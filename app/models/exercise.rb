@@ -101,4 +101,13 @@ class Exercise < ActiveRecord::Base
   def has_results?
     !results.finalized.empty?
   end
+
+  # Verifica se há pelo menos uma questão e se as questões têm pelo menos
+  # duas alternativas
+  def make_sense?
+    qs = questions.includes(:alternatives)
+    return false if qs.length == 0
+
+    qs.inject(true) { |acc,q| acc && q.alternatives.count > 1 }
+  end
 end

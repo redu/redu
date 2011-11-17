@@ -11,6 +11,22 @@ describe Exercise do
 
   it { should accept_nested_attributes_for(:questions) }
 
+  it "should not make sense when there arent questions" do
+    subject.make_sense?.should_not be_true
+  end
+
+  it "should make sense when there are questions" do
+    exercise = Factory(:complete_exercise)
+    exercise.make_sense?.should be_true
+  end
+
+  it "should not make sense when one question has just one alternative" do
+    question = Factory(:complete_question, :exercise => subject)
+    question.alternatives[0].destroy
+    question.alternatives[1].destroy
+    subject.make_sense?.should_not be_true
+  end
+
   it "should respond to question weight" do
     subject.should respond_to(:question_weight)
   end
