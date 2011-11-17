@@ -5804,6 +5804,7 @@ table.concave-invitation-table .cell-reinvite .reinvited {
 
 #space-manage .new-resource .concave-form .alternative-container,
 #space-manage .edit-resource .concave-form .alternative-container {
+  width: 524px;
   float: left;
 }
 
