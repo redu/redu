@@ -97,4 +97,8 @@ class Exercise < ActiveRecord::Base
       :average_duration => results.finalized.average(:duration) || 0,
     }
   end
+
+  def has_results?
+    !results.finalized.empty?
+  end
 end

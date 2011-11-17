@@ -260,4 +260,20 @@ describe Exercise do
       subject.result_for(@user).user.should == @user
     end
   end
+
+  context "when verifying if anyone have finalized" do
+    subject { Factory(:complete_exercise) }
+
+    it "should return false when there arent any results" do
+      subject.has_results?.should be_false
+    end
+
+    it "should return true when there are finalized results" do
+      user = Factory(:user)
+      subject.start_for(user)
+      subject.finalize_for(user)
+
+      subject.has_results?.should be_true
+    end
+  end
 end
