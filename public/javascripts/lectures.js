@@ -65,6 +65,7 @@ $(function(){
 
         $(document).ajaxComplete(function(){
           $(document).refreshLectures();
+          $(".student-actions").css({'position': 'relative'});
         });
     });
 });
