@@ -2,8 +2,8 @@
 
 if Rails.env.production?
   Redu::Application.config.session_store :cookie_store,
-    :key => '_redu_session'#,
-    # :domain => '.redu.com.br'
+    :key => '_redu_session',
+    :domain => '.redu.com.br'
 else
   Redu::Application.config.session_store :cookie_store, :key => '_redu_session'
 end
