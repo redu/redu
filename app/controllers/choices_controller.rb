@@ -12,7 +12,13 @@ class ChoicesController < BaseController
 
     respond_to do |format|
       format.html do
-        redirect_to exercise_question_path(@exercise, @next_question)
+        if @next_question
+          redirect_to exercise_question_path(@exercise, @next_question)
+        else
+          redirect_to \
+            edit_exercise_result_path(@exercise,
+                                      @exercise.result_for(current_user, false))
+        end
       end
     end
   end
@@ -24,12 +30,10 @@ class ChoicesController < BaseController
   def previous_or_next(commit, current)
     commit ||= ""
 
-    question = if commit.match(/Anterior/)
+    if commit.match(/Anterior/)
       current.previous_item
     else
       current.next_item
     end
-
-    question || current
   end
 end

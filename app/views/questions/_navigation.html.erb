@@ -27,6 +27,11 @@
           <%= submit_tag "Próxima", :class => "concave-clean" %>
         </li>
       <% end %>
+      <% if !@review && question == current && question == last %>
+        <li class="lecture-buttons">
+          <%= submit_tag "Finalizar", :class => "concave-clean" %>
+        </li>
+      <% end %>
     <% end %>
     <% if  next_range = current.item_at_offset(4) %>
       <li class="endless-lecture">

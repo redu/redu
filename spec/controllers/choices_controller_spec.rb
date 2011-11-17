@@ -68,9 +68,10 @@ describe ChoicesController do
                         :choice => { :alternative_id => @last.alternatives.first}})
       end
 
-      it "should redirect to itself" do
+      it "should redirect to results edit" do
+        result = @exercise.start_for(@user)
         post :create, @params
-        response.should redirect_to(exercise_question_path(@exercise, @last))
+        response.should redirect_to edit_exercise_result_path(@exercise, result)
       end
     end
 

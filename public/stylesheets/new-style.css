@@ -1550,8 +1550,7 @@ body {
 
 #resource .statistics {
   float: left;
-  font-size: .9em;
-  margin-left: 40px;
+  font-size: .85em;
 }
 
 #resource .statistics li {

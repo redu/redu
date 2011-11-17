@@ -1,5 +1,5 @@
 class ResultsController < BaseController
-  before_filter :load_hierarchy, :only => :index
+  before_filter :load_hierarchy, :only => [:index, :edit]
 
   load_resource :exercise
   load_resource :result
@@ -24,6 +24,17 @@ class ResultsController < BaseController
         redirect_to \
           space_subject_lecture_path(@space, @subject, @exercise.lecture)
       end
+    end
+  end
+
+  def edit
+    @first_question = @exercise.questions.
+      first(:conditions => { :position => 1})
+    @last_question = @first_question.last_item
+    @result = @exercise.result_for(current_user, false)
+
+    respond_to do |format|
+      format.html { render 'questions/show' }
     end
   end
 

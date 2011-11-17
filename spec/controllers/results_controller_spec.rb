@@ -57,6 +57,11 @@ describe ResultsController do
       post :update, @params
     end
 
+    xit "should call mark_as_done_for" do
+      Lecture.any_instance.should_receive('mark_as_done_for!')
+      post :update, @params
+    end
+
     it "should redirect to lectures#show" do
       post :update, @params
       response.should redirect_to \
@@ -85,6 +90,39 @@ describe ResultsController do
     it "should load the correct results" do
       post :index, @params
       assigns[:results].to_set.should == @results.to_set
+    end
+  end
+
+  context "GET edit" do
+    before do
+      @result = @exercise.start_for(@user)
+      @params = { :locale => 'pt-BR', :format => :html}
+      @params.merge!({ :exercise_id => @exercise.id, :id => @result.id })
+    end
+
+    it "should load exercise" do
+      get :edit, @params
+      assigns[:exercise].should_not be_nil
+    end
+
+    it "should load hierarchy" do
+      get :edit, @params
+      assigns[:lecture].should_not be_nil
+      assigns[:subject].should_not be_nil
+      assigns[:space].should_not be_nil
+      assigns[:course].should_not be_nil
+      assigns[:environment].should_not be_nil
+    end
+
+    it "should load the first and last question" do
+      get :edit, @params
+      assigns[:first_question].should_not be_nil
+      assigns[:last_question].should_not be_nil
+    end
+
+    it "should render questions#show" do
+      get :edit, @params
+      response.should render_template('questions/show')
     end
   end
 end

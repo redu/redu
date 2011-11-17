@@ -93,6 +93,21 @@
 
 }
 
+#resource .exercise-finalize-form {
+  margin-top: 80px;
+  text-align: center;
+}
+
+#resource .exercise-finalize-form .exercise-call {
+  color: rgb(109, 110, 111);
+}
+
+#resource .exercise-finalize-form .concave-button {
+  margin-top: 40px;
+  width: 146px;
+  height: 56px;
+}
+
 /* páginas de exercise */
 
 #resource .exercise {
@@ -572,8 +587,9 @@
 }
 
 
-.exercise-report {
-  min-height: 600px;
+.exercise-report,
+.resource-content {
+  min-height: 500px;
 }
 
 .exercise-report .table-report-students {

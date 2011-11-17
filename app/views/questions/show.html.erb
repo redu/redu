@@ -17,40 +17,23 @@
       <%= render :partial => 'lectures/details',
         :locals => { :lecture => @lecture} %>
       <div class="stage exercise">
-        <% if @question.last_item? && !@review %>
-          <%= form_tag exercise_result_path(@exercise, @exercise.result_for(current_user, false)), :method => :put do %>
-            <button type="submit" class="concave-button">
-              <span class="do-exercise icon-exercise-white_16_18-before">Finalizar</span>
-            </button>
+        <% if @question %>
+          <%= form_for :choice, :url => exercise_question_choices_path(@exercise, @question), :method => :post do |f| %>
+            <%= render"questions/navigation",
+              :f => f, :exercise => @exercise, :current => @question, :first => @first_question, :last => @last_question, :review => @review %>
+            <%= render "questions/form", :f => f, :exercise => @exercise, :question => @question, :result => @result, :review => @review, :choice => @choice %>
           <% end %>
-        <% end %>
-        <%= form_for :choice, :url => exercise_question_choices_path(@exercise, @question), :method => :post do |f| %>
-          <%= render"questions/navigation",
-            :f => f, :exercise => @exercise, :current => @question, :first => @first_question, :last => @last_question, :review => @review %>
-          <div class="question">
-            <p><%= @question.statement %></p>
-          </div>
-
-          <% if @review %>
-            <div class="justification">
-              <span class="call">Justificativa:</span>
-              <p><%= @question.explanation || "Não há" %></p>
-            </div>
-            <div class="alternatives review">
-              <ol>
-                <% @question.alternatives.each_with_index do |alternative, index| %>
-                  <%= render 'alternatives/answered', :index => index, :alternative => alternative, :choosed => @choice.alternative %>
-                <% end %>
-              </ol>
-            </div>
-          <% else %>
-            <div class="alternatives">
-              <ol>
-                <% @question.alternatives.each_with_index do |alternative, index| %>
-                  <%= render 'alternatives/item', :f => f, :index => index, :alternative => alternative %>
-                <% end %>
-              </ol>
-            </div>
+        <% else %>
+          <%= form_for :choice, :url => exercise_question_choices_path(@exercise, @last_question), :method => :post do |f| %>
+            <%= render"questions/navigation",
+              :f => f, :exercise => @exercise, :current => @last_question, :first => @first_question, :last => @last_question, :review => @review %>
+          <% end %>
+          <%= form_tag exercise_result_path(@exercise, @result), :method => :put, :class => "exercise-finalize-form" do %>
+            <span class="exercise-call">Exercício finalizado.</span>
+            <span class="exercise-call">Você pode revisar as questões ou submeter a aula. </span>
+            <button type="submit" class="concave-button">
+              <span class="do-exercise icon-exercise-white_16_18-before">Submeter</span>
+            </button>
           <% end %>
         <% end %>
       </div>
