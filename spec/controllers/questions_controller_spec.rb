@@ -57,9 +57,13 @@ describe QuestionsController do
       before do
         @alternative = @questions.first.alternatives[1]
         @questions.first.choose_alternative(@alternative, @user)
+        @params = { :locale => 'pt-BR', :format => :html }
+        @params.merge!({ :exercise_id => @exercise.id,
+                         :id => @questions.first.id })
       end
 
       it "should load the choice" do
+        get :show, @params
         assigns[:choice].should_not be_nil
         assigns[:choice].should_not be_new_record
       end
