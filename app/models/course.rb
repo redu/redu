@@ -112,10 +112,6 @@ class Course < ActiveRecord::Base
     self.path
   end
 
-  def permalink
-    "#{Redu::Application.config.url}/#{self.environment.path}/cursos/#{self.path}"
-  end
-
   # Muda papeis deste ponto para baixo na hieararquia
   def change_role(user, role)
     membership = user.user_course_associations.

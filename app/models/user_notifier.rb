@@ -13,7 +13,7 @@ class UserNotifier < ActionMailer::Base
   # Enviado ao aprovar a participação de um usuário num Course
   def approve_membership(user, course)
     @user = user
-    @url = course.permalink
+    @url = environment_course_url(course.environment, course)
     @course = course
 
     mail(:to => user.email,

@@ -162,12 +162,6 @@ describe Space do
     end
   end
 
-  it "generates a permalink" do
-    @space = Factory(:space, :id => 123, :name => "teste")
-    Redu::Application.config.url.should_not be_nil
-    @space.permalink.should include("#{@space.id}-#{@space.name.parameterize}")
-  end
-
   it "changes a user role" do
     user = Factory(:user)
     subject.users << user
