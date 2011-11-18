@@ -63,7 +63,7 @@ Redu::Application.routes.draw do
       end
     end
 
-    resources :subjects, :except => [:show, :index] do
+    resources :subjects, :except => [:index] do
       member do
         get :admin_lectures_order
         post :admin_lectures_order
@@ -226,8 +226,7 @@ Redu::Application.routes.draw do
 
   root :to => 'base#site_index', :as => :home
   root :to => "base#site_index", :as => :application
-
-  match '/:anything', :to => "application#routing_error", :constraints => { :anything => /.*/ }
+  
 end
 
 ActionDispatch::Routing::Translator.translate_from_file('lang','i18n-routes.yml')

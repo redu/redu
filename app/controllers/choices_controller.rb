@@ -3,9 +3,9 @@ class ChoicesController < BaseController
   load_resource :question
 
   def create
-    authorize! :update, @exercise.result_for(current_user, false)
+    result = @exercise.result_for(current_user, false)
 
-    if params[:choice] && alternative_id = params[:choice][:alternative_id]
+    if can?(:update, result) && alternative_id = alternative_if_exists(params)
       @alternative = @question.alternatives.find(alternative_id)
       @question.choose_alternative(@alternative, current_user)
     end
@@ -18,8 +18,7 @@ class ChoicesController < BaseController
           redirect_to exercise_question_path(@exercise, @next_question)
         else
           redirect_to \
-            edit_exercise_result_path(@exercise,
-                                      @exercise.result_for(current_user, false))
+            edit_exercise_result_path(@exercise, result)
         end
       end
     end
@@ -37,5 +36,9 @@ class ChoicesController < BaseController
     else
       current.next_item
     end
+  end
+
+  def alternative_if_exists(params)
+    return params[:choice][:alternative_id] if params[:choice]
   end
 end

@@ -549,7 +549,6 @@ body {
   margin-top: 10px;
   margin-left: 10px;
   position: absolute;
-  z-index: 1;
 }
 
 .boxshadow #content .concave-sidebar .course-frame .environment,
@@ -690,6 +689,8 @@ body {
   font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 500;
   color: rgb(77, 173, 214);
+  display: block;
+  width: 630px;
 }
 
 #space-manage #hierarchy-header .name a,
@@ -1070,7 +1071,7 @@ body {
 }
 
 .body .header .title {
-  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-family: museo-sans, helvetica, arial, sans-serif;
   font-weight: 100;
   font-size: 2.1em;
   color: rgb(77, 173, 214);
@@ -1827,6 +1828,9 @@ body {
   font-size: 1.3em;
   letter-spacing: .005em;
   margin-right: 5px;
+  float: left;
+  display: block;
+  width: 380px;
 }
 
 .hierarchy-listing .child .name:before {
@@ -1834,6 +1838,10 @@ body {
   margin-right: 15px;
   margin-left: 5px;
   margin-top: 5px;
+}
+
+.hierarchy-listing .child .enrolled{
+  float: none;
 }
 
 .hierarchy-listing .child .manage {
@@ -1852,6 +1860,9 @@ body {
   font-style: italic;
   font-size: .87em;
   color: rgb(179, 179, 179);
+  float: left;
+  display:block;
+  margin: 3px 0px;
 }
 
 .hierarchy-listing .child .description,
@@ -1859,7 +1870,8 @@ body {
   font-size: .87em;
   color: rgb(109, 110, 111);
   width: inherit;
-  margin: 5px 0 3px 0;
+  margin: 40px 0 3px 0;
+  clear: left;
 }
 
 .hierarchy-listing.subjects .child > .description,
@@ -3865,7 +3877,7 @@ a.clean:hover {
 }
 
 .big-tabs > ul li a {
-  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-family: museo-sans, helvetica, arial, sans-serif;
   font-size: 2.4em;
   font-weight: 100;
   color: rgb(76, 172, 213);
@@ -3906,7 +3918,7 @@ a.clean:hover {
 }
 
 .big-tabs > .panel {
-  overflow: hidden;
+
   border: 1px solid rgb(179, 179, 179);
   padding: 40px 60px;
   background-color: white;
@@ -4937,7 +4949,7 @@ table.spaced tr td {
 }
 
 #url_preview span {
-  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-family: museo-sans, helvetica, arial, sans-serif;
   font-weight: 100;
   font-size: 1em;
 }
@@ -7658,7 +7670,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 #partner-header .environments-title {
-  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-family: museo-sans, helvetica, arial, sans-serif;
   font-weight: 100;
   font-size: 2.2em;
   color: #B2B2B2;

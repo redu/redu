@@ -27,7 +27,7 @@
         <%= render :partial => 'courses/admin/form', :locals => { :f => f, :edit => true, :partner => @environment.partner } %>
         <%= f.submit "Salvar alterações" %>
         <% if @course.published? %>
-          <%= link_to 'Despublicar', unpublish_environment_course_path(@environment, @course),
+          <%= link_to 'Despublicar curso', unpublish_environment_course_path(@environment, @course),
             :confirm => 'Você tem certeza que deseja deixar este curso invisível?',
             :class => "concave-clean" %>
         <% else %>

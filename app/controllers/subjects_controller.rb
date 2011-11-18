@@ -84,12 +84,20 @@ class SubjectsController < BaseController
 
   def destroy
     @subject.destroy
-    if params[:building_subject]
-      flash[:notice] = "A construção do módulo foi cancelada."
-    else
-      flash[:notice] = "O módulo foi removido."
-    end
+    flash[:notice] = "O módulo foi removido."
     redirect_to space_path(@subject.space)
+  end
+
+  def show
+    @subjects = @space.subjects
+    unless can? :manage, @space
+      @subjects = @subjects.visible
+    end
+
+    respond_to do |format|
+      format.html
+      format.js { render_endless 'subjects/item', @subjects, '#subjects_list' }
+    end
   end
 
   #FIXME evitar usar GET e POST no mesmo action

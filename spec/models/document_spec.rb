@@ -2,22 +2,37 @@ require 'spec_helper'
 
 describe Document do
   it { should have_attached_file(:attachment) }
-  xit { should validate_attachment_content_type(:attachment) }
-  xit { should validate_attachment.size(:attachment).
-                less_than(2.megabytes) }
 
   context "validates" do
-    it "a content_type" do
-      path = File.join(Rails.root,
-                       "spec",
-                       "support",
-                       "documents",
-                       "document_test_fail.fai")
+    it "the content_type" do
+      doc = Document.new
+      doc.stub(:attachment_content_type) { "application/fay" }
 
-      doc = Factory.build(:document,
-                          :attachment => File.new(path))
       doc.should_not be_valid
-      doc.errors[:attachment].should_not be_empty
+      doc.errors[:attachment_content_type].should_not be_empty
+    end
+  end
+
+  context "scribdfu" do
+    before do
+      @file = mock("attached_file",
+                   :url => "http://test.com/path/to/somewhere",
+                   :path => "/path/to/somewhere", :options => {})
+      @document = Document.new
+      @document.stub(:attachment) { @file }
+      @document.stub('scribdable?') { true }
+
+      @scribd_user = mock("scribd_user")
+      Scribd::User.stub!(:login).and_return(@scribd_user)
+      @scribd_response = mock('scribd_response', :doc_id => "doc_id",
+                              :access_key => "access_key")
+      @scribd_user.should_receive(:upload).and_return(@scribd_response)
+    end
+
+    it "should upload to scribd" do
+      values = {:ipaper_id => 'doc_id', :ipaper_access_key => 'access_key'}
+      @document.should_receive(:update_attributes).with(values)
+      @document.save
     end
   end
 
