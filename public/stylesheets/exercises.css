@@ -308,7 +308,7 @@
 
 #resource .review-exercise .review-score {
   float: left;
-  width: 210px;
+  width: 230px;
   margin-left: 10px;
 }
 
@@ -325,7 +325,7 @@
 }
 
 #resource .review-score .score-type {
-  width: 165px;
+  width: 155px;
   float: left;
 }
 
@@ -336,13 +336,19 @@
 #resource .review-score .score-value {
   display: block;
   text-align: center;
+  overflow: hidden;
 }
 
+#resource .review-score .score-value,
+#resource .review-score .score-type {
+  font-family: museo-sans, helvetica, arial, sans-serif;
+  font-weight: 300;
+}
 
 #resource .review-grade {
   float: left;
   margin-left: 20px;
-  width: 190px;
+  width: 170px;
 }
 
 #resource .review-grade .exercise-grade {
