@@ -42,7 +42,7 @@ class Seminar < ActiveRecord::Base
   validates_presence_of :original, :unless => :external?
   validates_attachment_presence :original, :unless => :external?
   validate :accepted_content_type, :unless => :external?
-  validates_attachment_size :original, :less_than => 100.megabytes,
+  validates_attachment_size :original, :less_than => 1.gigabyte,
     :unless => :external?
 
   def validate_youtube_url
