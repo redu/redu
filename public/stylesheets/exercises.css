@@ -715,12 +715,22 @@
   font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 900;
   font-size: 1.3em;
-  color: rgb(179, 179, 179);
+  color: white;
 }
 
 .textshadow #space-manage .new-resource .concave-form .question-item .position,
 .textshadow #space-manage .edit-resource .concave-form .question-item .position {
-  text-shadow: 0px 1px 0px #ffffff;
+  text-shadow: 0px -1px 0px rgb(179, 179, 179);
+}
+
+#space-manage .new-resource .concave-form .question-item.closed .position,
+#space-manage .edit-resource .concave-form .question-item.closed .position {
+  color: rgb(179, 179, 179);
+}
+
+.textshadow #space-manage .new-resource .concave-form .question-item.closed .position,
+.textshadow #space-manage .edit-resource .concave-form .question-item.closed .position {
+  text-shadow: 0px 1px 0px white;
 }
 
 #space-manage .new-resource .concave-form .question-item.closed,
