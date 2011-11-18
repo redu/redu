@@ -21,7 +21,7 @@
     <ul class="statistics">
       <li><%= time_ago_in_words lecture.created_at %></li>
       <li>Visualizado <%= lecture.view_count %> <%= lecture.view_count > 1 ? "vezes" : "vez" %></li>
-      <% if @question %>
+      <% if @question || @results %>
         <li><%= link_to "Voltar", space_subject_lecture_path(@space, @subject, @lecture) %></li>
       <% end %>
     </ul>
