@@ -23,6 +23,7 @@ describe ChoicesController do
 
   context "POST create" do
     before do
+      @exercise.start_for(@user)
       @alternative = @questions.first.alternatives.first
       @question = @questions.first
       @params = { :locale => 'pt-BR', :format => :html }
