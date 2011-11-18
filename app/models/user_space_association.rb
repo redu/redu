@@ -1,8 +1,5 @@
 class UserSpaceAssociation < ActiveRecord::Base
 
-  after_create :increment_members_count
-  before_destroy :decrement_members_count
-
   belongs_to :user
   belongs_to :space
 
@@ -18,16 +15,5 @@ class UserSpaceAssociation < ActiveRecord::Base
   }
 
   validates_uniqueness_of :user_id, :scope => :space_id
-
-  protected
-  def increment_members_count
-    self.space.members_count += 1
-    self.space.save
-  end
-
-  def decrement_members_count
-    self.space.members_count -= 1
-    self.space.save
-  end
 
 end

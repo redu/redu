@@ -228,7 +228,9 @@ class UsersController < BaseController
     render :template => "users/signup_completed", :layout => "clean"
   end
 
-  def invite
+  def welcome_complete
+    flash[:notice] = t(:walkthrough_complete, :site => Redu::Application.config.name)
+    redirect_to user_path
   end
 
   def forgot_password
@@ -279,9 +281,15 @@ class UsersController < BaseController
     end
   end
 
-  def assume
-    self.current_user = User.find(params[:id])
-    redirect_to user_path(current_user)
+  def activity_xml
+    # talvez seja necessario setar o atributo depth nos nós para que funcione corretamente.
+    # ver: http://asterisq.com/products/constellation/roamer/integration#data_rest_tree
+
+    @user = User.find((params[:node_id]) ?  params[:node_id] :  params[:id] )
+    @activities = Status.activities(@user)
+    respond_to do |format|
+      format.xml
+    end
   end
 
   def home

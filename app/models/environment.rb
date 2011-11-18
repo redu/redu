@@ -58,10 +58,6 @@ class Environment < ActiveRecord::Base
     self.path
   end
 
-  def permalink
-    "#{Redu::Application.config.url}/#{self.path}"
-  end
-
   # Muda o papel do usuário levando em conta a hierarquia
   def change_role(user, role)
     membership =

@@ -133,11 +133,6 @@ describe Environment do
     end
   end
 
-  it "generates a permalink" do
-    Redu::Application.config.url.should_not be_nil
-    subject.permalink.should include(subject.path)
-  end
-
   it "changes a user role" do
     user = Factory(:user)
     subject.users << user

@@ -409,6 +409,7 @@ class CoursesController < BaseController
 
   # Página para administrar convites já enviados
   def admin_manage_invitations
+    @all_users = @course.user_course_associations
     @email_invitations = @course.user_course_invitations.invited
     @user_invitations = @course.user_course_associations.invited
 

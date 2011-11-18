@@ -6,14 +6,6 @@ class User < ActiveRecord::Base
   MALE    = 'M'
   FEMALE  = 'F'
 
-  LEARNING_ACTIONS = ['answer', 'results', 'show']
-  TEACHING_ACTIONS = ['create']
-
-  SUPPORTED_CURRICULUM_TYPES = [ 'application/pdf', 'application/msword',
-                                 'text/plain', 'application/rtf', 'text/rtf',
-                                 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' # docx
-  ]
-
   # CALLBACKS
   before_create :make_activation_code
   after_create  :update_last_login
@@ -356,10 +348,6 @@ class User < ActiveRecord::Base
     # self.activated_at
   end
 
-  def recently_activated?
-    @activated
-  end
-
   def encrypt(password)
     self.class.encrypt(password, self.password_salt)
   end
@@ -369,20 +357,13 @@ class User < ActiveRecord::Base
   end
 
   # FIXME Verificar necessidade (não foi testado)
-  # remember_token_expires_at e remember_token não existem no BD.
-  # These create and unset the fields required for remembering users between browser closes
-  def remember_me
-    self.remember_token_expires_at = 2.weeks.from_now.utc
-    self.remember_token            = encrypt("#{email}--#{remember_token_expires_at}")
-    save(false)
+  def location
+    metro_area && metro_area.name || ""
   end
 
   # FIXME Verificar necessidade (não foi testado)
-  # remember_token_expires_at e remember_token não existem no BD.
-  def forget_me
-    self.remember_token_expires_at = nil
-    self.remember_token            = nil
-    save(false)
+  def full_location
+    "#{metro_area.name if self.metro_area}#{" , #{self.country.name}" if self.country}"
   end
 
   def reset_password
@@ -391,7 +372,6 @@ class User < ActiveRecord::Base
     self.password_confirmation = new_password
     return self.valid?
   end
-
 
   def owner
     self

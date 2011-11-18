@@ -33,8 +33,11 @@ class Ability
     # User
     alias_action :show_mural, :contacts_endless, :environments_endless, :to => :read
 
-    alias_action :assume, :edit_account,
-      :update_account, :invite, :activate, :deactivate,
+    alias_action :edit_account,
+      :update_account, :edit_pro_details, :update_pro_details,
+      :invite, :activate, :deactivate,
+      :change_profile_photo, :crop_profile_photo,
+      :upload_profile_photo, :activity_xml, :annotations,
       :account, :home, :my_wall, :to => :manage
 
     # Lecture
@@ -134,12 +137,6 @@ class Ability
 
       # Plan (payment gateway)
       can :read, :success
-
-      # Admin do environment ou teacher, caso o space não tenha owner
-      can :take_ownership, Space do |space|
-        user.can_manage?(space.course.environment) || \
-          (space.owner.nil? && user.teacher?(space))
-      end
 
       # Caso seja o Status de usuário, apenas ele mesmo ou seus amigos
       # podem criá-lo/respondê-lo.

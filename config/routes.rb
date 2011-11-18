@@ -40,7 +40,6 @@ Redu::Application.routes.draw do
   resources :spaces, :except => [:index] do
     member do
       get :admin_members
-      get :take_ownership
       get :publish
       get :unpublish
       get :mural
@@ -89,7 +88,8 @@ Redu::Application.routes.draw do
   # Users
   resources :users, :except => [:index] do
     member do
-      get :assume
+      get :activity_xml
+      put :change_profile_photo
       get :edit_account
       put :update_account
       get :forgot_password

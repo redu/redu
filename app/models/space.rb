@@ -74,10 +74,6 @@ class Space < ActiveRecord::Base
   validates_length_of :name, :maximum => 40
   validates_length_of :description, :within => 30..250
 
-  def permalink
-    "#{Redu::Application.config.url}/espacos/#{self.id.to_s}-#{self.name.parameterize}"
-  end
-
   def create_root_folder
     @folder = self.folders.create(:name => "root")
   end

@@ -17,12 +17,6 @@ class SpacesController < BaseController
     redirect_to preview_environment_course_path(@environment, @course)
   end
 
-  def take_ownership
-    @space.update_attribute(:owner, current_user)
-    flash[:notice] = "Você é o novo dono desta disciplina."
-    redirect_to @space
-  end
-
   def admin_members
     @memberships = @space.user_space_associations.approved.
       paginate(:page => params[:page],:order => 'updated_at DESC',

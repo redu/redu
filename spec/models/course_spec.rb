@@ -303,14 +303,6 @@ describe Course do
     end
   end
 
-  it "generates a permalink" do
-    Redu::Application.config.url.should_not be_nil
-    environment = Factory(:environment)
-    subject.environment = environment
-    subject.permalink.should include(subject.path)
-    subject.permalink.should include(environment.path)
-  end
-
   it "changes a user role" do
     user = Factory(:user)
     subject.users << user
