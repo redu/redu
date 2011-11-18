@@ -1,46 +1,57 @@
 <div class="exercise-nav">
   <ol>
-    <% if prev_range = current.item_at_offset(-4) %>
-      <li class="endless-lecture">
+    <li class="endless-lecture">
+      <% if prev_range = current.item_at_offset(-4) %>
         <%= link_to "...", exercise_question_path(exercise, prev_range) %>
-      </li>
-    <% end %>
+      <% end %>
+    </li>
     <% limit, offset = pagination(current) %>
-    <% exercise.questions.limit(limit).offset(offset).order('position ASC').each do |question| %>
-      <% if question == current && question != first %>
+    <% questions_navigation = questions_array(exercise.questions.size, exercise.questions.limit(limit).offset(offset).order('position ASC'), current) %>
+    <% questions_navigation.each do |question| %>
+      <% if question == current %>
         <li class="lecture-buttons">
-          <%= submit_tag "Anterior", :class => "concave-clean" %>
+          <% if question != first %>
+            <%= submit_tag "Anterior", :class => "concave-clean" %>
+          <% end %>
         </li>
       <% end %>
-      <% choice = question.choice_for(current_user) %>
+      <% choice = question.choice_for(current_user) if question %>
       <% if review %>
         <li class="<%= question == current ? "actual" : "" %> <%= right_or_wrong(choice) %>">
-          <%= link_to question.position, exercise_question_path(exercise, question)  %>
+          <%= link_to question.position, exercise_question_path(exercise, question) if question %>
         </li>
       <% else %>
         <li class="<%= question == current ? "actual" : "" %> <%= choice ? "question-answered" : "" %>">
-          <%= link_to question.position, exercise_question_path(exercise, question)  %>
+          <%= link_to question.position, exercise_question_path(exercise, question) if question %>
         </li>
       <% end %>
-      <% if question == current && question != last %>
-        <li class="lecture-buttons">
-          <%= submit_tag "Próxima", :class => "concave-clean" %>
-        </li>
+      <% if question == current %>
+        <% if question != last %>
+          <li class="lecture-buttons">
+            <%= submit_tag "Próxima", :class => "concave-clean" %>
+          </li>
+        <% end %>
       <% end %>
       <% if !@review && question == current && question == last %>
-        <li class="lecture-buttons">
-          <%= submit_tag "Finalizar", :class => "concave-clean" %>
+        <li class="lecture-button-finalize">
+          <button type="submit" class="concave-button">
+            <span class="end-exercise icon-exercise-white_16_18-before">Finalizar</span>
+          </button>
         </li>
       <% end %>
     <% end %>
-    <% if  next_range = current.item_at_offset(4) %>
+    <% if current != last %>
       <li class="endless-lecture">
-        <%= link_to "...", exercise_question_path(exercise, next_range) %>
+        <% if  next_range = current.item_at_offset(4) %>
+          <%= link_to "...", exercise_question_path(exercise, next_range) %>
+        <% end %>
       </li>
     <% end %>
   </ol>
-  <%= link_to "< primeira", exercise_question_path(exercise, first), :class => "first-question" %>
-  <% if last %>
+  <% if current != first %>
+    <%= link_to "< primeira", exercise_question_path(exercise, first), :class => "first-question" %>
+  <% end %>
+  <% if current != last %>
     <%= link_to "> última", exercise_question_path(exercise, last), :class => "last-question" %>
   <% end %>
 </div>

@@ -14,13 +14,11 @@
 #resource .exercise-nav ol {
   margin: 15px 10px 5px 10px;
   overflow: hidden;
-  float: right;
-  width: 586px;
 }
 
 #resource .exercise-nav ol li {
   float: left;
-  width: 55px;
+  width: 58px;
   height: 35px;
   text-align: center;
 }
@@ -36,6 +34,23 @@
 
 #resource .exercise-nav ol li.lecture-buttons {
   display: block;
+}
+
+#resource .exercise-nav ol li.lecture-button-finalize {
+  width: 126px;
+  margin-left: 135px;
+}
+
+#resource .exercise-nav .lecture-button-finalize .concave-button {
+  margin: 0;
+  margin-top: 2px;
+  padding: 6px 25px 7px 25px;
+}
+
+.exercise-nav .lecture-button-finalize .concave-button .end-exercise:before {
+  display: block;
+  float: left;
+  margin-right: 5px;
 }
 
 #resource .exercise-nav ol li.question-answered a {
