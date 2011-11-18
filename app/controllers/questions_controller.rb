@@ -1,6 +1,8 @@
 class QuestionsController < BaseController
   before_filter :load_hierarchy
 
+  authorize_resource :question
+
   def show
     @first_question = @question.first_item
     @last_question = @question.last_item

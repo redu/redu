@@ -254,6 +254,10 @@ class User < ActiveRecord::Base
       self.can_manage?(entity.user)
     when 'Education'
       self.can_manage?(entity.user)
+    when 'Result'
+      self.can_manage?(entity.exercise)
+    when 'Exercise'
+      self.can_manage?(entity.lecture)
     end
   end
 
@@ -286,6 +290,10 @@ class User < ActiveRecord::Base
         self.has_access_to? entity.partner
       when 'Partner'
         entity.users.exists?(self)
+      when 'Result'
+        entity.user == self
+      when 'Question'
+        has_access_to? entity.exercise.lecture
       else
         return false
       end
@@ -304,8 +312,10 @@ class User < ActiveRecord::Base
        (object.class.to_s.eql? 'Event') || (object.class.to_s.eql? 'Bulletin') ||
        (object.class.to_s.eql? 'Status') || (object.class.to_s.eql? 'User') ||
        (object.class.to_s.eql? 'Friendship') || (object.class.to_s.eql? 'Plan') ||
-       (object.class.to_s.eql? 'Invoice') || (object.class.to_s.eql? 'PartnerEnvironmentAssociation') ||
-       (object.class.to_s.eql? 'Partner')
+       (object.class.to_s.eql? 'Invoice') ||
+       (object.class.to_s.eql? 'PartnerEnvironmentAssociation') ||
+       (object.class.to_s.eql? 'Partner') || (object.class.to_s.eql? 'Result') ||
+       (object.class.to_s.eql? 'Question')
 
        self.has_access_to?(object)
     else

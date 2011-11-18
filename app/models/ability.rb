@@ -154,6 +154,9 @@ class Ability
 
       # Parceiros
       can :contact, Partner
+
+      # Result
+      can :update, Result, :state => 'started', :user_id => user.id
     end
   end
 end

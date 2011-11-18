@@ -2,9 +2,10 @@ class ResultsController < BaseController
   before_filter :load_hierarchy, :only => [:index, :edit]
 
   load_resource :exercise
-  load_resource :result
+  load_and_authorize_resource :result, :except => :create
 
   def create
+    authorize! :read, @exercise.lecture
     @result = @exercise.start_for(current_user)
 
     respond_to do |format|
@@ -39,6 +40,7 @@ class ResultsController < BaseController
   end
 
   def index
+    authorize! :manage, @lecture
     @results = @exercise.results.finalized.includes(:user, :choices,
                                                     :exercise => :questions)
 

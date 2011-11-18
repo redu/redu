@@ -3,6 +3,8 @@ class ChoicesController < BaseController
   load_resource :question
 
   def create
+    authorize! :update, @exercise.result_for(current_user, false)
+
     if params[:choice] && alternative_id = params[:choice][:alternative_id]
       @alternative = @question.alternatives.find(alternative_id)
       @question.choose_alternative(@alternative, current_user)
