@@ -1542,6 +1542,7 @@ body {
   float: left;
   margin-right: 12px;
   margin-left: -4px;
+  margin-top: -5px;
 }
 
 #resource .details .name {
@@ -1550,8 +1551,8 @@ body {
 }
 
 #resource .statistics {
-  float: left;
   font-size: .85em;
+  margin-left: 42px;
 }
 
 #resource .statistics li {
