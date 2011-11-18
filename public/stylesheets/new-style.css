@@ -5795,9 +5795,9 @@ table.concave-invitation-table .cell-reinvite .reinvited {
   height: 44px;
 }
 
-#space-manage .new-resource .concave-form .question-item .concave-input:first-child,
+#space-manage .new-resource .concave-form .question-item .concave-label:first,
 #space-manage .new-resource .concave-form .question-item .question-statement,
-#space-manage .edit-resource .concave-form .question-item .concave-input:first-child,
+#space-manage .edit-resource .concave-form .question-item .concave-label:first,
 #space-manage .edit-resource .concave-form .question-item .question-statement {
   margin-top: 0;
 }
