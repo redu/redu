@@ -35,7 +35,7 @@ class Ability
       :list_subjects, :activity_xml, :show_mural, :contacts_endless,
       :environments_endless, :to => :read
 
-    alias_action :assume, :edit_account,
+    alias_action :edit_account,
       :update_account, :edit_pro_details, :update_pro_details,
       :invite, :activate, :deactivate,
       :change_profile_photo, :crop_profile_photo,

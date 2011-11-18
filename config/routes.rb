@@ -91,7 +91,6 @@ Redu::Application.routes.draw do
   resources :users, :except => [:index] do
     member do
       get :activity_xml
-      get :assume
       put :change_profile_photo
       get :edit_account
       put :update_account

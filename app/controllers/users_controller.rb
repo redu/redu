@@ -405,11 +405,6 @@ class UsersController < BaseController
     end
   end
 
-  def assume
-    self.current_user = User.find(params[:id])
-    redirect_to user_path(current_user)
-  end
-
   def activity_xml
     # talvez seja necessario setar o atributo depth nos nós para que funcione corretamente.
     # ver: http://asterisq.com/products/constellation/roamer/integration#data_rest_tree
