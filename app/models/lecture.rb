@@ -22,6 +22,8 @@ class Lecture < ActiveRecord::Base
   belongs_to :lectureable, :polymorphic => true, :dependent => :destroy
   belongs_to :subject
 
+  accepts_nested_attributes_for :lectureable
+
   # SCOPES
   scope :unpublished, where(:published => false)
   scope :published, where(:published => true)
@@ -29,7 +31,7 @@ class Lecture < ActiveRecord::Base
   scope :iclasses, where("lectureable_type LIKE 'InteractiveClass'")
   scope :pages, where("lectureable_type LIKE 'Page'")
   scope :documents, where("lectureable_type LIKE 'Document'")
-  scope :limited, lambda { |num| limit(num) }
+  scope :exercises, where("lectureable_type LIKE 'Exercise'")
   scope :related_to, lambda { |lecture|
     where("name LIKE ? AND id != ?", "%#{lecture.name}%", lecture.id)
   }
@@ -95,6 +97,22 @@ class Lecture < ActiveRecord::Base
   # Diz se a instância está pronta para ser divulgada via mural ou e-mail
   def notificable?
     self.subject.finalized && self.subject.visible
+  end
+
+  def build_lectureable(params)
+    return if params[:_type].blank?
+
+    klass = params.delete(:_type).constantize
+    relation = klass.reflections[:lecture].try(:options)
+
+    if relation && relation[:as] == :lectureable
+      self.lectureable = klass.new(params)
+    end
+  end
+
+  def build_question_and_alternative
+    self.lectureable.questions.build
+    self.lectureable.questions.first.alternatives.build
   end
 
   protected

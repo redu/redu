@@ -8,7 +8,7 @@
       :remote => true, :method => :delete,
       :confirm => "Você tem certeza que deseja excluir essa aula? Não será mais possível recuperá-la.",
       :class => 'delete icon-small icon-delete-gray_16_18 replacement' %>
-    <% if item_short.lectureable.class.to_s == 'Page' %>
+    <% if item_short.lectureable.is_a?(Page) or item_short.lectureable.is_a?(Exercise) %>
       <%= link_to "Editar", "#", :class => 'edit icon-manage-gray_8_10-before' %>
     <% end %>
 <% end %>

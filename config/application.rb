@@ -36,7 +36,9 @@ module Redu
     # config.action_view.javascript_expansions[:defaults] = %w(jquery rails)
 
     config.generators do |g|
-      g.test_framework :shoulda
+      g.orm :active_record
+      g.test_framework :rspec
+      g.fixture_replacement :factory_girl
     end
 
     # Configure the default encoding used in templates for Ruby 1.9.

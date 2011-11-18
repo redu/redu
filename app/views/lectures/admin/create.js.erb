@@ -1,19 +1,32 @@
 <%= remotipart_response do %>
-  var $itemShort = $("<%= escape_javascript(render :partial => 'lectures/admin/item_short', :locals => { :item_short => @lecture }) %>");
-  $('#resources_list').append($itemShort);
+  <% if @lecture.valid? %>
+    var $itemShort = $("<%= escape_javascript(render :partial => 'lectures/admin/item_short', :locals => { :item_short => @lecture }) %>");
+    $('#resources_list').append($itemShort);
 
-  $('#lecture_form').slideUp(function(){ $(this).remove(); });
-  <%# Tira efeito de selecionado do choo_lectures %>
-  $("#space-manage .new-resource .resources-types li").removeClass("selected");
+    $('.new-resource .resource-form').slideUp(function(){ $(this).remove(); });
+    <%# Tira efeito de selecionado do choose_lectures %>
+    $("#space-manage .new-resource .resources-types li").removeClass("selected");
 
-  <% if @lecture.lectureable.class == Page %>
-    var $editPageForm = $("<%= escape_javascript render 'lectures/admin/edit', :lecture => @lecture, :subject => @subject, :space => @space %>");
-    $('#resources-edition').append($editPageForm);
+    <% if @lecture.lectureable.is_a?(Page) or @lecture.lectureable.is_a?(Exercise) %>
+      var $editPageForm = $("<%= escape_javascript render 'lectures/admin/edit', :lecture => @lecture, :subject => @subject, :space => @space %>");
+      $('#resources-edition').append($editPageForm);
+      $editPageForm.refreshNestedFields();
+    <% end %>
+
+    $("#space-manage #resources_list").refreshResourcesNumbering();
+
+    <%# Atualiza quotas %>
+    var $quotas = $("<%= escape_javascript render 'subjects/admin/quotas', :quota => @quota, :plan => @plan %>");
+    $("#space-manage .concave-form .quotas").replaceWith($quotas);
+  <% else %>
+    <%# Mostra form com erros de validação %>
+    var $newForm = $("<%= escape_javascript(render 'lectures/admin/form', :space => @space, :subject => @subject, :lecture => @lecture) %>");
+    $('.new-resource .resource-form').replaceWith($newForm);
+    $('.new-resource .resource-form').show();
+    <% if @lecture.lectureable.is_a? Exercise %>
+      $newForm.refreshNestedFields();
+      $newForm.find(".question-item:first-child").refreshQuestionsNumbering();
+      $newForm.find(".alternative-item:first-child").refreshAlternativesNumbering();
+    <% end %>
   <% end %>
-
-  $("#space-manage #resources_list").refreshResourcesNumbering();
-
-  <%# Atualiza quotas %>
-  var $quotas = $("<%= escape_javascript render 'subjects/admin/quotas', :quota => @quota, :plan => @plan %>");
-  $("#space-manage .concave-form .quotas").replaceWith($quotas);
 <% end %>

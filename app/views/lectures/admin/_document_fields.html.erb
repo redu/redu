@@ -1,0 +1,6 @@
+<%= hidden_field_tag "lecture[lectureable_attributes][_type]", "Document" %>
+<%= f.label :attachment, "Arquivo" %>
+<%= f.file_field :attachment  %>
+<% unless f.object.errors[:attachment_content_type].empty? %>
+  <ul class="errors_on_field"><li>Formato de arquivo inválido</li></ul>
+<% end %>

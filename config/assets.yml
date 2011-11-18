@@ -17,6 +17,7 @@ javascripts:
     - public/javascripts/modernizr.js
     - public/javascripts/jquery.tipTip.minified.js
     - public/javascripts/folders.js
+    - public/javascripts/exercise.js
     - public/javascripts/lectures.js
     - public/javascripts/swfobject.js
     - public/javascripts/jquery.form.js
@@ -34,6 +35,7 @@ javascripts:
     - public/javascripts/subjects.js
     - public/javascripts/statuses.js
     - public/javascripts/admin.js
+    - public/javascripts/jquery.nested-fields.js
   chat:
     - public/javascripts/jquery.pjax.js
     - public/javascripts/pusher.js
@@ -64,6 +66,7 @@ stylesheets:
     - public/stylesheets/icons.big.redu.css
     - public/stylesheets/icons.redu.css
     - public/stylesheets/user.css
+    - public/stylesheets/exercise.css
   ie:
     - public/stylesheets/ie.css
   chat:

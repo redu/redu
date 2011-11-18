@@ -26,6 +26,7 @@ describe Lecture do
   it { should have_many(:statuses).dependent(:destroy) }
 
   it { should belong_to :subject }
+  it { should accept_nested_attributes_for :lectureable }
 
   it { should validate_presence_of :name }
   # Descrição não está sendo utilizada
@@ -131,11 +132,6 @@ describe Lecture do
                   :lectureable => Factory(:document)) }
 
         Lecture.documents.should == documents
-    end
-
-    it "retrieves a specified limited number of lectures" do
-      lectures = (1..10).collect { Factory(:lecture, :subject => @sub) }
-      Lecture.limited(5).should have(5).items
     end
 
     it "retrieves lectures related to a specified lecture" do
@@ -256,5 +252,123 @@ describe Lecture do
     subject.created_at = 10.day.ago
     subject.save
     subject.should_not be_recent
+  end
+
+  context "nested lectureable" do
+    before do
+      @owner = Factory(:user)
+      @sub = Factory(:subject)
+    end
+    context "when valid" do
+      before do
+        @lecture = Lecture.new({ :name => "Name", :subject => @sub,
+                                "lectureable_attributes" => {
+                                  "_type" => "Page", "body" => "Cool letters"} })
+        @lecture.owner = @owner
+      end
+
+      it "builds a lecture within a lectureable" do
+        @lecture.should_not be_nil
+        @lecture.lectureable.should_not be_nil
+      end
+
+      it "saves a lecture" do
+        expect {
+          @lecture.save
+        }.should change(Lecture, :count).by(1)
+      end
+
+      it "saves a lectureable (Page)" do
+        expect {
+          @lecture.save
+        }.should change(Page, :count).by(1)
+      end
+    end
+
+    context "when invalid" do
+      before do
+        @lecture = Lecture.new({ :name => "Name", :subject => @sub,
+                                 "lectureable_attributes" => {"_type" => "Page"}})
+        @lecture.owner = @owner
+      end
+
+      it "builds a lecture within a lectureable" do
+        @lecture.should_not be_nil
+        @lecture.lectureable.should_not be_nil
+      end
+
+      it "validates lectureable" do
+        @lecture.lectureable.should_not be_valid
+      end
+
+      it "does NOT save a lecture" do
+        expect {
+          @lecture.save
+        }.should_not change(Lecture, :count)
+      end
+
+      it "does NOT save a lectureable (Page)" do
+        expect {
+          @lecture.save
+        }.should_not change(Page, :count)
+      end
+    end
+
+
+    context "when building attributes" do
+      before do
+        @alternatives = 3.times.collect { {:text => "Lorem ipsum dolor"} }
+        @alternatives.first[:correct] = true
+        @questions = 3.times.collect do
+          { :statement => "Lorem ipsum dolor sit amet, consectetur?",
+            :explanation => "Lorem ipsum dolor sit amet?",
+            :alternatives_attributes => @alternatives.clone }
+        end
+        @params = { :lecture =>
+                    { :name => "Cool lecture",
+                      :lectureable_attributes =>
+                    { :_type => 'Exercise',
+                      :questions_attributes => @questions }}}
+
+      end
+
+      it "should build the Exercise" do
+        lecture = Lecture.new(@params[:lecture])
+        lecture.should be_valid
+      end
+
+      it "should create the Exercise" do
+        expect {
+          Lecture.create(@params[:lecture]) do |lecture|
+            lecture.owner = @sub.owner
+            lecture.subject = @sub
+          end
+        }.should change(Exercise, :count).by(1)
+      end
+
+      it "should return nil when there is not a _type" do
+        subject.build_lectureable({}).should be_nil
+      end
+
+      it "should return nil when type is blank" do
+        subject.build_lectureable({ :_type => '' }).should be_nil
+      end
+    end
+
+    context "when building one question with an alternative" do
+      before do
+        @lecture = Lecture.new
+        @lecture.build_lectureable(:_type => 'Exercise')
+        @lecture.build_question_and_alternative
+      end
+
+      it "builds a question" do
+        @lecture.lectureable.questions.should_not be_empty
+      end
+
+      it "builds a question within an alternative" do
+        @lecture.lectureable.questions.first.alternatives.should_not be_empty
+      end
+    end
   end
 end

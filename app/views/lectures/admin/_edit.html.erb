@@ -1,24 +1,26 @@
-<div id="<%= lecture.id %>-item-edition" class="clearfix edit-resource">
+<div id="<%= lecture.id %>-item-edition" class="clearfix edit-resource <%= lecture.lectureable.class.to_s.downcase %>">
   <div class="resources-types">
     <div class="resource-numbering">
       <label class="concave-label">Editar aula</label>
       <span class="position"><%= lecture.position %></span>
     </div>
-    <ul>
-      <li class="selected">
-        <span class="option icon-page-lightblue_32_34-before" title="Permite a postagem de conteúdo de leitura rápida como um tutorial ou um texto introdutório.">Página de texto</span>
-      </li>
-    </ul>
-    <span class="explanation">
-      <strong class="type">Página simples:</strong>
-      Permite a postagem de conteúdo de leitura rápida como um tutorial ou um texto introdutório.
-    </span>
+    <% if lecture.lectureable.is_a? Page %>
+      <ul>
+        <li class="selected">
+          <span class="option icon-page-lightblue_32_34-before" title="simples página de texto e imagens que permite a criação de um conteúdo a partir do navegador.">Página de texto</span>
+        </li>
+      </ul>
+      <span class="explanation">
+        <strong class="type">Página simples:</strong> simples página de texto e imagens que permite a criação de um conteúdo a partir do navegador.</span>
+    <% else %> <%# Exercício  %>
+      <ul>
+        <li class="selected">
+          <span class="option icon-exercise-lightblue_32_34-before" title="avaliação de conhecimento em formato de teste com questões de múltipla escolha.">Exercício</span>
+        </li>
+      </ul>
+      <span class="explanation">
+        <strong class="type">Exercício:</strong> avaliação de conhecimento em formato de teste com questões de múltipla escolha.</span>
+    <% end %>
   </div>
-
-  <%= form_for lecture.lectureable, :as => :page,
-    :url => space_subject_lecture_path(@space, @subject, lecture),
-    :remote => :true, :method => :put,
-    :html => { :class => "concave-form page-form" } do |f| %>
-    <%= render 'lectures/admin/page_fields', :f => f, :lecture => lecture%>
-  <% end %>
+  <%= render 'lectures/admin/form', :space => space, :subject => subject, :lecture => lecture %>
 </div>

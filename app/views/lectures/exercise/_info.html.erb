@@ -1,0 +1,61 @@
+<%# Resultados para o exercício. Locals: exercise, can_manage_lecture
+    (booleano), result (nil se não houver)  %>
+<% dom_class_for_result = result ? "done" : "undone" %>
+<div class="exercise-overview <%= dom_class_for_result %>">
+  <span class="exercise-call exercise-name <%= dom_class_for_result %>"><%= exercise.lecture.name %>:</span>
+  <span class="qty-questions <%= dom_class_for_result %>"><%= exercise.info[:questions_count] %></span>
+  <span class="qty-questions-tip">questões (múltipla ecolha)</span>
+  <span class="qty-questions <%= dom_class_for_result %>"><%= exercise.info[:explained_count] %></span>
+  <span class="qty-questions-tip <%= dom_class_for_result %>">questões explicadas</span>
+  <% if result %>
+    <span class="qty-questions right"><%= result.to_report[:hits] %></span>
+    <span class="qty-questions-tip">questões acertadas</span>
+  <% end %>
+</div>
+
+<% if exercise.results.finalized.count > 0 %>
+  <div class="exercise-result">
+    <span class="exercise-call">Quantos já fizeram</span>
+    <span class="qty-users-exercise"><%= exercise.info[:results_count] %></span>
+    <span class="qty-users-tip">pessoas</span>
+    <span class="exercise-call over">Média geral</span>
+    <span class="average"><%= exercise.info[:average_grade].round(2).to_s %></span>
+    <span class="exercise-call over">Tempo médio</span>
+    <span class="average"><%= period_of_time(exercise.info[:average_duration])[:value] %></span>
+    <span class="qty-users-tip"><%= period_of_time(exercise.info[:average_duration])[:unit] %></span>
+  </div>
+
+  <div class="users-exercise">
+    <span class="exercise-call">Recentemente</span>
+    <ul class="list-users-exercise">
+      <% exercise.results.finalized.n_recents(3).includes(:user).each do |result| %>
+        <li>
+          <%= image_tag result.user.avatar(:thumb_32), :size => "32x32", :class => "avatar" %>
+          <%= link_to result.user.display_name, user_path(result.user) %>
+          <span class="qty-list-users-tip"><%= time_ago_in_words(result.finalized_at) %></span>
+        </li>
+      <% end %>
+    </ul>
+
+    <% if can_manage_lecture %>
+      <span class="exercise-call">Melhores notas</span>
+    <% else %>
+      <span class="exercise-call">Compartilhe dúvidas com</span>
+    <% end %>
+    <ol class="list-users-exercise over">
+      <% exercise.results.finalized.n_best_grades(3).includes(:user).each do |result| %>
+        <li>
+          <%= image_tag result.user.avatar(:thumb_32), :size => "32x32", :class => "avatar" %>
+          <%= link_to result.user.display_name, user_path(result.user) %>
+          <% if can_manage_lecture %>
+            <span class="user-grade"><%= result.grade.round(2).to_s %></span>
+          <% end %>
+        </li>
+      <% end %>
+    </ol>
+  </div>
+<% else %>
+  <div class="exercise-clean">
+    <span class="exercise-note">Este exercício ainda não foi resolvido</span>
+  </div>
+<% end %>

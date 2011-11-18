@@ -1,0 +1,26 @@
+<div class="review-score">
+  <span class="exercise-call">Sua pontuação:</span>
+  <ul>
+    <li>
+      <span class="score-type">Acertos</span>
+      <span class="score-value"><%= result.to_report[:hits] %></span>
+    </li>
+    <li>
+      <span class="score-type">Erros</span>
+      <span class="score-value"><%= result.to_report[:misses] %></span>
+    </li>
+    <li>
+      <span class="score-type">Não marcadas</span>
+      <span class="score-value"><%= result.to_report[:blanks] %></span>
+    </li>
+    <li>
+      <span class="score-type">Tempo</span>
+      <span class="score-value"><%= detailed_period_of_time(result.to_report[:duration]) %></span>
+    </li>
+  </ul>
+</div>
+
+<div class="review-grade">
+  <span class="exercise-call">Sua nota:</span>
+  <span class="exercise-grade"><%= result.to_report[:grade].round(2) %></span>
+</div>

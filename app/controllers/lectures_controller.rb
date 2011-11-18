@@ -56,6 +56,8 @@ class LecturesController < BaseController
       paginate(:page => params[:page],:order => 'created_at DESC',
                :per_page => Redu::Application.config.items_per_page)
 
+    @can_manage_lecture = can?(:manage, @lecture)
+
     if current_user.get_association_with(@lecture.subject)
       asset_report = @lecture.asset_reports.of_user(current_user).first
       @student_grade = asset_report.student_profile.grade.to_i
@@ -75,6 +77,13 @@ class LecturesController < BaseController
         format.html do
           render :show_document
         end
+      elsif @lecture.lectureable_type == 'Exercise'
+        format.html do
+          @result = @lecture.lectureable.result_for(current_user)
+          @first_question = @lecture.lectureable.questions.
+            first(:conditions => { :position => 1 })
+          render :show_exercise
+        end
       end
       format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
       format.html
@@ -87,15 +96,11 @@ class LecturesController < BaseController
   # GET /lectures/new.xml
   def new
     @lecture = Lecture.new
-    @type = params.fetch(:type, 'Page')
+    lectureable_params = { :_type => params.fetch(:type, 'Page') }
+    @lecture.build_lectureable(lectureable_params)
 
-    case @type
-    when 'Page'
-      @page = Page.new
-    when 'Seminar'
-      @seminar = Seminar.new
-    when 'Document'
-      @document = Document.new
+    if @lecture.lectureable.is_a? Exercise
+      @lecture.build_question_and_alternative
     end
 
     respond_with(@space, @subject, @lecture) do |format|
@@ -115,49 +120,32 @@ class LecturesController < BaseController
     if params[:lecture_id] # Existent
       @lecture = Lecture.find(params[:lecture_id])
       @lecture = @lecture.clone_for_subject!(params[:subject_id])
-    else
-      @lecture = Lecture.new
-      @lecture.name = params[:name]
+    else # Nova lecture
+      @lecture = Lecture.new(params[:lecture])
       @lecture.owner = current_user
       @lecture.subject = Subject.find(params[:subject_id])
-    end
 
-    if @lecture.name
-      if params[:page]
-        @page = Page.create(params[:page])
-        @lecture.lectureable = @page
-      elsif params[:seminar]
-        @seminar = Seminar.new(params[:seminar])
-        @seminar.lecture = @lecture
-        authorize! :upload_multimedia, @seminar
-        @seminar.save
-      elsif params[:document]
-        @document = Document.new(params[:document])
-        @document.lecture = @lecture
-        authorize! :upload_document, @document
-        @document.save
-      end
-    end
-
-    respond_to do |format|
-      if @lecture.save
-        # verificação e conversão de tipos necessários
-        if @lecture.lectureable_type == 'Seminar'
-          @lecture.lectureable.convert! if @lecture.lectureable.need_transcoding?
-        elsif @lecture.lectureable_type == 'Document'
-          @lecture.lectureable.upload_to_scribd if @lecture.lectureable.need_uploading?
+      if @lecture.valid?
+        lectureable = @lecture.lectureable
+        if lectureable.is_a? Seminar
+          authorize! :upload_multimedia, @lecture
+          lectureable.convert! if lectureable.need_transcoding?
+        elsif lectureable.is_a? Document
+          authorize! :upload_document, @lecture
+          lectureable.upload_to_scribd if lectureable.need_uploading?
         end
 
         @space.course.quota.refresh
         @lecture.published = 1
         @lecture.save
-
-        @quota = @course.quota
-        @plan = @course.plan
-        format.js { render "lectures/admin/create" }
-      else
-        format.js { render 'lectures/admin/create_error'}
       end
+    end
+
+    @quota = @course.quota
+    @plan = @course.plan
+
+    respond_to do |format|
+      format.js { render "lectures/admin/create" }
     end
   end
 
@@ -181,18 +169,13 @@ class LecturesController < BaseController
   # PUT /lectures/1
   # PUT /lectures/1.xml
   def update
-    @lecture = Lecture.find(params[:lecture_id])
-    @lecture.name = params[:name]
-
-   if params[:page]
-     @page = @lecture.lectureable
-      @valid = @page.update_attributes(params[:page]) && @lecture.save
-    end
+    @lecture = Lecture.find(params[:id])
+    params[:lecture][:lectureable_attributes].delete(:_type)
+    @lecture.update_attributes(params[:lecture])
 
     respond_to do |format|
       format.js { render 'lectures/admin/update' }
     end
-
   end
 
   # DELETE /lectures/1

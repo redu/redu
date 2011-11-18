@@ -147,6 +147,9 @@ pt-BR:
         name: "Nome"
         description: "Descrição"
         submission_type: "Tipo de Moderação"
+      question:
+        statement: "Enunciado"
+        explanation: "Justificativa"
       role:
         admin: "Administrador"
         moderator: "Moderador"
@@ -188,10 +191,6 @@ pt-BR:
         taken: "já existente."
         invalid: "inválido."
       models:
-        question:
-          attributes:
-            statement:
-              blank: "Por favor escolha um enunciado maior que 6 caracteres."
         user:
           attributes:
             first_name:
@@ -222,11 +221,6 @@ pt-BR:
               invalid: "inválido."
             localization:
               invalid: "Localização inválida."
-        exam:
-          attributes:
-            name: ": Por favor escolha um título maior que 6 caracteres."
-            questions:
-              invalid: ": Escolha uma alternativa correta em cada questão!"
         space:
           attributes:
             path:
@@ -275,9 +269,6 @@ pt-BR:
       complementary_course:
         create: "+ Adicionar item"
         update: "Salvar item"
-      document:
-        create: "Adicionar"
-        update: "Salvar"
       event_education:
         create: "+ Adicionar item"
         update: "Salvar item"
@@ -290,10 +281,7 @@ pt-BR:
       higher_education:
         create: "+ Adicionar item"
         update: "Salvar item"
-      page:
-        create: "Adicionar"
-        update: "Salvar"
-      seminar:
+      lecture[lectureable_attributes]:
         create: "Adicionar"
         update: "Salvar"
       subject:
