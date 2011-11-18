@@ -424,39 +424,12 @@ class User < ActiveRecord::Base
     # self.activated_at
   end
 
-  def recently_activated?
-    @activated
-  end
-
   def encrypt(password)
     self.class.encrypt(password, self.password_salt)
   end
 
   def authenticated?(password)
     crypted_password == encrypt(password)
-  end
-
-  # FIXME Verificar necessidade (não foi testado)
-  # remember_token_expires_at não existe no BD.
-  def remember_token?
-    remember_token_expires_at && Time.now.utc < remember_token_expires_at
-  end
-
-  # FIXME Verificar necessidade (não foi testado)
-  # remember_token_expires_at e remember_token não existem no BD.
-  # These create and unset the fields required for remembering users between browser closes
-  def remember_me
-    self.remember_token_expires_at = 2.weeks.from_now.utc
-    self.remember_token            = encrypt("#{email}--#{remember_token_expires_at}")
-    save(false)
-  end
-
-  # FIXME Verificar necessidade (não foi testado)
-  # remember_token_expires_at e remember_token não existem no BD.
-  def forget_me
-    self.remember_token_expires_at = nil
-    self.remember_token            = nil
-    save(false)
   end
 
   # FIXME Verificar necessidade (não foi testado)
