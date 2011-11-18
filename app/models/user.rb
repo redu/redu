@@ -6,14 +6,6 @@ class User < ActiveRecord::Base
   MALE    = 'M'
   FEMALE  = 'F'
 
-  LEARNING_ACTIONS = ['answer', 'results', 'show']
-  TEACHING_ACTIONS = ['create']
-
-  SUPPORTED_CURRICULUM_TYPES = [ 'application/pdf', 'application/msword',
-                                 'text/plain', 'application/rtf', 'text/rtf',
-                                 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' # docx
-  ]
-
   # CALLBACKS
   before_create :make_activation_code
   after_create  :update_last_login
@@ -657,16 +649,6 @@ class User < ActiveRecord::Base
 
   def female?
     gender && gender.eql?(FEMALE)
-  end
-
-  # FIXME Não foi testado devido a futura reformulação de Status
-  def learning
-    self.statuses.log_action_eq(LEARNING_ACTIONS).descend_by_created_at
-  end
-
-  # FIXME Não foi testado devido a futura reformulação de Status
-  def teaching
-    self.statuses.log_action_eq(TEACHING_ACTIONS).descend_by_created_at
   end
 
   def home_activity(page = 1)
