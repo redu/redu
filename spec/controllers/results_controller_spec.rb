@@ -6,6 +6,8 @@ describe ResultsController do
   before do
     User.maintain_sessions = false
     @space = Factory(:space)
+    @course = @space.course
+    @owner = @space.owner
     activate_authlogic
 
     @subject = Factory(:subject, :owner => @space.owner,
@@ -71,6 +73,7 @@ describe ResultsController do
 
   context "get index" do
     before do
+      @course.change_role(@user, Role[:teacher])
       @results = 5.times.collect {
         Factory(:result, :exercise => @exercise, :state => 'finalized',
                 :grade => 10, :started_at => Time.zone.now,

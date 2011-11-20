@@ -8,7 +8,7 @@ FactoryGirl.define do
   factory :complete_question, :parent => :question do
     after_create do |q|
       Factory(:alternative, :correct => true, :question => q)
-      Factory(:alternative, :correct => true, :question => q)
+      Factory(:alternative, :correct => false, :question => q)
       Factory(:alternative, :correct => false, :question => q)
     end
   end
