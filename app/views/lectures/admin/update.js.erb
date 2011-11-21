@@ -8,7 +8,6 @@
 
   var $editForm = $("<%= escape_javascript render 'lectures/admin/edit', :lecture => @lecture, :subject => @subject, :space => @space %>");
   $('#<%= @lecture.id %>-item-edition').replaceWith($editForm);
-
 <% else %>
   var $form = $("#<%= @lecture.id %>-item-edition");
   var $editForm = $("<%= escape_javascript render 'lectures/admin/edit', :lecture => @lecture, :subject => @subject, :space => @space %>");

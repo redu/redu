@@ -21,6 +21,30 @@ describe Exercise do
     exercise.make_sense?.should be_true
   end
 
+  it "should not make sense when there are questions marked for destruction" do
+    exercise = Factory(:complete_exercise)
+    questions = exercise.questions
+    mass = { :questions_attributes =>
+             [{:id => questions[0].id, :_destroy => true},
+              {:id => questions[1].id, :_destroy => true},
+              {:id => questions[2].id, :_destroy => true}] }
+
+    exercise.attributes = mass
+    exercise.make_sense?.should_not be_true
+  end
+
+  it "should not make sense when there are alternatives makerd for destruction" do
+    exercise = Factory(:complete_exercise)
+    question = exercise.questions.last
+    alt1, alt2 = question.alternatives[0], question.alternatives[1]
+    mass = { :alternatives_attributes => [
+      { :id => alt1.id, :_destroy => true },
+      { :id => alt2.id, :_destroy => true }] }
+
+    exercise.attributes = { :questions_attributes => [ {:id => question.id}.merge!(mass) ]}
+    exercise.make_sense?.should_not be_true
+  end
+
   it "should not make sense when one question has just one alternative" do
     question = Factory(:complete_question, :exercise => subject)
     question.alternatives[0].destroy

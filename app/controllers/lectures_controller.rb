@@ -174,7 +174,9 @@ class LecturesController < BaseController
     params[:lecture][:lectureable_attributes].delete(:_type)
     @lecture.attributes = params[:lecture]
 
-    @lecture.save if @lecture.make_sense?
+    # Reload necesário pois o form_for estava sendo gerado c/ a alternativa
+    # removida https://github.com/redu/redu/issues/505
+    @lecture.save && @lecture.reload if @lecture.make_sense?
 
     respond_to do |format|
       format.js { render 'lectures/admin/update' }
