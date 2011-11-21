@@ -172,7 +172,9 @@ class LecturesController < BaseController
   def update
     @lecture = Lecture.find(params[:id])
     params[:lecture][:lectureable_attributes].delete(:_type)
-    @lecture.update_attributes(params[:lecture])
+    @lecture.attributes = params[:lecture]
+
+    @lecture.save if @lecture.make_sense?
 
     respond_to do |format|
       format.js { render 'lectures/admin/update' }
