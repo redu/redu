@@ -105,9 +105,18 @@ class Exercise < ActiveRecord::Base
   # Verifica se há pelo menos uma questão e se as questões têm pelo menos
   # duas alternativas
   def make_sense?
-    qs = questions.includes(:alternatives)
-    return false if qs.length == 0
+    qs = questions
+    valid_qs = (questions.length > 0)
+    valid_alts = questions.inject(true) { |acc,q|
+      acc && q.alternatives.length > 1
+    }
 
-    qs.inject(true) { |acc,q| acc && q.alternatives.count > 1 }
+    if valid_qs && valid_alts
+      return true
+    else
+      errors.add(:general, "deve existir no mínimo uma questão e cada " + \
+                 "questão deve possuir pelo menos duas alternativas")
+      return false
+    end
   end
 end

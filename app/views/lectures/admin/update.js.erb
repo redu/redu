@@ -1,4 +1,4 @@
-<% if @lecture.valid? %>
+<% if @lecture.valid? && @lecture.make_sense? %>
   var $lectureItem = $("<%= escape_javascript(render :partial => 'lectures/admin/item_short', :locals => { :item_short => @lecture}) %>");
 
   <% # Insere novo item mantendo a ordem dele na lista %>

@@ -115,6 +115,19 @@ class Lecture < ActiveRecord::Base
     self.lectureable.questions.first.alternatives.build
   end
 
+  def make_sense?
+    if lectureable && lectureable.is_a?(Exercise)
+      unless lectureable.make_sense?
+        errors.add("lectureable.general", lectureable.errors[:general])
+        false
+      else
+        true
+      end
+    else
+      true
+    end
+  end
+
   protected
   def create_asset_report
     student_profiles = StudentProfile.where(:subject_id => self.subject.id)

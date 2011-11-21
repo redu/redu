@@ -254,6 +254,40 @@ describe LecturesController do
       end
     end
 
+    context "POST create invalid (Exercise)" do
+      before do
+        # Apenas uma alternativa por questão
+        @alternatives = 1.times.collect { {:text => "Lorem ipsum dolor"} }
+        @alternatives.first[:correct] = true
+
+        @questions = 3.times.collect do
+          { :statement => "Lorem ipsum dolor sit amet, consectetur?",
+            :explanation => "Lorem ipsum dolor sit amet.",
+            :alternatives_attributes => @alternatives.clone }
+        end
+
+        @params = { :locale => 'pt-BR', :format => 'js', :space_id => @space.id,
+                    :subject_id => @subject.id }
+        @params.merge!(:lecture =>
+                       { :name => "Cool lecture",
+                         :lectureable_attributes =>
+                       { :_type => 'Exercise',
+                         :questions_attributes => @questions }})
+      end
+
+      it "should not create the Exercise" do
+        expect {
+          post :create, @params
+        }.should_not change(Exercise, :count).by(1)
+      end
+
+      it "should validate correctly" do
+        post :create, @params
+        lecture = assigns[:lecture]
+        lecture.lectureable.errors[:general].should_not be_empty
+      end
+    end
+
     context "POST update (Exercise)" do
       subject { Factory(:lecture,
                         :lectureable => Factory(:complete_exercise),

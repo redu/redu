@@ -13,6 +13,7 @@ describe Exercise do
 
   it "should not make sense when there arent questions" do
     subject.make_sense?.should_not be_true
+    subject.errors.get(:general).should_not be_empty
   end
 
   it "should make sense when there are questions" do
