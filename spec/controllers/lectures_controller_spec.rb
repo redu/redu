@@ -316,6 +316,14 @@ describe LecturesController do
         }.should change { subject.lectureable.questions.first.reload.statement }.
           to("new statement")
       end
+
+      it "should remove the alternative when destroy => true is passed" do
+        @params[:lecture][:lectureable_attributes][:questions_attributes].
+          first[:alternatives_attributes].last["_destroy"] = true
+        expect {
+          post :update, @params
+        }.should change(Alternative, :count).by(-1)
+      end
     end
 
     context "POST update" do
