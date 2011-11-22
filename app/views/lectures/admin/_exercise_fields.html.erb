@@ -5,7 +5,7 @@
     <a href="#" class="question-add question-add-top">+ adicionar</a>
   </div>
   <ol class="question-container clearfix">
-    <%= f.nested_fields_for :questions, :render_template => false do |builder| %>
+    <%= f.nested_fields_for :questions, { :new_item_index => 'new_question_item', :render_template => false } do |builder| %>
       <%= render 'lectures/admin/question_fields', :f => builder %>
     <% end %>
   </ol>

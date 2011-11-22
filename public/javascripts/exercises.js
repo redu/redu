@@ -17,6 +17,7 @@ $(function(){
       addSelector: ".question-add",
       removeSelector: ".question-remove",
       itemTemplateSelector: ".question.template",
+      newItemIndex: "new_question_item",
       afterInsert: function(item) {
         // Aplica nestedFields às alternativas da nova questão
         item.find(".nested-fields-level-2").nestedFields({
@@ -25,6 +26,7 @@ $(function(){
           addSelector: ".alternative-add",
           removeSelector: ".alternative-remove",
           itemTemplateSelector: ".alternative.template",
+          newItemIndex: "new_alternative_item",
           afterInsert: function(item) {
             item.refreshForms();
             item.refreshAlternativesNumbering();
@@ -56,6 +58,7 @@ $(function(){
       addSelector: ".alternative-add",
       removeSelector: ".alternative-remove",
       itemTemplateSelector: ".alternative.template",
+      newItemIndex: "new_alternative_item",
       afterInsert: function(item) {
         item.refreshForms();
         item.refreshAlternativesNumbering();

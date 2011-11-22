@@ -22,10 +22,9 @@
 
     <div class="nested-fields-level-2 clearfix">
       <ol class="alternative-container">
-        <%= f.nested_fields_for :alternatives, :render_template => false do |builder| %>
+        <%= f.nested_fields_for :alternatives, { :new_item_index => 'new_alternative_item' } do |builder| %>
           <%= render 'lectures/admin/alternative_fields', :f => builder %>
         <% end %>
-        <%= nested_fields_templates %>
       </ol>
       <div class="simple-actions">
         <a href="#" class="question-remove">excluir questão</a>
