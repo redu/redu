@@ -28,7 +28,7 @@
 
   // Alterna entre o formulário de Youtube e Upload (new Seminar)
   $.fn.refreshFormUpload = function(){
-    $("#seminar_external_resource_type_youtube, #seminar_external_resource_type_upload").change(function(){
+    $("#lecture_lectureable_attributes_external_resource_type_youtube, #lecture_lectureable_attributes_external_resource_type_upload").change(function(){
       $('#youtube_preview, #upload_resource_field, #external_resource_field').toggle();
     });
   }
@@ -67,16 +67,22 @@
 
   // Ação do botão cancelar (criação de recurso)
   $("#space-manage .new-resource .concave-form .cancel-lecture").live("click", function(e){
-    $(this).parents("#lecture_form").slideUp();
-    $("#space-manage .new-resource .resources-types li").removeClass("selected");
+    var answer = confirm("As informações inseridas serão perdidas. Deseja continuar?")
+    if(answer == true){
+      $(this).parents('.new-resource .resource-form').slideUp();
+      $("#space-manage .new-resource .resources-types li").removeClass("selected");
+    }
     e.preventDefault();
   });
 
   // Ação do botão cancelar (edição de recurso)
   $("#space-manage .edit-resource .concave-form .cancel-lecture").live("click", function(e){
-    $(this).parents(".edit-resource").slideUp();
-    var itemId = $(this).parent().parent().attr("id").split("-edition")[0];
-    $("#" + itemId).toggleClass("editing");
+    var answer = confirm("As informações modificadas serão perdidas. Deseja continuar?")
+    if(answer == true){
+      $(this).parents(".edit-resource").slideUp();
+      var itemId = $(this).parent().parent().attr("id").split("-edition")[0];
+      $("#" + itemId).toggleClass("editing");
+    }
     e.preventDefault();
   });
 
@@ -84,7 +90,9 @@
   $("#space-manage .resources > li .edit").live("click", function(e){
     var $item = $(this).parent();
     $item.toggleClass("editing");
-    $("#" + $item.attr("id") + "-edition").slideToggle();
+    var $editionItem = $("#" + $item.attr("id") + "-edition");
+    $editionItem.slideToggle();
+    $editionItem.find(".question-item:first-child").refreshQuestionsNumbering();
     e.preventDefault();
   });
 
@@ -93,7 +101,7 @@
     var $resources = $(this).find("> li:not(.no-lectures)");
     var qttResources = $resources.length;
     // Atualiza número da próxima aula a ser criada
-    $("#lectures_types").find(".position").text(qttResources + 1);
+    $("#lectures_types .resources-types").find(".position").text(qttResources + 1);
 
     if(qttResources > 0){
       $(this).find("> li.no-lectures").remove();
@@ -101,8 +109,8 @@
       $resources.each(function(index){
         newPosition = (index + 1);
         $(this).find(".position").text(newPosition + ".");
-        formId = "#" + $(this).attr("id") + "-edition";
-        $(formId).find(".position").text(newPosition);
+        itemId = "#" + $(this).attr("id") + "-edition";
+        $(formId + ".resource-numbering .position").text(newPosition);
       });
     }else{
       $(this).html($("<li/>", { "class" : "no-lectures", "text" : "Nenhuma aula foi adicionada ainda."}))
@@ -111,7 +119,7 @@
 
   // Pede confirmação do usuário para finalizar o módulo
   $("#subject_submit").live("click", function(e){
-    var $openForms = $("form:not(:hidden):not([class~='new-subject'])");
+    var $openForms = $("form:visible:not([class~='new-subject'])");
     if($openForms.length > 0){
       var answer = confirm("As aulas que não foram adicionadas e/ou salvas serão perdidas. Deseja continuar?")
       if(answer == true){
@@ -123,13 +131,19 @@
     e.preventDefault();
   });
 
+  // Faz o cursor ser uma mão ao arrastar aulas para ordenar
+  $(".ui-sortable").live("mousedown mouseup", function(){
+    $(this).toggleClass("grabbing");
+  });
+
   $(document).ready(function(){
     $(document).refreshRoleTable();
     $(document).refreshFormUpload();
-
+    $(document).refreshNestedFieldsEdition();
     $(document).ajaxComplete(function(){
       $(document).refreshRoleTable();
       $(document).refreshFormUpload();
+      $(document).refreshNestedFieldsEdition();
     });
   });
 })(jQuery);

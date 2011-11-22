@@ -42,14 +42,16 @@ gem 'actionmailer_inline_css',
   :branch => 'master'
 gem "acts_as_tree", "~> 0.1.1"
 gem 'exceptional'
+gem 'awesome_nested_fields'
 
 # Gems específicos de algum ambiente
 group :development, :test do
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 2.6'
   gem 'shoulda-matchers'
   gem 'ruby-debug'
   gem 'jasmine'
   gem 'no_peeping_toms', :git => 'git://github.com/alindeman/no_peeping_toms.git'
+  gem 'rails3-generators'
 end
 
 group :development do

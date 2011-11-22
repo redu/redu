@@ -1,0 +1,57 @@
+<%= render :partial => 'lectures/javascripts' %>
+<%= render :partial => 'subjects/sidebar' %>
+<div class="main space grid_12 omega big-col">
+  <%= render :partial => "subjects/breadcrumbs", :locals => { :subject => @subject } %>
+  <%= render :partial => 'subjects/header',
+    :locals => { :subject => @subject, :space => @space } %>
+
+  <div id="resource" class="hierarchy-listing-wrapper">
+    <div class="resource-head">
+      <%= render :partial => 'lectures/info',
+        :locals => { :lecture => @lecture } %>
+      <%= render :partial => 'lectures/context',
+        :locals => { :student_grade => @student_grade, :done => @done } %>
+    </div>
+
+    <div class="resource-content clearfix">
+      <%= render :partial => 'lectures/details',
+        :locals => { :lecture => @lecture} %>
+      <div class="stage exercise">
+        <form action="action" method="post" accept-charset="utf-8" >
+          <%= render :partial => "lectures/exercise_navigation" %>
+          <div class="question">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ac lectus sapien. Cras vulputate turpis sed arcu tincidunt tincidunt congue elit egestas. Morbi facilisis blandit sem et porttitor. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Quisque semper orci ultrices neque bibendum sit amet varius arcu dictum. In quis ligula sit amet erat pulvinar viverra. Duis fringilla fringilla facilisis? </p>
+          </div>
+
+          <div class="alternatives">
+            <ol class="">
+              <li>
+                <span class="choice">a:</span>
+                <input type="radio" name="exercise" value="true" />
+                <p>Vivamus fermentum adipiscing gravida. Duis et diam magna. Curabitur at diam non metus congue semper. Phasellus laoreet ligula at urna dictum eu feugiat diam lobortis. Praesent leo libero, mattis in condimentum non, sodales eu neque. In hac habitass. </p>
+              </li>
+              <li class="odd">
+                <span class="choice">b:</span>
+                <input type="radio" name="exercise" value="true" />
+                <p>Vivamus fermentum adipiscing gravida. Duis et diam magna. Curabitur at diam non metus congue semper. Phasellus laoreet ligula at urna dictum eu feugiat diam lobortis. Praesent leo libero, mattis in condimentum non, sodales eu neque. In hac habitass. </p>
+              </li>
+              <li>
+                <span class="choice">c:</span>
+                <input type="radio" name="exercise" value="true" />
+                <p>Vivamus fermentum adipiscing gravida. Duis et diam magna. Curabitur at diam non metus congue semper. Phasellus laoreet ligula at urna dictum eu feugiat diam lobortis. Praesent leo libero, mattis in condimentum non, sodales eu neque. In hac habitass. </p>
+              </li>
+              <li class="odd">
+                <span class="choice">d:</span>
+                <input type="radio" name="exercise" value="true" />
+                <p>Vivamus fermentum adipiscing gravida. Duis et diam magna. Curabitur at diam non metus congue semper.</p>
+              </li>
+            </ol>
+          </div>
+          </form>
+
+      </div>
+    </div>
+
+  </div><!-- end #resource -->
+
+</div><!-- end .main -->

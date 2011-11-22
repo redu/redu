@@ -1,0 +1,25 @@
+<div class="question">
+  <p><%= question.statement %></p>
+</div>
+
+<% if review %>
+  <div class="justification">
+    <span class="call">Justificativa:</span>
+    <p><%= question.explanation || "Não há" %></p>
+  </div>
+  <div class="alternatives review">
+    <ol>
+      <% question.alternatives.each_with_index do |alternative, index| %>
+        <%= render 'alternatives/answered', :index => index, :alternative => alternative, :choosed => choice.alternative %>
+      <% end %>
+    </ol>
+  </div>
+<% else %>
+  <div class="alternatives">
+    <ol>
+      <% question.alternatives.each_with_index do |alternative, index| %>
+        <%= render 'alternatives/item', :f => f, :index => index, :alternative => alternative %>
+      <% end %>
+    </ol>
+  </div>
+<% end %>

@@ -970,4 +970,184 @@ describe Ability do
       end
     end
   end
+
+  context "on Result" do
+    before do
+      @space = Factory(:space)
+      @subject = Factory(:subject, :owner => @space.owner,
+                         :space => @space, :finalized => true,
+                         :visible => true)
+      @lecture = Factory(:lecture, :subject => @subject, :owner => @space.owner,
+                         :lectureable => Factory(:complete_exercise))
+      @exercise = @lecture.lectureable
+
+      @member = Factory(:user)
+      @other_member = Factory(:user)
+      @teacher = Factory(:user)
+      @tutor = Factory(:user)
+      @external = Factory(:user)
+
+      @space.course.join(@member)
+      @space.course.join(@other_member)
+      @space.course.join(@teacher, Role[:teacher])
+      @space.course.join(@tutor, Role[:tutor])
+    end
+
+    context "when teacher" do
+      let(:ability) { Ability.new(@teacher) }
+      let(:result) { @exercise.start_for(@member) }
+
+      it "should be able to manage members results" do
+        ability.should be_able_to(:manage, result)
+      end
+
+      it "should not be able to manage results from another space" do
+        space = Factory(:space)
+        subj = Factory(:subject, :owner => space.owner,
+                       :space => space, :finalized => true,
+                       :visible => true)
+        lecture = Factory(:lecture, :subject => subj, :owner => space.owner,
+                          :lectureable => Factory(:complete_exercise))
+        exercise = lecture.lectureable
+        space.course.join(@member)
+        new_result = exercise.start_for(@member)
+
+        ability.should_not be_able_to(:manage, new_result)
+      end
+    end
+
+    context "when member" do
+      let(:ability) { Ability.new(@member) }
+      let(:own_result) { @exercise.start_for(@member) }
+      let(:other_result) { @exercise.start_for(@other_member) }
+
+      it "should be able to read own result" do
+        ability.should be_able_to(:read, own_result)
+      end
+
+      it "should be able to create" do
+        ability.should be_able_to(:create, Result)
+      end
+
+      it "should be able to update" do
+        ability.should be_able_to(:update, own_result)
+      end
+
+      it "should not be able to update if finalized" do
+        @exercise.start_for(@member)
+        result = @exercise.finalize_for(@member)
+        ability.should_not be_able_to(:update, result)
+      end
+
+      it "should not be able to update a strange result" do
+        ability.should_not be_able_to(:update, other_result)
+      end
+
+      it "should not be able to read a strange result" do
+        ability.should_not be_able_to(:read, other_result)
+      end
+
+      it "should not be able to read the another member result" do
+        ability.should_not be_able_to(:read, other_result)
+      end
+    end
+
+    context "when strange" do
+      let(:ability) { Ability.new(@strange) }
+      let(:member_result) { @exercise.start_for(@member) }
+
+      it "should not be able to read" do
+        ability.should_not be_able_to(:read, member_result)
+      end
+    end
+  end
+
+  context "on Question" do
+   before do
+      @space = Factory(:space)
+      @subject = Factory(:subject, :owner => @space.owner,
+                         :space => @space, :finalized => true,
+                         :visible => true)
+      @lecture = Factory(:lecture, :subject => @subject, :owner => @space.owner,
+                         :lectureable => Factory(:complete_exercise))
+      @exercise = @lecture.lectureable
+      @questions = @exercise.questions
+
+      @member = Factory(:user)
+      @other_member = Factory(:user)
+      @teacher = Factory(:user)
+      @tutor = Factory(:user)
+      @external = Factory(:user)
+
+      @space.course.join(@member)
+      @space.course.join(@other_member)
+      @space.course.join(@teacher, Role[:teacher])
+      @space.course.join(@tutor, Role[:tutor])
+    end
+
+    context "when member" do
+      let(:ability) { Ability.new(@member) }
+      it "should be able to read" do
+        ability.should be_able_to(:read, @questions.first)
+      end
+    end
+
+    context "when teacher" do
+      let(:ability) { Ability.new(@teacher) }
+      it "should be able to read" do
+        ability.should be_able_to(:read, @questions.first)
+      end
+    end
+
+    context "when strange" do
+      let(:ability) { Ability.new(@strange) }
+
+      it "should not be able to read" do
+        ability.should_not be_able_to(:read, @questions.first)
+      end
+    end
+  end
+
+  context "on Exercise" do
+   before do
+      @space = Factory(:space)
+      @subject = Factory(:subject, :owner => @space.owner,
+                         :space => @space, :finalized => true,
+                         :visible => true)
+      @lecture = Factory(:lecture, :subject => @subject, :owner => @space.owner,
+                         :lectureable => Factory(:complete_exercise))
+      @exercise = @lecture.lectureable
+      @questions = @exercise.questions
+
+      @member = Factory(:user)
+      @other_member = Factory(:user)
+      @teacher = Factory(:user)
+      @tutor = Factory(:user)
+      @external = Factory(:user)
+
+      @space.course.join(@member)
+      @space.course.join(@other_member)
+      @space.course.join(@teacher, Role[:teacher])
+      @space.course.join(@tutor, Role[:tutor])
+    end
+
+   context "when teacher" do
+     let(:ability) { Ability.new(@teacher) }
+     it "should not be able to update if there are finalized results" do
+       @exercise.start_for(@member)
+       @exercise.finalize_for(@member)
+       ability.should_not be_able_to(:manage, @exercise)
+     end
+
+     it "should be able to update if there arent finalized results" do
+       @exercise.start_for(@member)
+       ability.should be_able_to(:manage, @lecture)
+     end
+
+     it "should be able to update if there arent results at all" do
+       ability.should be_able_to(:manage, @lecture)
+     end
+   end
+  end
+
 end

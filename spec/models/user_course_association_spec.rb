@@ -179,4 +179,34 @@ describe UserCourseAssociation do
       UserCourseAssociation.has_invitation_for?(subject.user).should be_true
     end
   end
+
+  context "when notifying pending moderation" do
+    before do
+      UserNotifier.delivery_method = :test
+      UserNotifier.perform_deliveries = true
+      UserNotifier.deliveries = []
+
+      @course = Factory(:course)
+      @ucas = 3.times.collect {
+        Factory(:user_course_association, :course => @course,
+                :role => :environment_admin, :state => 'approved')
+      }
+
+      @new_uca = Factory(:user_course_association, :course => @course, :role => :member)
+    end
+
+    it "should send email notifications" do
+      expect {
+        @new_uca.notify_pending_moderation
+      }.should change(UserNotifier.deliveries, :count).by(4) # os 3 mais owner
+    end
+
+    it "should send email notifications with correct content" do
+      @new_uca.notify_pending_moderation
+
+      UserNotifier.deliveries.each do |message|
+        message.text_part.to_s.should =~ /#{@new_uca.user.email}/
+      end
+    end
+  end
 end

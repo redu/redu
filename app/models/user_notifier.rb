@@ -219,11 +219,11 @@ class UserNotifier < ActionMailer::Base
   end
 
   # Pedido de participação num Course
-  def course_moderation_requested(course, user)
+  def course_moderation_requested(course, admin, user)
     @course, @user = course, user
     @environment = @course.environment
 
-    mail(:to => @user.email,
+    mail(:to => admin.email,
          :subject => "Moderação pendente em #{@course.name}") do |format|
       format.html
     end
