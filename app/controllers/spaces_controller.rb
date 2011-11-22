@@ -88,11 +88,6 @@ class SpacesController < BaseController
     end
   end
 
-  def cancel
-    @course = Course.find(params[:course_id])
-    redirect_to(environment_course_path(@course.environment, @course))
-  end
-
   # GET /spaces/new
   # GET /spaces/new.xml
   def new
@@ -172,20 +167,6 @@ class SpacesController < BaseController
       format.html { redirect_to(environment_course_path(@space.course.environment, @space.course)) }
       format.xml  { head :ok }
     end
-  end
-
-  def publish
-
-    @space.publish!
-
-    flash[:notice] = "O space #{@space.name} foi publicado."
-    redirect_to space_path(@space)
-  end
-
-  def unpublish
-    @space.unpublish!
-    flash[:notice] = "O space #{@space.name} foi despublicado."
-    redirect_to space_path(@space)
   end
 
   # Utilizado pelo endless do sidebar
