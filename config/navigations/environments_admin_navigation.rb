@@ -23,7 +23,7 @@ SimpleNavigation::Configuration.run do |navigation|
                                          'courses' => ['new', 'create']}),
         :class => 'ui-state-default',
         :link => { :class => "icon-course_16_18-before" },
-        :details => { :text => 'Novo', :class => 'details',
+        :details => { :text => 'novo', :class => 'details',
           :if => action_matcher({'courses' => ['new', 'create']})}
       tabs.item :members, 'Membros', admin_members_environment_path(@header_environment || @environment),
         :highlights_on => action_matcher({'environments' => ['admin_members'],
