@@ -22,7 +22,7 @@ class Exercise < ActiveRecord::Base
   has_many :questions, :dependent => :destroy
   has_many :results, :dependent => :destroy
   has_many :explained_questions,
-    :conditions => 'questions.explanation IS NOT NULL',
+    :conditions => "questions.explanation != '' ",
     :class_name => 'Question', :foreign_key => :exercise_id
   has_one :lecture, :as => :lectureable
 
