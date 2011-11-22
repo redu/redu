@@ -1106,6 +1106,48 @@ describe Ability do
         ability.should_not be_able_to(:read, @questions.first)
       end
     end
-
   end
+
+  context "on Exercise" do
+   before do
+      @space = Factory(:space)
+      @subject = Factory(:subject, :owner => @space.owner,
+                         :space => @space, :finalized => true,
+                         :visible => true)
+      @lecture = Factory(:lecture, :subject => @subject, :owner => @space.owner,
+                         :lectureable => Factory(:complete_exercise))
+      @exercise = @lecture.lectureable
+      @questions = @exercise.questions
+
+      @member = Factory(:user)
+      @other_member = Factory(:user)
+      @teacher = Factory(:user)
+      @tutor = Factory(:user)
+      @external = Factory(:user)
+
+      @space.course.join(@member)
+      @space.course.join(@other_member)
+      @space.course.join(@teacher, Role[:teacher])
+      @space.course.join(@tutor, Role[:tutor])
+    end
+
+   context "when teacher" do
+     let(:ability) { Ability.new(@teacher) }
+     it "should not be able to update if there are finalized results" do
+       @exercise.start_for(@member)
+       @exercise.finalize_for(@member)
+       ability.should_not be_able_to(:manage, @exercise)
+     end
+
+     it "should be able to update if there arent finalized results" do
+       @exercise.start_for(@member)
+       ability.should be_able_to(:manage, @lecture)
+     end
+
+     it "should be able to update if there arent results at all" do
+       ability.should be_able_to(:manage, @lecture)
+     end
+   end
+  end
+
 end

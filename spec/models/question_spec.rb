@@ -14,7 +14,7 @@ describe Question do
     subject { Factory(:complete_question) }
     let(:alternatives) { subject.alternatives }
 
-    it "should validate even with mass assignment" do
+    it "should validate when more than 2 correct" do
       mass = alternatives.collect(&:attributes).collect { |a|
         a["correct"] = true
         a

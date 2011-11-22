@@ -310,7 +310,7 @@ describe LecturesController do
                          :questions_attributes => @questions }})
       end
 
-      it "creates the lecture" do
+      it "updates the lecture" do
         expect {
           post :update, @params
         }.should change { subject.lectureable.questions.first.reload.statement }.

@@ -209,7 +209,7 @@ class User < ActiveRecord::Base
     when 'Subject'
       self.teacher?(entity.space) || self.can_manage?(entity.space)
     when 'Lecture'
-      self.teacher?(entity.subject.space) || self.can_manage?(entity.subject)
+      teacher?(entity.subject.space) || can_manage?(entity.subject)
     when 'Exam'
       self.teacher?(entity.subject.space) || self.can_manage?(entity.space)
     when 'Folder'
@@ -257,7 +257,7 @@ class User < ActiveRecord::Base
     when 'Result'
       self.can_manage?(entity.exercise)
     when 'Exercise'
-      self.can_manage?(entity.lecture)
+      self.can_manage?(entity.lecture) && !entity.has_results?
     end
   end
 

@@ -1,16 +1,16 @@
 class UniqueTruthValidator < ActiveModel::EachValidator
   def validate_each(record,attribute,value)
     alts = record.alternatives
-    if alts.length > 1 && more_than_one_correct?(alts)
-      record.errors[attribute] << "só pode existir uma alternativa correta"
+    if alts.length > 1 && !exactly_one_correct?(alts)
+      record.errors[attribute] << "deve existir uma alternativa correta"
     end
   end
 
   protected
 
-  def more_than_one_correct?(value)
+  def exactly_one_correct?(value)
     remain_values = value.reject(&:marked_for_destruction?)
-    remain_values.select(&:correct?).length > 1
+    remain_values.select(&:correct?).length == 1
   end
 end
 

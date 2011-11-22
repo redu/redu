@@ -175,8 +175,13 @@ class LecturesController < BaseController
     @lecture.attributes = params[:lecture]
 
     # Reload necesário pois o form_for estava sendo gerado c/ a alternativa
-    # removida https://github.com/redu/redu/issues/505
-    @lecture.save && @lecture.reload if @lecture.make_sense?
+    # removida sem atualicação de refs https://github.com/redu/redu/issues/505
+    if @lecture.lectureable.is_a?(Exercise)
+      authorize!(:manage, @lecture.lectureable)
+      @lecture.save && @lecture.reload if @lecture.lectureable.make_sense?
+    else
+      @lecture.save
+    end
 
     respond_to do |format|
       format.js { render 'lectures/admin/update' }
