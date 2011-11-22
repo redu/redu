@@ -85,8 +85,8 @@ class UserCourseAssociation < ActiveRecord::Base
 
   # Notifica adimistradores do curso a respeito de moderações pendentes
   def notify_pending_moderation
-    self.course.administrators.each do |u|
-      UserNotifier.course_moderation_requested(self.course, u).deliver
+    self.course.administrators.each do |admin|
+      UserNotifier.course_moderation_requested(course, admin, user).deliver
     end
   end
 
