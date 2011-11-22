@@ -580,9 +580,9 @@
 }
 
 .icon-exercise-blue_16_18,
-.icon-exercise-lightblue_16_18{ background-position: -160px -1200px; }
+.icon-exercise-lightblue_16_18:hover { background-position: -160px -1200px; }
 .icon-exercise-blue_16_18-before:before,
-.icon-exercise-lightblue_16_18-before:before {
+.icon-exercise-lightblue_16_18-before:hover:before {
   content: "";
   width: 16px;
   height: 18px;
