@@ -41,7 +41,8 @@ describe Exercise do
       { :id => alt1.id, :_destroy => true },
       { :id => alt2.id, :_destroy => true }] }
 
-    exercise.attributes = { :questions_attributes => [ {:id => question.id}.merge!(mass) ]}
+    exercise.attributes = { :questions_attributes =>
+                            [ {:id => question.id}.merge!(mass) ]}
     exercise.make_sense?.should_not be_true
   end
 

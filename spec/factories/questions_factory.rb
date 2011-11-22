@@ -10,6 +10,7 @@ FactoryGirl.define do
       Factory(:alternative, :correct => true, :question => q)
       Factory(:alternative, :correct => false, :question => q)
       Factory(:alternative, :correct => false, :question => q)
+      q.alternatives.reload
     end
   end
 end

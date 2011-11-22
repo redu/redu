@@ -1,3 +1,19 @@
+class UniqueTruthValidator < ActiveModel::EachValidator
+  def validate_each(record,attribute,value)
+    alts = record.alternatives
+    if alts.length > 1 && more_than_one_correct?(alts)
+      record.errors[attribute] << "só pode existir uma alternativa correta"
+    end
+  end
+
+  protected
+
+  def more_than_one_correct?(value)
+    remain_values = value.reject(&:marked_for_destruction?)
+    remain_values.select(&:correct?).length > 1
+  end
+end
+
 class Question < ActiveRecord::Base
   belongs_to :exercise
   has_many :alternatives, :dependent => :destroy
@@ -6,6 +22,7 @@ class Question < ActiveRecord::Base
     :foreign_key => :question_id, :conditions => { :correct => true }
 
   validates_presence_of :statement
+  validates :alternatives, :unique_truth => true
 
   sortable :scope => :exercise_id
 

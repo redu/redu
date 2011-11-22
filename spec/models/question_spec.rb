@@ -10,6 +10,21 @@ describe Question do
   it { should have_many(:choices).dependent(:destroy) }
   it { should accept_nested_attributes_for(:alternatives) }
 
+  context "when validating uniqueness of correct alternative" do
+    subject { Factory(:complete_question) }
+    let(:alternatives) { subject.alternatives }
+
+    it "should validate even with mass assignment" do
+      mass = alternatives.collect(&:attributes).collect { |a|
+        a["correct"] = true
+        a
+      }
+      subject.attributes = { :alternatives_attributes => mass }
+      subject.should_not be_valid
+      subject.errors[:alternatives].should_not be_empty
+    end
+  end
+
   context "sortable" do
     before do
       subject.exercise = Factory(:exercise)
