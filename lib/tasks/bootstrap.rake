@@ -52,19 +52,6 @@ namespace :bootstrap do
     theuser.create_settings!
   end
 
-  desc "Insert default categories"
-  task :simple_categories => :environment do
-    SimpleCategory.delete_all
-
-    categories = ['Arts / Design / Animation', 'Beauty / Fashion', 'Business / Economics / Law', 'Cars / Bikes', 'Health / Wellness / Relationships', 'Hobbies / Gaming',
-                  'Home / Gardening', 'Languages', 'Music', 'Nutrition / Food / Drinks', 'Online Marketing', 'Religion / Philosophy', 'Science / Technology / Engineering',
-                  'Society / History / Politics', 'Sports', 'Other']
-
-    categories.each do |category|
-      SimpleCategory.create(:name => category)
-    end
-  end
-
   desc "Insert audiences"
   task :audiences => :environment do
     Audience.create(:name => "Ensino Superior")
@@ -85,6 +72,6 @@ namespace :bootstrap do
 
   desc "Run all bootstrapping tasks"
   task :all => [:roles, :privacies, :audiences,
-                :simple_categories, :default_user, :default_admin,
+                :default_user, :default_admin,
                 :partner]
 end
