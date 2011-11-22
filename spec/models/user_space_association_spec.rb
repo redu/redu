@@ -23,18 +23,4 @@ describe UserSpaceAssociation do
           user2.user_space_associations.last]
     end
   end
-
-  context "callbacks" do
-    it "increments members count after create" do
-      space = Factory(:space)
-      expect {
-       Factory(:user_space_association, :space => space)
-      }.should change(space, :members_count).by(1)
-    end
-    it "decrements members count before destroy" do
-      expect {
-        subject.destroy
-      }.should change(subject.space, :members_count).by(-1)
-    end
-  end
 end

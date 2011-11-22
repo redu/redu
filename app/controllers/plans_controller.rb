@@ -1,5 +1,4 @@
 class PlansController < BaseController
-  layout "application"
 
   before_filter :find_course_environment, :except => :index
 

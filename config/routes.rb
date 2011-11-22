@@ -62,12 +62,7 @@ Redu::Application.routes.draw do
       end
     end
 
-    resources :subjects, :except => [:index] do
-      member do
-        get :admin_lectures_order
-        post :admin_lectures_order
-      end
-
+    resources :subjects, :except => [:show, :index] do
       resources :lectures do
         member do
           post :rate
