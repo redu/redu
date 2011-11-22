@@ -90,28 +90,7 @@ class SubjectsController < BaseController
     end
     redirect_to space_path(@subject.space)
   end
-
-  #FIXME evitar usar GET e POST no mesmo action
-  def admin_lectures_order
-    unless request.post?
-      respond_to do |format|
-        format.html do
-          render :admin_lectures_order and return
-        end
-      end
-    end
-
-    lectures_ordered = params[:lectures_ordered].split(",")
-    @subject.change_lectures_order!(lectures_ordered)
-
-    flash[:notice] = "A ordem das aulas foi atualizada."
-    respond_to do |format|
-      format.html do
-        redirect_to admin_lectures_order_space_subject_path(@space, @subject)
-      end
-    end
-  end
-
+  
   protected
 
   def load_course_and_environment

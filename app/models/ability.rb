@@ -52,7 +52,7 @@ class Ability
     alias_action :delete_selected, :to => :manage
 
     # Subject
-    alias_action :cancel, :admin_lectures_order, :to => :manage
+    alias_action :cancel, :to => :manage
     alias_action :statuses, :mural, :to => :read
 
     # Presence

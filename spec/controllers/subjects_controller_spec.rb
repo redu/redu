@@ -165,36 +165,4 @@ describe SubjectsController do
       response.should redirect_to(space_path(@subject.space))
     end
   end
-
-  context "GET 'admin_lectures_order'" do
-    before do
-      @subject = Factory(:subject, :owner => @subject_owner,
-                         :space => @space, :finalized => true)
-    end
-    it "assigns the subject" do
-      get :admin_lectures_order, :locale => "pt-BR", :id => @subject.id,
-             :space_id => @space.id
-      assigns[:subject].should == @subject
-    end
-  end
-
-  context "POST 'admin_lectures_order'" do
-    before do
-      @subject = Factory(:subject, :owner => @subject_owner,
-                         :space => @space,
-                         :finalized => true)
-      lecture = Factory(:lecture, :owner => @user, :subject => @subject)
-      post :admin_lectures_order, :locale => "pt-BR", :id => @subject.id,
-        :space_id => @space.id,
-        :lectures_ordered => "#{lecture.id}-lecture"
-    end
-
-    it "assigns the subject" do
-      assigns[:subject].should == @subject
-    end
-
-    it "redirects to GET admin_lectures_order" do
-      response.should redirect_to(admin_lectures_order_space_subject_path(@space, @subject))
-    end
-  end
 end
