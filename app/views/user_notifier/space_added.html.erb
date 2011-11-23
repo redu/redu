@@ -12,7 +12,7 @@
       <td><%= @environment.initials_or_name %></td>
     </tr>
     <tr>
-      <td><%= link_to @space.name, space_url(@space) %></td>
+      <td><%= link_to(@course.name, environment_course_url(@environment, @course)) %></td>
     </tr>
   </table>
   <table class="action">

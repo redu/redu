@@ -1276,7 +1276,6 @@ body {
   color: #b3b2b3;
 }
 
-
 .body #users-list.members {
   width: 666px;
   margin: auto;
@@ -3596,10 +3595,11 @@ a.clean:hover {
 }
 
 .big-tabs > .panel {
-
   border: 1px solid rgb(179, 179, 179);
   padding: 40px 60px;
   background-color: white;
+  overflow: hidden;
+  float: left;
 }
 
 .borderradius .big-tabs > .panel {
