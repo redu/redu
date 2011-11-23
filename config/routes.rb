@@ -62,7 +62,7 @@ Redu::Application.routes.draw do
       end
     end
 
-    resources :subjects, :except => [:show, :index] do
+    resources :subjects, :except => [:index] do
       resources :lectures do
         member do
           post :rate
@@ -221,7 +221,7 @@ Redu::Application.routes.draw do
 
   root :to => 'base#site_index', :as => :home
   root :to => "base#site_index", :as => :application
-  
+
 end
 
 ActionDispatch::Routing::Translator.translate_from_file('lang','i18n-routes.yml')
