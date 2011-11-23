@@ -344,6 +344,15 @@ describe User do
 
       vader.friends_of_friends.should == [yoda]
     end
+
+    it "should retrieves all recipients passing a set of reccipients ids " do
+      vader = Factory(:user, :login => "vader")
+      luke = Factory(:user, :login => "luke_skywalker")
+      leia = Factory(:user, :login => "princess_leia")
+      han_solo = Factory(:user, :login => "han_solo")
+
+      User.message_recipients([vader.id, luke.id]).should == [vader, luke]
+    end
   end
 
   context "callbacks" do

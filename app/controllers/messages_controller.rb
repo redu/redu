@@ -46,6 +46,9 @@ class MessagesController < BaseController
       in_reply_to = Message.find_by_id(params[:reply_to])
     end
     @message = Message.new_reply(@user, in_reply_to, params)
+    if params[:message_to] and params[:message_to].length > 0
+      @recipients = @user.friends.message_recipients(params[:message_to])
+    end
 
     respond_to do |format|
       format.html

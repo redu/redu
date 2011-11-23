@@ -107,6 +107,9 @@ class User < ActiveRecord::Base
           " OR friendships.status = 'pending'" \
           " OR friendships.status = 'requested'")
 
+  scope :message_recipients, lambda { |recipients_ids| select("users.id, users.first_name").
+    where("users.id IN (?)", recipients_ids) }
+
   attr_accessor :email_confirmation
 
   # Accessors

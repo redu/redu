@@ -335,7 +335,7 @@ class UsersController < BaseController
     elsif params[:tag] # Usado em messages: somente amigos
       @users = current_user.friends.with_keyword(params[:tag])
       @users = @users.map do |u|
-        {:key => "<img src=\"#{ u.avatar(:thumb_32) }\"/> #{ u.first_name }", :value => u.id}
+        {:key => "<img src=\"#{ u.avatar(:thumb_32) }\"/> #{ u.display_name }", :value => u.id}
       end
     end
 
