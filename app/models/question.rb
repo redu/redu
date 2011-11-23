@@ -26,7 +26,9 @@ class Question < ActiveRecord::Base
 
   sortable :scope => :exercise_id
 
-  accepts_nested_attributes_for :alternatives, :allow_destroy => true
+  accepts_nested_attributes_for :alternatives, :allow_destroy => true,
+    :reject_if => Proc.new {|attrs| attrs['text'].blank? &&
+                            attrs['correct'] == "0" }
 
   # Cria uma instância de Choice com o usuário e a alternativa especificada
   def choose_alternative(alternative, user)

@@ -138,23 +138,28 @@ $(function(){
   $.fn.refreshNestedFieldsEdition = function(){
     $("#resources-edition .edit-resource.exercise").each(function(){
       $(this).refreshNestedFields();
-      // Clica na última alternativa para que as já criadas fiquem do tamanho
-      // maior enquanto que apenas a última fica disabled.
-      $(this).find(".alternative-container").find(".alternative-item:not([data-new-record='true']):last").click();
     });
+  };
+
+  // Habilita alternativas já existentes
+  $.fn.refreshAlternativesAppearance = function(){
+    $(".alternative-container").find(".alternative-item:not([data-new-record='true']):last").click();
   };
 
   // Deixa apenas uma alternativa marcada como certa
   $("#space-manage .concave-form .question-item .concave-multiple").live("change", function(e){
     $(this).parent().siblings().find(".concave-multiple").attr("checked", false)
   });
+
   $(document).ready(function(){
     $(document).refreshExercises();
     $(document).refreshNestedFieldsEdition();
+    $(document).refreshAlternativesAppearance();
 
     $(document).ajaxComplete(function(){
       $(document).refreshExercises();
       $(document).refreshNestedFieldsEdition();
-      });
+      $(document).refreshAlternativesAppearance();
+    });
   });
 });
