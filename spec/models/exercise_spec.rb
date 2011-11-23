@@ -9,8 +9,6 @@ describe Exercise do
   it { should have_one(:lecture) }
   it { should accept_nested_attributes_for(:questions) }
 
-  it { should accept_nested_attributes_for(:questions) }
-
   it "should not make sense when there arent questions" do
     subject.make_sense?.should_not be_true
     subject.errors.get(:general).should_not be_empty
@@ -316,6 +314,80 @@ describe Exercise do
       subject.finalize_for(user)
 
       subject.has_results?.should be_true
+    end
+  end
+
+  context "when accepting nested attributes" do
+    before do
+      @exercise = Factory.build(:exercise)
+    end
+
+    context "when creating an exercise with blank question" do
+      before do
+        question_attrs = { :questions_attributes => {
+          "1" => { :statement => "",
+                   :alternatives_attributes => {
+                     "1" =>  {:text => "", :correct => "0"},
+                     "2" =>  {:text => "", :correct => "0"},
+                     "3" =>  {:text => "", :correct => "0"}
+                   }
+                 },
+          "2" => { :statement => "Lorem valid 2",
+                   :alternatives_attributes => {
+                     "1" =>  {:text => "Alternative 1", :correct => "0"},
+                     "2" =>  {:text => "Alternative 2", :correct => "1"},
+                     "3" =>  {:text => "Alternative 3", :correct => "0"}
+                   }
+                 },
+        } }
+        @exercise.attributes = question_attrs
+      end
+
+      it "exercise is valid" do
+        @exercise.should be_valid
+      end
+
+      it "saves the exercise" do
+        expect {
+          @exercise.save
+        }.should change(Exercise, :count).by(1)
+      end
+
+      it "saves only the complete questions" do
+        expect {
+          @exercise.save
+        }.should change(Question, :count).by(1)
+      end
+    end
+
+    context "when creating an exercise with almost blank exercise (has non-blank question)" do
+      before do
+        question_attrs = { :questions_attributes => {
+          "1" => { :statement => "",
+                   :alternatives_attributes => {
+                     "1" =>  {:text => "Alternative 1", :correct => "1"},
+                     "2" =>  {:text => "Alternative 2", :correct => "0"},
+                     "3" =>  {:text => "Alternative 3", :correct => "0"}
+                   }
+                 },
+          "2" => { :statement => "Lorem valid 2",
+                   :alternatives_attributes => {
+                     "1" =>  {:text => "Alternative 1", :correct => "0"},
+                     "2" =>  {:text => "Alternative 2", :correct => "1"},
+                     "3" =>  {:text => "Alternative 3", :correct => "0"}
+                   }
+                 },
+        } }
+        @exercise.attributes = question_attrs
+      end
+
+      it "exercise is not valid" do
+        @exercise.should_not be_valid
+      end
+
+      it "question with valid alternatives but blank statement should it is not valid" do
+        @exercise.questions.first.should_not be_valid
+      end
     end
   end
 end

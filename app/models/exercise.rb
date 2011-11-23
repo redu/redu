@@ -26,7 +26,9 @@ class Exercise < ActiveRecord::Base
     :class_name => 'Question', :foreign_key => :exercise_id
   has_one :lecture, :as => :lectureable
 
-  accepts_nested_attributes_for :questions, :allow_destroy => true
+  accepts_nested_attributes_for :questions, :allow_destroy => true,
+    :reject_if => :question_and_alternatives_blank
+
 
   # Utiliza o maximum_grade para calcular o peso por questão
   def question_weight
@@ -115,5 +117,14 @@ class Exercise < ActiveRecord::Base
     errors.add(:general, "deve existir no mínimo uma questão e cada " + \
                "questão deve possuir pelo menos duas alternativas")
     return false
+  end
+
+  def question_and_alternatives_blank(attrs)
+    question_blank = attrs['statement'].blank? && attrs['explanation'].blank?
+    alternatives_blank = attrs['alternatives_attributes'].collect do |k, v|
+      v['text'].blank? && v['correct'] == "0"
+    end
+
+    question_blank && alternatives_blank.reduce(:&)
   end
 end

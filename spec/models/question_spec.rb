@@ -123,4 +123,62 @@ describe Question do
       subject.choice_for(@user).should == choice
     end
   end
+
+  context "when accepting nested attributes" do
+    before do
+      @question = Factory.build(:question)
+    end
+    context "when creating a question with blank alternatives" do
+      before do
+        alternatives_attrs =  {
+          :alternatives_attributes => {
+          "1" => { :text => "Lorem 1", :correct => "0"},
+          "2" => { :text => "Lorem 2", :correct => "0"},
+          "3" => { :text => "Lorem 3", :correct => "0"},
+          "4" => {:text => "Lorem correct", :correct => "1"},
+          "5" => {:text => "", :correct => "0"},
+          "6" => {:text => "", :correct => "0"}
+          }
+        }
+        @question.attributes = alternatives_attrs
+      end
+
+      it "question is valid" do
+        @question.should be_valid
+      end
+
+      it "saves the question" do
+        expect {
+          @question.save
+        }.should change(Question, :count).by(1)
+      end
+
+      it "saves only the complete alternatives" do
+        expect {
+          @question.save
+        }.should change(Alternative, :count).by(4)
+      end
+    end
+
+    context "when creating a question with correct alternative with blank text" do
+      before do
+        alternatives_attrs =  {
+          :alternatives_attributes => {
+          "1" => { :text => "Lorem 1", :correct => "0" },
+          "3" => { :text => "Lorem 3", :correct => "0"},
+          "4" => {:text => "", :correct => "1"},
+        }
+        }
+        @question.attributes = alternatives_attrs
+      end
+
+      it "it is not valid" do
+        @question.should_not be_valid
+      end
+
+      it "alternative with blank text it is not valid" do
+        @question.alternatives.last.should_not be_valid
+      end
+    end
+  end
 end

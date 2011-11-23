@@ -11,6 +11,32 @@ $(function(){
 
   // Aplica nestedFields às questões e alternativas de Exercício
   $.fn.refreshNestedFields = function(){
+    var alternativeOptions = {
+      containerSelector: ".alternative-container",
+      itemSelector: ".alternative-item",
+      addSelector: ".alternative-add",
+      removeSelector: ".alternative-remove",
+      itemTemplateSelector: ".alternative.template",
+      newItemIndex: "new_alternative_item",
+      afterInsert: function(item) {
+        item.refreshForms();
+        item.refreshAlternativesNumbering();
+        // Adiciona bind que insere nova alternativa
+        item.bind("click", function(){
+          item.parents(".nested-fields-level-2").nestedFields("insert");
+        });
+        // Remove da alternativa anterior bind que adiciona alternativa
+        var lastAlternatives = item.prevAll(".alternative-item")
+        lastAlternatives.unbind("click");
+        lastAlternatives.removeClass("disabled");
+        lastAlternatives.find(".tip").text("Digite uma alternativa para a questão");
+      },
+      beforeRemove: function(item) {
+          item.hide();
+          item.refreshAlternativesNumbering();
+      }
+    };
+
     $(this).find(".nested-fields-level-1").nestedFields({
       containerSelector: ".question-container",
       itemSelector: ".question-item",
@@ -20,22 +46,7 @@ $(function(){
       newItemIndex: "new_question_item",
       afterInsert: function(item) {
         // Aplica nestedFields às alternativas da nova questão
-        item.find(".nested-fields-level-2").nestedFields({
-          containerSelector: ".alternative-container",
-          itemSelector: ".alternative-item",
-          addSelector: ".alternative-add",
-          removeSelector: ".alternative-remove",
-          itemTemplateSelector: ".alternative.template",
-          newItemIndex: "new_alternative_item",
-          afterInsert: function(item) {
-            item.refreshForms();
-            item.refreshAlternativesNumbering();
-          },
-          beforeRemove: function(item) {
-            item.hide();
-            item.refreshAlternativesNumbering();
-          }
-        });
+        item.find(".nested-fields-level-2").nestedFields(alternativeOptions);
 
         // Insere um campo de alternativa para a nova questão
         item.find(".nested-fields-level-2").nestedFields("insert");
@@ -52,22 +63,7 @@ $(function(){
     });
 
     // Aplica nestedFields às alternativas da primeira questão
-    $(this).find('.nested-fields-level-2').nestedFields({
-      containerSelector: ".alternative-container",
-      itemSelector: ".alternative-item",
-      addSelector: ".alternative-add",
-      removeSelector: ".alternative-remove",
-      itemTemplateSelector: ".alternative.template",
-      newItemIndex: "new_alternative_item",
-      afterInsert: function(item) {
-        item.refreshForms();
-        item.refreshAlternativesNumbering();
-      },
-      beforeRemove: function(item) {
-        item.hide();
-        item.refreshAlternativesNumbering();
-      }
-    });
+    $(this).find('.nested-fields-level-2').nestedFields(alternativeOptions);
   };
 
   // Expande a questão
@@ -145,17 +141,25 @@ $(function(){
     });
   };
 
+  // Habilita alternativas já existentes
+  $.fn.refreshAlternativesAppearance = function(){
+    $(".alternative-container").find(".alternative-item:not([data-new-record='true']):last").click();
+  };
+
   // Deixa apenas uma alternativa marcada como certa
   $("#space-manage .concave-form .question-item .concave-multiple").live("change", function(e){
     $(this).parent().siblings().find(".concave-multiple").attr("checked", false)
   });
+
   $(document).ready(function(){
     $(document).refreshExercises();
     $(document).refreshNestedFieldsEdition();
+    $(document).refreshAlternativesAppearance();
 
     $(document).ajaxComplete(function(){
       $(document).refreshExercises();
       $(document).refreshNestedFieldsEdition();
-      });
+      $(document).refreshAlternativesAppearance();
+    });
   });
 });

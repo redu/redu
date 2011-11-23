@@ -1,9 +1,9 @@
-<li class="alternative-item clearfix">
+<li class="alternative-item disabled alternative-add clearfix">
   <%= f.label :text, :class => "alternative-label" %>
   <%= f.check_box :correct %>
   <%= f.text_area :text, :class => "alternative-text" %>
   <a href="#" class="alternative-remove icon-small icon-delete-gray_8_10 replacement">excluir alternativa</a>
-  <div class="tip">Digite uma alternativa para a questão</div>
+  <div class="tip">Clique para adicionar mais uma alternativa</div>
   <%= concave_errors_for(f.object, :text) %>
 
   <%= f.hidden_field :id %>
