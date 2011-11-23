@@ -49,6 +49,16 @@ $(function(){
       $(".create-status textarea.textarea").focus();
     });
 
+    $("#resource .status-type .type-item").live("click", function(e){
+      var $input = $("[name='status\[type\]']","#new_status");
+      var data = $(this).find("a").data();
+
+      $(this).siblings().andSelf().toggleClass("selected");
+      $input.val(data.type);
+
+      e.preventDefault();
+    });
+
     // Scroll os botões de student-actions de acordo com o #resource
     $(document).scroll(function(){
       if ($("#resource").length > 0) {

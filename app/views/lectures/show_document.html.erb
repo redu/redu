@@ -20,18 +20,7 @@
         :locals => { :lecture => @lecture } %>
     </div>
 
-    <div class="statuses-wrapper clearfix status-medium">
-      <%= render :partial => 'statuses/create_status',
-        :locals => { :statusable => @lecture } %>
-      <div id="statuses" class="statuses">
-        <ol>
-          <%= render :partial => 'statuses/item',
-            :collection => @statuses %>
-        </ol>
-
-        <%= will_paginate @statuses, :renderer => EndlessRenderer %>
-      </div><!-- end .statuses -->
-    </div>
+    <%= render 'lectures/create_statuses', :lecture => @lecture, :statuses => @statuses %>
   </div><!-- end #resource -->
 
 </div><!-- end .main -->
