@@ -66,6 +66,7 @@ stylesheets:
     - public/stylesheets/icons.big.redu.css
     - public/stylesheets/icons.redu.css
     - public/stylesheets/users.css
+    - public/stylesheets/lectures.css
     - public/stylesheets/exercises.css
   ie:
     - public/stylesheets/ie.css

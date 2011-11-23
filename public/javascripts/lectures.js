@@ -49,6 +49,11 @@ $(function(){
       $(".create-status textarea.textarea").focus();
     });
 
+    $("#resource .status-type .type-item").live("click", function(e){
+      $(this).parent(".status-type").find(".type-item").toggleClass("selected");
+      e.preventDefault();
+    });
+
     // Scroll os botões de student-actions de acordo com o #resource
     $(document).scroll(function(){
       if ($("#resource").length > 0) {

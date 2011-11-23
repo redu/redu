@@ -218,6 +218,28 @@
 .sidebar .action-comment:hover .icon-comment-lightblue_32_34 { background-position: -400px -640px; }
 .icon-comment-lightblue_32_34 { background-position: -320px -640px; }
 
+.status-type .selected .icon-comment2-lightblue_16_18-before:before,
+.icon-comment2-gray_16_18-before:before {
+  content: " ";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") 0 -640px no-repeat;
+}
+
+.icon-comment2-lightblue_16_18-before:before {
+  content: " ";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -80px -640px no-repeat;
+}
+
+.icon-comment2-lightblue_16_18-before:hover:before {
+  content: " ";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -160px -640px no-repeat;
+}
+
 .icon-confirm-gray_16_18 { background-position: -240px -2080px; }
 .icon-confirm-gray_16_18-before:before {
   content: "";
@@ -1234,6 +1256,29 @@
 .icon-request-help-lightblue_32_34:hover,
 .action-help:hover .icon-request-help-lightblue_32_34 { background-position: -560px -3040px; }
 .icon-request-help-lightblue_32_34 { background-position: -480px -3040px; }
+
+.icon-request-help-gray_16_18-before:before,
+.status-type .selected .icon-request-help-lightblue_16_18-before:before,
+.icon-request-help-lightblue_16_18-before:before,
+.icon-request-help-blue_16_18-before:before {
+  content: " ";
+  width: 16px;
+  height: 18px;
+  background-image: url("../images/new/icons-small.png");
+}
+
+.status-type .selected .icon-request-help-lightblue_16_18-before:before,
+.icon-request-help-gray_16_18-before:before {
+  background-position: 0 -1680px;
+}
+
+.icon-request-help-lightblue_16_18-before:before {
+  background-position: -80px -1680px;
+}
+
+.icon-request-help-lightblue_16_18-before:hover:before {
+  background-position: -160px -1680px;
+}
 
 .icon-seminar-blue_16_18,
 .icon-seminar-lightblue_16_18:hover { background-position: -480px -1200px; }
