@@ -3,7 +3,8 @@ class StatusesController < BaseController
   load_and_authorize_resource :status, :except => [:index]
 
   def create
-    @status = Activity.new(params[:status])
+    @status = Status.new(params[:status])
+    @status.type = params[:status][:type]
 
     @status.user = current_user
 

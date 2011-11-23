@@ -50,7 +50,12 @@ $(function(){
     });
 
     $("#resource .status-type .type-item").live("click", function(e){
-      $(this).parent(".status-type").find(".type-item").toggleClass("selected");
+      var $input = $("[name='status\[type\]']","#new_status");
+      var data = $(this).find("a").data();
+
+      $(this).siblings().andSelf().toggleClass("selected");
+      $input.val(data.type);
+
       e.preventDefault();
     });
 

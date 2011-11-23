@@ -1,3 +1,3 @@
-class Activity < Status
+class Help < Status
   include ActsAsActivity
 end

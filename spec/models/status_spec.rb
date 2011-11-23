@@ -40,6 +40,9 @@ describe Status do
        @lecture_statuses = @lectures.collect do |l|
          3.times.inject([]) do |acc,i|
            acc << Factory(:activity, :statusable => l, :user => @course.owner)
+         end + \
+         3.times.inject([]) do |acc,i|
+           acc << Factory(:help, :statusable => l, :user => @course.owner)
          end
        end.flatten
     end

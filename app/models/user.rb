@@ -274,6 +274,8 @@ class User < ActiveRecord::Base
         else
           self.friends?(entity.statusable) || self == entity.statusable
         end
+      when 'Help'
+        has_access_to?(entity.statusable)
       when 'Lecture'
         self.has_access_to? entity.subject
       when 'Exam'
@@ -302,7 +304,8 @@ class User < ActiveRecord::Base
     if (object.class.to_s.eql? 'Folder') || (object.class.to_s.eql? 'Forum') ||
        (object.class.to_s.eql? 'Topic') || (object.class.to_s.eql? 'SbPost') ||
        (object.class.to_s.eql? 'Event') || (object.class.to_s.eql? 'Bulletin') ||
-       (object.class.to_s.eql? 'Status') || (object.class.to_s.eql? 'User') ||
+       (object.class.to_s.eql? 'Status') || (object.class.to_s.eql? 'Help') ||
+       (object.class.to_s.eql? 'User') ||
        (object.class.to_s.eql? 'Friendship') || (object.class.to_s.eql? 'Plan') ||
        (object.class.to_s.eql? 'Invoice') ||
        (object.class.to_s.eql? 'PartnerEnvironmentAssociation') ||
