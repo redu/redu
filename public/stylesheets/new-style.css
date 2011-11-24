@@ -5316,7 +5316,7 @@ table.spaced tr td {
   margin-left: 50px;
   width: 315px;
   display: block;
-  float: left;
+  
 }
 
 .management .form-header-closer,
@@ -5449,6 +5449,7 @@ table.concave-invitation-table .cell-reinvite .reinvited {
   display: block;
   margin-left: 50px;
   margin-bottom: 10px;
+  float: none;
 }
 
 #space-manage .concave-form .concave-label.added-lectures:before {
@@ -7333,6 +7334,13 @@ div.token-input-dropdown {
   padding: 10px 20px;
   width: 420px;
   margin: auto;
+}
+
+#course-manage .panel {
+  height: 114px;
+  background: url("../images/new/circulos-peq-cinza.png");
+  background-repeat: no-repeat;
+  background-position: 90px 0px;
 }
 
 #course-manage .plan-use {

@@ -326,14 +326,18 @@ class User < ActiveRecord::Base
     login
   end
 
-  def this_months_posts
-    self.posts.where("published_at > ?", DateTime.now.to_time.at_beginning_of_month).all
-  end
-
-  def last_months_posts
-    self.posts.where("published_at > ? and published_at < ?",
-                      DateTime.now.to_time.at_beginning_of_month.months_ago(1),
-                      DateTime.now.to_time.at_beginning_of_month).all
+  # FIXME Falar com Guila
+  def avatar_photo_url(size = nil)
+    if avatar
+      avatar.public_filename(size)
+    else
+      case size
+      when :thumb
+        AppConfig.photo['missing_thumb']
+      else
+        AppConfig.photo['missing_medium']
+      end
+    end
   end
 
   def deactivate
@@ -393,6 +397,41 @@ class User < ActiveRecord::Base
   def update_last_login
     self.save #FIXME necessário para que o last_login_at seja atualizado, #419
     self.update_attribute(:last_login_at, Time.now)
+  end
+
+  # FIXME Verificar necessidade (não foi testado)
+  def add_offerings(skills)
+    skills.each do |skill_id|
+      offering = Offering.new(:skill_id => skill_id)
+      offering.user = self
+      if self.under_offering_limit? && !self.has_skill?(offering.skill)
+        if offering.save
+          self.offerings << offering
+        end
+      end
+    end
+  end
+
+  # FIXME Verificar necessidade (não foi testado)
+  def under_offering_limit?
+    self.offerings.size < 3
+  end
+
+  # FIXME Verificar necessidade (não foi testado)
+  def has_skill?(skill)
+    self.offerings.collect{|o| o.skill }.include?(skill)
+  end
+
+  # FIXME Verificar necessidade (não foi testado)
+  # A tabela Frienship não existe
+  def has_reached_daily_friend_request_limit?
+    friendships_initiated_by_me.where('created_at > ?', Time.now.beginning_of_day).count >= Friendship.daily_request_limit
+  end
+
+  # FIXME Verificar necessidade (não foi testado)
+  def friends_ids
+    return [] if accepted_friendships.empty?
+    accepted_friendships.map{|fr| fr.friend_id }
   end
 
   def display_name

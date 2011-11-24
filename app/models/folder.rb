@@ -7,7 +7,6 @@ class Folder < ActiveRecord::Base
   belongs_to :user
   alias :owner :user
   has_many :myfiles, :dependent => :destroy
-  has_many :group_permissions, :dependent => :destroy
   belongs_to :space
 
   # Accessors
