@@ -15,15 +15,15 @@
         <div class="management-actions">
           <%= link_to "Convidar membros", admin_invitations_environment_course_path(@environment, @course), :class => "button" %>
         </div>
-        <h3 class="form-header"><%= @all_users.count %> membros já foram convidados; aguardando a resposta de <%= (@email_invitations.count + @user_invitations.count) %></h3>
         <% unless @email_invitations.empty? && @user_invitations.invited.empty? %>
+          <h3 class="form-header">Aguardando a resposta de <%= (@email_invitations.count + @user_invitations.count) %> membro(s)</h3>
           <div id="user_list" class="invitation-list">
             <%= render :partial => 'courses/invitations_list_admin',
               :locals => {:user_invitations => @user_invitations, :email_invitations => @email_invitations}%>
           </div>
         <% else %>
           <div class="box_notice">
-            Não há convites em aberto.
+            <h3 class="form-header">Não há convites pendentes no momento</h3>
           </div>
         <% end %>
         <%#= will_paginate  @memberships, :renderer => EndlessRenderer %>

@@ -375,16 +375,6 @@ class User < ActiveRecord::Base
     login
   end
 
-  def this_months_posts
-    self.posts.where("published_at > ?", DateTime.now.to_time.at_beginning_of_month).all
-  end
-
-  def last_months_posts
-    self.posts.where("published_at > ? and published_at < ?",
-                      DateTime.now.to_time.at_beginning_of_month.months_ago(1),
-                      DateTime.now.to_time.at_beginning_of_month).all
-  end
-
   # FIXME Falar com Guila
   def avatar_photo_url(size = nil)
     if avatar
@@ -508,20 +498,6 @@ class User < ActiveRecord::Base
   def friends_ids
     return [] if accepted_friendships.empty?
     accepted_friendships.map{|fr| fr.friend_id }
-  end
-
-  def recommended_posts(since = 1.week.ago)
-    return [] if tags.empty?
-    rec_posts = Post.find_tagged_with(tags.map(&:name),
-                                      :conditions => ['posts.user_id != ? AND published_at > ?', self.id, since ],
-                                      :order => 'published_at DESC',
-                                      :limit => 10)
-
-    if rec_posts.empty?
-      []
-    else
-      rec_posts.uniq
-    end
   end
 
   def display_name
