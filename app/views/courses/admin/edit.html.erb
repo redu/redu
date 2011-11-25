@@ -11,14 +11,16 @@
   <div id="course-manage" class="body management">
     <%= render :partial => 'courses/admin/clean_header' %>
     <%= tabs :courses_admin do %>
-      <div class="plan-use">
-        <span class="plan-type"><%= @course.plan.name %></span>
-        <%= render :partial => "invoices/quotas",
-          :locals => { :quota_file => @course.percentage_quota_file,
-                       :plan => @course.plan,
-                       :quota_multimedia => @course.percentage_quota_multimedia,
-                       :quota_members => @course.percentage_quota_members,
-                       :quota => @course.quota } %>
+      <div class="plan-panel">
+        <div class="plan-use">
+          <span class="plan-type"><%= @course.plan.name %></span>
+          <%= render :partial => "invoices/quotas",
+            :locals => { :quota_file => @course.percentage_quota_file,
+                         :plan => @course.plan,
+                         :quota_multimedia => @course.percentage_quota_multimedia,
+                         :quota_members => @course.percentage_quota_members,
+                         :quota => @course.quota } %>
+        </div>
       </div>
       <%= form_for @course,
         :url => environment_course_path(@environment, @header_course),
