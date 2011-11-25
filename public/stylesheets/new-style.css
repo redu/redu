@@ -3600,6 +3600,7 @@ a.clean:hover {
   background-color: white;
   overflow: hidden;
   float: left;
+  min-width: 85%;
 }
 
 .borderradius .big-tabs > .panel {
