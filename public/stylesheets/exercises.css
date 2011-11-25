@@ -861,6 +861,25 @@
   margin: 45px 0 0 7px;
 }
 
+#space-manage .new-resource .concave-form .alternative-item.disabled .alternative-label,
+#space-manage .edit-resource .concave-form .alternative-item.disabled .alternative-label {
+  width: 90px;
+  margin-top: 31px;
+  height: 20px;
+}
+
+#space-manage .new-resource .concave-form .alternative-item.disabled .concave-multiple,
+#space-manage .new-resource .concave-form .alternative-item.disabled .alternative-remove,
+#space-manage .edit-resource .concave-form .alternative-item.disabled .concave-multiple,
+#space-manage .edit-resource .concave-form .alternative-item.disabled .alternative-remove {
+  display: none;
+}
+
+#space-manage .new-resource .concave-form .alternative-item.disabled .alternative-text,
+#space-manage .edit-resource .concave-form .alternative-item.disabled .alternative-text {
+  height: 16px;
+}
+
 #space-manage .new-resource .concave-form .question-item .simple-actions,
 #space-manage .new-resource .concave-form .question-add,
 #space-manage .edit-resource .concave-form .question-item .simple-actions,
