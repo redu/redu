@@ -536,7 +536,7 @@ class User < ActiveRecord::Base
     fav.destroy
   end
 
-    def has_favorite(favoritable)
+  def has_favorite(favoritable)
     Favorite.where("favoritable_id = ? AND favoritable_type = ? AND user_id = ?",
                      favoritable.id, favoritable.class.to_s,self.id).first
   end
