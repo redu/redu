@@ -13,7 +13,9 @@
   var $editForm = $("<%= escape_javascript render 'lectures/admin/edit', :lecture => @lecture, :subject => @subject, :space => @space %>");
   $form.replaceWith($editForm);
   $editForm.show();
-  $editForm.refreshNestedFields();
-  $editForm.find(".question-item:first-child").refreshQuestionsNumbering();
-  $editForm.find(".alternative-item:first-child").refreshAlternativesNumbering();
+  <% if @lecture.lectureable.is_a? Exercise %>
+    $editForm.find(".question-item:first-child").refreshQuestionsNumbering();
+    $editForm.find(".alternative-item:first-child").refreshAlternativesNumbering();
+    $editForm.refreshQuestionsAppearance();
+  <% end %>
 <% end %>

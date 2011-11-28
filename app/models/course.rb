@@ -135,12 +135,17 @@ class Course < ActiveRecord::Base
   end
 
   def join(user, role = Role[:member])
+
     association = UserCourseAssociation.create(:user_id => user.id,
                                                :course_id => self.id,
                                                :role => role)
 
-    if self.subscription_type.eql? 1 # Todos podem participar, sem moderação
+    association = user.get_association_with(self) if association.new_record?
+
+    if self.subscription_type.eql? 1 and association.waiting?  # Todos podem participar, sem moderação
       association.approve!
+    elsif association.invited?
+      association.accept!
     end
   end
 

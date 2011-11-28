@@ -322,6 +322,7 @@ describe Course do
                               :owner => subject.owner,
                               :finalized => true)
       @user = Factory(:user)
+      subject.reload
     end
 
     context "without a role" do
@@ -344,17 +345,17 @@ describe Course do
       it "creates space association" do
         assoc = @user.get_association_with(@space)
         assoc.should_not be_nil
-        assoc.role == Role[:member]
+        assoc.role.should == Role[:member]
       end
 
       it "enrolls the user" do
         assoc = @user.get_association_with(@subj)
         assoc.should_not be_nil
-        assoc.role == Role[:member]
+        assoc.role.should == Role[:member]
       end
     end
 
-    context "whit a role" do
+    context "whith a role" do
       before do
         subject.join(@user, Role[:environment_admin])
       end
@@ -374,13 +375,26 @@ describe Course do
       it "creates space association" do
         assoc = @user.get_association_with(@space)
         assoc.should_not be_nil
-        assoc.role == Role[:environment_admin]
+        assoc.role.should == Role[:environment_admin]
       end
 
       it "enrolls the user" do
         assoc = @user.get_association_with(@subj)
         assoc.should_not be_nil
-        assoc.role == Role[:environment_admin]
+        assoc.role.should == Role[:environment_admin]
+      end
+    end
+
+    context "with user invited" do
+      before do
+        subject.invite(@user)
+        @user.reload
+      end
+
+      it "should approve and create all hierarchy" do
+        subject.join(@user)
+        assoc = @user.get_association_with(subject)
+        assoc.state.should == "approved"
       end
     end
   end

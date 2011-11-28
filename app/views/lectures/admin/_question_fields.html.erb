@@ -1,14 +1,13 @@
-<% question_visibility, summary_visibility, fields_visibility = retract_question(f.object) %>
-<li class="question-item <%= question_visibility %>">
+<li class="question-item visible">
   <span class="position">1</span>
-  <div class="summary clearfix" style="display: <%= summary_visibility %>;">
-    <span class="statement"><%= f.object.statement or "(Enunciado não informado)" %></span>
+  <div class="summary clearfix">
+    <span class="statement">(Enunciado não informado)</span>
     <span class="alternatives">
-      <span class="qtt"><%= f.object.alternatives.size %></span> alternativas. Correta: <span class="correct"><%= correct_alternative_order_for(f.object) %></span>
+      <span class="qtt">0</span> alternativas. Correta: <span class="correct">(não marcada)</span>
     </span>
     <span class="expand icon-small icon-expand_down-gray_16_18 replacement">Mais detalhes</span>
   </div>
-  <div class="fields" style="display: <%= fields_visibility %>;">
+  <div class="fields">
     <%= f.label :statement %>
     <%= f.text_area :statement, :class => "question-statement" %>
     <div class="tip">Descrição da questão e sua problemática</div>

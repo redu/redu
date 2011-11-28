@@ -110,7 +110,7 @@
         newPosition = (index + 1);
         $(this).find(".position").text(newPosition + ".");
         itemId = "#" + $(this).attr("id") + "-edition";
-        $(formId + ".resource-numbering .position").text(newPosition);
+        $(itemId + ".resource-numbering .position").text(newPosition);
       });
     }else{
       $(this).html($("<li/>", { "class" : "no-lectures", "text" : "Nenhuma aula foi adicionada ainda."}))
@@ -139,11 +139,9 @@
   $(document).ready(function(){
     $(document).refreshRoleTable();
     $(document).refreshFormUpload();
-    $(document).refreshNestedFieldsEdition();
     $(document).ajaxComplete(function(){
       $(document).refreshRoleTable();
       $(document).refreshFormUpload();
-      $(document).refreshNestedFieldsEdition();
     });
   });
 })(jQuery);
