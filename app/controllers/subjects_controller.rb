@@ -39,7 +39,7 @@ class SubjectsController < BaseController
   end
 
   def edit
-    @editable_lectures = @subject.lectures.pages | @subject.lectures.exercises
+    @editable_lectures = @subject.lectures.pages | @subject.lectures.exercises_editables
     @quota = @course.quota
     @plan = @course.plan
 

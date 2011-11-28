@@ -146,6 +146,18 @@ describe Lecture do
                                               :created_at => (i*3).day.ago) }
       Lecture.recent.should == lectures[0..1]
     end
+
+    it "retrieves all editables exercises" do
+      exercise1 = Factory(:exercise)
+      lecture1 = Factory(:lecture, :subject => @sub,
+                          :name => "Exercicio 1", :lectureable => exercise1)
+      exercise2 = Factory(:exercise)
+      lecture2 = Factory(:lecture, :subject => @sub,
+                          :name => "Exercicio 2", :lectureable => exercise2)
+      result = Factory(:result, :exercise => exercise1)
+
+      Lecture.exercises_editables.should == [lecture2]
+    end
   end
 
   context "being attended" do
