@@ -32,7 +32,7 @@ $(function(){
         lastAlternatives.find(".tip").text("Digite uma alternativa para a questão");
       },
       beforeRemove: function(item) {
-          item.hide();
+          item.removeClass("visible");
           item.refreshAlternativesNumbering();
       }
     };
@@ -52,12 +52,10 @@ $(function(){
         item.find(".nested-fields-level-2").nestedFields("insert");
         item.refreshForms();
         item.refreshQuestionsNumbering();
-        if (item.hasClass("closed")) {
-          item.find(".expand").click();
-        }
         item.find(".alternative-item").refreshAlternativesNumbering();
       },
       afterRemove: function(item) {
+        item.removeClass("visible");
         item.refreshQuestionsNumbering();
       }
     });
@@ -68,25 +66,42 @@ $(function(){
 
   // Expande a questão
   $("#space-manage .concave-form .question-item .summary .expand").live("click", function(){
-    $(this).parent().slideToggle();
-    var $questionItem = $(this).parents(".question-item");
-    $questionItem.toggleClass("closed");
-    var $fields = $questionItem.find(".fields");
-    $fields.slideToggle();
-    $fields.find(".alternative-item:first-child").refreshAlternativesNumbering();
+    $(this).parents(".question-item").expandQuestion();
   });
 
-  // Retraí a questão
+  // Click do botão finalizar
   $("#space-manage .concave-form .question-item .finalize-edition").live("click", function(e){
-    var $questionItem = $(this).parents(".question-item");
-    var $fields = $questionItem.find(".fields");
-    var $summary = $questionItem.find(".summary");
-    $questionItem.toggleClass("closed");
-    $fields.slideToggle();
-    $questionItem.refreshExerciseSummary();
-    $summary.slideToggle();
+    $(this).parents(".question-item").retractQuestion();
     e.preventDefault();
   });
+
+  // Expande a questão
+  $.fn.expandQuestion = function(){
+    return this.each(function(){
+      $(this).find(".summary").slideUp();
+      $(this).removeClass("closed");
+      var $fields = $(this).find(".fields");
+      $fields.slideDown();
+      $fields.find(".alternative-item:first-child").refreshAlternativesNumbering();
+    });
+  };
+
+  // Retrai a questão
+  $.fn.retractQuestion = function(){
+    return this.each(function(){
+      var $fields = $(this).find(".fields");
+      var $summary = $(this).find(".summary");
+      $(this).addClass("closed");
+      // slideUp não funciona se o parent estiver hidden
+      if($fields.parent().is(":hidden")){
+        $fields.hide();
+      }else{
+        $fields.slideUp();
+      }
+      $(this).refreshExerciseSummary();
+      $summary.slideDown();
+    });
+  };
 
   // Atualiza informações no summary
   $.fn.refreshExerciseSummary = function(){
@@ -94,7 +109,10 @@ $(function(){
       var $fields = $(this).find(".fields")
       var $summary = $(this).find(".summary");
 
-      var qttAlternatives = $fields.find(".alternative-container .alternative-item:visible").length;
+    // Remove classe das alternativas  habilitadas
+    $fields.find(".alternative-item:last").prevAll(".alternative-item").removeClass("disabled")
+
+      var qttAlternatives = $fields.find(".alternative-container .alternative-item.visible:not(.disabled)").length;
     $summary.find(".alternatives .qtt").text(qttAlternatives);
     var statement = $fields.find(".question-statement").val();
     if (statement != ""){
@@ -103,7 +121,8 @@ $(function(){
       $summary.find(".statement").text("(Enunciado não informado)");
     }
 
-    var correctAlternative = $fields.find(".concave-multiple:checked").prev().text();
+    // Pega numeração da alternativa correta
+    var correctAlternative = $fields.find("input:checked").prevAll("label").text();
     if (correctAlternative != ""){
       $summary.find(".alternatives .correct").text(correctAlternative);
     }else{
@@ -115,7 +134,7 @@ $(function(){
   // Atualiza numeração das questões
   $.fn.refreshQuestionsNumbering = function(){
     return this.each(function(){
-      var $questions = $(this).parent().find(".question-item:visible");
+      var $questions = $(this).parent().find(".question-item.visible");
       $questions.each(function(index){
         $(this).find(".position").text(index + 1);
       });
@@ -125,7 +144,7 @@ $(function(){
   // Atualiza letras das alternativas
   $.fn.refreshAlternativesNumbering = function(){
     return this.each(function(){
-      var $alternatives = $(this).parent().find(".alternative-item:visible");
+      var $alternatives = $(this).parent().find(".alternative-item.visible");
       var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
       $alternatives.each(function(index){
         var letter = alphabet[index];
@@ -151,15 +170,35 @@ $(function(){
     $(this).parent().siblings().find(".concave-multiple").attr("checked", false)
   });
 
+  // Fecha as questões que não possuem erro de validação
+  $.fn.closeQuestionsWithoutErrors = function(){
+    return this.each(function(){
+      var qttFieldErrors = $(this).find(".field_with_errors").length;
+      var qttInlineErrors = $(this).find(".errors_on_field li").length;
+      if(qttFieldErrors  === 0 && qttInlineErrors === 0){
+        $(this).retractQuestion();
+      }
+    });
+  };
+
+  // Atualiza para apenas a última alternativa ter aparência disabled
+  // e deixa apenas as questões com erro abertas
+  $.fn.refreshQuestionsAppearance = function(){
+    return this.each(function(){
+      $(this).refreshAlternativesAppearance();
+      $(this).find(".question-item").closeQuestionsWithoutErrors();
+    });
+  };
+
   $(document).ready(function(){
     $(document).refreshExercises();
     $(document).refreshNestedFieldsEdition();
-    $(document).refreshAlternativesAppearance();
+    $("#resources-edition .exercise").refreshQuestionsAppearance();
 
     $(document).ajaxComplete(function(){
       $(document).refreshExercises();
       $(document).refreshNestedFieldsEdition();
-      $(document).refreshAlternativesAppearance();
+      $("#resources-edition .exercise").refreshQuestionsAppearance();
     });
   });
 });

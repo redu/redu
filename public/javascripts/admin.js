@@ -139,11 +139,9 @@
   $(document).ready(function(){
     $(document).refreshRoleTable();
     $(document).refreshFormUpload();
-    $(document).refreshNestedFieldsEdition();
     $(document).ajaxComplete(function(){
       $(document).refreshRoleTable();
       $(document).refreshFormUpload();
-      $(document).refreshNestedFieldsEdition();
     });
   });
 })(jQuery);
