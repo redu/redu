@@ -100,7 +100,7 @@ class LecturesController < BaseController
     @lecture.build_lectureable(lectureable_params)
 
     if @lecture.lectureable.is_a? Exercise
-      @lecture.build_question_and_alternative
+      @lecture.lectureable.build_question_and_alternative
     end
 
     respond_with(@space, @subject, @lecture) do |format|
@@ -125,7 +125,6 @@ class LecturesController < BaseController
       @lecture.owner = current_user
       @lecture.subject = Subject.find(params[:subject_id])
 
-
       if @lecture.valid? && @lecture.make_sense?
         lectureable = @lecture.lectureable
         if lectureable.is_a? Seminar
@@ -139,6 +138,10 @@ class LecturesController < BaseController
         @space.course.quota.refresh
         @lecture.published = 1
         @lecture.save
+      else
+        if @lecture.lectureable.is_a? Exercise
+          @lecture.lectureable.build_question_and_alternative
+        end
       end
     end
 
@@ -179,6 +182,9 @@ class LecturesController < BaseController
     if @lecture.lectureable.is_a?(Exercise)
       authorize!(:manage, @lecture.lectureable)
       @lecture.save && @lecture.reload if @lecture.lectureable.make_sense?
+      if @lecture.lectureable.is_a? Exercise
+        @lecture.lectureable.build_question_and_alternative
+      end
     else
       @lecture.save
     end

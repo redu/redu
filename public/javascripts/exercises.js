@@ -112,7 +112,7 @@ $(function(){
     // Remove classe das alternativas  habilitadas
     $fields.find(".alternative-item:last").prevAll(".alternative-item").removeClass("disabled")
 
-      var qttAlternatives = $fields.find(".alternative-container .alternative-item.visible:not(.disabled)").length;
+      var qttAlternatives = $fields.find(".alternative-container .alternative-item.visible:not(.disabled) .alternative-text:not(:empty)").length;
     $summary.find(".alternatives .qtt").text(qttAlternatives);
     var statement = $fields.find(".question-statement").val();
     if (statement != ""){
@@ -162,7 +162,7 @@ $(function(){
 
   // Habilita alternativas já existentes
   $.fn.refreshAlternativesAppearance = function(){
-    $(".alternative-container").find(".alternative-item:not([data-new-record='true']):last").click();
+    $(this).find(".alternative-container .alternative-item:not([data-new-record='true']):last").click();
   };
 
   // Deixa apenas uma alternativa marcada como certa

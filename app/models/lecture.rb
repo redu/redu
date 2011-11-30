@@ -109,11 +109,6 @@ class Lecture < ActiveRecord::Base
     end
   end
 
-  def build_question_and_alternative
-    self.lectureable.questions.build
-    self.lectureable.questions.first.alternatives.build
-  end
-
   def make_sense?
     if lectureable && lectureable.is_a?(Exercise)
       unless lectureable.make_sense?

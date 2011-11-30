@@ -127,4 +127,14 @@ class Exercise < ActiveRecord::Base
 
     question_blank && alternatives_blank.reduce(:&)
   end
+
+
+  # Instancia questão para exercício sem questão
+  # e alternativa para questões sem alternativas
+  def build_question_and_alternative
+    self.questions.build if self.questions.empty?
+    self.questions.each do |q|
+      q.alternatives.build if q.alternatives.empty?
+    end
+  end
 end
