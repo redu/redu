@@ -829,9 +829,21 @@ describe Ability do
       @user_ability.should be_able_to(:manage, @user)
     end
 
-    it "manages its own statuses" do
-      status = Factory(:activity, :user => @user)
-      @user_ability.should be_able_to(:manage, status)
+    context "manages its own statuses" do
+      it "when activy" do
+        status = Factory(:activity, :user => @user)
+        @user_ability.should be_able_to(:manage, status)
+      end
+
+      it "when answer" do
+        status = Factory(:answer, :user => @user)
+        @user_ability.should be_able_to(:manage, status)
+      end
+
+      it "when help" do
+        status = Factory(:help, :user => @user)
+        @user_ability.should be_able_to(:manage, status)
+      end
     end
 
     context "when destroying user" do

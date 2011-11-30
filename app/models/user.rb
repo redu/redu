@@ -213,7 +213,7 @@ class User < ActiveRecord::Base
       self.member?(entity.space)
     when 'SbPost'
       self.member?(entity.space)
-    when 'Status', 'Activity', 'Answer'
+    when 'Status', 'Activity', 'Answer', 'Help'
       if self == entity.user
         true
       else
