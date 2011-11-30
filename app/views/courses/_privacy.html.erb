@@ -3,10 +3,10 @@
     <% if course.user_course_associations.waiting.exists? %>
       <span class="privacy icon-small icon-privacy-orange_16_18 replacement">Curso fechado, existem alunos na fila de moderação.</span>
     <% else %>
-      <span class="privacy icon-small icon-privacy-grey_16_18 replacement">Curso fechado, não existem alunos na fila de moderação.</span>
+      <span class="privacy icon-small icon-privacy-gray_16_18 replacement">Curso fechado, não existem alunos na fila de moderação.</span>
     <% end %>
   <% elsif can?(:show, course) %>
-    <span class="privacy icon-small icon-privacy-grey_16_18 replacement">Curso fechado e você tem acesso.</span>
+    <span class="privacy icon-small icon-privacy-gray_16_18 replacement">Curso fechado e você tem acesso.</span>
   <% else %>
     <span class="privacy icon-small icon-privacy-red_16_18 replacement">Curso fechado</span>
   <% end %>

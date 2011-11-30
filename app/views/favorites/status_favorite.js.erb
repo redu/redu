@@ -6,7 +6,7 @@ var new_link = "<%= escape_javascript( link_to 'Desfavoritar',
                                         @favorite.favoritable,
                                         :id => @favorite.favoritable.id,
                                         :type => @favorite.favoritable.class.to_s),
-                                      :class => 'icon icon-unfavorite-gray_8_8',
+                                      :class => '',
                                       :id => "status-#{@favorite.favoritable.id}-rm_favorites_link",
                                       :remote => true, :method => :post) %>"
 $(old_link).after(new_link);

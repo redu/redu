@@ -6,7 +6,7 @@
         user_friendship_path(current_user, friendship.id),
         :remote => true,
         :method => :delete,
-        :class => "disconnect icon icon-x-gray_8_8"%>
+        :class => "disconnect icon-delete-gray_8_10-before"%>
     <% end %>
     <% if can? :manage, @user %>
       <%= render :partial => 'users/completeness_bar' %>

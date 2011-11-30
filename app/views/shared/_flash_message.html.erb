@@ -4,7 +4,7 @@
       <div class="flash-message <%=type.to_s%>">
         <span><%= h(flash[type.to_sym]) %></span>
         <%= link_to 'Fechar', nil,
-          :class => 'replacement icon icon icon-x-gray_8_8 close-flash' %>
+          :class => 'replacement icon-delete-gray_8_10-before close-flash' %>
       </div>
     </div>
   <% end %>
