@@ -112,7 +112,7 @@ $(function(){
     // Remove classe das alternativas  habilitadas
     $fields.find(".alternative-item:last").prevAll(".alternative-item").removeClass("disabled")
 
-      var qttAlternatives = $fields.find(".alternative-container .alternative-item.visible:not(.disabled) .alternative-text:not(:empty)").length;
+      var qttAlternatives = $fields.find(".alternative-container .alternative-item.visible:not(.disabled) textarea.alternative-text[value!=\"\"]").length;
     $summary.find(".alternatives .qtt").text(qttAlternatives);
     var statement = $fields.find(".question-statement").val();
     if (statement != ""){
