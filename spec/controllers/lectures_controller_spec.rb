@@ -217,8 +217,11 @@ describe LecturesController do
 
     context "POST create (Exercise)" do
       before do
-        @alternatives = 3.times.collect { {:text => "Lorem ipsum dolor"} }
-        @alternatives.first[:correct] = true
+        @alternatives = {
+         "1" => {:text => "Lorem ipsum dolor", :correct => true},
+         "2" => {:text => "Lorem ipsum dolor"},
+         "3" => {:text => "Lorem ipsum dolor"}
+        }
 
         @questions = 3.times.collect do
           { :statement => "Lorem ipsum dolor sit amet, consectetur?",
@@ -257,13 +260,14 @@ describe LecturesController do
     context "POST create invalid (Exercise)" do
       before do
         # Apenas uma alternativa por questão
-        @alternatives = 1.times.collect { {:text => "Lorem ipsum dolor"} }
-        @alternatives.first[:correct] = true
+        @alternatives = {
+          "1" => {:text => "Lorem ipsum dolor", :correct => true}
+        }
 
         @questions = 3.times.collect do
           { :statement => "Lorem ipsum dolor sit amet, consectetur?",
             :explanation => "Lorem ipsum dolor sit amet.",
-            :alternatives_attributes => @alternatives.clone }
+            :alternatives_attributes => @alternatives }
         end
 
         @params = { :locale => 'pt-BR', :format => 'js', :space_id => @space.id,
@@ -286,6 +290,21 @@ describe LecturesController do
         lecture = assigns[:lecture]
         lecture.lectureable.errors[:general].should_not be_empty
       end
+
+      context "when exercise does not have questions" do
+        before do
+          @params[:lecture][:lectureable_attributes][:questions_attributes] = {}
+          post :create, @params
+        end
+
+        it "assigns @lecture (Exercise) with one question" do
+          assigns[:lecture].lectureable.questions.should_not be_empty
+        end
+
+        it "assigns @lecture (Exercise) with one question" do
+          assigns[:lecture].lectureable.questions.should have(1).item
+        end
+      end
     end
 
     context "POST update (Exercise)" do
@@ -297,7 +316,8 @@ describe LecturesController do
         @params = { :locale => 'pt-BR', :format => 'js', :space_id => @space.id,
                     :subject_id => @subject.id, :id => subject.id }
         @questions = subject.lectureable.questions.collect do |q|
-          alternatives = q.alternatives.collect(&:attributes)
+          alternatives = {}
+          q.alternatives.each_with_index {|a, i| alternatives[i] = a.attributes }
           { :id => q.id, :statement => "new statement",
             :alternatives_attributes => alternatives }
         end
@@ -319,10 +339,49 @@ describe LecturesController do
 
       it "should remove the alternative when destroy => true is passed" do
         @params[:lecture][:lectureable_attributes][:questions_attributes].
-          first[:alternatives_attributes].last["_destroy"] = true
+          first[:alternatives_attributes].values.last["_destroy"] = true
         expect {
           post :update, @params
         }.should change(Alternative, :count).by(-1)
+      end
+    end
+
+    context "POST update (Exercise) invalid" do
+      subject { Factory(:lecture,
+                        :lectureable => Factory(:complete_exercise),
+                        :subject => @subject ) }
+
+      before do
+        @params = { :locale => 'pt-BR', :format => 'js', :space_id => @space.id,
+                    :subject_id => @subject.id, :id => subject.id }
+        @questions = subject.lectureable.questions.collect do |q|
+          alternatives = {}
+          q.alternatives.each_with_index {|a, i| alternatives[i] = a.attributes }
+          { :id => q.id, :statement => "new statement",
+            :alternatives_attributes => alternatives }
+        end
+
+        @params.merge!(:lecture =>
+                       { :name => "Cool lecture",
+                         :lectureable_attributes =>
+                       { :_type => 'Exercise',
+                         :id => subject.lectureable.id,
+                         :questions_attributes => @questions }})
+      end
+
+      context "when exercise has a question without alternatives" do
+        before do
+          @params[:lecture][:lectureable_attributes][:questions_attributes] << {
+            :statement => "new question",
+            :alternatives_attributes => {}
+          }
+          post :update, @params
+        end
+
+        it "assigns @lecture (Exercise) where last question has one alternative" do
+          assigns[:lecture].lectureable.questions.last.alternatives.
+            should have(1).item
+        end
       end
     end
 

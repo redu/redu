@@ -162,7 +162,7 @@ $(function(){
 
   // Habilita alternativas já existentes
   $.fn.refreshAlternativesAppearance = function(){
-    $(".alternative-container").find(".alternative-item:not([data-new-record='true']):last").click();
+    $(this).find(".alternative-container .alternative-item:not([data-new-record='true']):last").click();
   };
 
   // Deixa apenas uma alternativa marcada como certa

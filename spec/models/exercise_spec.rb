@@ -35,9 +35,9 @@ describe Exercise do
     exercise = Factory(:complete_exercise)
     question = exercise.questions.last
     alt1, alt2 = question.alternatives[0], question.alternatives[1]
-    mass = { :alternatives_attributes => [
-      { :id => alt1.id, :_destroy => true },
-      { :id => alt2.id, :_destroy => true }] }
+    mass = { :alternatives_attributes => {
+      "1" => { :id => alt1.id, :_destroy => true },
+      "2" => { :id => alt2.id, :_destroy => true }} }
 
     exercise.attributes = { :questions_attributes =>
                             [ {:id => question.id}.merge!(mass) ]}
@@ -387,6 +387,72 @@ describe Exercise do
 
       it "question with valid alternatives but blank statement should it is not valid" do
         @exercise.questions.first.should_not be_valid
+      end
+    end
+
+    context "when building nested" do
+      before do
+        @lecture = Lecture.new
+        @lecture.build_lectureable(:_type => 'Exercise')
+      end
+
+      context "when the exercise does not have any question" do
+        before do
+          @lecture.lectureable.build_question_and_alternative
+        end
+
+        it "builds a question" do
+          @lecture.lectureable.questions.should_not be_empty
+        end
+
+        it "builds a question within an alternative" do
+          @lecture.lectureable.questions.first.alternatives.should_not be_empty
+        end
+
+        it "has just on question" do
+          @lecture.lectureable.questions.should have(1).items
+        end
+
+        it "has just one alternative inside the question" do
+          @lecture.lectureable.questions.first.alternatives.should have(1).items
+        end
+      end
+
+      context "when the exercise has one question without alternatives" do
+        before do
+          @lecture.lectureable.questions << Factory(:question)
+          @lecture.lectureable.build_question_and_alternative
+        end
+
+        it "builds an alternative inside the question" do
+          @lecture.lectureable.questions.first.alternatives.should_not be_empty
+        end
+
+        it "has just on question" do
+          @lecture.lectureable.questions.should have(1).items
+        end
+
+        it "has just one alternative inside the question" do
+          @lecture.lectureable.questions.first.alternatives.should have(1).items
+        end
+      end
+
+      context "when the exercise has one question with alternatives" do
+        before do
+          @alternatives = (1..3).collect { Factory.build(:alternative) }
+          @question = Factory.build(:question, :alternatives => @alternatives)
+          @lecture.lectureable.questions << @question
+          @lecture.lectureable.build_question_and_alternative
+        end
+
+        it "has just on question" do
+          @lecture.lectureable.questions.should have(1).items
+        end
+
+        it "has just the same quantity of alternatives inside the question" do
+          @lecture.lectureable.questions.first.alternatives.
+            should have(@alternatives.size).items
+        end
       end
     end
   end
