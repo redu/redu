@@ -2164,8 +2164,9 @@ body {
   float: none;
 }
 
-.statuses .actions a {
-  padding-left: 12px;
+.statuses .actions a:before {
+  float: left;
+  margin: 1px 5px 0 0;
 }
 
 .statuses .actions li {
@@ -2276,7 +2277,7 @@ body {
 }
 
 #statuses .status-log .actions {
-  margin-left: 37px;
+  margin-left: 35px;
   margin-bottom: 0px;
 }
 
@@ -2400,9 +2401,13 @@ body {
 
 #content .actions .disconnect {
   margin-bottom: 20px;
-  padding-left: 12px;
   display: block;
   font-size: .9em;
+}
+
+#content .actions .disconnect:before {
+  float: left;
+  margin: 2px 5px 0 0;
 }
 
 #content .course-offering {
@@ -2487,7 +2492,7 @@ body {
 
 #breadcrumbs .home {
   width: 16px;
-  height: 16px;
+  height: 18px;
   padding: 0;
   margin-right: 2px;
 }
@@ -2892,9 +2897,13 @@ body {
 .flash-message .close-flash {
   position: absolute;
   right: 15px;
-  top: 15px;
+  top: 17px;
   width: 10px;
   height: 10px;
+}
+
+.flash-message .close-flash:before {
+  float: left;
 }
 
 .friends-requisitions,
@@ -3598,8 +3607,6 @@ a.clean:hover {
   border: 1px solid rgb(179, 179, 179);
   padding: 40px 60px;
   background-color: white;
-  overflow: hidden;
-  float: left;
   min-width: 85%;
 }
 
@@ -4274,7 +4281,7 @@ table.spaced tr td {
 }
 
 #breadcrumbs-wizard .home {
-  height: 16px;
+  height: 18px;
   margin: 0;
   width: 16px;
 }
@@ -4992,7 +4999,7 @@ table.spaced tr td {
   margin-left: 50px;
   width: 315px;
   display: block;
-  
+
 }
 
 .management .form-header-closer,
@@ -6093,7 +6100,7 @@ div.token-input-dropdown {
 #global-courses .general .moderated {
   position: absolute;
   width: 16px;
-  height: 16px;
+  height: 18px;
   right: 15px;
   top: 15px;
 }
@@ -6411,10 +6418,14 @@ div.token-input-dropdown {
 
 #profile .vcard .edit {
   font-size: .9em;
-  padding-left: 13px;
   float: right;
   display: block;
-  width: 30px;
+  width: 45px;
+}
+
+#profile .vcard .edit:before {
+  float: left;
+  margin: 2px 5px 0 0;
 }
 
 #profile .vcard .bio-wrapper {
@@ -6568,7 +6579,11 @@ div.token-input-dropdown {
 
 .profile-sidebar .incomplete-profile .edit {
   font-size: .9em;
-  padding-left: 12px;
+}
+
+.profile-sidebar .incomplete-profile .edit:before {
+  float: left;
+  margin: 2px 5px 0 0;
 }
 
 .profile-sidebar .environments .avatar {
@@ -7172,12 +7187,6 @@ div.token-input-dropdown {
   overflow: hidden;
 }
 
-.icon {
-  background-image: url("../images/new/icons.png");
-  background-repeat: no-repeat;
-  background-position: top left
-}
-
 .question-blue_12_12 {
   background: url("../images/new/icon-question-blue_12_12.png") no-repeat;
   padding: 0 6px;
@@ -7187,74 +7196,6 @@ div.token-input-dropdown {
 .form-common .question-blue_12_12 {
   margin-right: 15px;
 }
-
-/* icones usados */
-.tabs > ul > li .icon-administrator-gray_16_16:hover { background-position: 9px -1080px;  }
-.icon-administrator-gray_16_16{ background-position: 1px -1296px;  }
-.tabs > ul > li .icon-administrator-gray_16_16{ background-position: 9px -1296px;  }
-.icon-contacts-lightblue_16_16{ background-position: -896px -1080px;  }
-.icon-contacts-lightblue_16_16:hover,
-.icon-contacts-blue_16_16{ background-position: -896px -648px;  }
-.icon-environment-lightblue_16_16:hover,
-.icon-environment-blue_16_16{ background-position: -1376px -1776px;  }
-.icon-environment-lightblue_16_16{ background-position: -1624px -248px;  }
-.icon-home-lightblue_16_16 { background-position: -2616px 0;  }
-.icon-home-lightblue_16_16:hover,
-.icon-home-blue_16_16 { background-position: -2368px -1344px;  }
-#clean .icon-home-lightblue_48_48:hover { background-position: -2157px -1560px;  }
-#clean .icon-home-lightblue_48_48 { background-position: -2405px -216px;  }
-.icon-home-lightblue_48_48{ background-position: -2616px -216px;  }
-.icon-lock-gray_16_16{ background-position: -2864px -1560px;  }
-.icon-management-gray_16_16{ background-position: -3112px -656px;  }
-.icon-management-lightblue_16_16:hover,
-.icon-management-blue_16_16{ background-position: -3112px 0;  }
-.icon-management-lightblue_16_16{ background-position: -3112px -1312px;  }
-.tabs > ul > li .icon-management-lightblue_16_16 { background-position: -3104px -1312px;  }
-.tabs > ul > li .icon-management-gray_16_16:hover { background-position: -3104px 0;  }
-.tabs > ul > li .icon-management-gray_16_16{ background-position: -3104px -656px;  }
-.icon-members-lightblue_16_16:hover,
-.icon-members-blue_16_16{ background-position: -3360px -696px;  }
-.icon-members-lightblue_16_16{ background-position: -3360px -1592px;  }
-.tabs > ul > li .icon-members-lightblue_16_16{ background-position: -3352px -1592px;  }
-.icon-page-lightblue_16_16{ background-position: -4104px -1112px;  }
-.icon-slides-lightblue_16_16{ background-position: -5344px 0;  }
-.icon-video-lightblue_16_16{ background-position: -6584px -688px;  }
-.icon-resource-gray_16_16{ background-position: -4848px -232px;  }
-.tabs > ul > li .icon-resource-gray_16_16{ background-position: -4840px -232px;  }
-.tabs > ul > li .icon-resource-gray_16_16:hover { background-position: -4592px -1544px;  }
-.icon-resource-lightblue_16_16:hover,
-.icon-resource-blue_16_16{ background-position: -4600px -1544px;  }
-.icon-resource-lightblue_16_16{ background-position: -4848px -680px;  }
-.tabs > ul > li .icon-resource-lightblue_16_16 { background-position: -4840px -680px;  }
-.tabs > ul > li .icon-student-gray_16_16:hover { background-position: -5832px 0;  }
-.icon-student-gray_16_16{ background-position: -5840px -216px;  }
-.tabs > ul > li .icon-student-gray_16_16{ background-position: -5832px -216px;  }
-.tabs > ul > li .icon-teacher-gray_16_16:hover { background-position: -6080px -912px;  }
-.icon-teacher-gray_16_16{ background-position: -6088px -1128px;  }
-.tabs > ul > li .icon-teacher-gray_16_16 { background-position: -6080px -1128px;  }
-.tabs > ul > li .icon-tutor-gray_16_16:hover { background-position: -6080px -1776px;  }
-.icon-tutor-gray_16_16{ background-position: -6336px 0;  }
-.tabs > ul > li .icon-tutor-gray_16_16{ background-position: -6328px 0;  }
-
-.icon-favorite-gray_8_8{ background-position: -2120px -862px;  }
-.icon-favorite-gray_8_8:hover,
-.icon-favorite-orange_8_8{ background-position: -2120px -1286px;  }
-.icon-management-gray_8_8:hover,
-.icon-management-blue_8_8{ background-position: -3111px -445px;  }
-.icon-management-gray_8_8{ background-position: -3111px -1101px;  }
-.icon-page-white_24_24{ background-position: -4104px -1784px;  }
-.icon-slides-white_24_24{ background-position: -5344px -672px;  }
-.icon-resource-white_24_24{ background-position: -4848px -1568px;  }
-.icon-spinner-gray_8_8:hover,
-.icon-spinner-blue_8_8{ background-position: -5592px -877px;  }
-.icon-spinner-gray_8_8{ background-position: -5592px -1301px;  }
-.icon-unfavorite-gray_8_8:hover,
-.icon-unfavorite-blue_8_8{ background-position: -6336px -862px;  }
-.icon-unfavorite-gray_8_8{ background-position: -6336px -1070px;  }
-.icon-video-white_24_24{ background-position: -6584px -1360px;  }
-.icon-x-gray_8_8{ background-position: -6583px -1581px;  }
-.icon-x-gray_8_8:hover,
-.icon-x-red_8_8{ background-position: -6831px 3px;  }
 
 /* Spinner generico */
 .bt-loading,

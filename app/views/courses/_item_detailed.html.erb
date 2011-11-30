@@ -10,7 +10,7 @@
         environment_course_path(item_detailed.environment, item_detailed),
         :class => 'course' %>
       <% if item_detailed.subscription_type.eql? 2 %>
-        <span class="moderated replacement icon icon-lock-gray_16_16" title="Para entrar você precisa ser aceito">Moderado</span>
+        <span class="moderated replacement icon-small icon-privacy-gray_16_18" title="Para entrar você precisa ser aceito">Moderado</span>
       <% end %>
       <ul class="tags clearfix">
         <% item_detailed.tags.each do |tag| %>

@@ -49,7 +49,7 @@
       </div><!-- end .user-summary -->
       <% if can? :manage, @user %>
         <%= link_to 'Editar', edit_user_path(@user),
-          :class => 'edit icon icon-management-gray_8_8' %>
+          :class => 'edit icon-manage-gray_8_10-before' %>
       <% end %>
 
       <% unless @user.description.blank? and @user.tag_list.empty? and

@@ -903,6 +903,7 @@
 .icon-manage-blue_16_18,
 .icon-manage-lightblue_16_18:hover { background-position: -160px -400px; }
 .icon-manage-blue_16_18-before:before,
+.icon-manage-lightblue_16_18:hover:before,
 .icon-manage-lightblue_16_18-before:hover:before,
 .local-nav .icon-manage_16_18-before:hover:before {
   content: "";
@@ -1140,7 +1141,7 @@
   background: url("../images/new/icons-small.png") -80px -2720px no-repeat;
 }
 
-.icon-privacy-grey_16_18 { background-position: 0 -1520px; }
+.icon-privacy-gray_16_18 { background-position: 0 -1520px; }
 .icon-privacy-lightblue_16_18 { background-position: -80px -1520px; }
 .icon-privacy-lightred_16_18 { background-position: -160px -1520px; }
 .icon-privacy-orange_16_18 { background-position: -320px -1520px; }
@@ -1278,6 +1279,23 @@
 
 .icon-request-help-lightblue_16_18-before:hover:before {
   background-position: -160px -1680px;
+}
+
+.icon-response-blue_8_10,
+.icon-response-gray_8_10:hover { background-position: -240px -2880px }
+.icon-response-blue_8_10-before,
+.icon-response-gray_8_10-before:hover:before {
+  content: "";
+  width: 8px;
+  height: 10px;
+  background: url("../images/new/icons-small.png") -240px -2880px no-repeat;
+}
+.icon-response-gray_8_10 { background-position: -160px -2880px }
+.icon-response-gray_8_10-before:before {
+  content: "";
+  width: 8px;
+  height: 10px;
+  background: url("../images/new/icons-small.png") -160px -2880px no-repeat;
 }
 
 .icon-seminar-blue_16_18,

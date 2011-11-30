@@ -4,11 +4,15 @@
 }
 
 #biography .remove-network {
-  width: 16px;
+  width: 10px;
   margin-top: 30px;
-  margin-right: 5px;
+  margin-right: 10px;
   display: block;
   float: right;
+}
+
+#biography .remove-network:before {
+  float: left;
 }
 
 #biography .concave-form .concave-select {
@@ -83,8 +87,15 @@
   display: block;
   margin: 10px 30px 10px 10px;
   float: left;
-  padding-left: 13px;
   font-size: .87em;
+}
+
+#curriculum .experiences .remove-experience:before,
+#curriculum .educations .remove-education:before,
+#curriculum .experiences .edit-experience:before,
+#curriculum .educations .edit-education:before {
+  float: left;
+  margin: 2px 5px 0 0;
 }
 
 #curriculum .experiences .remove-experience,

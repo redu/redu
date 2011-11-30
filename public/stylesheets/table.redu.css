@@ -82,12 +82,13 @@
   padding-right: 0px;
 }
 
-
-.concave-admin-table .icon {
-  padding-left: 13px;
-}
-
 .concave-admin-table .option {
   font-size: .85em;
+}
+
+.concave-admin-table .option:before {
+  float: left;
+  margin-top: 2px;
+  margin-right: 5px;
 }
 
