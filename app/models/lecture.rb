@@ -50,10 +50,6 @@ class Lecture < ActiveRecord::Base
   validates_presence_of :lectureable
   validates_associated :lectureable #FIXME Não foi testado, pois vai ter accepts_nested
 
-  def permalink
-    "#{Redu::Application.config.url}/lectures/#{self.id.to_s}-#{self.name.parameterize}"
-  end
-
   # Friendly url
   def to_param
     "#{id}-#{name.parameterize}"
