@@ -1,8 +1,11 @@
 $(function(){
     $.fn.refreshLectures = function(){
       this.each(function(){
-          $overlay = $("<div/>", { 'id' : 'lights_dimmed', 'class' : 'clearfix'}).hide();
-          $("body").prepend($overlay);
+          // Adicionando overlay caso ele não exista
+          if($("#lights_dimmed").length == 0) {
+            $overlay = $("<div/>", { 'id' : 'lights_dimmed', 'class' : 'clearfix'}).hide();
+            $("body").prepend($overlay);
+          }
 
           // Luzes
           $("#lights").toggle(
