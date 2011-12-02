@@ -26,31 +26,9 @@ module FoldersHelper
     end
   end
 
-  # Creates a check box and checks/unchecks, disables it depending on the given parameters.
-  # The name of the check box is based on the given type.
-  # This helper method is used for show the permission in the folder list view.
-  def CRUD_check_box(type, group_id, folder_id, disabled)
-    case type
-    when 'create'
-      checked = true
-      check_box('create_check_box', group_id, {:checked => checked, :disabled => disabled, :onclick => 'CheckRead(this.checked, ' + group_id.to_s + ')'})
-    when 'read'
-      checked = true
-      check_box('read_check_box', group_id, {:checked => checked, :disabled => disabled, :onclick => 'UncheckCreateUpdateDelete(this.checked, ' + group_id.to_s + ')'})
-    when 'update'
-      checked = true
-      check_box('update_check_box', group_id, {:checked => checked, :disabled => disabled, :onclick => 'CheckRead(this.checked, ' + group_id.to_s + ')'})
-    when 'delete'
-      checked = true
-      check_box('delete_check_box', group_id, {:checked => checked, :disabled => disabled, :onclick => 'CheckRead(this.checked, ' + group_id.to_s + ')'})
-    end
-  end
-
   def bytes_to_kb(size_in_bytes)
      "%0.2f" % (size_in_bytes / (1024.0));
   end
-
-
 
   def folder_path(folder)
     path = h(folder.name)
@@ -65,5 +43,4 @@ module FoldersHelper
 
     return path.sub("root", "Arquivos de Apoio")
   end
-
 end
