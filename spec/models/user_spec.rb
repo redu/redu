@@ -501,12 +501,6 @@ describe User do
     subject.display_name.should == "(usuário removido)"
   end
 
-  it "retrieves his first name or login" do
-    subject.f_name.should == subject.first_name
-    subject.first_name = nil
-    subject.f_name.should == subject.login
-  end
-
   it "verifies if he can post on a space"
   it "retrieves his association with a thing" do
     environment = Factory(:environment)

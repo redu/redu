@@ -34,24 +34,14 @@ class Ability
     alias_action :show_mural, :contacts_endless, :environments_endless, :to => :read
 
     alias_action :edit_account,
-      :update_account, :edit_pro_details, :update_pro_details,
-      :invite, :activate, :deactivate,
-      :change_profile_photo, :crop_profile_photo,
-      :upload_profile_photo, :activity_xml, :annotations,
+      :update_account, :edit_pro_details, :invite, :activate, :deactivate,
       :account, :home, :my_wall, :to => :manage
 
     # Lecture
-    alias_action :cancel, :unpublished, :to => :manage
-    alias_action :download_attachment, :rate, :done,
-      :to => :read
-    alias_action :unpublished_preview, :to => :preview
+    alias_action :rate, :done, :to => :read
 
     # Message
     alias_action :delete_selected, :to => :manage
-
-    # Subject
-    alias_action :cancel, :to => :manage
-    alias_action :statuses, :mural, :to => :read
 
     # Presence
     alias_action :auth, :to => :manage
@@ -62,7 +52,6 @@ class Ability
 
     # Todos podem ver o preview
     can :preview, [Course, Environment], :published => true
-    can :preview, Subject, :visible => true
 
     # Todos podem criar usuários
     can :create, User
@@ -105,6 +94,7 @@ class Ability
       end
 
       # Space
+      # Necessário para visualizar os usuários do Space
       can :preview, Space do |space|
         user.can_read? space
       end

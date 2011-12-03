@@ -3,8 +3,6 @@ class ExperiencesController < ApplicationController
 
   load_resource :user
   load_and_authorize_resource :experience, :through => :user
-  def new
-  end
 
   def create
     if params[:experience][:current] == "1"

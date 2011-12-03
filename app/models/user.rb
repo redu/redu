@@ -45,11 +45,6 @@ class User < ActiveRecord::Base
   has_many :subjects, :order => 'title ASC',
     :conditions => { :finalized => true }
 
-  #groups
-  # FIXME Verificar necessidade (GroupUser.rb não existe). Não foi testado.
-  has_many :group_user
-  has_many :groups, :through => :group_user
-
   #student_profile
   has_many :student_profiles
   has_many :plans
@@ -376,16 +371,6 @@ class User < ActiveRecord::Base
     crypted_password == encrypt(password)
   end
 
-  # FIXME Verificar necessidade (não foi testado)
-  def location
-    metro_area && metro_area.name || ""
-  end
-
-  # FIXME Verificar necessidade (não foi testado)
-  def full_location
-    "#{metro_area.name if self.metro_area}#{" , #{self.country.name}" if self.country}"
-  end
-
   def reset_password
     new_password = newpass(8)
     self.password = new_password
@@ -402,41 +387,6 @@ class User < ActiveRecord::Base
     self.update_attribute(:last_login_at, Time.now)
   end
 
-  # FIXME Verificar necessidade (não foi testado)
-  def add_offerings(skills)
-    skills.each do |skill_id|
-      offering = Offering.new(:skill_id => skill_id)
-      offering.user = self
-      if self.under_offering_limit? && !self.has_skill?(offering.skill)
-        if offering.save
-          self.offerings << offering
-        end
-      end
-    end
-  end
-
-  # FIXME Verificar necessidade (não foi testado)
-  def under_offering_limit?
-    self.offerings.size < 3
-  end
-
-  # FIXME Verificar necessidade (não foi testado)
-  def has_skill?(skill)
-    self.offerings.collect{|o| o.skill }.include?(skill)
-  end
-
-  # FIXME Verificar necessidade (não foi testado)
-  # A tabela Frienship não existe
-  def has_reached_daily_friend_request_limit?
-    friendships_initiated_by_me.where('created_at > ?', Time.now.beginning_of_day).count >= Friendship.daily_request_limit
-  end
-
-  # FIXME Verificar necessidade (não foi testado)
-  def friends_ids
-    return [] if accepted_friendships.empty?
-    accepted_friendships.map{|fr| fr.friend_id }
-  end
-
   def display_name
     if self.removed?
       return '(usuário removido)'
@@ -448,14 +398,6 @@ class User < ActiveRecord::Base
       login
     end
 
-  end
-
-  def f_name
-    if self.first_name
-      self.first_name
-    else
-      login
-    end
   end
 
   # Pega associação com Entity (aplica-se a Environment, Course, Space e Subject)
