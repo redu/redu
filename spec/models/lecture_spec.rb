@@ -199,12 +199,6 @@ describe Lecture do
     end
   end
 
-  it "generates a permalink" do
-    Redu::Application.config.url.should_not be_nil
-    subject.permalink.should include(subject.id.to_s)
-    subject.permalink.should include(subject.name.parameterize)
-  end
-
   it "generates a clone of itself" do
     subject_owner = Factory(:user)
     space = Factory(:space)

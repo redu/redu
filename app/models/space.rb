@@ -84,16 +84,6 @@ class Space < ActiveRecord::Base
     membership.update_attributes({:role => role})
   end
 
-  def publish!
-    self.published = 1
-    self.save
-  end
-
-  def unpublish!
-    self.published = 0
-    self.save
-  end
-
   # Após a criação do space, todos os usuários do course ao qual
   # o space pertence tem que ser associados ao space
   def create_space_association_for_users_course

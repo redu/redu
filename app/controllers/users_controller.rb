@@ -281,17 +281,6 @@ class UsersController < BaseController
     end
   end
 
-  def activity_xml
-    # talvez seja necessario setar o atributo depth nos nós para que funcione corretamente.
-    # ver: http://asterisq.com/products/constellation/roamer/integration#data_rest_tree
-
-    @user = User.find((params[:node_id]) ?  params[:node_id] :  params[:id] )
-    @activities = Status.activities(@user)
-    respond_to do |format|
-      format.xml
-    end
-  end
-
   def home
     @friends = @user.friends.paginate(:page => 1, :per_page => 9)
     @friends_requisitions = @user.friends_pending

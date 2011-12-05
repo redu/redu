@@ -9,21 +9,6 @@ describe ExperiencesController do
     UserSession.create @user
   end
 
-  describe "GET 'new'" do
-    before do
-      @params = { :locale => "pt-BR", :user_id => @user.id }
-      get :new, @params
-    end
-
-    it "should be successful" do
-      response.should be_success
-    end
-
-    it "assings @experience" do
-      assigns[:experience].should_not be_nil
-    end
-  end
-
   describe "POST 'create'" do
     before do
       @post_params = { :locale => "pt-BR", :format => "js",
@@ -80,7 +65,8 @@ describe ExperiencesController do
   describe "GET 'edit'" do
     before do
       @experience = Factory(:experience, :user => @user)
-      @params = { :locale => "pt-BR", :user_id => @user.id, :id => @experience.id }
+      @params = { :locale => "pt-BR", :format => "js", :user_id => @user.id,
+                  :id => @experience.id }
       get :edit, @params
     end
 
@@ -96,8 +82,9 @@ describe ExperiencesController do
   describe "POST 'update'" do
     before do
       @experience = Factory(:experience, :user => @user)
-      @post_params = { :locale => "pt-BR", :user_id => @user.id,
-        :id => @experience.id, :experience => { :title => "Writer" }}
+      @post_params = { :locale => "pt-BR", :format => "js",
+                       :user_id => @user.id, :id => @experience.id,
+                       :experience => { :title => "Writer" }}
     end
     context "when success" do
       before do
@@ -156,8 +143,8 @@ describe ExperiencesController do
   describe "POST 'destroy'" do
     before do
       @experience = Factory(:experience, :user => @user)
-      @post_params = { :locale => "pt-BR", :user_id => @user.id,
-        :id => @experience.id}
+      @post_params = { :locale => "pt-BR", :format => "js",
+                       :user_id => @user.id, :id => @experience.id }
     end
 
     it "should be successful" do

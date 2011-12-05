@@ -243,18 +243,6 @@ pt-BR:
               blank: ": Por favor, digite um assunto."
             recipient:
               blank: ": Destinatário inexistente, digite um válido."
-        beta_candidate:
-            attributes:
-                email:
-                    blank: ": Por favor, digite um e-mail."
-                    too_short: ": E-mail inválido"
-                    taken: ": O e-mail informado já está cadastrado."
-                name:
-                    blank: ": Por favor, digite seu nome."
-                    too_short: ": Nome inválido"
-                role:
-                    blank: ": Por favor, informe seu papel (professor/aluno)."
-                    inclusion: ": Por favor, informe seu papel (professor/aluno)."
         lazy_asset:
           attributes:
            name:

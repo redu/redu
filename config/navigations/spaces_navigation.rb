@@ -12,6 +12,8 @@ SimpleNavigation::Configuration.run do |navigation|
   navigation.items do |primary|
     primary.dom_class = 'local-nav'
     primary.item :content, 'Conteúdo', space_path(@space),
+      :highlights_on => action_matcher({ 'spaces' => 'show',
+                                         'subjects' => 'show' }),
       :link => { :class => 'icon-subject_16_18-before' }
     primary.item :wall, 'Mural', mural_space_path(@space),
       :link => { :class => 'icon-wall_16_18-before' }

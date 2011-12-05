@@ -46,9 +46,6 @@ Redu::Application.routes.draw do
       get :students_endless
       get :admin_subjects
     end
-    collection do
-      get :cancel
-    end
 
     resources :folders, :only => [:update, :create, :index] do
       member do
@@ -68,12 +65,6 @@ Redu::Application.routes.draw do
           post :rate
           post :done
         end
-        collection do
-          get :unpublished_preview
-          get :cancel
-          get :unpublished
-          get :published
-        end
       end
     end
 
@@ -90,8 +81,6 @@ Redu::Application.routes.draw do
   # Users
   resources :users, :except => [:index] do
     member do
-      get :activity_xml
-      put :change_profile_photo
       get :edit_account
       put :update_account
       get :forgot_password
@@ -115,15 +104,9 @@ Redu::Application.routes.draw do
 
     resources :friendships, :only => [:index, :create, :destroy]
 
-    resources :activities do
-      collection do
-        get :network
-      end
-    end
-
     resources :invitations
 
-    resources :favorites, :only => [:index] do
+    resources :favorites, :only => [] do
       member do
         post :favorite
         post :not_favorite
@@ -136,8 +119,6 @@ Redu::Application.routes.draw do
         post :delete_selected
       end
     end
-
-    resources :photo_manager, :only => ['index']
 
     resources :plans, :only => [:index]
     resources :experiences

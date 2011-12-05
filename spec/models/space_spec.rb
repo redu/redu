@@ -175,20 +175,6 @@ describe Space do
 
   end
 
-  it "change to published" do
-    space = Factory(:space, :published => false)
-    expect {
-      space.publish!
-    }.should change { space.published }.to(true)
-  end
-
-  it "change to unpublished" do
-    space = Factory(:space, :published => true)
-    expect{
-      space.unpublish!
-    }.should change { space.published }.to(false)
-  end
-
   context "when counting lectures" do
     before do
       @lectures = 3.times.inject([]) do |acc,i|

@@ -153,23 +153,6 @@ class LecturesController < BaseController
     end
   end
 
-  def cancel
-    if session[:lecture_id]
-      lecture = Lecture.find(session[:lecture_id])
-      if lecture
-        authorize! :manage, lecture
-        # Se não tiver nada na sessão vai parecer que
-        # o usuário teve acesso, mas na realidade nada foi destruído.
-        lecture.destroy
-      end
-      session[:lecture_id] = nil
-    end
-
-    flash[:notice] = "Criação de aula cancelada."
-    @subject = Subject.find(params[:subject_id])
-    redirect_to lazy_space_subject_path(@space, @subject)
-  end
-
   # PUT /lectures/1
   # PUT /lectures/1.xml
   def update
@@ -210,19 +193,6 @@ class LecturesController < BaseController
         flash[:notice] = "A aula foi removida."
         redirect_to space_subject_path(@space, @subject)
       end
-    end
-  end
-
-  # lista aulas não publicados (em edição)
-  # Não precisa de permissão, pois utiliza o current_user.
-  def unpublished
-    @lectures = current_user.lectures.unpublished.include(:owner).
-                  paginate(:page => params[:page],
-                           :order => 'updated_at DESC',
-                           :per_page => Redu::Application.config.items_per_page)
-
-    respond_to do |format|
-      format.js
     end
   end
 

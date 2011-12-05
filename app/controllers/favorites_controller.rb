@@ -1,25 +1,4 @@
 class FavoritesController < BaseController
-
-  # Não precisa de permissão, pois ele vai ver os favoritos do current_user.
-  def index
-    @user = current_user
-
-    respond_to do |format|
-      case params[:type]
-      when 'statuses'
-        format.js do
-          render :template => 'favorites/statuses.rjs'
-        end
-      end
-      format.html do
-        @exams = current_user.favorites.where(:favoritable_type => 'Lecture')
-                  paginate(:page => params[:page], :order => 'created_at DESC',
-                           :per_page => Redu::Application.config.items_per_page)
-
-      end
-    end
-  end
-
   def favorite
     if (params[:id].to_i != 0) &&
       ((params[:type].eql? 'Lecture') || (params[:type].eql? 'Exam') ||
