@@ -322,45 +322,53 @@ describe Lecture do
 
 
     context "when building attributes" do
-      before do
-        @alternatives = {
-          "1" => {:text => "Lorem ipsum dolor", :correct => true},
-          "2" => {:text => "Lorem ipsum dolor"},
-          "3" => {:text => "Lorem ipsum dolor"}
-        }
-        @questions = 3.times.collect do
-          { :statement => "Lorem ipsum dolor sit amet, consectetur?",
-            :explanation => "Lorem ipsum dolor sit amet?",
-            :alternatives_attributes => @alternatives.clone }
+      context "when Exercise" do
+        before do
+          @alternatives = {
+            "1" => {:text => "Lorem ipsum dolor", :correct => true},
+            "2" => {:text => "Lorem ipsum dolor"},
+            "3" => {:text => "Lorem ipsum dolor"}
+          }
+          @questions = 3.times.collect do
+            { :statement => "Lorem ipsum dolor sit amet, consectetur?",
+              :explanation => "Lorem ipsum dolor sit amet?",
+              :alternatives_attributes => @alternatives.clone }
+          end
+
+          @params = { :lecture =>
+                      { :name => "Cool lecture",
+                        :lectureable_attributes =>
+                      { :_type => 'Exercise',
+                        :questions_attributes => @questions }}}
         end
 
-        @params = { :lecture =>
-                    { :name => "Cool lecture",
-                      :lectureable_attributes =>
-                    { :_type => 'Exercise',
-                      :questions_attributes => @questions }}}
-      end
+        it "should build the Exercise" do
+          lecture = Lecture.new(@params[:lecture])
+          lecture.should be_valid
+        end
 
-      it "should build the Exercise" do
-        lecture = Lecture.new(@params[:lecture])
-        lecture.should be_valid
-      end
-
-      it "should create the Exercise" do
-        expect {
-          Lecture.create(@params[:lecture]) do |lecture|
+        it "should create the Exercise" do
+          expect {
+            Lecture.create(@params[:lecture]) do |lecture|
             lecture.owner = @sub.owner
             lecture.subject = @sub
-          end
-        }.should change(Exercise, :count).by(1)
+            end
+          }.should change(Exercise, :count).by(1)
+        end
+
+        it "should return nil when there is not a _type" do
+          subject.build_lectureable({}).should be_nil
+        end
+
+        it "should return nil when type is blank" do
+          subject.build_lectureable({ :_type => '' }).should be_nil
+        end
       end
 
-      it "should return nil when there is not a _type" do
-        subject.build_lectureable({}).should be_nil
-      end
-
-      it "should return nil when type is blank" do
-        subject.build_lectureable({ :_type => '' }).should be_nil
+      context "when Existent" do
+        it "returns nil when type is Existent" do
+          subject.build_lectureable({ :_type => 'Existent'}).should be_nil
+        end
       end
     end
   end
