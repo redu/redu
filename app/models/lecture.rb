@@ -97,7 +97,11 @@ class Lecture < ActiveRecord::Base
   def build_lectureable(params)
     return if params[:_type].blank?
 
-    klass = params.delete(:_type).constantize
+    begin
+      klass = params.delete(:_type).constantize
+    rescue NameError # Caso seja não seja um lectureable válido
+      return nil
+    end
     relation = klass.reflections[:lecture].try(:options)
 
     if relation && relation[:as] == :lectureable
