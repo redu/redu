@@ -14,7 +14,7 @@
           </span>
         </div>
       </div>
-    <% elsif item.logeable && (item.logeable_type.eql? 'Friendship') %>
+    <% elsif (item.logeable_type.eql? 'Friendship') %>
       <div class="status icons-big-after icon-contact-lightblue_64_66-after">
         <div class="status-text">
           <%= image_tag item.user.avatar.url(:thumb_32), :class => "avatar", :width => 32, :height => 32 %>
