@@ -915,4 +915,21 @@ describe CoursesController do
       end
     end
   end
+
+  context "when course is unpublised" do
+    context "GET preview" do
+      before do
+        @course = Factory(:course, :published => false)
+
+        get :show, @params = { :locale => 'pt-BR', :environment_id => @course.environment.path,
+        :id => @course.path }
+      end
+
+      it "should show the preview page" do
+        response.should redirect_to(preview_environment_course_path(@course.environment,
+                                                                    @course))
+      end
+
+    end
+  end
 end
