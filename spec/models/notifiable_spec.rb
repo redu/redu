@@ -11,9 +11,10 @@ describe Notifiable do
       subject.counter.should >= 0
     end
 
-    if "increments counter if its nil" do
+    it "increments counter if its nil" do
       subject.counter = nil
       subject.increment_counter
       subject.counter.should == 1
+    end
   end
 end
