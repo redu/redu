@@ -307,6 +307,20 @@ class UsersController < BaseController
     end
   end
 
+  def notifiables
+    @speaker = current_user.notifiables.where({:name => "Speaker"}).first
+    respond_to do |format|
+      format.json  { render :json => @speaker }
+    end
+  end
+
+  def reset_notifiables
+    @speaker = current_user.notifiables.where({:name => "Speaker"}).first
+    @speaker.counter = 0
+    @speaker.save
+    render :nothing => true
+  end
+
   def account
     respond_to do |format|
       format.html

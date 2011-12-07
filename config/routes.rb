@@ -95,6 +95,8 @@ Redu::Application.routes.draw do
       get :environments_endless
       get :show_mural
       get :curriculum
+      get :notifiables
+      get :reset_notifiables
     end
     collection do
       get :auto_complete

@@ -1,2 +1,0 @@
-class NotifiableController < ApplicationController
-end
