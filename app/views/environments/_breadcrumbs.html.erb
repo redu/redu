@@ -5,10 +5,13 @@
         <%= link_to 'Home', home_user_path(current_user),
           :class => 'replacement icon-small icon-home-lightblue_16_18' %>
       </li>
-    <li class="icon-expand-gray_16_18-before">
     <% else %>
-      <li>
+      <li class="compact">
+        <%= link_to 'Home', home_path,
+          :class => 'replacement icon-small icon-home-gray_16_18' %>
+      </li>
     <% end %>
+    <li class="icon-expand-gray_16_18-before">
       <%= link_to environment.name, environment_path(environment),
         :class => 'icon-environment-lightblue_16_18-before' %>
     </li>
