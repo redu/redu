@@ -6,7 +6,7 @@ $(function(){
           $val = $this.val(),
           valArray = $val.split('\\'),
           newVal = valArray[valArray.length-1],
-          $button = $this.siblings('.button'),
+          $button = $this.siblings('.concave-button, .concave-clean, .upload-button'),
           $fakeFile = $this.siblings('.file-holder');
 
       if(newVal !== '') {
@@ -19,10 +19,6 @@ $(function(){
     utils.toggleFields = function(el){
       var $row = $(el).parents("li:first");
       $row.find(".folder-name, .rename-folder").toggle();
-    };
-
-    utils.toggleSpinner = function(el){
-      $(el).next(".spinner:first").toggle();
     };
 
     utils.toggleLoader = function(){
@@ -47,7 +43,7 @@ $(function(){
     utils.setup();
 
     // Criar diretorio
-    $(".new-folder .button").live("click", function(e){
+    $(".new-folder .concave-clean").live("click", function(e){
         $(".new-file-inner:visible", "#folder-admin").slideUp("fast");
         $(this).next(".holder").slideToggle("fast");
 
@@ -55,7 +51,7 @@ $(function(){
     });
 
     // Upload
-    $(".new-file .button").live("click", function(e){
+    $(".new-file .upload-button").live("click", function(e){
         $(".new-folder-inner:visible", "#folder-admin").slideUp("fast");
         $(this).next(".holder").slideToggle("fast");
         e.preventDefault();
@@ -67,12 +63,6 @@ $(function(){
     // Rename
     $(".rename, .rename-folder .cancel").live("click", function(e){
         utils.toggleFields(this);
-        e.preventDefault();
-    });
-
-    // Remover arquivos e pastas
-    $(".delete").live("click", function(e){
-        utils.toggleSpinner(this);
         e.preventDefault();
     });
 });

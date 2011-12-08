@@ -754,7 +754,7 @@ body {
   float:  right;
   width: 200px;
   text-align: right;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   margin-right: 50px;
 }
 
@@ -2364,18 +2364,6 @@ body {
   margin-top: -2px;
 }
 
-#content .actions .concave-button {
-  padding: 0;
-  margin: 0;
-
-  -webkit-border-top-right-radius: 3px;
-  -webkit-border-bottom-right-radius: 3px;
-  -moz-border-radius-topright: 3px;
-  -moz-border-radius-bottomright: 3px;
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
-}
-
 #content .actions .send-message .write-message:before {
   float: left;
   margin: -3px 5px 0 5px;
@@ -3147,7 +3135,6 @@ body {
   top: 30px;
   border: 1px solid #E6E6E5;
   padding: 5px;
-  width: 235px;
   background-color: white;
 
   -moz-border-radius: 3px;
@@ -3177,7 +3164,7 @@ body {
 
 #folder-admin .new-file .file-wrapper {
   position: relative;
-  width: 190px;
+  width: 220px;
   float: left;
   overflow: hidden;
   cursor: pointer;
@@ -3195,18 +3182,17 @@ body {
 #folder-admin .new-file .file-wrapper .file-holder {
   font-size: .85em;
   color: #b3b2b3;
-  margin-left: 5px;
+  margin: 5px 0 0 5px;
   display: block;
   float: left;
   width: 100px;
-  height: 30px;
+  height: 25px;
   overflow: hidden;
 }
 
 #folder-admin .new-file .browse {
   display: block;
   float: right;
-  width: 70px;
 }
 
 #folder-admin .new-file .file-wrapper input[type=file] {
@@ -3223,11 +3209,18 @@ body {
   opacity: 0.01;
 }
 
-#folder-admin .new-folder-inner input[type=submit],
-#folder-admin .new-file-inner input[type=submit] {
+#folder-admin .new-folder-inner .concave-button,
+#folder-admin .new-file-inner .concave-button {
   float: right;
   clear: none;
-  margin: 0;
+}
+
+#folder-admin .new-folder-inner .concave-button {
+  margin: 5px 0 0 0;
+}
+
+#folder-admin .new-file-inner .concave-button {
+  margin: 0 0 0 5px;
 }
 
 #file_list .title {
@@ -5004,6 +4997,7 @@ table.spaced tr td {
 
 .management .form-header-closer,
 .management .form-header {
+  float: left;
   margin-bottom: 20px;
 }
 
@@ -5132,7 +5126,6 @@ table.concave-invitation-table .cell-reinvite .reinvited {
   display: block;
   margin-left: 50px;
   margin-bottom: 10px;
-  float: none;
 }
 
 #space-manage .concave-form .concave-label.added-lectures:before {

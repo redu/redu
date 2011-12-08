@@ -203,17 +203,24 @@
 
   .concave-button,
   .concave-cancel {
-    margin: 20px 20px 0 0;
     border: 1px solid #4CACD5;
     background-color: #73C3E6;
   }
 
+  .concave-form .concave-button,
+  .concave-form .concave-cancel {
+    margin: 20px 20px 0 0;
+  }
+
   input[type="submit"].concave-remove,
   .concave-remove {
-    margin: 20px 0px 0px 20px;
     border: 1px solid rgb(232, 59, 59);
     color: white;
     background-color: rgb(255, 109, 109);
+  }
+
+  .concave-form .concave-remove {
+    margin: 20px 0px 0px 20px;
   }
 
   .concave-form .concave-button,
