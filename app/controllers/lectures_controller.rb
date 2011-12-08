@@ -45,12 +45,6 @@ class LecturesController < BaseController
       redirect_to removed_page_path and return
     end
 
-    @subject_users = @subject.members
-
-    #relacionados
-    @related_lectures = Lecture.related_to(@lecture).limit(3).
-      order('rating_average DESC')
-
     @status = Status.new
     @statuses = Status.from_hierarchy(@lecture).
       paginate(:page => params[:page],:order => 'created_at DESC',
