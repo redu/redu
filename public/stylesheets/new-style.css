@@ -2203,6 +2203,12 @@ body {
 
 .statuses .status-message p {
   margin-left: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.statuses .status-message p a {
+  white-space: nowrap;
 }
 
 .statuses .status-content {
