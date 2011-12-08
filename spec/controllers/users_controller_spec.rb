@@ -377,7 +377,6 @@ describe UsersController do
       @user = Factory(:user)
       activate_authlogic
       UserSession.create @user
-
     end
 
     [:friends, :statuses, :status].each do |var|
@@ -392,6 +391,27 @@ describe UsersController do
       @params = { :locale => "pt-BR", :id => @contact.login }
       get :my_wall, @params
       response.should redirect_to(home_path)
+    end
+  end
+
+  context "GET show" do
+    before do
+      @user = Factory(:user)
+      @courses = 4.times.collect { Factory(:course) }
+      @moderated_courses = 4.times.collect { Factory(:course,
+                                                     :subscription_type => 2) }
+      @approved_courses = @courses[0..2].each { |c| c.join(@user) }
+      @moderated_courses[0..2].each { |c| c.join(@user) }
+
+      activate_authlogic
+      UserSession.create @user
+
+      get :show, :locale => "pt-BR", :id => @user.login
+    end
+
+    it "assigns subscribed_courses_count" do
+      assigns[:subscribed_courses_count].should_not be_nil
+      assigns[:subscribed_courses_count].should == @approved_courses.size
     end
   end
 end

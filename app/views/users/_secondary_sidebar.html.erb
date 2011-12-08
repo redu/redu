@@ -41,7 +41,7 @@
 
   <div class="environments">
     <div class="call">
-      <span class="icon-environment-white-green_16_18-before">Cursos inscritos: <%= @user.courses.count %></span>
+      <span class="icon-environment-white-green_16_18-before">Cursos inscritos: <%= subscribed_courses_count %></span>
     </div>
     <ul>
       <% @environments = @user.environments.page(params[:page]).per(4) %>

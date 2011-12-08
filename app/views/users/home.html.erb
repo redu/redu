@@ -8,7 +8,7 @@
   </ol>
   <% unless @friends_requisitions.empty? %>
     <ul class="friends-requisitions">
-      <%= render :partial => 'users/friend_requisition',
+      <%= render :partial => 'friendships/friend_requisition',
         :collection => @friends_requisitions, :as => :friend %>
     </ul>
   <% end %>

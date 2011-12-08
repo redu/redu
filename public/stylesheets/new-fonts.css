@@ -78,6 +78,9 @@ h1, h2, h3, h4, h5, h6 {
 
 .pretty-text p {
   padding-bottom: 1.5em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .pretty-text ul,

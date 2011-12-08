@@ -824,6 +824,14 @@
   background: url("../images/new/icons-small.png") -80px -2240px no-repeat;
 }
 
+.icon-home-gray_16_18 { background-position: -560px -2240px; }
+.icon-home-gray_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -560px -2240px no-repeat;
+}
+
 .icon-home-lightblue_16_18 { background-position: 0 -2240px; }
 .icon-home-lightblue_16_18-before:before,
 .local-nav .icon-home_16_18-before:before {

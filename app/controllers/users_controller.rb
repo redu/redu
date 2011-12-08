@@ -43,6 +43,7 @@ class UsersController < BaseController
       redirect_to removed_page_path and return
     end
 
+    @subscribed_courses_count = @user.user_course_associations.approved.count
     respond_to do |format|
       format.html
     end

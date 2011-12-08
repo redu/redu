@@ -127,4 +127,5 @@
   </div><!-- end #profile -->
 </div><!-- end .main -->
 
-<%= render :partial => 'users/secondary_sidebar' %>
+<%= render 'users/secondary_sidebar',
+  :subscribed_courses_count => @subscribed_courses_count %>

@@ -134,13 +134,6 @@ describe Lecture do
         Lecture.documents.should == documents
     end
 
-    it "retrieves lectures related to a specified lecture" do
-      lecture = Factory(:lecture, :subject => @sub, :name => "Item com nome")
-      lecture2 = Factory(:lecture, :subject => @sub, :name => "Item")
-
-      Lecture.related_to(lecture2).should == [lecture]
-    end
-
     it "retrieves recent lectures (created until 1 week ago)" do
       lectures = (1..3).collect { |i| Factory(:lecture,
                                               :created_at => (i*3).day.ago) }

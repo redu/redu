@@ -9,7 +9,7 @@
   <div id="course-users" class="body">
     <div class="actions clearfix">
     <% if can? :invite_members, @course %>
-      <%= link_to "Convidar membros", admin_invitations_environment_course_path(@environment, @course), :class => "button" %>
+      <%= link_to "Convidar membros", admin_invitations_environment_course_path(@environment, @course), :class => "concave-button" %>
     <% end %>
     </div>
     <%= big_tabs :courses do %>
