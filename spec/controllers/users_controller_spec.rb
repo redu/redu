@@ -414,4 +414,25 @@ describe UsersController do
       assigns[:subscribed_courses_count].should == @approved_courses.size
     end
   end
+
+  context "GET show_mural" do
+    before do
+      @user = Factory(:user)
+      @courses = 4.times.collect { Factory(:course) }
+      @moderated_courses = 4.times.collect { Factory(:course,
+                                                     :subscription_type => 2) }
+      @approved_courses = @courses[0..2].each { |c| c.join(@user) }
+      @moderated_courses[0..2].each { |c| c.join(@user) }
+
+      activate_authlogic
+      UserSession.create @user
+
+      get :show_mural, :locale => "pt-BR", :id => @user.login
+    end
+
+    it "assigns subscribed_courses_count" do
+      assigns[:subscribed_courses_count].should_not be_nil
+      assigns[:subscribed_courses_count].should == @approved_courses.size
+    end
+  end
 end
