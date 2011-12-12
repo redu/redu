@@ -346,6 +346,8 @@ class UsersController < BaseController
     @statusable = @user
     @status = Status.new
 
+    @subscribed_courses_count = @user.user_course_associations.approved.count
+
     respond_to do |format|
       format.html
       format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
