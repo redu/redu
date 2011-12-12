@@ -2141,6 +2141,7 @@ body {
   font-size: .9em;
   color: #B2B2B2;
   overflow: hidden;
+  margin-left: 21px;
 }
 
 .statuses .status-info {
@@ -2300,7 +2301,8 @@ body {
 }
 
 .statuses .status-icon {
-  width: 480px;
+  padding-right: 65px;
+  overflow: hidden;
 }
 
 .statuses .status-icon:before {
