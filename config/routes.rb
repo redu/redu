@@ -90,6 +90,7 @@ Redu::Application.routes.draw do
       put :deactivate
       get :home
       get :my_wall
+      get :notifications
       get :account
       get :contacts_endless
       get :environments_endless

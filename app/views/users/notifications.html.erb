@@ -1,0 +1,29 @@
+<%= render :partial => 'users/home_sidebar' %>
+<div class="main grid_10" style="width: 580px;">
+
+<div id="breadcrumbs" class="clearfix" style="border-bottom:0px">
+  <ol class="clearfix">
+    <li class="compact">
+      <%= link_to 'Home', home_user_path(current_user),
+        :class => 'replacement icon-small icon-home-lightblue_16_18' %>
+    </li>
+    <li class="icon-expand-gray_16_18-before">
+      <%= link_to 'Avise-me', notifications_user_path(@user),
+        :class => 'icon-bulletin-lightblue_16_18' %>
+    </li>
+  </ol>
+</div><!-- end #breadcrumbs -->
+
+<div class="body-header">
+  <h4 class="title icon-manage-lightblue_32_34-before">Avise-me</h4>
+  <p>Saiba o que acontece no Redu e que se relaciona diretamente com você: convites para amizades; participações em cursos; respostas a comentários seus, etc.</p>
+</div>
+
+<div id="statuses" class="statuses">
+  <ol>
+    <%= render :partial => 'statuses/item', :collection => @statuses %>
+  </ol>
+  <%= will_paginate @statuses, :renderer => EndlessRenderer %>
+</div><!-- end .statuses -->
+
+</div><!-- end .main -->

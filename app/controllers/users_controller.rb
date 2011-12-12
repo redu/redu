@@ -307,6 +307,18 @@ class UsersController < BaseController
     end
   end
 
+  def notifications
+    @friends = @user.friends.paginate(:page => 1, :per_page => 9)
+    @statuses = @user.statuses.
+      paginate(:page => params[:page], :per_page => 10)
+    @status = Status.new
+
+    respond_to do |format|
+      format.html
+      format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
+    end
+  end
+
   def notifiables
     @speaker = current_user.notifiables.where({:name => "Speaker"}).first
     respond_to do |format|

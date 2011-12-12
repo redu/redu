@@ -824,6 +824,23 @@
   background: url("../images/new/icons-small.png") -80px -2240px no-repeat;
 }
 
+.icon-bulletin-blue_16_18,
+.icon-bulletin-blue_16_18-before,
+.icon-bulletin-lightblue_16_18-before:hover {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -560px -2080px no-repeat;
+}
+
+.icon-bulletin-lightblue_16_18,
+.icon-bulletin-lightblue_16_18-before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -480px -2080px no-repeat;
+}
+
 .icon-home-lightblue_16_18 { background-position: 0 -2240px; }
 .icon-home-lightblue_16_18-before:before,
 .local-nav .icon-home_16_18-before:before {

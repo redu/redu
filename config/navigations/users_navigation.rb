@@ -49,6 +49,9 @@ SimpleNavigation::Configuration.run do |navigation|
         :link => { :class => 'icon-add_message_16_18-before' }
       end
 
+    primary.item :notifications, 'Avise-me', notifications_user_path(current_user),
+      :link => { :class => 'icon-bulletin-lightblue_16_18-before' }
+
     primary.item :wall, 'Meu Mural', my_wall_user_path(current_user),
       :link => { :class => 'icon-wall_16_18-before' }
 

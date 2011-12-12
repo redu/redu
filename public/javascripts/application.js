@@ -19,6 +19,12 @@ jQuery(function(){
         $(this).find("ul").toggle();
     });
 
+    // Dropdown de Notificações
+    $("#nav-notifications").hover(function(){
+        $(this).find(".notifications").toggleClass("hover");
+        $(this).find("ul").toggle();
+    });
+
     // Aumentar form de criação de Status
     $("input[type=submit], .cancel, .char-limit", ".inform-my-status").hide();
     $(".inform-my-status textarea").live("focus", function(e){
