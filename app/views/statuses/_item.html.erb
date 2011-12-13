@@ -135,11 +135,11 @@
             <span class="date">
               <%= time_ago_in_words item.created_at %>
             </span>
-            <div class="status-message">
-              <p>
-                <%= raw auto_link(item.text) %>
-              </p>
-            </div>
+          </div>
+          <div class="status-message">
+            <p>
+              <%= raw auto_link(item.text) %>
+            </p>
           </div>
           <ul class="actions clearfix">
             <% if can? :respond, item %>
@@ -185,11 +185,11 @@
             <span class="date">
               <%= time_ago_in_words item.created_at %>
             </span>
-            <div class="status-message">
-              <p>
-                <%= raw auto_link(item.text) %>
-              </p>
-            </div>
+          </div>
+          <div class="status-message">
+            <p>
+              <%= raw auto_link(item.text) %>
+            </p>
           </div>
           <ul class="actions clearfix">
             <% if can? :respond, item %>
@@ -235,11 +235,11 @@
             <span class="date">
               <%= time_ago_in_words item.created_at %>
             </span>
-            <div class="status-message">
-              <p>
-                <%= raw auto_link(item.text) %>
-              </p>
-            </div>
+          </div>
+          <div class="status-message">
+            <p>
+              <%= raw auto_link(item.text) %>
+            </p>
           </div>
           <ul class="actions clearfix">
             <% if can? :respond, item %>
@@ -277,11 +277,11 @@
           <% if item.statusable_type.eql?('User') %>
             <% unless item.statusable.eql?(current_user) %>
               comentou no mural de <%= link_to item.statusable.display_name, show_mural_user_path(item.statusable) %>
-          <% else %>
-            comentou no <%= link_to "seu próprio mural", show_mural_user_path(current_user) %>
-        <% end %>
-      <% end %>
-    </span>
+            <% else %>
+              comentou no <%= link_to "seu próprio mural", show_mural_user_path(current_user) %>
+            <% end %>
+          <% end %>
+        </span>
         <span class="date">
           <%= time_ago_in_words item.created_at %>
         </span>
