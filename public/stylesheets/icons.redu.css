@@ -257,6 +257,14 @@
   background: url("../images/new/icons-small.png") -80px -2080px no-repeat;
 }
 
+.icon-confirm-white_16_18 { background-position: -160px -2080px; }
+.icon-confirm-white_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -160px -2080px no-repeat;
+}
+
 .icon-contacts-blue_16_18,
 .icon-contacts-lightblue_16_18:hover { background-position: -160px -2400px; }
 .icon-contacts-blue_16_18-before:before,
