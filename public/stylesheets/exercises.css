@@ -392,33 +392,31 @@
 }
 
 #resource .exercise-overview.undone {
+  background: rgb(255,238,215); /* Old browsers */
   border: 1px solid rgb(255, 169, 53);
 }
 
 #resource .exercise-overview.done {
+  background: rgb(225,241,225); /* Old browsers */
   border: 1px solid rgb(171, 227, 133);
 }
 
 .cssgradients #resource .exercise-overview.undone {
-  background: rgb(255,238,215); /* Old browsers */
   background: -moz-linear-gradient(45deg,  rgb(255,238,215) 1%, rgb(255,255,255) 50%, rgb(255,238,215) 100%); /* FF3.6+ */
   background: -webkit-gradient(linear, left bottom, right top, color-stop(1%,rgb(255,238,215)), color-stop(50%,rgb(255,255,255)), color-stop(100%,rgb(255,238,215))); /* Chrome,Safari4+ */
   background: -webkit-linear-gradient(45deg,  rgb(255,238,215) 1%,rgb(255,255,255) 50%,rgb(255,238,215) 100%); /* Chrome10+,Safari5.1+ */
   background: -o-linear-gradient(45deg,  rgb(255,238,215) 1%,rgb(255,255,255) 50%,rgb(255,238,215) 100%); /* Opera 11.10+ */
   background: -ms-linear-gradient(45deg,  rgb(255,238,215) 1%,rgb(255,255,255) 50%,rgb(255,238,215) 100%); /* IE10+ */
   background: linear-gradient(45deg,  rgb(255,238,215) 1%,rgb(255,255,255) 50%,rgb(255,238,215) 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffeed7', endColorstr='#ffeed7',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
 .cssgradients #resource .exercise-overview.done {
-  background: rgb(225,241,225); /* Old browsers */
   background: -moz-linear-gradient(45deg, rgba(225,241,225,1) 0%, rgba(255,255,255,1) 50%, rgba(225,241,225,1) 100%); /* FF3.6+ */
   background: -webkit-gradient(linear, left bottom, right top, color-stop(0%,rgba(225,241,225,1)), color-stop(50%,rgba(255,255,255,1)), color-stop(100%,rgba(225,241,225,1))); /* Chrome,Safari4+ */
   background: -webkit-linear-gradient(45deg, rgba(225,241,225,1) 0%,rgba(255,255,255,1) 50%,rgba(225,241,225,1) 100%); /* Chrome10+,Safari5.1+ */
   background: -o-linear-gradient(45deg, rgba(225,241,225,1) 0%,rgba(255,255,255,1) 50%,rgba(225,241,225,1) 100%); /* Opera 11.10+ */
   background: -ms-linear-gradient(45deg, rgba(225,241,225,1) 0%,rgba(255,255,255,1) 50%,rgba(225,241,225,1) 100%); /* IE10+ */
   background: linear-gradient(45deg, rgba(225,241,225,1) 0%,rgba(255,255,255,1) 50%,rgba(225,241,225,1) 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e1f1e1', endColorstr='#e1f1e1',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
 #resource .exercise-call {
@@ -702,19 +700,19 @@
 }
 
 /* Criação e edição de Exercícios */
-#space-manage .new-resource .concave-form .nested-fields-level-1,
-#space-manage .edit-resource .concave-form .nested-fields-level-1 {
+#space-manage .new-resource .nested-fields-level-1,
+#space-manage .edit-resource .nested-fields-level-1 {
   clear: left;
 }
 
-#space-manage .new-resource .concave-form .question-container,
-#space-manage .edit-resource .concave-form .question-container {
+#space-manage .new-resource .question-container,
+#space-manage .edit-resource .question-container {
   float: left;
   margin-top: 10px;
 }
 
-#space-manage .new-resource .concave-form .question-item,
-#space-manage .edit-resource .concave-form .question-item {
+#space-manage .new-resource .question-item,
+#space-manage .edit-resource .question-item {
   background-color: rgb(230, 230, 230);
   border: solid 1px rgb(204, 204, 204);
   margin-top: 10px;
@@ -722,15 +720,15 @@
   width: 524px;
 }
 
-.borderradius #space-manage .new-resource .concave-form .question-item,
-.borderradius #space-manage .edit-resource .concave-form .question-item {
+.borderradius #space-manage .new-resource .question-item,
+.borderradius #space-manage .edit-resource .question-item {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
 }
 
-#space-manage .new-resource .concave-form .question-item .position,
-#space-manage .edit-resource .concave-form .question-item .position {
+#space-manage .new-resource .question-item .position,
+#space-manage .edit-resource .question-item .position {
   display: block;
   width: 25px;
   text-align: left;
@@ -743,29 +741,28 @@
   color: white;
 }
 
-.textshadow #space-manage .new-resource .concave-form .question-item .position,
-.textshadow #space-manage .edit-resource .concave-form .question-item .position {
+.textshadow #space-manage .new-resource .question-item .position,
+.textshadow #space-manage .edit-resource .question-item .position {
   text-shadow: 0px -1px 0px rgb(179, 179, 179);
 }
 
-#space-manage .new-resource .concave-form .question-item.closed .position,
-#space-manage .edit-resource .concave-form .question-item.closed .position {
+#space-manage .new-resource .question-item.closed .position,
+#space-manage .edit-resource .question-item.closed .position {
   color: rgb(179, 179, 179);
 }
 
-.textshadow #space-manage .new-resource .concave-form .question-item.closed .position,
-.textshadow #space-manage .edit-resource .concave-form .question-item.closed .position {
+.textshadow #space-manage .new-resource .question-item.closed .position,
+.textshadow #space-manage .edit-resource .question-item.closed .position {
   text-shadow: 0px 1px 0px white;
 }
 
-#space-manage .new-resource .concave-form .question-item.closed,
-#space-manage .edit-resource .concave-form .question-item.closed {
+#space-manage .new-resource .question-item.closed,
+#space-manage .edit-resource .question-item.closed {
   background: rgb(240,240,240); /* Old browsers */
 }
 
-.cssgradients #space-manage .new-resource .concave-form .question-item.closed,
-.cssgradients #space-manage .edit-resource .concave-form .question-item.closed {
-  background: rgb(240,240,240); /* Old browsers */
+.cssgradients #space-manage .new-resource .question-item.closed,
+.cssgradients #space-manage .edit-resource .question-item.closed {
   background: -moz-linear-gradient(top, rgb(240,240,240) 0%, rgb(255,255,255) 50%, rgb(240,240,240) 100%); /* FF3.6+ */
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(240,240,240)), color-stop(50%,rgb(255,255,255)), color-stop(100%,rgb(240,240,240))); /* Chrome,Safari4+ */
   background: -webkit-linear-gradient(top, rgb(240,240,240) 0%,rgb(255,255,255) 50%,rgb(240,240,240) 100%); /* Chrome10+,Safari5.1+ */
@@ -774,21 +771,21 @@
   background: linear-gradient(top, rgb(240,240,240) 0%,rgb(255,255,255) 50%,rgb(240,240,240) 100%); /* W3C */
 }
 
-#space-manage .new-resource .concave-form .question-item .summary,
-#space-manage .edit-resource .concave-form .question-item .summary {
+#space-manage .new-resource .question-item .summary,
+#space-manage .edit-resource .question-item .summary {
   margin-left: 40px;
   display: none;
 }
 
-#space-manage .new-resource .concave-form .question-item .summary .statement,
-#space-manage .edit-resource .concave-form .question-item .summary .statement {
+#space-manage .new-resource .question-item .summary .statement,
+#space-manage .edit-resource .question-item .summary .statement {
   display: block;
   margin-top: 15px;
   color: rgb(109, 110, 111);
 }
 
-#space-manage .new-resource .concave-form .question-item .summary .alternatives,
-#space-manage .edit-resource .concave-form .question-item .summary .alternatives {
+#space-manage .new-resource .question-item .summary .alternatives,
+#space-manage .edit-resource .question-item .summary .alternatives {
   font-size: .87em;
   color: rgb(179, 179, 179);
   font-style: italic;
@@ -797,63 +794,63 @@
   float: left;
 }
 
-#space-manage .new-resource .concave-form .question-item .summary .expand,
-#space-manage .edit-resource .concave-form .question-item .summary .expand {
+#space-manage .new-resource .question-item .summary .expand,
+#space-manage .edit-resource .question-item .summary .expand {
   display: block;
   width: 16px;
   height: 18px;
   float: right;
 }
 
-#space-manage .new-resource .concave-form .question-item .fields,
-#space-manage .edit-resource .concave-form .question-item .fields {
+#space-manage .new-resource .question-item .fields,
+#space-manage .edit-resource .question-item .fields {
   clear: left;
 }
 
-#space-manage .new-resource .concave-form .question-item .concave-input,
-#space-manage .edit-resource .concave-form .question-item .concave-input {
+#space-manage .new-resource .question-item .concave-input,
+#space-manage .edit-resource .question-item .concave-input {
   width: 402px;
   height: 44px;
 }
 
-#space-manage .new-resource .concave-form .question-item .concave-label:first,
-#space-manage .new-resource .concave-form .question-item .question-statement,
-#space-manage .edit-resource .concave-form .question-item .concave-label:first,
-#space-manage .edit-resource .concave-form .question-item .question-statement {
+#space-manage .new-resource .question-item .concave-label:first,
+#space-manage .new-resource .question-item .question-statement,
+#space-manage .edit-resource .question-item .concave-label:first,
+#space-manage .edit-resource .question-item .question-statement {
   margin-top: 0;
 }
 
-#space-manage .new-resource .concave-form .alternative-container,
-#space-manage .edit-resource .concave-form .alternative-container {
+#space-manage .new-resource .alternative-container,
+#space-manage .edit-resource .alternative-container {
   width: 524px;
   float: left;
 }
 
-#space-manage .new-resource .concave-form .alternative-item,
-#space-manage .edit-resource .concave-form .alternative-item {
+#space-manage .new-resource .alternative-item,
+#space-manage .edit-resource .alternative-item {
   display: block;
 }
 
-#space-manage .new-resource .concave-form .alternative-item .concave-multiple,
-#space-manage .edit-resource .concave-form .alternative-item .concave-multiple {
+#space-manage .new-resource .alternative-item .concave-multiple,
+#space-manage .edit-resource .alternative-item .concave-multiple {
   margin: 45px 10px 0 0;
   float: left;
 }
 
-#space-manage .new-resource .concave-form .alternative-item .alternative-label,
-#space-manage .edit-resource .concave-form .alternative-item .alternative-label {
+#space-manage .new-resource .alternative-item .alternative-label,
+#space-manage .edit-resource .alternative-item .alternative-label {
   width: 68px;
   margin-top: 45px;
 }
 
-#space-manage .new-resource .concave-form .alternative-item .alternative-text,
-#space-manage .edit-resource .concave-form .alternative-item .alternative-text {
+#space-manage .new-resource .alternative-item .alternative-text,
+#space-manage .edit-resource .alternative-item .alternative-text {
   float: left;
-  width: 375px;
+  width: 368px;
 }
 
-#space-manage .new-resource .concave-form .alternative-item .alternative-remove,
-#space-manage .edit-resource .concave-form .alternative-item .alternative-remove {
+#space-manage .new-resource .alternative-item .alternative-remove,
+#space-manage .edit-resource .alternative-item .alternative-remove {
   display: block;
   width: 8px;
   height: 10px;
@@ -861,58 +858,58 @@
   margin: 45px 0 0 7px;
 }
 
-#space-manage .new-resource .concave-form .alternative-item.disabled .alternative-label,
-#space-manage .edit-resource .concave-form .alternative-item.disabled .alternative-label {
-  width: 90px;
+#space-manage .new-resource .alternative-item.disabled .alternative-label,
+#space-manage .edit-resource .alternative-item.disabled .alternative-label {
+  width: 108px;
   margin-top: 31px;
   height: 20px;
 }
 
-#space-manage .new-resource .concave-form .alternative-item.disabled .concave-multiple,
-#space-manage .new-resource .concave-form .alternative-item.disabled .alternative-remove,
-#space-manage .edit-resource .concave-form .alternative-item.disabled .concave-multiple,
-#space-manage .edit-resource .concave-form .alternative-item.disabled .alternative-remove {
+#space-manage .new-resource .alternative-item.disabled .concave-multiple,
+#space-manage .new-resource .alternative-item.disabled .alternative-remove,
+#space-manage .edit-resource .alternative-item.disabled .concave-multiple,
+#space-manage .edit-resource .alternative-item.disabled .alternative-remove {
   display: none;
 }
 
-#space-manage .new-resource .concave-form .alternative-item.disabled .alternative-text,
-#space-manage .edit-resource .concave-form .alternative-item.disabled .alternative-text {
+#space-manage .new-resource .alternative-item.disabled .alternative-text,
+#space-manage .edit-resource .alternative-item.disabled .alternative-text {
   height: 16px;
 }
 
-#space-manage .new-resource .concave-form .question-item .simple-actions,
-#space-manage .new-resource .concave-form .question-add,
-#space-manage .edit-resource .concave-form .question-item .simple-actions,
-#space-manage .edit-resource .concave-form .question-add {
+#space-manage .new-resource .question-item .simple-actions,
+#space-manage .new-resource .question-add,
+#space-manage .edit-resource .question-item .simple-actions,
+#space-manage .edit-resource .question-add {
   margin-top: 25px;
   font-size: .87em;
 }
 
-#space-manage .new-resource .concave-form .question-item .simple-actions,
-#space-manage .edit-resource .concave-form .question-item .simple-actions {
+#space-manage .new-resource .question-item .simple-actions,
+#space-manage .edit-resource .question-item .simple-actions {
   float: left;
   margin-left: 100px;
   width: 420px;
 }
 
-#space-manage .new-resource .concave-form .question-item .question-remove,
-#space-manage .edit-resource .concave-form .question-item .question-remove {
+#space-manage .new-resource .question-item .question-remove,
+#space-manage .edit-resource .question-item .question-remove {
   color: rgb(232, 59, 59);
   margin-right: 50px;
 }
 
-#space-manage .new-resource .concave-form .question-item .finalize-edition,
-#space-manage .edit-resource .concave-form .question-item .finalize-edition {
+#space-manage .new-resource .question-item .finalize-edition,
+#space-manage .edit-resource .question-item .finalize-edition {
   float: right;
 }
 
-#space-manage .new-resource .concave-form .question-add,
-#space-manage .edit-resource .concave-form .question-add {
+#space-manage .new-resource .question-add,
+#space-manage .edit-resource .question-add {
   float: right;
 }
 
-#space-manage .new-resource .concave-form .question-add-top,
-#space-manage .edit-resource .concave-form .question-add-top {
+#space-manage .new-resource .question-add-top,
+#space-manage .edit-resource .question-add-top {
   clear: left;
   float: left;
   display: block;
@@ -921,7 +918,111 @@
   margin: 0 10px 0 0;
 }
 
-#space-manage .new-resource .concave-form .label-wrapper,
-#space-manage .edit-resource .concave-form .label-wrapper {
+#space-manage .new-resource .label-wrapper,
+#space-manage .edit-resource .label-wrapper {
   float: left;
+}
+
+#space-manage .edit-resource .alternative-item .is-correct-label {
+  display: none;
+}
+
+.cssgradients #space-manage .new-resource .alternative-item .is-correct-label,
+.cssgradients #space-manage .edit-resource .alternative-item .is-correct-label {
+  display: block;
+}
+
+.cssgradients #space-manage .new-resource .alternative-item .is-correct,
+.cssgradients #space-manage .edit-resource .alternative-item .is-correct {
+  display: none;
+}
+
+.cssgradients #space-manage .new-resource .alternative-item.disabled .is-correct-label,
+.cssgradients #space-manage .edit-resource .alternative-item.disabled .is-correct-label {
+  display: none;
+}
+
+.cssgradients #space-manage .new-resource .alternative-item .is-correct-label,
+.cssgradients #space-manage .edit-resource .alternative-item .is-correct-label {
+  width: auto;
+  height: auto;
+  padding: 5px 6px;
+  border: solid 1px rgb(204, 204, 204);
+  clear: none;
+  margin-top: 34px;
+
+  background: -moz-linear-gradient(top,  rgb(255,255,255) 0%, rgb(240,240,240) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(255,255,255)), color-stop(100%,rgb(240,240,240))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgb(255,255,255) 0%,rgb(240,240,240) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgb(255,255,255) 0%,rgb(240,240,240) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgb(255,255,255) 0%,rgb(240,240,240) 100%); /* IE10+ */
+  background: linear-gradient(top,  rgb(255,255,255) 0%,rgb(240,240,240) 100%); /* W3C */
+}
+
+.cssgradients #space-manage .new-resource .alternative-item .is-correct-label:hover,
+.cssgradients #space-manage .edit-resource .alternative-item .is-correct-label:hover {
+  border-color: rgb(171, 227, 133);
+
+  background: -moz-linear-gradient(top,  rgb(255,255,255) 0%, rgb(225,241,225) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(255,255,255)), color-stop(100%,rgb(225,241,225))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgb(255,255,255) 0%,rgb(225,241,225) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgb(255,255,255) 0%,rgb(225,241,225) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgb(255,255,255) 0%,rgb(225,241,225) 100%); /* IE10+ */
+  background: linear-gradient(top,  rgb(255,255,255) 0%,rgb(225,241,225) 100%); /* W3C */
+}
+
+.cssgradients #space-manage .new-resource .alternative-item .is-correct:checked + .is-correct-label,
+.cssgradients #space-manage .edit-resource .alternative-item .is-correct:checked + .is-correct-label {
+  border-color: rgb(95, 192, 128);
+
+  background: -moz-linear-gradient(top,  rgb(171,227,133) 0%, rgb(95,192,128) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(171,227,133)), color-stop(100%,rgb(95,192,128))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgb(171,227,133) 0%,rgb(95,192,128) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgb(171,227,133) 0%,rgb(95,192,128) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgb(171,227,133) 0%,rgb(95,192,128) 100%); /* IE10+ */
+  background: linear-gradient(top,  rgb(171,227,133) 0%,rgb(95,192,128) 100%); /* W3C */
+}
+
+.cssgradients #space-manage .new-resource .alternative-item .is-correct:checked + .is-correct-label:hover,
+.cssgradients #space-manage .edit-resource .alternative-item .is-correct:checked + .is-correct-label:hover {
+  border-color: rgb(97, 160, 128);
+
+  background: -moz-linear-gradient(top,  rgb(171,227,133) 0%, rgb(97,160,128) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(171,227,133)), color-stop(100%,rgb(97,160,128))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgb(171,227,133) 0%,rgb(97,160,128) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgb(171,227,133) 0%,rgb(97,160,128) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgb(171,227,133) 0%,rgb(97,160,128) 100%); /* IE10+ */
+  background: linear-gradient(top,  rgb(171,227,133) 0%,rgb(97,160,128) 100%); /* W3C */
+}
+
+.borderradius #space-manage .new-resource .alternative-item .is-correct-label,
+.borderradius #space-manage .edit-resource .alternative-item .is-correct-label {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+
+.cssgradients #space-manage .new-resource .alternative-item .is-correct-label .confirm,
+.cssgradients #space-manage .edit-resource .alternative-item .is-correct-label .confirm {
+  display: block;
+  width: 16px;
+  height: 18px;
+}
+
+.cssgradients #space-manage .new-resource .alternative-item .is-correct-label:hover .icon-confirm-gray_16_18,
+.cssgradients #space-manage .edit-resource .alternative-item .is-correct-label:hover .icon-confirm-gray_16_18 {
+  background-position: -80px -2080px;
+}
+
+.cssgradients #space-manage .new-resource .alternative-item .is-correct:checked + .is-correct-label .icon-confirm-gray_16_18,
+.cssgradients #space-manage .edit-resource .alternative-item .is-correct:checked + .is-correct-label .icon-confirm-gray_16_18 {
+  background-position: -160px -2080px;
+}
+
+.cssgradients #space-manage .new-resource .alternative-item .tip,
+.cssgradients #space-manage .new-resource .alternative-item .errors_on_field,
+.cssgradients #space-manage .edit-resource .alternative-item .tip,
+.cssgradients #space-manage .edit-resource .alternative-item .errors_on_field {
+  margin-left: 118px;
 }

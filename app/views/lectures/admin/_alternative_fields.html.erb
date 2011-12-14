@@ -1,6 +1,10 @@
 <li class="alternative-item visible disabled alternative-add clearfix">
   <%= f.label :text, :class => "alternative-label" %>
-  <%= f.check_box :correct %>
+  <% random_number = get_random_number %>
+  <%= f.check_box :correct, :class => "is-correct",
+    :id => "correct-#{random_number}" %>
+  <%= f.label :correct, raw("<span class='confirm icon-small icon-confirm-gray_16_18'></span>"),
+    :class => "is-correct-label", :for => "correct-#{random_number}" %>
   <%= f.text_area :text, :class => "alternative-text" %>
   <a href="#" class="alternative-remove icon-small icon-delete-gray_8_10 replacement">excluir alternativa</a>
   <div class="tip">Clique para adicionar mais uma alternativa</div>
