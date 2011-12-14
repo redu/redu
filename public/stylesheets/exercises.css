@@ -727,6 +727,11 @@
   border-radius: 5px;
 }
 
+#space-manage .new-resource .question-item:hover,
+#space-manage .edit-resource .question-item:hover {
+  background-color: rgb(219, 239, 247);
+}
+
 #space-manage .new-resource .question-item .position,
 #space-manage .edit-resource .question-item .position {
   display: block;
@@ -744,6 +749,16 @@
 .textshadow #space-manage .new-resource .question-item .position,
 .textshadow #space-manage .edit-resource .question-item .position {
   text-shadow: 0px -1px 0px rgb(179, 179, 179);
+}
+
+#space-manage .new-resource .question-item:hover .position,
+#space-manage .edit-resource .question-item:hover .position {
+  color: rgb(115, 195, 230);
+}
+
+.textshadow #space-manage .new-resource .question-item:hover .position,
+.textshadow #space-manage .edit-resource .question-item:hover .position {
+  text-shadow: 0px 1px 0px #ffffff;
 }
 
 #space-manage .new-resource .question-item.closed .position,

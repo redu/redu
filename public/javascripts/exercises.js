@@ -124,7 +124,7 @@ $(function(){
     // Pega numeração da alternativa correta
     var correctAlternative = $fields.find("input:checked").prevAll("label").text();
     if (correctAlternative != ""){
-      $summary.find(".alternatives .correct").text(correctAlternative);
+      $summary.find(".alternatives .correct").text(correctAlternative.split(":")[0]);
     }else{
       $summary.find(".alternatives .correct").text("(não marcada)");
     }
