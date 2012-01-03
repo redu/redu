@@ -50,6 +50,13 @@ javascripts:
     - public/javascripts/jquery.maskedinput.js
   ckeditor:
     - public/javascripts/ckeditor/ckeditor.js
+  landing:
+    - public/javascripts/modernizr.js
+    - public/javascripts/lazyload.js
+    - public/javascripts/asyncjs.jquery.js
+    - public/javascripts/jquery.noisy.js
+    - public/javascripts/form.redu.jquery.js
+    - public/javascripts/landing.js
 
 stylesheets:
   common:
@@ -72,3 +79,8 @@ stylesheets:
     - public/stylesheets/ie.css
   chat:
     - public/stylesheets/chat.css
+  landing:
+    - public/stylesheets/reset.css
+    - public/stylesheets/960.css
+    - public/stylesheets/form.redu.css
+    - public/stylesheets/landing.css

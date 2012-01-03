@@ -4,45 +4,36 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
     <title><%= raw(page_title) %></title>
     <%= csrf_meta_tag %>
-    <%= include_stylesheets :common %>
-    <!--[if (gte IE 6)&(lte IE 8)]>
-      <%= stylesheet_link_tag 'ie' %>
-    <![endif]-->
-    <link href='http://fonts.googleapis.com/css?family=Copse' rel='stylesheet' type='text/css' />
+    <%= include_stylesheets :landing %>
     <%= javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js' %>
-    <%= include_javascripts :common %>
-    <!--[if (gte IE 6)&(lte IE 8)]>
-      <%= include_javascripts :ie %>
-    <![endif]-->
+    <%= include_javascripts :landing %>
+
+    <%= lazy_load("http://use.typekit.com/lpo4rgu.js", :jammit => false) do %>
+      try{
+        Typekit.load();
+      }catch(e){}
+    <% end %>
     <%= yield :header_scripts_and_styles %>
   </head>
   <body>
     <%= render :partial => 'shared/flash_message' %>
     <%= yield %>
-    <div id="footer" class="container_16 clearfix">
-      <h1 id="logotipo-footer" class="replacement">
-        <%= link_to 'Redu: potencializando o talento das pessoas.',
-          :title => 'Página Inicial' %>
-      </h1>
-      <div class="copyright">Copyright 2010 - redu.com.br. Todos os direitos reservados.</div>
-
-      <div id="nav-footer">
-        <ul>
-          <li>
-            <a href="#">Sobre o Redu</a>
-          </li>
-          <li>
-            <%= link_to "Privacidade", :controller => "base", :action => "privacy" %>
-          </li>
-          <li>
-            <%= link_to "Termos de uso", :controller => "base", :action => "tos" %>
-          </li>
-          <li>
-            <%= link_to "Contato", :controller => "base", :action => "contact" %>
-          </li>
+    <div class="footer">
+      <div class="container_16">
+        <h1 class="logo-2"><a href="http://www.redu.com.br"></a></h1>
+             <p class="footer-text">Somos uma pequena startup brasileira, recifense e estamos incubados pelo Porto Digital. Nossa equipe é composta por pessoas dedicadas e comprometidas com um objetivo em comum: desenvolver produtos que façam a diferença para uma educação mais acessível e universal.</p>
+             <address class="our-address">Rua do Apolo, 181 Cais do Apolo, Recife Brasil CNPJ: 12.359.885/0001-07</address>
+        <ul class="about-redu">
+          <li class="list"><%= link_to "Página Inicial", application_path %></li>
+          <li class="list"><a href="http://blog.redu.com.br/">Visite nosso Blog</a></li>
         </ul>
-      </div><!-- end #nav-footer -->
-    </div><!-- end #footer -->
+        <ul class="politics-terms">
+          <li class="list"><%= link_to "Política de Privacidade", privacy_path %></li>
+          <li class="list"><%= link_to "Termos de Uso", tos_path %></li>
+          <li class="list"><%= link_to "Fale conosco", contact_path %></li>
+        </ul>
+      </div>
+    </div>
      <%= yield :footer_scripts_and_styles %>
    </body>
  </html>
