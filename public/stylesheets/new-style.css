@@ -6173,89 +6173,10 @@ div.token-input-dropdown {
   color: #6C6D6E;
 }
 
-#clean {
-  min-height: 600px;
-  padding-top: 20px;
-}
-
-#course-invitation .logotipo,
-#clean .logotipo {
+#course-invitation .logotipo {
   width: 174px;
   height: 237px;
   background: url("../images/new/logotipo-vertical.png") no-repeat;
-}
-
-#clean .call {
-  font-family: Copse, Arial, sans-serif;
-  font-size: 2.7em;
-  font-weight: normal;
-  margin: 40px 0 20px 0;
-  color: #4CACD4;
-}
-
-#clean .form-common legend {
-  color: #F27A38;
-  display: block;
-  padding: 20px 0 10px 0;
-  font-size: 1.2em;
-}
-
-#clean .form-common .important {
-  padding: 10px 65px;
-  clear: both;
-  margin-top: 20px;
-  margin-left: 150px;
-}
-
-#clean .form-common .tos {
-  width: 400px;
-}
-
-#clean .form-common .tos legend {
-  float: left;
-  margin-right: 100px;
-}
-
-#clean .form-common .separator {
-  padding-bottom: 20px;
-  border-bottom: 1px dotted #B2B1B2;
-  width: 440px;
-}
-
-#clean .instruction {
-  background: url("../images/new/gray-ballon.png") no-repeat;
-  width: 210px;
-  height: 32px;
-  padding: 10px 10px 10px 20px;
-  color: #6C6D6E;
-  font-size: .9em;
-}
-
-#clean .success {
-  width: 420px;
-}
-
-#clean .success p {
-  margin-bottom: 10px;
-}
-
-#clean .call {
-  color: #60BE7F;
-  margin-top: 10px;
-  margin-bottom: 60px;
-}
-
-#clean .go-to-home {
-  text-align: center;
-  width: 460px;
-  margin-top: 150px;
-  padding-top: 90px;
-}
-
-#clean .go-to-home .button {
-  font-size: 1.2em;
-  font-weight: bold;
-  padding: 15px 40px;
 }
 
 #course-invitation {

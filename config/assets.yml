@@ -84,3 +84,5 @@ stylesheets:
     - public/stylesheets/960.css
     - public/stylesheets/form.redu.css
     - public/stylesheets/landing.css
+  cold:
+    - public/stylesheets/cold.css
