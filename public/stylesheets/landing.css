@@ -66,7 +66,7 @@ body {
 
 .textshadow .learn-call,
 .textshadow .teach-call {
-  text-shadow: 0px 1px 0px rgb(109, 110, 111);
+  text-shadow: 0 1px 0 rgb(109, 110, 111);
 }
 
 .teach-call {
@@ -125,7 +125,7 @@ body {
 /* IE */
 .form-login .concave-form .check-stay-connect {
   border: none;
-  padding: 0px;
+  padding: 0;
   width: 14px;
 }
 
@@ -148,9 +148,9 @@ body {
 }
 
 .boxshadow .form-login {
-  -webkit-box-shadow: 0px 1px 2px 2px rgba(0, 0 , 0, 0.1);
-  -moz-box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.1);
-  box-shadow: 0px 1px 2px 2px rgba(0,0 , 0, 0.1);
+  -webkit-box-shadow: 0 1px 2px 2px black;
+  -moz-box-shadow: 0 1px 2px 2px black;
+  box-shadow: 0 1px 2px 2px black;
 }
 
 .borderradius .form-login {
@@ -176,7 +176,7 @@ body {
 
 .textshadow .new-version-call,
 .textshadow .welcome {
-  text-shadow: 0px 1px 0px rgb(255, 255, 255);
+  text-shadow: 0 1px 0 rgb(255, 255, 255);
 }
 
 .beta-call {
@@ -190,15 +190,15 @@ body {
 .form-login .concave-form .concave-button {
   height: 28px;
   float: right;
-  margin-right: 0px;
+  margin-right: 0;
   margin-top: 10px;
   cursor: pointer;
   width: 68px;
-  padding: 0px;
+  padding: 0;
 }
 
 .textshadow .form-login .concave-form .concave-button {
-  text-shadow: 0px -1px 0px rgb(21, 138, 196);
+  text-shadow: 0 -1px 0 rgb(21, 138, 196);
 }
 
 .label-stay-connect {
@@ -208,7 +208,7 @@ body {
   margin-left: 6px;
   color: rgb(179,179,179);
   font-size: 11px;
-  font-family; arial, sans-serif;
+  font-family: arial, sans-serif;
 }
 
 .check-stay-connect {
@@ -280,7 +280,7 @@ body {
 }
 
 .textshadow .new-account {
-  text-shadow: 0px -1px 0px rgb(97, 160, 128);
+  text-shadow: 0 -1px 0 rgb(97, 160, 128);
 }
 
 .borderradius .new-account {
@@ -312,7 +312,7 @@ body {
   width: 133px;
   height: 72px;
   float: left;
-  margin-top: 0px;
+  margin-top: 0;
   padding-top: 21px;
   font-family: arial, sans-serif;
   font-style: italic;
@@ -322,7 +322,7 @@ body {
 
 .textshadow .footer-text,
 .textshadow .our-address {
-  text-shadow: 0px -1px 0px rgb(21, 138, 196);
+  text-shadow: 0 -1px 0 rgb(21, 138, 196);
 }
 
 .about-redu {
@@ -352,7 +352,7 @@ a {
 }
 
 .textshadow .footer a {
-  text-shadow: 0px 1px 0px rgb(109, 110, 111);
+  text-shadow: 0 1px 0 rgb(109, 110, 111);
 }
 
 .textshadow .footer a:hover {
@@ -374,9 +374,9 @@ a {
 }
 
 .boxshadow .list a:hover {
-  -webkit-box-shadow: 0px 1px 0px 0px rgb(109, 110, 111);
-  -moz-box-shadow: 0px 1px 0px 0px rgb(109, 110, 111);
-  box-shadow: 0px 1px 0px 0px rgb(109, 110, 111);
+  -webkit-box-shadow: 0 1px 0 0 rgb(109, 110, 111);
+  -moz-box-shadow: 0 1px 0 0 rgb(109, 110, 111);
+  box-shadow: 0 1px 0 0 rgb(109, 110, 111);
 }
 
 .list a:hover {
