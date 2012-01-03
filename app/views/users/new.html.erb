@@ -69,7 +69,7 @@
           <%= f.label "tos", raw("Li e aceito os #{link_to "termos de uso", tos_path} do Redu") %>
         </div>
       <% end %>
-      <%= submit_tag t(:sign_up), :class => 'important' %>
+      <%= submit_tag t(:sign_up), :class => 'register-button' %>
       <%= hidden_field_tag :inviter_id, params[:inviter_id] %>
       <%= hidden_field_tag :inviter_code, params[:inviter_code] %>
     <% end %>
