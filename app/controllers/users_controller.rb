@@ -81,7 +81,7 @@ class UsersController < BaseController
 
     respond_to do |format|
       format.html do
-        render :new, :layout => 'clean'
+        render :new, :layout => 'cold'
       end
     end
   end
@@ -128,7 +128,7 @@ class UsersController < BaseController
           render :action => :new
         end
       else
-        render :template => 'users/new', :layout => 'clean'
+        render :template => 'users/new', :layout => 'cold'
       end
     end
   end
@@ -226,7 +226,7 @@ class UsersController < BaseController
 
   def signup_completed
     redirect_to home_path and return unless @user
-    render :template => "users/signup_completed", :layout => "clean"
+    render :template => "users/signup_completed", :layout => "cold"
   end
 
   def welcome_complete
