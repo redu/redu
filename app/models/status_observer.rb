@@ -16,7 +16,8 @@ class StatusObserver < ActiveRecord::Observer
 
     # creating notifiables
     status.status_user_associations.each do |assoc|
-      n = Notifiable.find_or_initialize_by_user_id_and_name(assoc.user.id, "Speaker")
+      n = Notifiable.find_or_initialize_by_user_id_and_name(assoc.user.id,
+                                                            "Speaker")
       n.increment_counter
       n.save
     end
