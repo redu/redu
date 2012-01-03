@@ -2364,6 +2364,7 @@ body {
   -moz-text-shadow: 0 -1px 1px #1789c3;
   -webkit-text-shadow: 0 -1px 1px #1789c3;
   text-shadow: 0 -1px 1px #1789c3;
+  padding: 5px 0 6px 0;
 }
 
 #content .actions .add-as-friend .add-contact:before {
