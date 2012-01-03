@@ -20,19 +20,29 @@ describe SubjectObserver do
       UserNotifier.delivery_method = :test
       UserNotifier.perform_deliveries = true
       UserNotifier.deliveries = []
+
+      @sub = Factory(:subject, :visible => true)
+      space = Factory(:space, :owner => @sub.owner)
+      Factory(:lecture, :subject => @sub, :owner => @sub.owner)
+      @sub.enroll(@sub.owner)
     end
 
     it "notifies creation" do
-      sub = Factory(:subject, :visible => true)
-      space = Factory(:space, :owner => sub.owner)
-      Factory(:lecture, :subject => sub, :owner => sub.owner)
-      sub.enroll(sub.owner)
-
       ActiveRecord::Observer.with_observers(:subject_observer) do
         expect {
-          sub.finalized = true
-          sub.save
+          @sub.finalized = true
+          @sub.save
         }.should change(UserNotifier.deliveries, :count).by(1)
+      end
+    end
+
+    it "should not notify on update" do
+
+      ActiveRecord::Observer.with_observers(:subject_observer) do
+        @sub.update_attribute(:finalized, true)
+        expect {
+          @sub.update_attribute(:title, "Novo nome")
+        }.should_not change(UserNotifier.deliveries, :count).by(1)
       end
     end
   end

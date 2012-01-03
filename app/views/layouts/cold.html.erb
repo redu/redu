@@ -4,7 +4,10 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
     <title><%= raw(page_title) %></title>
     <%= csrf_meta_tag %>
+    <%= include_stylesheets :common %>
+    <%# Enquanto o novo footer não foi implementado %>
     <%= include_stylesheets :landing %>
+    <%= include_stylesheets :cold %>
     <!--[if (gte IE 6)&(lte IE 8)]>
       <%= stylesheet_link_tag 'ie' %>
     <![endif]-->

@@ -134,6 +134,7 @@ describe Invoice do
         mail = UserNotifier.deliveries.last
         mail.should_not be_nil
         mail.subject.should =~ /Pagamento N\. #{subject.id} pendente/
+        mail.body.should =~ /http:\/\//
       end
     end
   end
