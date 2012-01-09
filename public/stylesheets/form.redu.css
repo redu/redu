@@ -257,16 +257,19 @@
     background: -moz-linear-gradient(top, rgb(115, 195, 230), rgb(77, 172, 214)); /* firefox 3.6+ */
   }
 
+  .cssgradients input[type="submit"].concave-cancel,
   .cssgradients .concave-cancel {
     background: -webkit-gradient(linear, left top, left bottom, from(#FF6D6D), to(#E83B3B)); /* webkit browsers */
     background: -moz-linear-gradient(top,  #FF6D6D,  #E83B3B); /* firefox 3.6+ */
   }
 
+  .cssgradients input[type="submit"].concave-remove,
   .cssgradients .concave-remove {
     background: -webkit-gradient(linear, left top, left bottom, from(rgb(255, 109, 109)), to(rgb(232, 59, 59))); /* webkit browsers */
     background: -moz-linear-gradient(top, rgb(255, 109, 109), rgb(232, 59, 59)); /* Firefox 3.6+ */
   }
 
+  .cssgradients input[type="submit"].concave-clean,
   .cssgradients .concave-clean {
     background: -moz-linear-gradient(top, rgb(255,255,255) 0%, rgb(240,240,240) 97%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(255,255,255)), color-stop(97%,rgb(240,240,240))); /* Chrome,Safari4+ */
@@ -320,6 +323,7 @@
     background: rgb(255,255,255); /* Old browsers */
   }
 
+  .cssgradients input[type="submit"].concave-cancel:hover,
   .cssgradients .concave-cancel:hover {
     background: -webkit-gradient(linear, left top, left bottom, from(#FF6D6D), to(#C1272D)); /* webkit browsers */
     background: -moz-linear-gradient(top,  #FF6D6D,  #C1272D); /* firefox 3.6+ */
@@ -330,11 +334,13 @@
     background: -moz-linear-gradient(top,  rgb(115, 195, 230), rgb(21, 138, 196)); /* firefox 3.6+ */
   }
 
+  .cssgradients input[type="submit"].concave-remove:hover,
   .cssgradients .concave-remove:hover {
     background: -webkit-gradient(linear, left top, left bottom, from(rgb(255, 109, 109)), to(rgb(193, 39, 45))); /* webkit browsers */
     background: -moz-linear-gradient(top, rgb(255, 109, 109), rgb(193, 39, 45)); /* Firefox 3.6+ */
   }
 
+  .cssgradients input[type="submit"].concave-clean:hover,
   .cssgradients .concave-clean:hover {
     background: -moz-linear-gradient(top, rgb(255,255,255) 0%, rgb(219,239,247) 97%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(255,255,255)), color-stop(97%,rgb(219,239,247))); /* Chrome,Safari4+ */

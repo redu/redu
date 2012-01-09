@@ -3280,18 +3280,26 @@ input[type=submit].important {
   font-size: 1em;
   background-color: #61BE80;
 
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#AED584', endColorstr='#61BE80'); /* IE */
+}
+
+.cssgradients a.important,
+.cssgradients input[type=submit].important {
   background: -webkit-gradient(linear, left top, left bottom, from(#aed584), to(#61be80)); /* webkit browsers */
   background: -moz-linear-gradient(top,  #AED584,  #61BE80); /* Firefox 3.6+ */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#AED584', endColorstr='#61BE80'); /* IE */
 }
 
 a.important:hover,
 input[type=submit].important:hover {
   border: 1px solid #61a080;
 
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#AED584', endColorstr='#61a080'); /* IE */
+}
+
+.cssgradients a.important:hover,
+.cssgradients input[type=submit].important:hover {
   background: -webkit-gradient(linear, left top, left bottom, from(#AED584), to(#61a080)); /* webkit browsers */
   background: -moz-linear-gradient(top,  #AED584, #61a080); /* Firefox 3.6+ */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#AED584', endColorstr='#61a080'); /* IE */
 }
 
 a.button,
