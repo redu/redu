@@ -43,7 +43,6 @@ gem 'actionmailer_inline_css',
 gem 'acts_as_tree', '~> 0.1.1'
 gem 'exceptional'
 gem 'awesome_nested_fields'
-gem 'engineyard-dns'
 
 # Gems específicos de algum ambiente
 group :development, :test do
