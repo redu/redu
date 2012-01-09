@@ -11,21 +11,18 @@
 </div>
 
 <%= subtabs :notifications do %>
-  <div id="statuses" class="statuses">
-    <ol><%= render :partial => 'statuses/item', :collection => @statuses %></ol>
-    <%= will_paginate @statuses, :renderer => EndlessRenderer %>
-  </div><!-- end .statuses -->
+  <% unless @friends_requisitions.empty? %>
+    <ul class="friends-requisitions">
+      <%= render :partial => 'users/friend_requisition',
+        :collection => @friends_requisitions, :as => :friend %>
+    </ul>
+  <% end %>
+  <% if current_user.has_course_invitation? %>
+    <ul class="courses-requisitions">
+      <%= render :partial => 'courses/item_invitation',
+        :collection => @course_invitations %>
+    </ul>
+  <% end %>
 <% end %>
 
 </div><!-- end .main -->
-<div class="secondary-sidebar home-sidebar">
-  <div class="contact-recommendations">
-    <div class="call">
-      <span class="icon-contacts-white-green_16_18-before">Conecte-se</span>
-    </div>
-    <ul>
-      <%= render :partial => 'users/recommendation_item',
-        :collection => @contacts_recommendations %>
-    </ul>
-  </div>
-</div><!-- end .offering -->

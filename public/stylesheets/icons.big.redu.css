@@ -87,6 +87,16 @@
   background-position:  -480px -161px;
 }
 
+.icon-spk-lightblue_64_64-before:before {
+  content: "";
+  width: 64px;
+  height: 64px;
+  display: block;
+  float: left;
+  margin-right: 20px;
+  background-position:  -159px -155px;
+}
+
 .icon-privacy-lightred_64_66-before:before {
   content: "";
   width: 64px;

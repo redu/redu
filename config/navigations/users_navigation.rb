@@ -53,7 +53,7 @@ SimpleNavigation::Configuration.run do |navigation|
       :link => { :class => 'icon-wall_16_18-before' }
 
     primary.item :notifications, 'Avise-me', notifications_user_path(current_user),
-      :link => { :class => 'icon-spk_16_18-before' }
+      :link => { :class => 'icon-spk_16_18-before', :id => 'sidebar-notifications' }
 
     primary.item :configurations, 'Configurações',
       edit_user_path(current_user),

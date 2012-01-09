@@ -20,10 +20,13 @@ jQuery(function(){
     });
 
     // Dropdown de Notificações
-    $("#nav-notifications").hover(function(){
+    $("#nav-notifications").click(function(){
         $(this).find(".notifications").toggleClass("hover");
-        $(this).find("ul").toggle();
+        $(this).find("ul").fadeToggle();
     });
+
+    // Notificações na Sidebar
+    $("#sidebar-notifications").append('<span class="unread-notifications-count">5</span>');
 
     // Aumentar form de criação de Status
     $("input[type=submit], .cancel, .char-limit", ".inform-my-status").hide();

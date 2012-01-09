@@ -308,14 +308,21 @@ class UsersController < BaseController
   end
 
   def notifications
-    @friends = @user.friends.paginate(:page => 1, :per_page => 9)
     @statuses = @user.statuses.
       paginate(:page => params[:page], :per_page => 10)
-    @status = Status.new
-
+    @contacts_recommendations = @user.recommended_contacts(5)
     respond_to do |format|
       format.html
       format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
+    end
+  end
+
+  def invitations
+    @friends_requisitions = @user.friends_pending
+    @course_invitations = @user.course_invitations
+    @contacts_recommendations = @user.recommended_contacts(5)
+    respond_to do |format|
+      format.html
     end
   end
 

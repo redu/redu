@@ -91,6 +91,7 @@ Redu::Application.routes.draw do
       get :home
       get :my_wall
       get :notifications
+      get :invitations
       get :account
       get :contacts_endless
       get :environments_endless

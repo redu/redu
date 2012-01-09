@@ -1,7 +1,9 @@
 <%# Menu para navegação na conta do usuário (Dropdown) %>
 <% if current_user %>
   <div id="nav-account" class="grid_3">
-    <div class="username"><%= link_to current_user.first_name, home_user_path(current_user) %></div>
+    <div class="username">
+      <%= link_to current_user.first_name, home_user_path(current_user) %>
+    </div>
     <ul style="display: none;">
       <li>
         <%= link_to 'Meu Perfil', user_path(current_user),
@@ -23,14 +25,12 @@
     </ul>
   </div><!-- end #nav-account -->
 
-  <div id="nav-notifications" class="grid_2">
+  <div id="nav-notifications" class="grid_1">
     <div class="notifications">
-      <a class="icon-spk-blue_16_18" href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+      <a class="icon-spk-blue_16_18" href="#"><span class="unread-count">5</span></a>
     </div>
     <ul style="display: none;">
-      <li>
-        <%= link_to 'Teste', logout_path %>
-      </li>
+      <li class="bt-loading">teste</li>
     </ul>
   </div><!-- end #nav-notifications -->
 
