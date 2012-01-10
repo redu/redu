@@ -87,6 +87,7 @@ class MessagesController < BaseController
       @message.recipient_id = to# User.find(to)
       @message.sender = @user
       unless @message.valid?
+        @recipients = @user.friends.message_recipients(params[:message_to])
         respond_to do |format|
           format.html do
             render :template => 'messages/new' and return
