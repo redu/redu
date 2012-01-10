@@ -52,7 +52,7 @@ class UserNotifier < ActionMailer::Base
     @message = message
 
     mail(:to => @user.email,
-         :subject => "[#{Redu::Application.config.name}] #{message.sender.login} sent you a private message!",
+         :subject => "[#{Redu::Application.config.name}] #{message.sender.display_name} lhe enviou uma mensagem privada.",
          :date => Time.now) do |format|
       format.text
     end
