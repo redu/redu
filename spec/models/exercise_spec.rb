@@ -9,46 +9,28 @@ describe Exercise do
   it { should have_one(:lecture) }
   it { should accept_nested_attributes_for(:questions) }
 
-  it "should not make sense when there arent questions" do
-    subject.make_sense?.should_not be_true
-    subject.errors.get(:general).should_not be_empty
-  end
+  context "when validating questions count" do
+    it "should add error when there arent questions" do
+      subject.make_sense?.should_not be_true
+      subject.errors.get(:base).should_not be_empty
+    end
 
-  it "should make sense when there are questions" do
-    exercise = Factory(:complete_exercise)
-    exercise.make_sense?.should be_true
-  end
+    it "should not add errors when there are questions" do
+      exercise = Factory(:complete_exercise)
+      exercise.make_sense?.should be_true
+    end
 
-  it "should not make sense when there are questions marked for destruction" do
-    exercise = Factory(:complete_exercise)
-    questions = exercise.questions
-    mass = { :questions_attributes =>
-             [{:id => questions[0].id, :_destroy => true},
-              {:id => questions[1].id, :_destroy => true},
-              {:id => questions[2].id, :_destroy => true}] }
+    it "should add error when there are questions marked for destruction" do
+      subject = Factory(:complete_exercise)
+      questions = subject.questions
+      mass = { :questions_attributes =>
+               [{:id => questions[0].id, :_destroy => true},
+                {:id => questions[1].id, :_destroy => true},
+                {:id => questions[2].id, :_destroy => true}] }
 
-    exercise.attributes = mass
-    exercise.make_sense?.should_not be_true
-  end
-
-  it "should not make sense when there are alternatives makerd for destruction" do
-    exercise = Factory(:complete_exercise)
-    question = exercise.questions.last
-    alt1, alt2 = question.alternatives[0], question.alternatives[1]
-    mass = { :alternatives_attributes => {
-      "1" => { :id => alt1.id, :_destroy => true },
-      "2" => { :id => alt2.id, :_destroy => true }} }
-
-    exercise.attributes = { :questions_attributes =>
-                            [ {:id => question.id}.merge!(mass) ]}
-    exercise.make_sense?.should_not be_true
-  end
-
-  it "should not make sense when one question has just one alternative" do
-    question = Factory(:complete_question, :exercise => subject)
-    question.alternatives[0].destroy
-    question.alternatives[1].destroy
-    subject.make_sense?.should_not be_true
+     subject.attributes = mass
+     subject.make_sense?.should_not be_true
+    end
   end
 
   it "should respond to question weight" do

@@ -10,6 +10,28 @@ describe Question do
   it { should have_many(:choices).dependent(:destroy) }
   it { should accept_nested_attributes_for(:alternatives) }
 
+  context "when validating alternatives count" do
+    it "should add error when the question has just one alternative" do
+      subject = Factory(:complete_question)
+      subject.alternatives[0].destroy
+      subject.alternatives[1].destroy
+
+      subject.reload.make_sense?
+      subject.errors[:base].should_not be_empty
+    end
+
+    it "should add error when there are alternatives makerd for destruction" do
+      subject = Factory(:complete_question)
+      alt1, alt2 = subject.alternatives[0], subject.alternatives[1]
+      mass = { :alternatives_attributes => {
+        "1" => { :id => alt1.id, :_destroy => true, :text => "my def text" },
+        "2" => { :id => alt2.id, :_destroy => true, :text => "my def text" }} }
+
+      subject.attributes = mass
+      subject.make_sense?.should_not be_true
+    end
+  end
+
   context "when validating uniqueness of correct alternative" do
     subject { Factory(:complete_question) }
     let(:alternatives) { subject.alternatives }
