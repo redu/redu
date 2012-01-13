@@ -3,7 +3,7 @@
   response = "<%=  escape_javascript (render :partial => 'statuses/response', :locals => { :response => @answer }) %>";
   $status = $("#status-<%= status_id %>");
 
-  $status.find(".responses ol").prepend(response);
+  $status.find(".responses ol").append(response);
   $status.find(".responses").show();
   $status.find(".create-response").toggle();
   $status.find(".toggle-statuses .qty").text($status.find(".responses > ol > li").length);
