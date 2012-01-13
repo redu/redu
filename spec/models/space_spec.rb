@@ -18,12 +18,9 @@ describe Space do
   it { should have_many :statuses }
 
   it { should validate_presence_of :name}
-  it { should validate_presence_of :description }
+  it { should_not validate_presence_of :description }
   it { should validate_presence_of :submission_type }
   it { should ensure_length_of(:name).is_at_most 40 }
-  #FIXME falhando por problema de tradução
-  xit { should ensure_length_of(:description).is_at_least(30).is_at_most(250) }
-
 
   [:owner, :removed, :members_count, :course_id, :published].each do |attr|
     it { should_not allow_mass_assignment_of attr }
