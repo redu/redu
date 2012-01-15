@@ -16,7 +16,7 @@
           <%= link_to @course.name,
             environment_course_path(@course.environment, @course),
             :class => 'name' %>
-          <% unless @course.tags.empty? %>
+          <% unless @course.tags.blank? %>
             <ul class="tags clearfix">
               <% @course.tags.each do |tag| %>
                 <li>
@@ -28,7 +28,7 @@
           <% end %>
         </div>
         <span class="description">
-          <% if @course.description.empty? %>
+          <% if @course.description.blank? %>
             Sem descrição.
           <% else %>
             <%= @course.description %>
@@ -56,7 +56,7 @@
         <div class="audience">
           <em>Audiência:</em>
           <ul>
-            <% if @course.audiences.empty? %>
+            <% if @course.audiences.blank? %>
               <li><%= link_to 'Não informado', nil %></li>
             <% else %>
               <% @course.audiences.each do |audience| %>
