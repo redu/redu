@@ -17,8 +17,7 @@
             <ul class="tags clearfix">
               <% @course.tags.each do |tag| %>
                 <li>
-                  <%= link_to tag, environment_course_user_course_invitation_path(
-                    @course.environment, @course, @user_course_invitation) %>
+                  <%= tag %>
                 </li>
               <% end %>
             </ul>

@@ -526,3 +526,9 @@ a {
   float: left;
   width: 120px;
 }
+
+#course-invitation .tags li {
+  display: inline;
+  font-size: 10px;
+  color: #B2B2B2;
+}
