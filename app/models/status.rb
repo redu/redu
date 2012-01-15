@@ -3,7 +3,7 @@ class Status < ActiveRecord::Base
   belongs_to :user
   has_many :answers, :as => :in_response_to,
     :dependent => :destroy,
-    :order => "created_at DESC",
+    :order => "created_at ASC",
     :include => [:user]
   has_many :users, :through => :status_user_associations
   has_many :status_user_associations, :dependent => :destroy

@@ -44,6 +44,17 @@ class Question < ActiveRecord::Base
     choices.first(:conditions => { :user_id => user.id })
   end
 
+  # Verifica se a questão tem pelo menos duas alternativas. Em caso negativo
+  # adiciona erros de validação.
+  def make_sense?
+    remain_alts = self.alternatives.reject(&:marked_for_destruction?)
+
+    return true if remain_alts.length > 1
+
+    errors.add(:base, "devem existir no mínimo duas alternativas")
+    return false
+  end
+
   protected
 
   def find_alternative(alternative_or_id)

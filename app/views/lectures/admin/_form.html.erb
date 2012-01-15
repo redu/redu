@@ -13,7 +13,7 @@
     <% when "Document" %>
       <%= render :partial => 'lectures/admin/document_fields', :locals => { :f => builder } %>
     <% when "Exercise" %>
-      <%= concave_errors_for(f.object.lectureable, :general) %>
+      <%= concave_errors_for(f.object.lectureable, :base) %>
       <%= render :partial => 'lectures/admin/exercise_fields', :locals => { :f => builder } %>
     <% end %>
   <% end %>
