@@ -1,7 +1,7 @@
 <div class="container_16 clearfix" id="course-invitation">
   <div class="grid_4 alpha">
     <h1 class="logotipo replacement">
-      <a href="#">Redu: rede social educacional</a>
+      <%= link_to "Redu: rede social educacional", application_path  %>
     </h1>
   </div>
   <div class="clearfix invite">
@@ -11,11 +11,8 @@
         :class => 'avatar' %>
       <div class="informations">
         <div class="header">
-          <%= link_to @environment.name,
-            environment_path(@environment), :class => 'environment' %>
-          <%= link_to @course.name,
-            environment_course_path(@course.environment, @course),
-            :class => 'name' %>
+          <span class="environment"><%= @environment.name %></span>
+          <span class="name"><%= @course.name %></span>
           <% unless @course.tags.blank? %>
             <ul class="tags clearfix">
               <% @course.tags.each do |tag| %>
@@ -69,42 +66,30 @@
     </div>
   </div>
   <div class="grid_6 omega">
-    <div class="hall">
-      <%= link_to "Crie sua conta, é grátis!",
-        signup_url(:invitation_token => @user_course_invitation.token),
-        :class => "important signup" %>
-      <hr/>
+    <div class="form-login">
+        <div class="header-form-login">
+          <h3 class="new-version-call">Já possui uma conta? Acesse nossa versão <q class="beta-call" >beta </q>.</h3>
+        </div>
+        <%= form_for @user_session, :html => { :class => "concave-form" }, :url => sessions_path do |f| %>
+          <%= field_set_tag do %>
+            <%= hidden_field_tag :invitation_token, @user_course_invitation.token %>
+            <%= f.text_field :login, :id => "user-login", :value => "Digite seu login e, abaixo, sua senha" %>
+            <%= concave_errors_for @user_session, :login %>
 
-      <%= form_for @user_session, :html => { :class => "form-common highlightable"} ,:url => sessions_path do |f| %>
+            <%= f.password_field :password, :class => "password-field" %>
+            <%= concave_errors_for @user_session, :password %>
+            <button>Entrar</button>
 
-        <%= field_set_tag do %>
-
-          <%= hidden_field_tag :invitation_token, @user_course_invitation.token %>
-          <%= f.label :login, "Login ou e-mail:", :class => "small" %>
-          <%= f.text_field :login, :class => "small" %>
-          <%= error_for :user_session, :login %>
-
-          <%= f.label :password, "Senha:" ,:class => "small" %>
-          <%= f.password_field :password, :class => "small" %>
-          <%= error_for :user_session, :password %>
-
-          <%= field_set_tag "", :class => "inline" do %>
-            <%= f.check_box :remember_me %>
-            <%= f.label :remeber_me, "Manter-me logado" %>
+            <div class="short-options">
+              <%= f.check_box :remember_me, :class => "check-stay-connect" %>
+              <%= f.label :remember_me, "Matenha-me conectado", :class => "label-stay-connect" %>
+              <%= link_to "Recuperar login & senha", forgot_password_path, :class => "recover-login" %>
+            </div>
+            <p class="or-call">&minus; ou &minus;</p>
           <% end %>
-
-          <%= f.submit "Entrar" %>
-        <% end %>
-
-      <% end %>
-
+       <% end %>
+       <%= link_to "Que tal se cadastrar?", signup_path(:invitation_token => @user_course_invitation.token), :class => "new-account" %>
+      </div>
     </div>
-    <%= "Esqueceu seu login?" %>
-    <%= link_to "Clique aqui para recuperar o login",
-      forgot_username_url %>
-    <%= "Esqueceu sua senha?" %>
-    <%= link_to "Clique aqui para recuperar a senha",
-      forgot_password_url %>
   </div>
 </div>
-    </div>
