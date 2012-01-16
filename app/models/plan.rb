@@ -84,6 +84,8 @@ class Plan < ActiveRecord::Base
     },
   }
 
+  serialize :billable_audit, Course
+
   belongs_to :billable, :polymorphic => true
   belongs_to :user
   # Para quando houver upgrade/downgrade
@@ -220,6 +222,12 @@ class Plan < ActiveRecord::Base
   # Retorna true se há pelo menos um Invoice com estado 'overdue' ou 'pending'
   def pending_payment?
     self.invoices.pending.count > 0 || self.invoices.overdue.count > 0
+  end
+
+  # Serializa billable associado e salva com propósito de auditoria
+  def audit_billable!
+    self.billable_audit = self.billable
+    save!
   end
 
   protected
