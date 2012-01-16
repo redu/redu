@@ -1,10 +1,12 @@
 $(function(){
+
   $.fn.refreshExercises = function() {
+    // Deixa uma questão marcada quando o usuário a seleciona
     this.each(function(){
         $(".alternatives li input[type='radio']").live("click", function(){
           $(".alternatives li").removeClass("selected");
           $(this).parent().addClass("selected");
-          $(".exercise-nav li a.actual").parent().addClass("question-answered");
+          $(".exercise-nav li.actual").addClass("question-answered");
         });
     });
   }
