@@ -1,9 +1,11 @@
 <div class="concave-sidebar alpha grid_3">
   <div class="image-frame">
-    <%= image_tag environment.avatar.url(:thumb_140),
-      :size => "140x140",
-      :alt => 'profile',
-      :class => "environment-avatar" %>
+    <%= link_to(environment) do %>
+      <%= image_tag environment.avatar.url(:thumb_140),
+        :size => "140x140",
+        :alt => 'profile',
+        :class => "environment-avatar" %>
+    <% end %>
   </div>
 
   <div class="total-count">
