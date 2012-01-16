@@ -6,7 +6,7 @@
           :class => "billable"
         %>
     <% else %>
-      "(curso removido)"
+      <span class="name"><%= item.billable_audit.try(:name) || "Sem informações" %> (removido)</span>
     <% end %>
   </td>
   <td>
@@ -22,7 +22,7 @@
       <% end %>
 
     <% else %>
-      <span class="name">Não possui</span>
+      <span class="name"><%= item.name %></span>
     <% end %>
   </td>
   <td>
