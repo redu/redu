@@ -654,7 +654,7 @@
 }
 
 .table-report-students .member-info .avatar {
-  padding: 5px 10px 5px 0px;
+  padding: 5px 10px 5px 5px;
   float: left;
 }
 
@@ -665,7 +665,7 @@
   display: block;
   float: left;
   vertical-align: top;
-  width: 221px;
+  width: 216px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
