@@ -29,13 +29,14 @@ javascripts:
     - public/javascripts/form.redu.jquery.js
     - public/javascripts/asyncjs.jquery.js
     - public/javascripts/users.js
-    - public/javascripts/browserdetection.js
     - public/javascripts/jquery.cookie.js
     - public/javascripts/ytpreview.jquery.js
     - public/javascripts/subjects.js
     - public/javascripts/statuses.js
     - public/javascripts/admin.js
     - public/javascripts/jquery.nested-fields.js
+    - public/javascripts/browserdetection.js
+    - public/javascripts/outdated-browser.js
   chat:
     - public/javascripts/jquery.pjax.js
     - public/javascripts/pusher.js
@@ -56,6 +57,10 @@ javascripts:
     - public/javascripts/asyncjs.jquery.js
     - public/javascripts/jquery.noisy.js
     - public/javascripts/form.redu.jquery.js
+    - public/javascripts/swfobject.js # Necessário ao browserdetection.js
+    - public/javascripts/browserdetection.js
+    - public/javascripts/jquery.cookie.js
+    - public/javascripts/outdated-browser.js
     - public/javascripts/landing.js
 
 stylesheets:
@@ -63,11 +68,12 @@ stylesheets:
     - public/stylesheets/reset.css
     - public/stylesheets/960.css
     - public/stylesheets/new-fonts.css
+    - public/stylesheets/token-input.css
+    - public/stylesheets/utils.css
     - public/stylesheets/new-style.css
     - public/stylesheets/tipTip.css
     - public/stylesheets/ajaxful_rating.css
     - public/stylesheets/fb_style.css
-    - public/stylesheets/token-input.css
     - public/stylesheets/form.redu.css
     - public/stylesheets/table.redu.css
     - public/stylesheets/icons.big.redu.css
@@ -75,6 +81,7 @@ stylesheets:
     - public/stylesheets/users.css
     - public/stylesheets/lectures.css
     - public/stylesheets/exercises.css
+    - public/stylesheets/outdated-browser.css
   ie:
     - public/stylesheets/ie.css
   chat:
@@ -82,7 +89,9 @@ stylesheets:
   landing:
     - public/stylesheets/reset.css
     - public/stylesheets/960.css
+    - public/stylesheets/utils.css
     - public/stylesheets/form.redu.css
+    - public/stylesheets/outdated-browser.css
     - public/stylesheets/landing.css
   cold:
     - public/stylesheets/cold.css
