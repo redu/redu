@@ -96,10 +96,10 @@ describe Plan do
         :description => "Lorem ipsum dolor sit amet, consectetur magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
         :period_start => Date.today + 3,
         :period_end => Date.today + 5,
-        :amount => "21.5"
+        :amount => BigDecimal.new("21.5")
       }
 
-      invoice = subject.create_invoice(attrs)
+      invoice = subject.create_invoice(:invoice => attrs)
       invoice.should be_valid
 
       # Criando instância para o caso de existir algum callback que modifique o
@@ -185,13 +185,15 @@ describe Plan do
   context "when migrating to a new plan" do
     before do
       @amount_per_day = subject.price / subject.days_in_current_month
-      subject.create_invoice(:period_start => Date.new(2011, 01, 01),
-                             :period_end => Date.new(2011, 01, 31),
-                             :amount =>  31 * @amount_per_day)
+      subject.create_invoice(:invoice => {
+        :period_start => Date.new(2011, 01, 01),
+        :period_end => Date.new(2011, 01, 31),
+        :amount =>  31 * @amount_per_day})
 
-      subject.create_invoice(:period_start => Date.new(2011, 02, 01),
-                             :period_end => Date.new(2011, 02, 28),
-                             :amount =>  28 * @amount_per_day)
+      subject.create_invoice(:invoice => {
+        :period_start => Date.new(2011, 02, 01),
+        :period_end => Date.new(2011, 02, 28),
+        :amount =>  28 * @amount_per_day})
 
       @new_plan = subject.migrate_to(:name => "Novo plano",
                                      :members_limit => 30,
@@ -232,13 +234,15 @@ describe Plan do
       subject { Factory(:plan, :price => 50, :yearly_price => 150) }
 
       @amount_per_day = subject.price / subject.days_in_current_month
-      subject.create_invoice(:period_start => Date.new(2011, 01, 01),
-                             :period_end => Date.new(2011, 01, 31),
-                             :amount =>  31 * @amount_per_day)
+      subject.create_invoice(:invoice => {
+        :period_start => Date.new(2011, 01, 01),
+        :period_end => Date.new(2011, 01, 31),
+        :amount =>  31 * @amount_per_day})
 
-      subject.create_invoice(:period_start => Date.new(2011, 02, 01),
-                             :period_end => Date.new(2011, 02, 28),
-                             :amount =>  28 * @amount_per_day)
+      subject.create_invoice(:invoice => {
+        :period_start => Date.new(2011, 02, 01),
+        :period_end => Date.new(2011, 02, 28),
+        :amount =>  28 * @amount_per_day})
 
       subject.invoices.pending.map { |i| i.pay! }
       subject.invoices.reload

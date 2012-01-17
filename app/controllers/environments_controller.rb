@@ -99,8 +99,7 @@ class EnvironmentsController < BaseController
         @environment.color = "4DADD6"
         if @environment.save && @plan.save
           @environment.courses.first.create_quota
-          if @plan.price > 0
-            @plan.create_invoice_and_setup
+          if @plan.create_invoice_and_setup
             format.js { render :pay }
             format.html do
               redirect_to confirm_plan_path(@plan)
