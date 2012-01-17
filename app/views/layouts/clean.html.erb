@@ -19,9 +19,11 @@
         Typekit.load();
       }catch(e){}
     <% end %>
+    <%= render :partial => "shared/analytics" %>
     <%= yield :header_scripts_and_styles %>
   </head>
   <body>
+    <%= render :partial => 'shared/outdated_browser' %>
     <%= render :partial => 'shared/flash_message' %>
     <%= yield %>
     <div class="footer">

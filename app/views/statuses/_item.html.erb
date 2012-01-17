@@ -138,7 +138,7 @@
           </div>
           <div class="status-message">
             <p>
-              <%= raw auto_link(item.text) %>
+              <%= raw auto_link(h(item.text).gsub(/\n/, '</br>')) %>
             </p>
           </div>
           <ul class="actions clearfix">
@@ -188,7 +188,7 @@
           </div>
           <div class="status-message">
             <p>
-              <%= raw auto_link(item.text) %>
+              <%= raw auto_link(h(item.text).gsub(/\n/, '</br>')) %>
             </p>
           </div>
           <ul class="actions clearfix">
@@ -238,7 +238,7 @@
           </div>
           <div class="status-message">
             <p>
-              <%= raw auto_link(item.text) %>
+              <%= raw auto_link(h(item.text).gsub(/\n/, '</br>')) %>
             </p>
           </div>
           <ul class="actions clearfix">
@@ -288,7 +288,7 @@
       </div>
       <div class="status-message">
         <p>
-          <%= raw auto_link(item.text) %>
+          <%= raw auto_link(h(item.text).gsub(/\n/, '</br>')) %>
         </p>
       </div>
       <ul class="actions clearfix">

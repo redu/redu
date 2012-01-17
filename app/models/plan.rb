@@ -144,7 +144,12 @@ class Plan < ActiveRecord::Base
   # calculado dividindo-se o price do plano pela quantidade de dias restantes até
   # o último dia do mês atual. Caso nenhuma opção seja informada, a data inicial
   # será Date.tomorrow e a final de hoje a 30 dias, além disso o amount é
-  # calculado para esse período
+  # calculado para esse período.
+  #
+  # O invoice só é gerado o amount informado for maior do que zero. Para forçar
+  # a criação de invoices independente do preço do plano, passar a opção
+  # :force => true
+  #
   # Como no exemplo abaixo:
   #
   # plan.price
@@ -155,23 +160,29 @@ class Plan < ActiveRecord::Base
   # invoice.amount
   # => 11.61 # (31 dias - 13 dias) * (20 / 31 dias)
   def create_invoice(opts = {})
-    invoice_options = {
-      :period_start => Date.today.tomorrow,
-      :period_end => Date.today.advance(:days => 30),
-      :amount => self.price
-    }.merge(opts)
+    options = {
+      :invoice => {
+        :period_start => Date.today.tomorrow,
+        :period_end => Date.today.advance(:days => 30),
+        :amount => self.price,
+      },
+      :force => false
+    }.deep_merge(opts)
 
-    invoice = self.invoices.create(invoice_options)
-    invoice.pend!
+    if options[:force] || (options[:invoice][:amount] > 0)
+      invoice = self.invoices.create(options[:invoice])
+      invoice.pend!
+      invoice
+    end
 
-    invoice
   end
 
   # Cria o primeiro invoice para os primeiros 30 dias mas dobra seu valor
   # (correspondente a taxa de setup)
   def create_invoice_and_setup
-    create_invoice(:amount => self.price * 2,
-                   :description => "Fatura refrente aos primeiros 30 dias e a taxa de adesão do plano #{self.name}")
+    create_invoice(:invoice => {
+      :amount => self.price * 2,
+      :description => "Fatura refrente aos primeiros 30 dias e a taxa de adesão do plano #{self.name}"})
   end
 
   # Calcula o montante do perído informado porporcional ao preço do plano. O default

@@ -1,0 +1,5 @@
+/* CSS common to two or more areas */
+.replacement {
+  text-indent: -99999px;
+  overflow: hidden;
+}

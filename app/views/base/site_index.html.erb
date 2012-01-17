@@ -22,7 +22,8 @@
             <div class="short-options">
               <%= f.check_box :remember_me, :class => "check-stay-connect" %>
               <%= f.label :remember_me, "Matenha-me conectado", :class => "label-stay-connect" %>
-              <%= link_to "Recuperar login & senha", forgot_password_path, :class => "recover-login" %>
+              <%= link_to "Recuperar  senha", forgot_password_path, :class => "recover-login" %>
+              <%= link_to "Recuperar login", forgot_username_path, :class => "recover-login" %>
             </div>
             <p class="or-call">&minus; ou &minus;</p>
           <% end %>
