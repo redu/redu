@@ -4,9 +4,17 @@
 }
 
 #clean .logotipo {
+  background: url("../images/new/logotipo-vertical.png") no-repeat;
+}
+
+#clean .logotipo a {
+  display: block;
+}
+
+#clean .logotipo,
+#clean .logotipo a {
   width: 174px;
   height: 237px;
-  background: url("../images/new/logotipo-vertical.png") no-repeat;
 }
 
 #clean .call {

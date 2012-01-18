@@ -12,6 +12,7 @@
     <!--[if (gte IE 6)&(lte IE 8)]>
       <%= include_javascripts :ie %>
     <![endif]-->
+    <%= include_javascripts :common %>
     <%= include_javascripts :landing %>
 
     <%= lazy_load("http://use.typekit.com/lpo4rgu.js", :jammit => false) do %>
@@ -24,8 +25,12 @@
   </head>
   <body>
     <%= render :partial => 'shared/outdated_browser' %>
-    <%= render :partial => 'shared/flash_message' %>
-    <%= yield %>
+
+    <div class="<%= yield :wrapper_class %>">
+      <%= render :partial => 'shared/flash_message' %>
+      <%= yield %>
+    </div>
+
     <div class="footer">
       <div class="container_16">
         <h1 class="logo-2"><a href="http://www.redu.com.br"></a></h1>

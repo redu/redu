@@ -102,12 +102,3 @@
   width: 100px;
   text-align: center;
 }
-
-/* Redefinindo para não carregar todo o CSS */
-
-.icon-small.icon-delete-white-gray_16_18 {
-  background-image: url("../images/new/icons-small.png");
-  background-repeat: no-repeat;
-  background-position: top left;
-  background-position: -240px -2160px;
-}
