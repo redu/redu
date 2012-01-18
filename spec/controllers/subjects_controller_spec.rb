@@ -133,7 +133,7 @@ describe SubjectsController do
         lambda {
           put :update, :locale => "pt-BR", :id => @subject.id,
           :space_id => @space.id,
-          :subject => { :description => "short description" }
+          :subject => { :title => "" }
         }.should_not change{ @subject.reload.description }
       end
 
