@@ -210,6 +210,11 @@ html, body { height: 100% }
   padding: 0;
 }
 
+.form-login .concave-form .concave-button::-moz-focus-inner {
+  border:none;
+  padding:0;
+}
+
 .textshadow .form-login .concave-form .concave-button {
   text-shadow: 0 -1px 0 rgb(21, 138, 196);
 }
