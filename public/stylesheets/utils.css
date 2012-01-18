@@ -3,3 +3,49 @@
   text-indent: -99999px;
   overflow: hidden;
 }
+
+
+/* Flash messages */
+.global-messages {
+  padding-top: 10px;
+}
+
+.flash-message {
+  padding: 15px;
+}
+
+.borderradius .flash-message {
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.global-messages .flash-message {
+  margin-left: 170px;
+  width: 590px;
+  position: relative;
+}
+
+.flash-message.error,
+.flash-message.info,
+.flash-message.notice {
+  background-color: #FFEED7;
+  border: solid 1px #FBC172;
+}
+
+.flash-message.success {
+  background-color: #EEF6E5;
+  border: solid 1px #60BD7F;
+}
+
+.flash-message .close-flash {
+  position: absolute;
+  right: 15px;
+  top: 17px;
+  width: 10px;
+  height: 10px;
+}
+
+.flash-message .close-flash:before {
+  float: left;
+}

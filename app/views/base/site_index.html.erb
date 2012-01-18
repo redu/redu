@@ -1,38 +1,37 @@
-  <div class="overlay">
-    <div class="body container_16">
-      <div class="presentation">
-        <h1 class="top"><%= link_to "Redu: a rede social educacional", application_path %></h1>
-        <h2 class="learn-call">Aprender nunca foi tão fácil.</h2>
-        <h2 class="teach-call">Ensinar nunca foi tão conveniente.</h2>
-        <p class="welcome">Bem-vindo(a) ao Redu, uma plataforma de ensino que foi construída tendo como base as interações sociais. Aqui, a diversão é uma aliada da produtividade e a colaboração o núcleo do enriquecimento cultural.</p>
-      </div>
-    <div class="form-login">
-        <div class="header-form-login">
-          <h3 class="new-version-call">Já possui uma conta? Acesse nossa versão <q class="beta-call" >beta </q>.</h3>
-        </div>
-        <%= form_for @user_session, :html => { :class => "concave-form" }, :url => sessions_path do |f| %>
-          <%= field_set_tag do %>
-            <%= f.text_field :login, :id => "user-login", :value => "Digite seu login e, abaixo, sua senha" %>
-            <%= concave_errors_for @user_session, :login %>
-
-            <%= f.password_field :password, :class => "password-field" %>
-            <%= concave_errors_for @user_session, :password %>
-            <button>Entrar</button>
-
-            <div class="short-options">
-              <%= f.check_box :remember_me, :class => "check-stay-connect" %>
-              <%= f.label :remember_me, "Matenha-me conectado", :class => "label-stay-connect" %>
-              <%= link_to "Recuperar  senha", forgot_password_path, :class => "recover-login" %>
-              <%= link_to "Recuperar login", forgot_username_path, :class => "recover-login" %>
-            </div>
-            <p class="or-call">&minus; ou &minus;</p>
-          <% end %>
-       <% end %>
-       <%= link_to "Que tal se cadastrar?", signup_path, :class => "new-account" %>
-      </div>
-      <div class="facebook-like">
-        <iframe src="http://www.facebook.com/plugins/like.php?app_id=221316171245047&amp;href=http%3A%2F%2Fwww.facebook.com%2Fredesocialeducacional&amp;send=false&amp;layout=standard&amp;width=280&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:280px; height:80px;" allowTransparency="true"></iframe>
-      </div>
+<%= content_for :wrapper_class do %>overlay<% end %>
+<div class="body container_16">
+  <div class="presentation">
+    <h1 class="top"><%= link_to "Redu: a rede social educacional", application_path %></h1>
+    <h2 class="learn-call">Aprender nunca foi tão fácil.</h2>
+    <h2 class="teach-call">Ensinar nunca foi tão conveniente.</h2>
+    <p class="welcome">Bem-vindo(a) ao Redu, uma plataforma de ensino que foi construída tendo como base as interações sociais. Aqui, a diversão é uma aliada da produtividade e a colaboração o núcleo do enriquecimento cultural.</p>
+  </div>
+  <div class="form-login">
+    <div class="header-form-login">
+      <h3 class="new-version-call">Já possui uma conta? Acesse nossa versão <q class="beta-call" >beta </q>.</h3>
     </div>
-    <div class="push"></div>
-  </div><!-- end overlay -->
+    <%= form_for @user_session, :html => { :class => "concave-form" }, :url => sessions_path do |f| %>
+      <%= field_set_tag do %>
+        <%= f.text_field :login, :id => "user-login", :value => "Digite seu login e, abaixo, sua senha" %>
+        <%= concave_errors_for @user_session, :login %>
+
+        <%= f.password_field :password, :class => "password-field" %>
+        <%= concave_errors_for @user_session, :password %>
+        <button>Entrar</button>
+
+        <div class="short-options">
+          <%= f.check_box :remember_me, :class => "check-stay-connect" %>
+          <%= f.label :remember_me, "Matenha-me conectado", :class => "label-stay-connect" %>
+          <%= link_to "Recuperar  senha", forgot_password_path, :class => "recover-login" %>
+          <%= link_to "Recuperar login", forgot_username_path, :class => "recover-login" %>
+        </div>
+        <p class="or-call">&minus; ou &minus;</p>
+      <% end %>
+    <% end %>
+    <%= link_to "Que tal se cadastrar?", signup_path, :class => "new-account" %>
+  </div>
+  <div class="facebook-like">
+    <iframe src="http://www.facebook.com/plugins/like.php?app_id=221316171245047&amp;href=http%3A%2F%2Fwww.facebook.com%2Fredesocialeducacional&amp;send=false&amp;layout=standard&amp;width=280&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:280px; height:80px;" allowTransparency="true"></iframe>
+  </div>
+</div>
+<div class="push"></div>
