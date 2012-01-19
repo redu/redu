@@ -271,14 +271,19 @@ html, body { height: 100% }
 
 .new-account {
   background-color: rgb(171,227,133);
-  padding: 40px;
-  float: right;
   font-family: museo-slab, arial, sans-serif;
   font-weight: 500;
   font-size: 16px;
-  border: 1px solid rgb(95,192,128);
   color: white;
   cursor: pointer;
+
+  border: 1px solid rgb(95,192,128);
+  display: block;
+  width: 244px;
+  height: 51px;
+  padding-top: 34px;
+  text-align: center;
+  margin: 0 auto;
 }
 
 .new-account:hover {
