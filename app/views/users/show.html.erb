@@ -20,7 +20,7 @@
           </li>
           <% unless @user.educations.empty? %>
             <ul class="education icon-education-gray_8_10-before">
-              <%= render :partial => "concave-important_education",
+              <%= render :partial => "important_education",
                 :collection => @user.most_important_education,
                 :as => :education %>
             </ul>
