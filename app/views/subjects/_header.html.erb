@@ -14,13 +14,11 @@
     <%= link_to subject.title, space_path(subject.space) %>
   </h3>
 
-  <% unless subject.description.blank? && subject.tags.empty? %>
+  <% unless subject.description.blank? %>
     <div class="details">
-      <% unless subject.description.blank? %>
-        <span class="description icon-bio-gray_16_18-before">
-          <%= subject.description %>
-        </span>
-      <% end %>
+      <span class="description icon-bio-gray_16_18-before">
+        <%= subject.description %>
+      </span>
     </div>
   <% end %>
 </div><!-- end #hierarchy-header -->

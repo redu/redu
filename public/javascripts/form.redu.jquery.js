@@ -11,7 +11,7 @@
           var $fieldset = $form.find("fieldset:not(.inline)");
           var $files = $form.find("input[type=file]");
           var $select = $form.find("select");
-          var $buttons = $form.find("input[type=submit], button, input[type=button]");
+          var $buttons = $form.find("input[type=submit], button, input[type=button]").not(".concave-important, .concave-important-font");
           var $separator = $form.find("hr");
 
           // Cabels

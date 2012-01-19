@@ -155,7 +155,7 @@ jQuery(function(){
         var $target = $(e.target);
 
         if($target.is($this)){
-          $(this).find("input[type=submit]").loadingStart();
+          $(this).find("input[type=submit], button").loadingStart({ 'class' : 'concave-loading' });
         }
     });
 
@@ -164,7 +164,7 @@ jQuery(function(){
         var $target = $(e.target);
 
         if($target.is($this)){
-          $(this).find("input[type=submit]").loadingComplete();
+          $(this).find("input[type=submit], button").loadingComplete({ 'class' : 'concave-loading'});
         }
     });
 
@@ -180,7 +180,7 @@ jQuery(function(){
 
     $.fn.loadingStart = function(options){
       var config = {
-        "className" : "bt-loading"
+        "className" : "concave-loading"
       }
       $.extend(config, options);
 
@@ -192,7 +192,7 @@ jQuery(function(){
 
     $.fn.loadingComplete = function(options){
       var config = {
-        "className" : "bt-loading"
+        "className" : "concave-loading"
       }
       $.extend(config, options);
 
@@ -204,7 +204,7 @@ jQuery(function(){
 
     $.fn.loadingToggle = function(options){
       var config = {
-        "className" : "bt-loading"
+        "className" : "concave-loading"
       }
       $.extend(config, options);
 

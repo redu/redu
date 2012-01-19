@@ -181,10 +181,10 @@
 
 /* botoes */
   .concave-remove,
-  input[type="submit"].concave-remove,
-  input[type="submit"].concave-button,
   .concave-button,
   .concave-clean,
+  .concave-important,
+  .concave-important-font,
   .concave-cancel {
     padding: 5px 20px 6px 20px;
     color: white;
@@ -193,6 +193,17 @@
     font-weight: bold;
     font-size: 1em;
     text-align: center;
+    cursor: pointer;
+  }
+
+  .concave-important,
+  .concave-important-font {
+    border: 1px solid rgb(75,192,128);
+    background-color: rgb(171, 227, 133);
+  }
+
+  .concave-important-font {
+    font-family: museo-slab, helvetica, arial, sans-serif;
   }
 
   .concave-clean {
@@ -208,11 +219,12 @@
   }
 
   .concave-form .concave-button,
+  .concave-form .concave-important,
+  .concave-form .concave-important-font,
   .concave-form .concave-cancel {
     margin: 20px 20px 0 0;
   }
 
-  input[type="submit"].concave-remove,
   .concave-remove {
     border: 1px solid rgb(232, 59, 59);
     color: white;
@@ -224,6 +236,8 @@
   }
 
   .concave-form .concave-button,
+  .concave-form .concave-important,
+  .concave-form .concave-important-font,
   .concave-form .concave-cancel {
     float: right;
   }
@@ -239,6 +253,8 @@
   .concave-clean:hover,
   .concave-remove:hover,
   .concave-button:hover,
+  .concave-important:hover,
+  .concave-important-font:hover,
   .concave-cancel:hover {
     text-decoration: none;
   }
@@ -246,10 +262,18 @@
   .borderradius .concave-clean,
   .borderradius .concave-remove,
   .borderradius .concave-button,
+  .borderradius .concave-important,
+  .borderradius .concave-important-font,
   .borderradius .concave-cancel {
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
+  }
+
+  .cssgradients .concave-important,
+  .cssgradients .concave-important-font {
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(171, 227, 133)), to(rgb(95, 192, 128)));
+    background: -moz-linear-gradient(top, rgb(95, 192, 128), rgb(171, 227, 133));
   }
 
   .cssgradients .concave-button {
@@ -257,19 +281,16 @@
     background: -moz-linear-gradient(top, rgb(115, 195, 230), rgb(77, 172, 214)); /* firefox 3.6+ */
   }
 
-  .cssgradients input[type="submit"].concave-cancel,
   .cssgradients .concave-cancel {
     background: -webkit-gradient(linear, left top, left bottom, from(#FF6D6D), to(#E83B3B)); /* webkit browsers */
     background: -moz-linear-gradient(top,  #FF6D6D,  #E83B3B); /* firefox 3.6+ */
   }
 
-  .cssgradients input[type="submit"].concave-remove,
   .cssgradients .concave-remove {
     background: -webkit-gradient(linear, left top, left bottom, from(rgb(255, 109, 109)), to(rgb(232, 59, 59))); /* webkit browsers */
     background: -moz-linear-gradient(top, rgb(255, 109, 109), rgb(232, 59, 59)); /* Firefox 3.6+ */
   }
 
-  .cssgradients input[type="submit"].concave-clean,
   .cssgradients .concave-clean {
     background: -moz-linear-gradient(top, rgb(255,255,255) 0%, rgb(240,240,240) 97%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(255,255,255)), color-stop(97%,rgb(240,240,240))); /* Chrome,Safari4+ */
@@ -278,6 +299,13 @@
     background: -ms-linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 97%); /* IE10+ */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f0f0f0',GradientType=0 ); /* IE6-9 */
     background: linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 97%); /* W3C */
+  }
+
+  .textshadow .concave-important-font,
+  .textshadow .concave-important {
+     -moz-text-shadow: 0px -1px 0 rgb(97, 160, 128);
+     -webkit-text-shadow: 0px -1px 0 rgb(97, 160, 128);
+     text-shadow: 0px -1px 0 rgb(97, 160, 128);
   }
 
   .textshadow .concave-button {
@@ -302,6 +330,12 @@
     text-shadow: 0px 1px 0px #ffffff;
   }
 
+  .concave-important-font:hover,
+  .concave-important:hover {
+    border: 1px solid rgb(97,160,128);
+
+  }
+
   .concave-button:hover {
     border: 1px solid #1789C3;
     background: #1789C3;
@@ -323,7 +357,12 @@
     background: rgb(255,255,255); /* Old browsers */
   }
 
-  .cssgradients input[type="submit"].concave-cancel:hover,
+  .cssgradients .concave-important-font:hover,
+  .cssgradients .concave-important:hover {
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(171,227,133)), to(rgb(97,160,128)));
+    background: -moz-linear-gradient(top,  rgb(171,227,133), rgb(97,160,128));
+  }
+
   .cssgradients .concave-cancel:hover {
     background: -webkit-gradient(linear, left top, left bottom, from(#FF6D6D), to(#C1272D)); /* webkit browsers */
     background: -moz-linear-gradient(top,  #FF6D6D,  #C1272D); /* firefox 3.6+ */
@@ -334,13 +373,11 @@
     background: -moz-linear-gradient(top,  rgb(115, 195, 230), rgb(21, 138, 196)); /* firefox 3.6+ */
   }
 
-  .cssgradients input[type="submit"].concave-remove:hover,
   .cssgradients .concave-remove:hover {
     background: -webkit-gradient(linear, left top, left bottom, from(rgb(255, 109, 109)), to(rgb(193, 39, 45))); /* webkit browsers */
     background: -moz-linear-gradient(top, rgb(255, 109, 109), rgb(193, 39, 45)); /* Firefox 3.6+ */
   }
 
-  .cssgradients input[type="submit"].concave-clean:hover,
   .cssgradients .concave-clean:hover {
     background: -moz-linear-gradient(top, rgb(255,255,255) 0%, rgb(219,239,247) 97%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(255,255,255)), color-stop(97%,rgb(219,239,247))); /* Chrome,Safari4+ */
@@ -435,10 +472,19 @@
   }
 
 /* Indicador de estado de carregamento */
-  .concave-form .concave-loading,
-  .concave-form .concave-loading:hover {
+  .concave-loading,
+  .cssgradients .concave-loading,
+  .cssgradients .concave-loading:hover,
+  .concave-loading:hover {
     background: #f1f0f0 url("../images/new/spinner.gif") no-repeat center center;
     color: transparent;
+  }
+
+  .concave-loading *,
+  .cssgradients .concave-loading *,
+  .cssgradients .concave-loading:hover *,
+  .concave-loading:hover * {
+    display: none;
   }
 
   .textshadow .concave-loading {

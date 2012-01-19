@@ -50,7 +50,9 @@
             </td>
             <td>
               <% if invoice.pending? %>
-                <%= pagseguro_form invoice.plan.create_order, :submit => "Pagar" %>
+                <div class="concave-form pagseguro-concave-form">
+                  <%= pagseguro_form invoice.plan.create_order, :submit => "Pagar" %>
+                </div>
               <% end %>
             </td>
           </tr>
