@@ -338,7 +338,7 @@ body {
 }
 
 #content .sidebar .student-actions li > a {
-  width: 108px;
+  width: 85px;
   height: 71px;
   font-size: 1em;
   text-align: center;
@@ -3096,175 +3096,6 @@ body {
   font-size: .87em;
 }
 
-
-a.button,
-input[type=submit],
-a.cancel,
-a.die,
-a.remove,
-a.important {
-  padding: 7px 10px;
-  font-size: .9em;
-  font-weight: bold;
-  cursor: pointer;
-  text-align: center;
-
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
-}
-
-a.button:hover,
-input[type=submit]:hover,
-a.cancel:hover,
-a.die:hover,
-a.remove:hover,
-a.important:hover {
-  text-decoration: none;
-}
-
-input[type=submit] {
-  padding: 7px 10px;
-}
-
-a.important,
-input[type=submit].important {
-  border: 1px solid #61BE80;
-  font-family: museo-slab, helvetica, arial, sans-serif;
-  font-weight: 500;
-  color: white;
-  font-size: 1em;
-  background-color: #61BE80;
-
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#AED584', endColorstr='#61BE80'); /* IE */
-}
-
-.cssgradients a.important,
-.cssgradients input[type=submit].important {
-  background: -webkit-gradient(linear, left top, left bottom, from(#aed584), to(#61be80)); /* webkit browsers */
-  background: -moz-linear-gradient(top,  #AED584,  #61BE80); /* Firefox 3.6+ */
-}
-
-a.important:hover,
-input[type=submit].important:hover {
-  border: 1px solid #61a080;
-
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#AED584', endColorstr='#61a080'); /* IE */
-}
-
-.cssgradients a.important:hover,
-.cssgradients input[type=submit].important:hover {
-  background: -webkit-gradient(linear, left top, left bottom, from(#AED584), to(#61a080)); /* webkit browsers */
-  background: -moz-linear-gradient(top,  #AED584, #61a080); /* Firefox 3.6+ */
-}
-
-a.button,
-input[type=submit] {
-  color: white;
-  background-color: #4cacd5;
-
-  border: 1px solid #4cacd5;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4EADD6', endColorstr='#72C3E6'); /* IE */
-}
-
-.cssgradients a.button,
-.cssgradients input[type=submit] {
-  background: -webkit-gradient(linear, left top, left bottom, from(#73c3e6), to(#4cacd5)); /* webkit browsers */
-  background: -moz-linear-gradient(top, #73c3e6, #4cacd5); /* Firefox 3.6+ */
-}
-
-a.button:hover,
-input[type=submit]:hover {
-  border: 1px solid #1789c3;
-}
-
-.cssgradients a.button:hover,
-.cssgradients input[type=submit]:hover {
-  background: -webkit-gradient(linear, left top, left bottom, from(#73c3e6), to(#1789c3)); /* webkit browsers */
-  background: -moz-linear-gradient(top, #73c3e6, #1789c3); /* Firefox 3.6+ */
-}
-
-input[type=submit].cancel,
-a.cancel,
-a.die {
-  border: 1px solid #cccbcb;
-  background: white;
-
-  background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#f1f0f0)); /* webkit browsers */
-  background: -moz-linear-gradient(top, #ffffff, #f1f0f0); /* Firefox 3.6+ */
-}
-
-
-input[type=submit].cancel:hover,
-a.die:hover,
-a.cancel:hover {
-  border: 1px solid #4cacd5;
-
-  background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#dbeff7)); /* webkit browsers */
-  background: -moz-linear-gradient(top, #ffffff, #dbeff7); /* Firefox 3.6+ */
-}
-
-input[type=submit].remove,
-a.remove {
-  border: 1px solid #FF0000;
-  color: #FF0000;
-  background: white;
-}
-
-a.die:hover,
-a.cancel:hover {
-  text-decoration: none;
-}
-
-input[type=submit].clean,
-a.clean {
-  display: block;
-  width: 148px;
-  padding: 8px 0;
-
-  color: rgb(77, 173, 214);
-  border: 1px solid rgb(204, 204, 204);
-  background: rgb(255,255,255); /* Old browsers */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f0f0f0',GradientType=0 ); /* IE6-9 */
-}
-
-.textshadow input[type=submit].clean,
-.textshadow a.clean {
-  text-shadow: 0px 1px 0px #ffffff;
-}
-
-.cssgradients input[type=submit].clean,
-.cssgradients a.clean {
-  background: -moz-linear-gradient(top, rgb(255,255,255) 0%, rgb(240,240,240) 97%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(255,255,255)), color-stop(97%,rgb(240,240,240))); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 97%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 97%); /* Opera11.10+ */
-  background: -ms-linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 97%); /* IE10+ */
-  background: linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 97%); /* W3C */
-}
-
-input[type=submit].clean:hover,
-a.clean:hover {
-  color: rgb(23, 137, 195);
-  border: 1px solid rgb(76, 172, 213);
-
-  background: rgb(255,255,255); /* Old browsers */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#dbeff7',GradientType=0 ); /* IE6-9 */
-}
-
-.cssgradients input[type=submit].clean:hover,
-.cssgradients a.clean:hover {
-  background: -moz-linear-gradient(top, rgb(255,255,255) 0%, rgb(219,239,247) 97%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(255,255,255)), color-stop(97%,rgb(219,239,247))); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, rgb(255,255,255) 0%,rgb(219,239,247) 97%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top, rgb(255,255,255) 0%,rgb(219,239,247) 97%); /* Opera11.10+ */
-  background: -ms-linear-gradient(top, rgb(255,255,255) 0%,rgb(219,239,247) 97%); /* IE10+ */
-  background: linear-gradient(top, rgb(255,255,255) 0%,rgb(219,239,247) 97%); /* W3C */
-}
-
 .tabs {
   clear: both;
 }
@@ -3790,6 +3621,11 @@ table.common .ext_pptx {
   background: url("../images/new/ext/ppt.png") no-repeat center center;
 }
 
+.pagseguro-concave-form form .concave-button {
+  margin: 0 0 0 0;
+  width: 95px;
+}
+
 table.files thead th {
   padding: 0;
 }
@@ -3876,7 +3712,7 @@ table.users tr.invite {
   background-color: #EFF6E6;
 }
 
-table.users a.important.reinvite {
+table.users a.concave-important.reinvite {
   padding: 4px 14px;
 }
 
@@ -4104,7 +3940,7 @@ table.spaced tr td {
   margin-left: 30px;
 }
 
-#teach-index .concave-form .concave-button {
+#teach-index .concave-form .concave-important-font {
   width: 295px;
   height: 48px;
   margin-right: 15px;

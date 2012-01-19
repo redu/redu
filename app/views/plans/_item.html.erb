@@ -27,11 +27,13 @@
   </td>
   <td>
     <% if item.billable && item.pending_payment? %>
-      <%= pagseguro_form item.create_order, :submit => "Pagar" %>
+      <div class="concave-form pagseguro-concave-form">
+        <%= pagseguro_form item.create_order, :submit => "Pagar" %>
+      </div>
     <% elsif item.billable %>
       <%=
         link_to "Upgrade", upgrade_plan_path(item),
-          :class => "important"
+          :class => "concave-important"
         %>
     <% else %>
       N/A
