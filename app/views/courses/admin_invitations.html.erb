@@ -1,37 +1,35 @@
   <script type="text/javascript">
     jQuery(function(){
       $("#invite_email").live("click", function(){
-        email = $("input[autocomplete=off]").val();
+        var email = $("input[autocomplete=off]").val();
         $("#emails").val($("#emails").val() + "," + email);
         $("input[autocomplete=off]").val("")
 
-        item = "<li class=\"token-input-token email\"><p title=\"" + email + "\">" + email + "</p><span class=\"invite-to-redu\">(Convidar para o Redu)</span><span class=\"token-input-delete-token-email\">x</span></li>"
+        var item = "<li class=\"token-input-token email\"><p title=\"" + email + "\">" + email + "</p><span class=\"invite-to-redu\">(Convidar para o Redu)</span><span class=\"token-input-delete-token-email\">x</span></li>"
         $(".token-input-input-token").before(item);
-        //$("#admin-invitations .token-input-list").css("marginTop", "40px");
         $(this).hide();
         return false;
       });
 
       $(".token-input-delete-token-email").live("click", function(){
           $(this).parent().remove();
-          emails = $("#emails").val();
-          deleted_email = $(this).prev().get(0).getAttribute("title");
-          emails = emails.replace(new RegExp(deleted_email), "");
+          var emails = $("#emails").val();
+          var deleted_email = $(this).prev().get(0).getAttribute("title");
+          var emails = emails.replace(new RegExp(deleted_email), "");
           $("#emails").val(emails);
       });
 
       $(".form-common").ajaxComplete(function(){
         if ($(".token-input-dropdown li").length == 0) {
-          emailRegex = /^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/;
-          entered_value = $("input[autocomplete=off]").val().slice(2);
+          var emailRegex = /^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/;
+          var entered_value = $("input[autocomplete=off]").val();
           if (emailRegex.test(entered_value)) {
-            $("#admin-invitations .token-input-list").css("marginTop", "20px");
-            $("#invite_email_button").show();
-          };
-        }
-        else
-        {
-          $("#invite_email_button").hide();
+            $("#invite_email").show();
+          }else{
+              $("#invite_email").hide();
+          }
+        }else{
+          $("#invite_email").hide();
         }
       });
 
@@ -65,9 +63,9 @@
       <% end %>
       <%= form_tag invite_members_environment_course_path(@environment, @course),
         :class => 'form-common', :id => "invite-members" do %>
-        <div id="invite_email_button" style="display: none;" class="clearfix" >
+        <div id="invite_email_button" class="clearfix" >
          <%= link_to "Clique aqui para convidar este endereço de e-mail", "#",
-          :class => 'concave-button', :id => 'invite_email', :style => 'margin: 0px 0px 0px 165px;' %>
+          :class => 'concave-button', :id => 'invite_email', :style => 'display: none;' %>
         </div>
         <%= label_tag "name", "Nome ou e-mail:" %>
         <%= text_field_tag "users" %>

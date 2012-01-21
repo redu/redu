@@ -5521,14 +5521,18 @@ table.concave-invitation-table .cell-reinvite .reinvited {
   font-size: 1em;
 }
 
+#admin-invitations #invite_email_button {
+  height: 50px;
+}
+
 #admin-invitations .form-common .concave-button {
-  margin-right: 3px;
+  margin: 20px 0px 0px 165px;
 }
 
 #admin-invitations .token-input-list {
   clear: none;
   float: left;
-  margin-top: 10px;
+  margin-top: 20px;
   width: 395px;
   height: 25px;
 
