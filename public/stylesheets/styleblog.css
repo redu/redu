@@ -178,7 +178,6 @@ html, body {
 
 .body-blog {  
   margin-top: 160px;
-  height: 290px;
   border-style: solid;
   border-width: 1px;
   border-color: white;
@@ -209,3 +208,57 @@ html, body {
   float: right;
 }
 
+.about-us { 
+  clear: both;
+  display: block;
+  float: right;
+} 
+
+.tecnology {
+  float: left;
+  margin-right: 10px;
+}
+.divão {
+  float: right;
+  margin-top: -330px;
+}
+
+.body .members:before {
+  content: "";
+  float: left;
+  width: 32px;
+  height: 32px;
+  background: url("../images/new/missing_users_thumb_32.png") no-repeat;
+  padding: 4px;
+}
+
+.text {  
+  max-width: 160px;
+  float: right;
+}
+
+.members a {
+  font-size: 17px;
+  margin-bottom: 5px;
+}
+
+.members {
+  padding: 10px;
+}
+
+.about-members {  
+  background-color : pink;
+}
+
+.uau {
+  float: right;
+}
+
+.li-marks {
+  padding: 5px;
+}
+
+.marcadores {
+  margin-top: 28px;
+  background-color: gray;
+}
