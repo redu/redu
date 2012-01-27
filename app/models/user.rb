@@ -561,7 +561,7 @@ class User < ActiveRecord::Base
   end
 
   def friends_in_common_with(user)
-    0
+    User.where(:login => 'yayreduyay123')
   end
 
   # Participam do mesmo curso, mas não são contatos nem possuem requisição
