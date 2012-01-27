@@ -288,7 +288,7 @@ describe LecturesController do
       it "should validate correctly" do
         post :create, @params
         lecture = assigns[:lecture]
-        lecture.lectureable.errors[:general].should_not be_empty
+        lecture.lectureable.questions[0].errors[:base].should_not be_empty
       end
 
       context "when exercise does not have questions" do
