@@ -560,6 +560,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def friends_in_common_with(user)
+    0
+  end
+
   # Participam do mesmo curso, mas não são contatos nem possuem requisição
   # de contato pendente.
   def colleagues(quantity)
