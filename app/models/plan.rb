@@ -88,9 +88,6 @@ class Plan < ActiveRecord::Base
 
   belongs_to :billable, :polymorphic => true
   belongs_to :user
-  # Para quando houver upgrade/downgrade
-  has_one :changed_to, :class_name => "Plan", :foreign_key =>  :plan_id
-  belongs_to :changed_from, :class_name => "Plan", :foreign_key => :plan_id
   has_many :invoices
 
   scope :blocked, where(:state => "blocked")
@@ -124,7 +121,6 @@ class Plan < ActiveRecord::Base
   # plan.migrate_to(:name => "Novo", :members_limit => 90, :price => 1.99)
   #
   def migrate_to(new_plan_attrs)
-    new_plan_attrs[:changed_from] = self
     new_plan_attrs[:user] = self.user
     new_plan_attrs[:billable] = self.billable
 

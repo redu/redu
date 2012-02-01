@@ -5,10 +5,7 @@ describe Plan do
 
   it { should belong_to :billable }
   it { should belong_to :user }
-  it { should have_one :changed_to }
   it { should have_many :invoices }
-  it { should belong_to :changed_from }
-
   it { should_not allow_mass_assignment_of :state }
 
   [:members_limit, :price, :yearly_price].each do |attr|
@@ -216,11 +213,6 @@ describe Plan do
     it "copies the older plan associations" do
       @new_plan.user.should == subject.user
       @new_plan.billable.should == subject.billable
-    end
-
-    it "sets changed to/from associations" do
-      subject.changed_to.should == @new_plan
-      @new_plan.changed_from == subject
     end
 
     it "preserves the original invoices" do
