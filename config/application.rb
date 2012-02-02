@@ -1,6 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+require 'oauth/rack/oauth_filter'
 
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.
@@ -200,5 +201,8 @@ module Redu
     # Redu logger
     config.overview_logger = YAML.load_file("#{Rails.root}/config/logs.yml")
     config.overview_logger = config.overview_logger['config']
+
+    #Oauth
+    config.middleware.use OAuth::Rack::OAuthFilter
   end
 end
