@@ -3,23 +3,22 @@ require 'spec_helper'
 describe LicensedInvoice do
   subject { Factory(:licensed_invoice) }
 
-  it { should belong_to :original_partner_plan }
-  it { should belong_to :partner_plan }
+  it { should belong_to :plan }
   it { should have_many :licenses}
   it { should validate_presence_of :period_start }
-  it { should respond_to :generate_descritption }
+  it { should respond_to :generate_description }
 
   context "description" do
     before do
-      @plan = Plan.from_preset(PartnerPlan::PLANS[:empresa_plus], "PartnerPlan")
-      subject.partner_plan = @plan
+      @plan = Plan.from_preset(PackagePlan::PLANS[:empresa_plus], "PackagePlan")
+      subject.plan = @plan
       subject.save
       subject.reload
     end
 
     it "should generate something" do
-      subject.generate_descritption.should_not be_nil
-      subject.generate_descritption.should_not be_empty
+      subject.generate_description.should_not be_nil
+      subject.generate_description.should_not be_empty
     end
   end
 
@@ -40,9 +39,5 @@ describe LicensedInvoice do
 
       LicensedInvoice.actual.should == [os3]
     end
-  end
-
-  context "when been cloned to another plan" do
-    it "should make the clone has the correct original partner plan"
   end
 end

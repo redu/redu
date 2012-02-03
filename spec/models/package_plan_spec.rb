@@ -163,7 +163,7 @@ describe PackagePlan do
     context "the order" do
       before do
         invoices = 3.times.inject([]) { |res,i|
-          invoice = Factory(:invoice, :plan => subject)
+          invoice = Factory(:package_invoice, :plan => subject)
           invoice.pend!
           res << invoice
         }

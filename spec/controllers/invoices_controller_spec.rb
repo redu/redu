@@ -4,7 +4,7 @@ include Authlogic::TestCase
 
 describe InvoicesController do
   before do
-    @plan = Factory(:plan)
+    @plan = Factory(:active_package_plan)
     @invoices = []
 
 
@@ -12,7 +12,7 @@ describe InvoicesController do
       period_start = Date.today.advance(:days => (i+1) * -30)
       period_end = period_start.advance(:days => 30)
 
-      invoice = Factory(:invoice,
+      invoice = Factory(:package_invoice,
         :plan => @plan,
         :period_start => period_start,
         :period_end => period_end)

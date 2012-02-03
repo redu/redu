@@ -55,12 +55,12 @@ describe Plan do
   context "when migrating to a new plan" do
     before do
       @amount_per_day = subject.price / subject.days_in_current_month
-      subject.create_invoice(:invoice => {
+      subject.create_invoice(:package_invoice => {
         :period_start => Date.new(2011, 01, 01),
         :period_end => Date.new(2011, 01, 31),
         :amount =>  31 * @amount_per_day})
 
-      subject.create_invoice(:invoice => {
+      subject.create_invoice(:package_invoice => {
         :period_start => Date.new(2011, 02, 01),
         :period_end => Date.new(2011, 02, 28),
         :amount =>  28 * @amount_per_day})
@@ -99,12 +99,12 @@ describe Plan do
       subject { Factory(:plan, :price => 50, :yearly_price => 150) }
 
       @amount_per_day = subject.price / subject.days_in_current_month
-      subject.create_invoice(:invoice => {
+      subject.create_invoice(:package_invoice => {
         :period_start => Date.new(2011, 01, 01),
         :period_end => Date.new(2011, 01, 31),
         :amount =>  31 * @amount_per_day})
 
-      subject.create_invoice(:invoice => {
+      subject.create_invoice(:package_invoice => {
         :period_start => Date.new(2011, 02, 01),
         :period_end => Date.new(2011, 02, 28),
         :amount =>  28 * @amount_per_day})
@@ -155,7 +155,7 @@ describe Plan do
   context "when pending payment" do
     before do
       invoices = 3.times.inject([]) do |res,i|
-        invoice = Factory(:invoice, :plan => subject)
+        invoice = Factory(:package_invoice, :plan => subject)
         invoice.pend!
         res << invoice
       end
@@ -174,7 +174,7 @@ describe Plan do
   context "when overdue payment" do
     before  do
       invoices = 3.times.inject([]) do |acc,i|
-        invoice = Factory(:invoice, :plan => subject)
+        invoice = Factory(:package_invoice, :plan => subject)
         invoice.overdue!
         acc << invoice
       end

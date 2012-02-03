@@ -9,7 +9,7 @@ class LicensedInvoice < Invoice
           Date.civil(year, month, 1).end_of_month) }
   scope :actual,  order("period_start DESC").limit(1)
 
-  def generate_descritption
-    msg = "#{self.partner_plan.name} - Licença #{self.partner_plan.price} - Capacidade de Armazenamento #{self.partner_plan.file_storage_limit}"
+  def generate_description
+    msg = "#{self.plan.name} - Licença #{self.plan.price} - Capacidade de Armazenamento #{self.plan.file_storage_limit}"
   end
 end

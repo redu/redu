@@ -110,12 +110,13 @@ class PackagePlan < Plan
       :period_start => Date.today.tomorrow,
       :period_end => Date.today.advance(:days => 30),
       :amount => self.price,
+      :plan => self,
     },
     :force => false
     }.deep_merge(opts)
 
     if options[:force] || (options[:invoice][:amount] > 0)
-      invoice = self.invoices.create(options[:invoice])
+      invoice = PackageInvoice.create(options[:invoice])
       invoice.pend!
       invoice
     end

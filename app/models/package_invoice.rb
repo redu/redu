@@ -1,6 +1,8 @@
 class PackageInvoice < Invoice
   include AASM
 
+  belongs_to :plan
+
   aasm_column :state
   aasm_initial_state :waiting
 
