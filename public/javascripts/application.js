@@ -149,24 +149,6 @@ jQuery(function(){
         e.preventDefault();
     });
 
-    // Padrão de spinner
-    $(".form-common, .form-loader").live('ajax:before', function(e){
-        var $this = $(this);
-        var $target = $(e.target);
-
-        if($target.is($this)){
-          $(this).find("input[type=submit], button").loadingStart({ 'class' : 'concave-loading' });
-        }
-    });
-
-    $(".form-common, .form-loader").live('ajax:complete', function(e){
-        var $this = $(this);
-        var $target = $(e.target);
-
-        if($target.is($this)){
-          $(this).find("input[type=submit], button").loadingComplete({ 'class' : 'concave-loading'});
-        }
-    });
 
     $("a[data-remote=true]").live('ajax:before', function(){
         $(this).css('width', $(this).width());
@@ -178,46 +160,6 @@ jQuery(function(){
         $(this).removeClass("link-loading");
     });
 
-    $.fn.loadingStart = function(options){
-      var config = {
-        "className" : "concave-loading"
-      }
-      $.extend(config, options);
-
-      return this.each(function(){
-          $bt = $(this);
-          $bt.addClass(config.className);
-      });
-    };
-
-    $.fn.loadingComplete = function(options){
-      var config = {
-        "className" : "concave-loading"
-      }
-      $.extend(config, options);
-
-      return this.each(function(){
-          $bt = $(this);
-          $bt.removeClass(config.className);
-      });
-    };
-
-    $.fn.loadingToggle = function(options){
-      var config = {
-        "className" : "concave-loading"
-      }
-      $.extend(config, options);
-
-      return this.each(function(){
-          $bt = $(this);
-
-          if( $bt.hasClass(config.className) ) {
-            $bt.loadingComplete();
-          } else {
-            $bt.loadingStart();
-          }
-      });
-    };
 
     $(document).ajaxComplete(function(){
         $.refreshSubtabs();

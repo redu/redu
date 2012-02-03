@@ -52,6 +52,7 @@ javascripts:
   ckeditor:
     - public/javascripts/ckeditor/ckeditor.js
   landing:
+    - public/javascripts/rails.js
     - public/javascripts/modernizr.js
     - public/javascripts/lazyload.js
     - public/javascripts/asyncjs.jquery.js
