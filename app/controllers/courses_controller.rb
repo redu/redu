@@ -239,7 +239,11 @@ class CoursesController < BaseController
 
   # Associa um usuário a um Course (Ação de participar).
   def join
-    authorize! :add_entry, @course
+    if @course.environment.plan
+      authorize! :add_entry, @course.environment
+    else
+      authorize! :add_entry, @course
+    end
 
     @course.join(current_user)
 

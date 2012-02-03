@@ -15,11 +15,12 @@ describe CoursesController do
         { :name => "Redu", :workload => "12",
           :tag_list => "minhas, tags, exemplo, aula, teste",
           :path => "redu", :subscription_type => "1",
-          :description => "Lorem ipsum dolor sit amet, consectetur magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-        ullamco laboris nisi ut aliquip ex ea commodo."},
-        :plan => "free",
-        :environment_id => @environment.path,
-        :locale => "pt-BR" }
+          :description => "Lorem ipsum dolor sit amet, consectetur" \
+          "magna aliqua. Ut enim ad minim veniam, quis nostrud" \
+          "ullamco laboris nisi ut aliquip ex ea commodo."},
+          :plan => "free",
+          :environment_id => @environment.path,
+          :locale => "pt-BR" }
     end
 
     context "POST create" do
@@ -58,9 +59,7 @@ describe CoursesController do
         expect {
           post :create, @params
         }.should_not change(Invoice, :count)
-
       end
-
     end
   end
 

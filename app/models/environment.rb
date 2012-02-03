@@ -75,6 +75,10 @@ class Environment < ActiveRecord::Base
     (self.initials.nil? or self.initials.empty?) ? self.name : self.initials
   end
 
+  def can_add_entry?
+    #code
+  end
+
   protected
 
   def create_environment_association
