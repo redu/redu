@@ -224,7 +224,7 @@ class User < ActiveRecord::Base
       end
     when 'User'
       entity == self
-    when 'Plan'
+    when 'Plan', 'PackagePlan'
       entity.user == self
     when 'Invoice'
       self.can_manage?(entity.plan)
@@ -266,7 +266,7 @@ class User < ActiveRecord::Base
       when 'Folder'
         self.get_association_with(entity.space).nil? ? false : true
       when 'Status'
-        unless entity.statusable.class.to_s.eql?("User")
+        unless entity.statusable.is_a? User
           self.has_access_to? entity.statusable
         else
           self.friends?(entity.statusable) || self == entity.statusable
@@ -298,20 +298,18 @@ class User < ActiveRecord::Base
   # Método de alto nível, verifica se o object está publicado (caso se aplique)
   # e se o usuário possui acesso (i.e. relacionamento) com o mesmo
   def can_read?(object)
-    if (object.class.to_s.eql? 'Folder') || (object.class.to_s.eql? 'Forum') ||
-       (object.class.to_s.eql? 'Topic') || (object.class.to_s.eql? 'SbPost') ||
-       (object.class.to_s.eql? 'Event') || (object.class.to_s.eql? 'Bulletin') ||
-       (object.class.to_s.eql? 'Status') || (object.class.to_s.eql? 'Help') ||
-       (object.class.to_s.eql? 'User') ||
-       (object.class.to_s.eql? 'Friendship') || (object.class.to_s.eql? 'Plan') ||
-       (object.class.to_s.eql? 'Invoice') ||
-       (object.class.to_s.eql? 'PartnerEnvironmentAssociation') ||
-       (object.class.to_s.eql? 'Partner') || (object.class.to_s.eql? 'Result') ||
-       (object.class.to_s.eql? 'Question')
+    if (object.is_a? Folder)  ||
+       (object.is_a? Status) || (object.is_a? Help) ||
+       (object.is_a? User) || (object.is_a? Friendship) ||
+       (object.is_a? Plan) || (object.is_a? PackagePlan) ||
+       (object.is_a? Invoice) ||
+       (object.is_a? PartnerEnvironmentAssociation) ||
+       (object.is_a? Partner) || (object.is_a? Result) ||
+       (object.is_a? Question)
 
        self.has_access_to?(object)
     else
-      if (object.class.to_s.eql? 'Subject')
+      if (object.is_a? Subject)
         object.visible? && self.has_access_to?(object)
       else
         object.published? && self.has_access_to?(object)

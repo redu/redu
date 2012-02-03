@@ -239,7 +239,7 @@ describe Ability do
           before do
             @course = Factory(:course,:owner => @env_admin,
                               :environment => @environment)
-            @plan = Factory(:plan, :billable => @course)
+            @plan = Factory(:active_package_plan, :billable => @course)
             @plan.block!
             @space = Factory(:space, :owner => @env_admin, :course => @course)
             @sub = Factory(:subject, :owner => @env_admin, :space => @space)
@@ -560,30 +560,30 @@ describe Ability do
       end
     end
 
-    context "on plan" do
+    context "on package_plan" do
       before do
-        @plan = Factory(:plan)
-        @invoice = Factory(:invoice, :plan => @plan)
+        @package_plan = Factory(:active_package_plan)
+        @invoice = Factory(:invoice, :plan => @package_plan)
       end
 
       context "the owner" do
         before do
-          @ability = Ability.new(@plan.user)
+          @ability = Ability.new(@package_plan.user)
         end
 
-        it "read its own plan" do
-          @ability.should be_able_to(:read, @plan)
+        it "read its own package_plan" do
+          @ability.should be_able_to(:read, @package_plan)
         end
 
-        it "manages its own plan" do
-          @ability.should be_able_to(:manage, @plan)
+        it "manages its own package_plan" do
+          @ability.should be_able_to(:manage, @package_plan)
         end
 
-        it "reads plan's invoice" do
+        it "reads package_plan's invoice" do
           @ability.should be_able_to(:read, @invoice)
         end
 
-        it "manages plan's invoice" do
+        it "manages package_plan's invoice" do
           @ability.should be_able_to(:manage, @invoice)
         end
       end
@@ -593,23 +593,24 @@ describe Ability do
       before do
         strange = Factory(:user)
 
-        @plan = Factory(:plan)
-        @invoice = Factory(:invoice, :plan => @plan)
+        @package_plan = Factory(:active_package_plan)
+        @invoice = Factory(:invoice, :plan => @package_plan)
         @ability = Ability.new(strange)
       end
 
-      it "can NOT read others plans" do
-        @ability.should_not be_able_to(:read, @plan)
+      it "can NOT read others package_plans" do
+        @ability.should_not be_able_to(:read, @package_plan)
       end
 
-      it "can NOT manage others plans" do
-        @ability.should_not be_able_to(:manage, @plan)
+      it "can NOT manage others package_plans" do
+        @ability.should_not be_able_to(:manage, @package_plan)
       end
 
-      it "can NOT read others plan's invoice" do
+      it "can NOT read others package_plan's invoice" do
         @ability.should_not be_able_to(:read, @invoice)
       end
-      it "can NOT manage others plan's invoice" do
+
+      it "can NOT manage others package_plan's invoice" do
         @ability.should_not be_able_to(:manage, @invoice)
       end
     end

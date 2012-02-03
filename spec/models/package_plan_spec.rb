@@ -1,0 +1,180 @@
+require 'spec_helper'
+
+describe PackagePlan do
+  subject { Factory(:active_package_plan) }
+
+  [:members_limit, :yearly_price].each do |attr|
+    it { should validate_presence_of attr }
+  end
+
+  context "when creating new invoices" do
+    it "responds to create_invoice" do
+      should respond_to :create_invoice
+    end
+
+    it "should be valid" do
+      invoice = subject.create_invoice()
+      invoice.should be_valid
+    end
+
+    it "should default to pending" do
+      invoice = subject.create_invoice
+      invoice.state.should == "pending"
+    end
+
+    it "should be successfully" do
+      expected_amount = subject.price
+
+      expect {
+        @invoice = subject.create_invoice()
+      }.should change(subject.invoices, :count).to(1)
+
+      @invoice.amount.round(8).should == expected_amount.round(8)
+      @invoice.period_end.should == Date.today.advance(:days => 30)
+      @invoice.period_start.should == Date.tomorrow
+    end
+
+    it "period_start defaults to tomorrow" do
+      subject.create_invoice
+      subject.invoices.first.period_start.should == Date.tomorrow
+    end
+
+    it "accepts custom attributes" do
+      attrs = {
+        :description => "Lorem ipsum dolor sit amet, consectetur magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
+        :period_start => Date.today + 3,
+        :period_end => Date.today + 5,
+        :amount => BigDecimal.new("21.5")
+      }
+
+      invoice = subject.create_invoice(:invoice => attrs)
+      invoice.should be_valid
+
+      # Criando instância para o caso de existir algum callback que modifique o
+      # modelo
+      memo = Factory.build(:invoice, attrs)
+
+      invoice.description.should == memo.description
+      invoice.period_start.should == memo.period_start
+      invoice.period_end.should == memo.period_end
+      invoice.amount.should == memo.amount
+
+    end
+
+    context "when setting up the plan" do
+      before do
+        UserNotifier.delivery_method = :test
+        UserNotifier.perform_deliveries = true
+        UserNotifier.deliveries = []
+
+        subject {
+          Plan.from_preset(:empresas_plus).save
+        }
+      end
+
+       it "should create one invoice" do
+         expect {
+           subject.create_invoice_and_setup
+         }.should change(Invoice, :count).by(1)
+       end
+
+       it "sends the pending invoice e-mail correctly" do
+         invoice = nil
+
+         expect {
+           invoice = subject.create_invoice_and_setup
+         }.should change(UserNotifier.deliveries, :size).by(1)
+
+        mail = UserNotifier.deliveries.last
+        mail.should_not be_nil
+        mail.subject.should =~ /Pagamento N\. #{invoice.id} pendente/
+       end
+
+       context "the only invoice" do
+         it "should have the setup description" do
+           subject.create_invoice_and_setup
+           subject.invoices.first.description =~ /adesão/
+         end
+
+         it "should have the correct amount" do
+           subject.create_invoice_and_setup
+           subject.invoices.first.amount == subject.price * 2
+         end
+       end
+    end
+
+    context "when generating the amount" do
+      it "calculates days in a period" do
+        subject.complete_days_in(Date.new(2011,01,14),
+                                 Date.new(2011,01,31)).should == 17
+      end
+
+      it "responds to amount_until_next_month" do
+        should respond_to :amount_until_next_month
+      end
+
+      xit "should be proportionally to period until billing date" do
+        per_day = subject.price / subject.days_in_current_month
+        expected_amount = (period == 0) ? BigDecimal.new("0.0") : (per_day * period)
+
+        expected_amount.should_not be_nil
+        expected_amount.should == expected_amount
+      end
+
+      it "infers the amount between two dates" do
+        subject.update_attribute(:price, 28)
+        Date.stub(:today => Date.new(2011,02,14))
+
+        subject.amount_between(Date.today, Date.today + 3).should == BigDecimal("3", 8)
+      end
+    end
+  end
+
+  it { should respond_to :create_order }
+
+  context "when creating a new order" do
+    it "should return a valid order object" do
+      subject.create_order.should be_instance_of(PagSeguro::Order)
+    end
+
+    it "should have the plan ID" do
+      subject.create_order.id == subject.id
+    end
+
+    context "with custom attributes" do
+      before do
+        @opts = {
+          :order_id => 12,
+          :items => [{:id => 13, :price => 12.0}]
+        }
+      end
+
+      it "accepts custom ID" do
+        order = subject.create_order(@opts)
+        order.id.should == @opts[:order_id]
+      end
+
+      it "accepts custom items" do
+        order = subject.create_order(@opts)
+        order.products.first == @opts[:items].first
+      end
+    end
+
+    context "the order" do
+      before do
+        invoices = 3.times.inject([]) { |res,i|
+          invoice = Factory(:invoice, :plan => subject)
+          invoice.pend!
+          res << invoice
+        }
+
+        @products = subject.create_order.products
+      end
+
+      it "should have 3 products" do
+        @products.should_not be_nil
+        @products.size.should == 3
+      end
+    end
+  end
+end
