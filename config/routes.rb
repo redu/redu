@@ -1,4 +1,9 @@
 Redu::Application.routes.draw do
+  namespace 'api' do
+    resources :environments do
+      resources :courses
+    end
+  end
 
   post "presence/auth"
   post "presence/multiauth"
