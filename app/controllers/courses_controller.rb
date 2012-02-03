@@ -22,7 +22,7 @@ class CoursesController < BaseController
 
   def edit
     @header_course = @course.clone :include => [:new_members,
-      :approved_users, :teachers, :students, :tutors, :plan, :quota]
+      :approved_users, :teachers, :students, :tutors, :quota]
 
     respond_to do |format|
       format.html { render 'courses/admin/edit' }
@@ -79,7 +79,7 @@ class CoursesController < BaseController
     respond_to do |format|
       if @course.save
         @course.create_quota
-        @course.plan = @plan
+        @course.plans << @plan
         @plan.create_invoice_and_setup
         @environment.courses << @course
         format.html { redirect_to environment_course_path(@environment, @course) }

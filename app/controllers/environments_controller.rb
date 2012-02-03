@@ -93,7 +93,7 @@ class EnvironmentsController < BaseController
       respond_to do |format|
         @plan = Plan.from_preset(params[:plan].to_sym)
         @plan.user = current_user
-        @environment.courses.first.plan = @plan
+        @environment.courses.first.plans << @plan
         @environment.owner = current_user
         @environment.courses.first.owner = current_user
         @environment.color = "4DADD6"
