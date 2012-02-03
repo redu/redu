@@ -24,10 +24,10 @@ describe Course do
   it { should have_many(:tutors).through :user_course_associations }
   it { should have_many(:students).through :user_course_associations }
   it { should have_many(:teachers_and_tutors).through :user_course_associations }
+  it { should have_many(:plans) }
 
   it { should have_and_belong_to_many :audiences }
   it { should have_one(:quota).dependent(:destroy) }
-  it { should have_one(:plan) }
 
   it { should have_many :logs }
   it { should have_many :statuses }
@@ -300,6 +300,14 @@ describe Course do
       it "is a student" do
         Course.user_behave_as_student(@user).should == @courses[0..1]
       end
+    end
+
+    it "should retrieves the current plan" do
+      plan1 = Factory(:plan, :billable => subject, :created_at => 2.days.ago)
+      plan2 = Factory(:plan, :billable => subject)
+      subject.reload
+
+      subject.plan.should == plan2
     end
   end
 

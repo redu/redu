@@ -4,6 +4,7 @@ class Course < ActiveRecord::Base
   after_create :create_user_course_association, :unless => "self.environment.nil?"
 
   belongs_to :environment
+  has_many :plans, :as => :billable
   has_many :spaces, :dependent => :destroy
   has_many :user_course_associations, :dependent => :destroy
   has_many :user_course_invitations, :dependent => :destroy
@@ -47,7 +48,6 @@ class Course < ActiveRecord::Base
 
   has_and_belongs_to_many :audiences
   has_one :quota, :dependent => :destroy, :as => :billable
-  has_one :plan, :as => :billable
 
   has_many :logs, :as => :logeable, :order => "created_at DESC",
     :dependent => :destroy
@@ -288,6 +288,11 @@ class Course < ActiveRecord::Base
 
   def can_add_entry?
     self.approved_users.count < self.plan.members_limit
+  end
+
+  def plan
+    # TODO rever este código
+    self.plans.order("created_at DESC").limit(1).first
   end
 
 end
