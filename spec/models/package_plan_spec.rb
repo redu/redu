@@ -102,32 +102,6 @@ describe PackagePlan do
          end
        end
     end
-
-    context "when generating the amount" do
-      it "calculates days in a period" do
-        subject.complete_days_in(Date.new(2011,01,14),
-                                 Date.new(2011,01,31)).should == 17
-      end
-
-      it "responds to amount_until_next_month" do
-        should respond_to :amount_until_next_month
-      end
-
-      xit "should be proportionally to period until billing date" do
-        per_day = subject.price / subject.days_in_current_month
-        expected_amount = (period == 0) ? BigDecimal.new("0.0") : (per_day * period)
-
-        expected_amount.should_not be_nil
-        expected_amount.should == expected_amount
-      end
-
-      it "infers the amount between two dates" do
-        subject.update_attribute(:price, 28)
-        Date.stub(:today => Date.new(2011,02,14))
-
-        subject.amount_between(Date.today, Date.today + 3).should == BigDecimal("3", 8)
-      end
-    end
   end
 
   it { should respond_to :create_order }
