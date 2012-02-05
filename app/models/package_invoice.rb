@@ -3,6 +3,8 @@ class PackageInvoice < Invoice
 
   belongs_to :plan
 
+  validates_presence_of :amount
+
   aasm_column :state
   aasm_initial_state :waiting
 

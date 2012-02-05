@@ -4,9 +4,39 @@ describe LicensedInvoice do
   subject { Factory(:licensed_invoice) }
 
   it { should belong_to :plan }
-  it { should have_many :licenses}
+  it { should have_many :licenses }
   it { should validate_presence_of :period_start }
   it { should respond_to :generate_description }
+
+  context "when having state machine" do
+    it "should defaults to open" do
+      should be_open
+    end
+
+    [:state, :wait!, :pay!].each do |attr|
+      it "should respond_to #{attr}" do
+        should respond_to attr
+      end
+    end
+
+    context "when open" do
+      it "should change to waiting" do
+        subject.wait!
+        should be_waiting
+      end
+    end
+
+    context "when waiting" do
+      before do
+        subject.update_attribute(:state, "waiting")
+      end
+
+      it "should change to paid" do
+        subject.pay!
+        should be_paid
+      end
+    end
+  end
 
   context "description" do
     before do
@@ -38,6 +68,52 @@ describe LicensedInvoice do
       os3 = Factory(:licensed_invoice, :period_start => "2012-01-16", :period_end => "2012-01-31")
 
       LicensedInvoice.actual.should == [os3]
+    end
+  end
+
+  it "LicensedPlan should respond to refresh_amounts!" do
+    LicensedInvoice.respond_to?(:refresh_amounts!).should be_true
+  end
+
+  context "when generating the amount" do
+    before do
+      plan = Factory(:active_licensed_plan, :price => 3.00)
+
+      from = Date.new(2010, 01, 15)
+      plan.create_invoice({:invoice => {
+        :period_start => from,
+        :period_end => from.end_of_month} })
+        @invoice1 = plan.invoices.last
+
+      from = Date.today
+      plan.create_invoice({:invoice => {
+        :period_start => from,
+        :period_end => from.end_of_month} })
+
+      @invoice2 = plan.invoices.last
+      (1..20).collect { Factory(:license, :invoice => @invoice1) }
+      (1..20).collect { Factory(:license, :invoice => @invoice2) }
+
+
+      LicensedInvoice.refresh_amounts!
+      @invoice1.reload
+      @invoice2.reload
+    end
+
+    it "should change invoice1 to be waiting" do
+      @invoice1.should be_waiting
+    end
+
+    it "should maintain invoice2 as open" do
+      @invoice2.should be_open
+    end
+
+    it "should calculates invoice1's relative amount" do
+      @invoice1.reload.amount.round(2).should == BigDecimal.new("30.97")
+    end
+
+    it "should NOT calculate invoice2's relative amount" do
+      @invoice2.amount.should be_nil
     end
   end
 end

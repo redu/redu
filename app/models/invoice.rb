@@ -3,7 +3,7 @@ class Invoice < ActiveRecord::Base
 
   belongs_to :plan
 
-  validates_presence_of :period_start, :period_end, :amount
+  validates_presence_of :period_start, :period_end
 
   scope :pending, where(:state => "pending")
   scope :overdue, where(:state => "overdue")

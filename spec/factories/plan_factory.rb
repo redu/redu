@@ -22,4 +22,14 @@ FactoryGirl.define do
     association :billable, :factory => :course
     association :user
   end
+
+  factory :active_licensed_plan, :class => :licensed_plan do
+    state "active"
+    sequence(:name) { "Licensed Plan #{n}" }
+    video_storage_limit 1024
+    file_storage_limit 1024
+    price 3.00
+    association :billable, :factory => :course
+    association :user
+  end
 end

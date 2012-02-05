@@ -5,7 +5,7 @@ describe Invoice do
   subject { Factory(:invoice) }
 
   it { should belong_to(:plan) }
-  [:period_start, :period_end, :amount].each do |attr|
+  [:period_start, :period_end].each do |attr|
     it { should validate_presence_of attr }
   end
   it { should_not allow_mass_assignment_of :state }

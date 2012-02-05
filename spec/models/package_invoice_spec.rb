@@ -8,6 +8,7 @@ describe PackageInvoice do
   it { should respond_to :threshold_date }
   it { should respond_to :description }
   it { should respond_to :discount }
+  it { should validate_presence_of :amount }
 
 
   context "threshold date" do

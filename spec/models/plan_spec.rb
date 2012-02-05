@@ -139,8 +139,6 @@ describe Plan do
 
   end
 
-
-
   context "when creating a preset" do
     it "should respond to from_preset" do
       Plan.should respond_to(:from_preset)
