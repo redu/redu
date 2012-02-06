@@ -53,4 +53,8 @@ class Plan < ActiveRecord::Base
     self.billable_audit = self.billable
     save!
   end
+
+  def invoice
+    self.invoice.order("created_at DESC").limit(1).first
+  end
 end

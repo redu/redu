@@ -144,6 +144,17 @@ class Course < ActiveRecord::Base
 
     if self.subscription_type.eql? 1 and association.waiting?  # Todos podem participar, sem moderação
       association.approve!
+      if self.environment.plan
+        invoice = self.plan.invoice
+        if invoice and invoice.type = "LicensedInvoice"
+          self.environment.plan.invoice.licenses << License.create(:name => user.display_name,
+                                                                   :login => user.login,
+                                                                   :email => user.email,
+                                                                   :period_start => DateTime.now,
+                                                                   :role => role,
+                                                                   :invoice => self.environment.plan.invoice)
+        end
+      end
     elsif association.invited?
       association.accept!
     end
