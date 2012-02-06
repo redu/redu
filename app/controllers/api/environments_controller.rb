@@ -46,7 +46,7 @@ module Api
     private
 
     def not_found
-      respond_with nil, :status => :not_found
+      respond_with nil, :status => 404
     end
   end
 end
