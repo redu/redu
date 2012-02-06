@@ -2,7 +2,7 @@ class LicensedInvoice < Invoice
   include AASM
 
   belongs_to :plan
-  has_many :licenses, :as => :invoice
+  has_many :licenses, :foreign_key => :invoice_id
 
   scope :retrieve_by_month_year, lambda { |month, year|
     where("period_start between ? and ?",

@@ -26,8 +26,11 @@ class Environment < ActiveRecord::Base
   has_many :students, :through => :user_environment_associations,
     :source => :user,
     :conditions => [ "user_environment_associations.role = ?", 2 ]
+  has_many :plans, :as => :billable
+
   has_one :partner, :through => :partner_environment_association
   has_one :partner_environment_association, :dependent => :destroy
+  has_one :quota, :dependent => :destroy, :as => :billable
 
   attr_protected :owner, :published
 
@@ -76,7 +79,12 @@ class Environment < ActiveRecord::Base
   end
 
   def can_add_entry?
-    #code
+    self.users.count < self.plan.members_limit
+  end
+
+  def plan
+    # TODO rever este código
+    self.plans.order("created_at DESC").limit(1).first
   end
 
   protected
