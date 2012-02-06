@@ -1,0 +1,138 @@
+= API REST do Redu
+
+Draft inicial da API REST do Redu. Os seguintes recursos estão disponíveis:
+
+  * Environment
+
+== Funcionamento
+
+Em geral usa-se a semântica padrão para APIs provida pelo Rails. Além disso
+todas as respostas possuem uma chave <code>links</code> que mostram URLs para
+ações importantes no estado atual da aplicação.
+
+Toda a API REST foi pensada para que exista um único ponto de entrada e os
+clientes possam "descobrir" as URLs baseado no valor da chave <code>links</code>.
+
+== Environment
+
+=== Propriedades e restrições
+Propriedades::
+              [name] Nome do ambiente
+              [path] Nome que aparecerá na barra de endereço
+              [initials] Abreviação (usado em alguns pontos da interface)
+              [description] Descrição do ambiente (opcional)
+Restrições::
+              [name] Máximo 40 caracteres; deve ser único.
+              [path] Deve respeitar a seguinte regex: <code>^[-_A-Za-z0-9]*$</code>
+              [initials] Deve ser único; Máximo de 10 caracteres
+              [description] Máximo de 400 caracteres
+
+
+=== Visualização
+
+URL::            <code>/api/ambientes/:id</code>
+Método::         GET
+Argumentos:: Nenum
+Restrições::   Nenhuma
+
+Troque <tt>:environment_id</tt> pelo ID do ambiente.
+
+==== Retorno
+
+Exemplo de saída:
+
+  {
+    name: "Faculdade Frassinetti do Recife",
+    created_at: "2010-12-17T16:37:40-02:00",
+    initials: "FAFIRE",
+    path: "fafire",
+    links: [
+      {
+        href: "http://127.0.0.1:3000/api/ambientes/fafire",
+        rel: "self"
+      },
+      {
+        href: "http://127.0.0.1:3000/api/ambientes/fafire/cursos",
+        rel: "courses"
+      }
+    ],
+    description: "A FAFIRE avança no seu tempo, procurando associar modernidade com tradição, através de seis cursos: Administração, Ciências Biológicas, Letras, Pedagogia, Psicologia e Turismo e 37 pós-graduações lato sensu. "
+  }
+
+=== Criação
+
+URL::            <code>/api/ambientes</code>
+Método::         POST
+Argumentos:: <code>name, path, initials, description (opcional)</code>
+
+Troque <tt>:environment_id</tt> pelo ID do ambiente.
+
+==== Retorno
+
+404:: Não encontrado
+200:: Encontrado
+
+Exemplo de saída:
+
+  {
+    name: "Faculdade Frassinetti do Recife",
+    created_at: "2010-12-17T16:37:40-02:00",
+    initials: "FAFIRE",
+    path: "fafire",
+    links: [
+      {
+        href: "http://127.0.0.1:3000/api/ambientes/fafire",
+        rel: "self"
+      },
+      {
+        href: "http://127.0.0.1:3000/api/ambientes/fafire/cursos",
+        rel: "courses"
+      }
+    ],
+    description: "A FAFIRE avança no seu tempo, procurando associar modernidade com tradição, através de seis cursos: Administração, Ciências Biológicas, Letras, Pedagogia, Psicologia e Turismo e 37 pós-graduações lato sensu. "
+  }
+
+=== Atualização
+
+URL::            <code>/api/ambientes/:id</code>
+Método::         PUT
+Argumentos:: <code>name, path, initials, description (opcional)</code>
+
+Troque <tt>:environment_id</tt> pelo ID do ambiente.
+
+==== Retorno
+
+422:: Recurso inválido
+200:: Atualizado
+
+Exemplo de saída:
+
+  {
+    name: "Faculdade Frassinetti do Recife",
+    created_at: "2010-12-17T16:37:40-02:00",
+    initials: "FAFIRE",
+    path: "fafire",
+    links: [
+      {
+        href: "http://127.0.0.1:3000/api/ambientes/fafire",
+        rel: "self"
+      },
+      {
+        href: "http://127.0.0.1:3000/api/ambientes/fafire/cursos",
+        rel: "courses"
+      }
+    ],
+    description: "A FAFIRE avança no seu tempo, procurando associar modernidade com tradição, através de seis cursos: Administração, Ciências Biológicas, Letras, Pedagogia, Psicologia e Turismo e 37 pós-graduações lato sensu. "
+  }
+
+=== Remoção
+
+URL::            <code>/api/ambientes/:id</code>
+Método::         DELETE
+Argumentos:: Nenum
+Restrições::   Nenhuma
+
+==== Retorno
+
+200:: Removido
+404:: Não encontrado
