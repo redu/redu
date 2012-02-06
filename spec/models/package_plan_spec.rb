@@ -68,7 +68,7 @@ describe PackagePlan do
         UserNotifier.deliveries = []
 
         subject {
-          Plan.from_preset(:empresas_plus).save
+          Plan.from_preset(:professor_lite).save
         }
       end
 
@@ -98,7 +98,19 @@ describe PackagePlan do
 
          it "should have the correct amount" do
            subject.create_invoice_and_setup
-           subject.invoices.first.amount == subject.price * 2
+           subject.invoices.first.amount == subject.price + subject.membership_fee
+         end
+
+         context "when does not have membership fee" do
+           before do
+             subject.membership_fee = nil
+             subject.save
+           end
+
+           it "should have the correct amount" do
+             subject.create_invoice_and_setup
+             subject.invoices.first.amount == subject.price
+           end
          end
        end
     end

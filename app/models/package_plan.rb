@@ -5,6 +5,7 @@ class PackagePlan < Plan
       :name => "Professor Grátis (3 meses)",
       :price => 0,
       :yearly_price => 0,
+      :membership_fee => 0,
       :video_storage_limit => 10.megabytes,
       :file_storage_limit => 5.megabytes,
       :members_limit => 10
@@ -13,6 +14,7 @@ class PackagePlan < Plan
       :name => "Professor Lite",
       :price => 13.99,
       :yearly_price => 139.90,
+      :membership_fee => 13.99,
       :video_storage_limit => 30.megabytes,
       :file_storage_limit => 25.megabytes,
       :members_limit => 20
@@ -21,6 +23,7 @@ class PackagePlan < Plan
       :name => "Professor Standard",
       :price => 56.99,
       :yearly_price => 569.90,
+      :membership_fee => 56.99,
       :video_storage_limit => 90.megabytes,
       :file_storage_limit => 25.megabytes,
       :members_limit => 100
@@ -29,6 +32,7 @@ class PackagePlan < Plan
       :name => "Professor Plus",
       :price => 243.99,
       :yearly_price => 2439.90,
+      :membership_fee => 243.99,
       :video_storage_limit => 150.megabytes,
       :file_storage_limit => 25.megabytes,
       :members_limit => 500
@@ -100,7 +104,7 @@ class PackagePlan < Plan
   # (correspondente a taxa de setup)
   def create_invoice_and_setup
     create_invoice(:invoice => {
-      :amount => self.price * 2,
+      :amount => self.price + (self.membership_fee || 0),
       :description => "Fatura refrente aos primeiros 30 dias e a taxa de adesão do plano #{self.name}"})
   end
 

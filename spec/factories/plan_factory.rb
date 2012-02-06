@@ -19,6 +19,7 @@ FactoryGirl.define do
     file_storage_limit 1024
     price 9.99
     yearly_price (9.99 * 12)
+    membership_fee 9.99
     association :billable, :factory => :course
     association :user
   end

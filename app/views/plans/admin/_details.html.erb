@@ -14,8 +14,12 @@
   </ul>
 <% else %>
   <ul class="pricing">
-    <li><span class="value"><%= number_to_currency plan.price %></span> <span class="period">(adesão)</span></li>
-    <li>+ <span class="value"><%= number_to_currency plan.price %></span> <span class="period">/mês</span></li>
+    <% if plan.membership_fee %>
+      <li><span class="value"><%= number_to_currency plan.membership_fee %></span> <span class="period">(adesão)</span></li>
+      <li>+ <span class="value"><%= number_to_currency plan.price %></span> <span class="period">/mês</span></li>
+    <% else %>
+      <li><span class="value"><%= number_to_currency plan.price %></span> <span class="period">/mês</span></li>
+    <% end %>
     <li>ou <span class="value"><%= number_to_currency plan.yearly_price %></span> <span class="period">/ano</span></li>
   </ul>
 <% end %>
