@@ -779,6 +779,29 @@ describe CoursesController do
     end
 
     context "POST create" do
+      context "when environment has plan" do
+        before do
+          @post_params = {:course => { :name => "course", :workload => "",
+                                        :path => "course-path", :tag_list => "",
+                                        :description => "",
+                                        :subscription_type => "1" } }
+          @post_params[:locale] = "pt-BR"
+          @post_params[:environment_id] = @environment.path
+          Factory(:active_licensed_plan, :billable => @environment)
+          @environment.reload
+          post :create, @post_params
+        end
+
+        it "should not create the plan" do
+          assigns[:course].plan.should be_nil
+        end
+
+        it "should not create the quota and computes it" do
+          assigns[:course].quota.should be_nil
+        end
+
+      end
+
       context "when successful" do
         before do
           @post_params = { :plan => "free",
@@ -788,10 +811,10 @@ describe CoursesController do
                                         :subscription_type => "1" } }
           @post_params[:locale] = "pt-BR"
           @post_params[:environment_id] = @environment.path
-          post :create, @post_params
         end
 
         it "redirects to Courses#show" do
+          post :create, @post_params
           response.should redirect_to(environment_course_path(@environment, Course.last))
         end
       end

@@ -15,13 +15,14 @@ describe PartnerEnvironmentAssociationsController do
       @partner = Factory(:partner)
       @partner.add_collaborator(@user)
 
-      environment = {:name => "Faculdade mauricio de nassau",
+      environment = { :name => "Faculdade mauricio de nassau",
           :initials => "FMN",
           :path => "faculdade-mauricio-de-nassau",
           :owner => @user.id,
           :tag_list => "minhas, tags de, teste"}
 
-      @params = {
+      @params = {:plan => "instituicao_superior",
+          :plan_type => "LicensedPlan",
           :partner_environment_association => { :cnpj => "12.123.123/1234-12",
           :environment_attributes => environment},
           :partner_id => @partner.id,
@@ -42,6 +43,12 @@ describe PartnerEnvironmentAssociationsController do
       expect {
         post :create, @params
       }.should change(Environment, :count).by(1)
+    end
+
+    it "should create a plan" do
+      expect {
+        post :create, @params
+      }.should change(Plan, :count).by(1)
     end
 
     context "with validation error" do

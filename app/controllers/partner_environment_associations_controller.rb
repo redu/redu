@@ -17,6 +17,12 @@ class PartnerEnvironmentAssociationsController < BaseController
     respond_to do |format|
       format.html do
         if @partner_environment_association.save
+          @plan = Plan.from_preset(params[:plan].to_sym, params[:plan_type])
+          @plan.user = current_user
+          @partner_environment_association.environment.create_quota
+          @partner_environment_association.environment.plans << @plan
+          @plan.create_invoice_and_setup
+
           admins = @partner.users.reject { |u| u.eql?(current_user) }
           admins.each { |u| @partner.join_hierarchy(u) }
           redirect_to partner_path(@partner)
