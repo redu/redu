@@ -1,6 +1,6 @@
 module Api
   class EnvironmentsController < ApiController
-    respond_to :json
+    rescue_from ActiveRecord::RecordNotFound, :with => :not_found
 
     def show
       @environment = Environment.find(params[:id])
@@ -22,22 +22,31 @@ module Api
 
       @environment.destroy
 
-      respond_with @environment, :status => 200
+      respond_with @environment
     end
 
     def create
       @environment = Environment.new(params[:environment]) do |e|
         e.owner = current_user
-        debugger
       end
       @environment.extend(EnvironmentRepresenter)
+      @environment.save
 
-      if @environment.save
-        respond_with @environment
-      else
-        respond_with @environment, :status => 400
-      end
+      respond_with @environment
+    end
 
+    def update
+      @environment = Environment.find(params[:id])
+      @environment.update_attributes(params[:environment])
+      @environment.extend(EnvironmentRepresenter)
+
+      respond_with @environment
+    end
+
+    private
+
+    def not_found
+      respond_with nil, :status => :not_found
     end
   end
 end
