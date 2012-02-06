@@ -5,6 +5,8 @@ module EnvironmentRepresenter
   property :name
   property :description
   property :created_at
+  property :path
+  property :initials
 
   link :self do
     api_environment_url(self)
