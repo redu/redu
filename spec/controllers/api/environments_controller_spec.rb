@@ -7,6 +7,25 @@ describe Api::EnvironmentsController do
     ActiveSupport::JSON.decode(json)
   end
 
+  context "the document returned" do
+    it "should have the correct keys" do
+      get :show, :id => subject.id, :format => :json, :locale => 'pt-BR'
+
+      %w(name description created_at links path initials id).each do |attr|
+        parse(response.body).should have_key attr
+      end
+    end
+
+    it "should embed a link to self and courses" do
+      get :show, :id => subject.id, :format => :json, :locale => 'pt-BR'
+      links = parse(response.body).fetch('links', {})
+
+      %w(courses self).each do |prop|
+        links.collect { |l| l.fetch 'rel' }.should include prop
+      end
+    end
+  end
+
   context "get /api/environments/id" do
     it "should return status 200" do
       get :show, :id => subject.id, :format => :json, :locale => 'pt-BR'
@@ -14,13 +33,6 @@ describe Api::EnvironmentsController do
       response.code.should == '200'
     end
 
-    it "should represent the environment" do
-      get :show, :id => subject.id, :format => :json, :locale => 'pt-BR'
-
-      %w(name description created_at links path initials).each do |attr|
-        parse(response.body).should have_key attr
-      end
-    end
 
     it "should return status 404 when doesnt exist" do
       get :show, :id => 91209, :format => :json, :locale => 'pt-BR'
