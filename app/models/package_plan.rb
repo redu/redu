@@ -33,65 +33,38 @@ class PackagePlan < Plan
       :file_storage_limit => 25.megabytes,
       :members_limit => 500
     },
-    :empresas_lite => {
-      :name => "Empresa Lite",
-      :price => 210.99,
-      :yearly_price => 2109.90,
-      :video_storage_limit => 250.megabytes,
-      :file_storage_limit => 25.megabytes,
-      :members_limit => 30
-    },
-    :empresas_standard => {
-      :name => "Empresa Standard",
-      :price => 248.99,
-      :yearly_price => 2489.90,
-      :video_storage_limit => 500.megabytes,
-      :file_storage_limit => 250.megabytes,
-      :members_limit => 50
-    },
-    :empresas_plus => {
-      :name => "Empresa Plus",
-      :price => 858.99,
-      :yearly_price => 8589.90,
-      :video_storage_limit => 1000.megabytes,
-      :file_storage_limit => 250.megabytes,
+    :instituicao_medio_lite => {
+      :name => "Instituição de Ensino Médio Lite",
+      :price => 600.00,
+      :yearly_price => 5000.00,
+      :video_storage_limit => 512.megabytes,
+      :file_storage_limit => 512.megabytes,
       :members_limit => 200
     },
-    :instituicao_plus => {
-      :name => "Instituição Plus",
-      :price => 1280.99,
-      :yearly_price => 12809.90,
-      :video_storage_limit => 800.megabytes,
-      :file_storage_limit => 75.megabytes,
-      :members_limit => 600
+    :instituicao_medio_standard => {
+      :name => "Instituição de Ensino Médio Standard",
+      :price => 1250.00,
+      :yearly_price => 12000.00,
+      :video_storage_limit => 512.megabytes,
+      :file_storage_limit => 512.megabytes,
+      :members_limit => 500
     },
-    :instituicao_lite => {
-      :name => "Instituição Lite",
-      :price => 251.99,
-      :yearly_price => 2519.90,
-      :video_storage_limit => 500.megabytes,
-      :file_storage_limit => 25.megabytes,
-      :members_limit => 100
-    },
-    :instituicao_standard => {
-      :name => "Instituição Standard",
-      :price => 730.99,
-      :yearly_price => 7309.90,
-      :video_storage_limit => 800.megabytes,
-      :file_storage_limit => 50.megabytes,
-      :members_limit => 300
-    },
+    :instituicao_medio_plus => {
+      :name => "Instituição de Ensino Médio Plus",
+      :price => 1680.00,
+      :yearly_price => 16968.00,
+      :video_storage_limit => 512.megabytes,
+      :file_storage_limit => 512.megabytes,
+      :members_limit => 700
+    }
   }
 
   validates_presence_of :members_limit, :yearly_price
 
-  # Cria um Invoice com o amount correto para este plano. O amount do invoice é
-  # calculado dividindo-se o price do plano pela quantidade de dias restantes até
-  # o último dia do mês atual. Caso nenhuma opção seja informada, a data inicial
-  # será Date.tomorrow e a final de hoje a 30 dias, além disso o amount é
-  # calculado para esse período.
+  # Cria um Invoice com o amount correto para este plano. Por default,
+  # a data final é 30 dias após a data inicial (hoje).
   #
-  # O invoice só é gerado o amount informado for maior do que zero. Para forçar
+  # O invoice só é gerado se o amount informado for maior do que zero. Para forçar
   # a criação de invoices independente do preço do plano, passar a opção
   # :force => true
   #
@@ -102,8 +75,8 @@ class PackagePlan < Plan
   # Date.today
   # => Thu, 13 Jan 2011
   # invoice = plan.create_invoice
-  # invoice.amount
-  # => 11.61 # (31 dias - 13 dias) * (20 / 31 dias)
+  # invoice.period_end
+  # => Sat, 12 Feb 2011
   def create_invoice(opts = {})
     options = {
       :invoice => {

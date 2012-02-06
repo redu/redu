@@ -57,8 +57,22 @@ describe LicensedPlan do
     end
   end
 
-  context "when setting up the plan"
+  it { should respond_to :create_invoice_and_setup }
+  context "when setting up the plan" do
+    before do
+      @plan = Plan.from_preset(:instituicao_superior, "LicensedPlan")
+    end
 
+    it "should preset the correct plan" do
+      @plan.name.should == LicensedPlan::PLANS[:instituicao_superior][:name]
+    end
+
+    it "should create an invoice" do
+      expect {
+        @plan.create_invoice_and_setup
+      }.should change(Invoice, :count).by(1)
+    end
+  end
 
   context "when creating a new order"
 end

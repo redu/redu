@@ -160,6 +160,7 @@ pt-BR:
         tutor: "Tutor"
         student: "Aluno"
       invoice:
+        open: "Em aberto"
         pending: "Pendente"
         overdue: "Vencido"
         paid: "Pago"
