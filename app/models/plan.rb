@@ -34,8 +34,7 @@ class Plan < ActiveRecord::Base
 
   def self.from_preset(key, type="PackagePlan")
     plan = begin
-             self.new.becomes(type.constantize)
-             plan.type = plan.class.to_s
+             type.constantize.new
            rescue NameError
              PackagePlan.new
            end

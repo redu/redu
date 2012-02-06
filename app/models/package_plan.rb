@@ -32,6 +32,30 @@ class PackagePlan < Plan
       :video_storage_limit => 150.megabytes,
       :file_storage_limit => 25.megabytes,
       :members_limit => 500
+    },
+    :instituicao_medio_lite => {
+      :name => "Instituição de Ensino Médio Lite",
+      :price => 600.00,
+      :yearly_price => 5000.00,
+      :video_storage_limit => 512.megabytes,
+      :file_storage_limit => 512.megabytes,
+      :members_limit => 200
+    },
+    :instituicao_medio_standard => {
+      :name => "Instituição de Ensino Médio Standard",
+      :price => 1250.00,
+      :yearly_price => 12000.00,
+      :video_storage_limit => 512.megabytes,
+      :file_storage_limit => 512.megabytes,
+      :members_limit => 500
+    },
+    :instituicao_medio_plus => {
+      :name => "Instituição de Ensino Médio Plus",
+      :price => 1680.00,
+      :yearly_price => 16968.00,
+      :video_storage_limit => 512.megabytes,
+      :file_storage_limit => 512.megabytes,
+      :members_limit => 700
     }
   }
 

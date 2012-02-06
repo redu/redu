@@ -13,22 +13,22 @@ describe LicensedInvoice do
       should be_open
     end
 
-    [:state, :wait!, :pay!].each do |attr|
+    [:state, :pend!, :pay!].each do |attr|
       it "should respond_to #{attr}" do
         should respond_to attr
       end
     end
 
     context "when open" do
-      it "should change to waiting" do
-        subject.wait!
-        should be_waiting
+      it "should change to pending" do
+        subject.pend!
+        should be_pending
       end
     end
 
-    context "when waiting" do
+    context "when pending" do
       before do
-        subject.update_attribute(:state, "waiting")
+        subject.update_attribute(:state, "pending")
       end
 
       it "should change to paid" do
@@ -100,8 +100,8 @@ describe LicensedInvoice do
       @invoice2.reload
     end
 
-    it "should change invoice1 to be waiting" do
-      @invoice1.should be_waiting
+    it "should change invoice1 to be pending" do
+      @invoice1.should be_pending
     end
 
     it "should maintain invoice2 as open" do

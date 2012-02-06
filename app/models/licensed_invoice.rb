@@ -17,15 +17,15 @@ class LicensedInvoice < Invoice
   aasm_initial_state :open
 
   aasm_state :open
-  aasm_state :waiting
+  aasm_state :pending
   aasm_state :paid
 
-  aasm_event :wait do
-    transitions :to => :waiting, :from => [:open]
+  aasm_event :pend do
+    transitions :to => :pending, :from => [:open]
   end
 
   aasm_event :pay do
-    transitions :to => :paid, :from => [:waiting]
+    transitions :to => :paid, :from => [:pending]
   end
 
   def generate_description
