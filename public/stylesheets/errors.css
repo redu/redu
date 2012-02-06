@@ -55,6 +55,10 @@ body {
   padding-top: -8px;
 }
 
+.body {
+  margin: 0 auto;
+}
+
 .footer {
   background-color: gray;
   height: 97px;
@@ -167,11 +171,11 @@ body {
 .something-call {
   font-family: museo-sans, arial, sans-serif;
   font-weight: 100;
-}    
- 
+}
+
 .text-body:after {
   background-image: url("../images/new/alerta.png");
-  background-repeat: no-repeat; 
+  background-repeat: no-repeat;
   height: 142px;
   width: 165px;
   float: right;
@@ -215,7 +219,7 @@ body {
 
 .title-call {
   color: rgb(193, 39, 45);
-} 
+}
 
 .system-call, .sorry-call {
   color: rgb(109, 110, 111);
@@ -232,7 +236,7 @@ body {
   font-weight: normal;
 }
 
-.erros { 
+.erros {
   clear: both;
   margin: 0;
 }
@@ -242,7 +246,7 @@ body {
   margin-top: 10px;
 }
 
-.body .text-body .concave-form  .concave-input { 
+.body .text-body .concave-form  .concave-input {
   font-size: 11px;
   font-family: arial, sans-serif;
   font-style: italic;
@@ -311,7 +315,7 @@ fieldset {
 clear: both;
 }
 
-body .alerta:after { 
+body .alerta:after {
   margin-top: -516px;
 }
 
@@ -322,13 +326,13 @@ body .alerta:after {
   font-weight: normal;
   font-size: 12px;
   font-family: arial, sans-serif;
-}  
-  
+}
+
 .list-link a {
   text-decoration: none;
   color: rgb(77, 173, 214);
 }
-  
+
 .list-link {
   padding: 3px;
 }

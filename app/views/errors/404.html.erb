@@ -1,6 +1,30 @@
-<div id="error-header" class="grid_9 push_2 omega">
-<h2 class="message">Ops! Erro 404</h2>
-<span class="detail">O que você procura não está aqui.</span>
-</div>
+<%= content_for :wrapper_class do %>overlay<% end %>
+<div class="body container_16">
+  <h1 id="logo" class="logo-top grid_5 omega"><%= link_to "", home_path %></h1>
 
-<%= render :partial => 'errors/contact' %>
+  <div class="text-body alerta grid_10 alfa">
+    <h2 class="ops-call">Ops!</h2>
+    <h2 class="something-call">Algo inesperado aconteceu.</h2>
+    <div class="errors grid_2 alfa">
+      <h3 class="error-name">ERRO</h3>
+      <h3 class="error-number">404</h3>
+    </div>
+    <div class="descricao-erro grid_7 alfa">
+      <h3 class="title-call"> Página não encontrada. </h3>
+      <h4 class="why-call">Por quê?</h4>
+      <h5 class="system-call">A página que você procura não foi encontrada. Isso pode resultar de alguns fatores como: a URL conter algum caractere digitado incorretamente, a página não existir ou o endereço ter sido realocado.</h5>
+      <h4 class="sugestion-call">Sugerimos:</h4>
+      <h5 class="sorry-call">Caso você tenha digitado o endereço, verifique se o mesmo está correto (com algum caractere a mais ou a menos). Se foi de algum link nosso, pedimos desculpas pelo incoveniente e que você  <q class="back-call"> nos ajude </q>a resolver este problema.</h5>
+      <h4 class="help-links">Estes links podem te ajudar.</h4>
+      <div class=" grid_3 links">
+        <ul class="suggested-links">
+          <li class="list-link"><%= link_to "Início", home_path %></li>
+          <li class="list-link"><%= link_to "Blog", "http://blog.redu.com.br" %></li>
+          <li class="list-link"><%= link_to "Termos de Uso", tos_path %></li>
+          <li class="list-link"><%= link_to "Política de Privacidade", privacy_path %></li>
+          <li class="list-link"><%= link_to "Fale Conosco", contact_path%></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div><!-- end-container -->
