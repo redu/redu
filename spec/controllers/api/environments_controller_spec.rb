@@ -29,12 +29,70 @@ describe Api::EnvironmentsController do
     end
   end
 
-  context "post /api/environments/id" do
-    xit "should create an environment" do
-      controller.stub!(:current_user).and_return Factory(:user)
+  context "post /api/environments" do
+    before do
+      @user = Factory(:user)
+      controller.stub!(:current_user).and_return @user
 
-      params = { :name => 'New environment' }
-      post :create, :environment => params, :format => :json, :locale => 'pt-BR'
+      @params = { :name => 'New environment', :path => 'environment-path',
+                  :initials => 'NE' }
+    end
+
+    it "should create an environment" do
+      expect {
+        post :create, :environment => @params,
+        :format => :json, :locale => 'pt-BR'
+      }.should change(Environment, :count).by(1)
+    end
+
+    it "should return status 201 when successful" do
+      post :create, :environment => @params,
+        :format => :json, :locale => 'pt-BR'
+
+      response.status.should == 201
+    end
+
+    it "should return the environment representation" do
+      post :create, :environment => @params,
+        :format => :json, :locale => 'pt-BR'
+
+      parse(response.body).should have_key('name')
+      parse(response.body).fetch('name').should == @params[:name]
+    end
+
+    it "should return 422 (unproccessable entity) when invalid" do
+      @params = { :name => 'Invalid entity' }
+      post :create, :environment => @params,
+        :format => :json, :locale => 'pt-BR'
+
+      response.status.should == 422
+    end
+  end
+
+  context "put /api/environment/id" do
+    before do
+      @user = Factory(:user)
+      controller.stub!(:current_user).and_return @user
+
+      @environment = Factory(:complete_environment)
+    end
+
+    it "should return status 200" do
+      updated_params = { :name => 'New name' }
+
+      put :update, :id => @environment.id, :environment => updated_params,
+        :format => :json, :locale => 'pt-BR'
+
+      response.status.should == 200
+    end
+
+    it "should return 422 when invalid" do
+      updated_params = { :name => 'Big name Big name Big name Big name Big name' }
+
+      put :update, :id => @environment.id, :environment => updated_params,
+        :format => :json, :locale => 'pt-BR'
+
+      response.status.should == 422
     end
   end
 
