@@ -169,4 +169,23 @@ describe Environment do
     subject.should be_published
   end
 
+  context "behaves like a billable" do
+    before do
+      users = 4.times.collect { Factory(:user) }
+
+      Factory(:active_package_plan, :billable => subject, :user => subject.owner,
+              :members_limit => 10)
+
+      Factory(:quota, :billable => subject)
+      course = Factory(:course, :environment => subject, :quota => nil)
+      course.join(users[0], Role[:environment_admin])
+      course.join(users[1], Role[:environment_admin])
+      course.join(users[2], Role[:teacher])
+      course.join(users[3], Role[:tutor])
+    end
+
+    it_should_behave_like "a billable" do
+      let(:billable) { subject }
+    end
+  end
 end

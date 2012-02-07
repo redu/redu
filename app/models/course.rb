@@ -1,10 +1,10 @@
 class Course < ActiveRecord::Base
+  include ActsAsBillable
 
   # Apenas deve ser chamado na criação do segundo curso em diante
   after_create :create_user_course_association, :unless => "self.environment.nil?"
 
   belongs_to :environment
-  has_many :plans, :as => :billable
   has_many :spaces, :dependent => :destroy
   has_many :user_course_associations, :dependent => :destroy
   has_many :user_course_invitations, :dependent => :destroy
@@ -47,7 +47,6 @@ class Course < ActiveRecord::Base
     :conditions => [ "(user_course_associations.role = ? OR user_course_associations.role = ?) AND user_course_associations.state = ?", 6, 5, 'approved']
 
   has_and_belongs_to_many :audiences
-  has_one :quota, :dependent => :destroy, :as => :billable
 
   has_many :logs, :as => :logeable, :order => "created_at DESC",
     :dependent => :destroy
@@ -270,40 +269,7 @@ class Course < ActiveRecord::Base
     self.user_course_invitations.find_by_email(email)
   end
 
-  # Retorna o percentual de espaço ocupado por files
-  def percentage_quota_file
-    if self.quota.files >= self.plan.file_storage_limit
-      100
-    else
-      (self.quota.files * 100.0) / self.plan.file_storage_limit
-    end
-  end
-
-  # Retorna o percentual de espaço ocupado por arquivos multimedia
-  def percentage_quota_multimedia
-    if self.quota.multimedia >= self.plan.video_storage_limit
-      100
-    else
-      ( self.quota.multimedia * 100.0 ) / self.plan.video_storage_limit
-    end
-  end
-
-  # Retorna o percentual de membros do curso
-  def percentage_quota_members
-    if self.users.count >= self.plan.members_limit
-      100
-    else
-      ( self.users.count * 100.0 )/ self.plan.members_limit
-    end
-  end
-
   def can_add_entry?
     self.approved_users.count < self.plan.members_limit
   end
-
-  def plan
-    # TODO rever este código
-    self.plans.order("created_at DESC").limit(1).first
-  end
-
 end

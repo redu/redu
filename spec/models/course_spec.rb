@@ -24,7 +24,6 @@ describe Course do
   it { should have_many(:tutors).through :user_course_associations }
   it { should have_many(:students).through :user_course_associations }
   it { should have_many(:teachers_and_tutors).through :user_course_associations }
-  it { should have_many(:plans) }
 
   it { should have_and_belong_to_many :audiences }
   it { should have_one(:quota).dependent(:destroy) }
@@ -300,14 +299,6 @@ describe Course do
       it "is a student" do
         Course.user_behave_as_student(@user).should == @courses[0..1]
       end
-    end
-
-    it "should retrieves the current plan" do
-      plan1 = Factory(:plan, :billable => subject, :created_at => 2.days.ago)
-      plan2 = Factory(:plan, :billable => subject)
-      subject.reload
-
-      subject.plan.should == plan2
     end
   end
 
@@ -700,39 +691,27 @@ describe Course do
     subject.invited?("email@example.com").should be_true
   end
 
-  context "Quotas" do
-    before do
-      users = 4.times.inject([]) { |res, i| res << Factory(:user) }
-
-      Factory(:plan, :billable => subject, :user => subject.owner,
-              :members_limit => 10)
-      subject.join(users[0], Role[:environment_admin])
-      subject.join(users[1], Role[:environment_admin])
-      subject.join(users[2], Role[:teacher])
-      subject.join(users[3], Role[:tutor])
-    end
-
-    it "retrieve a percentage of quota file" do
-      subject.quota.files = 512
-      subject.quota.save
-      subject.percentage_quota_file.should == 50
-    end
-
-    it "retrieve a percentage of quota multimedia" do
-      subject.quota.multimedia = 512
-      subject.quota.save
-      subject.percentage_quota_multimedia.should == 50
-    end
-
-    it "retrieve a percentage of a members" do
-      subject.percentage_quota_members == 50
-    end
-  end
-
   it "doesnt accept ." do
     subject.path = "www.redu.com.br"
     subject.should_not be_valid
     subject.errors[:path].should_not be_empty
   end
 
+  context "behaves like a billable" do
+    before do
+      users = 4.times.collect { Factory(:user) }
+
+      Factory(:active_package_plan, :billable => subject, :user => subject.owner,
+              :members_limit => 10)
+
+      subject.join(users[0], Role[:environment_admin])
+      subject.join(users[1], Role[:environment_admin])
+      subject.join(users[2], Role[:teacher])
+      subject.join(users[3], Role[:tutor])
+    end
+
+    it_should_behave_like "a billable" do
+      let(:billable) { subject }
+    end
+  end
 end
