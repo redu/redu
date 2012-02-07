@@ -100,6 +100,19 @@ pt-BR:
   support:
     array:
       two_words_connector: "Formato inválido"
+  
+  activemodel:
+    models:
+      recovery_email: "E-mail de recuperação"
+    attributes:
+      recovery_email:
+        email: "E-mail"
+    errors:
+      models:
+        recovery_email:
+              attributes:
+                email:
+                  invalid: "E-mail inválido."
   activerecord:
     models:
       user: "usuário"
@@ -251,7 +264,7 @@ pt-BR:
           attributes:
             cnpj:
               invalid: "formato inválido"
-
+        
   helpers:
     submit:
       complementary_course:
@@ -275,7 +288,7 @@ pt-BR:
       subject:
         create: "Adicionar aulas"
         update: "Finalizar módulo"
-
+          
   lectureable: vídeo-aula
   lectures: aulas
   history: historico

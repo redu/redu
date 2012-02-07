@@ -108,3 +108,4 @@ stylesheets:
     - public/stylesheets/outdated-browser.css
     - public/stylesheets/cold.css
     - public/stylesheets/errors.css
+    - public/stylesheets/recover.css
