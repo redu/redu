@@ -340,3 +340,60 @@ body .alerta:after {
   margin-top: 20px;
 }
 
+
+.confirmation-msg {
+  background-color: rgb(240, 240, 240);
+  clear: both;
+  float: right;
+  margin-top: 20px;
+}
+
+.boxshadow .confirmation-msg {
+  -webkit-box-shadow: inset 0px -1px 0px 0px rgb(255, 255, 255), inset 0px 1px 0px 0px rgb(230, 230, 230);
+  -moz-box-shadow: inset 0px -1px 0px 0px rgb(255, 255, 255)), inset 0px 1px 0px 0px rgb(230, 230, 230);
+  box-shadow: inset 0px -1px 0px 0px rgb(255 ,255 , 255), inset 0px 1px 0px 0px rgb(230, 230, 230);
+}
+
+
+.borderradius .confirmation-msg {
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  border-radius: 7px; 
+}
+
+.text-confirmation {
+  font-size: 12px;
+  color: rgb(0, 0, 0);
+  font-weight: normal;
+  padding: 20px 10px;
+  font-family: arial, sans-serif;
+  clear:both;
+  float: left;			
+}
+ 
+.aba-top {
+  background-image: url("../images/new/aba-cima-borda.png");
+  background-repeat: no-repeat;
+  width: 30px;
+  height: 10px;
+  margin-top: -8px;
+  margin-left: 40px;
+}
+
+.thank-you {
+  padding: 20px 15px 0 15px;
+  font-size: 17px;
+  font-family: museo-sans, arial, sans-serif;
+  font-weight: 500;
+}
+
+.text-confirmation, .initial-page {  
+  font-size: 12px;
+  font-family: arial, sans-serif;
+  font-weight: normal;
+}
+
+.initial-page {
+  color: rgb(77, 173, 214);
+}
+
