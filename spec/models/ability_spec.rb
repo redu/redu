@@ -560,60 +560,112 @@ describe Ability do
       end
     end
 
-    context "on package_plan" do
-      before do
-        @package_plan = Factory(:active_package_plan)
-        @invoice = Factory(:invoice, :plan => @package_plan)
-      end
-
-      context "the owner" do
+    context "on plans" do
+      context "on package_plan" do
         before do
-          @ability = Ability.new(@package_plan.user)
+          @package_plan = Factory(:active_package_plan)
+          @invoice = Factory(:invoice, :plan => @package_plan)
         end
 
-        it "read its own package_plan" do
-          @ability.should be_able_to(:read, @package_plan)
+        context "the owner" do
+          before do
+            @ability = Ability.new(@package_plan.user)
+          end
+
+          it "read its own package_plan" do
+            @ability.should be_able_to(:read, @package_plan)
+          end
+
+          it "manages its own package_plan" do
+            @ability.should be_able_to(:manage, @package_plan)
+          end
+
+          it "reads package_plan's invoice" do
+            @ability.should be_able_to(:read, @invoice)
+          end
+
+          it "manages package_plan's invoice" do
+            @ability.should be_able_to(:manage, @invoice)
+          end
         end
 
-        it "manages its own package_plan" do
-          @ability.should be_able_to(:manage, @package_plan)
+        context "the strange" do
+          before do
+            strange = Factory(:user)
+            @ability = Ability.new(strange)
+          end
+
+          it "can NOT read others package_plans" do
+            @ability.should_not be_able_to(:read, @package_plan)
+          end
+
+          it "can NOT manage others package_plans" do
+            @ability.should_not be_able_to(:manage, @package_plan)
+          end
+
+          it "can NOT read others package_plan's invoice" do
+            @ability.should_not be_able_to(:read, @invoice)
+          end
+
+          it "can NOT manage others package_plan's invoice" do
+            @ability.should_not be_able_to(:manage, @invoice)
+          end
+        end
+      end
+
+      context "on licensed_plan" do
+        before do
+          @licensed_plan = Factory(:active_licensed_plan)
+          @invoice = Factory(:invoice, :plan => @licensed_plan)
         end
 
-        it "reads package_plan's invoice" do
-          @ability.should be_able_to(:read, @invoice)
+        context "the owner" do
+          before do
+            @ability = Ability.new(@licensed_plan.user)
+          end
+
+          it "read its own licensed_plan" do
+            @ability.should be_able_to(:read, @licensed_plan)
+          end
+
+          it "manages its own licensed_plan" do
+            @ability.should be_able_to(:manage, @licensed_plan)
+          end
+
+          it "reads licensed_plan's invoice" do
+            @ability.should be_able_to(:read, @invoice)
+          end
+
+          it "manages licensed_plan's invoice" do
+            @ability.should be_able_to(:manage, @invoice)
+          end
         end
 
-        it "manages package_plan's invoice" do
-          @ability.should be_able_to(:manage, @invoice)
+        context "the strange" do
+          before do
+            strange = Factory(:user)
+            @ability = Ability.new(strange)
+          end
+
+          it "can NOT read others licensed_plans" do
+            @ability.should_not be_able_to(:read, @licensed_plan)
+          end
+
+          it "can NOT manage others licensed_plans" do
+            @ability.should_not be_able_to(:manage, @licensed_plan)
+          end
+
+          it "can NOT read others licensed_plan's invoice" do
+            @ability.should_not be_able_to(:read, @invoice)
+          end
+
+          it "can NOT manage others licensed_plan's invoice" do
+            @ability.should_not be_able_to(:manage, @invoice)
+          end
         end
       end
     end
 
-    context "the strange" do
-      before do
-        strange = Factory(:user)
-
-        @package_plan = Factory(:active_package_plan)
-        @invoice = Factory(:invoice, :plan => @package_plan)
-        @ability = Ability.new(strange)
-      end
-
-      it "can NOT read others package_plans" do
-        @ability.should_not be_able_to(:read, @package_plan)
-      end
-
-      it "can NOT manage others package_plans" do
-        @ability.should_not be_able_to(:manage, @package_plan)
-      end
-
-      it "can NOT read others package_plan's invoice" do
-        @ability.should_not be_able_to(:read, @invoice)
-      end
-
-      it "can NOT manage others package_plan's invoice" do
-        @ability.should_not be_able_to(:manage, @invoice)
-      end
-    end
   end
 
   context "on user -" do

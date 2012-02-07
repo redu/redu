@@ -224,7 +224,7 @@ class User < ActiveRecord::Base
       end
     when 'User'
       entity == self
-    when 'Plan', 'PackagePlan'
+    when 'Plan', 'PackagePlan', 'LicensedPlan'
       entity.user == self
     when 'Invoice'
       self.can_manage?(entity.plan)

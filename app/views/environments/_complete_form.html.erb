@@ -23,9 +23,10 @@ ambiente de estudo.
 <span class="tip">Descreva o ambiente em palavras-chaves</span>
 <% if partner %>
   <%= label :plan, "Plano" %>
+  <%= hidden_field_tag :plan_type, "LicensedPlan" %>
   <ul class="single-column course-plan">
     <li>
-      <span class="plan-type">Planos por licença</span>
+      <span class="plan-type">Planos por Licença</span>
     </li>
     <li>
       <%= radio_button_tag :plan, 'instituicao_meio', :checked => true %>

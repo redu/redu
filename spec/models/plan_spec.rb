@@ -121,6 +121,10 @@ describe Plan do
       it "should return a plan with type PackagePlan" do
         @another_plan.class.should == PackagePlan
       end
+
+      it "should return a plan with correct name in this case" do
+        @another_plan.name.should == PackagePlan::PLANS[:professor_lite][:name]
+      end
     end
 
     context "when trying to preset a inexistent plan" do

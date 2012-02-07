@@ -38,7 +38,7 @@ class LicensedInvoice < Invoice
         days_of_month = i.period_end.end_of_month.day.to_f
         i.amount = (i.plan.price / days_of_month) *
           (i.period_end - i.period_start) * i.licenses.count
-        i.wait!
+        i.pend!
         i.save
       end
     end

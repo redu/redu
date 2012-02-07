@@ -1,10 +1,13 @@
 <tr>
   <td>
     <% if item.billable %>
-      <%=
-        link_to item.billable.name, environment_course_path(item.billable.environment, item.billable),
-          :class => "billable"
-        %>
+      <% if item.billable.is_a? Environment %>
+        <%= link_to item.billable.name, item.billable, :class => "billable" %>
+      <% else %>
+        <%= link_to item.billable.name,
+          environment_course_path(item.billable.environment, item.billable),
+          :class => "billable" %>
+      <% end %>
     <% else %>
       <span class="name"><%= item.billable_audit.try(:name) || "Sem informações" %> (removido)</span>
     <% end %>

@@ -5,8 +5,12 @@
     <%= tabs :users do %>
     <div class="call">
       <span class="billable">
+      <% if @plan.billable.is_a? Environment %>
+        <%= link_to @plan.billable.name, @plan.billable %>
+      <% else %>
         <%= link_to @plan.billable.name,
           environment_course_path(@plan.billable.environment, @plan.billable) %>
+      <% end %>
       </span>
       <span class="name"><%= @plan.name %></span>
     </div>
