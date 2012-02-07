@@ -8,6 +8,7 @@ html, body {
 
 .body-login {
   width: 580px;
+  float: right;
 }
 
 .logo-top a {
@@ -82,19 +83,23 @@ body {
    margin: 10px 0 0 0;
 }
 
-.input-email, .input-password {
+.concave-form .input-email, 
+.concave-form .input-password {
   color: rgb(179, 179, 179);
   font-family: arial, sans-serif;
   font-size: 12px;
   font-weight: bold;
   margin-left: 10px;
+  clear: none;
+  width: auto;
+  margin-top: 28px;
 }
 
 .forgot-password {
   border-top: 1px dotted;	
   margin-left: -2px;
   border-color: rgb(214, 214, 214);
-  margin-top: 190px;
+  /*margin-top: 190px;*/
 }  
 
 .body .concave-form  .body-login .concave-input {
