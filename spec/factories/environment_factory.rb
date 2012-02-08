@@ -7,11 +7,10 @@ FactoryGirl.define do
   end
 
   factory :complete_environment, :parent => :environment do
-    sequence(:name) { |n| "Ambiente #{n}" }
-    sequence(:path) { |n| "ambiente-#{n}" }
-    sequence(:initials) { |n| "amb-#{n}" }
     description "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-    association :owner, :factory => :user
+    after_create do |e|
+      e.courses << Factory(:complete_course, :environment => e, :owner => e.owner)
+    end
   end
 end
 
