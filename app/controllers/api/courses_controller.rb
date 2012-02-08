@@ -1,5 +1,3 @@
-require "redu_responder"
-
 module Api
   class CoursesController < ApiController
     respond_to :js
@@ -40,12 +38,6 @@ module Api
       @course.destroy
 
       respond_with @course
-    end
-
-    private
-
-    def self.responder
-      Class.new(super).send :include, Roar::Rails::Responder
     end
   end
 end

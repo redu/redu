@@ -14,5 +14,9 @@ module Api
     def bad_request
       respond_with nil, :status => :bad_request
     end
+
+    def self.responder
+      Class.new(super).send :include, Api::Responder
+    end
   end
 end
