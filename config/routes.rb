@@ -1,9 +1,4 @@
 Redu::Application.routes.draw do
-  namespace 'api' do
-    resources :environments do
-      resources :courses
-    end
-  end
 
   post "presence/auth"
   post "presence/multiauth"
@@ -210,4 +205,30 @@ Redu::Application.routes.draw do
 
 end
 
-ActionDispatch::Routing::Translator.translate_from_file('lang','i18n-routes.yml')
+ActionDispatch::Routing::Translator.translate_from_file('lang/i18n-routes.yml')
+
+Redu::Application.routes.draw do
+  namespace 'api' do
+    resources :environments, :except => [:new, :edit] do
+      resources :courses, :except => [:new, :edit], :shallow => true
+      resources :users, :only => :index
+    end
+
+    resources :courses, :except => [:new, :edit, :index, :create] do
+      resources :spaces, :except => [:new, :edit], :shallow => true
+      resources :users, :only => :index
+    end
+
+    resources :spaces, :except => [:new, :edit, :index, :create] do
+      resources :lectures, :except => [:new, :edit], :shallow => true
+      resources :users, :only => :index
+    end
+
+    resources :lectures, :except => [:new, :edit, :index, :create] do
+      resources :user, :only => :index
+    end
+
+    # Hack para capturar exceções ActionController::RoutingError
+    match '*', :to => 'api#routing_error'
+  end
+end
