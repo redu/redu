@@ -142,6 +142,9 @@ class Ability
 
       # Parceiros
       can :contact, Partner
+      unless user.admin?
+        cannot :index, Partner
+      end
 
       # Result
       can :update, Result, :state => 'started', :user_id => user.id

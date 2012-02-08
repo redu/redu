@@ -68,4 +68,16 @@ describe PartnersController do
       assigns[:partner_contact].should be_valid
     end
   end
+
+  context "when viewing all partners" do
+    before do
+      @user.role = Role[:admin]
+      UserSession.create @user
+      get :index, :locale => 'pt-BR'
+    end
+
+    it "assigns all partners" do
+      assigns[:partners].should_not be_nil
+    end
+  end
 end

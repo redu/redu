@@ -6933,7 +6933,8 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   margin: 0;
 }
 
-#partner-environments-list li {
+#partner-environments-list li,
+#partners-list li {
   padding: 10px;
   margin-bottom: 20px;
   border: 1px solid #CCCBCB;
@@ -6971,7 +6972,8 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   margin-right: 10px;
 }
 
-#partner-environments-list .environment-name {
+#partner-environments-list .environment-name,
+#partners-list .partner-name {
   font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 500;
   font-size: 1.2em;
@@ -6982,13 +6984,15 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   margin-bottom: 5px;
 }
 
-#partner-environments-list .environment-info {
+#partner-environments-list .environment-info,
+#partners-list .partner-info {
   float: left;
   overflow: hidden;
   display: block;
 }
 
-#partner-environments-list .date {
+#partner-environments-list .date,
+#partners-list .qtt-environments {
   font-size: .85em;
   color: #B2B2B2;
 }

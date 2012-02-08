@@ -981,10 +981,12 @@ describe Ability do
   end
 
   context "on Partner" do
+    before do
+      @partner = Factory(:partner)
+    end
     context "all common users" do
       before do
         @user = Factory(:user)
-        @partner = Factory(:partner)
         @user_ability = Ability.new(@user)
       end
 
@@ -999,12 +1001,15 @@ describe Ability do
       it "can contact" do
         @user_ability.should be_able_to(:contact, @partner)
       end
+
+      it "cannot view all partners" do
+        @user_ability.should_not be_able_to(:index, Partner)
+      end
     end
 
     context "the collbarator" do
       before do
         @user = Factory(:user)
-        @partner = Factory(:partner)
         @partner.add_collaborator(@user)
 
         @user_ability = Ability.new(@user)
@@ -1016,6 +1021,29 @@ describe Ability do
 
       it "can manage" do
         @user_ability.should be_able_to(:manage, @partner)
+      end
+
+      it "cannot view all partners" do
+        @user_ability.should_not be_able_to(:index, Partner)
+      end
+    end
+
+    context "the redu admin" do
+      before do
+        @redu_admin = Factory(:user, :role => Role[:admin])
+        @redu_admin_ability = Ability.new(@redu_admin)
+      end
+
+      it "can view" do
+        @redu_admin_ability.should be_able_to(:read, @partner)
+      end
+
+      it "can manage" do
+        @redu_admin_ability.should be_able_to(:manage, @partner)
+      end
+
+      it "cannot view all partners" do
+        @redu_admin_ability.should be_able_to(:index, Partner)
       end
     end
   end

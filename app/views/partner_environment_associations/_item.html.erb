@@ -2,7 +2,7 @@
   <%= image_tag item.environment.avatar(:thumb_32), :size => "32x32", :class => "avatar" %>
   <div class="environment-info">
     <%= link_to item.environment.name, environment_path(item.environment), :class => "environment-name" %>
-    <span class="date"><%= time_ago_in_words(item.created_at) %></span>
+    <span class="date">Criado há <%= time_ago_in_words(item.created_at) %> por</span>
     <%= link_to item.environment.owner.display_name, user_path(item.environment.owner), :class=> "owner" %>
   </div>
 </li>
