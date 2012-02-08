@@ -1,15 +1,20 @@
 require 'spec_helper'
 
-describe Api::EnvironmentsController do
+describe "Api::EnvironmentsController" do
   subject { Factory(:complete_environment) }
 
   def parse(json)
     ActiveSupport::JSON.decode(json)
   end
 
+  def href_to(rel, representation)
+    representation.fetch('links', []).detect { |link| link['rel'] == rel }.
+      fetch('href', nil)
+  end
+
   context "the document returned" do
     it "should have the correct keys" do
-      get :show, :id => subject.id, :format => :json, :locale => 'pt-BR'
+      get "/api/environments/#{subject.id}", :format => 'json'
 
       %w(name description created_at links path initials id).each do |attr|
         parse(response.body).should have_key attr
@@ -17,7 +22,7 @@ describe Api::EnvironmentsController do
     end
 
     it "should embed a link to self and courses" do
-      get :show, :id => subject.id, :format => :json, :locale => 'pt-BR'
+      get "/api/environments/#{subject.id}", :format => 'json'
       links = parse(response.body).fetch('links', {})
 
       %w(courses self).each do |prop|
@@ -28,14 +33,14 @@ describe Api::EnvironmentsController do
 
   context "get /api/environments/id" do
     it "should return status 200" do
-      get :show, :id => subject.id, :format => :json, :locale => 'pt-BR'
+      get "/api/environments/#{subject.id}", :format => 'json'
 
       response.code.should == '200'
     end
 
 
     it "should return status 404 when doesnt exist" do
-      get :show, :id => 91209, :format => :json, :locale => 'pt-BR'
+      get "/api/environments/0912092", :format => 'json'
 
       response.code.should == '404'
     end
@@ -44,29 +49,29 @@ describe Api::EnvironmentsController do
   context "post /api/environments" do
     before do
       @user = Factory(:user)
-      controller.stub!(:current_user).and_return @user
+      Api::EnvironmentsController.any_instance.stub(:current_user).
+        and_return @user
 
       @params = { :name => 'New environment', :path => 'environment-path',
                   :initials => 'NE' }
     end
 
     it "should create an environment" do
-      expect {
-        post :create, :environment => @params,
-        :format => :json, :locale => 'pt-BR'
-      }.should change(Environment, :count).by(1)
+      post "/api/environments", :environment => @params, :format => 'json'
+      representation = parse(response.body)
+      get href_to('self', representation), :format => 'json'
+
+      response.code.should == '200'
     end
 
     it "should return status 201 when successful" do
-      post :create, :environment => @params,
-        :format => :json, :locale => 'pt-BR'
+      post "/api/environments", :environment => @params, :format => 'json'
 
       response.status.should == 201
     end
 
     it "should return the environment representation" do
-      post :create, :environment => @params,
-        :format => :json, :locale => 'pt-BR'
+      post "/api/environments", :environment => @params, :format => 'json'
 
       parse(response.body).should have_key('name')
       parse(response.body).fetch('name').should == @params[:name]
@@ -74,8 +79,7 @@ describe Api::EnvironmentsController do
 
     it "should return 422 (unproccessable entity) when invalid" do
       @params = { :name => 'Invalid entity' }
-      post :create, :environment => @params,
-        :format => :json, :locale => 'pt-BR'
+      post "/api/environments", :environment => @params, :format => 'json'
 
       response.status.should == 422
     end
@@ -84,7 +88,7 @@ describe Api::EnvironmentsController do
   context "put /api/environment/id" do
     before do
       @user = Factory(:user)
-      controller.stub!(:current_user).and_return @user
+      EnvironmentsController.any_instance.stub(:current_user).and_return @user
 
       @environment = Factory(:complete_environment)
     end
@@ -92,8 +96,8 @@ describe Api::EnvironmentsController do
     it "should return status 200" do
       updated_params = { :name => 'New name' }
 
-      put :update, :id => @environment.id, :environment => updated_params,
-        :format => :json, :locale => 'pt-BR'
+      put "/api/environments/#{@environment.id}", :environment => updated_params,
+        :format => 'json'
 
       response.status.should == 200
     end
@@ -101,8 +105,8 @@ describe Api::EnvironmentsController do
     it "should return 422 when invalid" do
       updated_params = { :name => 'Big name Big name Big name Big name Big name' }
 
-      put :update, :id => @environment.id, :environment => updated_params,
-        :format => :json, :locale => 'pt-BR'
+      put "/api/environments/#{@environment.id}", :environment => updated_params,
+        :format => 'json'
 
       response.status.should == 422
     end
@@ -110,14 +114,14 @@ describe Api::EnvironmentsController do
 
   context "get /api/environments" do
     it "should return status 200" do
-      get :index, :format => :json, :locale => 'pt-BR'
+      get "/api/environments", :format => 'json'
 
       response.status.should == 200
     end
 
     it "should return all environments" do
       2.times { Factory(:environment) }
-      get :index, :format => :json, :locale => 'pt-BR'
+      get '/api/environments', :format => 'json'
 
       parse(response.body).should be_kind_of Array
       parse(response.body).length.should == 2
@@ -126,13 +130,13 @@ describe Api::EnvironmentsController do
 
   context "delete /api/environments/id" do
     it "should return status 200" do
-      delete :destroy, :id => subject.id, :format => :json, :locale => 'pt-BR'
+      delete "/api/environments/#{subject.id}", :format => 'json'
 
       response.status.should == 200
     end
 
     it "should return status 404 when doesnt exist" do
-      delete :destroy, :id => 33232, :format => :json, :locale => 'pt-BR'
+      delete "/api/environments/20202020", :format => 'json'
 
       response.status.should == 404
     end
