@@ -71,31 +71,84 @@ describe LicensedInvoice do
     end
   end
 
-  it "LicensedPlan should respond to refresh_amounts!" do
-    LicensedInvoice.respond_to?(:refresh_amounts!).should be_true
+  it "LicensedPlan should respond to refresh_open_invoices!" do
+    LicensedInvoice.respond_to?(:refresh_open_invoices!).should be_true
   end
 
-  context "when generating the amount" do
+  it { should respond_to :calculate_amount! }
+  context "when calculating the amount" do
     before do
-      plan = Factory(:active_licensed_plan, :price => 3.00)
+      @plan = Factory(:active_licensed_plan, :price => 3.00)
 
       from = Date.new(2010, 01, 15)
-      plan.create_invoice({:invoice => {
+      @plan.create_invoice({:invoice => {
         :period_start => from,
-        :period_end => from.end_of_month} })
-        @invoice1 = plan.invoices.last
+        :period_end => from.end_of_month }
+      })
+      @invoice = @plan.invoices.last
+
+      (1..10).collect { Factory(:license, :invoice => @invoice) }
+      @in_use_licenses = (1..10).collect do
+        Factory(:license, :invoice => @invoice, :period_end => nil)
+      end
+
+      @invoice.calculate_amount!
+    end
+
+    it "updates to the correct amount" do
+      @invoice.amount.round(2).should == BigDecimal.new("30.97")
+    end
+    it "updates state to pending" do
+      @invoice.should be_pending
+    end
+
+    it { should respond_to :duplicate_licenses_to }
+    context "when duplicating licenses" do
+      before do
+        @new_invoice = @plan.create_invoice(:invoice => {
+          :created_at => Time.now + 2.hours})
+        @invoice.duplicate_licenses_to @new_invoice
+      end
+
+      it "should have all licenses without period_end (at the end of month)" do
+        @new_invoice.licenses.should_not be_empty
+        @new_invoice.licenses.each_with_index do |l, i|
+          l.name.should == @in_use_licenses[i].name
+          l.email.should == @in_use_licenses[i].email
+        end
+      end
+    end
+  end
+
+  context "when refreshing open licensed invoices" do
+    before do
+      @plan1 = Factory(:active_licensed_plan, :price => 3.00)
+      plan2 = Factory(:active_licensed_plan, :price => 4.00)
+
+      from = Date.new(2010, 01, 10)
+      @plan1.create_invoice({:invoice => {
+        :period_start => from,
+        :period_end => from.end_of_month,
+        :created_at => Time.now - 1.hour }
+      })
+      @invoice1 = @plan1.invoices.last
 
       from = Date.today
-      plan.create_invoice({:invoice => {
+      plan2.create_invoice({:invoice => {
         :period_start => from,
-        :period_end => from.end_of_month} })
+        :period_end => from.end_of_month }
+      })
+      @invoice2 = plan2.invoices.last
 
-      @invoice2 = plan.invoices.last
+      @in_use_licenses = (1..10).collect do
+        Factory(:license, :invoice => @invoice1, :period_end => nil)
+      end
       (1..20).collect { Factory(:license, :invoice => @invoice1) }
       (1..20).collect { Factory(:license, :invoice => @invoice2) }
 
-
-      LicensedInvoice.refresh_amounts!
+      @feb_first = Date.new(2010, 02, 01)
+      Date.stub(:today) { @feb_first }
+      LicensedInvoice.refresh_open_invoices!
       @invoice1.reload
       @invoice2.reload
     end
@@ -109,11 +162,39 @@ describe LicensedInvoice do
     end
 
     it "should calculates invoice1's relative amount" do
-      @invoice1.reload.amount.round(2).should == BigDecimal.new("30.97")
+      @invoice1.reload.amount.round(2).should == BigDecimal.new("60.97")
     end
 
     it "should NOT calculate invoice2's relative amount" do
       @invoice2.amount.should be_nil
+    end
+
+    context "when generating a new invoice" do
+      it "should generate a new invoice" do
+        @plan1.invoices.length.should == 2
+      end
+
+      it "should return the correct invoice" do
+        @plan1.invoice.should_not == @ainvoice1
+      end
+
+      it "should have the correct dates" do
+        @plan1.invoice.period_start.should == @feb_first
+        @plan1.invoice.period_end.should == @feb_first.end_of_month
+      end
+
+      it "should have all licenses without period_end (at the end of month)" do
+        @plan1.invoice.licenses.should_not be_empty
+        @plan1.invoice.licenses.each_with_index do |l, i|
+          l.name.should == @in_use_licenses[i].name
+          l.email.should == @in_use_licenses[i].email
+        end
+      end
+
+      it "should update period_end of all in use licenses" do
+        @plan1.invoices.first.licenses.in_use.should be_empty
+        @in_use_licenses.first.reload.period_end.should == Date.yesterday
+      end
     end
   end
 end
