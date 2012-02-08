@@ -16,7 +16,7 @@ module Api
     end
 
     def self.responder
-      Class.new(super).send :include, Api::Responder
+      Class.new(super).send :include, Roar::Rails::Responder
     end
   end
 end

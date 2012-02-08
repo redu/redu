@@ -1,5 +1,4 @@
-# Base: https://github.com/apotonick/roar-rails/blob/master/lib/roar/rails/responder.rb
-module Api
+module Roar::Rails
   module Responder
     def extend_with_representer!(resource, representer=nil)
       if const_exists? representer_name(resource)
