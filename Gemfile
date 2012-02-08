@@ -48,7 +48,7 @@ gem 'roar-rails', '~> 0.0.3',
 
 # Gems específicos de algum ambiente
 group :development, :test do
-  gem 'rspec-rails', '~> 2.6'
+  gem 'rspec-rails', '~> 2.8'
   gem 'shoulda-matchers'
   gem 'ruby-debug'
   gem 'jasmine'

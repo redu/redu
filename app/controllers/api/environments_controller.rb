@@ -1,6 +1,5 @@
 module Api
   class EnvironmentsController < ApiController
-    rescue_from ActiveRecord::RecordNotFound, :with => :not_found
 
     def show
       @environment = Environment.find(params[:id])
@@ -41,12 +40,6 @@ module Api
       @environment.extend(EnvironmentRepresenter)
 
       respond_with @environment
-    end
-
-    private
-
-    def not_found
-      respond_with nil, :status => 404
     end
   end
 end
