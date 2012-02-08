@@ -173,21 +173,25 @@ body {
   font-weight: 100;
 }
 
-.text-body:after {
+.alert:after {
   background-image: url("../images/new/alerta.png");
   background-repeat: no-repeat;
   height: 142px;
   width: 165px;
   float: right;
   content: "";
+  margin-top: -516px;
+}
+
+.bad-server:after {
   margin-top: -748px;
 }
 
-.text-body {
+.alert {
   margin-top: 70px;
 }
 
-.textshadow .text-body {
+.textshadow .alert {
   text-shadow: 0px 1px 0px rgb(255, 255, 255);
 }
 
@@ -281,8 +285,6 @@ body {
   font-weight: bold;
   font-size: 12px;
   font-family: arial, sans-serif;
-  width: 70px;
-  height: 30px;
   clear: both;
   float: right;
   margin: 10px 14px;
@@ -314,11 +316,6 @@ fieldset {
 .footer, .push {
 clear: both;
 }
-
-body .alerta:after {
-  margin-top: -516px;
-}
-
 
 .suggested-links {
   padding-top: 6px;

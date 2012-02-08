@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
     logger.error exception
     respond_to do |format|
       format.html {
-        render :template => 'errors/404', :layout => 'errors', :status => '404'
+        render :template => 'errors/404', :layout => 'cold', :status => '404'
       }
     end
   end
@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
     logger.error exception
     respond_to do |format|
       format.html {
-        render :template => 'errors/500', :layout => 'errors', :status => '500'
+        render :template => 'errors/500', :layout => 'cold', :status => '500'
       }
     end
   end
