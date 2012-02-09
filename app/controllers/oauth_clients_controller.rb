@@ -1,5 +1,5 @@
-class OauthClientsController < ApplicationController
-  #before_filter :login_required
+class OauthClientsController < BaseController
+  before_filter :login_required
   before_filter :get_client_application, :only => [:show, :edit, :update, :destroy]
 
   def index
@@ -48,5 +48,9 @@ class OauthClientsController < ApplicationController
       flash.now[:error] = "Wrong application id"
       raise ActiveRecord::RecordNotFound
     end
+  end
+
+  def login_required
+    authorize! :manage, :client_applications
   end
 end
