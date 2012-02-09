@@ -146,7 +146,6 @@ pt-BR:
       space:
         name: "Nome"
         description: "Descrição"
-        submission_type: "Tipo de Moderação"
       question:
         statement: "Enunciado"
         explanation: "Justificativa"

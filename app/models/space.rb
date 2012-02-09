@@ -70,7 +70,7 @@ class Space < ActiveRecord::Base
   has_attached_file :avatar, Redu::Application.config.paperclip
 
   # VALIDATIONS
-  validates_presence_of :name, :submission_type
+  validates_presence_of :name
   validates_length_of :name, :maximum => 40
 
   def create_root_folder
