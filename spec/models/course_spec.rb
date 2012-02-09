@@ -396,10 +396,32 @@ describe Course do
         assoc.state.should == "approved"
       end
     end
+
+    context "when plan is licensed" do
+      before do
+        @plan = Factory(:active_licensed_plan, :billable => @environment,
+                        :user => subject.owner)
+        @plan.create_invoice_and_setup
+        @environment.create_quota
+        @environment.reload
+      end
+
+      it "should create a license" do
+        @user= Factory(:user)
+        expect {
+          subject.join(@user)
+        }.should change(License, :count).by(1)
+      end
+
+    end
   end
 
   context "removes a user (unjoin)" do
     before do
+      @plan = Factory(:active_licensed_plan, :billable => @environment)
+      @plan.create_invoice_and_setup
+      @environment.create_quota
+      @environment.reload
       @space = Factory(:space, :course => subject)
       @space_2 = Factory(:space, :course => subject)
       @sub = Factory(:subject, :space => @space, :owner => subject.owner,
@@ -424,6 +446,13 @@ describe Course do
     it "removes a user from all enrolled subjects" do
       @sub.members.should_not include(@user)
       @sub_2.members.should_not include(@user)
+    end
+
+    context "when plan is licensed" do
+      it "should set the period end of a license that" do
+        subject.environment.plan.invoice.licenses.last.
+          period_end.should_not be_nil
+        end
     end
   end
 

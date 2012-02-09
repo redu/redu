@@ -55,6 +55,6 @@ class Plan < ActiveRecord::Base
   end
 
   def invoice
-    self.invoice.order("created_at DESC").limit(1).first
+    self.invoices.order("created_at DESC").limit(1).first
   end
 end

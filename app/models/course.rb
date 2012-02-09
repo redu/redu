@@ -117,6 +117,13 @@ class Course < ActiveRecord::Base
                    where(:course_id => self.id).first
     membership.update_attributes({:role => role})
 
+    # alterando o papel do usuário no license atual
+    license = user.get_open_license_with(self)
+    if license
+      license.role = role
+      license.save
+    end
+
     user.user_space_associations.where(:space_id => self.spaces).
       includes(:space).each do |membership|
         membership.space.change_role(user, role)
@@ -134,7 +141,6 @@ class Course < ActiveRecord::Base
   end
 
   def join(user, role = Role[:member])
-
     association = UserCourseAssociation.create(:user_id => user.id,
                                                :course_id => self.id,
                                                :role => role)
@@ -143,17 +149,6 @@ class Course < ActiveRecord::Base
 
     if self.subscription_type.eql? 1 and association.waiting?  # Todos podem participar, sem moderação
       association.approve!
-      if self.environment.plan
-        invoice = self.plan.invoice
-        if invoice and invoice.type = "LicensedInvoice"
-          self.environment.plan.invoice.licenses << License.create(:name => user.display_name,
-                                                                   :login => user.login,
-                                                                   :email => user.email,
-                                                                   :period_start => DateTime.now,
-                                                                   :role => role,
-                                                                   :invoice => self.environment.plan.invoice)
-        end
-      end
     elsif association.invited?
       association.accept!
     end
@@ -162,6 +157,9 @@ class Course < ActiveRecord::Base
   def unjoin(user)
     course_association = user.get_association_with(self)
     course_association.destroy
+
+    # Atualizando license atual para setar o period_end
+    set_period_end(user)
 
     self.spaces.each do |space|
       space_association = user.get_association_with(space)
@@ -180,6 +178,9 @@ class Course < ActiveRecord::Base
     UserEnvironmentAssociation.create(:user_id => user.id,
                                       :environment_id => self.environment.id,
                                       :role => role)
+
+
+    self.create_license(user, role)
     self.spaces.each do |space|
       #FIXME tirar status quando remover moderacao de space
       UserSpaceAssociation.create(:user_id => user.id,
@@ -272,4 +273,41 @@ class Course < ActiveRecord::Base
   def can_add_entry?
     self.approved_users.count < self.plan.members_limit
   end
+
+  def plan
+    # TODO rever este código
+    self.plans.order("created_at DESC").limit(1).first
+  end
+
+  protected
+
+  # Cria licença passando com parâmetro o usuário que acaba de se matricular e o
+  # papel que desempenha
+  def create_license(user, role)
+    if self.environment.plan
+      invoice = self.environment.plan.invoice
+      if invoice and invoice.type = "LicensedInvoice"
+        invoice.licenses << License.create(:name => user.display_name,
+                                           :login => user.login,
+                                           :email => user.email,
+                                           :period_start => DateTime.now,
+                                           :role => role,
+                                           :invoice => invoice,
+                                           :course => self)
+      end
+    end
+  end
+
+  # Seta o period_end de License quando o usuário é desmatriculado ou se desmatricula
+  def set_period_end(user)
+    if self.environment.plan
+      invoice = self.environment.plan.invoice
+      if invoice and invoice.type = "LicensedInvoice"
+        license = user.get_open_license_with(self)
+        license.period_end = DateTime.now
+        license.save
+      end
+    end
+  end
+
 end

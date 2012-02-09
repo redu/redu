@@ -8,6 +8,7 @@ class CreateLicenses < ActiveRecord::Migration
       t.date :period_end
       t.integer :role
       t.references :invoice
+      t.references :course
 
       t.timestamps
     end

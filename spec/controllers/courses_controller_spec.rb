@@ -535,41 +535,56 @@ describe CoursesController do
     end
   end
 
-  context "POST - join" do
-    before do
-      @user = Factory(:user)
-      activate_authlogic
-      UserSession.create @user
+  context "POST join" do
 
-      @environment = Factory(:environment, :owner => @user)
+    context "when course is open" do
+      before do
+        @user = Factory(:user)
+        activate_authlogic
+        UserSession.create @user
 
-      @course = Factory(:course,:environment => @environment,
-                        :owner => @user)
+        @environment = Factory(:environment, :owner => @user)
 
-      plan = Factory( :plan, :billable => @course,
-                     :user => @course.owner)
-      @course.create_quota
+        @course = Factory(:course,:environment => @environment,
+                          :owner => @user)
 
-      @space = Factory(:space, :course => @course)
-      @subject_space = Factory(:subject, :space => @space,
-                               :owner => @course.owner,
-                               :finalized => true)
+        @plan = Factory(:active_licensed_plan, :billable => @environment,
+                       :user => @course.owner)
+        @plan.create_invoice_and_setup
 
-      @params = { :locale => 'pt-BR',
-        :environment_id => @environment.path,
-        :id => @course.path }
-    end
+        @environment.create_quota
+        @environment.reload
 
-    it "should create all hieararchy" do
-      @new_user = Factory(:user)
-      UserSession.create @new_user
+        @space = Factory(:space, :course => @course)
+        @subject_space = Factory(:subject, :space => @space,
+                                 :owner => @course.owner,
+                                 :finalized => true)
 
-      post :join, @params
+        @params = { :locale => 'pt-BR',
+                    :environment_id => @environment.path,
+                    :id => @course.path }
 
-      @course.users.should include(@new_user)
-      @space.users.should include(@new_user)
-      @subject_space.members.should include(@new_user)
-      @course.environment.users.should include(@new_user)
+        @new_user = Factory(:user)
+        UserSession.create @new_user
+      end
+
+      it "should create all hieararchy" do
+        post :join, @params
+
+        @course.users.should include(@new_user)
+        @space.users.should include(@new_user)
+        @subject_space.members.should include(@new_user)
+        @course.environment.users.should include(@new_user)
+      end
+
+      context "and plan is licensed" do
+        it "should create license on respective invoice" do
+          expect {
+            post :join, @params
+          }.should change(License, :count).by(1)
+        end
+      end
+
     end
   end
 

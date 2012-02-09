@@ -9,5 +9,6 @@ FactoryGirl.define do
       period_end "2012-02-02"
       role :member
       invoice nil
+      course nil
     end
 end

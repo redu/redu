@@ -82,7 +82,6 @@ class CoursesController < BaseController
           @course.plans << @plan
           @plan.create_invoice_and_setup
         end
-
         @environment.courses << @course
         format.html { redirect_to environment_course_path(@environment, @course) }
       else

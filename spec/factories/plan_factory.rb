@@ -30,7 +30,7 @@ FactoryGirl.define do
     video_storage_limit 1024
     file_storage_limit 1024
     price 3.00
-    association :billable, :factory => :course
+    association :billable, :factory => :environment
     association :user
   end
 end

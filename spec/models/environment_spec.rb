@@ -9,6 +9,7 @@ describe Environment do
   it { should have_many(:administrators).through(:user_environment_associations)}
   it { should have_many(:users).through(:user_environment_associations)}
   it { should have_many(:users).through(:user_environment_associations)}
+  it { should have_many(:plans) }
   it { should belong_to(:owner)}
   it { should have_one(:partner).through(:partner_environment_association) }
   it { should have_one(:partner_environment_association) }
@@ -142,6 +143,15 @@ describe Environment do
       subject.change_role(user, Role[:environment_admin])
     }.should change {
       subject.user_environment_associations.last.role }.to(Role[:environment_admin])
+  end
+
+  it { should respond_to :plan }
+
+  it "should return actual plan" do
+    plan = Factory(:active_package_plan, :billable => subject, :created_at => 2.days.ago)
+    plan2 = Factory(:active_package_plan, :billable => subject)
+
+    subject.plan.should == plan2
   end
 
   context "callbacks" do

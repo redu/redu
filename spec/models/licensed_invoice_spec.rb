@@ -78,8 +78,12 @@ describe LicensedInvoice do
   it { should respond_to :calculate_amount! }
   context "when calculating the amount" do
     before do
-      @plan = Factory(:active_licensed_plan, :price => 3.00)
-
+      user = Factory(:user)
+      environment = Factory(:environment, :owner => user)
+      course = Factory(:course, :environment => environment,
+                       :owner => user)
+      @plan = Factory(:active_licensed_plan, :price => 3.00,
+                     :billable => environment)
       from = Date.new(2010, 01, 15)
       @plan.create_invoice({:invoice => {
         :period_start => from,
@@ -141,10 +145,13 @@ describe LicensedInvoice do
       @invoice2 = plan2.invoices.last
 
       @in_use_licenses = (1..10).collect do
-        Factory(:license, :invoice => @invoice1, :period_end => nil)
+        Factory(:license, :invoice => @invoice1, :period_end => nil,
+                :course => course)
       end
-      (1..20).collect { Factory(:license, :invoice => @invoice1) }
-      (1..20).collect { Factory(:license, :invoice => @invoice2) }
+      (1..20).collect { Factory(:license, :invoice => @invoice1,
+                                :course => course) }
+      (1..20).collect { Factory(:license, :invoice => @invoice2,
+                                :course => course) }
 
       @feb_first = Date.new(2010, 02, 01)
       Date.stub(:today) { @feb_first }
