@@ -10,7 +10,7 @@ module CourseRepresenter
   property :path
 
   link :self do
-    environment_course_url(self.environment, self)
+    api_course_url(self.environment, self)
   end
 
   link :spaces do
