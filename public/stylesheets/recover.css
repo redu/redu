@@ -89,25 +89,25 @@ body {
   font-family: arial, sans-serif;
   font-size: 12px;
   font-weight: bold;
-  margin-left: 10px;
-  clear: none;
-  width: auto;
-  margin-top: 28px;
+  margin-left: 8px;
+  float: left;
 }
 
 .forgot-password {
   border-top: 1px dotted;	
-  margin-left: -2px;
+  margin-top: 30px;
   border-color: rgb(214, 214, 214);
   /*margin-top: 190px;*/
 }  
 
 .body .concave-form  .body-login .concave-input {
-  width: 300px;
+  width: 389px;
   color: rgb(179, 179, 179);
   font-style: italic;
   font-size: 11px;
+  float: right;
   font-family: arial, sans-serif;
+  margin: 0px;
 }
 
 .body .concave-form {
@@ -244,11 +244,11 @@ body {
   float: left;
   height: 12px;
   background: url("../images/new/icones-p.png") -400px -2160px 	repeat;
+  margin-left: 30px;
 }
 
 .appear-tiptip {
   float: left;
-  margin-top: 27px;
   cursor: pointer;
 }
 
@@ -345,6 +345,11 @@ body #tiptip_content {
   margin-left: 40px;
 }
  
+.icon-interrog-blue_12_12-before {
+  float: left;
+}
 
-
+.email-label {  
+  float: left;
+}
 
