@@ -359,7 +359,7 @@ clear: both;
 .borderradius .confirmation-msg {
   -webkit-border-radius: 7px;
   -moz-border-radius: 7px;
-  border-radius: 7px; 
+  border-radius: 7px;
 }
 
 .text-confirmation {
@@ -369,9 +369,9 @@ clear: both;
   padding: 20px 10px;
   font-family: arial, sans-serif;
   clear:both;
-  float: left;			
+  float: left;
 }
- 
+
 .aba-top {
   background-image: url("../images/new/aba-cima-borda.png");
   background-repeat: no-repeat;
@@ -388,7 +388,7 @@ clear: both;
   font-weight: 500;
 }
 
-.text-confirmation, .initial-page {  
+.text-confirmation, .initial-page {
   font-size: 12px;
   font-family: arial, sans-serif;
   font-weight: normal;

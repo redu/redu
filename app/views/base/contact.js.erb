@@ -1,0 +1,16 @@
+var $form = $("#contact_form");
+<% if @contact.valid? %>
+  $("#contact_form").replaceWith(
+      '<div class="confirmation-msg grid_7">'+
+      '<h2 class="aba-top"></h2>'+
+      '<div class="sucess-email grid_7">'+
+      '<h2 class="thank-you">Obrigado, <%= @contact.name %></h2>'+
+      '<h3 class="text-confirmation"> Sua ajuda foi muito importante para nós. Visite a <q class="initial-page"> <%= link_to "página inicial", home_path %> </q>para recomeçar a navegar no Redu</h3>'+
+      '</div></div>'
+      );
+  $("#contact_form").show();
+<% else %>
+  var contact_form = "<%= escape_javascript render :partial => 'base/contact_form', :locals => { :remote => true, :css_class => 'concave-form call-us grid_9 alfa', :id => 'contact_form' } %>"
+  $("#contact_form").replaceWith(contact_form);
+  $("#contact_form").show();
+<% end %>

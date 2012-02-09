@@ -1,21 +1,21 @@
-  <%= content_for :wrapper_class do %>overlay<% end %>
-  <div class="body container_16">
-    <h1 id="logo" class="logo-top grid_5 omega"><%= link_to "", home_path %></h1>
-    <div class="text-body alert bad-server grid_10 alfa">
-      <h2 class="ops-call">Ops!</h2>
-      <h2 class="something-call">Algo inesperado aconteceu.</h2>
-      <div class="errors grid_2 alfa">
-        <h3 class="error-name">ERRO</h3>
-        <h3 class="error-number">500</h3>
-      </div>
-      <div class="descricao-erro grid_7 alfa">
-        <h3 class="title-call"> Isso é um pouco embaraçoso, mas... </h3>
-        <h4 class="why-call">Por quê?</h4>
-        <h5 class="system-call">O sistema não agiu conforme esperávamos, portanto ainda não sabemos o que exatamente causou essa ação inesperada</h5>
-        <h4 class="sugestion-call">Sugerimos:</h4>
-        <h5 class="sorry-call">Pedimos desculpas pelo incoveniente. Recomendamos que você entre em contado conosco e explique-nos o que fazia no Redu (e onde) antes do erro acontecer. Prometemos nos esforçar ao máximo para resolvê-lo o mais rápido possível. Você também pode <q class="back-call"><%= link_to 'voltar para a página anterior', :back %></q></h5>
+<%= content_for :wrapper_class do %>overlay<% end %>
+<div class="body container_16">
+  <h1 id="logo" class="logo-top grid_5 omega"><%= link_to "", home_path %></h1>
+  <div class="text-body alert bad-server grid_10 alfa">
+    <h2 class="ops-call">Ops!</h2>
+    <h2 class="something-call">Algo inesperado aconteceu.</h2>
+    <div class="errors grid_2 alfa">
+      <h3 class="error-name">ERRO</h3>
+      <h3 class="error-number">500</h3>
+    </div>
+    <div class="descricao-erro grid_7 alfa">
+      <h3 class="title-call"> Isso é um pouco embaraçoso, mas... </h3>
+      <h4 class="why-call">Por quê?</h4>
+      <h5 class="system-call">O sistema não agiu conforme esperávamos, portanto ainda não sabemos o que exatamente causou essa ação inesperada</h5>
+      <h4 class="sugestion-call">Sugerimos:</h4>
+      <h5 class="sorry-call">Pedimos desculpas pelo incoveniente. Recomendamos que você entre em contado conosco e explique-nos o que fazia no Redu (e onde) antes do erro acontecer. Prometemos nos esforçar ao máximo para resolvê-lo o mais rápido possível. Você também pode <q class="back-call"><%= link_to 'voltar para a página anterior', :back %></q></h5>
       <h4 class="you-can-call">Você pode nos ajudar:</h4>
     </div>
-    <%= render :partial=>'errors/contact' %>
+    <%= render :partial => 'base/contact_form', :locals => {:remote => true, :css_class => 'concave-form call-us grid_9 alfa', :id => "contact_form"} %>
   </div>
 </div><!-- end-container -->
