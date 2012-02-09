@@ -38,8 +38,6 @@ Restrições::   Nenhuma
 
 Troque <tt>:environment_id</tt> pelo ID do ambiente.
 
-==== Códigos HTTP possíveis
-
 <b>Exemplo de retorno:</b>
 
   {
@@ -296,3 +294,122 @@ HTTP 404:: Não encontrado
     description: ""
     }
   ]
+
+== Space
+
+=== Propriedades e restrições
+Propriedades::
+              [name] Nome da disciplina
+              [path] Descrição da disciplina
+Restrições::
+              [name] Máximo 40 caracteres; deve ser único.
+              [description] Máximo de 400 caracteres
+
+=== Visualização
+
+URL::            <code>/api/space/:space_id</code>
+Método::         GET
+Argumentos:: Nenum
+Restrições::   Nenhuma
+
+Troque <tt>:space_id</tt> pelo ID da disciplina.
+
+<b>Exemplo de retorno:</b>
+
+  {
+    name: "IHC",
+    created_at: "2010-12-17T18:51:34-02:00",
+    links: [
+      {
+        href: "http://127.0.0.1:3000/api/spaces/2",
+        rel: "self"
+      },
+      {
+        href: "http://127.0.0.1:3000/api/courses/ciencia-da-computacao",
+        rel: "course"
+      },
+      {
+        href: "http://127.0.0.1:3000/api/environments/centro-de-infromatica",
+        rel: "environment"
+      },
+      {
+        href: "http://127.0.0.1:3000/api/spaces/2/users",
+        rel: "users"
+      }
+    ],
+    description: "Interação humano-computador (IHC, também conhecida como interação homem-computador) é o estudo da interação entre pessoas e computadores. É uma matéria multidisciplinar que relaciona a ciência da compu"
+  }
+
+=== Criação
+
+URL::            <code>/api/courses/:course_id/spaces</code>
+Método::         POST
+Argumentos:: <code>name, description (opcional)</code>
+
+==== Códigos HTTP possíveis
+
+404:: Não encontrado
+200:: Encontrado
+
+<b>Exemplo de retorno:</b>
+
+  {
+    name: "IHC",
+    created_at: "2010-12-17T18:51:34-02:00",
+    links: [
+      {
+        href: "http://127.0.0.1:3000/api/spaces/2",
+        rel: "self"
+      },
+      {
+        href: "http://127.0.0.1:3000/api/courses/ciencia-da-computacao",
+        rel: "course"
+      },
+      {
+        href: "http://127.0.0.1:3000/api/environments/centro-de-infromatica",
+        rel: "environment"
+      },
+      {
+        href: "http://127.0.0.1:3000/api/spaces/2/users",
+        rel: "users"
+      }
+    ],
+    description: "Interação humano-computador (IHC, também conhecida como interação homem-computador) é o estudo da interação entre pessoas e computadores. É uma matéria multidisciplinar que relaciona a ciência da compu"
+  }
+
+=== Atualização
+
+URL::            <code>/api/spaces/:space_id</code>
+Método::         PUT
+Argumentos:: <code>name, description (opcional)</code>
+
+Troque <tt>:space_id</tt> pelo ID do ambiente.
+
+==== Códigos HTTP possíveis
+
+422:: Recurso inválido
+200:: Atualizado
+
+Se não houver erro de validação uma resposta vazia com o código HTTP 200 será
+enviada.
+
+Se houver erro de validação uma resposta com o código HTTP 422 será enviada
+contendo os erros de validação encontrados:
+
+  {"name":["Texto muito longo"]}
+
+=== Remoção
+
+URL::            <code>/api/spaces/:space_id</code>
+Método::         DELETE
+Argumentos:: Nenhum
+Restrições::   Nenhuma
+
+Troque <tt>:space_id</tt> pelo ID do ambiente.
+
+==== Códigos HTTP possíveis
+
+HTTP 200:: Removido
+HTTP 404:: Não encontrado
+
+
