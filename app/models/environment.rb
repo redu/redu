@@ -98,4 +98,6 @@ class Environment < ActiveRecord::Base
       :role => Role[:environment_admin])
       course_assoc.approve!
   end
+
+
 end

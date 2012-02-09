@@ -117,12 +117,11 @@ class Course < ActiveRecord::Base
                    where(:course_id => self.id).first
     membership.update_attributes({:role => role})
 
+
+
+    # TODO remover lógica daqui
     # alterando o papel do usuário no license atual
-    license = user.get_open_license_with(self)
-    if license
-      license.role = role
-      license.save
-    end
+    change_license_role(user, role)
 
     user.user_space_associations.where(:space_id => self.spaces).
       includes(:space).each do |membership|
@@ -307,6 +306,15 @@ class Course < ActiveRecord::Base
         license.period_end = DateTime.now
         license.save
       end
+    end
+  end
+
+  # Recupera o último license criado e modifica a role passada como parâmetro
+  def change_license_role(user, role)
+    license = user.get_open_license_with(role)
+    if license
+      license.role = role
+      license.save
     end
   end
 

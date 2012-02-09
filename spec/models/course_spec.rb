@@ -313,6 +313,23 @@ describe Course do
       subject.user_course_associations.last.role }.to(Role[:tutor])
 
   end
+  context "when plan is licensed" do
+    before do
+      @plan = Factory(:active_licensed_plan, :billable => @environment,
+                      :user => subject.owner)
+      @plan.create_invoice_and_setup
+      @environment.create_quota
+      @environment.reload
+    end
+
+
+    it "changes a license role" do
+      user = Factory(:user)
+      subject.join(user)
+      subject.change_role(user, Role[:tutor])
+      user.get_open_license_with(subject).role == Role[:tutor]
+    end
+  end
 
   context "when joining an user" do
     before do

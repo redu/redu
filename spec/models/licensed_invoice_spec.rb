@@ -91,9 +91,9 @@ describe LicensedInvoice do
       })
       @invoice = @plan.invoices.last
 
-      (1..10).collect { Factory(:license, :invoice => @invoice) }
+      (1..10).collect { Factory(:license, :invoice => @invoice, :course => course) }
       @in_use_licenses = (1..10).collect do
-        Factory(:license, :invoice => @invoice, :period_end => nil)
+        Factory(:license, :invoice => @invoice, :period_end => nil, :course => course)
       end
 
       @invoice.calculate_amount!
@@ -126,7 +126,13 @@ describe LicensedInvoice do
 
   context "when refreshing open licensed invoices" do
     before do
-      @plan1 = Factory(:active_licensed_plan, :price => 3.00)
+      user = Factory(:user)
+      environment = Factory(:environment, :owner => user)
+      course = Factory(:course, :environment => environment,
+                       :owner => user)
+      @plan1 = Factory(:active_licensed_plan, :price => 3.00,
+                     :billable => environment)
+
       plan2 = Factory(:active_licensed_plan, :price => 4.00)
 
       from = Date.new(2010, 01, 10)

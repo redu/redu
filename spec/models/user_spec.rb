@@ -533,9 +533,6 @@ describe User do
     it "retrives his license with a course" do
       environment = Factory(:environment)
       plan = Factory(:active_licensed_plan, :billable => environment)
-      plan.invoice.licenses << Factory(:license, :period_end => nil,
-                                       :created_at => 3.days.ago,
-                                       :updated_at => 3.days.ago)
       plan.create_invoice_and_setup
       environment.create_quota
       environment.reload
@@ -543,6 +540,13 @@ describe User do
                        :owner => environment.owner)
       space = Factory(:space, :owner => environment.owner,
                       :course => course)
+      Factory(:license, :period_end => nil,
+              :course => course,
+              :invoice => plan.invoice,
+              :created_at => 3.days.ago,
+              :updated_at => 3.days.ago)
+
+
       course.join(subject)
       current_license = plan.invoice.licenses.last
 
