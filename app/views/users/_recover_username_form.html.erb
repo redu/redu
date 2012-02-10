@@ -1,22 +1,21 @@
 <!-- Login Recover Form -->
 <div id="login-form">
-  <%# form_tag ({:action => :forgot_username, :method => "post"}, :remote => true, :class => "concave-form") do %>
   <%= form_for @recovery_email, :url =>  {:action => :forgot_username, :method => "post"}, :remote => true, :html => {:class => "concave-form recover-blog"} do |f| %>
-    <fieldset class="body-login grid_10 omega alfa" >
+    <fieldset class="body-login" >
       <h2 class="forgot-login">Esqueceu o <q class="name-login">Login</q> ?</h2>
-       <div class="confirmation-msg" id="recovered-username" style="display:none">
+        <div class="confirmation-msg" id="recovered-username" style="display:none">
           <h2 class="aba-top"></h2>
           <div class="sucess-email">
             <h3 class="text-confirmation" id="username-text"></h3>
           </div>
-      </div>
+        </div>
       <div class="login-box grid_9 omega alfa" id="password-box">
-        <strong class="grid_1 omega alfa appear-tiptip icon-interrog-blue_12_12-before tiptip-lite" title="Este endereço de e-mail deve ser o mesmo que você cadastrou no Redu. Mantenha-o atualizado."></strong>
-        <%= f.label "E-mail", :class => "input-email grid_1" %>
-        <%= f.text_field "email", :value => "Digite o seu endereço de e-mail cadastrado no Redu", :html => { :class => "concave-input grid_7 registered-email" } %>
+        <strong class="appear-tiptip icon-interrog-blue_12_12-before tiptip-lite" title="Este endereço de e-mail deve ser o mesmo que você cadastrou no Redu. Mantenha-o atualizado."></strong>
+        <%= f.label "E-mail", :class => "input-email" %>
+        <%= f.text_field "email", :placeholder => "Digite o seu endereço de e-mail cadastrado no Redu", :html => { :class => "concave-input registered-email" } %>
       <%= concave_errors_for @recovery_email, :email %>
       </div>
-      <%= f.submit "Enviar", :class => "concave-button grid_2", :id => "username" %>
+      <%= f.submit "Enviar", :class => "concave-button", :id => "username" %>
     </fieldset>
   <% end %>
 </div>
