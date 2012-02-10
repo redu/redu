@@ -36,6 +36,7 @@ class ApplicationController < ActionController::Base
   end
 
   def render_error(exception)
+    @contact = Contact.new
     logger.error exception
     respond_to do |format|
       format.html {
