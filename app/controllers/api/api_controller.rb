@@ -18,5 +18,12 @@ module Api
     def self.responder
       Class.new(super).send :include, Roar::Rails::Responder
     end
+
+    protected
+
+    def current_user
+      token = OauthToken.find_by_token params[:oauth_token]
+      token.try(:user)
+    end
   end
 end

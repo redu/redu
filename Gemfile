@@ -43,11 +43,11 @@ gem 'actionmailer_inline_css',
 gem 'acts_as_tree', '~> 0.1.1'
 gem 'exceptional'
 gem 'awesome_nested_fields'
-gem 'roar-rails', '~> 0.0.3',
-  :git => 'git://github.com/apotonick/roar-rails.git'
 
 # Gems específicos para a API
 gem "oauth-plugin", ">= 0.4.0.pre1"
+gem 'roar-rails', '~> 0.0.3',
+  :git => 'git://github.com/apotonick/roar-rails.git'
 
 # Gems específicos de algum ambiente
 group :development, :test do
