@@ -89,7 +89,6 @@ body {
   font-family: arial, sans-serif;
   font-size: 12px;
   font-weight: bold;
-  margin-left: 8px;
   float: left;
 }
 
@@ -353,3 +352,7 @@ body #tiptip_content {
   float: left;
 }
 
+.text-body .recover .concave-label {
+  text-align: normal;
+  margin: 0px;
+}
