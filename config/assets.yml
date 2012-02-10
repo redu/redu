@@ -37,6 +37,9 @@ javascripts:
     - public/javascripts/jquery.nested-fields.js
     - public/javascripts/browserdetection.js
     - public/javascripts/outdated-browser.js
+    - public/javascripts/participacao_professor.js
+    - public/javascripts/highcharts.js
+    - public/javascripts/d3.js
   chat:
     - public/javascripts/jquery.pjax.js
     - public/javascripts/pusher.js
