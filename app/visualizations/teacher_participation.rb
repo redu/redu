@@ -3,66 +3,38 @@ class TeacherParticipation
 
   def initialize(uca)
     @uca = uca
-    #@start = init_period
-    #@end = end_period
+
+    # Time de início e de fim
+    @start = "2012-02-08".to_date
+    @end = "2012-02-10".to_date
+
+    # Array de id's que veio de params
+    @spaces = Space.find([1,2])
   end
 
   # Todos os resultados tem que ser filtrados pelo período de tempo e pelas disciplinas selecionadas
   def generate!
-    @user_id = @uca.user_id
-    @course_id = @uca.course_id
-    @duration = self.period_days
-
-    # Criação da lista de disciplinas, passa o array de id's de params
-    @spaces = @uca.course.spaces.where("id=?", [1])
-
-    @lectures_created = @spaces
+    self.lectures_created_by_day
   end
 
-  def lectures_created
-   # @day = Time.new(@start_year, @start_month, @start_day)
+  def lectures_created_by_day
+    # Lectures criadas no total
+    @total_subjects = self.subjects_space & @uca.user.subjects_id
+    @total_lectures = Lecture.by_subjects(@total_subjects)
+    @lectures_created = []
 
-    for d in 1..@duration
-    #  @lecture[d] = @uca.user.lectures.where(:created_at => ())
-
-    #  @day += (60*60*24)
+    (0..(@end - @start)).each do |day|
+      @query = @total_lectures.where(:created_at=>(@start..(@start+1))).count
+      @lectures_created << @query
+      @start += 1
     end
   end
 
-  # Quantização de dias no intervalo dado
-  def period_days
-    @start_day = 20
-    @start_month = 12
-    @start_year = 2011
-
-    @end_day = 19
-    @end_month = 02
-    @end_year = 2012
-
-    @qtd_days = 0
-
-    if(@start_year == @end_year)
-      for m in @start_month..@end_month
-        @qtd_days += Time.days_in_month(m,y)
-      end
-    else
-      for y in @start_year..@end_year
-        if(y == @start_year)
-          for m in @start_month..12
-            @qtd_days += Time.days_in_month(m,y)
-          end
-        elsif (y == @end_year)
-          for m in 1..@end_month
-            @qtd_days += Time.days_in_month(m,y)
-          end
-        else
-          for m in 1..12
-            @qtd_days += Time.days_in_month(m,y)
-          end
-        end
-      end
+  def subjects_space
+    @subjects_space = []
+    @spaces.each do |space|
+      @subjects_space.concat(space.subjects_id)
     end
-
-    @qtd_days = @qtd_days - ((@start_day - 1) + (Time.days_in_month(@end_month, @end_year) - @end_day))
+    @subjects_space
   end
 end

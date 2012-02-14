@@ -32,6 +32,7 @@ class Lecture < ActiveRecord::Base
   scope :exercises, where("lectureable_type LIKE 'Exercise'")
   scope :exercises_editables, where("lectureable_type LIKE 'Exercise' and lectureable_id NOT IN (SELECT exercise_id FROM results)")
   scope :recent, lambda { where('created_at > ?', 1.week.ago) }
+  scope :by_subjects, lambda { |subjects_id| where('subject_id = ?', subjects_id) }
 
 
   attr_protected :owner, :published, :view_count, :removed, :is_clone

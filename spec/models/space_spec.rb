@@ -157,6 +157,18 @@ describe Space do
                                        :folder => subject.root_folder) }
       subject.myfiles.should == files
     end
+
+    it "retrieves all spaces that user is teacher" do
+      spaces = (1..5).collect { Factory(:space) }
+      user = Factory(:user)
+      spaces[0].course.join(user, Role[:teacher])
+      spaces[1].course.join(user, Role[:teacher])
+      spaces[2].course.join(user, Role[:member])
+      spaces[3].course.join(user, Role[:tutor])
+
+      user.spaces.teachers.to_set.should ==
+        [spaces[0], spaces[1]].to_set
+    end
   end
 
   it "changes a user role" do
@@ -189,5 +201,4 @@ describe Space do
       subject.lectures_count.should == @lectures.size
     end
   end
-
 end
