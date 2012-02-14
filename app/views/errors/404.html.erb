@@ -4,25 +4,24 @@
 
   <div class="alert grid_10 alfa">
     <h2 class="ops-call">Ops!</h2>
-    <h2 class="something-call">Algo inesperado aconteceu.</h2>
+    <h2 class="something-call"> Página não encontrada.</h2>
     <div class="errors grid_2 alfa">
       <h3 class="error-name">ERRO</h3>
       <h3 class="error-number">404</h3>
     </div>
     <div class="descricao-erro grid_7 alfa">
-      <h3 class="title-call"> Página não encontrada. </h3>
       <h4 class="why-call">Por quê?</h4>
       <h5 class="system-call">A página que você procura não foi encontrada. Isso pode resultar de alguns fatores como: a URL conter algum caractere digitado incorretamente, a página não existir ou o endereço ter sido realocado.</h5>
       <h4 class="sugestion-call">Sugerimos:</h4>
-      <h5 class="sorry-call">Caso você tenha digitado o endereço, verifique se o mesmo está correto (com algum caractere a mais ou a menos). Se foi de algum link nosso, pedimos desculpas pelo incoveniente e que você  <q class="back-call"> nos ajude </q>a resolver este problema.</h5>
+      <h5 class="sorry-call">Caso você tenha digitado o endereço, verifique se o mesmo está correto (com algum caractere a mais ou a menos). Se foi de algum link nosso, pedimos desculpas pelo incoveniente e que você  <%= link_to 'nos ajude', contact_path, :class => 'back-call' %> a resolver este problema.</h5>
       <h4 class="help-links">Estes links podem te ajudar.</h4>
       <div class=" grid_3 links">
         <ul class="suggested-links">
-          <li class="list-link"><%= link_to "Início", home_path %></li>
+          <li class="list-link"><%= link_to "Página inicial", home_path %></li>
           <li class="list-link"><%= link_to "Blog", "http://blog.redu.com.br" %></li>
           <li class="list-link"><%= link_to "Termos de Uso", tos_path %></li>
           <li class="list-link"><%= link_to "Política de Privacidade", privacy_path %></li>
-          <li class="list-link"><%= link_to "Fale Conosco", contact_path%></li>
+          <li class="list-link"><%= link_to "Entre em contato conosco", contact_path%></li>
         </ul>
       </div>
     </div>
