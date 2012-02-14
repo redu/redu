@@ -260,12 +260,6 @@ body {
   float: right;
 }
 
-.body .text-body .concave-form  .concave-label {
-  margin: 14px;
-  clear: both;
-  float: left;
-}
-
 .texteshadow .call-us .concave-input {
   text-shadow: 0px 1px 0px rgb(255, 255, 255);
 }
@@ -397,4 +391,20 @@ clear: both;
 .initial-page {
   color: rgb(77, 173, 214);
 }
+
+.error-500 .text-body .concave-fieldset {
+  width: 520px;
+}
+
+.error-500 .text-body .concave-fieldset .errors_on_field {
+  margin-left: 111px;
+}
+
+.error-500 .text-body .concave-fieldset .field_with_errors {
+  margin: 0px;
+  width: 520px;
+  clear: none;
+  margin: 0px;
+}
+
 
