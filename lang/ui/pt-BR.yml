@@ -196,7 +196,7 @@ pt-BR:
         header:
           one: "Ops!" #"Um erro ocorreu, verifique abaixo como proceder."
           other: "Ops!" #"{{count}} erros ocorreram, veja como proceder abaixo."
-        body: "Há problemas para os seguinte(s) campo(s):"
+        body: "Há problemas para o(s) seguinte(s) campo(s):"
       messages:
         blank: "não pode ser deixado em branco."
         too_long: "Texto muito longo"

@@ -25,8 +25,8 @@ Redu::Application.routes.draw do
   match '/logout' => 'sessions#destroy', :as => :logout
 
   match '/recover_username_password' => 'users#recover_username_password'
-  match '/forgot_password' => 'users#forgot_password', :as => :forgot_password
-  match '/forgot_username' => 'users#forgot_username', :as => :forgot_username
+  match '/recover_username' => 'users#recover_username', :as => :recover_username
+ match '/recover_password' => 'users#recover_password', :as => :recover_password
   match '/resend_activation' => 'users#resend_activation',
     :as => :resend_activation
   match '/account/edit' => 'users#edit_account', :as => :edit_account_from_email
