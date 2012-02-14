@@ -4,7 +4,7 @@ var $form = $("#contact_form");
       '<div class="confirmation-msg grid_7">'+
       '<h2 class="aba-top"></h2>'+
       '<div class="sucess-email grid_7">'+
-      '<h2 class="thank-you">Obrigado, <%= @contact.name %></h2>'+
+      '<span class="thank-you">Obrigado, <h2 class="thank-you"><%= @contact.name %></h2></span>'+
       '<h3 class="text-confirmation"> Sua ajuda foi muito importante para nós. Visite a <q class="initial-page"> <%= link_to "página inicial", home_path %> </q>para recomeçar a navegar no Redu</h3>'+
       '</div></div>'
       );
