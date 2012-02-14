@@ -3,7 +3,7 @@ var $form = $("#login-form");
   $("#password-box").hide();
   $("#recovered-username").show();
   var email = '<%= @recovery_email.email %>'
-  $("#username-text").text("Um e-mail contendo a nova senha foi enviado para a sua caixa de entrada ("+ email +")" );
+  $("#client-email1").text(email);
   $(".concave-button#username").hide();
 <% else %>
   var email_form = "<%= escape_javascript render :partial => 'recover_username_form', :locals => { :email => @recovery_email } %>"

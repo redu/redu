@@ -375,11 +375,18 @@ clear: both;
   margin-left: 40px;
 }
 
-.thank-you {
+.thank-you, span {
   padding: 20px 15px 0 15px;
   font-size: 17px;
   font-family: museo-sans, arial, sans-serif;
+  font-weight: lighter;
+  display: block;
+}
+
+.thank-you h2 {
   font-weight: 500;
+  display:inline;
+  padding-left: 0px;
 }
 
 .text-confirmation, .initial-page {
