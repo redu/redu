@@ -28,6 +28,12 @@ describe Api::CoursesController do
       links.should include 'self'
       links.should include 'spaces'
     end
+
+    it "shold be return code 200 passing both ID and path" do
+      get "/api/courses/#{subject.path}", :format => 'json'
+
+      response.status.should == 200
+    end
   end
 
   context "get /courses/:id" do

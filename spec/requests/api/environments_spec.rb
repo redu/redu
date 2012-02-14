@@ -25,6 +25,12 @@ describe Api::EnvironmentsController do
         links.collect { |l| l.fetch 'rel' }.should include prop
       end
     end
+
+    it "shold be return code 200 passing both ID and path" do
+      get "/api/environments/#{subject.path}", :format => 'json'
+
+      response.status.should == 200
+    end
   end
 
   context "get /api/environments/id" do
