@@ -352,7 +352,9 @@ body #tiptip_content {
   float: left;
 }
 
-.text-body .recover .concave-label {
-  text-align: normal;
+.text-body .concave-form .concave-label {
   margin: 0px;
+  font-size: 12px;
+  width: 0px;
+  clear: none;
 }
