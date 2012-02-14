@@ -225,8 +225,8 @@ class User < ActiveRecord::Base
     when 'User'
       entity == self
     when 'Plan', 'PackagePlan', 'LicensedPlan'
-      entity.user == self
-    when 'Invoice'
+      entity.user == self || self.can_manage?(entity.billable)
+    when 'Invoice', 'LicensedInvoice'
       self.can_manage?(entity.plan)
     when 'Myfile'
       self.can_manage?(entity.folder)

@@ -616,7 +616,7 @@ describe Ability do
       context "on licensed_plan" do
         before do
           @licensed_plan = Factory(:active_licensed_plan)
-          @invoice = Factory(:invoice, :plan => @licensed_plan)
+          @invoice = Factory(:licensed_invoice, :plan => @licensed_plan)
         end
 
         context "the owner" do
@@ -661,6 +661,38 @@ describe Ability do
 
           it "can NOT manage others licensed_plan's invoice" do
             @ability.should_not be_able_to(:manage, @invoice)
+          end
+        end
+
+        context "the partner admin" do
+          before do
+            partner_env_assoc = Factory(:partner_environment_association)
+            partner = partner_env_assoc.partner
+            environment = partner_env_assoc.environment
+
+            partner_admin = Factory(:user)
+            partner.add_collaborator partner_admin
+            @ability = Ability.new(partner_admin)
+
+            @licensed_plan = Factory(:active_licensed_plan,
+                                     :billable => environment)
+            @invoice = Factory(:invoice, :plan => @licensed_plan)
+          end
+
+          it "can read partner licensed_plans" do
+            @ability.should be_able_to(:read, @licensed_plan)
+          end
+
+          it "can manage partner licensed_plans" do
+            @ability.should be_able_to(:manage, @licensed_plan)
+          end
+
+          it "can read partner licensed_plan's invoice" do
+            @ability.should be_able_to(:read, @invoice)
+          end
+
+          it "can manage partner licensed_plan's invoice" do
+            @ability.should be_able_to(:manage, @invoice)
           end
         end
       end

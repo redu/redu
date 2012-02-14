@@ -1,0 +1,32 @@
+<%= include_stylesheets :print, :media => 'print' %>
+<div id="invoice-show">
+  <div class="header">
+    <%= image_tag 'new/redu-hi-horiz.png' %>
+    <span class="redu-infos">Redu Educational Technologies | CNPJ: 12.359.885/0001-07 | +55 81 3419-8110 | contato@redu.com.br</span>
+  </div>
+
+  <div class="client-infos">
+    <h2 class="name"><%= @plan.billable.name %></h2>
+    <span class="cnpj info"><strong>CNPJ:</strong> <%= @plan.billable.partner_environment_association.formatted_cnpj %></span>
+    <span class="emission info"><strong>Emissão:</strong><%= l Date.today %></span>
+    <span class="month-reference info"><strong>Referência:</strong> <%= l @invoice.period_end, :format => :month_year %></span>
+    <span class="period"><strong>Período:</strong> <%= l @invoice.period_start %> a <%= l @invoice.period_end %></span>
+  </div>
+
+  <div class="billable-infos">
+    <h3 class="name"><%= @plan.billable.name %></h3>
+    <span class="created-by">Criado por <%= @plan.billable.owner ? @plan.billable.owner.display_name : "Usuário removido" %></span>
+
+    <div class="plan">
+      <div class="header">
+        <h3 class="plan-name"><%= @plan.name %></h3>
+        <span class="infos">
+          <strong>Licença:</strong> <span class="price"><%= number_to_currency @plan.price %></span>; <strong>capacidade de armazenamento:</strong> <span class="storage-limit"><%= number_to_human_size(@plan.video_storage_limit + @plan.file_storage_limit, :precision => 0) %></span>; <strong>usuários inscritos:</strong> <span class="qtt-members"><%= @invoice.licenses.count %></span>
+        </span>
+      </div>
+      <ul class="courses">
+        <%= render :partial => "invoices/course", :collection => @plan.billable.courses %>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -29,7 +29,7 @@ ambiente de estudo.
       <span class="plan-type">Planos por Licença</span>
     </li>
     <li>
-      <%= radio_button_tag :plan, 'instituicao_meio', :checked => true %>
+      <%= radio_button_tag :plan, 'instituicao_medio' %>
       <%= label_tag :plan_instituicao_medio, "Inst. de Ensino Médio" %>
       <span class="tiptip-right icon-small icon-question-blue_12_12" title="<%= "#{render 'plans/admin/licensed_plan_details', :name => 'Planos por licença', :type => 'Inst. de Ensino Médio', :plan => Plan.from_preset(:instituicao_medio, "LicensedPlan")}" %>"></span>
     </li>

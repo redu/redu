@@ -29,7 +29,7 @@
     <% end %>
   </td>
   <td>
-    <% if item.billable && item.pending_payment? %>
+    <% if item.billable && item.pending_payment? && item.is_a?(PackagePlan) %>
       <div class="concave-form pagseguro-concave-form">
         <%= pagseguro_form item.create_order, :submit => "Pagar" %>
       </div>

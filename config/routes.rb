@@ -144,7 +144,7 @@ Redu::Application.routes.draw do
       post :upgrade
     end
 
-    resources :invoices, :only => [:index]
+    resources :invoices, :only => [:index, :show]
   end
 
   match '/payment/callback' => 'payment_gateway#callback',

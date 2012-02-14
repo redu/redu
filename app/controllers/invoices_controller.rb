@@ -12,4 +12,7 @@ class InvoicesController < BaseController
       format.html
     end
   end
+
+  def show
+  end
 end

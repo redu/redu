@@ -6,4 +6,7 @@ class License < ActiveRecord::Base
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
 
   scope :in_use, where(:period_end => nil)
+  scope :of_course, lambda { |course|
+    where(:course_id => course.id)
+  }
 end

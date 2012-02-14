@@ -13,12 +13,14 @@ describe License do
 
   context "retrievers" do
     before do
-      user = Factory(:user)
-      environment = Factory(:environment, :owner => user)
-      @course = Factory(:course, :environment => environment,
-                       :owner => user)
+      @user = Factory(:user)
+      @environment = Factory(:environment, :owner => @user)
+      @course = Factory(:course, :environment => @environment,
+                       :owner => @user)
+      @another_course = Factory(:course, :environment => @environment,
+                        :owner => @user)
       @plan = Factory(:active_licensed_plan, :price => 3.00,
-                       :billable => environment)
+                       :billable => @environment)
       from = Date.new(2010, 01, 10)
       @plan.create_invoice({:invoice => {
         :period_start => from,
@@ -37,6 +39,18 @@ describe License do
                                 :invoice => @invoice) }
 
       License.in_use.to_set.should == @in_use.to_set
+    end
+
+    it "retrieves all licenses of a course" do
+      (1..10).collect { Factory(:license, :period_end => Date.yesterday,
+                                :course => @course,
+                                :invoice => @invoice) }
+      @licenses = (1..10).collect do
+        Factory(:license, :period_end => Date.yesterday,
+                :course => @another_course, :invoice => @invoice)
+      end
+
+      License.of_course(@another_course).to_set.should == @licenses.to_set
     end
   end
 end

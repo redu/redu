@@ -53,7 +53,7 @@
               </span>
             </td>
             <td>
-              <% if invoice.pending? %>
+              <% if invoice.pending? && invoice.is_a?(PackageInvoice) %>
                 <div class="concave-form pagseguro-concave-form">
                   <%= pagseguro_form invoice.plan.create_order, :submit => "Pagar" %>
                 </div>
