@@ -1,4 +1,5 @@
 <%= form_for @contact, :remote => remote ||= false, :html => {:class => css_class ||= 'concave-form call-us alfa', :id => id ||= ''}, :url => contact_path do |f| %>
+  <%= concave_error_messages_for f.object %>
   <fieldset>
     <%= f.label :name, 'Nome:', :class => 'concave-label put-your-name' %>
     <%= f.text_field :name, :id => 'name',  :placeholder =>'Digite o seu nome', :class => 'concave-input personal-information' %>
