@@ -54,7 +54,7 @@ body {
 }
 
 .forgot-login, .forgot-password {
-  text-shadow: 0px 1px 0px rgb(255, 255, 255); 
+  text-shadow: 0px 1px 0px rgb(255, 255, 255);
 }
 
 .forgot-login {
@@ -70,7 +70,7 @@ body {
   letter-spacing: -4px;
 }
 
-.body .concave-form .body-login  .concave-button{ 
+.body .concave-form .body-login  .concave-button{
    cursor: pointer;
    float: right;
    font-family: arial,sans-serif;
@@ -83,7 +83,7 @@ body {
    margin: 10px 0 0 0;
 }
 
-.concave-form .input-email, 
+.concave-form .input-email,
 .concave-form .input-password {
   color: rgb(179, 179, 179);
   font-family: arial, sans-serif;
@@ -93,11 +93,11 @@ body {
 }
 
 .forgot-password {
-  border-top: 1px dotted;	
+  border-top: 1px dotted;
   margin-top: 30px;
   border-color: rgb(214, 214, 214);
   /*margin-top: 190px;*/
-}  
+}
 
 .body .concave-form  .body-login .concave-input {
   width: 389px;
@@ -114,7 +114,7 @@ body {
   clear: none;
 }
 
-.push { 
+.push {
   height: 97px;
 }
 
@@ -236,7 +236,7 @@ body {
   .textshadow .menu-footer {
   text-shadow: 0px -1px 0px rgb(255, 255, 255);
 }
- 
+
 .icon-interrog-blue_12_12-before:before  {
   content: "";
   width: 12px;
@@ -263,15 +263,15 @@ button::-moz-focus-inner {
     border: none;
     padding: 0;
 }
- 
+
 .login-box {
   float: right;
 }
 
-#tiptip_holder {  
+#tiptip_holder {
   color: pink;
 }
-  
+
 
 body #tiptip_content {
  color: white;
@@ -286,7 +286,7 @@ body #tiptip_content {
 .boxshadow body #tiptip_content {
   -webkit-box-shadow: 0px 3px px rgba(85 , 85, 85, 0.1);
   -moz-box-shadow: 0px 3px px rgba(85 , 85, 85, 0.1);
-  box-shadow: 0px 3px px rgba(85 , 85, 85, 0.1); 
+  box-shadow: 0px 3px px rgba(85 , 85, 85, 0.1);
 }
 
 .alerta {
@@ -299,7 +299,7 @@ body #tiptip_content {
 .confirmation-msg {
   background-color: rgb(240, 240, 240);
   clear: both;
-  float: right;  
+  float: right;
 }
 
 .boxshadow .confirmation-msg {
@@ -312,17 +312,17 @@ body #tiptip_content {
 .borderradius .confirmation-msg {
   -webkit-border-radius: 7px;
   -moz-border-radius: 7px;
-  border-radius: 7px; 
+  border-radius: 7px;
 }
 
-.text-confirmation { 
+.text-confirmation {
   font-size: 12px;
   color: rgb(0, 0, 0);
   font-weight: normal;
   padding: 20px 15px;
   font-family: arial, sans-serif;
   clear:both;
-  float: left;			
+  float: left;
 }
 
 .client-email {
@@ -334,7 +334,7 @@ body #tiptip_content {
 .textshadow .text-confirmation {
   text-shadow: 0px 1px 0px rgb(255, 255, 255);
 }
- 
+
 .aba-top {
   background-image: url("../images/new/aba-cima-borda.png");
   background-repeat: no-repeat;
@@ -343,25 +343,25 @@ body #tiptip_content {
   margin-top: -8px;
   margin-left: 40px;
 }
- 
+
 .icon-interrog-blue_12_12-before {
   float: left;
 }
 
-.email-label {  
+.email-label {
   float: left;
 }
 
-.text-body .concave-form .concave-label {   
+.text-body .concave-form .concave-label {
   clear: none;
   font-size: 12px;
-  width: 40px;
-  margin-top: 0px;
+  width: 90px;
+  margin-top: 20px;
   margin-left: 5px;
-  height: 0px; 
+  height: 0px;
 }
 
-.body .thank-you, 
+.body .thank-you,
 .body span {
   padding: 0px;
 }
