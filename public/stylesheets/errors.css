@@ -413,4 +413,6 @@ clear: both;
   margin: 0px;
 }
 
-
+.overlay .error-500 .error_explanation {
+  margin-top: 20px;
+}
