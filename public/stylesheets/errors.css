@@ -180,9 +180,10 @@ body {
   width: 165px;
   float: right;
   content: "";
-  margin-left: 286px;
+  margin-left: 410px;
   margin-top: -164px;
   position: absolute;
+  display: block;
 }
 
 .alert {
