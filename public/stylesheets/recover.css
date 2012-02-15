@@ -355,10 +355,15 @@ body #tiptip_content {
 .text-body .concave-form .concave-label {
   clear: none;
   font-size: 12px;
-  width: 90px;
-  margin-top: 20px;
+  width: 40px;
+  margin-top: 0px;
   margin-left: 5px;
   height: 0px;
+}
+
+.error-500 .concave-form .concave-label {
+  width: 90px;
+  margin-top: 20px;
 }
 
 .body .thank-you,
