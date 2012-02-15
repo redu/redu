@@ -16,9 +16,10 @@ class ApplicationController < ActionController::Base
   end
 
   def routing_error
+    @contact = Contact.new
     respond_to do |format|
       format.html {
-        render :template => 'errors/404', :layout => 'cold', :status => '404'
+        render :template => 'errors/500', :layout => 'cold', :status => '500'
       }
     end
   end

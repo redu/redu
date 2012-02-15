@@ -352,11 +352,22 @@ body #tiptip_content {
   float: left;
 }
 
-.text-body .concave-form .concave-label {
+.text-body .concave-form .concave-label {   
   clear: none;
   font-size: 12px;
   width: 40px;
   margin-top: 0px;
   margin-left: 5px;
   height: 0px; 
+}
+
+.body .thank-you, 
+.body span {
+  padding: 0px;
+}
+
+.body .concave-form .errors_on_field {
+  margin-left: 110px;
+  display: block;
+  clear: both;
 }

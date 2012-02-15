@@ -180,11 +180,9 @@ body {
   width: 165px;
   float: right;
   content: "";
-  margin-top: -516px;
-}
-
-.bad-server:after {
-  margin-top: -748px;
+  margin-left: 286px;
+  margin-top: -164px;
+  position: absolute;
 }
 
 .alert {
