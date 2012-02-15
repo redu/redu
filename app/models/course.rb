@@ -10,40 +10,40 @@ class Course < ActiveRecord::Base
   belongs_to :owner, :class_name => "User", :foreign_key => "owner"
   has_many :users, :through => :user_course_associations
   has_many :approved_users, :through => :user_course_associations,
-    :source => :user, :conditions => [ "user_course_associations.state = ?",
+    :source => :user, :conditions => [ "course_enrollments.state = ?",
                                        'approved' ]
   has_many :pending_users, :through => :user_course_associations,
-    :source => :user, :conditions => [ "user_course_associations.state = ?",
+    :source => :user, :conditions => [ "course_enrollments.state = ?",
                                        'waiting' ]
   # environment_admins
   has_many :administrators, :through => :user_course_associations,
     :source => :user,
-    :conditions => [ "user_course_associations.role = ? AND user_course_associations.state = ?",
+    :conditions => [ "course_enrollments.role = ? AND course_enrollments.state = ?",
                       3, 'approved' ]
   # teachers
   has_many :teachers, :through => :user_course_associations,
     :source => :user,
-    :conditions => [ "user_course_associations.role = ? AND user_course_associations.state = ?",
+    :conditions => [ "course_enrollments.role = ? AND course_enrollments.state = ?",
                       5, 'approved' ]
   # tutors
   has_many :tutors, :through => :user_course_associations,
     :source => :user,
-    :conditions => [ "user_course_associations.role = ? AND user_course_associations.state = ?",
+    :conditions => [ "course_enrollments.role = ? AND course_enrollments.state = ?",
                       6, 'approved' ]
   # students (member)
   has_many :students, :through => :user_course_associations,
     :source => :user,
-    :conditions => [ "user_course_associations.role = ? AND user_course_associations.state = ?",
+    :conditions => [ "course_enrollments.role = ? AND course_enrollments.state = ?",
                       2, 'approved' ]
 
   # new members (form 1 week ago)
   has_many :new_members, :through => :user_course_associations,
     :source => :user,
-    :conditions => [ "user_course_associations.state = ? AND user_course_associations.updated_at >= ?", 'approved', 1.week.ago]
+    :conditions => [ "course_enrollments.state = ? AND course_enrollments.updated_at >= ?", 'approved', 1.week.ago]
 
   has_many :teachers_and_tutors, :through => :user_course_associations,
     :source => :user, :select => 'users.id',
-    :conditions => [ "(user_course_associations.role = ? OR user_course_associations.role = ?) AND user_course_associations.state = ?", 6, 5, 'approved']
+    :conditions => [ "(course_enrollments.role = ? OR course_enrollments.role = ?) AND course_enrollments.state = ?", 6, 5, 'approved']
 
   has_and_belongs_to_many :audiences
   has_one :quota, :dependent => :destroy, :as => :billable
@@ -66,25 +66,25 @@ class Course < ActiveRecord::Base
 
   scope :user_behave_as_administrator, lambda { |user_id|
     joins(:user_course_associations).
-      where("user_course_associations.user_id = ? AND user_course_associations.role = ?",
+      where("course_enrollments.user_id = ? AND course_enrollments.role = ?",
              user_id, 3)
   }
 
   scope :user_behave_as_teacher, lambda { |user_id|
     joins(:user_course_associations).
-      where("user_course_associations.user_id = ? AND user_course_associations.role = ?",
+      where("course_enrollments.user_id = ? AND course_enrollments.role = ?",
               user_id, 5)
   }
 
   scope :user_behave_as_tutor, lambda { |user_id|
     joins(:user_course_associations).
-      where("user_course_associations.user_id = ? AND user_course_associations.role = ?",
+      where("course_enrollments.user_id = ? AND course_enrollments.role = ?",
               user_id, 6)
   }
 
   scope :user_behave_as_student, lambda { |user_id|
     joins(:user_course_associations).
-      where("user_course_associations.user_id = ? AND user_course_associations.role = ? AND user_course_associations.state = ?",
+      where("course_enrollments.user_id = ? AND course_enrollments.role = ? AND course_enrollments.state = ?",
               user_id, 2, 'approved')
   }
 

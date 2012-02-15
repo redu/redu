@@ -325,7 +325,7 @@ class CoursesController < BaseController
     @memberships = @memberships.with_keyword(keyword).paginate(
       :include => [{ :user => {:user_space_associations => :space} }],
       :page => params[:page],
-      :order => 'user_course_associations.updated_at DESC',
+      :order => 'course_enrollments.updated_at DESC',
       :per_page => Redu::Application.config.items_per_page)
 
       respond_to do |format|
