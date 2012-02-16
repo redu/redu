@@ -629,7 +629,7 @@ class User < ActiveRecord::Base
     return new_password
   end
 
-  # TODO Falta os teste!
+    # TODO Falta os teste!
   def subjects_id
     self.lectures.select(:subject_id).collect{ |lecture| lecture.subject_id }
   end

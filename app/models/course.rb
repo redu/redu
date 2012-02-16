@@ -88,6 +88,9 @@ class Course < ActiveRecord::Base
               user_id, 2, 'approved')
   }
 
+  # TODO teste para o scopo
+  scope :spaces, lambda { |id| where("id = ?", id) }
+
   attr_protected :owner, :published, :environment
 
   acts_as_taggable
@@ -289,5 +292,4 @@ class Course < ActiveRecord::Base
   def can_add_entry?
     self.approved_users.count < self.plan.members_limit
   end
-
 end

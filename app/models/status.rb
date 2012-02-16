@@ -8,6 +8,12 @@ class Status < ActiveRecord::Base
   has_many :users, :through => :status_user_associations
   has_many :status_user_associations, :dependent => :destroy
 
+  # TODO Testes para os scopos
+  scope :activity_by_user, lambda { |u| where("type = ? AND user_id = ?", "Activity", u) }
+  scope :helps, where("type = ?", "Help")
+  scope :by_space, lambda { |id| where(:statusable_id =>id) }
+  scope :by_day, lambda { |day| where(:created_at =>(day..(day+1))) }
+
   scope :from_hierarchy, lambda { |c|
     where(build_conditions(c)).includes(:user) \
       .order("updated_at DESC")
@@ -20,7 +26,7 @@ class Status < ActiveRecord::Base
   }
 
   # Constrói as condições de busca de status dentro da hierarquia. Aceita
-  # Course, Space e Lecture como raíz
+  # Course, Space e Lecture como raiz
   def self.build_conditions(entity)
     statusables = statuables_on_hierarchy(entity)
     conditions = []
