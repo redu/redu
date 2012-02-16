@@ -1,10 +1,8 @@
-class UserCourseAssociation < ActiveRecord::Base
-  include AASM
+class UserCourseAssociation < CourseEnrollment
   belongs_to :user
-  belongs_to :course
+  enumerate :role
   has_many :logs, :as => :logeable, :order => "created_at DESC",
     :dependent => :destroy
-  enumerate :role
 
   # Filtra por papéis (lista)
   scope :with_roles, lambda { |roles|
@@ -63,7 +61,7 @@ class UserCourseAssociation < ActiveRecord::Base
     transitions :to => :failed, :from => [:waiting]
   end
 
-  validates_uniqueness_of :user_id, :scope => :course_id
+  validates_uniqueness_of :user_id, :scope => [:course_id, :type]
 
   # Verificar se há UCA com estado pending para um determinado usuário.
   # Opcionalmente pode-se passar o curso.

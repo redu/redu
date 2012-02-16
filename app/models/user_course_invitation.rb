@@ -1,9 +1,7 @@
-class UserCourseInvitation < ActiveRecord::Base
+class UserCourseInvitation < CourseEnrollment
   require 'active_support'
-  include AASM
 
   belongs_to :user
-  belongs_to :course
 
   before_validation :generate_token, :on => :create
 

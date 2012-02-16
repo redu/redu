@@ -93,7 +93,7 @@ class User < ActiveRecord::Base
 
   scope :popular_teachers, lambda { |quantity|
     includes(:user_course_associations).
-      where("user_course_associations.role" => Role[:teacher]).popular(quantity)
+      where("course_enrollments.role" => Role[:teacher]).popular(quantity)
   }
   scope :with_email_domain_like, lambda { |email|
     where("email LIKE ?", "%#{email.split("@")[1]}%")
@@ -575,8 +575,8 @@ class User < ActiveRecord::Base
     User.select("DISTINCT users.id, users.login, users.avatar_file_name," \
                 " users.first_name, users.last_name").
       includes(:user_course_associations).
-      where("user_course_associations.state = 'approved' AND " \
-            "user_course_associations.user_id NOT IN (?, ?)",
+      where("course_enrollments.state = 'approved' AND " \
+            "course_enrollments.user_id NOT IN (?, ?)",
             contacts_ids, self.id).
       limit(quantity)
   end
