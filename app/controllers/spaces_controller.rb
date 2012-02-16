@@ -117,7 +117,6 @@ class SpacesController < BaseController
     @space.course = @course
     @environment = @course.environment
     @space.owner = current_user
-    @space.submission_type = '3'
 
     if @space.valid?
       @space.save

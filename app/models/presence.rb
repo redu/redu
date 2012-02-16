@@ -111,23 +111,23 @@ class Presence
     # Cursos nos quais ele é professor ou tutor
     teaching_courses = Course.select("courses.id").
       joins(:user_course_associations).
-      where(:user_course_associations =>
+      where(:course_enrollments =>
             { :state => 'approved', :user_id => @user.id, :role => teacher_or_tutor }).all
 
     # Curso nos quais ele é membro
     enrolled_courses = Course.select("courses.id").
       joins(:user_course_associations).
-      where(:user_course_associations =>
+      where(:course_enrollments =>
             { :state => 'approved', :user_id => @user.id, :role => member }).all
 
     # Condições para usuários de cursos
     sql = <<-eos
-     `user_course_associations`.`state` = 'approved' AND
-     `user_course_associations`.`user_id` != ? AND
+     `course_enrollments`.`state` = 'approved' AND
+     `course_enrollments`.`user_id` != ? AND
         (
-         user_course_associations.course_id IN (?) OR
-         (user_course_associations.course_id IN (?)
-          AND user_course_associations.role IN (?))
+         course_enrollments.course_id IN (?) OR
+         (course_enrollments.course_id IN (?)
+          AND course_enrollments.role IN (?))
         )
     eos
     course_cond = [sql, @user.id, teaching_courses, enrolled_courses,
@@ -144,8 +144,8 @@ class Presence
     # União de usuários amigos (friendship) e usuários do curso
     sql = <<-eos
      SELECT `users`.* FROM `users` INNER JOIN
-       `user_course_associations` ON
-       `user_course_associations`.`user_id` = `users`.`id`
+       `course_enrollments` ON
+       `course_enrollments`.`user_id` = `users`.`id`
       WHERE #{course_cond}
      UNION
      SELECT `users`.* FROM `users` INNER JOIN
