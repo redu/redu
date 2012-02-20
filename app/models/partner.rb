@@ -5,7 +5,7 @@ class Partner < ActiveRecord::Base
   has_many :users, :through => :partner_user_associations
   has_many :partner_user_associations
 
-  validates_presence_of :name, :email
+  validates_presence_of :name, :email, :cnpj
 
   # Adiciona colaborador ao parcendo, dando acesso de administrador a todos os
   # ambientes associados.
@@ -38,5 +38,16 @@ class Partner < ActiveRecord::Base
         ass.approve!
       end
     end
+  end
+
+  # Returns all environments' invoices
+  def invoices
+    plans_ids = self.environments.collect { |e| e.plans.collect(&:id) }
+    Invoice.where(:plan_id => plans_ids.flatten)
+  end
+
+  def formatted_cnpj
+    self.cnpj =~ /(\d{2})\.?(\d{3})\.?(\d{3})\/?(\d{4})-?(\d{2})/
+    "#{$1}.#{$2}.#{$3}/#{$4}-#{$5}"
   end
 end

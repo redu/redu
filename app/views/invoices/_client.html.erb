@@ -1,0 +1,8 @@
+<%# Cliente da fatura
+    Params: client (Partner || Environment), period (Date Range)%>
+<div class="client-infos">
+  <h2 class="name"><%= client.name %></h2>
+  <span class="cnpj info"><strong>CNPJ:</strong> <%= client.is_a?(Partner) ? client.formatted_cnpj : client.partner_environment_association.formatted_cnpj %></span>
+  <span class="emission info"><strong>Emissão:</strong><%= l Date.today %></span>
+  <span class="period"><strong>Período:</strong> <%= l period.begin %> a <%= l period.end %></span>
+</div>

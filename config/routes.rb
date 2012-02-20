@@ -160,6 +160,7 @@ Redu::Application.routes.draw do
     resources :partner_environment_associations, :as => :clients,
       :only => [:create, :index, :new]
     resources :partner_user_associations, :as => :collaborators, :only => :index
+    resources :invoices, :only => [:index]
   end
 
   resources :environments, :path => '', :except => [:index] do
