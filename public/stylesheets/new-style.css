@@ -7081,6 +7081,10 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   color: #4CACD4;
 }
 
+#partner-environments-list li .see-invoices {
+  display: block;
+  float: right;
+}
 #partner-admins-list {
   margin-bottom: 40px;
 }

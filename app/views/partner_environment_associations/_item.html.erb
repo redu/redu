@@ -5,4 +5,7 @@
     <span class="date">Criado há <%= time_ago_in_words(item.created_at) %> por</span>
     <%= link_to item.environment.owner.display_name, user_path(item.environment.owner), :class=> "owner" %>
   </div>
+  <% if item.environment.plan %>
+    <%= link_to "ver faturas", partner_client_plan_invoices_path(item.partner, item, item.environment.plan), :class => 'see-invoices' %>
+  <% end %>
 </li>
