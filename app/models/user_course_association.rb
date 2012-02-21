@@ -98,7 +98,8 @@ class UserCourseAssociation < ActiveRecord::Base
   protected
 
   def create_hierarchy_associations
-    if self.invited? || (has_environment? && self.waiting?)
+    # Só deve criar as associações da hierarquia se o UCA existir no BD
+    if !self.new_record? && (self.invited? || (has_environment? && self.waiting?))
       self.course.create_hierarchy_associations(self.user, self.role)
     end
   end

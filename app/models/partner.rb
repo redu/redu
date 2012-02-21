@@ -31,10 +31,11 @@ class Partner < ActiveRecord::Base
                                         :role => role)
 
       e.courses.each do |c|
-        c.create_hierarchy_associations(user, role)
         ass = UserCourseAssociation.create(:user => user,
                                      :course => c,
                                      :role => role)
+        # Callback cria as outras associações da hierarquia (Environment,
+        # Space, Subject).
         ass.approve!
       end
     end

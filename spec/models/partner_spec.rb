@@ -103,4 +103,62 @@ describe Partner do
     subject.cnpj = "12123123123412"
     subject.formatted_cnpj.should == "12.123.123/1234-12"
   end
+
+  context "when joining hierarchy" do
+    before do
+      @environments = 3.times.collect do
+        course = Factory(:course)
+        environment = course.environment
+        Factory(:partner_environment_association, :partner => subject,
+                :environment => course.environment)
+        environment.plans << Plan.from_preset(:instituicao_superior, "LicensedPlan")
+        environment.plan.create_invoice
+        environment
+      end
+
+      @collaborator = Factory(:user)
+    end
+
+    it "creates three UserEnvironmentAssociation" do
+      expect{
+        subject.join_hierarchy(@collaborator, Role[:environment_admin])
+      }.should change(UserEnvironmentAssociation, :count).by(3)
+    end
+
+    it "creates three UserCourseAssociation" do
+      expect{
+        subject.join_hierarchy(@collaborator, Role[:environment_admin])
+      }.should change(UserCourseAssociation, :count).by(3)
+    end
+
+    it "creates one license for each course" do
+      expect{
+        subject.join_hierarchy(@collaborator, Role[:environment_admin])
+      }.should change(License, :count).by(3)
+    end
+
+    context "when trying to join again" do
+      before do
+        subject.join_hierarchy(@collaborator, Role[:environment_admin])
+      end
+
+      it "creates three UserEnvironmentAssociation" do
+        expect{
+          subject.join_hierarchy(@collaborator, Role[:environment_admin])
+        }.should_not change(UserEnvironmentAssociation, :count)
+      end
+
+      it "creates three UserCourseAssociation" do
+        expect{
+          subject.join_hierarchy(@collaborator, Role[:environment_admin])
+        }.should_not change(UserCourseAssociation, :count)
+      end
+
+      it "creates one license for each course" do
+        expect{
+          subject.join_hierarchy(@collaborator, Role[:environment_admin])
+        }.should_not change(License, :count)
+      end
+    end
+  end
 end
