@@ -6445,6 +6445,7 @@ div.token-input-dropdown {
 #partner-invoice-index {
   background-color: white;
   padding: 10px;
+  overflow: hidden;
 }
 
 .boxshadow #invoice-show,
@@ -6481,10 +6482,15 @@ div.token-input-dropdown {
 }
 
 #invoice-show .client-infos strong,
-#invoice-show .billable-infos .plan strong,
+#invoice-show .billable-infos .plan-infos strong,
 #partner-invoice-index .client-infos strong,
-#partner-invoice-index .billable-infos .plan strong {
+#partner-invoice-index .billable-infos .plan-infos strong {
   font-weight: normal;
+}
+
+#invoice-show .billable-infos .name,
+#partner-invoice-index .billable-infos .name {
+  clear: right;
 }
 
 #invoice-show .billable-infos .name,
@@ -6494,29 +6500,47 @@ div.token-input-dropdown {
   margin-bottom: 2px;
 }
 
-#invoice-show .billable-infos .plan .header,
-#partner-invoice-index .billable-infos .plan .header {
+#invoice-show .billable-infos .invoice,
+#partner-invoice-index .billable-infos .invoice {
+  overflow: hidden;
+}
+
+#invoice-show .billable-infos .invoice .plan-infos,
+#partner-invoice-index .billable-infos .invoice .plan-infos {
   background-color: rgb(240, 240, 240);
   padding: 10px;
   margin-top: 25px;
   margin-bottom: 10px;
 }
 
-#invoice-show .billable-infos .plan .header .plan-name,
-#partner-invoice-index .billable-infos .plan .header .plan-name {
+#invoice-show .billable-infos .plan-infos .plan-name,
+#partner-invoice-index .billable-infos .plan-infos .plan-name {
   font-weight: normal;
   font-size: 14px;
   margin-bottom: 2px;
 }
 
-#invoice-show .billable-infos .plan .header .plan-period,
-#partner-invoice-index .billable-infos .plan .header .plan-period {
+#invoice-show .billable-infos .plan-infos .plan-period,
+#partner-invoice-index .billable-infos .plan-infos .plan-period {
   display: block;
   margin-top: 2px;
 }
 
 #invoice-show .billable-infos .courses .course-name,
 #partner-invoice-index .billable-infos .courses .course-name {
+  margin-top: 20px;
+}
+
+#invoice-show .billable-infos .invoice .total,
+#partner-invoice-index .billable-infos .invoice .total,
+#partner-invoice-index .total-partner {
+  display: block;
+  float: right;
+  clear: right;
+  font-size: 20px;
+}
+
+#partner-invoice-index .total-partner {
   margin-top: 20px;
 }
 

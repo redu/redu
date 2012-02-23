@@ -5,4 +5,8 @@
   <%= render 'invoices/client', :client => @partner, :period => @reference_period %>
 
   <%= render :partial => 'invoices/billable_details', :collection => @partner.environments, :as => :billable, :locals => { :invoices => @invoices } %>
+
+  <span class="total-partner">
+    Total final: <strong><%= number_to_currency total_amount %></strong>
+  </span>
 </div>

@@ -52,5 +52,24 @@ describe License do
 
       License.of_course(@another_course).to_set.should == @licenses.to_set
     end
+
+    it "retrieves all payable licenses" do
+      (1..3).collect { Factory(:license, :period_end => Date.yesterday,
+                                :invoice => @invoice,
+                                :role => Role[:environment_admin]) }
+      (1..3).collect { Factory(:license, :period_end => Date.yesterday,
+                                :invoice => @invoice,
+                                :role => Role[:tutor]) }
+      (1..3).collect { Factory(:license, :period_end => Date.yesterday,
+                                :invoice => @invoice,
+                                :role => Role[:teacher]) }
+
+      @licenses = (1..10).collect do
+        Factory(:license, :period_end => Date.yesterday,
+                 :invoice => @invoice, :role => Role[:member])
+      end
+
+      License.payable.to_set.should == @licenses.to_set
+    end
   end
 end

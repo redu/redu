@@ -91,9 +91,21 @@ describe LicensedInvoice do
       })
       @invoice = @plan.invoices.last
 
-      (1..10).collect { Factory(:license, :invoice => @invoice, :course => course) }
+      (1..10).collect do
+        Factory(:license, :invoice => @invoice, :course => course,
+               :role => Role[:member])
+      end
+      (1..3).collect do
+        Factory(:license, :invoice => @invoice, :course => course,
+                :role => Role[:teacher])
+        Factory(:license, :invoice => @invoice, :course => course,
+                :role => Role[:tutor])
+        Factory(:license, :invoice => @invoice, :course => course,
+                :role => Role[:environment_admin])
+      end
       @in_use_licenses = (1..10).collect do
-        Factory(:license, :invoice => @invoice, :period_end => nil, :course => course)
+        Factory(:license, :invoice => @invoice, :period_end => nil,
+                :course => course, :role => Role[:member])
       end
 
       @invoice.calculate_amount!
