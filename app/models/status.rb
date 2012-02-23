@@ -9,10 +9,12 @@ class Status < ActiveRecord::Base
   has_many :status_user_associations, :dependent => :destroy
 
   # TODO Testes para os scopos
-  scope :activity_by_user, lambda { |u| where("type = ? AND user_id = ?", "Activity", u) }
-  scope :helps, where("type = ?", "Help")
+  scope :activity_by_user, lambda { |u|
+    where("type = ? AND user_id = ?", "Activity", u) }
+  scope :helps_and_activities, where("type = ? OR type = ?", "Help", "Activity")
   scope :by_space, lambda { |id| where(:statusable_id =>id) }
   scope :by_day, lambda { |day| where(:created_at =>(day..(day+1))) }
+  scope :by_id, lambda { |id| where(:id =>id) }
 
   scope :from_hierarchy, lambda { |c|
     where(build_conditions(c)).includes(:user) \
@@ -47,6 +49,11 @@ class Status < ActiveRecord::Base
     users.includes(:status_user_associations).each do |u|
       u.status_user_associations.create(:status => self)
     end
+  end
+
+  # TODO Falta os testes do método abaixo
+  def answers_ids(id)
+    answers.where("user_id = ?", id).collect{ |answer| answer.id }
   end
 
   protected
