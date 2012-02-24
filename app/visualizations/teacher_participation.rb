@@ -1,16 +1,14 @@
 class TeacherParticipation
-  attr_accessor :lectures_created, :posts, :answers
+  attr_accessor :lectures_created, :posts, :answers, :end, :start, :spaces, :days
 
   def initialize(uca)
     @uca = uca
     @user_id = @uca.user.id
 
-    # Time de início e de fim
-    @start = "2012-02-08".to_date
-    @end = "2012-02-16".to_date
-
-    # Array de id's que veio de params
-    @spaces = @uca.course.spaces.find([1,2])
+    # O default é fazer a consulta em todos os spaces de course nos últimos 10 dias
+    @end = Date.today
+    @start = @end - 9
+    @spaces = @uca.course.spaces
   end
 
   # Todos os resultados tem que ser filtrados pelo período de
@@ -19,19 +17,23 @@ class TeacherParticipation
     self.lectures_created_by_space
     self.posts_by_space
     self.answers_by_space
-    self.by_day
+    self.by_day!
   end
 
-  # Alinha as consultas por dia
-  def by_day
+  protected
+
+  # Alinha todas as consultas por dia
+  def by_day!
     @lectures_created = []
     @posts = []
     @answers = []
+    @days = []
     @start_aux = @start
     (0..(@end - @start)).each do
       @lectures_created << @total_lectures.by_day(@start_aux).count
       @posts << @total_posts.by_day(@start_aux).count
       @answers << @total_answers.by_day(@start_aux).count
+      @days << @start_aux.strftime("%-d-%m-%Y")
       @start_aux += 1
     end
   end

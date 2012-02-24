@@ -1,3 +1,38 @@
-<div id="chart">
-
+<div id="teacher-participation-chart">
+  <%= lazy_load(:chart, :jammit => true) do %>
+    try{
+      initialize_graph(<%= @course.id %>);
+    }catch(e){}
+  <% end %>
 </div>
+
+<div id="teacher-select-chart">
+  <%= select(:user, "id", @course.teachers.collect {
+    |teacher| [teacher.first_name, teacher.id ] }, { :default => User.first } )%>
+</div>
+
+<div class="space-choosen-chart">
+  <% @course.spaces.each do |space| %>
+    <div class="item-space-chart">
+      <%= check_box_tag space.name, space.id %>
+      <%= label_tag space.name, space.name %>
+    </div>
+  <% end %>
+  <div class="item-space-chart">
+    <%= check_box_tag "todos", "0", true %>
+    <%= label_tag "todos", "Todos" %>
+  </div>
+</div>
+
+<div class="time-range-chart">
+  <div class="item-time-range-chart">
+    <%= label_tag "date_start", "Início" %>
+    <%= date_select "date_start", "start", :use_short_month => true, :date_separator => "-", :default => Date.today - 9 %>
+  </div>
+
+  <div class="item-time-range-chart">
+    <%= label_tag "date_end", "Fim" %>
+    <%= date_select "date_end", "start", :use_short_month => true, :date_separator => "-" %>
+  </div>
+</div>
+

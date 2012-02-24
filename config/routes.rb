@@ -6,6 +6,7 @@ Redu::Application.routes.draw do
   get "presence/last_messages_with"
   get "dashboard/index"
   get "api/dashboard/teacher_participation"
+  get "api/dashboard/teacher_participation_interaction"
 
   match 'clipboard/:action/:folder_or_file/:id' => 'clipboard',
     :constraints => { :action         => /(add|remove)/,

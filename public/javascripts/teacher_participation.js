@@ -1,9 +1,8 @@
 $(document).ready(function(){
   var chart;
-  var $content = $("#chart");
+  var $content = $("#teacher-participation-chart");
 
   var options = {
-
     chart: {
       renderTo: $content[0],
       defaultSeriesType: 'area'
@@ -14,7 +13,6 @@ $(document).ready(function(){
     },
 
     xAxis:{
-      categories: ['d1','s2','t3','q4','q5','s6','s7', 'd8', 's9', 't10'],
       title: {
         text: 'Dias'
       }
@@ -28,21 +26,22 @@ $(document).ready(function(){
 
     series: [{
       name: 'Quantidade de Aulas Criadas',
-      data: [4, 1, 2, 0, 1, 4, 5, 2, 1, 0]
     }, {
       name: 'Quantidade de Postagens',
-      data: [20, 10, 3, 4, 12, 9, 5, 19, 21, 5]
     }, {
       name: 'Quantidade de Respostas',
-      data: [2, 5, 6, 10, 2, 13, 20, 9, 10, 1]
-    }, {
-      name: 'Tempo de Espera',
-      data: [1, 4, 7, 9, 10, 3, 5, 20, 9, 1]
     }]
   };
 
-  chart = new Highcharts.Chart(options);
+  initialize_graph = function (id_course) {
+    $.getJSON("../api/dashboard/teacher_participation.json?id_course="+id_course,
+    function(json){
+      options.series[0].data = json.lectures_created;
+      options.series[1].data = json.posts;
+      options.series[2].data = json.answers;
 
-  d3.json("/api/dashboard/teacher_participation.json?id_teacher=1&id_course=1", function(json){
-  }t;
+      options.xAxis.categories = json.days;
+      chart = new Highcharts.Chart(options);
+    });
+  };
 });

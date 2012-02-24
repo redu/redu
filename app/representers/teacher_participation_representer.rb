@@ -4,5 +4,6 @@ module TeacherParticipationRepresenter
   property :lectures_created
   property :posts
   property :answers
+  property :days
 
 end
