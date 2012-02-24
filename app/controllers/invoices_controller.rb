@@ -35,7 +35,8 @@ class InvoicesController < BaseController
       if @client
         format.html { render "partner_environment_associations/invoices/index" }
       elsif @partner
-        format.html { render "partners/invoices/index" }
+        format.html { render "partners/invoices/index" } if @reference_period
+        format.html { render "partners/invoices/monthly" }
       else
         format.html
       end

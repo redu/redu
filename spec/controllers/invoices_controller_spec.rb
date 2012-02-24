@@ -103,7 +103,7 @@ describe InvoicesController do
                                                    "LicensedPlan")
       end
 
-      context "when viewing invoices (GET index) of a partner" do
+      context "when viewing invoices of a partner" do
         before do
           @environments[0].plan.create_invoice({
             :invoice => {
@@ -152,8 +152,8 @@ describe InvoicesController do
             assigns[:invoices].length.should == 11
           end
 
-          it "renders partners/invoices/index" do
-            response.should render_template("partners/invoices/index")
+          it "renders partners/invoices/monthly" do
+            response.should render_template("partners/invoices/monthly")
           end
         end
 
@@ -167,6 +167,10 @@ describe InvoicesController do
             assigns[:invoices].should_not be_nil
             assigns[:invoices].length.should == 10
           end
+
+          it "renders partners/invoices/index" do
+            response.should render_template("partners/invoices/index")
+          end
         end
 
         context "with year and month set" do
@@ -178,6 +182,10 @@ describe InvoicesController do
           it "assigns all invoices of the requested period" do
             assigns[:invoices].should_not be_nil
             assigns[:invoices].length.should == 3
+          end
+
+          it "renders partners/invoices/index" do
+            response.should render_template("partners/invoices/index")
           end
         end
       end

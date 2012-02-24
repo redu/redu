@@ -19,15 +19,18 @@ SimpleNavigation::Configuration.run do |navigation|
         # Sub abas
         subtabs.dom_class = 'clearfix ui-tabs-nav'
         subtabs.item :environments, "Ambientes", partner_path(@partner),
-          :highlights_on => Proc.new { action_matcher({'partners' => ['show'],
-                                                       'invoices' => ['index']}).
-                                                       call ||
-            create_action_matcher('partner_environment_associations').call },
-            :class => 'ui-state-default',
-            :link => { :class => 'icon-environment_16_18-before' }
+          :highlights_on => Proc.new {
+            action_matcher({'partners' => ['show']}).call ||
+              (action_matcher('invoices' => ['index']).call && @client) ||
+              create_action_matcher('partner_environment_associations').call
+          },
+          :class => 'ui-state-default',
+          :link => { :class => 'icon-environment_16_18-before' }
         subtabs.item :admins, "Admins", partner_collaborators_path(@partner),
           :class => 'ui-state-default',
           :link => { :class => 'icon-environment_admin_16_18-before' }
+        subtabs.item :invoices, "Faturas", partner_invoices_path(@partner),
+          :class => 'ui-state-default'
       end
     end
   end

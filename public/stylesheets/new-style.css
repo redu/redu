@@ -6544,6 +6544,14 @@ div.token-input-dropdown {
   margin-top: 20px;
 }
 
+#invoice-index .invoices {
+  margin-left: 25px;
+}
+
+#invoice-index .invoices li {
+  margin-bottom: 10px;
+}
+
 #contacts ul {
   border-bottom: 1px dotted #B3B2B3;
   padding-bottom: 30px;

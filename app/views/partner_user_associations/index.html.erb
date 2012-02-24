@@ -1,7 +1,7 @@
 <%= render :partial => 'users/home_sidebar' %>
 <div class="main grid_10" id="partner" style="width: 580px;">
   <%= render :partial => 'partners/breadcrumbs', :locals => { :partner => @partner} %>
-  <%= render :partial => 'partners/header', :locals => { :partner => @partner } %>
+  <%= render 'partners/header', :partner => @partner, :title => "Admins" %>
   <%= subtabs :partners do %>
     <div id="admins">
       <%= render :partial => 'partner_user_associations/admin_list',
