@@ -617,6 +617,7 @@ describe Ability do
         before do
           @licensed_plan = Factory(:active_licensed_plan)
           @invoice = Factory(:licensed_invoice, :plan => @licensed_plan)
+          @invoice.pend!
         end
 
         context "the owner" do
@@ -638,6 +639,10 @@ describe Ability do
 
           it "manages licensed_plan's invoice" do
             @ability.should be_able_to(:manage, @invoice)
+          end
+
+          it "can NOT pay licensed_plan's invoice" do
+            @ability.should_not be_able_to(:pay, @invoice)
           end
         end
 
@@ -676,7 +681,8 @@ describe Ability do
 
             @licensed_plan = Factory(:active_licensed_plan,
                                      :billable => environment)
-            @invoice = Factory(:invoice, :plan => @licensed_plan)
+            @invoice = Factory(:licensed_invoice, :plan => @licensed_plan)
+            @invoice.pend!
           end
 
           it "can read partner licensed_plans" do
@@ -693,6 +699,26 @@ describe Ability do
 
           it "can manage partner licensed_plan's invoice" do
             @ability.should be_able_to(:manage, @invoice)
+          end
+
+          it "can NOT pay licensed_plan's invoice" do
+            @ability.should_not be_able_to(:pay, @invoice)
+          end
+        end
+
+        context "the redu admin" do
+          before do
+            redu_admin = Factory(:user, :role => Role[:admin])
+            @ability = Ability.new(redu_admin)
+          end
+
+          it "can pay licensed_plan's invoice" do
+            @ability.should be_able_to(:pay, @invoice)
+          end
+
+          it "can NOT pay a non pending invoice" do
+            @invoice.pay!
+            @ability.should_not be_able_to(:pay, @invoice.reload)
           end
         end
       end

@@ -1,4 +1,6 @@
 class InvoicesController < BaseController
+  respond_to :html, :js
+
   load_and_authorize_resource :plan
   load_and_authorize_resource :invoice, :through => [:plan], :except => :index
   load_and_authorize_resource :partner, :only => :index
@@ -41,5 +43,13 @@ class InvoicesController < BaseController
   end
 
   def show
+  end
+
+  def pay
+    @invoice.pay!
+
+    respond_with do |format|
+      format.html { redirect_to plan_invoices_path(@invoice.plan) }
+    end
   end
 end

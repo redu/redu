@@ -142,12 +142,15 @@ class Ability
 
       # Parceiros
       can :contact, Partner
-      unless user.admin?
-        cannot :index, Partner
-      end
+      cannot :index, Partner unless user.admin?
 
       # Result
       can :update, Result, :state => 'started', :user_id => user.id
+
+      # Invoice
+      cannot :pay, Invoice do |invoice|
+        !(user.admin? && invoice.pending?)
+      end
     end
   end
 end

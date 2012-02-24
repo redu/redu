@@ -3,6 +3,8 @@ require 'authlogic/test_case'
 include Authlogic::TestCase
 
 describe InvoicesController do
+  subject { Factory(:package_invoice) }
+
   context "when PackageInvoice" do
     before do
       @plan = Factory(:active_package_plan)
@@ -200,6 +202,32 @@ describe InvoicesController do
         it "renders partner_environment_associations/invoices/index" do
           response.should render_template("partner_environment_associations/" \
                                           "invoices/index")
+        end
+      end
+
+
+      context "when paying an invoice" do
+        before do
+          activate_authlogic
+          UserSession.create Factory(:user, :role => Role[:admin])
+
+          @invoice = @environments[0].plan.create_invoice
+          @invoice.pend!
+
+          post :pay, :id => @invoice.id, :plan_id => @invoice.plan.id,
+            :locale => "pt-BR"
+        end
+
+        it "assigns an invoice" do
+          assigns[:invoice].should_not be_nil
+        end
+
+        it "should call pay!" do
+          @invoice.reload.should be_paid
+        end
+
+        it "redirects to Invoices#index" do
+          response.should redirect_to(plan_invoices_path(@invoice.plan))
         end
       end
     end

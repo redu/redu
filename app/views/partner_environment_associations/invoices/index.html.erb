@@ -35,7 +35,7 @@
                      </thead>
                      <tbody>
                        <% @invoices.each do |invoice| %>
-                         <tr>
+                         <tr id="invoice-<%= invoice.id %>">
                            <td><%= link_to_unless invoice.open?, invoice.id, plan_invoice_path(@plan, invoice) %></td>
                            <td>
                              <span class="date">
@@ -54,6 +54,9 @@
                              </span>
                            </td>
                            <td>
+                             <% if can? :pay, invoice %>
+                               <%= link_to "Pagar", pay_plan_invoice_path(invoice.plan, invoice), :remote => true, :method => :post, :class => "concave-button pay" %>
+                             <% end %>
                            </td>
                          </tr>
                        <% end %>
