@@ -5,6 +5,7 @@ describe Partner do
 
   it { should validate_presence_of :name }
   it { should validate_presence_of :email }
+  it { should validate_presence_of :address }
   it { should have_many(:environments).through(:partner_environment_associations) }
   it { should have_many(:users).through(:partner_user_associations) }
 
@@ -76,7 +77,7 @@ describe Partner do
     end
 
     it "assigns the current collaborators as new environment admins" do
-      subject.add_environment(@environment, "12.123.123/1234-12")
+      subject.add_environment(@environment, "12.123.123/1234-12", "Cool Street")
       subject.users.to_set.should be_subset(@environment.administrators.to_set)
     end
   end

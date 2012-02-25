@@ -6,6 +6,7 @@ describe PartnerEnvironmentAssociation do
   it { should belong_to :partner }
   it { should belong_to :environment }
   it { should validate_presence_of :cnpj }
+  it { should validate_presence_of :address }
   it { should accept_nested_attributes_for :environment }
 
   it "should return formated CNPJ" do

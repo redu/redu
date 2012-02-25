@@ -3,6 +3,7 @@
 <div class="client-infos">
   <h2 class="name"><%= client.name %></h2>
   <span class="cnpj info"><strong>CNPJ:</strong> <%= client.is_a?(Partner) ? client.formatted_cnpj : client.partner_environment_association.formatted_cnpj %></span>
+  <span class="address info"><strong>Endereço:</strong> <%= client.is_a?(Partner) ? client.address : client.partner_environment_association.address %></span>
   <span class="emission info"><strong>Emissão:</strong> <%= l Date.today %></span>
   <% unless period.nil? %>
     <span class="period"><strong>Período:</strong> <%= l period.begin %> a <%= l period.end %></span>

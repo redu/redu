@@ -564,7 +564,7 @@ describe Ability do
       context "on package_plan" do
         before do
           @package_plan = Factory(:active_package_plan)
-          @invoice = Factory(:invoice, :plan => @package_plan)
+          @invoice = Factory(:package_invoice, :plan => @package_plan)
         end
 
         context "the owner" do

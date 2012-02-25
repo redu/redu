@@ -74,6 +74,10 @@ class PackageInvoice < Invoice
     return msg
   end
 
+  def open?
+    false
+  end
+
   # Atualiza estado do Invoice de acordo com a data atual e o Invoice.period_start
   # de acordo com a seguinte regra:
   #

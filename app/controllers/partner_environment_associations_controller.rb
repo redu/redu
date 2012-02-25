@@ -17,7 +17,8 @@ class PartnerEnvironmentAssociationsController < BaseController
     respond_to do |format|
       format.html do
         if @partner_environment_association.save
-          @plan = Plan.from_preset(params[:plan].to_sym, params[:plan_type])
+          plan_type, key = params[:plan].split("-")
+          @plan = Plan.from_preset(key.to_sym, plan_type.classify)
           @plan.user = current_user
           @partner_environment_association.environment.create_quota
           @partner_environment_association.environment.plans << @plan

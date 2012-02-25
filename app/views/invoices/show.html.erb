@@ -8,6 +8,6 @@
     <h3 class="name"><%= @plan.billable.name %></h3>
     <span class="created-by">Criado por <%= @plan.billable.owner ? @plan.billable.owner.display_name : "Usuário removido" %></span>
 
-    <%= render 'invoices/plan_details', :invoice => @invoice %>
+    <%= render "invoices/#{@invoice.plan.class.to_s.underscore}_details", :invoice => @invoice %>
   </div>
 </div>

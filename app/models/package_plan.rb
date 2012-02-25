@@ -32,7 +32,7 @@ class PackagePlan < Plan
       :name => "Professor Plus",
       :price => 243.99,
       :yearly_price => 2439.90,
-      :membership_fee => 243.99,
+      :membership_fee => 245.99,
       :video_storage_limit => 150.megabytes,
       :file_storage_limit => 25.megabytes,
       :members_limit => 500
@@ -41,6 +41,7 @@ class PackagePlan < Plan
       :name => "Instituição de Ensino Médio Lite",
       :price => 600.00,
       :yearly_price => 5000.00,
+      :membership_fee => 0.00,
       :video_storage_limit => 512.megabytes,
       :file_storage_limit => 512.megabytes,
       :members_limit => 200
@@ -49,6 +50,7 @@ class PackagePlan < Plan
       :name => "Instituição de Ensino Médio Standard",
       :price => 1250.00,
       :yearly_price => 12000.00,
+      :membership_fee => 0.00,
       :video_storage_limit => 512.megabytes,
       :file_storage_limit => 512.megabytes,
       :members_limit => 500
@@ -57,6 +59,7 @@ class PackagePlan < Plan
       :name => "Instituição de Ensino Médio Plus",
       :price => 1680.00,
       :yearly_price => 16968.00,
+      :membership_fee => 0.00,
       :video_storage_limit => 512.megabytes,
       :file_storage_limit => 512.megabytes,
       :members_limit => 700

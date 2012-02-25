@@ -234,4 +234,8 @@ describe PackageInvoice do
       subject.generate_description.should_not be_nil
     end
   end
+
+  it "always returns false to open?" do
+    subject.should_not be_open
+  end
 end
