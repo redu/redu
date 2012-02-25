@@ -29,22 +29,22 @@ ambiente de estudo.
     </li>
     <li>
       <%= radio_button_tag :plan, 'licensed_plan-instituicao_medio' %>
-      <%= label_tag :plan_instituicao_medio, "Inst. de Ensino Médio" %>
+      <%= label_tag 'plan_licensed_plan-instituicao_medio', "Inst. de Ensino Médio" %>
       <span class="tiptip-right icon-small icon-question-blue_12_12" title="<%= "#{render 'plans/admin/licensed_plan_details', :name => 'Planos por licença', :type => 'Inst. de Ensino Médio', :plan => Plan.from_preset(:instituicao_medio, "LicensedPlan")}" %>"></span>
     </li>
     <li>
       <%= radio_button_tag :plan, 'licensed_plan-instituicao_superior', :checked => true %>
-      <%= label_tag :plan_instituicao_superior, "Inst. de Ensino Superior" %>
+      <%= label_tag 'plan_licensed_plan-instituicao_superior', "Inst. de Ensino Superior" %>
       <span class="tiptip-right icon-small icon-question-blue_12_12" title="<%= "#{render 'plans/admin/licensed_plan_details', :name => 'Planos por licença', :type => 'Inst. de Ensino Superior', :plan => Plan.from_preset(:instituicao_superior, "LicensedPlan")}" %>"></span>
     </li>
     <li>
       <%= radio_button_tag :plan, 'licensed_plan-curso_extensao' %>
-      <%= label_tag :plan_curso_extensao, "Curso Extensão" %>
+      <%= label_tag 'plan_licensed_plan-curso_extensao', "Curso Extensão" %>
       <span class="tiptip-right icon-small icon-question-blue_12_12" title="<%= "#{render 'plans/admin/licensed_plan_details', :name => 'Planos por licença', :type => 'Curso Extensão', :plan => Plan.from_preset(:curso_extensao, "LicensedPlan")}" %>"></span>
     </li>
     <li>
       <%= radio_button_tag :plan, 'licensed_plan-curso_corporativo' %>
-      <%= label_tag :plan_curso_corporativo, "Curso Corporativo" %>
+      <%= label_tag 'plan_licensed_plan-curso_corporativo', "Curso Corporativo" %>
       <span class="tiptip-right icon-small icon-question-blue_12_12" title="<%= "#{render 'plans/admin/licensed_plan_details', :name => 'Planos por licença', :type => 'Curso Corporativo', :plan => Plan.from_preset(:curso_corporativo, "LicensedPlan")}" %>"></span>
     </li>
   </ul>
@@ -54,17 +54,17 @@ ambiente de estudo.
     </li>
     <li>
       <%= radio_button_tag :plan, 'package_plan-instituicao_medio_lite' %>
-      <%= label_tag :plan_instituicao_medio_lite, "Lite" %>
+      <%= label_tag 'plan_package_plan-instituicao_medio_lite', "Lite" %>
       <span class="tiptip-right icon-small icon-question-blue_12_12" title="<%= "#{render 'plans/admin/details', :name => 'Instituição de Ensino Médio', :type => 'Lite', :plan => Plan.from_preset(:instituicao_medio_lite)}" %>"></span>
     </li>
     <li>
       <%= radio_button_tag :plan, 'package_plan-instituicao_medio_standard' %>
-      <%= label_tag :plan_instituicao_medio_standard, "Standard" %>
+      <%= label_tag 'plan_package_plan-instituicao_medio_standard', "Standard" %>
       <span class="tiptip-right icon-small icon-question-blue_12_12" title="<%= "#{render 'plans/admin/details', :name => 'Instituição de Ensino Médio', :type => 'Standard', :plan => Plan.from_preset(:instituicao_medio_standard)}" %>"></span>
     </li>
     <li>
       <%= radio_button_tag :plan, 'package_plan-instituicao_medio_plus' %>
-      <%= label_tag :plan_instituicao_medio_plus, "Plus" %>
+      <%= label_tag 'plan_package_plan-instituicao_medio_plus', "Plus" %>
       <span class="tiptip-right icon-small icon-question-blue_12_12" title="<%= "#{render 'plans/admin/details', :name => 'Instituição de Ensino Médio', :type => 'Plus', :plan => Plan.from_preset(:instituicao_medio_plus)}" %>"></span>
     </li>
   </ul>

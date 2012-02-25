@@ -51,7 +51,7 @@ describe Invoice do
         should == last_year_invoices.to_set
     end
 
-    it "" do
+    it "retrieves invoices of a billable" do
       plans = 2.times.collect do
         Factory(:plan, :billable => Factory(:environment))
       end

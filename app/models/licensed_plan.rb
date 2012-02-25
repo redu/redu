@@ -43,10 +43,13 @@ class LicensedPlan < Plan
   # será calculado ao final do mês, já que o seu valor depende da quantidade
   # de licenças utilizadas.
   def create_invoice(opts = {})
+    period_end = Date.today.end_of_month
+    period_start = Date.today
     options = {
       :invoice => {
-      :period_start => Date.today,
-      :period_end => Date.today.end_of_month,
+      :period_start => period_start,
+      :period_end => period_end,
+      :description => "Fatura referente à #{period_end - period_start + 1} dias no plano #{self.name}",
       :plan => self }
     }.deep_merge(opts)
 

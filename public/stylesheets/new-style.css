@@ -6531,6 +6531,10 @@ div.token-input-dropdown {
   margin-top: 20px;
 }
 
+#invoice-show .billable-infos .courses li {
+  width: 939px;
+}
+
 #invoice-show .billable-infos .invoice .total,
 #partner-invoice-index .billable-infos .invoice .total,
 #partner-invoice-index .total-partner {

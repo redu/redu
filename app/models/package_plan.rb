@@ -5,7 +5,6 @@ class PackagePlan < Plan
       :name => "Professor Grátis (3 meses)",
       :price => 0,
       :yearly_price => 0,
-      :membership_fee => 0,
       :video_storage_limit => 10.megabytes,
       :file_storage_limit => 5.megabytes,
       :members_limit => 10
@@ -41,7 +40,6 @@ class PackagePlan < Plan
       :name => "Instituição de Ensino Médio Lite",
       :price => 600.00,
       :yearly_price => 5000.00,
-      :membership_fee => 0.00,
       :video_storage_limit => 512.megabytes,
       :file_storage_limit => 512.megabytes,
       :members_limit => 200
@@ -50,7 +48,6 @@ class PackagePlan < Plan
       :name => "Instituição de Ensino Médio Standard",
       :price => 1250.00,
       :yearly_price => 12000.00,
-      :membership_fee => 0.00,
       :video_storage_limit => 512.megabytes,
       :file_storage_limit => 512.megabytes,
       :members_limit => 500
@@ -59,7 +56,6 @@ class PackagePlan < Plan
       :name => "Instituição de Ensino Médio Plus",
       :price => 1680.00,
       :yearly_price => 16968.00,
-      :membership_fee => 0.00,
       :video_storage_limit => 512.megabytes,
       :file_storage_limit => 512.megabytes,
       :members_limit => 700
@@ -108,7 +104,7 @@ class PackagePlan < Plan
   def create_invoice_and_setup
     create_invoice(:invoice => {
       :amount => self.price + (self.membership_fee || 0),
-      :description => "Fatura refrente aos primeiros 30 dias e a taxa de adesão do plano #{self.name}"})
+      :description => "Fatura refrente aos primeiros 30 dias#{self.membership_fee ? ' e a taxa de adesão': ''} no plano #{self.name}"})
   end
 
   # Cria ordem do gateway padrão (i.e PagSeguro) com as informações dos invoices
