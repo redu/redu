@@ -2,7 +2,11 @@
 <%= f.text_field :cnpj %>
 <%= concave_errors_for(f.object, :cnpj) %>
 
+<%= f.label :address, "Endereço:" %>
+<%= f.text_field :address %>
+<%= concave_errors_for(f.object, :address) %>
+
 <%= f.fields_for :environment do |builder| %>
-  <%= render :partial => "environments/complete_form", :locals => { :f => builder }%>
+  <%= render :partial => "environments/complete_form", :locals => { :f => builder, :partner => partner }%>
   <%= builder.hidden_field :owner,  :value => current_user.id %>
 <% end %>

@@ -96,3 +96,8 @@ stylesheets:
     - public/stylesheets/landing.css
   cold:
     - public/stylesheets/cold.css
+  print:
+    - public/stylesheets/reset.css
+    - public/stylesheets/new-fonts.css
+    - public/stylesheets/new-style.css
+    - public/stylesheets/print.css

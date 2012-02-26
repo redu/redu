@@ -5,8 +5,12 @@
     <%= tabs :users do %>
     <div class="call">
       <span class="billable">
+      <% if @plan.billable.is_a? Environment %>
+        <%= link_to @plan.billable.name, @plan.billable %>
+      <% else %>
         <%= link_to @plan.billable.name,
           environment_course_path(@plan.billable.environment, @plan.billable) %>
+      <% end %>
       </span>
       <span class="name"><%= @plan.name %></span>
     </div>
@@ -49,7 +53,7 @@
               </span>
             </td>
             <td>
-              <% if invoice.pending? %>
+              <% if invoice.pending? && invoice.is_a?(PackageInvoice) %>
                 <div class="concave-form pagseguro-concave-form">
                   <%= pagseguro_form invoice.plan.create_order, :submit => "Pagar" %>
                 </div>

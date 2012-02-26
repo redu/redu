@@ -1,0 +1,18 @@
+<%# Detalhes do curso em relação ao invoice
+    Params: course, invoice %>
+<li class="item">
+  <h4 class="course-name"><%= course.name %></h4>
+  <table class="common spaced">
+    <thead>
+      <th>#</th>
+      <th>Nome</th>
+      <th>Login</th>
+      <th>Data de início</th>
+      <th>Data de saída</th>
+      <th>Papel no curso</th>
+    </thead>
+    <tbody>
+      <%= render :partial => "licenses/item", :collection => invoice.licenses.of_course(course) %>
+    </tbody>
+  </table>
+</li>

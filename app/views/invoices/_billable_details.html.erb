@@ -1,0 +1,10 @@
+<%# Detalhes do billable
+  Params: billable (Environment) %>
+<% invoices.of_billable(billable).each do |invoice| %>
+  <div class="billable-infos">
+    <h3 class="name"><%= billable.name %></h3>
+    <span class="created-by">Criado por <%= billable.owner ? billable.owner.display_name : "Usuário removido" %></span>
+
+    <%= render "invoices/#{invoice.plan.class.to_s.underscore}_details", :invoice => invoice %>
+  </div>
+<% end %>
