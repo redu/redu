@@ -29,6 +29,13 @@ describe Api::CoursesController do
       links.should include 'spaces'
     end
 
+    it "should return valid relationships" do
+      parse(response.body)['links'].each do |rel|
+        get rel['href'], :format => 'json', :oauth_token => @token
+        response.code.should == "200"
+      end
+    end
+
     it "shold be return code 200 passing both ID and path" do
       get "/api/courses/#{subject.path}", :format => 'json'
 
@@ -91,7 +98,7 @@ describe Api::CoursesController do
       response.code.should == "422"
     end
 
-    it "should return the error explanation" do
+    it "should return the error explanation when there are errors" do
       course = { :path => 'my_new_course' }
       post "/api/environments/#{subject.environment.id}/courses",
         :course => course, :oauth_token => @token, :format => 'json'

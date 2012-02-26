@@ -6,13 +6,13 @@ module Api
       @environment = Environment.find_by_id(params[:environment_id])
       @courses = @environment.try(:courses) || []
 
-      respond_with @courses
+      respond_with :api, @environment, @courses
     end
 
     def show
       @course = Course.find(params[:id])
 
-      respond_with @course
+      respond_with :api, @course
     end
 
     def create
@@ -23,7 +23,7 @@ module Api
       end
       @course.save
 
-      respond_with @environment, @course
+      respond_with :api, @course
     end
 
     def update
@@ -37,7 +37,7 @@ module Api
       @course = Course.find(params[:id])
       @course.destroy
 
-      respond_with @course
+      respond_with :api, @course
     end
   end
 end
