@@ -15,11 +15,12 @@ describe CoursesController do
         { :name => "Redu", :workload => "12",
           :tag_list => "minhas, tags, exemplo, aula, teste",
           :path => "redu", :subscription_type => "1",
-          :description => "Lorem ipsum dolor sit amet, consectetur magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-        ullamco laboris nisi ut aliquip ex ea commodo."},
-        :plan => "free",
-        :environment_id => @environment.path,
-        :locale => "pt-BR" }
+          :description => "Lorem ipsum dolor sit amet, consectetur" \
+          "magna aliqua. Ut enim ad minim veniam, quis nostrud" \
+          "ullamco laboris nisi ut aliquip ex ea commodo."},
+          :plan => "free",
+          :environment_id => @environment.path,
+          :locale => "pt-BR" }
     end
 
     context "POST create" do
@@ -58,9 +59,7 @@ describe CoursesController do
         expect {
           post :create, @params
         }.should_not change(Invoice, :count)
-
       end
-
     end
   end
 
@@ -536,41 +535,56 @@ describe CoursesController do
     end
   end
 
-  context "POST - join" do
-    before do
-      @user = Factory(:user)
-      activate_authlogic
-      UserSession.create @user
+  context "POST join" do
 
-      @environment = Factory(:environment, :owner => @user)
+    context "when course is open" do
+      before do
+        @user = Factory(:user)
+        activate_authlogic
+        UserSession.create @user
 
-      @course = Factory(:course,:environment => @environment,
-                        :owner => @user)
+        @environment = Factory(:environment, :owner => @user)
 
-      plan = Factory( :plan, :billable => @course,
-                     :user => @course.owner)
-      @course.create_quota
+        @course = Factory(:course,:environment => @environment,
+                          :owner => @user)
 
-      @space = Factory(:space, :course => @course)
-      @subject_space = Factory(:subject, :space => @space,
-                               :owner => @course.owner,
-                               :finalized => true)
+        @plan = Factory(:active_licensed_plan, :billable => @environment,
+                       :user => @course.owner)
+        @plan.create_invoice_and_setup
 
-      @params = { :locale => 'pt-BR',
-        :environment_id => @environment.path,
-        :id => @course.path }
-    end
+        @environment.create_quota
+        @environment.reload
 
-    it "should create all hieararchy" do
-      @new_user = Factory(:user)
-      UserSession.create @new_user
+        @space = Factory(:space, :course => @course)
+        @subject_space = Factory(:subject, :space => @space,
+                                 :owner => @course.owner,
+                                 :finalized => true)
 
-      post :join, @params
+        @params = { :locale => 'pt-BR',
+                    :environment_id => @environment.path,
+                    :id => @course.path }
 
-      @course.users.should include(@new_user)
-      @space.users.should include(@new_user)
-      @subject_space.members.should include(@new_user)
-      @course.environment.users.should include(@new_user)
+        @new_user = Factory(:user)
+        UserSession.create @new_user
+      end
+
+      it "should create all hieararchy" do
+        post :join, @params
+
+        @course.users.should include(@new_user)
+        @space.users.should include(@new_user)
+        @subject_space.members.should include(@new_user)
+        @course.environment.users.should include(@new_user)
+      end
+
+      context "and plan is licensed" do
+        it "should create license on respective invoice" do
+          expect {
+            post :join, @params
+          }.should change(License, :count).by(1)
+        end
+      end
+
     end
   end
 
@@ -780,6 +794,29 @@ describe CoursesController do
     end
 
     context "POST create" do
+      context "when environment has plan" do
+        before do
+          @post_params = {:course => { :name => "course", :workload => "",
+                                        :path => "course-path", :tag_list => "",
+                                        :description => "",
+                                        :subscription_type => "1" } }
+          @post_params[:locale] = "pt-BR"
+          @post_params[:environment_id] = @environment.path
+          Factory(:active_licensed_plan, :billable => @environment)
+          @environment.reload
+          post :create, @post_params
+        end
+
+        it "should not create the plan" do
+          assigns[:course].plan.should be_nil
+        end
+
+        it "should not create the quota and computes it" do
+          assigns[:course].quota.should be_nil
+        end
+
+      end
+
       context "when successful" do
         before do
           @post_params = { :plan => "free",
@@ -789,10 +826,10 @@ describe CoursesController do
                                         :subscription_type => "1" } }
           @post_params[:locale] = "pt-BR"
           @post_params[:environment_id] = @environment.path
-          post :create, @post_params
         end
 
         it "redirects to Courses#show" do
+          post :create, @post_params
           response.should redirect_to(environment_course_path(@environment, Course.last))
         end
       end

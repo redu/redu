@@ -129,7 +129,8 @@ class LecturesController < BaseController
           lectureable.upload_to_scribd if lectureable.need_uploading?
         end
 
-        @space.course.quota.refresh
+        @space.course.quota.try(:refresh!)
+        @space.course.environment.quota.try(:refresh!)
         @lecture.published = 1
         @lecture.save
       else
@@ -175,7 +176,8 @@ class LecturesController < BaseController
   # DELETE /lectures/1.xml
   def destroy
     @lecture.destroy
-    @lecture.subject.space.course.quota.refresh
+    @lecture.subject.space.course.quota.try(:refresh!)
+    @lecture.subject.space.course.environment.quota.try(:refresh!)
     @lecture.refresh_students_profiles
 
     @quota = @course.quota

@@ -1,0 +1,8 @@
+<tr>
+  <td><%= item.id %></td>
+  <td><%= item.name %></td>
+  <td><%= item.login %></td>
+  <td><%= l item.period_start %></td>
+  <td><%= item.period_end ? (l item.period_end) : "-" %></td>
+  <td><%= Role.human_attribute_name(Role[item.role]) %></td>
+</tr>

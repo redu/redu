@@ -1,24 +1,26 @@
 <ul class="quotas clearfix">
-      <li class="clearfix">
-        <div class="meta">
-          <span class="label">membros:</span>
-          <span class="numeric">
-            <strong class="strong"><%= plan.billable.users.count %></strong> /
-            <%= plan.members_limit %>
-          </span>
-        </div>
-        <div class="used">
-          <span class="percentage"><%= quota_members.round %>%</span>
-          <div class="progress">
-            <div class="completed" style="width: <%= quota_members.round %>%;">
-              <%= quota_members.round %>%
-            </div>
+  <% unless plan.members_limit == 1.0/0 # Infinity %>
+    <li class="clearfix">
+      <div class="meta">
+        <span class="label">membros:</span>
+        <span class="numeric">
+          <strong class="strong"><%= plan.billable.users.count %></strong> /
+          <%= plan.members_limit %>
+        </span>
+      </div>
+      <div class="used">
+        <span class="percentage"><%= quota_members.round %>%</span>
+        <div class="progress">
+          <div class="completed" style="width: <%= quota_members.round %>%;">
+            <%= quota_members.round %>%
           </div>
         </div>
-        <ul class="resources">
-          <li class="icon-small icon-members-gray_16_18 replacement">membros</li>
-        </ul>
-      </li>
+      </div>
+      <ul class="resources">
+        <li class="icon-small icon-members-gray_16_18 replacement">membros</li>
+      </ul>
+    </li>
+  <% end %>
       <li class="clearfix">
         <div class="meta">
           <span class="label">documentos:</span>

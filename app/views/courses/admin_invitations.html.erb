@@ -56,7 +56,7 @@
         <span class="invite-description">Amplie sua base de membros. Procure pelo nome ou endereço de email; caso a pessoa não seja cadastrada no Redu, enviaremos um convite - que terá validade apenas para este curso. </span>
       </div>
 
-      <% unless @course.can_add_entry? %>
+      <% unless can? :add_entry, @course %>
         <div class="flash-message info">
           <span>O limite de vagas foi atingido, seus convites não poderão ser aceitos. Faça o upgrade do seu curso, e aumente a capacidade de usuários.</span>
         </div>
