@@ -290,7 +290,7 @@ class Course < ActiveRecord::Base
   def create_license(user, role)
     if self.environment.plan
       invoice = self.environment.plan.invoice
-      if invoice and invoice.type = "LicensedInvoice"
+      if invoice.is_a? LicensedInvoice
         invoice.licenses << License.create(:name => user.display_name,
                                            :login => user.login,
                                            :email => user.email,
@@ -306,7 +306,7 @@ class Course < ActiveRecord::Base
   def set_period_end(user)
     if self.environment.plan
       invoice = self.environment.plan.invoice
-      if invoice and invoice.type = "LicensedInvoice"
+      if invoice.is_a? LicensedInvoice
         license = user.get_open_license_with(self)
         license.period_end = DateTime.now
         license.save
