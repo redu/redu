@@ -7,7 +7,7 @@ FactoryGirl.define do
       email "fulano@redu.com.br"
       period_start "2012-02-02"
       period_end "2012-02-02"
-      role Role[:member]
+      role 2 # :member FIXME Aparece número estranho se deixar :member
       invoice nil
       association :course
     end

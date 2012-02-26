@@ -408,8 +408,8 @@ class User < ActiveRecord::Base
   end
 
   def get_open_license_with(entity)
-    License.where('login LIKE ? AND course_id = ? AND period_end IS NULL', self.login,
-                                 entity.id).first
+    License.where('login LIKE ? AND course_id = ? AND period_end IS NULL',
+                  self.login, entity).first
   end
 
   def environment_admin?(entity)
