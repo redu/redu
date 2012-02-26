@@ -177,6 +177,24 @@ describe CoursesController do
       end
     end
 
+    context "when course does not have a plan" do
+      before do
+        @course.plans = []
+
+        plan = Factory(:plan, :billable => @course.environment,
+                       :user => @course.environment.owner)
+
+        @params = { :member => { @users[1].id.to_s => "approve",
+          @users[2].id.to_s => "approve"},
+          :id => @course.path, :environment_id => @environment.path,
+          :locale => "pt-BR"}
+        post :moderate_members_requests, @params
+      end
+
+      it "should approve association" do
+        @course.approved_users.to_set.should == [@users[1], @users[2], @user].to_set
+      end
+    end
   end
 
   context "when viewing existent courses list" do

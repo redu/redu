@@ -206,9 +206,11 @@ class CoursesController < BaseController
         # calcula o total de usuarios que estão para ser aprovados
         # e só aprova aqueles que estiverem dentro do limite
         total_members = @course.approved_users.count + approved.count
-        if total_members > @course.plan.members_limit
+        members_limit = @course.plan.try(:members_limit) ||
+          @course.environment.plan.try(:members_limit)
+        if total_members > members_limit
           # remove o usuários que passaram do limite
-          (total_members - @course.plan.members_limit).times do
+          (total_members - members_limit).times do
             approved.shift
           end
           flash[:notice] = "O limite máximo de usuários foi atigindo, apenas alguns membros foram moderados."
