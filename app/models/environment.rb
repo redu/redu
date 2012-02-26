@@ -79,6 +79,7 @@ class Environment < ActiveRecord::Base
     (self.initials.nil? or self.initials.empty?) ? self.name : self.initials
   end
 
+  # Indica se o plano suporta a entrada de mais um usuário no ambiente
   def can_add_entry?
     self.users.count < self.plan.members_limit
   end

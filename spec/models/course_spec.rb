@@ -759,5 +759,46 @@ describe Course do
     it_should_behave_like "a billable" do
       let(:billable) { subject }
     end
+
+    context "when verifying members limit and plan is on course" do
+      before do
+        # Sem moderação
+        subject.subscription_type = 1
+        (1..5).each { subject.join(Factory(:user)) }
+      end
+
+      context "and plan has members limit" do
+        before do
+          plan = Plan.from_preset(:free)
+          plan.members_limit = 15
+          subject.plans << plan
+        end
+
+        it "should permit entry" do
+          subject.can_add_entry?.should be_true
+        end
+
+        it "should NOT permit entry" do
+          (1..15).each { subject.join(Factory(:user)) }
+          subject.can_add_entry?.should be_false
+        end
+      end
+
+      context "and plan dones NOT have members limit" do
+        before do
+          plan = Plan.from_preset(:free, "LicensedPlan")
+          subject.plans << plan
+        end
+
+        it "should permit entry" do
+          subject.can_add_entry?.should be_true
+        end
+
+        it "should permit entry" do
+          (1..15).each { subject.join(Factory(:user)) }
+          subject.can_add_entry?.should be_true
+        end
+      end
+    end
   end
 end

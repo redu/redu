@@ -20,7 +20,7 @@
                                  :remote => true, :class => 'form-loader' do %>
       <%= submit_tag "Recusar", :class => 'concave-clean' %>
     <% end %>
-    <% if item_invitation.course.can_add_entry? %>
+    <% if can? :add_entry, item_invitation.course %>
       <%= form_tag accept_environment_course_path(
         item_invitation.course.environment,
         item_invitation.course),

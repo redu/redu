@@ -112,7 +112,7 @@ describe LicensedInvoice do
     end
 
     it "updates to the correct amount" do
-      @invoice.amount.round(2).should == BigDecimal.new("30.97")
+      @invoice.amount.round(2).should == BigDecimal.new("32.90")
     end
     it "updates state to pending" do
       @invoice.should be_pending
@@ -187,7 +187,7 @@ describe LicensedInvoice do
     end
 
     it "should calculates invoice1's relative amount" do
-      @invoice1.reload.amount.round(2).should == BigDecimal.new("60.97")
+      @invoice1.reload.amount.round(2).should == BigDecimal.new("63.87")
     end
 
     it "should NOT calculate invoice2's relative amount" do

@@ -122,7 +122,7 @@ class Ability
       end
 
       # Join in a Course
-      can :add_entry, [Course, Environment] do |el|
+      can :add_entry, Course do |el|
         el.can_add_entry?
       end
 

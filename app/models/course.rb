@@ -269,8 +269,13 @@ class Course < ActiveRecord::Base
     self.user_course_invitations.find_by_email(email)
   end
 
+  # Indica se o plano suporta a entrada de mais um usuário no curso
   def can_add_entry?
-    self.approved_users.count < self.plan.members_limit
+    if self.plan
+      self.approved_users.count < self.plan.members_limit
+    else
+      self.environment.can_add_entry?
+    end
   end
 
   def plan

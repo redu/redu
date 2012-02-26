@@ -197,5 +197,49 @@ describe Environment do
     it_should_behave_like "a billable" do
       let(:billable) { subject }
     end
+
+    context "when verifying members limit and plan is on environment" do
+      before do
+        subject.courses = (1..2).collect { Factory(:course, :environment => nil) }
+        # Sem moderação
+        subject.courses.each do |c|
+          c.subscription_type = 1
+          (1..5).each { c.join(Factory(:user)) }
+        end
+      end
+
+      context "and plan has members limit" do
+        before do
+          plan = Plan.from_preset(:free)
+          plan.members_limit = 30
+          subject.plans << plan
+        end
+
+        it "should permit entry" do
+          subject.can_add_entry?.should be_true
+        end
+
+        it "should NOT permit entry" do
+          (1..15).each { subject.courses.first.join(Factory(:user)) }
+          subject.can_add_entry?.should be_false
+        end
+      end
+
+      context "and plan dones NOT have members limit" do
+        before do
+          plan = Plan.from_preset(:free, "LicensedPlan")
+          subject.plans << plan
+        end
+
+        it "should permit entry" do
+          subject.can_add_entry?.should be_true
+        end
+
+        it "should permit entry" do
+          (1..15).each { subject.courses.first.join(Factory(:user)) }
+          subject.can_add_entry?.should be_true
+        end
+      end
+    end
   end
 end

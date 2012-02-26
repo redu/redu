@@ -201,7 +201,7 @@ class CoursesController < BaseController
       end
 
       # verifica se o limite de usuário foi atingido
-      if @course.can_add_entry? and !approved.to_hash.empty?
+      if can?(:add_entry?, @course) and !approved.to_hash.empty?
 
         # calcula o total de usuarios que estão para ser aprovados
         # e só aprova aqueles que estiverem dentro do limite
