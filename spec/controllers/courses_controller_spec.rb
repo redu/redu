@@ -181,18 +181,26 @@ describe CoursesController do
       before do
         @course.plans = []
 
-        plan = Factory(:plan, :billable => @course.environment,
+        @plan = Factory(:active_licensed_plan, :billable => @course.environment,
                        :user => @course.environment.owner)
+        @plan.create_invoice
+
 
         @params = { :member => { @users[1].id.to_s => "approve",
           @users[2].id.to_s => "approve"},
           :id => @course.path, :environment_id => @environment.path,
           :locale => "pt-BR"}
-        post :moderate_members_requests, @params
       end
 
       it "should approve association" do
+        post :moderate_members_requests, @params
         @course.approved_users.to_set.should == [@users[1], @users[2], @user].to_set
+      end
+
+      it "should create only two licenses" do
+        expect{
+          post :moderate_members_requests, @params
+        }.should change(License, :count).from(0).to(2)
       end
     end
   end

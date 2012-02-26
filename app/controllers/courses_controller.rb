@@ -48,7 +48,6 @@ class CoursesController < BaseController
         if params[:course][:subscription_type].eql? "1" # Entrada de membros passou a ser livre, aprovar todos os membros pendentes
           @course.user_course_associations.waiting.each do |ass|
             ass.approve!
-            @course.create_hierarchy_associations(ass.user, ass.role)
           end
 
         end
@@ -221,7 +220,6 @@ class CoursesController < BaseController
         approved.keys.each do |user_id|
           @course.user_course_associations.where(:user_id => user_id).each do |ass|
             ass.approve!
-            @course.create_hierarchy_associations(ass.user, ass.role)
             # TODO fazer isso em batch
             UserNotifier.approve_membership(ass.user, @course).deliver
             end
