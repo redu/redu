@@ -75,7 +75,7 @@
       <div class="course-info">
         <span class="info-title icon-members-gray_16_18-before">Membro(s):</span>
         <span class="info-qty">
-          <span class="info-qty-members"><%= @course.users.count %></span> / <%= @course.plan.try(:members_limit) || @course.environment.plan.try(:members_limit) %> (<%= number_to_percentage(@course.percentage_quota_members, :precision => 0) %>)
+          <span class="info-qty-members"><%= @course.users.count %></span> / <%= @course.plan.try(:members_limit) || @course.environment.plan.try(:members_limit) %> (<%= number_to_percentage(@course.plan ? @course.percentage_quota_members : @course.environment.percentage_quota_members, :precision => 0) %>)
         </span>
         <span class="info-title icon-add-contact-gray_16_18-before">Convite(s):</span>
         <span class="info-qty"><span class="info-qty-members"><%= @course.user_course_invitations.count + @course.user_course_associations.invited.count %></span></span>
