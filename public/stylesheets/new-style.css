@@ -98,6 +98,9 @@ body {
   font-size: .9em;
   width: 138px;
   margin: 0 3px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 #nav-account li a:hover {
