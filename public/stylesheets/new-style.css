@@ -1,3 +1,4 @@
+
 body {
   background-color: rgb(247, 247, 247);
 }
@@ -7089,4 +7090,162 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   cursor: grabbing;
   cursor: -moz-grabbing;
   cursor: -webkit-grabbing;
+}
+
+/* Aqui modifiquei */
+
+.panel .upgrade-top-button .concave-important {
+  float: right;
+  width: 150px;
+  height: 32px;
+  background: rgb(171,227,133); /* Old browsers */
+}
+
+.borderradius .panel .upgrade-top-button .concave-important {
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.cssgradients .panel .concave-important {
+  background: -moz-linear-gradient(top, rgb(171,227,133) 0%, rgb(95,192,128) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(171,227,133)), color-stop(100%,rgb(95,192,128))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgb(171,227,133) 0%,rgb(95,192,128) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgb(171,227,133) 0%,rgb(95,192,128) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgb(171,227,133) 0%,rgb(95,192,128) 100%); /* IE10+ */
+  background: linear-gradient(top, rgb(171,227,133) 0%,rgb(95,192,128) 100%); /* W3C */
+}
+
+.cssgradients .panel  .concave-important:hover {
+  background: rgb(95,192,128); /* Old browsers */
+  background: -moz-linear-gradient(top,  rgb(95,192,128) 1%, rgb(171,227,133) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,rgb(95,192,128)), color-stop(100%,rgb(171,227,133))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgb(95,192,128) 1%,rgb(171,227,133) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgb(95,192,128) 1%,rgb(171,227,133) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgb(95,192,128) 1%,rgb(171,227,133) 100%); /* IE10+ */
+  background: linear-gradient(top,  rgb(95,192,128) 1%,rgb(171,227,133) 100%); /* W3C */
+}
+
+.boxshadow .panel .concave-important {
+  -webkit-box-shadow: inset 1px 1px 0px 0px rgb(171, 227, 133), inset -1px -1px 0px 0px rgb(171,227,133);
+  -moz-box-shadow: inset 1px 1px 0px 0px rgb(171, 227, 133), inset -1px -1px 0px 0px rgb(171,227,133);
+  box-shadow: inset 1px 1px 0px 0px rgb(171, 227, 133), inset -1px -1px 0px 0px rgb(171,227,133); 
+}
+
+.panel .call .college {
+  margin-top: 20px;
+}
+
+#invoice-index .panel .call {
+  margin-left: 9px;
+}
+
+.panel .plan-use:before {
+  background-image: url("../images/new/circulos-peq-cinza.png");
+  float: left;
+  content: '';
+  width: 51px;
+  height: 34px;
+  margin-left: -75px;
+  margin-top: -10px;
+}
+
+.panel .plan-use {
+  text-align: center;
+  margin-left: 75px;
+}
+
+.panel .call .environment p {
+  font-family: arial, sans-serif;
+  font-weight: normal;
+  font-size: 12px;
+  color: rgb(179, 179, 179);
+}
+
+.panel .call .course a {
+  font-family: museo-slab, arial ,sans-serif;
+  font-weight: 500;
+  font-size: 17px;
+  color: rgb(77, 173, 214);
+  line-height: 12px;
+  letter-spacing: -1px;
+}
+
+.plan-panel .payments {
+   background: rgb(255,255,255); /* Old browsers */;
+   width: 580px;
+   height: 34px;
+   padding-top: 20px;
+   font-family: arial, sans-serif;
+   font-size: 11px;
+   font-weight: normal;
+   margin-top: 1px;
+}
+
+.plan-panel .payments .pay-invoice {
+  margin-top: 20px;
+}
+
+.plan-panel .payments .pay-invoice li {
+  display: inline;
+}
+
+.plan-panel .payments .concave-important {
+  margin-right: 20px;
+  float: right;
+  margin-top: -10px;
+}
+
+.cssgradients .plan-panel .payments {
+  background: -moz-linear-gradient(top, rgb(255,255,255) 0%, rgb(204,204,204) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(255,255,255)), color-stop(100%,rgb(204,204,204))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgb(255,255,255) 0%,rgb(204,204,204) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgb(255,255,255) 0%,rgb(204,204,204) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgb(255,255,255) 0%,rgb(204,204,204) 100%); /* IE10+ */
+  background: linear-gradient(top, rgb(255,255,255) 0%,rgb(204,204,204) 100%); /* W3C */
+}
+
+.borderradius .plan-panel .payments {
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.boxshadow .plan-panel .payments {
+  -webkit-box-shadow: inset 1px 1px 0px 0px rgb(204, 204, 204), inset -1px -1px 0px 0px rgb(204, 204, 204);
+  -moz-box-shadow: inset 1px 1px 0px 0px rgb(204, 204, 204), inset -1px -1px 0px 0px rgb(204, 204, 204);
+  box-shadow: inset 1px 1px 0px 0px rgb(204, 204, 204), inset -1px -1px 0px 0px rgb(204, 204, 204); 
+}
+
+.plan-panel .payments .data .number {
+  color: rgb(77, 173, 214);
+  float: left;
+  margin-left: 20px;
+}
+
+.plan-panel .payments .data .date,
+.plan-panel .payments .data .value {
+  color: rgb(109, 110, 111);
+}
+
+.plan-panel .payments .data .date {
+  margin-left: 50px;
+}
+
+.plan-panel .payments .data .value {
+  margin-left: 65px;
+}
+
+.plan-panel .payments .data .date .bar {
+  color: rgb(204, 204, 204);
+}
+
+.plan-panel .payments .data .arrears {
+  color: rgb(255, 109, 109);
+  margin-left: 20px;
+}
+
+.plan-panel .payments .data .paid  {
+  margin-left: 20px;
+  color: rgb(109, 110, 122);
 }
