@@ -94,4 +94,28 @@ describe Api::CourseEnrollmentsController do
       @entity.fetch('state', '').should == 'invited'
     end
   end
+
+  context "when listing enrollments" do
+    before do
+      @enrollment1 = { :email => 'abc@def.gh' }
+      @user = Factory(:user)
+      @enrollment2 = { :email => @user.email }
+      post "/api/courses/#{@course.id}/enrollments", :enrollment => @enrollment1,
+        :format => 'json'
+      post "/api/courses/#{@course.id}/enrollments", :enrollment => @enrollment2,
+        :format => 'json'
+    end
+
+    it "should return code 200 (ok)" do
+      get "/api/courses/#{@course.id}/enrollments", :format => 'json'
+
+      response.code.should == '200'
+    end
+
+    it "should list any type of enrollment" do
+      get "/api/courses/#{@course.id}/enrollments", :format => 'json'
+
+      parse(response.body).length.should == 3
+    end
+  end
 end

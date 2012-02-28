@@ -1,7 +1,7 @@
 module Api
   class SpacesController < Api::ApiController
     def index
-      @course = Course.find_by_id(params[:course_id])
+      @course = Course.find(params[:course_id])
       @spaces = @course.try(:spaces) || []
 
       respond_with :api, @course, @spaces
@@ -14,7 +14,7 @@ module Api
     end
 
     def create
-      @course = Course.find_by_id(params[:course_id])
+      @course = Course.find(params[:course_id])
       @space = Space.new(params[:space]) do |c|
         c.course = @course
         c.owner = current_user

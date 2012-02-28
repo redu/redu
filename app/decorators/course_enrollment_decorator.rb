@@ -1,6 +1,7 @@
 module Api
   class CourseEnrollmentDecorator
-    delegate :id, :to_param, :model_name, :course, :user, :token, :email, :created_at,
+    delegate :id, :to_param, :model_name, :course, :user, :token, :email,
+      :created_at, :to_hash,
       :to => :@base_enrollment
 
     def initialize(base)

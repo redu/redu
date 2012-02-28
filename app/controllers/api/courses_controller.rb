@@ -3,7 +3,7 @@ module Api
     respond_to :js
 
     def index
-      @environment = Environment.find_by_id(params[:environment_id])
+      @environment = Environment.find(params[:environment_id])
       @courses = @environment.try(:courses) || []
 
       respond_with :api, @environment, @courses
@@ -16,12 +16,18 @@ module Api
     end
 
     def create
-      @environment = Environment.find_by_id(params[:environment_id])
+      @environment = Environment.find(params[:environment_id])
       @course = Course.new(params[:course]) do |c|
         c.environment = @environment
         c.owner = current_user
       end
       @course.save
+      @plan = Plan.from_preset(params[:course][:plan].try(:to_sym))
+      @plan.user = current_user
+      @course.plan = @plan
+      @plan.save
+      @course.create_quota
+      @plan.create_invoice_and_setup
 
       respond_with :api, @course
     end

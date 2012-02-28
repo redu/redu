@@ -13,6 +13,7 @@ Redu::Application.routes.draw do
   match '/oauth/authorize',     :to => 'oauth#authorize',     :as => :authorize
 
   match '/oauth',               :to => 'oauth#index',         :as => :oauth
+  match '/oauth/revoke', :to => 'oauth#revoke'
 
   match '/oauth/revoke',        :to => 'oauth#revoke',        :as => :oauth_revoke
 
@@ -237,7 +238,7 @@ Redu::Application.routes.draw do
     resources :courses, :except => [:new, :edit, :index, :create] do
       resources :spaces, :except => [:new, :edit], :shallow => true
       resources :users, :only => :index
-      resources :course_enrollments, :only => [:create, :show],
+      resources :course_enrollments, :only => [:create, :show, :index],
         :path => 'enrollments', :as => 'enrollments'
     end
 

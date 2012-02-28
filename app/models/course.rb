@@ -7,6 +7,7 @@ class Course < ActiveRecord::Base
   has_many :spaces, :dependent => :destroy
   has_many :user_course_associations, :dependent => :destroy
   has_many :user_course_invitations, :dependent => :destroy
+  has_many :course_enrollments
   belongs_to :owner, :class_name => "User", :foreign_key => "owner"
   has_many :users, :through => :user_course_associations
   has_many :approved_users, :through => :user_course_associations,

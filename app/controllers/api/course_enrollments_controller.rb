@@ -16,5 +16,14 @@ module Api
 
       respond_with(decorated, :with_representer => CourseEnrollmentRepresenter)
     end
+
+    def index
+      @course = Course.find(params[:course_id])
+      denrollments = @course.course_enrollments.collect do |e|
+        Api::CourseEnrollmentDecorator.new(e)
+      end
+
+      respond_with(denrollments, :with_representer => CourseEnrollmentRepresenter)
+    end
   end
 end
