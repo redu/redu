@@ -36,12 +36,17 @@ $(document).ready(function(){
   initialize_graph = function (id_course) {
     $.getJSON("../api/dashboard/teacher_participation.json?id_course="+id_course,
     function(json){
-      options.series[0].data = json.lectures_created;
-      options.series[1].data = json.posts;
-      options.series[2].data = json.answers;
+      if (json.erro) {
+        options.title.text = json.erro
+      }
+      else{
+        options.series[0].data = json.lectures_created;
+        options.series[1].data = json.posts;
+        options.series[2].data = json.answers;
 
-      options.xAxis.categories = json.days;
-      chart = new Highcharts.Chart(options);
+        options.xAxis.categories = json.days;
+      };
+        chart = new Highcharts.Chart(options);
     });
   };
 });

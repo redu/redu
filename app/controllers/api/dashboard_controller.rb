@@ -5,10 +5,16 @@ module Api
       # params [:id_course]
       @course = Course.find(params[:id_course])
       @teachers = @course.teachers
-      @uca = @teachers.first.get_association_with(@course)
-      @participation = TeacherParticipation.new(@uca)
 
-      self.generate_json
+      # only if there is teachers
+      if @teachers.empty?
+        @erro = Erro.new("Não existem Professores neste Curso")
+        respond_with @erro.extend(ErroRepresenter)
+      else
+        @uca = @teachers.first.get_association_with(@course)
+        @participation = TeacherParticipation.new(@uca)
+        self.generate_json
+      end
     end
 
     # Interação do usuário
