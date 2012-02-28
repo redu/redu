@@ -300,7 +300,7 @@ HTTP 404:: Não encontrado
 === Propriedades e restrições
 Propriedades::
               [name] Nome da disciplina
-              [path] Descrição da disciplina
+              [description] Descrição da disciplina
 Restrições::
               [name] Máximo 40 caracteres; deve ser único.
               [description] Máximo de 400 caracteres

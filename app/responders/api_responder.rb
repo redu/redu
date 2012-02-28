@@ -1,10 +1,8 @@
 module Roar::Rails
   module Responder
     def extend_with_representer!(resource, representer=nil)
-      if const_exists? representer_name(resource)
-        representer ||= representer_for_resource(resource)
-        resource.extend(representer)
-      end
+      representer ||= representer_for_resource(resource)
+      resource.extend(representer) if representer
     end
 
     def display(resource, given_options={})
@@ -22,7 +20,8 @@ module Roar::Rails
     private
 
     def representer_for_resource(resource)
-      representer_name(resource).constantize
+      representer = representer_name(resource)
+      representer.constantize if const_exists? representer
     end
 
     def representer_name(resource)
