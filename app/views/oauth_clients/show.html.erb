@@ -1,4 +1,4 @@
-<h1>OAuth details for <%=@client_application.name %></h1>
+<h1>Detalhes do Aplicativo OAuth <%=@client_application.name %></h1>
 <p>
   <strong>Consumer Key:</strong>
   <code><%=@client_application.key %></code>
@@ -21,7 +21,7 @@
 </p>
 
 <p>
-  We support hmac-sha1 (recommended) as well as plain text in ssl mode.
+  Suportamos hmac-sha1 (recomendado) ou texto puro em modo ssl.
 </p>
-<%= link_to 'Edit', edit_oauth_client_path(@client_application) %> |
-<%= link_to 'Back', oauth_clients_path %>
+<%= link_to 'Editar', edit_oauth_client_path(@client_application) %> |
+<%= link_to 'Voltar', oauth_clients_path %>

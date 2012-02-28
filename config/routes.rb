@@ -14,6 +14,12 @@ Redu::Application.routes.draw do
 
   match '/oauth',               :to => 'oauth#index',         :as => :oauth
 
+  match '/oauth/revoke',        :to => 'oauth#revoke',        :as => :oauth_revoke
+
+  match '/oauth/invalidate',    :to => 'oauth#invalidate',    :as => :oauth_invalidate
+
+  match '/oauth/capabilities',  :to => 'oauth#capabilities',  :as => :oauth_capabilities
+
   post "presence/auth"
   post "presence/multiauth"
   post "presence/send_chat_message"
