@@ -9,7 +9,10 @@ module Api
       # only if there is teachers
       if @teachers.empty?
         @erro = Erro.new("Não existem Professores neste Curso")
-        respond_with @erro.extend(ErroRepresenter)
+        respond_to do |format|
+          format.json { render :json => @erro.extend(ErroRepresenter)}
+          format.any { raise ActionController::RoutingError.new('Not Found') }
+        end
       else
         @uca = @teachers.first.get_association_with(@course)
         @participation = TeacherParticipation.new(@uca)
@@ -40,7 +43,10 @@ module Api
       @participation.generate!
       @participation.extend(TeacherParticipationRepresenter)
 
-      respond_with @participation
+      respond_to do |format|
+        format.json { render :json => @participation }
+        format.any { raise ActionController::RoutingError.new('Not Found') }
+      end
     end
   end
 end
