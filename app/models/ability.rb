@@ -127,8 +127,8 @@ class Ability
       end
 
       # Join in a Course
-      can :add_entry, Course do |course|
-        course.can_add_entry?
+      can :add_entry, Course do |el|
+        el.can_add_entry?
       end
 
       # Plan (payment gateway)
@@ -147,9 +147,15 @@ class Ability
 
       # Parceiros
       can :contact, Partner
+      cannot :index, Partner unless user.admin?
 
       # Result
       can :update, Result, :state => 'started', :user_id => user.id
+
+      # Invoice
+      cannot :pay, Invoice do |invoice|
+        !(user.admin? && invoice.pending?)
+      end
     end
   end
 end

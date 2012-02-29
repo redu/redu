@@ -1,4 +1,11 @@
-Factory.define :quota do |q|
-  q.multimedia 5.megabytes
-  q.files 10.megabytes
+FactoryGirl.define do
+  factory :quota do
+    multimedia 5.megabytes
+    files 10.megabytes
+  end
+
+  factory :unused_quota, :class => :quota do
+    multimedia 0
+    files 0
+  end
 end

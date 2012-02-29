@@ -233,7 +233,7 @@ module BaseHelper
 
   # Mostra tabela de preço de planos
   def pricing_table(plans=nil)
-    plans ||= Plan::PLANS
+    plans ||= PackagePlan::PLANS
 
     render :partial => "plans/plans", :locals => { :plans => plans }
   end

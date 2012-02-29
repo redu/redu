@@ -27,7 +27,6 @@ describe Course do
 
   it { should have_and_belong_to_many :audiences }
   it { should have_one(:quota).dependent(:destroy) }
-  it { should have_one(:plan) }
 
   it { should have_many :logs }
   it { should have_many :statuses }
@@ -314,6 +313,23 @@ describe Course do
       subject.user_course_associations.last.role }.to(Role[:tutor])
 
   end
+  context "when plan is licensed" do
+    before do
+      @plan = Factory(:active_licensed_plan, :billable => @environment,
+                      :user => subject.owner)
+      @plan.create_invoice_and_setup
+      @environment.create_quota
+      @environment.reload
+    end
+
+
+    it "changes a license role" do
+      user = Factory(:user)
+      subject.join(user)
+      subject.change_role(user, Role[:tutor])
+      user.get_open_license_with(subject).role == Role[:tutor]
+    end
+  end
 
   context "when joining an user" do
     before do
@@ -397,10 +413,32 @@ describe Course do
         assoc.state.should == "approved"
       end
     end
+
+    context "when plan is licensed" do
+      before do
+        @plan = Factory(:active_licensed_plan, :billable => @environment,
+                        :user => subject.owner)
+        @plan.create_invoice_and_setup
+        @environment.create_quota
+        @environment.reload
+      end
+
+      it "should create a license" do
+        @user= Factory(:user)
+        expect {
+          subject.join(@user)
+        }.should change(License, :count).by(1)
+      end
+
+    end
   end
 
   context "removes a user (unjoin)" do
     before do
+      @plan = Factory(:active_licensed_plan, :billable => @environment)
+      @plan.create_invoice_and_setup
+      @environment.create_quota
+      @environment.reload
       @space = Factory(:space, :course => subject)
       @space_2 = Factory(:space, :course => subject)
       @sub = Factory(:subject, :space => @space, :owner => subject.owner,
@@ -425,6 +463,13 @@ describe Course do
     it "removes a user from all enrolled subjects" do
       @sub.members.should_not include(@user)
       @sub_2.members.should_not include(@user)
+    end
+
+    context "when plan is licensed" do
+      it "should set the period end of a license that" do
+        subject.environment.plan.invoice.licenses.last.
+          period_end.should_not be_nil
+        end
     end
   end
 
@@ -692,39 +737,68 @@ describe Course do
     subject.invited?("email@example.com").should be_true
   end
 
-  context "Quotas" do
-    before do
-      users = 4.times.inject([]) { |res, i| res << Factory(:user) }
-
-      Factory(:plan, :billable => subject, :user => subject.owner,
-              :members_limit => 10)
-      subject.join(users[0], Role[:environment_admin])
-      subject.join(users[1], Role[:environment_admin])
-      subject.join(users[2], Role[:teacher])
-      subject.join(users[3], Role[:tutor])
-    end
-
-    it "retrieve a percentage of quota file" do
-      subject.quota.files = 512
-      subject.quota.save
-      subject.percentage_quota_file.should == 50
-    end
-
-    it "retrieve a percentage of quota multimedia" do
-      subject.quota.multimedia = 512
-      subject.quota.save
-      subject.percentage_quota_multimedia.should == 50
-    end
-
-    it "retrieve a percentage of a members" do
-      subject.percentage_quota_members == 50
-    end
-  end
-
   it "doesnt accept ." do
     subject.path = "www.redu.com.br"
     subject.should_not be_valid
     subject.errors[:path].should_not be_empty
   end
 
+  context "behaves like a billable" do
+    before do
+      users = 4.times.collect { Factory(:user) }
+
+      Factory(:active_package_plan, :billable => subject, :user => subject.owner,
+              :members_limit => 10)
+
+      subject.join(users[0], Role[:environment_admin])
+      subject.join(users[1], Role[:environment_admin])
+      subject.join(users[2], Role[:teacher])
+      subject.join(users[3], Role[:tutor])
+    end
+
+    it_should_behave_like "a billable" do
+      let(:billable) { subject }
+    end
+
+    context "when verifying members limit and plan is on course" do
+      before do
+        # Sem moderação
+        subject.subscription_type = 1
+        (1..5).each { subject.join(Factory(:user)) }
+      end
+
+      context "and plan has members limit" do
+        before do
+          plan = Plan.from_preset(:free)
+          plan.members_limit = 15
+          subject.plans << plan
+        end
+
+        it "should permit entry" do
+          subject.can_add_entry?.should be_true
+        end
+
+        it "should NOT permit entry" do
+          (1..15).each { subject.join(Factory(:user)) }
+          subject.can_add_entry?.should be_false
+        end
+      end
+
+      context "and plan dones NOT have members limit" do
+        before do
+          plan = Plan.from_preset(:free, "LicensedPlan")
+          subject.plans << plan
+        end
+
+        it "should permit entry" do
+          subject.can_add_entry?.should be_true
+        end
+
+        it "should permit entry" do
+          (1..15).each { subject.join(Factory(:user)) }
+          subject.can_add_entry?.should be_true
+        end
+      end
+    end
+  end
 end

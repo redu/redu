@@ -1,4 +1,5 @@
 class Course < ActiveRecord::Base
+  include ActsAsBillable
 
   # Apenas deve ser chamado na criação do segundo curso em diante
   after_create :create_user_course_association, :unless => "self.environment.nil?"
@@ -47,8 +48,6 @@ class Course < ActiveRecord::Base
     :conditions => [ "(course_enrollments.role = ? OR course_enrollments.role = ?) AND course_enrollments.state = ?", 6, 5, 'approved']
 
   has_and_belongs_to_many :audiences
-  has_one :quota, :dependent => :destroy, :as => :billable
-  has_one :plan, :as => :billable
 
   has_many :logs, :as => :logeable, :order => "created_at DESC",
     :dependent => :destroy
@@ -119,6 +118,12 @@ class Course < ActiveRecord::Base
                    where(:course_id => self.id).first
     membership.update_attributes({:role => role})
 
+
+
+    # TODO remover lógica daqui
+    # alterando o papel do usuário no license atual
+    change_license_role(user, role)
+
     user.user_space_associations.where(:space_id => self.spaces).
       includes(:space).each do |membership|
         membership.space.change_role(user, role)
@@ -136,7 +141,6 @@ class Course < ActiveRecord::Base
   end
 
   def join(user, role = Role[:member])
-
     association = UserCourseAssociation.create(:user_id => user.id,
                                                :course_id => self.id,
                                                :role => role)
@@ -153,6 +157,9 @@ class Course < ActiveRecord::Base
   def unjoin(user)
     course_association = user.get_association_with(self)
     course_association.destroy
+
+    # Atualizando license atual para setar o period_end
+    set_period_end(user)
 
     self.spaces.each do |space|
       space_association = user.get_association_with(space)
@@ -171,6 +178,9 @@ class Course < ActiveRecord::Base
     UserEnvironmentAssociation.create(:user_id => user.id,
                                       :environment_id => self.environment.id,
                                       :role => role)
+
+
+    self.create_license(user, role)
     self.spaces.each do |space|
       #FIXME tirar status quando remover moderacao de space
       UserSpaceAssociation.create(:user_id => user.id,
@@ -260,35 +270,58 @@ class Course < ActiveRecord::Base
     self.user_course_invitations.find_by_email(email)
   end
 
-  # Retorna o percentual de espaço ocupado por files
-  def percentage_quota_file
-    if self.quota.files >= self.plan.file_storage_limit
-      100
-    else
-      (self.quota.files * 100.0) / self.plan.file_storage_limit
-    end
-  end
-
-  # Retorna o percentual de espaço ocupado por arquivos multimedia
-  def percentage_quota_multimedia
-    if self.quota.multimedia >= self.plan.video_storage_limit
-      100
-    else
-      ( self.quota.multimedia * 100.0 ) / self.plan.video_storage_limit
-    end
-  end
-
-  # Retorna o percentual de membros do curso
-  def percentage_quota_members
-    if self.users.count >= self.plan.members_limit
-      100
-    else
-      ( self.users.count * 100.0 )/ self.plan.members_limit
-    end
-  end
-
+  # Indica se o plano suporta a entrada de mais um usuário no curso
   def can_add_entry?
-    self.approved_users.count < self.plan.members_limit
+    if self.plan
+      self.approved_users.count < self.plan.members_limit
+    else
+      self.environment.can_add_entry?
+    end
+  end
+
+  def plan
+    # TODO rever este código
+    self.plans.order("created_at DESC").limit(1).first
+  end
+
+  protected
+
+  # Cria licença passando com parâmetro o usuário que acaba de se matricular e o
+  # papel que desempenha
+  def create_license(user, role)
+    if self.environment.plan
+      invoice = self.environment.plan.invoice
+      if invoice.is_a? LicensedInvoice
+        invoice.licenses << License.create(:name => user.display_name,
+                                           :login => user.login,
+                                           :email => user.email,
+                                           :period_start => DateTime.now,
+                                           :role => role,
+                                           :invoice => invoice,
+                                           :course => self)
+      end
+    end
+  end
+
+  # Seta o period_end de License quando o usuário é desmatriculado ou se desmatricula
+  def set_period_end(user)
+    if self.environment.plan
+      invoice = self.environment.plan.invoice
+      if invoice.is_a? LicensedInvoice
+        license = user.get_open_license_with(self)
+        license.period_end = DateTime.now
+        license.save
+      end
+    end
+  end
+
+  # Recupera o último license criado e modifica a role passada como parâmetro
+  def change_license_role(user, role)
+    license = user.get_open_license_with(role)
+    if license
+      license.role = role
+      license.save
+    end
   end
 
 end
