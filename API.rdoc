@@ -176,9 +176,11 @@ Troque <tt>:course_id</tt> pelo ID do curso.
 
 === Criação
 
-URL::            <code>/api/courses</code>
+URL::            <code>/api/environments/:environment_id/courses</code>
 Método::         POST
 Argumentos:: <code>name, path, workload (opcional), description (opcional)</code>
+
+Troque <tt>:environment_id</tt> pelo ID do AVA.
 
 ==== Códigos HTTP possíveis
 
