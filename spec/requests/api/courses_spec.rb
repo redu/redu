@@ -105,6 +105,14 @@ describe Api::CoursesController do
 
       parse(response.body).should have_key 'name'
     end
+
+    it "should not create the course without an environment" do
+      course = { :name => 'My new course', :path => 'my_new_course' }
+      post "/api/environments/1212121/courses",
+        :course => course, :oauth_token => @token, :format => 'json'
+
+      response.code.should == '404'
+    end
   end
 
   context "put /courses/:id" do
@@ -131,6 +139,7 @@ describe Api::CoursesController do
 
       parse(response.body).should have_key 'path'
     end
+
   end
 
   context "delete /courses/:id" do
