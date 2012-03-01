@@ -1,5 +1,6 @@
 module Api
   class DashboardController < ApiController
+
     # Requisição default pega o primeiro professor da lista do curso
     def teacher_participation
       # params [:id_course]

@@ -98,6 +98,7 @@ GEM
       mime-types
       xml-simple
     builder (2.1.2)
+    calendar_date_select (1.16.3)
     cancan (1.6.4)
     childprocess (0.2.2)
       ffi (~> 1.0.6)
@@ -281,6 +282,7 @@ DEPENDENCIES
   awesome_nested_fields
   aws-s3
   bundler (~> 1.0.15)
+  calendar_date_select (~> 1.16.3)
   cancan
   ckeditor (= 3.4.2.pre)
   date_validator
