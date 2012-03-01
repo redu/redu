@@ -2,6 +2,7 @@ require "api_spec_helper"
 
 describe Api::CourseEnrollmentsController do
   before do
+    @application, @current_user, @token = generate_token
     @environment = Factory(:complete_environment)
     @course = @environment.courses.first
   end
@@ -117,5 +118,45 @@ describe Api::CourseEnrollmentsController do
 
       parse(response.body).length.should == 3
     end
+  end
+
+  context "when listing user's enrollments" do
+    before do
+      @environment2 = Factory(:complete_environment)
+      @user = @environment2.owner
+      @course.join(@user)
+    end
+
+    it "should return status 200 (ok)" do
+      get "/api/users/#{@user.id}/enrollments", :format => 'json'
+      response.code.should == '200'
+    end
+
+    it "should return the correct enrollments" do
+      get "/api/users/#{@user.id}/enrollments", :format => 'json'
+      parse(response.body).count.should == 2
+    end
+  end
+
+  context "when DELETE enrollment" do
+    before do
+      @external_user = Factory(:user)
+      @enrollment = { :email => @external_user.email }
+      post "/api/courses/#{@course.id}/enrollments", :enrollment => @enrollment,
+        :format => 'json'
+      @entity = parse(response.body)
+      @href = @entity['links'].detect { |link| link['rel'] == 'self' }
+      @href = @href.fetch('href','')
+    end
+
+    it "should return status 200 (ok)" do
+      delete @href, :format => 'json', :oauth_token => @token
+      response.code.should == '200'
+    end
+
+
+
+
+
   end
 end

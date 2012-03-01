@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
   has_many :user_environment_associations, :dependent => :destroy
   has_many :environments, :through => :user_environment_associations
   has_many :user_course_associations, :dependent => :destroy
+  has_many :course_enrollments, :dependent => :destroy
   has_many :environments_owned, :class_name => "Environment",
     :foreign_key => "owner"
   # Course
