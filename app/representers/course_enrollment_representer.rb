@@ -21,6 +21,6 @@ module CourseEnrollmentRepresenter
   end
 
   link :user do
-    user_url(self.user) if self.user
+    api_user_url(self.user) if self.user
   end
 end
