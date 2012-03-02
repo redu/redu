@@ -82,4 +82,23 @@ describe SessionsController do
       end
     end
   end
+
+  describe :omniauth do
+    OmniAuth.config.test_mode = true
+    
+    before do
+      request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:facebook]
+    end
+
+    it "should authenticate user in facebook" do
+      request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:facebook]
+      OmniAuth.config.mock_auth[:facebook] = {
+        :provider => 'facebook',
+        :uid => '12345'
+      }
+      request.env['omniauth.auth']['info']['uid'].should_be eq('12345')
+    end
+
+  end
+
 end

@@ -49,6 +49,9 @@ class SessionsController < BaseController
     redirect_to home_path
   end
 
+  def omniauth
+  end
+
   protected
 
   def less_than_30_days_of_registration_required
