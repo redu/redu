@@ -141,11 +141,11 @@ describe Api::CourseEnrollmentsController do
   context "when DELETE enrollment" do
     before do
       @external_user = Factory(:user)
-      @enrollment = { :email => @external_user.email }
-      post "/api/courses/#{@course.id}/enrollments", :enrollment => @enrollment,
-        :format => 'json'
-      @entity = parse(response.body)
-      @href = @entity['links'].detect { |link| link['rel'] == 'self' }
+      @course.join(@external_user)
+
+      get "/api/enrollments/#{@external_user.get_association_with(@course).id}",
+        :format => 'json', :oauth_token => @token
+      @href = parse(response.body)['links'].detect { |link| link['rel'] == 'self' }
       @href = @href.fetch('href','')
     end
 
@@ -154,9 +154,24 @@ describe Api::CourseEnrollmentsController do
       response.code.should == '200'
     end
 
+    it "should remove the enrollment" do
+      delete @href, :format => 'json', :oauth_token => @token
+      get @href, :format => 'json', :oauth_token => @token
+      response.code.should == '404'
+    end
 
+    context "when the user isnt registered" do
+      it "should remove the enrollment" do
+        post "/api/courses/#{@course.id}/enrollments",
+        :enrollment => { :email => 'abc@def.gh' }, :format => 'json',
+        :token => @token
 
+        id = parse(response.body)['id']
+        delete "/api/enrollments/#{id}", :token => @token, :format => 'json'
 
-
+        get "/api/enrollments/#{id}", :format => 'json', :oauth_token => @token
+        response.code.should == '404'
+      end
+    end
   end
 end

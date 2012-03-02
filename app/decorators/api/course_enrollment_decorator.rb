@@ -15,5 +15,14 @@ module Api
 
       @base_enrollment.state
     end
+
+    # Lógica de desmatricular para UCI e UCA
+    def unenroll
+      if @base_enrollment.kind_of? UserCourseAssociation
+        @base_enrollment.course.unjoin(@base_enrollment.user)
+      else
+        @base_enrollment.destroy
+      end
+    end
   end
 end

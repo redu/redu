@@ -21,12 +21,13 @@ describe Api::CoursesController do
       end
     end
 
-    it "should hold a relationship to self and spaces"  do
+    it "should hold a relationship to self, spaces, environment and enrollments"  do
       links = parse(response.body)['links']
       links.collect! { |l| l.fetch('rel') }
 
-      links.should include 'self'
-      links.should include 'spaces'
+      %w( self spaces environment enrollments ).each do |link|
+        links.should include link
+      end
     end
 
     it "should return valid relationships" do

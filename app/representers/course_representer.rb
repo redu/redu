@@ -17,4 +17,12 @@ module CourseRepresenter
     api_course_spaces_url(self)
   end
 
+  link :environment do
+    api_environment_url(self.environment)
+  end
+
+  link :enrollments do
+    api_course_enrollments_url(self)
+  end
+
 end

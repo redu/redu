@@ -28,9 +28,10 @@ module Api
 
     def destroy
       @enrollment = CourseEnrollment.find(params[:id])
-      @enrollment.course.unjoin(@enrollment.user)
+      denrollment = Api::CourseEnrollmentDecorator.new(@enrollment)
+      denrollment.unenroll
 
-      respond_with @enrollment
+      respond_with denrollment
     end
 
     protected
