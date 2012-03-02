@@ -16,6 +16,10 @@ class PartnersController < BaseController
 
   end
 
+  def index
+    @partners = Partner.all
+  end
+
   def contact
     @environment = Environment.new(params[:environment])
     @partner_contact = PartnerContact.new(params[:partner_contact])

@@ -19,7 +19,6 @@ describe Space do
 
   it { should validate_presence_of :name}
   it { should_not validate_presence_of :description }
-  it { should validate_presence_of :submission_type }
   it { should ensure_length_of(:name).is_at_most 40 }
 
   [:owner, :removed, :members_count, :course_id, :published].each do |attr|

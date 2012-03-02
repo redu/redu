@@ -7,12 +7,6 @@ GIT
       activesupport (>= 3.0.0)
 
 GIT
-  remote: git://github.com/alto/aasm.git
-  revision: a6f77b5fa4981d92695e28d5984af56f1d79388c
-  specs:
-    aasm (2.2.0)
-
-GIT
   remote: git://github.com/apotonick/roar-rails.git
   revision: 851736e6cf2c4a930bc0b107cd43f750ac67f42b
   specs:
@@ -45,6 +39,13 @@ GIT
       actionmailer (>= 3.0.0)
       nokogiri (>= 1.4.4)
       premailer (>= 1.7.1)
+
+GIT
+  remote: git://github.com/rubyist/aasm.git
+  revision: ec724d5a486469955a927db38c667f0604d8800f
+  specs:
+    aasm (3.0.3)
+      activerecord
 
 GEM
   remote: http://rubygems.org/

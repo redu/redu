@@ -8,9 +8,13 @@ class Document < ActiveRecord::Base
 
   # Verifica se o curso tem espaço suficiente para o arquivo
   def can_upload_document?(lecture)
-    return false if lecture.subject.space.course.plan.state != "active"
-    plan = lecture.subject.space.course.plan
-    quota = lecture.subject.space.course.quota
+    plan = lecture.subject.space.course.plan ||
+      lecture.subject.space.course.environment.plan
+
+    return false if plan.state != "active"
+
+    quota = lecture.subject.space.course.quota ||
+      lecture.subject.space.course.environment.quota
 
     if quota.files > plan.file_storage_limit
       return false

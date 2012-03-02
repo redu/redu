@@ -12,7 +12,7 @@ gem 'will_paginate', '~> 3.0.pre2'
 gem 'mime-types'
 gem 'cancan'
 gem 'aasm', :require => "aasm",
-  :git => "git://github.com/alto/aasm.git"
+  :git => "git://github.com/rubyist/aasm.git"
 gem 'shuber-sortable'
 gem 'scribd_fu', :git => 'git://github.com/guiocavalcanti/scribd_fu.git'
 gem 'factory_girl_rails'
