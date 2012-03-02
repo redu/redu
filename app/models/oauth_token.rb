@@ -21,6 +21,10 @@ class OauthToken < ActiveRecord::Base
     "oauth_token=#{token}&oauth_token_secret=#{secret}"
   end
 
+  def self.verify_token(token)
+    self.find_by_token_and_invalidated_at(token, nil)
+  end
+
   protected
 
   def generate_keys

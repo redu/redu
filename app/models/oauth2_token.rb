@@ -17,4 +17,8 @@ class Oauth2Token < AccessToken
   def expires_in
     expires_at.to_i - Time.now.to_i
   end
+
+  def self.verify_token(token)
+    self.find_by_token_and_invalidated_at(token, nil)
+  end
 end
