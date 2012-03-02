@@ -4,7 +4,6 @@ Redu::Application.routes.draw do
   post "presence/multiauth"
   post "presence/send_chat_message"
   get "presence/last_messages_with"
-  get "dashboard/index"
   get "api/dashboard/teacher_participation"
   get "api/dashboard/teacher_participation_interaction"
 
@@ -180,6 +179,7 @@ Redu::Application.routes.draw do
         get :admin_members_requests
         get :admin_invitations
         get :admin_manage_invitations
+        get :teacher_participation_report
         post :invite_members
         post :accept
         post :join

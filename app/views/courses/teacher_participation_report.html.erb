@@ -1,0 +1,58 @@
+<%= render :partial => 'shared/management_background' %>
+<div class="management-sidebar">
+  <%= render :partial => 'courses/sidebar',
+    :locals => { :course => @course }%>
+</div>
+
+<div class="main grid_12 omega big-col management-wrapper">
+  <%= render :partial => 'courses/breadcrumbs',
+    :locals => { :course => @course } %>
+  <%= render :partial => 'courses/admin/header',
+    :locals => { :course => @course } %>
+  <div id="course-manage" class="body management">
+    <%= render :partial => 'courses/admin/clean_header' %>
+    <%= tabs :courses_admin do %>
+      <div id="teacher-participation-chart">
+        <%= lazy_load(:chart, :jammit => true) do %>
+          try{
+          id_course = <%= @course.id %>;
+          initialize_graph();
+          }catch(e){}
+        <% end %>
+      </div>
+      <%= form_tag "#", :class => "concave-form", :id => "graph-form" do %>
+        <%= label_tag "Professor"%>
+        <%= select(:user, "id", @course.teachers.all.collect {
+          |teacher| [teacher.first_name, teacher.id ] }, { :default => @course.teachers.first },
+          {:class =>"concave-select"})%>
+
+        <%= label_tag "Disciplinas" %>
+        <ul class="single-column">
+          <% @course.spaces.each do |space| %>
+            <li>
+              <%= check_box_tag "spaces-#{space.id}", space.id, true,
+              { :class => "item-space-check" } %>
+            <%= label_tag "spaces-#{space.id}", space.name %>
+          </li>
+        <% end %>
+        <li>
+          <%= check_box_tag "all-check", "0", true %>
+          <%= label_tag "all-check", "Todos" %>
+        </li>
+      </ul>
+
+      <%= label_tag "date_start", "Início" %>
+      <%= field_set_tag nil, :class => "inline" do %>
+        <%= date_select "date_start", "start", :default => Date.today - 9 %>
+      <% end %>
+
+      <%= label_tag "date_end", "Fim" %>
+      <%= field_set_tag nil, :class => "inline" do %>
+        <%= date_select "date_end", "start" %>
+      <% end %>
+
+      <%= submit_tag "Update", :onclick => "graph_interaction();", :class=>"concave-submit" %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

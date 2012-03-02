@@ -33,7 +33,7 @@ class TeacherParticipation
       @lectures_created << @total_lectures.by_day(@start_aux).count
       @posts << @total_posts.by_day(@start_aux).count
       @answers << @total_answers.by_day(@start_aux).count
-      @days << @start_aux.strftime("%-d-%m-%Y")
+      @days << @start_aux.strftime("%-d/%m")
       @start_aux += 1
     end
   end
