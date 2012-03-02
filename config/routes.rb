@@ -247,11 +247,11 @@ Redu::Application.routes.draw do
     resources :courses, :except => [:new, :edit, :index, :create] do
       resources :spaces, :except => [:new, :edit], :shallow => true
       resources :users, :only => :index
-      resources :course_enrollments, :only => [:create, :show, :index],
+      resources :course_enrollments, :only => [:create, :index],
         :path => 'enrollments', :as => 'enrollments'
     end
 
-    resources :course_enrollments, :only => :show,
+    resources :course_enrollments, :only => [:show, :destroy],
         :path => 'enrollments', :as => 'enrollments'
 
     resources :spaces, :except => [:new, :edit, :index, :create] do
@@ -263,7 +263,10 @@ Redu::Application.routes.draw do
       resources :user, :only => :index
     end
 
-    resources :users, :only => :show
+    resources :users, :only => :show do
+      resources :course_enrollments, :only => :index, :path => :enrollments,
+        :as => 'enrollments'
+    end
 
     # Hack para capturar exceções ActionController::RoutingError
     match '*', :to => 'api#routing_error'

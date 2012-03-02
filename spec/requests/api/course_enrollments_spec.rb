@@ -2,6 +2,7 @@ require "api_spec_helper"
 
 describe Api::CourseEnrollmentsController do
   before do
+    @application, @current_user, @token = generate_token
     @environment = Factory(:complete_environment)
     @course = @environment.courses.first
   end
@@ -116,6 +117,61 @@ describe Api::CourseEnrollmentsController do
       get "/api/courses/#{@course.id}/enrollments", :format => 'json'
 
       parse(response.body).length.should == 3
+    end
+  end
+
+  context "when listing user's enrollments" do
+    before do
+      @environment2 = Factory(:complete_environment)
+      @user = @environment2.owner
+      @course.join(@user)
+    end
+
+    it "should return status 200 (ok)" do
+      get "/api/users/#{@user.id}/enrollments", :format => 'json'
+      response.code.should == '200'
+    end
+
+    it "should return the correct enrollments" do
+      get "/api/users/#{@user.id}/enrollments", :format => 'json'
+      parse(response.body).count.should == 2
+    end
+  end
+
+  context "when DELETE enrollment" do
+    before do
+      @external_user = Factory(:user)
+      @course.join(@external_user)
+
+      get "/api/enrollments/#{@external_user.get_association_with(@course).id}",
+        :format => 'json', :oauth_token => @token
+      @href = parse(response.body)['links'].detect { |link| link['rel'] == 'self' }
+      @href = @href.fetch('href','')
+    end
+
+    it "should return status 200 (ok)" do
+      delete @href, :format => 'json', :oauth_token => @token
+      response.code.should == '200'
+    end
+
+    it "should remove the enrollment" do
+      delete @href, :format => 'json', :oauth_token => @token
+      get @href, :format => 'json', :oauth_token => @token
+      response.code.should == '404'
+    end
+
+    context "when the user isnt registered" do
+      it "should remove the enrollment" do
+        post "/api/courses/#{@course.id}/enrollments",
+        :enrollment => { :email => 'abc@def.gh' }, :format => 'json',
+        :token => @token
+
+        id = parse(response.body)['id']
+        delete "/api/enrollments/#{id}", :token => @token, :format => 'json'
+
+        get "/api/enrollments/#{id}", :format => 'json', :oauth_token => @token
+        response.code.should == '404'
+      end
     end
   end
 end

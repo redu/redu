@@ -6,7 +6,7 @@ module Api
       decorated = Api::CourseEnrollmentDecorator.new(@enrollment)
 
       respond_with(:api, @course, decorated,
-                   :location => api_course_enrollment_url(@course, @enrollment),
+                   :location => api_enrollment_url(@course, @enrollment),
                    :with_representer => CourseEnrollmentRepresenter)
     end
 
@@ -18,12 +18,30 @@ module Api
     end
 
     def index
-      @course = Course.find(params[:course_id])
-      denrollments = @course.course_enrollments.collect do |e|
+      @entity = find_entity
+      denrollments = @entity.course_enrollments.collect do |e|
         Api::CourseEnrollmentDecorator.new(e)
       end
 
       respond_with(denrollments, :with_representer => CourseEnrollmentRepresenter)
+    end
+
+    def destroy
+      @enrollment = CourseEnrollment.find(params[:id])
+      denrollment = Api::CourseEnrollmentDecorator.new(@enrollment)
+      denrollment.unenroll
+
+      respond_with denrollment
+    end
+
+    protected
+
+    def find_entity
+      if params.has_key?(:course_id)
+        Course.find(params[:course_id])
+      else
+        User.find(params[:user_id])
+      end
     end
   end
 end

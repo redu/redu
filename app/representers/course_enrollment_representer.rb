@@ -9,7 +9,7 @@ module CourseEnrollmentRepresenter
   property :token
 
   link :self do
-    api_course_enrollment_url(self.course, self)
+    api_enrollment_url(self)
   end
 
   link :course do
@@ -21,6 +21,6 @@ module CourseEnrollmentRepresenter
   end
 
   link :user do
-    user_url(self.user) if self.user
+    api_user_url(self.user) if self.user
   end
 end

@@ -8,15 +8,21 @@ module Api
     private
 
     def not_found
-      respond_with nil, :status => :not_found
+      # respond_with({}, :status => :not_found)
+      respond_to do |format|
+        format.json { render :nothing => true, :status => :not_found }
+      end
     end
 
     def bad_request
-      respond_with nil, :status => :bad_request
+      # respond_with({}, :status => :bad_request)
+      respond_to do |format|
+        format.json { render :nothing => true, :status => :bad_request }
+      end
     end
 
     def self.responder
-      Class.new(super).send :include, Roar::Rails::Responder
+      Class.new(super).send :include, Api::Responder
     end
 
     protected
