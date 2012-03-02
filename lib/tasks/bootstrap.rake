@@ -67,7 +67,10 @@ namespace :bootstrap do
 
   desc "Inser standard partner"
   task :partner => :environment do
-    Partner.create(:name => "CNS", :email => "cns@redu.com.br")
+    Partner.create(:name => "CNS",
+                   :email => "cns@redu.com.br",
+                   :cnpj => "123445667",
+                   :address => "Beaker street")
   end
 
   desc "Run all bootstrapping tasks"
