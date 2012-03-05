@@ -49,7 +49,8 @@ class SessionsController < BaseController
     redirect_to home_path
   end
 
-  def omniauth
+  def omniauth_fb_authenticated
+    
   end
 
   protected

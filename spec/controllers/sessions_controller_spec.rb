@@ -2,6 +2,9 @@ require 'spec_helper'
 require 'authlogic/test_case'
 include Authlogic::TestCase
 
+# Omniauth testing.
+require 'omniauth-facebook'
+
 describe SessionsController do
   before do
     @user = Factory(:user)
@@ -84,21 +87,38 @@ describe SessionsController do
   end
 
   describe :omniauth do
-    OmniAuth.config.test_mode = true
-    
-    before do
-      request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:facebook]
+    before :each do
+      #@request = double('Request')
+      @request.stub(:params) { {} }
+      @request.stub(:cookies) { {} }
+
+      @client_id = '123'
+      @client_secret = '53cr3tz'
     end
 
-    it "should authenticate user in facebook" do
-      request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:facebook]
-      OmniAuth.config.mock_auth[:facebook] = {
-        :provider => 'facebook',
-        :uid => '12345'
-      }
-      request.env['omniauth.auth']['info']['uid'].should_be eq('12345')
+    subject do
+      args = [@client_id, @client_scret, @options].compact
+      OmniAuth::Strategies::Facebook.new(nil, *args).tap do |strategy|
+        strategy.stub(:request) { @request }
+      end
+    end #subject
+
+    context 'user has authenticated in facebook' do
+      context 'user is not a Redu user' do
+        it 'should detect that user is not registered' do
+          @raw_info = { 'email' => 'unregistered@example.com' }
+          subject.stub(:raw_info) { @raw_info }
+          user = User.find_by_email(subject.raw_info['email'])
+          user.should be_nil
+        end
+
+        it 'should create user from facebook auth hash' do
+          #TODO
+        end
+      end
+
+      context 'user is a Redu user' do
+      end
     end
-
-  end
-
+  end #describe :omniauth
 end

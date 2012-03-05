@@ -23,7 +23,7 @@ Redu::Application.routes.draw do
   # sessions routes
   match '/signup' => 'users#new', :as => :signup
   match '/logout' => 'sessions#destroy', :as => :logout
-  match '/auth/facebook/callback' => 'sessions#omniauth'
+  match '/auth/facebook/callback' => 'sessions#omniauth_fb_authenticated'
 
   # recover routes
   match '/forgot_password' => 'users#forgot_password', :as => :forgot_password
