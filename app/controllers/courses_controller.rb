@@ -447,6 +447,8 @@ class CoursesController < BaseController
   end
 
   def teacher_participation_report
-
+    respond_to do |format|
+      format.html { render 'courses/admin/teacher_participation_report'}
+    end
   end
 end

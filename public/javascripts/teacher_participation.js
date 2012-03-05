@@ -11,7 +11,7 @@ $(document).ready(function(){
     },
 
     title: {
-      text: 'Participação do Professor na Disciplina'
+      text: ''
     },
 
     xAxis:{

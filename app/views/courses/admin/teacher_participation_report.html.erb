@@ -49,7 +49,7 @@
 
       <%= label_tag "date_end", "Fim" %>
       <%= field_set_tag nil, :class => "inline" do %>
-        <%= date_select "date_end", "start" %>
+        <%= date_select "date_end", "start", :end_year => Date.today.year %>
       <% end %>
 
       <%= submit_tag "Update", :onclick => "graph_interaction();", :class=>"concave-submit" %>

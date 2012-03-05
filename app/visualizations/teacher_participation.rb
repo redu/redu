@@ -5,7 +5,13 @@ class TeacherParticipation
     @uca = uca
     @user_id = @uca.user.id
 
-    # O default é fazer a consulta em todos os spaces de course nos últimos 10 dias
+    @lectures_created = []
+    @posts = []
+    @answers = []
+    @days = []
+
+    # O default é fazer a consulta em todos os spaces de course
+    # nos últimos 10 dias
     @end = Date.today
     @start = @end - 9
     @spaces = @uca.course.spaces
@@ -24,17 +30,12 @@ class TeacherParticipation
 
   # Alinha todas as consultas por dia
   def by_day!
-    @lectures_created = []
-    @posts = []
-    @answers = []
-    @days = []
-    @start_aux = @start
-    (0..(@end - @start)).each do
-      @lectures_created << @total_lectures.by_day(@start_aux).count
-      @posts << @total_posts.by_day(@start_aux).count
-      @answers << @total_answers.by_day(@start_aux).count
-      @days << @start_aux.strftime("%-d/%m")
-      @start_aux += 1
+    (0..(self.end - self.start)).each do
+      self.lectures_created << @total_lectures.by_day(self.start).count
+      self.posts << @total_posts.by_day(self.start).count
+      self.answers << @total_answers.by_day(self.start).count
+      self.days << self.start.strftime("%-d/%m")
+      self.start += 1
     end
   end
 
@@ -46,7 +47,7 @@ class TeacherParticipation
 
   # Define os subjects do conjunto de spaces
   def subjects_by_space
-    @subjects_space = @spaces.inject([]) do |acc, space|
+    @subjects_space = self.spaces.inject([]) do |acc, space|
       acc.concat(space.subjects_id)
     end
   end
@@ -54,10 +55,12 @@ class TeacherParticipation
   # Todos os posts do professor naquelas disciplinas + aulas
   def posts_by_space
     @statuses_by_spaces = Status.from_hierarchy(@uca.course)
-    @total_posts = @statuses_by_spaces.activity_by_user(@user_id).by_space(@spaces)
+    @total_posts_users = @statuses_by_spaces.activity_by_user(@user_id)
+    @total_posts = @total_posts_users.by_space(self.spaces)
   end
 
-  # Todas as respostas (Tanto de Help quanto de Activity) do professor naquelas disciplinas + aulas
+  # Todas as respostas (Tanto de Help quanto de Activity)
+  # do professor naquelas disciplinas + aulas
   def answers_by_space
     @total_helps_and_activities = @statuses_by_spaces.helps_and_activities
     @answers_ids = @total_helps_and_activities.inject([]) do |acc, help|

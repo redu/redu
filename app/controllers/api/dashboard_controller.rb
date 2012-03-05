@@ -1,5 +1,16 @@
 module Api
   class DashboardController < ApiController
+    include ActiveModel::Validations
+    validate :time_range
+
+    # validate time_range
+    def time_range
+      self.generate_erro("Intervalo de tempo inválido")
+      unless
+        params[:time_start].to_date > params[:time_end].to_date
+      end
+    end
+
     # Requisição default pega o primeiro professor da lista do curso
     def teacher_participation
       # params [:id_course]
@@ -18,12 +29,7 @@ module Api
 
     # Interação do usuário
     def teacher_participation_interaction
-      @start = params[:time_start].to_date
-      @end = params[:time_end].to_date
-
-      if @start > @end
-        self.generate_erro("Intervalo de tempo inválido")
-      else
+      unless valid?
         # params [:id_teacher]
         @course = Course.find(params[:id_course])
         @teacher = @course.teachers.find(params[:id_teacher])
@@ -48,7 +54,6 @@ module Api
       @erro = Erro.new(msg)
       respond_to do |format|
         format.json { render :json => @erro.extend(ErroRepresenter)}
-        format.any { raise ActionController::RoutingError.new('Not Found') }
       end
     end
 
@@ -58,7 +63,6 @@ module Api
 
       respond_to do |format|
         format.json { render :json => @participation }
-        format.any { raise ActionController::RoutingError.new('Not Found') }
       end
     end
   end
