@@ -43,8 +43,11 @@ class LicensedPlan < Plan
   # será calculado ao final do mês, já que o seu valor depende da quantidade
   # de licenças utilizadas.
   def create_invoice(opts = {})
-    period_end = Date.today.end_of_month
-    period_start = Date.today
+    period_start = opts[:invoice].try(:delete, :period_start) || Date.today
+    period_end = Date.new(period_start.year, period_start.month, 20)
+    # Caso o period_start seja após o dia 20 do mês atual
+    period_end = period_end + 1.month if period_end < period_start
+
     options = {
       :invoice => {
       :period_start => period_start,
