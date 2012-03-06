@@ -16,8 +16,9 @@ class Invoice < ActiveRecord::Base
   scope :of_period, lambda { |period|
     where(:period_end => period)
   }
-  scope :of_billable, lambda { |billable|
-    where(:plan_id => billable.plans.collect(&:id).flatten)
+  # Feito desta forma, pois o billable pode ter sido destruído
+  scope :of_billable, lambda { |billable_id, billable_type|
+    where(:plan_id => Plan.where(:billable_id => billable_id, :billable_type => billable_type))
   }
 
   attr_protected :state
