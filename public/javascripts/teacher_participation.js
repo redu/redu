@@ -9,24 +9,20 @@ $(document).ready(function(){
       renderTo: $content[0],
       defaultSeriesType: 'line'
     },
-
     title: {
       text: ''
     },
-
     xAxis:{
       title: {
         text: 'Dias'
       }
     },
-
     yAxis: {
       title:{
         text: 'Colaborações'
       },
       min: 0
     },
-
     tooltip: {
       crosshairs: true,
       shared: true,
@@ -42,7 +38,6 @@ $(document).ready(function(){
         return s;
       }
     },
-
     series: [{
       name: 'Quantidade de Aulas Criadas',
     }, {
@@ -59,16 +54,11 @@ $(document).ready(function(){
     $.getJSON("/api/dashboard/teacher_participation.json?id_course="
         +that.id_course,
         function(json){
-          if (json.erro) {
-            options.title.text = json.erro
-          }
-          else{
-            options.series[0].data = json.lectures_created;
-            options.series[1].data = json.posts;
-            options.series[2].data = json.answers;
+          options.series[0].data = json.lectures_created;
+          options.series[1].data = json.posts;
+          options.series[2].data = json.answers;
 
-            options.xAxis.categories = json.days;
-          };
+          options.xAxis.categories = json.days;
           chart = new Highcharts.Chart(options);
         });
   };
@@ -102,16 +92,21 @@ $(document).ready(function(){
         +"&time_end="+end_time+"&spaces[]="+spaces,
         function(json){
           if (json.erro) {
-            options.title.text = json.erro
+            $('#form-problem').before('<div class="error_explanation" id="error_explanation"><h2>Ops!</h2><p>Há problemas para os seguinte(s) campo(s):</p><p class="invalid_fields">Data inicial, Data final</p></div>');
+            $("#date-validate").append('<ul class="errors_on_date"><li>'+json.erro+'</li></ul>');
           }
           else{
+            if($('.errors_on_date')){
+              $('.error_explanation').remove();
+              $('.errors_on_date').remove();
+            }
             options.series[0].data = json.lectures_created;
             options.series[1].data = json.posts;
             options.series[2].data = json.answers;
 
             options.xAxis.categories = json.days;
+            chart = new Highcharts.Chart(options);
           }
-          chart = new Highcharts.Chart(options);
         });
   };
 

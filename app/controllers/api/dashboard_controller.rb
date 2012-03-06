@@ -1,16 +1,5 @@
 module Api
   class DashboardController < ApiController
-    include ActiveModel::Validations
-    validate :time_range
-
-    # validate time_range
-    def time_range
-      self.generate_erro("Intervalo de tempo inválido")
-      unless
-        params[:time_start].to_date > params[:time_end].to_date
-      end
-    end
-
     # Requisição default pega o primeiro professor da lista do curso
     def teacher_participation
       # params [:id_course]
@@ -29,7 +18,7 @@ module Api
 
     # Interação do usuário
     def teacher_participation_interaction
-      unless valid?
+      if params[:time_start].to_date < params[:time_end].to_date
         # params [:id_teacher]
         @course = Course.find(params[:id_course])
         @teacher = @course.teachers.find(params[:id_teacher])
@@ -45,6 +34,8 @@ module Api
         @participation.spaces = @uca.course.spaces.find(@spaces)
 
         self.generate_json
+      else
+        self.generate_erro("Intervalo de tempo inválido")
       end
     end
 
