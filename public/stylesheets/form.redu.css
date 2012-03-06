@@ -24,7 +24,7 @@
     margin: 20px 10px 0 0;
     clear: left;
     height: 30px;
-    font-size: .9em;
+    font-size: 12px;
   }
 
   .concave-form .concave-label-high {
@@ -191,7 +191,7 @@
     display: inline-block;
     line-height: 17px;
     font-weight: bold;
-    font-size: 1em;
+    font-size: 12px;
     text-align: center;
     cursor: pointer;
   }

@@ -559,7 +559,7 @@ body {
   clear: left;
   float: left;
   font-size: 2.4em;
-  letter-spacing: -1px;
+  letter-spg: -1px;
   color: rgb(179, 179, 179);
   font-weight: normal;
 }
@@ -3207,7 +3207,8 @@ body {
   margin-top: -3px;
 }
 
-.tabs > ul li .details{
+.tabs > ul li .details, 
+.tabs > ul li .upgrade {
   display: block;
   margin-top: -10px;
   margin-left: 30px;
@@ -6696,9 +6697,9 @@ div.token-input-dropdown {
   display: block;
   text-align: center;
   font-family: museo-sans, helvetica, arial, sans-serif;
-  font-weight: 500;
+  font-weight: 100;
   color: rgb(109, 110, 111);
-  font-size: 1.3em;
+  font-size: 17px;
   margin-bottom: 15px;
 }
 
@@ -7094,18 +7095,31 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 
 /* Aqui modifiquei */
 
-.panel .upgrade-top-button .concave-important {
+.panel .upgrade-button .concave-important {
   float: right;
   width: 150px;
   height: 32px;
   background: rgb(171,227,133); /* Old browsers */
+  font-size: 15px;
+  margin-bottom: 40px;
 }
 
-.borderradius .panel .upgrade-top-button .concave-important {
+.panel .concave-important-p .concave-important {
+  float: right;
+  width: 70px;
+  height: 30px;
+  background: rgb(171,227,133); /* Old browsers */
+  font-size: 12px;
+  margin: 8px 20px;
+}
+
+.borderradius .panel .upgrade-button .concave-important {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
 }
+
+
 
 .cssgradients .panel .concave-important {
   background: -moz-linear-gradient(top, rgb(171,227,133) 0%, rgb(95,192,128) 100%); /* FF3.6+ */
@@ -7116,17 +7130,20 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   background: linear-gradient(top, rgb(171,227,133) 0%,rgb(95,192,128) 100%); /* W3C */
 }
 
-.cssgradients .panel  .concave-important:hover {
-  background: rgb(95,192,128); /* Old browsers */
-  background: -moz-linear-gradient(top,  rgb(95,192,128) 1%, rgb(171,227,133) 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,rgb(95,192,128)), color-stop(100%,rgb(171,227,133))); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top,  rgb(95,192,128) 1%,rgb(171,227,133) 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top,  rgb(95,192,128) 1%,rgb(171,227,133) 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  rgb(95,192,128) 1%,rgb(171,227,133) 100%); /* IE10+ */
-  background: linear-gradient(top,  rgb(95,192,128) 1%,rgb(171,227,133) 100%); /* W3C */
+.panel  .concave-important:hover {
+  background: rgb(171,227,133);
 }
 
-.boxshadow .panel .concave-important {
+.cssgradients .panel  .concave-important:hover {
+  background: -moz-linear-gradient(top,  rgb(171,227,133) 0%, rgb(97,160,128) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(171,227,133)), color-stop(100%,rgb(97,160,128))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgb(171,227,133) 0%,rgb(97,160,128) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgb(171,227,133) 0%,rgb(97,160,128) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgb(171,227,133) 0%,rgb(97,160,128) 100%); /* IE10+ */
+  background: linear-gradient(top,  rgb(171,227,133) 0%,rgb(97,160,128) 100%); /* W3C */
+}
+
+.boxshadow .panel .upgrade-button {
   -webkit-box-shadow: inset 1px 1px 0px 0px rgb(171, 227, 133), inset -1px -1px 0px 0px rgb(171,227,133);
   -moz-box-shadow: inset 1px 1px 0px 0px rgb(171, 227, 133), inset -1px -1px 0px 0px rgb(171,227,133);
   box-shadow: inset 1px 1px 0px 0px rgb(171, 227, 133), inset -1px -1px 0px 0px rgb(171,227,133); 
@@ -7160,34 +7177,23 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   font-weight: normal;
   font-size: 12px;
   color: rgb(179, 179, 179);
+  padding-bottom: 5px;
 }
 
-.panel .call .course a {
-  font-family: museo-slab, arial ,sans-serif;
+.panel .call .call-course {
+  font-family: museo-sans, arial ,sans-serif;
   font-weight: 500;
   font-size: 17px;
-  color: rgb(77, 173, 214);
+  color: rgb(179, 179, 179);
   line-height: 12px;
-  letter-spacing: -1px;
+  letter-spacing: -1px; 
 }
 
 .plan-panel .payments {
-   background: rgb(255,255,255); /* Old browsers */;
-   width: 580px;
-   height: 34px;
-   padding-top: 20px;
+   background: rgb(255,255,255);
    font-family: arial, sans-serif;
    font-size: 11px;
    font-weight: normal;
-   margin-top: 1px;
-}
-
-.plan-panel .payments .pay-invoice {
-  margin-top: 20px;
-}
-
-.plan-panel .payments .pay-invoice li {
-  display: inline;
 }
 
 .plan-panel .payments .concave-important {
@@ -7196,31 +7202,8 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   margin-top: -10px;
 }
 
-.cssgradients .plan-panel .payments {
-  background: -moz-linear-gradient(top, rgb(255,255,255) 0%, rgb(204,204,204) 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(255,255,255)), color-stop(100%,rgb(204,204,204))); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, rgb(255,255,255) 0%,rgb(204,204,204) 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top, rgb(255,255,255) 0%,rgb(204,204,204) 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top, rgb(255,255,255) 0%,rgb(204,204,204) 100%); /* IE10+ */
-  background: linear-gradient(top, rgb(255,255,255) 0%,rgb(204,204,204) 100%); /* W3C */
-}
-
-.borderradius .plan-panel .payments {
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-}
-
-.boxshadow .plan-panel .payments {
-  -webkit-box-shadow: inset 1px 1px 0px 0px rgb(204, 204, 204), inset -1px -1px 0px 0px rgb(204, 204, 204);
-  -moz-box-shadow: inset 1px 1px 0px 0px rgb(204, 204, 204), inset -1px -1px 0px 0px rgb(204, 204, 204);
-  box-shadow: inset 1px 1px 0px 0px rgb(204, 204, 204), inset -1px -1px 0px 0px rgb(204, 204, 204); 
-}
-
 .plan-panel .payments .data .number {
   color: rgb(77, 173, 214);
-  float: left;
-  margin-left: 20px;
 }
 
 .plan-panel .payments .data .date,
@@ -7233,7 +7216,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 .plan-panel .payments .data .value {
-  margin-left: 65px;
+  margin-left: 7px;
 }
 
 .plan-panel .payments .data .date .bar {
@@ -7242,10 +7225,238 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 
 .plan-panel .payments .data .arrears {
   color: rgb(255, 109, 109);
-  margin-left: 20px;
+}
+
+.explanation-sidebar .explanation .arrears {
+    color: rgb(255, 109, 109);
+    font-style: italic;
+}
+
+.explanation-sidebar .explanation .to-expirate {
+  color: rgb(255, 169, 53);
+  font-style: italic;
+}
+
+.explanation-sidebar .explanation .pag-seguro {
+  text-indent: -9999px;
+}
+
+.explanation-sidebar .explanation .pag-seguro a {
+  background-image: url("../images/new/pagseguro-p.png");
+  text-indent: -9999px;
+  display: block;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  width: 150px;
+  height: 30px;
 }
 
 .plan-panel .payments .data .paid  {
-  margin-left: 20px;
-  color: rgb(109, 110, 122);
+  margin-left: 22px;
+  color: rgb(95, 192, 128);
+}
+
+.payments .data .icon {
+  background: url("../images/new/icones-p.png") -80px -2080px 	no-repeat;
+  width: 16px;
+  height: 18px;
+  text-indent: -9999px;
+  float: right;
+  content: ".";
+  margin: 15px 74px 0px 0px;
+  padding: 0px;
+}
+
+.plan-panel .box-gray {
+  border-top: 1px solid rgb(179, 179, 179);
+  border-bottom: 1px solid rgb(179, 179, 179);
+}
+
+.borderradius .plan-panel table.common .data {
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.plan-panel table.common tbody tr {
+  border: none;
+}
+
+
+.plan-panel table.common .box-gray .data {
+  background-color: rgb(247, 247, 247);
+}
+
+.plan-panel .courses-list,
+.plan-panel .courses-details {
+  font-size: 11px;
+  float: right;
+  clear: both;
+}
+
+.plan-panel .courses-list {
+	margin-bottom: 30px;
+}
+
+.plan-panel .courses-list a,
+.plan-panel .courses-details a {
+  color: rgb(77, 73, 214);
+  font-family: arial, sans-serisf;
+}
+
+.plan-panel .plans-list .plans .plan {
+  border: solid 1px rgb(179, 179, 179);
+  width: 580px;
+  background: rgb(255,255,255); /* Old browsers */
+} 
+
+.borderradius .plans-list .plans .plan {
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+} 
+ 
+.cssgradients .plans-list .plans .plan {
+  background: -moz-linear-gradient(top,  rgb(255,255,255) 0%, rgb(240,240,240) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(255,255,255)), color-stop(100%,rgb(240,240,240))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgb(255,255,255) 0%,rgb(240,240,240) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgb(255,255,255) 0%,rgb(240,240,240) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgb(255,255,255) 0%,rgb(240,240,240) 100%); /* IE10+ */
+  background: linear-gradient(top,  rgb(255,255,255) 0%,rgb(240,240,240) 100%); /* W3C */
+}
+
+.plans-list .plans .plan {
+	padding-bottom: 10px;
+}
+
+.plan-panel .plan-user {
+  font-family: museo-sans, arial, sans-serif;
+  font-weight: 100;
+  font-size: 17px;
+  color: rgb(115, 195, 230);
+  line-height: 14px;
+  margin: 20px 0px;
+  display: block;
+  clear: both;
+  padding-top: 10px;
+}
+
+.plans-list .plans .plan .name {
+  font-family: museo-slab, arial, sans-serif;
+  font-weight: 500;
+  font-size: 17px;
+  color: rgb(95, 192, 128);
+  display: block;
+  padding: 5px 20px;
+}
+
+.plans-list .plans .plan .price {
+  font-family: museo-sans, arial, sans-serif;
+  font-weight: 100;
+  font-size: 17px;
+  color: rgb(95, 192, 128);
+  display: block;
+  padding: 0 20px;
+}
+
+.plans-list .plans .plan .a-month,
+.plans-list .plans .plan .Highlights {
+  font-size: 12px;
+  font-family: arial, sans-serif;
+  font-style: italic;
+  color: rgb(179, 179, 179);
+}
+
+.plans-list .plans .plan .plan-limit {
+  font-size: 12px;
+  font-family: arial, sans-serif;
+  font-style: normal;
+  color: rgb(0, 0, 0);
+  padding: 2.5px 20px;
+}
+09
+.plan-panel .concave-form {
+	width: 580px;
+}
+
+.plan-panel .plan-user-call {
+	font-family: arial;
+	font-size: 11px;
+	color: rgb(179, 179, 179);
+}
+
+.textshadow .plans-list .plans .plan .plan-limit {
+	text-shadow: 0px 1px 0px rgb(255, 255, 255);
+}
+
+.plans-list .call-us .concave-important {
+	margin-right: 28px;
+}
+
+.plan-panel .concave-form .columns, .concave-form .single-column {
+	float: none;
+}
+
+.plans-list .your-plan .plans .plan .plan-limit,
+.plans-list .your-plan .plans .plan .name {
+	color: rgb(109, 110, 111);
+}
+
+.plans-list .your-plan .plans .plan .price {
+	color: rgb(179, 179, 179);
+}
+
+.plans-list .your-plan .plans .plan .actual-plan {
+	font-size: 12px;
+	color: rgb(109, 110, 111);
+	font-weight: bold;
+	float: right;
+	margin: 20px 28px 0 0;
+}
+
+.invoice-detail .course {
+	background: rgb(240,240,240); /* Old browsers*/
+	border: solid 1px rgb(179, 179, 179);
+}
+
+.cssgradients .invoice-detail .course {
+	background: -moz-linear-gradient(top,  rgb(240,240,240) 0%, rgb(255,255,255) 50%, rgb(240,240,240) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(240,240,240)), color-stop(50%,rgb(255,255,255)), color-stop(100%,rgb(240,240,240))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgb(240,240,240) 0%,rgb(255,255,255) 50%,rgb(240,240,240) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgb(240,240,240) 0%,rgb(255,255,255) 50%,rgb(240,240,240) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgb(240,240,240) 0%,rgb(255,255,255) 50%,rgb(240,240,240) 100%); /* IE10+ */
+	background: linear-gradient(top,  rgb(240,240,240) 0%,rgb(255,255,255) 50%,rgb(240,240,240) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0f0f0', endColorstr='#f0f0f0',GradientType=0 ); /* IE6-9 */
+}
+
+.borderradius .invoice-detail .course {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px; 
+}
+
+.invoice-detail .course .environment,
+.invoice-detail .course .type-user .user-status {
+	font-size: 11px;
+	font-family: arial,sans-serif;
+	font-weight: regular;
+	color: rgb(179, 179, 179);
+}
+
+.invoice-detail .course .environment .name {
+	font-size: 12px;
+	font-family: arial, sans-serif;
+	font-weight: bold;
+	color: rgb(179, 179, 179);
+}
+
+.invoice-detail .course .type-user {
+	font-size: 12px;
+	font-family: arial, sans-serif;
+	font-weight: regular;
+	color: rgb(95, 192, 128);
+}
+
+.textshadow .course .type-user {
+	text-shadow: 0px 1px 0px rgb(255, 255, 255);
 }
