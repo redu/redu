@@ -33,6 +33,9 @@ class Lecture < ActiveRecord::Base
   scope :exercises_editables, where("lectureable_type LIKE 'Exercise' and lectureable_id NOT IN (SELECT exercise_id FROM results)")
   scope :recent, lambda { where('created_at > ?', 1.week.ago) }
 
+  # TODO Não existe teste para estes scopos
+  scope :by_subjects, lambda { |subjects_id| where(:subject_id =>subjects_id) }
+  scope :by_day, lambda { |day| where(:created_at =>(day..(day+1))) }
 
   attr_protected :owner, :published, :view_count, :removed, :is_clone
 
