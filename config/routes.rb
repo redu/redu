@@ -4,6 +4,8 @@ Redu::Application.routes.draw do
   post "presence/multiauth"
   post "presence/send_chat_message"
   get "presence/last_messages_with"
+  get "api/dashboard/teacher_participation"
+  get "api/dashboard/teacher_participation_interaction"
 
   match 'clipboard/:action/:folder_or_file/:id' => 'clipboard',
     :constraints => { :action         => /(add|remove)/,
@@ -186,6 +188,7 @@ Redu::Application.routes.draw do
         get :admin_members_requests
         get :admin_invitations
         get :admin_manage_invitations
+        get :teacher_participation_report
         post :invite_members
         post :accept
         post :join
@@ -215,3 +218,4 @@ Redu::Application.routes.draw do
 end
 
 ActionDispatch::Routing::Translator.translate_from_file('lang','i18n-routes.yml')
+
