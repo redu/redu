@@ -3,8 +3,9 @@ class CreateInvitations < ActiveRecord::Migration
     create_table :invitations do |t|
       t.string :email
       t.string :token
-      t.string :invitable_type
-      t.integer :invitable_id
+      t.string :hostable_type
+      t.integer :hostable_id
+      t.integer :user_id
       t.timestamps
     end
   end

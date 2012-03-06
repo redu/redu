@@ -1,56 +1,15 @@
-#define callback models
-module Invitee
-  extend ActiveSupport::Concern
-
-  included do
-    include ActiveSupport::Callbacks
-    define_callbacks :invitation_accepted
-  end
-
-  module ClassMethods
-    def after_invitation_accepted(*args, &block)
-      set_callback(:invitation_accepted, :after, *args, &block)
-    end
-
-    def before_invitation_accepted(*args, &block)
-      set_callback(:invitation_accepted, *args, &block)
-    end
-  end
-
-  def accept_invitation!(new_user)
-    run_callbacks(:invitation_accepted) do
-      puts "#{self}\n"
-      #TODO: associar new user a instancia
-      #TODO: remover entrada de invitation (invitiation aceita)
-      puts "2\n"
-    end
-  end
-
-end
-
-#open associations classes
-class Friendship < ActiveRecord::Base
-  include Invitee
-
-  after_invitation_accepted do
-    puts "#{self}\n"
-    #TODO: criacao de friendship
-    puts "1\n"
-  end
-end
-
 class Invitation < ActiveRecord::Base
 
-  validates_presence_of :email, :invitable_id, :invitable_type
+  validates_presence_of :email, :hostable
   validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/
+  before_validation :generate_token, :on => :create
 
-  belongs_to :invitable, :polymorphic => true
+  belongs_to :hostable, :polymorphic => true
+  belongs_to :user
 
-  after_validation :generate_token, :on => :create
-
-  def accept!(new_user)
-    puts @invitable
-    @invitable.accept_invitation!(new_user)
+  # hostable => entidate ao qual o convidado (invitee) será associado
+  def accept!(invitee)
+    @hostable.process_invitation!(invitee, self)
   end
 
   protected
@@ -59,3 +18,31 @@ class Invitation < ActiveRecord::Base
       gsub(/=+$/,"")
   end
 end
+
+# Open some classes
+class User < ActiveRecord::Base
+
+  has_many :invitations, :dependent => :destroy
+
+  def process_invitation!(invitee, invitation)
+    if self.be_friends_with(invitee)[0]
+       invitation.delete
+    else
+      false
+    end
+  end
+end
+
+class UserCourseInvitation < CourseEnrollment
+
+  #FIXME: validar accept state machine
+  def process_invitation!(invitee, invitation)
+    begin
+      self.accept!
+      invitation.delete
+    rescue
+      false
+    end
+  end
+end
+
