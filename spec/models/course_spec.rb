@@ -800,5 +800,27 @@ describe Course do
         end
       end
     end
+
+    context "when destroying" do
+      let(:subject) { Factory(:course) }
+      context "with an associated plan" do
+        it "should persist environment attributes" do
+          subject.plans = []
+          plan = Factory(:active_package_plan, :billable => subject)
+
+          subject.audit_billable_and_destroy
+          plan.reload.billable_audit["name"].should == subject.name
+          plan.reload.billable_audit["path"].should == subject.path
+        end
+      end
+
+      context "withdout an associated plan" do
+        it "should only destroy itself" do
+          expect {
+            subject.audit_billable_and_destroy
+          }.should_not raise_error
+        end
+      end
+    end
   end
 end

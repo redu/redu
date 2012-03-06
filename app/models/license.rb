@@ -8,7 +8,7 @@ class License < ActiveRecord::Base
   # Retorna todas as licenças que estão em uso
   scope :in_use, where(:period_end => nil)
   scope :of_course, lambda { |course|
-    where(:course_id => course.id)
+    where(:course_id => course)
   }
   # Retorna todas as licenças consideradas pagáveis
   scope :payable, where(:role => Role[:member])
