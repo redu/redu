@@ -12,6 +12,7 @@
   <div id="course-manage" class="body management">
     <%= render :partial => 'courses/admin/clean_header' %>
     <%= tabs :courses_admin do %>
+
       <h3 class="form-header">Qual a participação do professor na disciplina?</h3>
       <div id="teacher-participation-chart">
         <%= lazy_load(:chart, :jammit => true) do %>
