@@ -77,6 +77,17 @@ describe UserCourseAssociation do
         subject.course.should_receive(:create_hierarchy_associations).with(subject.user, Role[:member])
         subject.accept!
       end
+
+      context "when it is a new record" do
+        before do
+          @ass = Factory.build(:user_course_association, :state => "invited")
+        end
+
+        it "should not call create hierarchy associations" do
+          @ass.course.should_not_receive(:create_hierarchy_associations)
+          @ass.accept!
+        end
+      end
     end
 
     context "when approving" do
@@ -93,6 +104,15 @@ describe UserCourseAssociation do
       it "should create hierachy associations" do
         subject.course.should_receive(:create_hierarchy_associations).with(subject.user, Role[:member])
         subject.approve!
+      end
+
+      context "when it is a new record" do
+        let(:subject) { Factory.build(:user_course_association) }
+
+        it "should not call create hierarchy associations" do
+          subject.course.should_not_receive(:create_hierarchy_associations)
+          subject.approve!
+        end
       end
     end
   end

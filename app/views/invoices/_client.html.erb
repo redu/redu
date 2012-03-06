@@ -1,0 +1,22 @@
+<%# Cliente da fatura
+  Params: client (Partner || Environment || Hash (dead_environment)),
+  period (Date Range)%>
+<div class="client-infos">
+  <h2 class="name"><%= client.is_a?(Hash) ? client["name"] : client.name %></h2>
+  <% if client.is_a? Partner %>
+    <span class="cnpj info"><strong>CNPJ:</strong><%= client.formatted_cnpj %></span>
+    <span class="address info"><strong>Endereço:</strong> <%= client.address %></span>
+  <% else %>
+    <% if client.is_a? Environment %>
+      <span class="cnpj info"><strong>CNPJ:</strong><%= client.partner_environment_association.formatted_cnpj %></span>
+      <span class="address info"><strong>Endereço:</strong> <%= client.partner_environment_association.address %></span>
+    <% else %>
+      <span class="cnpj info"><strong>CNPJ:</strong><%= client[:partner_environment_association]["cnpj"] %></span>
+      <span class="address info"><strong>Endereço:</strong> <%= client[:partner_environment_association]["address"] %></span>
+    <% end %>
+  <% end %>
+  <span class="emission info"><strong>Emissão:</strong> <%= l Date.today %></span>
+  <% unless period.nil? %>
+    <span class="period"><strong>Período:</strong> <%= l period.begin %> a <%= l period.end %></span>
+  <% end %>
+</div>

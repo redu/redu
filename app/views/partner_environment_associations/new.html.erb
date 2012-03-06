@@ -9,7 +9,7 @@
         :html => {:class => "concave-form"} do |f| %>
         <%= concave_error_messages_for(@partner_environment_association) %>
         <%= render :partial => 'partner_environment_associations/form',
-          :locals => { :f => f} %>
+          :locals => { :f => f, :partner => @partner } %>
         <%= f.submit "Criar ambiente" %>
       <% end %>
     </div>

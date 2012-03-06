@@ -31,6 +31,9 @@ RSpec.configure do |config|
   # Inclui os matchers do paperclip
   config.include Paperclip::Shoulda::Matchers
 
+  # Inclui o helper para fazer mock da API do scribd
+  config.include ScribdSpecHelper
+
   # Adiciona os papéis ao BD, pois estes são necessários nos testes.
   create_roles
   create_privacies

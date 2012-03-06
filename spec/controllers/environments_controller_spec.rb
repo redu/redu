@@ -260,5 +260,18 @@ describe EnvironmentsController do
         end
       end
     end
+
+    context "POST destroy" do
+      before do
+        @plan = Factory(:active_package_plan, :billable => @environment)
+        @post_params = { :locale => "pt-BR" }
+        @post_params[:id] = @environment.path
+        post :destroy, @post_params
+      end
+
+      it "should store billable" do
+        @plan.reload.billable_audit.should_not be_nil
+      end
+    end
   end
 end

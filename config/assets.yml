@@ -44,6 +44,10 @@ javascripts:
     - public/javascripts/jquery.linkify-1.0.js
     - public/javascripts/chat.jquery.js
     - public/javascripts/chat.js
+  chart:
+    - public/javascripts/highcharts/highcharts.js
+    - public/javascripts/d3/d3.js
+    - public/javascripts/teacher_participation.js
   ie:
     - public/javascripts/json2.js
     - public/javascripts/selectivizr.js
@@ -96,3 +100,8 @@ stylesheets:
     - public/stylesheets/landing.css
   cold:
     - public/stylesheets/cold.css
+  print:
+    - public/stylesheets/reset.css
+    - public/stylesheets/new-fonts.css
+    - public/stylesheets/new-style.css
+    - public/stylesheets/print.css

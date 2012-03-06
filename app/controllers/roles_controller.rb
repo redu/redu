@@ -69,4 +69,5 @@ class RolesController < BaseController
       end
     end
   end
+
 end

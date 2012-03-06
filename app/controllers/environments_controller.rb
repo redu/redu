@@ -93,7 +93,7 @@ class EnvironmentsController < BaseController
       respond_to do |format|
         @plan = Plan.from_preset(params[:plan].to_sym)
         @plan.user = current_user
-        @environment.courses.first.plan = @plan
+        @environment.courses.first.plans << @plan
         @environment.owner = current_user
         @environment.courses.first.owner = current_user
         if @environment.save && @plan.save
@@ -143,7 +143,7 @@ class EnvironmentsController < BaseController
   # DELETE /environments/1
   # DELETE /environments/1.xml
   def destroy
-    @environment.destroy
+    @environment.audit_billable_and_destroy
 
     respond_to do |format|
       format.html { redirect_to(teach_index_url) }
