@@ -13,7 +13,7 @@ class InvoicesController < BaseController
 
     if @plan
       @invoices = @plan.invoices
-      @quota = @plan.billable.quota if @plan.billable.quota
+      @quota = @plan.billable.quota if @plan.billable
     elsif @partner
       @invoices = @partner.invoices
       if params.fetch(:year, false)

@@ -7124,6 +7124,14 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   display: block;
   float: right;
 }
+
+#partner-environments-list li .removed-environment {
+  font-size: 11px;
+  float: right;
+  margin-right: 10px;
+  color: rgb(255, 109, 109);
+}
+
 #partner-admins-list {
   margin-bottom: 40px;
 }

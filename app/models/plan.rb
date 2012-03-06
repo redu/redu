@@ -1,7 +1,7 @@
 class Plan < ActiveRecord::Base
   include AASM
 
-  serialize :billable_audit, Course
+  serialize :billable_audit
 
   belongs_to :billable, :polymorphic => true
   belongs_to :user
@@ -50,8 +50,10 @@ class Plan < ActiveRecord::Base
 
   # Serializa billable associado e salva com propósito de auditoria
   def audit_billable!
-    self.billable_audit = self.billable
-    save!
+    options = Hash.new
+    options[:include] = [:courses, :partner_environment_association] if self.billable.is_a? Environment
+    self.billable_audit = self.billable.serializable_hash(options)
+    self.save!
   end
 
   def invoice
