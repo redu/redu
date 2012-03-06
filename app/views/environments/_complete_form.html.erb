@@ -53,6 +53,11 @@ ambiente de estudo.
       <span class="plan-type">Inst. de Ensino Médio</span>
     </li>
     <li>
+      <%= radio_button_tag :plan, 'package_plan-instituicao_medio_tiny' %>
+      <%= label_tag 'plan_package_plan-instituicao_medio_tiny', "Tiny" %>
+      <span class="tiptip-right icon-small icon-question-blue_12_12" title="<%= "#{render 'plans/admin/details', :name => 'Instituição de Ensino Médio', :type => 'Tiny', :plan => Plan.from_preset(:instituicao_medio_tiny)}" %>"></span>
+    </li>
+    <li>
       <%= radio_button_tag :plan, 'package_plan-instituicao_medio_lite' %>
       <%= label_tag 'plan_package_plan-instituicao_medio_lite', "Lite" %>
       <span class="tiptip-right icon-small icon-question-blue_12_12" title="<%= "#{render 'plans/admin/details', :name => 'Instituição de Ensino Médio', :type => 'Lite', :plan => Plan.from_preset(:instituicao_medio_lite)}" %>"></span>
