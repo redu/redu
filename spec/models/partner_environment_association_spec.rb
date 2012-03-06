@@ -13,4 +13,17 @@ describe PartnerEnvironmentAssociation do
     subject.cnpj = "12123123123412"
     subject.formatted_cnpj.should == "12.123.123/1234-12"
   end
+
+  context "when destroyed billable" do
+    before do
+      @plan = Factory(:active_package_plan, :billable => subject.environment)
+      subject.environment.audit_billable_and_destroy
+    end
+
+    it "should return the plan" do
+      subject.reload
+      subject.environment.should be_nil
+      subject.plan_of_dead_environment.should == @plan
+    end
+  end
 end

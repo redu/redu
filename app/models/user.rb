@@ -229,7 +229,14 @@ class User < ActiveRecord::Base
     when 'User'
       entity == self
     when 'Plan', 'PackagePlan', 'LicensedPlan'
-      entity.user == self || self.can_manage?(entity.billable)
+      entity.user == self || self.can_manage?(entity.billable) ||
+        # Caso em que billable foi destruído
+        self.can_manage?(
+          # Não levanta RecordNotFound
+          Partner.where( :id => entity.billable_audit.
+                        try(:[], :partner_environment_association).
+                        try(:[],"partner_id")).first
+      )
     when 'Invoice', 'LicensedInvoice', 'PackageInvoice'
       self.can_manage?(entity.plan)
     when 'Myfile'

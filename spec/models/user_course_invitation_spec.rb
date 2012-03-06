@@ -84,8 +84,9 @@ describe UserCourseInvitation do
       end
 
       it "do NOT accept if it does not have a user" do
-        subject.accept!
-        subject.should_not be_approved
+        expect {
+          subject.accept!
+        }.to raise_error(AASM::InvalidTransition)
       end
 
       it "creates a user course association with state 'invited'" do

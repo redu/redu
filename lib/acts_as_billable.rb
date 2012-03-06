@@ -38,5 +38,10 @@ module ActsAsBillable
         ( self.users.count * 100.0 )/ self.plan.members_limit
       end
     end
+
+    def audit_billable_and_destroy
+      plan.audit_billable! if self.plan
+      self.destroy
+    end
   end
 end

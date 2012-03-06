@@ -6,6 +6,8 @@ describe Partner do
   it { should validate_presence_of :name }
   it { should validate_presence_of :email }
   it { should validate_presence_of :address }
+  it { should have_many(:partner_environment_associations).dependent(:destroy) }
+  it { should have_many(:partner_user_associations).dependent(:destroy) }
   it { should have_many(:environments).through(:partner_environment_associations) }
   it { should have_many(:users).through(:partner_user_associations) }
 
