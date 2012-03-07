@@ -1,7 +1,11 @@
 class Invitation < ActiveRecord::Base
 
-  validates_presence_of :email, :hostable
+  validates_presence_of :email, :hostable, :user
   validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/
+  validates_uniqueness_of :email, :scope => [:hostable_id, :hostable_type]
+
+  validate :validate_invitee, :on => :create
+
   before_validation :generate_token, :on => :create
 
   belongs_to :hostable, :polymorphic => true
@@ -13,9 +17,14 @@ class Invitation < ActiveRecord::Base
   end
 
   protected
+  def validate_invitee
+   errors.add(:invitee,"Não pode convidar a si próprio") if (self.email and self.user.email == self.email)
+  end
+
   def generate_token
     self.token = ActiveSupport::SecureRandom.base64(8).gsub("/","_").
       gsub(/=+$/,"")
+    self.generate_token if Invitation.where(:token => self.token).size != 0
   end
 end
 

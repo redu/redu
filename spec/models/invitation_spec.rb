@@ -2,18 +2,21 @@ require 'spec_helper'
 
 describe Invitation do
 
+  subject {
+    user = Factory(:user)
+    Invitation.new(:user => user, :hostable => user, :email => 'email@example.com', :token => 't0k3N')
+  }
   xit { should validate_uniqueness_of :token }
 
-  context 'Callbacks' do
+  context 'Callbacks:' do
     it 'Token should be gerenated before create invitation' do
-      invitation = FactoryGirl.build(:invitation, :token => nil)
-      invitation.hostable = Factory(:user)
-      invitation.valid? # Chamando valid (callback token)
-      invitation.token.should_not be_nil
+      subject.token = nil
+      subject.valid?.should be_true
+      subject.token.should_not be_nil
     end
   end
 
-  context 'Associations' do
+  context 'Associations:' do
     it 'Invitations should have a sender' do
       should belong_to :user
     end
@@ -28,34 +31,35 @@ describe Invitation do
     end
   end
 
-  context 'Friends invitations' do
-
-    #FIXME: validar email
+  context 'Friends invitations:' do
     it "User can't invite itself" do
-      user = Factory(:user)
-      invitation = FactoryGirl.build(:invitation)
-      invitation.hostable = user
-      invitation.email = user.email
-      invitation.accept!(user).should be_false
+      subject.email = subject.user.email
+      subject.save
+      subject.accept!(subject.user).should be_false
     end
 
-    #FIXME: validar email
     it "User can invite many other users" do
-      user = Factory(:user)
-      invitation = FactoryGirl.build(:invitation)
-      invitation.hostable = user
-      invitation.accept!(Factory(:user)).should be_true
+      subject.save
+      subject.accept!(Factory(:user)).should be_true
     end
 
-    it "Invites to same email should not be valid" do
-      user = Factory(:user)
-      i1= FactoryGirl.build(:invitation)
-      i2 = FactoryGirl.build(:invite)
-      i1.hostable = user
-      i2.hostable = user
-      i1.save
-      i2.save.should be_false
+    it "Invites to same email should not be valid when sended by same user" do
+      invitation = FactoryGirl.build(:invitation, :user => subject.user, :hostable => subject.hostable, :email => subject.email)
+      invitation.save
+      subject.save.should be_false
+      subject.errors[:email].should_not be_empty
+    end
 
+    it "Invalid email on invite should make a invalid invitation" do
+      subject.email = 'invalid.com'
+      subject.should_not be_valid
+      subject.errors[:email].should_not be_empty
+    end
+
+    it "Invitations whitout email should be invalid" do
+      subject.email = nil
+      subject.should_not be_valid
+      subject.errors[:email].should_not be_empty
     end
   end
 end
