@@ -15,7 +15,7 @@ module Api
 
     def destroy
       @environment = Environment.find(params[:id])
-      @environment.destroy
+      @environment.audit_billable_and_destroy
 
       respond_with @environment
     end
