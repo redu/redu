@@ -50,7 +50,26 @@ class SessionsController < BaseController
   end
 
   def omniauth_fb_authenticated
-    
+    info = request.env['omniauth.auth']['info']
+    user = User.find_by_email(info['email'])
+    if user
+      @user_session = UserSession.new(:remember_be => '0', 
+                                      :login => info['nickname'],
+                                      :password => 'password1')
+      @user_session.save do |result|
+        if result
+          current_user = @user_session.record
+
+          flash[:notice] = t :thanks_youre_now_logged_in
+          redirect_to home_user_path(current_user)
+        end
+      end
+    else
+      # raise info.to_yaml
+      user = User.new_from_facebook(info)
+      user.save
+      redirect_to home_path
+    end
   end
 
   protected

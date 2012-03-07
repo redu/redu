@@ -113,7 +113,7 @@ describe SessionsController do
         end
 
         it 'should create user from facebook auth hash' do
-          #TODO
+          
         end
       end
 

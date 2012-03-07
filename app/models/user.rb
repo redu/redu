@@ -604,6 +604,22 @@ class User < ActiveRecord::Base
     educations
   end
 
+  def self.new_from_facebook(info_hash)
+    login = User.get_login_from_facebook_nickname(info_hash)
+    user = User.new(
+        :login => login,
+        :email => info_hash['email'],
+        :email_confirmation => info_hash['email'],
+        :first_name => info_hash['first_name'],
+        :last_name => info_hash['last_name'],
+        'birthday(3i)' => '7',
+        'birthday(2i)' => '3',
+        :tos => '1')
+    user.reset_password
+
+    user
+  end
+
   protected
   def activate_before_save
     self.activated_at = Time.now.utc
@@ -630,6 +646,24 @@ class User < ActiveRecord::Base
     new_password = ""
     1.upto(len) { |i| new_password << chars[rand(chars.size-1)] }
     return new_password
+  end
+
+  def self.get_login_from_facebook_nickname(info_hash)
+    login = info_hash['nickname']
+    # Se o usuário não tiver um nickname no fb
+    if !login
+      # Gera login a partir de nome e sobrenome
+      login = info_hash['first_name'] + info_hash['last_name']
+      login.delete(' ').downcase #remove espaços e força lowcase
+      # Verifica se já existe um login
+      n = 1
+      while User.find_by_login(login) do
+        login = login + n.to_s
+        n = n + 1
+      end
+    end
+
+    login
   end
 
 end
