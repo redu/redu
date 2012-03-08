@@ -1,9 +1,12 @@
 module Api
   class DashboardController < ApiController
+    load_and_authorize_resource :course, :through => :environment,
+      :except => [:index], :find_by => :path
+
     # Requisição default pega o primeiro professor da lista do curso
     def teacher_participation
       # params [:id_course]
-      @course = Course.find(params[:id_course])
+      @course = Course.find(params[:course_id])
       @teachers = @course.teachers
 
       # only if there is teachers
@@ -18,16 +21,16 @@ module Api
 
     # Interação do usuário
     def teacher_participation_interaction
-      if params[:time_start].to_date < params[:time_end].to_date
+      if params[:date_start].to_date < params[:date_end].to_date
         # params [:id_teacher]
-        @course = Course.find(params[:id_course])
-        @teacher = @course.teachers.find(params[:id_teacher])
+        @course = Course.find(params[:course_id])
+        @teacher = @course.teachers.find(params[:teacher_id])
         @uca = @teacher.get_association_with(@course)
         @participation = TeacherParticipation.new(@uca)
 
         # params [:time_start, :time_end] => time (format): "year-month-day"
-        @participation.start = params[:time_start].to_date
-        @participation.end = params[:time_end].to_date
+        @participation.start = params[:date_start].to_date
+        @participation.end = params[:date_end].to_date
 
         # params [:spaces[id's]]
         @spaces = params[:spaces].join(',').split(',')
@@ -42,9 +45,9 @@ module Api
     protected
 
     def generate_erro(msg)
-      @erro = Erro.new(msg)
+      @error = Error.new(msg)
       respond_to do |format|
-        format.json { render :json => @erro.extend(ErroRepresenter)}
+        format.json { render :json => @error.extend(ErrorRepresenter)}
       end
     end
 
