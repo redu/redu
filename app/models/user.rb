@@ -622,6 +622,7 @@ class User < ActiveRecord::Base
         'birthday(3i)' => '7',
         'birthday(2i)' => '3',
         :tos => '1')
+    user.create_settings!
     user.reset_password
 
     user

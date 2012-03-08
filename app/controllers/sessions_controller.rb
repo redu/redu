@@ -54,14 +54,15 @@ class SessionsController < BaseController
     user = User.find_by_email(info['email'])
     if user
       @user_session = UserSession.new(:remember_be => '0', 
-                                      :login => info['nickname'],
-                                      :password => 'password1')
+                                      :login => user.login)
       @user_session.save do |result|
         if result
           current_user = @user_session.record
 
           flash[:notice] = t :thanks_youre_now_logged_in
           redirect_to home_user_path(current_user)
+        else
+          raise info.to_yaml
         end
       end
     else
