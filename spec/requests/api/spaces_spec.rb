@@ -60,6 +60,19 @@ describe "Api::SpacesController" do
     end
   end
 
+  context "get /users/:id/spaces" do
+    before do
+      @user = @space.users.first
+    end
+
+    it "should return code 200" do
+      get "/api/users/#{@user.id}/spaces", :oauth_token => @token,
+        :format => 'json'
+
+      response.code == '200'
+    end
+  end
+
   context "post /course/:id/spaces" do
     it "should return code 201 (created)" do
       space = { :name => 'My new space' }
