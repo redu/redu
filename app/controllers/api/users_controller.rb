@@ -6,15 +6,35 @@ module Api
     end
 
     def index
-      @space = Space.find(params[:space_id])
+      @entity = find_entity
 
-      @users = @space.users
+      @users = @entity.users
       if role = params[:role]
-        @users = @users.
-          where(:user_space_associations => { :role => Role[role.to_sym] })
+        if @entity.class == Space
+          @users = @users.
+            where(:user_space_associations => { :role => Role[role.to_sym] })
+        elsif @entity.class == Environment
+          @users = @users.
+            where(:user_environment_associations => { :role => Role[role.to_sym] })
+        else
+          @users = @users.
+            where(:course_enrollments => { :role => Role[role.to_sym] })
+        end
       end
 
-      respond_with(:api, @space, @users)
+      respond_with(:api, @entity, @users)
+    end
+
+    protected
+
+    def find_entity
+      if params.has_key?(:course_id)
+        Course.find(params[:course_id])
+      elsif params.has_key?(:environment_id)
+        Environment.find(params[:environment_id])
+      else
+        Space.find(params[:space_id])
+      end
     end
   end
 end

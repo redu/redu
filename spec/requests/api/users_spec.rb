@@ -35,7 +35,7 @@ describe "User" do
     end
   end
 
-  context "when GET /space/:space_id/users" do
+  context "when listing users" do
     before do
       @environment = Factory(:complete_environment)
       @course = @environment.courses.first
@@ -49,46 +49,47 @@ describe "User" do
       @members << @course.owner
     end
 
-    it "should return 200" do
-      get "/api/spaces/#{@space.id}/users", :oauth_token => @token,
-        :format => 'json'
-
-      response.code.should == '200'
+    context "on course" do
+      it_should_behave_like "user listing" do # spec/support/api/user_listing...
+        let(:subject) { @course }
+        let(:token) { @token }
+        let(:members) { @members }
+        let(:entity_name) { "#{subject.class.to_s.tableize}" }
+      end
     end
 
-    it "should return the correct number of users" do
-      get "/api/spaces/#{@space.id}/users", :oauth_token => @token,
-        :format => 'json'
-
-      parse(response.body).length.should == @members.length
+    context "on space" do
+      it_should_behave_like "user listing" do # spec/support/api/user_listing...
+        let(:subject) { @space }
+        let(:token) { @token }
+        let(:members) { @members }
+        let(:entity_name) { "#{subject.class.to_s.tableize}" }
+      end
     end
 
-    it "should return the correct members" do
-      get "/api/spaces/#{@space.id}/users", :oauth_token => @token,
-        :format => 'json'
-
-      parse(response.body).collect { |m| m['id'] }.to_set.should ==
-        @members.collect(&:id).to_set
-    end
-
-    it "should filter by members" do
-      get "/api/spaces/#{@space.id}/users", :role => 'member',
-        :oauth_token => @token, :format => 'json'
-
-      parse(response.body).length.should == @members.length - 1
-    end
-
-    it "should filter by members" do
-      get "/api/spaces/#{@space.id}/users", :role => 'member',
-        :oauth_token => @token, :format => 'json'
-
-      parse(response.body).length.should == @members.length - 1
+    context "on environment" do
+      it_should_behave_like "user listing" do # spec/support/api/user_listing...
+        let(:subject) { @environment }
+        let(:token) { @token }
+        let(:members) { @members }
+        let(:entity_name) { "#{subject.class.to_s.tableize}" }
+      end
     end
   end
 
-  context "when GET /space/:space_id/user to a non-existent space" do
+  context "when GET /space/:space_id/users to a non-existent space" do
     it "should return code 404 (not existent)" do
       get "/api/spaces/2198219/users", :oauth_token => @token,
+        :format => 'json'
+
+      response.code.should == '404'
+    end
+  end
+
+
+  context "when GET /space/:space_id/user to a non-existent space" do
+    it "should return code 404 (not existent)" do
+      get "/api/courses/2198219/users", :oauth_token => @token,
         :format => 'json'
 
       response.code.should == '404'
