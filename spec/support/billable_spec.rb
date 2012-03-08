@@ -12,6 +12,13 @@ shared_examples_for "a billable" do
     subject.plan.should == plan2
   end
 
+  it "should stores itself ond plan and self destroy" do
+    Factory(:plan, :billable => subject)
+    subject.should_receive(:destroy)
+    subject.audit_billable_and_destroy
+    subject.plan.billable_audit.should_not be_nil
+  end
+
   context "Quotas" do
     it "retrieve a percentage of quota file" do
       billable.quota.files = 512

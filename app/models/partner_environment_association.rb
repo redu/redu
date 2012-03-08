@@ -11,4 +11,11 @@ class PartnerEnvironmentAssociation < ActiveRecord::Base
     self.cnpj =~ /(\d{2})\.?(\d{3})\.?(\d{3})\/?(\d{4})-?(\d{2})/
     "#{$1}.#{$2}.#{$3}/#{$4}-#{$5}"
   end
+
+  # Retorna o plano de um environment destruído
+  def plan_of_dead_environment
+    Plan.where(:billable_id => self.environment_id,
+               :billable_type => "Environment").
+               order("created_at DESC").limit(1).first
+  end
 end

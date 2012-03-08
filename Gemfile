@@ -12,7 +12,7 @@ gem 'will_paginate', '~> 3.0.pre2'
 gem 'mime-types'
 gem 'cancan'
 gem 'aasm', :require => "aasm",
-  :git => "git://github.com/alto/aasm.git"
+  :git => "git://github.com/rubyist/aasm.git"
 gem 'shuber-sortable'
 gem 'scribd_fu', :git => 'git://github.com/guiocavalcanti/scribd_fu.git'
 gem 'factory_girl_rails'
@@ -43,8 +43,12 @@ gem 'actionmailer_inline_css',
 gem 'acts_as_tree', '~> 0.1.1'
 gem 'exceptional'
 gem 'awesome_nested_fields'
+
 gem 'omniauth'
 gem 'omniauth-facebook'
+
+gem 'roar-rails', '~> 0.0.3',
+  :git => 'git://github.com/apotonick/roar-rails.git'
 
 # Gems específicos de algum ambiente
 group :development, :test do

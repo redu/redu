@@ -143,7 +143,7 @@ class EnvironmentsController < BaseController
   # DELETE /environments/1
   # DELETE /environments/1.xml
   def destroy
-    @environment.destroy
+    @environment.audit_billable_and_destroy
 
     respond_to do |format|
       format.html { redirect_to(teach_index_url) }

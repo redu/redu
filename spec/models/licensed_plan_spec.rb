@@ -12,6 +12,8 @@ describe LicensedPlan do
 
   context "when creating invoices" do
     before do
+      Date.stub(:today) { Date.new(2010, 02, 07) }
+
       subject.create_invoice
       @invoice = subject.invoices.last
     end
@@ -28,8 +30,21 @@ describe LicensedPlan do
       @invoice.period_start.should == Date.today
     end
 
-    it "should ends period on the end of month" do
-      @invoice.period_end.should == Date.today.end_of_month
+    it "should ends period on 20th day of month" do
+      @invoice.period_end.should == Date.new(2010, 02, 20)
+    end
+
+    context "when start period is after 20th day of month" do
+      before do
+        Date.stub(:today) { Date.new(2010, 02, 23) }
+
+        subject.create_invoice
+        @invoice = subject.invoices.last
+      end
+
+      it "should end period on next month 20th day" do
+        @invoice.period_end.should == Date.new(2010, 03, 20)
+      end
     end
 
     it "should initiates without amount" do

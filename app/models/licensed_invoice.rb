@@ -67,10 +67,12 @@ class LicensedInvoice < Invoice
   #   terem um period_end
   def self.refresh_open_invoices!
     LicensedInvoice.open.each do |i|
-      if i.period_end < Date.today
+      if i.period_end <= Date.today
 
         i.calculate_amount!
-        new_invoice =  i.plan.create_invoice
+        new_invoice =  i.plan.create_invoice({:invoice => {
+          :period_start => Date.today + 1.day }
+        })
         i.duplicate_licenses_to(new_invoice)
 
         # Atualiza as licenças do invoice fechado para terem um period_end

@@ -445,4 +445,10 @@ class CoursesController < BaseController
       format.html { redirect_to :action => :admin_manage_invitations }
     end
   end
+
+  def teacher_participation_report
+    respond_to do |format|
+      format.html { render 'courses/admin/teacher_participation_report'}
+    end
+  end
 end

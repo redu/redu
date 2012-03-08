@@ -148,17 +148,17 @@ describe LicensedInvoice do
       plan2 = Factory(:active_licensed_plan, :price => 4.00)
 
       from = Date.new(2010, 01, 10)
+      @to = Date.new(2010, 01, 20)
       @plan1.create_invoice({:invoice => {
         :period_start => from,
-        :period_end => from.end_of_month,
+        :period_end => @to,
         :created_at => Time.now - 1.hour }
       })
       @invoice1 = @plan1.invoices.last
 
       from = Date.today
       plan2.create_invoice({:invoice => {
-        :period_start => from,
-        :period_end => from.end_of_month }
+        :period_start => from }
       })
       @invoice2 = plan2.invoices.last
 
@@ -171,8 +171,7 @@ describe LicensedInvoice do
       (1..20).collect { Factory(:license, :invoice => @invoice2,
                                 :course => course) }
 
-      @feb_first = Date.new(2010, 02, 01)
-      Date.stub(:today) { @feb_first }
+      Date.stub(:today) { @to }
       LicensedInvoice.refresh_open_invoices!
       @invoice1.reload
       @invoice2.reload
@@ -187,7 +186,7 @@ describe LicensedInvoice do
     end
 
     it "should calculates invoice1's relative amount" do
-      @invoice1.reload.amount.round(2).should == BigDecimal.new("63.87")
+      @invoice1.reload.amount.round(2).should == BigDecimal.new("31.94")
     end
 
     it "should NOT calculate invoice2's relative amount" do
@@ -200,12 +199,12 @@ describe LicensedInvoice do
       end
 
       it "should return the correct invoice" do
-        @plan1.invoice.should_not == @ainvoice1
+        @plan1.invoice.should_not == @invoice1
       end
 
       it "should have the correct dates" do
-        @plan1.invoice.period_start.should == @feb_first
-        @plan1.invoice.period_end.should == @feb_first.end_of_month
+        @plan1.invoice.period_start.should == @to + 1.day
+        @plan1.invoice.period_end.should == @to + 1.month
       end
 
       it "should have all licenses without period_end (at the end of month)" do
