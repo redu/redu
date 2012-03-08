@@ -1,17 +1,15 @@
 require 'api_spec_helper'
 
 describe "Api::SpacesController" do
-  subject do
-    course = Factory(:complete_course)
-    course.spaces.first
-  end
   before do
     @application, @current_user, @token = generate_token
+    @course = Factory(:complete_course)
+    @space = @course.spaces.first
   end
 
   context "the document returned" do
     before do
-      get "/api/spaces/#{subject.id}", :oauth_token => @token,
+      get "/api/spaces/#{@space.id}", :oauth_token => @token,
          :format => 'json'
     end
 
@@ -34,7 +32,7 @@ describe "Api::SpacesController" do
 
   context "get /spaces/:id" do
     it "should return status 200" do
-      get "/api/spaces/#{subject.id}", :oauth_token => @token,
+      get "/api/spaces/#{@space.id}", :oauth_token => @token,
          :format => 'json'
       response.code.should == "200"
     end
@@ -48,24 +46,24 @@ describe "Api::SpacesController" do
 
   context "get /course/:id/spaces" do
     it "should return code 200" do
-      get "/api/courses/#{subject.course.id}/spaces", :oauth_token => @token,
+      get "/api/courses/#{@course.id}/spaces", :oauth_token => @token,
          :format => 'json'
       response.code.should == "200"
     end
 
     it "should represent the spaces" do
-      get "/api/courses/#{subject.course.id}/spaces", :oauth_token => @token,
+      get "/api/courses/#{@course.id}/spaces", :oauth_token => @token,
          :format => 'json'
 
       parse(response.body).should be_kind_of Array
-      parse(response.body).first['name'].should == subject.name
+      parse(response.body).first['name'].should == @space.name
     end
   end
 
   context "post /course/:id/spaces" do
     it "should return code 201 (created)" do
       space = { :name => 'My new space' }
-      post "/api/courses/#{subject.course.id}/spaces", :space => space,
+      post "/api/courses/#{@course.id}/spaces", :space => space,
         :oauth_token => @token, :format => 'json'
 
       response.code.should == '201'
@@ -73,7 +71,7 @@ describe "Api::SpacesController" do
 
     it "should return the entity" do
       space = { :name => 'My new space' }
-      post "/api/courses/#{subject.course.id}/spaces", :oauth_token => @token,
+      post "/api/courses/#{@course.id}/spaces", :oauth_token => @token,
         :space => space, :format => 'json'
 
       parse(response.body).should have_key('name')
@@ -81,7 +79,7 @@ describe "Api::SpacesController" do
 
     it "should return code 422 (unproccessable entity) when not valid" do
       space = { :name => 'Big Space Name Big Space Name Big Space Name Big Space Name ' }
-      post "/api/courses/#{subject.course.id}/spaces", :oauth_token => @token,
+      post "/api/courses/#{@course.id}/spaces", :oauth_token => @token,
         :space => space, :format => 'json'
 
       response.code.should == "422"
@@ -89,7 +87,7 @@ describe "Api::SpacesController" do
 
     it "should return the error explanation" do
       space = { :name => 'Big Space Name Big Space Name Big Space Name Big Space Name ' }
-      post "/api/courses/#{subject.course.id}/spaces", :oauth_token => @token,
+      post "/api/courses/#{@course.id}/spaces", :oauth_token => @token,
         :space => space, :format => 'json'
 
       parse(response.body).should have_key 'name'
@@ -99,7 +97,7 @@ describe "Api::SpacesController" do
   context "put /spaces/:id" do
     it "should return code 201" do
       space = { :name => 'new_space_name' }
-      put "/api/spaces/#{subject.id}", :space => space, :oauth_token => @token,
+      put "/api/spaces/#{@space.id}", :space => space, :oauth_token => @token,
         :format => 'json'
 
       response.code.should == "200"
@@ -107,7 +105,7 @@ describe "Api::SpacesController" do
 
     it "should return code 422 (unproccessable entity) when not valid" do
       space = { :name => 'Big Space Name Big Space Name Big Space Name Big Space Name ' }
-      put "/api/spaces/#{subject.id}", :space => space, :oauth_token => @token,
+      put "/api/spaces/#{@space.id}", :space => space, :oauth_token => @token,
         :format => 'json'
 
       response.code.should == "422"
@@ -115,7 +113,7 @@ describe "Api::SpacesController" do
 
     it "should return the error explanation" do
       space = { :name => 'Big Space Name Big Space Name Big Space Name Big Space Name ' }
-      put "/api/spaces/#{subject.id}", :space => space, :oauth_token => @token,
+      put "/api/spaces/#{@space.id}", :space => space, :oauth_token => @token,
         :format => 'json'
 
       parse(response.body).should have_key 'name'
@@ -124,7 +122,7 @@ describe "Api::SpacesController" do
 
   context "delete /spaces/:id" do
     it "should return status 200" do
-      delete "/api/spaces/#{subject.id}", :oauth_token => @token,
+      delete "/api/spaces/#{@space.id}", :oauth_token => @token,
         :format => 'json'
 
       response.status.should == 200
@@ -136,7 +134,6 @@ describe "Api::SpacesController" do
 
       response.status.should == 404
     end
-
   end
 end
 
