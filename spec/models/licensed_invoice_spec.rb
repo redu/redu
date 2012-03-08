@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 describe LicensedInvoice do
-  subject { Factory(:licensed_invoice) }
+  subject { Factory(:licensed_invoice,
+                    :plan => Factory(:active_licensed_plan)) }
 
   it { should belong_to :plan }
   it { should have_many :licenses }
@@ -20,9 +21,16 @@ describe LicensedInvoice do
     end
 
     context "when open" do
-      it "should change to pending" do
+      before do
         subject.pend!
+      end
+
+      it "should change to pending" do
         should be_pending
+      end
+
+      it "should calculate the amount" do
+        subject.amount.should_not be_nil
       end
     end
 
@@ -31,10 +39,20 @@ describe LicensedInvoice do
         subject.update_attribute(:state, "pending")
       end
 
-      it "should change to paid" do
-        subject.pay!
-        should be_paid
+      context "when paying" do
+        before do
+          subject.pay!
+        end
+
+        it "should change to paid" do
+          subject.should be_paid
+        end
+
+        it "should register time" do
+          subject.due_at.should_not be_nil
+        end
       end
+
     end
   end
 
@@ -75,8 +93,7 @@ describe LicensedInvoice do
     LicensedInvoice.respond_to?(:refresh_open_invoices!).should be_true
   end
 
-  it { should respond_to :calculate_amount! }
-  context "when calculating the amount" do
+  context "when verifying protected methods" do
     before do
       user = Factory(:user)
       environment = Factory(:environment, :owner => user)
@@ -108,22 +125,38 @@ describe LicensedInvoice do
                 :course => course, :role => Role[:member])
       end
 
-      @invoice.calculate_amount!
     end
 
-    it "updates to the correct amount" do
-      @invoice.amount.round(2).should == BigDecimal.new("32.90")
-    end
-    it "updates state to pending" do
-      @invoice.should be_pending
+    context "when calculating amount" do
+      before do
+        @invoice.send(:calculate_amount!)
+      end
+
+      it "updates to the correct amount" do
+        @invoice.amount.round(2).should == BigDecimal.new("32.90")
+      end
     end
 
-    it { should respond_to :duplicate_licenses_to }
+    context "when creating next invoice" do
+      before do
+        @invoice.send(:create_next_invoice)
+        @new_invoice = @invoice.plan.invoices.last
+      end
+
+      it "should be persisted" do
+        @new_invoice.should be_persisted
+      end
+
+      it "should have period start one day after last invoice period end" do
+        @new_invoice.period_start.should == @invoice.period_end.tomorrow
+      end
+    end
+
     context "when duplicating licenses" do
       before do
         @new_invoice = @plan.create_invoice(:invoice => {
           :created_at => Time.now + 2.hours})
-        @invoice.duplicate_licenses_to @new_invoice
+        @invoice.send(:replicate_licenses_to, @new_invoice)
       end
 
       it "should have all licenses without period_end (at the end of month)" do
@@ -215,9 +248,10 @@ describe LicensedInvoice do
         end
       end
 
-      it "should update period_end of all in use licenses" do
-        @plan1.invoices.first.licenses.in_use.should be_empty
-        @in_use_licenses.first.reload.period_end.should == Date.yesterday
+      it "should update period_end of all in use licenses with invoice period end" do
+        invoice = @plan1.invoices.first
+        invoice.licenses.in_use.should be_empty
+        @in_use_licenses.first.reload.period_end.should == invoice.period_end
       end
     end
   end
