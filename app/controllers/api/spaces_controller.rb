@@ -1,10 +1,21 @@
 module Api
   class SpacesController < Api::ApiController
+    # GET /api/course/:course_id/spaces?user_id=1&role=member
+    # GET /api/users/:user_id/spaces?course_id=1&role=member
     def index
-      @course = Course.find(params[:course_id])
-      @spaces = @course.try(:spaces) || []
+      @context = context
+      @spaces = @context.spaces
 
-      respond_with :api, @course, @spaces
+      if params[:role] && params[:user_id]
+        role = Role[params[:role].to_sym]
+        @spaces = @spaces.where(:user_space_associations => { :role => role })
+      elsif params[:course_id] && params[:user_id] && params[:role]
+        role = Role[params[:role].to_sym]
+        @spaces = @spaces.includes(:user_space_associations).
+          where(:user_space_associations => { :role => role, :user_id => params[:user_id], :course_id => params[:course_id] })
+      end
+
+      respond_with :api, @context, @spaces
     end
 
     def show
@@ -36,6 +47,16 @@ module Api
       @space.destroy
 
       respond_with @space
+    end
+
+    protected
+
+    def context
+      if c_id = params[:course_id]
+        Course.find(c_id)
+      else
+        User.find(params[:user_id])
+      end
     end
   end
 end

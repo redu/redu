@@ -266,6 +266,7 @@ Redu::Application.routes.draw do
     resources :users, :only => :show do
       resources :course_enrollments, :only => :index, :path => :enrollments,
         :as => 'enrollments'
+      resources :spaces, :only => :index
     end
 
     # Hack para capturar exceções ActionController::RoutingError

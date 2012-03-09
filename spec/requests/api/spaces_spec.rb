@@ -1,6 +1,6 @@
 require 'api_spec_helper'
 
-describe "Api::SpacesController" do
+describe "Spaces API" do
   before do
     @application, @current_user, @token = generate_token
     @course = Factory(:complete_course)
@@ -45,6 +45,11 @@ describe "Api::SpacesController" do
   end
 
   context "get /course/:id/spaces" do
+    before do
+      @teacher = Factory(:user)
+      @course.join(@teacher, Role[:teacher])
+    end
+
     it "should return code 200" do
       get "/api/courses/#{@course.id}/spaces", :oauth_token => @token,
          :format => 'json'
@@ -62,7 +67,9 @@ describe "Api::SpacesController" do
 
   context "get /users/:id/spaces" do
     before do
+      @new_env = Factory(:complete_environment)
       @user = @space.users.first
+      @new_env.courses.first.join(@user, Role[:teacher])
     end
 
     it "should return code 200" do
@@ -70,6 +77,35 @@ describe "Api::SpacesController" do
         :format => 'json'
 
       response.code == '200'
+    end
+
+    it "should return the user spaces" do
+      get "/api/users/#{@user.id}/spaces", :oauth_token => @token,
+        :format => 'json'
+
+      parse(response.body).length.should == 2
+    end
+
+    it "should filter by teacher role" do
+      get "/api/users/#{@user.id}/spaces", :role => 'teacher',
+        :oauth_token => @token, :format => 'json'
+
+      parse(response.body).length.should == 1
+    end
+
+    it "should filter by administrator role" do
+      get "/api/users/#{@user.id}/spaces", :role => 'teacher',
+        :oauth_token => @token, :format => 'json'
+
+      parse(response.body).length.should == 1
+    end
+
+    it "should filter by course" do
+      get "/api/users/#{@user.id}/spaces", :role => 'teacher',
+        :course_id => @new_env.courses.first.id, :oauth_token => @token,
+        :format => 'json'
+
+      parse(response.body).length.should == 1
     end
   end
 
