@@ -1,6 +1,7 @@
 module Api
   class ApiController < ActionController::Base
     respond_to :json
+
     rescue_from ActiveRecord::RecordNotFound, :with => :not_found
     rescue_from CanCan::AccessDenied do |exception|
       respond_with Error.new("Acesso negado").extend(ErrorRepresenter), :status => 401
@@ -20,6 +21,10 @@ module Api
 
     def self.responder
       Class.new(super).send :include, Roar::Rails::Responder
+    end
+
+    def current_ability
+      @current_ability ||= Ability.new(current_user)
     end
 
     def current_user_session

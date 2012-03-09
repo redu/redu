@@ -1,7 +1,9 @@
 require "spec_helper"
+require 'authlogic/test_case'
+include Authlogic::TestCase
 
-describe "Dashboard" do
-  context "when not authorized" do
+describe Api::DashboardController do
+  context "authorizing" do
     before do
       @environment = Factory(:environment)
       @course = Factory(:course, :environment => @environment,
@@ -10,24 +12,35 @@ describe "Dashboard" do
         u = Factory(:user)
         @course.join(u, Role[:teacher])
       end
+
+      @user = @environment.owner
     end
 
     context "GET teacher_participation" do
       it "should return 401 (unauthorized) HTTP code" do
-        get "api/dashboard/teacher_participation",
-          :course_id => @course.id,
-          :format =>'json'
+        get :teacher_participation, :course_id => @course.id,
+          :format =>'json', :locale => "pt-BR"
 
         response.code.should == "401"
       end
 
       it "should not return any data" do
-        get "api/dashboard/teacher_participation",
-          :course_id => @course.id,
-          :format =>'json'
+        get :teacher_participation,
+          :course_id => @course.id, :locale => "pt-BR", :format =>'json'
 
         ActiveSupport::JSON.decode(response.body).
           should have_key 'error'
+      end
+
+      it "should return 200 HTTP code" do
+        activate_authlogic
+        UserSession.create @user
+
+        @course.join(@user, Role[:environment_admin])
+        get :teacher_participation, :course_id => @course.id,
+          :format => "json", :locale => "pt-BR"
+
+        response.code.should == "200"
       end
     end
 
@@ -42,22 +55,31 @@ describe "Dashboard" do
                     :date_start => "2012-03-01",
                     :date_end => "2012-03-10",
                     :spaces => [@space.id.to_s],
-                    :format => :json}
+                    :format => :json,
+                    :locale => "pt-BR" }
       end
 
       it "should return 401 (unauthorized) HTTP code" do
-        get "api/dashboard/teacher_participation_interaction",
-          @params
+        get :teacher_participation_interaction, @params
 
         response.code.should == "401"
       end
 
       it "should not return any data" do
-        get "api/dashboard/teacher_participation_interaction",
-          @params
+        get :teacher_participation_interaction, @params
 
         ActiveSupport::JSON.decode(response.body).
           should have_key 'error'
+      end
+
+      it "should return 200 HTTP code" do
+        activate_authlogic
+        UserSession.create @user
+
+        @course.join(@user, Role[:environment_admin])
+        get :teacher_participation_interaction, @params
+
+        response.code.should == "200"
       end
     end
   end

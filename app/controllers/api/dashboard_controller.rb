@@ -1,12 +1,12 @@
 module Api
   class DashboardController < ApiController
-    load_and_authorize_resource :course, :through => :environment,
-      :except => [:index], :find_by => :path
+    check_authorization
 
     # Requisição default pega o primeiro professor da lista do curso
     def teacher_participation
       # params [:id_course]
       @course = Course.find(params[:course_id])
+      authorize! :teacher_participation, @course
       @teachers = @course.teachers
 
       # only if there is teachers
@@ -24,6 +24,7 @@ module Api
       if params[:date_start].to_date < params[:date_end].to_date
         # params [:id_teacher]
         @course = Course.find(params[:course_id])
+        authorize! :teacher_participation_interaction, @course
         @teacher = @course.teachers.find(params[:teacher_id])
         @uca = @teacher.get_association_with(@course)
         @participation = TeacherParticipation.new(@uca)
