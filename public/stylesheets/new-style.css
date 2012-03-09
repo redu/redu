@@ -7117,20 +7117,14 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   margin-bottom: 40px;
 }
 
-.panel .concave-important-p {
-	margin: 0 auto;
-}
-
-.panel .concave-important-p{
+.panel .plans .plan .concave-important-p {
   width: 70px;
+  padding: 0;
   height: 30px;
   background: rgb(171,227,133); /* Old browsers */
 	float: right;
-}
-
-.panel .plans .plan .concave-important-p {
 	margin-right: 25px;
-}  
+}
 
 .borderradius .panel .upgrade-button .concave-important {
   -moz-border-radius: 5px;
@@ -7138,9 +7132,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   border-radius: 5px;
 }
 
-
-
-.cssgradients .panel .concave-important {
+.cssgradients .panel .plans .concave-important-p {
   background: -moz-linear-gradient(top, rgb(171,227,133) 0%, rgb(95,192,128) 100%); /* FF3.6+ */
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(171,227,133)), color-stop(100%,rgb(95,192,128))); /* Chrome,Safari4+ */
   background: -webkit-linear-gradient(top, rgb(171,227,133) 0%,rgb(95,192,128) 100%); /* Chrome10+,Safari5.1+ */
@@ -7210,10 +7202,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 .plan-panel .payments {
-   background: rgb(255,255,255);
-   font-family: arial, sans-serif;
    font-size: 11px;
-   font-weight: normal;
 }
 
 .plan-panel .payments .data .number {
@@ -7223,10 +7212,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .plan-panel .payments .data .date,
 .plan-panel .payments .data .value {
   color: rgb(109, 110, 111);
-}
-
-.plan-panel .payments .data .date {
-  margin-left: 50px;
 }
 
 .plan-panel .payments .data .date .bar {
@@ -7262,7 +7247,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 .plan-panel .payments .data .paid  {
-  margin-left: 22px;
   color: rgb(95, 192, 128);
 }
 
@@ -7275,24 +7259,22 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   background-repeat: no-repeat;
 }
 
-.plan-panel .box-gray {
-  border-top: 1px solid rgb(179, 179, 179);
-  border-bottom: 1px solid rgb(179, 179, 179);
-}
-
-.borderradius .plan-panel table.common .data {
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-}
-
 .plan-panel table.common tbody tr {
   border: none;
 }
 
+.plan-panel table.common .box-gray .data td {
+	background-color: #f7f7f7;
+	border-top: 1px solid rgb(179, 179, 179);
+  border-bottom: 1px solid rgb(179, 179, 179);
+}
 
-.plan-panel table.common .box-gray .data {
-  background-color: rgb(247, 247, 247);
+.borderradius .plan-panel table.common .box-gray .data td:first-child {
+	border-radius: 5px 0px 0px 5px; 
+}
+
+.borderradius .plan-panel table.common .box-gray .data td:last-child {
+	border-radius: 0px 5px 5px 0px; 
 }
 
 .plan-panel .courses-list,
@@ -7422,43 +7404,32 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 	margin: 20px 28px 0 0;
 }
 
-.plan-panel table.common .invoice-detail .course {
+.plan-panel .concave-admin-table {
+	width: 580px;
+	margin: 0;
+}
+
+.plan-panel .concave-admin-table .invoice-detail .course {
 	background: rgb(240,240,240); /* Old browsers*/
 	border: solid 1px rgb(179, 179, 179);
 }
 
-.cssgradients .plan-panel table.common .invoice-detail .course {
-	background: -moz-linear-gradient(top,  rgb(240,240,240) 0%, rgb(255,255,255) 50%, rgb(240,240,240) 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(240,240,240)), color-stop(50%,rgb(255,255,255)), color-stop(100%,rgb(240,240,240))); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top,  rgb(240,240,240) 0%,rgb(255,255,255) 50%,rgb(240,240,240) 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,  rgb(240,240,240) 0%,rgb(255,255,255) 50%,rgb(240,240,240) 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,  rgb(240,240,240) 0%,rgb(255,255,255) 50%,rgb(240,240,240) 100%); /* IE10+ */
-	background: linear-gradient(top,  rgb(240,240,240) 0%,rgb(255,255,255) 50%,rgb(240,240,240) 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0f0f0', endColorstr='#f0f0f0',GradientType=0 ); /* IE6-9 */
-}
-
-.borderradius .invoice-detail .course {
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px; 
-}
-
-.invoice-detail .course .environment,
-.invoice-detail .course .no-pending {
+.plan-panel .concave-admin-table .course .environment,
+.plan-panel .concave-admin-table .course .no-pending {
 	font-size: 11px;
 	font-family: arial,sans-serif;
 	font-weight: regular;
 	color: rgb(179, 179, 179);
 }
 
-.invoice-detail .course .environment .name {
+.plan-panel .concave-admin-table .course .environment .name {
 	font-size: 12px;
 	font-family: arial, sans-serif;
 	font-weight: bold;
 	color: rgb(179, 179, 179);
 }
 
-.invoice-detail .course .type-user {
+.plan-panel .concave-admin-table .course .type-user {
 	font-size: 12px;
 	font-family: arial, sans-serif;
 	font-weight: regular;
@@ -7466,17 +7437,24 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 	padding-left: 120px;
 }
 
-.invoice-detail .course .pending-user {
+.plan-panel .concave-admin-table .course .pending-user {
 	color: rgb(255, 109, 109);
 }
 
-.textshadow .course .type-user {
-	text-shadow: 0px 1px 0px rgb(255, 255, 255);
+.plan-panel table.concave-admin-table .label-course .name-course,
+.plan-panel table.concave-admin-table .label-course .category {
+	text-align: left;
+	padding: 10px;
+	color: rgb(204, 204, 204);
 }
 
-table .label-course .category {
-	padding-left: 120px;
-}	
+.plan-panel table.concave-admin-table .label-course .category {
+    padding-left: 120px;
+}
+
+.textshadow .plan-panel .concave-admin-table .course .type-user {
+	text-shadow: 0px 1px 0px rgb(255, 255, 255);
+}
 
 .payments .data .botao  {
 	text-align: center;
