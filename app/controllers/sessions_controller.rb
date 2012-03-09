@@ -50,12 +50,13 @@ class SessionsController < BaseController
   end
 
   def omniauth_fb_authenticated
-    info = request.env['omniauth.auth']['info']
-    user = User.find_by_email(info['email'])
+    auth = request.env['omniauth.auth']
+    user = User.find_by_external_uid(auth['uid'])
     if user
-      @user_session = UserSession.new(:remember_be => '0', 
-                                      :login => user.login)
+      debugger
+      @user_session = UserSession.new(user, true) 
       @user_session.save do |result|
+        # raise request.env['omniauth.auth'].to_yaml
         if result
           current_user = @user_session.record
 
@@ -66,8 +67,8 @@ class SessionsController < BaseController
         end
       end
     else
-      # raise info.to_yaml
-      user = User.new_from_facebook(info)
+      #raise request.env['omniauth.auth'].to_yaml
+      user = User.new_from_facebook(auth)
       user.save
       redirect_to home_path
     end

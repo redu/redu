@@ -145,7 +145,7 @@ class User < ActiveRecord::Base
   validates_uniqueness_of   :login, :email, :case_sensitive => false
   validates_exclusion_of    :login, :in => Redu::Application.config.extras["reserved_logins"]
   validates :birthday,
-      :date => { :before => Proc.new { 13.years.ago } }
+      :date => { :before => Proc.new { 13.years.ago } }, :allow_nil => true
   validates_acceptance_of :tos
   validates_confirmation_of :email
   validates_format_of :email,
@@ -612,16 +612,27 @@ class User < ActiveRecord::Base
   end
 
   def self.new_from_facebook(info_hash)
-    login = User.get_login_from_facebook_nickname(info_hash)
+    login = User.get_login_from_facebook_nickname(info_hash['info'])
+    # Dados obrigatórios.
     user = User.new(
+        :external_uid => info_hash['uid'],
         :login => login,
-        :email => info_hash['email'],
-        :email_confirmation => info_hash['email'],
-        :first_name => info_hash['first_name'],
-        :last_name => info_hash['last_name'],
-        'birthday(3i)' => '7',
-        'birthday(2i)' => '3',
+        :email => info_hash['info']['email'],
+        :email_confirmation => info_hash['info']['email'],
+        :first_name => info_hash['info']['first_name'],
+        :last_name => info_hash['info']['last_name'],
         :tos => '1')
+
+    # Dados opcionais.
+    user.localization = info_hash['info']['location']
+    user.birth_localization = info_hash['extra']['raw_info']['hometown']['name']
+    edu_hash = info_hash['extra']['raw_info']['education']
+    edu_hash.each do |education|
+      new_user_education = Education.new
+      education.each do |edu|
+       #TODO 
+      end
+    end
     user.create_settings!
     user.reset_password
 
