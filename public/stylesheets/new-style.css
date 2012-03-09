@@ -6538,6 +6538,16 @@ div.token-input-dropdown {
   width: 939px;
 }
 
+#invoice-show .invoice .courses .licenses .user-name,
+#partner-invoice-index .invoice .courses .licenses .user-name {
+  width: 220px;
+}
+
+#invoice-show .invoice .courses .licenses .user-login,
+#partner-invoice-index .invoice .courses .licenses .user-login {
+  width: 120px;
+}
+
 #invoice-show .billable-infos .invoice .total,
 #partner-invoice-index .billable-infos .invoice .total,
 #partner-invoice-index .total-partner {
