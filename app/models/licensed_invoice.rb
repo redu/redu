@@ -17,31 +17,49 @@ class LicensedInvoice < Invoice
 
   aasm_state :open
   aasm_state :pending, :enter => [:calculate_amount!, :create_next_invoice,
-                                  :set_licenses_period_end]
-  aasm_state :paid, :enter => :register_time
+                                  :set_licenses_period_end, :send_pending_notice]
+  aasm_state :paid, :after_enter => [:register_time,
+                                     :send_confirmation_and_unlock_plan]
+  aasm_state :overdue, :enter => :send_overdue_notice
 
   aasm_event :pend do
-    transitions :to => :pending, :from => [:open]
+    transitions :to => :pending, :from => [:open, :pending]
   end
 
   aasm_event :pay do
-    transitions :to => :paid, :from => [:pending]
+    transitions :to => :paid, :from => [:pending, :overdue]
+  end
+
+  aasm_event :overdue do
+    transitions :to => :overdue, :from => [:pending]
+  end
+
+  # Data limite para o pagamento
+  def threshold_date
+    self.period_end + Invoice::OVERDUE_DAYS
   end
 
   def generate_description
     msg = "#{self.plan.name} - Licença #{self.plan.price} - Capacidade de Armazenamento #{self.plan.file_storage_limit}"
   end
 
-
-  # Verifica quais invoices em aberto já podem ter o amount calculado e:
-  # - calcula o amount do invoice em questão
-  # - cria um novo invoice
-  # - duplica todas as licenças em uso para o novo invoice
-  # - Atualiza todas as licenças em uso do invoice em questão para
-  #   terem um period_end
-  def self.refresh_open_invoices!
+  # Atualiza os estados dos invoices
+  # - Para os abertos, passa para pending, caso a contagem o cálculo do
+  #   amount já possa ser feito
+  # - Para os pendentes, verifica se devem ser passados para vencido/atrasado
+  #   ou se apenas o reenvio do email deve ser feito
+  def self.refresh_states!
     LicensedInvoice.open.each do |i|
       i.pend! if i.period_end <= Date.today
+    end
+
+    LicensedInvoice.pending.each do |i|
+      if i.threshold_date < Date.today
+        i.overdue!
+        i.plan.block!
+      else
+        i.deliver_pending_notice
+      end
     end
   end
 
@@ -84,10 +102,5 @@ class LicensedInvoice < Invoice
   def set_licenses_period_end
     License.update_all(["period_end = ? ", self.period_end],
                        ["id IN (?)", self.licenses.collect(&:id)])
-  end
-
-  # Marca o horário em que o pagamento foi feito
-  def register_time
-    self.due_at = Time.now
   end
 end
