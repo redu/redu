@@ -61,5 +61,27 @@ describe Invitation do
       subject.should_not be_valid
       subject.errors[:email].should_not be_empty
     end
+
+    it "Create and send email invitation with static method" do
+      invitation = Invitation.invite(:user => subject.user, :hostable => subject.hostable, :email => subject.email) do |invitation|
+        UserNotifier.friendship_invitation(invitation).deliver
+      end
+      invitation.should be_valid
+    end
+  end
+
+  context 'Send email.' do
+    before do
+      UserNotifier.delivery_method :test
+      UserNotifier.perform_deliveries = true
+      UserNotifier.deliveries = []
+    end
+
+   it 'Users can resend invitation email' do
+      subject.resend_email do |invitation|
+      UserNotifier.friendship_invitation(invitation).deliver
+        UserNotifier.deliveries.should_not be_empty
+      end
+    end
   end
 end

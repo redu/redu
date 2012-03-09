@@ -11,9 +11,24 @@ class Invitation < ActiveRecord::Base
   belongs_to :hostable, :polymorphic => true
   belongs_to :user
 
+  def self.invite(params, &block)
+    invitation = Invitation.create(params)
+    if invitation.valid?
+      block.call(invitation) if block_given?
+      invitation
+    else
+      invitation.errors
+    end
+  end
+
+  def send_email(&block)
+    block.call(self) if block_given?
+  end
+  alias :resend_email :send_email
+
   # hostable => entidate ao qual o convidado (invitee) será associado
   def accept!(invitee)
-    @hostable.process_invitation!(invitee, self)
+    self.hostable.process_invitation!(invitee, self)
   end
 
   protected
@@ -28,15 +43,20 @@ class Invitation < ActiveRecord::Base
   end
 end
 
-# Open some classes
+# TODO: extrair para módulo
 class User < ActiveRecord::Base
 
-  has_many :invitations, :dependent => :destroy
+  has_many :invitations, :as => :hostable, :dependent => :destroy
 
   def process_invitation!(invitee, invitation)
-    if self.be_friends_with(invitee)[0]
+    friendship_invitation = self.be_friends_with(invitee)
+    if friendship_invitation[0]
        invitation.delete
     else
+      #STATUS_ALREADY_FRIENDS     = 1
+      #STATUS_ALREADY_REQUESTED   = 2
+      #STATUS_IS_YOU              = 3
+      invitation.delete if [1,2,3].include? friendship_invitation[1]
       false
     end
   end
@@ -44,7 +64,8 @@ end
 
 class UserCourseInvitation < CourseEnrollment
 
-  #FIXME: validar accept state machine
+  has_many :invitations, :as => :hostable, :dependent => :destroy
+
   def process_invitation!(invitee, invitation)
     begin
       self.accept!

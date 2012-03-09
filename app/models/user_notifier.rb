@@ -170,6 +170,22 @@ class UserNotifier < ActionMailer::Base
     end
   end
 
+  #FIXME: Modelo html do email
+  def friendship_invitation(invitation)
+    #FIXME: Email usuário sender
+    @user = invitation.user
+    uca = UserCourseAssociation.where(:user_id => @user).approved
+    @contacts = { :total => @user.friends.count }
+    @courses = { :total => @user.courses.count,
+                 :environment_admin => uca.with_roles([:environment_admin]).count,
+                 :tutor => uca.with_roles([:tutor]).count,
+                 :teacher => uca.with_roles([:teacher]).count }
+
+    mail(:subject => 'Teste', :to => invitation.email) do |format|
+      format.html
+    end
+  end
+
   # Enviado para o usuário requisitado numa requisição de conexão
   def friendship_requested(user, friend)
     @user, @friend = user, friend
