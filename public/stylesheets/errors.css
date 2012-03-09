@@ -4,6 +4,7 @@
 
 html, body {
   height: 100%;
+  background-color: none;
 }
 
 .body-login {
@@ -23,10 +24,6 @@ button::-moz-focus-inner {
     padding: 0;
 }
 
-.errors  {
-  margin-left: 0px;
-}
-
 .logo-top a {
   background-image: url("../images/new/redu-hi-vert.png");
   display: block;
@@ -35,11 +32,13 @@ button::-moz-focus-inner {
   overflow: hidden;
   background-repeat: no-repeat;
   float: left;
+  text-indent: -9999px;
 }
 
-body {
+html body {
   background-image: url("../images/new/circulos-bokeh-peq.png");
   background-repeat: no-repeat;
+  background-color: transparent;
 }
 
 .overlay {
@@ -59,7 +58,7 @@ body {
   padding-top: -8px;
 }
 
-.body {
+.overlay .body {
   margin: 0 auto;
 }
 
@@ -97,26 +96,26 @@ body {
   margin-top: -32px;
 }
 
-.menu-list {
+.menu-footer li  {
   display: inline;
 }
 
-.boxshadow .menu-list a:hover {
+.boxshadow .menu-footer li a:hover {
   -webkit-box-shadow:  0px -1px 0px 0px rgba(255, 255, 255, 0.1);
   -moz-box-shadow: 0px -1px 0px 0px rgba(255, 255, 255, 0.1);
   box-shadow: 0px -1px 0px 0px rgba(255, 255, 255, 0.1);
 }
 
-.textshadow .menu-list a:hover {
+.textshadow .menu-footer li a:hover {
   text-shadow: 0px -1px 0px rgb(21, 138, 196);
 }
 
-.menu-list a:hover {
+.menu-footer li a:hover {
   background-color: rgb(21, 138, 196);
   color: rgb(255, 255, 255);
 }
 
-.borderradius .menu-list a:hover {
+.borderradius .menu-footer li a:hover {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
@@ -126,7 +125,7 @@ body {
   height: 97px;
 }
 
-.menu-list a {
+.menu-footer li a {
   padding: 6px;
   float: left;
   margin-left: 10px;
@@ -157,7 +156,7 @@ body {
 }
 
 .textshadow .cnpj,
-  .textshadow .menu-footer {
+.textshadow .menu-footer {
   text-shadow: 0px -1px 0px rgb(255, 255, 255);
 }
 
@@ -166,13 +165,13 @@ body {
   font-weight: 900;
 }
 
-.ops-call, .something-call {
+.ops-call, .warning {
   font-size: 47px;
   letter-spacing: -4px;
   color: rgb(193, 39, 45);
 }
 
-.something-call {
+.warning {
   font-family: museo-sans, arial, sans-serif;
   font-weight: 100;
 }
@@ -217,30 +216,25 @@ body {
   letter-spacing: -8px;
 }
 
-.title-call, .why-call, .sugestion-call, .you-can-call {
+.title-call, 
+.description-error .title {
   font-family: museo-sans, arial, sans-serif;
   font-size: 17px;
   font-weight: 500;
   margin-top: 20px;
 }
 
+.description-error p {
+	color: rgb(179, 179, 179);
+}
+
 .title-call {
   color: rgb(193, 39, 45);
 }
 
-.system-call, .sorry-call {
-  color: rgb(109, 110, 111);
-  line-height: 14px;
-}
-
 .back-call {
   color: rgb(77, 173, 214);
-}
-
-.back-call, .system-call, .sorry-call {
-  font-family: arial, sans-serif;
-  font-size: 12px;
-  font-weight: normal;
+  text-decoration: none;
 }
 
 .erros {
@@ -248,51 +242,45 @@ body {
   margin: 0;
 }
 
-.descricao-erro {
+.description-error {
   float: right;
   margin-top: 10px;
 }
 
-.body .text-body .concave-form  .concave-input {
+.body .body-error .concave-form  .concave-input {
   font-size: 11px;
   font-family: arial, sans-serif;
-  font-style: italic;
   color: rgb(179, 179, 179);
   padding: 0 10px;
   float: right;
   margin-right: 16px;
 }
 
-.text-body .confirmation-msg .sucess-email .thank-you .thank-you {
+.body-error .confirmation-msg .sucess-email .thank-you .thank-you {
   margin-left: 0;
 }
 
-.text-body .confirmation-msg .sucess-email .thank-you {
-  padding-top: 15px;
-  margin-left: 5px;
-}
-
-.text-body .confirmation-msg .sucess-email .text-confirmation {
+.body-error .confirmation-msg .sucess-email .text-confirmation {
   padding-right: 20px;
   padding-left: 5px;
 }
 
-.texteshadow .call-us .concave-input {
+.texteshadow .form-error .concave-input {
   text-shadow: 0px 1px 0px rgb(255, 255, 255);
 }
 
-.text-body .concave-form .personal-information{
+.body-error .concave-form .personal-information{
   width: 374px;
   height: 32px;
 }
 
-.body .text-body .concave-form .message-box {
+.body .body-error .concave-form .message-box {
   min-width: 374px;
   height: 167px;
   padding: 10px;
 }
 
-.text-body .concave-form .concave-button {
+.body-error .concave-form .concave-button {
   font-weight: bold;
   font-size: 12px;
   font-family: arial, sans-serif;
@@ -301,34 +289,34 @@ body {
   margin: 10px 14px;
 }
 
-.body .text-body .call-us {
+.body .body-error .form-error {
   margin: -20px 0;
   float: right;
 }
 
-.textshadow .text-body .concave-form .concave-button {
+.textshadow .body-error .concave-form .concave-button {
   text-shadow: 0px -1px 0px rgb(12, 138, 196);
 }
 
-.text-body .concave-form .put-your-email,
-.text-body .concave-form .put-your-name,
-.text-body .concave-form .put-your-message {
+.body-error .concave-form .put-your-email,
+.body-error .concave-form .put-your-name,
+.body-error .concave-form .put-your-message {
   font-size: 11px;
   font-family: arial;
   clear: both;
   width: 54px;
 }
 
-fieldset {
+.form-error .call-us {
   clear: both;
-  float: right;
 }
 
-.footer, .push {
+.footer,
+.push {
 clear: both;
 }
 
-.suggested-links {
+.description-error .suggested-links {
   padding-top: 3px;
   list-style-type: disc;
   font-weight: normal;
@@ -336,22 +324,14 @@ clear: both;
   font-family: arial, sans-serif;
 }
 
-.list-link a {
+.description-error .suggested-links li a {
   text-decoration: none;
   color: rgb(77, 173, 214);
 }
 
-.list-link {
+.description-error .suggested-links li {
   padding: 2px;
 }
-
-.title-call, .why-call, .sugestion-call, .help-links {
-  font-family: museo-sans, arial, sans-serif;
-  font-size: 17px;
-  font-weight: 500;
-  margin-top: 20px;
-}
-
 
 .confirmation-msg {
   background-color: rgb(240, 240, 240);
@@ -390,11 +370,11 @@ clear: both;
   height: 10px;
   margin-top: -8px;
   margin-left: 40px;
-  margin-top: 10px;
+  margin-top: -9px;
 }
 
-.thank-you, span {
-  padding: 20px 15px 0 15px;
+.thank-you {
+  padding: 20px 0px 0px 0px;
   font-size: 17px;
   font-family: museo-sans, arial, sans-serif;
   font-weight: lighter;
@@ -417,15 +397,15 @@ clear: both;
   color: rgb(77, 173, 214);
 }
 
-.error-500 .text-body .concave-fieldset {
+.error-500 .body-error .concave-fieldset {
   width: 520px;
 }
 
-.error-500 .text-body .concave-fieldset .errors_on_field {
+.error-500 .body-error.concave-fieldset .errors_on_field {
   margin-left: 111px;
 }
 
-.error-500 .text-body .concave-fieldset .field_with_errors {
+.error-500 .body-error .concave-fieldset .field_with_errors {
   margin: 0px;
   width: 520px;
   clear: none;

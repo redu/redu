@@ -3,6 +3,19 @@ body {
   background-color: rgb(247, 247, 247);
 }
 
+button {
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  overflow: visible; /* removes padding in IE */
+}
+
+button::-moz-focus-inner {
+    /* removes ppushadding in Firefox */
+    border: none;
+    padding: 0;
+}
+
 #header a:hover {
   text-decoration: none;
 }
@@ -7104,14 +7117,20 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   margin-bottom: 40px;
 }
 
-.panel .concave-important-p .concave-important {
-  float: right;
+.panel .concave-important-p {
+	margin: 0 auto;
+}
+
+.panel .concave-important-p{
   width: 70px;
   height: 30px;
   background: rgb(171,227,133); /* Old browsers */
-  font-size: 12px;
-  margin: 8px 20px;
+	float: right;
 }
+
+.panel .plans .plan .concave-important-p {
+	margin-right: 25px;
+}  
 
 .borderradius .panel .upgrade-button .concave-important {
   -moz-border-radius: 5px;
@@ -7132,6 +7151,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 
 .panel  .concave-important:hover {
   background: rgb(171,227,133);
+  color: white;
 }
 
 .cssgradients .panel  .concave-important:hover {
@@ -7196,12 +7216,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
    font-weight: normal;
 }
 
-.plan-panel .payments .concave-important {
-  margin-right: 20px;
-  float: right;
-  margin-top: -10px;
-}
-
 .plan-panel .payments .data .number {
   color: rgb(77, 173, 214);
 }
@@ -7213,10 +7227,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 
 .plan-panel .payments .data .date {
   margin-left: 50px;
-}
-
-.plan-panel .payments .data .value {
-  margin-left: 7px;
 }
 
 .plan-panel .payments .data .date .bar {
@@ -7256,15 +7266,13 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   color: rgb(95, 192, 128);
 }
 
-.payments .data .icon {
+.payments .data .icon  {
   background: url("../images/new/icones-p.png") -80px -2080px 	no-repeat;
   width: 16px;
   height: 18px;
   text-indent: -9999px;
-  float: right;
   content: ".";
-  margin: 15px 74px 0px 0px;
-  padding: 0px;
+  background-repeat: no-repeat;
 }
 
 .plan-panel .box-gray {
@@ -7305,7 +7313,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 .plan-panel .plans-list .plans .plan {
-  border: solid 1px rgb(179, 179, 179);
+  border: solid 1px rgb(204, 204, 204);
   width: 580px;
   background: rgb(255,255,255); /* Old browsers */
 } 
@@ -7414,12 +7422,12 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 	margin: 20px 28px 0 0;
 }
 
-.invoice-detail .course {
+.plan-panel table.common .invoice-detail .course {
 	background: rgb(240,240,240); /* Old browsers*/
 	border: solid 1px rgb(179, 179, 179);
 }
 
-.cssgradients .invoice-detail .course {
+.cssgradients .plan-panel table.common .invoice-detail .course {
 	background: -moz-linear-gradient(top,  rgb(240,240,240) 0%, rgb(255,255,255) 50%, rgb(240,240,240) 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(240,240,240)), color-stop(50%,rgb(255,255,255)), color-stop(100%,rgb(240,240,240))); /* Chrome,Safari4+ */
 	background: -webkit-linear-gradient(top,  rgb(240,240,240) 0%,rgb(255,255,255) 50%,rgb(240,240,240) 100%); /* Chrome10+,Safari5.1+ */
@@ -7436,7 +7444,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 .invoice-detail .course .environment,
-.invoice-detail .course .type-user .user-status {
+.invoice-detail .course .no-pending {
 	font-size: 11px;
 	font-family: arial,sans-serif;
 	font-weight: regular;
@@ -7455,8 +7463,21 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 	font-family: arial, sans-serif;
 	font-weight: regular;
 	color: rgb(95, 192, 128);
+	padding-left: 120px;
+}
+
+.invoice-detail .course .pending-user {
+	color: rgb(255, 109, 109);
 }
 
 .textshadow .course .type-user {
 	text-shadow: 0px 1px 0px rgb(255, 255, 255);
+}
+
+table .label-course .category {
+	padding-left: 120px;
+}	
+
+.payments .data .botao  {
+	text-align: center;
 }
