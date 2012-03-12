@@ -7112,18 +7112,15 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   float: right;
   width: 150px;
   height: 32px;
-  background: rgb(171,227,133); /* Old browsers */
   font-size: 15px;
   margin-bottom: 40px;
 }
 
-.panel .plans .plan .concave-important-p {
+.panel .concave-important {
   width: 70px;
   padding: 0;
   height: 30px;
-  background: rgb(171,227,133); /* Old browsers */
 	float: right;
-	margin-right: 25px;
 }
 
 .borderradius .panel .upgrade-button .concave-important {
