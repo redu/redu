@@ -1,6 +1,5 @@
 module Vis
   class DashboardController < VisualizationsController
-    check_authorization
 
     # Requisição default pega o primeiro professor da lista do curso
     def teacher_participation
