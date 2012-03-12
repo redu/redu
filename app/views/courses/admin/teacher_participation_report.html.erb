@@ -29,19 +29,14 @@
               $("#graph-form").submit();
               }catch(e){}
           <% end %>
-        <%= form_tag "/api/dashboard/teacher_participation_interaction.json?id_course=#{@course.id}", :method => :get, :remote => true, :class => "concave-form", :id => "graph-form" do %>
+        <%= form_tag "/api/dashboard/teacher_participation_interaction.json?course_id=#{@course.id}", :method => :get, :remote => true, :class => "concave-form", :id => "graph-form" do %>
           <%= label_tag "", "Professor", :id => "form-problem"%>
-          <%= select_tag(:id_teacher, options_from_collection_for_select(@course.teachers, :id, :first_name), {:class =>"concave-select"})%>
+          <%= select_tag(:teacher_id, options_from_collection_for_select(@course.teachers, :id, :first_name), {:class =>"concave-select"})%>
 
           <%= label_tag "Disciplinas" %>
           <ul class="single-column">
-            <% @course.spaces.each do |space| %>
-              <li>
-                <%= check_box_tag "spaces[]", space.id, true,
-                  { :class => "item-space-check", :id => "spaces-#{space.id}" } %>
-                <%= label_tag "spaces-#{space.id}", space.name %>
-              </li>
-            <% end %>
+            <%= render :partial => 'courses/admin/space_item_admin',
+              :collection => @course.spaces, :as => :space  %>
             <li>
               <%= check_box_tag "all-check", "0", true %>
               <%= label_tag "all-check", "Todos" %>
@@ -52,7 +47,7 @@
           <%= field_set_tag nil, :class => "inline" do %>
             <%= date_select "date_start_fake", "start",
                 :default => Date.today - 9 %>
-            <%= text_field_tag :time_start, nil,
+            <%= text_field_tag :date_start, nil,
                 :style => "display: none;" %>
           <% end %>
 
@@ -60,7 +55,7 @@
           <%= field_set_tag nil, :id => "date-validate",
             :class => "inline" do %>
             <%= date_select "date_end_fake", "start", :end_year => Date.today.year %>
-            <%= text_field_tag :time_end, nil, :style => "display: none;" %>
+            <%= text_field_tag :date_end, nil, :style => "display: none;" %>
           <% end %>
 
           <%= submit_tag "Atualizar", :class=>"concave-submit" %>
