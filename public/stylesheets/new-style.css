@@ -3220,7 +3220,7 @@ button::-moz-focus-inner {
   margin-top: -3px;
 }
 
-.tabs > ul li .details, 
+.tabs > ul li .details,
 .tabs > ul li .upgrade {
   display: block;
   margin-top: -10px;
@@ -7158,7 +7158,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .boxshadow .panel .upgrade-button {
   -webkit-box-shadow: inset 1px 1px 0px 0px rgb(171, 227, 133), inset -1px -1px 0px 0px rgb(171,227,133);
   -moz-box-shadow: inset 1px 1px 0px 0px rgb(171, 227, 133), inset -1px -1px 0px 0px rgb(171,227,133);
-  box-shadow: inset 1px 1px 0px 0px rgb(171, 227, 133), inset -1px -1px 0px 0px rgb(171,227,133); 
+  box-shadow: inset 1px 1px 0px 0px rgb(171, 227, 133), inset -1px -1px 0px 0px rgb(171,227,133);
 }
 
 .panel .call .college {
@@ -7198,9 +7198,10 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   font-size: 17px;
   color: rgb(179, 179, 179);
   line-height: 12px;
-  letter-spacing: -1px; 
+  letter-spacing: -1px;
 }
 
+/* FIXME: tentar agrupar por tela */
 .plan-panel .payments {
    font-size: 11px;
 }
@@ -7259,6 +7260,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   background-repeat: no-repeat;
 }
 
+/* FIXME identação incorreta */
 .plan-panel table.common tbody tr {
   border: none;
 }
@@ -7270,11 +7272,11 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 .borderradius .plan-panel table.common .box-gray .data td:first-child {
-	border-radius: 5px 0px 0px 5px; 
+	border-radius: 5px 0px 0px 5px;
 }
 
 .borderradius .plan-panel table.common .box-gray .data td:last-child {
-	border-radius: 0px 5px 5px 0px; 
+	border-radius: 0px 5px 5px 0px;
 }
 
 .plan-panel .courses-list,
@@ -7284,6 +7286,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   clear: both;
 }
 
+/* Fixme: identação correta */
 .plan-panel .courses-list {
 	margin-bottom: 30px;
 }
@@ -7298,14 +7301,17 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   border: solid 1px rgb(204, 204, 204);
   width: 580px;
   background: rgb(255,255,255); /* Old browsers */
-} 
+  /* FIXME: margin-top: -1px para simular linha única */
+}
 
+/* FIXME: faltou colocar o plan-panel */
 .borderradius .plans-list .plans .plan {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
-} 
- 
+}
+
+/* FIXME: faltou colocar o plan-panel */
 .cssgradients .plans-list .plans .plan {
   background: -moz-linear-gradient(top,  rgb(255,255,255) 0%, rgb(240,240,240) 100%); /* FF3.6+ */
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(255,255,255)), color-stop(100%,rgb(240,240,240))); /* Chrome,Safari4+ */
@@ -7315,6 +7321,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   background: linear-gradient(top,  rgb(255,255,255) 0%,rgb(240,240,240) 100%); /* W3C */
 }
 
+/* FIXME identação incorreta */
 .plans-list .plans .plan {
 	padding-bottom: 10px;
 }
@@ -7350,7 +7357,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 .plans-list .plans .plan .a-month,
-.plans-list .plans .plan .Highlights {
+.plans-list .plans .plan .Highlights { /* FIXME: não usar letras grandes p/ nome de classe */
   font-size: 12px;
   font-family: arial, sans-serif;
   font-style: italic;
@@ -7404,6 +7411,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 	margin: 20px 28px 0 0;
 }
 
+/* FIXME: colocar padding nas linhas */
 .plan-panel .concave-admin-table {
 	width: 580px;
 	margin: 0;
