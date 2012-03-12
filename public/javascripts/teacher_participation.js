@@ -95,17 +95,22 @@ $(document).ready(function(){
 
   // Submissão do gráfico por AJAX
   $("#graph-form").submit(function(e) {
-    $("#time_start").val(time_selected("start"));
-    $("#time_end").val(time_selected("end"));
+    $("#date_start").val(time_selected("start"));
+    $("#date_end").val(time_selected("end"));
   });
 
   $("#graph-form").live("ajax:complete", function(e, xhr){
     json = $.parseJSON(xhr.responseText);
-    options.series[0].data = json.lectures_created;
-    options.series[1].data = json.posts;
-    options.series[2].data = json.answers;
+    if(json.error){
+      $('#form-problem').before('<div class="error_explanation" id="error_explanation"><h2>Ops!</h2><p>Há problemas para os seguinte(s) campo(s):</p><p class="invalid_fields">Data inicial, Data final</p></div>');
+      $("#date-validate").append('<ul class="errors_on_date"><li>'+json.error+'</li></ul>');
+    }else{
+      options.series[0].data = json.lectures_created;
+      options.series[1].data = json.posts;
+      options.series[2].data = json.answers;
 
-    options.xAxis.categories = json.days;
-    chart = new Highcharts.Chart(options);
+      options.xAxis.categories = json.days;
+      chart = new Highcharts.Chart(options);
+    }
   });
 });
