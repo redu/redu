@@ -14,7 +14,7 @@ describe "Spaces API" do
     end
 
     it "should have the correct keys" do
-      %w(name description created_at links).each do |attr|
+      %w(name description created_at links id).each do |attr|
         parse(response.body).should have_key attr
       end
     end
@@ -68,8 +68,10 @@ describe "Spaces API" do
   context "get /users/:id/spaces" do
     before do
       @new_env = Factory(:complete_environment)
+      @new_course = @new_env.courses.first
+      @new_space = @new_course.spaces.first
       @user = @space.users.first
-      @new_env.courses.first.join(@user, Role[:teacher])
+      @new_course.join(@user, Role[:teacher])
     end
 
     it "should return code 200" do
@@ -100,12 +102,20 @@ describe "Spaces API" do
       parse(response.body).length.should == 1
     end
 
-    it "should filter by course" do
+    it "should filter by course and role" do
+      # /api/users/1/spaces?role=teacher&course_id=2
       get "/api/users/#{@user.id}/spaces", :role => 'teacher',
-        :course_id => @new_env.courses.first.id, :oauth_token => @token,
+        :course => @new_course.id, :oauth_token => @token,
         :format => 'json'
 
-      parse(response.body).length.should == 1
+      parse(response.body).first['id'].should == @new_space.id
+    end
+
+    it "should filter by course" do
+      get "/api/users/#{@user.id}/spaces", :course => @new_course.id,
+        :oauth_token => @token, :format => 'json'
+
+      parse(response.body).first['id'].should == @new_space.id
     end
   end
 

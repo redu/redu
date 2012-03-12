@@ -1,6 +1,6 @@
 shared_examples_for "user listing" do
   it "should return 200" do
-    get "/api/spaces/#{subject.id}/users", :oauth_token => token,
+    get "/api/#{entity_name}/#{subject.id}/users", :oauth_token => token,
       :format => 'json'
 
     response.code.should == '200'

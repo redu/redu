@@ -2,10 +2,10 @@ module SpaceRepresenter
   include Roar::Representer::JSON
   include Roar::Representer::Feature::Hypermedia
 
+  property :id
   property :name
   property :description
   property :created_at
-
 
   link :self do
     api_space_url(self)
