@@ -1,12 +1,4 @@
 GIT
-  remote: git://github.com/alindeman/no_peeping_toms.git
-  revision: 83dbd4cb993ae8e78a38a0f5cad784ca58bb0dcd
-  specs:
-    no_peeping_toms (2.1.0)
-      activerecord (>= 3.0.0)
-      activesupport (>= 3.0.0)
-
-GIT
   remote: git://github.com/apotonick/roar-rails.git
   revision: 851736e6cf2c4a930bc0b107cd43f750ac67f42b
   specs:
@@ -39,6 +31,14 @@ GIT
       actionmailer (>= 3.0.0)
       nokogiri (>= 1.4.4)
       premailer (>= 1.7.1)
+
+GIT
+  remote: git://github.com/patmaddox/no-peeping-toms.git
+  revision: b39544b58bba7c9258d60ddc7dead0ccb6c1aa83
+  specs:
+    no_peeping_toms (2.1.1)
+      activerecord (>= 3.0.0)
+      activesupport (>= 3.0.0)
 
 GIT
   remote: git://github.com/rubyist/aasm.git
@@ -255,7 +255,7 @@ GEM
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
-    tzinfo (0.3.31)
+    tzinfo (0.3.32)
     whenever (0.6.7)
       aaronh-chronic (>= 0.3.9)
       activesupport (>= 2.3.4)
