@@ -272,6 +272,8 @@ Redu::Application.routes.draw do
       resources :spaces, :only => :index
     end
 
+    resources :statuses, :only => :show
+
     # Hack para capturar exceções ActionController::RoutingError
     match '*', :to => 'api#routing_error'
   end

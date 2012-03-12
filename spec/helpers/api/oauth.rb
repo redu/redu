@@ -18,8 +18,10 @@ module Api
     end
 
     def href_to(rel, representation)
-      representation.fetch('links', []).detect { |link| link['rel'] == rel }.
-        fetch('href', nil)
+      link = representation.fetch('links', []).
+        detect { |link| link['rel'] == rel }
+
+      link ? link['href'] : ''
     end
   end
 end
