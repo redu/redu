@@ -2,7 +2,7 @@ require "spec_helper"
 require 'authlogic/test_case'
 include Authlogic::TestCase
 
-describe Api::DashboardController do
+describe Vis::DashboardController do
   context "authorizing" do
     before do
       @environment = Factory(:environment)
@@ -32,7 +32,7 @@ describe Api::DashboardController do
           should have_key 'error'
       end
 
-      it "should return 200 HTTP code" do
+      it "should return 200 (Ok) HTTP code" do
         activate_authlogic
         UserSession.create @user
 
@@ -72,7 +72,7 @@ describe Api::DashboardController do
           should have_key 'error'
       end
 
-      it "should return 200 HTTP code" do
+      it "should return 200 (Ok) HTTP code" do
         activate_authlogic
         UserSession.create @user
 
