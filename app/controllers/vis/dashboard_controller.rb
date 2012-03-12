@@ -1,5 +1,5 @@
-module Api
-  class DashboardController < ApiController
+module Vis
+  class DashboardController < VisualizationsController
     check_authorization
 
     # Requisição default pega o primeiro professor da lista do curso

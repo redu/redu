@@ -29,7 +29,7 @@
               $("#graph-form").submit();
               }catch(e){}
           <% end %>
-        <%= form_tag "/api/dashboard/teacher_participation_interaction.json?course_id=#{@course.id}", :method => :get, :remote => true, :class => "concave-form", :id => "graph-form" do %>
+        <%= form_tag "/vis/dashboard/teacher_participation_interaction.json?course_id=#{@course.id}", :method => :get, :remote => true, :class => "concave-form", :id => "graph-form" do %>
           <%= label_tag "", "Professor", :id => "form-problem"%>
           <%= select_tag(:teacher_id, options_from_collection_for_select(@course.teachers, :id, :first_name), {:class =>"concave-select"})%>
 

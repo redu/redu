@@ -1,5 +1,5 @@
-module Api
-  class ApiController < ActionController::Base
+module Vis
+  class VisualizationsController < ActionController::Base
     respond_to :json
 
     rescue_from ActiveRecord::RecordNotFound, :with => :not_found
