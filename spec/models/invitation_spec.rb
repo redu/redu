@@ -78,10 +78,12 @@ describe Invitation do
     end
 
    it 'Users can resend invitation email' do
-      subject.resend_email do |invitation|
-      UserNotifier.friendship_invitation(invitation).deliver
-        UserNotifier.deliveries.should_not be_empty
+     ActiveRecord::Observer.with_observers(:friendship_observer) do
+       subject.resend_email do |invitation|
+         UserNotifier.friendship_invitation(invitation).deliver
+         UserNotifier.deliveries.should_not be_empty
       end
+     end
     end
   end
 end

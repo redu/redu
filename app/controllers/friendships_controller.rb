@@ -14,6 +14,13 @@ class FriendshipsController < BaseController
     end
   end
 
+  def new
+    @contacts_recommendations = @user.recommended_contacts(5)
+    respond_to do |format|
+      format.html
+    end
+  end
+
   def create
     @friend = User.find(params[:friend_id])
     current_user.be_friends_with(@friend)

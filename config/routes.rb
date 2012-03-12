@@ -102,7 +102,7 @@ Redu::Application.routes.draw do
 
     resources :social_networks, :only => [:destroy]
 
-    resources :friendships, :only => [:index, :create, :destroy]
+    resources :friendships, :only => [:index, :create, :destroy, :new]
 
     resources :invitations
 
