@@ -1,0 +1,457 @@
+* {
+  margin: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none; /* Overwrites new-fonts.css */
+}
+
+.clearer {
+  clear: both;
+}
+
+.overlay {
+  background-image: url("../images/circulos-bokeh-peq.png");
+  background-position: 60px 0;
+  background-repeat: no-repeat;
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -211px;
+}
+
+.footer, .push {
+  height: 211px;
+}
+
+h1.logo-top {
+  background-image: url("../images/redu-hi-vert.png");
+  width: 225px;
+  height: 196px;
+  margin-left: -18px;
+  text-indent: -9999px;
+}
+
+h1.logo-top a {
+  /* Clickable logo. */
+  display: block;
+  height: 196px;
+  width: 225px;
+}
+
+div.left-navigation {
+  position: relative; /* Make the active item tab stand over the content. */
+}
+
+ul.left-navigation {
+  font-family: "Museo Sans", sans-serif;
+  font-size: 17px;
+  font-weight: 500;
+  color: rgb(179, 179, 179);
+  margin-top: 45px;
+}
+
+ul.left-navigation li {
+  margin-bottom: 9px;
+}
+
+ul.left-navigation li.active {
+  margin-right: -6px;
+  background-color: rgb(77, 173, 214);
+}
+
+.boxshadow ul.left-navigation li.active {
+  -webkit-box-shadow: 1px 2px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 1px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 1px 2px rgba(0, 0, 0, 0.3); 
+}
+
+.borderradius ul.left-navigation li.active {
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 0px;
+  -moz-border-radius-bottomright: 0px;
+  -moz-border-radius-bottomleft: 5px;
+  -webkit-border-radius: 5px 0px 0px 5px;
+  border-radius: 5px 0px 0px 5px;
+}
+
+ul.left-navigation li.active:hover {
+  background-color: rgb(21, 138, 196);
+}
+
+ul.left-navigation li.active a {
+  color: white;
+}
+
+.textshadow ul.left-navigation li.active a {
+  text-shadow: 0px -1px 0px rgb(21, 138, 196);
+}
+
+ul.left-navigation li.active a:after {
+  content: "";
+  width: 24px;
+  height: 55px;
+  background-image: url("../images/icones-termos-e-contato.png");
+  background-position: 0 -318px;
+  float: right;
+  margin-right: -24px;
+  margin-top: -15px;
+}
+
+ul.left-navigation li.active:hover a:after {
+  background-position: -80px -318px;
+}
+
+ul.left-navigation a {
+  color: rgb(179, 179, 179);
+  display: block;
+  padding: 13px 0 10px 42px;
+}
+
+ul.left-navigation a:hover {
+  color: rgb(21, 138, 196);
+}
+
+ul.left-navigation li a:before {
+  content: "";
+  width: 24px;
+  height: 32px;
+  float: left;
+  margin-left: -35px;
+  margin-top: -9px;
+}
+
+ul.left-navigation li.term-of-service a:before {
+  background-image: url("../images/icones-termos-e-contato.png");
+  background-position: -8px -4px;
+}
+
+ul.left-navigation li.term-of-service a:hover:before {
+  background-position: -88px -4px;
+}
+
+ul.left-navigation li.active.term-of-service a:before {
+  background-position: -168px -4px;
+}
+
+ul.left-navigation li.privacy-policy a:before {
+  background-image: url("../images/icones-termos-e-contato.png");
+  background-position: -8px -84px;
+}
+
+ul.left-navigation li.privacy-policy a:hover:before {
+  background-position: -88px -84px;
+}
+
+ul.left-navigation li.active.privacy-policy a:before {
+  background-position: -168px -84px;
+}
+
+ul.left-navigation li.contact a:before {
+  background-image: url("../images/icones-termos-e-contato.png");
+  background-position: -8px -164px;
+}
+
+ul.left-navigation li.contact a:hover:before {
+  background-position: -88px -164px;
+}
+
+ul.left-navigation li.active.contact a:before {
+  background-position: -168px -164px;
+}
+
+h2.content-title {
+  margin-top: 40px;
+  margin-bottom: 50px;
+  padding-left: 40px;
+  font-family: "Museo Sans", sans-serif;
+  font-size: 47px;
+  font-weight: 100;
+  color: rgb(115, 195, 230);
+}
+
+h2.content-title:after {
+  content: "";
+  float: right;
+  height: 64px;
+  margin-right: 14px;
+  margin-top: -13px;
+  width: 56px;
+}
+
+h2.content-title.term-of-service:after {
+  background-image: url("../images/icones-termos-e-contato.png");
+  background-position: 0 -241px;
+}
+
+h2.content-title.privacy-policy:after {
+  background-image: url("../images/icones-termos-e-contato.png");
+  background-position: 160px -241px;
+}
+
+h2.content-title.contact:after {
+  background-image: url("../images/icones-termos-e-contato.png");
+  background-position: 80px -241px;
+}
+
+ul.top-navigation {
+  margin-left: 40px;
+  margin-top: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  color: rgb(179, 179, 179);
+}
+
+ul.top-navigation li {
+  display: inline;
+}
+
+ul.top-navigation a, .content a {
+  color: rgb(77, 173, 214);
+}
+
+ul.top-navigation a:hover {
+  color: rgb(21, 138, 196);
+}
+
+ul.top-navigation a.active {
+  font-weight: bold;
+}
+
+ul.top-navigation .separator {
+  margin: 0 15px;
+}
+
+.textshadow ul.top-navigation, 
+.textshadow h2.content-title,
+.textshadow ul.left-navigation,
+.textshadow div.contact-post,
+.textshadow form.contact input[type=text],
+.textshadow form.contact textarea.description {
+  text-shadow: 0px 1px 0px white;
+}
+
+.content {
+  padding: 40px;
+  border: 1px solid white;
+  background-color: white;
+}
+
+.borderradius .content {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+
+.boxshadow .content {
+  -webkit-box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.4); 
+}
+
+.cssgradients .content {
+  background: -moz-linear-gradient(top,  rgb(240,240,240) 0%, rgb(255,255,255) 8%, rgb(255,255,255) 90%, rgb(240,240,240) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(240,240,240)), color-stop(8%,rgb(255,255,255)), color-stop(90%,rgb(255,255,255)), color-stop(100%,rgb(240,240,240))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgb(240,240,240) 0%,rgb(255,255,255) 8%,rgb(255,255,255) 90%,rgb(240,240,240) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgb(240,240,240) 0%,rgb(255,255,255) 8%,rgb(255,255,255) 90%,rgb(240,240,240) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgb(240,240,240) 0%,rgb(255,255,255) 8%,rgb(255,255,255) 90%,rgb(240,240,240) 100%); /* IE10+ */
+  background: linear-gradient(top,  rgb(240,240,240) 0%,rgb(255,255,255) 8%,rgb(255,255,255) 90%,rgb(240,240,240) 100%); /* W3C */
+}
+
+.textshadow .content {
+  text-shadow: 1px 1px 0px white;
+}
+
+.content p, 
+.content .last-updated {
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  line-height: 17px;
+  color: rgb(109, 110, 111);
+  margin-bottom: 20px;
+}
+
+.content .section {
+  font-family: "Museo Sans", sans-serif;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 17px;
+  color: black;
+}
+
+.content .standout {
+  color: black;
+  font-weight: bold;
+}
+
+.content .last-updated {
+  display: block;
+  margin-top: 20px;
+}
+
+.content .last-updated .date {
+  font-style: italic;
+}
+
+form.contact {
+  width: 572px; /* So input submit aligns. */
+}
+
+form.contact input[type=text],
+form.contact textarea.description {
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+  font-style: italic;
+  color: rgb(179, 179, 179);
+}
+
+.contact-post {
+  color: black; 
+  padding: 20px;
+  width: 400px;
+  background-color: rgb(240, 240, 240);
+  margin: 110px auto 156px;
+}
+
+.contact-post p {
+  color: black; /* Overwrites the grey. */
+}
+
+.contact-post:before {
+  content: "";
+  width: 29px;
+  height: 10px;
+  background-image: url("../images/aba-cima-contato.png");
+  float: left;
+  margin-left: 25px;
+  margin-top: -30px;
+}
+
+.borderradius .contact-post {
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  border-radius: 7px;
+}
+
+.boxshadow .contact-post {
+  -webkit-box-shadow: 0px -1px rgba(204, 204, 204, 1);
+  -moz-box-shadow: 0px -1px rgba(204, 204, 204, 1);
+  box-shadow: 0px -1px rgba(204, 204, 204, 1); 
+}
+
+.contact-post span.thank-you {
+  font-family: "Museo Sans", sans-serif;
+  font-size: 17px;
+  font-weight: 100;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.contact-post span.thank-you span.person-name {
+  font-weight: 500;
+}
+
+.footer {  
+  background: rgb(77,173,214);
+  border-top: 1px solid white;
+  margin-top: 130px;
+}
+
+.cssgradients .footer {
+  background: -moz-linear-gradient(top, rgb(115,195,230) 0%, rgb(23,137,195) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(115,195,230)), color-stop(100%,rgb(23,137,195))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgb(115,195,230) 0%,rgb(23,137,195) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgb(115,195,230) 0%,rgb(23,137,195) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgb(115,195,230) 0%,rgb(23,137,195) 100%); /* IE10+ */
+  background: linear-gradient(top, rgb(115,195,230) 0%,rgb(23,137,195) 100%);
+}
+
+.footer .logo-bottom {
+  width: 240px;
+  height: 77px;
+  background-image: url("../images/redutech-low-horiz-a.png");
+  margin-left: -18px;
+  text-indent: -9999px;
+}
+
+.footer .logo-bottom a {
+  height: 212px;
+  overflow: hidden;
+  display: block;
+}
+
+.footer .presentation-call, 
+.footer .our-address, 
+.footer .about-redu, 
+.footer .politics-terms {
+  color: white;
+  float: left;
+  font-family: Arial, sans-serif;
+  line-height: 15px;
+}
+
+.footer .presentation-call, 
+.footer .our-address {
+  font-size: 11px;
+}
+
+.textshadow .footer .presentation-call, 
+.textshadow .footer .our-address {
+  text-shadow: 0 -1px 0 rgb(23, 137, 195);
+}
+
+.footer .presentation-call {
+    width: 285px;
+}
+
+.footer .our-address {
+  background-image: url("../images/icone-interrog-12.png");
+  background-repeat: no-repeat;
+  background-position: 1px 1px;
+  margin-left: 27px; 
+  padding-top: 15px;
+}
+
+.footer .about-redu, 
+.footer .politics-terms {
+  font-size: 12px;
+}
+
+.footer .about-redu {
+  margin-left: 190px;
+  margin-right: 45px;
+}
+
+.footer .item-menu {
+  padding: 5px;
+}
+
+.footer .item-menu a {
+  padding: 5px;
+  color: white;
+}
+
+.footer .item-menu a:hover {
+  background-color: white;
+  color: rgb(21, 138, 196);
+}
+
+.boxshadow .footer .item-menu a:hover {
+  -webkit-box-shadow: 0 1px 0 0 rgb(109, 110, 111);
+  -moz-box-shadow: 0 1px 0 0 rgb(109, 110, 111);
+  box-shadow: 0 1px 0 0 rgb(109, 110, 111);
+}
+
+.borderradius .footer .item-menu a:hover {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
