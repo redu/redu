@@ -323,5 +323,4 @@ class Course < ActiveRecord::Base
       license.save
     end
   end
-
 end
