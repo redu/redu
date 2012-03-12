@@ -173,11 +173,11 @@ class UserNotifier < ActionMailer::Base
   # Enviado para o usuário requisitado numa requisição de conexão
   def friendship_requested(user, friend)
     @user, @friend = user, friend
-    uca = UserCourseAssociation.where(:user_id => user).approved
+    uca = UserCourseAssociation.where(:user_id => @friend).approved
 
     @contacts = { :total => @user.friends.count,
-                  :in_common => user.friends_in_common_with(friend).count }
-    @courses = { :total => @user.courses.count,
+                  :in_common => user.friends_in_common_with(@friend).count }
+    @courses = { :total => @friend.courses.count,
                  :environment_admin => uca.with_roles([:environment_admin]).count,
                  :tutor => uca.with_roles([:tutor]).count,
                  :teacher => uca.with_roles([:teacher]).count }

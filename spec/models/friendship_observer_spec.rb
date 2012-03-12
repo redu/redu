@@ -24,6 +24,10 @@ describe FriendshipObserver do
 
     it "notifies the request" do
       neo = Factory(:user)
+      2.times do
+        e = Factory(:environment, :owner => neo)
+        Factory(:course, :environment => e, :owner => neo)
+      end
       smith = Factory(:user)
 
       ActionMailer::Base.register_observer(UserNotifierObserver)
@@ -33,6 +37,8 @@ describe FriendshipObserver do
         }.should change(UserNotifier.deliveries, :count).by(1)
         UserNotifier.deliveries.last.subject.should \
           == "#{neo.display_name} quer se conectar"
+        UserNotifier.deliveries.last.text_part.to_s.should \
+          =~ /2 cursos/
       end
     end
   end
