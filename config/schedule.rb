@@ -25,11 +25,11 @@ set :output, log_dir + "whenever.log"
 unless @environment.eql?('production')
   every 1.minute do
     runner "PackageInvoice.refresh_states!"
-    runner "LicensedInvoice.refresh_amounts!"
+    runner "LicensedInvoice.refresh_states!"
   end
 else
-  every 1.days do
+  every 1.day, :at => '21 pm' do
     runner "PackageInvoice.refresh_states!"
-    runner "LicensedInvoice.refresh_amounts!"
+    runner "LicensedInvoice.refresh_states!"
   end
 end
