@@ -1,3 +1,4 @@
+/* Verificar em todo o CSS a ocorrência de seletores não utilizados, classes em português e seletores muito genéricos */
 * {
   margin: 0;
 }
@@ -70,11 +71,12 @@ body {
   letter-spacing: -4px;
 }
 
+/* FIXME Este botão não fica correto apenas por herdar as definiçoes de .concave-form .concave-button? */
 .body .concave-form .body-login  .concave-button{
    cursor: pointer;
    float: right;
-   font-family: arial,sans-serif;
-   font-size: 12px;
+   font-family: arial,sans-serif; /* FIXME Este é o padrão, porque foi preciso ser colocado aqui? */
+   font-size: 12px; /* FIXME Este é o padrão, porque foi preciso ser colocado aqui? */
    font-weight: bold;
    height: 30px;
    padding: 0;
@@ -86,19 +88,22 @@ body {
 .concave-form .input-email,
 .concave-form .input-password {
   color: rgb(179, 179, 179);
-  font-family: arial, sans-serif;
-  font-size: 12px;
+  font-family: arial, sans-serif; /* FIXME Este é o padrão, porque foi preciso ser colocado aqui? */
+  font-size: 12px; /* FIXME Este é o padrão, porque foi preciso ser colocado aqui? */
   font-weight: bold;
   float: left;
 }
 
+
+/* FIXME Colocar o separador entre os forms e não em relação ao <h2> que está dentro de um deles */
 .forgot-password {
   border-top: 1px dotted;
   margin-top: 30px;
   border-color: rgb(214, 214, 214);
-  /*margin-top: 190px;*/
+  /*margin-top: 190px;*/ /* FIXME Se não vai usar, remover */
 }
 
+/* FIXME Estas definições de cor e fonte deveriam ser herdadas de .concave-form .concave-input */
 .body .concave-form  .body-login .concave-input {
   width: 389px;
   color: rgb(179, 179, 179);
@@ -119,7 +124,8 @@ body {
 
 .concave-form .concave-input.registered-email{
   font-size: 11px;
-  font-family: arial, sans-serif;
+  font-family: arial, sans-serif; /* FIXME Este é o padrão, porque foi preciso ser colocado aqui? */
+  /* FIXME Erro de sintaxe e uso de CSS3 sem seletores do modernizr */
   font-sty-webkit-box-shadow: -px 0px 0px rgba(255, 255, 255, 0);
   -moz-box-shadow: -px 0px 0px rgba(255, 255, 255, 0);
   box-shadow: -px 0px 0px rgba(255, 255, 255, 0);le: italic;
@@ -132,7 +138,7 @@ body {
 .call {
   font-size: 11px;
   color: rgb(179, 179, 179);
-  font-family: arial, sans-serif;
+  font-family: arial, sans-serif; /* FIXME Este é o padrão, porque foi preciso ser colocado aqui? */
   margin-top: 4px;
   margin-bottom: 25px;
   font-weight: normal;
@@ -150,6 +156,7 @@ body {
   min-width: 1035px;
 }
 
+/* Não usar as classes do grid960 para alterar estilo */
 .footer .container_12 .container_16 {
   margin-left: auto;
   min-width: 5000px;
@@ -267,11 +274,13 @@ button::-moz-focus-inner {
   float: right;
 }
 
+/* FIXME pink? O_O */
 #tiptip_holder {
   color: pink;
 }
 
 
+/* Não é necessário a utilização do body */
 body #tiptip_content {
  color: white;
  font-size: 11px;
@@ -288,6 +297,7 @@ body #tiptip_content {
   box-shadow: 0px 3px px rgba(85 , 85, 85, 0.1);
 }
 
+/* FIXME No portuguese */
 .alerta {
   background-image: url("../images/new/alerta.png");
   height: 142px;
@@ -334,6 +344,7 @@ body #tiptip_content {
   text-shadow: 0px 1px 0px rgb(255, 255, 255);
 }
 
+/* FIXME No portuguese */
 .aba-top {
   background-image: url("../images/new/aba-cima-borda.png");
   background-repeat: no-repeat;
