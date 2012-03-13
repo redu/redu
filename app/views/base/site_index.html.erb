@@ -22,57 +22,19 @@
         <div class="short-options">
           <%= f.check_box :remember_me, :class => "check-stay-connect" %>
           <%= f.label :remember_me, "Matenha-me conectado", :class => "label-stay-connect" %>
-          <%= link_to "Logar com Facebook", "/auth/facebook", :class => "recover-login" %>
-          <%= link_to "Recuperar  senha", forgot_password_path, :class => "recover-login" %>
-          <%= link_to "Recuperar login", forgot_username_path, :class => "recover-login" %>
+          <%= link_to "Login com Facebook", "/auth/facebook", 
+                      :class => "recover-login" %>
+          <%= link_to "Recuperar  senha", forgot_password_path, 
+                      :class => "recover-login" %>
+          <%= link_to "Recuperar login", forgot_username_path, 
+                      :class => "recover-login" %>
         </div>
         <p class="or-call">&minus; ou &minus;</p>
       <% end %>
     <% end %>
     <%= link_to "Que tal se cadastrar?", signup_path, :class => "new-account" %>
+    <br />
   </div>
-  <script type="text/javascript">
-          window.fbAsyncInit = function() {
-            FB.init({
-              appId  : '142857189169463',
-              status : true, // check login status
-              cookie : true, // enable cookies to allow the server to access the session
-              xfbml  : true  // parse XFBML
-            });
-          };
-
-          (function(d) {
-            var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
-            js = d.createElement('script'); js.id = id; js.async = true;
-            js.src = "//connect.facebook.net/en_US/all.js";
-            d.getElementsByTagName('head')[0].appendChild(js);
-          }(document));
-
-          $(function() {
-            $('#connect a').click(function(e) {
-              e.preventDefault();
-
-              FB.login(function(response) {
-                if (response.authResponse) {
-                  $('#connect').html('Connected! Hitting OmniAuth callback (GET /auth/facebook/callback)...');
-
-                  // since we have cookies enabled, this request will allow omniauth to parse
-                  // out the auth code from the signed request in the fbsr_XXX cookie
-                  $.getJSON('/auth/facebook/callback', function(json) {
-                    $('#connect').html('Connected! Callback complete.');
-                    $('#results').html(JSON.stringify(json));
-                  });
-                }
-              }, { scope: 'email' });
-            });
-          });
-        </script>
-
-        <p id="connect">
-          <a href="#"   data-fields="[{'name':'name'}, {'name':'email'},
-          {'name':'favorite_car','description':'What is your favorite car?',
-            'type':'text'}]" >Connect to FB</a>
-        </p>
   <div class="facebook-like">
     <iframe src="http://www.facebook.com/plugins/like.php?app_id=221316171245047&amp;href=http%3A%2F%2Fwww.facebook.com%2Fredesocialeducacional&amp;send=false&amp;layout=standard&amp;width=280&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:280px; height:80px;" allowTransparency="true"></iframe>
   </div>

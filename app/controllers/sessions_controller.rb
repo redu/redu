@@ -53,7 +53,7 @@ class SessionsController < BaseController
     auth = request.env['omniauth.auth']
     user = User.find_by_external_uid(auth['uid'])
     if user
-      debugger
+      #debugger
       @user_session = UserSession.new(user, true) 
       @user_session.save do |result|
         # raise request.env['omniauth.auth'].to_yaml
@@ -68,10 +68,35 @@ class SessionsController < BaseController
       end
     else
       #raise request.env['omniauth.auth'].to_yaml
-      user = User.new_from_facebook(auth)
-      user.save
-      redirect_to home_path
+      render 'facebook_registration'
+      #user = User.new_from_facebook(auth)
+      #user.save
+      #redirect_to home_path
     end
+  end
+
+  def facebook_registration
+    debugger
+    if params[:signed_request]
+      value = params[:signed_request]
+      signature, encoded_payload = value.split('.')
+
+      decoded_hex_signature = base64_decode_url(signature)
+      decoded_payload = MultiJson.decode(base64_decode_url(encoded_payload))
+
+      unless decoded_payload['algorithm'] == 'HMAC-SHA256'
+        raise NotImplementedError, "unknown algorithm: #{decoded_payload['algorithm']}"
+      end
+    end
+  end
+
+  def valid_signature?(secret, signature, payload, algorithm = OpenSSL::Digest::SHA256.new)
+    OpenSSL::HMAC.digest(algorithm, secret, payload) == signature
+  end
+
+  def base64_decode_url(value)
+    value += '=' * (4 - value.size.modulo(4))
+    Base64.decode64(value.tr('-_', '+/'))
   end
 
   protected
