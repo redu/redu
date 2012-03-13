@@ -36,6 +36,15 @@ describe Plan do
       }.should change { subject.state }.to "blocked"
     end
 
+    it "sends an email when blocked" do
+      UserNotifier.delivery_method = :test
+      UserNotifier.perform_deliveries = true
+      expect {
+      subject.block!
+      }.should change {UserNotifier.deliveries.size }.by(1)
+      UserNotifier.deliveries.last.body.should =~ /foi bloqueado/
+    end
+
     it "migrates" do
       expect {
         subject.migrate!

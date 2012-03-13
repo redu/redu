@@ -12,8 +12,8 @@ describe PackageInvoice do
 
 
   context "threshold date" do
-    it "should be 10 days from period end" do
-      subject.threshold_date.should == subject.period_end + 10
+    it "should be overdue days from period start" do
+      subject.threshold_date.should == subject.period_start + Invoice::OVERDUE_DAYS
     end
   end
 

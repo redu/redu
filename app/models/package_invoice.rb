@@ -33,16 +33,6 @@ class PackageInvoice < Invoice
     transitions :to => :overdue, :from => [:pending, :overdue, :waiting]
   end
 
-  # Data limite para o pagamento
-  def threshold_date
-    self.period_end + 10
-  end
-
-  # Manda o e-mail de vencimento
-  def deliver_overdue_notice
-    send_overdue_notice
-  end
-
   # Converte o invoice para um hash que pode ser utilizado para adicionar produtos
   # a ordem do gateway de pagamento (e.g PagSeguro)
   def to_order_item(item_options = {})
@@ -62,6 +52,11 @@ class PackageInvoice < Invoice
     end
   end
 
+  # Data limite para o pagamento
+  def threshold_date
+    self.period_start + Invoice::OVERDUE_DAYS
+  end
+
   # Gera descrição amigável para o invoice
   def generate_description
 
@@ -78,7 +73,7 @@ class PackageInvoice < Invoice
     false
   end
 
-  # Atualiza estado do Invoice de acordo com a data atual e o Invoice.period_start
+  # Atualiza estado do Invoice de acordo com a data atual e a data de vencimento
   # de acordo com a seguinte regra:
   #
   #  se Date.today > deadline
@@ -94,39 +89,12 @@ class PackageInvoice < Invoice
     }.merge(opts)
 
     PackageInvoice.pending.each do |i|
-      deadline = i.period_start.advance(:days => Invoice::OVERDUE_DAYS)
-
-      if Date.today > deadline
+      if Date.today > i.threshold_date
         i.overdue!
         i.plan.block! if opts[:block_plan]
-      elsif Date.today >= i.period_start && Date.today <= deadline
+      elsif Date.today >= i.period_start && Date.today <= i.threshold_date
         i.pend!
       end
     end
   end
-
-  protected
-
-  def register_time
-    self.due_at = Time.now
-  end
-
-  def send_confirmation_and_unlock_plan
-    self.plan.activate! unless self.plan.pending_payment?
-    self.send_payment_confirmation
-  end
-
-  def send_payment_confirmation
-    UserNotifier.payment_confirmation(self.plan.user, self).deliver
-  end
-
-  def send_overdue_notice
-    UserNotifier.overdue_notice(self.plan.user, self).deliver
-  end
-
-  def send_pending_notice
-    deadline = self.period_start.advance(:days => 5)
-    UserNotifier.pending_notice(self.plan.user, self, deadline).deliver
-  end
-
 end
