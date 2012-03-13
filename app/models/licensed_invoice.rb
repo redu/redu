@@ -101,6 +101,6 @@ class LicensedInvoice < Invoice
   # Atualiza as licenças do invoice para terem um period_end
   def set_licenses_period_end
     License.update_all(["period_end = ? ", self.period_end],
-                       ["id IN (?)", self.licenses.collect(&:id)])
+                       ["id IN (?)", self.licenses.in_use.collect(&:id)])
   end
 end

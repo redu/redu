@@ -306,8 +306,10 @@ describe LicensedInvoice do
         Factory(:license, :invoice => @invoice1, :period_end => nil,
                 :course => course)
       end
-      (1..20).collect { Factory(:license, :invoice => @invoice1,
-                                :course => course) }
+      @not_in_use_licenses = (1..20).collect do
+        Factory(:license, :invoice => @invoice1,
+                :course => course)
+      end
       (1..20).collect { Factory(:license, :invoice => @invoice2,
                                 :course => course) }
 
@@ -359,6 +361,12 @@ describe LicensedInvoice do
         invoice = @plan1.invoices.first
         invoice.licenses.in_use.should be_empty
         @in_use_licenses.first.reload.period_end.should == invoice.period_end
+      end
+
+      it "should NOT update period_end of licenses with period end" do
+        invoice = @plan1.invoices.first
+        @not_in_use_licenses.first.reload.period_end.should_not ==
+          invoice.period_end
       end
     end
 
