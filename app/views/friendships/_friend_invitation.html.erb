@@ -33,7 +33,7 @@
       }
     });
 
-    $("#users").tokenInput("<%= auto_complete_users_path(:format => :js) %>", {
+    $("#friend_id").tokenInput("<%= auto_complete_users_path(:format => :js) %>", {
       crossDomain: false,
       hintText: "Digite o nome e sobrenome ou e-mail",
       noResultsText: "Sem resultados",
@@ -54,8 +54,10 @@
           :class => 'concave-button', :id => 'invite_email', :style => 'display: none;' %>
         </div>
         <%= label_tag "name", "Nome ou e-mail:" %>
-        <%= text_field_tag "users" %>
+        <%= text_field_tag "friend_id" %>
         <%= hidden_field_tag "emails", "" %>
+        <%= hidden_field_tag "goto_home", "true" %>
+        <%= hidden_field_tag "recommendation", "true" %>
         <%= submit_tag "Enviar convites", :class => "concave-button" %>
       <% end %>
   </div><!-- end friendship-invitations -->

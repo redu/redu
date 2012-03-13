@@ -28,7 +28,11 @@
     <%= will_paginate @statuses, :renderer => EndlessRenderer %>
   </div><!-- end .statuses -->
 </div><!-- end .main -->
+
 <div class="secondary-sidebar home-sidebar">
+  <div class="invite-contact">
+    <%= render :partial => 'friendships/invite-button' %>
+  </div><!-- end invite-botton -->
   <div class="contact-recommendations">
     <div class="call">
       <span class="icon-contacts-white-green_16_18-before">Conecte-se</span>
