@@ -18,7 +18,7 @@
     </span>
   </td>
   <td class="cell centered-cell">
-    <%= link_to "Papéis", user_admin_roles_path(user_item_admin.user, @environment),
+    <%= link_to "Papéis", environment_user_roles_path(@environment, user_item_admin.user),
       :class => "option icon-manage-gray_8_10-before"%>
   </td>
 </tr>

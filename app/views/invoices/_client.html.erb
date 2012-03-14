@@ -2,15 +2,17 @@
   Params: client (Partner || Environment || Hash (dead_environment)),
   period (Date Range)%>
 <div class="client-infos">
-  <h2 class="name"><%= client.is_a?(Hash) ? client["name"] : client.name %></h2>
   <% if client.is_a? Partner %>
+    <h2 class="name"><%= client.name %></h2>
     <span class="cnpj info"><strong>CNPJ:</strong><%= client.formatted_cnpj %></span>
     <span class="address info"><strong>Endereço:</strong> <%= client.address %></span>
   <% else %>
     <% if client.is_a? Environment %>
+      <h2 class="name"><%= client.partner_environment_association.company_name %></h2>
       <span class="cnpj info"><strong>CNPJ:</strong><%= client.partner_environment_association.formatted_cnpj %></span>
       <span class="address info"><strong>Endereço:</strong> <%= client.partner_environment_association.address %></span>
     <% else %>
+      <h2 class="name"><%= client[:partner_environment_association]["company_name"] %></h2>
       <span class="cnpj info"><strong>CNPJ:</strong><%= client[:partner_environment_association]["cnpj"] %></span>
       <span class="address info"><strong>Endereço:</strong> <%= client[:partner_environment_association]["address"] %></span>
     <% end %>
