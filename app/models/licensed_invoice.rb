@@ -63,6 +63,16 @@ class LicensedInvoice < Invoice
     end
   end
 
+  def create_license(user, role, course)
+    self.licenses << License.create(:name => user.display_name,
+                                    :login => user.login,
+                                    :email => user.email,
+                                    :period_start => DateTime.now,
+                                    :role => role,
+                                    :invoice => self,
+                                    :course => course)
+  end
+
   protected
 
   # Calcula o amount do invoice de acordo com a quantidade de licenças
@@ -102,15 +112,5 @@ class LicensedInvoice < Invoice
   def set_licenses_period_end
     License.update_all(["period_end = ? ", self.period_end],
                        ["id IN (?)", self.licenses.in_use.collect(&:id)])
-  end
-
-  def create_license(user, role, course)
-    self.licenses << License.create(:name => user.display_name,
-                                    :login => user.login,
-                                    :email => user.email,
-                                    :period_start => DateTime.now,
-                                    :role => role,
-                                    :invoice => self,
-                                    :course => course)
   end
 end
