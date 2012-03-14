@@ -24,6 +24,8 @@ class User < ActiveRecord::Base
     :foreign_key => "owner"
   # Course
   has_many :courses, :through => :user_course_associations
+  # Authentication
+  has_many :authentications
 
   #COURSES
   has_many :lectures, :foreign_key => "owner",
@@ -173,6 +175,22 @@ class User < ActiveRecord::Base
     u = find :first, :conditions => ['login = ?', login]
     u = find :first, :conditions => ['email = ?', login] if u.nil?
     u && u.authenticated?(password) && u.update_last_login ? u : nil
+  end
+
+  def apply_omniauth(omniauth)
+    info = omniauth['info']
+    self.email = info['email']
+    self.reset_password
+    self.tos = '1' # TODO Definir lógica de aceitação de TOS
+
+    # Atualiza dados do usuário de acordo com a rede social provedora.
+    case omniauth[:provider]
+    when 'facebook'
+      self.login = get_login_from_facebook_nickname(info) 
+      self.first_name = info['first_name']
+      self.last_name = info['last_name']
+    when 'twitter'
+    end
   end
 
   def self.encrypt(password, salt)
@@ -667,7 +685,7 @@ class User < ActiveRecord::Base
     return new_password
   end
 
-  def self.get_login_from_facebook_nickname(info_hash)
+  def get_login_from_facebook_nickname(info_hash)
     login = info_hash['nickname']
     # Se o usuário não tiver um nickname no fb
     if !login
