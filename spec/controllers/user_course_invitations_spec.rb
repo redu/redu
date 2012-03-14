@@ -65,16 +65,5 @@ describe UserCourseInvitationsController do
         assigns[:user_session].should_not be_nil
       end
     end
-    context "when the invite was used ('approved')" do
-      before do
-        @invite.user = Factory(:user)
-        @invite.accept!
-        get :show, @params
-      end
-
-      it "redirects to site index" do
-        response.should redirect_to(application_path)
-      end
-    end
   end
 end

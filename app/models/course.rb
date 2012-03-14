@@ -122,7 +122,7 @@ class Course < ActiveRecord::Base
 
     # TODO remover lógica daqui
     # alterando o papel do usuário no license atual
-    change_license_role(user, role)
+    License.change_role(user, self, role)
 
     user.user_space_associations.where(:space_id => self.spaces).
       includes(:space).each do |membership|
@@ -289,38 +289,26 @@ class Course < ActiveRecord::Base
   # Cria licença passando com parâmetro o usuário que acaba de se matricular e o
   # papel que desempenha
   def create_license(user, role)
-    if self.environment.plan
-      invoice = self.environment.plan.invoice
+    plan = self.plan || self.environment.plan
+    if plan
+      invoice = plan.invoice
       if invoice.is_a? LicensedInvoice
-        invoice.licenses << License.create(:name => user.display_name,
-                                           :login => user.login,
-                                           :email => user.email,
-                                           :period_start => DateTime.now,
-                                           :role => role,
-                                           :invoice => invoice,
-                                           :course => self)
+        invoice.create_license(user, role, self)
       end
     end
   end
 
   # Seta o period_end de License quando o usuário é desmatriculado ou se desmatricula
   def set_period_end(user)
-    if self.environment.plan
-      invoice = self.environment.plan.invoice
+    plan = self.plan || self.environment.plan
+    if plan
+      invoice = plan.invoice
       if invoice.is_a? LicensedInvoice
-        license = user.get_open_license_with(self)
+        license = License.get_open_license_with(user, self)
         license.period_end = DateTime.now
         license.save
       end
     end
   end
 
-  # Recupera o último license criado e modifica a role passada como parâmetro
-  def change_license_role(user, role)
-    license = user.get_open_license_with(role)
-    if license
-      license.role = role
-      license.save
-    end
-  end
 end

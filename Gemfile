@@ -10,7 +10,7 @@ gem 'pagseguro', '~> 0.1.10'
 gem 'paperclip'
 gem 'will_paginate', '~> 3.0.pre2'
 gem 'mime-types'
-gem 'cancan'
+gem 'cancan', '~> 1.6.7'
 gem 'aasm', :require => "aasm",
   :git => "git://github.com/rubyist/aasm.git"
 gem 'shuber-sortable'

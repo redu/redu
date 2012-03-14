@@ -100,6 +100,19 @@ class UserNotifier < ActionMailer::Base
 
   end
 
+  # Enviado quando o Plan foi bloqueado
+  def blocked_notice(user, plan)
+    @user = user
+    @plan = plan
+    @billable = plan.billable
+
+    mail(:to => user.email,
+         :subject => "Plano do(a) #{@billable.name} foi bloqueado",
+         :date => Time.now) do |format|
+      format.text
+    end
+  end
+
   # Enviado quando um upgrade de plano é requisitado
   def upgrade_request(user, old_plan, new_plan)
     @user = user

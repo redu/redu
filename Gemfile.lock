@@ -99,9 +99,8 @@ GEM
       mime-types
       xml-simple
     builder (2.1.2)
-    cancan (1.6.4)
+    cancan (1.6.7)
     childprocess (0.3.1)
-      ffi (~> 1.0.6)
     ckeditor (3.4.2.pre)
       mime-types (>= 1.16)
     closure-compiler (1.1.1)
@@ -295,7 +294,7 @@ DEPENDENCIES
   awesome_nested_fields
   aws-s3
   bundler (~> 1.0.15)
-  cancan
+  cancan (~> 1.6.7)
   ckeditor (= 3.4.2.pre)
   date_validator
   deep_cloneable
