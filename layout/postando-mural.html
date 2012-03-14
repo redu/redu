@@ -169,21 +169,54 @@
 
     <input id="status_type" name="status[type]" type="hidden" value="Activity" />
 
-    
+<!-- SEM THUMBNAIL -->    
     <fieldset>
     	<label class="status-icon replacement concave-label" for="status_text">Seu mural</label>
      <textarea rows="1" name="status[text]" id="status_text" cols="40" class="status textarea status-d04c366d concave-input"></textarea>
 			<div class="new-post">
-				<h2 class="title"></h2>
-				<h3 class="link"></h3>
-				<p class="coment"></p>
+			  <span class="close">Close</span>
+				<h2 class="title">Redu experimento na Escola do Recife</h2>
+				<h3 class="link">www.youtube.com</h3>
+				<p class="coment">Este vídeo lalala ;)</p>
 			</div>
 			<div class="status-buttons">
-				<a class="cancel" href="#">Cancelar</a>
-				<input id="status_submit" class="concave-button" type="submit" value="Postar" name="commit">
+				<input id="status_submit" class="concave-clean" type="submit" value="Cancelar" name="commit">
+				<input id="status_submit" class="concave-button" type="submit" value="Enviar" name="commit">
 			</div>
 		</fieldset></form></div>
 
+<!-- COM THUMBNAIL -->
+ <div class="create-status inform-my-status">
+  <form accept-charset="UTF-8" action="/statuses" class="form-loader concave-form" data-remote="true" id="new_status" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="SFLTQcxPE9cX8UFz63+MAQkh5V/dJST5oG1awR9fLF8=" /></div>
+    
+    <input id="return" name="return" type="hidden" value="http://www.redu.com.br/pessoas/thaisbione/meu_mural" />
+    <input id="status_statusable_id" name="status[statusable_id]" type="hidden" value="1622" />
+    <input id="status_statusable_type" name="status[statusable_type]" type="hidden" value="User" />
+
+    <input id="status_type" name="status[type]" type="hidden" value="Activity" />
+
+<!-- SEM THUMBNAIL -->    
+    <fieldset>
+    	<label class="status-icon replacement concave-label" for="status_text">Seu mural</label>
+     <textarea rows="1" name="status[text]" id="status_text" cols="40" class="status textarea status-d04c366d concave-input"></textarea>
+			<div class="new-post">
+			  <span class="preview-link">
+			    <span class="last">L</span>
+			    <span class="next">N</span>
+			    <span class="remove">R</span>
+			  </span>
+			  <span class="close">Close</span>
+				<h2 class="title">Redu experimento na Escola do Recife</h2>
+				<h3 class="link">www.youtube.com</h3>
+				<p class="coment">Este vídeo lalala ;)</p>
+			</div>
+			<div class="status-buttons">
+				<input id="status_submit" class="concave-clean" type="submit" value="Cancelar" name="commit">
+				<input id="status_submit" class="concave-button" type="submit" value="Enviar" name="commit">
+			</div>
+		</fieldset></form></div>
+		
+		
    <div id="statuses" class="statuses">
     <ol>
 

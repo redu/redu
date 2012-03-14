@@ -7271,6 +7271,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 
 .panel .payments .data .pay-status .concave-important {
 	margin-right: 0px;
+	font-size: 12px;
 }
 
 /* Fim estilo página faturas */
@@ -7451,3 +7452,25 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 	text-shadow: 0px 1px 0px rgb(255, 255, 255);
 }
 /* Fim página detalhe faturas */
+
+/* inicio pré-visualização novo post */
+
+.textshadow .create-status form fieldset .new-post {
+  text-shadow: 0px 1px 0px rgb(255, 255, 255);
+}
+
+.create-status form fieldset .new-post {
+  font-size: 13px;
+  font-family: arial, sans-sefif;
+  font-weight: normal;
+}
+
+.create-status form fieldset .new-post .title {
+  color: rgb(77, 173, 214);
+    font-weight: normal;
+}
+
+.textshadow .create-status form fieldset .new-post .link {
+  color: rgb(204, 204, 204);
+  font-weight: normal;
+}
