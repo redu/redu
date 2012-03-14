@@ -20,6 +20,7 @@
 # Learn more: http://github.com/javan/whenever
 
 log_dir = Dir.pwd + "/log/"
+log_dir += "../../current/" if @environment.eql?('production')
 set :output, log_dir + "whenever.log"
 
 unless @environment.eql?('production')
@@ -33,3 +34,4 @@ else
     runner "LicensedInvoice.refresh_states!"
   end
 end
+
