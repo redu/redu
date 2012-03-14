@@ -79,7 +79,8 @@ describe Partner do
     end
 
     it "assigns the current collaborators as new environment admins" do
-      subject.add_environment(@environment, "12.123.123/1234-12", "Cool Street")
+      subject.add_environment(@environment, "12.123.123/1234-12", "Cool Street",
+                              "Cool Inc.")
       subject.users.to_set.should be_subset(@environment.administrators.to_set)
     end
   end

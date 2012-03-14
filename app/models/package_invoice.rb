@@ -91,7 +91,7 @@ class PackageInvoice < Invoice
     PackageInvoice.pending.each do |i|
       if Date.today > i.threshold_date
         i.overdue!
-        i.plan.block! if opts[:block_plan]
+        i.plan.block! if opts[:block_plan] && !i.plan.blocked?
       elsif Date.today >= i.period_start && Date.today <= i.threshold_date
         i.pend!
       end

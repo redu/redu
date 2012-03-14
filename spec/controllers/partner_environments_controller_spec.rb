@@ -24,6 +24,7 @@ describe PartnerEnvironmentAssociationsController do
       @params = {:plan => "licensed_plan-instituicao_superior",
           :partner_environment_association => { :cnpj => "12.123.123/1234-12",
             :address => "Cool Street",
+            :company_name => "Cool Inc.",
             :environment_attributes => environment},
           :partner_id => @partner.id,
           :locale => "pt-BR"
@@ -87,7 +88,7 @@ describe PartnerEnvironmentAssociationsController do
         3.times.inject([]) do |acc,i|
           environment = Factory(:environment)
           @partner.add_environment(environment, "12.123.123/1234-12",
-                                   "Cool Street")
+                                   "Cool Street", "Cool Inc.")
         end
       end
 

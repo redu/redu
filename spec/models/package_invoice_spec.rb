@@ -54,6 +54,17 @@ describe PackageInvoice do
         PackageInvoice.refresh_states!
       }.should change { Plan.blocked.count }.from(0).to(2)
     end
+
+    it "should not raise error if a plan is already blocked" do
+      PackageInvoice.refresh_states!
+      inv = Factory(:package_invoice, :plan => Plan.blocked.last,
+                    :period_start => @period_start)
+      inv.pend!
+
+      expect {
+        PackageInvoice.refresh_states!
+      }.should_not raise_error(AASM::InvalidTransition)
+    end
   end
 
   context "states" do
