@@ -103,4 +103,14 @@ class LicensedInvoice < Invoice
     License.update_all(["period_end = ? ", self.period_end],
                        ["id IN (?)", self.licenses.in_use.collect(&:id)])
   end
+
+  def create_license(user, role, course)
+    self.licenses << License.create(:name => user.display_name,
+                                    :login => user.login,
+                                    :email => user.email,
+                                    :period_start => DateTime.now,
+                                    :role => role,
+                                    :invoice => self,
+                                    :course => course)
+  end
 end

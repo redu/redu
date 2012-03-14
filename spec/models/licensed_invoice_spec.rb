@@ -206,6 +206,7 @@ describe LicensedInvoice do
       environment = Factory(:environment, :owner => user)
       course = Factory(:course, :environment => environment,
                        :owner => user)
+
       @plan = Factory(:active_licensed_plan, :price => 3.00,
                       :billable => environment)
       from = Date.new(2010, 01, 15)
@@ -214,7 +215,6 @@ describe LicensedInvoice do
         :period_end => from.end_of_month }
       })
       @invoice = @plan.invoices.last
-
       (1..10).collect do
         Factory(:license, :invoice => @invoice, :course => course,
                 :role => Role[:member])
@@ -282,6 +282,7 @@ describe LicensedInvoice do
       environment = Factory(:environment, :owner => user)
       course = Factory(:course, :environment => environment,
                        :owner => user)
+
       @plan1 = Factory(:active_licensed_plan, :price => 3.00,
                        :billable => environment)
 
@@ -295,7 +296,6 @@ describe LicensedInvoice do
         :created_at => Time.now - 1.hour }
       })
       @invoice1 = @plan1.invoices.last
-
       from = Date.today
       plan2.create_invoice({:invoice => {
         :period_start => from }
@@ -388,6 +388,21 @@ describe LicensedInvoice do
   context "threshold date" do
     it "should be overdue days from period end" do
       subject.threshold_date.should == subject.period_end + Invoice::OVERDUE_DAYS
+    end
+  end
+
+  context "when creating a license" do
+    before do
+      @user = Factory(:user)
+      @environment = Factory(:environment, :owner => @user)
+      @course = Factory(:course, :environment => @environment,
+                        :owner => @user)
+    end
+    it "should create a license" do
+      @user= Factory(:user)
+      expect {
+        subject.create_license(@user, Role[:member], @course)
+      }.should change(License, :count).by(1)
     end
   end
 end
