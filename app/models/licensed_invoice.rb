@@ -56,7 +56,7 @@ class LicensedInvoice < Invoice
     LicensedInvoice.pending.each do |i|
       if i.threshold_date < Date.today
         i.overdue!
-        i.plan.block!
+        i.plan.block! unless i.plan.blocked?
       else
         i.deliver_pending_notice
       end

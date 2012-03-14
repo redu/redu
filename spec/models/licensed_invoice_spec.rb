@@ -383,6 +383,22 @@ describe LicensedInvoice do
         /a fatura com número ##{@invoice1.id} [a-z]+ está com pagamento pendente/
       end
     end
+
+    context "when a plan is already blocked" do
+      before do
+        plan = Factory(:active_licensed_plan)
+        invoice = Factory(:licensed_invoice, :plan => plan,
+                          :period_end => Date.today - Invoice::OVERDUE_DAYS - 1)
+        invoice.pend!
+        plan.block!
+      end
+
+      it "should not raise error" do
+        expect {
+        LicensedInvoice.refresh_states!
+        }.should_not raise_error(AASM::InvalidTransition)
+      end
+    end
   end
 
   context "threshold date" do
