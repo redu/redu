@@ -16,10 +16,10 @@ class Partner < ActiveRecord::Base
 
   # Adiciona environment existente ao conjunto de environments do parceiro.
   # Também transforma os administadores do parceiro em admins do ambiente
-  def add_environment(environment, cnpj, address)
-    ass = self.partner_environment_associations.create(:cnpj => cnpj,
-                                                       :address => address,
-                                                       :environment => environment)
+  def add_environment(environment, cnpj, address, company_name)
+    ass = self.partner_environment_associations.
+      create(:cnpj => cnpj, :address => address, :company_name => company_name,
+             :environment => environment)
     self.users.each do |user|
       join_hierarchy(user)
     end
