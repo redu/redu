@@ -22,9 +22,7 @@ class FriendshipsController < BaseController
   end
 
   def create
-    @friend = User.find(params[:friend_id])
-    current_user.be_friends_with(@friend)
-    friendship = @friend.friendship_for current_user
+    @friend = InvitationsUtil.process_invites(params.to_hash, current_user)
     respond_to do |format|
       format.html do
         if params.has_key? :goto_home
