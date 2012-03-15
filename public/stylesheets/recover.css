@@ -3,16 +3,19 @@
   margin: 0;
 }
 
+body { 
+  background: transparent;
+}
+
 html, body {
   height: 100%;
 }
 
-.body-login {
-  width: 580px;
+.overlay .text-body .body-login {
   float: right;
 }
 
-.logo-top a {
+.overlay .text-body .logo-top a {
   background-image: url("../images/new/redu-hi-vert.png");
   display: block;
   width: 255px;
@@ -20,6 +23,7 @@ html, body {
   overflow: hidden;
   background-repeat: no-repeat;
   float: left;
+  text-indent: -9999px;
 }
 
 body {
@@ -27,14 +31,14 @@ body {
   background-repeat: no-repeat;
 }
 
-.overlay{
+body .overlay {
   min-height: 100%;
   height: auto !important;
   height: 100%;
   margin: 0 auto -97px;
 }
 
-.body .clearfix:after {
+body .overlay .text-body .clearfix:after {
   content: ".";
   display: block;
   height: 0;
@@ -44,7 +48,7 @@ body {
   padding-top: -8px;
 }
 
-.forgot-login, .forgot-password {
+.overlay .text-body .title-fieldset{
   padding-top: 50px;
   font-family: museo-sans,arial,sans-serif;
   font-weight: 100;
@@ -54,16 +58,11 @@ body {
   letter-spacing: -2px;
 }
 
-.forgot-login, .forgot-password {
+.textshadow .overlay .text-body .title-fieldset {
   text-shadow: 0px 1px 0px rgb(255, 255, 255);
 }
 
-.forgot-login {
-  margin-bottom: 35px;
-}
-
-.body-login .name-login,
-.body-login .name-password {
+.textshadow .overlay .text-body form .body-login .forgotten-information{
   font-family: museo-slab,arial,sans-serif;
   font-weight: 900;
   font-size: 47px;
@@ -71,12 +70,9 @@ body {
   letter-spacing: -4px;
 }
 
-/* FIXME Este botão não fica correto apenas por herdar as definiçoes de .concave-form .concave-button? */
-.body .concave-form .body-login  .concave-button{
+.concave-form .concave-button {
    cursor: pointer;
    float: right;
-   font-family: arial,sans-serif; /* FIXME Este é o padrão, porque foi preciso ser colocado aqui? */
-   font-size: 12px; /* FIXME Este é o padrão, porque foi preciso ser colocado aqui? */
    font-weight: bold;
    height: 30px;
    padding: 0;
@@ -88,32 +84,37 @@ body {
 .concave-form .input-email,
 .concave-form .input-password {
   color: rgb(179, 179, 179);
-  font-family: arial, sans-serif; /* FIXME Este é o padrão, porque foi preciso ser colocado aqui? */
-  font-size: 12px; /* FIXME Este é o padrão, porque foi preciso ser colocado aqui? */
   font-weight: bold;
   float: left;
 }
 
+.text-body .body-login .ui-placeholder {
+  left: 10px;
+  top: 10px;
+}
 
-/* FIXME Colocar o separador entre os forms e não em relação ao <h2> que está dentro de um deles */
-.forgot-password {
-  border-top: 1px dotted;
-  margin-top: 30px;
+.text-body .body-login .ui-placeholder-wrap {
+  display: inline;
+  float: right;
+}
+
+.overlay .text-body .separator {
+  border-top: 1px  dotted;
   border-color: rgb(214, 214, 214);
-  /*margin-top: 190px;*/ /* FIXME Se não vai usar, remover */
+  margin-top: 40px;
+  clear: both;
+  text-indent: -9999px;
+  display: block;
 }
 
 /* FIXME Estas definições de cor e fonte deveriam ser herdadas de .concave-form .concave-input */
-.body .concave-form  .body-login .concave-input {
+.text-body .concave-form  .body-login .concave-input {
   width: 389px;
-  color: rgb(179, 179, 179);
-  font-size: 11px;
   float: right;
-  font-family: arial, sans-serif;
   margin: 0px;
 }
 
-.body .concave-form {
+.text-body .concave-form {
   overflow: hidden;
   clear: none;
 }
@@ -122,30 +123,21 @@ body {
   height: 97px;
 }
 
-.concave-form .concave-input.registered-email{
-  font-size: 11px;
-  font-family: arial, sans-serif; /* FIXME Este é o padrão, porque foi preciso ser colocado aqui? */
-  /* FIXME Erro de sintaxe e uso de CSS3 sem seletores do modernizr */
-  font-sty-webkit-box-shadow: -px 0px 0px rgba(255, 255, 255, 0);
-  -moz-box-shadow: -px 0px 0px rgba(255, 255, 255, 0);
-  box-shadow: -px 0px 0px rgba(255, 255, 255, 0);le: italic;
-}
-
-.textshadow .registered-email {
-  text-shadow: 0px -1px 0px rgb(255, 255, 255);
-}
-
-.call {
+.text-body .call {
   font-size: 11px;
   color: rgb(179, 179, 179);
-  font-family: arial, sans-serif; /* FIXME Este é o padrão, porque foi preciso ser colocado aqui? */
-  margin-top: 4px;
-  margin-bottom: 25px;
   font-weight: normal;
+  margin-top: 10px;
 }
 
 .textshadow .call {
   text-shadow: 0px 1px 0px rgb(255, 255, 255);
+}
+
+
+.footer,
+.push {
+clear: both;
 }
 
 .footer {
@@ -154,12 +146,6 @@ body {
   margin-top: 170px;
   border-top: 1px solid white;
   min-width: 1035px;
-}
-
-/* Não usar as classes do grid960 para alterar estilo */
-.footer .container_12 .container_16 {
-  margin-left: auto;
-  min-width: 5000px;
 }
 
 .footer-text {
@@ -174,6 +160,7 @@ body {
   overflow: hidden;
   background-repeat: no-repeat;
   float: left;
+  text-indent: -9999px;
 }
 
 .menu-footer {
@@ -183,32 +170,32 @@ body {
   margin-top: -32px;
 }
 
-.menu-list {
+.footer .menu-footer li {
   display: inline;
 }
 
-.boxshadow .menu-list a:hover {
+.boxshadow .footer .menu-footer a:hover {
   -webkit-box-shadow:  0px -1px 0px 0px rgba(255, 255, 255, 0.1);
   -moz-box-shadow: 0px -1px 0px 0px rgba(255, 255, 255, 0.1);
   box-shadow: 0px -1px 0px 0px rgba(255, 255, 255, 0.1);
 }
 
-.textshadow .menu-list a:hover {
+.textshadow .footer .menu-footer a:hover {
   text-shadow: 0px -1px 0px rgb(21, 138, 196);
 }
 
-.menu-list a:hover {
+.footer .menu-footer a:hover {
   background-color: rgb(21, 138, 196);
   color: rgb(255, 255, 255);
 }
 
-.borderradius .menu-list a:hover {
+.borderradius .footer .menu-footer a:hover {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
 }
 
-.menu-list a {
+.footer .menu-footer a {
   padding: 6px;
   float: left;
   margin-left: 10px;
@@ -217,11 +204,13 @@ body {
   font-size: 12px;
 }
 
-.cnpj {
-  clear:both;
+.footer .cnpj {
+  clear: both;
+  display: block;
+  float: left;
   font-size: 10px;
+  margin-left: 75px;
   color: rgb(179, 179, 179);
-  margin-left: 60px;
 }
 
 .cssgradients .footer {
@@ -250,11 +239,13 @@ body {
   height: 12px;
   background: url("../images/new/icones-p.png") -400px -2160px 	repeat;
   margin-left: 30px;
+  background-repeat: no-repeat;
 }
 
 .appear-tiptip {
   float: left;
   cursor: pointer;
+  text-indent: -9999px;
 }
 
 button {
@@ -270,23 +261,6 @@ button::-moz-focus-inner {
     padding: 0;
 }
 
-.login-box {
-  float: right;
-}
-
-/* FIXME pink? O_O */
-#tiptip_holder {
-  color: pink;
-}
-
-
-/* Não é necessário a utilização do body */
-body #tiptip_content {
- color: white;
- font-size: 11px;
- font-family: arial, sans-serif;
-}
-
 .textshadow body #tiptip_content {
   text-shadow: 0px 0px 2px rgb(0, 0, 0):
 }
@@ -297,17 +271,10 @@ body #tiptip_content {
   box-shadow: 0px 3px px rgba(85 , 85, 85, 0.1);
 }
 
-/* FIXME No portuguese */
-.alerta {
-  background-image: url("../images/new/alerta.png");
-  height: 142px;
-  width: 165px;
-  float: right;
-}
-
 .confirmation-msg {
   background-color: rgb(240, 240, 240);
   clear: both;
+  margin-top: 20px;
   float: right;
 }
 
@@ -344,8 +311,7 @@ body #tiptip_content {
   text-shadow: 0px 1px 0px rgb(255, 255, 255);
 }
 
-/* FIXME No portuguese */
-.aba-top {
+.tab-top {
   background-image: url("../images/new/aba-cima-borda.png");
   background-repeat: no-repeat;
   width: 30px;
@@ -367,7 +333,7 @@ body #tiptip_content {
   font-size: 12px;
   width: 40px;
   margin-top: 0px;
-  margin-left: 5px;
+  margin-left: 45px;
   height: 0px;
 }
 
@@ -376,12 +342,12 @@ body #tiptip_content {
   margin-top: 20px;
 }
 
-.body .thank-you,
-.body span {
+.text-body .thank-you,
+.text-body span {
   padding: 0px;
 }
 
-.body .concave-form .errors_on_field {
+.text-body .concave-form .errors_on_field {
   margin-left: 110px;
   display: block;
   clear: both;
