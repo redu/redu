@@ -59,13 +59,10 @@
   background-image: url("../images/new/aba-cima-borda.png");
   float: left;
   margin-left: 25px;
-  margin-top: -30px;
+  margin-top: -9px;
 }
 
 .confirmation-msg {
-  padding: 20px;
-  margin-top: 20px;
-  width: 400px;
   background-color: rgb(240, 240, 240);
 }
 

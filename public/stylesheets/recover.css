@@ -11,11 +11,11 @@ html, body {
   height: 100%;
 }
 
-.overlay .text-body .body-login {
+.overlay .user-data-recovery .body-login {
   float: right;
 }
 
-.overlay .text-body .logo-top a {
+.overlay .user-data-recovery .logo-top a {
   background-image: url("../images/new/redu-hi-vert.png");
   display: block;
   width: 255px;
@@ -38,7 +38,7 @@ body .overlay {
   margin: 0 auto -97px;
 }
 
-body .overlay .text-body .clearfix:after {
+body .overlay .user-data-recovery .clearfix:after {
   content: ".";
   display: block;
   height: 0;
@@ -48,7 +48,7 @@ body .overlay .text-body .clearfix:after {
   padding-top: -8px;
 }
 
-.overlay .text-body .title-fieldset{
+.overlay .user-data-recovery .title-fieldset{
   padding-top: 50px;
   font-family: museo-sans,arial,sans-serif;
   font-weight: 100;
@@ -58,11 +58,11 @@ body .overlay .text-body .clearfix:after {
   letter-spacing: -2px;
 }
 
-.textshadow .overlay .text-body .title-fieldset {
+.textshadow .overlay .user-data-recovery .title-fieldset {
   text-shadow: 0px 1px 0px rgb(255, 255, 255);
 }
 
-.textshadow .overlay .text-body form .body-login .forgotten-information{
+.textshadow .overlay .user-data-recovery form .body-login .forgotten-information{
   font-family: museo-slab,arial,sans-serif;
   font-weight: 900;
   font-size: 47px;
@@ -88,17 +88,17 @@ body .overlay .text-body .clearfix:after {
   float: left;
 }
 
-.text-body .body-login .ui-placeholder {
+.user-data-recovery .body-login .ui-placeholder {
   left: 10px;
   top: 10px;
 }
 
-.text-body .body-login .ui-placeholder-wrap {
+.user-data-recovery .body-login .ui-placeholder-wrap {
   display: inline;
   float: right;
 }
 
-.overlay .text-body .separator {
+.overlay .user-data-recovery .separator {
   border-top: 1px  dotted;
   border-color: rgb(214, 214, 214);
   margin-top: 40px;
@@ -107,14 +107,13 @@ body .overlay .text-body .clearfix:after {
   display: block;
 }
 
-/* FIXME Estas definições de cor e fonte deveriam ser herdadas de .concave-form .concave-input */
-.text-body .concave-form  .body-login .concave-input {
+.user-data-recovery .concave-form  .body-login .concave-input {
   width: 389px;
   float: right;
   margin: 0px;
 }
 
-.text-body .concave-form {
+.user-data-recovery .concave-form {
   overflow: hidden;
   clear: none;
 }
@@ -123,7 +122,7 @@ body .overlay .text-body .clearfix:after {
   height: 97px;
 }
 
-.text-body .call {
+.user-data-recovery .call {
   font-size: 11px;
   color: rgb(179, 179, 179);
   font-weight: normal;
@@ -328,7 +327,7 @@ button::-moz-focus-inner {
   float: left;
 }
 
-.text-body .concave-form .concave-label {
+.user-data-recovery .concave-form .concave-label {
   clear: none;
   font-size: 12px;
   width: 40px;
@@ -342,12 +341,12 @@ button::-moz-focus-inner {
   margin-top: 20px;
 }
 
-.text-body .thank-you,
-.text-body span {
+.user-data-recovery .thank-you,
+.user-data-recovery span {
   padding: 0px;
 }
 
-.text-body .concave-form .errors_on_field {
+.user-data-recovery .concave-form .errors_on_field {
   margin-left: 110px;
   display: block;
   clear: both;
