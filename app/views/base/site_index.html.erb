@@ -1,3 +1,20 @@
+<script>
+function popupCenter(url, width, height, name) {
+    var left = (screen.width/2)-(width/2);
+      var top = (screen.height/2)-(height/2);
+        return window.open(url, name, "menubar=no,toolbar=no,status=no,width="+width+",height="+height+",toolbar=no,left="+left+",top="+top);
+}
+
+$(".popup").click(function(e) {
+    popupCenter($(this).attr("href"), $(this).attr("data-width"), $(this).attr("data-height"), "authPopup");
+      e.stopPropagation(); return false;
+});
+ if(window.opener) {
+       window.opener.location.reload(true);
+           window.close()
+             }
+</script>
+
 <%= content_for :wrapper_class do %>overlay<% end %>
 <div class="body container_16">
   <div class="presentation">
@@ -23,7 +40,8 @@
           <%= f.check_box :remember_me, :class => "check-stay-connect" %>
           <%= f.label :remember_me, "Matenha-me conectado", :class => "label-stay-connect" %>
           <%= link_to "Login com Facebook", "/auth/facebook", 
-                      :class => "recover-login" %>
+                      :class => "recover-login popup",
+                      :"data-width" => 600, :"data-height" => 400 %>
           <%= link_to "Recuperar  senha", forgot_password_path, 
                       :class => "recover-login" %>
           <%= link_to "Recuperar login", forgot_username_path, 

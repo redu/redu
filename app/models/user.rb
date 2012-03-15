@@ -25,7 +25,8 @@ class User < ActiveRecord::Base
   # Course
   has_many :courses, :through => :user_course_associations
   # Authentication
-  has_many :authentications
+  has_many :authentications, :dependent => :destroy
+  
 
   #COURSES
   has_many :lectures, :foreign_key => "owner",
@@ -189,6 +190,9 @@ class User < ActiveRecord::Base
       self.login = get_login_from_facebook_nickname(info) 
       self.first_name = info['first_name']
       self.last_name = info['last_name']
+      if info['image']
+        self.update_avatar_from_picture_url(info['image'])
+      end
     when 'twitter'
     end
   end
@@ -657,6 +661,10 @@ class User < ActiveRecord::Base
     user
   end
 
+  def update_avatar_from_picture_url(url)
+    self.avatar = open(url)
+  end
+
   protected
   def activate_before_save
     self.activated_at = Time.now.utc
@@ -691,13 +699,14 @@ class User < ActiveRecord::Base
     if !login
       # Gera login a partir de nome e sobrenome
       login = info_hash['first_name'] + info_hash['last_name']
-      login.delete(' ').downcase #remove espaços e força lowcase
+      login = login.delete(' ').parameterize
       # Verifica se já existe um login
       n = 1
       while User.find_by_login(login) do
         login = login + n.to_s
         n = n + 1
       end
+      self.save
     end
 
     login

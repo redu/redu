@@ -20,7 +20,6 @@ class AuthenticationsController < ApplicationController
     else
       # Usuário não cadastrado.
       user = User.new
-      debugger
       user.authentications.build(:provider => auth['provider'],
                                  :uid => auth['uid'])
       user.apply_omniauth(auth)
@@ -29,6 +28,8 @@ class AuthenticationsController < ApplicationController
         flash[:notice] = t :thanks_youre_now_logged_in
         sign_in_and_redirect(user)
       else
+        user.valid?
+        flash[:notice] = user.errors.to_s
         redirect_to home_path
       end
     end
