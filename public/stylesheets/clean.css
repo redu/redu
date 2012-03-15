@@ -1,25 +1,5 @@
-* {
-  margin: 0;
-}
-
-html, body {
-  height: 100%;
-}
-
-a {
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: none; /* Overwrites new-fonts.css */
-}
-
-.clearer {
-  clear: both;
-}
-
 .overlay {
-  background-image: url("../images/circulos-bokeh-peq.png");
+  background-image: url("../images/new/circulos-bokeh-peq.png");
   background-position: 60px 0;
   background-repeat: no-repeat;
   min-height: 100%;
@@ -32,49 +12,51 @@ a:hover {
   height: 211px;
 }
 
-h1.logo-top {
-  background-image: url("../images/redu-hi-vert.png");
+.logo-top {
+  background-image: url("../images/new/redu-hi-vert.png");
   width: 225px;
   height: 196px;
   margin-left: -18px;
   text-indent: -9999px;
 }
 
-h1.logo-top a {
-  /* Clickable logo. */
+.logo-top a {
   display: block;
   height: 196px;
   width: 225px;
 }
 
-div.left-navigation {
-  position: relative; /* Make the active item tab stand over the content. */
-}
-
-ul.left-navigation {
-  font-family: "Museo Sans", sans-serif;
+.left-navigation {
+  font-family: "Museo Sans", helvetica, arial, sans-serif;
   font-size: 17px;
   font-weight: 500;
   color: rgb(179, 179, 179);
   margin-top: 45px;
+  position: relative; /* Faz a aba sobrepor o bloco direito. */
 }
 
-ul.left-navigation li {
+.left-navigation li {
   margin-bottom: 9px;
 }
 
-ul.left-navigation li.active {
+.left-navigation a,
+.about-redu a:hover,
+.politics-terms a:hover {
+  text-decoration: none;
+}
+
+.left-navigation li.active {
   margin-right: -6px;
   background-color: rgb(77, 173, 214);
 }
 
-.boxshadow ul.left-navigation li.active {
+.boxshadow .left-navigation li.active {
   -webkit-box-shadow: 1px 2px rgba(0, 0, 0, 0.3);
   -moz-box-shadow: 1px 2px rgba(0, 0, 0, 0.3);
   box-shadow: 1px 2px rgba(0, 0, 0, 0.3); 
 }
 
-.borderradius ul.left-navigation li.active {
+.borderradius .left-navigation li.active {
   -moz-border-radius-topleft: 5px;
   -moz-border-radius-topright: 0px;
   -moz-border-radius-bottomright: 0px;
@@ -83,44 +65,44 @@ ul.left-navigation li.active {
   border-radius: 5px 0px 0px 5px;
 }
 
-ul.left-navigation li.active:hover {
+.left-navigation li.active:hover {
   background-color: rgb(21, 138, 196);
 }
 
-ul.left-navigation li.active a {
+.left-navigation a:hover {
+  color: rgb(21, 138, 196);
+}
+
+.left-navigation li.active a {
   color: white;
 }
 
-.textshadow ul.left-navigation li.active a {
+.textshadow .left-navigation li.active a {
   text-shadow: 0px -1px 0px rgb(21, 138, 196);
 }
 
-ul.left-navigation li.active a:after {
+.left-navigation li.active a:after {
   content: "";
   width: 24px;
   height: 55px;
-  background-image: url("../images/icones-termos-e-contato.png");
+  background-image: url("../images/new/icones-termos-e-contato.png");
   background-position: 0 -318px;
   float: right;
   margin-right: -24px;
   margin-top: -15px;
 }
 
-ul.left-navigation li.active:hover a:after {
+.left-navigation li.active:hover a:after {
   background-position: -80px -318px;
 }
 
-ul.left-navigation a {
+.left-navigation a {
   color: rgb(179, 179, 179);
   display: block;
   padding: 13px 0 10px 42px;
 }
 
-ul.left-navigation a:hover {
-  color: rgb(21, 138, 196);
-}
-
-ul.left-navigation li a:before {
+.left-navigation li a:before {
   content: "";
   width: 24px;
   height: 32px;
@@ -129,56 +111,56 @@ ul.left-navigation li a:before {
   margin-top: -9px;
 }
 
-ul.left-navigation li.term-of-service a:before {
-  background-image: url("../images/icones-termos-e-contato.png");
+.left-navigation li.term-of-service a:before {
+  background-image: url("../images/new/icones-termos-e-contato.png");
   background-position: -8px -4px;
 }
 
-ul.left-navigation li.term-of-service a:hover:before {
+.left-navigation li.term-of-service a:hover:before {
   background-position: -88px -4px;
 }
 
-ul.left-navigation li.active.term-of-service a:before {
+.left-navigation li.active.term-of-service a:before {
   background-position: -168px -4px;
 }
 
-ul.left-navigation li.privacy-policy a:before {
-  background-image: url("../images/icones-termos-e-contato.png");
+.left-navigation li.privacy-policy a:before {
+  background-image: url("../images/new/icones-termos-e-contato.png");
   background-position: -8px -84px;
 }
 
-ul.left-navigation li.privacy-policy a:hover:before {
+.left-navigation li.privacy-policy a:hover:before {
   background-position: -88px -84px;
 }
 
-ul.left-navigation li.active.privacy-policy a:before {
+.left-navigation li.active.privacy-policy a:before {
   background-position: -168px -84px;
 }
 
-ul.left-navigation li.contact a:before {
-  background-image: url("../images/icones-termos-e-contato.png");
+.left-navigation li.contact a:before {
+  background-image: url("../images/new/icones-termos-e-contato.png");
   background-position: -8px -164px;
 }
 
-ul.left-navigation li.contact a:hover:before {
+.left-navigation li.contact a:hover:before {
   background-position: -88px -164px;
 }
 
-ul.left-navigation li.active.contact a:before {
+.left-navigation li.active.contact a:before {
   background-position: -168px -164px;
 }
 
-h2.content-title {
+.content-title {
   margin-top: 40px;
   margin-bottom: 50px;
   padding-left: 40px;
-  font-family: "Museo Sans", sans-serif;
+  font-family: "Museo Sans", helvetica, arial, sans-serif;
   font-size: 47px;
   font-weight: 100;
   color: rgb(115, 195, 230);
 }
 
-h2.content-title:after {
+.content-title:after {
   content: "";
   float: right;
   height: 64px;
@@ -187,22 +169,22 @@ h2.content-title:after {
   width: 56px;
 }
 
-h2.content-title.term-of-service:after {
-  background-image: url("../images/icones-termos-e-contato.png");
+.content-title.term-of-service:after {
+  background-image: url("../images/new/icones-termos-e-contato.png");
   background-position: 0 -241px;
 }
 
-h2.content-title.privacy-policy:after {
-  background-image: url("../images/icones-termos-e-contato.png");
+.content-title.privacy-policy:after {
+  background-image: url("../images/new/icones-termos-e-contato.png");
   background-position: 160px -241px;
 }
 
-h2.content-title.contact:after {
-  background-image: url("../images/icones-termos-e-contato.png");
+.content-title.contact:after {
+  background-image: url("../images/new/icones-termos-e-contato.png");
   background-position: 80px -241px;
 }
 
-ul.top-navigation {
+.top-navigation {
   margin-left: 40px;
   margin-top: 20px;
   font-family: Arial, sans-serif;
@@ -210,39 +192,40 @@ ul.top-navigation {
   color: rgb(179, 179, 179);
 }
 
-ul.top-navigation li {
+.top-navigation li {
   display: inline;
 }
 
-ul.top-navigation a, .content a {
+.top-navigation a, 
+.content a {
   color: rgb(77, 173, 214);
 }
 
-ul.top-navigation a:hover {
+.top-navigation a:hover,
+.content a {
   color: rgb(21, 138, 196);
 }
 
-ul.top-navigation a.active {
+.top-navigation a.active {
   font-weight: bold;
 }
 
-ul.top-navigation .separator {
+.top-navigation .separator {
   margin: 0 15px;
 }
 
-.textshadow ul.top-navigation, 
-.textshadow h2.content-title,
-.textshadow ul.left-navigation,
-.textshadow div.contact-post,
-.textshadow form.contact input[type=text],
-.textshadow form.contact textarea.description {
+.textshadow .top-navigation, 
+.textshadow .content-title,
+.textshadow .left-navigation {
   text-shadow: 0px 1px 0px white;
 }
 
 .content {
   padding: 40px;
+  margin-bottom: 130px;
   border: 1px solid white;
   background-color: white;
+  overflow: hidden;
 }
 
 .borderradius .content {
@@ -280,7 +263,7 @@ ul.top-navigation .separator {
 }
 
 .content .section {
-  font-family: "Museo Sans", sans-serif;
+  font-family: "Museo Sans", helvetica, arial, sans-serif;
   font-weight: 500;
   font-size: 17px;
   line-height: 17px;
@@ -301,68 +284,29 @@ ul.top-navigation .separator {
   font-style: italic;
 }
 
-form.contact {
-  width: 572px; /* So input submit aligns. */
+.contact-form {
+  width: 572px; /* Pra alinhar o botão na direita... */
 }
 
-form.contact input[type=text],
-form.contact textarea.description {
-  font-family: Arial, sans-serif;
-  font-size: 11px;
-  font-style: italic;
-  color: rgb(179, 179, 179);
+/* Específico a tela de fale conosco após submissão do formulário. */
+
+.content.contact-submited {
+  padding-bottom: 156px;
 }
 
-.contact-post {
-  color: black; 
-  padding: 20px;
-  width: 400px;
-  background-color: rgb(240, 240, 240);
-  margin: 110px auto 156px;
+.content.contact-submited p {
+  margin-bottom: 110px;
 }
 
-.contact-post p {
-  color: black; /* Overwrites the grey. */
-}
-
-.contact-post:before {
-  content: "";
-  width: 29px;
-  height: 10px;
-  background-image: url("../images/aba-cima-contato.png");
-  float: left;
-  margin-left: 25px;
-  margin-top: -30px;
-}
-
-.borderradius .contact-post {
-  -webkit-border-radius: 7px;
-  -moz-border-radius: 7px;
-  border-radius: 7px;
-}
-
-.boxshadow .contact-post {
-  -webkit-box-shadow: 0px -1px rgba(204, 204, 204, 1);
-  -moz-box-shadow: 0px -1px rgba(204, 204, 204, 1);
-  box-shadow: 0px -1px rgba(204, 204, 204, 1); 
-}
-
-.contact-post span.thank-you {
-  font-family: "Museo Sans", sans-serif;
-  font-size: 17px;
-  font-weight: 100;
-  display: block;
-  margin-bottom: 20px;
-}
-
-.contact-post span.thank-you span.person-name {
-  font-weight: 500;
+.content.contact-submited .confirmation-msg {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .footer {  
   background: rgb(77,173,214);
   border-top: 1px solid white;
-  margin-top: 130px;
+  clear: both;
 }
 
 .cssgradients .footer {
@@ -377,7 +321,7 @@ form.contact textarea.description {
 .footer .logo-bottom {
   width: 240px;
   height: 77px;
-  background-image: url("../images/redutech-low-horiz-a.png");
+  background-image: url("../images/new/redutech-low-horiz-a.png");
   margin-left: -18px;
   text-indent: -9999px;
 }
@@ -413,7 +357,7 @@ form.contact textarea.description {
 }
 
 .footer .our-address {
-  background-image: url("../images/icone-interrog-12.png");
+  background-image: url("../images/new/icone-interrog-12.png");
   background-repeat: no-repeat;
   background-position: 1px 1px;
   margin-left: 27px; 

@@ -3,7 +3,7 @@ $(function() {
         "intensity": 1,
         "size": "400",
         "opacity": 0.079,
-        "fallback":"../public/images/t-noisy.png",
+        "fallback":"/images/t-noisy.png",
         "monochrome": true
     }).css("background-color", "#e6e6e6");
 
