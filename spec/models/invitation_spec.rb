@@ -8,7 +8,7 @@ describe Invitation do
   }
   xit { should validate_uniqueness_of :token }
 
-  context 'Callbacks:' do
+  context ':Callbacks:' do
     it 'Token should be gerenated before create invitation' do
       subject.token = nil
       subject.valid?.should be_true
@@ -16,7 +16,7 @@ describe Invitation do
     end
   end
 
-  context 'Associations:' do
+  context ':Associations:' do
     it 'Invitations should have a sender' do
       should belong_to :user
     end
@@ -29,23 +29,32 @@ describe Invitation do
       user = Factory(:user)
       user.should have_many :invitations
     end
+
+    it 'When a user is deleted, all his invitations should be deleted' do
+      user = Factory(:user)
+      invitation = FactoryGirl.build(:invitation, :user => user, :hostable => user, :email => subject.email)
+      invitation.save.should be_true
+      expect {Invitation.find(invitation.id)}.should_not raise_error
+      user.destroy.should_not be_nil
+      lambda {Invitation.find(invitation.id)}.should raise_error
+    end
   end
 
-  context 'Friends invitations:' do
+  context ':Friends invitations:' do
     it "User can't invite itself" do
       subject.email = subject.user.email
-      subject.save
+      subject.save.should be_false
       subject.accept!(subject.user).should be_false
     end
 
     it "User can invite many other users" do
-      subject.save
+      subject.save.should be_true
       subject.accept!(Factory(:user)).should be_true
     end
 
     it "Invites to same email should not be valid when sended by same user" do
       invitation = FactoryGirl.build(:invitation, :user => subject.user, :hostable => subject.hostable, :email => subject.email)
-      invitation.save
+      invitation.save.should be_true
       subject.save.should be_false
       subject.errors[:email].should_not be_empty
     end
@@ -68,9 +77,17 @@ describe Invitation do
       end
       invitation.should be_valid
     end
+
+    it "User can delete invitations" do
+      user = Factory(:user)
+      invitation = FactoryGirl.build(:invitation, :user => user, :hostable => user, :email => subject.email)
+      invitation.save.should be_true
+      invitation.destroy.should_not be_nil
+      user.invitations.include?(invitation).should be_false
+    end
   end
 
-  context 'Send email.' do
+  context ':Send email:' do
     before do
       UserNotifier.delivery_method :test
       UserNotifier.perform_deliveries = true
