@@ -510,8 +510,8 @@
 
 .ui-placeholder {
   position: absolute;
-  top: 3px;
-  left: 163px;
+  top: 30px;
+  left: 173px;
   display: inline-block;
   vertical-align: middle;
   overflow: hidden;
@@ -521,19 +521,8 @@
   color: rgb(179, 179, 179);
 }
 
-.placeholder { 
-  display: block; 
-  border: solid 1px #CCC; 
-  padding: 5px; 
-}
-
 .ui-placeholder-wrap { 
   display: block; 
-}
-
-.ui-placeholder { 
-  display: block; 
-  padding: 5px 8px; 
 }
 
 .invite-button {
