@@ -10,9 +10,9 @@ gem 'pagseguro', '~> 0.1.10'
 gem 'paperclip'
 gem 'will_paginate', '~> 3.0.pre2'
 gem 'mime-types'
-gem 'cancan'
+gem 'cancan', '~> 1.6.7'
 gem 'aasm', :require => "aasm",
-  :git => "git://github.com/alto/aasm.git"
+  :git => "git://github.com/rubyist/aasm.git"
 gem 'shuber-sortable'
 gem 'scribd_fu', :git => 'git://github.com/guiocavalcanti/scribd_fu.git'
 gem 'factory_girl_rails'
@@ -43,6 +43,8 @@ gem 'actionmailer_inline_css',
 gem 'acts_as_tree', '~> 0.1.1'
 gem 'exceptional'
 gem 'awesome_nested_fields'
+gem 'roar-rails', '~> 0.0.3',
+  :git => 'git://github.com/apotonick/roar-rails.git'
 
 # Gems específicos de algum ambiente
 group :development, :test do
@@ -50,7 +52,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'ruby-debug'
   gem 'jasmine'
-  gem 'no_peeping_toms', :git => 'git://github.com/alindeman/no_peeping_toms.git'
+  gem 'no_peeping_toms', :git => 'git://github.com/patmaddox/no-peeping-toms.git'
   gem 'rails3-generators'
 end
 

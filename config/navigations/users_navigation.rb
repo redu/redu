@@ -75,7 +75,7 @@ SimpleNavigation::Configuration.run do |navigation|
         :class => 'ui-state-default',
         :link => { :class => 'icon-account_16_18-before' }
       config_nav.item :plans, 'Planos', user_plans_path(@user),
-        :highlights_on => action_matcher({'plans' => ['index'], 'invoices' => ['index']}),
+        :highlights_on => Proc.new { action_matcher({'plans' => ['index'], 'invoices' => ['index']}).call && @partner.nil? },
         :class => 'ui-state-default',
         :link => { :class => 'icon-plans_16_18-before'},
         :details => { :text => 'detalhes', :class => "details",

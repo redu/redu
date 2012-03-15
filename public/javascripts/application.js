@@ -160,6 +160,58 @@ jQuery(function(){
         $(this).removeClass("link-loading");
     });
 
+    /* Links remotos com estilo de botão */
+    $("a[data-remote=true].concave-button").live('ajax:before', function(){
+      // Remove spinner padrão para links
+      $(this).css('width', 'auto');
+      $(this).removeClass("link-loading");
+      $(this).loadingStart({ 'class' : 'concave-loading'});
+    });
+
+    $("a[data-remote=true].concave-button").live('ajax:complete', function(){
+      $(this).loadingComplete({ 'class' : 'concave-loading'});
+    });
+
+    $.fn.loadingStart = function(options){
+      var config = {
+        "className" : "concave-loading"
+      }
+      $.extend(config, options);
+
+      return this.each(function(){
+          $bt = $(this);
+          $bt.addClass(config.className);
+      });
+    };
+
+    $.fn.loadingComplete = function(options){
+      var config = {
+        "className" : "concave-loading"
+      }
+      $.extend(config, options);
+
+      return this.each(function(){
+          $bt = $(this);
+          $bt.removeClass(config.className);
+      });
+    };
+
+    $.fn.loadingToggle = function(options){
+      var config = {
+        "className" : "concave-loading"
+      }
+      $.extend(config, options);
+
+      return this.each(function(){
+          $bt = $(this);
+
+          if( $bt.hasClass(config.className) ) {
+            $bt.loadingComplete();
+          } else {
+            $bt.loadingStart();
+          }
+      });
+    };
 
     $(document).ajaxComplete(function(){
         $.refreshSubtabs();

@@ -108,3 +108,9 @@ stylesheets:
     - public/stylesheets/outdated-browser.css
     - public/stylesheets/cold.css
     - public/stylesheets/errors.css
+    - public/stylesheets/recover.css
+  print:
+    - public/stylesheets/reset.css
+    - public/stylesheets/new-fonts.css
+    - public/stylesheets/new-style.css
+    - public/stylesheets/print.css

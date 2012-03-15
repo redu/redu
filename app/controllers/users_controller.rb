@@ -6,7 +6,8 @@ class UsersController < BaseController
     :index],
     :find_by => :login
   load_resource :environment, :only => [:index], :find_by => :path
-  load_resource :course, :only => [:index], :find_by => :path
+  load_resource :course, :only => [:index], :find_by => :path,
+    :through => :environment
   load_resource :space, :only => [:index]
 
   rescue_from CanCan::AccessDenied, :with => :deny_access
@@ -384,10 +385,7 @@ class UsersController < BaseController
     end
 
 
-    @users = @users.includes(:user_environment_associations).
-      includes(:user_course_associations).
-      includes(:user_space_associations).
-      paginate(:page => params[:page], :order => 'first_name ASC',
+    @users = @users.paginate(:page => params[:page], :order => 'first_name ASC',
                :per_page => 18)
 
     respond_to do |format|

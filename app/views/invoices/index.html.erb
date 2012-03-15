@@ -5,19 +5,27 @@
     <%= tabs :users do %>
     <div class="call">
       <span class="billable">
-        <%= link_to @plan.billable.name,
-          environment_course_path(@plan.billable.environment, @plan.billable) %>
+        <% if @plan.billable.is_a? Environment %>
+          <%= link_to @plan.billable.name, @plan.billable %>
+        <% elsif @plan.billable.is_a? Course %>
+          <%= link_to @plan.billable.name,
+            environment_course_path(@plan.billable.environment, @plan.billable) %>
+        <% elsif @plan.billable_audit %>
+          <%= content_tag :span, @plan.billable_audit["name"] %>
+        <% end %>
       </span>
       <span class="name"><%= @plan.name %></span>
     </div>
-    <div class="plan-use">
-      <%= render :partial => "invoices/quotas",
-        :locals => { :quota_file => @plan.billable.percentage_quota_file,
-                     :plan => @plan,
-                     :quota_multimedia => @plan.billable.percentage_quota_multimedia,
-                     :quota_members => @plan.billable.percentage_quota_members,
-                     :quota => @quota } %>
-    </div>
+    <% if @quota %>
+      <div class="plan-use">
+        <%= render :partial => "invoices/quotas",
+          :locals => { :quota_file => @plan.billable.percentage_quota_file,
+                       :plan => @plan,
+                       :quota_multimedia => @plan.billable.percentage_quota_multimedia,
+                       :quota_members => @plan.billable.percentage_quota_members,
+                       :quota => @quota } %>
+      </div>
+    <% end %>
     <table class="common spaced">
       <thead>
         <tr>
@@ -49,7 +57,7 @@
               </span>
             </td>
             <td>
-              <% if invoice.pending? %>
+              <% if invoice.pending? && invoice.is_a?(PackageInvoice) %>
                 <div class="concave-form pagseguro-concave-form">
                   <%= pagseguro_form invoice.plan.create_order, :submit => "Pagar" %>
                 </div>

@@ -4,6 +4,8 @@ Redu::Application.routes.draw do
   post "presence/multiauth"
   post "presence/send_chat_message"
   get "presence/last_messages_with"
+  get "vis/dashboard/teacher_participation"
+  get "vis/dashboard/teacher_participation_interaction"
 
   match 'clipboard/:action/:folder_or_file/:id' => 'clipboard',
     :constraints => { :action         => /(add|remove)/,
@@ -127,8 +129,6 @@ Redu::Application.routes.draw do
     resources :plans, :only => [:index]
     resources :experiences
     resources :educations, :except => [:new, :edit]
-    get '/:environment_id/roles' => 'roles#show', :as => :admin_roles
-    post '/:environment_id/roles' => 'roles#update', :as => :update_roles
   end
 
   match 'users/activate/:id' => 'users#activate', :as => :activate
@@ -148,22 +148,31 @@ Redu::Application.routes.draw do
       post :upgrade
     end
 
-    resources :invoices, :only => [:index]
+    resources :invoices, :only => [:index, :show] do
+      member do
+        post :pay
+      end
+    end
   end
 
   match '/payment/callback' => 'payment_gateway#callback',
     :as => :payment_callback
   match '/payment/success' => 'payment_gateway#success', :as => :payment_success
 
-  resources :partners, :only => [:show] do
+  resources :partners, :only => [:show, :index] do
     member do
       post :contact
       get :success
     end
 
     resources :partner_environment_associations, :as => :clients,
-      :only => [:create, :index, :new]
+      :only => [:create, :index, :new] do
+        resources :plans, :only => [:show] do
+          resources :invoices, :only => [:index]
+        end
+    end
     resources :partner_user_associations, :as => :collaborators, :only => :index
+    resources :invoices, :only => [:index]
   end
 
   resources :environments, :path => '', :except => [:index] do
@@ -181,6 +190,7 @@ Redu::Application.routes.draw do
         get :admin_members_requests
         get :admin_invitations
         get :admin_manage_invitations
+        get :teacher_participation_report
         post :invite_members
         post :accept
         post :join
@@ -197,10 +207,17 @@ Redu::Application.routes.draw do
       end
 
       resources :users, :only => [:index]
+      resources :users, :only => :show do
+        match :roles, :to => 'roles#update', :via => :post, :as => :roles
+      end
       resources :user_course_invitations, :only => [:show]
     end
 
     resources :users, :only => [:index]
+    resources :users, :only => :show do
+      resources :roles, :only => :index
+      match :roles, :to => 'roles#update', :via => :post, :as => :roles
+    end
   end
 
 
@@ -210,3 +227,4 @@ Redu::Application.routes.draw do
 end
 
 ActionDispatch::Routing::Translator.translate_from_file('lang','i18n-routes.yml')
+

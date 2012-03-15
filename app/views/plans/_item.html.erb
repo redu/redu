@@ -1,32 +1,27 @@
 <tr>
   <td>
     <% if item.billable %>
-      <%=
-        link_to item.billable.name, environment_course_path(item.billable.environment, item.billable),
-          :class => "billable"
-        %>
-    <% else %>
-      <span class="name"><%= item.billable_audit.try(:name) || "Sem informações" %> (removido)</span>
-    <% end %>
-  </td>
-  <td>
-    <% if item.billable %>
-      <%=
-        link_to item.name, plan_invoices_path(item),
-          :class => "name"
-        %>
-      <% if item.pending_payment? %>
-        <span class="info">Pagamento pendente</span>
+      <% if item.billable.is_a? Environment %>
+        <%= link_to item.billable.name, item.billable, :class => "billable" %>
       <% else %>
-        <span class="info">Sem pendências</span>
+        <%= link_to item.billable.name,
+          environment_course_path(item.billable.environment, item.billable),
+          :class => "billable" %>
       <% end %>
-
     <% else %>
-      <span class="name"><%= item.name %></span>
+      <span class="name"><%= item.billable_audit.try(:[], "name") || "Sem informações" %> (removido)</span>
     <% end %>
   </td>
   <td>
-    <% if item.billable && item.pending_payment? %>
+    <%= link_to item.name, plan_invoices_path(item), :class => "name" %>
+    <% if item.pending_payment? %>
+      <span class="info">Pagamento pendente</span>
+    <% else %>
+      <span class="info">Sem pendências</span>
+    <% end %>
+  </td>
+  <td>
+    <% if item.billable && item.pending_payment? && item.is_a?(PackagePlan) %>
       <div class="concave-form pagseguro-concave-form">
         <%= pagseguro_form item.create_order, :submit => "Pagar" %>
       </div>

@@ -44,6 +44,12 @@ SimpleNavigation::Configuration.run do |navigation|
             :class => 'ui-state-default invite-tab',
             :link => { :class => 'icon-add-contact_16_18-before' }
         end
+      tabs.item :reports, 'Relatórios',
+        teacher_participation_report_environment_course_path(@environment, @course),
+        :highlights_on => action_matcher({
+          'courses' => ['teacher_participation_report']}),
+        :class => 'ui-state-default',
+        :link => { :class => "icon-space_16_18-before" }
     end
   end
 end

@@ -60,6 +60,8 @@ class Space < ActiveRecord::Base
 
   scope :of_course, lambda { |course_id| where(:course_id => course_id) }
   scope :published, where(:published => true)
+  scope :teachers, joins(
+        :user_space_associations).where("user_space_associations.role = ?", 5)
 
   # ACCESSORS
   attr_protected :owner, :removed, :lectures_count, :members_count,
@@ -70,7 +72,7 @@ class Space < ActiveRecord::Base
   has_attached_file :avatar, Redu::Application.config.paperclip
 
   # VALIDATIONS
-  validates_presence_of :name, :submission_type
+  validates_presence_of :name
   validates_length_of :name, :maximum => 40
 
   def create_root_folder
@@ -120,4 +122,8 @@ class Space < ActiveRecord::Base
     self.subjects.select(:id).collect{ |subject| subject.lectures.count }.sum
   end
 
+  # TODO Falta os testes dos métodos abaixo
+  def subjects_id
+    self.subjects.select(:id).collect{ |subject| subject.id }
+  end
 end

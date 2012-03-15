@@ -112,6 +112,9 @@ button::-moz-focus-inner {
   font-size: .9em;
   width: 138px;
   margin: 0 3px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 #nav-account li a:hover {
@@ -6456,6 +6459,131 @@ div.token-input-dropdown {
   color: black;
 }
 
+#invoice-show,
+#partner-invoice-index {
+  background-color: white;
+  padding: 10px;
+  overflow: hidden;
+}
+
+.boxshadow #invoice-show,
+.boxshadow #partner-invoice-index {
+  -webkit-box-shadow: 0px 0px 5px 0px black;
+  -moz-box-shadow: 0px 0px 5px 0px black;
+  box-shadow: 0px 0px 5px 0px black;
+}
+
+#invoice-show .header .redu-infos,
+#partner-invoice-index .header .redu-infos {
+  display: block;
+  font-size: 11px;
+  color: rgb(179, 179, 179);
+  margin-bottom: 20px;
+}
+
+#invoice-show .client-infos,
+#partner-invoice-index .client-infos {
+  margin-bottom: 20px;
+}
+
+#invoice-show .client-infos .name,
+#partner-invoice-index .client-infos .name {
+  font-size: 21px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+#invoice-show .client-infos .info,
+#partner-invoice-index .client-infos .info {
+  display: block;
+  margin-bottom: 5px;
+}
+
+#invoice-show .client-infos strong,
+#invoice-show .billable-infos .plan-infos strong,
+#partner-invoice-index .client-infos strong,
+#partner-invoice-index .billable-infos .plan-infos strong {
+  font-weight: normal;
+}
+
+#invoice-show .billable-infos .name,
+#partner-invoice-index .billable-infos .name {
+  clear: right;
+}
+
+#invoice-show .billable-infos .name,
+#partner-invoice-index .billable-infos .name {
+  font-size: 21px;
+  font-weight: normal;
+  margin-bottom: 2px;
+}
+
+#invoice-show .billable-infos .invoice,
+#partner-invoice-index .billable-infos .invoice {
+  overflow: hidden;
+}
+
+#invoice-show .billable-infos .invoice .plan-infos,
+#partner-invoice-index .billable-infos .invoice .plan-infos {
+  background-color: rgb(240, 240, 240);
+  padding: 10px;
+  margin-top: 25px;
+  margin-bottom: 10px;
+}
+
+#invoice-show .billable-infos .plan-infos .plan-name,
+#partner-invoice-index .billable-infos .plan-infos .plan-name {
+  font-weight: normal;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+#invoice-show .billable-infos .plan-infos .plan-period,
+#partner-invoice-index .billable-infos .plan-infos .plan-period {
+  display: block;
+  margin-top: 2px;
+}
+
+#invoice-show .billable-infos .courses .course-name,
+#partner-invoice-index .billable-infos .courses .course-name {
+  margin-top: 20px;
+}
+
+#invoice-show .billable-infos .courses li {
+  width: 939px;
+}
+
+#invoice-show .invoice .courses .licenses .user-name,
+#partner-invoice-index .invoice .courses .licenses .user-name {
+  width: 220px;
+}
+
+#invoice-show .invoice .courses .licenses .user-login,
+#partner-invoice-index .invoice .courses .licenses .user-login {
+  width: 120px;
+}
+
+#invoice-show .billable-infos .invoice .total,
+#partner-invoice-index .billable-infos .invoice .total,
+#partner-invoice-index .total-partner {
+  display: block;
+  float: right;
+  clear: right;
+  font-size: 20px;
+}
+
+#partner-invoice-index .total-partner {
+  margin-top: 20px;
+}
+
+#invoice-index .invoices {
+  margin-left: 25px;
+}
+
+#invoice-index .invoices li {
+  margin-bottom: 10px;
+}
+
 #contacts ul {
   border-bottom: 1px dotted #B3B2B3;
   padding-bottom: 30px;
@@ -6645,7 +6773,7 @@ div.token-input-dropdown {
 }
 
 .concave-form .course-plan {
-  width: 140px;
+  width: 200px;
 }
 
 .concave-form .course-plan .plan-type {
@@ -6948,7 +7076,8 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   margin: 0;
 }
 
-#partner-environments-list li {
+#partner-environments-list li,
+#partners-list li {
   padding: 10px;
   margin-bottom: 20px;
   border: 1px solid #CCCBCB;
@@ -6986,7 +7115,8 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   margin-right: 10px;
 }
 
-#partner-environments-list .environment-name {
+#partner-environments-list .environment-name,
+#partners-list .partner-name {
   font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 500;
   font-size: 1.2em;
@@ -6997,13 +7127,15 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   margin-bottom: 5px;
 }
 
-#partner-environments-list .environment-info {
+#partner-environments-list .environment-info,
+#partners-list .partner-info {
   float: left;
   overflow: hidden;
   display: block;
 }
 
-#partner-environments-list .date {
+#partner-environments-list .date,
+#partners-list .qtt-environments {
   font-size: .85em;
   color: #B2B2B2;
 }
@@ -7011,6 +7143,18 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 #partner-environments-list .owner {
   font-size: .85em;
   color: #4CACD4;
+}
+
+#partner-environments-list li .see-invoices {
+  display: block;
+  float: right;
+}
+
+#partner-environments-list li .removed-environment {
+  font-size: 11px;
+  float: right;
+  margin-right: 10px;
+  color: rgb(255, 109, 109);
 }
 
 #partner-admins-list {
@@ -7473,4 +7617,15 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .textshadow .create-status form fieldset .new-post .link {
   color: rgb(204, 204, 204);
   font-weight: normal;
+}
+
+#graph-form .inline {
+  float: left;
+}
+
+.concave-form .errors_on_date{
+  font-size: .8em;
+  color: #FF6D6D;
+  overflow: hidden;
+  margin-left: 0px;
 }

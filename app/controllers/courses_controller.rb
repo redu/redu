@@ -22,7 +22,7 @@ class CoursesController < BaseController
 
   def edit
     @header_course = @course.clone :include => [:new_members,
-      :approved_users, :teachers, :students, :tutors, :plan, :quota]
+      :approved_users, :teachers, :students, :tutors, :quota]
 
     respond_to do |format|
       format.html { render 'courses/admin/edit' }
@@ -48,7 +48,6 @@ class CoursesController < BaseController
         if params[:course][:subscription_type].eql? "1" # Entrada de membros passou a ser livre, aprovar todos os membros pendentes
           @course.user_course_associations.waiting.each do |ass|
             ass.approve!
-            @course.create_hierarchy_associations(ass.user, ass.role)
           end
 
         end
@@ -73,14 +72,15 @@ class CoursesController < BaseController
     authorize! :manage, @environment #Talvez seja necessario pois o @environment não está sendo autorizado.
 
     @course.owner = current_user
-    @plan = Plan.from_preset(params[:plan].to_sym)
-    @plan.user = current_user
-
     respond_to do |format|
       if @course.save
-        @course.create_quota
-        @course.plan = @plan
-        @plan.create_invoice_and_setup
+        if @environment.plan.nil?
+          @plan = Plan.from_preset(params[:plan].to_sym)
+          @plan.user = current_user
+          @course.create_quota
+          @course.plans << @plan
+          @plan.create_invoice_and_setup
+        end
         @environment.courses << @course
         format.html { redirect_to environment_course_path(@environment, @course) }
       else
@@ -200,14 +200,16 @@ class CoursesController < BaseController
       end
 
       # verifica se o limite de usuário foi atingido
-      if @course.can_add_entry? and !approved.to_hash.empty?
+      if can?(:add_entry?, @course) and !approved.to_hash.empty?
 
         # calcula o total de usuarios que estão para ser aprovados
         # e só aprova aqueles que estiverem dentro do limite
         total_members = @course.approved_users.count + approved.count
-        if total_members > @course.plan.members_limit
+        members_limit = @course.plan.try(:members_limit) ||
+          @course.environment.plan.try(:members_limit)
+        if total_members > members_limit
           # remove o usuários que passaram do limite
-          (total_members - @course.plan.members_limit).times do
+          (total_members - members_limit).times do
             approved.shift
           end
           flash[:notice] = "O limite máximo de usuários foi atigindo, apenas alguns membros foram moderados."
@@ -218,7 +220,6 @@ class CoursesController < BaseController
         approved.keys.each do |user_id|
           @course.user_course_associations.where(:user_id => user_id).each do |ass|
             ass.approve!
-            @course.create_hierarchy_associations(ass.user, ass.role)
             # TODO fazer isso em batch
             UserNotifier.approve_membership(ass.user, @course).deliver
             end
@@ -325,7 +326,7 @@ class CoursesController < BaseController
     @memberships = @memberships.with_keyword(keyword).paginate(
       :include => [{ :user => {:user_space_associations => :space} }],
       :page => params[:page],
-      :order => 'user_course_associations.updated_at DESC',
+      :order => 'course_enrollments.updated_at DESC',
       :per_page => Redu::Application.config.items_per_page)
 
       respond_to do |format|
@@ -442,6 +443,12 @@ class CoursesController < BaseController
 
     respond_to do |format|
       format.html { redirect_to :action => :admin_manage_invitations }
+    end
+  end
+
+  def teacher_participation_report
+    respond_to do |format|
+      format.html { render 'courses/admin/teacher_participation_report'}
     end
   end
 end

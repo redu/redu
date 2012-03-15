@@ -55,7 +55,7 @@ class SessionsController < BaseController
     user = User.find_by_login_or_email(params[:user_session][:login])
     if user and not user.active? and not user.can_activate? # Passou do tempo de autenticar
       @user_email = user.email
-      render :action => 'expired_activation'
+      render :template => 'sessions/expired_activation', :layout => 'application'
     end
   end
 
