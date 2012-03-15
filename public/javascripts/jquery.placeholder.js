@@ -1,3 +1,5 @@
+// Fonte: http://calebogden.com/ms/placeholder/
+
 $.fn.placeholder = function(options) {
     
   var settings = {

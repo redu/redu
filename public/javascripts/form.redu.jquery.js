@@ -131,6 +131,11 @@
             }
         });
 
+        // Chamada ao jquery.placeholder.
+        try { 
+          $form.find("[placeholder]").placeholder(); 
+        } catch (e) {}
+
       });
     };
 
@@ -141,10 +146,5 @@
         $(document).ajaxComplete(function(){
             $(".concave-form").refreshForms();
         });
-
-        // Chamada ao jquery.placeholder.
-        try { 
-          $('.placeholder').placeholder(); 
-        } catch (e) {}
     });
 })($);
