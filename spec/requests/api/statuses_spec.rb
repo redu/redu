@@ -52,9 +52,11 @@ describe "Statuses" do
     end
     
     it "should have the currect links (self, user, in_response_to)" do
+#   Devido a funcionalidade de :statusable, :factory => :seminar_youtube
+#    em answer_factory ainda não esta disponivel para api
+#     statusable não esta sendo testado porém será incluiso em breve
       %w(self user in_response_to).each do |attr|
-        link = @entity['links'].detect { |link| link['rel'] == attr }
-        get link['href'], :format => 'json', :token => @token
+        get href_to(attr, @entity), :format => 'json', :token => @token
         response.code.should == "200"
       end
     end
