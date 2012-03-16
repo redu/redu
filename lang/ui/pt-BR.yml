@@ -222,6 +222,8 @@ pt-BR:
               invalid: "inválido."
             localization:
               invalid: "Localização inválida."
+            birthday:
+              before: "Você deve ter mais de 13 anos."
         space:
           attributes:
             path:

@@ -41,6 +41,11 @@ class AuthenticationsController < ApplicationController
     flash[:notice] = "Autenticação destruída com sucesso!"
     redirect_to authentications_url
   end
+  
+  def fallback
+    flash[:notice] = "Para logar com Facebook, você precisa permitir o Redu."
+    redirect_to '/'
+  end
 
   def facebook_registration
     debugger

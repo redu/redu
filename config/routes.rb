@@ -26,9 +26,10 @@ Redu::Application.routes.draw do
   match '/signup' => 'users#new', :as => :signup
   match '/logout' => 'sessions#destroy', :as => :logout
 
-  # external providers authentications
+  # authentications routes
   resources :authentications
   match '/auth/:provider/callback' => 'authentications#create'
+  match '/auth/failure' => 'authentications#fallback'
 
   # recover routes
   match '/forgot_password' => 'users#forgot_password', :as => :forgot_password

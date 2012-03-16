@@ -182,7 +182,7 @@ class User < ActiveRecord::Base
     info = omniauth['info']
     self.email = info['email']
     self.reset_password
-    self.tos = '1' # TODO Definir lógica de aceitação de TOS
+    self.tos = '1'
 
     # Atualiza dados do usuário de acordo com a rede social provedora.
     case omniauth[:provider]
@@ -631,34 +631,6 @@ class User < ActiveRecord::Base
     educations << edu.high_schools.first unless edu.high_schools.empty?
 
     educations
-  end
-
-  def self.new_from_facebook(info_hash)
-    login = User.get_login_from_facebook_nickname(info_hash['info'])
-    # Dados obrigatórios.
-    user = User.new(
-        :external_uid => info_hash['uid'],
-        :login => login,
-        :email => info_hash['info']['email'],
-        :email_confirmation => info_hash['info']['email'],
-        :first_name => info_hash['info']['first_name'],
-        :last_name => info_hash['info']['last_name'],
-        :tos => '1')
-
-    # Dados opcionais.
-    user.localization = info_hash['info']['location']
-    user.birth_localization = info_hash['extra']['raw_info']['hometown']['name']
-    edu_hash = info_hash['extra']['raw_info']['education']
-    edu_hash.each do |education|
-      new_user_education = Education.new
-      education.each do |edu|
-       #TODO 
-      end
-    end
-    user.create_settings!
-    user.reset_password
-
-    user
   end
 
   def update_avatar_from_picture_url(url)
