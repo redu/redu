@@ -270,6 +270,7 @@ Redu::Application.routes.draw do
       resources :course_enrollments, :only => :index, :path => :enrollments,
         :as => 'enrollments'
       resources :spaces, :only => :index
+      resources :statuses, :only => [:index]
     end
 
     resources :statuses, :only => :show

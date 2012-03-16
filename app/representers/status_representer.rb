@@ -3,10 +3,9 @@ module StatusRepresenter
   include Roar::Representer::Feature::Hypermedia
 
   property :id
-  property :text
   property :created_at
-  property :action
   property :type
+  property :text
 
   link :self do
     api_status_url self
@@ -22,4 +21,5 @@ module StatusRepresenter
   link :user do
     api_user_url(self.user)
   end
+
 end
