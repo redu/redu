@@ -1,15 +1,6 @@
 .overlay {
   background-image: url("../images/new/circulos-bokeh-peq.png");
   background-position: 60px 0;
-  background-repeat: no-repeat;
-  min-height: 100%;
-  height: auto !important;
-  height: 100%;
-  margin: 0 auto -211px;
-}
-
-.footer, .push {
-  height: 211px;
 }
 
 .logo-top {
@@ -291,31 +282,21 @@
 /* Específico a tela de fale conosco após submissão do formulário. */
 
 .content.contact-submited {
-  padding-bottom: 156px;
+  height: 437px; /* Mesma altura da tela do formulário. */
 }
 
-.content.contact-submited p {
+.content.contact-submited > p {
   margin-bottom: 110px;
 }
 
 .content.contact-submited .confirmation-msg {
   margin-left: auto;
   margin-right: auto;
+  width: 400px;
 }
 
-.footer {  
-  background: rgb(77,173,214);
-  border-top: 1px solid white;
+.footer {
   clear: both;
-}
-
-.cssgradients .footer {
-  background: -moz-linear-gradient(top, rgb(115,195,230) 0%, rgb(23,137,195) 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(115,195,230)), color-stop(100%,rgb(23,137,195))); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, rgb(115,195,230) 0%,rgb(23,137,195) 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top, rgb(115,195,230) 0%,rgb(23,137,195) 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top, rgb(115,195,230) 0%,rgb(23,137,195) 100%); /* IE10+ */
-  background: linear-gradient(top, rgb(115,195,230) 0%,rgb(23,137,195) 100%);
 }
 
 .footer .logo-bottom {

@@ -48,7 +48,7 @@ body .overlay .user-data-recovery .clearfix:after {
   padding-top: -8px;
 }
 
-.overlay .user-data-recovery .title-fieldset{
+.overlay .user-data-recovery .title-fieldset {
   padding-top: 50px;
   font-family: museo-sans,arial,sans-serif;
   font-weight: 100;
@@ -62,11 +62,9 @@ body .overlay .user-data-recovery .clearfix:after {
   text-shadow: 0px 1px 0px rgb(255, 255, 255);
 }
 
-.textshadow .overlay .user-data-recovery form .body-login .forgotten-information{
+.overlay .user-data-recovery .title-fieldset .forgotten-information {
   font-family: museo-slab,arial,sans-serif;
   font-weight: 900;
-  font-size: 47px;
-  color: rgb(115, 195, 230);
   letter-spacing: -4px;
 }
 
@@ -270,43 +268,12 @@ button::-moz-focus-inner {
   box-shadow: 0px 3px px rgba(85 , 85, 85, 0.1);
 }
 
-.confirmation-msg {
-  background-color: rgb(240, 240, 240);
-  clear: both;
-  margin-top: 20px;
-  float: right;
-}
-
-.boxshadow .confirmation-msg {
-  -webkit-box-shadow: inset 0px -1px 0px 0px rgb(255, 255, 255), inset 0px 1px 0px 0px rgb(230, 230, 230);
-  -moz-box-shadow: inset 0px -1px 0px 0px rgb(255, 255, 255)), inset 0px 1px 0px 0px rgb(230, 230, 230);
-  box-shadow: inset 0px -1px 0px 0px rgb(255 ,255 , 255), inset 0px 1px 0px 0px rgb(230, 230, 230);
-}
-
-
-.borderradius .confirmation-msg {
-  -webkit-border-radius: 7px;
-  -moz-border-radius: 7px;
-  border-radius: 7px;
-}
-
-.text-confirmation {
-  font-size: 12px;
-  color: rgb(0, 0, 0);
-  font-weight: normal;
-  padding: 20px 15px;
-  font-family: arial, sans-serif;
-  clear:both;
-  float: left;
-}
-
 .client-email {
   font-style: italic;
   color: rgb(179, 179, 179);
 }
 
-.textshadow .client-email,
-.textshadow .text-confirmation {
+.textshadow .client-email {
   text-shadow: 0px 1px 0px rgb(255, 255, 255);
 }
 

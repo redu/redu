@@ -247,6 +247,10 @@ html body {
   margin-top: 10px;
 }
 
+.body-error .confirmation-msg {
+  width: 400px;
+}
+
 .body .body-error .concave-form  .concave-input {
   font-size: 11px;
   font-family: arial, sans-serif;
