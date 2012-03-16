@@ -71,5 +71,44 @@ describe License do
 
       License.payable.to_set.should == @licenses.to_set
     end
+
+    it "should retrive open license" do
+     (1..4).collect { Factory(:license, :period_end => Date.yesterday,
+                               :course => @course,
+                               :invoice => @invoice) }
+     @another_user = Factory(:user)
+     @course.join(@another_user, Role[:member])
+     License.get_open_license_with(@another_user, @course).should == @invoice.licenses.last
+    end
+  end
+
+  context "when changing role license" do
+    before do
+      @user = Factory(:user)
+      @environment = Factory(:environment, :owner => @user)
+      @course = Factory(:course, :environment => @environment,
+                       :owner => @user)
+      @another_course = Factory(:course, :environment => @environment,
+                        :owner => @user)
+      @plan = Factory(:active_licensed_plan, :price => 3.00,
+                       :billable => @environment)
+      from = Date.new(2010, 01, 10)
+      @plan.create_invoice({:invoice => {
+        :period_start => from,
+        :period_end => from.end_of_month,
+        :created_at => Time.now - 1.hour }
+      })
+      @invoice = @plan.invoices.last
+    end
+
+    it "should change the role" do
+      (1..4).collect { Factory(:license, :period_end => Date.yesterday,
+                               :course => @course,
+                               :invoice => @invoice) }
+      @another_user = Factory(:user)
+      @course.join(@another_user, Role[:member])
+      @course.change_role(@another_user, Role[:tutor])
+      License.get_open_license_with(@another_user, @course).role == Role[:tutor]
+    end
   end
 end

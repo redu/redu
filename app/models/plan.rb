@@ -17,7 +17,7 @@ class Plan < ActiveRecord::Base
   aasm_initial_state :active
 
   aasm_state :active
-  aasm_state :blocked
+  aasm_state :blocked, :enter => [:send_blocked_notice]
   aasm_state :migrated
 
   aasm_event :block do
@@ -58,5 +58,9 @@ class Plan < ActiveRecord::Base
 
   def invoice
     self.invoices.order("created_at DESC").limit(1).first
+  end
+
+  def send_blocked_notice
+    UserNotifier.blocked_notice(self.user, self).deliver
   end
 end

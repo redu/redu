@@ -13,60 +13,56 @@
     <%= render :partial => 'courses/admin/clean_header' %>
     <%= tabs :courses_admin do %>
       <% if @course.teachers.empty? %>
-        <div class="body preview">
+        <div class="body">
         <div class="flash-message notice">
           <ul class="message icons-big-before icon-privacy-lightred_64_66-before">
             <li>O conteúdo desta página não está disponível para o curso que não possui professores.</li>
-            <li>Você pode continuar com as <%= link_to "configurações do curso", admin_spaces_environment_course_path(@course.environment, @course)%>.</li>
+            <li>Você pode modificar os pápeis dos usuários <%= link_to "configurando o ambiente", admin_members_environment_path(@course.environment)%>.</li>
           <ul>
         </div>
         </div>
       <% else %>
-
         <h3 class="form-header">Qual a participação do professor na disciplina?</h3>
-        <div id="teacher-participation-chart">
           <%= lazy_load(:chart, :jammit => true) do %>
             try{
-            id_course = <%= @course.id %>;
-            initialize_graph();
-            }catch(e){}
+              $("#graph-form").before("<div id='teacher-participation-chart'></div>"),
+              $("#graph-form").submit();
+              }catch(e){}
           <% end %>
-        </div>
-        <%= form_tag "#", :class => "concave-form", :id => "graph-form" do %>
+          <%= form_tag vis_dashboard_teacher_participation_interaction_path, :method => :get, :remote => true, :class => "concave-form", :id => "graph-form" do %>
           <%= label_tag "", "Professor", :id => "form-problem"%>
-          <%= select(:user, "id", @course.teachers.all.collect {
-            |teacher| [teacher.first_name, teacher.id ] }, { :default => @course.teachers.first },
-            {:class =>"concave-select"})%>
+          <%= select_tag(:teacher_id, options_from_collection_for_select(@course.teachers, :id, :first_name), {:class =>"concave-select"})%>
 
           <%= label_tag "Disciplinas" %>
           <ul class="single-column">
-            <% @course.spaces.each do |space| %>
-              <li>
-                <%= check_box_tag "spaces-#{space.id}", space.id, true,
-                { :class => "item-space-check" } %>
-              <%= label_tag "spaces-#{space.id}", space.name %>
+            <%= render :partial => 'courses/admin/space_item_admin',
+              :collection => @course.spaces, :as => :space  %>
+            <li>
+              <%= check_box_tag "all-check", "0", true %>
+              <%= label_tag "all-check", "Todos" %>
             </li>
+          </ul>
+
+          <%= label_tag "date_start_fake", "Data inicial" %>
+          <%= field_set_tag nil, :class => "inline" do %>
+            <%= date_select "date_start_fake", "start",
+                :default => Date.today - 9 %>
+            <%= text_field_tag :date_start, nil,
+                :style => "display: none;" %>
           <% end %>
-          <li>
-            <%= check_box_tag "all-check", "0", true %>
-            <%= label_tag "all-check", "Todos" %>
-          </li>
-        </ul>
 
-        <%= label_tag "date_start", "Data inicial" %>
-        <%= field_set_tag nil, :class => "inline" do %>
-          <%= date_select "date_start", "start", :default => Date.today - 9 %>
+          <%= label_tag "date_end", "Data final" %>
+          <%= field_set_tag nil, :id => "date-validate",
+            :class => "inline" do %>
+            <%= date_select "date_end_fake", "start", :end_year => Date.today.year %>
+            <%= text_field_tag :date_end, nil, :style => "display: none;" %>
+          <% end %>
+
+          <%= hidden_field_tag :course_id, @course.id %>
+
+          <%= submit_tag "Atualizar", :class=>"concave-submit" %>
         <% end %>
-
-        <%= label_tag "date_end", "Data final" %>
-        <%= field_set_tag nil, :id => "date-validate",
-          :class => "inline" do %>
-          <%= date_select "date_end", "start", :end_year => Date.today.year %>
-        <% end %>
-
-        <%= submit_tag "Update", :onclick => "graph_interaction();", :class=>"concave-submit" %>
       <% end %>
     <% end %>
-  <% end %>
-</div>
+  </div>
 </div>

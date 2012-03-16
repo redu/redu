@@ -1,0 +1,11 @@
+Olá <%= @user.display_name %>,
+
+detectamos que o plano do(a) <%= @billable.name %> possui pendências em relação
+ao pagamento das faturas, portanto, o mesmo foi bloqueado e os serviços foram
+suspensos.
+
+A fim desbloquear o plano e normalizar o uso da plataforma, o pagamento pode ser realizado ao clicar no link abaixo:
+ <%= plan_invoices_url(@plan) %>
+
+Obrigado,
+Equipe <%= Redu::Application.config.name %>
