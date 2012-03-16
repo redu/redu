@@ -8,11 +8,11 @@ class Status < ActiveRecord::Base
   has_many :users, :through => :status_user_associations
   has_many :status_user_associations, :dependent => :destroy
 
-  # TODO Testes para os scopos
   scope :activity_by_user, lambda { |u|
     where("type = ? AND user_id = ?", "Activity", u) }
   scope :helps_and_activities, where("type = ? OR type = ?", "Help", "Activity")
-  scope :by_space, lambda { |id| where(:statusable_id =>id) }
+  scope :by_statusable, lambda { |kind, id| where("statusable_id IN (?) AND statusable_type = ?", id, kind) }
+  scope :by_statusable_type, lambda { |type| where(:statusable_type => type) }
   scope :by_day, lambda { |day| where(:created_at =>(day..(day+1))) }
   scope :by_id, lambda { |id| where(:id =>id) }
 
@@ -51,7 +51,6 @@ class Status < ActiveRecord::Base
     end
   end
 
-  # TODO Falta os testes do método abaixo
   def answers_ids(id)
     answers.where("user_id = ?", id).collect{ |answer| answer.id }
   end

@@ -1,38 +1,23 @@
 module Vis
   class DashboardController < VisualizationsController
 
-    # Requisição default pega o primeiro professor da lista do curso
-    def teacher_participation
-      # params [:id_course]
-      @course = Course.find(params[:course_id])
-      authorize! :teacher_participation, @course
-      @teachers = @course.teachers
-
-      # only if there is teachers
-      if @teachers.empty?
-        self.generate_erro("Não existem professores neste curso")
-      else
-        @uca = @teachers.first.get_association_with(@course)
-        @participation = TeacherParticipation.new(@uca)
-        self.generate_json
-      end
-    end
-
     # Interação do usuário
     def teacher_participation_interaction
       if params[:date_start].to_date < params[:date_end].to_date
-        # params [:id_teacher]
+        # params [:course_id]
         @course = Course.find(params[:course_id])
         authorize! :teacher_participation_interaction, @course
+
+        # params [:teacher_id]
         @teacher = @course.teachers.find(params[:teacher_id])
         @uca = @teacher.get_association_with(@course)
         @participation = TeacherParticipation.new(@uca)
 
-        # params [:time_start, :time_end] => time (format): "year-month-day"
+        # params [:date_start, :date_end] => time (format): "year-month-day"
         @participation.start = params[:date_start].to_date
         @participation.end = params[:date_end].to_date
 
-        # params [:spaces[id's]]
+        # params [:spaces[id.to_s]]
         @spaces = params[:spaces].join(',').split(',')
         @participation.spaces = @uca.course.spaces.find(@spaces)
 

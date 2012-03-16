@@ -122,8 +122,7 @@ class Space < ActiveRecord::Base
     self.subjects.select(:id).collect{ |subject| subject.lectures.count }.sum
   end
 
-  # TODO Falta os testes dos métodos abaixo
   def subjects_id
-    self.subjects.select(:id).collect{ |subject| subject.id }
+    self.subjects.collect{ |subject| subject.id }
   end
 end

@@ -353,6 +353,14 @@ describe User do
 
       User.message_recipients([vader.id, luke.id]).should == [vader, luke]
     end
+
+    it "retrieves all subjects ids from your lectures" do
+      @lecture = Factory(:lecture, :owner => subject)
+      subject.lectures << @lecture
+
+      @id = @lecture.subject.id
+      subject.subjects_id.should eq([@id])
+    end
   end
 
   context "callbacks" do

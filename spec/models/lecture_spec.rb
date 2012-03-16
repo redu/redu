@@ -151,6 +151,26 @@ describe Lecture do
 
       Lecture.exercises_editables.should == [lecture2]
     end
+
+    it "retrieve lectures in the specifeid subjects" do
+      subject.reload
+      lecture2 = Factory(:lecture, :subject => @sub, :owner => @user)
+      sub2 = Factory(:subject)
+      lecture3 = Factory(:lecture, :subject => sub2, :owner => @user)
+
+      @user.lectures.by_subjects(@sub.id).to_set.should eq([subject, lecture2].to_set)
+    end
+
+    it "retrieves lectures by day" do
+      subj = Factory(:subject)
+      lec1 = Factory(:lecture, :subject => subj,
+                     :created_at => "2012-02-14".to_date)
+      lec2 = Factory(:lecture, :subject => subj,
+                     :created_at => "2012-02-16".to_date)
+      lectures = Lecture.by_subjects(subj.id)
+
+      lectures.by_day("2012-02-14".to_date).should eq([lectures.first])
+    end
   end
 
   context "being attended" do
