@@ -56,11 +56,32 @@ class Plan < ActiveRecord::Base
     self.save!
   end
 
-  def invoice
-    self.invoices.order("created_at DESC").limit(1).first
-  end
-
   def send_blocked_notice
     UserNotifier.blocked_notice(self.user, self).deliver
+  end
+
+  # Retorna o invoice atual
+  #
+  # subject.plan
+  # => #<PackageInvoice:0x103f20f18>
+  def invoice
+    self.invoices.where(:current => true).first
+  end
+
+  # Seta o invoice como o atual
+  #
+  # subject.invoice = invoice
+  # => #<PackageInvoice:0x103f20f18>
+  # subject.invoice
+  # => #<PackageInvoice:0x103f20f18>
+  #
+  # subject.invoice = nil
+  # => nil
+  # subject.invoice
+  # => nil
+  def invoice=(new_invoice)
+    self.invoice.try(:update_attribute, :current, false)
+    new_invoice.try(:update_attributes, :current => true, :plan => self)
+    self.invoice
   end
 end

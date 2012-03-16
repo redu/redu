@@ -52,12 +52,12 @@ class LicensedPlan < Plan
       :invoice => {
       :period_start => period_start,
       :period_end => period_end,
-      :description => "Fatura referente à #{period_end - period_start + 1} dias no plano #{self.name}",
-      :plan => self }
+      :description => "Fatura referente à #{period_end - period_start + 1} dias no plano #{self.name}"
+      }
     }.deep_merge(opts)
 
     options[:invoice].delete(:amount) # Não deve aceitar amount nos parâmetros
-    LicensedInvoice.create(options[:invoice])
+    self.invoice = LicensedInvoice.new(options[:invoice])
   end
 
   # Apenas cria o invoice, já que este plano não possui taxa de adesão

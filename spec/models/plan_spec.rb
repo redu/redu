@@ -146,4 +146,52 @@ describe Plan do
       end
     end
   end
+
+  context "when dealing with current invoice" do
+    before do
+      subject.invoices = []
+    end
+
+    it { should respond_to(:invoice) }
+    it { should respond_to(:invoice=) }
+
+    it "should retrieve the current invoice" do
+      invoice1 = Factory(:invoice, :plan => subject, :current => false)
+      invoice2 = Factory(:invoice, :plan => subject)
+      subject.reload
+
+      subject.invoice.should == invoice2
+    end
+
+    it "should store the invoice as current" do
+      invoices = (1..2).collect do
+        Factory(:invoice, :plan => subject, :current => false)
+      end
+      subject.reload
+
+      invoice1 = Factory.build(:invoice)
+      subject.invoice = invoice1
+      subject.save
+      subject.invoice.should == invoice1
+
+      invoice2 = Factory(:invoice)
+      subject.invoice = invoice2
+      subject.invoice.should == invoice2
+
+      subject.invoices.to_set.should == (invoices << invoice1 << invoice2).to_set
+    end
+
+    it "should return nil as current" do
+      invoices = (1..2).collect do
+        Factory(:invoice, :plan => subject, :current => false)
+      end
+      subject.reload
+
+      invoice1 = Factory(:invoice)
+      subject.invoice = invoice1
+
+      subject.invoice = nil
+      subject.invoice.should be_nil
+    end
+  end
 end

@@ -32,11 +32,7 @@ describe PackagePlan do
       @invoice.amount.round(8).should == expected_amount.round(8)
       @invoice.period_end.should == Date.today.advance(:days => 30)
       @invoice.period_start.should == Date.tomorrow
-    end
-
-    it "period_start defaults to tomorrow" do
-      subject.create_invoice
-      subject.invoices.first.period_start.should == Date.tomorrow
+      subject.invoice.should == @invoice
     end
 
     it "accepts custom attributes" do
