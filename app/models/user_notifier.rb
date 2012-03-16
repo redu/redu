@@ -170,9 +170,12 @@ class UserNotifier < ActionMailer::Base
     end
   end
 
-  #FIXME: Modelo html do email
+  #FIXME: Modelo html do email (link token)
   def friendship_invitation(invitation)
-    #FIXME: Email usuário sender
+    #FIXME: Email usuário sender (layout user_notifier)
+    #FIXME: Subject email invitation
+    @invitation = invitation
+    @email = invitation.email
     @user = invitation.user
     uca = UserCourseAssociation.where(:user_id => @user).approved
     @contacts = { :total => @user.friends.count }
@@ -181,7 +184,7 @@ class UserNotifier < ActionMailer::Base
                  :tutor => uca.with_roles([:tutor]).count,
                  :teacher => uca.with_roles([:teacher]).count }
 
-    mail(:subject => 'Teste', :to => invitation.email) do |format|
+    mail(:subject => 'Você foi convidado para do Redu', :to => @email) do |format|
       format.html
     end
   end

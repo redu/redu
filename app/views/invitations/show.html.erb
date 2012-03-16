@@ -1,0 +1,72 @@
+<div class="container_16 clearfix" id="course-invitation">
+  <div class="grid_4 alpha">
+    <h1 class="logotipo replacement">
+      <%= link_to "Redu: rede social educacional", application_path  %>
+    </h1>
+  </div>
+  <div class="clearfix invite">
+    <span class="salutation">Olá, você foi convidado para participar do Redu.</span>
+    <div  class="clearfix course">
+      <%= image_tag @user.avatar(:thumb_32), :size => '32x32',
+        :class => 'avatar' %>
+      <div class="informations">
+        <div class="header">
+          <%= link_to @user.display_name, user_path(@user), :class => "name" %>
+        </div>
+        <ul class="statistics">
+          <li>
+            <em>Contatos</em>
+            <span>
+              <%= @contacts[:total] %>
+            </span>
+          </li>
+          <% if @courses[:total] > 0 %>
+          <li>
+            <em>Cursos</em>
+            <span><%= @courses[:total] %></span>
+          </li>
+          <% end %>
+          <% if @courses[:teacher] > 0 %>
+          <li>
+            <em>Professor em:</em>
+            <span><%= @courses[:teacher] %> </span>
+          </li>
+          <% end %>
+          <% if @courses[:tutor] > 0 %>
+          <li>
+            <em>Tutor em:</em>
+            <span><%= @courses[:tutor] %>, tutor em <%= @courses[:tutor] %>) </span>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <div class="grid_6 omega">
+    <div class="form-login">
+        <div class="header-form-login">
+          <h3 class="new-version-call">Já possui uma conta? Acesse nossa versão <q class="beta-call" >beta </q>.</h3>
+        </div>
+        <%= form_for @user_session, :html => { :class => "concave-form" }, :url => sessions_path do |f| %>
+          <%= field_set_tag do %>
+            <%= hidden_field_tag :friendship_invitation_token, @invitation.token %>
+            <%= f.text_field :login, :id => "user-login", :value => "Digite seu login e, abaixo, sua senha" %>
+            <%= concave_errors_for @user_session, :login %>
+
+            <%= f.password_field :password, :class => "password-field" %>
+            <%= concave_errors_for @user_session, :password %>
+            <button>Entrar</button>
+
+            <div class="short-options">
+              <%= f.check_box :remember_me, :class => "check-stay-connect" %>
+              <%= f.label :remember_me, "Matenha-me conectado", :class => "label-stay-connect" %>
+              <%= link_to "Recuperar  senha", forgot_password_path, :class => "recover-login" %>
+              <%= link_to "Recuperar login", forgot_username_path, :class => "recover-login" %>
+            </div>
+            <p class="or-call">&minus; ou &minus;</p>
+          <% end %>
+       <% end %>
+       <%= link_to "Que tal se cadastrar?", signup_path(:friendship_invitation_token => @invitation.token), :class => "new-account" %>
+      </div>
+    </div>
+  </div>
+</div>

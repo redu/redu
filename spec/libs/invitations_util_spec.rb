@@ -44,6 +44,17 @@ describe InvitationsUtil do
     }.should change{ Invitation.all.count }.from(0).to(1)
   end
 
+  it "when email exists in redu database, a friendship should be created instead of a invitation" do
+    @param['emails'] = @email.collect { |e| "#{e},"}.to_s
+    @param['emails'] << @user.email
+    user = Factory(:user)
+    expect {
+      InvitationsUtil.process_invites(@param, user)
+    }.should change{ Invitation.all.count }.from(0).to(5)
+    Friendship.all.count.should == 2
+    user.friendships.count.should == 1
+  end
+
   context "Add only one client" do
     it "A friendship request should be correctly sent" do
       requested_user = @friends.first

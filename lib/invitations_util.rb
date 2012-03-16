@@ -3,7 +3,8 @@ class InvitationsUtil
   FRIENDSHIP = 0
   FRIENDSHIP_STATUS = 1
 
-
+  # params => parâmetros da requisição (:friend_id // :emails)
+  # user => remetente do convite
   def self.process_invites(params, user)
     friend = process_friendship(params['friend_id'].to_s, user) unless params['friend_id'].to_s.strip == ""
     process_invitation(params['emails'].to_s, user) unless params['emails'].to_s.strip == ""
@@ -26,13 +27,18 @@ class InvitationsUtil
   def self.process_invitation(invited_friends, user)
     emails = process_params(invited_friends)
     emails.each do |email|
-      Invitation.invite(:user => user, :hostable => user, :email => email) do |invitation|
-        UserNotifier.friendship_invitation(invitation).deliver
+      invitee = User.where(:email => email)
+      if invitee.empty?
+        Invitation.invite(:user => user, :hostable => user, :email => email) do |invitation|
+          UserNotifier.friendship_invitation(invitation).deliver
+        end
+      else
+        process_friendship(invitee.first.id, user)
       end
     end
   end
 
   def self.process_params(params)
-    params.gsub(',',' ').split
+    params.to_s.gsub(',',' ').split
   end
 end

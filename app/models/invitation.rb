@@ -37,9 +37,8 @@ class Invitation < ActiveRecord::Base
   end
 
   def generate_token
-    self.token = ActiveSupport::SecureRandom.base64(8).gsub("/","_").
-      gsub(/=+$/,"")
-    self.generate_token if Invitation.where(:token => self.token).size != 0
+    self.token = rand(36**11).to_s(36)
+    self.generate_token unless Invitation.where(:token => self.token).empty?
   end
 end
 

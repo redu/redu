@@ -19,7 +19,12 @@
   <tr class="footer">
     <td class="footer-info-wrapper">
       <div class="footer-info">
-        Esta notificação foi enviada para <a href="mailto:<%= @user.email %>"><%= @user.email %></a>.
+        Esta notificação foi enviada para
+        <% if @user.email %>
+          <a href="mailto:<%= @user.email %>"><%= @user.email %></a>.
+        <% else %>
+          <a href="mailto:<%= @email %>"><%= @email %></a>.
+        <% end %>
         Não é necessário responder a este e-mail.
       </div>
     </td>

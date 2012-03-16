@@ -8,7 +8,7 @@
       </td>
       <td rowspan="3" class="acceptance-cell">
         <%= image_tag "new/mail/icon-friendship-big.png", :size => "64x64" %>
-        <%= link_to "Aceitar ou recusar o pedido", "#{@token}", :class => "accept-contact" %>
+        <%= link_to "Aceitar pedido", invitation_url(@invitation), :class => "accept-contact" %>
       </td>
     </tr>
     <tr>
