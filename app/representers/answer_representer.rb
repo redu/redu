@@ -1,6 +1,7 @@
 module AnswerRepresenter
   include Roar::Representer::JSON
   include Roar::Representer::Feature::Hypermedia
+  include StatusRepresenter
 
 
   link :in_response_to do
