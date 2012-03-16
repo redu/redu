@@ -6,10 +6,29 @@ module ActsAsBillable
   end
 
   module InstanceMethods
-    # Retorna o plan atual
+    # Retorna o plano atual
+    #
+    # subject.plan
+    # => #<PackagePlan:0x103f20f18>
     def plan
-      # TODO rever este código
-      self.plans.order("created_at DESC").limit(1).first
+      self.plans.where(:current => true).first
+    end
+
+    # Seta o plano como o atual
+    #
+    # subject.plan = plan
+    # => #<PackagePlan:0x103f20f18>
+    # subject.plan
+    # => #<PackagePlan:0x103f20f18>
+    #
+    # subject.plan = nil
+    # => nil
+    # subject.plan
+    # => nil
+    def plan=(new_plan)
+      self.plan.try(:update_attribute, :current, false)
+      new_plan.try(:update_attributes, :current => true, :billable => self)
+      self.plan
     end
 
     # Retorna o percentual de espaço ocupado por files
@@ -39,6 +58,7 @@ module ActsAsBillable
       end
     end
 
+    # Guarda suas informações no plano e se destrói
     def audit_billable_and_destroy
       plan.audit_billable! if self.plan
       self.destroy

@@ -95,11 +95,11 @@ describe InvoicesController do
         end
         @partner.add_collaborator(@user)
 
-        @environments[0].plans << Plan.from_preset(:instituicao_superior,
+        @environments[0].plan = Plan.from_preset(:instituicao_superior,
                                                    "LicensedPlan")
-        @environments[1].plans << Plan.from_preset(:curso_extensao,
+        @environments[1].plan = Plan.from_preset(:curso_extensao,
                                                    "LicensedPlan")
-        @environments[2].plans << Plan.from_preset(:curso_corporativo,
+        @environments[2].plan = Plan.from_preset(:curso_corporativo,
                                                    "LicensedPlan")
         # Associando owners dos planos
         @environments.each do |e|

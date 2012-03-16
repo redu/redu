@@ -754,7 +754,7 @@ describe Course do
         before do
           plan = Plan.from_preset(:free)
           plan.members_limit = 15
-          subject.plans << plan
+          subject.plan = plan
         end
 
         it "should permit entry" do
@@ -770,7 +770,7 @@ describe Course do
       context "and plan dones NOT have members limit" do
         before do
           plan = Plan.from_preset(:free, "LicensedPlan")
-          subject.plans << plan
+          subject.plan = plan
         end
 
         it "should permit entry" do
