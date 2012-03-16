@@ -56,11 +56,21 @@ class LicensedInvoice < Invoice
     LicensedInvoice.pending.each do |i|
       if i.threshold_date < Date.today
         i.overdue!
-        i.plan.block!
+        i.plan.block! unless i.plan.blocked?
       else
         i.deliver_pending_notice
       end
     end
+  end
+
+  def create_license(user, role, course)
+    self.licenses << License.create(:name => user.display_name,
+                                    :login => user.login,
+                                    :email => user.email,
+                                    :period_start => DateTime.now,
+                                    :role => role,
+                                    :invoice => self,
+                                    :course => course)
   end
 
   protected
@@ -101,6 +111,6 @@ class LicensedInvoice < Invoice
   # Atualiza as licenças do invoice para terem um period_end
   def set_licenses_period_end
     License.update_all(["period_end = ? ", self.period_end],
-                       ["id IN (?)", self.licenses.collect(&:id)])
+                       ["id IN (?)", self.licenses.in_use.collect(&:id)])
   end
 end

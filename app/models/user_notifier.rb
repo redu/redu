@@ -104,10 +104,10 @@ class UserNotifier < ActionMailer::Base
   def blocked_notice(user, plan)
     @user = user
     @plan = plan
-    @billable = plan.billable
+    @billable_name = plan.billable.try(:name) || plan.billable_audit.try(:[], "name")
 
     mail(:to => user.email,
-         :subject => "Plano do(a) #{@billable.name} foi bloqueado",
+         :subject => "Plano do(a) #{@billable_name} foi bloqueado",
          :date => Time.now) do |format|
       format.text
     end

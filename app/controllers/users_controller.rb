@@ -5,7 +5,8 @@ class UsersController < BaseController
     :forgot_username, :resend_activation, :activate, :index],
     :find_by => :login
   load_resource :environment, :only => [:index], :find_by => :path
-  load_resource :course, :only => [:index], :find_by => :path
+  load_resource :course, :only => [:index], :find_by => :path,
+    :through => :environment
   load_resource :space, :only => [:index]
 
   rescue_from CanCan::AccessDenied, :with => :deny_access

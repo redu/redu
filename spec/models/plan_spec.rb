@@ -1,6 +1,11 @@
 require 'spec_helper'
 
 describe Plan do
+  before do
+    UserNotifier.delivery_method = :test
+    UserNotifier.perform_deliveries = true
+  end
+
   subject { Factory(:plan) }
 
   it { should belong_to :billable }
@@ -37,10 +42,8 @@ describe Plan do
     end
 
     it "sends an email when blocked" do
-      UserNotifier.delivery_method = :test
-      UserNotifier.perform_deliveries = true
       expect {
-      subject.block!
+        subject.block!
       }.should change {UserNotifier.deliveries.size }.by(1)
       UserNotifier.deliveries.last.body.should =~ /foi bloqueado/
     end
@@ -144,6 +147,19 @@ describe Plan do
       it "should return a plan with correct name" do
         @another_plan.name.should == PackagePlan::PLANS[:free][:name]
       end
+    end
+  end
+
+  context "when billable is destroyed" do
+    before do
+      subject.billable.audit_billable_and_destroy
+      subject.reload
+    end
+
+    it "sends email when blocked" do
+      expect {
+        subject.block!
+      }.should change(UserNotifier.deliveries, :count).by(1)
     end
   end
 end

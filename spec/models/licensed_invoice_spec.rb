@@ -206,6 +206,7 @@ describe LicensedInvoice do
       environment = Factory(:environment, :owner => user)
       course = Factory(:course, :environment => environment,
                        :owner => user)
+
       @plan = Factory(:active_licensed_plan, :price => 3.00,
                       :billable => environment)
       from = Date.new(2010, 01, 15)
@@ -214,7 +215,6 @@ describe LicensedInvoice do
         :period_end => from.end_of_month }
       })
       @invoice = @plan.invoices.last
-
       (1..10).collect do
         Factory(:license, :invoice => @invoice, :course => course,
                 :role => Role[:member])
@@ -282,6 +282,7 @@ describe LicensedInvoice do
       environment = Factory(:environment, :owner => user)
       course = Factory(:course, :environment => environment,
                        :owner => user)
+
       @plan1 = Factory(:active_licensed_plan, :price => 3.00,
                        :billable => environment)
 
@@ -295,7 +296,6 @@ describe LicensedInvoice do
         :created_at => Time.now - 1.hour }
       })
       @invoice1 = @plan1.invoices.last
-
       from = Date.today
       plan2.create_invoice({:invoice => {
         :period_start => from }
@@ -306,8 +306,10 @@ describe LicensedInvoice do
         Factory(:license, :invoice => @invoice1, :period_end => nil,
                 :course => course)
       end
-      (1..20).collect { Factory(:license, :invoice => @invoice1,
-                                :course => course) }
+      @not_in_use_licenses = (1..20).collect do
+        Factory(:license, :invoice => @invoice1,
+                :course => course)
+      end
       (1..20).collect { Factory(:license, :invoice => @invoice2,
                                 :course => course) }
 
@@ -360,6 +362,12 @@ describe LicensedInvoice do
         invoice.licenses.in_use.should be_empty
         @in_use_licenses.first.reload.period_end.should == invoice.period_end
       end
+
+      it "should NOT update period_end of licenses with period end" do
+        invoice = @plan1.invoices.first
+        @not_in_use_licenses.first.reload.period_end.should_not ==
+          invoice.period_end
+      end
     end
 
     context "when refreshing states again" do
@@ -375,11 +383,42 @@ describe LicensedInvoice do
         /a fatura com número ##{@invoice1.id} [a-z]+ está com pagamento pendente/
       end
     end
+
+    context "when a plan is already blocked" do
+      before do
+        plan = Factory(:active_licensed_plan)
+        invoice = Factory(:licensed_invoice, :plan => plan,
+                          :period_end => Date.today - Invoice::OVERDUE_DAYS - 1)
+        invoice.pend!
+        plan.block!
+      end
+
+      it "should not raise error" do
+        expect {
+        LicensedInvoice.refresh_states!
+        }.should_not raise_error(AASM::InvalidTransition)
+      end
+    end
   end
 
   context "threshold date" do
     it "should be overdue days from period end" do
       subject.threshold_date.should == subject.period_end + Invoice::OVERDUE_DAYS
+    end
+  end
+
+  context "when creating a license" do
+    before do
+      @user = Factory(:user)
+      @environment = Factory(:environment, :owner => @user)
+      @course = Factory(:course, :environment => @environment,
+                        :owner => @user)
+    end
+    it "should create a license" do
+      @user= Factory(:user)
+      expect {
+        subject.create_license(@user, Role[:member], @course)
+      }.should change(License, :count).by(1)
     end
   end
 end

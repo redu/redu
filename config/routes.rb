@@ -124,8 +124,6 @@ Redu::Application.routes.draw do
     resources :plans, :only => [:index]
     resources :experiences
     resources :educations, :except => [:new, :edit]
-    get '/:environment_id/roles' => 'roles#show', :as => :admin_roles
-    post '/:environment_id/roles' => 'roles#update', :as => :update_roles
   end
 
   match 'users/activate/:id' => 'users#activate', :as => :activate
@@ -204,10 +202,17 @@ Redu::Application.routes.draw do
       end
 
       resources :users, :only => [:index]
+      resources :users, :only => :show do
+        match :roles, :to => 'roles#update', :via => :post, :as => :roles
+      end
       resources :user_course_invitations, :only => [:show]
     end
 
     resources :users, :only => [:index]
+    resources :users, :only => :show do
+      resources :roles, :only => :index
+      match :roles, :to => 'roles#update', :via => :post, :as => :roles
+    end
   end
 
 
