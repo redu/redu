@@ -1903,12 +1903,17 @@ button::-moz-focus-inner {
   padding: 0;
 }
 
-.create-status .concave-form .cancel {
+.create-status .concave-form .cancel, 
+.create-status .concave-form .concave-clean {
   float: left;
   padding: 8px 0 8px 0;
   width: 68px;
   height: 12px;
   color: #4cacd5;
+}
+
+.create-status .concave-form .concave-clean {
+  padding: 8px 4px 8px 4px;
 }
 
 .create-status .concave-form .char-limit,
@@ -7605,18 +7610,111 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 
 .create-status form fieldset .new-post {
   font-size: 13px;
+  padding: 10px 10px 15px 10px;
+  margin-top: 20px;
   font-family: arial, sans-sefif;
   font-weight: normal;
+  border-top: solid 1px rgb(255, 255, 255);
+  border-bottom: solid 1px rgb(255, 255, 255);
+  overflow: hidden;
+}
+
+.create-status form fieldset .new-post .close {
+  background: url("../images/new/icones-p.png") -400px -2796px no-repeat;
+  text-indent: -9999px;
+  width: 16px;
+  float: right;
+  cursor: pointer;
+  height: 18px;
+}
+
+.create-status form fieldset .new-post .close:hover {
+  background: url("../images/new/icones-p.png") -480px -2796px no-repeat;
 }
 
 .create-status form fieldset .new-post .title {
   color: rgb(77, 173, 214);
-    font-weight: normal;
+  font-weight: normal;
+  margin-bottom: 5px;
 }
 
-.textshadow .create-status form fieldset .new-post .link {
+.create-status form fieldset .new-post .link {
   color: rgb(204, 204, 204);
   font-weight: normal;
+  margin-bottom: 5px;
+}
+
+.create-status form fieldset .new-post .preview-link {
+  width: 100px;
+  height: 75px;
+  background-color: blue;
+  float: left;
+  text-indent: -9999px;
+}
+
+.create-status form fieldset .new-post .thumbnail{
+  clear: both;
+  float: left;
+  overflow: hidden;
+}
+
+.create-status form fieldset .new-post .description {
+  overflow: hidden;
+  padding-left: 10px;
+}
+
+.create-status form fieldset .new-post .thumbnail .last {
+  clear: both;
+}
+
+.create-status form fieldset .new-post .thumbnail .last .arrow {
+  background:  url("../images/new/icones-p.png") -560px -1917px no-repeat;
+  float: right;
+  height: 16px;
+  margin: 2px 1px;
+  width: 18px;
+}
+
+.create-status form fieldset .new-post .thumbnail .next .arrow {
+  background:  url("../images/new/icones-p.png") -560px -1837px no-repeat;
+  float: right;
+  height: 16px;
+  margin: 2px 1px;
+  width: 18px;
+}
+
+
+.create-status form fieldset .new-post .thumbnail .last,
+.create-status form fieldset .new-post .thumbnail .next,
+.create-status form fieldset .new-post .thumbnail .remove  {
+  float: left;
+  border: 1px solid rgb(204, 204, 204);
+  width: 28px;
+  height: 22px;
+  text-indent: -9999px;
+  background: rgb(247,247,247); /* Old browsers */
+  margin: 5px 5px 0px 0px;
+  cursor: pointer;
+}
+
+.borderradius .create-status form fieldset .new-post .thumbnail .last,
+.borderradius .create-status form fieldset .new-post .thumbnail .next,
+.borderradius .create-status form fieldset .new-post .thumbnail .remove {
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+}
+
+.cssgradients .create-status form fieldset .new-post .thumbnail .last,
+.cssgradients .create-status form fieldset .new-post .thumbnail .next,
+.cssgradients .create-status form fieldset .new-post .thumbnail .remove {
+  background: -moz-linear-gradient(top,  rgb(247,247,247) 0%, rgb(230,230,230) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(247,247,247)), color-stop(100%,rgb(230,230,230))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* IE10+ */
+  background: linear-gradient(top,  rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', endColorstr='#e6e6e6',GradientType=0 ); /* IE6-9 */
 }
 
 #graph-form .inline {
