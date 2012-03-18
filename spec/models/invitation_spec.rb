@@ -72,10 +72,11 @@ describe Invitation do
     end
 
     it "Create and send email invitation with static method" do
-      invitation = Invitation.invite(:user => subject.user, :hostable => subject.hostable, :email => subject.email) do |invitation|
-        UserNotifier.friendship_invitation(invitation).deliver
-      end
-      invitation.should be_valid
+      expect {
+        invitation = Invitation.invite(:user => subject.user, :hostable => subject.hostable, :email => subject.email) do |invitation|
+          UserNotifier.friendship_invitation(invitation).deliver
+        end
+      }.should change { Invitation.all.count }.from(0).to(1)
     end
 
     it "User can delete invitations" do

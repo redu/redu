@@ -88,7 +88,6 @@ class UsersController < BaseController
 
   def create
     @user = User.new(params[:user])
-
     if @user.save
       @user.create_settings!
       if @key
@@ -104,6 +103,12 @@ class UsersController < BaseController
         invite.accept!
       end
 
+      #Invitation Token
+      if params.has_key?(:friendship_invitation_token)
+        invite = Invitation.find_by_token(params[:friendship_invitation_token])
+        invite.accept!(@user)
+      end
+
       flash[:notice] = t(:email_signup_thanks, :email => @user.email)
       redirect_to signup_completed_user_path(@user)
     else
@@ -114,6 +119,15 @@ class UsersController < BaseController
           params[:invitation_token])
           @course = @user_course_invitation.course
           @environment = @course.environment
+      elsif params.has_key?(:friendship_invitation_token)
+        invitation = Invitation.find_by_token(params[:friendship_invitation_token])
+        @user = invitation.user
+        uca = UserCourseAssociation.where(:user_id => @user).approved
+        @contacts = {:total => @user.friends.count}
+        @courses = { :total => @user.courses.count,
+                     :environment_admin => uca.with_roles([:environment_admin]).count,
+                     :tutor => uca.with_roles([:tutor]).count,
+                     :teacher => uca.with_roles([:teacher]).count }
       end
 
       unless @user.oauth_token.nil?

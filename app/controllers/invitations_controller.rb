@@ -3,7 +3,7 @@ class InvitationsController < ApplicationController
 
   def index
     #TODO: list all invitations
-    #FIXME: invites|frienship request mostradas via mesmo action?
+    #FIXME: invites|friendship request mostradas via mesmo action?
   end
 
   def show
