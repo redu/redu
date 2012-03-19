@@ -33,6 +33,14 @@ GIT
       premailer (>= 1.7.1)
 
 GIT
+  remote: git://github.com/patmaddox/no-peeping-toms.git
+  revision: b39544b58bba7c9258d60ddc7dead0ccb6c1aa83
+  specs:
+    no_peeping_toms (2.1.1)
+      activerecord (>= 3.0.0)
+      activesupport (>= 3.0.0)
+
+GIT
   remote: git://github.com/rubyist/aasm.git
   revision: ec724d5a486469955a927db38c667f0604d8800f
   specs:
@@ -91,7 +99,7 @@ GEM
       mime-types
       xml-simple
     builder (2.1.2)
-    cancan (1.6.4)
+    cancan (1.6.7)
     childprocess (0.2.2)
       ffi (~> 1.0.6)
     ckeditor (3.4.2.pre)
@@ -267,7 +275,7 @@ GEM
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
-    tzinfo (0.3.31)
+    tzinfo (0.3.32)
     whenever (0.6.7)
       aaronh-chronic (>= 0.3.9)
       activesupport (>= 2.3.4)
@@ -294,7 +302,7 @@ DEPENDENCIES
   awesome_nested_fields
   aws-s3
   bundler (~> 1.0.15)
-  cancan
+  cancan (~> 1.6.7)
   ckeditor (= 3.4.2.pre)
   date_validator
   deep_cloneable

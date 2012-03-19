@@ -179,6 +179,10 @@ pt-BR:
         password: "Senha"
       partner:
         name: "Nome"
+      partner_environment_association:
+        cnpj: "CNPJ"
+        company_name: "Razão social"
+        address: "Endereço"
     errors:
       template:
         header:

@@ -3,14 +3,14 @@
   <% if is_admin %>
   <span class="current-role strong">Administrador</span>
     <%= link_to "Remover papel de administrador",
-      user_update_roles_path(membership.user, @environment,
-                             :type => 'environment', :roles => Role[:member]),
+      environment_user_roles_path(@environment, membership.user,
+                             :role => Role[:member]),
       :remote => true, :method => :post, :class => "option" %>
   <% else %>
   <span class="current-role">O membro não possui nível de administrador</span>
     <%= link_to "Tornar administrador",
-      user_update_roles_path(membership.user, @environment,
-                             :type => 'environment', :roles => Role[:environment_admin]),
+      environment_user_roles_path(@environment, membership.user,
+                             :role => Role[:environment_admin]),
       :remote => true, :method => :post, :class => "option" %>
   <% end %>
 </div>

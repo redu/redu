@@ -12,8 +12,8 @@ describe PackageInvoice do
 
 
   context "threshold date" do
-    it "should be 10 days from period end" do
-      subject.threshold_date.should == subject.period_end + 10
+    it "should be overdue days from period start" do
+      subject.threshold_date.should == subject.period_start + Invoice::OVERDUE_DAYS
     end
   end
 
@@ -53,6 +53,17 @@ describe PackageInvoice do
       expect {
         PackageInvoice.refresh_states!
       }.should change { Plan.blocked.count }.from(0).to(2)
+    end
+
+    it "should not raise error if a plan is already blocked" do
+      PackageInvoice.refresh_states!
+      inv = Factory(:package_invoice, :plan => Plan.blocked.last,
+                    :period_start => @period_start)
+      inv.pend!
+
+      expect {
+        PackageInvoice.refresh_states!
+      }.should_not raise_error(AASM::InvalidTransition)
     end
   end
 
