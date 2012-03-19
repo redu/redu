@@ -56,7 +56,8 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'ruby-debug'
   gem 'jasmine'
-  gem 'no_peeping_toms', :git => 'git://github.com/alindeman/no_peeping_toms.git'
+  gem 'no_peeping_toms'
+  #gem 'no_peeping_toms', :git => 'git://github.com/alindeman/no_peeping_toms.git'
   gem 'rails3-generators'
 end
 

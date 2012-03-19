@@ -1,12 +1,4 @@
 GIT
-  remote: git://github.com/alindeman/no_peeping_toms.git
-  revision: 83dbd4cb993ae8e78a38a0f5cad784ca58bb0dcd
-  specs:
-    no_peeping_toms (2.1.0)
-      activerecord (>= 3.0.0)
-      activesupport (>= 3.0.0)
-
-GIT
   remote: git://github.com/apotonick/roar-rails.git
   revision: 851736e6cf2c4a930bc0b107cd43f750ac67f42b
   specs:
@@ -165,6 +157,9 @@ GEM
     multipart-post (1.1.5)
     mysql2 (0.2.7)
     newrelic_rpm (3.0.1)
+    no_peeping_toms (2.1.2)
+      activerecord (>= 3.0.0)
+      activesupport (>= 3.0.0)
     nokogiri (1.5.0)
     oauth2 (0.5.2)
       faraday (~> 0.7)
@@ -313,7 +308,7 @@ DEPENDENCIES
   mime-types
   mysql2 (~> 0.2.1)
   newrelic_rpm (= 3.0.1)
-  no_peeping_toms!
+  no_peeping_toms
   omniauth
   omniauth-facebook
   pagseguro (~> 0.1.10)
