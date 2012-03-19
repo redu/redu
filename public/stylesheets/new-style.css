@@ -7714,7 +7714,19 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   background: -o-linear-gradient(top,  rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* Opera 11.10+ */
   background: -ms-linear-gradient(top,  rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* IE10+ */
   background: linear-gradient(top,  rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', endColorstr='#e6e6e6',GradientType=0 ); /* IE6-9 */
+}
+
+.create-status .new-post .java-applet {
+  clear: both;
+  float: left;
+  overflow: hidden;
+  background-color: rgb (192, 128, 64);
+}
+
+.create-status .new-post .java-applet {
+  height: 34px;
+  padding-left: 10px;
+  width: 32px;
 }
 
 #graph-form .inline {
