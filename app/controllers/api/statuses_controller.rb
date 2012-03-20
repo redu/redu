@@ -8,17 +8,29 @@ module Api
     end
     
     def index
-      @user = User.find(params[:user_id])
-      @statuses = Status.where(:user_id => @user)
+      @statuses = statuses
       
       case params[:type]      
       when 'help'
         @statuses = @statuses.where(:type => 'Help')
       when 'log'
         @statuses = @statuses.where(:type => 'Log')
+      when 'activity'
+        @statuses = @statuses.where(:type => 'Activity')
       end
 
       respond_with(:api, @statuses)
     end
+    
+    protected
+    
+    def statuses
+      if  params[:space_id]
+        Status.where(:statusable_id => Space.find(params[:space_id]))
+      else
+          Status.where(:user_id => User.find(params[:user_id]))
+      end
+    end
+    
   end
 end

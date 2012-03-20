@@ -45,13 +45,13 @@ describe "Statuses" do
       response.code.should == '200'
     end
     
-    it "should have the correct type, text, created_at" do
+    it "should have type, text, created_at" do
       %w(type text created_at).each do |attr|
         parse(response.body).should have_key attr
       end
     end
     
-    it "should have the currect links (self, user, in_response_to)" do
+    it "should have the correct links (self, user, in_response_to)" do
 #   Devido a funcionalidade de :statusable, :factory => :seminar_youtube
 #    em answer_factory ainda não esta disponivel para api
 #     statusable não esta sendo testado porém será incluiso em breve
@@ -73,9 +73,15 @@ describe "Statuses" do
     it "should return code 200" do
       response.code.should == "200"
     end
+    
+    it "should have type, created_at" do
+      %w(type created_at).each do |attr|
+        parse(response.body).should have_key attr
+      end
+    end
 
-    it "should have a link to logeable" do
-      %w(logeable).each do |attr|
+    it "should have the correct link to statusable, self, user, logeable" do
+      %w(statusable self user logeable).each do |attr|
         get href_to(attr, @entity), :format => 'json', :token => @token
         response.code.should == "200"
       end
@@ -92,6 +98,27 @@ describe "Statuses" do
     it "should have a link to its Answers" do
       %w(answers).each do |attr|
         get href_to(attr, @entity), :format => 'json', :token => @token
+        response.code.should == "200"
+      end
+    end
+  end
+  
+  context "when Help type" do
+    before do
+      @help =  Factory(:help)
+      get "api/statuses/#{@help.id}", :token => @token, :format => 'json'
+      @entity = parse(response.body)
+    end
+    
+    it "should have type, text, created_at" do
+      %w(type text created_at).each do |attr|
+        @entity.should have_key attr
+      end
+    end
+    
+    it "should have a link statusable, self, user" do
+      %w(statusable self user).each do |attr|
+        get href_to(attr, @entity), :token => @token, :format => 'json'
         response.code.should == "200"
       end
     end
@@ -133,23 +160,52 @@ describe "Statuses" do
       parse(response.body).count.should == 4
     end
 
-    xit "should filter by status type (log)" do
+    it "should filter by status type (log)" do
       get "/api/users/#{@user.id}/statuses", :type => "log",
         :token => @token, :format => 'json'
       parse(response.body).all? { |s| s["type"] == "Log" }.should be
-      debugger
     end
-    it "should filter by status type (activity)"
+    
+    it "should filter by status type (activity)" do
+      get "api/users/#{@user.id}/statuses", :type => "activity",
+        :token => @token, :format => 'json'
+      parse(response.body).all? { |s| s["type"] == "Activity" }.should be
+    end
   end
 
   context "when listing space statuses" do
-    it "should return code 200"
-    it "should filter by status type (help)"
-    it "should filter by status type (log)"
-    it "should filter by status type (activity)"
+    before do
+      @space = Factory(:space)
+    end
+    
+    it "should return code 200" do
+      get "api/spaces/#{@space.id}/statuses", :token => @token, :format => 'json'
+      response.code.should == "200"
+    end
+    
+    it "should filter by status type (help)" do
+      get "api/spaces/#{@space.id}/statuses", :type => 'help',
+        :token => @token, :format => 'json'
+      parse(response.body).all? { |s| s["type"] == "Help" }.should be
+    end
+    
+    it "should filter by status type (log)" do
+      get "api/spaces/#{@space.id}/statuses", :type => 'log',
+        :token => @token, :format => 'json'
+      parse(response.body).all? { |s| s["type"] == "Log" }.should be
+    end
+    it "should filter by status type (activity)" do
+      get "api/spaces/#{@space.id}/statuses", :type => 'activity',
+        :token => @token, :format => 'json'
+      parse(response.body).all? { |s| s["type"] == "Activity" }.should be
+    end
   end
 
   context "when listing lectures statuses" do
+    before do
+      @lecture = Factory(:lectore)
+    end
+    
     it "should return code 200"
     it "should filter by status type (help)"
     it "should filter by status type (log)"

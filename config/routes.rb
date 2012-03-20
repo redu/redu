@@ -265,10 +265,12 @@ Redu::Application.routes.draw do
     resources :spaces, :except => [:new, :edit, :index, :create] do
       resources :lectures, :except => [:new, :edit], :shallow => true
       resources :users, :only => :index
+      resources :statuses, :only => [:index]
     end
 
     resources :lectures, :except => [:new, :edit, :index, :create] do
       resources :user, :only => :index
+      resources :statuses, :only => [:index]
     end
 
     resources :users, :only => :show do
