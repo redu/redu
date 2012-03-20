@@ -93,6 +93,7 @@ $(document).ready(function(){
     }
   });
 
+  // Função checa se mensagem de erro está ativa
   var errorExist = function (){
     return ($(".error_explanation")).length
   };
@@ -103,6 +104,7 @@ $(document).ready(function(){
     $("#date_end").val(time_selected("end"));
   });
 
+  // Requisição AJAX para carregamento do gráfico + Tratamento de erros
   $("#graph-form").live("ajax:complete", function(e, xhr){
     json = $.parseJSON(xhr.responseText);
     if(json.error){
