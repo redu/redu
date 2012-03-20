@@ -3,7 +3,7 @@
   Params: invoice %>
 <div class="invoice">
   <div class="plan-infos">
-    <h3 class="plan-name"><%= invoice.plan.name %></h3>
+    <h4 class="plan-name"><%= invoice.plan.name %></h4>
     <span class="infos">
       <strong>Preço:</strong> <span class="price"><%= number_to_currency invoice.plan.price %>;</span> <strong>capacidade de armazenamento:</strong> <span class="storage-limit"><%= number_to_human_size(invoice.plan.video_storage_limit + invoice.plan.file_storage_limit, :precision => 0) %></span>
     <span class="plan-period"><strong>Período:</strong> <%= l invoice.period_start %> a <%= l invoice.period_end %></span>

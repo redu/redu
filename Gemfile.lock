@@ -115,8 +115,13 @@ GEM
     deep_cloneable (1.2.3)
     diff-lcs (1.1.3)
     dynamic_form (1.1.4)
+    em-http-request (0.3.0)
+      addressable (>= 2.0.0)
+      escape_utils
+      eventmachine (>= 0.12.9)
     erubis (2.6.6)
       abstract (>= 1.0.0)
+    escape_utils (0.2.4)
     eventmachine (0.12.10)
     exceptional (2.0.32)
       rack
@@ -287,6 +292,8 @@ DEPENDENCIES
   date_validator
   deep_cloneable
   dynamic_form
+  em-http-request
+  eventmachine
   exceptional
   factory_girl_rails
   jammit-s3

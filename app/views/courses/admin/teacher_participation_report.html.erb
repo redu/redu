@@ -45,7 +45,7 @@
 
           <%= label_tag "date_start_fake", "Data inicial" %>
           <%= field_set_tag nil, :class => "inline" do %>
-            <%= date_select "date_start_fake", "start",
+            <%= date_select "date_start_fake", nil,
                 :default => Date.today - 9 %>
             <%= text_field_tag :date_start, nil,
                 :style => "display: none;" %>
@@ -54,7 +54,7 @@
           <%= label_tag "date_end", "Data final" %>
           <%= field_set_tag nil, :id => "date-validate",
             :class => "inline" do %>
-            <%= date_select "date_end_fake", "start", :end_year => Date.today.year %>
+            <%= date_select "date_end_fake", nil, :end_year => Date.today.year %>
             <%= text_field_tag :date_end, nil, :style => "display: none;" %>
           <% end %>
 
