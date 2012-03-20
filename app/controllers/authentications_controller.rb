@@ -25,11 +25,13 @@ class AuthenticationsController < ApplicationController
       user.apply_omniauth(auth)
 
       if user.save
+        # Usuário criado com sucesso.
         flash[:notice] = t :thanks_youre_now_logged_in
         sign_in_and_redirect(user)
       else
-        user.valid?
-        flash[:notice] = user.errors.to_s
+        # Usuário não foi criado.
+        flash[:notice] = "Não foi possível logar porque" +
+                         user.errors.first.second.to_s
         redirect_to home_path
       end
     end
@@ -48,7 +50,6 @@ class AuthenticationsController < ApplicationController
   end
 
   def facebook_registration
-    debugger
     if params[:signed_request]
       value = params[:signed_request]
       signature, encoded_payload = value.split('.')
@@ -70,7 +71,7 @@ class AuthenticationsController < ApplicationController
       @user_session.save
     end
     # current_user = @user_session.record
-    redirect_to home_user_path(@user_session.record)
+    redirect_to home_user_path(user)
   end
 
   # Método utilizado para decodificação de dados da signed_request do facebook.

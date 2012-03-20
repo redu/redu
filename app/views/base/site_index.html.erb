@@ -23,7 +23,7 @@
           <%= f.check_box :remember_me, :class => "check-stay-connect" %>
           <%= f.label :remember_me, "Matenha-me conectado", :class => "label-stay-connect" %>
           <%= link_to "Login com Facebook", "/auth/facebook", 
-                      :class => "popup",
+                      :class => "recover-login",
                       :"data-width" => 600, :"data-height" => 400 %>
           <%= link_to "Recuperar  senha", forgot_password_path, 
                       :class => "recover-login" %>

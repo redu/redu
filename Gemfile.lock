@@ -165,9 +165,6 @@ GEM
     multipart-post (1.1.5)
     mysql2 (0.2.7)
     newrelic_rpm (3.0.1)
-    no_peeping_toms (2.1.2)
-      activerecord (>= 3.0.0)
-      activesupport (>= 3.0.0)
     nokogiri (1.5.0)
     oauth2 (0.5.2)
       faraday (~> 0.7)
@@ -316,7 +313,7 @@ DEPENDENCIES
   mime-types
   mysql2 (~> 0.2.1)
   newrelic_rpm (= 3.0.1)
-  no_peeping_toms
+  no_peeping_toms!
   omniauth
   omniauth-facebook
   pagseguro (~> 0.1.10)
