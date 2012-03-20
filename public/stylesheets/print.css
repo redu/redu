@@ -1,3 +1,42 @@
 #header, #footer, #chat {
   display: none;
 }
+
+body { font-size: 9px; }
+h2 { font-size: 18px;  }
+h3 { font-size: 16px;  }
+h4 { font-size: 14px;  }
+
+/* Visualização de fatura */
+#invoice-show .client-infos .name,
+#partner-invoice-index .client-infos .name,
+#invoice-show .billable-infos .name,
+#partner-invoice-index .billable-infos .name {
+  font-size: 18px;
+}
+
+#invoice-show .billable-infos .invoice .total,
+#partner-invoice-index .billable-infos .invoice .total,
+#partner-invoice-index .total-partner {
+  font-size: 17px;
+}
+
+#invoice-show .invoice .courses .licenses .id,
+#partner-invoice-index .invoice .courses .licenses .id {
+  width: 10px;
+}
+
+#invoice-show .invoice .courses .licenses .user-name,
+#partner-invoice-index .invoice .courses .licenses .user-name {
+  width: 100px;
+}
+
+#invoice-show .invoice .courses .licenses .user-login,
+#partner-invoice-index .invoice .courses .licenses .user-login {
+  width: 60px;
+}
+
+#invoice-show .invoice .courses .licenses .date,
+#partner-invoice-index .invoice .courses .licenses .date {
+  width: 40px;
+}
