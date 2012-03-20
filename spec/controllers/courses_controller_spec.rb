@@ -939,6 +939,17 @@ describe CoursesController do
         end
       end
     end
+
+    context "GET reports" do
+      before do
+        get :teacher_participation_report, :locale => "pt-BR",
+          :environment_id => @environment.path, :id => @course.path
+      end
+
+      it "when successful" do
+        response.should render_template "courses/admin/teacher_participation_report"
+      end
+    end
   end
 
   context "when course is unpublised" do
@@ -954,7 +965,6 @@ describe CoursesController do
         response.should redirect_to(preview_environment_course_path(@course.environment,
                                                                     @course))
       end
-
     end
   end
 end
