@@ -16,7 +16,8 @@ class UserCourseInvitation < CourseEnrollment
   # Envia e-mail avisando que ele foi convidado
   aasm_state :invited, :enter => :send_external_user_course_invitation
   # Convida o usuário (já dentro do Redu) para o curso
-  aasm_state :approved, :enter => :create_user_course_association
+  aasm_state :approved, :enter => :create_user_course_association,
+    :after_enter => Proc.new { |uci| uci.destroy }
   aasm_state :rejected
   aasm_state :failed
 

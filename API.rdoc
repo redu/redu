@@ -1,0 +1,417 @@
+= API REST do Redu
+
+Draft inicial da API REST do Redu. Os seguintes recursos estão disponíveis:
+
+* Environment
+* Course
+
+== Funcionamento
+
+Em geral usa-se a semântica padrão para APIs provida pelo Rails. Além disso
+todas as respostas possuem uma chave <code>links</code> que mostram URLs para
+ações importantes no estado atual da aplicação.
+
+Toda a API REST foi pensada para que exista um único ponto de entrada e os
+clientes possam "descobrir" as URLs baseado no valor da chave <code>links</code>.
+
+== Environment
+
+=== Propriedades e restrições
+Propriedades::
+              [name] Nome do ambiente
+              [path] Nome que aparecerá na barra de endereço
+              [initials] Abreviação (usado em alguns pontos da interface)
+              [description] Descrição do ambiente (opcional)
+Restrições::
+              [name] Máximo 40 caracteres; deve ser único.
+              [path] Deve respeitar a seguinte regex: <code>^[-_A-Za-z0-9]*$</code>
+              [initials] Deve ser único; Máximo de 10 caracteres
+              [description] Máximo de 400 caracteres
+
+
+=== Visualização
+
+URL::            <code>/api/environments/:environmnt_id</code>
+Método::         GET
+Argumentos:: Nenum
+Restrições::   Nenhuma
+
+Troque <tt>:environment_id</tt> pelo ID do ambiente.
+
+<b>Exemplo de retorno:</b>
+
+  {
+    name: "Faculdade Frassinetti do Recife",
+    created_at: "2010-12-17T16:37:40-02:00",
+    initials: "FAFIRE",
+    path: "fafire",
+    links: [
+      {
+        href: "http://127.0.0.1:3000/api/environments/fafire",
+        rel: "self"
+      },
+      {
+        href: "http://127.0.0.1:3000/api/environments/fafire/courses",
+        rel: "courses"
+      }
+    ],
+    description: "A FAFIRE avança no seu tempo, procurando associar modernidade com tradição, através de seis cursos: Administração, Ciências Biológicas, Letras, Pedagogia, Psicologia e Turismo e 37 pós-graduações lato sensu. "
+  }
+
+=== Criação
+
+URL::            <code>/api/environments</code>
+Método::         POST
+Argumentos:: <code>name, path, initials, description (opcional)</code>
+
+==== Códigos HTTP possíveis
+
+404:: Não encontrado
+200:: Encontrado
+
+<b>Exemplo de retorno:</b>
+
+  {
+    name: "Faculdade Frassinetti do Recife",
+    created_at: "2010-12-17T16:37:40-02:00",
+    initials: "FAFIRE",
+    path: "fafire",
+    links: [
+      {
+        href: "http://127.0.0.1:3000/api/environments/fafire",
+        rel: "self"
+      },
+      {
+        href: "http://127.0.0.1:3000/api/environments/fafire/courses",
+        rel: "courses"
+      }
+    ],
+    description: "A FAFIRE avança no seu tempo, procurando associar modernidade com tradição, através de seis cursos: Administração, Ciências Biológicas, Letras, Pedagogia, Psicologia e Turismo e 37 pós-graduações lato sensu. "
+  }
+
+=== Atualização
+
+URL::            <code>/api/environments/:environment_id</code>
+Método::         PUT
+Argumentos:: <code>name, path, initials, description (opcional)</code>
+
+Troque <tt>:environment_id</tt> pelo ID do ambiente.
+
+==== Códigos HTTP possíveis
+
+422:: Recurso inválido
+200:: Atualizado
+
+<b>Exemplo de retorno:</b>
+
+Se não houver erro de validação uma resposta vazia com o código HTTP 200 será
+enviada.
+
+Se houver erro de validação uma resposta com o código HTTP 422 será enviada
+contendo os erros de validação encontrados:
+
+  {"name":["Texto muito longo"]}
+
+=== Remoção
+
+URL::            <code>/api/environments/:environment_id</code>
+Método::         DELETE
+Argumentos:: Nenhum
+Restrições::   Nenhuma
+
+Troque <tt>:environment_id</tt> pelo ID do ambiente.
+
+==== Códigos HTTP possíveis
+
+HTTP 200:: Removido
+HTTP 404:: Não encontrado
+
+
+== Course
+
+=== Propriedades e restrições
+Propriedades::
+              [name] Nome do curso
+              [path] Nome que aparecerá na barra de endereço
+              [description] Descrição do curso (opcional)
+              [workload] Carga horária do curso em horas (opcional)
+Restrições::
+              [name] Máximo 60 caracteres; deve ser único.
+              [path] Deve respeitar a seguinte regex: <code>^[-_A-Za-z0-9]*$</code>
+              [description] Máximo de 400 caracteres
+              [workload] Deve ser númerico (exemplo: 60 para 60 horas)
+
+
+=== Visualização
+
+URL::            <code>/api/courses/:course_id</code>
+Método::         GET
+Argumentos:: Nenum
+Restrições::   Nenhuma
+
+Troque <tt>:course_id</tt> pelo ID do curso.
+
+==== Códigos HTTP possíveis
+
+<b>Exemplo de retorno:</b>
+
+  {
+    name: "HDCorporativo-Loja",
+    created_at: "2011-06-12T06:48:07-03:00",
+    id: 180,
+    workload: 10,
+    path: "hdcorporativo-loja",
+    links: [
+      {
+        href: "http://127.0.0.1:3000/projje-softwares/cursos/hdcorporativo-loja",
+        rel: "self"
+      },
+      {
+        href: "http://127.0.0.1:3000/api/courses/hdcorporativo-loja/spaces",
+        rel: "spaces"
+      }
+    ],
+    description: "Capacitação no uso do Software HD Corporativo loja."
+  }
+
+=== Criação
+
+URL::            <code>/api/environments/:environment_id/courses</code>
+Método::         POST
+Argumentos:: <code>name, path, workload (opcional), description (opcional)</code>
+
+Troque <tt>:environment_id</tt> pelo ID do AVA.
+
+==== Códigos HTTP possíveis
+
+404:: Não encontrado
+200:: Encontrado
+
+<b>Exemplo de retorno:</b>
+
+  {
+    name: "HDCorporativo-Loja",
+    created_at: "2011-06-12T06:48:07-03:00",
+    id: 180,
+    workload: 10,
+    path: "hdcorporativo-loja",
+    links: [
+      {
+        href: "http://127.0.0.1:3000/projje-softwares/cursos/hdcorporativo-loja",
+        rel: "self"
+      },
+      {
+        href: "http://127.0.0.1:3000/api/courses/hdcorporativo-loja/spaces",
+        rel: "spaces"
+      }
+    ],
+    description: "Capacitação no uso do Software HD Corporativo loja."
+  }
+
+=== Atualização
+
+URL::            <code>/api/courses/:course_id</code>
+Método::         PUT
+Argumentos:: <code>name, path, workload (opcional), description (opcional)</code>
+
+Troque <tt>:course_id</tt> pelo ID do curso.
+
+==== Códigos HTTP possíveis
+
+422:: Recurso inválido
+200:: Atualizado
+
+<b>Exemplo de retorno:</b>
+
+Se não houver erro de validação uma resposta vazia com o código HTTP 200 será
+enviada.
+
+Se houver erro de validação uma resposta com o código HTTP 422 será enviada
+contendo os erros de validação encontrados:
+
+  {"name":["Texto muito longo"]}
+
+=== Remoção
+
+URL::            <code>/api/courses/:course_id</code>
+Método::         DELETE
+Argumentos:: Nenhum
+Restrições::   Nenhuma
+
+Troque <tt>:course_id</tt> pelo ID do curso.
+
+==== Códigos HTTP possíveis
+
+HTTP 200:: Removido
+HTTP 404:: Não encontrado
+
+=== Listagem
+
+URL::            <code>/api/environments/:environment_id/courses</code>
+Método::         GET
+Argumentos:: Nenhum
+Restrições::   Nenhuma
+
+Troque <tt>:environment_id</tt> pelo ID do ambiente.
+
+==== Códigos HTTP possíveis
+
+HTTP 200:: Encontrado
+HTTP 404:: Não encontrado
+
+<b>Exemplo de retorno:</b>
+
+  [
+    {
+      name: "Ciência da Computação",
+      created_at: "2010-12-17T16:39:20-02:00",
+      id: 2,
+      path: "ciencia-da-computacao",
+      links: [
+        {
+          href: "http://127.0.0.1:3000/centro-de-infromatica/cursos/ciencia-da-computacao",
+          rel: "self"
+        },
+        {
+          href: "http://127.0.0.1:3000/api/courses/ciencia-da-computacao/spaces",
+          rel: "spaces"
+        }
+      ]
+    },
+  {
+    name: "Gestão em Tecnologia da Informação",
+    created_at: "2010-12-18T11:52:10-02:00",
+    id: 8,
+    path: "gestao-em-tecnologia-da-informacao-2e",
+    links: [
+      {
+        href: "http://127.0.0.1:3000/centro-de-infromatica/cursos/gestao-em-tecnologia-da-informacao-2e",
+        rel: "self"
+      },
+      {
+        href: "http://127.0.0.1:3000/api/courses/gestao-em-tecnologia-da-informacao-2e/spaces",
+        rel: "spaces"
+      }
+    ],
+    description: ""
+    }
+  ]
+
+== Space
+
+=== Propriedades e restrições
+Propriedades::
+              [name] Nome da disciplina
+              [description] Descrição da disciplina
+Restrições::
+              [name] Máximo 40 caracteres; deve ser único.
+              [description] Máximo de 400 caracteres
+
+=== Visualização
+
+URL::            <code>/api/space/:space_id</code>
+Método::         GET
+Argumentos:: Nenum
+Restrições::   Nenhuma
+
+Troque <tt>:space_id</tt> pelo ID da disciplina.
+
+<b>Exemplo de retorno:</b>
+
+  {
+    name: "IHC",
+    created_at: "2010-12-17T18:51:34-02:00",
+    links: [
+      {
+        href: "http://127.0.0.1:3000/api/spaces/2",
+        rel: "self"
+      },
+      {
+        href: "http://127.0.0.1:3000/api/courses/ciencia-da-computacao",
+        rel: "course"
+      },
+      {
+        href: "http://127.0.0.1:3000/api/environments/centro-de-infromatica",
+        rel: "environment"
+      },
+      {
+        href: "http://127.0.0.1:3000/api/spaces/2/users",
+        rel: "users"
+      }
+    ],
+    description: "Interação humano-computador (IHC, também conhecida como interação homem-computador) é o estudo da interação entre pessoas e computadores. É uma matéria multidisciplinar que relaciona a ciência da compu"
+  }
+
+=== Criação
+
+URL::            <code>/api/courses/:course_id/spaces</code>
+Método::         POST
+Argumentos:: <code>name, description (opcional)</code>
+
+==== Códigos HTTP possíveis
+
+404:: Não encontrado
+200:: Encontrado
+
+<b>Exemplo de retorno:</b>
+
+  {
+    name: "IHC",
+    created_at: "2010-12-17T18:51:34-02:00",
+    links: [
+      {
+        href: "http://127.0.0.1:3000/api/spaces/2",
+        rel: "self"
+      },
+      {
+        href: "http://127.0.0.1:3000/api/courses/ciencia-da-computacao",
+        rel: "course"
+      },
+      {
+        href: "http://127.0.0.1:3000/api/environments/centro-de-infromatica",
+        rel: "environment"
+      },
+      {
+        href: "http://127.0.0.1:3000/api/spaces/2/users",
+        rel: "users"
+      }
+    ],
+    description: "Interação humano-computador (IHC, também conhecida como interação homem-computador) é o estudo da interação entre pessoas e computadores. É uma matéria multidisciplinar que relaciona a ciência da compu"
+  }
+
+=== Atualização
+
+URL::            <code>/api/spaces/:space_id</code>
+Método::         PUT
+Argumentos:: <code>name, description (opcional)</code>
+
+Troque <tt>:space_id</tt> pelo ID do ambiente.
+
+==== Códigos HTTP possíveis
+
+422:: Recurso inválido
+200:: Atualizado
+
+Se não houver erro de validação uma resposta vazia com o código HTTP 200 será
+enviada.
+
+Se houver erro de validação uma resposta com o código HTTP 422 será enviada
+contendo os erros de validação encontrados:
+
+  {"name":["Texto muito longo"]}
+
+=== Remoção
+
+URL::            <code>/api/spaces/:space_id</code>
+Método::         DELETE
+Argumentos:: Nenhum
+Restrições::   Nenhuma
+
+Troque <tt>:space_id</tt> pelo ID do ambiente.
+
+==== Códigos HTTP possíveis
+
+HTTP 200:: Removido
+HTTP 404:: Não encontrado
+
+

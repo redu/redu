@@ -1,5 +1,26 @@
 Redu::Application.routes.draw do
 
+  resources :oauth_clients
+
+  match '/oauth/test_request',  :to => 'oauth#test_request',  :as => :test_request
+
+  match '/oauth/token',         :to => 'oauth#token',         :as => :token
+
+  match '/oauth/access_token',  :to => 'oauth#access_token',  :as => :access_token
+
+  match '/oauth/request_token', :to => 'oauth#request_token', :as => :request_token
+
+  match '/oauth/authorize',     :to => 'oauth#authorize',     :as => :authorize
+
+  match '/oauth',               :to => 'oauth#index',         :as => :oauth
+  match '/oauth/revoke', :to => 'oauth#revoke'
+
+  match '/oauth/revoke',        :to => 'oauth#revoke',        :as => :oauth_revoke
+
+  match '/oauth/invalidate',    :to => 'oauth#invalidate',    :as => :oauth_invalidate
+
+  match '/oauth/capabilities',  :to => 'oauth#capabilities',  :as => :oauth_capabilities
+
   post "presence/auth"
   post "presence/multiauth"
   post "presence/send_chat_message"
@@ -221,5 +242,46 @@ Redu::Application.routes.draw do
 
 end
 
-ActionDispatch::Routing::Translator.translate_from_file('lang','i18n-routes.yml')
+ActionDispatch::Routing::Translator.translate_from_file('lang/i18n-routes.yml')
 
+Redu::Application.routes.draw do
+  namespace 'api' do
+    resources :environments, :except => [:new, :edit] do
+      resources :courses, :except => [:new, :edit], :shallow => true
+      resources :users, :only => :index
+    end
+
+    resources :courses, :except => [:new, :edit, :index, :create] do
+      resources :spaces, :except => [:new, :edit], :shallow => true
+      resources :users, :only => :index
+      resources :course_enrollments, :only => [:create, :index],
+        :path => 'enrollments', :as => 'enrollments'
+    end
+
+    resources :course_enrollments, :only => [:show, :destroy],
+        :path => 'enrollments', :as => 'enrollments'
+
+    resources :spaces, :except => [:new, :edit, :index, :create] do
+      resources :lectures, :except => [:new, :edit], :shallow => true
+      resources :users, :only => :index
+      resources :statuses, :only => [:index]
+    end
+
+    resources :lectures, :except => [:new, :edit, :index, :create] do
+      resources :user, :only => :index
+      resources :statuses, :only => [:index]
+    end
+
+    resources :users, :only => :show do
+      resources :course_enrollments, :only => :index, :path => :enrollments,
+        :as => 'enrollments'
+      resources :spaces, :only => :index
+      resources :statuses, :only => [:index]
+    end
+
+    resources :statuses, :only => :show
+
+    # Hack para capturar exceções ActionController::RoutingError
+    match '*', :to => 'api#routing_error'
+  end
+end

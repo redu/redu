@@ -69,7 +69,7 @@ namespace :bootstrap do
   task :partner => :environment do
     Partner.create(:name => "CNS",
                    :email => "cns@redu.com.br",
-                   :cnpj => "123445667",
+                   :cnpj => "12.123.123/1234-12",
                    :address => "Beaker street")
   end
 

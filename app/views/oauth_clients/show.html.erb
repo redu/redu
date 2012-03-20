@@ -1,0 +1,27 @@
+<h1>Detalhes do Aplicativo OAuth <%=@client_application.name %></h1>
+<p>
+  <strong>Consumer Key:</strong>
+  <code><%=@client_application.key %></code>
+</p>
+<p>
+  <strong>Consumer Secret:</strong>
+  <code><%=@client_application.secret %></code>
+</p>
+<p>
+  <strong>Request Token URL</strong>
+  <code>http<%='s' if request.ssl? %>://<%= request.host_with_port %><%=@client_application.oauth_server.request_token_path %></code>
+</p>
+<p>
+  <strong>Access Token URL</strong>
+  <code>http<%='s' if request.ssl? %>://<%= request.host_with_port %><%=@client_application.oauth_server.access_token_path %></code>
+</p>
+<p>
+  <strong>Authorize URL</strong>
+  <code>http<%='s' if request.ssl? %>://<%= request.host_with_port %><%=@client_application.oauth_server.authorize_path %></code>
+</p>
+
+<p>
+  Suportamos hmac-sha1 (recomendado) ou texto puro em modo ssl.
+</p>
+<%= link_to 'Editar', edit_oauth_client_path(@client_application) %> |
+<%= link_to 'Voltar', oauth_clients_path %>

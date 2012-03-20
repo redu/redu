@@ -46,9 +46,14 @@ gem 'awesome_nested_fields'
 gem 'roar-rails', '~> 0.0.3',
   :git => 'git://github.com/apotonick/roar-rails.git'
 
+# Gems específicos para a API
+gem "oauth-plugin", ">= 0.4.0.pre1"
+gem 'roar-rails', '~> 0.0.3',
+  :git => 'git://github.com/apotonick/roar-rails.git'
+
 # Gems específicos de algum ambiente
 group :development, :test do
-  gem 'rspec-rails', '~> 2.6'
+  gem 'rspec-rails', '~> 2.8'
   gem 'shoulda-matchers'
   gem 'ruby-debug'
   gem 'jasmine'
