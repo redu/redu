@@ -12,7 +12,6 @@ class Status < ActiveRecord::Base
     where("type = ? AND user_id = ?", "Activity", u) }
   scope :helps_and_activities, where("type = ? OR type = ?", "Help", "Activity")
   scope :by_statusable, lambda { |kind, id| where("statusable_id IN (?) AND statusable_type = ?", id, kind) }
-  scope :by_statusable_type, lambda { |type| where(:statusable_type => type) }
   scope :by_day, lambda { |day| where(:created_at =>(day..(day+1))) }
   scope :by_id, lambda { |id| where(:id =>id) }
 

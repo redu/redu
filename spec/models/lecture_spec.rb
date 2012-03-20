@@ -152,7 +152,7 @@ describe Lecture do
       Lecture.exercises_editables.should == [lecture2]
     end
 
-    it "retrieve lectures in the specifeid subjects" do
+    it "retrieve lectures in the specified subjects" do
       subject.reload
       lecture2 = Factory(:lecture, :subject => @sub, :owner => @user)
       sub2 = Factory(:subject)
@@ -169,7 +169,7 @@ describe Lecture do
                      :created_at => "2012-02-16".to_date)
       lectures = Lecture.by_subjects(subj.id)
 
-      lectures.by_day("2012-02-14".to_date).should eq([lectures.first])
+      lectures.by_day("2012-02-14".to_date).should eq([lec1])
     end
   end
 
