@@ -10,7 +10,7 @@ module Api
     def index
       @statuses = statuses
       
-      case params[:type]      
+      case params[:type]
       when 'help'
         @statuses = @statuses.where(:type => 'Help')
       when 'log'
@@ -27,6 +27,10 @@ module Api
     def statuses
       if  params[:space_id]
         Status.where(:statusable_id => Space.find(params[:space_id]))
+        
+      elsif params[:lecture_id]
+        Status.where(:statusable_id => Lecture.find(params[:lecture_id]))
+        
       else
           Status.where(:user_id => User.find(params[:user_id]))
       end

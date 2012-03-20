@@ -203,12 +203,32 @@ describe "Statuses" do
 
   context "when listing lectures statuses" do
     before do
-      @lecture = Factory(:lectore)
+      @lecture = Factory(:lecture)
     end
     
-    it "should return code 200"
-    it "should filter by status type (help)"
-    it "should filter by status type (log)"
-    it "should filter by status type (activity)"
+    it "should return code 200" do
+      get "api/lectures/#{@lecture.id}/statuses", :token => @token,
+        :format => 'json'
+        response.code.should == "200"
+    end
+    
+    it "should filter by status type (help)" do
+      get "api/lectures/#{@lecture.id}/statuses", :type => 'help' ,
+        :token => @token, :format => 'json'
+      parse(response.body).all? { |s| s["type"] == "Help" }.should be
+    end
+    
+    it "should filter by status type (log)" do
+      get "api/lectures/#{@lecture.id}/statuses", :type => 'log' ,
+        :token => @token, :format => 'json'
+      parse(response.body).all? { |s| s["type"] == "Log" }.should be
+    end
+    
+    it "should filter by status type (activity)" do
+      get "api/lectures/#{@lecture.id}/statuses", :type => 'activity' ,
+        :token => @token, :format => 'json'
+      
+      parse(response.body).all? { |s| s["type"] == "Activity" }.should be
+    end
   end
 end
