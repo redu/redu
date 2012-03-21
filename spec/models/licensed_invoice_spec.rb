@@ -43,6 +43,7 @@ describe LicensedInvoice do
       it "should send an email" do
         UserNotifier.deliveries.size.should == 1
         UserNotifier.deliveries.last.body.should =~ /com pagamento pendente/
+        UserNotifier.deliveries.last.body.should =~ /Para visualizar a fatura/
       end
     end
 
@@ -166,6 +167,7 @@ describe LicensedInvoice do
   context "description" do
     before do
       @plan = Plan.from_preset(PackagePlan::PLANS[:empresa_plus], "PackagePlan")
+      @plan.user = Factory(:user)
       subject.plan = @plan
       subject.save
       subject.reload
@@ -313,7 +315,7 @@ describe LicensedInvoice do
       (1..20).collect { Factory(:license, :invoice => @invoice2,
                                 :course => course) }
 
-      Date.stub(:today) { @to }
+      Date.stub(:today) { @to + 1.day }
       LicensedInvoice.refresh_states!
       @invoice1.reload
       @invoice2.reload

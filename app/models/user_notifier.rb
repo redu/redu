@@ -100,6 +100,21 @@ class UserNotifier < ActionMailer::Base
 
   end
 
+  # Enviado quando LicensedInvoice está pendente
+  def licensed_pending_notice(user, invoice, deadline)
+    @user = user
+    @invoice = invoice
+    @plan = invoice.plan
+    @deadline = deadline
+
+    mail(:to => user.email,
+         :subject => "Pagamento N. #{invoice.id} pendente",
+         :date => Time.now) do |format|
+      format.text
+    end
+
+  end
+
   # Enviado quando o Plan foi bloqueado
   def blocked_notice(user, plan)
     @user = user

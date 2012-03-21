@@ -53,4 +53,7 @@ Redu::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+
+  # Remove cores do log
+  config.colorize_logging = false
 end
