@@ -96,7 +96,7 @@ describe "Spaces API" do
     end
 
     it "should filter by administrator role" do
-      get "/api/users/#{@user.id}/spaces", :role => 'teacher',
+      get "/api/users/#{@user.id}/spaces", :role => 'environment_admin',
         :oauth_token => @token, :format => 'json'
 
       parse(response.body).length.should == 1
