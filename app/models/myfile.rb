@@ -34,7 +34,7 @@ class Myfile < ActiveRecord::Base
     'image/gif'
   ]
 
-  before_create :overwrite
+  before_save :overwrite
 
   has_attached_file :attachment, Redu::Application.config.paperclip_myfiles
 
