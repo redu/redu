@@ -50,7 +50,8 @@ class Myfile < ActiveRecord::Base
   def overwrite
     existing = Myfile.find_by_attachment_file_name(self.attachment_file_name)
     if existing
-      existing.destroy
+      self.attachment_file_name = \
+        "#{self.attachment_file_name}_#{rand(38**8).to_s(36)}"
     end
   end
 
