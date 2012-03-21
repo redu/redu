@@ -1,5 +1,6 @@
 class TeacherParticipation
-  attr_accessor :lectures_created, :posts, :answers, :end, :start, :spaces, :days
+  attr_reader :lectures_created, :posts, :answers, :days
+  attr_accessor :end, :start, :spaces
 
   def initialize(uca)
     @uca = uca
@@ -25,8 +26,6 @@ class TeacherParticipation
     self.answers_by_space
     self.by_day!
   end
-
-  protected
 
   # Alinha todas as consultas por dia
   def by_day!
@@ -54,15 +53,21 @@ class TeacherParticipation
 
   # Todos os posts do professor naquelas disciplinas + aulas
   def posts_by_space
-    @statuses_by_spaces = Status.from_hierarchy(@uca.course)
-    @total_posts_users = @statuses_by_spaces.activity_by_user(@user_id)
-    @total_posts = @total_posts_users.by_space(self.spaces)
+    @statuses = Status.from_hierarchy(@course)
+    @total_posts = @statuses.activity_by_user(@user_id)
+
+    lectures = Lecture.by_subjects(@subjects_space)
+    @statusable_ids = @total_posts.by_statusable("Lecture", lectures)
+    @statusable_ids += @total_posts.by_statusable("Space", @spaces)
+
+    @total_posts = @total_posts.by_id(@statusable_ids)
   end
 
   # Todas as respostas (Tanto de Help quanto de Activity)
   # do professor naquelas disciplinas + aulas
   def answers_by_space
-    @total_helps_and_activities = @statuses_by_spaces.helps_and_activities
+    helps_activities = @statuses.helps_and_activities
+    @total_helps_and_activities = helps_activities.by_id(@statusable_ids)
     @answers_ids = @total_helps_and_activities.inject([]) do |acc, help|
       acc.concat(help.answers_ids(@user_id))
     end

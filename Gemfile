@@ -49,6 +49,8 @@ gem 'omniauth-facebook'
 
 gem 'roar-rails', '~> 0.0.3',
   :git => 'git://github.com/apotonick/roar-rails.git'
+gem 'eventmachine'
+gem 'em-http-request'
 
 # Gems específicos de algum ambiente
 group :development, :test do

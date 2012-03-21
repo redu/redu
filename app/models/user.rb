@@ -191,7 +191,8 @@ class User < ActiveRecord::Base
       self.first_name = info['first_name']
       self.last_name = info['last_name']
       if info['image']
-        self.update_avatar_from_picture_url(info['image'])
+        self.update_avatar_from_picture_url(info['image']) unless 
+          info['image'] == "http://graph.facebook.com/100002476817463/picture?type=square"
       end
     when 'twitter'
     end
@@ -632,7 +633,12 @@ class User < ActiveRecord::Base
     self.avatar = open(url)
   end
 
+  def subjects_id
+    self.lectures.collect{ |lecture| lecture.subject_id }
+  end
+
   protected
+
   def activate_before_save
     self.activated_at = Time.now.utc
     self.activation_code = nil
@@ -659,7 +665,7 @@ class User < ActiveRecord::Base
     1.upto(len) { |i| new_password << chars[rand(chars.size-1)] }
     return new_password
   end
-
+  
   def get_login_from_facebook_nickname(info_hash)
     login = info_hash['nickname']
     # Se o usuário não tiver um nickname no fb
@@ -677,11 +683,6 @@ class User < ActiveRecord::Base
     end
 
     login
-  end
-
-  # TODO Falta os teste!
-  def subjects_id
-    self.lectures.select(:subject_id).collect{ |lecture| lecture.subject_id }
   end
 
 end
