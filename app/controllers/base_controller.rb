@@ -49,6 +49,11 @@ class BaseController < ApplicationController
       @contact.subject = params[:contact][:subject]
       @contact.body = params[:contact][:body]
       if @contact.valid?
+        if params.has_key? :send_error
+          @contact.body << "\n\n Stacktrace: \n"
+          @contact.body << `tail -n 1500 #{Redu::Application.root}/log/development.log | grep -C 300 "Completed 500" | sed -r "s/\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]//g"`
+        end
+
         @contact.deliver
         flash[:notice] = "Seu e-mail foi enviado, aguarde o nosso contato. Obrigado."
         redirect_to contact_path
