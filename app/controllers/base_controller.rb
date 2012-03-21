@@ -51,7 +51,7 @@ class BaseController < ApplicationController
       if @contact.valid?
         if params.has_key? :send_error
           @contact.body << "\n\n Stacktrace: \n"
-          @contact.body << `tail -n 1500 #{Redu::Application.root}/log/development.log | grep -C 300 "Completed 500" | sed -r "s/\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]//g"`
+          @contact.body << `tail -n 1500 #{Redu::Application.root}/log/#{Rails.env}.log | grep -C 300 "Completed 500"`
         end
 
         @contact.deliver
