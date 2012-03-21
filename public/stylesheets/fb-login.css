@@ -1,0 +1,35 @@
+.fb-login {
+  font-family: "Lucida Grande", Verdana, Arial, sans-serif;
+  font-weight: bold;
+  color: white;
+  font-size: 12px;
+  line-height: 15px;
+  padding: 1px 6px 1px 0px;
+  border: solid #1A356E 1px;
+  background: #34609D;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.fb-login:before {
+  background: url("../images/new/connect_favicon.png");
+  width: 18px;
+  height: 16px;
+  content: "";
+  float: left;
+}
+
+.box-shadow .fb-login {
+  box-shadow: inset 0px 1px 0px 0px #879AC;
+  -webkit-box-shadow: inset 0px 1px 0px 0px #879AC;
+  -moz-box-shadow: inset 0px 1px 0px 0px #879AC;
+}
+
+.fb-login:hover {
+  background: #34609D;
+  text-decoration: none;
+}
+
+.textshadow .fb-login:hover {
+  text-shadow: 1px 1px 3px #666666;
+}
