@@ -86,10 +86,8 @@ describe "Statuses" do
     end
     
     it "should have a link to its Answers" do
-      %w(answers).each do |attr|
-        get href_to(attr, @entity), :format => 'json', :token => @token
-        response.code.should == "200"
-      end
+      get href_to('answers', @entity), :format => 'json', :token => @token
+      response.code.should == "200"
     end
   end
   

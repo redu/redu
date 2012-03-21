@@ -9,7 +9,7 @@ module Api
     
     def index
       @statuses = statuses
-      
+
       case params[:type]
       when 'help'
         @statuses = @statuses.where(:type => 'Help')

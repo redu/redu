@@ -6,6 +6,6 @@ module ActivityRepresenter
   property :text
 
   link :answers do
-    api_status_url(self)
+    api_status_answers_url(self)
   end
 end
