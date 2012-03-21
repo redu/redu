@@ -231,4 +231,37 @@ describe "Statuses" do
       parse(response.body).all? { |s| s["type"] == "Activity" }.should be
     end
   end
+  context "post api/user/:user_id/" do
+    it "should create an status the user type activity"
+    it "should return status 201 when successful"
+    it "should return 422 when invalid"
+    it "should create an status the user type help"
+    it "should return status 201 when successful"
+    it "should return 422 when invalid"
+    it "should create an status the user type answer"
+    it "should return status 201 when successful"
+    it "should return 422 when invalid"
+  end
+  context "post api/space/:space_id" do
+    it "should create an status the space type activity"
+    it "should return status 201 when successful"
+    it "should return 422 when invalid"
+    it "should create an status the space type help"
+    it "should return status 201 when successful"
+    it "should return 422 when invalid"
+    it "should create an status the space type answer"
+    it "should return status 201 when successful"
+    it "should return 422 when invalid"
+  end
+  context "post api/lecture/:lecture_id" do
+    it "should create an status the lecture type activity"
+    it "should return status 201 when successful"
+    it "should return 422 when invalid"
+    it "should create an status the lecture type help"
+    it "should return status 201 when successful"
+    it "should return 422 when invalid"
+    it "should create an status the lecture type answer"
+    it "should return status 201 when successful"
+    it "should return 422 when invalid"
+  end
 end
