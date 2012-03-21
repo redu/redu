@@ -37,14 +37,14 @@
 }
 
 .left-navigation li.active {
-  margin-right: -6px;
+  margin-right: -8px;
   background-color: rgb(77, 173, 214);
 }
 
 .boxshadow .left-navigation li.active {
-  -webkit-box-shadow: 1px 2px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow: 1px 2px rgba(0, 0, 0, 0.3);
-  box-shadow: 1px 2px rgba(0, 0, 0, 0.3); 
+  -webkit-box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.3); 
 }
 
 .borderradius .left-navigation li.active {
@@ -74,12 +74,12 @@
 
 .left-navigation li.active a:after {
   content: "";
-  width: 24px;
-  height: 55px;
+  width: 26px;
+  height: 46px;
   background-image: url("../images/new/icones-termos-e-contato.png");
   background-position: 0 -318px;
   float: right;
-  margin-right: -24px;
+  margin-right: -26px;
   margin-top: -15px;
 }
 
@@ -213,7 +213,7 @@
 
 .content {
   padding: 40px;
-  margin-bottom: 130px;
+  margin-bottom: 60px;
   border: 1px solid white;
   background-color: white;
   overflow: hidden;
@@ -264,15 +264,6 @@
 .content .standout {
   color: black;
   font-weight: bold;
-}
-
-.content .last-updated {
-  display: block;
-  margin-top: 20px;
-}
-
-.content .last-updated .date {
-  font-style: italic;
 }
 
 .contact-form {
