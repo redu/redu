@@ -9,7 +9,7 @@ describe Myfile do
   end
 
   context "when creating a file with existing title in different folders" do
-    it "should rename the current one" do
+    it "should reemove the current one" do
       Factory(:myfile, :folder => @another_folder,
               :attachment_file_name => subject.attachment_file_name)
       expect { subject.reload }.to_not raise_error(ActiveRecord::RecordNotFound)
