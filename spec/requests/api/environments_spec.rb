@@ -16,12 +16,12 @@ describe Api::EnvironmentsController do
       end
     end
 
-    it "should embed a link to self and courses" do
+    it "should embed a link to self, courses and user" do
       get "/api/environments/#{subject.id}", :oauth_token => @token,
         :format => 'json'
       links = parse(response.body).fetch('links', {})
 
-      %w(courses self).each do |prop|
+      %w(courses self user).each do |prop|
         links.collect { |l| l.fetch 'rel' }.should include prop
       end
     end
