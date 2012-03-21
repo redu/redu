@@ -167,6 +167,7 @@ describe LicensedInvoice do
   context "description" do
     before do
       @plan = Plan.from_preset(PackagePlan::PLANS[:empresa_plus], "PackagePlan")
+      @plan.user = Factory(:user)
       subject.plan = @plan
       subject.save
       subject.reload

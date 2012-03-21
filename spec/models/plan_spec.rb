@@ -13,6 +13,7 @@ describe Plan do
   it { should have_many :invoices }
   it { should_not allow_mass_assignment_of :state }
   it { should validate_presence_of :price }
+  it { should validate_presence_of :user }
 
   def period
     (Date.today.at_end_of_month - Date.today).to_i
@@ -71,6 +72,7 @@ describe Plan do
 
     it "creates a plan from preset" do
       plan = Plan.from_preset(:professor_standard)
+      plan.user = Factory(:user)
       plan.should be_valid
     end
   end
@@ -114,6 +116,7 @@ describe Plan do
     end
 
     it "should initialize a valid plan" do
+      @plan.user = Factory(:user)
       @plan.should be_valid
     end
 
