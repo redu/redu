@@ -51,7 +51,7 @@ class Myfile < ActiveRecord::Base
     existing = Myfile.find_by_attachment_file_name(self.attachment_file_name)
     if existing
       self.attachment_file_name = \
-        "#{self.attachment_file_name}_#{rand(38**8).to_s(36)}"
+        "#{rand(38**8).to_s(36)}_#{self.attachment_file_name}"
     end
   end
 
