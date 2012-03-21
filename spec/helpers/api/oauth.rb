@@ -3,8 +3,8 @@ module OAuth
     def generate_token
       application = Factory(:client_application)
       current_user = Factory(:user)
-      token = current_user.tokens.create(:client_application => application).
-        token
+      token = ::AccessToken.create(:client_application => application,
+                                 :user => current_user).token
 
       [application, current_user, token]
     end

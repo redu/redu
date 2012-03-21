@@ -8,6 +8,7 @@ module Api
     end
 
     def index
+      user = current_user
       @environments = Environment.all
 
       respond_with @environments
