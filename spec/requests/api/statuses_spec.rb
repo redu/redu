@@ -50,17 +50,7 @@ describe "Statuses" do
         parse(response.body).should have_key attr
       end
     end
-    
-    it "should have the correct links (self, user, in_response_to)" do
-#   Devido a funcionalidade de :statusable, :factory => :seminar_youtube
-#    em answer_factory ainda não esta disponivel para api
-#     statusable não esta sendo testado porém será incluiso em breve
-      %w(self user in_response_to).each do |attr|
-        get href_to(attr, @entity), :format => 'json', :token => @token
-        response.code.should == "200"
-      end
-    end
-    
+
   end
 
   context "when Log type" do
