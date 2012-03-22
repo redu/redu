@@ -2,7 +2,6 @@ module Api
   class StatusesController < Api::ApiController
     def show
       @status = Status.find(params[:id])
-      @status.extend(ActivityRepresenter)
 
       respond_with(:api, @status)
     end

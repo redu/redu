@@ -39,18 +39,28 @@ describe "Statuses" do
       response.code.should == "200"
     end
 
-    it "should have a link to activity (in_response_to)" do
-      link = @entity["links"].detect { |link| link['rel'] == 'in_response_to' }
-      get link['href'], :format => 'json', :token => @token
-      response.code.should == '200'
-    end
+#   Teste duplicado
+#    it "should have a link to activity (in_response_to)" do
+#      link = @entity["links"].detect { |link| link['rel'] == 'in_response_to' }
+#      get link['href'], :format => 'json', :token => @token
+#      response.code.should == '200'
+#    end
     
     it "should have type, text, created_at" do
       %w(type text created_at).each do |attr|
         parse(response.body).should have_key attr
       end
     end
-
+    
+    it "should have the currect links (self, user, in_response_to)" do
+#     Assim que seminar for adicionado quanto o tipo for Answer testar o link
+#       para statusable
+      debugger
+      %w(self user in_response_to).each do |attr|
+        get href_to(attr, @entity), :token => @token, :format => 'json'
+        response.code.should == "200"
+      end
+    end
   end
 
   context "when Log type" do
@@ -87,7 +97,14 @@ describe "Statuses" do
     
     it "should have a link to its Answers" do
       get href_to('answers', @entity), :format => 'json', :token => @token
+      debugger
       response.code.should == "200"
+    end
+    
+    it "should have id, type, created_at, text" do
+      %w(id type created_at text).each do |attr|
+        @entity.should have_key attr
+      end
     end
   end
   

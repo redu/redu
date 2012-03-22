@@ -4,7 +4,6 @@ module Api
       
       @activity = Activity.find(params[:status_id])
       @answers = @activity.answers
-#      debugger
       
       respond_with(:api, @answers)
     end

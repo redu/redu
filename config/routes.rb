@@ -282,6 +282,7 @@ Redu::Application.routes.draw do
 
     resources :statuses, :only => :show do
       resources :answers, :only => [:index]
+#      resources :in_response_to, :only => [:index], :to => "answers#"
     end
 
     # Hack para capturar exceções ActionController::RoutingError
