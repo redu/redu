@@ -216,7 +216,6 @@ html body {
   letter-spacing: -8px;
 }
 
-.title-call, 
 .description-error .title {
   font-family: museo-sans, arial, sans-serif;
   font-size: 17px;
@@ -224,12 +223,12 @@ html body {
   margin-top: 20px;
 }
 
-.description-error p {
-	color: rgb(179, 179, 179);
-}
-
 .title-call {
   color: rgb(193, 39, 45);
+}
+
+.description-error p {
+	color: rgb(179, 179, 179);
 }
 
 .back-call {
@@ -243,7 +242,7 @@ html body {
 }
 
 .description-error {
-  float: right;
+  margin-left: 20px;
   margin-top: 10px;
 }
 
@@ -256,7 +255,6 @@ html body {
   font-family: arial, sans-serif;
   color: rgb(179, 179, 179);
   padding: 0 10px;
-  float: right;
   margin-right: 16px;
 }
 
@@ -281,7 +279,7 @@ html body {
   font-family: arial, sans-serif;
   clear: both;
   float: right;
-  margin: 10px 14px;
+  margin: 10px 17px;
 }
 
 .body .body-error .form-error {
@@ -296,10 +294,9 @@ html body {
 .body-error .concave-form .put-your-email,
 .body-error .concave-form .put-your-name,
 .body-error .concave-form .put-your-message {
-  font-size: 11px;
-  font-family: arial;
   clear: both;
-  width: 54px;
+  width: 98px;
+  padding-top: 7px;
 }
 
 .form-error .call-us {
