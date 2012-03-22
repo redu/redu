@@ -97,7 +97,6 @@ describe "Statuses" do
     
     it "should have a link to its Answers" do
       get href_to('answers', @entity), :format => 'json', :token => @token
-      debugger
       response.code.should == "200"
     end
     
