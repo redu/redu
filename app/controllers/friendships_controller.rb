@@ -15,6 +15,10 @@ class FriendshipsController < BaseController
   end
 
   def new
+    #TODO: REMOVER AO CRIAR GEM
+    Invitation
+    @invitations = @user.invitations
+    @friendship_requests = @user.friendships.requested
     @contacts_recommendations = @user.recommended_contacts(5)
     respond_to do |format|
       format.html
@@ -55,6 +59,19 @@ class FriendshipsController < BaseController
         end
       end
       format.js
+    end
+  end
+
+  def resend_email
+    friendship = Friendship.find(params[:id])
+    user = User.find(friendship.user_id)
+    friend = User.find(friendship.friend_id)
+    UserNotifier.friendship_requested(user, friend).deliver
+    respond_to do |format|
+      format.js do
+        @invitation_id = "request-#{params[:id]}"
+        render 'invitations/resend_email'
+      end
     end
   end
 

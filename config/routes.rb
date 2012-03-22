@@ -79,7 +79,14 @@ Redu::Application.routes.draw do
   end
 
   #Invitations
-  resources :invitations, :only => [:index, :create, :show, :destroy]
+  resources :invitations, :only => [:show, :destroy] do
+    member do
+      post :resend_email
+    end
+    collection do
+      post :batch_destroy
+    end
+  end
 
   # Users
   resources :users, :except => [:index] do
@@ -105,7 +112,11 @@ Redu::Application.routes.draw do
 
     resources :social_networks, :only => [:destroy]
 
-    resources :friendships, :only => [:index, :create, :destroy, :new]
+    resources :friendships, :only => [:index, :create, :destroy, :new] do
+      member do
+        post :resend_email
+      end
+    end
 
     resources :favorites, :only => [] do
       member do

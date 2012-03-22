@@ -96,4 +96,62 @@ describe FriendshipsController do
 
   end
 
+   context 'new action' do
+     before do
+       @friend = @friends[0]
+     end
+    context 'user logged' do
+      before do
+        InvitationsUtil.process_invites({'emails' => 'example.mail.com, teste@mail.com', 'friend_id' => @friend.id}, @user)
+        @params = {:locale => "pt-BR", :user_id => @user.login}
+        UserSession.create(@user)
+        get :new, @params
+      end
+
+      it 'assigns all invitations from current user' do
+        assigns(:invitations).should == @user.invitations
+      end
+
+      it 'assigns all friendship requests with requested current state' do
+        assigns(:friendship_requests).should == @user.friendships.requested
+      end
+
+      it 'render new template' do
+        response.should render_template('new')
+      end
+
+    end
+
+    context 'user not logged' do
+      before do
+        user = Factory(:user)
+        InvitationsUtil.process_invites({'emails' => 'example@email.com', 'friend_id' => @friend.id}, user)
+        @params = {:locale => "pt-BR", :user_id => user.login}
+        get :new, @params
+      end
+
+      it 'redirect to home path' do
+        response.should redirect_to(home_path)
+      end
+    end
+  end
+
+
+  context 'Resend invitation email' do
+    before do
+      InvitationsUtil.process_invites({'emails' => 'example1@email.com', 'friend_id' => @friends[0].id}, @user)
+      @friendship_request = @user.friendships.requested.first
+      @params = {:locale => "pt-BR", :id => @friendship_request.id, :user_id => @user.login, :format => 'js'}
+      post :resend_email, @params
+    end
+
+    it 'assigns invitation_id' do
+      assigns(:invitation_id).should == "request-#{@friendship_request.id}"
+    end
+
+    it 'render js template' do
+      response.should render_template('invitations/resend_email')
+    end
+  end
+
 end

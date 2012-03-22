@@ -1,10 +1,9 @@
-class InvitationsUtil
+module InvitationsUtil
   #TODO: deve incluir o módulo invitation (quando for gem)
-  FRIENDSHIP = 0
-  FRIENDSHIP_STATUS = 1
 
   # params => parâmetros da requisição (:friend_id // :emails)
   # user => remetente do convite
+  # Processa a requisição de convite de amizade (por email e por id do usuário cadastrado no redu), seguindo as regras de negócio relacionadas a criação de requisições de amizade.
   def self.process_invites(params, user)
     friend = process_friendships(params['friend_id'].to_s, user) unless params['friend_id'].to_s.strip == ""
     process_invitations(params['emails'].to_s, user) unless params['emails'].to_s.strip == ""
