@@ -76,7 +76,7 @@
   content: "";
   width: 26px;
   height: 46px;
-  background-image: url("../images/new/icones-termos-e-contato.png");
+  background-image: url("../images/new/icons-tos-privacy-contact.png");
   background-position: 0 -318px;
   float: right;
   margin-right: -26px;
@@ -103,7 +103,7 @@
 }
 
 .left-navigation li.term-of-service a:before {
-  background-image: url("../images/new/icones-termos-e-contato.png");
+  background-image: url("../images/new/icons-tos-privacy-contact.png");
   background-position: -8px -4px;
 }
 
@@ -116,7 +116,7 @@
 }
 
 .left-navigation li.privacy-policy a:before {
-  background-image: url("../images/new/icones-termos-e-contato.png");
+  background-image: url("../images/new/icons-tos-privacy-contact.png");
   background-position: -8px -84px;
 }
 
@@ -129,7 +129,7 @@
 }
 
 .left-navigation li.contact a:before {
-  background-image: url("../images/new/icones-termos-e-contato.png");
+  background-image: url("../images/new/icons-tos-privacy-contact.png");
   background-position: -8px -164px;
 }
 
@@ -161,17 +161,17 @@
 }
 
 .content-title.term-of-service:after {
-  background-image: url("../images/new/icones-termos-e-contato.png");
+  background-image: url("../images/new/icons-tos-privacy-contact.png");
   background-position: 0 -241px;
 }
 
 .content-title.privacy-policy:after {
-  background-image: url("../images/new/icones-termos-e-contato.png");
+  background-image: url("../images/new/icons-tos-privacy-contact.png");
   background-position: 160px -241px;
 }
 
 .content-title.contact:after {
-  background-image: url("../images/new/icones-termos-e-contato.png");
+  background-image: url("../images/new/icons-tos-privacy-contact.png");
   background-position: 80px -241px;
 }
 
