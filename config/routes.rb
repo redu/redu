@@ -84,7 +84,7 @@ Redu::Application.routes.draw do
       post :resend_email
     end
     collection do
-      post :batch_destroy
+      post :destroy_invitations
     end
   end
 

@@ -2,7 +2,7 @@
 <div class="main grid_10 omega friends-invitations">
   <%= render :partial => 'friendships/breadcrumbs' %>
   <%= render :partial => "friendships/friend_invitation" %>
-  <%= render :partial => "friendships/manage_invitations",
+  <%= render :partial => "invitations/manage_invitations",
   :locals => { :invitations => @invitations,
                :friendship_requests => @friendship_requests } %>
 </div>

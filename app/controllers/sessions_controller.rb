@@ -44,11 +44,11 @@ class SessionsController < BaseController
           @environment = @course.environment
           render :template => 'user_course_invitations/show'
         elsif params.has_key?(:friendship_invitation_token)
-          invitation = Invitation.find_by_token(:friendship_invitation_token)
-          @user = invitation.user
-          uca = UserCourseAssociation.where(:user_id => @user).approved
-          @contacts = {:total => @user.friends.count}
-          @courses = { :total => @user.courses.count,
+          invitation = Invitation.find_by_token(params[:friendship_invitation_token])
+          @invitation_user = invitation.user
+          uca = UserCourseAssociation.where(:user_id => @invitation_user).approved
+          @contacts = {:total => @invitation_user.friends.count}
+          @courses = { :total => @invitation_user.courses.count,
                        :environment_admin => uca.with_roles([:environment_admin]).count,
                        :tutor => uca.with_roles([:tutor]).count,
                        :teacher => uca.with_roles([:teacher]).count }

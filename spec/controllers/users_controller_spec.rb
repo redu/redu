@@ -117,6 +117,65 @@ describe UsersController do
 
         end
       end
+
+      context "The request contains an invitation token" do
+        before do
+          @invitation_params = {}
+          @email = 'mail@example.com'
+
+          @invitation_params.store('emails', @email)
+          InvitationsUtil.process_invites(@invitation_params, @user)
+          @invitation = @user.invitations.last
+          @post_params.store(:friendship_invitation_token, @invitation.token)
+        end
+
+        context "User as succcessfully created" do
+          before do
+            post :create, @post_params
+            @created_user = User.find_by_email(@post_params[:user][:email])
+          end
+          it "invite should be accepted (Invitation should be destroyed)" do
+            Invitation.all.should be_empty
+          end
+
+          it "friendship request should be created" do
+            @created_user.friendships.should_not be_empty
+          end
+
+          it "should be redirected to signup completed" do
+            response.should redirect_to signup_completed_user_path(@created_user)
+          end
+        end
+
+        context "User params validation fail" do
+          before do
+            @post_params[:user][:password_confirmation] = "wrong-pass"
+            post :create, @post_params
+            @created_user = User.find_by_email(@post_params[:user][:email])
+          end
+
+          it "assigns user" do
+            assigns(:invitation_user).should == @invitation.user
+          end
+
+          it 'assigns contacts' do
+            assigns(:contacts)[:total].should == @invitation.user.friends.count
+          end
+
+          it 'assigns courses' do
+            uca = UserCourseAssociation.where(:user_id => @invitation.user).approved
+            @courses = { :total => @invitation.user.courses.count,
+                         :environment_admin => uca.with_roles([:environment_admin]).count,
+                         :tutor => uca.with_roles([:tutor]).count,
+                         :teacher => uca.with_roles([:teacher]).count }
+
+            assigns(:courses)[:total].should == @courses[:total]
+            assigns(:courses)[:environment_admin].should == @courses[:environment_admin]
+            assigns(:courses)[:tutor].should == @courses[:tutor]
+            assigns(:courses)[:teacher].should == @courses[:teacher]
+          end
+        end
+      end
     end
   end
 

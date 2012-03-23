@@ -7,11 +7,11 @@
   <div class="clearfix invite">
     <span class="salutation">Olá, você foi convidado para participar do Redu.</span>
     <div  class="clearfix course">
-      <%= image_tag @user.avatar(:thumb_32), :size => '32x32',
+      <%= image_tag @invitation_user.avatar(:thumb_32), :size => '32x32',
         :class => 'avatar' %>
       <div class="informations">
         <div class="header">
-          <%= link_to @user.display_name, user_path(@user), :class => "name" %>
+          <%= link_to @invitation_user.display_name, user_path(@invitation_user), :class => "name" %>
         </div>
         <ul class="statistics">
           <li>

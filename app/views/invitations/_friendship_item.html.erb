@@ -1,6 +1,6 @@
 <tr id="request-<%= friendship_item.id %>" class="invite">
   <td class="cell-checkbox">
-    <%= check_box_tag 'user_invitations[]', friendship_item.id, false,
+    <%= check_box_tag 'friendship_requests[]', friendship_item.id, false,
       {:class => "autoCheck",
        :id => "remove-#{friendship_item.id}"}  %>
   </td>
