@@ -7,7 +7,7 @@
       <%= link_to user_item_admin.user.display_name, user_item_admin.user,
         :rarget => "_blank", :class => "member-name" %>
       <span class="member-detail">Último login em <%= user_item_admin.user.last_login_at && l(user_item_admin.user.last_login_at, :format => :admin) %></span>
-      <span class="member-detail">Incrito em <%= user_item_admin.created_at && l(user_item_admin.created_at, :format => :admin) %></span>
+      <span class="member-detail">Inscrito em <%= user_item_admin.created_at && l(user_item_admin.created_at, :format => :admin) %></span>
     </div>
   </td>
   <td class="cell centered-cell">

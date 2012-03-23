@@ -656,6 +656,10 @@ body {
   margin-right: 50px;
 }
 
+.body.management .concave-admin-table {
+  clear: both;
+}
+
 #space-manage .management-actions .concave-button {
   margin: 0;
 }
@@ -5210,6 +5214,7 @@ table.concave-invitation-table .cell-reinvite .reinvited {
   margin-left: -20px;
   margin-bottom: 10px;
   overflow: hidden;
+  clear: both;
 }
 
 .borderradius .admin-filter-form .text-input {
