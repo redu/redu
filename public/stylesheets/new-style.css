@@ -248,6 +248,10 @@ body {
   margin-left: 4px;
 }
 
+#content .concave-sidebar .connections {
+  margin-top: 10px;
+}
+
 #content .concave-sidebar .connections:before,
 #content .sidebar.space .big-separator:after {
   content: "";
@@ -395,7 +399,6 @@ body {
 
 #content .concave-sidebar .roles {
   margin-top: 20px;
-  margin-bottom: 10px;
 }
 
 .textshadow #content .concave-sidebar .total-count .members,
