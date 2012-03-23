@@ -168,6 +168,15 @@ describe Space do
       user.spaces.teachers.to_set.should ==
         [spaces[0], spaces[1]].to_set
     end
+
+    it "retrieves all my subjects ids" do
+      subj = (1..2).collect { Factory(:subject, :space => subject) }
+
+      subject.subjects << subj[0]
+      subject.subjects << subj[1]
+
+      subject.subjects_id.to_set.should eq([subj[0].id, subj[1].id].to_set)
+    end
   end
 
   it "changes a user role" do

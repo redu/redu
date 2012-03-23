@@ -91,7 +91,9 @@ describe Partner do
       @invoices = 2.times.collect do
         env = Factory(:partner_environment_association,
                       :partner => subject).environment
-        env.plans << Plan.from_preset(:instituicao_superior, "LicensedPlan")
+        plan = Plan.from_preset(:instituicao_superior, "LicensedPlan")
+        plan.user = env.owner
+        env.plans << plan
         env.plan.create_invoice
       end
     end
@@ -115,7 +117,9 @@ describe Partner do
         environment = course.environment
         Factory(:partner_environment_association, :partner => subject,
                 :environment => course.environment)
-        environment.plans << Plan.from_preset(:instituicao_superior, "LicensedPlan")
+        plan = Plan.from_preset(:instituicao_superior, "LicensedPlan")
+        plan.user = environment.owner
+        environment.plans << plan
         environment.plan.create_invoice
         environment
       end

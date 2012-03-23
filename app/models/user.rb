@@ -610,7 +610,12 @@ class User < ActiveRecord::Base
     educations
   end
 
+  def subjects_id
+    self.lectures.collect{ |lecture| lecture.subject_id }
+  end
+
   protected
+
   def activate_before_save
     self.activated_at = Time.now.utc
     self.activation_code = nil
@@ -636,10 +641,5 @@ class User < ActiveRecord::Base
     new_password = ""
     1.upto(len) { |i| new_password << chars[rand(chars.size-1)] }
     return new_password
-  end
-
-    # TODO Falta os teste!
-  def subjects_id
-    self.lectures.select(:subject_id).collect{ |lecture| lecture.subject_id }
   end
 end
