@@ -191,12 +191,12 @@ class CoursesController < BaseController
       approved = params[:member].reject{|k,v| v == 'reject'}
       rejected = params[:member].reject{|k,v| v == 'approve'}
 
-      rejected.keys.each do |user_id|
-        @course.user_course_associations.where(:user_id => user_id).each do |ass|
-          #TODO fazer isso em batch
-          UserNotifier.reject_membership(ass.user, @course).deliver
-          ass.destroy
-          end
+      # Rejeitando
+      rejected_ucas = @course.user_course_associations.waiting.
+        where(:user_id => rejected.keys)
+      rejected_ucas.each do |uca|
+        UserNotifier.reject_membership(uca.user, @course).deliver
+        uca.destroy
       end
 
       # verifica se o limite de usuário foi atingido
@@ -217,12 +217,12 @@ class CoursesController < BaseController
           flash[:notice] = 'Membros moderados!'
         end
 
-        approved.keys.each do |user_id|
-          @course.user_course_associations.where(:user_id => user_id).each do |ass|
-            ass.approve!
-            # TODO fazer isso em batch
-            UserNotifier.approve_membership(ass.user, @course).deliver
-            end
+        # Aprovando
+        approved_ucas = @course.user_course_associations.waiting.
+          where(:user_id => approved.keys)
+        approved_ucas.each do |uca|
+          uca.approve!
+          UserNotifier.approve_membership(uca.user, @course).deliver
         end
       else
         if rejected.to_hash.empty?

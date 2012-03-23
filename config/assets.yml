@@ -34,6 +34,7 @@ javascripts:
     - public/javascripts/subjects.js
     - public/javascripts/statuses.js
     - public/javascripts/admin.js
+    - public/javascripts/partner.js
     - public/javascripts/jquery.nested-fields.js
     - public/javascripts/browserdetection.js
     - public/javascripts/outdated-browser.js

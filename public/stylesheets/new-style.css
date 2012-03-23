@@ -248,6 +248,10 @@ body {
   margin-left: 4px;
 }
 
+#content .concave-sidebar .connections {
+  margin-top: 10px;
+}
+
 #content .concave-sidebar .connections:before,
 #content .sidebar.space .big-separator:after {
   content: "";
@@ -395,7 +399,6 @@ body {
 
 #content .concave-sidebar .roles {
   margin-top: 20px;
-  margin-bottom: 10px;
 }
 
 .textshadow #content .concave-sidebar .total-count .members,
@@ -654,6 +657,10 @@ body {
   text-align: right;
   margin-bottom: 10px;
   margin-right: 50px;
+}
+
+.body.management .concave-admin-table {
+  clear: both;
 }
 
 #space-manage .management-actions .concave-button {
@@ -5210,6 +5217,7 @@ table.concave-invitation-table .cell-reinvite .reinvited {
   margin-left: -20px;
   margin-bottom: 10px;
   overflow: hidden;
+  clear: both;
 }
 
 .borderradius .admin-filter-form .text-input {
