@@ -7668,19 +7668,39 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 .new-post .thumbnail .last .arrow {
-  background:  url("../images/new/icones-p.png") -560px -1917px no-repeat;
+  background:  url("../images/new/icons-oembed-nav.png") 0px 0px no-repeat;
   float: right;
-  height: 16px;
-  margin: 2px 1px;
-  width: 18px;
+  height: 10px;
+  margin: 5px 10px;
+  width: 8px;
+}
+
+.new-post .thumbnail .last .arrow:hover {
+  background:  url("../images/new/icons-oembed-nav.png") 0px -20px no-repeat;
 }
 
 .new-post .thumbnail .next .arrow {
-  background:  url("../images/new/icones-p.png") -560px -1837px no-repeat;
+  background:  url("../images/new/icons-oembed-nav.png") -20px 0px no-repeat;
   float: right;
-  height: 16px;
-  margin: 2px 1px;
-  width: 18px;
+  height: 10px;
+  margin: 5px 10px;
+  width: 8px;
+}
+
+.new-post .thumbnail .next .arrow:hover {
+  background:  url("../images/new/icons-oembed-nav.png") -20px -20px no-repeat;
+}
+
+.new-post .thumbnail .remove .arrow {
+  background:  url("../images/new/icons-oembed-nav.png") -40px 0px no-repeat;
+  float: right;
+  height: 10px;
+  margin: 5px 10px;
+  width: 8px;
+}
+
+.new-post .thumbnail .remove .arrow:hover {
+  background:  url("../images/new/icons-oembed-nav.png") -40px -20px no-repeat;
 }
 
 .new-post .thumbnail .last,
@@ -7742,6 +7762,16 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   float: left;
   overflow: hidden;
   background-color: rgb (192, 128, 64);
+}
+
+.new-post .java-applet .icon {
+  background-image: url("../images/new/icon-applet.png");
+  text-indent: -9999px;
+  width: 32px;
+  height: 34px;
+  display: block;
+  background-repeat: no-repeat;
+  padding: 0px;
 }
 
 #graph-form .inline {
