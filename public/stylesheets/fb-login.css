@@ -1,10 +1,13 @@
 .fb-login {
+  box-shadow: inset 0px 1px 0px 0px rgba(106, 132, 179, 1);
+  -webkit-box-shadow: inset 0px 1px 0px 0px rgba(106, 132, 179, 1);
+  -moz-box-shadow: inset 0px 1px 0px 0px rgba(106, 132, 179, 1);
   font-family: "Lucida Grande", Verdana, Arial, sans-serif;
   font-weight: bold;
   color: white;
   font-size: 12px;
   line-height: 15px;
-  padding: 1px 6px 1px 0px;
+  padding: 5px 6px 3px 0px;
   border: solid #1A356E 1px;
   background: #34609D;
   display: inline-block;
@@ -22,13 +25,14 @@
 }
 
 .box-shadow .fb-login {
-  box-shadow: inset 0px 1px 0px 0px #879AC;
   -webkit-box-shadow: inset 0px 1px 0px 0px #879AC;
   -moz-box-shadow: inset 0px 1px 0px 0px #879AC;
 }
 
 .fb-login:hover {
-  background: #34609D;
+  -webkit-box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.2);
   text-decoration: none;
 }
 
