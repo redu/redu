@@ -9,20 +9,12 @@ class AuthenticationsController < ApplicationController
       # Usuário cadastrado.
       flash[:notice] = t :thanks_youre_now_logged_in
       sign_in_and_redirect(authentication.user)
-    elsif current_user
-      # Usuário está logado mas não tem autenticação com este provedor.
-      current_user.authentications.create!(:provider => auth[:provider],
-                                           :uid => auth['uid'])
-      current_user.apply_omniauth(auth)
-      current_user.save
-
-      flash[:notice] = "Autenticado com sucesso."
     else
       # Usuário não cadastrado.
       user = User.new
       user.authentications.build(:provider => auth['provider'],
                                  :uid => auth['uid'])
-      user.apply_omniauth(auth)
+      user.apply_omniauth!(auth)
 
       if user.save
         # Usuário criado com sucesso.
@@ -36,31 +28,10 @@ class AuthenticationsController < ApplicationController
       end
     end
   end
-
-  def destroy
-    @authentication = current_user.authentications.find(params[:id])
-    @authentication.destroy
-    flash[:notice] = "Autenticação destruída com sucesso!"
-    redirect_to authentications_url
-  end
   
   def fallback
     flash[:notice] = "Para logar com Facebook, você precisa permitir o Redu."
-    redirect_to '/'
-  end
-
-  def facebook_registration
-    if params[:signed_request]
-      value = params[:signed_request]
-      signature, encoded_payload = value.split('.')
-
-      decoded_hex_signature = base64_decode_url(signature)
-      decoded_payload = MultiJson.decode(base64_decode_url(encoded_payload))
-
-      unless decoded_payload['algorithm'] == 'HMAC-SHA256'
-        raise NotImplementedError, "unknown algorithm: #{decoded_payload['algorithm']}"
-      end
-    end
+    redirect_to home_path
   end
 
   private
@@ -70,19 +41,7 @@ class AuthenticationsController < ApplicationController
       @user_session = UserSession.new(User.find_by_single_access_token(user.single_access_token))
       @user_session.save
     end
-    # current_user = @user_session.record
-    redirect_to home_user_path(user)
-  end
-
-  # Método utilizado para decodificação de dados da signed_request do facebook.
-  def valid_signature?(secret, signature, payload, algorithm = OpenSSL::Digest::SHA256.new)
-    OpenSSL::HMAC.digest(algorithm, secret, payload) == signature
-  end
-
-  # Método utilizado para decodificação de dados da signed_request do facebook.
-  def base64_decode_url(value)
-    value += '=' * (4 - value.size.modulo(4))
-    Base64.decode64(value.tr('-_', '+/'))
+    redirect_to user_path(user)
   end
 
 end

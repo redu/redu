@@ -178,7 +178,7 @@ class User < ActiveRecord::Base
     u && u.authenticated?(password) && u.update_last_login ? u : nil
   end
 
-  def apply_omniauth(omniauth)
+  def apply_omniauth!(omniauth)
     info = omniauth['info']
     self.email = info['email']
     self.reset_password
@@ -191,10 +191,11 @@ class User < ActiveRecord::Base
       self.first_name = info['first_name']
       self.last_name = info['last_name']
       if info['image']
-        self.update_avatar_from_picture_url(info['image']) unless 
-          info['image'] == "http://graph.facebook.com/100002476817463/picture?type=square"
+        # Atualiza o avatar do usuário de acordo com seu avatar no Facebook (se não for o default).
+        if info['image'] != "http://graph.facebook.com/100002476817463/picture?type=square"
+          self.avatar = open(info['image'])
+        end
       end
-    when 'twitter'
     end
   end
 
@@ -629,10 +630,6 @@ class User < ActiveRecord::Base
     educations
   end
 
-  def update_avatar_from_picture_url(url)
-    self.avatar = open(url)
-  end
-
   def subjects_id
     self.lectures.collect{ |lecture| lecture.subject_id }
   end
@@ -679,7 +676,6 @@ class User < ActiveRecord::Base
         login = login + n.to_s
         n = n + 1
       end
-      self.save
     end
 
     login

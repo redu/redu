@@ -27,13 +27,12 @@
           <%= link_to "Recuperar login", forgot_username_path, 
                       :class => "recover-login" %>
         </div>
-        <%= link_to "Logar com Facebook", "/auth/facebook",
+        <%= link_to "Logar com Facebook", facebook_authentication_path,
                     :class => "fb-login", :value => "login-facebook" %>
         <p class="or-call">&minus; ou &minus;</p>
       <% end %>
     <% end %>
     <%= link_to "Que tal se cadastrar?", signup_path, :class => "new-account" %>
-    <br />
   </div>
   <div class="facebook-like">
     <iframe src="http://www.facebook.com/plugins/like.php?app_id=221316171245047&amp;href=http%3A%2F%2Fwww.facebook.com%2Fredesocialeducacional&amp;send=false&amp;layout=standard&amp;width=280&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:280px; height:80px;" allowTransparency="true"></iframe>

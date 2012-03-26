@@ -49,30 +49,6 @@ class SessionsController < BaseController
     redirect_to home_path
   end
 
-  # DEPRECATED
-  def omniauth_fb_authenticated
-    auth = request.env['omniauth.auth']
-    user = User.find_by_external_uid(auth['uid'])
-    if user
-      @user_session = UserSession.new(user, true) 
-      @user_session.save do |result|
-        if result
-          current_user = @user_session.record
-
-          flash[:notice] = t :thanks_youre_now_logged_in
-          redirect_to home_user_path(current_user)
-        else
-          raise info.to_yaml
-        end
-      end
-    else
-      render 'facebook_registration'
-      user = User.new_from_facebook(auth)
-      user.save
-      redirect_to home_path
-    end
-  end
-
   protected
 
   def less_than_30_days_of_registration_required

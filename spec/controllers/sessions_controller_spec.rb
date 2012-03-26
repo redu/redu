@@ -85,40 +85,4 @@ describe SessionsController do
       end
     end
   end
-
-  describe :omniauth do
-    before :each do
-      #@request = double('Request')
-      @request.stub(:params) { {} }
-      @request.stub(:cookies) { {} }
-
-      @client_id = '123'
-      @client_secret = '53cr3tz'
-    end
-
-    subject do
-      args = [@client_id, @client_scret, @options].compact
-      OmniAuth::Strategies::Facebook.new(nil, *args).tap do |strategy|
-        strategy.stub(:request) { @request }
-      end
-    end #subject
-
-    context 'user has authenticated in facebook' do
-      context 'user is not a Redu user' do
-        it 'should detect that user is not registered' do
-          @raw_info = { 'email' => 'unregistered@example.com' }
-          subject.stub(:raw_info) { @raw_info }
-          user = User.find_by_email(subject.raw_info['email'])
-          user.should be_nil
-        end
-
-        it 'should create user from facebook auth hash' do
-          
-        end
-      end
-
-      context 'user is a Redu user' do
-      end
-    end
-  end #describe :omniauth
 end
