@@ -2,9 +2,10 @@ require 'api_spec_helper'
 
 describe "Spaces API" do
   before do
-    @application, @current_user, @token = generate_token
-    @course = Factory(:complete_course)
+    @environment = Factory(:complete_environment)
+    @course = @environment.courses.first
     @space = @course.spaces.first
+    @application, @current_user, @token = generate_token(@course.owner)
   end
 
   context "the document returned" do
