@@ -1,17 +1,16 @@
+.boxshadow .fb-login {
+  box-shadow: inset 0px 1px 0px 0px rgb(106, 132, 179);
+  -webkit-box-shadow: inset 0px 1px 0px 0px rgb(106, 132, 179);
+  -moz-box-shadow: inset 0px 1px 0px 0px rgb(106, 132, 179);
+}
+
 .fb-login {
-  box-shadow: inset 0px 1px 0px 0px rgba(106, 132, 179, 1);
-  -webkit-box-shadow: inset 0px 1px 0px 0px rgba(106, 132, 179, 1);
-  -moz-box-shadow: inset 0px 1px 0px 0px rgba(106, 132, 179, 1);
-  font-family: "Lucida Grande", Verdana, Arial, sans-serif;
   font-weight: bold;
   color: white;
-  font-size: 12px;
   line-height: 15px;
   padding: 5px 6px 3px 0px;
-  border: solid #1A356E 1px;
-  background: #34609D;
-  display: inline-block;
-  text-decoration: none;
+  border: solid rgb(26, 53, 110) 1px;
+  background: rgb(52, 96, 157);
   float: left;
   margin: 20px 0 0 50px;
 }
@@ -24,18 +23,16 @@
   float: left;
 }
 
-.box-shadow .fb-login {
-  -webkit-box-shadow: inset 0px 1px 0px 0px #879AC;
-  -moz-box-shadow: inset 0px 1px 0px 0px #879AC;
-}
-
 .fb-login:hover {
-  -webkit-box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.2);
-  -moz-box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.2);
-  box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.2);
   text-decoration: none;
 }
 
+.boxshadow .fb-login:hover {
+  -webkit-box-shadow: 0px 1px 2px 1px black;
+  -moz-box-shadow: 0px 1px 1px 2px black;
+  box-shadow: 0px 1px 2px 1px black;
+}
+
 .textshadow .fb-login:hover {
-  text-shadow: 1px 1px 3px #666666;
+  text-shadow: 1px 1px 3px rgb(102, 102, 102);
 }
