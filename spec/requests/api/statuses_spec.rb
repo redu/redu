@@ -55,7 +55,6 @@ describe "Statuses" do
     it "should have the currect links (self, user, in_response_to)" do
 #     Assim que seminar for adicionado quanto o tipo for Answer testar o link
 #       para statusable
-      debugger
       %w(self user in_response_to).each do |attr|
         get href_to(attr, @entity), :token => @token, :format => 'json'
         response.code.should == "200"
@@ -130,6 +129,8 @@ describe "Statuses" do
 
   context "when listing User statuses" do
     before do
+#   É criado status para usuarios diferentes para se testar o retorno corretor
+#     apartir da filtragem por tipo
       @user = Factory(:user)
       @user_statuses = 4.times.collect do
         [ Factory(:help, :user => @user),
@@ -139,6 +140,7 @@ describe "Statuses" do
       3.times.each do
         @help = Factory(:help)
         @log = Factory(:log)
+        @activity = Factory(:activity)
       end
     end
 
@@ -152,6 +154,12 @@ describe "Statuses" do
       parse(response.body).count.should == @user_statuses.length
     end
 
+    it "should return correct numbers of statuses (help)" do
+      get "api/users/#{@user.id}/statuses", :type => "help",
+        :token => @token, :format => 'json'
+      parse(response.body).count.should == 4
+    end
+    
     it "should filter by status type (help)" do
       get "/api/users/#{@user.id}/statuses", :type => "help",
         :token => @token, :format => 'json'
@@ -174,6 +182,12 @@ describe "Statuses" do
       get "api/users/#{@user.id}/statuses", :type => "activity",
         :token => @token, :format => 'json'
       parse(response.body).all? { |s| s["type"] == "Activity" }.should be
+    end
+    
+    it "should return correct numbers of statuses (Activity)" do
+      get "api/users/#{@user.id}/statuses", :type => 'activity',
+        :token => @token, :format => 'json'
+      parse(response.body).count.should == 4
     end
   end
 
