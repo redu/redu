@@ -95,6 +95,7 @@ describe "Statuses" do
     end
     
     it "should have a link to its Answers" do
+      debugger
       get href_to('answers', @entity), :format => 'json', :token => @token
       response.code.should == "200"
     end
@@ -249,37 +250,48 @@ describe "Statuses" do
       parse(response.body).all? { |s| s["type"] == "Activity" }.should be
     end
   end
-  context "post api/user/:user_id/" do
+  context "post api/users/:user_id/statuses" do
     it "should create an status the user type activity"
-    it "should return status 201 when successful"
-    it "should return 422 when invalid"
     it "should create an status the user type help"
-    it "should return status 201 when successful"
-    it "should return 422 when invalid"
     it "should create an status the user type answer"
     it "should return status 201 when successful"
     it "should return 422 when invalid"
   end
-  context "post api/space/:space_id" do
+  
+  context "delete api/users/:user_id/statuses" do
+  end
+  
+  context "post api/spaces/:space_id/statuses" do
     it "should create an status the space type activity"
-    it "should return status 201 when successful"
-    it "should return 422 when invalid"
     it "should create an status the space type help"
-    it "should return status 201 when successful"
-    it "should return 422 when invalid"
     it "should create an status the space type answer"
     it "should return status 201 when successful"
     it "should return 422 when invalid"
   end
-  context "post api/lecture/:lecture_id" do
+  
+  context "delete api/spaces/:space_id/statuses" do
+  end
+  
+  context "post api/lectures/:lecture_id/statuses" do
     it "should create an status the lecture type activity"
-    it "should return status 201 when successful"
-    it "should return 422 when invalid"
     it "should create an status the lecture type help"
-    it "should return status 201 when successful"
-    it "should return 422 when invalid"
     it "should create an status the lecture type answer"
     it "should return status 201 when successful"
     it "should return 422 when invalid"
+  end
+  
+  context "api/lectures/:lecture_id/statuses" do
+  end
+  
+  context "post api/statuses/status_id/statuses Answer type" do
+    it "should create an status the answer for activity in Spaces"
+    it "should return status 201 when successful"
+    it "should return 422 when invalid"
+    it "should create an status the answer for help in Lectures"
+    it "should create an status the answer for activity in Lectures"
+    it "should create an status the answer for activity in Users"
+  end
+  
+  context "delete api/statuses/:statuses_id/statuses" do
   end
 end
