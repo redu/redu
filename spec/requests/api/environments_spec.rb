@@ -1,9 +1,9 @@
 require 'api_spec_helper'
 
-describe Api::EnvironmentsController do
+describe "Environments API" do
   subject { Factory(:complete_environment) }
   before do
-    @application, @current_user, @token = generate_token
+    @application, @current_user, @token = generate_token(subject.owner)
   end
 
   context "the document returned" do
@@ -27,7 +27,8 @@ describe Api::EnvironmentsController do
     end
 
     it "shold be return code 200 passing both ID and path" do
-      get "/api/environments/#{subject.path}", :format => 'json'
+      get "/api/environments/#{subject.path}", :oauth_token => @token,
+        :format => 'json'
 
       response.status.should == 200
     end
@@ -61,7 +62,8 @@ describe Api::EnvironmentsController do
       post "/api/environments", :environment => @params,
         :oauth_token => @token, :format => 'json'
       representation = parse(response.body)
-      get href_to('self', representation), :format => 'json'
+      get href_to('self', representation), :oauth_token => @token,
+        :format => 'json'
 
       response.code.should == '200'
     end
@@ -91,15 +93,10 @@ describe Api::EnvironmentsController do
   end
 
   context "put /api/environment/id" do
-    before do
-      @user = Factory(:user)
-      @environment = Factory(:complete_environment)
-    end
-
     it "should return status 200" do
       updated_params = { :name => 'New name' }
 
-      put "/api/environments/#{@environment.id}", :environment => updated_params,
+      put "/api/environments/#{subject.id}", :environment => updated_params,
         :oauth_token => @token, :format => 'json'
 
       response.status.should == 200
@@ -108,7 +105,7 @@ describe Api::EnvironmentsController do
     it "should return 422 when invalid" do
       updated_params = { :name => 'Big name Big name Big name Big name Big name' }
 
-      put "/api/environments/#{@environment.id}", :environment => updated_params,
+      put "/api/environments/#{subject.id}", :environment => updated_params,
         :oauth_token => @token, :format => 'json'
 
       response.status.should == 422
@@ -123,13 +120,13 @@ describe Api::EnvironmentsController do
       response.status.should == 200
     end
 
-    it "should return all environments" do
-      2.times { Factory(:environment) }
+    it "should return current user environments" do
+      2.times { Factory(:environment, :owner => @current_user) }
       get '/api/environments', :oauth_token => @token,
         :format => 'json'
 
       parse(response.body).should be_kind_of Array
-      parse(response.body).length.should == 2
+      parse(response.body).length.should == 3
     end
   end
 
