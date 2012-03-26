@@ -73,5 +73,4 @@ describe "Course abilities" do
       subject.should be_able_to :manage, @course
     end
   end
-
 end
