@@ -1,19 +1,5 @@
-
 body {
   background-color: rgb(247, 247, 247);
-}
-
-button {
-  border: 0;
-  padding: 0;
-  cursor: pointer;
-  overflow: visible; /* removes padding in IE */
-}
-
-button::-moz-focus-inner {
-    /* removes ppushadding in Firefox */
-    border: none;
-    padding: 0;
 }
 
 #header a:hover {
@@ -197,7 +183,6 @@ button::-moz-focus-inner {
   padding: 2px 0 2px 25px;
   display: block;
   font-size: .9em;
-  text-decoration: none;
 }
 
 .textshadow #content .sidebar .local-nav > li > .session > a {
@@ -261,6 +246,10 @@ button::-moz-focus-inner {
 #content .concave-sidebar .connections,
 #content .sidebar.space .connections {
   margin-left: 4px;
+}
+
+#content .concave-sidebar .connections {
+  margin-top: 10px;
 }
 
 #content .concave-sidebar .connections:before,
@@ -410,7 +399,6 @@ button::-moz-focus-inner {
 
 #content .concave-sidebar .roles {
   margin-top: 20px;
-  margin-bottom: 10px;
 }
 
 .textshadow #content .concave-sidebar .total-count .members,
@@ -576,7 +564,7 @@ button::-moz-focus-inner {
   clear: left;
   float: left;
   font-size: 2.4em;
-  letter-spg: -1px;
+  letter-spacing: -1px;
   color: rgb(179, 179, 179);
   font-weight: normal;
 }
@@ -669,6 +657,10 @@ button::-moz-focus-inner {
   text-align: right;
   margin-bottom: 10px;
   margin-right: 50px;
+}
+
+.body.management .concave-admin-table {
+  clear: both;
 }
 
 #space-manage .management-actions .concave-button {
@@ -1904,13 +1896,12 @@ button::-moz-focus-inner {
   padding: 0;
 }
 
-.create-status .concave-form .cancel, 
-.create-status .concave-form .concave-clean {
+.create-status .concave-form .cancel {
   float: left;
+  padding: 8px 0 8px 0;
   width: 68px;
-  height: 28px;
+  height: 12px;
   color: #4cacd5;
-  padding: 0px;
 }
 
 .create-status .concave-form .char-limit,
@@ -2085,8 +2076,9 @@ button::-moz-focus-inner {
 }
 
 .statuses .actions li {
-  float: right;
+  float: left;
   padding: 0 10px;
+  border-right: 1px solid #C6C6C6;
 }
 
 .statuses .actions li:last-child {
@@ -3224,8 +3216,7 @@ button::-moz-focus-inner {
   margin-top: -3px;
 }
 
-.tabs > ul li .details,
-.tabs > ul li .upgrade {
+.tabs > ul li .details{
   display: block;
   margin-top: -10px;
   margin-left: 30px;
@@ -5226,6 +5217,7 @@ table.concave-invitation-table .cell-reinvite .reinvited {
   margin-left: -20px;
   margin-bottom: 10px;
   overflow: hidden;
+  clear: both;
 }
 
 .borderradius .admin-filter-form .text-input {
@@ -6839,9 +6831,9 @@ div.token-input-dropdown {
   display: block;
   text-align: center;
   font-family: museo-sans, helvetica, arial, sans-serif;
-  font-weight: 100;
+  font-weight: 500;
   color: rgb(109, 110, 111);
-  font-size: 17px;
+  font-size: 1.3em;
   margin-bottom: 15px;
 }
 
@@ -6952,12 +6944,6 @@ div.token-input-dropdown {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-}
-
-.question-blue_12_12 {
-  background: url("../images/new/icon-question-blue_12_12.png") no-repeat;
-  padding: 0 6px;
-  cursor: pointer;
 }
 
 .form-common .question-blue_12_12 {
@@ -7251,6 +7237,8 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   cursor: -webkit-grabbing;
 }
 
+<<<<<<< Updated upstream
+=======
 /* Aqui modifiquei */
 .panel .upgrade-button .concave-important {
   float: right;
@@ -7367,12 +7355,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 .payments .data .icon  {
-  background: url("../images/new/icones-p.png") -80px -2080px 	no-repeat;
-  width: 16px;
-  height: 18px;
   text-indent: -9999px;
-  content: ".";
-  background-repeat: no-repeat;
 }
 
 .plan-panel table.common tbody tr {
@@ -7388,7 +7371,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .borderradius .plan-panel table.common .box-gray .data td:first-child {
 	border-radius: 5px 0px 0px 5px;
 }
-
+}}
 .borderradius .plan-panel table.common .box-gray .data td:last-child {
 	border-radius: 0px 5px 5px 0px;
 }
@@ -7399,7 +7382,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   float: right;
   clear: both;
 }
-
+}
 .plan-panel .courses-list {
 	margin-bottom: 30px;
 }
@@ -7621,16 +7604,11 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 .new-post .close {
-  background: url("../images/new/icones-p.png") -400px -2796px no-repeat;
   text-indent: -9999px;
   width: 16px;
   float: right;
   cursor: pointer;
   height: 18px;
-}
-
-.new-post .close:hover {
-  background: url("../images/new/icones-p.png") -480px -2796px no-repeat;
 }
 
 .new-post .title {
@@ -7743,8 +7721,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   background: rgb(30,87,153); /* Old browsers */
 }
  
-
-
 .cssgradients .new-post .thumbnail .last:hover,
 .cssgradients .new-post .thumbnail .next:hover,
 .cssgradients .new-post .thumbnail .remove:hover {
@@ -7754,8 +7730,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   background: -o-linear-gradient(top,  rgb(30,87,153) 0%,rgb(247,247,247) 2%,rgb(219,239,247) 100%); /* Opera 11.10+ */
   background: -ms-linear-gradient(top,  rgb(30,87,153) 0%,rgb(247,247,247) 2%,rgb(219,239,247) 100%); /* IE10+ */
   background: linear-gradient(top,  rgb(30,87,153) 0%,rgb(247,247,247) 2%,rgb(219,239,247) 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#dbeff7',GradientType=0 ); /* IE6-9 */
-
 }
 
 .new-post .java-applet {
@@ -7775,6 +7749,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   padding: 0px;
 }
 
+>>>>>>> Stashed changes
 #graph-form .inline {
   float: left;
 }
@@ -7785,6 +7760,8 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   overflow: hidden;
   margin-left: 0px;
 }
+<<<<<<< Updated upstream
+=======
 
 
 #statuses .post-link {
@@ -7813,6 +7790,8 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
  margin-left: 30px;
 }
 
+/* -- Início notificações lateral esquerda -- */
+
 .local-nav .session .notification {
   background-color: rgb(230, 230, 230);
   padding: 3px 3px 2px 3px;
@@ -7832,3 +7811,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   -moz-border-radius: 3px;
   border-radius: 3px; 
 }
+
+/* início agrupar-mural */
+>>>>>>> Stashed changes

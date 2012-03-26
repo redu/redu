@@ -229,14 +229,9 @@ clear: both;
   text-shadow: 0px -1px 0px rgb(255, 255, 255);
 }
 
-.icon-interrog-blue_12_12-before:before  {
-  content: "";
-  width: 12px;
+.body-login .icon-question-blue_12_12-before:before  {
   float: left;
-  height: 12px;
-  background: url("../images/new/icones-p.png") -400px -2160px 	repeat;
   margin-left: 30px;
-  background-repeat: no-repeat;
 }
 
 .appear-tiptip {
