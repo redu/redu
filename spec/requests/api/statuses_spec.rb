@@ -38,13 +38,6 @@ describe "Statuses" do
     it "should return code 200" do
       response.code.should == "200"
     end
-
-#   Teste duplicado
-#    it "should have a link to activity (in_response_to)" do
-#      link = @entity["links"].detect { |link| link['rel'] == 'in_response_to' }
-#      get link['href'], :format => 'json', :token => @token
-#      response.code.should == '200'
-#    end
     
     it "should have type, text, created_at" do
       %w(type text created_at).each do |attr|
@@ -95,7 +88,6 @@ describe "Statuses" do
     end
     
     it "should have a link to its Answers" do
-      debugger
       get href_to('answers', @entity), :format => 'json', :token => @token
       response.code.should == "200"
     end
