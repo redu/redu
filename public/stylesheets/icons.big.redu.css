@@ -84,7 +84,7 @@
   float: left;
   margin-right: 10px;
 
-  background-position:  -480px -161px;
+  background-position:  -320px -160px;
 }
 
 .icon-privacy-lightred_64_66-before:before {
@@ -103,6 +103,17 @@
   float: right;
 
   background-position: -480px -80px;
+}
+
+.icon-invite-friends-lightblue_64_66-before:before {
+  content: "";
+  width: 64px;
+  height: 66px;
+  display: block;
+  float: left;
+  margin-right: 10px;
+
+  background-position: -400px -160px;
 }
 
 .icon-request-help-orange_64_66-after:after {
