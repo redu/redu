@@ -9,7 +9,6 @@ module Api
     end
     
     def create
-      debugger
       @status = Status.new(params[:status]) do |e|
         e.user = current_user
       end

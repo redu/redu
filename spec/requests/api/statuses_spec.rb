@@ -330,9 +330,9 @@ describe "Statuses" do
   
   context "post /api/statuses/status_id/statuses Answer type" do
     before do
-      @status = Factory(:activity)
+      @status = Factory(:answer)
       @params = {'status' => {:text => "Ximbica Answer",
-        :statusable_id => @status.id, :statusable_type => "Answer" },
+        :statusable_id => @status.id, :statusable_type => @status.class },
         :oauth_token => @token, :format => 'json' }
     end
     
