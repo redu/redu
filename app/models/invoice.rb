@@ -39,6 +39,18 @@ class Invoice < ActiveRecord::Base
     self.amount + self.previous_balance
   end
 
+  # Cria o próximo invoice
+  # - Leva em conta possíveis descontos
+  def create_next_invoice
+    previous_balance = self.total if self.total < 0
+    previous_balance ||= 0
+
+    self.plan.create_invoice({ :invoice => {
+      :period_start => self.period_end.tomorrow,
+      :previous_balance => previous_balance
+    }})
+  end
+
   protected
 
   # Marca o horário em que o pagamento foi feito

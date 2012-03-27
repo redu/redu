@@ -71,10 +71,14 @@ class PackageInvoice < Invoice
   # Atualiza estado do Invoice de acordo com a data atual e a data de vencimento
   # de acordo com a seguinte regra:
   #
-  #  se Date.today > deadline
-  #   o estado vai para 'overdue' e o plano vai para 'block'
-  #  se Date.today <- deadline e Date.today >= Invoice.period_start
-  #   o estado vai para 'pending'
+  #  Para os invoices pendentes:
+  #  - se Date.today > deadline
+  #     o estado vai para 'overdue' e o plano vai para 'block'
+  #  - se Date.today <- deadline e Date.today >= Invoice.period_start
+  #     o estado vai para 'pending'
+  #
+  #   Para os invoices pagos:
+  #   - Se já passou o período do invoice, o próximo é criado
   #
   # Caso a opção :block_plan = false o plano não é bloqueado quando o Invoice
   # está vencido (overdue).
@@ -90,6 +94,10 @@ class PackageInvoice < Invoice
       elsif Date.today >= i.period_start && Date.today <= i.threshold_date
         i.pend!
       end
+    end
+
+    PackageInvoice.paid.each do |i|
+      i.create_next_invoice if i.period_end < Date.today
     end
   end
 end

@@ -64,6 +64,18 @@ describe PackageInvoice do
         PackageInvoice.refresh_states!
       }.should_not raise_error(AASM::InvalidTransition)
     end
+
+    it "should generate next invoice" do
+      inv = Factory(:package_invoice, :period_start => Date.today - 20.days,
+                    :period_end => Date.today - 1.day)
+      inv.pend!
+      inv.pay!
+
+      PackageInvoice.refresh_states!
+
+      PackageInvoice.pending.should have(2).items
+      PackageInvoice.pending.last.should == inv.plan.invoice
+    end
   end
 
   context "states" do
@@ -235,5 +247,22 @@ describe PackageInvoice do
 
   it "always returns false to open?" do
     subject.should_not be_open
+  end
+
+  context "when creating next invoice" do
+    before do
+      subject.update_attributes(:amount => 50,
+                                :plan => Factory(:active_package_plan))
+      subject.create_next_invoice
+      @new_invoice = subject.plan.invoices.last
+    end
+
+    it "should be persisted" do
+      @new_invoice.should be_persisted
+    end
+
+    it "should have period start one day after last invoice period end" do
+      @new_invoice.period_start.should == subject.period_end.tomorrow
+    end
   end
 end

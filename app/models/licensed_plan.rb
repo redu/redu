@@ -39,11 +39,11 @@ class LicensedPlan < Plan
   end
 
   # Cria o invoice relativo a este plano. Por default, a data inicial é o hoje
-  # e a data final é o último dia do mês. Inicia com amount nil, pois este só
+  # e a data final é o 20º dia do mês. Inicia com amount nil, pois este só
   # será calculado ao final do mês, já que o seu valor depende da quantidade
   # de licenças utilizadas.
   def create_invoice(opts = {})
-    period_start = opts[:invoice].try(:delete, :period_start) || Date.today
+    period_start = opts[:invoice].try(:[], :period_start) || Date.today
     period_end = Date.new(period_start.year, period_start.month, 20)
     # Caso o period_start seja após o dia 20 do mês atual
     period_end = period_end + 1.month if period_end < period_start

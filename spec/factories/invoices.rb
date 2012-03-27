@@ -11,7 +11,7 @@ FactoryGirl.define do
     period_start Date.today
     period_end(Date.today + 15)
     amount 150.25
-    association :plan
+    association :plan, :factory => :active_package_plan
     current true
   end
 
@@ -19,6 +19,7 @@ FactoryGirl.define do
   factory :licensed_invoice do |i|
     period_start Date.today
     period_end(Date.today + 15)
+    association :plan, :factory => :active_licensed_plan
     current true
   end
 end

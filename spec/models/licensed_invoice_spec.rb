@@ -60,6 +60,19 @@ describe LicensedInvoice do
         end
       end
 
+      context "when pend! an invoice that will have a total less than zero" do
+        before do
+          subject.update_attributes(:previous_balance => - 1000)
+          subject.pend!
+        end
+
+        it "should create a new opened invoice with previous balance" do
+          subject.plan.invoice.previous_balance.should_not be_nil
+          subject.plan.invoice.previous_balance.should be < 0
+          subject.plan.invoice.previous_balance.should == subject.total
+        end
+      end
+
       context "when closing" do
         before do
           subject.close!
@@ -277,21 +290,6 @@ describe LicensedInvoice do
       end
     end
 
-    context "when creating next invoice" do
-      before do
-        @invoice.send(:create_next_invoice)
-        @new_invoice = @invoice.plan.invoices.last
-      end
-
-      it "should be persisted" do
-        @new_invoice.should be_persisted
-      end
-
-      it "should have period start one day after last invoice period end" do
-        @new_invoice.period_start.should == @invoice.period_end.tomorrow
-      end
-    end
-
     context "when duplicating licenses" do
       before do
         @new_invoice = @plan.create_invoice(:invoice => {
@@ -326,6 +324,7 @@ describe LicensedInvoice do
       @plan1.create_invoice({:invoice => {
         :period_start => from,
         :period_end => @to,
+        :previous_balance => - 300,
         :created_at => Time.now - 1.hour }
       })
       @invoice1 = @plan1.invoices.last
@@ -346,7 +345,7 @@ describe LicensedInvoice do
       (1..20).collect { Factory(:license, :invoice => @invoice2,
                                 :course => course) }
 
-      Date.stub(:today) { @to }
+      Date.stub(:today) { @to + 1.day }
       LicensedInvoice.refresh_states!
       @invoice1.reload
       @invoice2.reload
@@ -400,6 +399,11 @@ describe LicensedInvoice do
         invoice = @plan1.invoices.first
         @not_in_use_licenses.first.reload.period_end.should_not ==
           invoice.period_end
+      end
+
+      it "should have a discount" do
+        invoice = @plan1.invoices.first
+        invoice.previous_balance.should be < 0
       end
     end
 

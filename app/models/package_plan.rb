@@ -93,11 +93,15 @@ class PackagePlan < Plan
   # invoice.period_end
   # => Sat, 12 Feb 2011
   def create_invoice(opts = {})
+    period_start = opts[:invoice].try(:[], :period_start) || Date.today
+    period_end = period_start.advance(:days => 30)
+
     options = {
       :invoice => {
-      :period_start => Date.today.tomorrow,
-      :period_end => Date.today.advance(:days => 30),
-      :amount => self.price
+      :period_start => period_start,
+      :period_end => period_end,
+      :amount => self.price,
+      :description => "Fatura referente à #{period_end - period_start + 1} dias no plano #{self.name}"
     },
     :force => false
     }.deep_merge(opts)
@@ -110,8 +114,7 @@ class PackagePlan < Plan
 
   end
 
-  # Cria o primeiro invoice para os primeiros 30 dias mas dobra seu valor
-  # (correspondente a taxa de setup)
+  # Cria o primeiro invoice para os primeiros 30 dias + a taxa de adesão
   def create_invoice_and_setup
     create_invoice(:invoice => {
       :amount => self.price + (self.membership_fee || 0),

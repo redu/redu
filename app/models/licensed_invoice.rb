@@ -58,6 +58,13 @@ class LicensedInvoice < Invoice
                                     :course => course)
   end
 
+  # Cria o próximo invoice com todas as licenças relativas aos usuários atuais
+  def create_next_invoice
+    new_invoice = super
+    self.replicate_licenses_to(new_invoice)
+  end
+
+
   # Atualiza os estados dos invoices
   # - Para os abertos, passa para pending, caso a contagem o cálculo do
   #   amount já possa ser feito
@@ -65,7 +72,7 @@ class LicensedInvoice < Invoice
   #   ou se apenas o reenvio do email deve ser feito
   def self.refresh_states!
     LicensedInvoice.open.each do |i|
-      i.pend! if i.period_end <= Date.today
+      i.pend! if i.period_end < Date.today
     end
 
     LicensedInvoice.pending.each do |i|
@@ -94,14 +101,6 @@ class LicensedInvoice < Invoice
     self.update_attributes(:amount => amount)
   end
 
-  # Cria o próximo invoice com todas as licenças relativas aos usuários atuais
-  def create_next_invoice
-    new_invoice = self.plan.create_invoice({:invoice => {
-      :period_start => self.period_end.tomorrow }
-    })
-    self.replicate_licenses_to(new_invoice)
-  end
-
   # Duplica todas as licenças em uso para o invoice passado como parâmetro
   def replicate_licenses_to(invoice)
     self.licenses.in_use.each do |l|
@@ -113,7 +112,7 @@ class LicensedInvoice < Invoice
     end
   end
 
-  # Atualiza as licenças do invoice para terem um period_end
+  # Atualiza as licenças em uso do invoice para terem um period_end
   def set_licenses_period_end
     License.update_all(["period_end = ? ", self.period_end],
                        ["id IN (?)", self.licenses.in_use.collect(&:id)])
