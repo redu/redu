@@ -525,68 +525,6 @@
   display: block; 
 }
 
-.invite-button {
-  width: 150px;
-  height: 90px;
-  font-size: 12px; 
-  color: rgb(255, 255, 255);
-  font-family: arial, sans-serif;
-  background-color: rgb(115,195,230); /* Old browsers */
-  border: solid 1px rgb(21, 138, 196);
-  font-weight: bold;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-.invite-button .icon {
-  background: url("../images/new/icones-p.png") -320px -3200px no-repeat;
-  content: "";
-  width: 50px;
-  height: 34px;
-  display: block;
-  clear: both;
-  text-indent: -9999px;
-  margin: 0 auto 2px;
-}
-
-.borderradius .invite-button {
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px; 
-}
-
-.cssgradients .invite-button {
-  background: -moz-linear-gradient(top,  rgb(115,195,230) 0%, rgb(76,172,213) 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(115,195,230)), color-stop(100%,rgb(76,172,213))); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top,  rgb(115,195,230) 0%,rgb(76,172,213) 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top,  rgb(115,195,230) 0%,rgb(76,172,213) 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  rgb(115,195,230) 0%,rgb(76,172,213) 100%); /* IE10+ */
-  background: linear-gradient(top,  rgb(115,195,230) 0%,rgb(76,172,213) 100%); /* W3C */
-}  
-
-.cssgradients .invite-button:hover {
-  background: -moz-linear-gradient(top,  rgb(115,195,230) 0%, rgb(21,138,196) 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(115,195,230)), color-stop(100%,rgb(21,138,196))); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top,  rgb(115,195,230) 0%,rgb(21,138,196) 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top,  rgb(115,195,230) 0%,rgb(21,138,196) 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  rgb(115,195,230) 0%,rgb(21,138,196) 100%); /* IE10+ */
-  background: linear-gradient(top,  rgb(115,195,230) 0%,rgb(21,138,196) 100%); /* W3C */
-}  
-
-.invite-button {
-  background-color: rgb(76, 172, 213);
-}
-
-.boxshadow .invite-button {
-  -webkit-box-shadow: inset 1px 1px 0px 0px rgb(115, 195, 230),inset -1px -1px 0px 0px rgb(115, 195, 230);
-  -moz-box-shadow: inset 1px 1px 0px 0px rgb(115, 195, 230),inset -1px -1px 0px 0px rgb(115, 195, 230);
-  box-shadow: inset 1px 1px 0px 0px rgb(115, 195, 230),inset -1px -1px 0px 0px rgb(115, 195, 230);
-}
-
-.textshadow .invite-button {
-  text-shadow: 0px -1px 0px rgb(21, 138, 196);
-}
-
 .textshadow .concave-form .concave-input,
 .textshadow .concave-form textarea {
   text-shadow: 0px 1px 0px white;
