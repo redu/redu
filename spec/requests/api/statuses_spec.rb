@@ -332,11 +332,11 @@ describe "Statuses" do
     before do
       @status = Factory(:activity)
       @params = {'status' => {:text => "Ximbica Answer",
-        :statusable_id => @status.id, :statusable_type => @status.class },
+        :statusable_id => @status.id, :statusable_type => "Answer" },
         :oauth_token => @token, :format => 'json' }
     end
     
-    xit "should return status 201 when successful" do
+    it "should return status 201 when successful" do
       @params['status'][:type] = "Answer"
       post "/api/statuses/#{@status.id}/answers", @params
       
