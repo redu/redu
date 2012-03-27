@@ -78,6 +78,30 @@ describe PackageInvoice do
     end
   end
 
+  context " when refreshing paid invoices" do
+    before do
+      @current_invoices = (1..3).collect do
+        attrs = {
+          :period_start => Date.today - 60.days,
+          :period_end => Date.today - 35.days
+        }
+        invoice = Factory(:package_invoice)
+        invoice.update_attributes(attrs)
+        invoice.pend!
+        invoice.pay!
+
+        inv = invoice.plan.create_invoice(:invoice => attrs)
+        inv.pend!
+        inv.pay!
+      end
+    end
+
+    it "should take in count only current ones" do
+      PackageInvoice.refresh_states!
+      PackageInvoice.pending.should have(@current_invoices.size).items
+    end
+  end
+
   context "states" do
     [:close!, :pend!, :overdue!, :pay!].each do  |attr|
       it "responds to #{attr}" do
