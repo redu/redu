@@ -13,22 +13,20 @@ class AuthenticationsController < ApplicationController
         @user_session.save
       end
       flash[:notice] = t :thanks_youre_now_logged_in
-      redirect_to home_path
+      redirect_to home_user_path(user)
     else
       # Usuário não cadastrado.
-      user = User.new
+      user = Authentication.build_user(auth)
       user.authentications.build(:provider => auth['provider'],
                                  :uid => auth['uid'])
-      user.apply_omniauth!(auth)
-
       if user.save
         # Usuário criado com sucesso.
         flash[:notice] = t :thanks_youre_now_logged_in
-        redirect_to home_path
+        redirect_to home_user_path(user)
       else
         # Usuário não foi criado.
-        flash[:notice] = "Não foi possível logar porque" +
-                         user.errors.first.second.to_s
+        @erro = user.errors.first.second.to_s
+        flash[:notice] = "#{t :impossible_connect_fb}#{@erro}"
         redirect_to home_path
       end
     end

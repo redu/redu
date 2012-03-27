@@ -58,4 +58,17 @@ Redu::Application.configure do
 
   # Só converte os 5 primeiros segundos (grátis)
   config.zencoder[:test] = 1
+
+  # Ativa o modo de testes do OmniAuth.
+  OmniAuth.config.test_mode = true
+
+  # Configura o mockup do OmniAuth.
+  OmniAuth.config.mock_auth[:facebook] = {
+    :provider => 'facebook',
+    :uid => '123545',
+    :info => {:email => 'user@example.com',
+      :'first_name' => 'Some',
+      :'last_name' => 'Userville'
+    }
+  }
 end

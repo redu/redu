@@ -613,27 +613,6 @@ class User < ActiveRecord::Base
     self.lectures.collect{ |lecture| lecture.subject_id }
   end
 
-  def apply_omniauth!(omniauth)
-    info = omniauth['info']
-    self.email = info['email']
-    self.reset_password
-    self.tos = '1'
-
-    # Atualiza dados do usuário de acordo com a rede social provedora.
-    case omniauth[:provider]
-    when 'facebook'
-      self.login = get_login_from_facebook_nickname(info) 
-      self.first_name = info['first_name']
-      self.last_name = info['last_name']
-      if info['image']
-        # Atualiza o avatar do usuário de acordo com seu avatar no Facebook (se não for o default).
-        if info['image'] != "http://graph.facebook.com/100002476817463/picture?type=square"
-          self.avatar = open(info['image'])
-        end
-      end
-    end
-  end
-
   protected
 
   def activate_before_save
@@ -661,24 +640,6 @@ class User < ActiveRecord::Base
     new_password = ""
     1.upto(len) { |i| new_password << chars[rand(chars.size-1)] }
     return new_password
-  end
-  
-  def get_login_from_facebook_nickname(info_hash)
-    login = info_hash['nickname']
-    # Se o usuário não tiver um nickname no fb
-    if !login
-      # Gera login a partir de nome e sobrenome
-      login = info_hash['first_name'] + info_hash['last_name']
-      login = login.delete(' ').parameterize
-      # Verifica se já existe um login
-      n = 1
-      while User.find_by_login(login) do
-        login = login + n.to_s
-        n = n + 1
-      end
-    end
-
-    login
   end
 
 end

@@ -2,8 +2,10 @@
 
 FactoryGirl.define do
   factory :authentication do
-      user_id 1
-      provider "MyString"
-      uid "MyString"
+      association :user
+      provider "facebook"
+      sequence :uid do |n|
+        "JIOjwqfqwfj#{n}"
+      end
     end
 end
