@@ -1,8 +1,20 @@
 module Api
   class StatusesController < Api::ApiController
+  
     def show
       @status = Status.find(params[:id])
 
+      respond_with(:api, @status)
+    end
+
+    def create
+      @status = Status.new(params[:status]) do |e|
+        e.user = current_user
+#      @status.type = params[:status][:type]
+      end
+
+      @status.save
+      
       respond_with(:api, @status)
     end
     
@@ -34,6 +46,6 @@ module Api
           Status.where(:user_id => User.find(params[:user_id]))
       end
     end
-    
+        
   end
 end
