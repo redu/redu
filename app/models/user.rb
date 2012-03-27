@@ -178,27 +178,6 @@ class User < ActiveRecord::Base
     u && u.authenticated?(password) && u.update_last_login ? u : nil
   end
 
-  def apply_omniauth!(omniauth)
-    info = omniauth['info']
-    self.email = info['email']
-    self.reset_password
-    self.tos = '1'
-
-    # Atualiza dados do usuário de acordo com a rede social provedora.
-    case omniauth[:provider]
-    when 'facebook'
-      self.login = get_login_from_facebook_nickname(info) 
-      self.first_name = info['first_name']
-      self.last_name = info['last_name']
-      if info['image']
-        # Atualiza o avatar do usuário de acordo com seu avatar no Facebook (se não for o default).
-        if info['image'] != "http://graph.facebook.com/100002476817463/picture?type=square"
-          self.avatar = open(info['image'])
-        end
-      end
-    end
-  end
-
   def self.encrypt(password, salt)
     Digest::SHA1.hexdigest("--#{salt}--#{password}--")
   end
@@ -632,6 +611,27 @@ class User < ActiveRecord::Base
 
   def subjects_id
     self.lectures.collect{ |lecture| lecture.subject_id }
+  end
+
+  def apply_omniauth!(omniauth)
+    info = omniauth['info']
+    self.email = info['email']
+    self.reset_password
+    self.tos = '1'
+
+    # Atualiza dados do usuário de acordo com a rede social provedora.
+    case omniauth[:provider]
+    when 'facebook'
+      self.login = get_login_from_facebook_nickname(info) 
+      self.first_name = info['first_name']
+      self.last_name = info['last_name']
+      if info['image']
+        # Atualiza o avatar do usuário de acordo com seu avatar no Facebook (se não for o default).
+        if info['image'] != "http://graph.facebook.com/100002476817463/picture?type=square"
+          self.avatar = open(info['image'])
+        end
+      end
+    end
   end
 
   protected

@@ -2,9 +2,6 @@ require 'spec_helper'
 require 'authlogic/test_case'
 include Authlogic::TestCase
 
-# Omniauth testing.
-require 'omniauth-facebook'
-
 describe SessionsController do
   before do
     @user = Factory(:user)

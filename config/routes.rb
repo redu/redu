@@ -25,8 +25,11 @@ Redu::Application.routes.draw do
   match '/signup' => 'users#new', :as => :signup
   match '/logout' => 'sessions#destroy', :as => :logout
 
+  # Authentications
+  resources :authentications, :only => [:create]
   match '/auth/:provider/callback' => 'authentications#create'
   match '/auth/failure' => 'authentications#fallback'
+  get 'auth/facebook', :as => :facebook_authentication
 
   # recover routes
   match '/forgot_password' => 'users#forgot_password', :as => :forgot_password
@@ -40,9 +43,6 @@ Redu::Application.routes.draw do
   match '/about' => 'base#about', :as => :about
   match '/faq' => 'base#faq', :as => :faq
   match 'contact' => 'base#contact', :as => :contact
-
-  # Authentications
-  resources :authentications, :only => [:create]
 
   # Space
   resources :spaces, :except => [:index] do

@@ -7,8 +7,13 @@ class AuthenticationsController < ApplicationController
 
     if authentication
       # Usuário cadastrado.
+      user = authentication.user
+      unless current_user
+        @user_session = UserSession.new(user)
+        @user_session.save
+      end
       flash[:notice] = t :thanks_youre_now_logged_in
-      sign_in_and_redirect(authentication.user)
+      redirect_to home_path
     else
       # Usuário não cadastrado.
       user = User.new
@@ -19,7 +24,7 @@ class AuthenticationsController < ApplicationController
       if user.save
         # Usuário criado com sucesso.
         flash[:notice] = t :thanks_youre_now_logged_in
-        sign_in_and_redirect(user)
+        redirect_to home_path
       else
         # Usuário não foi criado.
         flash[:notice] = "Não foi possível logar porque" +
@@ -30,18 +35,8 @@ class AuthenticationsController < ApplicationController
   end
   
   def fallback
-    flash[:notice] = "Para logar com Facebook, você precisa permitir o Redu."
+    flash[:notice] = t :you_need_give_us_access_to_your_facebook_data
     redirect_to home_path
-  end
-
-  private
-
-  def sign_in_and_redirect(user)
-    unless current_user
-      @user_session = UserSession.new(User.find_by_single_access_token(user.single_access_token))
-      @user_session.save
-    end
-    redirect_to user_path(user)
   end
 
 end
