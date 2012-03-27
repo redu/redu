@@ -19,7 +19,7 @@ describe LicensedInvoice do
       should be_open
     end
 
-    [:state, :pend!, :pay!, :overdue!].each do |attr|
+    [:state, :pend!, :pay!, :overdue!, :close!].each do |attr|
       it "should respond_to #{attr}" do
         should respond_to attr
       end
@@ -28,21 +28,54 @@ describe LicensedInvoice do
     context "when open" do
       before do
         UserNotifier.deliveries = []
-
-        subject.pend!
+        (1..5).collect { Factory(:license, :period_end => nil,
+                                 :invoice => subject) }
       end
 
-      it "should change to pending" do
-        should be_pending
+      context "when pend!" do
+        before do
+          subject.pend!
+        end
+
+        it "should change to pending" do
+          should be_pending
+        end
+
+        it "should calculate the amount" do
+          subject.amount.should_not be_nil
+        end
+
+        it "should create a new opened invoice" do
+          subject.plan.invoice.should_not == subject
+          subject.plan.invoice.should be_open
+        end
+
+        it "should set invoice's licenses period end" do
+          subject.licenses.reload.in_use.should be_empty
+        end
+
+        it "should send an email" do
+          UserNotifier.deliveries.size.should == 1
+          UserNotifier.deliveries.last.body.should =~ /com pagamento pendente/
+        end
       end
 
-      it "should calculate the amount" do
-        subject.amount.should_not be_nil
-      end
+      context "when closing" do
+        before do
+          subject.close!
+        end
 
-      it "should send an email" do
-        UserNotifier.deliveries.size.should == 1
-        UserNotifier.deliveries.last.body.should =~ /com pagamento pendente/
+        it "should change to closed" do
+          subject.should be_closed
+        end
+
+        it "should calculate the amount" do
+          subject.amount.should_not be_nil
+        end
+
+        it "should set invoice's licenses period end" do
+          subject.licenses.reload.in_use.should be_empty
+        end
       end
     end
 

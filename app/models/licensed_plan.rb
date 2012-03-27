@@ -64,4 +64,22 @@ class LicensedPlan < Plan
   def create_invoice_and_setup
     self.create_invoice
   end
+
+  # Efetua setup necessário à migração.
+  # - Cria as licenças relativas aos usuários dos cursos.
+  #
+  # - Para invocá-lo, é mandatório que o plano já possua um invoice.
+  def setup_for_migration
+    assocs = if self.billable.is_a? Environment
+      self.billable.courses.collect do |c|
+        c.user_course_associations.approved
+      end.flatten
+    elsif self.billable.is_a? Course
+      self.billable.user_course_associations.approved
+    end
+
+    assocs.each do |uca|
+      self.invoice.create_license(uca.user, uca.role, uca.course)
+    end
+  end
 end

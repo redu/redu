@@ -33,6 +33,12 @@ class Invoice < ActiveRecord::Base
     self.send_pending_notice
   end
 
+  # Calcula o total do Invoice (levando em conta possíveis descontos
+  # ou adições)
+  def total
+    self.amount + self.previous_balance
+  end
+
   protected
 
   # Marca o horário em que o pagamento foi feito

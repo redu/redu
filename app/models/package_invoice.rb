@@ -22,7 +22,7 @@ class PackageInvoice < Invoice
   end
 
   aasm_event :close do
-    transitions :to => :closed, :from => [:pending, :overdue]
+    transitions :to => :closed, :from => [:pending, :waiting]
   end
 
   aasm_event :pay do
@@ -43,15 +43,6 @@ class PackageInvoice < Invoice
     }.merge(item_options)
   end
 
-  # Calcula o total do Invoice (levando em conta o desconto e sem valores negativos)
-  def total
-    if self.amount >= self.discount
-      self.amount - self.discount
-    else
-      0
-    end
-  end
-
   # Data limite para o pagamento
   def threshold_date
     self.period_start + Invoice::OVERDUE_DAYS
@@ -63,8 +54,12 @@ class PackageInvoice < Invoice
     msg = "Fatura N. #{self.id} referente ao período de #{self.period_start} a " +
     "#{self.period_end} no plano #{self.plan.name}"
 
-    discount_msg = ". Com desconto de R$ #{self.discount.round(2)}"
-    msg << discount_msg if self.discount > 0
+    discount_or_addition_msg = if self.previous_balance < 0
+       ". Com desconto de R$ #{self.previous_balance.round(2)}"
+    elsif self.previous_balance > 0
+      ". Com adição de R$ #{self.previous_balance.round(2)}"
+    end
+    msg << discount_or_addition_msg if discount_or_addition_msg
 
     return msg
   end

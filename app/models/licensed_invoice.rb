@@ -21,6 +21,7 @@ class LicensedInvoice < Invoice
   aasm_state :paid, :after_enter => [:register_time,
                                      :send_confirmation_and_unlock_plan]
   aasm_state :overdue, :enter => :send_overdue_notice
+  aasm_state :closed, :enter => [:calculate_amount!, :set_licenses_period_end]
 
   aasm_event :pend do
     transitions :to => :pending, :from => [:open, :pending]
@@ -34,6 +35,10 @@ class LicensedInvoice < Invoice
     transitions :to => :overdue, :from => [:pending]
   end
 
+  aasm_event :close do
+    transitions :to => :closed, :from => [:open]
+  end
+
   # Data limite para o pagamento
   def threshold_date
     self.period_end + Invoice::OVERDUE_DAYS
@@ -41,6 +46,16 @@ class LicensedInvoice < Invoice
 
   def generate_description
     msg = "#{self.plan.name} - Licença #{self.plan.price} - Capacidade de Armazenamento #{self.plan.file_storage_limit}"
+  end
+
+  def create_license(user, role, course)
+    self.licenses << License.create(:name => user.display_name,
+                                    :login => user.login,
+                                    :email => user.email,
+                                    :period_start => DateTime.now,
+                                    :role => role,
+                                    :invoice => self,
+                                    :course => course)
   end
 
   # Atualiza os estados dos invoices
@@ -61,16 +76,6 @@ class LicensedInvoice < Invoice
         i.deliver_pending_notice
       end
     end
-  end
-
-  def create_license(user, role, course)
-    self.licenses << License.create(:name => user.display_name,
-                                    :login => user.login,
-                                    :email => user.email,
-                                    :period_start => DateTime.now,
-                                    :role => role,
-                                    :invoice => self,
-                                    :course => course)
   end
 
   protected

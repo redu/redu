@@ -8,6 +8,7 @@ describe Invoice do
   [:period_start, :period_end].each do |attr|
     it { should validate_presence_of attr }
   end
+  it { should respond_to :previous_balance }
   it { should_not allow_mass_assignment_of :state }
 
   context "finder" do
@@ -67,4 +68,9 @@ describe Invoice do
     end
   end
 
+  it "should return the total value" do
+    subject.update_attributes(:amount => BigDecimal.new("45"),
+                              :previous_balance => 10)
+    subject.total.should == BigDecimal.new("55")
+  end
 end

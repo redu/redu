@@ -7,7 +7,6 @@ describe PackageInvoice do
 
   it { should respond_to :threshold_date }
   it { should respond_to :description }
-  it { should respond_to :discount }
   it { should validate_presence_of :amount }
 
 
@@ -154,18 +153,6 @@ describe PackageInvoice do
         UserNotifier.deliveries = []
       end
 
-      it "closes" do
-        expect {
-          subject.close!
-        }.should change(subject, :state).to("closed")
-      end
-
-      it "pays" do
-        expect {
-          subject.close!
-        }.should change(subject, :state).to("closed")
-      end
-
       it "stays on same stage if overdue again" do
         expect {
           subject.overdue!
@@ -222,14 +209,14 @@ describe PackageInvoice do
 
   context "when giving a discount" do
     before do
-      subject.update_attribute(:discount, 10.0)
+      subject.update_attribute(:previous_balance, -10.0)
     end
 
     #FIXME o pagseguro oferece um campo para desconto que o Gem não suporta
     it "should discount from amount" do
       item = subject.to_order_item
 
-      item[:price].should == subject.amount - subject.discount
+      item[:price].should == subject.amount + subject.previous_balance
     end
 
     it "says something about it" do
