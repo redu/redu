@@ -1708,10 +1708,18 @@
   background: url("../images/new/icons-small.png") -160px -1920px no-repeat;
 }
 
-.icon-twitter_16_18 { background-position:  -80px -1920px }
+.icon-twitter_16_18 { background-position: -80px -1920px }
 .icon-twitter_16_18-before:before {
   content: "";
   width: 16px;
   height: 18px;
   background: url("../images/new/icons-small.png") -80px -1920px no-repeat;
+}
+
+.invite-contact_32_50 { background-position: -320px -3200px }
+.invite-contact_32_50-before:before {
+  content: "";
+  width: 50px;
+  height: 32px;
+  background: url("../images/new/icons-small.png") -320px -3200px no-repeat;
 }
