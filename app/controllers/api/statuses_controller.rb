@@ -1,6 +1,6 @@
 module Api
   class StatusesController < Api::ApiController
-  
+
     def show
       @status = Status.find(params[:id])
 
@@ -10,14 +10,13 @@ module Api
     def create
       @status = Status.new(params[:status]) do |e|
         e.user = current_user
-#      @status.type = params[:status][:type]
       end
 
       @status.save
-      
+
       respond_with(:api, @status)
     end
-    
+
     def index
       @statuses = statuses
 
@@ -32,20 +31,18 @@ module Api
 
       respond_with(:api, @statuses)
     end
-    
+
     protected
-    
+
     def statuses
       if  params[:space_id]
         Status.where(:statusable_id => Space.find(params[:space_id]))
-        
       elsif params[:lecture_id]
         Status.where(:statusable_id => Lecture.find(params[:lecture_id]))
-        
       else
-          Status.where(:user_id => User.find(params[:user_id]))
+        Status.where(:user_id => User.find(params[:user_id]))
       end
     end
-        
+
   end
 end
