@@ -27,6 +27,8 @@ class Authentication < ActiveRecord::Base
     user
   end
 
+  private
+
   def self.get_login_from_facebook_nickname(info_hash)
     login = info_hash['nickname']
 
