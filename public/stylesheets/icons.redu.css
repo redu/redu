@@ -1255,12 +1255,16 @@
   background: url("../images/new/icons-small.png") -240px -2320px no-repeat;
 }
 
-.icon-question-blue_12_12 { background-position: -400px -2160px; }
+.icon-question-blue_12_12 {
+  background-position: -400px -2160px;
+  padding: 0px 6px;
+  cursor: pointer;
+}
+
 .icon-question-blue_12_12-before:before {
   content: "";
   width: 12px;
   height: 12px;
-  background-position: -400px -2160px;
   padding: 0px 6px;
   cursor: pointer;
   background: url("../images/new/icons-small.png") -400px -2160px no-repeat;

@@ -7509,7 +7509,8 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 	margin-right: 28px;
 }
 
-.plan-panel .options-plan .concave-form .columns, .concave-form .single-column {
+.plan-panel .options-plan .concave-form .columns,
+.plan-panel .options-plan .concave-form .single-column {
 	float: none;
 }
 
@@ -7718,7 +7719,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   color: rgb(21, 138, 196);
   background: rgb(30,87,153); /* Old browsers */
 }
- 
+
 .cssgradients .new-post .thumbnail .last:hover,
 .cssgradients .new-post .thumbnail .next:hover,
 .cssgradients .new-post .thumbnail .remove:hover {
@@ -7766,7 +7767,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   float: none;
   height: 34px;
   padding-left: 10px;
-  width: 32px;  
+  width: 32px;
 }
 
 .responses .comment-title {
@@ -7796,14 +7797,14 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   font-size: 11px;
 }
 
-.textshadow .local-nav .session .notification { 
+.textshadow .local-nav .session .notification {
   text-shadow: 0px 1px 0px rgb(255, 255, 255);
 }
 
 .borderradius .local-nav .session .notification {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
-  border-radius: 3px; 
+  border-radius: 3px;
 }
 
 /* Botão convidar amigos */
@@ -7823,7 +7824,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .borderradius .invite-button {
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
-  border-radius: 10px; 
+  border-radius: 10px;
 }
 
 .boxshadow .invite-button {

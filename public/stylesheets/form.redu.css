@@ -8,6 +8,10 @@
   color: black;
 }
 
+.concave-form .concave-label {
+  padding-top: 7px;
+}
+
 .concave-form {
   clear: both;
   overflow: hidden;
@@ -258,11 +262,11 @@
   .concave-cancel:hover {
     text-decoration: none;
   }
-	
+
 .concave-important:hover {
-  color: rgb(95, 192, 128);	
+  color: rgb(95, 192, 128);
 }
-	
+
   .borderradius .concave-clean,
   .borderradius .concave-remove,
   .borderradius .concave-button,
@@ -499,7 +503,27 @@
 
 /* For the jquery.placeholder. */
 
-.ui-placeholder-wrap {
+::-webkit-input-placeholder {
+  font-style: italic;
+  font-size: 11px;
+}
+
+:-moz-placeholder {
+  font-style: italic;
+  font-size: 11px;
+}
+
+::-ms-input-placeholder {
+  font-style: italic;
+  font-size: 11px;
+}
+
+.concave-form .ui-placeholder {
+  font-style: italic;
+  font-size: 11px;
+}
+
+.concave-form .ui-placeholder-wrap {
   position: relative;
   display: inline-block;
   -moz-user-select: -moz-none;
@@ -508,21 +532,12 @@
   user-select: none;
 }
 
-.ui-placeholder {
+.concave-form .ui-placeholder {
   position: absolute;
-  top: 30px;
-  left: 173px;
+  top: 28px;
+  left: 10px;
   display: inline-block;
-  vertical-align: middle;
-  overflow: hidden;
-  font-family: Arial, sans-serif;
-  font-size: 11px;
-  font-style: italic;
   color: rgb(179, 179, 179);
-}
-
-.ui-placeholder-wrap { 
-  display: block; 
 }
 
 .textshadow .concave-form .concave-input,

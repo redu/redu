@@ -1,20 +1,14 @@
 <div id="login-form">
-  <%= form_for @recovery_email, :url =>  {:action => :recover_username, :method => "post"}, :remote => true, :html => {:class => "concave-form recover-blog"} do |f| %>
+  <h2 class="forgot-title">Esqueceu o <span class="forgotten-information">login</span>?</h2>
+  <%= form_for @recovery_email, :url =>  {:action => :recover_username, :method => "post"}, :remote => true, :html => {:class => "concave-form recover-login-form"} do |f| %>
     <fieldset class="body-login" >
-      <h2 class="forgot-login">Esqueceu o <q class="name-login">login</q> ?</h2>
-        <div class="confirmation-msg" id="recovered-username" style="display:none">
-          <h2 class="aba-top"></h2>
-          <div class="sucess-email">
-            <h3 class="text-confirmation" id="username-text">
-            Um e-mail com o login esquecido foi enviado para a sua caixa de entrada (<q class="client-email" id="client-email1">endereço@email.com.br</q>)            
-            </h3>
-          </div>
-        </div>
-      <div class="login-box grid_9 omega alfa" id="password-box">
-      <%= concave_error_messages_for @recovery_email %>
-        <strong class="appear-tiptip icon-interrog-blue_12_12-before tiptip-lite" title="Este endereço de e-mail deve ser o mesmo que você cadastrou no Redu. Mantenha-o atualizado."></strong>
-        <%= f.label "E-mail:", :class => "input-email" %>
-        <%= f.text_field "email", :placeholder => "Digite o seu endereço de e-mail cadastrado no Redu", :html => { :class => "concave-input registered-email" } %>
+      <div class="confirmation-msg" id="recovered-username" style="display:none">
+        <p id="username-text">Um e-mail com o login esquecido foi enviado para a sua caixa de entrada (<span class="client-email" id="client-email1">endereço@email.com.br</span>)</p>
+      </div>
+      <div id="password-box">
+        <%= concave_error_messages_for @recovery_email %>
+        <%= f.text_field :email, :placeholder => "Digite o seu endereço de e-mail cadastrado no Redu", :class => "registered-email" %>
+        <%= f.label :email, raw("#{ content_tag :span, "", :class => "icon-small icon-question-blue_12_12 tiptip-left", :title => "Este endereço de e-mail deve ser o mesmo que você cadastrou no Redu. Mantenha-o atualizado." } E-mail:"), :class => "input-email" %>
         <%= concave_errors_for @recovery_email, :email %>
       </div>
       <%= f.submit "Enviar", :class => "concave-button", :id => "username" %>

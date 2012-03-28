@@ -3,7 +3,7 @@
   margin: 0;
 }
 
-body { 
+body {
   background: transparent;
 }
 
@@ -48,7 +48,7 @@ body .overlay .user-data-recovery .clearfix:after {
   padding-top: -8px;
 }
 
-.overlay .user-data-recovery .title-fieldset {
+.overlay .user-data-recovery .forgot-title {
   padding-top: 50px;
   font-family: museo-sans,arial,sans-serif;
   font-weight: 100;
@@ -58,11 +58,11 @@ body .overlay .user-data-recovery .clearfix:after {
   letter-spacing: -2px;
 }
 
-.textshadow .overlay .user-data-recovery .title-fieldset {
+.textshadow .overlay .user-data-recovery .forgot-title {
   text-shadow: 0px 1px 0px rgb(255, 255, 255);
 }
 
-.overlay .user-data-recovery .title-fieldset .forgotten-information {
+.overlay .user-data-recovery .forgot-title .forgotten-information {
   font-family: museo-slab,arial,sans-serif;
   font-weight: 900;
   letter-spacing: -4px;
@@ -88,7 +88,7 @@ body .overlay .user-data-recovery .clearfix:after {
 
 .user-data-recovery .body-login .ui-placeholder {
   left: 10px;
-  top: 10px;
+  top: 8px;
 }
 
 .user-data-recovery .body-login .ui-placeholder-wrap {
@@ -96,13 +96,10 @@ body .overlay .user-data-recovery .clearfix:after {
   float: right;
 }
 
-.overlay .user-data-recovery .separator {
-  border-top: 1px  dotted;
-  border-color: rgb(214, 214, 214);
-  margin-top: 40px;
-  clear: both;
-  text-indent: -9999px;
-  display: block;
+.user-data-recovery .recover-login-form {
+  border-bottom: 1px  dotted;
+  border-bottom-color: rgb(214, 214, 214);
+  padding-bottom: 40px;
 }
 
 .user-data-recovery .concave-form  .body-login .concave-input {
@@ -229,17 +226,6 @@ clear: both;
   text-shadow: 0px -1px 0px rgb(255, 255, 255);
 }
 
-.body-login .icon-question-blue_12_12-before:before  {
-  float: left;
-  margin-left: 30px;
-}
-
-.appear-tiptip {
-  float: left;
-  cursor: pointer;
-  text-indent: -9999px;
-}
-
 button {
   border: 0;
   padding: 0;
@@ -281,8 +267,8 @@ button::-moz-focus-inner {
   margin-left: 40px;
 }
 
-.icon-interrog-blue_12_12-before {
-  float: left;
+.user-data-recovery .body-login .icon-question-blue_12_12 {
+  margin-right: 10px;
 }
 
 .email-label {
@@ -290,12 +276,9 @@ button::-moz-focus-inner {
 }
 
 .user-data-recovery .concave-form .concave-label {
-  clear: none;
-  font-size: 12px;
-  width: 40px;
+  float: right;
+  width: 62px;
   margin-top: 0px;
-  margin-left: 45px;
-  height: 0px;
 }
 
 .error-500 .concave-form .concave-label {
@@ -303,13 +286,12 @@ button::-moz-focus-inner {
   margin-top: 20px;
 }
 
-.user-data-recovery .thank-you,
-.user-data-recovery span {
+.user-data-recovery .thank-you {
   padding: 0px;
 }
 
 .user-data-recovery .concave-form .errors_on_field {
-  margin-left: 110px;
+  margin-left: 170px;
   display: block;
   clear: both;
 }
