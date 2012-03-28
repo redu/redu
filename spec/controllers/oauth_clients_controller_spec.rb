@@ -136,4 +136,45 @@ describe OauthClientsController do
     end
   end
 
+  describe "PUT update" do
+    before do
+      @client_application = @user.client_applications.create! @params[:client_application]
+      put :update, {:id => @client_application.to_param, :client_application => {'name' => 'UpdatedClient'} }.merge!(@locale)
+    end
+
+    context "with valid params" do
+      it "updates the requested client application" do
+        ClientApplication.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
+        put :update, {:id => @client_application.to_param, :client_application => {'these' => 'params'} }.merge!(@locale)
+      end
+
+      it "assigns the requested client_application as @client_application" do
+        assigns(:client_application).should eq(@client_application)
+      end
+
+      it "redirects to the client_application" do
+        response.should redirect_to(oauth_client_path(@client_application))
+      end
+
+      it "has a 302 (redirect) status code" do
+        response.code.should eq("302")
+      end
+    end
+
+    context "with invalid params" do
+      before do
+        ClientApplication.any_instance.stub(:save) { false }
+      end
+
+      it "reassigns the client_application as @client_application" do
+        assigns(:client_application).should eq(@client_application)
+      end
+
+      it "re-renders the edit template" do
+        put :update, {:id => @client_application.to_param, :client_application => {'url' => 'url invalida'} }.merge!(@locale)
+        response.should render_template("edit")
+      end
+    end
+  end
+
 end
