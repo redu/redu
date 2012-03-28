@@ -23,10 +23,12 @@
         <a href="mailto:<%= @user.email %>" class="plain-text"><%= @user.email %></a>
       </td>
     </tr>
+    <% if @user.birthday %>
     <tr>
       <td class="field-cell">Nascimento:</td>
       <td class="value-cell"><%= l @user.birthday %></td>
     </tr>
+    <% end %>
     <tr>
       <td class="field-cell">Login:</td>
       <td class="value-cell"><%= @user.login %></td>
