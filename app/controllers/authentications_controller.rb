@@ -6,7 +6,7 @@ class AuthenticationsController < ApplicationController
                                                              auth[:uid])
 
     if authentication
-      # Usuário cadastrado.
+      # Autenticação já existe.
       user = authentication.user
       unless current_user
         @user_session = UserSession.new(user)
@@ -15,18 +15,31 @@ class AuthenticationsController < ApplicationController
       flash[:notice] = t :thanks_youre_now_logged_in
       redirect_to home_user_path(user)
     else
-      # Usuário não cadastrado.
-      user = Authentication.build_user(auth)
-      user.authentications.build(:provider => auth['provider'],
-                                 :uid => auth['uid'])
+      # Autenticação inexistente.
+      user = User.find_by_email(auth[:info][:email])
+      if user
+        # Existe conta no Redu com o e-mail associado aa conta do FB.
+        user.authentications.create!(:provider => auth[:provider],
+                                           :uid => auth[:uid])
+        flash[:notice] = t :facebook_connect_account_association
+      else
+        # Não existe conta do Redu associada ao e-mail do usuário no FB. 
+        user = Authentication.build_user(auth)
+        user.authentications.build(:provider => auth[:provider],
+                                   :uid => auth[:uid])
+        flash[:notice] = t :facebook_connect_new_user
+      end
+
+      # Tenta atualizar os dados do usuário (possivelmente recém-criado).
       if user.save
-        # Usuário criado com sucesso.
-        flash[:notice] = t :thanks_youre_now_logged_in
+        @user_session = UserSession.new(user)
+        @user_session.save
+        # Usuário criado / atualizado com sucesso.
         redirect_to home_user_path(user)
       else
-        # Usuário não foi criado.
+        # Erro ao criar / atualizar usuário.
         @erro = user.errors.first.second.to_s
-        flash[:notice] = "#{t :impossible_connect_fb}#{@erro}"
+        flash[:notice] = "#{t :facebook_connect_error}#{@erro}"
         redirect_to home_path
       end
     end
