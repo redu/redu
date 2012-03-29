@@ -95,6 +95,7 @@ stylesheets:
     - public/stylesheets/form.redu.css
     - public/stylesheets/outdated-browser.css
     - public/stylesheets/landing.css
+    - public/stylesheets/fb-login.css
   cold:
     - public/stylesheets/cold.css
   print:
