@@ -1,17 +1,10 @@
-<div id="login-form">
-  <h2 class="forgot-title">Esqueceu o <span class="forgotten-information">login</span>?</h2>
-  <%= form_for @recovery_email, :url =>  {:action => :recover_username, :method => "post"}, :remote => true, :html => {:class => "concave-form recover-login-form"} do |f| %>
-    <fieldset class="body-login" >
-      <div class="confirmation-msg" id="recovered-username" style="display:none">
-        <p id="username-text">Um e-mail com o login esquecido foi enviado para a sua caixa de entrada (<span class="client-email" id="client-email1">endereço@email.com.br</span>)</p>
-      </div>
-      <div id="password-box">
-        <%= concave_error_messages_for @recovery_email %>
-        <%= f.text_field :email, :placeholder => "Digite o seu endereço de e-mail cadastrado no Redu", :class => "registered-email" %>
-        <%= f.label :email, raw("#{ content_tag :span, "", :class => "icon-small icon-question-blue_12_12 tiptip-left", :title => "Este endereço de e-mail deve ser o mesmo que você cadastrou no Redu. Mantenha-o atualizado." } E-mail:"), :class => "input-email" %>
-        <%= concave_errors_for @recovery_email, :email %>
-      </div>
-      <%= f.submit "Enviar", :class => "concave-button", :id => "username" %>
-    </fieldset>
-  <% end %>
-</div>
+<%= form_for recover_username, :url => recover_username_path, :remote => true, :html => { :method => "post", :class => "concave-form", :id => "recover-username-form" } do |f| %>
+  <fieldset>
+    <%= concave_error_messages_for recover_username %>
+
+    <%= f.text_field :email, :placeholder => "Digite o seu endereço de e-mail cadastrado no Redu", :class => "registered-email" %>
+    <%= f.label :email, raw("#{ content_tag :span, "", :class => "icon-small icon-question-blue_12_12 tiptip-left", :title => "Este endereço de e-mail deve ser o mesmo que você cadastrou no Redu. Mantenha-o atualizado." } E-mail:"), :class => "input-email" %>
+    <%= concave_errors_for recover_username, :email %>
+    <%= f.submit "Enviar" %>
+  </fieldset>
+<% end %>

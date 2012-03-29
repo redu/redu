@@ -101,5 +101,20 @@
 .boxshadow .confirmation-msg {
   -webkit-box-shadow: 0px -1px rgba(204, 204, 204, 1);
   -moz-box-shadow: 0px -1px rgba(204, 204, 204, 1);
-  box-shadow: 0px -1px rgba(204, 204, 204, 1); 
+  box-shadow: 0px -1px rgba(204, 204, 204, 1);
 }
+
+/* removes padding in IE */
+button {
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  overflow: visible;
+}
+
+/* removes padding in Firefox */
+button::-moz-focus-inner {
+  border: none;
+  padding: 0;
+}
+

@@ -26,9 +26,10 @@ Redu::Application.routes.draw do
   match '/signup' => 'users#new', :as => :signup
   match '/logout' => 'sessions#destroy', :as => :logout
 
-  match '/recover_username_password' => 'users#recover_username_password'
-  match '/recover_username' => 'users#recover_username', :as => :recover_username
- match '/recover_password' => 'users#recover_password', :as => :recover_password
+  get '/recover_username_password' => 'users#recover_username_password',
+    :as => :recover_username_password
+  post '/recover_username' => 'users#recover_username', :as => :recover_username
+  post '/recover_password' => 'users#recover_password', :as => :recover_password
   match '/resend_activation' => 'users#resend_activation',
     :as => :resend_activation
   match '/account/edit' => 'users#edit_account', :as => :edit_account_from_email
@@ -38,7 +39,7 @@ Redu::Application.routes.draw do
   match '/about' => 'base#about', :as => :about
   match '/faq' => 'base#faq', :as => :faq
   match 'contact' => 'base#contact', :as => :contact
-  
+
   # Recovery Email
   resources :'recovery_emails'
 

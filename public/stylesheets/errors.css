@@ -41,13 +41,6 @@ html body {
   background-color: transparent;
 }
 
-.overlay {
-  min-height: 100%;
-  height: auto !important;
-  height: 100%;
-  margin: 0 auto -97px;
-}
-
 .body .clearfix:after {
   content: ".";
   display: block;
@@ -56,108 +49,6 @@ html body {
   visibility: hidden;
   margin-left: 80px;
   padding-top: -8px;
-}
-
-.overlay .body {
-  margin: 0 auto;
-}
-
-.footer {
-  background-color: gray;
-  height: 97px;
-  margin-top: 300px;
-  border-top: 1px solid white;
-  min-width: 1035px;
-}
-
-.footer .container_12 .container_16 {
-  margin-left: auto;
-  min-width: 5000px;
-}
-
-.footer-text {
-  margin: 0 auto;
-}
-
-.logo-footer a {
-  background-image: url("../images/new/redutech-low-horiz-b.png");
-  display: block;
-  width: 240px;
-  height: 70px;
-  overflow: hidden;
-  background-repeat: no-repeat;
-  float: left;
-}
-
-.menu-footer {
-  padding-left: 500px;
-  float: left;
-  list-style: none;
-  margin-top: -32px;
-}
-
-.menu-footer li  {
-  display: inline;
-}
-
-.boxshadow .menu-footer li a:hover {
-  -webkit-box-shadow:  0px -1px 0px 0px rgba(255, 255, 255, 0.1);
-  -moz-box-shadow: 0px -1px 0px 0px rgba(255, 255, 255, 0.1);
-  box-shadow: 0px -1px 0px 0px rgba(255, 255, 255, 0.1);
-}
-
-.textshadow .menu-footer li a:hover {
-  text-shadow: 0px -1px 0px rgb(21, 138, 196);
-}
-
-.menu-footer li a:hover {
-  background-color: rgb(21, 138, 196);
-  color: rgb(255, 255, 255);
-}
-
-.borderradius .menu-footer li a:hover {
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-}
-
-.push {
-  height: 97px;
-}
-
-.menu-footer li a {
-  padding: 6px;
-  float: left;
-  margin-left: 10px;
-  text-decoration: none;
-  color: rgb(77, 173, 214);
-  font-size: 12px;
-}
-
-.cnpj {
-  clear:both;
-  font-size: 10px;
-  color: rgb(179, 179, 179);
-  margin-left: 60px;
-}
-
-.cssgradients .footer {
-  background: rgb(204, 204, 204); /* Old browsers */
-  background: -moz-linear-gradient(top, rgb(204, 204, 204) 0%, rgb(240, 240, 240) 100%); /* FF3.6+ */
-  background: -webfookit-gradient(linear, left top, left bottom, color-stop(0%,rgb(204, 204, 204)), color-stop(100%,rgb(240, 240, 240))); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, rgb(204, 204, 204) 0%,rgb(240, 240, 240) 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top, rgb(204, 204, 204) 0%,rgb(240, 240, 240) 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top, rgb(204, 204, 204) 0%,rgb(240, 240, 240) 100%); /* IE10+ */
-  background: linear-gradient(top, rgb(204, 204, 204) 0%,rgb(240, 240, 240) 100%); /* W3C */
-}
-
-.cnpj, .menu-footer {
-  font-family: arial, sans-serif;
-}
-
-.textshadow .cnpj,
-.textshadow .menu-footer {
-  text-shadow: 0px -1px 0px rgb(255, 255, 255);
 }
 
 .ops-call{
@@ -303,11 +194,6 @@ html body {
   clear: both;
 }
 
-.footer,
-.push {
-clear: both;
-}
-
 .description-error .suggested-links {
   padding-top: 3px;
   list-style-type: disc;
@@ -340,7 +226,7 @@ clear: both;
   margin: 0px;
 }
 
-.overlay .error-500 .error_explanation {
+.error-500 .error_explanation {
   margin-top: 20px;
 }
 

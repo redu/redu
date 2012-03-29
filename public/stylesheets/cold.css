@@ -1,3 +1,115 @@
+/* Rodapé */
+body {
+  background: transparent;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background-image: url("../images/new/circulos-bokeh-peq.png");
+  background-repeat: no-repeat;
+}
+
+.overlay {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -97px;
+}
+
+.push {
+  height: 97px;
+}
+
+.footer,
+.push {
+  clear: both;
+}
+
+.footer {
+  background: rgb(204, 204, 204); /* Old browsers */
+  height: 97px;
+  border-top: 1px solid white;
+}
+
+.cssgradients .footer {
+  background: -moz-linear-gradient(top, rgb(204, 204, 204) 0%, rgb(240, 240, 240) 100%); /* FF3.6+ */
+  background: -webfookit-gradient(linear, left top, left bottom, color-stop(0%,rgb(204, 204, 204)), color-stop(100%,rgb(240, 240, 240))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgb(204, 204, 204) 0%,rgb(240, 240, 240) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgb(204, 204, 204) 0%,rgb(240, 240, 240) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgb(204, 204, 204) 0%,rgb(240, 240, 240) 100%); /* IE10+ */
+  background: linear-gradient(top, rgb(204, 204, 204) 0%,rgb(240, 240, 240) 100%); /* W3C */
+}
+
+.footer .logo-footer a {
+  background-image: url("../images/new/redutech-low-horiz-b.png");
+  display: block;
+  width: 240px;
+  height: 70px;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  float: left;
+  text-indent: -9999px;
+}
+
+.footer .cnpj {
+  clear: both;
+  display: block;
+  float: left;
+  font-size: 10px;
+  margin-left: 75px;
+  color: rgb(179, 179, 179);
+}
+
+.footer .menu {
+  padding-left: 500px;
+  float: left;
+  list-style: none;
+  margin-top: -32px;
+}
+
+.footer .menu li {
+  display: inline;
+}
+
+.footer .menu a {
+  padding: 6px;
+  float: left;
+  margin-left: 10px;
+  text-decoration: none;
+  color: rgb(77, 173, 214);
+  font-size: 12px;
+}
+
+.footer .menu a:hover {
+  background-color: rgb(21, 138, 196);
+  color: rgb(255, 255, 255);
+}
+
+.boxshadow .footer .menu a:hover {
+  -webkit-box-shadow:  0px -1px 0px 0px rgba(255, 255, 255, 0.1);
+  -moz-box-shadow: 0px -1px 0px 0px rgba(255, 255, 255, 0.1);
+  box-shadow: 0px -1px 0px 0px rgba(255, 255, 255, 0.1);
+}
+
+.textshadow .footer .menu a:hover {
+  text-shadow: 0px -1px 0px rgb(21, 138, 196);
+}
+
+.borderradius .footer .menu a:hover {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+.textshadow .footer .cnpj,
+.textshadow .footer .menu {
+  text-shadow: 0px -1px 0px rgb(255, 255, 255);
+}
+
+/* Página de cadastro */
 #clean {
   min-height: 600px;
   padding-top: 20px;
@@ -110,23 +222,4 @@
 
 #clean .user-registration-form {
   margin-bottom: 20px;
-}
-
-/* Comum a outros CSS */
-.replacement {
-  text-indent: -99999px;
-  overflow: hidden;
-}
-
-.flash-message {
-  padding: 15px;
-
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-}
-
-.flash-message.success {
-  background-color: #EEF6E5;
-  border: solid 1px #60BD7F;
 }

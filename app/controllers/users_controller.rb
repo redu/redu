@@ -1,8 +1,8 @@
 class UsersController < BaseController
   respond_to :html, :js
 
-  load_and_authorize_resource :except => [:recover_username_password, 
-    :recover_username, :recover_password, :resend_activation, :activate, 
+  load_and_authorize_resource :except => [:recover_username_password,
+    :recover_username, :recover_password, :resend_activation, :activate,
     :index],
     :find_by => :login
   load_resource :environment, :only => [:index], :find_by => :path
@@ -11,7 +11,7 @@ class UsersController < BaseController
   load_resource :space, :only => [:index]
 
   rescue_from CanCan::AccessDenied, :with => :deny_access
-  
+
   ## User
   def activate
     redirect_to signup_path and return if params[:id].blank?
@@ -235,32 +235,27 @@ class UsersController < BaseController
     flash[:notice] = t(:walkthrough_complete, :site => Redu::Application.config.name)
     redirect_to user_path
   end
-  
-  # FIXME
+
   def recover_username_password
-    @recovery_email = RecoveryEmail.new
+    @recover_username = RecoveryEmail.new
+    @recover_password = RecoveryEmail.new
     render :layout => 'cold'
   end
 
   def recover_username
-    return unless request.post?
-    @recovery_email = RecoveryEmail.new params[:recovery_email]
-    if @user = User.find_by_email(params[:recovery_email][:email])
+    @recover_username = RecoveryEmail.new(params[:recovery_email])
+    @user = User.find_by_email(@recover_username.email)
+
+    if @user
       UserNotifier.user_forgot_username(@user).deliver
-      #redirect_to home_path
-      #flash[:info] = t :your_username_was_emailed_to_you
-    else
-      @recovery_email = RecoveryEmail.new #invalida o e-mail
-      #flash[:error] = t :sorry_we_dont_recognize_that_email_address
     end
   end
 
   def recover_password
-    return unless request.post?
-    @recovery_email = RecoveryEmail.new params[:recovery_email]
-    @user = User.find_by_email(params[:recovery_email][:email])
+    @recover_password = RecoveryEmail.new(params[:recovery_email])
+    @user = User.find_by_email(@recover_password.email)
 
-    if @user && @user.reset_password
+    if @user.try(:reset_password)
       UserNotifier.user_reseted_password(@user).deliver
       @user.save
 
@@ -269,17 +264,10 @@ class UsersController < BaseController
       if UserSession.find
         UserSession.find.destroy
       end
-
-      #redirect_to home_path
-      #flash[:info] = t :your_password_has_been_reset_and_emailed_to_you
-    else
-      @recovery_email = RecoveryEmail.new #invalida o e-mail
-      #flash[:error] = t :sorry_we_dont_recognize_that_email_address
     end
   end
 
   def resend_activation
-    return unless request.post?
     if params[:email]
       @user = User.find_by_email(params[:email])
     else

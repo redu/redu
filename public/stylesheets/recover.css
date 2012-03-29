@@ -1,21 +1,5 @@
-/* Verificar em todo o CSS a ocorrência de seletores não utilizados, classes em português e seletores muito genéricos */
-* {
-  margin: 0;
-}
-
-body {
-  background: transparent;
-}
-
-html, body {
-  height: 100%;
-}
-
-.overlay .user-data-recovery .body-login {
-  float: right;
-}
-
-.overlay .user-data-recovery .logo-top a {
+/* Página de recuperação de login e senha */
+.user-data-recovery .logo-top a {
   background-image: url("../images/new/redu-hi-vert.png");
   display: block;
   width: 255px;
@@ -26,31 +10,9 @@ html, body {
   text-indent: -9999px;
 }
 
-body {
-  background-image: url("../images/new/circulos-bokeh-peq.png");
-  background-repeat: no-repeat;
-}
-
-body .overlay {
-  min-height: 100%;
-  height: auto !important;
-  height: 100%;
-  margin: 0 auto -97px;
-}
-
-body .overlay .user-data-recovery .clearfix:after {
-  content: ".";
-  display: block;
-  height: 0;
-  clear: both;
-  visibility: hidden;
-  margin-left: 80px;
-  padding-top: -8px;
-}
-
-.overlay .user-data-recovery .forgot-title {
-  padding-top: 50px;
-  font-family: museo-sans,arial,sans-serif;
+.user-data-recovery .forgot-title {
+  margin-top: 50px;
+  font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 100;
   font-size: 47px;
   color: rgb(115, 195, 230);
@@ -58,63 +20,14 @@ body .overlay .user-data-recovery .clearfix:after {
   letter-spacing: -2px;
 }
 
-.textshadow .overlay .user-data-recovery .forgot-title {
+.textshadow .user-data-recovery .forgot-title {
   text-shadow: 0px 1px 0px rgb(255, 255, 255);
 }
 
-.overlay .user-data-recovery .forgot-title .forgotten-information {
-  font-family: museo-slab,arial,sans-serif;
+.user-data-recovery .forgot-title .forgotten-information {
+  font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 900;
   letter-spacing: -4px;
-}
-
-.concave-form .concave-button {
-   cursor: pointer;
-   float: right;
-   font-weight: bold;
-   height: 30px;
-   padding: 0;
-   width: 70px;
-   clear: both;
-   margin: 10px 0 0 0;
-}
-
-.concave-form .input-email,
-.concave-form .input-password {
-  color: rgb(179, 179, 179);
-  font-weight: bold;
-  float: left;
-}
-
-.user-data-recovery .body-login .ui-placeholder {
-  left: 10px;
-  top: 8px;
-}
-
-.user-data-recovery .body-login .ui-placeholder-wrap {
-  display: inline;
-  float: right;
-}
-
-.user-data-recovery .recover-login-form {
-  border-bottom: 1px  dotted;
-  border-bottom-color: rgb(214, 214, 214);
-  padding-bottom: 40px;
-}
-
-.user-data-recovery .concave-form  .body-login .concave-input {
-  width: 389px;
-  float: right;
-  margin: 0px;
-}
-
-.user-data-recovery .concave-form {
-  overflow: hidden;
-  clear: none;
-}
-
-.push {
-  height: 97px;
 }
 
 .user-data-recovery .call {
@@ -128,151 +41,27 @@ body .overlay .user-data-recovery .clearfix:after {
   text-shadow: 0px 1px 0px rgb(255, 255, 255);
 }
 
-
-.footer,
-.push {
-clear: both;
-}
-
-.footer {
-  background-color: gray;
-  height: 97px;
-  margin-top: 170px;
-  border-top: 1px solid white;
-  min-width: 1035px;
-}
-
-.footer-text {
-  margin: 0 auto;
-}
-
-.logo-footer a {
-  background-image: url("../images/new/redutech-low-horiz-b.png");
-  display: block;
-  width: 240px;
-  height: 70px;
-  overflow: hidden;
-  background-repeat: no-repeat;
-  float: left;
-  text-indent: -9999px;
-}
-
-.menu-footer {
-  padding-left: 500px;
-  float: left;
-  list-style: none;
-  margin-top: -32px;
-}
-
-.footer .menu-footer li {
-  display: inline;
-}
-
-.boxshadow .footer .menu-footer a:hover {
-  -webkit-box-shadow:  0px -1px 0px 0px rgba(255, 255, 255, 0.1);
-  -moz-box-shadow: 0px -1px 0px 0px rgba(255, 255, 255, 0.1);
-  box-shadow: 0px -1px 0px 0px rgba(255, 255, 255, 0.1);
-}
-
-.textshadow .footer .menu-footer a:hover {
-  text-shadow: 0px -1px 0px rgb(21, 138, 196);
-}
-
-.footer .menu-footer a:hover {
-  background-color: rgb(21, 138, 196);
-  color: rgb(255, 255, 255);
-}
-
-.borderradius .footer .menu-footer a:hover {
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-}
-
-.footer .menu-footer a {
-  padding: 6px;
-  float: left;
-  margin-left: 10px;
-  text-decoration: none;
-  color: rgb(77, 173, 214);
-  font-size: 12px;
-}
-
-.footer .cnpj {
-  clear: both;
-  display: block;
-  float: left;
-  font-size: 10px;
-  margin-left: 75px;
-  color: rgb(179, 179, 179);
-}
-
-.cssgradients .footer {
-  background: rgb(204, 204, 204); /* Old browsers */
-  background: -moz-linear-gradient(top, rgb(204, 204, 204) 0%, rgb(240, 240, 240) 100%); /* FF3.6+ */
-  background: -webfookit-gradient(linear, left top, left bottom, color-stop(0%,rgb(204, 204, 204)), color-stop(100%,rgb(240, 240, 240))); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, rgb(204, 204, 204) 0%,rgb(240, 240, 240) 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top, rgb(204, 204, 204) 0%,rgb(240, 240, 240) 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top, rgb(204, 204, 204) 0%,rgb(240, 240, 240) 100%); /* IE10+ */
-  background: linear-gradient(top, rgb(204, 204, 204) 0%,rgb(240, 240, 240) 100%); /* W3C */
-}
-
-.cnpj, .menu-footer {
-  font-family: arial, sans-serif;
-}
-
-.textshadow .cnpj,
-  .textshadow .menu-footer {
-  text-shadow: 0px -1px 0px rgb(255, 255, 255);
-}
-
-button {
-  border: 0;
+.user-data-recovery .concave-form .concave-button {
+  height: 30px;
   padding: 0;
-  cursor: pointer;
-  overflow: visible; /* removes padding in IE */
+  width: 70px;
+  margin: 10px 0 0 0;
 }
 
-button::-moz-focus-inner {
-    /* removes padding in Firefox */
-    border: none;
-    padding: 0;
+.user-data-recovery .concave-form .ui-placeholder {
+  left: 10px;
+  top: 8px;
 }
 
-.textshadow body #tiptip_content {
-  text-shadow: 0px 0px 2px rgb(0, 0, 0):
+.user-data-recovery .concave-form .ui-placeholder-wrap {
+  float: right;
 }
 
-.boxshadow body #tiptip_content {
-  -webkit-box-shadow: 0px 3px px rgba(85 , 85, 85, 0.1);
-  -moz-box-shadow: 0px 3px px rgba(85 , 85, 85, 0.1);
-  box-shadow: 0px 3px px rgba(85 , 85, 85, 0.1);
-}
-
-.client-email {
-  font-style: italic;
-  color: rgb(179, 179, 179);
-}
-
-.textshadow .client-email {
-  text-shadow: 0px 1px 0px rgb(255, 255, 255);
-}
-
-.tab-top {
-  background-image: url("../images/new/aba-cima-borda.png");
-  background-repeat: no-repeat;
-  width: 30px;
-  height: 10px;
-  margin-top: -8px;
-  margin-left: 40px;
-}
-
-.user-data-recovery .body-login .icon-question-blue_12_12 {
-  margin-right: 10px;
-}
-
-.email-label {
-  float: left;
+.user-data-recovery .forgot-title.forgot-password {
+  border-top: 1px  dotted;
+  border-top-color: rgb(214, 214, 214);
+  margin-top: 40px;
+  padding-top: 40px;
 }
 
 .user-data-recovery .concave-form .concave-label {
@@ -281,17 +70,25 @@ button::-moz-focus-inner {
   margin-top: 0px;
 }
 
-.error-500 .concave-form .concave-label {
-  width: 90px;
-  margin-top: 20px;
-}
-
-.user-data-recovery .thank-you {
-  padding: 0px;
+.user-data-recovery .concave-form .concave-label .icon-question-blue_12_12 {
+  margin-right: 10px;
 }
 
 .user-data-recovery .concave-form .errors_on_field {
   margin-left: 170px;
-  display: block;
   clear: both;
+}
+
+.user-data-recovery .concave-form .concave-input {
+  width: 389px;
+  margin: 0px;
+}
+
+.user-data-recovery .confirmation-msg .client-email {
+  font-style: italic;
+  color: rgb(179, 179, 179);
+}
+
+.textshadow .user-data-recovery .confirmation-msg .client-email {
+  text-shadow: 0px 1px 0px rgb(255, 255, 255);
 }
