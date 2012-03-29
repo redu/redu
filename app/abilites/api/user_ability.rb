@@ -6,8 +6,6 @@ module Api
       def user_abilities(user)
         if user
           can :manage, User, :id => user.id
-        else
-          cannot :read, User
         end
       end
     end
