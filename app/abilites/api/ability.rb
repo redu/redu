@@ -3,6 +3,7 @@ module Api
     include CanCan::Ability
     include Api::EnvironmentAbility
     include Api::CourseAbility
+    include Api::CourseEnrollmentAbility
     include Api::SpaceAbility
     include Api::UserAbility
 

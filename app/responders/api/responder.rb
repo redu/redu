@@ -2,7 +2,8 @@ module Api
   module Responder
     def extend_with_representer!(resource, representer=nil)
       representer ||= representer_for_resource(resource)
-      resource.extend(representer) if representer
+      return resource.extend(representer) if representer
+      resource
     end
 
     def display(resource, given_options={})
