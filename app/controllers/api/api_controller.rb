@@ -12,7 +12,9 @@ module Api
     def not_authorized
       authorize! :read, :error
       error = { :message => 'not authorized', :action => params[:action] }
-      respond_with(error, :status => :unauthorized)
+      respond_to do |format|
+        format.json { render :json => error, :status => :unauthorized }
+      end
     end
 
     def not_found

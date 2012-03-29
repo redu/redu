@@ -7,7 +7,6 @@ describe "Course abilities" do
     @environment = Factory(:complete_environment)
     @course = @environment.courses.first
     @user = Factory(:user)
-    @application, @current_user, @token = generate_token(@user)
   end
 
   context "when not a member" do
