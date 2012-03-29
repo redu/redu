@@ -85,6 +85,7 @@
 }
 
 .confirmation-msg .thank-you .person-name {
+  font-family: inherit;
   font-weight: 500;
 }
 

@@ -1,16 +1,15 @@
-<%= form_for @contact, :remote => remote ||= false, :html => {:class => css_class ||= 'concave-form call-us alfa', :id => id ||= ''}, :url => contact_path do |f| %>
-
-  <fieldset concave-fieldset grid_9>
+<%= form_for @contact, :remote => remote ||= false, :html => {:class => css_class ||= 'concave-form omega', :id => id ||= ''}, :url => contact_path do |f| %>
+  <fieldset>
     <%= concave_error_messages_for f.object %>
-    <%= f.label :name, 'Nome:', :class => 'concave-label put-your-name' %>
-    <%= f.text_field :name, :id => 'name',  :placeholder =>'Digite o seu nome', :class => 'concave-input personal-information' %>
+    <%= f.label :name, 'Nome:' %>
+    <%= f.text_field :name,  :placeholder =>'Digite o seu nome' %>
     <%= concave_errors_for f.object, :name %>
-    <%= f.label :email, 'E-mail:', :class => 'concave-label put-your-email' %>
-    <%= f.text_field :email, :id => 'email', :placeholder =>'Digite o seu e-mail para contato (talvez tenhamos algo a lhe perguntar)', :class => 'concave-input personal-information' %>
+    <%= f.label :email, 'E-mail:' %>
+    <%= f.text_field :email, :id => 'email', :placeholder =>'Digite o seu e-mail para contato (talvez tenhamos algo a lhe perguntar)' %>
     <%= concave_errors_for f.object, :email %>
-    <%= f.label :body, 'Mensagem:', :id => 'message', :class => 'concave-label put-your-message' %>
-    <%= f.text_area :body, :id => 'message',:placeholder =>'Detalhe a situação que lhe levou a achar este erro, bem como o que fazia antes desta mensagem aparecer.', :class => 'concave-input message-box' %>
+    <%= f.label :body, 'Mensagem:' %>
+    <%= f.text_area :body, :placeholder =>'Detalhe a situação que lhe levou a achar este erro, bem como o que fazia antes desta mensagem aparecer.' %>
     <%= concave_errors_for f.object, :body %>
-    <%= f.submit 'Enviar', :class => 'concave-button'%>
+    <%= f.submit 'Enviar' %>
   </fieldset>
 <% end %>

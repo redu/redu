@@ -1,30 +1,5 @@
-* {
-  margin: 0;
-}
-
-html, body {
-  height: 100%;
-  background-color: none;
-}
-
-.body-login {
-  width: 580px;
-}
-
-button {
-  border: 0;
-  padding: 0;
-  cursor: pointer;
-  overflow: visible; /* removes padding in IE */
-}
-
-button::-moz-focus-inner {
-    /* removes ppushadding in Firefox */
-    border: none;
-    padding: 0;
-}
-
-.logo-top a {
+/* Páginas de erro */
+#error .logo-top a {
   background-image: url("../images/new/redu-hi-vert.png");
   display: block;
   width: 255px;
@@ -35,166 +10,89 @@ button::-moz-focus-inner {
   text-indent: -9999px;
 }
 
-html body {
-  background-image: url("../images/new/circulos-bokeh-peq.png");
-  background-repeat: no-repeat;
-  background-color: transparent;
+#error .alert {
+  margin-top: 70px;
 }
 
-.body .clearfix:after {
-  content: ".";
-  display: block;
-  height: 0;
-  clear: both;
-  visibility: hidden;
-  margin-left: 80px;
-  padding-top: -8px;
-}
-
-.ops-call{
-  font-family: museo-slab, arial, sans-serif;
-  font-weight: 900;
-}
-
-.ops-call, .warning {
-  font-size: 47px;
-  letter-spacing: -4px;
-  color: rgb(193, 39, 45);
-}
-
-.warning {
-  font-family: museo-sans, arial, sans-serif;
-  font-weight: 100;
-}
-
-.alert:after {
+#error .alert:after {
+  content: "";
   background-image: url("../images/new/alerta.png");
   background-repeat: no-repeat;
   height: 142px;
   width: 165px;
   float: right;
-  content: "";
   margin-left: 410px;
   margin-top: -164px;
   position: absolute;
   display: block;
 }
 
-.alert {
-  margin-top: 70px;
-}
-
-.textshadow .alert {
-  text-shadow: 0px 1px 0px rgb(255, 255, 255);
-}
-
-.error-name {
-  font-size: 17px;
-  color: rgb(193, 39, 45);
-  margin-top: 30px;
-  letter-spacing: 10px;
-  padding-left: 10px;
-}
-
-.error-number, .error-name {
-  font-family: museo-sans, arial, sans-serif;
+#error .infos .warning {
   font-weight: 100;
 }
 
-.error-number {
-  font-size: 72px;
-  color: rgb(109, 110, 111);
-  letter-spacing: -8px;
+#error .infos .warning,
+#error .infos .warning .ops-call {
+  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-size: 47px;
+  letter-spacing: -4px;
+  color: rgb(193, 39, 45);
 }
 
-.description-error .title {
-  font-family: museo-sans, arial, sans-serif;
+#error .infos .warning .ops-call {
+  font-weight: 900;
+  display: block;
+}
+
+#error .infos .error-name {
+  width: 110px;
+  float: left;
+  margin-top: 30px;
+  margin-left: 10px;
+}
+
+#error .infos .error-name .call,
+#error .infos .error-name .number {
+  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-weight: 100;
+}
+
+#error .infos .error-name .call {
+  font-size: 17px;
+  letter-spacing: 17px;
+  color: rgb(193, 39, 45);
+  float: left;
+  margin-left: 10px;
+}
+
+#error .infos .error-name .number {
+  font-size: 72px;
+  color: rgb(109, 110, 111);
+  letter-spacing: -6px;
+}
+
+#error .infos .description-error {
+  margin-left: 20px;
+  margin-top: 10px;
+}
+
+#error .infos .description-error .title {
+  font-family: museo-sans, helvetica, arial, sans-serif;
   font-size: 17px;
   font-weight: 500;
   margin-top: 20px;
 }
 
-.title-call {
-  color: rgb(193, 39, 45);
+#error .infos .description-error p {
+  color: rgb(179, 179, 179);
 }
 
-.description-error p {
-	color: rgb(179, 179, 179);
-}
-
-.back-call {
+#error .infos .description-error .back-call {
   color: rgb(77, 173, 214);
   text-decoration: none;
 }
 
-.erros {
-  clear: both;
-  margin: 0;
-}
-
-.description-error {
-  margin-left: 20px;
-  margin-top: 10px;
-}
-
-.body-error .confirmation-msg {
-  width: 400px;
-}
-
-.body .body-error .concave-form  .concave-input {
-  font-size: 11px;
-  font-family: arial, sans-serif;
-  color: rgb(179, 179, 179);
-  padding: 0 10px;
-  margin-right: 16px;
-}
-
-.texteshadow .form-error .concave-input {
-  text-shadow: 0px 1px 0px rgb(255, 255, 255);
-}
-
-.body-error .concave-form .personal-information{
-  width: 374px;
-  height: 32px;
-}
-
-.body .body-error .concave-form .message-box {
-  min-width: 374px;
-  height: 167px;
-  padding: 10px;
-}
-
-.body-error .concave-form .concave-button {
-  font-weight: bold;
-  font-size: 12px;
-  font-family: arial, sans-serif;
-  clear: both;
-  float: right;
-  margin: 10px 17px;
-}
-
-.body .body-error .form-error {
-  margin: -20px 0;
-  float: right;
-}
-
-.textshadow .body-error .concave-form .concave-button {
-  text-shadow: 0px -1px 0px rgb(12, 138, 196);
-}
-
-.body-error .concave-form .put-your-email,
-.body-error .concave-form .put-your-name,
-.body-error .concave-form .put-your-message {
-  clear: both;
-  width: 98px;
-  padding-top: 7px;
-}
-
-.form-error .call-us {
-  clear: both;
-}
-
-.description-error .suggested-links {
+#error .infos .description-error .suggested-links {
   padding-top: 3px;
   list-style-type: disc;
   font-weight: normal;
@@ -202,34 +100,33 @@ html body {
   font-family: arial, sans-serif;
 }
 
-.description-error .suggested-links li a {
+#error .infos .description-error .suggested-links li {
+  padding: 2px;
+}
+
+#error .infos .description-error .suggested-links li a {
   text-decoration: none;
   color: rgb(77, 173, 214);
 }
 
-.description-error .suggested-links li {
-  padding: 2px;
+#error .infos .concave-form {
+  margin-left: 30px;
 }
 
-.error-500 .body-error .concave-fieldset {
-  width: 520px;
+#error .infos .concave-form .concave-label {
+  width: 98px;
 }
 
-.error-500 .body-error.concave-fieldset .errors_on_field {
-  margin-left: 111px;
+#error .infos .concave-form .errors_on_field {
+  margin-left: 110px;
 }
 
-.error-500 .body-error .concave-fieldset .field_with_errors {
-  margin: 0px;
-  width: 520px;
-  clear: none;
-  margin: 0px;
+#error .infos .concave-form .concave-button {
+  margin-top: 10px;
+  margin-right: 20px;
 }
 
-.error-500 .error_explanation {
-  margin-top: 20px;
-}
-
-.body-error .confirmation-msg {
+#error .infos .confirmation-msg {
+  width: 400px;
   float: right;
 }
