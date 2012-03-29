@@ -65,6 +65,8 @@ class User < ActiveRecord::Base
   has_many :overview, :through => :status_user_associations, :source => :status,
     :include => [:user, :answers], :order => "updated_at DESC"
   has_many :status_user_associations, :dependent => :destroy
+  # Invitation
+  has_many :invitations, :as => :hostable, :dependent => :destroy
 
   # Named scopes
   scope :recent, order('users.created_at DESC')
@@ -180,6 +182,19 @@ class User < ActiveRecord::Base
   end
 
   ## Instance Methods
+  def process_invitation!(invitee, invitation)
+    friendship_invitation = self.be_friends_with(invitee)
+    if friendship_invitation[0]
+      invitation.delete
+    else
+      #STATUS_ALREADY_FRIENDS     = 1
+      #STATUS_ALREADY_REQUESTED   = 2
+      #STATUS_IS_YOU              = 3
+      invitation.delete if [1,2,3].include? friendship_invitation[1]
+      false
+    end
+  end
+
   def profile_complete?
     (self.first_name and self.last_name and self.gender and
         self.description and self.tags) ? true : false

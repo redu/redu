@@ -1,6 +1,4 @@
 module InvitationsUtil
-  #TODO: deve incluir o módulo invitation (quando for gem)
-
   #   Processa a requisição de convite de amizade (por email e
   # por id do usuário cadastrado no redu), seguindo as regras
   # de negócio relacionadas a criação de requisições de amizade.

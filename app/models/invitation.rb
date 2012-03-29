@@ -41,37 +41,3 @@ class Invitation < ActiveRecord::Base
     self.generate_token unless Invitation.where(:token => self.token).empty?
   end
 end
-
-# TODO: extrair para módulo
-class User < ActiveRecord::Base
-
-  has_many :invitations, :as => :hostable, :dependent => :destroy
-
-  def process_invitation!(invitee, invitation)
-    friendship_invitation = self.be_friends_with(invitee)
-    if friendship_invitation[0]
-       invitation.delete
-    else
-      #STATUS_ALREADY_FRIENDS     = 1
-      #STATUS_ALREADY_REQUESTED   = 2
-      #STATUS_IS_YOU              = 3
-      invitation.delete if [1,2,3].include? friendship_invitation[1]
-      false
-    end
-  end
-end
-
-class UserCourseInvitation < CourseEnrollment
-
-  has_many :invitations, :as => :hostable, :dependent => :destroy
-
-  def process_invitation!(invitee, invitation)
-    begin
-      self.accept!
-      invitation.delete
-    rescue
-      false
-    end
-  end
-end
-
