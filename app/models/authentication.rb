@@ -5,8 +5,8 @@ class Authentication < ActiveRecord::Base
 
   def self.build_user(omniauth)
     user = User.new
-    info = omniauth['info']
-    user.email = info['email']
+    info = omniauth[:info]
+    user.email = info[:email]
     user.reset_password
     user.tos = '1'
 
@@ -14,12 +14,12 @@ class Authentication < ActiveRecord::Base
     case omniauth[:provider]
     when 'facebook'
       user.login = get_login_from_facebook_nickname(info)
-      user.first_name = info['first_name']
-      user.last_name = info['last_name']
-      if info['image']
+      user.first_name = info[:first_name]
+      user.last_name = info[:last_name]
+      if info[:image]
         # Atualiza o avatar do usuário de acordo com seu avatar no Facebook (se não for o default).
-        if info['image'] != "http://graph.facebook.com/100002476817463/picture?type=square"
-          user.avatar = open(info['image'])
+        if info[:image] != "http://graph.facebook.com/100002476817463/picture?type=square"
+          user.avatar = open(info[:image])
         end
       end
     end
@@ -30,12 +30,12 @@ class Authentication < ActiveRecord::Base
   private
 
   def self.get_login_from_facebook_nickname(info_hash)
-    login = info_hash['nickname']
+    login = info_hash[:nickname]
 
     if !login
       # Usuário não possui um nickname no Facebook.
       # Gera login a partir de nome e sobrenome.
-      login = info_hash['first_name'] + info_hash['last_name']
+      login = info_hash[:first_name] + info_hash[:last_name]
       login = login.delete(' ').parameterize
     end
 
