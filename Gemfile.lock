@@ -1,12 +1,4 @@
 GIT
-  remote: git://github.com/alindeman/no_peeping_toms.git
-  revision: 83dbd4cb993ae8e78a38a0f5cad784ca58bb0dcd
-  specs:
-    no_peeping_toms (2.1.0)
-      activerecord (>= 3.0.0)
-      activesupport (>= 3.0.0)
-
-GIT
   remote: git://github.com/edgarjs/ajaxful-rating.git
   revision: 81b563ef4e4f7937b769ea64b589d990dc833b43
   branch: rails3
@@ -31,11 +23,25 @@ GIT
       premailer (>= 1.7.1)
 
 GIT
+  remote: git://github.com/patmaddox/no-peeping-toms.git
+  revision: b39544b58bba7c9258d60ddc7dead0ccb6c1aa83
+  specs:
+    no_peeping_toms (2.1.1)
+      activerecord (>= 3.0.0)
+      activesupport (>= 3.0.0)
+
+GIT
   remote: git://github.com/rubyist/aasm.git
   revision: ec724d5a486469955a927db38c667f0604d8800f
   specs:
     aasm (3.0.3)
       activerecord
+
+PATH
+  remote: /home/tacsio/Projects/invitable
+  specs:
+    invitable (0.0.2)
+      rails (~> 3.0.10)
 
 GEM
   remote: http://rubygems.org/
@@ -272,6 +278,7 @@ DEPENDENCIES
   dynamic_form
   exceptional
   factory_girl_rails
+  invitable!
   jammit-s3
   jasmine
   jquery-rails (>= 1.0.3)
