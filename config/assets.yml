@@ -69,7 +69,7 @@ javascripts:
     - public/javascripts/browserdetection.js
     - public/javascripts/jquery.cookie.js
     - public/javascripts/outdated-browser.js
-    - public/javascripts/landing.js
+    - public/javascripts/clean.js
 
 stylesheets:
   common:
@@ -100,6 +100,7 @@ stylesheets:
     - public/stylesheets/new-fonts.css
     - public/stylesheets/utils.css
     - public/stylesheets/icons.redu.css
+    - public/stylesheets/tipTip.css
     - public/stylesheets/form.redu.css
     - public/stylesheets/outdated-browser.css
     - public/stylesheets/clean.css

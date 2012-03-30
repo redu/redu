@@ -12,6 +12,10 @@
   padding-top: 7px;
 }
 
+.textshadow .concave-form .concave-label {
+  text-shadow: 0px 1px 0px white;
+}
+
 .concave-form {
   clear: both;
   overflow: hidden;
@@ -201,6 +205,14 @@
     cursor: pointer;
   }
 
+  .concave-remove:hover,
+  .concave-button:hover,
+  .concave-important:hover,
+  .concave-important-font:hover,
+  .concave-cancel:hover {
+    color: white;
+  }
+
   .concave-important,
   .concave-important-font {
     border: 1px solid rgb(75,192,128);
@@ -208,7 +220,7 @@
   }
 
   .concave-important-font {
-    font-family: museo-slab, helvetica, arial, sans-serif;
+    font-family: museo-slab, "Helvetica Neue", Arial, sans-serif;
   }
 
   .concave-clean {
@@ -263,10 +275,6 @@
   .concave-cancel:hover {
     text-decoration: none;
   }
-
-.concave-important:hover {
-  color: rgb(95, 192, 128);
-}
 
   .borderradius .concave-clean,
   .borderradius .concave-remove,
@@ -440,7 +448,7 @@
   .concave-form .error_explanation h2 {
     position: absolute;
     left: 85px;
-    font-family: museo-slab, helvetica, arial, sans-serif;
+    font-family: museo-slab, "Helvetica Neue", Arial, sans-serif;
     font-weight: 900;
     font-size: 2.2em;
     color: #C0262C;

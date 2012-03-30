@@ -26,8 +26,8 @@ a {
 }
 
 a:hover {
-  text-decoration: none;
   color: rgb(21, 138, 196);
+  text-decoration: underline;
 }
 
 strong {

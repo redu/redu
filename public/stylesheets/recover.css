@@ -1,8 +1,9 @@
 /* Página de recuperação de login e senha */
 
-body {
+.overlay {
   background-image: url("../images/new/circulos-bokeh-peq.png");
   background-repeat: no-repeat;
+  background-position: 60px 0;
 }
 
 .user-data-recovery .logo-top a {
@@ -10,6 +11,7 @@ body {
   display: block;
   width: 255px;
   height: 196px;
+  margin-left: -20px;
   overflow: hidden;
   background-repeat: no-repeat;
   float: left;
@@ -18,7 +20,7 @@ body {
 
 .user-data-recovery .forgot-title {
   margin-top: 50px;
-  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-family: museo-sans, helvetica, arial, sans-serif;
   font-weight: 100;
   font-size: 47px;
   color: rgb(115, 195, 230);
@@ -43,7 +45,7 @@ body {
   margin-top: 10px;
 }
 
-.textshadow .call {
+.textshadow .user-data-recovery .call {
   text-shadow: 0px 1px 0px rgb(255, 255, 255);
 }
 

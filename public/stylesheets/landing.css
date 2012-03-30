@@ -26,7 +26,7 @@
 }
 
 #landing .presentation .learn-call {
-  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-family: museo-slab, "Helvetica Neue", Arial, sans-serif;
   font-weight: 900;
   color: rgb(171,227,133);
   font-size: 39px;
@@ -34,7 +34,7 @@
 }
 
 #landing .presentation .teach-call {
-  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-family: museo-slab, "Helvetica Neue", Arial, sans-serif;
   font-weight: 900;
   color: rgb(255,169,53);
   font-size: 39px;
@@ -52,7 +52,7 @@
 }
 
 #landing .presentation .welcome {
-  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-family: museo-slab, "Helvetica Neue", Arial, sans-serif;
   font-weight: 500;
   width: 650px;
   height: 66px;
@@ -92,7 +92,7 @@
 
 #landing .login-box .new-version-call {
   font-size: 17px;
-  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-family: museo-sans, "Helvetica Neue", Arial, sans-serif;
   font-weight: 100;
 }
 
@@ -183,13 +183,13 @@
   color: rgb(204,204,204);
   float: left;
   margin: 25px 0 30px 100px;
-  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-family: museo-slab, "Helvetica Neue", Arial, sans-serif;
   font-weight: 100;
   font-size: 17px;
 }
 
 #landing .login-box .concave-important {
-  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-family: museo-slab, "Helvetica Neue", Arial, sans-serif;
   font-weight: 500;
   font-size: 16px;
 

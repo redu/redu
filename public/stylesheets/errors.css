@@ -4,6 +4,7 @@
   display: block;
   width: 255px;
   height: 196px;
+  margin-left: -20px;
   overflow: hidden;
   background-repeat: no-repeat;
   float: left;
@@ -27,19 +28,24 @@
   display: block;
 }
 
+.textshadow #error .infos {
+  text-shadow: 0px 1px 0px white;
+}
+
 #error .infos .warning {
   font-weight: 100;
 }
 
 #error .infos .warning,
 #error .infos .warning .ops-call {
-  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-family: museo-sans, "Helvetica Neue", Arial, sans-serif;
   font-size: 47px;
   letter-spacing: -4px;
   color: rgb(193, 39, 45);
 }
 
 #error .infos .warning .ops-call {
+  font-family: museo-slab, "Helvetica Neue", Arial, sans-serif;
   font-weight: 900;
   display: block;
 }
@@ -53,7 +59,7 @@
 
 #error .infos .error-name .call,
 #error .infos .error-name .number {
-  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-family: museo-sans, "Helvetica Neue", Arial, sans-serif;
   font-weight: 100;
 }
 
@@ -77,7 +83,7 @@
 }
 
 #error .infos .description-error .title {
-  font-family: museo-sans, helvetica, arial, sans-serif;
+  font-family: museo-sans, "Helvetica Neue", Arial, sans-serif;
   font-size: 17px;
   font-weight: 500;
   margin-top: 20px;
@@ -115,6 +121,10 @@
 
 #error .infos .concave-form .concave-label {
   width: 98px;
+}
+
+#error .infos .concave-form .concave-button {
+  margin-bottom: 60px;
 }
 
 #error .infos .concave-form .errors_on_field {

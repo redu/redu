@@ -9,7 +9,7 @@
   background-image: url("../images/new/redu-hi-vert.png");
   width: 225px;
   height: 196px;
-  margin-left: -18px;
+  margin-left: -20px;
   text-indent: -9999px;
 }
 
@@ -20,7 +20,7 @@
 }
 
 .left-navigation {
-  font-family: "Museo Sans", helvetica, arial, sans-serif;
+  font-family: "Museo Sans", "Helvetica Neue", Arial, sans-serif;
   font-size: 17px;
   font-weight: 500;
   color: rgb(179, 179, 179);
@@ -82,7 +82,7 @@
   background-position: 0 -318px;
   float: right;
   margin-right: -26px;
-  margin-top: -15px;
+  margin-top: -13px;
 }
 
 .left-navigation li.active:hover a:after {
@@ -92,7 +92,7 @@
 .left-navigation a {
   color: rgb(179, 179, 179);
   display: block;
-  padding: 13px 0 10px 42px;
+  padding: 11px 0 12px 42px;
 }
 
 .left-navigation li a:before {
@@ -101,7 +101,7 @@
   height: 32px;
   float: left;
   margin-left: -35px;
-  margin-top: -9px;
+  margin-top: -7px;
 }
 
 .left-navigation li.term-of-service a:before {
@@ -147,9 +147,10 @@
   margin-top: 40px;
   margin-bottom: 50px;
   padding-left: 40px;
-  font-family: "Museo Sans", helvetica, arial, sans-serif;
+  font-family: museo-sans, "Helvetica Neue", Arial, sans-serif;
   font-size: 47px;
   font-weight: 100;
+  letter-spacing: -2px;
   color: rgb(115, 195, 230);
 }
 
@@ -257,7 +258,7 @@
 }
 
 .content .section {
-  font-family: "Museo Sans", helvetica, arial, sans-serif;
+  font-family: "Museo Sans", "Helvetica Neue", Arial, sans-serif;
   font-weight: 500;
   font-size: 17px;
   line-height: 17px;
@@ -335,7 +336,7 @@ html, body {
 .footer .about {
   font-family: arial, sans-serif;
   height: 72px;
-  width: 287px;
+  width: 290px;
   font-size: 11px;
   float: left;
   color: white;
@@ -344,9 +345,10 @@ html, body {
 
 .footer .our-address{
   margin-left: 60px;
-  background-image: url("../images/new/icone-interrog-12.png");
+  margin-right: 160px;
+  background-image: url("../images/new/icon-geolocal-white_12.png");
   background-repeat: no-repeat;
-  width: 133px;
+  width: 170px;
   float: left;
   padding-top: 21px;
   font-size: 11px;
@@ -359,7 +361,6 @@ html, body {
 }
 
 .footer .menu {
-  margin-left: 200px;
   width: 130px;
   height: 62px;
   float: left;
@@ -393,6 +394,7 @@ html, body {
   padding: 6px 5px 4px 5px;
   background-color: white;
   color: rgb(21,138,196);
+  text-decoration: none;
 }
 
 .textshadow .footer li a:hover {
