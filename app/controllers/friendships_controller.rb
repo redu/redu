@@ -15,8 +15,6 @@ class FriendshipsController < BaseController
   end
 
   def new
-    #TODO: REMOVER AO CRIAR GEM
-    Invitation
     @invitations = @user.invitations
     @friendship_requests = @user.friendships.requested
     @contacts_recommendations = @user.recommended_contacts(5)
