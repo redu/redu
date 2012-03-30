@@ -1,3 +1,10 @@
+/* Landing page */
+.overlay.landing {
+  background-image: url("../images/new/circulos-bokeh.png");
+  background-repeat: no-repeat;
+  background-position: 0 0;
+}
+
 #landing .presentation {
   float: left;
 }

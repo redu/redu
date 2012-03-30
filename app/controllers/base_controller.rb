@@ -10,11 +10,11 @@ class BaseController < ApplicationController
   end
 
   def tos
-    #TODO
+    render :layout => 'clean'
   end
 
   def privacy
-    #TODO
+    render :layout => 'clean'
   end
 
   def teach_index
@@ -45,11 +45,12 @@ class BaseController < ApplicationController
       @contact = Contact.create(params[:contact])
       if @contact.valid?
         @contact.deliver
+        @boxed = true # CSS style
         flash[:notice] = 'Seu e-mail foi enviado, aguarde o nosso contato. Obrigado!' unless request.xhr?
       end
     end
     respond_to do |format|
-      format.html
+      format.html { render :layout => 'clean' }
       format.js
     end
   end

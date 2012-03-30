@@ -68,6 +68,12 @@
   margin-top: 20px;
 }
 
+.confirmation-msg.boxed {
+  margin-left: auto;
+  margin-right: auto;
+  width: 400px;
+}
+
 .confirmation-msg p {
   font-family: Arial, sans-serif !important;
   font-size: 12px !important;

@@ -11,6 +11,6 @@
       <p>Pedimos desculpas pelo incoveniente. Recomendamos que você entre em contado conosco e explique-nos o que fazia no Redu (e onde) antes do erro acontecer. Prometemos nos esforçar ao máximo para resolvê-lo o mais rápido possível. Você também pode <span class="back-call"><%= link_to 'voltar para a página anterior', :back %></span></p>
       <h4 class="title">Você pode nos ajudar:</h4>
     </div>
-    <%= render :partial => 'base/contact_form', :locals => {:remote => true, :css_class => 'concave-form grid_9', :id => "contact_form"} %>
+    <%= render 'base/contact_form', :remote => true, :css_class => 'concave-form grid_9', :id => "contact-form", :body_placeholder => 'Detalhe a situação que lhe levou a achar este erro, bem como o que fazia antes desta mensagem aparecer.' %>
   </div>
 </div><!-- end-container -->
