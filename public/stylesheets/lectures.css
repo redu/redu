@@ -237,7 +237,7 @@
 #resource .position {
   font-size: 2.2em;
   color: rgb(230, 230, 230);
-  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-family: museo-slab, "Helvetica Neue", Arial, sans-serif;
   font-weight: 500;
   float: left;
   margin-left: 4px;
