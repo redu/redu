@@ -69,7 +69,7 @@ class Ability
 
       # Somente usuários logados acessam a página de criar apps Oauth
       can :manage, :client_applications do
-        !user.partners.empty?
+        !user.partners.empty? || user.admin?
       end
 
       # Gerencial
