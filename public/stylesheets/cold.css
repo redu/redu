@@ -1,15 +1,6 @@
 /* Rodapé */
-body {
-  background: transparent;
-}
-
 html, body {
   height: 100%;
-}
-
-body {
-  background-image: url("../images/new/circulos-bokeh-peq.png");
-  background-repeat: no-repeat;
 }
 
 .overlay {
@@ -130,7 +121,7 @@ body {
 }
 
 #clean .call {
-  font-family: museo-slab, arial, sans-serif;
+  font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 100;
   font-size: 2.7em;
   font-weight: normal;

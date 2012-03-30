@@ -57,7 +57,7 @@ javascripts:
     - public/javascripts/jquery.maskedinput.js
   ckeditor:
     - public/javascripts/ckeditor/ckeditor.js
-  landing:
+  clean:
     - public/javascripts/rails.js
     - public/javascripts/modernizr.js
     - public/javascripts/lazyload.js
@@ -94,13 +94,15 @@ stylesheets:
     - public/stylesheets/ie.css
   chat:
     - public/stylesheets/chat.css
-  landing:
+  clean:
     - public/stylesheets/reset.css
     - public/stylesheets/960.css
+    - public/stylesheets/new-fonts.css
     - public/stylesheets/utils.css
     - public/stylesheets/icons.redu.css
     - public/stylesheets/form.redu.css
     - public/stylesheets/outdated-browser.css
+    - public/stylesheets/clean.css
     - public/stylesheets/landing.css
   cold:
     - public/stylesheets/reset.css

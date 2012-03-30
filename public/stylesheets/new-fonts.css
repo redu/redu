@@ -21,12 +21,13 @@ input[type=submit] {
 }
 
 a {
-  color: #158ac4;
+  color: rgb(77, 173, 214);
   text-decoration: none;
 }
 
 a:hover {
-  text-decoration: underline;
+  text-decoration: none;
+  color: rgb(21, 138, 196);
 }
 
 strong {

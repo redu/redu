@@ -4,20 +4,19 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
     <title><%= raw(page_title) %></title>
     <%= csrf_meta_tag %>
-    <%= include_stylesheets :landing %>
+    <%= include_stylesheets :clean %>
     <!--[if (gte IE 6)&(lte IE 8)]>
-      <%= stylesheet_link_tag 'ie' %>
+    <%= stylesheet_link_tag 'ie' %>
     <![endif]-->
     <%= javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js' %>
     <!--[if (gte IE 6)&(lte IE 8)]>
-      <%= include_javascripts :ie %>
+    <%= include_javascripts :ie %>
     <![endif]-->
-    <%= include_javascripts :common %>
-    <%= include_javascripts :landing %>
+    <%= include_javascripts :clean %>
 
     <%= lazy_load("http://use.typekit.com/lpo4rgu.js", :jammit => false) do %>
       try{
-        Typekit.load();
+      Typekit.load();
       }catch(e){}
     <% end %>
     <%= render :partial => "shared/analytics" %>
@@ -29,24 +28,25 @@
     <div class="<%= yield :wrapper_class %>">
       <%= render :partial => 'shared/flash_message' %>
       <%= yield %>
+      <div class="push"></div>
     </div>
 
     <div class="footer">
       <div class="container_16">
-        <h1 class="logo-2"><a href="http://www.redu.com.br"></a></h1>
-             <p class="footer-text">Somos uma pequena startup brasileira, recifense e estamos incubados pelo Porto Digital. Nossa equipe é composta por pessoas dedicadas e comprometidas com um objetivo em comum: desenvolver produtos que façam a diferença para uma educação mais acessível e universal.</p>
-             <address class="our-address">Rua do Apolo, 181 Cais do Apolo, Recife Brasil CNPJ: 12.359.885/0001-07</address>
-        <ul class="about-redu">
-          <li class="list"><%= link_to "Página Inicial", application_path %></li>
-          <li class="list"><a href="http://blog.redu.com.br/">Visite nosso Blog</a></li>
+        <h1 class="logo-bottom replacement"><%= link_to "Redu", home_path %></h1>
+        <p class="about">Somos uma startup brasileira, recifense e estamos incubados pelo Porto Digital. Nossa equipe é composta por pessoas dedicadas e comprometidas com um objetivo em comum: desenvolver produtos que façam a diferença para uma educação mais acessível e universal.</p>
+        <address class="our-address">Rua do Apolo, 181 Cais do Apolo, Recife Brasil CNPJ: 12.359.885/0001-07</address>
+        <ul class="menu">
+          <li><%= link_to "Página Inicial", application_path %></li>
+          <li><%= link_to "Visite nosso Blog", "http://blog.redu.com.br" %></li>
         </ul>
         <ul class="politics-terms">
-          <li class="list"><%= link_to "Política de Privacidade", privacy_path %></li>
-          <li class="list"><%= link_to "Termos de Uso", tos_path %></li>
-          <li class="list"><%= link_to "Fale conosco", contact_path %></li>
+          <li><%= link_to "Política de Privacidade", privacy_path %></li>
+          <li><%= link_to "Termos de Uso", tos_path %></li>
+          <li><%= link_to "Fale conosco", contact_path %></li>
         </ul>
       </div>
     </div>
-     <%= yield :footer_scripts_and_styles %>
-   </body>
- </html>
+    <%= yield :footer_scripts_and_styles %>
+  </body>
+</html>

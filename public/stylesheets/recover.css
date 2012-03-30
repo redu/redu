@@ -1,4 +1,10 @@
 /* Página de recuperação de login e senha */
+
+body {
+  background-image: url("../images/new/circulos-bokeh-peq.png");
+  background-repeat: no-repeat;
+}
+
 .user-data-recovery .logo-top a {
   background-image: url("../images/new/redu-hi-vert.png");
   display: block;
