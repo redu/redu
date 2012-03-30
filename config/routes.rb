@@ -27,8 +27,8 @@ Redu::Application.routes.draw do
 
   # Authentications
   resources :authentications, :only => [:create]
-  match '/auth/:provider/callback' => 'authentications#create'
-  match '/auth/failure' => 'authentications#fallback'
+  match '/auth/:provider/callback' => 'authentications#create', :as => :omniauth_auth
+  match '/auth/failure' => 'authentications#fallback', :as => :omniauth_fallback
   get 'auth/facebook', :as => :facebook_authentication
 
   # recover routes

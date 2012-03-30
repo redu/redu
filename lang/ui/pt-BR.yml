@@ -853,6 +853,9 @@ pt-BR:
   exibitions: "Exibições"
   #en: explore_site: Explore {{site}}
   explore_site: "Explore {{site}}"
+  facebook_connect_error: Não foi possível logar com sua conta do Facebook
+  facebook_connect_account_association: Sua conta do Facebook foi associada ao Redu.
+  facebook_connect_new_user: Sua conta foi criada com seu e-mail do Facebook.
   #en: failed: failed
   failed: failed
   #en: faq: FAQ
@@ -974,7 +977,6 @@ pt-BR:
   image: Image
   #en: image_url: Image URL
   image_url: Image URL
-  impossible_connect_fb: Não foi possível logar com sua conta do Facebook
   #en: in_the_forums: In the forums
   in_the_forums: In the forums
   #en: in_your_favorites: In your favorites
