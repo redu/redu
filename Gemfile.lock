@@ -37,8 +37,9 @@ GIT
     aasm (3.0.3)
       activerecord
 
-PATH
-  remote: /home/tacsio/Projects/invitable
+GIT
+  remote: git@github.com:redu/invitable.git
+  revision: b6b1b530ac339d44b8b4a2a2e57e4219ac3ffd2c
   specs:
     invitable (0.0.3)
       rails (~> 3.0.10)

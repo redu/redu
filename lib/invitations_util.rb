@@ -37,7 +37,7 @@ module InvitationsUtil
     end
   end
 
-  private
+  # Private method
   def self.process_friendships(invited_friends, user)
     friends = invited_friends.to_s.gsub(',',' ').split
     if friends.size > 0
@@ -50,6 +50,7 @@ module InvitationsUtil
     end
   end
 
+  # Private method
   def self.process_invitations(invited_friends, user)
     emails =invited_friends.to_s.gsub(',',' ').split
     emails.each do |email|
@@ -65,4 +66,5 @@ module InvitationsUtil
       end
     end
   end
+  private_class_method :process_friendships, :process_invitations
 end
