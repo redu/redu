@@ -5,27 +5,29 @@ describe "Statuses" do
     @application, @current_user, @token = generate_token
   end
 
-  context "when Activity type qualquecoisa" do
+  context "when Activity type" do
     before do
       @activity = Factory(:activity)
+      get "/api/statuses/#{@activity.id}", :oauth_token => @token, :format => 'json'
+      @entity = parse(response.body)
     end
 
     it "should return status 200 (ok)" do
-      get "/api/statuses/#{@activity.id}", :oauth_token => @token, :format => 'json'
       response.code.should == '200'
     end
 
     it "should have id, text, created_at, links and type" do
-      get "/api/statuses/#{@activity.id}", :oauth_token => @token, :format => 'json'
       %w(id text created_at links type).each do |attr|
-        parse(response.body).should have_key attr
+        @entity.should have_key attr
       end
     end
 
-    it "should have the correct links (statusable, user, self)" do
-      get "/api/statuses/#{@activity.id}", :oauth_token => @token, :format => 'json'
-      @entity = parse(response.body)
+    it "should have a link to its Answers" do
+      get href_to('answers', @entity), :format => 'json', :oauth_token => @token
+      response.code.should == "200"
+    end
 
+    it "should have the correct links (statusable, user, self)" do
       %w(statusable self user).each do |attr|
         get href_to(attr, @entity), :format => 'json', :oauth_token => @token
         response.code.should == "200"
@@ -51,8 +53,7 @@ describe "Statuses" do
     end
     
     it "should have the currect links (self, user, in_response_to)" do
-#     Assim que seminar for adicionado quanto o tipo for Answer testar o link
-#       para statusable
+#     https://github.com/redu/redu/issues/660
       %w(self user in_response_to).each do |attr|
         get href_to(attr, @entity), :oauth_token => @token, :format => 'json'
         response.code.should == "200"
@@ -84,25 +85,6 @@ describe "Statuses" do
       end
     end
   end
-
-  context "when Activity type" do
-    before do
-      @activity = Factory(:activity)
-      get "/api/statuses/#{@activity.id}", :oauth_token => @token, :format => 'json'
-      @entity = parse(response.body)
-    end
-    
-    it "should have a link to its Answers" do
-      get href_to('answers', @entity), :format => 'json', :oauth_token => @token
-      response.code.should == "200"
-    end
-    
-    it "should have id, type, created_at, text" do
-      %w(id type created_at text).each do |attr|
-        @entity.should have_key attr
-      end
-    end
-  end
   
   context "when Help type" do
     before do
@@ -125,10 +107,9 @@ describe "Statuses" do
     end
   end
 
-  context "when listing User statuses" do
+  context "when listing User" do
+  # São criados usuarios para validação na filtragem pelo tipo
     before do
-#   É criado status para usuarios diferentes para se testar o retorno corretor
-#     apartir da filtragem por tipo
       @user = Factory(:user)
       @user_statuses = 4.times.collect do
         [ Factory(:help, :user => @user),
@@ -170,7 +151,7 @@ describe "Statuses" do
       parse(response.body).count.should == 4
     end
 
-    it "should filter by status type (log)" do
+    it "should filter by status type (log)" do      
       get "/api/users/#{@user.id}/statuses", :type => "log",
         :oauth_token => @token, :format => 'json'
       parse(response.body).all? { |s| s["type"] == "Log" }.should be
@@ -189,7 +170,7 @@ describe "Statuses" do
     end
   end
 
-  context "when listing space statuses" do
+  context "when listing Space" do
     before do
       @space = Factory(:space)
     end
@@ -217,7 +198,7 @@ describe "Statuses" do
     end
   end
 
-  context "when listing lectures statuses" do
+  context "when listing Lectures" do
     before do
       @lecture = Factory(:lecture)
     end
@@ -248,71 +229,120 @@ describe "Statuses" do
     end
   end
   
-  context "post /api/users/:user_id/statuses" do
+  context "when create status an user" do
     before do
       @user = Factory(:user)
       
-      @params = { 'status' => { :text => 'Ximbica', :statusable_id => @user.id, 
-        :statusable_type => @user.class },
+      @params = { 'status' => { :text => 'Ximbica' },
         :oauth_token => @token, :format => 'json' }
-        
     end
     
     it "should create an status the user type activity and return 201" do
-      @params['status'][:type] = 'Activity'
       post "/api/users/#{@user.id}/statuses", @params
       
       response.code.should == "201"
     end
     
-    xit "should return 422 when invalid type" do
-      @params['status'][:type] = "Indevido"
+    it "should create status with the correct statusable" do
+      post "/api/users/#{@user.id}/statuses", @params
+
+      get href_to("statusable", parse(response.body)), :oauth_token => @token,
+        :format => 'json'
+      response.code.should == "200"
+    end
+    
+    it "should create an activity" do
+      post "/api/users/#{@user.id}/statuses", @params
+      
+      parse(response.body)["type"].should == "Activity"
+    end
+
+    it "should return 422 when invalid" do
+      @params['status'][:text] = ""
       post "api/users/#{@user.id}/statuses", @params
       
-      debugger
       response.code.should == "422"
     end
   end
   
-  context "delete /api/users/:user_id/statuses" do    
+  context "when delete status an user" do
     it "should return status 200"
     it "should return status 404 when doesnt exist"
   end
   
-  context "post /api/spaces/:space_id/statuses" do
+  context "when create status an space" do
     before do
       @space = Factory(:space)
-      @params = { 'status' => { :text => "Space Ximbica",
-        :statusable_id => @space.id, :statusable_type => @space.class },
+      @params = { 'status' => { :text => "Space Ximbica" },
         :oauth_token => @token, :format => 'json' }
     end
     
     it "should create an status the space type activity and return 201" do
-      @params['status'][:type] = "Activity"
       post "/api/spaces/#{@space.id}/statuses", @params
-      
+
       response.code.should == "201"
     end
     
-    it "should return 422 when invalid"
+    it "should create status with the correct statusable" do
+      post "/api/spaces/#{@space.id}/statuses", @params
+      
+      get href_to("statusable", parse(response.body)), :oauth_token => @token,
+        :format => 'json'
+      response.code.should == "200"
+    end
+    
+    it "should create an activity" do
+      post "/api/spaces/#{@space.id}/statuses", @params
+      
+      parse(response.body)["type"].should == "Activity" 
+    end
+    
+    it "should return 422 when invalid" do
+      @params['status'][:text] = ""
+      post "/api/spaces/#{@space.id}/statuses", @params
+      
+      response.code.should == "422"
+    end
   end
   
-  context "delete api/spaces/:space_id/statuses" do
+  context "when delete status an space" do
   end
   
-  context "post /api/lectures/:lecture_id/statuses" do
+  context "when create status an lecture" do
     before do
       @lecture = Factory(:lecture)
-      @params = { 'status' => { :text => "Lacture Ximbica",
-        :statusable_id => @lecture.id, :statusable_type => @lecture.class },
+      @params = { 'status' => { :text => "Lacture Ximbica" },
         :oauth_token => @token, :format => 'json' }
     end
     
     it "should create an status the lecture type activity and return 201" do
       @params['status'][:type] = "Activity"
       post "/api/lectures/#{@lecture.id}/statuses", @params
-      
+
       response.code.should == "201"
+    end
+    
+    it "should create an activity" do
+      @params['status'][:type] = "Activity"
+      post "/api/lectures/#{@lecture.id}/statuses", @params
+      
+      parse(response.body)["type"].should == "Activity"
+    end
+    
+    it "should create status with the corret statusable when type activity" do
+      @params['status'][:type] = "activity"
+      post "/api/lectures/#{@lecture.id}/statuses", @params
+
+      get href_to("statusable", parse(response.body)), :oauth_token => @token,
+        :format => 'json'
+      response.code.should == "200"
+    end
+    
+    it "should create an activity when no passed type" do  
+      @params['status'][:type] = ""
+      post "/api/lectures/#{@lecture.id}/statuses", @params
+      
+      parse(response.body)["type"].should == "Activity"
     end
     
     it "should create an status the lecture type help and return 201" do
@@ -322,30 +352,82 @@ describe "Statuses" do
       response.code.should == "201"
     end
     
-    it "should return 422 when invalid"
-  end
-  
-  context "delete /api/lectures/:lecture_id/statuses" do
-  end
-  
-  context "post /api/statuses/status_id/statuses Answer type" do
-    before do
-      @status = Factory(:answer)
-      @params = {'status' => {:text => "Ximbica Answer",
-        :statusable_id => @status.id, :statusable_type => @status.class },
-        :oauth_token => @token, :format => 'json' }
+    it "should create an help" do
+      @params['status'][:type] = "Help"
+      post "/api/lectures/#{@lecture.id}/statuses", @params
+      
+      parse(response.body)["type"].should == "Help"
     end
     
-    it "should return status 201 when successful" do
-      @params['status'][:type] = "Answer"
-      post "/api/statuses/#{@status.id}/answers", @params
+    it "should create status with the corret statusable when type help" do
+      @params['status'][:type] = "help"
+      post "/api/lectures/#{@lecture.id}/statuses", @params
+
+      get href_to("statusable", parse(response.body)), :oauth_token => @token,
+        :format => 'json'
+      response.code.should == "200"
+    end
+    
+    it "should return 422 when invalid" do
+      @params['status'][:text] = ""
+      post "/api/lectures/#{@lecture.id}/statuses", @params
       
+      response.code.should == "422"
+    end
+  end
+  
+  context "when delete status an lecture" do
+  end
+  
+  context "when create status an answer" do
+    before do
+      @params = {'status' => {:text => "Ximbica Answer Test" },
+        :oauth_token => @token, :format => 'json' }
+    end
+
+    it "should create status 201 when activity type" do
+      @activity = Factory(:activity)
+      post "/api/statuses/#{@activity.id}/answers", @params
+
       response.code.should == "201"
     end
     
-    it "should return 422 when invalid"
+    it "should create an activity" do
+      @activity = Factory(:activity)
+      post "/api/statuses/#{@activity.id}/answers", @params
+
+      parse(response.body)["type"].should == "Answer"
+    end
+    
+    it "should create status 201 when help type" do
+      @help = Factory(:help)
+      post "/api/statuses/#{@help.id}/answers", @params
+
+      response.code.should == "201"
+    end
+    
+    it "should return 404 when doesnt exists" do
+      post "/api/statuses/007/answers", @params # id não existente
+      
+      response.code.should == "404"
+    end
+
+    it "should return 422 when invalid" do
+      @params['status'][:text] = "" # texto inválido
+      @activity = Factory(:activity)
+      post "/api/statuses/#{@activity.id}/answers", @params
+      
+      response.code.should == "422"
+    end
+    
+    it "should return 422 when invalid type" do
+      @log = Factory(:log) # tipo inválido
+      post "/api/statuses/#{@log.id}/answers", @params
+      
+      response.code.should == "422"
+    end
   end
   
-  context "delete api/statuses/:statuses_id/statuses" do
+  context "when delete status an answer" do
   end
 end
