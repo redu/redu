@@ -353,6 +353,14 @@ describe User do
 
       User.message_recipients([vader.id, luke.id]).should == [vader, luke]
     end
+
+    it "retrieves all subjects ids from your lectures" do
+      @lecture = Factory(:lecture, :owner => subject)
+      subject.lectures << @lecture
+
+      @id = @lecture.subject.id
+      subject.subjects_id.should eq([@id])
+    end
   end
 
   context "callbacks" do
@@ -527,31 +535,6 @@ describe User do
                              :owner => subject)
     subject.get_association_with(lecture_entity).
       should == subject.enrollments.last
-  end
-
-  context "when plan is licensed" do
-    it "retrives his license with a course" do
-      environment = Factory(:environment)
-      plan = Factory(:active_licensed_plan, :billable => environment)
-      plan.create_invoice_and_setup
-      environment.create_quota
-      environment.reload
-      course = Factory(:course, :environment => environment,
-                       :owner => environment.owner)
-      space = Factory(:space, :owner => environment.owner,
-                      :course => course)
-      Factory(:license, :period_end => nil,
-              :course => course,
-              :invoice => plan.invoice,
-              :created_at => 3.days.ago,
-              :updated_at => 3.days.ago)
-
-
-      course.join(subject)
-      current_license = plan.invoice.licenses.last
-
-      subject.get_open_license_with(course).should == current_license
-    end
   end
 
   it "verifies if he is redu admin" do

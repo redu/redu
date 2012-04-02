@@ -269,6 +269,16 @@ describe Ability do
 
           # Need Myfile factory
           it "can NOT upload file"
+
+          it "can see reports" do
+            @ability.should be_able_to(:teacher_participation_report,
+                                       @course)
+          end
+
+          it "can access JSON reports" do
+            @ability.should be_able_to(:teacher_participation_interaction,
+                                       @course)
+          end
         end
 
         it "invites members" do
@@ -689,6 +699,11 @@ describe Ability do
             @ability.should be_able_to(:read, @licensed_plan)
           end
 
+          it "can read partner licensed_plans of dead billable" do
+            @licensed_plan.billable.audit_billable_and_destroy
+            @ability.should be_able_to(:read, @licensed_plan.reload)
+          end
+
           it "can manage partner licensed_plans" do
             @ability.should be_able_to(:manage, @licensed_plan)
           end
@@ -719,6 +734,11 @@ describe Ability do
           it "can NOT pay a non pending invoice" do
             @invoice.pay!
             @ability.should_not be_able_to(:pay, @invoice.reload)
+          end
+
+          it "can maange partner licensed_plans of dead billable" do
+            @licensed_plan.billable.audit_billable_and_destroy
+            @ability.should be_able_to(:manage, @licensed_plan)
           end
         end
       end

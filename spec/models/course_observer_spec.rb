@@ -21,7 +21,8 @@ describe CourseObserver do
 
         ActiveRecord::Observer.with_observers :course_observer do
           subject.billable.destroy
-          subject.reload.billable_audit.should == course
+          subject.reload.billable_audit["name"].should == course.name
+          subject.reload.billable_audit["path"].should == course.path
         end
       end
     end

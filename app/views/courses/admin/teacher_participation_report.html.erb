@@ -1,0 +1,68 @@
+<%= render :partial => 'shared/management_background' %>
+<div class="management-sidebar">
+  <%= render :partial => 'courses/sidebar',
+    :locals => { :course => @course }%>
+</div>
+
+<div class="main grid_12 omega big-col management-wrapper">
+  <%= render :partial => 'courses/breadcrumbs',
+    :locals => { :course => @course } %>
+  <%= render :partial => 'courses/admin/header',
+    :locals => { :course => @course } %>
+  <div id="course-manage" class="body management">
+    <%= render :partial => 'courses/admin/clean_header' %>
+    <%= tabs :courses_admin do %>
+      <% if @course.teachers.empty? %>
+        <div class="body">
+        <div class="flash-message notice">
+          <ul class="message icons-big-before icon-privacy-lightred_64_66-before">
+            <li>O conteúdo desta página não está disponível para o curso que não possui professores.</li>
+            <li>Você pode modificar os pápeis dos usuários <%= link_to "configurando o ambiente", admin_members_environment_path(@course.environment)%>.</li>
+          <ul>
+        </div>
+        </div>
+      <% else %>
+        <h3 class="form-header">Qual a participação do professor na disciplina?</h3>
+          <%= lazy_load(:chart, :jammit => true) do %>
+            try{
+              $("#graph-form").before("<div id='teacher-participation-chart' class='teacher-participation-chart'></div>"),
+              $("#graph-form").submit();
+              }catch(e){}
+          <% end %>
+          <%= form_tag vis_dashboard_teacher_participation_interaction_path, :method => :get, :remote => true, :class => "concave-form", :id => "graph-form" do %>
+          <%= label_tag "", "Professor", :id => "form-problem"%>
+          <%= select_tag(:teacher_id, options_from_collection_for_select(@course.teachers, :id, :first_name), {:class =>"concave-select"})%>
+
+          <%= label_tag "Disciplinas" %>
+          <ul class="single-column">
+            <%= render :partial => 'courses/admin/space_item_admin',
+              :collection => @course.spaces, :as => :space  %>
+            <li>
+              <%= check_box_tag "all-check", "0", true %>
+              <%= label_tag "all-check", "Todos" %>
+            </li>
+          </ul>
+
+          <%= label_tag "date_start_fake", "Data inicial" %>
+          <%= field_set_tag nil, :class => "inline" do %>
+            <%= date_select "date_start_fake", nil,
+                :default => Date.today - 9 %>
+            <%= text_field_tag :date_start, nil,
+                :style => "display: none;" %>
+          <% end %>
+
+          <%= label_tag "date_end", "Data final" %>
+          <%= field_set_tag nil, :id => "date-validate",
+            :class => "inline" do %>
+            <%= date_select "date_end_fake", nil, :end_year => Date.today.year %>
+            <%= text_field_tag :date_end, nil, :style => "display: none;" %>
+          <% end %>
+
+          <%= hidden_field_tag :course_id, @course.id %>
+
+          <%= submit_tag "Atualizar", :class=>"concave-submit" %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

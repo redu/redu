@@ -101,6 +101,11 @@ describe InvoicesController do
                                                    "LicensedPlan")
         @environments[2].plans << Plan.from_preset(:curso_corporativo,
                                                    "LicensedPlan")
+        # Associando owners dos planos
+        @environments.each do |e|
+          plan = e.plans.last
+          plan.update_attributes(:user => @user)
+        end
       end
 
       context "when viewing invoices of a partner" do
@@ -125,17 +130,17 @@ describe InvoicesController do
           })
 
           Date.stub(:today) { Date.new(2010, 12, 01) }
-          LicensedInvoice.refresh_open_invoices!
+          LicensedInvoice.refresh_states!
           Date.stub(:today) { Date.new(2011, 01, 01) }
-          LicensedInvoice.refresh_open_invoices!
+          LicensedInvoice.refresh_states!
           Date.stub(:today) { Date.new(2011, 02, 01) }
-          LicensedInvoice.refresh_open_invoices!
+          LicensedInvoice.refresh_states!
           Date.stub(:today) { Date.new(2011, 03, 01) }
-          LicensedInvoice.refresh_open_invoices!
+          LicensedInvoice.refresh_states!
           Date.stub(:today) { Date.new(2011, 04, 01) }
-          LicensedInvoice.refresh_open_invoices!
+          LicensedInvoice.refresh_states!
           Date.stub(:today) { Date.new(2011, 05, 01) }
-          LicensedInvoice.refresh_open_invoices!
+          LicensedInvoice.refresh_states!
         end
 
         context "with no period set" do

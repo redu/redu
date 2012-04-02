@@ -1,7 +1,7 @@
 class Plan < ActiveRecord::Base
   include AASM
 
-  serialize :billable_audit, Course
+  serialize :billable_audit
 
   belongs_to :billable, :polymorphic => true
   belongs_to :user
@@ -9,7 +9,7 @@ class Plan < ActiveRecord::Base
 
   scope :blocked, where(:state => "blocked")
 
-  validates_presence_of :price
+  validates_presence_of :price, :user
 
   attr_protected :state
 
@@ -17,7 +17,7 @@ class Plan < ActiveRecord::Base
   aasm_initial_state :active
 
   aasm_state :active
-  aasm_state :blocked
+  aasm_state :blocked, :enter => [:send_blocked_notice]
   aasm_state :migrated
 
   aasm_event :block do
@@ -50,11 +50,17 @@ class Plan < ActiveRecord::Base
 
   # Serializa billable associado e salva com propósito de auditoria
   def audit_billable!
-    self.billable_audit = self.billable
-    save!
+    options = Hash.new
+    options[:include] = [:courses, :partner_environment_association] if self.billable.is_a? Environment
+    self.billable_audit = self.billable.serializable_hash(options)
+    self.save!
   end
 
   def invoice
     self.invoices.order("created_at DESC").limit(1).first
+  end
+
+  def send_blocked_notice
+    UserNotifier.blocked_notice(self.user, self).deliver
   end
 end

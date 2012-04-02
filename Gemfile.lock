@@ -1,4 +1,14 @@
 GIT
+  remote: git://github.com/apotonick/roar-rails.git
+  revision: 851736e6cf2c4a930bc0b107cd43f750ac67f42b
+  specs:
+    roar-rails (0.0.3)
+      actionpack (~> 3.0)
+      railties (~> 3.0)
+      roar (~> 0.9.2)
+      test_xml
+
+GIT
   remote: git://github.com/edgarjs/ajaxful-rating.git
   revision: 81b563ef4e4f7937b769ea64b589d990dc833b43
   branch: rails3
@@ -96,7 +106,7 @@ GEM
       mime-types
       xml-simple
     builder (2.1.2)
-    cancan (1.6.4)
+    cancan (1.6.7)
     childprocess (0.2.2)
       ffi (~> 1.0.6)
     ckeditor (3.4.2.pre)
@@ -112,8 +122,13 @@ GEM
     deep_cloneable (1.2.3)
     diff-lcs (1.1.3)
     dynamic_form (1.1.4)
+    em-http-request (0.3.0)
+      addressable (>= 2.0.0)
+      escape_utils
+      eventmachine (>= 0.12.9)
     erubis (2.6.6)
       abstract (>= 1.0.0)
+    escape_utils (0.2.4)
     eventmachine (0.12.10)
     exceptional (2.0.32)
       rack
@@ -122,7 +137,12 @@ GEM
     factory_girl_rails (1.3.0)
       factory_girl (~> 2.2.0)
       railties (>= 3.0.0)
+    faraday (0.7.6)
+      addressable (~> 2.2)
+      multipart-post (~> 1.1)
+      rack (~> 1.1)
     ffi (1.0.9)
+    hashie (1.2.0)
     htmlentities (4.3.0)
     i18n (0.5.0)
     jammit (0.6.0)
@@ -154,9 +174,21 @@ GEM
     mime-types (1.17.1)
     mimemagic (0.1.8)
     multi_json (1.0.3)
+    multipart-post (1.1.5)
     mysql2 (0.2.7)
     newrelic_rpm (3.0.1)
     nokogiri (1.5.0)
+    oauth2 (0.5.2)
+      faraday (~> 0.7)
+      multi_json (~> 1.0)
+    omniauth (1.0.2)
+      hashie (~> 1.2)
+      rack
+    omniauth-facebook (1.2.0)
+      omniauth-oauth2 (~> 1.0.0)
+    omniauth-oauth2 (1.0.0)
+      oauth2 (~> 0.5.0)
+      omniauth (~> 1.0)
     open4 (1.0.1)
     pagseguro (0.1.12)
     paperclip (2.3.11)
@@ -201,6 +233,11 @@ GEM
     rdoc (3.11)
       json (~> 1.4)
     remotipart (0.3.4)
+    representable (1.1.1)
+      json
+      nokogiri
+    roar (0.9.2)
+      representable (~> 1.1)
     rscribd (1.3.0)
       mime-types
     rspec (2.7.0)
@@ -236,6 +273,8 @@ GEM
       ruby-hmac
     simple-navigation (3.5.0)
       activesupport (>= 2.3.2)
+    test_xml (0.1.2)
+      nokogiri (>= 1.3.2)
     thin (1.2.11)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
@@ -245,7 +284,7 @@ GEM
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
-    tzinfo (0.3.31)
+    tzinfo (0.3.32)
     whenever (0.6.7)
       aaronh-chronic (>= 0.3.9)
       activesupport (>= 2.3.4)
@@ -272,11 +311,13 @@ DEPENDENCIES
   awesome_nested_fields
   aws-s3
   bundler (~> 1.0.15)
-  cancan
+  cancan (~> 1.6.7)
   ckeditor (= 3.4.2.pre)
   date_validator
   deep_cloneable
   dynamic_form
+  em-http-request
+  eventmachine
   exceptional
   factory_girl_rails
   invitable!
@@ -288,6 +329,8 @@ DEPENDENCIES
   mysql2 (~> 0.2.1)
   newrelic_rpm (= 3.0.1)
   no_peeping_toms!
+  omniauth
+  omniauth-facebook
   pagseguro (~> 0.1.10)
   paperclip
   pusher
@@ -297,6 +340,7 @@ DEPENDENCIES
   rake (= 0.8.7)
   rd_searchlogic
   remotipart (>= 0.3.4)
+  roar-rails (~> 0.0.3)!
   rspec-rails (~> 2.6)
   ruby-debug
   scribd_fu!

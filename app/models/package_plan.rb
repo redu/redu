@@ -2,12 +2,12 @@ class PackagePlan < Plan
 
   PLANS = {
     :free => {
-      :name => "Professor Grátis (3 meses)",
+      :name => "Professor Grátis (6 meses)",
       :price => 0,
       :yearly_price => 0,
       :video_storage_limit => 10.megabytes,
       :file_storage_limit => 5.megabytes,
-      :members_limit => 10
+      :members_limit => 50
     },
     :professor_lite => {
       :name => "Professor Lite",
@@ -16,7 +16,7 @@ class PackagePlan < Plan
       :membership_fee => 13.99,
       :video_storage_limit => 30.megabytes,
       :file_storage_limit => 25.megabytes,
-      :members_limit => 20
+      :members_limit => 70
     },
     :professor_standard => {
       :name => "Professor Standard",
@@ -36,29 +36,41 @@ class PackagePlan < Plan
       :file_storage_limit => 25.megabytes,
       :members_limit => 500
     },
-    :instituicao_medio_lite => {
-      :name => "Instituição de Ensino Médio Lite",
+    :instituicao_medio_tiny => {
+      :name => "Instituição de Ensino Médio Tiny",
       :price => 600.00,
       :yearly_price => 5000.00,
+      :membership_fee => 600.00,
       :video_storage_limit => 512.megabytes,
       :file_storage_limit => 512.megabytes,
       :members_limit => 200
     },
-    :instituicao_medio_standard => {
-      :name => "Instituição de Ensino Médio Standard",
-      :price => 1250.00,
-      :yearly_price => 12000.00,
+    :instituicao_medio_lite => {
+      :name => "Instituição de Ensino Médio Lite",
+      :price => 870.00,
+      :yearly_price => 7452.00,
+      :membership_fee => 870.00,
       :video_storage_limit => 512.megabytes,
       :file_storage_limit => 512.megabytes,
-      :members_limit => 500
+      :members_limit => 300
+    },
+    :instituicao_medio_standard => {
+      :name => "Instituição de Ensino Médio Standard",
+      :price => 1120.00,
+      :yearly_price => 9888.00,
+      :membership_fee => 1120.00,
+      :video_storage_limit => 512.megabytes,
+      :file_storage_limit => 512.megabytes,
+      :members_limit => 400
     },
     :instituicao_medio_plus => {
       :name => "Instituição de Ensino Médio Plus",
-      :price => 1680.00,
-      :yearly_price => 16968.00,
+      :price => 1250.00,
+      :yearly_price => 12000.00,
+      :membership_fee => 1250.00,
       :video_storage_limit => 512.megabytes,
       :file_storage_limit => 512.megabytes,
-      :members_limit => 700
+      :members_limit => 500
     }
   }
 

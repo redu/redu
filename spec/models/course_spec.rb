@@ -313,23 +313,6 @@ describe Course do
       subject.user_course_associations.last.role }.to(Role[:tutor])
 
   end
-  context "when plan is licensed" do
-    before do
-      @plan = Factory(:active_licensed_plan, :billable => @environment,
-                      :user => subject.owner)
-      @plan.create_invoice_and_setup
-      @environment.create_quota
-      @environment.reload
-    end
-
-
-    it "changes a license role" do
-      user = Factory(:user)
-      subject.join(user)
-      subject.change_role(user, Role[:tutor])
-      user.get_open_license_with(subject).role == Role[:tutor]
-    end
-  end
 
   context "when joining an user" do
     before do
@@ -770,6 +753,7 @@ describe Course do
       context "and plan has members limit" do
         before do
           plan = Plan.from_preset(:free)
+          plan.user = subject.owner
           plan.members_limit = 15
           subject.plans << plan
         end
@@ -787,6 +771,7 @@ describe Course do
       context "and plan dones NOT have members limit" do
         before do
           plan = Plan.from_preset(:free, "LicensedPlan")
+          plan.user = subject.owner
           subject.plans << plan
         end
 
@@ -797,6 +782,28 @@ describe Course do
         it "should permit entry" do
           (1..15).each { subject.join(Factory(:user)) }
           subject.can_add_entry?.should be_true
+        end
+      end
+    end
+
+    context "when destroying" do
+      let(:subject) { Factory(:course) }
+      context "with an associated plan" do
+        it "should persist environment attributes" do
+          subject.plans = []
+          plan = Factory(:active_package_plan, :billable => subject)
+
+          subject.audit_billable_and_destroy
+          plan.reload.billable_audit["name"].should == subject.name
+          plan.reload.billable_audit["path"].should == subject.path
+        end
+      end
+
+      context "withdout an associated plan" do
+        it "should only destroy itself" do
+          expect {
+            subject.audit_billable_and_destroy
+          }.should_not raise_error
         end
       end
     end

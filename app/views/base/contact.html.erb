@@ -1,3 +1,32 @@
-<%= form_for :contact, :url => {:action => :contact} do |f| %>
-  <%= render :partial => 'base/contact_form', :locals => { :f => f } %>
-<% end %>
+<%= content_for :wrapper_class do %>overlay<% end %>
+<div class="container_16">
+  <div class="grid_4">
+    <h1 class="logo-top" title="Redu">
+      <%= link_to "Redu", home_path %>
+    </h1>
+    <ul class="left-navigation">
+      <li class="term-of-service">
+        <%= link_to "Termos de Uso", tos_path, :title => "Termos de Uso" %>
+      </li>
+      <li class="privacy-policy">
+        <%= link_to "Política de Privacidade", privacy_path, :title => "Política de Privacidade" %>
+      </li>
+      <li class="active contact">
+        <%= link_to "Fale conosco", contact_path, :title => "Fale conosco" %>
+      </li>
+    </ul>
+  </div>
+  <div class="grid_12 alpha">
+    <ul class="top-navigation">
+      <li><%= link_to "Termos de Uso", tos_path, :title => "Termos de Uso" %><span class="separator">|</span></li>
+      <li><%= link_to "Política de Privacidade", privacy_path, :title => "Política de Privacidade" %><span class="separator">|</span></li>
+      <li><%= link_to "Fale conosco", contact_path, :title => "Fale conosco", :class => "active" %><span class="separator">|</span></li>
+      <li><%= link_to "Página inicial", home_path, :title => "Página inicial" %></li>
+    </ul>
+    <h2 class="content-title contact" title="Fale conosco">Fale conosco</h2>
+    <div class="content">
+      <p>Sua opinião é valiosa para nós. Através dela, podemos saber a eficácia de uma funcionalidade – quais caminhos devemos guiar nosso produto – e assim conhecer melhor o nosso público-alvo: você. Sua mensagem será encaminhada de acordo com a finalidade e devidamente levada em consideração.</p>
+      <%= render 'base/contact_form', :remote => true, :id => "contact-form", :css_class => 'concave-form contact-form', :kind => true, :body_title => 'Como podemos ajudar?' %>
+    </div>
+  </div>
+</div>

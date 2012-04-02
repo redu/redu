@@ -1,5 +1,5 @@
 class Invoice < ActiveRecord::Base
-  OVERDUE_DAYS = 5
+  OVERDUE_DAYS = 15
 
   belongs_to :plan
 
@@ -16,9 +16,45 @@ class Invoice < ActiveRecord::Base
   scope :of_period, lambda { |period|
     where(:period_end => period)
   }
-  scope :of_billable, lambda { |billable|
-    where(:plan_id => billable.plans.collect(&:id).flatten)
+  # Feito desta forma, pois o billable pode ter sido destruído
+  scope :of_billable, lambda { |billable_id, billable_type|
+    where(:plan_id => Plan.where(:billable_id => billable_id,
+                                 :billable_type => billable_type))
   }
 
   attr_protected :state
+
+  # Manda o e-mail de vencimento
+  def deliver_overdue_notice
+    send_overdue_notice
+  end
+
+  def deliver_pending_notice
+    self.send_pending_notice
+  end
+
+  protected
+
+  # Marca o horário em que o pagamento foi feito
+  def register_time
+    self.due_at = Time.now
+  end
+
+  def send_pending_notice
+    UserNotifier.pending_notice(self.plan.user, self, self.threshold_date).
+      deliver
+  end
+
+  def send_overdue_notice
+    UserNotifier.overdue_notice(self.plan.user, self).deliver
+  end
+
+  def send_confirmation_and_unlock_plan
+    self.plan.activate! unless self.plan.pending_payment?
+    self.send_payment_confirmation
+  end
+
+  def send_payment_confirmation
+    UserNotifier.payment_confirmation(self.plan.user, self).deliver
+  end
 end

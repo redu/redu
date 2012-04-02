@@ -26,6 +26,9 @@ class User < ActiveRecord::Base
     :foreign_key => "owner"
   # Course
   has_many :courses, :through => :user_course_associations
+  # Authentication
+  has_many :authentications, :dependent => :destroy
+  
 
   #COURSES
   has_many :lectures, :foreign_key => "owner",
@@ -147,7 +150,7 @@ class User < ActiveRecord::Base
   validates_uniqueness_of   :login, :email, :case_sensitive => false
   validates_exclusion_of    :login, :in => Redu::Application.config.extras["reserved_logins"]
   validates :birthday,
-      :date => { :before => Proc.new { 13.years.ago } }
+      :date => { :before => Proc.new { 13.years.ago } }, :allow_nil => true
   validates_acceptance_of :tos
   validates_confirmation_of :email
   validates_format_of :email,
@@ -240,7 +243,14 @@ class User < ActiveRecord::Base
     when 'User'
       entity == self
     when 'Plan', 'PackagePlan', 'LicensedPlan'
-      entity.user == self || self.can_manage?(entity.billable)
+      entity.user == self || self.can_manage?(entity.billable) ||
+        # Caso em que billable foi destruído
+        self.can_manage?(
+          # Não levanta RecordNotFound
+          Partner.where( :id => entity.billable_audit.
+                        try(:[], :partner_environment_association).
+                        try(:[],"partner_id")).first
+      )
     when 'Invoice', 'LicensedInvoice', 'PackageInvoice'
       self.can_manage?(entity.plan)
     when 'Myfile'
@@ -420,11 +430,6 @@ class User < ActiveRecord::Base
       association = Enrollment.where('user_id = ? AND subject_id = ?', self.id,
                                       entity.subject.id).first
     end
-  end
-
-  def get_open_license_with(entity)
-    License.where('login LIKE ? AND course_id = ? AND period_end IS NULL',
-                  self.login, entity).first
   end
 
   def environment_admin?(entity)
@@ -619,7 +624,12 @@ class User < ActiveRecord::Base
     educations
   end
 
+  def subjects_id
+    self.lectures.collect{ |lecture| lecture.subject_id }
+  end
+
   protected
+
   def activate_before_save
     self.activated_at = Time.now.utc
     self.activation_code = nil

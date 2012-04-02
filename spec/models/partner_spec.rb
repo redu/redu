@@ -6,6 +6,8 @@ describe Partner do
   it { should validate_presence_of :name }
   it { should validate_presence_of :email }
   it { should validate_presence_of :address }
+  it { should have_many(:partner_environment_associations).dependent(:destroy) }
+  it { should have_many(:partner_user_associations).dependent(:destroy) }
   it { should have_many(:environments).through(:partner_environment_associations) }
   it { should have_many(:users).through(:partner_user_associations) }
 
@@ -77,7 +79,8 @@ describe Partner do
     end
 
     it "assigns the current collaborators as new environment admins" do
-      subject.add_environment(@environment, "12.123.123/1234-12", "Cool Street")
+      subject.add_environment(@environment, "12.123.123/1234-12", "Cool Street",
+                              "Cool Inc.")
       subject.users.to_set.should be_subset(@environment.administrators.to_set)
     end
   end
@@ -88,7 +91,9 @@ describe Partner do
       @invoices = 2.times.collect do
         env = Factory(:partner_environment_association,
                       :partner => subject).environment
-        env.plans << Plan.from_preset(:instituicao_superior, "LicensedPlan")
+        plan = Plan.from_preset(:instituicao_superior, "LicensedPlan")
+        plan.user = env.owner
+        env.plans << plan
         env.plan.create_invoice
       end
     end
@@ -112,7 +117,9 @@ describe Partner do
         environment = course.environment
         Factory(:partner_environment_association, :partner => subject,
                 :environment => course.environment)
-        environment.plans << Plan.from_preset(:instituicao_superior, "LicensedPlan")
+        plan = Plan.from_preset(:instituicao_superior, "LicensedPlan")
+        plan.user = environment.owner
+        environment.plans << plan
         environment.plan.create_invoice
         environment
       end

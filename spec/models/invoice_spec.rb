@@ -62,7 +62,7 @@ describe Invoice do
         Factory(:invoice, :plan => plans[1])
       end
 
-      Invoice.of_billable(plans[0].billable).to_set.
+      Invoice.of_billable(plans[0].billable, plans[0].billable.class).to_set.
         should == invoices.to_set
     end
   end
