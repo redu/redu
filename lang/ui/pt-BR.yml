@@ -101,6 +101,19 @@ pt-BR:
   support:
     array:
       two_words_connector: "Formato inválido"
+  
+  activemodel:
+    models:
+      recovery_email: "E-mail de recuperação"
+    attributes:
+      recovery_email:
+        email: "E-mail"
+    errors:
+      models:
+        recovery_email:
+              attributes:
+                email:
+                  invalid: "E-mail inválido."
   activerecord:
     models:
       user: "usuário"
@@ -188,7 +201,7 @@ pt-BR:
         header:
           one: "Ops!" #"Um erro ocorreu, verifique abaixo como proceder."
           other: "Ops!" #"{{count}} erros ocorreram, veja como proceder abaixo."
-        body: "Há problemas para os seguinte(s) campo(s):"
+        body: "Há problemas para o(s) seguinte(s) campo(s):"
       messages:
         blank: "não pode ser deixado em branco."
         too_long: "Texto muito longo"
@@ -226,6 +239,8 @@ pt-BR:
               invalid: "inválido."
             localization:
               invalid: "Localização inválida."
+            birthday:
+              before: "Você deve ter mais de 13 anos."
         space:
           attributes:
             path:
@@ -256,7 +271,7 @@ pt-BR:
           attributes:
             cnpj:
               invalid: "formato inválido"
-
+        
   helpers:
     submit:
       complementary_course:
@@ -280,7 +295,7 @@ pt-BR:
       subject:
         create: "Adicionar aulas"
         update: "Finalizar módulo"
-
+          
   lectureable: vídeo-aula
   lectures: aulas
   history: historico
@@ -851,6 +866,9 @@ pt-BR:
   exibitions: "Exibições"
   #en: explore_site: Explore {{site}}
   explore_site: "Explore {{site}}"
+  facebook_connect_error: Não foi possível logar com sua conta do Facebook
+  facebook_connect_account_association: Sua conta do Facebook foi associada ao Redu.
+  facebook_connect_new_user: Sua conta foi criada com seu e-mail do Facebook.
   #en: failed: failed
   failed: failed
   #en: faq: FAQ
@@ -1874,6 +1892,7 @@ pt-BR:
   you_may_want_to_use_your_company_logo_or_a_photo_of_one_of_your_products_: "You may want to use your company logo, or a photo of one of your products. "
   #en: you_must_vote_to_see_the_results: You must vote to see the resuts.
   you_must_vote_to_see_the_results: You must vote to see the resuts.
+  you_need_give_us_access_to_your_facebook_data: "Para logar com sua conta do Facebook, é necessário adicionar o Redu aos seus aplicativos."
   #en: your_about_text_goes_here: Your About text goes here.
   your_about_text_goes_here: Your About text goes here.
   #en: your_faq_text_goes_here: Your FAQ text goes here.

@@ -9,7 +9,7 @@ class Plan < ActiveRecord::Base
 
   scope :blocked, where(:state => "blocked")
 
-  validates_presence_of :price
+  validates_presence_of :price, :user
 
   attr_protected :state
 

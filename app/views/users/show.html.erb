@@ -27,7 +27,9 @@
           <% end %>
           <li>
             <ul class="biography icon-bio-gray_8_10">
-              <li><span class="bio"><%= @user.age %></span> anos</li>
+              <% if @user.birthday %>
+                <li><span class="bio"><%= @user.age %></span> anos</li>
+              <% end %>
               <% unless @user.languages.blank? %>
                 <li>Fala
                   <span class="bio"><%= @user.languages %></span>

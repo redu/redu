@@ -117,4 +117,10 @@ class LicensedInvoice < Invoice
     License.update_all(["period_end = ? ", self.period_end],
                        ["id IN (?)", self.licenses.in_use.collect(&:id)])
   end
+
+  # Redefinindo método de Invoice
+  def send_pending_notice
+    UserNotifier.licensed_pending_notice(self.plan.user, self, self.threshold_date).
+      deliver
+  end
 end

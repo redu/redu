@@ -753,6 +753,7 @@ describe Course do
       context "and plan has members limit" do
         before do
           plan = Plan.from_preset(:free)
+          plan.user = subject.owner
           plan.members_limit = 15
           subject.plan = plan
         end
@@ -770,6 +771,7 @@ describe Course do
       context "and plan dones NOT have members limit" do
         before do
           plan = Plan.from_preset(:free, "LicensedPlan")
+          plan.user = subject.owner
           subject.plan = plan
         end
 

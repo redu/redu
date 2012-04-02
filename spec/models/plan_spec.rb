@@ -1,6 +1,11 @@
 require 'spec_helper'
 
 describe Plan do
+  before do
+    UserNotifier.delivery_method = :test
+    UserNotifier.perform_deliveries = true
+  end
+
   subject { Factory(:plan) }
 
   it { should belong_to :billable }
@@ -8,6 +13,7 @@ describe Plan do
   it { should have_many :invoices }
   it { should_not allow_mass_assignment_of :state }
   it { should validate_presence_of :price }
+  it { should validate_presence_of :user }
 
   def period
     (Date.today.at_end_of_month - Date.today).to_i
@@ -37,10 +43,8 @@ describe Plan do
     end
 
     it "sends an email when blocked" do
-      UserNotifier.delivery_method = :test
-      UserNotifier.perform_deliveries = true
       expect {
-      subject.block!
+        subject.block!
       }.should change {UserNotifier.deliveries.size }.by(1)
       UserNotifier.deliveries.last.body.should =~ /foi bloqueado/
     end
@@ -67,6 +71,7 @@ describe Plan do
 
     it "creates a plan from preset" do
       plan = Plan.from_preset(:professor_standard)
+      plan.user = Factory(:user)
       plan.should be_valid
     end
   end
@@ -110,6 +115,7 @@ describe Plan do
     end
 
     it "should initialize a valid plan" do
+      @plan.user = Factory(:user)
       @plan.should be_valid
     end
 
@@ -352,6 +358,19 @@ describe Plan do
         @new_plan.invoice.licenses.should_not be_empty
         @new_plan.invoice.licenses.should have(users.count).items
       end
+    end
+  end
+
+  context "when billable is destroyed" do
+    before do
+      subject.billable.audit_billable_and_destroy
+      subject.reload
+    end
+
+    it "sends email when blocked" do
+      expect {
+        subject.block!
+      }.should change(UserNotifier.deliveries, :count).by(1)
     end
   end
 end

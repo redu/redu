@@ -1,6 +1,23 @@
-<div id="error-header" class="grid_9 push_2 omega">
-<h2 class="message">Ops! Erro 404</h2>
-<span class="detail">O que você procura não está aqui.</span>
-</div>
+<%= content_for :wrapper_class do %>overlay<% end %>
+<div id="error" class="container_16">
+  <h1 id="logo" class="logo-top grid_5 omega"><%= link_to "Redu", home_path %></h1>
 
-<%= render :partial => 'errors/contact' %>
+  <div class="infos alert grid_10">
+    <h2 class="warning"> <span class="ops-call">Ops!</span>Página não encontrada</h2>
+    <h3 class="error-name"><span class="call">ERRO</span><span class="number">404</span></h3>
+    <div class="description-error grid_7">
+      <h4 class="title">Por quê?</h4>
+      <p>A página que você procura não foi encontrada. Isso pode resultar de alguns fatores como: a URL conter algum caractere digitado incorretamente, a página não existir ou o endereço ter sido realocado.</p>
+      <h4 class="title">Sugerimos:</h4>
+      <p>Caso você tenha digitado o endereço, verifique se o mesmo está correto (com algum caractere a mais ou a menos). Se foi de algum link nosso, pedimos desculpas pelo incoveniente e que você  <%= link_to 'nos ajude', contact_path, :class => 'back-call' %> a resolver este problema.</p>
+      <h4 class="title">Estes links podem te ajudar.</h4>
+      <ul class="grid_3 suggested-links">
+        <li><%= link_to "Página inicial", home_path %></li>
+        <li><%= link_to "Blog", "http://blog.redu.com.br" %></li>
+        <li><%= link_to "Termos de Uso", tos_path %></li>
+        <li><%= link_to "Política de Privacidade", privacy_path %></li>
+        <li><%= link_to "Entre em contato conosco", contact_path%></li>
+      </ul>
+    </div>
+  </div>
+</div><!-- end-container -->
