@@ -1,5 +1,5 @@
 <tr id=<%="invitation-#{invitation_item.id}" %> class="invite">
-  <td class="cell-check-box">
+  <td class="cell-checkbox">
     <%= check_box_tag 'invitations[]', invitation_item.id, false, {:class => 'autoCheck',
            :id => "remove-#{invitation_item.id}"} %>
   </td>

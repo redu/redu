@@ -1,5 +1,7 @@
 <% unless invitations.empty? and friendship_requests.empty? %>
-  <h3 class="form-header">Aguardando a resposta de <%= (invitations.count + friendship_requests.count) %> membro(s)</h3>
+  <div class="notice">
+    <h3 class="form-header">Aguardando a resposta de <%= (invitations.count + friendship_requests.count) %> membro(s)</h3>
+  </div>
   <div id="user_list" class="invitation-list">
     <%= form_tag destroy_invitations_invitations_path, :method => :post do %>
       <table id="user_list_table" class ="concave-invitation-table">
@@ -23,7 +25,7 @@
     <% end %>
   </div>
 <% else %>
-  <div class="box_notice">
+  <div class="notice empty-list">
     <h3 class="form-header">Não há convites pendentes no momento</h3>
   </div>
 <% end %>
