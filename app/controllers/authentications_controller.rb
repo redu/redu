@@ -20,16 +20,16 @@ class AuthenticationsController < ApplicationController
       if user
         # Existe conta no Redu com o e-mail associado aa conta do FB.
         user.authentications.create!(:provider => auth[:provider],
-                                          :uid => auth[:uid])
+                                     :uid => auth[:uid])
         flash[:notice] = t :facebook_connect_account_association
       else
         # Não existe conta do Redu associada ao e-mail do usuário no FB. 
         user = Authentication.build_user(auth)
         user.authentications.build(:provider => auth[:provider],
-                                        :uid => auth[:uid])
+                                   :uid => auth[:uid])
         flash[:notice] = t :facebook_connect_new_user
       end
-
+      user.email = ""
       # Tenta atualizar os dados do usuário (possivelmente recém-criado).
       if user.save
         @user_session = UserSession.new(user)
@@ -37,6 +37,7 @@ class AuthenticationsController < ApplicationController
         # Usuário criado / atualizado com sucesso.
         redirect_to home_user_path(user)
       else
+        debugger
         # Erro ao criar / atualizar usuário.
         @error = user.errors.first.second.to_s
         flash[:notice] = "#{t :facebook_connect_error}#{@error}"
