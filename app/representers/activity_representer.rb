@@ -1,7 +1,6 @@
 module ActivityRepresenter
   include Roar::Representer::JSON
   include Roar::Representer::Feature::Hypermedia
-#  include StatusRepresenter
   property :id
   property :created_at
   property :type
@@ -13,7 +12,7 @@ module ActivityRepresenter
   end
 
   link :statusable do
-    if statusable.is_a?(User) || statusable.is_a?(Space)
+    if statusable.is_a?(User) || statusable.is_a?(Space) || statusable.is_a?(Lecture)
       polymorphic_url([:api, self.statusable])
     end
   end
