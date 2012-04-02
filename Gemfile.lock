@@ -47,6 +47,12 @@ GIT
     aasm (3.0.3)
       activerecord
 
+GIT
+  remote: git@github.com:redu/vis_client.git
+  revision: ef3bbcfb8c95c0b8040ca44521de4b866db42f97
+  specs:
+    vis_client (0.0.4)
+
 GEM
   remote: http://rubygems.org/
   remote: http://gems.github.com/
@@ -341,6 +347,7 @@ DEPENDENCIES
   simple-navigation
   thin
   translate_routes
+  vis_client!
   whenever
   will_paginate (~> 3.0.pre2)
   zencoder

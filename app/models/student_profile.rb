@@ -2,6 +2,7 @@ class StudentProfile < ActiveRecord::Base
   # Perfil de um User num determinado Subject. Contém informações sobre aulas
   # realizadas, porcentagem do Subject cursado e informações sobre desempenho
   # no Subject.
+  include VisClient
 
   after_create :creates_assets_reports
 
@@ -28,6 +29,24 @@ class StudentProfile < ActiveRecord::Base
     if total == done
       self.grade = 100
       self.graduaded = true
+
+      params = {
+        :user_id => self.user_id,
+        :lecture_id => nil,
+        :subject_id => self.subject_id,
+        :space_id => self.subject.space.id,
+        :course_id => self.subject.space.course.id,
+        :type => "subject_finalized",
+        :status_id => nil,
+        :statusable_id => nil,
+        :statusable_type => nil,
+        :in_response_to_id => nil,
+        :in_response_to_type => nil,
+        :created_at => enrollment.created_at,
+        :updated_at => enrollment.updated_at
+      }
+
+      self.send_async_info(params, Redu::Application.config.vis_client[:url])
     end
     self.save
 
@@ -40,5 +59,18 @@ class StudentProfile < ActiveRecord::Base
       self.asset_reports << AssetReport.create(:subject => self.subject,
                                                 :lecture => lecture)
     end
+  end
+
+  def fill_params(status, options = {})
+    params = {
+      :user_id => status.user_id,
+      :type => get_type(status),
+      :status_id => status.id,
+      :statusable_id => status.statusable_id,
+      :statusable_type => status.statusable_type,
+      :in_response_to_id => status.in_response_to_id,
+      :in_response_to_type => status.in_response_to_type
+    }
+    params.merge(options)
   end
 end

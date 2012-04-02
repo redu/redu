@@ -51,6 +51,7 @@ gem 'roar-rails', '~> 0.0.3',
   :git => 'git://github.com/apotonick/roar-rails.git'
 gem 'eventmachine'
 gem 'em-http-request'
+gem 'vis_client', :git => "git@github.com:redu/vis_client.git"
 
 # Gems específicos de algum ambiente
 group :development, :test do
