@@ -3,8 +3,7 @@ class Lecture < ActiveRecord::Base
   # Entidade polimórfica que representa o objeto de aprendizagem. Pode possuir
   # três especializações: Seminar, InteractiveClass e Page.
 
-  #
-  after_create :create_asset_report
+  after_create :delay_create_asset_report
 
   # ASSOCIATIONS
   has_many :statuses, :as => :statusable, :order => "updated_at DESC",
@@ -15,7 +14,7 @@ class Lecture < ActiveRecord::Base
   #FIXME Falta testar
   has_many :favorites, :as => :favoritable, :dependent => :destroy
   has_many :asset_reports, :dependent => :destroy
-  has_many :student_profiles, :through => :asset_reports, :dependent => :destroy
+  # has_many :student_profiles, :through => :asset_reports, :dependent => :destroy
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
   belongs_to :lectureable, :polymorphic => true, :dependent => :destroy
   belongs_to :subject
@@ -77,10 +76,7 @@ class Lecture < ActiveRecord::Base
   end
 
   def refresh_students_profiles
-    student_profiles = StudentProfile.where(:subject_id => self.subject.id)
-    student_profiles.each do |student_profile|
-      student_profile.update_grade!
-    end
+    self.subject.enrollments.each(&:"update_grade!")
   end
 
   def recent?
@@ -120,13 +116,21 @@ class Lecture < ActiveRecord::Base
     end
   end
 
-  protected
   def create_asset_report
-    student_profiles = StudentProfile.where(:subject_id => self.subject.id)
-    student_profiles.each do |student_profile|
-      self.asset_reports << AssetReport.create(:subject => self.subject,
-                                               :student_profile => student_profile)
-      student_profile.update_grade!
+    enrollments = Enrollment.where(:subject_id => self.subject.id)
+
+    reports = enrollments.collect do |enrollment|
+      AssetReport.new(:subject => self.subject, :enrollment => enrollment)
     end
+    AssetReport.import(reports)
+
+    enrollments.collect(&:"update_grade!")
   end
+
+  protected
+
+  def delay_create_asset_report
+    Delayed::Job.enqueue CreateAssetReportJob.new(:lecture_id => self.id)
+  end
+
 end

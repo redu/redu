@@ -1,12 +1,15 @@
 class Enrollment < ActiveRecord::Base
   # Entidade intermediária entre User e Subject. É criada quando o usuário se
   # matricula num determinado Subject.
+  # Contém informações sobre aulas realizadas, porcentagem do Subject cursado
+  # e informações sobre desempenho no Subject.
 
-  after_create :creates_student_profile
+  after_create :create_assets_reports
 
   belongs_to :user
   belongs_to :subject
-  has_one :student_profile, :dependent => :destroy
+  has_many :asset_reports, :dependent => :destroy
+  has_many :lectures, :through => :asset_reports
 
   enumerate :role
 
@@ -30,8 +33,29 @@ class Enrollment < ActiveRecord::Base
     end
   }
 
+  # Atualiza a porcentagem de cumprimento do módulo.
+  def update_grade!
+    total = self.asset_reports.count
+    done = self.asset_reports.count(:conditions => "done = 1");
+
+    self.grade = (( done.to_f * 100 ) / total)
+    if total == done
+      self.grade = 100
+      self.graduaded = true
+    else
+      self.graduaded = false
+    end
+    self.save
+
+    return self.grade
+  end
+
   protected
-  def creates_student_profile
-    self.create_student_profile(:user => self.user, :subject => self.subject)
+
+  def create_assets_reports
+    subject.lectures.each do |lecture|
+      self.asset_reports << AssetReport.create(:subject => self.subject,
+                                                :lecture => lecture)
+    end
   end
 end

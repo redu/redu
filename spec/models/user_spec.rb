@@ -5,7 +5,7 @@ describe User do
 
   it { should have_many(:statuses) }
   [:lectures, :favorites, :statuses,
-    :subjects, :student_profiles, :subjects].each do |attr|
+    :subjects, :subjects].each do |attr|
     it { should have_many attr }
     end
 
@@ -608,14 +608,6 @@ describe User do
     space = Factory(:space)
     subject.add_favorite(space.class.to_s, space.id)
     subject.has_favorite(space)
-  end
-
-  it "retrieves his profile for a subject" do
-    pending "Need student profile factory" do
-      student_profile = Factory(:student_profile)
-      subject.student_profiles = student_profile
-      subject.profile_for(student_profile.subject).should == student_profile
-    end
   end
 
   it "retrieves completeness percentage of profile" do
