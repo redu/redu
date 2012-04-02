@@ -1,0 +1,6 @@
+<%# Caixa de confirmação
+  Variáveis: message => mesagem a ser mostrada,
+             boxed => se a div deve ser uma caixa %>
+<div class="confirmation-msg <%= (boxed ||= false) ? 'boxed' : '' %>">
+  <%= content_tag(:p, raw(message)) %>
+</div>

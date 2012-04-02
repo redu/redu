@@ -31,9 +31,11 @@ Redu::Application.routes.draw do
   get '/auth/failure' => 'authentications#fallback', :as => :omniauth_fallback
   get 'auth/facebook', :as => :facebook_authentication
 
-  # recover routes
-  match '/forgot_password' => 'users#forgot_password', :as => :forgot_password
-  match '/forgot_username' => 'users#forgot_username', :as => :forgot_username
+  get '/recover_username_password' => 'users#recover_username_password',
+    :as => :recover_username_password
+  post '/recover_username' => 'users#recover_username', :as => :recover_username
+  post '/recover_password' => 'users#recover_password', :as => :recover_password
+
   match '/resend_activation' => 'users#resend_activation',
     :as => :resend_activation
   match '/account/edit' => 'users#edit_account', :as => :edit_account_from_email
@@ -43,6 +45,9 @@ Redu::Application.routes.draw do
   match '/about' => 'base#about', :as => :about
   match '/faq' => 'base#faq', :as => :faq
   match 'contact' => 'base#contact', :as => :contact
+
+  # Recovery Email
+  resources :'recovery_emails'
 
   # Space
   resources :spaces, :except => [:index] do
