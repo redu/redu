@@ -85,7 +85,7 @@
   color: rgb(179, 179, 179);
   font-size: 2.3em;
   font-weight: 100;
-  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-family: museo-slab, "Helvetica Neue", Arial, sans-serif;
 }
 
 .textshadow #resource .exercise-nav li a {
@@ -142,7 +142,7 @@
 }
 
 #resource .justification .call {
-  font-family: museo-sans, helvetica, arial, sans-serif;
+  font-family: museo-sans, "Helvetica Neue", Arial, sans-serif;
   font-weight: 500;
   font-size: 1.3em;
   letter-spacing: -1px;
@@ -321,7 +321,7 @@
 }
 
 #resource .review-score ul li {
-  font-family: museo-sans, helvetica, arial, sans-serif;
+  font-family: museo-sans, "Helvetica Neue", Arial, sans-serif;
   font-weight: 300;
   font-size: 1.3em;
   line-height: 1.1;
@@ -345,7 +345,7 @@
 
 #resource .review-score .score-value,
 #resource .review-score .score-type {
-  font-family: museo-sans, helvetica, arial, sans-serif;
+  font-family: museo-sans, "Helvetica Neue", Arial, sans-serif;
   font-weight: 300;
 }
 
@@ -356,7 +356,7 @@
 }
 
 #resource .review-grade .exercise-grade {
-  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-family: museo-slab, "Helvetica Neue", Arial, sans-serif;
   font-weight: 100;
   font-size: 4.5em;
   display: block;
@@ -420,7 +420,7 @@
 }
 
 #resource .exercise-call {
-  font-family: museo-sans, helvetica, arial, sans-serif;
+  font-family: museo-sans, "Helvetica Neue", Arial, sans-serif;
   color: black;
   font-size: 1.3em;
   font-weight: 500;
@@ -437,7 +437,7 @@
 }
 
 #resource .exercise-overview .qty-questions {
-  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-family: museo-slab, "Helvetica Neue", Arial, sans-serif;
   font-weight: 100;
   font-size: 4.5em;
   display: block;
@@ -475,7 +475,7 @@
 }
 
 #resource .exercise-clean .exercise-note {
-  font-family: museo-sans, helvetica, arial, sans-serif;
+  font-family: museo-sans, "Helvetica Neue", Arial, sans-serif;
   font-weight: 500;
   font-size: 1.3em;
 
@@ -520,7 +520,7 @@
 }
 
 #resource .exercise-result .qty-users-exercise {
-  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-family: museo-slab, "Helvetica Neue", Arial, sans-serif;
   font-weight: 100;
   font-size: 4.5em;
   display: block;
@@ -740,7 +740,7 @@
   float: left;
   margin: 5px;
 
-  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-family: museo-slab, "Helvetica Neue", Arial, sans-serif;
   font-weight: 900;
   font-size: 1.3em;
   color: white;

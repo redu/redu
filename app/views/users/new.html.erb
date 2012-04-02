@@ -44,18 +44,18 @@
         <%= concave_errors_for @user, :birthday %>
       <% end %>
       <%= field_set_tag "Informações de contato", :class => 'separator' do %>
-        <%= f.label :login, t( :username ) %>
+        <%= f.label :login, t( :username ) + ':' %>
         <%= f.text_field :login, :class => 'small' %>
         <%= concave_errors_for @user, :login %>
 
-        <%= f.label :email, t( :email ) %>
+        <%= f.label :email, t( :email ) + ':' %>
         <%= f.text_field :email, :class => 'small' %>
         <%= concave_errors_for @user, :email %>
         <%= f.label :email_confirmation, "Confirmação:" %>
         <%= f.text_field :email_confirmation, :class => 'small' %>
       <% end %>
       <%= field_set_tag "Senha", :class => 'separator' do %>
-        <%= f.label :password, t( :password ) %>
+        <%= f.label :password, t( :password ) + ':' %>
         <%= f.password_field :password, :class => 'small' %>
         <%= concave_errors_for @user, :password %>
 

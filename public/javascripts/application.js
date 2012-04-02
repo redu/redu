@@ -118,9 +118,11 @@ jQuery(function(){
     // Tooltips
     $(".tiptip").tipTip();
     $(".tiptip-right").tipTip({defaultPosition: "right"});
+    $(".tiptip-left").tipTip({defaultPosition: "left"});
     $(document).ajaxComplete(function(){
       $(".tiptip").tipTip();
       $(".tiptip-right").tipTip({defaultPosition: "right"});
+      $(".tiptip-left").tipTip({defaultPosition: "left"});
     });
 
     $(".form-common .tiptip").each(function(){
@@ -149,24 +151,6 @@ jQuery(function(){
         e.preventDefault();
     });
 
-    // Padrão de spinner
-    $(".form-common, .form-loader").live('ajax:before', function(e){
-        var $this = $(this);
-        var $target = $(e.target);
-
-        if($target.is($this)){
-          $(this).find("input[type=submit], button").loadingStart({ 'class' : 'concave-loading' });
-        }
-    });
-
-    $(".form-common, .form-loader").live('ajax:complete', function(e){
-        var $this = $(this);
-        var $target = $(e.target);
-
-        if($target.is($this)){
-          $(this).find("input[type=submit], button").loadingComplete({ 'class' : 'concave-loading'});
-        }
-    });
 
     $("a[data-remote=true]").live('ajax:before', function(){
         $(this).css('width', $(this).width());
