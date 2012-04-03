@@ -1,14 +1,13 @@
 <%= render :partial => 'users/home_sidebar' %>
 <div class="main grid_10" style="width: 580px;">
   <%= render :partial => 'users/breadcrumbs' %>
-  <div id="plan-index">
+  <div id="plan-index" class="plan-panel">
     <%= tabs :users do %>
-      <table class="common spaced">
+      <table class="concave-admin-table">
         <thead>
-          <tr>
-            <th style="width: 45%">Curso:</th>
-            <th>Plano/situação:</th>
-            <th>Upgrade:</th>
+          <tr class="label-course">
+            <th class="name-course">Curso:</th>
+            <th class="category">Categoria/Plano:</th>
           </tr>
         </thead>
         <tbody>

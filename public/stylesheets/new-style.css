@@ -7537,7 +7537,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .plan-panel .concave-admin-table .course .no-pending {
   font-size: 11px;
   font-family: arial,sans-serif;
-  font-weight: regular;
   color: rgb(179, 179, 179);
 }
 
@@ -7549,14 +7548,20 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 .plan-panel .concave-admin-table .course .type-user {
-  font-size: 12px;
-  font-family: arial, sans-serif;
-  font-weight: regular;
-  color: rgb(95, 192, 128);
   padding-left: 120px;
 }
 
-.plan-panel .concave-admin-table .course .pending-user {
+.plan-panel .concave-admin-table .course .type-user .name {
+  display: block;
+  font-size: 12px;
+  color: rgb(95, 192, 128);
+}
+
+.plan-panel .concave-admin-table .course .type-user .name:hover {
+  color: rgb(21, 138, 196);
+}
+
+.plan-panel .concave-admin-table .course .type-user .pending-user {
   color: rgb(255, 109, 109);
 }
 
