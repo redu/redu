@@ -48,6 +48,7 @@ javascripts:
   chart:
     - public/javascripts/highcharts/highcharts.js
     - public/javascripts/d3/d3.js
+    - public/javascripts/d3/d3.chart.js
     - public/javascripts/teacher_participation.js
     - public/javascripts/subject_participation.js
   ie:
