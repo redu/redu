@@ -4551,6 +4551,10 @@ table.spaced tr td {
   margin-top: 5px;
 }
 
+#course-manage .teacher-participation-chart {
+  clear: both;
+}
+
 #environment-manage .course-path .course-name,
 #course-manage .course-path .course-name {
   font-family: inherit;
@@ -4778,6 +4782,10 @@ table.spaced tr td {
   width: 390px;
   float: left;
   font-size: .85em;
+}
+
+table.concave-invitation-table {
+  clear: both;
 }
 
 #course-manage table.concave-invitation-table {

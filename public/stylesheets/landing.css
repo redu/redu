@@ -174,7 +174,6 @@
 
 #landing .login-box .concave-form .concave-button {
   height: 28px;
-  width: 68px;
   margin-right: 0;
   margin-top: 10px;
 }
@@ -220,10 +219,31 @@
 
 }
 
-.facebook-like {
-  float: left;
+#landing .staging {
   margin-top: 145px;
-  margin-left: 185px;
+}
+
+#landing .facebook-like {
+  float: right;
+}
+
+#landing .book-ad {
+  float: left;
+  margin-right: 20px;
+  margin-top: 5px;
+}
+
+#landing .book-ad a,
+#landing .book-ad {
+  width: 340px;
+  height: 70px;
+}
+
+#landing .book-ad a {
+  display: block;
+  background: url("../images/new/educar-mini-banner.png") no-repeat;
+  text-indent: -9999px;
+  overflow: hidden;
 }
 
 /* Página de convite */
