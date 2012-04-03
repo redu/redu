@@ -2020,6 +2020,7 @@ body {
 .statuses > ol > li {
   background: url("../images/new/dots.png") repeat-x top;
   padding: 20px 0;
+  overflow: hidden;
 }
 
 .statuses .icon-seminar-lightblue_64_66-after:after,
@@ -2064,6 +2065,10 @@ body {
   color: #B2B2B2;
   overflow: hidden;
   margin-left: 21px;
+}
+
+.statuses .said {
+  color: rgb(109, 109, 109);
 }
 
 .statuses .status-info {
@@ -2138,6 +2143,7 @@ body {
   overflow: hidden;
   line-height: 130%;
   margin: 10px 0 0 38px;
+  display: inline;
 }
 
 .statuses .status-subject {
@@ -7279,54 +7285,34 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 /* Aqui modifiquei */
-.panel .upgrade-button .concave-important {
+.plan-panel .upgrade-button .concave-important {
   float: right;
-  width: 150px;
+  width: 148px;
   height: 32px;
   font-size: 15px;
   margin-bottom: 40px;
+  margin-right: 30px;
 }
 
-.panel .upgrade-button .concave-important {
-  width: 70px;
-  padding: 0;
-  height: 30px;
-  float: right;
-}
-
-.borderradius .panel .upgrade-button .concave-important {
+.borderradius .plan-panel .call-us .upgrade-button .concave-important {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
 }
 
-.panel .upgrade-button .concave-important:hover {
-  background: rgb(171,227,133);
-  color: white;
-}
-
-.cssgradients .panel  .concave-important:hover {
-  background: -moz-linear-gradient(top,  rgb(171,227,133) 0%, rgb(97,160,128) 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(171,227,133)), color-stop(100%,rgb(97,160,128))); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top,  rgb(171,227,133) 0%,rgb(97,160,128) 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top,  rgb(171,227,133) 0%,rgb(97,160,128) 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  rgb(171,227,133) 0%,rgb(97,160,128) 100%); /* IE10+ */
-  background: linear-gradient(top,  rgb(171,227,133) 0%,rgb(97,160,128) 100%); /* W3C */
-}
-
-.boxshadow .panel .upgrade-button {
+.boxshadow .plan-panel .call-us .upgrade-button {
   -webkit-box-shadow: inset 1px 1px 0px 0px rgb(171, 227, 133), inset -1px -1px 0px 0px rgb(171,227,133);
   -moz-box-shadow: inset 1px 1px 0px 0px rgb(171, 227, 133), inset -1px -1px 0px 0px rgb(171,227,133);
   box-shadow: inset 1px 1px 0px 0px rgb(171, 227, 133), inset -1px -1px 0px 0px rgb(171,227,133);
 }
 
-/* início estilo página fatura */
+/* início estilo página invoice.html */
 
 #invoice-index .panel .call {
   margin-left: 9px;
 }
 
-.panel .plan-use:before {
+#invoice-index .tabs .plan-panel .plan-use:before {
   background-image: url("../images/new/circulos-peq-cinza.png");
   float: left;
   content: '';
@@ -7336,12 +7322,12 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   margin-top: -10px;
 }
 
-.panel .plan-use {
+#invoice-index .tabs .plan-panel .plan-use {
   text-align: center;
   margin-left: 75px;
 }
 
-.panel .call .environment p {
+#invoice-index .tabs .plan-panel .call .environment p {
   font-family: arial, sans-serif;
   font-weight: normal;
   font-size: 12px;
@@ -7349,7 +7335,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   padding-bottom: 5px;
 }
 
-.panel .call .call-course {
+.plan-panel .call .call-course {
   font-family: museo-sans, arial ,sans-serif;
   font-weight: 500;
   font-size: 17px;
@@ -7358,30 +7344,34 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   letter-spacing: -1px;
 }
 
-.plan-panel .payments {
+.plan-panel table .payments {
    font-size: 11px;
 }
 
-.plan-panel .payments .data .number {
+.plan-panel table .payments .data .number {
   color: rgb(77, 173, 214);
 }
 
-.plan-panel .payments .data .date,
-.plan-panel .payments .data .value {
+.plan-panel table .payments .data .icon  {
+  text-indent: -9999px;
+}
+
+.plan-panel table .payments .data .date,
+.plan-panel table .payments .data .value {
   color: rgb(109, 110, 111);
 }
 
-.plan-panel .payments .data .date .bar {
+.plan-panel table .payments .data .date .bar {
   color: rgb(204, 204, 204);
 }
 
-.plan-panel .payments .data .arrears {
+.plan-panel table .payments .data .arrears {
   color: rgb(255, 109, 109);
 }
 
-.explanation-sidebar .explanation .arrears {
-    color: rgb(255, 109, 109);
-    font-style: italic;
+#content .explanation-sidebar .explanation .arrears {
+  color: rgb(255, 109, 109);
+  font-style: italic;
 }
 
 .explanation-sidebar .explanation .to-expirate {
@@ -7389,12 +7379,8 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   font-style: italic;
 }
 
-.plan-panel .payments .data .paid  {
+#content .plan-panel .payments .data .paid  {
   color: rgb(95, 192, 128);
-}
-
-.payments .data .icon  {
-  text-indent: -9999px;
 }
 
 .plan-panel table.common tbody tr {
@@ -7415,40 +7401,49 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   border-radius: 0px 5px 5px 0px;
 }
 
-.plan-panel .courses-list,
-.plan-panel .courses-details {
+#invoice-index .plan-panel .courses-list,
+#invoice-index .plan-panel .courses-details {
   font-size: 11px;
   float: right;
   clear: both;
 }
 
-.plan-panel .courses-list {
+#invoice-index .plan-panel .courses-list {
   margin-bottom: 30px;
 }
 
-.plan-panel .courses-list a,
-.plan-panel .courses-details a {
+#invoice-index .plan-panel .courses-list a,
+#invoice-index .plan-panel .courses-details a {
   color: rgb(77, 73, 214);
   font-family: arial, sans-serisf;
 }
 
-.panel .payments .data .pay-status {
+.plan-panel table .payments .data .pay-status {
   text-align: center;
 }
 
-.panel .payments .data .pay-status .concave-important {
+.plan-panel table .payments .data .pay-status .concave-important {
   margin-right: 0px;
   font-size: 12px;
 }
 
-/* Fim estilo página faturas */
+/* Fim estilo página invoice.html */
 
-/* Início página planos professor */
+/* Início página plans.html */
 .explanation-sidebar .explanation .pag-seguro {
   text-indent: -9999px;
 }
 
-.explanation-sidebar .explanation .pag-seguro a {
+.tabs > ul li .upgrade-plan {
+    color: rgb(204, 204, 204);
+    display: block;
+    font-size: 11px;
+    font-style: italic;
+    margin-left: 30px;
+    margin-top: -10px;
+}
+
+#content .explanation-sidebar .explanation .pag-seguro a {
   background-image: url("../images/new/pagseguro-p.png");
   text-indent: -9999px;
   display: block;
@@ -7496,7 +7491,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   padding-top: 10px;
 }
 
-.options-plan .plans-list .plans .plan .name {
+.plan-panel .options-plan .plans-list .plans .plan .name {
   font-family: museo-slab, arial, sans-serif;
   font-weight: 500;
   font-size: 17px;
@@ -7506,7 +7501,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   text-decoration: none;
 }
 
-.options-plan .plans-list .plans .plan .price {
+.plan-panel .options-plan .plans-list .plans .plan .price {
   font-family: museo-sans, arial, sans-serif;
   font-weight: 100;
   font-size: 17px;
@@ -7514,15 +7509,15 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   display: block;
 }
 
-.options-plan .plans-list .plans .plan .a-month,
-.options-plan .plans-list .plans .plan .highlights {
+.plan-panel .options-plan .plans-list .plans .plan .a-month,
+.plan-panel .options-plan .plans-list .plans .plan .highlights {
   font-size: 12px;
   font-family: arial, sans-serif;
   font-style: italic;
   color: rgb(179, 179, 179);
 }
 
-.options-plan .plans-list .plans .plan .plan-limit {
+.plan-panel .options-plan .plans-list .plans .plan .plan-limit {
   font-size: 12px;
   font-family: arial, sans-serif;
   font-style: normal;
@@ -7532,7 +7527,11 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   font-weight: bold;
 }
 
-.options-plan .plan-panel .concave-form {
+.plan-panel .options-plan .plans-list .plans .plan .concave-important-p {
+  float: right;
+}
+
+.plan-panel .options-plan .concave-form {
   width: 580px;
 }
 
@@ -7542,11 +7541,11 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   color: rgb(179, 179, 179);
 }
 
-.textshadow .options-plan .plans-list .plans .plan .plan-limit {
+.textshadow .plan-panel .options-plan .plans-list .plans .plan .plan-limit {
   text-shadow: 0px 1px 0px rgb(255, 255, 255);
 }
 
-.options-plan .plans-list .call-us .concave-important {
+.plan-panel .options-plan .plans-list .call-us .concave-important {
   margin-right: 28px;
 }
 
@@ -7555,23 +7554,23 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   float: none;
 }
 
-.options-plan .plans-list .your-plan .plans .plan .plan-limit,
-.options-plan .plans-list .your-plan .plans .plan .name {
+.plan-panel .options-plan .plans-list .your-plan .plans .plan .plan-limit,
+.plan-panel .options-plan .plans-list .your-plan .plans .plan .name {
   color: rgb(109, 110, 111);
 }
 
-.options-plan .plans-list .your-plan .plans .plan .price {
+.plan-panel .options-plan .plans-list .your-plan .plans .plan .price {
   color: rgb(179, 179, 179);
 }
 
-.options-plan .plans-list .your-plan .plans .plan .actual-plan {
+.plan-panel .options-plan .plans-list .your-plan .plans .plan .actual-plan {
   font-size: 12px;
   color: rgb(109, 110, 111);
   font-weight: bold;
   float: right;
-  margin: 20px 0 0 0;
+  margin: 20px 15px 0 0;
 }
-/* Fim estilo página plano professor */
+/* Fim estilo página plano plans.html */
 
 /* Início estilo página detalhes fatura */
 .plan-panel .concave-admin-table {
@@ -7620,7 +7619,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .textshadow .plan-panel .concave-admin-table .course .type-user {
   text-shadow: 0px 1px 0px rgb(255, 255, 255);
 }
-/* Fim página detalhe faturas */
+/* Fim página invoice-detail.html */
 
 /* inicio pré-visualização novo post */
 
@@ -7857,6 +7856,10 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   padding-right: 5px;
 }
 
+.invite-button .invite-contact_32_50-before {
+  float: left;
+}
+
 .invite-button .invite-contact_32_50-before:before {
   display: block;
   margin: 11px auto 2px;
@@ -7877,4 +7880,3 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 /* FIM botão convidar amigos */
 
 /* início agrupar-mural */
-
