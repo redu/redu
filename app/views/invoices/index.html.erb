@@ -6,8 +6,8 @@
 <%= render :partial => 'users/home_sidebar' %>
 <div class="main grid_10" style="width: 580px;">
   <%= render :partial => 'users/breadcrumbs' %>
-  <div id="invoice-index" class="plan-panel">
-    <%= tabs :users do %>
+  <div id="invoice-index">
+    <%= tabs :users, :class => "plan-panel" do %>
     <div class="call">
       <% if @plan.billable.is_a? Environment %>
         <%= content_tag(:h3, @plan.billable.name, :class => "billable") %>

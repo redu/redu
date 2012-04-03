@@ -2,8 +2,8 @@
 <div class="main grid_10" id="partner" style="width: 580px;">
   <%= render :partial => 'partners/breadcrumbs', :locals => { :partner => @partner} %>
   <%= render :partial => 'partners/header', :locals => { :partner => @partner } %>
-    <div id="invoice-index" class="plan-panel panel">
-      <%= subtabs :partners do %>
+    <div id="invoice-index">
+      <%= subtabs :partners, :class => "plan-panel" do %>
       <div class="call">
         <% if @plan.billable.is_a? Environment %>
           <%= content_tag(:h3, @plan.billable.name, :class => "billable") %>
