@@ -1,3 +1,5 @@
+
+
 <%# Form de status  %>
 <% random_number = get_random_number%>
 <div class="create-status inform-my-status">
@@ -22,3 +24,32 @@
 <% end %>
 </div>
 
+<script>
+
+  function replaceURLWithHTMLLinks(text) {
+      var exp = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+      return text.replace(exp,"<a href='$1'>$1</a>"); 
+  }
+
+  $('.status.textarea').keyup(function(){
+      var data = $(this).val();
+      // Then i would try and split the spaces and carriages 
+      // array = data.split('\n|\r\n|\s|,'); //Split by returns,new lines,spaces,commas.
+      var regexp = /^(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+
+      // My Regex
+      // ^(((http|https):\/\/)|(www\.))[aA-zZ]*\.([aA0-zZ\/\-]*)$
+
+      // $(array).each(function(value){
+      // Now i will check the URL is valid
+      if(regexp.test(data))
+      {
+        console.log("REGEX ACCEPTED")
+        replaceURLWithHTMLLinks(data);
+        //Valid URL so i will then append it to the links container
+        //Here you can do e
+        // $('<a></a>').attr('href',data).val(data).appendTo('.linksContainer');
+      // }
+      }
+  });
+</script>
