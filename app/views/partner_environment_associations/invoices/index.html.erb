@@ -2,23 +2,22 @@
 <div class="main grid_10" id="partner" style="width: 580px;">
   <%= render :partial => 'partners/breadcrumbs', :locals => { :partner => @partner} %>
   <%= render :partial => 'partners/header', :locals => { :partner => @partner } %>
-  <%= subtabs :partners do %>
-    <div id="invoice-index">
+    <div id="invoice-index" class="plan-panel panel">
+      <%= subtabs :partners do %>
       <div class="call">
-        <span class="billable">
-          <% if @plan.billable.is_a? Environment %>
-            <%= link_to @plan.billable.name, @plan.billable %>
-          <% elsif @plan.billable.is_a? Course %>
-            <%= link_to @plan.billable.name,
-              environment_course_path(@plan.billable.environment, @plan.billable) %>
-          <% elsif @plan.billable_audit %>
-            <%= content_tag :span, @plan.billable_audit["name"] %>
-          <% end %>
-        </span>
-        <span class="name"><%= @plan.name %></span>
+        <% if @plan.billable.is_a? Environment %>
+          <%= content_tag(:h3, @plan.billable.name, :class => "billable") %>
+        <% elsif @plan.billable.is_a? Course %>
+          <%= content_tag(:h3, @plan.billable.environment.name, :class => "environment") %>
+          <%= content_tag(:h3, @plan.billable.name, :class => "billable") %>
+        <% elsif @plan.billable_audit %>
+          <%= content_tag :span, @plan.billable_audit["name"] %>
+        <% end %>
       </div>
+      <%= link_to "Upgrade", nil, :class => "concave-important upgrade-button" %>
       <% if @quota %>
         <div class="plan-use">
+          <span class="plan-type"><%= @plan.name %></span>
           <%= render :partial => "invoices/quotas",
             :locals => { :quota_file => @plan.billable.percentage_quota_file,
                          :plan => @plan,
@@ -30,25 +29,25 @@
       <table class="common spaced">
         <thead>
           <tr>
-            <th style="width: 15%">Fatura:</th>
-            <th style="width: 40%">Data:</th>
-            <th style="width: 15%">Estado:</th>
+            <th style="width: 20%">Fatura:</th>
+            <th style="width: 22%">Data:</th>
+            <th style="width: 20%">Estado:</th>
             <th style="width: 20%">Valor:</th>
             <th></th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="payments">
           <% @invoices.each do |invoice| %>
-            <tr id="invoice-<%= invoice.id %>">
-              <td><%= link_to invoice.id, plan_invoice_path(@plan, invoice) %></td>
+            <tr id="invoice-<%= invoice.id %>" class="data">
+              <td class="number"><%= link_to invoice.id.to_s.rjust(10, "0"), plan_invoice_path(@plan, invoice) %></td>
               <td>
                 <span class="date">
-                  <%= l invoice.period_start %> a
-                  <%= l invoice.period_end %>
+                <%= content_tag(:span, "#{l invoice.period_start} a", :class => "start") %>
+                <%= content_tag(:span, (l invoice.period_end), :class => "done") %>
                 </span>
               </td>
               <td>
-                <span class="state">
+                <span class="state <%= invoice.state %>">
                   <%= Invoice.human_attribute_name(invoice.state)%>
                 </span>
               </td>
@@ -57,15 +56,27 @@
                   <%= number_to_currency(invoice.amount) %>
                 </span>
               </td>
-              <td>
+              <td class="pay-status">
                 <% if can? :pay, invoice %>
                   <%= link_to "Pagar", pay_plan_invoice_path(invoice.plan, invoice), :remote => true, :method => :post, :class => "concave-button pay" %>
+                <% elsif invoice.paid? %>
+                  <span class="icon icon-small icon-confirm-green_16_18"></span>
                 <% end %>
               </td>
             </tr>
           <% end %>
         </tbody>
       </table>
-   </div>
-  <% end %>
+      <%= link_to "< voltar para lista de ambientes", partner_path(@partner), :class => "back" %>
+    <% end %>
+  </div>
+</div>
+<div class="explanation-sidebar">
+  <div class="explanation">
+    <span class="title">Planos</span>
+    <p>Utilize este painel administrativo para gerenciar seus planos.</p>
+    <p>A fatura em estado <span class="pending"> A vencer</span> é ativada alguns dias antes do vencimento da mesma.</p>
+    <p> Caso não seja paga a partir do fechamento da data, o estado será <span class="overdue"> Em aberto</span>. A partir de então, você terá até <span class="featured">15 dias</span> para regularizar a situação; caso não, o curso será bloqueado.</p>
+    <p>A fatura em estado <span class="closed">Fechado</span> indica que houve uma migração de plano e o valor desta foi repassado para a fatura do novo plano.</p>
+  </div>
 </div>

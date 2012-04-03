@@ -101,7 +101,7 @@ pt-BR:
   support:
     array:
       two_words_connector: "Formato inválido"
-  
+
   activemodel:
     models:
       recovery_email: "E-mail de recuperação"
@@ -173,9 +173,9 @@ pt-BR:
         tutor: "Tutor"
         student: "Aluno"
       invoice:
-        open: "Em aberto"
-        pending: "Pendente"
-        overdue: "Vencido"
+        open: "A calcular"
+        pending: "A vencer"
+        overdue: "Em aberto"
         paid: "Pago"
         closed: "Fechado"
       message:
@@ -271,7 +271,7 @@ pt-BR:
           attributes:
             cnpj:
               invalid: "formato inválido"
-        
+
   helpers:
     submit:
       complementary_course:
@@ -295,7 +295,7 @@ pt-BR:
       subject:
         create: "Adicionar aulas"
         update: "Finalizar módulo"
-          
+
   lectureable: vídeo-aula
   lectures: aulas
   history: historico

@@ -3664,11 +3664,6 @@ table.common .ext_pptx {
   background: url("../images/new/ext/ppt.png") no-repeat center center;
 }
 
-.pagseguro-concave-form form .concave-button {
-  margin: 0 0 0 0;
-  width: 95px;
-}
-
 table.files thead th {
   padding: 0;
 }
@@ -6480,19 +6475,6 @@ div.token-input-dropdown {
   margin-bottom: 25px;
 }
 
-#invoice-index .call .name {
-  font-size: .9em;
-  color: #B2B2B2;
-  display: block;
-}
-
-#invoice-index .call .billable {
-  font-size: 1.2em;
-  display: block;
-  margin-bottom: 10px;
-  color: black;
-}
-
 #invoice-show,
 #partner-invoice-index {
   background-color: white;
@@ -7279,45 +7261,9 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 /* Aqui modifiquei */
-.panel .upgrade-button .concave-important {
+.panel .upgrade-button {
   float: right;
-  width: 150px;
-  height: 32px;
-  font-size: 15px;
   margin-bottom: 40px;
-}
-
-.panel .upgrade-button .concave-important {
-  width: 70px;
-  padding: 0;
-  height: 30px;
-  float: right;
-}
-
-.borderradius .panel .upgrade-button .concave-important {
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-}
-
-.panel .upgrade-button .concave-important:hover {
-  background: rgb(171,227,133);
-  color: white;
-}
-
-.cssgradients .panel  .concave-important:hover {
-  background: -moz-linear-gradient(top,  rgb(171,227,133) 0%, rgb(97,160,128) 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(171,227,133)), color-stop(100%,rgb(97,160,128))); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top,  rgb(171,227,133) 0%,rgb(97,160,128) 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top,  rgb(171,227,133) 0%,rgb(97,160,128) 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  rgb(171,227,133) 0%,rgb(97,160,128) 100%); /* IE10+ */
-  background: linear-gradient(top,  rgb(171,227,133) 0%,rgb(97,160,128) 100%); /* W3C */
-}
-
-.boxshadow .panel .upgrade-button {
-  -webkit-box-shadow: inset 1px 1px 0px 0px rgb(171, 227, 133), inset -1px -1px 0px 0px rgb(171,227,133);
-  -moz-box-shadow: inset 1px 1px 0px 0px rgb(171, 227, 133), inset -1px -1px 0px 0px rgb(171,227,133);
-  box-shadow: inset 1px 1px 0px 0px rgb(171, 227, 133), inset -1px -1px 0px 0px rgb(171,227,133);
 }
 
 /* início estilo página fatura */
@@ -7341,7 +7287,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   margin-left: 75px;
 }
 
-.panel .call .environment p {
+.panel .call .environment {
   font-family: arial, sans-serif;
   font-weight: normal;
   font-size: 12px;
@@ -7349,7 +7295,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   padding-bottom: 5px;
 }
 
-.panel .call .call-course {
+.panel .call .billable {
   font-family: museo-sans, arial ,sans-serif;
   font-weight: 500;
   font-size: 17px;
@@ -7362,10 +7308,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
    font-size: 11px;
 }
 
-.plan-panel .payments .data .number {
-  color: rgb(77, 173, 214);
-}
-
+.plan-panel .payments .data .number,
 .plan-panel .payments .data .date,
 .plan-panel .payments .data .value {
   color: rgb(109, 110, 111);
@@ -7375,16 +7318,20 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   color: rgb(204, 204, 204);
 }
 
-.plan-panel .payments .data .arrears {
+.plan-panel .payments .data .overdue {
   color: rgb(255, 109, 109);
 }
 
-.explanation-sidebar .explanation .arrears {
-    color: rgb(255, 109, 109);
-    font-style: italic;
+.explanation-sidebar .explanation .overdue {
+  color: rgb(255, 109, 109);
+  font-style: italic;
 }
 
-.explanation-sidebar .explanation .to-expirate {
+.plan-panel .payments .data .pending  {
+  color: rgb(255, 169, 53);
+}
+
+.explanation-sidebar .explanation .pending {
   color: rgb(255, 169, 53);
   font-style: italic;
 }
@@ -7393,43 +7340,50 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   color: rgb(95, 192, 128);
 }
 
+.explanation-sidebar .explanation .closed {
+  color: black;
+  font-style: italic;
+}
+
 .payments .data .icon  {
-  text-indent: -9999px;
+  display: block;
+  width: 16px;
+  height: 18px;
+  margin: 0 auto;
+  padding-left: 0; /* Sobreescreve padrão da tabela */
 }
 
 .plan-panel table.common tbody tr {
   border: none;
 }
 
-.plan-panel table.common .box-gray .data td {
+.plan-panel table.common tbody .odd {
   background-color: #f7f7f7;
   border-top: 1px solid rgb(179, 179, 179);
   border-bottom: 1px solid rgb(179, 179, 179);
 }
 
-.borderradius .plan-panel table.common .box-gray .data td:first-child {
+.borderradius .plan-panel table.common tbody .odd td:first-child {
   border-radius: 5px 0px 0px 5px;
 }
 
-.borderradius .plan-panel table.common .box-gray .data td:last-child {
+.borderradius .plan-panel table.common tbody .odd td:last-child {
   border-radius: 0px 5px 5px 0px;
 }
 
-.plan-panel .courses-list,
-.plan-panel .courses-details {
+.plan-panel .back {
   font-size: 11px;
   float: right;
   clear: both;
 }
 
-.plan-panel .courses-list {
+.plan-panel .back {
   margin-bottom: 30px;
 }
 
-.plan-panel .courses-list a,
-.plan-panel .courses-details a {
+.plan-panel .back a {
   color: rgb(77, 73, 214);
-  font-family: arial, sans-serisf;
+  font-family: arial, sans-serif;
 }
 
 .panel .payments .data .pay-status {
