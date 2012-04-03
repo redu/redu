@@ -58,7 +58,7 @@
               </td>
               <td class="pay-status">
                 <% if can? :pay, invoice %>
-                  <%= link_to "Pagar", pay_plan_invoice_path(invoice.plan, invoice), :remote => true, :method => :post, :class => "concave-button pay" %>
+                  <%= link_to "Pagar", pay_plan_invoice_path(invoice.plan, invoice), :remote => true, :method => :post, :class => "concave-important pay" %>
                 <% elsif invoice.paid? %>
                   <span class="icon icon-small icon-confirm-green_16_18"></span>
                 <% end %>
