@@ -20,7 +20,7 @@ module Api
         elsif @status.is_a? Activity
           create_on_activity
         else
-          @answer = Answer.new(params[:status_id])          
+          @answer = Answer.new(params[:status_id]) 
         end
         @answer.user = current_user
 
@@ -30,7 +30,7 @@ module Api
         respond_with(:api, @answer)
       end
     end
-    
+
     protected
     
     def create_on_help

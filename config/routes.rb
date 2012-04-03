@@ -280,7 +280,7 @@ Redu::Application.routes.draw do
       resources :statuses, :only => [:index, :create]
     end
 
-    resources :statuses, :only => :show do
+    resources :statuses, :only => [:show, :destroy] do
       resources :answers, :only => [:index, :create]
     end
 

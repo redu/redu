@@ -39,6 +39,13 @@ module Api
       respond_with(:api, @statuses)
     end
     
+    def destroy
+      @status = Status.find(params[:id])
+      @status.destroy
+
+      respond_with @status
+    end
+
     protected
     
     def statuses

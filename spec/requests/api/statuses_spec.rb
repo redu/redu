@@ -260,16 +260,63 @@ describe "Statuses" do
     it "should return 422 when invalid" do
       @params['status'][:text] = ""
       post "api/users/#{@user.id}/statuses", @params
-      
+
       response.code.should == "422"
     end
   end
+
+  context "when delete status" do
   
-  context "when delete status an user" do
-    it "should return status 200"
-    it "should return status 404 when doesnt exist"
+    it "should return status 200 when activity type" do
+      @activity = Factory(:activity)
+      delete "/api/statuses/#{@activity.id}", :oauth_token => @token,
+       :format => 'json'
+
+      response.status.should == 200
+    end
+
+    it "should return status 200 when help type" do
+      @help = Factory(:help)
+      delete "/api/statuses/#{@help.id}", :oauth_token => @token,
+        :format => 'json'
+        
+      response.status.should == 200
+    end
+    
+    it "should return status 200 when log type" do
+      @log = Factory(:log)
+      delete "/api/statuses/#{@log.id}", :oauth_token => @token, 
+        :format => 'json'
+
+      response.status.should == 200
+    end
+
+    it "should return status 200 when answer type" do
+      @answer = Factory(:answer)
+      delete "/api/statuses/#{@answer.id}", :oauth_token => @token,
+        :format => 'json'
+
+      response.status.should == 200
+    end
+    
+    it "should return status 404 when not found" do
+      @activity = Factory(:activity)
+      delete "/api/statuses/#{@activity.id}", :oauth_token => @token, 
+        :format => 'json'
+
+      delete "/api/statuses/#{@activity.id}", :oauth_token => @token, 
+        :format => 'json'
+        # id valido porém já removido
+      response.status.should == 404
+    end
+    
+    it "should return status 404 when not exist" do
+      delete "/api/statuses/007", :oauth_token => @token, :format => 'json'
+      
+      response.status.should == 404
+    end
   end
-  
+
   context "when create status an space" do
     before do
       @space = Factory(:space)
@@ -304,10 +351,7 @@ describe "Statuses" do
       response.code.should == "422"
     end
   end
-  
-  context "when delete status an space" do
-  end
-  
+
   context "when create status an lecture" do
     before do
       @lecture = Factory(:lecture)
@@ -375,10 +419,7 @@ describe "Statuses" do
       response.code.should == "422"
     end
   end
-  
-  context "when delete status an lecture" do
-  end
-  
+
   context "when create status an answer" do
     before do
       @params = {'status' => {:text => "Ximbica Answer Test" },
@@ -427,7 +468,5 @@ describe "Statuses" do
       response.code.should == "422"
     end
   end
-  
-  context "when delete status an answer" do
-  end
+
 end
