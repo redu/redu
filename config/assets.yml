@@ -40,6 +40,7 @@ javascripts:
     - public/javascripts/browserdetection.js
     - public/javascripts/outdated-browser.js
     - public/javascripts/jquery.noisy.js
+    - public/javascripts/embedly/embedly.js
   chat:
     - public/javascripts/jquery.pjax.js
     - public/javascripts/pusher.js
