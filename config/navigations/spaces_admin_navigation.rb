@@ -25,6 +25,11 @@ SimpleNavigation::Configuration.run do |navigation|
         admin_members_space_path(@space),
         :class => 'ui-state-default',
         :link => { :class => "icon-members_16_18-before" }
+      tabs.item :reports, 'Relatório',
+        subject_participation_report_space_path(@space),
+        :highlights_on => action_matcher({'spaces' => ['subject_participation']}),
+        :class => 'ui-state-default',
+        :link => { :class => "icon-subject_16_18-before" }
     end
   end
 end

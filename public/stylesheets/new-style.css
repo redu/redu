@@ -4735,6 +4735,18 @@ table.spaced tr td {
   font-weight: 500;
 }
 
+.management .subject-participation-chart {
+  list-style-type: none;
+  margin-bottom: 10px;
+  margin-left: 60px;
+}
+
+.management .subject-participation-chart .form-subheader {
+  font-family: museo-sans, helvetica, arial, sans-serif;
+  font-weight: 400;
+  color: rgb(77,173,214);
+}
+
 .management .form-header .strong,
 .management .course-path .strong {
   color: rgb(77,173,214);

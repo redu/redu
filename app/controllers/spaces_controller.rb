@@ -168,6 +168,12 @@ class SpacesController < BaseController
     end
   end
 
+  def subject_participation_report
+    respond_to do |format|
+      format.html { render "spaces/admin/subject_participation_report"}
+    end
+  end
+
   # Utilizado pelo endless do sidebar
   def students_endless
     @sidebar_students = @space.students.page(params[:page]).per(4)

@@ -1,8 +1,7 @@
-$(document).ready(function() {
+var subject_participation_pie = function () {
     var chart;
     var options = {
         chart: {
-            renderTo: 'subject-participation-chart',
             defaultSeriesType: 'pie'
         },
         title: {
@@ -36,21 +35,33 @@ $(document).ready(function() {
     }
 
     // Pie Chart
-    var loadGraph = function(json, incremento) {
-      options.chart.renderTo = 'subject-participation-chart'+incremento;
-      options.series[0].data[0] = ['Quantidade de respostas aos pedidos de ajuda', json.answered_helps];
-      options.series[0].data[1] = {
-        name: 'Quantidade de pedidos de ajuda',
-        sliced: true,
-        selected: true,
-        y: json.helps
-      };
+    var loadPie = function(subject_id) {
+      var url = "http://localhost:3000/subjects/activities.json?subject_id=1";
 
-      chart = new Highcharts.Chart(options);
+      $.getJSON(url, function (json) {
+        options.chart.renderTo = 'subject-participation-pie-'+subject_id;
+        options.series[0].data[0] = ['Quantidade de respostas aos pedidos de ajuda', json.answered_helps];
+        options.series[0].data[1] = {
+          name: 'Quantidade de pedidos de ajuda',
+          sliced: true,
+          selected: true,
+          y: json.helps
+        };
+
+        new Highcharts.Chart(options);
+      })
     };
 
-    // Carregamento do Bullet Charts
-    var w = 960,
+    return {
+      load_subject_participation_pie: function (subject_id) {
+        loadPie(subject_id);
+      }
+    }
+};
+
+// Carregamento do Bullet Charts
+var subject_participation_bullet = function () {
+    var w = 748,
         h = 50,
         m = [5, 40, 20, 120];
 
@@ -59,8 +70,9 @@ $(document).ready(function() {
         .height(h -m[0] -m[2]);
 
     // URL activities_d3
-    d3.json("#", function(data) {
-      var vis = d3.select("#subject-participation-chart").selectAll("svg")
+    var loadBullet = function(subject_id){
+      d3.json("http://localhost:3000/subjects/activities_d3.json?subject_id=1", function(data) {
+      var vis = d3.select("#subject-participation-bullet-"+subject_id).selectAll("svg")
         .data(data)
         .enter().append("svg")
         .attr("class", "bullet")
@@ -74,15 +86,13 @@ $(document).ready(function() {
         .attr("text-anchor", "end")
         .attr("transform", "translate(-6," + (h - m[0] - m[2]) / 2 + ")");
 
-      title.append("text")
-        .attr("class", "title")
-        .text();
+      d3chart.duration(1000);
+      });
+    };
 
-      title.append("text")
-        .attr("class", "subtitle")
-        .attr("dy", "1em")
-        .text();
-
-      chart.duration(1000);
-    });
-});
+    return {
+      load_subject_participation_bullet: function (subject_id) {
+        loadBullet(subject_id);
+      }
+    };
+};
