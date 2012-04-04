@@ -52,8 +52,7 @@ class Ability
     alias_action :confirm, :address, :pay, :upgrade, :to => :manage
 
     # Reports
-    alias_action :teacher_participation,
-      :teacher_participation_interaction, :to => :manage
+    alias_action :teacher_participation_interaction, :to => :manage
 
     # Todos podem ver o preview
     can :preview, [Course, Environment]
@@ -70,7 +69,7 @@ class Ability
 
       # Somente usuários logados acessam a página de criar apps Oauth
       can :manage, :client_applications do
-        !user.partners.empty?
+        !user.partners.empty? || user.admin?
       end
 
       # Gerencial

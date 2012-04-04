@@ -25,7 +25,6 @@ Redu::Application.routes.draw do
   post "presence/multiauth"
   post "presence/send_chat_message"
   get "presence/last_messages_with"
-  get "vis/dashboard/teacher_participation"
   get "vis/dashboard/teacher_participation_interaction"
 
   match 'clipboard/:action/:folder_or_file/:id' => 'clipboard',

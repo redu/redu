@@ -21,12 +21,6 @@ class OauthClientsController < BaseController
     end
   end
 
-  def show
-  end
-
-  def edit
-  end
-
   def update
     if @client_application.update_attributes(params[:client_application])
       flash[:notice] = "Updated the client information successfully"

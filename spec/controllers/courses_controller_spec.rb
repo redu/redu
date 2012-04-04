@@ -151,6 +151,12 @@ describe CoursesController do
         @users[2].get_association_with(@space).should be_nil
         @course.approved_users.to_set.should == [@user, @users[3]].to_set
       end
+
+      it "should not raise error when moderating again" do
+        expect {
+          post :moderate_members_requests, @params
+        }.to_not raise_error(AASM::InvalidTransition)
+      end
     end
 
     context "POST - accepting member" do
@@ -174,6 +180,12 @@ describe CoursesController do
       it "should create environment and space associations" do
         @course.environment.users.to_set.should == [@users[1], @users[2], @user].to_set
         @space.users.to_set.should == [@users[1], @users[2], @user].to_set
+      end
+
+      it "should not raise error when moderating again" do
+        expect {
+          post :moderate_members_requests, @params
+        }.to_not raise_error(AASM::InvalidTransition)
       end
     end
 
@@ -939,6 +951,17 @@ describe CoursesController do
         end
       end
     end
+
+    context "GET reports" do
+      before do
+        get :teacher_participation_report, :locale => "pt-BR",
+          :environment_id => @environment.path, :id => @course.path
+      end
+
+      it "when successful" do
+        response.should render_template "courses/admin/teacher_participation_report"
+      end
+    end
   end
 
   context "when course is unpublised" do
@@ -954,7 +977,6 @@ describe CoursesController do
         response.should redirect_to(preview_environment_course_path(@course.environment,
                                                                     @course))
       end
-
     end
   end
 end

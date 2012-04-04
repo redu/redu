@@ -94,5 +94,60 @@ describe Status do
           be_superset((statuses | @recent_space_statuses).to_set)
       end
     end
+
+    context "filtering" do
+      before do
+        @user = Factory(:user)
+        @activity_statuses = (1..2).collect { Factory(:activity, :user => @user,
+                                                     :statusable => @spaces.first) }
+        @activity_statuses << Factory(:activity, :statusable => @spaces.first)
+        @activity_statuses << Factory(:activity, :statusable => @spaces.first)
+      end
+
+      it "Activities by a specified user" do
+        @spaces.first.statuses.activity_by_user(@user.id).to_set.should \
+          eq([@activity_statuses[0], @activity_statuses[1]].to_set)
+      end
+
+      it "Helps and Activities" do
+        @activity_statuses << Factory(:help, :statusable => @spaces.first, :user => @user)
+        @activity_statuses << Factory(:help, :statusable => @spaces.first, :user => @user)
+
+        @spaces.first.statuses.helps_and_activities.count.should eq(9)
+      end
+
+      it "by statusable" do
+        Status.from_hierarchy(@course).by_statusable("Space", [@spaces[0], @spaces[1]]).count.should eq(10)
+      end
+
+      it "by id" do
+        id = []
+        id << @activity_statuses[0].id
+        id << @activity_statuses[1].id
+        id << @activity_statuses[2].id
+        id << @activity_statuses[3].id
+
+        Status.by_id(id).should eq(@activity_statuses)
+      end
+
+      it "by day" do
+        id = [Factory(:activity, :created_at => "2012-02-14".to_date).id]
+        id << Factory(:activity, :created_at => "2012-02-16".to_date).id
+        activity = Status.by_id(id)
+        activity.by_day("2012-02-14".to_date).should eq([activity.first])
+      end
+
+      it "answers id" do
+        id = []
+        3.times.collect do
+          a = Factory(:answer, :user => @user,
+                      :in_response_to => @activity_statuses.first)
+          id << a.id
+          @activity_statuses.first.answers << a
+        end
+
+        @activity_statuses.first.answers_ids(@user).should eq(id)
+      end
+    end
   end
 end

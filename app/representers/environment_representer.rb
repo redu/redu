@@ -16,4 +16,8 @@ module EnvironmentRepresenter
   link :courses do
     api_environment_courses_url(self)
   end
+
+  link :user do
+    api_user_url(self.owner)
+  end
 end

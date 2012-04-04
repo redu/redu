@@ -2,12 +2,12 @@ class PackagePlan < Plan
 
   PLANS = {
     :free => {
-      :name => "Professor Grátis (3 meses)",
+      :name => "Professor Grátis (6 meses)",
       :price => 0,
       :yearly_price => 0,
       :video_storage_limit => 10.megabytes,
       :file_storage_limit => 5.megabytes,
-      :members_limit => 10
+      :members_limit => 50
     },
     :professor_lite => {
       :name => "Professor Lite",
@@ -16,7 +16,7 @@ class PackagePlan < Plan
       :membership_fee => 13.99,
       :video_storage_limit => 30.megabytes,
       :file_storage_limit => 25.megabytes,
-      :members_limit => 20
+      :members_limit => 70
     },
     :professor_standard => {
       :name => "Professor Standard",
