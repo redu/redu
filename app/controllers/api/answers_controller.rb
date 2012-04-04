@@ -1,28 +1,41 @@
 module Api
   class AnswersController < Api::ApiController
     def index
-      
       @status = Status.find(params[:status_id])
+
       if @status.is_a? Activity
         @status = Activity.find(params[:status_id])
       else
         @status = Help.find(params[:status_id])
       end
-      @answers = @status.answers
-      
+      @answers = @status.answers # isso não é salvo
+
+      #FIXME
+      # Sugestão de refactoring:
+      # if @status.is_a?(Activity) || @status.is_a?(Help)
+      #   @answers = @status.answers
+      # end
       respond_with(:api, @answers)
     end
-    
+
     def create
         @status = Status.find(params[:status_id])
         if @status.is_a? Help
-          create_on_help
+          create_on_help #FIXME não há necessidade de método auxiliar
         elsif @status.is_a? Activity
-          create_on_activity
-        else
-          @answer = Answer.new(params[:status_id]) 
+          create_on_activity #FIXME não há necessidade de método auxiliar
+        else #FIXME não faz sentido criar um Answer sem estar associado a um Activity ou Help
+          @answer = Answer.new(params[:status_id])
         end
-        @answer.user = current_user
+        @answer.user = current_user # isso não é salvo
+
+      # FIXME
+      # Sugestão refactoring
+      # if @status.is_a?(Activity) || @status.is_a?(Help)
+      #   @statuse.answers.create(params) do
+      #    # ...
+      #   end
+      # end
 
       if @answer.valid?
         respond_with(:api, @answer, :location => api_status_url(@answer))
@@ -32,7 +45,7 @@ module Api
     end
 
     protected
-    
+
     def create_on_help
       @answer = Answer.create(params[:status]) do |e|
         @help = Help.find(params[:status_id])
@@ -41,8 +54,6 @@ module Api
       end
     end
 
-    protected
-    
     def create_on_activity
       @answer = Answer.create(params[:status]) do |e|
         @activity = Activity.find(params[:status_id])

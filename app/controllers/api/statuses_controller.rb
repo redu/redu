@@ -1,6 +1,6 @@
 module Api
   class StatusesController < Api::ApiController
-  
+
     def show
       @status = Status.find(params[:id])
 
@@ -11,10 +11,11 @@ module Api
       if params[:user_id]
         @status = create_on_user
       elsif params[:lecture_id]
-        @status = create_on_lecture
+        @status = create_on_lecture #FIXME esses métodos não devem retornar a instância salva
       else
-        @status = create_on_space
+        @status = create_on_space #FIXME esses métodos não devem retornar a instância salva
       end
+      #FIXME Caso current_user não exista, o status é criado mesmo assim. Talvez mover isso para dentro dos métodos create_on_*
       @status.user = current_user
 
       if @status.valid?
@@ -38,47 +39,40 @@ module Api
 
       respond_with(:api, @statuses)
     end
-    
+
     def destroy
       @status = Status.find(params[:id])
       @status.destroy
 
-      respond_with @status
+      respond_with(:api, @status)
     end
 
     protected
-    
+
     def statuses
       if  params[:space_id]
         Status.where(:statusable_id => Space.find(params[:space_id]))
-        
       elsif params[:lecture_id]
         Status.where(:statusable_id => Lecture.find(params[:lecture_id]))
-        
       else
-          Status.where(:user_id => User.find(params[:user_id]))
+        Status.where(:user_id => User.find(params[:user_id]))
       end
     end
-    
-    protected
-    
-    def create_on_user
+
+    def create_on_user #FIXME colocar parâmetro obrigatório status_id
       Activity.create(params[:status]) do |e|
         e.statusable = User.find(params[:user_id])
       end
     end
-    
-    protected
-    
-    def create_on_space
+
+    def create_on_space  # colocar parâmetro obrigatório status_id
       Activity.create(params[:status]) do |e|
         e.statusable = Space.find(params[:space_id])
       end
     end
-    
-    protected
-    
-    def create_on_lecture
+
+    def create_on_lecture #FIXME colocar parâmetro obrigatório status_id e type
+      #FIXME nao é necessário verificar
       if params[:status][:type] == "Help" or params[:status][:type] == "help"
         Help.create(params[:status]) do |e|
           e.statusable = Lecture.find(params[:lecture_id])
@@ -86,7 +80,7 @@ module Api
       else
         Activity.create(params[:status]) do |e|
           e.statusable = Lecture.find(params[:lecture_id])
-        end      
+        end
       end
     end
 
