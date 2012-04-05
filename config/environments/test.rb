@@ -79,4 +79,11 @@ Redu::Application.configure do
       :last_name => 'Userville'
     }
   }
+
+  # Configurações de VisClient
+  config.vis_client = {
+   :url => "http://localhost:4000/hierarchy_notifications.json"
+  }
+
+
 end

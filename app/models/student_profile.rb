@@ -42,8 +42,8 @@ class StudentProfile < ActiveRecord::Base
         :statusable_type => nil,
         :in_response_to_id => nil,
         :in_response_to_type => nil,
-        :created_at => enrollment.created_at,
-        :updated_at => enrollment.updated_at
+        :created_at => self.created_at,
+        :updated_at => self.updated_at
       }
 
       self.send_async_info(params, Redu::Application.config.vis_client[:url])
