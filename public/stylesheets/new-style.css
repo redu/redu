@@ -4334,7 +4334,7 @@ table.spaced tr td {
   margin: 0 auto;
   overflow: hidden;
   padding: 20px;
-  min-height: 620px;
+  min-height: 520px;
 }
 
 #partner-plan .partner-call {
@@ -4355,8 +4355,24 @@ table.spaced tr td {
   font-size: .9em;
 }
 
-#partner-plan .concave-form {
+#partner-contact-form {
   clear: left;
+}
+
+#partner-contact-form .concave-fieldset {
+  margin-top: 0;
+}
+
+#partner-contact-form .category-fieldset {
+  overflow: hidden;
+}
+
+#partner-contact-form .single-column {
+  float: none;
+}
+
+#partner-contact-form textarea {
+  height: 72px;
 }
 
 #checkout .customizing {
@@ -7290,7 +7306,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   margin-left: 75px;
 }
 
-#invoice-index .plan-panel .call .environment {
+.plan-panel .call .environment {
   font-family: arial, sans-serif;
   font-weight: normal;
   font-size: 12px;
@@ -7382,6 +7398,10 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 
 .plan-panel .back {
   margin-bottom: 30px;
+}
+
+.plan-panel .back.bottom {
+  margin-top: 30px;
 }
 
 .plan-panel .back a {
@@ -7503,12 +7523,8 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   float: right;
 }
 
-.plan-panel .options-plan .concave-form {
-  width: 580px;
-}
-
 .plan-panel .options-plan .plan-user-call {
-  font-family: arial;
+  margin-bottom: 20px;
   font-size: 11px;
   color: rgb(179, 179, 179);
 }
@@ -7517,25 +7533,16 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   text-shadow: 0px 1px 0px rgb(255, 255, 255);
 }
 
-.plan-panel .options-plan .plans-list .call-us .concave-important {
-  margin-right: 28px;
-}
-
-.plan-panel .options-plan .concave-form .columns,
-.plan-panel .options-plan .concave-form .single-column {
-  float: none;
-}
-
-.plan-panel .options-plan .plans-list .your-plan .plans .plan .plan-limit,
-.plan-panel .options-plan .plans-list .your-plan .plans .plan .name {
+.plan-panel .options-plan .plans-list .your-plan .plan .plan-limit,
+.plan-panel .options-plan .plans-list .your-plan .plan .name {
   color: rgb(109, 110, 111);
 }
 
-.plan-panel .options-plan .plans-list .your-plan .plans .plan .price {
+.plan-panel .options-plan .plans-list .your-plan .plan .price {
   color: rgb(179, 179, 179);
 }
 
-.plan-panel .options-plan .plans-list .your-plan .plans .plan .actual-plan {
+.plan-panel .options-plan .plans-list .your-plan .plan .actual-plan {
   font-size: 12px;
   color: rgb(109, 110, 111);
   font-weight: bold;

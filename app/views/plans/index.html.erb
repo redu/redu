@@ -1,8 +1,7 @@
 <%= render :partial => 'users/home_sidebar' %>
 <div class="main grid_10" style="width: 580px;">
   <%= render :partial => 'users/breadcrumbs' %>
-  <div id="plan-index" class="plan-panel">
-    <%= tabs :users do %>
+  <%= tabs :users, :class => "plan-panel" do %>
       <table class="concave-admin-table">
         <thead>
           <tr class="label-course">
@@ -15,6 +14,5 @@
         </tbody>
       </table>
   <% end %>
-</div>
 </div>
 
