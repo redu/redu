@@ -69,6 +69,31 @@ describe PartnersController do
     end
   end
 
+  context "when contacting a partner about migration" do
+    before do
+      @partner = Factory(:partner)
+      @environment = Factory(:environment)
+
+      @contact_params = {:category => "institution",
+                         :details => "Mensagem",
+                         :migration => true,
+                         :billable_url => environment_path(@environment),
+                         :email => "guilhermec@redu.com.br"}
+
+      post :contact, :id => @partner.id, :partner_contact => @contact_params,
+        :locale => "pt-BR", :format => :js
+    end
+
+    it "should not assign environment" do
+      assigns[:environment].should be_nil
+    end
+
+    it "creates PartnerContact" do
+      assigns[:partner_contact].should_not be_nil
+      assigns[:partner_contact].should be_valid
+    end
+  end
+
   context "when viewing all partners" do
     before do
       @user.role = Role[:admin]
