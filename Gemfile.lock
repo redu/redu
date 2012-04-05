@@ -321,6 +321,7 @@ DEPENDENCIES
   bundler (~> 1.0.15)
   cancan (~> 1.6.7)
   ckeditor (= 3.4.2.pre)
+  daemons
   date_validator
   deep_cloneable
   delayed_job_active_record!
