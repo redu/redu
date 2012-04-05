@@ -169,10 +169,10 @@ GEM
     newrelic_rpm (3.0.1)
     nokogiri (1.5.0)
     oauth (0.4.5)
-    oauth-plugin (0.4.0.rc2)
+    oauth-plugin (0.4.0)
       multi_json
       oauth (~> 0.4.4)
-      oauth2
+      oauth2 (>= 0.5.0)
       rack
     oauth2 (0.5.2)
       faraday (~> 0.7)
@@ -316,7 +316,7 @@ DEPENDENCIES
   mysql2 (~> 0.2.1)
   newrelic_rpm (= 3.0.1)
   no_peeping_toms!
-  oauth-plugin (>= 0.4.0.pre1)
+  oauth-plugin (~> 0.4.0)
   pagseguro (~> 0.1.10)
   paperclip
   pusher
