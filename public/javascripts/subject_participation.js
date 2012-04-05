@@ -61,9 +61,9 @@ var subject_participation_pie = function () {
 
 // Carregamento do Bullet Charts
 var subject_participation_bullet = function () {
-    var w = 748,
-        h = 50,
-        m = [5, 40, 20, 120];
+    var w = 350,
+        h = 107.5,
+        m = [52.5, 30, 40, 20]; // top right bottom left
 
     var d3chart = d3.chart.bullet()
         .width(w - m[1] -m[3])
@@ -83,10 +83,12 @@ var subject_participation_bullet = function () {
         .call(d3chart);
 
       var title = vis.append("g")
-        .attr("text-anchor", "end")
-        .attr("transform", "translate(-6," + (h - m[0] - m[2]) / 2 + ")");
+        .attr("text-anchor", "start");
 
-      d3chart.duration(1000);
+      title.append("text")
+        .attr("class", "subtitle-chart")
+        .attr("dy", "4.5em")
+        .text("Total de alunos X Total de alunos que finalizaram o módulo");
       });
     };
 

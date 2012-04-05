@@ -1,0 +1,11 @@
+.range.s0{
+  fill: #ddd;
+}
+
+.measure.s0{
+  fill: rgb(115, 195, 230);
+}
+
+.tick text{
+  font-size: 12px;
+}
