@@ -3,21 +3,19 @@ class StatusObserver < ActiveRecord::Observer
     case status.statusable.class.to_s
     when "User"
       status.user.status_user_associations.create(:status => status)
-      status.associate_with(status.user.friends)
-      status.associate_with(status.statusable.friends)
+      Delayed::Job.enqueue UserStatusesJob.new(status.user.id, status.id)
     when "Lecture"
       course = status.statusable.subject.space.course
-      associate_with_approved_users(course, status)
+      Delayed::Job.enqueue \
+        HierarchyStatusesJob.new(status.id, course.id)
     when "Space"
-      associate_with_approved_users(status.statusable.course, status)
+      Delayed::Job.enqueue \
+        HierarchyStatusesJob.new(status.id, status.statusable.course.id)
     when "Course"
-      associate_with_approved_users(status.statusable, status)
+      Delayed::Job.enqueue \
+        HierarchyStatusesJob.new(status.id, status.statusable.id)
     end
   end
 
   protected
-
-  def associate_with_approved_users(course, status)
-    status.associate_with(course.approved_users)
-  end
 end

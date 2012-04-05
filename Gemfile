@@ -51,6 +51,11 @@ gem 'roar-rails', '~> 0.0.3',
   :git => 'git://github.com/apotonick/roar-rails.git'
 gem 'eventmachine'
 gem 'em-http-request'
+gem 'delayed_job_active_record',
+  :git => 'git://github.com/guiocavalcanti/delayed_job_active_record.git',
+  :branch => 'issue-10'
+gem 'daemons'
+gem 'activerecord-import'
 
 # Gems específicos de algum ambiente
 group :development, :test do

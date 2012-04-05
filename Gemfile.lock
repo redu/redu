@@ -16,6 +16,15 @@ GIT
     ajaxful_rating (3.0.0.beta3)
 
 GIT
+  remote: git://github.com/guiocavalcanti/delayed_job_active_record.git
+  revision: d4b26c961b96b25c9656ff10cc9090049bd6344d
+  branch: issue-10
+  specs:
+    delayed_job_active_record (0.3.2)
+      activerecord (> 2.1.0)
+      delayed_job (~> 3.0.0)
+
+GIT
   remote: git://github.com/guiocavalcanti/scribd_fu.git
   revision: ce15af925afbab9f5806d4038ec0ac5e05b18d2e
   specs:
@@ -80,6 +89,9 @@ GEM
       activesupport (= 3.0.10)
       arel (~> 2.0.10)
       tzinfo (~> 0.3.23)
+    activerecord-import (0.2.9)
+      activerecord (~> 3.0)
+      activerecord (~> 3.0)
     activeresource (3.0.10)
       activemodel (= 3.0.10)
       activesupport (= 3.0.10)
@@ -113,6 +125,8 @@ GEM
     date_validator (0.6.1)
       activemodel (~> 3.0.0)
     deep_cloneable (1.2.3)
+    delayed_job (3.0.1)
+      activesupport (~> 3.0)
     diff-lcs (1.1.3)
     dynamic_form (1.1.4)
     em-http-request (0.3.0)
@@ -296,6 +310,7 @@ DEPENDENCIES
   aasm!
   actionmailer_inline_css!
   active_enum
+  activerecord-import
   acts-as-taggable-on
   acts_as_tree (~> 0.1.1)
   ajaxful_rating!
@@ -306,8 +321,10 @@ DEPENDENCIES
   bundler (~> 1.0.15)
   cancan (~> 1.6.7)
   ckeditor (= 3.4.2.pre)
+  daemons
   date_validator
   deep_cloneable
+  delayed_job_active_record!
   dynamic_form
   em-http-request
   eventmachine
