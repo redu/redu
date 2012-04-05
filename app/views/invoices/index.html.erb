@@ -18,7 +18,7 @@
         <%= content_tag :span, @plan.billable_audit["name"] %>
       <% end %>
     </div>
-    <%= link_to "Upgrade", nil, :class => "concave-important upgrade-button" %>
+    <%= link_to "Upgrade", options_plan_path(@plan), :class => "concave-important upgrade-button" %>
     <% if @quota %>
       <div class="plan-use">
         <span class="plan-type"><%= @plan.name %></span>
@@ -57,7 +57,7 @@
             </td>
             <td>
               <span class="value">
-                <%= number_to_currency(invoice.amount) %>
+                <%= number_to_currency(invoice.total) %>
               </span>
             </td>
             <td class="pay-status">
@@ -73,7 +73,7 @@
         <% end %>
       </tbody>
     </table>
-    <%= link_to "< voltar para lista de planos", user_plans_path(@plan.user), :class => "back" %>
+    <%= link_to "< voltar para lista de planos", user_plans_path(@plan.user), :class => "back bottom" %>
   <% end %>
   </div>
 </div>
