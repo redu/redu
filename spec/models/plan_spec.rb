@@ -216,7 +216,19 @@ describe Plan do
         @billable.plan.should == @new_plan
       end
 
-      it "should creates a new invoice to new plan with correct dates" do
+      it "should associate the new plan with the billable" do
+        billable = subject.billable
+        subject.migrate_to @new_plan
+        @new_plan.billable.should == billable
+      end
+
+      it "should associate the new plan with the user" do
+        user = subject.user
+        subject.migrate_to @new_plan
+        @new_plan.user.should == user
+      end
+
+      it "should create a new invoice to new plan with correct dates" do
         last_invoice_period_end = subject.invoice.period_end
         expect {
           subject.migrate_to @new_plan
@@ -282,6 +294,24 @@ describe Plan do
           subject.migrate_to @new_plan
           @new_plan.invoice.previous_balance.should be < 0
           @new_plan.invoice.previous_balance.should == - subject.invoice.total
+        end
+      end
+
+      context "when does not have any invoices" do
+        before do
+          subject.invoices = []
+          subject.save
+        end
+
+        it "should create a new invoice with no discount or addition" do
+          subject.migrate_to @new_plan
+          @new_plan.invoice.previous_balance.should == 0
+          @new_plan.invoice.total.should == @new_plan.price
+        end
+
+        it "should create a new invoice with period_end at 30 days from today (package)" do
+          subject.migrate_to @new_plan
+          @new_plan.invoice.period_end.should == Date.today + 30.days
         end
       end
     end

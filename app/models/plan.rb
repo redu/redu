@@ -92,26 +92,34 @@ class Plan < ActiveRecord::Base
 
   # Efetua a migração para o plano passado como parâmetro
   def migrate_to(new_plan)
-    previous_balance = unless self.invoice.paid?
-      self.invoice.close!
-      self.invoice.total
-    else
-      balance = if self.invoice.total < 0
-                   self.invoice.total # Valor já entra como desconto
-                 else
-                   - self.invoice.total # Valor convertido para desconto
-                 end
-      balance
-    end
+    previous_balance = if self.invoice.nil?
+                         0
+                       elsif !self.invoice.paid?
+                         self.invoice.close!
+                         self.invoice.total
+                       else # Se já estiver pago
+                         balance = if self.invoice.total < 0
+                                     # Valor já entra como desconto
+                                     self.invoice.total
+                                   else
+                                     # Valor convertido para desconto
+                                     - self.invoice.total
+                                   end
+                         balance
+                       end
 
-    new_invoice = new_plan.create_invoice(:invoice => {
+    opts = {
       :period_start => Date.today,
-      :period_end => self.invoice.period_end,
       :previous_balance => previous_balance
-    })
+    }
+    opts[:period_end] = self.invoice.period_end if self.invoice
+
+    new_plan.user = self.user
     self.billable.plan = new_plan
+
+    new_invoice = new_plan.create_invoice(:invoice => opts)
     new_plan.setup_for_migration
 
-    self.invoice.update_attributes(:period_end => Date.yesterday)
+    self.invoice.try(:update_attributes, :period_end => Date.yesterday)
   end
 end
