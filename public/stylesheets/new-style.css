@@ -2103,6 +2103,11 @@ body {
   border-right: 1px solid #C6C6C6;
 }
 
+.statuses .actions li {
+  float: right;
+  border:none;
+}
+
 .statuses .actions li:last-child {
   border: none;
 }
@@ -7383,6 +7388,11 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   color: rgb(95, 192, 128);
 }
 
+.payments .data .icon  {
+  text-indent: -9999px;
+}
+
+>>>>>>> Stashed changes
 .plan-panel table.common tbody tr {
   border: none;
 }
@@ -7396,7 +7406,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .borderradius .plan-panel table.common .box-gray .data td:first-child {
   border-radius: 5px 0px 0px 5px;
 }
-
+}}
 .borderradius .plan-panel table.common .box-gray .data td:last-child {
   border-radius: 0px 5px 5px 0px;
 }
@@ -7410,6 +7420,9 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 
 #invoice-index .plan-panel .courses-list {
   margin-bottom: 30px;
+}
+.plan-panel .courses-list {
+	margin-bottom: 30px;
 }
 
 #invoice-index .plan-panel .courses-list a,
@@ -7578,6 +7591,18 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   margin: 0;
 }
 
+#content .create-status .new-post .border-post {
+  border-top: solid 1px rgb(204, 204, 204);
+  border-bottom: solid 1px white;
+  border-left: none;
+  border-right: none;
+  margin: 10px 0px;
+}
+
+#content .create-status .no-preview p {
+  width: 478px;
+}
+
 .plan-panel .concave-admin-table .course .environment,
 .plan-panel .concave-admin-table .course .no-pending {
   font-size: 11px;
@@ -7623,46 +7648,65 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 
 /* inicio pré-visualização novo post */
 
-.textshadow .new-post {
+.textshadow #content .create-status .new-post,
+.textshadow #statuses .status .status-text .new-post {
   text-shadow: 0px 1px 0px rgb(255, 255, 255);
 }
 
-.new-post {
+#content .create-status .new-post,
+#statuses .status .status-text .new-post {
   font-size: 13px;
   font-family: arial, sans-sefif;
   font-weight: normal;
   overflow: hidden;
 }
 
-.vis-new-post {
-  border-top: solid 1px rgb(255, 255, 255);
-  border-bottom: solid 1px rgb(255, 255, 255);
+#content .create-status .status-buttons .concave-clean {
+  float: right;
+  height: 28px;
+  width: 73px;
+  padding: 0px;
+}
+
+#statuses .status .status-text .vis-new-post {
   overflow: hidden;
-  padding: 10px 10px 15px 10px;
   margin-top: 20px;
 }
 
-.new-post .close {
-  text-indent: -9999px;
-  width: 16px;
-  float: right;
-  cursor: pointer;
-  height: 18px;
+#statuses .status .status-text .create-response {
+    background: #f0f0f0;
 }
 
-.new-post .title {
+#content .create-status .new-post p,
+#content .create-status .new-post .link {
+  width: 400px;
+}
+
+#content .create-status .new-post .close {
+  text-indent: -9999px;
+  width: 8px;
+  float: right;
+  cursor: pointer;
+  height: 8px;
+}
+
+#content .create-status .new-post .title,
+#statuses .status .status-text .new-post .title {
   color: rgb(77, 173, 214);
   font-weight: normal;
   margin-bottom: 5px;
+  cursor: pointer;
 }
 
-.new-post .link {
+#content .create-status .new-post .link,
+#statuses .status .status-text .new-post .link {
   color: rgb(204, 204, 204);
   font-weight: normal;
   margin-bottom: 5px;
 }
 
-.new-post .preview-link {
+#content .create-status .new-post .preview-link,
+#statuses .status .status-text .new-post .preview-link {
   width: 100px;
   height: 75px;
   background-color: blue;
@@ -7670,22 +7714,30 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   text-indent: -9999px;
 }
 
-.new-post .thumbnail{
+#content .create-status .new-post .thumbnail,
+#statuses .status .status-text .new-post .thumbnail{
   clear: both;
+  margin-bottom: 10px;
   float: left;
   overflow: hidden;
 }
 
-.new-post .description {
+.status .status-text .statuses .actions li {
+  float: right;
+  border: none;
+}
+
+#content .create-status .new-post .description,
+#statuses .status .status-text .new-post .description {
   overflow: hidden;
   padding-left: 10px;
 }
 
-.new-post .thumbnail .last {
+#content .create-status .new-post .thumbnail .last {
   clear: both;
 }
 
-.new-post .thumbnail .last .arrow {
+#content .create-status .new-post .thumbnail .last .arrow {
   background:  url("../images/new/icons-oembed-nav.png") 0px 0px no-repeat;
   float: right;
   height: 10px;
@@ -7693,11 +7745,11 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   width: 8px;
 }
 
-.new-post .thumbnail .last .arrow:hover {
+#content .create-status .new-post .thumbnail .last .arrow:hover {
   background:  url("../images/new/icons-oembed-nav.png") 0px -20px no-repeat;
 }
 
-.new-post .thumbnail .next .arrow {
+#content .create-status .new-post .thumbnail .next .arrow {
   background:  url("../images/new/icons-oembed-nav.png") -20px 0px no-repeat;
   float: right;
   height: 10px;
@@ -7705,11 +7757,11 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   width: 8px;
 }
 
-.new-post .thumbnail .next .arrow:hover {
+#content .create-status .new-post .thumbnail .next .arrow:hover {
   background:  url("../images/new/icons-oembed-nav.png") -20px -20px no-repeat;
 }
 
-.new-post .thumbnail .remove .arrow {
+#content .create-status  .new-post .thumbnail .remove .arrow {
   background:  url("../images/new/icons-oembed-nav.png") -40px 0px no-repeat;
   float: right;
   height: 10px;
@@ -7717,13 +7769,13 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   width: 8px;
 }
 
-.new-post .thumbnail .remove .arrow:hover {
+#content .create-status  .new-post .thumbnail .remove .arrow:hover {
   background:  url("../images/new/icons-oembed-nav.png") -40px -20px no-repeat;
 }
 
-.new-post .thumbnail .last,
-.new-post .thumbnail .next,
-.new-post .thumbnail .remove  {
+#content .create-status .new-post .thumbnail .last,
+#content .create-status .new-post .thumbnail .next,
+#content .create-status .new-post .thumbnail .remove  {
   float: left;
   border: 1px solid rgb(204, 204, 204);
   width: 28px;
@@ -7734,16 +7786,17 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   cursor: pointer;
 }
 
-.borderradius .new-post .thumbnail .last,
-.borderradius .new-post .thumbnail .next,
-.borderradius .new-post .thumbnail .remove {
+.borderradius #content .create-status .new-post .thumbnail .last,
+.borderradius #content .create-status .new-post .thumbnail .next,
+.borderradius #content .create-status .new-post .thumbnail .remove {
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
   border-radius: 4px;
 }
-.cssgradients .new-post .thumbnail .last,
-.cssgradients .new-post .thumbnail .next,
-.cssgradients .new-post .thumbnail .remove {
+
+.cssgradients #content .create-status .new-post .thumbnail .last,
+.cssgradients #content .create-status .new-post .thumbnail .next,
+.cssgradients #content .create-status .new-post .thumbnail .remove {
   background: -moz-linear-gradient(top,  rgb(247,247,247) 0%, rgb(230,230,230) 100%); /* FF3.6+ */
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(247,247,247)), color-stop(100%,rgb(230,230,230))); /* Chrome,Safari4+ */
   background: -webkit-linear-gradient(top,  rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* Chrome10+,Safari5.1+ */
@@ -7752,17 +7805,17 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   background: linear-gradient(top,  rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* W3C */
 }
 
-.new-post .thumbnail .last:hover,
-.new-post .thumbnail .next:hover,
-.new-post .thumbnail .remove:hover {
+#content .create-status .new-post .thumbnail .last:hover,
+#content .create-status .new-post .thumbnail .next:hover,
+#content .create-status .new-post .thumbnail .remove:hover {
   border: solid 1px rgb(115, 195, 230);
   color: rgb(21, 138, 196);
   background: rgb(30,87,153); /* Old browsers */
 }
 
-.cssgradients .new-post .thumbnail .last:hover,
-.cssgradients .new-post .thumbnail .next:hover,
-.cssgradients .new-post .thumbnail .remove:hover {
+.cssgradients #content .create-status .new-post .thumbnail .last:hover,
+.cssgradients #content .create-status .new-post .thumbnail .next:hover,
+.cssgradients #content .create-status .new-post .thumbnail .remove:hover {
   background: -moz-linear-gradient(top,  rgb(30,87,153) 0%, rgb(247,247,247) 2%, rgb(219,239,247) 100%); /* FF3.6+ */
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(30,87,153)), color-stop(2%,rgb(247,247,247)), color-stop(100%,rgb(219,239,247))); /* Chrome,Safari4+ */
   background: -webkit-linear-gradient(top,  rgb(30,87,153) 0%,rgb(247,247,247) 2%,rgb(219,239,247) 100%); /* Chrome10+,Safari5.1+ */
@@ -7771,20 +7824,23 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   background: linear-gradient(top,  rgb(30,87,153) 0%,rgb(247,247,247) 2%,rgb(219,239,247) 100%); /* W3C */
 }
 
-.new-post .java-applet {
+#content .create-status .new-post .java-applet,
+#statuses .status .status-text .new-post .java-applet {
   clear: both;
   float: left;
   overflow: hidden;
   background-color: rgb (192, 128, 64);
 }
 
-.new-post .java-applet .icon {
+#content .create-status .new-post .java-applet .icon,
+#statuses .status .status-text .new-post .java-applet .icon {
   background-image: url("../images/new/icon-applet.png");
   text-indent: -9999px;
   width: 32px;
   height: 34px;
   display: block;
   background-repeat: no-repeat;
+  margin-top: -3px;
   padding: 0px;
 }
 
@@ -7803,25 +7859,23 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   padding: 0px;
 }
 
-.java-applet .icon {
-  float: none;
-  height: 34px;
-  padding-left: 10px;
-  width: 32px;
+#statuses .status .status-text .create-response .ui-placeholder {
+  top: 9px;
+  font-style: normal;
 }
 
-.responses .comment-title {
+#statuses .status .status-text .responses .comment-title {
   margin: 3px 0px;
   display: block;
 }
 
-.responses .answer-box {
+#statuses .status .status-text .responses .answer-box {
   float: left;
-  margin-left: 30px;
+  margin-left: 37px;
   width: 500px;
 }
 
-.responses .new-post, {
+#statuses .status .status-text .responses .new-post, {
  margin-left: 30px;
 }
 

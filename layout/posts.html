@@ -25,7 +25,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     <script src="../public//javascripts/modernizr.js" type="text/javascript"></script>
     <script type="text/javascript" src="http://use.typekit.com/lpo4rgu.js"></script>
-    <script type="text/javascript">try{ Typekit.load(); }catch(e){}</script> 
+    <script type="text/javascript">try{ Typekit.load(); }catch(e){}</script>
     <link href="../public//stylesheets/new-style.css" rel="stylesheet" type="text/css"/>
   </head>
   <body>
@@ -77,7 +77,7 @@
         <a href="/pessoas/thaisbione/editar" class="edit" title="editar">editar</a>
       </li>
 
-      
+
       <li>
         <a href="/pessoas/thaisbione/messages">Mensagens (0)</a>
       </li>
@@ -96,7 +96,7 @@
       </div><!-- end #search -->
     </div><!-- end #header -->
 
-    
+
 
     <div id="content" class="container_16 clearfix">
 
@@ -161,42 +161,44 @@
   </ol>
   <div class="create-status inform-my-status">
   <form accept-charset="UTF-8" action="/statuses" class="form-loader concave-form" data-remote="true" id="new_status" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="SFLTQcxPE9cX8UFz63+MAQkh5V/dJST5oG1awR9fLF8=" /></div>
-    
+
     <input id="return" name="return" type="hidden" value="http://www.redu.com.br/pessoas/thaisbione/meu_mural" />
     <input id="status_statusable_id" name="status[statusable_id]" type="hidden" value="1622" />
     <input id="status_statusable_type" name="status[statusable_type]" type="hidden" value="User" />
 
     <input id="status_type" name="status[type]" type="hidden" value="Activity" />
-<!-- FALTAM ALGUNS ÍCONES E SEUS RESPECTIVOS "HOVER'S" - sérgio vai me passar -->
-<!-- SEM THUMBNAIL -->    
+<!-- SEM THUMBNAIL -->
     <fieldset>
     	<label class="status-icon replacement concave-label" for="status_text">Seu mural</label>
      <textarea rows="1" name="status[text]" id="status_text" cols="40" class="status textarea status-d04c366d concave-input"></textarea>
-			  <div class="new-post vis-new-post">
+			  <div class="new-post no-preview">
+			    <hr class="border-post">
 			    <span class="close icon-small icon-delete-gray_8_10">Close</span>
-				  <h2 class="title">Redu experimento na Escola do Recife</h2>
+				  <a hrfe="#" class="title">Redu experimento na Escola do Recife</a>
 				  <h3 class="link">www.youtube.com</h3>
 				  <p>Neste vídeo são apresentados os resultados de uma experiência de uso do Redu na Escola do Recife, PE. </p>
+				  <hr class="border-post">
 			  </div>
 			<div class="status-buttons">
+			  <input id="status_submit" class="concave-button" type="submit" value="Enviar" name="commit">
 				<input id="status_submit" class="concave-clean" type="submit" value="Cancelar" name="commit">
-				<input id="status_submit" class="concave-button" type="submit" value="Enviar" name="commit">
 			</div>
 		</fieldset></form></div>
 
 <!-- COM THUMBNAIL -->
  <div class="create-status inform-my-status">
   <form accept-charset="UTF-8" action="/statuses" class="form-loader concave-form" data-remote="true" id="new_status" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="SFLTQcxPE9cX8UFz63+MAQkh5V/dJST5oG1awR9fLF8=" /></div>
-    
+
     <input id="return" name="return" type="hidden" value="http://www.redu.com.br/pessoas/thaisbione/meu_mural" />
     <input id="status_statusable_id" name="status[statusable_id]" type="hidden" value="1622" />
     <input id="status_statusable_type" name="status[statusable_type]" type="hidden" value="User" />
 
-    <input id="status_type" name="status[type]" type="hidden" value="Activity" />  
+    <input id="status_type" name="status[type]" type="hidden" value="Activity" />
     <fieldset>
     	<label class="status-icon replacement concave-label" for="status_text">Seu mural</label>
      <textarea rows="1" name="status[text]" id="status_text" cols="40" class="status textarea status-d04c366d concave-input"></textarea>
-			<div class="new-post vis-new-post">
+			<div class="new-post">
+			  <hr class="border-post">
 			  <div class="thumbnail">
 			    <span class="preview-link">seu post aqui</span>
 			    <span class="last"><span class="arrow">L</span></span>
@@ -205,45 +207,48 @@
 			  </div>
 			  <div class="description">
 			    <span class="close icon-small icon-delete-gray_8_10">Close</span>
-			    <h2 class="title">Redu experimento na Escola do Recife</h2>
+			    <a href="#" class="title">Redu experimento na Escola do Recife</a>
 			    <h3 class="link">www.youtube.com</h3>
 			    <p>Neste vídeo são apresentados os resultados de uma experiência de uso do Redu na Escola do Recife, PE.</p>
 				</div>
+				<hr class="border-post">
 			</div>
 			<div class="status-buttons">
+			  <input id="status_submit" class="concave-button" type="submit" value="Enviar" name="commit">
 				<input id="status_submit" class="concave-clean" type="submit" value="Cancelar" name="commit">
-				<input id="status_submit" class="concave-button" type="submit" value="Enviar" name="commit">
 			</div>
 		</fieldset></form></div>
-		
+
 <!--Java Applet -->
      <div class="create-status inform-my-status">
   <form accept-charset="UTF-8" action="/statuses" class="form-loader concave-form" data-remote="true" id="new_status" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="SFLTQcxPE9cX8UFz63+MAQkh5V/dJST5oG1awR9fLF8=" /></div>
-    
+
     <input id="return" name="return" type="hidden" value="http://www.redu.com.br/pessoas/thaisbione/meu_mural" />
     <input id="status_statusable_id" name="status[statusable_id]" type="hidden" value="1622" />
     <input id="status_statusable_type" name="status[statusable_type]" type="hidden" value="User" />
 
-    <input id="status_type" name="status[type]" type="hidden" value="Activity" />  
+    <input id="status_type" name="status[type]" type="hidden" value="Activity" />
     <fieldset>
     	<label class="status-icon replacement concave-label" for="status_text">Seu mural</label>
      <textarea rows="1" name="status[text]" id="status_text" cols="40" class="status textarea status-d04c366d concave-input"></textarea>
-			<div class="new-post vis-new-post">
+			<div class="new-post">
+			  <hr class="border-post">
 			  <div class="java-applet">
 			    <span class="icon">cup</span>
 			  </div>
 			  <div class="description">
 			    <span class="close icon-small icon-delete-gray_8_10">Close</span>
-			    <h2 class="title">Parábola circular (produzida por Carlos Cr)</h2>
+			    <a href="#" class="title">Parábola circular (produzida por Carlos Cr)</a>
 			    <h3 class="link">www.gregosetroianos.com.br</h3>
 			    <p> </p>
 				</div>
+				<hr class="border-post">
 			</div>
 			<div class="status-buttons">
+			  <input id="status_submit" class="concave-button" type="submit" value="Enviar" name="commit">
 				<input id="status_submit" class="concave-clean" type="submit" value="Cancelar" name="commit">
-				<input id="status_submit" class="concave-button" type="submit" value="Enviar" name="commit">
 			</div>
-		</fieldset></form></div>    		
+		</fieldset></form></div>
    <div id="statuses" class="statuses">
     <ol>
 
@@ -259,19 +264,19 @@
         <span class="date">
           17 dias
         </span>
-        <div class="responses new-post vis-new-post">
+        <div class="responses new-post vis-new-post create-response">
           <span class="comment-title">lorem ipsum title </span>
             <div class="thumbnail">
 			        <span class="preview-link">seu post aqui</span>
 			      </div>
 			      <div class="description">
-			        <h2 class="title">Redu experimento na Escola do Recife</h2>
+			        <a href="#" class="title">Redu experimento na Escola do Recife</a>
 			        <h3 class="link">www.youtube.com</h3>
 			        <p>Neste vídeo são apresentados os resultados de uma experiência de uso do Redu na Escola do Recife, PE.</p>
 				    </div>
 			  </div>
-			  
-			  <div class="responses new-post">
+
+			  <div class="responses  create-response vis-new-post">
 			    <img width="32" height="32" src="http://s3.amazonaws.com/redu_uploads/users/avatars/1182/thumb_32/sílvia 2011.jpg?1330739994" class="avatar" alt="Sílvia 2011">
           <a class="username" href="/pessoas/silvia0301">Sílvia Carla da Silva Cardoso</a>
           <span class="status-info">
@@ -287,12 +292,12 @@
 			          <span class="icon">cup</span>
 			        </div>
 			        <div class="description">
-			          <h2 class="title">Parábola circular (produzida por Carlos Cr)</h2>
+			          <a href="#" class="title">Parábola circular (produzida por Carlos Cr)</a>
 			          <h3 class="link">www.gregosetroianos.com.br</h3>
 			          <p> </p>
 				      </div>
 			      </div>
-			  </div>			  
+			  </div>
 			  <ul class="actions clearfix">
             <li>
               <a class="icon-response-gray_8_10-before reply-status" href="#">Responder</a>
@@ -301,8 +306,28 @@
               <a class="icon-delete-gray_8_10-before" rel="nofollow" data-remote="true" data-method="delete" data-confirm="Deseja remover a postagem?" href="/statuses/17746">Excluir</a>
             </li>
         </ul>
-          
-</li>  
+        <div style="" class="create-status create-response">
+          <form method="post" data-remote="true" class="form-loader concave-form" action="/statuses/17728/respond" accept-charset="UTF-8"><div style="margin:0;padding:0;display:inline"><input type="hidden" value="✓" name="utf8"><input type="hidden" value="ilBCYpX8Bqn9hjyaLOXmDa13tHyLHOBVMHMApiT4HLg=" name="authenticity_token"></div>
+          <input type="hidden" value="17728" name="status[in_response_to_id]" id="status_in_response_to_id">
+          <input type="hidden" value="Activity" name="status[in_response_to_type]" id="status_in_response_to_type">
+          <fieldset class="concave-fieldset">
+            <label for="status_text" class="status-icon-answer replacement concave-label">Resposta status</label>
+            <span class="ui-placeholder-wrap">
+              <input name="status[text]" id="status_text" placeholder="" class="status-answer-28cd0728 concave-input"></input>
+              <span class="ui-placeholder">Digite sua resposta ao comentário acima </span>
+            </span>
+            <div class="char-limit char-status-answer-28cd0728">
+              <span class="chars">800</span> caracteres restantes.
+            </div>
+            <div class="status-buttons">
+              <input type="submit" value="Postar" name="commit" id="status_submit" class="concave-button">
+   				    <input id="status_submit" class="concave-clean" type="submit" value="Cancelar" name="commit">
+            </div>
+          </fieldset>
+        </form>
+      </div>
+
+</li>
 
    </ol>
 
@@ -340,7 +365,6 @@
         </ul>
       </div><!-- end #nav-footer -->
     </div><!-- end #footer -->
-    
+
   <script>(function(){var d=document;var e=d.createElement("script");e.async=true;e.src="https://d1ros97qkrwjf5.cloudfront.net/30/eum/rum.js";var s=d.getElementsByTagName("script")[0];s.parentNode.insertBefore(e,s);})();NREUMQ.push(["nrf2","beacon-1.newrelic.com","6e36f43cf9",385120,"cQ1aTERXXQlREBdBSlcQRxdbQW4SVQ5U",0,1810,new Date().getTime()])</script></body>
 </html>
-
