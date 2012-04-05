@@ -7,6 +7,7 @@ class Status < ActiveRecord::Base
     :include => [:user]
   has_many :users, :through => :status_user_associations
   has_many :status_user_associations, :dependent => :destroy
+  has_many :status_resource, :dependent => :destroy
 
   scope :activity_by_user, lambda { |u|
     where("type = ? AND user_id = ?", "Activity", u) }
