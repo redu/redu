@@ -11,8 +11,9 @@ class StatusObserver < ActiveRecord::Observer
       Delayed::Job.enqueue \
         HierarchyStatusesJob.new(status.id, course.id)
 
+      debugger
       # Used to send information to vis application
-      if !status.type == "Log"
+      unless status.type == "Log"
         options = {
           :lecture_id => status.statusable_id,
           :subject_id => status.statusable.subject.id,
@@ -28,7 +29,7 @@ class StatusObserver < ActiveRecord::Observer
         HierarchyStatusesJob.new(status.id, status.statusable.course.id)
 
       # Used to send information to vis application
-      if !status.type == "Log"
+      unless status.type == "Log"
         options = {
           :lecture_id => nil,
           :subject_id => nil,
@@ -84,8 +85,8 @@ class StatusObserver < ActiveRecord::Observer
       :statusable_type => status.statusable_type,
       :in_response_to_id => status.in_response_to_id,
       :in_response_to_type => status.in_response_to_type,
-      :created_at => enrollment.created_at,
-      :updated_at => enrollment.updated_at
+      :created_at => status.created_at,
+      :updated_at => status.updated_at
     }
     params.merge(options)
   end
