@@ -5,12 +5,13 @@ class StatusObserver < ActiveRecord::Observer
     case status.statusable.class.to_s
     when "User"
       status.user.status_user_associations.create(:status => status)
-      status.associate_with(status.user.friends)
-      status.associate_with(status.statusable.friends)
+      Delayed::Job.enqueue UserStatusesJob.new(status.user.id, status.id)
     when "Lecture"
       course = status.statusable.subject.space.course
-      associate_with_approved_users(course, status)
+      Delayed::Job.enqueue \
+        HierarchyStatusesJob.new(status.id, course.id)
 
+      # Used to send information to vis application
       if !status.type == "Log"
         options = {
           :lecture_id => status.statusable_id,
@@ -23,8 +24,10 @@ class StatusObserver < ActiveRecord::Observer
         self.send_async_info(params, Redu::Application.config.vis_client[:url])
       end
     when "Space"
-      associate_with_approved_users(status.statusable.course, status)
+      Delayed::Job.enqueue \
+        HierarchyStatusesJob.new(status.id, status.statusable.course.id)
 
+      # Used to send information to vis application
       if !status.type == "Log"
         options = {
           :lecture_id => nil,
@@ -37,7 +40,10 @@ class StatusObserver < ActiveRecord::Observer
         self.send_async_info(params, Redu::Application.config.vis_client[:url])
       end
     when "Course"
-      associate_with_approved_users(status.statusable, status)
+      Delayed::Job.enqueue \
+        HierarchyStatusesJob.new(status.id, status.statusable.id)
+
+    # status of type answers
     when "Activity", "Help"
       statusable = status.statusable
       case statusable.statusable.class.to_s
@@ -68,10 +74,6 @@ class StatusObserver < ActiveRecord::Observer
   end
 
   protected
-
-  def associate_with_approved_users(course, status)
-    status.associate_with(course.approved_users)
-  end
 
   def fill_params(status, options = {})
     params = {
