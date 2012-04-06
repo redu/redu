@@ -7392,7 +7392,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   text-indent: -9999px;
 }
 
->>>>>>> Stashed changes
 .plan-panel table.common tbody tr {
   border: none;
 }
@@ -7406,7 +7405,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .borderradius .plan-panel table.common .box-gray .data td:first-child {
   border-radius: 5px 0px 0px 5px;
 }
-}}
+
 .borderradius .plan-panel table.common .box-gray .data td:last-child {
   border-radius: 0px 5px 5px 0px;
 }
@@ -7421,6 +7420,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 #invoice-index .plan-panel .courses-list {
   margin-bottom: 30px;
 }
+
 .plan-panel .courses-list {
 	margin-bottom: 30px;
 }
@@ -7875,9 +7875,43 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   width: 500px;
 }
 
-#statuses .status .status-text .responses .new-post, {
- margin-left: 30px;
+#content .create-status .new-post:before {
+  border-color: rgb(240, 240, 240) transparent;
+  border-width: 0 10px 10px;
+  margin-top: -52px;
+  border-style: solid;
+  content: " ";
+  display: block;
+  left: 416px;
+  position: absolute;
+  width: 0;
 }
+
+.status-text .vis-new-post:after,
+.status-text .create-response:after {
+   border-color: rgb(240, 240, 240) transparent;
+   border-width: 0 10px 10px;
+   margin-top: 48px;
+   border-style: solid;
+   content: " ";
+   display: block;
+   left: 65px;
+   position: absolute;
+   width: 0;
+}
+
+.status-text .create-response:after {
+  margin-top: -108px;
+}
+
+.status-text .vis-new-post:after {
+  margin-top: -63px;
+}
+
+.status-text .new-post:after {
+    margin-top: -122px;
+}
+
 
 /* -- Início notificações lateral esquerda -- */
 
