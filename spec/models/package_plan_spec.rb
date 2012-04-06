@@ -110,6 +110,19 @@ describe PackagePlan do
          end
        end
     end
+
+    context "when creating invoice with negative total" do
+      before do
+        @new_invoice = subject.create_invoice(:invoice => {
+          :amount => 50,
+          :previous_balance => -100
+        })
+      end
+
+      it "new invoice is marked as paid" do
+        @new_invoice.should be_paid
+      end
+    end
   end
 
   it { should respond_to :create_order }

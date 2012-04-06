@@ -83,6 +83,8 @@ class PackagePlan < Plan
   # a criação de invoices independente do preço do plano, passar a opção
   # :force => true
   #
+  # - Caso o invoice criado tenha total < 0, o mesmo será marcado como pago
+  #
   # Como no exemplo abaixo:
   #
   # plan.price
@@ -109,6 +111,7 @@ class PackagePlan < Plan
     if options[:force] || (options[:invoice][:amount] > 0)
       self.invoice = PackageInvoice.new(options[:invoice])
       self.invoice.pend!
+      self.invoice.pay! if self.invoice.total <= 0
       self.invoice
     end
 

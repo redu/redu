@@ -92,8 +92,23 @@ describe LicensedInvoice do
       end
     end
 
+    context "when pending and actual invoice has negative total" do
+      before do
+        subject.update_attributes(:amount => 50,
+                                  :previous_balance => -100,
+                                  :plan => Factory(:active_licensed_plan))
+        subject.pend!
+      end
+
+      it "actual invoice is marked as paid" do
+        subject.should be_paid
+      end
+    end
+
     context "when pending" do
       before do
+        (1..5).collect { Factory(:license, :period_end => nil,
+                                 :invoice => subject) }
         subject.update_attribute(:state, "pending")
       end
 
@@ -325,7 +340,7 @@ describe LicensedInvoice do
       @plan1.create_invoice({:invoice => {
         :period_start => from,
         :period_end => @to,
-        :previous_balance => - 300,
+        :previous_balance => - 25,
         :created_at => Time.now - 1.hour }
       })
       @invoice1 = @plan1.invoices.last

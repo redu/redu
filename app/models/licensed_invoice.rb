@@ -16,8 +16,10 @@ class LicensedInvoice < Invoice
   aasm_initial_state :open
 
   aasm_state :open
-  aasm_state :pending, :enter => [:calculate_amount!, :create_next_invoice,
-                                  :set_licenses_period_end, :send_pending_notice]
+  aasm_state :pending, :after_enter => [:calculate_amount!, :create_next_invoice,
+                                        :mark_as_paid_if_necessary,
+                                        :set_licenses_period_end,
+                                        :send_pending_notice]
   aasm_state :paid, :after_enter => [:register_time,
                                      :send_confirmation_and_unlock_plan]
   aasm_state :overdue, :enter => :send_overdue_notice
@@ -62,6 +64,7 @@ class LicensedInvoice < Invoice
   def create_next_invoice
     new_invoice = super
     self.replicate_licenses_to(new_invoice)
+    new_invoice
   end
 
 
@@ -99,6 +102,11 @@ class LicensedInvoice < Invoice
     amount = (self.plan.price / days_of_month) *
       (self.period_end - self.period_start + 1) * self.licenses.payable.count
     self.update_attributes(:amount => amount)
+  end
+
+  # Marca invoice recém pendente como pago, caso possua total < 0
+  def mark_as_paid_if_necessary
+    self.pay! if self.total <= 0
   end
 
   # Duplica todas as licenças em uso para o invoice passado como parâmetro
