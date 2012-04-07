@@ -117,6 +117,7 @@ GEM
     ckeditor (3.4.2.pre)
       mime-types (>= 1.16)
     closure-compiler (1.1.1)
+    cocaine (0.2.1)
     columnize (0.3.2)
     crack (0.1.8)
     css_parser (1.2.5)
@@ -198,9 +199,11 @@ GEM
       omniauth (~> 1.0)
     open4 (1.0.1)
     pagseguro (0.1.12)
-    paperclip (2.3.11)
+    paperclip (2.7.0)
       activerecord (>= 2.3.0)
       activesupport (>= 2.3.2)
+      cocaine (>= 0.0.2)
+      mime-types
     polyglot (0.3.2)
     premailer (1.7.3)
       css_parser (>= 1.1.9)
@@ -341,7 +344,7 @@ DEPENDENCIES
   omniauth
   omniauth-facebook
   pagseguro (~> 0.1.10)
-  paperclip
+  paperclip (~> 2.7)
   pusher
   rails (= 3.0.10)
   rails-footnotes (>= 3.7.5.rc4)

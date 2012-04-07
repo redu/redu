@@ -1,11 +1,10 @@
 class Document < ActiveRecord::Base
-  has_ipaper_and_uses 'Paperclip'
   has_attached_file :attachment, Redu::Application.config.paperclip_documents
+  has_ipaper_and_uses 'Paperclip', :on => :attachment_post_proccess
   validates_attachment_content_type :attachment,
     :content_type => Redu::Application.config.mimetypes['documents']
 
   has_one :lecture, :as => :lectureable
-  after_post_process :try_to_upload
 
   # Verifica se o curso tem espaço suficiente para o arquivo
   def can_upload_document?(lecture)
