@@ -126,6 +126,7 @@ class LecturesController < BaseController
           lectureable.convert! if lectureable.need_transcoding?
         elsif lectureable.is_a? Document
           authorize! :upload_document, @lecture
+          lectureable.upload_to_scribd if lectureable.need_uploading?
         end
 
         @space.course.quota.try(:refresh!)

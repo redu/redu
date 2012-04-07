@@ -27,8 +27,4 @@ class Document < ActiveRecord::Base
     !(self.conversion_processing? or self.conversion_complete?)
   end
 
-  def try_to_upload
-    upload_to_scribd if need_uploading?
-  end
-
 end
