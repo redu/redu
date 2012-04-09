@@ -67,7 +67,10 @@ class Ability
       # Ter acesso ao 'Ensine', só usuários logados
       can :teach_index, :base
 
-      # Somente usuários logados acessam a página de criar apps Oauth
+      # Autorizar apps OAuth
+      can :authorize_oauth, :base
+
+      # Somente usuários parceiros e  admin gerenciam apps OAuth
       can :manage, :client_applications do
         !user.partners.empty? || user.admin?
       end
