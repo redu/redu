@@ -7968,3 +7968,38 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 /* FIM botão convidar amigos */
 
 /* início agrupar-mural */
+
+#statuses .post-grouped {
+  width: 410px;
+  overflow: hidden;
+  margin-left: 35px;
+  margin-top: 10px;
+}
+
+#statuses .post-grouped .status-content {
+  margin: 0px;
+}
+
+#statuses .post-grouped .show-more {
+  display: block;
+  clear: both;
+  float: right;
+  margin-top: 10px;
+  margin-right: 8px;
+}
+
+#statuses .status .status-context .post-grouped-discipline {
+  float: none;
+}
+
+#statuses #status-18748 .status .status-log {
+  padding-top: 10px;
+}
+
+#statuses #status-11859 .post-grouped-courses .status-info {
+  margin-left: 10px;
+}
+
+#statuses .status {
+  overflow: hidden;
+}
