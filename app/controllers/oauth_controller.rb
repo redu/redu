@@ -3,7 +3,7 @@ class OauthController < ApplicationController
   include OAuth::Controllers::ProviderController
 
   def login_required
-    authorize! :manage, :client_applications
+    authorize! :authorize_oauth, :base
   end
 
   protected
