@@ -1,6 +1,6 @@
 class Document < ActiveRecord::Base
-  has_ipaper_and_uses 'Paperclip'
   has_attached_file :attachment, Redu::Application.config.paperclip_documents
+  has_ipaper_and_uses 'Paperclip'
   validates_attachment_content_type :attachment,
     :content_type => Redu::Application.config.mimetypes['documents']
 
@@ -25,6 +25,10 @@ class Document < ActiveRecord::Base
 
   def need_uploading?
     !(self.conversion_processing? or self.conversion_complete?)
+  end
+
+  def upload_to_scribd
+    super if persisted?
   end
 
 end
