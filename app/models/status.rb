@@ -50,6 +50,13 @@ class Status < ActiveRecord::Base
     end
   end
 
+  def self.associate_with(status, users)
+    associations = users.collect(&:id).collect do |u_id|
+      StatusUserAssociation.new(:user_id => u_id, :status_id => status.id)
+    end
+    StatusUserAssociation.import(associations)
+  end
+
   def answers_ids(id)
     answers.where("user_id = ?", id).collect{ |answer| answer.id }
   end
