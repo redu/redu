@@ -4924,12 +4924,12 @@ table.concave-invitation-table .cell-reinvite .reinvited {
 
 .friends-invitations .concave-invitation-table .cell-reinvite .reinvite {
   display: block;
-  text-align: center;
+  text-align: right;
 }
 
 .friends-invitations .concave-invitation-table .cell-reinvite .reinvited {
   display: block;
-  text-align: center;
+  text-align: right;
 }
 
 #course-manage .invitation-list input[type="submit"].concave-remove {

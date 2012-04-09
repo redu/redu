@@ -28,12 +28,14 @@ class FriendshipsController < BaseController
     respond_to do |format|
       format.html do
         if params.has_key? :goto_home
+          redirect_to home_user_path(current_user)
+        elsif params.has_key? :goto_invitations
           if params[:emails].to_s.strip != "" || params[:friend_id].to_s.strip != ""
             flash[:notice] = "Convites enviados com sucesso."
           else
             flash[:error] = "Nenhum convite para ser enviado."
           end
-          redirect_to home_user_path(current_user)
+          redirect_to new_user_friendship_path(current_user)
         else
           redirect_to user_path(@friend)
         end
