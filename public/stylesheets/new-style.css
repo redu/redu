@@ -7666,9 +7666,13 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .new-post .preview-link {
   width: 100px;
   height: 75px;
-  background-color: blue;
   float: left;
   text-indent: -9999px;
+}
+
+.new-post .thumbnail img {
+  display: block;
+  width: 100%;
 }
 
 .new-post .thumbnail{
