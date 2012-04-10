@@ -12,7 +12,7 @@ module AnswerRepresenter
   end
 
   link :statusable do
-    if statusable.is_a?(User) || statusable.is_a?(Space) || statusable.is_a?(Lecture)
+    if statusable.is_a?(User) || statusable.is_a?(Space) || statusable.is_a?(Lecture) || statusable.is_a?(Answer)
       polymorphic_url([:api, self.statusable])
     end
   end

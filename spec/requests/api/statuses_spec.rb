@@ -133,13 +133,6 @@ describe "Statuses" do
       parse(response.body).count.should == @user_statuses.length
     end
 
-    # teste está repetido com o anterior
-    it "should return correct numbers of statuses (help)" do
-      get "/api/users/#{@user.id}/statuses", :type => "help",
-        :oauth_token => @token, :format => 'json'
-      parse(response.body).count.should == 4
-    end
-
     it "should filter by status type (help)" do
       get "/api/users/#{@user.id}/statuses", :type => "help",
         :oauth_token => @token, :format => 'json'
@@ -173,30 +166,43 @@ describe "Statuses" do
 
   context "when listing on Space" do
     before do
-      #FIXME Inicializar e salvar statuses de vários tipos, como no contexto anterior
       @space = Factory(:space)
+      @space_statuses = 3.times.collect do 
+        [ Factory(:help, :statusable => @space),
+          Factory(:activity, :statusable => @space),
+          Factory(:log, :statusable => @space) ]
+      end.flatten
+      3.times.each do
+        Factory(:help)
+        Factory(:activity)
+        Factory(:log)
+      end
     end
 
     it "should return code 200" do
-      get "/api/spaces/#{@space.id}/statuses", :oauth_token => @token, :format => 'json'
+      get "/api/spaces/#{@space.id}/statuses", :oauth_token => @token, 
+        :format => 'json'
       response.code.should == "200"
     end
 
-    #FIXME falso positivo. a lista retornada está vazia e o .all? retorna true para esse caso
+    it "should return correct numbers statuses" do
+      get "/api/spaces/#{@space.id}/statuses", :oauth_token => @token,
+        :format => 'json'
+      parse(response.body).count.should == @space_statuses.length
+    end
+
     it "should filter by status type (help)" do
       get "/api/spaces/#{@space.id}/statuses", :type => 'help',
         :oauth_token => @token, :format => 'json'
       parse(response.body).all? { |s| s["type"] == "Help" }.should be
     end
 
-    #FIXME falso positivo. a lista retornada está vazia e o .all? retorna true para esse caso
     it "should filter by status type (log)" do
       get "/api/spaces/#{@space.id}/statuses", :type => 'log',
         :oauth_token => @token, :format => 'json'
       parse(response.body).all? { |s| s["type"] == "Log" }.should be
     end
 
-    #FIXME falso positivo. a lista retornada está vazia e o .all? retorna true para esse caso
     it "should filter by status type (activity)" do
       get "/api/spaces/#{@space.id}/statuses", :type => 'activity',
         :oauth_token => @token, :format => 'json'
@@ -206,8 +212,17 @@ describe "Statuses" do
 
   context "when listing Lectures" do
     before do
-      #FIXME Inicializar e salvar statuses de vários tipos, como no contexto anterior
       @lecture = Factory(:lecture)
+      @lecture_statuses = 3.times.collect do
+        [ Factory(:help, :statusable => @lecture),
+          Factory(:activity, :statusable => @lecture),
+          Factory(:log, :statusable => @lecture) ]
+      end.flatten
+      4.times.each do
+        Factory(:help)
+        Factory(:activity)
+        Factory(:log)
+      end
     end
 
     it "should return code 200" do
@@ -216,21 +231,24 @@ describe "Statuses" do
         response.code.should == "200"
     end
 
-    #FIXME falso positivo. a lista retornada está vazia e o .all? retorna true para esse caso
+    it "should return correct numbers statuses" do
+      get "/api/lectures/#{@lecture.id}/statuses", :oauth_token => @token,
+        :format => 'json'
+      parse(response.body).count.should == @lecture_statuses.length
+    end
+
     it "should filter by status type (help)" do
       get "/api/lectures/#{@lecture.id}/statuses", :type => 'help' ,
         :oauth_token => @token, :format => 'json'
       parse(response.body).all? { |s| s["type"] == "Help" }.should be
     end
 
-    #FIXME falso positivo. a lista retornada está vazia e o .all? retorna true para esse caso
     it "should filter by status type (log)" do
       get "/api/lectures/#{@lecture.id}/statuses", :type => 'log' ,
         :oauth_token => @token, :format => 'json'
       parse(response.body).all? { |s| s["type"] == "Log" }.should be
     end
 
-    #FIXME falso positivo. a lista retornada está vazia e o .all? retorna true para esse caso
     it "should filter by status type (activity)" do
       get "/api/lectures/#{@lecture.id}/statuses", :type => 'activity',
         :oauth_token => @token, :format => 'json'
@@ -258,8 +276,15 @@ describe "Statuses" do
 
       get href_to("statusable", parse(response.body)), :oauth_token => @token,
         :format => 'json'
-      #FIXME testar se a entidade retornada (statusable) é um user
       response.code.should == "200"
+    end
+
+    it "should return statusable user" do
+      post "/api/users/#{@user.id}/statuses", @params
+
+      get href_to("statusable", parse(response.body)), :oauth_token => @token,
+        :format => 'json'
+      parse(response.body)["first_name"].should == @user.first_name
     end
 
     it "should create an activity" do
@@ -323,7 +348,6 @@ describe "Statuses" do
 
     it "should return status 404 when does not exist" do
       delete "/api/statuses/007", :oauth_token => @token, :format => 'json'
-
       response.status.should == 404
     end
   end
@@ -346,9 +370,15 @@ describe "Statuses" do
 
       get href_to("statusable", parse(response.body)), :oauth_token => @token,
         :format => 'json'
-
-      #FIXME testar se a entidade retornada (statusable) é um space
       response.code.should == "200"
+    end
+
+    it "should return statusable space" do
+      post "/api/spaces/#{@space.id}/statuses", @params
+
+      get href_to("statusable", parse(response.body)), :oauth_token => @token,
+        :format => 'json'
+      parse(response.body)['name'].should == @space.name
     end
 
     it "should create an activity" do
@@ -365,8 +395,7 @@ describe "Statuses" do
     end
   end
 
-  context "when creating status on lecture" do
-    #FIXME você poderia dividir em 2 context, um p/ help e um p/ activity
+  context "when creating status on lecture type (Activity)" do
     before do
       @lecture = Factory(:lecture)
       @params = { 'status' => { :text => "Lacture Ximbica" },
@@ -377,8 +406,18 @@ describe "Statuses" do
       @params['status'][:type] = "Activity"
       post "/api/lectures/#{@lecture.id}/statuses", @params
 
-      #FIXME testar se a entidade retornada (statusable) é um lecture
+      #FIXME Refatorar se necessario informat o tipo em post para lecture
       response.code.should == "201"
+    end
+
+    it "should return correct statusable lecture" do
+      @params['status'][:type] = "Activity"
+      post "/api/lectures/#{@lecture.id}/statuses", @params
+      
+      get href_to("statusable", parse(response.body)), :oauth_token => @token, 
+        :format => 'json'
+
+      parse(response.body)['lecture']['name'].should == @lecture.name
     end
 
     it "should create an activity" do
@@ -388,14 +427,13 @@ describe "Statuses" do
       parse(response.body)["type"].should == "Activity"
     end
 
-    it "should create status with the corret statusable when type activity" do
+    it "should return correct statusable" do
       @params['status'][:type] = "activity"
       post "/api/lectures/#{@lecture.id}/statuses", @params
 
       get href_to("statusable", parse(response.body)), :oauth_token => @token,
         :format => 'json'
-      #FIXME testar se a entidade retornada (statusable) é um activity
-      response.code.should == "200"
+      parse(response.body)['lecture']['name'].should == @lecture.name
     end
 
     it "should create an activity when there is not type" do
@@ -403,6 +441,14 @@ describe "Statuses" do
       post "/api/lectures/#{@lecture.id}/statuses", @params
 
       parse(response.body)["type"].should == "Activity"
+    end
+  end
+  
+  context "when creating status on lecture type (Help)" do
+    before do
+      @lecture = Factory(:lecture)
+      @params = { 'status' => { :text => "Lacture Ximbica" },
+        :oauth_token => @token, :format => 'json' }
     end
 
     it "should create a status with the lecture type help and return 201" do
@@ -419,7 +465,7 @@ describe "Statuses" do
       parse(response.body)["type"].should == "Help"
     end
 
-    it "should create status with the corret statusable when type help" do
+    it "should return statusable" do
       @params['status'][:type] = "help"
       post "/api/lectures/#{@lecture.id}/statuses", @params
 
@@ -483,7 +529,19 @@ describe "Statuses" do
 
       response.code.should == "422"
     end
+    
+    it "should return correct statusable" do
+      @activity = Factory(:activity)
+      post "/api/statuses/#{@activity.id}/answers", @params
+      puts parse(response.body)['links']
+      get href_to("statusable", parse(response.body)), :oauth_token => @token,
+        :format => 'json'
 
+      response.code.should == "200"
+    end
+    
+    it "should return corret in_response_to" do
+    end
     #FIXME testar se o statusable e o in_response_to são o que vc espera
   end
 

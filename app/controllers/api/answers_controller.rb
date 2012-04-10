@@ -64,3 +64,15 @@ module Api
 
   end
 end
+
+#      @status = Status.find(params[:status_id])
+#      if @status.is_a?(Activity) || @status.is_a?(Help)
+#        @answer = Answer.new(params[:status]) do |e|
+ #         @activity = Activity.find(:status_id)
+  #        debugger
+  #        e.statusable = @activity
+  #        e.in_response_to = @activity
+  #        e.user = current_user
+   #       e.save
+   #     end
+   #   end
