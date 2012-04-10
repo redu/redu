@@ -286,10 +286,28 @@
           <%= time_ago_in_words item.created_at %>
         </span>
       </div>
-      <div class="status-message">
-        <p>
-          <%= raw auto_link(h(item.text).gsub(/\n/, '</br>')) %>
-        </p>
+      <div class="responses-preview new-post vis-new-post">
+        <span class="comment-title">
+          <%= raw auto_link(h(item.text).gsub(/\n/, '</br>'))%>
+        </span>
+        <% if item.status_resources.first %>
+          <% if item.status_resources.first.thumb_url %>
+            <div class="thumbnail">
+              <span class="preview-link">
+                <%= image_tag(item.status_resources.first.thumb_url) %>
+              </span>
+            </div>
+          <% end %>
+          <div class="description">
+            <h2 class="title">
+              <%= link_to item.status_resources.first.title, item.status_resources.first.link %>
+            </h2>
+            <h3 class="link">
+              <%= link_to item.status_resources.first.provider, item.status_resources.first.provider %>
+            </h3>
+            <p>item.status_resources.first.description</p>
+          </div>
+        <% end %>
       </div>
       <ul class="actions clearfix">
         <% if can? :respond, item %>

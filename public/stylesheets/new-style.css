@@ -2034,6 +2034,7 @@ body {
 
 
 .statuses ol .responses,
+.statuses ol .responses-preview,
 .statuses ol .create-response {
   margin-left: 37px;
   background: #F0F0F0 url("../images/new/gray-nipple.png") no-repeat left top;
@@ -2201,7 +2202,8 @@ body {
 }
 
 .statuses .status-log .create-response,
-.statuses .status-log .responses {
+.statuses .status-log .responses-preview,
+.statuses .status-log .responses  {
   margin-left: 37px;
 }
 
@@ -7815,6 +7817,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   width: 32px;
 }
 
+.responses-preview .comment-title,
 .responses .comment-title {
   margin: 3px 0px;
   display: block;

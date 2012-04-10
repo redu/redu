@@ -79,7 +79,7 @@ $(document).ready(function(){
     //next thumbnail
     $('.thumbnail span').click(function(){
       if($(this).hasClass('remove')){
-        $('.thumbnail').fadeOut();
+        $('fieldset .thumbnail').fadeOut();
       } else if($(this).hasClass('next')) {
         updateThumbnail(thumbnail_list, true);
       } else if($(this).hasClass('last')) {
