@@ -8,6 +8,11 @@ class StatusesController < BaseController
 
     @status.user = current_user
 
+    if(params[:resource])
+      @status_resource = StatusResource.create(params[:resource])
+      @status.status_resources << @status_resource
+    end
+
     respond_to do |format|
       if @status.save
         format.html { redirect_to :back }

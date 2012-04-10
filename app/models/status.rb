@@ -7,7 +7,7 @@ class Status < ActiveRecord::Base
     :include => [:user]
   has_many :users, :through => :status_user_associations
   has_many :status_user_associations, :dependent => :destroy
-  has_many :status_resource, :dependent => :destroy
+  has_many :status_resources, :dependent => :destroy
 
   scope :activity_by_user, lambda { |u|
     where("type = ? AND user_id = ?", "Activity", u) }
@@ -21,7 +21,7 @@ class Status < ActiveRecord::Base
       .order("updated_at DESC")
   }
 
-  # Não utilizar o recent em consultas sem include e posteriomente,
+  # Não utilizar o recent em consultas sem include e posteriormente,
   # na view, fazer as consultas
   scope :recent_from_hierarchy, lambda { |c|
     where(build_conditions(c)).where('created_at > ?', 1.week.ago)

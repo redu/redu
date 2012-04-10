@@ -4,7 +4,7 @@ describe Status do
   it { should belong_to(:statusable) }
   it { should have_many(:users).through(:status_user_associations) }
   it { should have_many(:status_user_associations).dependent(:destroy) }
-  it { should have_many(:status_resource) }
+  it { should have_many(:status_resources) }
 
   context "scopes" do
     before do

@@ -47,7 +47,7 @@ $(document).ready(function(){
       }
 
       //Adiciona input com thumbnail caso exita thumbnail
-      resource_inputs = resource_inputs + appendInput("thumbnail", thumbnail_list[0]);
+      resource_inputs = resource_inputs + appendInput("thumb_url", thumbnail_list[0]);
       thumbnail_content = '<div class="thumbnail">'+
         '<span class="preview-link">'+
         '<img id="thumbnail-0" src="'+thumbnail_list[0] +'"/>"</span>'+
