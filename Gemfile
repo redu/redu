@@ -50,8 +50,7 @@ gem 'roar-rails', '~> 0.0.3',
 gem 'eventmachine'
 gem 'em-http-request'
 gem 'delayed_job_active_record',
-  :git => 'git://github.com/guiocavalcanti/delayed_job_active_record.git',
-  :branch => 'issue-10'
+  :git => 'git://github.com/collectiveidea/delayed_job_active_record.git'
 gem 'daemons'
 gem 'activerecord-import'
 gem 'aws-sdk'
