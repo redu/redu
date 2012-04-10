@@ -11,7 +11,6 @@ class StatusObserver < ActiveRecord::Observer
       Delayed::Job.enqueue \
         HierarchyStatusesJob.new(status.id, course.id)
 
-      debugger
       # Used to send information to vis application
       unless status.type == "Log"
         options = {
