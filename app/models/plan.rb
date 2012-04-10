@@ -96,7 +96,8 @@ class Plan < ActiveRecord::Base
                          0
                        elsif !self.invoice.paid?
                          self.invoice.close!
-                         self.invoice.total
+                         self.invoice.total / self.invoice.total_days *
+                           (Date.yesterday - self.invoice.period_start + 1)
                        else # Se já estiver pago
                          balance = if self.invoice.total < 0
                                      # Valor já entra como desconto
@@ -105,7 +106,8 @@ class Plan < ActiveRecord::Base
                                      # Valor convertido para desconto
                                      - self.invoice.total
                                    end
-                         balance
+                         balance / self.invoice.total_days *
+                           (Date.yesterday - self.invoice.period_start + 1)
                        end
 
     opts = {

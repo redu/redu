@@ -99,8 +99,8 @@ class LicensedInvoice < Invoice
   def calculate_amount!
     days_of_month = self.period_end.end_of_month.day.to_f
     # Preço diário * # de dias usados * # de licenças pagáveis utilizadas
-    amount = (self.plan.price / days_of_month) *
-      (self.period_end - self.period_start + 1) * self.licenses.payable.count
+    amount = (self.plan.price / days_of_month) * self.total_days *
+      self.licenses.payable.count
     self.update_attributes(:amount => amount)
   end
 

@@ -51,6 +51,10 @@ class Invoice < ActiveRecord::Base
     }})
   end
 
+  def total_days
+    (self.period_end - self.period_start + 1).to_i
+  end
+
   protected
 
   # Marca o horário em que o pagamento foi feito

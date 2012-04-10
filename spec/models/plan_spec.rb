@@ -205,7 +205,9 @@ describe Plan do
 
     context "when upgrading" do
       before do
-        subject.invoice = Factory(:package_invoice)
+        subject.invoice = Factory(:package_invoice,
+                                  :period_start => Date.today - 15.days,
+                                  :period_end => Date.today + 15.days)
         @billable = subject.billable
 
         @new_plan = Factory.build(:active_package_plan, :price => 25.40)
@@ -242,7 +244,9 @@ describe Plan do
         before do
           subject.update_attribute(:price, 2)
           subject.invoice = Factory(:licensed_invoice, :state => "open",
-                                    :previous_balance => -4)
+                                    :previous_balance => -4,
+                                    :period_start => Date.today - 15.days,
+                                    :period_end => Date.today + 15.days)
           (1..10).each { Factory(:license, :invoice => subject.invoice)}
         end
 
@@ -262,7 +266,9 @@ describe Plan do
       context "when last invoice is pending" do
         before do
           subject.invoice = Factory(:package_invoice, :state => "pending",
-                                    :amount => 15.9, :previous_balance => 2)
+                                    :amount => 15.9, :previous_balance => 2,
+                                    :period_start => Date.today - 15.days,
+                                    :period_end => Date.today + 15.days)
         end
 
         it "should change last invoice to closed" do
@@ -281,7 +287,9 @@ describe Plan do
       context "when last invoice is paid" do
         before do
           subject.invoice = Factory(:package_invoice, :state => "paid",
-                                    :amount => 10, :previous_balance => 3)
+                                    :amount => 10, :previous_balance => 3,
+                                    :period_start => Date.today - 15.days,
+                                    :period_end => Date.today + 15.days)
         end
 
         it "should maintain last invoice as paid" do
@@ -291,9 +299,15 @@ describe Plan do
         end
 
         it "should have a discount on new invoice" do
+          @qtt_days = subject.invoice.total_days
+
           subject.migrate_to @new_plan
+
+          @qtt_used_days = subject.invoice.total_days
+          discount = - subject.invoice.total / @qtt_days * @qtt_used_days
+
           @new_plan.invoice.previous_balance.should be < 0
-          @new_plan.invoice.previous_balance.should == - subject.invoice.total
+          @new_plan.invoice.previous_balance.should == discount.round(2)
         end
       end
 
@@ -318,7 +332,9 @@ describe Plan do
 
     context "when downgrading" do
       before do
-        subject.invoice = Factory(:package_invoice)
+        subject.invoice = Factory(:package_invoice,
+                                  :period_start => Date.today - 15.days,
+                                  :period_end => Date.today + 15.days)
         @billable = subject.billable
 
         @new_plan = Factory.build(:active_package_plan, :price => 10.70)
@@ -328,47 +344,68 @@ describe Plan do
         before do
           subject.update_attribute(:price, 2)
           subject.invoice = Factory(:licensed_invoice, :state => "open",
-                                    :previous_balance => -100)
+                                    :previous_balance => -100,
+                                    :period_start => Date.today - 15.days,
+                                    :period_end => Date.today + 15.days)
           (1..10).each { Factory(:license, :invoice => subject.invoice)}
+
+          @qtt_days = subject.invoice.total_days
           subject.migrate_to @new_plan
+          @qtt_used_days = subject.invoice.total_days
         end
 
         it "should have a discount on new invoice" do
+          subject.invoice.send(:calculate_amount!)
+          discount = subject.invoice.total
+
           @new_plan.invoice.previous_balance.should be < 0
-          @new_plan.invoice.previous_balance.should == subject.invoice.total
+          @new_plan.invoice.previous_balance.should == discount.round(2)
         end
       end
 
       context "when last invoice is pending and total is less than zero" do
         before do
           subject.invoice = Factory(:package_invoice, :state => "pending",
-                                    :previous_balance => -200)
+                                    :previous_balance => -200,
+                                    :period_start => Date.today - 15.days,
+                                    :period_end => Date.today + 15.days)
+          @qtt_days = subject.invoice.total_days
           subject.migrate_to @new_plan
+          @qtt_used_days = subject.invoice.total_days
         end
 
         it "should have a discount on new invoice" do
+          discount = subject.invoice.total / @qtt_days * @qtt_used_days
+
           @new_plan.invoice.previous_balance.should be < 0
-          @new_plan.invoice.previous_balance.should == subject.invoice.total
+          @new_plan.invoice.previous_balance.should == discount.round(2)
         end
       end
 
       context "when last invoice is paid and total is less than zero" do
         before do
           subject.invoice = Factory(:package_invoice, :state => "paid",
-                                    :previous_balance => -200)
+                                    :previous_balance => -200,
+                                    :period_start => Date.today - 15.days,
+                                    :period_end => Date.today + 15.days)
+          @qtt_days = subject.invoice.total_days
           subject.migrate_to @new_plan
+          @qtt_used_days = subject.invoice.total_days
         end
 
         it "should have a discount on new invoice" do
+          discount = subject.invoice.total / @qtt_days * @qtt_used_days
           @new_plan.invoice.previous_balance.should be < 0
-          @new_plan.invoice.previous_balance.should == subject.invoice.total
+          @new_plan.invoice.previous_balance.should == discount.round(2)
         end
       end
     end
 
     context "when new plan is licensed" do
       before do
-        subject.invoice = Factory(:package_invoice)
+        subject.invoice = Factory(:package_invoice,
+                                  :period_start => Date.today - 15.days,
+                                  :period_end => Date.today + 15.days)
         subject.billable = Factory(:environment, :owner => subject.user)
         (1..5).collect do
           c = Factory(:course, :environment => subject.billable)

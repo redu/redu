@@ -73,4 +73,10 @@ describe Invoice do
                               :previous_balance => 10)
     subject.total.should == BigDecimal.new("55")
   end
+
+  it "should return the total of days" do
+    subject.period_start = Date.today
+    subject.period_end = Date.today + 15.days
+    subject.total_days.should == 16
+  end
 end
