@@ -23,6 +23,19 @@ describe UserObserver do
     end
   end
 
+  context "OAuth AccessToken" do
+    it "creates an AccessToken for the user" do
+      ActiveRecord::Observer.with_observers(:user_observer) do
+        application = Factory(:client_application)
+        user = Factory(:user)
+        expect {
+          user.score = 10
+          user.save
+        }.should change(AccessToken, :count).by(1)
+      end
+    end
+  end
+
   context "Redu Course" do
     it "associates to Redu environment" do
       ActiveRecord::Observer.with_observers(:user_observer) do
