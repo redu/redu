@@ -19,11 +19,11 @@ describe StatusesController do
         UserSession.create @author
 
         @params = {
-          :status => {:statusable_type => "User", 
-                      :text => "Lorem ipsum dolor sit amet, consectetur" + 
-                               "magna aliqua. Ut enim ad minim veniam," + 
-                               "quis nostrud exercitation", 
-                      :statusable_id => @statusable.id, 
+          :status => {:statusable_type => "User",
+                      :text => "Lorem ipsum dolor sit amet, consectetur" +
+                               "magna aliqua. Ut enim ad minim veniam," +
+                               "quis nostrud exercitation",
+                      :statusable_id => @statusable.id,
                       :type => "Activity" }, 
           :locale => "pt-BR"
         }
@@ -56,7 +56,6 @@ describe StatusesController do
           @resource = Factory.build(:status_resource)
           @params[:resource] = {
             :provider => @resource.provider,
-            :type => @resource.type,
             :thumb_url => @resource.thumb_url,
             :title => @resource.title,
             :description => @resource.description,
@@ -87,7 +86,7 @@ describe StatusesController do
         # Logando
         UserSession.create @author
 
-          @params = {"status" => {"statusable_type"=>"Lecture", "text"=>"Lorem ipsum dolor sit amet, consectetur magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation", "statusable_id"=> @statusable.id, "type" => "Help" }, "locale" => "pt-BR"}
+        @params = {"status" => {"statusable_type"=>"Lecture", "text"=>"Lorem ipsum dolor sit amet, consectetur magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation", "statusable_id"=> @statusable.id, "type" => "Help" }, "locale" => "pt-BR"}
       end
 
       it "creates successfully" do
@@ -153,6 +152,45 @@ describe StatusesController do
             space_subject_lecture_url(@space, @subject, @lecture)
           post :respond, @params
         }.should change(@help.answers, :count).by(1)
+      end
+    end
+  end
+
+  describe "DELETE destroy" do
+    context "when destroying a status" do
+      before do
+        # Logando
+        activate_authlogic
+        UserSession.create subject.user
+
+        @params = {:id => subject.id, :format => "js", :locale => "pt-BR"}
+      end
+
+      it "destroys successfully" do
+        expect {
+          delete :destroy, @params
+        }.should change(Activity, :count).by(-1)
+      end
+
+      context "that has an associated resource" do
+        before do
+          subject.type = "Activity"
+          @resource = Factory(:status_resource)
+          subject.status_resources << @resource
+          @params = {:id => subject.id, :format => "js", :locale => "pt-BR"}
+        end
+
+        it "should destroys the status successfully" do
+          expect {
+            delete :destroy, @params
+          }.should change(Status, :count).by(-1)
+        end
+
+        it "should destroys the status resource successfully" do
+          expect {
+            delete :destroy, @params
+          }.should change(StatusResource, :count).by(-1)
+        end
       end
     end
   end

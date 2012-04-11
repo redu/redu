@@ -53,10 +53,10 @@ class StatusesController < BaseController
   end
 
   def destroy
-   @status.destroy
-   # Deleta as respostas do Status
-   Status.destroy_all(:in_response_to_id => @status.id,
-                      :in_response_to_type => 'Status')
+  @status.destroy
+  # Deleta as respostas do Status
+  Status.destroy_all(:in_response_to_id => @status.id,
+                     :in_response_to_type => 'Status')
   end
 
 end
