@@ -25,7 +25,7 @@
         <h3 class="form-header">Qual a participação do professor na disciplina?</h3>
           <%= lazy_load(:chart, :jammit => true) do %>
             try{
-              $("#graph-form").before("<div id='teacher-participation-chart'></div>"),
+              $("#graph-form").before("<div id='teacher-participation-chart' class='teacher-participation-chart'></div>"),
               $("#graph-form").submit();
               }catch(e){}
           <% end %>

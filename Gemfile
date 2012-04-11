@@ -7,14 +7,14 @@ gem 'rake', '0.8.7'
 gem 'mysql2', '~> 0.2.1'
 gem 'authlogic'
 gem 'pagseguro', '~> 0.1.10'
-gem 'paperclip'
+gem 'paperclip', '~> 2.7'
 gem 'will_paginate', '~> 3.0.pre2'
 gem 'mime-types'
 gem 'cancan', '~> 1.6.7'
 gem 'aasm', :require => "aasm",
   :git => "git://github.com/rubyist/aasm.git"
 gem 'shuber-sortable'
-gem 'scribd_fu', :git => 'git://github.com/guiocavalcanti/scribd_fu.git'
+gem 'scribd_fu', :git => 'git://github.com/ProtectedMethod/scribd_fu.git'
 gem 'factory_girl_rails'
 gem 'ar_mailer_rails3'
 gem 'active_enum'
@@ -43,14 +43,17 @@ gem 'actionmailer_inline_css',
 gem 'acts_as_tree', '~> 0.1.1'
 gem 'exceptional'
 gem 'awesome_nested_fields'
-
 gem 'omniauth'
 gem 'omniauth-facebook'
-
 gem 'roar-rails', '~> 0.0.3',
   :git => 'git://github.com/apotonick/roar-rails.git'
 gem 'eventmachine'
 gem 'em-http-request'
+gem 'delayed_job_active_record',
+  :git => 'git://github.com/collectiveidea/delayed_job_active_record.git'
+gem 'daemons'
+gem 'activerecord-import'
+gem 'aws-sdk'
 
 # Gems específicos de algum ambiente
 group :development, :test do

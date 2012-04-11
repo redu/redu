@@ -1,8 +1,9 @@
 class UsersController < BaseController
   respond_to :html, :js
 
-  load_and_authorize_resource :except => [:forgot_password,
-    :forgot_username, :resend_activation, :activate, :index],
+  load_and_authorize_resource :except => [:recover_username_password,
+    :recover_username, :recover_password, :resend_activation, :activate,
+    :index],
     :find_by => :login
   load_resource :environment, :only => [:index], :find_by => :path
   load_resource :course, :only => [:index], :find_by => :path,
@@ -235,40 +236,45 @@ class UsersController < BaseController
     redirect_to user_path
   end
 
-  def forgot_password
-    return unless request.post?
-    @user = User.find_by_email(params[:email])
+  def recover_username_password
+    @recover_username = RecoveryEmail.new
+    @recover_password = RecoveryEmail.new
+    render :layout => 'cold'
+  end
 
-    if @user && @user.reset_password
-      UserNotifier.user_reseted_password(@user).deliver
-      @user.save
-
-      # O usuario estava ficando logado, apos o comando @user.save.
-      # Destruindo sessao caso ela exista.
-      if UserSession.find
-        UserSession.find.destroy
+  def recover_username
+    @recover_username = RecoveryEmail.new(params[:recovery_email])
+    if @recover_username.valid?
+      @user = User.find_by_email(@recover_username.email)
+      if @user
+        UserNotifier.user_forgot_username(@user).deliver
+      else # Email não cadastrado no Redu
+        @recover_username.mark_email_as_invalid!
       end
-
-      redirect_to home_path
-      flash[:info] = t :your_password_has_been_reset_and_emailed_to_you
-    else
-      flash[:error] = t :sorry_we_dont_recognize_that_email_address
     end
   end
 
-  def forgot_username
-    return unless request.post?
-    if @user = User.find_by_email(params[:email])
-      UserNotifier.user_forgot_username(@user).deliver
-      redirect_to home_path
-      flash[:info] = t :your_username_was_emailed_to_you
-    else
-      flash[:error] = t :sorry_we_dont_recognize_that_email_address
+  def recover_password
+    @recover_password = RecoveryEmail.new(params[:recovery_email])
+    if @recover_password.valid?
+      @user = User.find_by_email(@recover_password.email)
+
+      if @user.try(:reset_password)
+        UserNotifier.user_reseted_password(@user).deliver
+        @user.save
+
+        # O usuario estava ficando logado, apos o comando @user.save.
+        # Destruindo sessao caso ela exista.
+        if UserSession.find
+          UserSession.find.destroy
+        end
+      else # Email não cadastrado no Redu
+        @recover_password.mark_email_as_invalid!
+      end
     end
   end
 
   def resend_activation
-    return unless request.post?
     if params[:email]
       @user = User.find_by_email(params[:email])
     else

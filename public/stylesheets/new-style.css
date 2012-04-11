@@ -185,6 +185,10 @@ body {
   font-size: .9em;
 }
 
+#content .sidebar .local-nav > li > .session > a {
+  text-decoration: none;
+}
+
 .textshadow #content .sidebar .local-nav > li > .session > a {
   text-shadow: 0px 1px 0px #ffffff;
 }
@@ -392,7 +396,7 @@ body {
 #content .concave-sidebar .total-count .count {
   display: block;
   text-align: center;
-  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-family: museo-slab, "Helvetica Neue", Arial, sans-serif;
   font-weight: 300;
   font-size: 2.1em;
 }
@@ -515,7 +519,7 @@ body {
   display: block;
   float: left;
   margin-bottom: 3px;
-  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-family: museo-slab, "Helvetica Neue", Arial, sans-serif;
   font-weight: 500;
   color: rgb(230, 230, 230);
   font-size: 1.4em;
@@ -523,7 +527,7 @@ body {
 
 #hierarchy-header .parent a,
 #hierarchy-header.management .parent a {
-  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-family: museo-slab, "Helvetica Neue", Arial, sans-serif;
   font-weight: 500;
   color: rgb(179, 179, 179);
 }
@@ -544,6 +548,13 @@ body {
 #hierarchy-header.subject-header .parent a {
   font-family: arial, sans-serif;
   color: rgb(179, 179, 179);
+}
+
+#hierarchy-header .parent a:hover,
+#hierarchy-header.space-header .parent a:hover,
+#hierarchy-header.subject-header .parent a:hover {
+  text-decoration: none;
+  color: rgb(21, 138, 196);
 }
 
 .textshadow #hierarchy-header.space-header .parent a,
@@ -587,11 +598,17 @@ body {
 
 #hierarchy-header .name a,
 #hierarchy-header .space-name {
-  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-family: museo-slab, "Helvetica Neue", Arial, sans-serif;
   font-weight: 500;
   color: rgb(77, 173, 214);
   display: block;
   width: 630px;
+}
+
+#hierarchy-header .name a:hover,
+#hierarchy-header .space-name:hover {
+  color: rgb(21, 138, 196);
+  text-decoration: none;
 }
 
 #space-manage #hierarchy-header .name a,
@@ -613,7 +630,7 @@ body {
 }
 
 #hierarchy-header.subject-header .name a {
-  font-family: museo-sans, helvetica, arial, sans-serif;
+  font-family: museo-sans, "Helvetica Neue", Arial, sans-serif;
   font-weight: 500;
   color: rgb(179, 178, 179);
 }
@@ -625,7 +642,7 @@ body {
 
 #hierarchy-header.subject-header .subject-name a,
 #hierarchy-header.subject-header .lecture-name a {
-  font-family: museo-sans, helvetica, arial, sans-serif;
+  font-family: museo-sans, "Helvetica Neue", Arial, sans-serif;
   font-weight: 500;
 }
 
@@ -642,6 +659,11 @@ body {
   float: right;
   font-size: .9em;
   color: rgb(77, 173, 214);
+}
+
+#hierarchy-header .manage:hover,
+.body.management .manage:hover {
+  color: rgb(21, 138, 196);
 }
 
 .body.management .exit {
@@ -976,7 +998,7 @@ body {
 }
 
 .body .header .title {
-  font-family: museo-sans, helvetica, arial, sans-serif;
+  font-family: museo-sans, "Helvetica Neue", Arial, sans-serif;
   font-weight: 100;
   font-size: 2.1em;
   color: rgb(77, 173, 214);
@@ -995,7 +1017,7 @@ body {
 }
 
 .body .header .detail {
-  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-family: museo-slab, "Helvetica Neue", Arial, sans-serif;
   font-weight: 300;
   font-size: 1.3em;
   color: rgb(179, 179, 179);
@@ -1405,7 +1427,7 @@ body {
 }
 
 .hierarchy-listing .child .name {
-  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-family: museo-slab, "Helvetica Neue", Arial, sans-serif;
   font-weight: 500;
   font-size: 1.3em;
   letter-spacing: .005em;
@@ -1901,7 +1923,6 @@ body {
   padding: 8px 0 8px 0;
   width: 68px;
   height: 12px;
-  color: #4cacd5;
 }
 
 .create-status .concave-form .char-limit,
@@ -1994,10 +2015,6 @@ body {
 
 .statuses {
   font-size: .98em;
-}
-
-.statuses a {
-  color: #4CACD5;
 }
 
 .statuses > ol > li {
@@ -2388,6 +2405,11 @@ body {
   color: rgb(77, 173, 214);
 }
 
+#breadcrumbs li a:hover {
+  color: rgb(21, 138, 196);
+  text-decoration: none;
+}
+
 #breadcrumbs li:first-child {
   margin: 0;
 }
@@ -2488,6 +2510,10 @@ body {
   float: left;
   display: block;
   margin-top: 2px;
+}
+
+#concave-breadcrumbs li a:hover {
+  text-decoration: none;
 }
 
 #concave-breadcrumbs li a:before,
@@ -2732,7 +2758,7 @@ body {
 }
 
 #home .hall,
-#course-invitation .hall {
+#invitation .hall {
   border: 1px solid #B3B2B3;
   padding: 20px;
   background: #F0F0F0 url("../images/new/login-gradient.png") repeat-x;
@@ -2743,14 +2769,14 @@ body {
 }
 
 #home .hall .signup,
-#course-invitation .hall .signup {
+#invitation .hall .signup {
   display: block;
   text-align: center;
   padding: 15px 30px;
 }
 
 #home .hall hr,
-#course-invitation .hall hr {
+#invitation .hall hr {
   border: none;
   border-bottom: 2px dotted #B3B2B3;
   margin-top: 25px;
@@ -3179,7 +3205,7 @@ body {
 .tabs > ul li.ui-state-active a {
   padding-bottom: 10px;
   background-color: white;
-  color: #1788C3;
+  color: rgb(77, 173, 214);
 }
 
 .borderradius .tabs > ul li.ui-state-active a {
@@ -3191,8 +3217,10 @@ body {
   border-top-right-radius: 3px;
 }
 
+.tabs > ul li.ui-state-active a:hover,
 .tabs > ul li a:hover {
-  color: #1788C3;
+  text-decoration: none;
+  color: rgb(21, 138, 196);
 }
 
 .cssgradients .tabs > ul li:hover {
@@ -3271,7 +3299,7 @@ body {
 }
 
 .big-tabs > ul li a {
-  font-family: museo-sans, helvetica, arial, sans-serif;
+  font-family: museo-sans, "Helvetica Neue", Arial, sans-serif;
   font-size: 2.4em;
   font-weight: 100;
   color: rgb(76, 172, 213);
@@ -3299,6 +3327,11 @@ body {
   background-color: white;
   text-indent: 0px;
   width: auto;
+}
+
+.big-tabs > ul li.ui-state-active a:hover {
+  color: rgb(21, 138, 196);
+  text-decoration: none;
 }
 
 .big-tabs .ui-state-default a:before {
@@ -4518,6 +4551,10 @@ table.spaced tr td {
   margin-top: 5px;
 }
 
+#course-manage .teacher-participation-chart {
+  clear: both;
+}
+
 #environment-manage .course-path .course-name,
 #course-manage .course-path .course-name {
   font-family: inherit;
@@ -4781,6 +4818,10 @@ table.spaced tr td {
   width: 390px;
   float: left;
   font-size: .85em;
+}
+
+table.concave-invitation-table {
+  clear: both;
 }
 
 #course-manage table.concave-invitation-table {
@@ -5871,7 +5912,7 @@ div.token-input-dropdown {
 }
 
 #global-courses .courses .audience,
-#course-invitation .course .audience {
+#invitation .course .audience {
   float: left;
 }
 
@@ -5900,15 +5941,15 @@ div.token-input-dropdown {
 
 #global-courses .courses .statistics li,
 #global-courses .courses .audience li,
-#course-invitation .course .statistics li,
-#course-invitation .course .audience li {
+#invitation .course .statistics li,
+#invitation .course .audience li {
   margin-bottom: 3px;
 }
 
 #global-courses .courses .statistics em,
 #global-courses .courses .audience em,
-#course-invitation .course .statistics em,
-#course-invitation .course .audience em {
+#invitation .course .statistics em,
+#invitation .course .audience em {
   font-size: .9em;
   font-style: oblique;
   display: block;
@@ -5918,42 +5959,42 @@ div.token-input-dropdown {
 }
 
 #global-courses .courses .audience em,
-#course-invitation .course .audience em {
+#invitation .course .audience em {
   margin-bottom: 5px;
 }
 
 #global-courses .courses .statistics span,
 #global-courses .courses .audience a,
-#course-invitation .course .statistics span,
-#course-invitation .course .audience a {
+#invitation .course .statistics span,
+#invitation .course .audience a {
   font-size: .9em;
   font-weight: bold;
   color: #6C6D6E;
 }
 
-#course-invitation .logotipo {
+#invitation .logotipo {
   width: 174px;
   height: 237px;
   background: url("../images/new/logotipo-vertical.png") no-repeat;
 }
 
-#course-invitation {
+#invitation {
   margin-top: 20px;
   padding-bottom: 200px;
 }
 
-#course-invitation .invite {
+#invitation .invite {
   float: left;
 }
 
-#course-invitation .salutation {
+#invitation .salutation {
   display: block;
   margin: 35px 0 25px 0;
   font-size: 1.3em;
   color: black;
 }
 
-#course-invitation .course {
+#invitation .course {
   padding: 10px;
   margin-bottom: 10px;
   margin-right: 20px;
@@ -5965,34 +6006,34 @@ div.token-input-dropdown {
   border-radius: 5px;
 }
 
-#course-invitation .course .informations{
+#invitation .course .informations{
   float: left;
   width: 278px;
 }
 
-#course-invitation .course img {
+#invitation .course img {
   float: left;
   margin-right: 10px;
 }
 
-#course-invitation .course .header {
+#invitation .course .header {
   background: url("../images/new/dots.png") repeat-x bottom;
   padding-bottom: 20px;
 }
 
-#course-invitation .course a.environment {
+#invitation .course a.environment {
   display: block;
   font-size: 0.9em;
 }
 
-#course-invitation .course a.name {
+#invitation .course a.name {
   display: block;
   margin: 5px 0;
   font-size: 1.2em;
   color: black;
 }
 
-#course-invitation .course .description {
+#invitation .course .description {
   display: block;
   background: url("../images/new/dots.png") repeat-x bottom;
   padding: 20px 0;
@@ -6001,7 +6042,7 @@ div.token-input-dropdown {
   color: #6D6E6F;
 }
 
-#course-invitation .course .statistics {
+#invitation .course .statistics {
   float: left;
   width: 120px;
 }
@@ -6982,12 +7023,6 @@ div.token-input-dropdown {
   border-radius: 3px;
 }
 
-.question-blue_12_12 {
-  background: url("../images/new/icon-question-blue_12_12.png") no-repeat;
-  padding: 0 6px;
-  cursor: pointer;
-}
-
 .form-common .question-blue_12_12 {
   margin-right: 15px;
 }
@@ -7279,6 +7314,517 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   cursor: -webkit-grabbing;
 }
 
+/* Aqui modifiquei */
+.panel .upgrade-button .concave-important {
+  float: right;
+  width: 150px;
+  height: 32px;
+  font-size: 15px;
+  margin-bottom: 40px;
+}
+
+.panel .upgrade-button .concave-important {
+  width: 70px;
+  padding: 0;
+  height: 30px;
+  float: right;
+}
+
+.borderradius .panel .upgrade-button .concave-important {
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.panel .upgrade-button .concave-important:hover {
+  background: rgb(171,227,133);
+  color: white;
+}
+
+.cssgradients .panel  .concave-important:hover {
+  background: -moz-linear-gradient(top,  rgb(171,227,133) 0%, rgb(97,160,128) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(171,227,133)), color-stop(100%,rgb(97,160,128))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgb(171,227,133) 0%,rgb(97,160,128) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgb(171,227,133) 0%,rgb(97,160,128) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgb(171,227,133) 0%,rgb(97,160,128) 100%); /* IE10+ */
+  background: linear-gradient(top,  rgb(171,227,133) 0%,rgb(97,160,128) 100%); /* W3C */
+}
+
+.boxshadow .panel .upgrade-button {
+  -webkit-box-shadow: inset 1px 1px 0px 0px rgb(171, 227, 133), inset -1px -1px 0px 0px rgb(171,227,133);
+  -moz-box-shadow: inset 1px 1px 0px 0px rgb(171, 227, 133), inset -1px -1px 0px 0px rgb(171,227,133);
+  box-shadow: inset 1px 1px 0px 0px rgb(171, 227, 133), inset -1px -1px 0px 0px rgb(171,227,133);
+}
+
+/* início estilo página fatura */
+
+#invoice-index .panel .call {
+  margin-left: 9px;
+}
+
+.panel .plan-use:before {
+  background-image: url("../images/new/circulos-peq-cinza.png");
+  float: left;
+  content: '';
+  width: 51px;
+  height: 34px;
+  margin-left: -75px;
+  margin-top: -10px;
+}
+
+.panel .plan-use {
+  text-align: center;
+  margin-left: 75px;
+}
+
+.panel .call .environment p {
+  font-family: arial, sans-serif;
+  font-weight: normal;
+  font-size: 12px;
+  color: rgb(179, 179, 179);
+  padding-bottom: 5px;
+}
+
+.panel .call .call-course {
+  font-family: museo-sans, arial ,sans-serif;
+  font-weight: 500;
+  font-size: 17px;
+  color: rgb(179, 179, 179);
+  line-height: 12px;
+  letter-spacing: -1px;
+}
+
+.plan-panel .payments {
+   font-size: 11px;
+}
+
+.plan-panel .payments .data .number {
+  color: rgb(77, 173, 214);
+}
+
+.plan-panel .payments .data .date,
+.plan-panel .payments .data .value {
+  color: rgb(109, 110, 111);
+}
+
+.plan-panel .payments .data .date .bar {
+  color: rgb(204, 204, 204);
+}
+
+.plan-panel .payments .data .arrears {
+  color: rgb(255, 109, 109);
+}
+
+.explanation-sidebar .explanation .arrears {
+    color: rgb(255, 109, 109);
+    font-style: italic;
+}
+
+.explanation-sidebar .explanation .to-expirate {
+  color: rgb(255, 169, 53);
+  font-style: italic;
+}
+
+.plan-panel .payments .data .paid  {
+  color: rgb(95, 192, 128);
+}
+
+.payments .data .icon  {
+  text-indent: -9999px;
+}
+
+.plan-panel table.common tbody tr {
+  border: none;
+}
+
+.plan-panel table.common .box-gray .data td {
+  background-color: #f7f7f7;
+  border-top: 1px solid rgb(179, 179, 179);
+  border-bottom: 1px solid rgb(179, 179, 179);
+}
+
+.borderradius .plan-panel table.common .box-gray .data td:first-child {
+  border-radius: 5px 0px 0px 5px;
+}
+
+.borderradius .plan-panel table.common .box-gray .data td:last-child {
+  border-radius: 0px 5px 5px 0px;
+}
+
+.plan-panel .courses-list,
+.plan-panel .courses-details {
+  font-size: 11px;
+  float: right;
+  clear: both;
+}
+
+.plan-panel .courses-list {
+  margin-bottom: 30px;
+}
+
+.plan-panel .courses-list a,
+.plan-panel .courses-details a {
+  color: rgb(77, 73, 214);
+  font-family: arial, sans-serisf;
+}
+
+.panel .payments .data .pay-status {
+  text-align: center;
+}
+
+.panel .payments .data .pay-status .concave-important {
+  margin-right: 0px;
+  font-size: 12px;
+}
+
+/* Fim estilo página faturas */
+
+/* Início página planos professor */
+.explanation-sidebar .explanation .pag-seguro {
+  text-indent: -9999px;
+}
+
+.explanation-sidebar .explanation .pag-seguro a {
+  background-image: url("../images/new/pagseguro-p.png");
+  text-indent: -9999px;
+  display: block;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  width: 150px;
+  height: 30px;
+}
+
+.plan-panel .options-plan .plans-list .plans .plan {
+  border: solid 1px rgb(204, 204, 204);
+  background: rgb(255,255,255); /* Old browsers */
+  margin-top: -1px;
+  padding: 0 	20px;
+}
+
+.borderradius .plan-panel .options-plan .plans-list .plans .plan {
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.cssgradients .plan-panel .options-plan .plans-list .plans .plan {
+  background: -moz-linear-gradient(top,  rgb(255,255,255) 0%, rgb(240,240,240) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(255,255,255)), color-stop(100%,rgb(240,240,240))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgb(255,255,255) 0%,rgb(240,240,240) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgb(255,255,255) 0%,rgb(240,240,240) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgb(255,255,255) 0%,rgb(240,240,240) 100%); /* IE10+ */
+  background: linear-gradient(top,  rgb(255,255,255) 0%,rgb(240,240,240) 100%); /* W3C */
+}
+
+.plan-panel .options-plan .plans-list .plans .plan {
+  padding-bottom: 10px;
+}
+
+.plan-panel .options-plan .plan-user {
+  font-family: museo-sans, arial, sans-serif;
+  font-weight: 100;
+  font-size: 17px;
+  color: rgb(115, 195, 230);
+  line-height: 14px;
+  margin: 20px 0px;
+  display: block;
+  clear: both;
+  padding-top: 10px;
+}
+
+.options-plan .plans-list .plans .plan .name {
+  font-family: museo-slab, arial, sans-serif;
+  font-weight: 500;
+  font-size: 17px;
+  color: rgb(95, 192, 128);
+  display: block;
+  padding: 5px 0px;
+  text-decoration: none;
+}
+
+.options-plan .plans-list .plans .plan .price {
+  font-family: museo-sans, arial, sans-serif;
+  font-weight: 100;
+  font-size: 17px;
+  color: rgb(95, 192, 128);
+  display: block;
+}
+
+.options-plan .plans-list .plans .plan .a-month,
+.options-plan .plans-list .plans .plan .highlights {
+  font-size: 12px;
+  font-family: arial, sans-serif;
+  font-style: italic;
+  color: rgb(179, 179, 179);
+}
+
+.options-plan .plans-list .plans .plan .plan-limit {
+  font-size: 12px;
+  font-family: arial, sans-serif;
+  font-style: normal;
+  color: rgb(0, 0, 0);
+  padding: 2.5px 0px;
+  display: block;
+  font-weight: bold;
+}
+
+.options-plan .plan-panel .concave-form {
+  width: 580px;
+}
+
+.plan-panel .options-plan .plan-user-call {
+  font-family: arial;
+  font-size: 11px;
+  color: rgb(179, 179, 179);
+}
+
+.textshadow .options-plan .plans-list .plans .plan .plan-limit {
+  text-shadow: 0px 1px 0px rgb(255, 255, 255);
+}
+
+.options-plan .plans-list .call-us .concave-important {
+  margin-right: 28px;
+}
+
+.plan-panel .options-plan .concave-form .columns,
+.plan-panel .options-plan .concave-form .single-column {
+  float: none;
+}
+
+.options-plan .plans-list .your-plan .plans .plan .plan-limit,
+.options-plan .plans-list .your-plan .plans .plan .name {
+  color: rgb(109, 110, 111);
+}
+
+.options-plan .plans-list .your-plan .plans .plan .price {
+  color: rgb(179, 179, 179);
+}
+
+.options-plan .plans-list .your-plan .plans .plan .actual-plan {
+  font-size: 12px;
+  color: rgb(109, 110, 111);
+  font-weight: bold;
+  float: right;
+  margin: 20px 0 0 0;
+}
+/* Fim estilo página plano professor */
+
+/* Início estilo página detalhes fatura */
+.plan-panel .concave-admin-table {
+  width: 580px;
+  margin: 0;
+}
+
+.plan-panel .concave-admin-table .course .environment,
+.plan-panel .concave-admin-table .course .no-pending {
+  font-size: 11px;
+  font-family: arial,sans-serif;
+  font-weight: regular;
+  color: rgb(179, 179, 179);
+}
+
+.plan-panel .concave-admin-table .course .environment .name {
+  font-size: 12px;
+  font-family: arial, sans-serif;
+  font-weight: bold;
+  color: rgb(179, 179, 179);
+}
+
+.plan-panel .concave-admin-table .course .type-user {
+  font-size: 12px;
+  font-family: arial, sans-serif;
+  font-weight: regular;
+  color: rgb(95, 192, 128);
+  padding-left: 120px;
+}
+
+.plan-panel .concave-admin-table .course .pending-user {
+  color: rgb(255, 109, 109);
+}
+
+.plan-panel table.concave-admin-table .label-course .name-course,
+.plan-panel table.concave-admin-table .label-course .category {
+  text-align: left;
+  padding: 10px;
+  color: rgb(204, 204, 204);
+}
+
+.plan-panel table.concave-admin-table .label-course .category {
+  padding-left: 120px;
+}
+
+.textshadow .plan-panel .concave-admin-table .course .type-user {
+  text-shadow: 0px 1px 0px rgb(255, 255, 255);
+}
+/* Fim página detalhe faturas */
+
+/* inicio pré-visualização novo post */
+
+.textshadow .new-post {
+  text-shadow: 0px 1px 0px rgb(255, 255, 255);
+}
+
+.new-post {
+  font-size: 13px;
+  font-family: arial, sans-sefif;
+  font-weight: normal;
+  overflow: hidden;
+}
+
+.vis-new-post {
+  border-top: solid 1px rgb(255, 255, 255);
+  border-bottom: solid 1px rgb(255, 255, 255);
+  overflow: hidden;
+  padding: 10px 10px 15px 10px;
+  margin-top: 20px;
+}
+
+.new-post .close {
+  text-indent: -9999px;
+  width: 16px;
+  float: right;
+  cursor: pointer;
+  height: 18px;
+}
+
+.new-post .title {
+  color: rgb(77, 173, 214);
+  font-weight: normal;
+  margin-bottom: 5px;
+}
+
+.new-post .link {
+  color: rgb(204, 204, 204);
+  font-weight: normal;
+  margin-bottom: 5px;
+}
+
+.new-post .preview-link {
+  width: 100px;
+  height: 75px;
+  background-color: blue;
+  float: left;
+  text-indent: -9999px;
+}
+
+.new-post .thumbnail{
+  clear: both;
+  float: left;
+  overflow: hidden;
+}
+
+.new-post .description {
+  overflow: hidden;
+  padding-left: 10px;
+}
+
+.new-post .thumbnail .last {
+  clear: both;
+}
+
+.new-post .thumbnail .last .arrow {
+  background:  url("../images/new/icons-oembed-nav.png") 0px 0px no-repeat;
+  float: right;
+  height: 10px;
+  margin: 5px 10px;
+  width: 8px;
+}
+
+.new-post .thumbnail .last .arrow:hover {
+  background:  url("../images/new/icons-oembed-nav.png") 0px -20px no-repeat;
+}
+
+.new-post .thumbnail .next .arrow {
+  background:  url("../images/new/icons-oembed-nav.png") -20px 0px no-repeat;
+  float: right;
+  height: 10px;
+  margin: 5px 10px;
+  width: 8px;
+}
+
+.new-post .thumbnail .next .arrow:hover {
+  background:  url("../images/new/icons-oembed-nav.png") -20px -20px no-repeat;
+}
+
+.new-post .thumbnail .remove .arrow {
+  background:  url("../images/new/icons-oembed-nav.png") -40px 0px no-repeat;
+  float: right;
+  height: 10px;
+  margin: 5px 10px;
+  width: 8px;
+}
+
+.new-post .thumbnail .remove .arrow:hover {
+  background:  url("../images/new/icons-oembed-nav.png") -40px -20px no-repeat;
+}
+
+.new-post .thumbnail .last,
+.new-post .thumbnail .next,
+.new-post .thumbnail .remove  {
+  float: left;
+  border: 1px solid rgb(204, 204, 204);
+  width: 28px;
+  height: 22px;
+  text-indent: -9999px;
+  background: rgb(247,247,247); /* Old browsers */
+  margin: 5px 5px 0px 0px;
+  cursor: pointer;
+}
+
+.borderradius .new-post .thumbnail .last,
+.borderradius .new-post .thumbnail .next,
+.borderradius .new-post .thumbnail .remove {
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+}
+.cssgradients .new-post .thumbnail .last,
+.cssgradients .new-post .thumbnail .next,
+.cssgradients .new-post .thumbnail .remove {
+  background: -moz-linear-gradient(top,  rgb(247,247,247) 0%, rgb(230,230,230) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(247,247,247)), color-stop(100%,rgb(230,230,230))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* IE10+ */
+  background: linear-gradient(top,  rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* W3C */
+}
+
+.new-post .thumbnail .last:hover,
+.new-post .thumbnail .next:hover,
+.new-post .thumbnail .remove:hover {
+  border: solid 1px rgb(115, 195, 230);
+  color: rgb(21, 138, 196);
+  background: rgb(30,87,153); /* Old browsers */
+}
+
+.cssgradients .new-post .thumbnail .last:hover,
+.cssgradients .new-post .thumbnail .next:hover,
+.cssgradients .new-post .thumbnail .remove:hover {
+  background: -moz-linear-gradient(top,  rgb(30,87,153) 0%, rgb(247,247,247) 2%, rgb(219,239,247) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(30,87,153)), color-stop(2%,rgb(247,247,247)), color-stop(100%,rgb(219,239,247))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgb(30,87,153) 0%,rgb(247,247,247) 2%,rgb(219,239,247) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgb(30,87,153) 0%,rgb(247,247,247) 2%,rgb(219,239,247) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgb(30,87,153) 0%,rgb(247,247,247) 2%,rgb(219,239,247) 100%); /* IE10+ */
+  background: linear-gradient(top,  rgb(30,87,153) 0%,rgb(247,247,247) 2%,rgb(219,239,247) 100%); /* W3C */
+}
+
+.new-post .java-applet {
+  clear: both;
+  float: left;
+  overflow: hidden;
+  background-color: rgb (192, 128, 64);
+}
+
+.new-post .java-applet .icon {
+  background-image: url("../images/new/icon-applet.png");
+  text-indent: -9999px;
+  width: 32px;
+  height: 34px;
+  display: block;
+  background-repeat: no-repeat;
+  padding: 0px;
+}
+
 #graph-form .inline {
   float: left;
 }
@@ -7289,3 +7835,83 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   overflow: hidden;
   margin-left: 0px;
 }
+
+#statuses .post-link {
+  padding: 0px;
+}
+
+.java-applet .icon {
+  float: none;
+  height: 34px;
+  padding-left: 10px;
+  width: 32px;
+}
+
+.responses .comment-title {
+  margin: 3px 0px;
+  display: block;
+}
+
+.responses .answer-box {
+  float: left;
+  margin-left: 30px;
+  width: 500px;
+}
+
+.responses .new-post, {
+ margin-left: 30px;
+}
+
+/* -- Início notificações lateral esquerda -- */
+
+.local-nav .session .notification {
+  background-color: rgb(230, 230, 230);
+  padding: 3px 3px 2px 3px;
+  color: rgb(77, 173, 214);
+  font-weight: normal;
+  display: inline;
+  margin-left: 10px;
+  font-size: 11px;
+}
+
+.textshadow .local-nav .session .notification {
+  text-shadow: 0px 1px 0px rgb(255, 255, 255);
+}
+
+.borderradius .local-nav .session .notification {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+/* Botão convidar amigos */
+.invite-button {
+  width: 130px;
+  height: 80px;
+  border: solid 1px rgb(21, 138, 196);
+  padding-right: 5px !important;
+  padding-left: 5px !important;
+  margin-left: 15px;
+}
+
+.invite-button .invite-contact_32_50-before:before {
+  display: block;
+  margin: 11px auto 2px;
+}
+
+.borderradius .invite-button {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+
+.boxshadow .invite-button {
+  -webkit-box-shadow: inset 1px 1px 0px 0px rgb(115, 195, 230),inset -1px -1px 0px 0px rgb(115, 195, 230);
+  -moz-box-shadow: inset 1px 1px 0px 0px rgb(115, 195, 230),inset -1px -1px 0px 0px rgb(115, 195, 230);
+  box-shadow: inset 1px 1px 0px 0px rgb(115, 195, 230),inset -1px -1px 0px 0px rgb(115, 195, 230);
+}
+
+/* FIM botão convidar amigos */
+
+/* início agrupar-mural */
+

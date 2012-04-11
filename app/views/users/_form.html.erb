@@ -37,7 +37,7 @@
   <% end %>
 
   <%= f.label :birth_localization, "Cidade onde nasceu:"%>
-  <%= f.text_field :birth_localization %>
+  <%= f.text_field :birth_localization, :placeholder => "Cidade Natal" %>
   <%= concave_errors_for(f.object, :birth_localization) %>
   <span class="tip">Cidade natal</span>
 

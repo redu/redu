@@ -10,8 +10,13 @@ class License < ActiveRecord::Base
   scope :of_course, lambda { |course|
     where(:course_id => course)
   }
-  # Retorna todas as licenças consideradas pagáveis
-  scope :payable, where(:role => Role[:member])
+  # Scopes que precisam ser interpretados em tempo de execução
+  class << self
+    # Retorna todas as licenças consideradas pagáveis
+    def payable
+      where(:role => Role[:member])
+    end
+  end
 
   # Recupera o último license criado e modifica a role passada como parâmetro
   def self.change_role(user, course, role)
