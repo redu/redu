@@ -52,9 +52,9 @@ describe "Statuses" do
       end
     end
 
-    it "should have the correct links (self, user, in_response_to)" do
+    it "should have the correct links (self, user, in_response_to and statusable)" do
       # https://github.com/redu/redu/issues/660
-      %w(self user in_response_to).each do |attr|
+      %w(self user in_response_to statusable).each do |attr|
         get href_to(attr, @entity), :oauth_token => @token, :format => 'json'
         response.code.should == "200"
       end
@@ -72,13 +72,19 @@ describe "Statuses" do
       response.code.should == "200"
     end
 
-    it "should have type, created_at" do
-      %w(type created_at).each do |attr|
-        parse(response.body).should have_key attr
+    it "should have type, created_at and text" do
+      %w(type created_at text).each do |attr|
+        @entity.should have_key attr
       end
     end
 
-    it "should have the correct link to statusable, self, user, logeable" do
+    it "should return correct statusable" do
+      get href_to("statusable", @entity), :oauth_token => @token, 
+        :format => 'json'
+      response.code.should == "200"
+    end
+
+    it "should have the correct link to statusable, self, user and logeable" do
       %w(statusable self user logeable).each do |attr|
         get href_to(attr, @entity), :format => 'json', :oauth_token => @token
         response.code.should == "200"
@@ -99,8 +105,8 @@ describe "Statuses" do
       end
     end
 
-    it "should have a link statusable, self, user" do
-      %w(statusable self user).each do |attr|
+    it "should have a link statusable, self, user and answers" do
+      %w(statusable self user answers).each do |attr|
         get href_to(attr, @entity), :oauth_token => @token, :format => 'json'
         response.code.should == "200"
       end
@@ -129,8 +135,11 @@ describe "Statuses" do
     end
 
     it "should return correct numbers statuses" do
-      get "/api/users/#{@user.id}/statuses",:oauth_token => @token, :format => 'json'
-      parse(response.body).count.should == @user_statuses.length
+      get "/api/users/#{@user.id}/statuses",:oauth_token => @token, 
+        :format => 'json'
+
+      parse(response.body).count.should == @user_statuses.select {|i| i[:type] == 
+        "Activity" or i[:type] == "Help"}.length
     end
 
     it "should filter by status type (help)" do
@@ -139,10 +148,16 @@ describe "Statuses" do
       parse(response.body).all? { |s| s["type"] == "Help" }.should be
     end
 
+    it "should return correct numbers of statuses (Help)" do
+      get "/api/users/#{@user.id}/statuses", :type => "help",
+        :oauth_token => @token, :format => 'json'
+      parse(response.body).count.should == @user_statuses.select {|i| i[:type] == "Help" }.length
+    end
+
     it "should return correct numbers of statuses (Log)" do
       get "/api/users/#{@user.id}/statuses", :type => "log",
         :oauth_token => @token, :format => 'json'
-      parse(response.body).count.should == 4
+      parse(response.body).count.should == @user_statuses.select {|i| i[:type] == "Log" }.length
     end
 
     it "should filter by status type (log)" do
@@ -160,7 +175,7 @@ describe "Statuses" do
     it "should return correct numbers of statuses (Activity)" do
       get "/api/users/#{@user.id}/statuses", :type => 'activity',
         :oauth_token => @token, :format => 'json'
-      parse(response.body).count.should == 4
+      parse(response.body).count.should == @user_statuses.select {|i| i[:type] == "Activity" }.length
     end
   end
 
@@ -188,7 +203,8 @@ describe "Statuses" do
     it "should return correct numbers statuses" do
       get "/api/spaces/#{@space.id}/statuses", :oauth_token => @token,
         :format => 'json'
-      parse(response.body).count.should == @space_statuses.length
+      parse(response.body).count.should == @space_statuses.select {|i| i[:type] ==
+       "Help" or i[:type] == "Activity" }.length
     end
 
     it "should filter by status type (help)" do
@@ -234,7 +250,8 @@ describe "Statuses" do
     it "should return correct numbers statuses" do
       get "/api/lectures/#{@lecture.id}/statuses", :oauth_token => @token,
         :format => 'json'
-      parse(response.body).count.should == @lecture_statuses.length
+      parse(response.body).count.should == 
+        @lecture_statuses.select {|i| i[:type] == "Activity" or i[:type] == "Help" }.length
     end
 
     it "should filter by status type (help)" do
@@ -267,7 +284,6 @@ describe "Statuses" do
 
     it "should return 201" do
       post "/api/users/#{@user.id}/statuses", @params
-
       response.code.should == "201"
     end
 
@@ -361,7 +377,6 @@ describe "Statuses" do
 
     it "should return 201" do
       post "/api/spaces/#{@space.id}/statuses", @params
-
       response.code.should == "201"
     end
 
@@ -405,8 +420,6 @@ describe "Statuses" do
     it "should return 201" do
       @params['status'][:type] = "Activity"
       post "/api/lectures/#{@lecture.id}/statuses", @params
-
-      #FIXME Refatorar se necessario informat o tipo em post para lecture
       response.code.should == "201"
     end
 
@@ -437,7 +450,6 @@ describe "Statuses" do
     end
 
     it "should create an activity when there is not type" do
-      @params['status'][:type] = ""
       post "/api/lectures/#{@lecture.id}/statuses", @params
 
       parse(response.body)["type"].should == "Activity"
@@ -475,6 +487,7 @@ describe "Statuses" do
     end
 
     it "should return 422 when invalid" do
+      @params['status'][:type] = "help"
       @params['status'][:text] = ""
       post "/api/lectures/#{@lecture.id}/statuses", @params
 
@@ -523,26 +536,48 @@ describe "Statuses" do
       response.code.should == "422"
     end
 
-    it "should return 422 when invalid type" do
+    xit "should return 422 when invalid type" do
       @log = Factory(:log) # tipo inválido
       post "/api/statuses/#{@log.id}/answers", @params
-
+      # Deve ser atualizado com authorize
       response.code.should == "422"
     end
     
     it "should return correct statusable" do
       @activity = Factory(:activity)
       post "/api/statuses/#{@activity.id}/answers", @params
-      puts parse(response.body)['links']
+
       get href_to("statusable", parse(response.body)), :oauth_token => @token,
         :format => 'json'
-
       response.code.should == "200"
     end
     
     it "should return corret in_response_to" do
+      @activity = Factory(:activity)
+      post "/api/statuses/#{@activity.id}/answers", @params
+
+      get href_to("in_response_to", parse(response.body)), :oauth_token => @token,
+        :format => 'json'
+      response.code.should == "200"
     end
-    #FIXME testar se o statusable e o in_response_to são o que vc espera
+
+    it "should return correct in_response_to type (Activity)" do
+      @activity = Factory(:activity)
+      post "/api/statuses/#{@activity.id}/answers", @params
+
+      get href_to("in_response_to", parse(response.body)), :oauth_token => @token,
+        :format => 'json'
+      parse(response.body)["type"].should == "Activity"
+    end
+
+    it "should return correct in_response_to type (Help)" do
+      @help = Factory(:help)
+      post "/api/statuses/#{@help.id}/answers", @params
+
+      get href_to("in_response_to", parse(response.body)), :oauth_token => @token,
+        :format => 'json'
+      parse(response.body)["type"].should == "Help"
+    end
   end
 
 end

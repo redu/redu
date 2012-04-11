@@ -1,7 +1,7 @@
 module HelpRepresenter
   include Roar::Representer::JSON
   include Roar::Representer::Feature::Hypermedia
-  
+
   property :id
   property :created_at
   property :type
@@ -20,5 +20,8 @@ module HelpRepresenter
   link :user do
     api_user_url(self.user)
   end
- 
+
+  link :answers do
+    api_status_answers_url(self)
+  end
 end

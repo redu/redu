@@ -5,18 +5,15 @@ module LogRepresenter
 
   property :id
   property :created_at
-  property :type
   property :text
+  property :type
 
   link :self do
     api_status_url self
-    # polymorphic_url([:api, self])
   end
 
   link :statusable do
-    if statusable.is_a?(User) || statusable.is_a?(Space)
-      polymorphic_url([:api, self.statusable])
-    end
+    polymorphic_url([:api, self.statusable])
   end
 
   link :user do
@@ -24,6 +21,6 @@ module LogRepresenter
   end
 
   link :logeable do
-    api_status_url(self)
+    api_user_url(self.logeable)
   end
 end

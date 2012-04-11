@@ -1,7 +1,7 @@
 module AnswerRepresenter
   include Roar::Representer::JSON
   include Roar::Representer::Feature::Hypermedia
-  
+
   property :id
   property :created_at
   property :type
@@ -12,15 +12,17 @@ module AnswerRepresenter
   end
 
   link :statusable do
-    if statusable.is_a?(User) || statusable.is_a?(Space) || statusable.is_a?(Lecture) || statusable.is_a?(Answer)
-      polymorphic_url([:api, self.statusable])
+    if statusable == nil
+      api_status_url(self.statusable)
+    else
+      api_status_url(self.in_response_to)
     end
   end
 
   link :user do
     api_user_url(self.user)
   end
-  
+
   link :in_response_to do
     api_status_url(self.in_response_to)
   end

@@ -1,6 +1,7 @@
 module ActivityRepresenter
   include Roar::Representer::JSON
   include Roar::Representer::Feature::Hypermedia
+
   property :id
   property :created_at
   property :type
