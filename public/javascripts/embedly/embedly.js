@@ -45,7 +45,6 @@ $(document).ready(function(){
       } else {
         thumbnail_list.push(json.thumbnail_url);
       }
-
       //Adiciona input com thumbnail caso exita thumbnail
       resource_inputs = resource_inputs + appendInput("thumb_url", thumbnail_list[0]);
       thumbnail_content = '<div class="thumbnail">'+
@@ -73,13 +72,16 @@ $(document).ready(function(){
 
     //close embedded content
     $('.description span.close.icon-small').click(function(){
-      $('fieldset .new-post.vis-new-post').slideUp();
+      $('fieldset .new-post.vis-new-post').slideUp(function(){
+        $(this).remove();
+      });
     });
 
     //next thumbnail
-    $('.thumbnail span').click(function(){
+    $('fieldset .thumbnail span').click(function(){
       if($(this).hasClass('remove')){
         $('fieldset .thumbnail').fadeOut();
+        $('fieldset input#resource_thumb_url').remove();
       } else if($(this).hasClass('next')) {
         updateThumbnail(thumbnail_list, true);
       } else if($(this).hasClass('last')) {
@@ -93,7 +95,7 @@ $(document).ready(function(){
 });
 
 function updateThumbnail(thumbnail_list, get_next) {
-  var img = $('.thumbnail .preview-link img');
+  var img = $('fieldset .thumbnail .preview-link img');
   var id = img[0].id.split('-')[1];
 
   if(get_next){
@@ -105,8 +107,9 @@ function updateThumbnail(thumbnail_list, get_next) {
   }
   img.attr('src', thumbnail_list[next_id]);
   img.attr('id', 'thumbnail-' + next_id);
+  $('fieldset input#resource_thumb_url').attr('value', thumbnail_list[next_id]);
 }
 
 function appendInput(name, value){
-  return '<input type="hidden" name="resource['+ name + ']" value="'+ value +'"/>';
+  return '<input id="resource_'+ name +'" type="hidden" name="resource['+ name + ']" value="'+ value +'"/>';
 }
