@@ -10,11 +10,31 @@
         há <%= time_ago_in_words response.created_at %>
       </span>
     </div>
-  <div class="status-message">
-    <p>
-      <%= raw auto_link(h(response.text).gsub(/\n/, '</br>')) %>
-    </p>
-  </div>
+    <div class="responses-preview new-post vis-new-post">
+      <span class="comment-title">
+        <%= raw auto_link(h(response.text).gsub(/\n/, '</br>'))%>
+      </span>
+      <% if response.status_resources.first %>
+        <% if response.status_resources.first.thumb_url %>
+          <div class="thumbnail">
+            <span class="preview-link">
+              <%= link_to response.status_resources.first.link, :target => "_blank", :rel => "nofollow" do %>
+                <%= image_tag(response.status_resources.first.thumb_url) %>
+              <% end %>
+            </span>
+          </div>
+        <% end %>
+        <div class="description">
+          <h2 class="title">
+            <%= link_to response.status_resources.first.title, response.status_resources.first.link, :target => "_blank", :rel => "nofollow" %>
+          </h2>
+          <h3 class="link">
+            <%= response.status_resources.first.provider %>
+          </h3>
+          <p><%= response.status_resources.first.description %></p>
+        </div>
+      <% end %>
+    </div>
   <ul class="actions clearfix">
     <% if can? :manage, response %>
       <li>
