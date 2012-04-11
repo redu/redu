@@ -4791,7 +4791,7 @@ table.spaced tr td {
 }
 
 .management .subject-participation-list .subject-participation-bullet {
-  width: 338px;
+  width: 408px;
   height: 140px;
   float: left;
 }
@@ -4802,7 +4802,7 @@ table.spaced tr td {
 }
 
 .management .subject-participation-list .subject-participation-pie {
-  width: 350px;
+  width: 280px;
   height: 140px;
   float: left;
   margin-bottom: 10px;

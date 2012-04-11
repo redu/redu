@@ -4,6 +4,9 @@ var subject_participation_pie = function () {
         chart: {
             defaultSeriesType: 'pie'
         },
+        credits: {
+            enabled: false
+        },
         title: {
             text: ''
         },
@@ -40,13 +43,13 @@ var subject_participation_pie = function () {
 
       $.getJSON(url, function (json) {
         options.chart.renderTo = 'subject-participation-pie-'+subject_id;
-        options.series[0].data[0] = ['Quantidade de respostas aos pedidos de ajuda', json.answered_helps];
-        options.series[0].data[1] = {
-          name: 'Quantidade de pedidos de ajuda',
+        options.series[0].data[0] = {
+          name: 'Pedidos de ajuda que tiveram resposta',
           sliced: true,
           selected: true,
-          y: json.helps
+          y: json.helps_answered
         };
+        options.series[0].data[1] = ['Pedidos de ajuda sem resposta', json.helps_not_answered];
 
         new Highcharts.Chart(options);
       })
@@ -61,7 +64,7 @@ var subject_participation_pie = function () {
 
 // Carregamento do Bullet Charts
 var subject_participation_bullet = function () {
-    var w = 350,
+    var w = 418,
         h = 107.5,
         m = [52.5, 30, 40, 20]; // top right bottom left
 
