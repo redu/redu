@@ -68,6 +68,10 @@ class PackageInvoice < Invoice
     false
   end
 
+  def total_relative_to(new_period_end)
+    self.total / self.total_days * (new_period_end - self.period_start + 1).to_i
+  end
+
   # Atualiza estado do Invoice de acordo com a data atual e a data de vencimento
   # de acordo com a seguinte regra:
   #

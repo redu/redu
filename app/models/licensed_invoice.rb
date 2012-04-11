@@ -88,6 +88,10 @@ class LicensedInvoice < Invoice
     end
   end
 
+  def total_relative_to(new_period_end)
+    self.total
+  end
+
   protected
 
   # Calcula o amount do invoice de acordo com a quantidade de licenças

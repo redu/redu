@@ -289,4 +289,20 @@ describe PackageInvoice do
       @new_invoice.period_start.should == subject.period_end.tomorrow
     end
   end
+
+  context "when calculating total value relative to a specific day" do
+    before do
+      @new_period_end = subject.period_end - 10.days
+    end
+
+    it "should return BigDecimal" do
+      subject.total_relative_to(@new_period_end).should be_kind_of(BigDecimal)
+    end
+
+    it "should take new_period_end as the period_end of invoice" do
+      subject.total_relative_to(@new_period_end).should ==
+         subject.total / subject.total_days *
+         (@new_period_end - subject.period_start + 1)
+    end
+  end
 end

@@ -474,4 +474,19 @@ describe LicensedInvoice do
       }.should change(License, :count).by(1)
     end
   end
+
+  context "when calculating total value relative to a specific day" do
+    before do
+      subject.pend!
+      @new_period_end = subject.period_end - 10.days
+    end
+
+    it "should return BigDecimal" do
+      subject.total_relative_to(@new_period_end).should be_kind_of(BigDecimal)
+    end
+
+    it "should be the same that was already calculated" do
+      subject.total_relative_to(@new_period_end).should == subject.total
+    end
+  end
 end

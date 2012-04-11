@@ -332,7 +332,9 @@ describe Plan do
 
     context "when downgrading" do
       before do
+        # Invoice com 31 dias
         subject.invoice = Factory(:package_invoice,
+                                  :price => 40.55,
                                   :period_start => Date.today - 15.days,
                                   :period_end => Date.today + 15.days)
         @billable = subject.billable
@@ -343,18 +345,20 @@ describe Plan do
       context "when last invoice is open and total is less than zero" do
         before do
           subject.update_attribute(:price, 2)
+          # Invoice com 31 dias
           subject.invoice = Factory(:licensed_invoice, :state => "open",
                                     :previous_balance => -100,
                                     :period_start => Date.today - 15.days,
                                     :period_end => Date.today + 15.days)
-          (1..10).each { Factory(:license, :invoice => subject.invoice)}
+          (1..10).each { Factory(:license, :role => Role[:member],
+                                 :invoice => subject.invoice)}
 
           @qtt_days = subject.invoice.total_days
           subject.migrate_to @new_plan
           @qtt_used_days = subject.invoice.total_days
         end
 
-        it "should have a discount on new invoice" do
+        it "should have a discount of [[value]] on new invoice" do
           subject.invoice.send(:calculate_amount!)
           discount = subject.invoice.total
 
