@@ -40,6 +40,7 @@ javascripts:
     - public/javascripts/browserdetection.js
     - public/javascripts/outdated-browser.js
     - public/javascripts/jquery.noisy.js
+    - public/javascripts/embedly.js
   chat:
     - public/javascripts/jquery.pjax.js
     - public/javascripts/pusher.js
@@ -67,6 +68,7 @@ javascripts:
     - public/javascripts/jquery.cookie.js
     - public/javascripts/outdated-browser.js
     - public/javascripts/clean.js
+    - public/javascripts/embedly.js
 
 stylesheets:
   common:

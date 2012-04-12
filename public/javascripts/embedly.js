@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$.fn.catchAndSendToEmbedly = function() {
   $('textarea#status_text').keyup(function(e){
     var $this = $(this);
     if(e.which == 13 | e.which == 32) {
@@ -102,7 +102,7 @@ $(document).ready(function(){
       updateThumbnail(button, thumbnail_list, false);
     }
   });
-});
+}
 
 function updateThumbnail(root, thumbnail_list, get_next) {
   var img = root.parents('fieldset').find('.thumbnail .preview-link img');
@@ -129,3 +129,12 @@ function parseUrl(text){
   var resultArray = text.match(regex);
   return resultArray;
 }
+
+// Carrega o JavaScript tanto para requisições remotas quanto para não-remotas
+$(document).ready(function(){
+  $(document).catchAndSendToEmbedly();
+
+  $(document).ajaxComplete(function(){
+    $(document).catchAndSendToEmbedly();
+  });
+});
