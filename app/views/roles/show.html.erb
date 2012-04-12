@@ -34,8 +34,8 @@
         <tbody>
           <% is_admin = @environment_membership.role.eql?(Role[:environment_admin]) %>
           <% @courses.each do |membership| %>
-            <tr>
               <% if is_admin %>
+              <tr>
                 <td class="edit-roles">
                 <div class="box_notice">Este usuário é administrador do ambiente. Seu papel não pode ser mudado.</div>
                 </td>
@@ -45,9 +45,12 @@
                 </td>
                 <td class="edit-cell">
                 </td>
+              </tr>
               <% else %>
+
                 <%= form_tag environment_course_user_roles_path(@environment, membership.course, @user),
                   :method => :post do %>
+                  <tr>
                   <td class="edit-roles">
                     <%= label_tag "role_#{Role[:teacher]}", "Professor", :class => "label " %>
                     <%= radio_button_tag :role, Role[:teacher], membership.role.eql?(Role[:teacher]) ? true : false, :class => "input-checkbox"  %>
@@ -63,9 +66,9 @@
                   <td class="edit-cell">
                     <%= submit_tag "Alterar", :class => "concave-button" %>
                   </td>
+                  </tr>
                 <% end %>
               <% end %>
-            </tr>
           <% end %>
         </tbody>
       </table>
