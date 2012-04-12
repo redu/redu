@@ -26,11 +26,9 @@ describe UserObserver do
   context "OAuth AccessToken" do
     it "creates an AccessToken for the user" do
       ActiveRecord::Observer.with_observers(:user_observer) do
-        application = Factory(:client_application)
-        user = Factory(:user)
         expect {
-          user.score = 10
-          user.save
+          ClientApplication.create(:name => "ReduViz", :url => "http://www.redu.com.br")
+          user = Factory(:user)
         }.should change(AccessToken, :count).by(1)
       end
     end
