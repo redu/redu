@@ -81,11 +81,13 @@ Pusher.prototype = {
 
   subscribeAll: function() {
     var channel;
+     var channelNames = [];
     for (channel in this.channels.channels) {
       if (this.channels.channels.hasOwnProperty(channel)) {
-        this.subscribe(channel);
+        channelNames.push(channel);
       }
     }
+    this.multiSubscribe(channelNames);
   },
 
   subscribe: function(channel_name) {
