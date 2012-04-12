@@ -1,5 +1,8 @@
+// Objeto para carregamento do Pie Charts
 var subject_participation_pie = function () {
     var chart;
+
+    // Configuração padrão do pie chart
     var options = {
         chart: {
             defaultSeriesType: 'pie'
@@ -37,7 +40,7 @@ var subject_participation_pie = function () {
         }]
     }
 
-    // Pie Chart
+    // Carregamento do Pie Chart
     var loadPie = function(subject_id) {
       var url = "http://localhost:3000/subjects/activities.json?subject_id=1";
 
@@ -55,6 +58,7 @@ var subject_participation_pie = function () {
       })
     };
 
+    // Retorno do objeto
     return {
       load_subject_participation_pie: function (subject_id) {
         loadPie(subject_id);
@@ -62,8 +66,9 @@ var subject_participation_pie = function () {
     }
 };
 
-// Carregamento do Bullet Charts
+// Objeto para carregamento do Bullet Charts
 var subject_participation_bullet = function () {
+    // Parametros de tamanho do bullet
     var w = 418,
         h = 107.5,
         m = [52.5, 30, 40, 20]; // top right bottom left
@@ -73,8 +78,11 @@ var subject_participation_bullet = function () {
         .height(h -m[0] -m[2]);
 
     // URL activities_d3
+    // Carregamento do bullet
     var loadBullet = function(subject_id){
-      d3.json("http://localhost:3000/subjects/activities_d3.json?subject_id=1", function(data) {
+      var url = "http://localhost:3000/subjects/activities_d3.json?subject_id=1";
+
+      d3.json(url, function(data) {
       var vis = d3.select("#subject-participation-bullet-"+subject_id).selectAll("svg")
         .data(data)
         .enter().append("svg")
@@ -88,16 +96,27 @@ var subject_participation_bullet = function () {
       var title = vis.append("g")
         .attr("text-anchor", "start");
 
+      // Subtítulo do bullet charts
       title.append("text")
         .attr("class", "subtitle-chart")
         .attr("dy", "4.5em")
         .text("Total de alunos X Total de alunos que finalizaram o módulo");
-      });
-    };
 
-    return {
-      load_subject_participation_bullet: function (subject_id) {
-        loadBullet(subject_id);
-      }
-    };
+      // Atributo title para o tooltip
+      d3.selectAll("rect")
+        .attr("title", "Total de alunos: " + data[0].ranges[0] +
+            "<br/>Total de alunos que finalizarama o módulo: " + data[0].measures[0]);
+
+      // Configuração default do tooltip
+      $('.subject-participation-bullet > svg > g > rect.range').tipTip({defaultPosition: "top"});
+      $('.subject-participation-bullet > svg > g > rect.measure').tipTip({defaultPosition: "top"});
+    });
+  };
+
+  // Retorno do objeto
+  return {
+    load_subject_participation_bullet: function (subject_id) {
+      loadBullet(subject_id);
+    },
+  };
 };
