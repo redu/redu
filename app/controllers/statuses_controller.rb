@@ -62,6 +62,9 @@ class StatusesController < BaseController
     # Deleta as respostas do Status
     Status.destroy_all(:in_response_to_id => @status.id,
                        :in_response_to_type => 'Status')
+    respond_to do |format|
+      format.js
+    end
   end
 
 end
