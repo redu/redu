@@ -79,7 +79,7 @@ describe "Statuses" do
     end
 
     it "should return correct statusable" do
-      get href_to("statusable", @entity), :oauth_token => @token, 
+      get href_to("statusable", @entity), :oauth_token => @token,
         :format => 'json'
       response.code.should == "200"
     end
@@ -135,10 +135,10 @@ describe "Statuses" do
     end
 
     it "should return correct numbers statuses" do
-      get "/api/users/#{@user.id}/statuses",:oauth_token => @token, 
+      get "/api/users/#{@user.id}/statuses",:oauth_token => @token,
         :format => 'json'
 
-      parse(response.body).count.should == @user_statuses.select {|i| i[:type] == 
+      parse(response.body).count.should == @user_statuses.select {|i| i[:type] ==
         "Activity" or i[:type] == "Help"}.length
     end
 
@@ -182,7 +182,7 @@ describe "Statuses" do
   context "when listing on Space" do
     before do
       @space = Factory(:space)
-      @space_statuses = 3.times.collect do 
+      @space_statuses = 3.times.collect do
         [ Factory(:help, :statusable => @space),
           Factory(:activity, :statusable => @space),
           Factory(:log, :statusable => @space) ]
@@ -195,7 +195,7 @@ describe "Statuses" do
     end
 
     it "should return code 200" do
-      get "/api/spaces/#{@space.id}/statuses", :oauth_token => @token, 
+      get "/api/spaces/#{@space.id}/statuses", :oauth_token => @token,
         :format => 'json'
       response.code.should == "200"
     end
@@ -226,7 +226,7 @@ describe "Statuses" do
     end
   end
 
-  context "when listing Lectures" do
+  context "when listing on Lecture" do
     before do
       @lecture = Factory(:lecture)
       @lecture_statuses = 3.times.collect do
@@ -250,7 +250,7 @@ describe "Statuses" do
     it "should return correct numbers statuses" do
       get "/api/lectures/#{@lecture.id}/statuses", :oauth_token => @token,
         :format => 'json'
-      parse(response.body).count.should == 
+      parse(response.body).count.should ==
         @lecture_statuses.select {|i| i[:type] == "Activity" or i[:type] == "Help" }.length
     end
 
@@ -426,8 +426,8 @@ describe "Statuses" do
     it "should return correct statusable lecture" do
       @params['status'][:type] = "Activity"
       post "/api/lectures/#{@lecture.id}/statuses", @params
-      
-      get href_to("statusable", parse(response.body)), :oauth_token => @token, 
+
+      get href_to("statusable", parse(response.body)), :oauth_token => @token,
         :format => 'json'
 
       parse(response.body)['lecture']['name'].should == @lecture.name
@@ -455,7 +455,7 @@ describe "Statuses" do
       parse(response.body)["type"].should == "Activity"
     end
   end
-  
+
   context "when creating status on lecture type (Help)" do
     before do
       @lecture = Factory(:lecture)
@@ -542,7 +542,7 @@ describe "Statuses" do
       # Deve ser atualizado com authorize
       response.code.should == "422"
     end
-    
+
     it "should return correct statusable" do
       @activity = Factory(:activity)
       post "/api/statuses/#{@activity.id}/answers", @params
@@ -551,7 +551,7 @@ describe "Statuses" do
         :format => 'json'
       response.code.should == "200"
     end
-    
+
     it "should return corret in_response_to" do
       @activity = Factory(:activity)
       post "/api/statuses/#{@activity.id}/answers", @params
@@ -579,5 +579,7 @@ describe "Statuses" do
       parse(response.body)["type"].should == "Help"
     end
   end
+
+  #FIXME faltou o teste de listagem de answers num activity ou help
 
 end
