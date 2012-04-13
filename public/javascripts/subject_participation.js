@@ -42,7 +42,7 @@ var subject_participation_pie = function () {
 
     // Carregamento do Pie Chart
     var loadPie = function(subject_id) {
-      var url = "http://localhost:3000/subjects/activities.json?subject_id=1";
+      var url = "http://192.168.1.9:3000/subjects/activities.json?subject_id=1";
 
       $.getJSON(url, function (json) {
         options.chart.renderTo = 'subject-participation-pie-'+subject_id;
@@ -80,7 +80,7 @@ var subject_participation_bullet = function () {
     // URL activities_d3
     // Carregamento do bullet
     var loadBullet = function(subject_id){
-      var url = "http://localhost:3000/subjects/activities_d3.json?subject_id=1";
+      var url = "http://192.168.1.9:3000/subjects/activities_d3.json?subject_id=1";
 
       d3.json(url, function(data) {
       var vis = d3.select("#subject-participation-bullet-"+subject_id).selectAll("svg")

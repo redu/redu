@@ -53,3 +53,5 @@ pt-BR:
     recover_username_password: "recuperar_login_senha"
     recover_username: "recuperar_login"
     recover_password: "recuperar_senha"
+    teacher_participation_report: "relatorio_participacao_professor"
+    subject_participation_report: "relatorio_participacao_modulo"

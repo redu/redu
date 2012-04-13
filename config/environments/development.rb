@@ -24,7 +24,7 @@ Redu::Application.configure do
   config.action_dispatch.best_standards_support = :builtin
 
   # Nome e URL do app
-  config.url = "0.0.0.0:3000"
+  config.url = "0.0.0.0:4000"
 
   config.action_mailer.default_url_options = { :host => config.url }
   config.action_mailer.asset_host = config.url
@@ -62,5 +62,11 @@ Redu::Application.configure do
       :app_secret => 'ea0f249a4df83b250c3364ccf097f35c'
     }
   }
+
+  # Configurações de VisClient
+  config.vis_client = {
+   :url => "http://localhost:4000/hierarchy_notifications.json"
+  }
+
 end
 

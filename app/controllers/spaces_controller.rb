@@ -15,7 +15,7 @@ class SpacesController < BaseController
   Browser = Struct.new(:browser, :version)
 
   UNSUPPORTED_BROWSERS = [
-    Browser.new("Internet Explore", "8.0")
+    Browser.new("Internet Explorer", "8.0")
   ]
 
   rescue_from CanCan::AccessDenied do |exception|
@@ -177,6 +177,7 @@ class SpacesController < BaseController
   def subject_participation_report
     @user_agent = UserAgent.parse(request.user_agent)
     @browser_not_supported = self.is_browser_unsupported?
+
     respond_to do |format|
       format.html { render "spaces/admin/subject_participation_report"}
     end
@@ -207,10 +208,14 @@ class SpacesController < BaseController
   end
 
   def is_browser_unsupported?
+    current_browser = Browser.new(@user_agent.browser, @user_agent.version)
     browser = UNSUPPORTED_BROWSERS[0].browser
     version = UNSUPPORTED_BROWSERS[0].version
 
-    return true if @user_agent.browser == browser && @user_agent.version == version
-    false
+    if current_browser.browser == browser && current_browser.version <= version
+      return true
+    else
+      return false
+    end
   end
 end
