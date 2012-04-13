@@ -12,7 +12,8 @@
     <%= render :partial => 'spaces/admin/clean_header' %>
 
     <%= tabs :spaces_admin do %>
-      <h3 class="form-header">Qual a participação nos módulos da disciplina?</h3>
+      <h3 class="form-header">Quantos alunos finalizaram o módulo?</h3>
+      <h3 class="form-header" id = "second-header">Quantos pedidos de ajuda foram respondidos?</h3>
       <div id="subject-chart-admin">
         <% if @browser_not_supported %>
           <div class="body">

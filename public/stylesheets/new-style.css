@@ -4760,7 +4760,12 @@ table.spaced tr td {
 
 #space-manage .form-header {
   margin-bottom: 10px;
-  width: 700px;
+  margin-right: 165px;
+  width: 240px;
+}
+
+#space-manage #second-header {
+  margin-right: 0px;
 }
 
 .management .form-header .strong,
@@ -4791,7 +4796,7 @@ table.spaced tr td {
 }
 
 .management .subject-participation-list .subject-participation-bullet {
-  width: 408px;
+  width: 380px;
   height: 140px;
   float: left;
 }
@@ -4802,7 +4807,7 @@ table.spaced tr td {
 }
 
 .management .subject-participation-list .subject-participation-pie {
-  width: 280px;
+  width: 306px;
   height: 140px;
   float: left;
   margin-bottom: 10px;

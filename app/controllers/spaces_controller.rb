@@ -179,7 +179,7 @@ class SpacesController < BaseController
     @browser_not_supported = self.is_browser_unsupported?
 
     respond_to do |format|
-      format.html { render "spaces/admin/subject_participation_report"}
+      format.html { render "spaces/admin/subject_participation_report" }
     end
   end
 

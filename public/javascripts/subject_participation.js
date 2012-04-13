@@ -15,8 +15,9 @@ var subject_participation_pie = function () {
         },
         tooltip: {
             formatter: function() {
-                return '<b>' + this.point.name + '</b>: ' + this.percentage + ' %';
-            }
+                return '<b>' + this.point.name + '</b>: ' + Highcharts.numberFormat( this.percentage, 1 )+ ' %';
+            },
+            valueDecimals: 1
         },
         plotOptions: {
             pie: {
@@ -50,9 +51,9 @@ var subject_participation_pie = function () {
           name: 'Pedidos de ajuda que tiveram resposta',
           sliced: true,
           selected: true,
-          y: json.helps_answered
+          y: 5
         };
-        options.series[0].data[1] = ['Pedidos de ajuda sem resposta', json.helps_not_answered];
+        options.series[0].data[1] = ['Pedidos de ajuda sem resposta', 4];
 
         new Highcharts.Chart(options);
       })
@@ -69,7 +70,7 @@ var subject_participation_pie = function () {
 // Objeto para carregamento do Bullet Charts
 var subject_participation_bullet = function () {
     // Parametros de tamanho do bullet
-    var w = 418,
+    var w = 390,
         h = 107.5,
         m = [52.5, 30, 40, 20]; // top right bottom left
 
