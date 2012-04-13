@@ -4760,6 +4760,7 @@ table.spaced tr td {
 
 #space-manage .form-header {
   margin-bottom: 10px;
+  width: 700px;
 }
 
 .management .form-header .strong,
@@ -4768,8 +4769,43 @@ table.spaced tr td {
 #environment-manage .course-path,
 #course-manage .course-path,
 #space-manage .concave-form .section-detail {
-  font-family: museo-sans, helvetica, arial, sans-serif;
+  font-family: museo-sans, "Helvetica Neue", arial, sans-serif;
   font-weight: 500;
+}
+
+.management #subject-chart-admin{
+  display: block;
+  float: left;
+  width: 748px;
+  margin-top: 5px;
+}
+
+.management .subject-participation-list {
+  list-style-type: none;
+  margin-bottom: 30px;
+  margin-left: 60px;
+}
+
+.management .subject-participation-list .form-subheader {
+  color: rgb(179, 179, 179);
+}
+
+.management .subject-participation-list .subject-participation-bullet {
+  width: 408px;
+  height: 140px;
+  float: left;
+}
+
+.management .subject-participation-list .subject-participation-bullet  .subtitle-chart {
+  font-size: 11px;
+  fill: rgb(179, 179, 179);
+}
+
+.management .subject-participation-list .subject-participation-pie {
+  width: 280px;
+  height: 140px;
+  float: left;
+  margin-bottom: 10px;
 }
 
 .management .form-header .strong,

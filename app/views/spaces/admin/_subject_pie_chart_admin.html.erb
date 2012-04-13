@@ -1,0 +1,10 @@
+<% content_tag(:div, :class => "subject-participation-pie",
+               :id => "subject-participation-pie-#{subject.id}") do %>
+  <%= lazy_load(:chart, :jammit => true) do %>
+    try{
+      var pieSbjPar = subject_participation_pie();
+      pieSbjPar.load_subject_participation_pie(<%= subject.id %>);
+    }catch(e){
+    }
+  <% end %>
+<% end %>

@@ -1,0 +1,8 @@
+<li class="subject-participation-list">
+  <h4 class="form-subheader"> <%= subject.title %> </h3>
+
+  <%= render :partial => 'spaces/admin/subject_bullet_chart_admin',
+    :locals => { :subject => subject }%>
+  <%= render :partial => 'spaces/admin/subject_pie_chart_admin',
+    :locals => { :subject => subject } %>
+</li>

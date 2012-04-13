@@ -50,7 +50,9 @@ javascripts:
   chart:
     - public/javascripts/highcharts/highcharts.js
     - public/javascripts/d3/d3.js
+    - public/javascripts/d3/d3.chart.js
     - public/javascripts/teacher_participation.js
+    - public/javascripts/subject_participation.js
   ie:
     - public/javascripts/json2.js
     - public/javascripts/selectivizr.js
@@ -125,3 +127,5 @@ stylesheets:
     - public/stylesheets/new-fonts.css
     - public/stylesheets/new-style.css
     - public/stylesheets/print.css
+  chart:
+    - public/stylesheets/chart.css
