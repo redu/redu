@@ -8,13 +8,12 @@ module Api
     end
 
     def create
+      @values = params
       if params[:lecture_id]
         @status = create_on_lecture
       else
         @status = create_activity
       end
-      # FIXME isso é necessário? Vc pq não usar o create ao invés do new dentro dos métodos create_activity e create_on_lecture
-      @status.save
 
       if @status.valid?
         respond_with(:api, @status, :location => api_status_url(@status))
@@ -24,9 +23,10 @@ module Api
     end
 
     def index
+      @values = params
       @statuses = statuses
 
-      case params[:type]
+      case @values[:type]
       when 'help'
         @statuses = @statuses.where(:type => 'Help')
       when 'log'
@@ -34,9 +34,8 @@ module Api
       when 'activity'
         @statuses = @statuses.where(:type => 'Activity')
       else
-        # FIXME sintaxe mais elegante:
-        # @statuses = @statuses.where(:type => ['Help', 'Activity'])
-        @statuses = @statuses.where("type LIKE 'Help' OR type LIKE 'Activity'")
+        @statuses = @statuses.where(:type => ['Help', 'Activity'])
+#        @statuses = @statuses.where("type LIKE 'Help' OR type LIKE 'Activity'")
       end
 
       respond_with(:api, @statuses)
@@ -51,36 +50,33 @@ module Api
 
     protected
 
-    # FIXME não é bom confiar em variáveis globais (params). Passa o que vc precisa como parametro.
     def statuses
-      if  params[:space_id]
-        Status.where(:statusable_id => Space.find(params[:space_id]))
+      if  @values[:space_id]
+        Status.where(:statusable_id => Space.find(@values[:space_id]))
       elsif params[:lecture_id]
-        Status.where(:statusable_id => Lecture.find(params[:lecture_id]))
+        Status.where(:statusable_id => Lecture.find(@values[:lecture_id]))
       else
-        Status.where(:user_id => User.find(params[:user_id]))
+        Status.where(:user_id => User.find(@values[:user_id]))
       end
     end
 
-    # FIXME não é bom confiar em variáveis globais (params). Passa o que vc precisa como parametro.
     def create_activity
-      Activity.new(params[:status]) do |e|
-        if params[:user_id]
-          e.statusable = User.find(params[:user_id])
-        elsif params[:space_id]
-          e.statusable = Space.find(params[:space_id])
+      Activity.create(@values[:status]) do |e|
+        if @values[:user_id]
+          e.statusable = User.find(@values[:user_id])
+        elsif @values[:space_id]
+          e.statusable = Space.find(@values[:space_id])
         else
-          e.statusable = Lecture.find(params[:lecture_id])
+          e.statusable = Lecture.find(@values[:lecture_id])
         end
         e.user = current_user
       end
     end
 
-    # FIXME não é bom confiar em variáveis globais (params). Passa o que vc precisa como parametro.
     def create_on_lecture
-      if params[:status][:type] == "help" || params[:status][:type] == "Help"
-        Help.create(params[:status]) do |e|
-          e.statusable = Lecture.find(params[:lecture_id])
+      if @values[:status][:type] == "help" || @values[:status][:type] == "Help"
+        Help.create(@values[:status]) do |e|
+          e.statusable = Lecture.find(@values[:lecture_id])
           e.user = current_user
         end
       else

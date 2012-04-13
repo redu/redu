@@ -53,7 +53,6 @@ describe "Statuses" do
     end
 
     it "should have the correct links (self, user, in_response_to and statusable)" do
-      # https://github.com/redu/redu/issues/660
       %w(self user in_response_to statusable).each do |attr|
         get href_to(attr, @entity), :oauth_token => @token, :format => 'json'
         response.code.should == "200"
@@ -504,7 +503,6 @@ describe "Statuses" do
     it "should return status 201 when activity type" do
       @activity = Factory(:activity)
       post "/api/statuses/#{@activity.id}/answers", @params
-
       response.code.should == "201"
     end
 
@@ -580,6 +578,28 @@ describe "Statuses" do
     end
   end
 
-  #FIXME faltou o teste de listagem de answers num activity ou help
+  context "when listing an Answer" do
+    it "should return code 200 type (activity)" do
+      @activity = Factory(:activity)
+      get "/api/statuses/#{@activity.id}/answers", :oauth_token => @token, 
+        :format => 'json'
+      response.code.should == "200"
+    end
+
+    it "should return code 200 type (help)" do
+      @help = Factory(:help)
+      get "/api/statuses/#{@help.id}/answers", :oauth_token => @token, 
+        :format => 'json'
+      response.code.should == "200"
+    end
+    
+    it "should return code 200" do
+      @log = Factory(:log)
+      get "/api/statuses/#{@log.id}/answers", :oauth_token => @token, 
+        :format => 'json'
+      # lista vazia
+      response.code.should == "200"
+    end
+  end
 
 end

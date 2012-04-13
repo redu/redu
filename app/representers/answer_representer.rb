@@ -1,15 +1,7 @@
 module AnswerRepresenter
   include Roar::Representer::JSON
   include Roar::Representer::Feature::Hypermedia
-
-  property :id
-  property :created_at
-  property :type
-  property :text
-
-  link :self do
-    api_status_url self
-  end
+  include StatusRepresenter
 
   link :statusable do
     if statusable == nil # FIXME em qual caso o statusable de um Answer é nil? Esse if é necessário?
@@ -17,10 +9,6 @@ module AnswerRepresenter
     else
       api_status_url(self.in_response_to)
     end
-  end
-
-  link :user do
-    api_user_url(self.user)
   end
 
   link :in_response_to do
