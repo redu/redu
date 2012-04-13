@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
   has_many :courses, :through => :user_course_associations
   # Authentication
   has_many :authentications, :dependent => :destroy
-  
+
 
   #COURSES
   has_many :lectures, :foreign_key => "owner",
@@ -187,15 +187,7 @@ class User < ActiveRecord::Base
   ## Instance Methods
   def process_invitation!(invitee, invitation)
     friendship_invitation = self.be_friends_with(invitee)
-    if friendship_invitation[0]
-      invitation.delete
-    else
-      #STATUS_ALREADY_FRIENDS     = 1
-      #STATUS_ALREADY_REQUESTED   = 2
-      #STATUS_IS_YOU              = 3
-      invitation.delete if [1,2,3].include? friendship_invitation[1]
-      false
-    end
+    invitation.delete
   end
 
   def profile_complete?

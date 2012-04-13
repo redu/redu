@@ -198,10 +198,7 @@ class UserNotifier < ActionMailer::Base
     end
   end
 
-  #FIXME: Modelo html do email (link token)
   def friendship_invitation(invitation)
-    #FIXME: Email usuário sender (layout user_notifier)
-    #FIXME: Subject email invitation
     @invitation = invitation
     @email = invitation.email
     @user = invitation.user

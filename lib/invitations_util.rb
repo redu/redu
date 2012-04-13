@@ -1,5 +1,5 @@
 module InvitationsUtil
-  #   Processa a requisição de convite de amizade (por email e
+  # Processa a requisição de convite de amizade (por email e
   # por id do usuário cadastrado no redu), seguindo as regras
   # de negócio relacionadas a criação de requisições de amizade.
   #
@@ -11,13 +11,13 @@ module InvitationsUtil
     return friend
   end
 
-  #   Destrói em batch as requisições de amizade selecionadas
+  # Destrói em batch as requisições de amizade selecionadas
   # pelo usuário.
   #
   # @params => parâmetros da requisição (:invitations | :friendship_requests)
   # @user => Usuário logado, que está gerenciando seus convites
   def self.destroy_invitations(params, user)
-    invitations = params['invitations'] || ""
+    invitations = params['invitations_ids'] || ""
     invitations = invitations.collect{ |invitation_id| invitation_id.to_i }
     friendship_requests = params['friendship_requests'] || ""
     friendship_requests = friendship_requests.collect{ |friendship_id| friendship_id.to_i}

@@ -5,7 +5,7 @@ describe InvitationsUtil do
   before {
     @user = Factory(:user)
     @friends = (1..5).collect { Factory(:user) }
-    @email = (1..5).collect { |i| "email#{i}@mail.com"}
+    @email = (1..@friends.count).collect { |i| "email#{i}@mail.com"}
     @param = {}
   }
 
@@ -13,7 +13,7 @@ describe InvitationsUtil do
     @param['friend_id'] = @friends.collect{ |f| "#{f.id}," }.to_s
     expect {
       InvitationsUtil.process_invites(@param, @user)
-    }.should change{ @user.friendships.count}.from(0).to(5)
+    }.should change{ @user.friendships.count }.by(5)
     Friendship.all.count.should == 10
   end
 
@@ -22,7 +22,7 @@ describe InvitationsUtil do
     @user.invitations.count.should == 0
     expect {
       InvitationsUtil.process_invites(@param, @user)
-    }.should change{ Invitation.all.count }.from(0).to(5)
+    }.should change(Invitation, :count).by(5)
     @user.invitations.count.should == 5
   end
 
@@ -37,11 +37,11 @@ describe InvitationsUtil do
     @user.invitations.count.should == 5
   end
 
-  it "duplicated request" do
+  it "request with duplicated email in params should create only one invitation" do
     @param['emails'] = ['teste@mail.com, teste@mail.com']
     expect {
       InvitationsUtil.process_invites(@param, @user)
-    }.should change{ Invitation.all.count }.from(0).to(1)
+    }.should change(Invitation, :count).by(1)
   end
 
   it "when email exists in redu database, a friendship should be created instead of a invitation" do
@@ -50,18 +50,18 @@ describe InvitationsUtil do
     user = Factory(:user)
     expect {
       InvitationsUtil.process_invites(@param, user)
-    }.should change{ Invitation.all.count }.from(0).to(5)
+    }.should change(Invitation, :count).by(5)
     Friendship.all.count.should == 2
     user.friendships.count.should == 1
   end
 
-  context "Add only one client" do
-    it "A friendship request should be correctly sent" do
+  context "when a friendship request is sent and expect return" do
+    it "An friendship request, should be correctly sent and the friend instance invited should be returned." do
       requested_user = @friends.first
       @param['friend_id'] = requested_user.id
       expect {
         InvitationsUtil.process_invites(@param, @user)
-      }.should change { Invitation.all.count}.by(0)
+      }.should change(Invitation, :count).by(0)
       @user.friendships.count.should == 1
       requested_user.friendships.count.should == 1
     end

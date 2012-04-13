@@ -43,6 +43,7 @@ class SessionsController < BaseController
           @course = @user_course_invitation.course
           @environment = @course.environment
           render :template => 'user_course_invitations/show'
+
         elsif params.has_key?(:friendship_invitation_token)
           invitation = Invitation.find_by_token(params[:friendship_invitation_token])
           @invitation_user = invitation.user

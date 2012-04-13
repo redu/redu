@@ -1,6 +1,7 @@
 class InvitationsController < ApplicationController
 
   layout "clean"
+  load_and_authorize_resource :invitation, :except => [:show]
 
   def show
     begin
@@ -27,10 +28,10 @@ class InvitationsController < ApplicationController
 
   def destroy
     begin
-      invitation = Invitation.find(params[:id])
-      invitation.destroy
+      @invitation = Invitation.find(params[:id])
+      @invitation.destroy
       flash[:notice] = "O convite foi removido com sucesso."
-    rescue
+    rescue ActiveRecord::RecordNotFound
       flash[:error] = "Nenhum convite para ser removido."
     end
     respond_to do |format|
@@ -39,11 +40,9 @@ class InvitationsController < ApplicationController
   end
 
   def destroy_invitations
-    invitations = params[:invitations]
-    friendship_requests = params[:friendship_requests]
     InvitationsUtil.destroy_invitations(params.to_hash, current_user)
 
-    if params.key?(:friendship_requests) or params.key?(:invitations)
+    if params.key?(:friendship_requests) or params.key?(:invitations_ids)
       flash[:notice] = "Os convites foram removidos com sucesso."
     else
       flash[:error] = "Nenhum convite foi selecionado para remoção."
@@ -55,13 +54,13 @@ class InvitationsController < ApplicationController
   end
 
   def resend_email
-    invitation = Invitation.find(params[:id])
-    invitation.resend_email do |invitation|
+    @invitation.resend_email do |invitation|
       UserNotifier.friendship_invitation(invitation).deliver
     end
+
     respond_to do |format|
       format.js do
-        @invitation_id = "invitation-#{invitation.id}"
+        @invitation_id = "invitation-#{@invitation.id}"
         render 'invitations/resend_email'
       end
     end

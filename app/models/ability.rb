@@ -38,6 +38,9 @@ class Ability
       :update_account, :edit_pro_details, :invite, :activate, :deactivate,
       :account, :home, :my_wall, :to => :manage
 
+    # Invitation
+    alias_action :resend_email, :destroy, :destroy_invitations, :to => :manage
+
     # Lecture
     alias_action :rate, :done, :to => :read
 
@@ -97,6 +100,11 @@ class Ability
         u.settings.view_mural == Privacy[:public] or
         (u.settings.view_mural == Privacy[:friends] && u.friends?(user))
       end
+
+      # Invitations
+      can :resend_email, Invitation
+      can :destroy_invitations, Invitation
+      can :destroy, Invitation
 
       # Space
       # Necessário para visualizar os usuários do Space

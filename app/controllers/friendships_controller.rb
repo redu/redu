@@ -18,6 +18,7 @@ class FriendshipsController < BaseController
     @invitations = @user.invitations
     @friendship_requests = @user.friendships.requested
     @contacts_recommendations = @user.recommended_contacts(5)
+
     respond_to do |format|
       format.html
     end
@@ -63,9 +64,9 @@ class FriendshipsController < BaseController
   end
 
   def resend_email
-    friendship = Friendship.find(params[:id])
-    user = User.find(friendship.user_id)
-    friend = User.find(friendship.friend_id)
+    user = @friendship.user
+    friend = @friendship.friend
+
     UserNotifier.friendship_requested(user, friend).deliver
     respond_to do |format|
       format.js do

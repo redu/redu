@@ -119,20 +119,6 @@ describe FriendshipsController do
       it 'render new template' do
         response.should render_template('new')
       end
-
-    end
-
-    context 'user not logged' do
-      before do
-        user = Factory(:user)
-        InvitationsUtil.process_invites({'emails' => 'example@email.com', 'friend_id' => @friend.id}, user)
-        @params = {:locale => "pt-BR", :user_id => user.login}
-        get :new, @params
-      end
-
-      it 'redirect to home path' do
-        response.should redirect_to(home_path)
-      end
     end
   end
 
