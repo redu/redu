@@ -4,17 +4,22 @@ class RefactoringStudentProfileAndEnrollment < ActiveRecord::Migration
       t.boolean  "graduaded",     :default => false
       t.float    "grade",         :default => 0.0
     end
+    add_index :enrollments, ["graduaded"]
+    add_index :enrollments, ["role"]
+    add_index :enrollments, ["subject_id"]
+    add_index :enrollments, ["user_id"]
+    add_index :enrollments, ["user_id", "subject_id"],
+      :name => "idx_enrollments_u_id_and_sid"
 
     # Migrando os dados de student_profile antes de remover a tabelas
-    StudentProfile.each do |sp|
-      sp.enrollment.graduaded = sp.graduaded
-      sp.enrollment.grade = sp.grade
+    StudentProfile.all.each do |sp|
+      sp.enrollment.update_attributes({:graduaded => sp.graduaded, :grade => sp.grade})
     end
 
     # Alterando o usando o enrollment_id na table de asset_reports
     add_column :asset_reports, :enrollment_id, :integer
-    AssetReport.each do |ap|
-      ap.enrollment_id = ap.student_profile.enrollment_id
+    AssetReport.all.each do |ap|
+      ap.update_attributes({:enrollment_id => ap.student_profile.enrollment_id})
     end
     remove_column :asset_reports, :student_profile_id
 

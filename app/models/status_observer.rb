@@ -3,17 +3,18 @@ class StatusObserver < ActiveRecord::Observer
     case status.statusable.class.to_s
     when "User"
       status.user.status_user_associations.create(:status => status)
-      Delayed::Job.enqueue UserStatusesJob.new(status.user.id, status.id)
+      job = UserStatusesJob.new(status.user.id, status.id)
+      Delayed::Job.enqueue(job, :queue => 'general')
     when "Lecture"
       course = status.statusable.subject.space.course
-      Delayed::Job.enqueue \
-        HierarchyStatusesJob.new(status.id, course.id)
+      job = HierarchyStatusesJob.new(status.id, course.id)
+      Delayed::Job.enqueue(job, :queue => 'general')
     when "Space"
-      Delayed::Job.enqueue \
-        HierarchyStatusesJob.new(status.id, status.statusable.course.id)
+      job = HierarchyStatusesJob.new(status.id, status.statusable.course.id)
+      Delayed::Job.enqueue(job, :queue => 'general')
     when "Course"
-      Delayed::Job.enqueue \
-        HierarchyStatusesJob.new(status.id, status.statusable.id)
+      job = HierarchyStatusesJob.new(status.id, status.statusable.id)
+      Delayed::Job.enqueue(job, :queue => 'general')
     end
   end
 

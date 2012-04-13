@@ -64,10 +64,13 @@ class Subject < ActiveRecord::Base
   end
 
   def create_enrollment_associations
-    self.space.user_space_associations.each do |users_space|
-      self.enrollments.create(:user => users_space.user, :subject => self,
-                              :role => users_space.role)
+    enrollments = self.space.user_space_associations.all.collect do |users_space|
+      Enrollment.new(:user_id => users_space.user_id,
+                     :subject => self,
+                     :role => users_space.role)
     end
+
+    Enrollment.import(enrollments)
   end
 
   def graduated?(user)
@@ -82,8 +85,8 @@ class Subject < ActiveRecord::Base
 
   # Notifica todos alunos matriculados sobre a adição de Subject
   def notify_subject_added
-    if self.notificable?
-      self.space.users.each { |u| UserNotifier.subject_added(u, self).deliver }
+    if notificable?
+      self.space.users.all.each { |u| UserNotifier.subject_added(u, self).deliver }
     end
   end
 

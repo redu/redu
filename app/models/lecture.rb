@@ -134,7 +134,8 @@ class Lecture < ActiveRecord::Base
 
   # ver app/jobs/create_asset_report_job.rb
   def delay_create_asset_report
-    Delayed::Job.enqueue CreateAssetReportJob.new(:lecture_id => self.id)
+    job = CreateAssetReportJob.new(:lecture_id => self.id)
+    Delayed::Job.enqueue(job, :queue => 'general')
   end
 
 end
