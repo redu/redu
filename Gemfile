@@ -55,6 +55,7 @@ gem 'delayed_job_active_record',
 gem 'daemons'
 gem 'activerecord-import'
 gem 'aws-sdk'
+gem "useragent", "~> 0.4.8"
 
 # Gems específicos de algum ambiente
 group :development, :test do
