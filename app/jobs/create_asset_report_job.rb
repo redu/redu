@@ -1,8 +1,9 @@
 class CreateAssetReportJob
+  # Cria asset_report para todos usuários matriculado no subject
   attr_accessor :lecture_id
 
-  def initialize(lecture_id)
-    @lecture_id = lecture_id
+  def initialize(opts)
+    @lecture_id = opts[:lecture_id]
   end
 
   def perform

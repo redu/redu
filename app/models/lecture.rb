@@ -116,11 +116,14 @@ class Lecture < ActiveRecord::Base
     end
   end
 
+  # Cria asset_report entre esta aula e todos os usuários matriculados no
+  # subject.
   def create_asset_report
     enrollments = Enrollment.where(:subject_id => self.subject.id)
 
     reports = enrollments.collect do |enrollment|
-      AssetReport.new(:subject => self.subject, :enrollment => enrollment)
+      AssetReport.new(:subject => self.subject, :enrollment => enrollment,
+                      :lecture => self)
     end
     AssetReport.import(reports)
 
@@ -129,6 +132,7 @@ class Lecture < ActiveRecord::Base
 
   protected
 
+  # ver app/jobs/create_asset_report_job.rb
   def delay_create_asset_report
     Delayed::Job.enqueue CreateAssetReportJob.new(:lecture_id => self.id)
   end
