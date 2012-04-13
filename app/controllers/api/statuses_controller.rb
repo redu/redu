@@ -13,6 +13,7 @@ module Api
       else
         @status = create_activity
       end
+      # FIXME isso é necessário? Vc pq não usar o create ao invés do new dentro dos métodos create_activity e create_on_lecture
       @status.save
 
       if @status.valid?
@@ -33,6 +34,8 @@ module Api
       when 'activity'
         @statuses = @statuses.where(:type => 'Activity')
       else
+        # FIXME sintaxe mais elegante:
+        # @statuses = @statuses.where(:type => ['Help', 'Activity'])
         @statuses = @statuses.where("type LIKE 'Help' OR type LIKE 'Activity'")
       end
 
@@ -48,6 +51,7 @@ module Api
 
     protected
 
+    # FIXME não é bom confiar em variáveis globais (params). Passa o que vc precisa como parametro.
     def statuses
       if  params[:space_id]
         Status.where(:statusable_id => Space.find(params[:space_id]))
@@ -57,7 +61,8 @@ module Api
         Status.where(:user_id => User.find(params[:user_id]))
       end
     end
-    
+
+    # FIXME não é bom confiar em variáveis globais (params). Passa o que vc precisa como parametro.
     def create_activity
       Activity.new(params[:status]) do |e|
         if params[:user_id]
@@ -71,7 +76,8 @@ module Api
       end
     end
 
-    def create_on_lecture #FIXME colocar parâmetro obrigatório status_id e type
+    # FIXME não é bom confiar em variáveis globais (params). Passa o que vc precisa como parametro.
+    def create_on_lecture
       if params[:status][:type] == "help" || params[:status][:type] == "Help"
         Help.create(params[:status]) do |e|
           e.statusable = Lecture.find(params[:lecture_id])

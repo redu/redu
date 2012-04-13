@@ -9,6 +9,7 @@ module ActivityRepresenter
 
   link :self do
     api_status_url self
+    # FIXME o que essa linha comentada significa?
     # polymorphic_url([:api, self])
   end
 

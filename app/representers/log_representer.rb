@@ -1,7 +1,7 @@
 module LogRepresenter
   include Roar::Representer::JSON
   include Roar::Representer::Feature::Hypermedia
-#  include StatusRepresenter
+#  include StatusRepresenter # FIXME essa linha serve para algo?
 
   property :id
   property :created_at

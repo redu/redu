@@ -12,7 +12,7 @@ module AnswerRepresenter
   end
 
   link :statusable do
-    if statusable == nil
+    if statusable == nil # FIXME em qual caso o statusable de um Answer é nil? Esse if é necessário?
       api_status_url(self.statusable)
     else
       api_status_url(self.in_response_to)
