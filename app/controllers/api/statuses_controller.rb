@@ -35,7 +35,6 @@ module Api
         @statuses = @statuses.where(:type => 'Activity')
       else
         @statuses = @statuses.where(:type => ['Help', 'Activity'])
-#        @statuses = @statuses.where("type LIKE 'Help' OR type LIKE 'Activity'")
       end
 
       respond_with(:api, @statuses)
