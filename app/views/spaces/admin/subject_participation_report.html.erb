@@ -14,8 +14,22 @@
     <%= tabs :spaces_admin do %>
       <h3 class="form-header">Qual a participação nos módulos da disciplina?</h3>
       <div id="subject-chart-admin">
-        <%= render :partial => 'spaces/admin/subject_chart_admin',
-          :collection => @space.subjects, :as => :subject %>
+        <% if @browser_not_supported %>
+          <div class="body">
+            <div class="flash-message notice">
+              <ul class="message icons-big-before icon-privacy-lightred_64_66-before">
+                <li>Para visualizar este relatório é necessário que você atualize seu navegador para a versão mais recente.
+                  <%= link_to "Internet Explore 9.0",
+                  "http://windows.microsoft.com/pt-Br/internet-explorer/downloads/ie-9/worldwide-languages"%>,
+                <%= link_to "Google Chrome", "http://www.google.com/chrome" %>, ou
+                <%= link_to "Mozilla Firefox", "http://br.mozdev.org/" %> </li>
+              <ul>
+            </div>
+          </div>
+        <% else %>
+          <%= render :partial => 'spaces/admin/subject_chart_admin',
+            :collection => @space.subjects, :as => :subject %>
+        <% end %>
       </div>
     <% end %>
   </div>

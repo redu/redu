@@ -1,11 +1,4 @@
 GIT
-  remote: git://github.com/ProtectedMethod/scribd_fu.git
-  revision: 61c1e0bf7f448a8a00b696baa12e81ee6a16bd14
-  specs:
-    scribd_fu (2.0.11)
-      rscribd
-
-GIT
   remote: git://github.com/apotonick/roar-rails.git
   revision: 851736e6cf2c4a930bc0b107cd43f750ac67f42b
   specs:
@@ -29,6 +22,14 @@ GIT
   branch: rails3
   specs:
     ajaxful_rating (3.0.0.beta3)
+
+GIT
+  remote: git://github.com/guiocavalcanti/scribd_fu.git
+  revision: 422926986f993bf4d72fcaa981dea221ecc86641
+  branch: without-scape
+  specs:
+    scribd_fu (2.0.11)
+      rscribd
 
 GIT
   remote: git://github.com/ndbroadbent/actionmailer_inline_css.git
@@ -303,6 +304,7 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.33)
+    useragent (0.4.8)
     uuidtools (2.1.2)
     whenever (0.6.7)
       aaronh-chronic (>= 0.3.9)
@@ -371,6 +373,7 @@ DEPENDENCIES
   simple-navigation
   thin
   translate_routes
+  useragent (~> 0.4.8)
   whenever
   will_paginate (~> 3.0.pre2)
   zencoder

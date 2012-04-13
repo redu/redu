@@ -23,31 +23,30 @@
       <span class="info">Inscreveu-se há <%= time_ago_in_words(@environment_membership.created_at) %></span>
     </div>
     <% unless @courses.empty? %>
-      <table class="admin-role-table">
-        <thead style="display: none;">
-          <tr>
-            <th>Curso</th>
-            <th>Papel</th>
-            <th>Editar</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% is_admin = @environment_membership.role.eql?(Role[:environment_admin]) %>
-          <% @courses.each do |membership| %>
-            <tr>
-              <% if is_admin %>
-                <td class="edit-roles">
-                <div class="box_notice">Este usuário é administrador do ambiente. Seu papel não pode ser mudado.</div>
-                </td>
-                <td class="course-cell">
-                  <%= link_to membership.course.name,
-                    environment_course_path(@environment, membership.course), :class => "course-name" %>
-                </td>
-                <td class="edit-cell">
-                </td>
-              <% else %>
-                <%= form_tag environment_course_user_roles_path(@environment, membership.course, @user),
-                  :method => :post do %>
+      <% is_admin = @environment_membership.role.eql?(Role[:environment_admin]) %>
+      <% @courses.each do |membership| %>
+        <%= form_tag environment_course_user_roles_path(@environment, membership.course, @user), :method => :post do %>
+          <table class="admin-role-table">
+            <thead style="display: none;">
+              <tr>
+                <th>Curso</th>
+                <th>Papel</th>
+                <th>Editar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <% if is_admin %>
+                  <td class="edit-roles">
+                    <div class="box_notice">Este usuário é administrador do ambiente. Seu papel não pode ser mudado.</div>
+                  </td>
+                  <td class="course-cell">
+                    <%= link_to membership.course.name,
+                      environment_course_path(@environment, membership.course), :class => "course-name" %>
+                  </td>
+                  <td class="edit-cell">
+                  </td>
+                <% else %>
                   <td class="edit-roles">
                     <%= label_tag "role_#{Role[:teacher]}", "Professor", :class => "label " %>
                     <%= radio_button_tag :role, Role[:teacher], membership.role.eql?(Role[:teacher]) ? true : false, :class => "input-checkbox"  %>
@@ -64,11 +63,11 @@
                     <%= submit_tag "Alterar", :class => "concave-button" %>
                   </td>
                 <% end %>
-              <% end %>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+              </tr>
+            </tbody>
+          </table>
+        <% end %>
+      <% end %>
     <% end %>
   <% end %>
   <%= link_to "Sair", environment_path(@environment), :class => "manage exit icon-manage-gray_8_10-before" %>
