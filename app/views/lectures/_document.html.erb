@@ -1,10 +1,8 @@
 <div id="view_video" class="stage" align="center" >
   <% unless lecture.lectureable.conversion_processing? %>
-    <%= lazy_load("http://www.scribd.com/javascripts/view.js") do %>
-      <%= raw(lecture.lectureable.display_ipaper(:disable_related_docs => true,
-                                                 :mode => :slide,
-                                                 :hide_disabled_buttons => true )) %>
-    <% end %>
+    <%= raw(lecture.lectureable.display_ipaper(:disable_related_docs => true,
+                                               :mode => :slide,
+                                               :hide_disabled_buttons => true )) %>
   <div id="document_stage"></div>
   <% else %>
     <div class="box_notice">
