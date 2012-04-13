@@ -2,6 +2,13 @@ require 'spec_helper'
 
 describe InvitationsUtil do
 
+  subject do
+    class Bar
+      include InvitationsUtil
+    end
+    Bar.new
+  end
+
   before {
     @user = Factory(:user)
     @friends = (1..5).collect { Factory(:user) }
@@ -12,7 +19,7 @@ describe InvitationsUtil do
   it "requests with set of friends(redu users) should create set of frienship requests" do
     @param['friend_id'] = @friends.collect{ |f| "#{f.id}," }.to_s
     expect {
-      InvitationsUtil.process_invites(@param, @user)
+      subject.process_invites(@param, @user)
     }.should change{ @user.friendships.count }.by(5)
     Friendship.all.count.should == 10
   end
@@ -21,7 +28,7 @@ describe InvitationsUtil do
     @param['emails'] = @email.collect { |e| "#{e},"}.to_s
     @user.invitations.count.should == 0
     expect {
-      InvitationsUtil.process_invites(@param, @user)
+      subject.process_invites(@param, @user)
     }.should change(Invitation, :count).by(5)
     @user.invitations.count.should == 5
   end
@@ -30,7 +37,7 @@ describe InvitationsUtil do
     @param['emails'] = @email.collect { |e| "#{e},"}.to_s
     @param['friend_id'] = @friends.collect{ |f| "#{f.id}," }.to_s
     expect {
-      InvitationsUtil.process_invites(@param, @user)
+      subject.process_invites(@param, @user)
     }.should change{ Invitation.all.count}.from(0).to(5)
     Friendship.all.count.should == 10
     @user.friendships.count.should == 5
@@ -40,7 +47,7 @@ describe InvitationsUtil do
   it "request with duplicated email in params should create only one invitation" do
     @param['emails'] = ['teste@mail.com, teste@mail.com']
     expect {
-      InvitationsUtil.process_invites(@param, @user)
+      subject.process_invites(@param, @user)
     }.should change(Invitation, :count).by(1)
   end
 
@@ -49,21 +56,45 @@ describe InvitationsUtil do
     @param['emails'] << @user.email
     user = Factory(:user)
     expect {
-      InvitationsUtil.process_invites(@param, user)
+      subject.process_invites(@param, user)
     }.should change(Invitation, :count).by(5)
     Friendship.all.count.should == 2
     user.friendships.count.should == 1
   end
 
   context "when a friendship request is sent and expect return" do
+
     it "An friendship request, should be correctly sent and the friend instance invited should be returned." do
       requested_user = @friends.first
       @param['friend_id'] = requested_user.id
       expect {
-        InvitationsUtil.process_invites(@param, @user)
+        subject.process_invites(@param, @user)
       }.should change(Invitation, :count).by(0)
       @user.friendships.count.should == 1
       requested_user.friendships.count.should == 1
+    end
+  end
+
+  context "Destroy invitation in batch" do
+    before do
+      @param['friend_id'] = @friends.collect{ |f| "#{f.id}," }.to_s
+      @param['emails'] = @email.collect { |e| "#{e},"}.to_s
+      subject.process_invites(@param, @user)
+
+      @invitations_ids = @user.invitations.collect{ |i| i.id }
+      @friendship_requests = @user.friendships.requested.collect{ |f| f.id }
+    end
+
+    it "Destroy all friendship requests" do
+      expect {
+        subject.batch_destroy_friendships(@friendship_requests, @user)
+      }.should change(Friendship, :count).by(@friendship_requests.count*-2)
+    end
+
+    it "Destroy all invitations" do
+      expect{
+        subject.batch_destroy_invitations(@invitations_ids, @user)
+      }.should change(Invitation, :count).by(@invitations_ids.count*-1)
     end
   end
 end

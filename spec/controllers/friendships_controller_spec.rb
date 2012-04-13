@@ -102,7 +102,7 @@ describe FriendshipsController do
      end
     context 'user logged' do
       before do
-        InvitationsUtil.process_invites({'emails' => 'example.mail.com, teste@mail.com', 'friend_id' => @friend.id}, @user)
+        controller.process_invites({'emails' => 'example.mail.com, teste@mail.com', 'friend_id' => @friend.id}, @user)
         @params = {:locale => "pt-BR", :user_id => @user.login}
         UserSession.create(@user)
         get :new, @params
@@ -125,7 +125,7 @@ describe FriendshipsController do
 
   context 'Resend invitation email' do
     before do
-      InvitationsUtil.process_invites({'emails' => 'example1@email.com', 'friend_id' => @friends[0].id}, @user)
+      controller.process_invites({'emails' => 'example1@email.com', 'friend_id' => @friends[0].id}, @user)
       @friendship_request = @user.friendships.requested.first
       @params = {:locale => "pt-BR", :id => @friendship_request.id, :user_id => @user.login, :format => 'js'}
       post :resend_email, @params

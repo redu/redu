@@ -1,4 +1,5 @@
 class FriendshipsController < BaseController
+  include InvitationsUtil
 
   load_and_authorize_resource :user, :find_by => :login
   load_and_authorize_resource :friendship, :through => :user
@@ -25,7 +26,7 @@ class FriendshipsController < BaseController
   end
 
   def create
-    @friend = InvitationsUtil.process_invites(params.to_hash, current_user)
+    @friend = process_invites(params.to_hash, current_user)
     respond_to do |format|
       format.html do
         if params.has_key? :goto_home

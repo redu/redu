@@ -57,13 +57,11 @@ describe SessionsController do
 
     context "Request with friendship_invitation_token" do
       before do
-        @invitation_params = {}
         @email = 'mail@example.com'
         @host = Factory(:user)
-
-        @invitation_params.store('emails', @email)
-        InvitationsUtil.process_invites(@invitation_params, @host)
-        @invitation = @host.invitations.last
+        @invitation = Invitation.invite(:user => @host,
+                                        :hostable => @host,
+                                        :email => 'email@example.com')
       end
 
       context "Login successfully" do

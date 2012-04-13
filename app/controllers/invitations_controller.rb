@@ -1,4 +1,5 @@
 class InvitationsController < ApplicationController
+  include InvitationsUtil
 
   layout "clean"
   load_and_authorize_resource :invitation, :except => [:show]
@@ -40,7 +41,14 @@ class InvitationsController < ApplicationController
   end
 
   def destroy_invitations
-    InvitationsUtil.destroy_invitations(params.to_hash, current_user)
+    invitations_ids = params[:invitations_ids] || ""
+    invitations_ids = invitations_ids.collect{ |invitation_id| invitation_id.to_i }
+
+   friendship_requests = params[:friendship_requests] || ""
+   friendship_requests = friendship_requests.collect{ |friendship_id| friendship_id.to_i}
+
+    batch_destroy_invitations(invitations_ids, current_user)
+    batch_destroy_friendships(friendship_requests, current_user)
 
     if params.key?(:friendship_requests) or params.key?(:invitations_ids)
       flash[:notice] = "Os convites foram removidos com sucesso."

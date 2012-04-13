@@ -120,12 +120,10 @@ describe UsersController do
 
       context "The request contains an invitation token" do
         before do
-          @invitation_params = {}
           @email = 'mail@example.com'
-
-          @invitation_params.store('emails', @email)
-          InvitationsUtil.process_invites(@invitation_params, @user)
-          @invitation = @user.invitations.last
+          @invitation = Invitation.invite(:user => @user,
+                                          :hostable => @user,
+                                          :email => 'mail@example.com')
           @post_params.store(:friendship_invitation_token, @invitation.token)
         end
 
