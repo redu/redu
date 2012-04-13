@@ -88,8 +88,10 @@ class LicensedInvoice < Invoice
     end
   end
 
-  def total_relative_to(new_period_end)
-    self.total
+  # Apenas atualiza a data, visto que o amount será atualizado no
+  # calculate_amount!
+  def refresh_amount!(new_period_end)
+    self.update_attribute(:period_end, new_period_end)
   end
 
   protected
@@ -101,7 +103,7 @@ class LicensedInvoice < Invoice
   # invoice.calculate_amount!
   # => #<BigDecimal:104a9fbf0,'0.0',9(18)>
   def calculate_amount!
-    days_of_month = self.period_end.end_of_month.day.to_f
+    days_of_month = 30
     # Preço diário * # de dias usados * # de licenças pagáveis utilizadas
     amount = (self.plan.price / days_of_month) * self.total_days *
       self.licenses.payable.count

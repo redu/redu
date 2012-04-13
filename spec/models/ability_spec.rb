@@ -627,7 +627,7 @@ describe Ability do
         before do
           @licensed_plan = Factory(:active_licensed_plan)
           @invoice = Factory(:licensed_invoice, :plan => @licensed_plan)
-          @invoice.pend!
+          @invoice.update_attribute(:state, "pending")
         end
 
         context "the owner" do

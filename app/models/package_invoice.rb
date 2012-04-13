@@ -68,8 +68,24 @@ class PackageInvoice < Invoice
     false
   end
 
-  def total_relative_to(new_period_end)
-    self.total / self.total_days * (new_period_end - self.period_start + 1).to_i
+  # Atualiza a data final e retorna a diferença entre o amount e o que foi
+  # de fato utilizado (de acordo com a nova data final)
+  def refresh_amount(new_period_end)
+    old_total_days = self.total_days
+    self.update_attribute(:period_end, new_period_end)
+
+    used = (self.amount / old_total_days * self.total_days)
+    self.amount - used
+  end
+
+  # Atualiza a data final e o amount de acordo com a nova data final
+  def refresh_amount!(new_period_end)
+    old_total_days = self.total_days
+    self.period_end = new_period_end
+
+    used = (self.amount / old_total_days * self.total_days)
+    self.amount = used
+    self.save
   end
 
   # Atualiza estado do Invoice de acordo com a data atual e a data de vencimento

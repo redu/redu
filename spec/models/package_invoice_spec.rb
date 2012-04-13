@@ -290,19 +290,45 @@ describe PackageInvoice do
     end
   end
 
-  context "when calculating total value relative to a specific day" do
+  context "when refreshing amount after changing period_end" do
     before do
-      @new_period_end = subject.period_end - 10.days
+      # Amount R$ 25.81
+      subject.update_attributes(:amount => 50,
+                                :period_start => Date.today - 15.days,
+                                :period_end => Date.today + 15.days)
+      @new_period_end = Date.today
     end
 
-    it "should return BigDecimal" do
-      subject.total_relative_to(@new_period_end).should be_kind_of(BigDecimal)
+    context "when calling refresh_amount" do
+      before do
+        @return = subject.refresh_amount(@new_period_end)
+      end
+
+      it "should return BigDecimal" do
+        @return.should be_kind_of(BigDecimal)
+      end
+
+      it "should change period_end to new_period_End" do
+        subject.period_end.should == @new_period_end
+      end
+
+      it "should return difference between amount and used part of it" do
+        @return.round(2).should == BigDecimal.new("24.19")
+      end
     end
 
-    it "should take new_period_end as the period_end of invoice" do
-      subject.total_relative_to(@new_period_end).should ==
-         subject.total / subject.total_days *
-         (@new_period_end - subject.period_start + 1)
+    context "when calling refresh_amount!" do
+      before do
+        @return = subject.refresh_amount!(@new_period_end)
+      end
+
+      it "should update period_end to new_period_End" do
+        subject.period_end.should == @new_period_end
+      end
+
+      it "should update amount value to used part of it" do
+        subject.amount.round(2).should ==  BigDecimal.new("25.81")
+      end
     end
   end
 end

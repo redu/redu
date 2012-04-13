@@ -302,7 +302,7 @@ describe LicensedInvoice do
       end
 
       it "updates to the correct amount" do
-        @invoice.amount.round(2).should == BigDecimal.new("32.90")
+        @invoice.amount.round(2).should == BigDecimal.new("34")
       end
     end
 
@@ -376,7 +376,7 @@ describe LicensedInvoice do
     end
 
     it "should calculates invoice1's relative amount" do
-      @invoice1.reload.amount.round(2).should == BigDecimal.new("31.94")
+      @invoice1.reload.amount.round(2).should == BigDecimal.new("33")
     end
 
     it "should NOT calculate invoice2's relative amount" do
@@ -475,18 +475,19 @@ describe LicensedInvoice do
     end
   end
 
-  context "when calculating total value relative to a specific day" do
+  context "when refreshing amount after changing period_end" do
     before do
-      subject.pend!
-      @new_period_end = subject.period_end - 10.days
+      @new_period_end = Date.today
     end
 
-    it "should return BigDecimal" do
-      subject.total_relative_to(@new_period_end).should be_kind_of(BigDecimal)
-    end
+    context "when calling refresh_amount!" do
+      before do
+        @return = subject.refresh_amount!(@new_period_end)
+      end
 
-    it "should be the same that was already calculated" do
-      subject.total_relative_to(@new_period_end).should == subject.total
+      it "should update period_end to new_period_End" do
+        subject.period_end.should == @new_period_end
+      end
     end
   end
 end

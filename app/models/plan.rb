@@ -91,37 +91,49 @@ class Plan < ActiveRecord::Base
   end
 
   # Efetua a migração para o plano passado como parâmetro
+  # - Faz o tratamento correto para o invoice atual
+  #   . Se estiver aberto ou pendente, a data final é atualizada, ele é
+  #     fechado e o valor repassado como adição para o novo invoice
+  #   . Se estiver pago, permanecerá pago e o desconto é repassado para o
+  #     novo invoice
+  # - Cria um novo invoice com o valor relativo a quantidade de dias
+  #   e com desconto (caso houver) do invoice anterior
   def migrate_to(new_plan)
-    previous_balance = if self.invoice.nil?
-                         0
-                       elsif !self.invoice.paid?
-                         self.invoice.close!
-                         self.invoice.total / self.invoice.total_days *
-                           (Date.yesterday - self.invoice.period_start + 1)
-                       else # Se já estiver pago
-                         balance = if self.invoice.total < 0
-                                     # Valor já entra como desconto
-                                     self.invoice.total
-                                   else
-                                     # Valor convertido para desconto
-                                     - self.invoice.total
-                                   end
-                         balance / self.invoice.total_days *
-                           (Date.yesterday - self.invoice.period_start + 1)
-                       end
-
     opts = {
-      :period_start => Date.today,
-      :previous_balance => previous_balance
+      :period_start => Date.today
     }
     opts[:period_end] = self.invoice.period_end if self.invoice
 
+    previous_balance = if self.invoice.nil?
+                         0
+                       elsif !self.invoice.paid?
+                         self.invoice.refresh_amount!(Date.yesterday)
+                         self.invoice.close!
+                         self.invoice.total
+                       else # Se já estiver pago
+                         credit = self.invoice.refresh_amount(Date.yesterday)
+                         balance = if self.invoice.total < 0
+                                     # Valor já entra como desconto
+                                     self.invoice.total - credit
+                                   else
+                                     # Valor convertido para desconto
+                                     - credit
+                                   end
+                       end
+    opts[:previous_balance] = previous_balance
+
+    # Seta o valor relativo para o novo invoice
+    if self.invoice
+      relative_amount = new_plan.price / (opts[:period_end] -
+                                          self.invoice.period_start + 1) *
+                                          (opts[:period_end] -
+                                           opts[:period_start] + 1)
+      opts[:amount] = relative_amount
+    end
+
     new_plan.user = self.user
     self.billable.plan = new_plan
-
-    new_invoice = new_plan.create_invoice(:invoice => opts)
+    new_invoice = new_plan.create_invoice(:invoice => opts, :force => true)
     new_plan.setup_for_migration
-
-    self.invoice.try(:update_attributes, :period_end => Date.yesterday)
   end
 end

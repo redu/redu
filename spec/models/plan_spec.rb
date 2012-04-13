@@ -240,10 +240,16 @@ describe Plan do
         @new_plan.invoice.period_end.should == last_invoice_period_end
       end
 
+      it "should have a invoice with amount value of 13.11" do
+        subject.migrate_to @new_plan
+        @new_plan.invoice.amount.round(2).should == BigDecimal.new("13.11")
+      end
+
       context "when last invoice is open" do
         before do
           subject.update_attribute(:price, 2)
           subject.invoice = Factory(:licensed_invoice, :state => "open",
+                                    :amount => nil,
                                     :previous_balance => -4,
                                     :period_start => Date.today - 15.days,
                                     :period_end => Date.today + 15.days)
@@ -265,6 +271,7 @@ describe Plan do
 
       context "when last invoice is pending" do
         before do
+          # Amount R$ 7.69
           subject.invoice = Factory(:package_invoice, :state => "pending",
                                     :amount => 15.9, :previous_balance => 2,
                                     :period_start => Date.today - 15.days,
@@ -277,15 +284,17 @@ describe Plan do
           }.should change{ subject.invoice.state }.to("closed")
         end
 
-        it "should have an addition on new invoice" do
+        it "should have an addition of 9.70 on new invoice" do
           subject.migrate_to @new_plan
           @new_plan.invoice.previous_balance.should be > 0
-          @new_plan.invoice.previous_balance.should == subject.invoice.total
+          @new_plan.invoice.previous_balance.round(2).should ==
+            BigDecimal.new("9.69")
         end
       end
 
       context "when last invoice is paid" do
         before do
+          # Amount R$ 4.84
           subject.invoice = Factory(:package_invoice, :state => "paid",
                                     :amount => 10, :previous_balance => 3,
                                     :period_start => Date.today - 15.days,
@@ -298,16 +307,11 @@ describe Plan do
           }.should_not change{ subject.invoice.state }
         end
 
-        it "should have a discount on new invoice" do
-          @qtt_days = subject.invoice.total_days
-
+        it "should have a discount of 5.16 on new invoice" do
           subject.migrate_to @new_plan
 
-          @qtt_used_days = subject.invoice.total_days
-          discount = - subject.invoice.total / @qtt_days * @qtt_used_days
-
-          @new_plan.invoice.previous_balance.should be < 0
-          @new_plan.invoice.previous_balance.should == discount.round(2)
+          @new_plan.invoice.previous_balance.round(2).should ==
+            - BigDecimal.new("5.16")
         end
       end
 
@@ -334,7 +338,7 @@ describe Plan do
       before do
         # Invoice com 31 dias
         subject.invoice = Factory(:package_invoice,
-                                  :price => 40.55,
+                                  :amount => 40.55,
                                   :period_start => Date.today - 15.days,
                                   :period_end => Date.today + 15.days)
         @billable = subject.billable
@@ -342,10 +346,15 @@ describe Plan do
         @new_plan = Factory.build(:active_package_plan, :price => 10.70)
       end
 
+      it "should have an invoice with amount value of 5.52" do
+        subject.migrate_to @new_plan
+        @new_plan.invoice.amount.round(2).should == BigDecimal.new("5.52")
+      end
+
       context "when last invoice is open and total is less than zero" do
         before do
           subject.update_attribute(:price, 2)
-          # Invoice com 31 dias
+          # Amount R$ 10.00
           subject.invoice = Factory(:licensed_invoice, :state => "open",
                                     :previous_balance => -100,
                                     :period_start => Date.today - 15.days,
@@ -353,54 +362,48 @@ describe Plan do
           (1..10).each { Factory(:license, :role => Role[:member],
                                  :invoice => subject.invoice)}
 
-          @qtt_days = subject.invoice.total_days
           subject.migrate_to @new_plan
-          @qtt_used_days = subject.invoice.total_days
         end
 
-        it "should have a discount of [[value]] on new invoice" do
-          subject.invoice.send(:calculate_amount!)
-          discount = subject.invoice.total
-
-          @new_plan.invoice.previous_balance.should be < 0
-          @new_plan.invoice.previous_balance.should == discount.round(2)
+        it "should have a discount of 90 on new invoice" do
+          @new_plan.invoice.previous_balance.round(2).should ==
+            - BigDecimal.new("90")
         end
       end
 
       context "when last invoice is pending and total is less than zero" do
         before do
+          # Amount R$ 21.77
           subject.invoice = Factory(:package_invoice, :state => "pending",
+                                    :amount => 45,
                                     :previous_balance => -200,
                                     :period_start => Date.today - 15.days,
                                     :period_end => Date.today + 15.days)
-          @qtt_days = subject.invoice.total_days
+
           subject.migrate_to @new_plan
-          @qtt_used_days = subject.invoice.total_days
         end
 
-        it "should have a discount on new invoice" do
-          discount = subject.invoice.total / @qtt_days * @qtt_used_days
-
-          @new_plan.invoice.previous_balance.should be < 0
-          @new_plan.invoice.previous_balance.should == discount.round(2)
+        it "should have a discount of 178.23 on new invoice" do
+          @new_plan.invoice.previous_balance.round(2).should ==
+            - BigDecimal.new("178.23")
         end
       end
 
       context "when last invoice is paid and total is less than zero" do
         before do
+          # Amount 21.77
           subject.invoice = Factory(:package_invoice, :state => "paid",
+                                    :amount => 45,
                                     :previous_balance => -200,
                                     :period_start => Date.today - 15.days,
                                     :period_end => Date.today + 15.days)
-          @qtt_days = subject.invoice.total_days
+
           subject.migrate_to @new_plan
-          @qtt_used_days = subject.invoice.total_days
         end
 
-        it "should have a discount on new invoice" do
-          discount = subject.invoice.total / @qtt_days * @qtt_used_days
-          @new_plan.invoice.previous_balance.should be < 0
-          @new_plan.invoice.previous_balance.should == discount.round(2)
+        it "should have a discount of 155 on new invoice" do
+          @new_plan.invoice.previous_balance.round(2).should ==
+            - BigDecimal.new("178.23")
         end
       end
     end
@@ -411,7 +414,7 @@ describe Plan do
                                   :period_start => Date.today - 15.days,
                                   :period_end => Date.today + 15.days)
         subject.billable = Factory(:environment, :owner => subject.user)
-        (1..5).collect do
+        (1..5).each do
           c = Factory(:course, :environment => subject.billable)
           (1..10).each { c.join Factory(:user) }
         end
@@ -428,6 +431,14 @@ describe Plan do
         end.flatten
         @new_plan.invoice.licenses.should_not be_empty
         @new_plan.invoice.licenses.should have(users.count).items
+      end
+
+      it "should have a invoice without amount value" do
+        @new_plan.invoice.amount.should be_nil
+      end
+
+      it "should have a open invoice" do
+        @new_plan.invoice.should be_open
       end
     end
   end
