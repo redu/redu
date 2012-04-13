@@ -102,6 +102,13 @@ $.fn.catchAndSendToEmbedly = function() {
       updateThumbnail(button, thumbnail_list, false);
     }
   });
+
+  // Faz desaparecer o preview depois de criar a postagem
+  $('input#status_submit').live('click', function() {
+    $(this).parents('fieldset').find('.new-post.vis-new-post').ajaxComplete(function() {
+      $(this).slideUp();
+    });
+  });
 }
 
 function updateThumbnail(root, thumbnail_list, get_next) {
