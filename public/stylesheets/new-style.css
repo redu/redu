@@ -7789,11 +7789,12 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   padding: 0px;
 }
 
+/*-- #graph-form é o .concave-form do gráfico --*/
 #graph-form .inline {
   float: left;
 }
 
-.concave-form .errors_on_date{
+#graph-form .errors_on_date{
   font-size: .8em;
   color: #FF6D6D;
   overflow: hidden;
