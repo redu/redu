@@ -990,15 +990,20 @@ describe Ability do
 
     context "when manage invitations" do
 
-      it "when destroy invitation" do
+      it "others can't destroy my invitations" do
+        @user_ability.should_not be_able_to(:destroy, @others)
+        @user_ability.should_not be_able_to(:destroy_invitations, @others)
+      end
+
+      it "can destroy invitation" do
         @user_ability.should be_able_to(:destroy, @user)
       end
 
-      it "when destroy invitations and friendship requests in batch" do
+      it "can destroy invitations and friendship requests in batch" do
         @user_ability.should be_able_to(:destroy_invitations, @user)
       end
 
-      it "when resend invitation email" do
+      it "can resend invitation email" do
         @user_ability.should be_able_to(:resend_email, @user)
       end
     end
