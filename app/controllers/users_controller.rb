@@ -105,7 +105,7 @@ class UsersController < BaseController
         invite.accept!
       end
 
-      #Invitation Token
+      # Invitation Token
       if params.has_key?(:friendship_invitation_token)
         invite = Invitation.find_by_token(params[:friendship_invitation_token])
         invite.accept!(@user)

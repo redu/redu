@@ -987,6 +987,21 @@ describe Ability do
         @user_ability.should be_able_to(:my_wall, @user)
       end
     end
+
+    context "when manage invitations" do
+
+      it "when destroy invitation" do
+        @user_ability.should be_able_to(:destroy, @user)
+      end
+
+      it "when destroy invitations and friendship requests in batch" do
+        @user_ability.should be_able_to(:destroy_invitations, @user)
+      end
+
+      it "when resend invitation email" do
+        @user_ability.should be_able_to(:resend_email, @user)
+      end
+    end
   end
 
   context "on PartnerEnvironmentAssociation" do
