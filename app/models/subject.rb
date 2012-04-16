@@ -6,8 +6,7 @@ class Subject < ActiveRecord::Base
   has_many :enrollments, :dependent => :destroy
   has_many :members, :through => :enrollments, :source => :user
   has_many :graduated_members, :through => :enrollments, :source => :user,
-    :include => :student_profiles,
-    :conditions => ["student_profiles.graduaded = 1"]
+    :conditions => ["enrollments.graduaded = 1"]
   has_many :teachers, :through => :enrollments, :source => :user,
     :conditions => ["enrollments.role = ?", 5] # Teacher
   has_many :statuses, :as => :statusable, :order => "created_at DESC"
@@ -65,14 +64,17 @@ class Subject < ActiveRecord::Base
   end
 
   def create_enrollment_associations
-    self.space.user_space_associations.each do |users_space|
-      self.enrollments.create(:user => users_space.user, :subject => self,
-                              :role => users_space.role)
+    enrollments = self.space.user_space_associations.all.collect do |users_space|
+      Enrollment.new(:user_id => users_space.user_id,
+                     :subject => self,
+                     :role => users_space.role)
     end
+
+    Enrollment.import(enrollments)
   end
 
   def graduated?(user)
-    self.enrolled?(user) and user.get_association_with(self).student_profile.graduaded?
+    self.enrolled?(user) && user.get_association_with(self).graduaded?
   end
 
   # Verifica se o módulo está pronto para ser publicado via
@@ -83,8 +85,8 @@ class Subject < ActiveRecord::Base
 
   # Notifica todos alunos matriculados sobre a adição de Subject
   def notify_subject_added
-    if self.notificable?
-      self.space.users.each { |u| UserNotifier.subject_added(u, self).deliver }
+    if notificable?
+      self.space.users.all.each { |u| UserNotifier.subject_added(u, self).deliver }
     end
   end
 
