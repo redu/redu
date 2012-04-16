@@ -48,8 +48,11 @@ module Api
     end
 
     def timeline
-      @spaces = Space.find(params[:space_id])
-      @statuses = Status.from_hierarchy(@spaces)
+      if params[:space_id]
+        @statuses = Status.from_hierarchy( Space.find(params[:space_id]) )
+      else
+        @statuses = User.find(params[:user_id]).overview
+      end
 
       respond_with(:api, @statuses)
     end

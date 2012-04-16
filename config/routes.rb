@@ -290,6 +290,7 @@ Redu::Application.routes.draw do
         :as => 'enrollments'
       resources :spaces, :only => :index
       resources :statuses, :only => [:index, :create]
+      match 'statuses/timeline',  :to => 'statuses#timeline',  :as => :user_timeline
     end
 
     resources :statuses, :only => [:show, :destroy] do

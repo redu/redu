@@ -605,7 +605,7 @@ describe "Statuses" do
   context "when listing overview on Space (timeline)" do
     before do
       @space = Factory(:space)
-      @params = {:oauth_token => @token, :format => 'json'}
+      @params = { :oauth_token => @token, :format => 'json' }
     end
 
     it "should return code 200" do
@@ -614,7 +614,7 @@ describe "Statuses" do
       response.code.should == "200"
     end
 
-    it "should return status created on space" do
+    it "should return text of status created on space" do
       @params = { 'status' => { :text => "Ximbica over" },
         :oauth_token => @token, :format => 'json' }
       post "/api/spaces/#{@space.id}/statuses", @params
@@ -640,6 +640,57 @@ describe "Statuses" do
     it "should return code 404, not found" do
       @lecture = Factory(:lecture)
       get "/api/spaces/#{@lecture.id}/statuses/timeline", @params
+      response.code.should == "404"
+    end
+  end
+  
+  context "when listing overview on User (timeline)" do
+    before do
+      @user = Factory(:user)
+      # Associação do user com uma atividade
+      ActiveRecord::Observer.with_observers(:status_observer) do
+        @activity = Factory(:activity,
+                              :user => @user,
+                              :statusable => @user)
+                              
+        @associations = @user.status_user_associations
+        @activity.text = "Ximbica over"
+        @params = { 'status' => { :text => @activity.text },
+          :oauth_token => @token, :format => 'json' }
+          
+        post "/api/users/#{@user.id}/statuses", @params
+      end
+    end
+
+    it "should return 200" do
+      get "/api/users/#{@user.id}/statuses/timeline", @params
+      response.code.should == "200"
+    end
+    
+    it "should return id of status created on user" do
+      get "/api/users/#{@user.id}/statuses/timeline", @params
+      parse(response.body)[0]['id'].should == @activity.id
+    end
+
+    it "should return body not be null" do
+      get "/api/users/#{@user.id}/statuses/timeline", @params
+      parse(response.body).should_not be_empty
+    end
+
+    it "should return number of overview" do
+      get "/api/users/#{@user.id}/statuses/timeline", @params
+
+      parse(response.body).count.should == @user.overview.count
+    end
+
+    it "should return code 404" do
+      get "/api/users/007/statuses/timeline", @params
+      response.code.should == "404"
+    end
+
+    it "should return code 404, not found" do
+      @lecture = Factory(:lecture)
+      get "/api/users/#{@lecture.id}/statuses/timeline", @params
       response.code.should == "404"
     end
   end
