@@ -277,6 +277,7 @@ Redu::Application.routes.draw do
       resources :lectures, :except => [:new, :edit], :shallow => true
       resources :users, :only => :index
       resources :statuses, :only => [:index, :create]
+      match 'statuses/timeline',  :to => 'statuses#timeline',  :as => :space_timeline
     end
 
     resources :lectures, :except => [:new, :edit, :index, :create] do

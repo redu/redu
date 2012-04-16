@@ -47,6 +47,13 @@ module Api
       respond_with(:api, @status)
     end
 
+    def timeline
+      @spaces = Space.find(params[:space_id])
+      @statuses = Status.from_hierarchy(@spaces)
+
+      respond_with(:api, @statuses)
+    end
+
     protected
 
     def statuses

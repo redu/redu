@@ -602,4 +602,46 @@ describe "Statuses" do
     end
   end
 
+  context "when listing overview on Space (timeline)" do
+    before do
+      @space = Factory(:space)
+      @params = {:oauth_token => @token, :format => 'json'}
+    end
+
+    it "should return code 200" do
+      get "/api/spaces/#{@space.id}/statuses/timeline", @params
+      # Retorna 200 mesmo sem nada listado
+      response.code.should == "200"
+    end
+
+    it "should return status created on space" do
+      @params = { 'status' => { :text => "Ximbica over" },
+        :oauth_token => @token, :format => 'json' }
+      post "/api/spaces/#{@space.id}/statuses", @params
+      get "/api/spaces/#{@space.id}/statuses/timeline", @params
+
+      parse(response.body)[0]['text'].should == "Ximbica over"
+    end
+
+    it "should return body not be null" do
+      @params = { 'status' => { :text => "Ximbica over" },
+        :oauth_token => @token, :format => 'json' }
+      post "/api/spaces/#{@space.id}/statuses", @params
+      get "/api/spaces/#{@space.id}/statuses/timeline", @params
+
+      parse(response.body).should_not be_empty
+    end
+
+    it "should return code 404" do
+      get "/api/spaces/007/statuses/timeline", @params
+      response.code.should == "404"
+    end
+
+    it "should return code 404, not found" do
+      @lecture = Factory(:lecture)
+      get "/api/spaces/#{@lecture.id}/statuses/timeline", @params
+      response.code.should == "404"
+    end
+  end
+  
 end
