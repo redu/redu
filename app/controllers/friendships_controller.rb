@@ -1,5 +1,5 @@
 class FriendshipsController < BaseController
-  include InvitationsUtil
+  include InvitationsProcessor
 
   load_and_authorize_resource :user, :find_by => :login
   load_and_authorize_resource :friendship, :through => :user

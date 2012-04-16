@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe InvitationsUtil do
+describe InvitationsProcessor do
 
   subject do
     class Bar
-      include InvitationsUtil
+      include InvitationsProcessor
     end
     Bar.new
   end

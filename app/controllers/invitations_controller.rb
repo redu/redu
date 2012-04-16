@@ -1,5 +1,5 @@
 class InvitationsController < ApplicationController
-  include InvitationsUtil
+  include InvitationsProcessor
 
   layout "clean"
   load_and_authorize_resource :invitation, :except => [:show]

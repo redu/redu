@@ -1,6 +1,6 @@
 require 'active_support/concern'
 
-module InvitationsUtil
+module InvitationsProcessor
   extend ActiveSupport::Concern
 
   module InstanceMethods
