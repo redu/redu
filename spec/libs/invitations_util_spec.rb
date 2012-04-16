@@ -81,8 +81,8 @@ describe InvitationsUtil do
       @param['emails'] = @email.collect { |e| "#{e},"}.to_s
       subject.process_invites(@param, @user)
 
-      @invitations_ids = @user.invitations.collect{ |i| i.id }
-      @friendship_requests = @user.friendships.requested.collect{ |f| f.id }
+      @invitations = @user.invitations
+      @friendship_requests = @user.friendships.requested
     end
 
     it "Destroy all friendship requests" do
@@ -93,8 +93,8 @@ describe InvitationsUtil do
 
     it "Destroy all invitations" do
       expect{
-        subject.batch_destroy_invitations(@invitations_ids, @user)
-      }.should change(Invitation, :count).by(@invitations_ids.count*-1)
+        subject.batch_destroy_invitations(@invitations, @user)
+      }.should change(Invitation, :count).by(@invitations.count*-1)
     end
   end
 end

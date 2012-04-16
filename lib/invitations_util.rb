@@ -23,11 +23,8 @@ module InvitationsUtil
     # pelo usuário.
     #
     # @user => Usuário logado, que está gerenciando seus convites
-    def batch_destroy_invitations(invitations_ids, user)
-      invitations_ids.each do |invitation_id|
-        invitation = Invitation.find(invitation_id)
-        invitation.destroy
-      end
+    def batch_destroy_invitations(invitations, user)
+      invitations.each{ |i| i.destroy }
     end
 
     # Destrói em batch as requisições de amizade selecionadas
@@ -35,8 +32,7 @@ module InvitationsUtil
     #
     # @user => Usuário logado, que está gerenciando seus convites
     def batch_destroy_friendships(friendship_requests, user)
-      friendship_requests.each do |friendship_id|
-        friendship_request = Friendship.find(friendship_id)
+      friendship_requests.each do |friendship_request|
         friend = friendship_request.friend
         friendship_receive = friend.friendship_for(user)
 

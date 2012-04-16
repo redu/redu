@@ -188,6 +188,42 @@ describe UserCourseAssociation do
 
       UserCourseAssociation.invited.should == @associations[3..4]
     end
+
+    it "retrieves associations from specified user" do
+      course = Factory(:course)
+      uca = course.user_course_associations.first
+
+      user = Factory(:user,
+                     :first_name => "John",
+                     :last_name => "Snow")
+      assoc = Factory(:user_course_association,
+                      :user => user,
+                      :course => course,
+                      :created_at => 2.weeks.ago)
+      assoc.approve!
+
+      user2 = Factory(:user,
+                      :first_name => "Cercei",
+                      :last_name => "Lannister")
+      assoc2 = Factory(:user_course_association,
+                       :user => user2,
+                       :course => course)
+      assoc2.invite!
+
+      user3 = Factory(:user,
+                      :first_name => "Rhaegar",
+                      :last_name => "Targaryen")
+      assoc3 = Factory(:user_course_association,
+                       :user => user3,
+                       :course => course)
+      assoc4 = Factory(:user_course_association,
+                       :user => user3,
+                       :course => Factory(:course))
+
+      UserCourseAssociation.by_user(user).should == [assoc]
+      UserCourseAssociation.by_user(user2).count.should == 1
+      UserCourseAssociation.by_user(user3).count.should == 2
+    end
   end
 
   context "when there are invitations (state is invted)" do

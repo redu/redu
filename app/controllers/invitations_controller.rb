@@ -12,7 +12,7 @@ class InvitationsController < ApplicationController
         redirect_to home_user_path(current_user)
       else
         @invitation_user = @invitation.user #remetente do convite
-        uca = UserCourseAssociation.where(:user_id => @invitation_user).approved
+        uca = UserCourseAssociation.by_user(@invitation_user).approved
         @contacts = { :total => @invitation_user.friends.count }
         @courses = { :total => @invitation_user.courses.count,
                      :environment_admin => uca.with_roles([:environment_admin]).count,
@@ -28,26 +28,37 @@ class InvitationsController < ApplicationController
   end
 
   def destroy
-    begin
-      @invitation = Invitation.find(params[:id])
-      @invitation.destroy
-      flash[:notice] = "O convite foi removido com sucesso."
-    rescue ActiveRecord::RecordNotFound
-      flash[:error] = "Nenhum convite para ser removido."
-    end
+    @invitation = Invitation.find(params[:id])
+    @invitation.destroy
+    flash[:notice] = "O convite foi removido com sucesso."
+
     respond_to do |format|
       format.html { redirect_to home_user_path(current_user) }
     end
   end
 
   def destroy_invitations
-    invitations_ids = params[:invitations_ids] || ""
-    invitations_ids = invitations_ids.collect{ |invitation_id| invitation_id.to_i }
+    invitations = params[:invitations_ids] || ""
+    invitations = invitations.collect do |id|
+      begin
+        invitation = Invitation.find(id)
+        authorize! :destroy, invitation
+        invitation
+      rescue
+      end
+    end
 
-   friendship_requests = params[:friendship_requests] || ""
-   friendship_requests = friendship_requests.collect{ |friendship_id| friendship_id.to_i}
+    friendship_requests = params[:friendship_requests] || ""
+    friendship_requests = friendship_requests.collect do |id|
+      begin
+        friendship_request = Friendship.find(id)
+        authorize! :destroy, friendship_request
+        friendship_request
+      rescue
+      end
+    end
 
-    batch_destroy_invitations(invitations_ids, current_user)
+    batch_destroy_invitations(invitations, current_user)
     batch_destroy_friendships(friendship_requests, current_user)
 
     if params.key?(:friendship_requests) or params.key?(:invitations_ids)
@@ -62,8 +73,12 @@ class InvitationsController < ApplicationController
   end
 
   def resend_email
-    @invitation.resend_email do |invitation|
-      UserNotifier.friendship_invitation(invitation).deliver
+    begin
+      authorize! :resend_email, @invitation
+      @invitation.resend_email do |invitation|
+        UserNotifier.friendship_invitation(invitation).deliver
+      end
+    rescue
     end
 
     respond_to do |format|

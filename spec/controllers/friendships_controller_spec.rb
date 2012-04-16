@@ -71,14 +71,14 @@ describe FriendshipsController do
     it "destroy a friendship, returning JS" do
       lambda {
         post :destroy, :locale => "pt-BR", :user_id => @user.login,
-          :id => @friendship.id, :format => :js
+        :id => @friendship.id, :format => :js
       }.should change(Friendship, :count).by(-2)
     end
 
     it "destroy a friendship, returning HTML" do
       lambda {
         post :destroy, :locale => "pt-BR", :user_id => @user.login,
-          :id => @friendship.id
+        :id => @friendship.id
       }.should change(Friendship, :count).by(-2)
     end
 
@@ -96,11 +96,11 @@ describe FriendshipsController do
 
   end
 
-   context 'new action' do
-     before do
-       @friend = @friends[0]
-     end
-    context 'user logged' do
+  context 'new action' do
+    before do
+      @friend = @friends[0]
+    end
+    context 'when user logged' do
       before do
         controller.process_invites({'emails' => 'example.mail.com, teste@mail.com', 'friend_id' => @friend.id}, @user)
         @params = {:locale => "pt-BR", :user_id => @user.login}
@@ -123,7 +123,7 @@ describe FriendshipsController do
   end
 
 
-  context 'Resend invitation email' do
+  context 'When resend invitation email' do
     before do
       controller.process_invites({'emails' => 'example1@email.com', 'friend_id' => @friends[0].id}, @user)
       @friendship_request = @user.friendships.requested.first
@@ -139,5 +139,4 @@ describe FriendshipsController do
       response.should render_template('invitations/resend_email')
     end
   end
-
 end

@@ -101,11 +101,6 @@ class Ability
         (u.settings.view_mural == Privacy[:friends] && u.friends?(user))
       end
 
-      # Invitations
-      can :resend_email, Invitation
-      can :destroy_invitations, Invitation
-      can :destroy, Invitation
-
       # Space
       # Necessário para visualizar os usuários do Space
       can :preview, Space do |space|

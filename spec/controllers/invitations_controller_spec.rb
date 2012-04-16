@@ -13,9 +13,9 @@ describe InvitationsController do
   context "Friendship invitations - " do
     before do
       @friend = Factory(:user)
-      @invitation_params = {}
-      @invitation_params.store('emails', 'example@email.com')
-      @invitation_params.store('friend_id', @friend.id)
+      @invitation_params = {'emails' => 'example@email.com',
+                            'friend_id' => @friend.id }
+
       controller.process_invites(@invitation_params, @user)
       @invitation = @user.invitations.last
       @params.store(:id, @invitation.id)
@@ -65,7 +65,9 @@ describe InvitationsController do
       before do
         @user = Factory(:user)
         controller.process_invites(@invitation_params, @user)
-        @params = {:locale => "pt-BR", :id => @invitation.id}
+        @params = {:locale => "pt-BR",
+                   :id => @invitation.id}
+
         get :show, @params
       end
 
@@ -82,7 +84,7 @@ describe InvitationsController do
       end
 
       it 'assigns courses members counts' do
-        uca = UserCourseAssociation.where(:user_id => @user).approved
+        uca = UserCourseAssociation.by_user(@user).approved
         @courses = { :total => @user.courses.count,
                      :environment_admin => uca.with_roles([:environment_admin]).count,
                      :tutor => uca.with_roles([:tutor]).count,
@@ -105,9 +107,8 @@ describe InvitationsController do
         @emails = @emails.collect{ |e| "#{e},"}.to_s
 
         # Params to create invitations
-        @invitation_params = {:locale => 'pt-BR'}
-        @invitation_params.store('emails', @emails)
-        @invitation_params.store('friend_id', @friends)
+        @invitation_params = {'emails' => @emails,
+                              'friend_id' => @friends}
         controller.process_invites(@invitation_params, @user)
 
         # Request params
@@ -181,7 +182,6 @@ describe InvitationsController do
     end
 
     it 'Invitations should be deleted' do
-      Invitation.all.should be_empty
       @new_invitation = Invitation.invite(:user => @user,
                                           :hostable => @user,
                                           :email => 'email@example.com')
@@ -204,16 +204,12 @@ describe InvitationsController do
       before do
         @params.store(:id, @invitation.id)
         @invitation.destroy
-        delete :destroy, @params
       end
 
-      it do
-        flash[:error].should_not be_nil
-        flash[:error].should == "Nenhum convite para ser removido."
-      end
-
-      it 'Should be redirected to user home' do
-        response.should redirect_to(home_user_path(@user))
+      it 'Should be redirected to not found' do
+        expect {
+          delete :destroy, @params
+        }.should raise_error ActiveRecord::RecordNotFound
       end
     end
   end

@@ -989,22 +989,34 @@ describe Ability do
     end
 
     context "when manage invitations" do
+      before do
+        @bastard = Factory(:user,
+                           :first_name => 'Jhon',
+                           :last_name => 'Snow')
+        @bastard_ability = Ability.new(@bastard)
+        @bastard_invitation = Invitation.invite(:user => @bastard,
+                                                :hostable => @bastard,
+                                                :email => 'mail@teste.com')
 
-      it "others can't destroy my invitations" do
-        @user_ability.should_not be_able_to(:destroy, @others)
-        @user_ability.should_not be_able_to(:destroy_invitations, @others)
+        @my_invitation = Invitation.invite(:user => @user,
+                                           :hostable => @user,
+                                           :email => 'mail@teste.com')
+      end
+
+      it "others can't manage my invitations" do
+        @bastard_ability.should_not be_able_to(:manage, @my_invitation)
+      end
+
+      it "I can't manage invitations from others" do
+        @user_ability.should_not be_able_to(:manage, @bastard_invitation)
       end
 
       it "can destroy invitation" do
-        @user_ability.should be_able_to(:destroy, @user)
-      end
-
-      it "can destroy invitations and friendship requests in batch" do
-        @user_ability.should be_able_to(:destroy_invitations, @user)
+        @user_ability.should be_able_to(:destroy, @my_invitation)
       end
 
       it "can resend invitation email" do
-        @user_ability.should be_able_to(:resend_email, @user)
+        @user_ability.should be_able_to(:resend_email, @my_invitation)
       end
     end
   end

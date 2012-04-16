@@ -264,6 +264,8 @@ class User < ActiveRecord::Base
       self.can_manage?(entity.exercise)
     when 'Exercise'
       self.can_manage?(entity.lecture) && !entity.has_results?
+    when 'Invitation'
+      self.can_manage?(entity.hostable)
     end
   end
 
