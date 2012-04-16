@@ -5,6 +5,7 @@ describe Log do
 
   it { should validate_presence_of :action }
   it { should belong_to(:logeable) }
+  it { should belong_to(:compound_log) }
 
   it "assigns type" do
     subject.type.should == subject.class.to_s

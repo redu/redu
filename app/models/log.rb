@@ -24,6 +24,7 @@ class Log < Status
   CONFIG = Redu::Application.config.overview_logger
 
   belongs_to :logeable, :polymorphic => true
+  belongs_to :compound_log
 
   validates_presence_of :action
 
