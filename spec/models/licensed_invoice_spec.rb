@@ -162,6 +162,24 @@ describe LicensedInvoice do
         end
       end
 
+      context "when closing" do
+        before do
+          subject.close!
+        end
+
+        it "should change to closed" do
+          subject.should be_closed
+        end
+
+        it "should calculate the amount" do
+          subject.amount.should_not be_nil
+        end
+
+        it "should set invoice's licenses period end" do
+          subject.licenses.reload.in_use.should be_empty
+        end
+      end
+
       context "when invoice is not paid in correct time" do
         before do
           Date.stub(:today) do

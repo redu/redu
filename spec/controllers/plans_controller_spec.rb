@@ -8,6 +8,8 @@ describe PlansController do
       @user = Factory(:user)
       @course = Factory(:course, :owner => @user)
       @plan = Factory(:plan, :user => @user, :billable => @course)
+      @plan_not_in_use = Factory(:plan, :user => @user, :billable => @course,
+                                 :current => false)
 
       activate_authlogic
       UserSession.create @user
@@ -21,6 +23,7 @@ describe PlansController do
       it "should assign plans" do
         assigns[:plans].should_not be_nil
         assigns[:plans].should include(@plan)
+        assigns[:plans].should_not include(@plan_not_in_use)
       end
 
       it "renders the correct template" do

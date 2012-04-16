@@ -15,10 +15,6 @@ describe Plan do
   it { should validate_presence_of :price }
   it { should validate_presence_of :user }
 
-  def period
-    (Date.today.at_end_of_month - Date.today).to_i
-  end
-
   context "states" do
     [:block!, :migrate!, :activate!, :state].each do |attr|
       it "responds to" do

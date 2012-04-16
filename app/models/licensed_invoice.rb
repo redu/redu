@@ -38,7 +38,7 @@ class LicensedInvoice < Invoice
   end
 
   aasm_event :close do
-    transitions :to => :closed, :from => [:open]
+    transitions :to => :closed, :from => [:open, :pending]
   end
 
   # Data limite para o pagamento
