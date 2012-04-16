@@ -269,16 +269,16 @@ describe Ability do
 
           # Need Myfile factory
           it "can NOT upload file"
+        end
 
-          it "can see reports" do
-            @ability.should be_able_to(:teacher_participation_report,
-                                       @course)
-          end
+        it "can see reports" do
+          @ability.should be_able_to(:teacher_participation_report,
+                                     @course)
+        end
 
-          it "can access JSON reports" do
-            @ability.should be_able_to(:teacher_participation_interaction,
-                                       @course)
-          end
+        it "can access JSON reports" do
+          @ability.should be_able_to(:teacher_participation_interaction,
+                                     @course)
         end
 
         it "invites members" do

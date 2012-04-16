@@ -70,4 +70,9 @@ Redu::Application.configure do
    :url => "http://vis.redu.com.br/hierarchy_notifications.json"
   }
 
+  config.vis = {
+    :activities => "http://vis.redu.com.br/subjects/activities.json",
+    :activities_d3 => "http://vis.redu.com.br/subjects/activities_d3.json"
+  }
+
 end

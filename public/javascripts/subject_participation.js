@@ -42,8 +42,8 @@ var subject_participation_pie = function () {
     }
 
     // Carregamento do Pie Chart
-    var loadPie = function(subject_id) {
-      var url = "http://192.168.1.9:3000/subjects/activities.json?subject_id=1";
+    var loadPie = function(subject_id, ur) {
+      var url = ur + "?subject_id=" + subject_id;
 
       $.getJSON(url, function (json) {
         options.chart.renderTo = 'subject-participation-pie-'+subject_id;
@@ -51,9 +51,9 @@ var subject_participation_pie = function () {
           name: 'Pedidos de ajuda que tiveram resposta',
           sliced: true,
           selected: true,
-          y: 5
+          y: json.helps_answered
         };
-        options.series[0].data[1] = ['Pedidos de ajuda sem resposta', 4];
+        options.series[0].data[1] = ['Pedidos de ajuda sem resposta', json.helps_not_answered];
 
         new Highcharts.Chart(options);
       })
@@ -61,8 +61,8 @@ var subject_participation_pie = function () {
 
     // Retorno do objeto
     return {
-      load_subject_participation_pie: function (subject_id) {
-        loadPie(subject_id);
+      load_subject_participation_pie: function (subject_id, url) {
+        loadPie(subject_id, url);
       }
     }
 };
@@ -80,8 +80,8 @@ var subject_participation_bullet = function () {
 
     // URL activities_d3
     // Carregamento do bullet
-    var loadBullet = function(subject_id){
-      var url = "http://192.168.1.9:3000/subjects/activities_d3.json?subject_id=1";
+    var loadBullet = function(subject_id, ur){
+      var url = ur + "?subject_id=" + subject_id;
 
       d3.json(url, function(data) {
       var vis = d3.select("#subject-participation-bullet-"+subject_id).selectAll("svg")
@@ -116,8 +116,8 @@ var subject_participation_bullet = function () {
 
   // Retorno do objeto
   return {
-    load_subject_participation_bullet: function (subject_id) {
-      loadBullet(subject_id);
+    load_subject_participation_bullet: function (subject_id, url) {
+      loadBullet(subject_id, url);
     },
   };
 };

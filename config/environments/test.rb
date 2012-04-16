@@ -85,4 +85,9 @@ Redu::Application.configure do
    :url => "http://localhost:4000/hierarchy_notifications.json"
   }
 
+  config.vis = {
+    :activities => "http://localhost:4000/subjects/activities.json",
+    :activities_d3 => "http://localhost:4000/subjects/activities_d3.json"
+  }
+
 end

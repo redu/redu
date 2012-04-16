@@ -3,7 +3,7 @@
   <%= lazy_load(:chart, :jammit => true) do %>
     try{
       var pieSbjPar = subject_participation_pie();
-      pieSbjPar.load_subject_participation_pie(<%= subject.id %>);
+      pieSbjPar.load_subject_participation_pie(<%= subject.id %>, "<%=  Redu::Application.config.vis[:activities] %>");
     }catch(e){
     }
   <% end %>
