@@ -4,8 +4,7 @@ describe User do
   subject { Factory(:user) }
 
   it { should have_many(:statuses) }
-  [:lectures, :favorites, :statuses,
-    :subjects, :subjects].each do |attr|
+  [:lectures, :favorites, :statuses, :subjects].each do |attr|
     it { should have_many attr }
     end
 
