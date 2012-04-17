@@ -84,7 +84,7 @@ describe InvitationsController do
       end
 
       it 'assigns courses members counts' do
-        uca = UserCourseAssociation.by_user(@user).approved
+        uca = @user.user_course_associations.approved
         @courses = { :total => @user.courses.count,
                      :environment_admin => uca.with_roles([:environment_admin]).count,
                      :tutor => uca.with_roles([:tutor]).count,

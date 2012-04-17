@@ -1007,12 +1007,8 @@ describe Ability do
         @bastard_ability.should_not be_able_to(:manage, @my_invitation)
       end
 
-      it "I can't manage invitations from others" do
-        @user_ability.should_not be_able_to(:manage, @bastard_invitation)
-      end
-
       it "can destroy invitation" do
-        @user_ability.should be_able_to(:destroy, @my_invitation)
+        @user_ability.should be_able_to(:destroy_invitations, @my_invitation)
       end
 
       it "can resend invitation email" do

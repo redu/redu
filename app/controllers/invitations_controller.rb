@@ -12,7 +12,7 @@ class InvitationsController < ApplicationController
         redirect_to home_user_path(current_user)
       else
         @invitation_user = @invitation.user #remetente do convite
-        uca = UserCourseAssociation.by_user(@invitation_user).approved
+        uca = @invitation_user.user_course_associations.approved
         @contacts = { :total => @invitation_user.friends.count }
         @courses = { :total => @invitation_user.courses.count,
                      :environment_admin => uca.with_roles([:environment_admin]).count,

@@ -21,8 +21,6 @@ class UserCourseAssociation < CourseEnrollment
     end
   }
 
-  scope :by_user, lambda { |user_id| where(:user_id => user_id) }
-
   scope :recent, lambda { where("created_at >= ?", 1.week.ago) }
   scope :approved, where(:state => 'approved')
   scope :invited, where(:state => 'invited')
