@@ -60,17 +60,4 @@ class StudentProfile < ActiveRecord::Base
                                                 :lecture => lecture)
     end
   end
-
-  def fill_params(status, options = {})
-    params = {
-      :user_id => status.user_id,
-      :type => get_type(status),
-      :status_id => status.id,
-      :statusable_id => status.statusable_id,
-      :statusable_type => status.statusable_type,
-      :in_response_to_id => status.in_response_to_id,
-      :in_response_to_type => status.in_response_to_type
-    }
-    params.merge(options)
-  end
 end
