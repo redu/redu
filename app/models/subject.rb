@@ -65,10 +65,16 @@ class Subject < ActiveRecord::Base
   end
 
   def create_enrollment_associations
+    params_array = []
     self.space.user_space_associations.each do |users_space|
-      self.enrollments.create(:user => users_space.user, :subject => self,
-                              :role => users_space.role)
+      enrollment = self.enrollments.create(:user => users_space.user,
+                                           :subject => self,
+                                           :role => users_space.role)
+      if enrollment
+        params_array << fill_params(enrollment)
+      end
     end
+    Delayed::Job.enqueue HierarchyNotificationJob.new(params_array)
   end
 
   def graduated?(user)
@@ -88,4 +94,24 @@ class Subject < ActiveRecord::Base
     end
   end
 
+  protected
+
+  def fill_params(enrollment)
+    course = enrollment.subject.space.course
+    params = {
+      :user_id => enrollment.user_id,
+      :type => "enrollment",
+      :lecture_id => nil,
+      :subject_id => enrollment.subject_id,
+      :space_id => enrollment.subject.space.id,
+      :course_id => course.id,
+      :status_id => nil,
+      :statusable_id => nil,
+      :statusable_type => nil,
+      :in_response_to_id => nil,
+      :in_response_to_type => nil,
+      :created_at => enrollment.created_at,
+      :updated_at => enrollment.updated_at
+    }
+  end
 end
