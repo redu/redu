@@ -1,7 +1,7 @@
 class CompoundLog < Status
   has_many :logs, :dependent => :destroy
 
-  def should_compound? ||
+  def should_compound?
 
   end
 
