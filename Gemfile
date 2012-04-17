@@ -55,6 +55,7 @@ gem 'delayed_job_active_record',
 gem 'daemons'
 gem 'activerecord-import'
 gem 'aws-sdk'
+gem 'vis_client', :git => "git@github.com:redu/vis_client.git"
 
 # Gems específicos de algum ambiente
 group :development, :test do
