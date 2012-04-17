@@ -1114,6 +1114,7 @@ body {
   display: block;
   font-size: .9em;
   margin-top: 2px;
+
 }
 
 .hierarchy-preview .spaces .name {
@@ -2037,7 +2038,6 @@ body {
 .statuses ol .responses,
 .statuses ol .create-response {
   margin-left: 37px;
-  background: #F0F0F0 url("../images/new/gray-nipple.png") no-repeat left top;
   padding: 20px 10px 10px 10px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -2051,7 +2051,7 @@ body {
 .statuses .friend-avatar,
 .statuses li .avatar {
   float: left;
-  margin-right: 5px;
+  margin-right: 10px;
 }
 
 .statuses .username {
@@ -2077,9 +2077,6 @@ body {
 
 .statuses .toggle-statuses {
   display: block;
-  border-top: 1px solid white;
-  padding-top: 10px;
-  margin-left: 37px;
   text-align: center;
   font-size: .9em;
 }
@@ -2135,7 +2132,8 @@ body {
 }
 
 .statuses .status-message p {
-  margin-left: 5px;
+  line-height: 18px;
+  margin-left: 10px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -7591,16 +7589,19 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   margin: 0;
 }
 
-#content .create-status .new-post .border-post {
+#content .create-status .new-post .border-post,
+#content .create-status .new-post .border-post-down,
+#content .responses ol .border-post,
+#content .responses ol .border-post-down {
   border-top: solid 1px rgb(204, 204, 204);
   border-bottom: solid 1px white;
   border-left: none;
   border-right: none;
-  margin: 10px 0px;
+  margin: 10px 0px 10px 0px;
 }
 
-#content .create-status .no-preview p {
-  width: 478px;
+#content .create-status .new-post .border-post-down  {
+  margin-bottom: 0px;
 }
 
 .plan-panel .concave-admin-table .course .environment,
@@ -7648,6 +7649,12 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 
 /* inicio pré-visualização novo post */
 
+.borderradius #content .create-status {
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
 .textshadow #content .create-status .new-post,
 .textshadow #statuses .status .status-text .new-post {
   text-shadow: 0px 1px 0px rgb(255, 255, 255);
@@ -7659,6 +7666,8 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   font-family: arial, sans-sefif;
   font-weight: normal;
   overflow: hidden;
+  clear: both;
+  padding-left: 10px;
 }
 
 #content .create-status .status-buttons .concave-clean {
@@ -7666,11 +7675,17 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   height: 28px;
   width: 73px;
   padding: 0px;
+  border-color: rgb(204, 204, 204);
+}
+
+#content .create-status .status-buttons .concave-clean:hover {
+  border-color: rgb(77, 173, 214);
 }
 
 #statuses .status .status-text .vis-new-post {
   overflow: hidden;
   margin-top: 20px;
+  margin-bottom: 13px;
 }
 
 #statuses .status .status-text .create-response {
@@ -7678,8 +7693,15 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 #content .create-status .new-post p,
+#content .create-status .new-post .title,
 #content .create-status .new-post .link {
-  width: 400px;
+  width: 390px;
+}
+
+#content .create-status .no-preview p,
+#content .create-status .no-preview .title,
+#content .create-status .no-preview .link {
+  width: 540px;
 }
 
 #content .create-status .new-post .close {
@@ -7688,14 +7710,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   float: right;
   cursor: pointer;
   height: 8px;
-}
-
-#content .create-status .new-post .title,
-#statuses .status .status-text .new-post .title {
-  color: rgb(77, 173, 214);
-  font-weight: normal;
-  margin-bottom: 5px;
-  cursor: pointer;
 }
 
 #content .create-status .new-post .link,
@@ -7731,10 +7745,17 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 #statuses .status .status-text .new-post .description {
   overflow: hidden;
   padding-left: 10px;
+  line-height: 18px;
 }
 
-#content .create-status .new-post .thumbnail .last {
+.textshadow .statuses .status .date,
+.textshadow .statuses .last-responses {
+  text-shadow: 0px 1px 0px white;
+}
+
+#content .create-status .new-post .thumbnail .buttons-thumbnail {
   clear: both;
+  display: block
 }
 
 #content .create-status .new-post .thumbnail .last .arrow {
@@ -7745,7 +7766,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   width: 8px;
 }
 
-#content .create-status .new-post .thumbnail .last .arrow:hover {
+#content .create-status .new-post .thumbnail .last:hover .arrow {
   background:  url("../images/new/icons-oembed-nav.png") 0px -20px no-repeat;
 }
 
@@ -7757,7 +7778,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   width: 8px;
 }
 
-#content .create-status .new-post .thumbnail .next .arrow:hover {
+#content .create-status .new-post .thumbnail .next:hover .arrow {
   background:  url("../images/new/icons-oembed-nav.png") -20px -20px no-repeat;
 }
 
@@ -7769,7 +7790,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   width: 8px;
 }
 
-#content .create-status  .new-post .thumbnail .remove .arrow:hover {
+#content .create-status  .new-post .thumbnail .remove:hover .arrow {
   background:  url("../images/new/icons-oembed-nav.png") -40px -20px no-repeat;
 }
 
@@ -7781,9 +7802,83 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   width: 28px;
   height: 22px;
   text-indent: -9999px;
-  background: rgb(247,247,247); /* Old browsers */
+  background: rgb(255, 255, 255); /* Old browsers */
   margin: 5px 5px 0px 0px;
   cursor: pointer;
+}
+
+.cssgradients #content .create-status .new-post .thumbnail .last,
+.cssgradients #content .create-status .new-post .thumbnail .next ,
+.cssgradients #content .create-status .new-post .thumbnail .remove {
+  background: -moz-linear-gradient(top, rgb(255,255,255) 0%, rgb(240,240,240) 97%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(255,255,255)), color-stop(97%,rgb(240,240,240))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 97%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 97%); /* Opera11.10+ */
+  background: -ms-linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 97%); /* IE10+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f0f0f0',GradientType=0 ); /* IE6-9 */
+  background: linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 97%); /* W3C */
+}
+
+#content .create-status .new-post .thumbnail .last:hover,
+#content .create-status .new-post .thumbnail .next:hover,
+#content .create-status .new-post .thumbnail .remove:hover {
+  border: solid 1px rgb(115, 195, 230);
+  color: rgb(21, 138, 196);
+  background: rgb(219, 239, 247); /* Old browsers */
+}
+
+#content .create-status .new-post .thumbnail .desactived .last,
+#content .create-status .new-post .thumbnail .desactived .next,
+#content .create-status .new-post .thumbnail .desactived .remove {
+  background: rgb(247, 247, 247);
+}
+
+.cssgradients #content .create-status .new-post .thumbnail .last:hover,
+.cssgradients #content .create-status .new-post .thumbnail .next:hover,
+.cssgradients #content .create-status .new-post .thumbnail .remove:hover {
+  background: -moz-linear-gradient(top,  rgb(247,247,247) 0%, rgb(219,239,247) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(247,247,247)), color-stop(100%,rgb(219,239,247))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgb(247,247,247) 0%,rgb(219,239,247) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgb(247,247,247) 0%,rgb(219,239,247) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgb(247,247,247) 0%,rgb(219,239,247) 100%); /* IE10+ */
+  background: linear-gradient(top,  rgb(247,247,247) 0%,rgb(219,239,247) 100%); /* W3C */
+}
+
+#content .create-status .new-post .thumbnail .desactived:hover {
+  background-color: rgb(247, 247, 247);
+}
+
+#content .create-status .new-post .java-applet,
+#statuses .status .status-text .new-post .java-applet {
+  clear: both;
+  float: left;
+  overflow: hidden;
+  background-color: rgb (192, 128, 64);
+}
+
+#content .create-status .new-post .thumbnail .desactived .last:hover,
+#content .create-status .new-post .thumbnail .desactived .next:hover,
+#content .create-status .new-post .thumbnail .desactived .remove:hover {
+  border: solid 1px rgb(204, 204, 204);
+  background: rgb(247, 247, 247);
+}
+
+.cssgradients #content .create-status .new-post .thumbnail:hover .desactived:hover {
+  background-color: black;
+}
+
+.cssgradients #content .create-status .new-post .thumbnail .desactived .last,
+.cssgradients #content .create-status .new-post .thumbnail .desactived .next,
+.cssgradients #content .create-status .new-post .thumbnail .desactived .remove,
+.cssgradients #content .create-status .new-post .desactived .last:hover,
+.cssgradients #content .create-status .new-post .desactived .next:hover,
+.cssgradients #content .create-status .new-post .desactived .remove:hover {
+  background: -moz-linear-gradient(top,  rgb(247,247,247) 0%, rgb(230,230,230) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(247,247,247)), color-stop(100%,rgb(230,230,230))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* IE10+ */
+  background: linear-gradient(top,  rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* W3C */
 }
 
 .borderradius #content .create-status .new-post .thumbnail .last,
@@ -7794,42 +7889,19 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   border-radius: 4px;
 }
 
-.cssgradients #content .create-status .new-post .thumbnail .last,
-.cssgradients #content .create-status .new-post .thumbnail .next,
-.cssgradients #content .create-status .new-post .thumbnail .remove {
-  background: -moz-linear-gradient(top,  rgb(247,247,247) 0%, rgb(230,230,230) 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(247,247,247)), color-stop(100%,rgb(230,230,230))); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top,  rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top,  rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* IE10+ */
-  background: linear-gradient(top,  rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* W3C */
+#content .create-status .new-post .thumbnail .desactived .last .arrow {
+  background: url("../images/new/icones-p.png") -480px -1919px no-repeat;
+  content: '';
 }
 
-#content .create-status .new-post .thumbnail .last:hover,
-#content .create-status .new-post .thumbnail .next:hover,
-#content .create-status .new-post .thumbnail .remove:hover {
-  border: solid 1px rgb(115, 195, 230);
-  color: rgb(21, 138, 196);
-  background: rgb(30,87,153); /* Old browsers */
+#content .create-status .new-post .thumbnail .desactived .next .arrow {
+  background: url("../images/new/icones-p.png") -480px -1839px no-repeat;
+  content: '';
 }
 
-.cssgradients #content .create-status .new-post .thumbnail .last:hover,
-.cssgradients #content .create-status .new-post .thumbnail .next:hover,
-.cssgradients #content .create-status .new-post .thumbnail .remove:hover {
-  background: -moz-linear-gradient(top,  rgb(30,87,153) 0%, rgb(247,247,247) 2%, rgb(219,239,247) 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(30,87,153)), color-stop(2%,rgb(247,247,247)), color-stop(100%,rgb(219,239,247))); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top,  rgb(30,87,153) 0%,rgb(247,247,247) 2%,rgb(219,239,247) 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top,  rgb(30,87,153) 0%,rgb(247,247,247) 2%,rgb(219,239,247) 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  rgb(30,87,153) 0%,rgb(247,247,247) 2%,rgb(219,239,247) 100%); /* IE10+ */
-  background: linear-gradient(top,  rgb(30,87,153) 0%,rgb(247,247,247) 2%,rgb(219,239,247) 100%); /* W3C */
-}
-
-#content .create-status .new-post .java-applet,
-#statuses .status .status-text .new-post .java-applet {
-  clear: both;
-  float: left;
-  overflow: hidden;
-  background-color: rgb (192, 128, 64);
+#content .create-status .new-post .thumbnail .desactived .remove .arrow {
+  background: url("../images/new/icones-p.png") -4px -2163px no-repeat;
+  content: '';
 }
 
 #content .create-status .new-post .java-applet .icon,
@@ -7859,14 +7931,37 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   padding: 0px;
 }
 
+.statuses .last-responses {
+  color: rgb(179, 179, 179);
+  display: block;
+  font-size: 0.9em;
+  margin-top: -10px;
+  text-align: center;
+}
+
 #statuses .status .status-text .create-response .ui-placeholder {
   top: 9px;
   font-style: normal;
 }
 
-#statuses .status .status-text .responses .comment-title {
-  margin: 3px 0px;
+#statuses .status .status-text .comment-title {
+  margin: 3px 0px 0px 10px;
   display: block;
+}
+
+#statuses .status .status-text .vis-new-post .comment-title {
+  margin-left: 0px;
+}
+
+#statuses .status .responses {
+  padding-left: 0px;
+  padding-right: 0px;
+  background-color: rgb(240, 240, 240);
+}
+
+#statuses .status .responses .re-status {
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 #statuses .status .status-text .responses .answer-box {
@@ -7875,58 +7970,51 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   width: 500px;
 }
 
-#content .create-status .new-post:before {
-  border-color: rgb(240, 240, 240) transparent;
-  border-width: 0 10px 10px;
-  margin-top: -52px;
-  border-style: solid;
-  content: " ";
-  display: block;
-  left: 416px;
-  position: absolute;
-  width: 0;
-}
-
-.status-text .vis-new-post:after,
-.status-text .create-response:after {
-   border-color: rgb(240, 240, 240) transparent;
+#content .create-status .new-post .distance-top:before {
+   border-color: rgb(240, 240, 240) white;
    border-width: 0 10px 10px;
-   margin-top: 48px;
+   margin-top: -58px;
    border-style: solid;
    content: " ";
    display: block;
-   left: 65px;
    position: absolute;
    width: 0;
 }
 
-.status-text .create-response:after {
-  margin-top: -108px;
+.status-text .create-response .distance-top:after,
+.status-text .responses .distance-top:after {
+   border-color: rgb(240, 240, 240) white;
+   border-width: 0 10px 10px;
+   margin-top: -46px;
+   border-style: solid;
+   content: " ";
+   display: block;
+   left: 540px;
+   position: absolute;
+   width: 0;
 }
 
-.status-text .vis-new-post:after {
-  margin-top: -63px;
+.distance-top {
+  text-indent: -9999px;
+  width: 0px;
+  height: 0px;
 }
-
-.status-text .new-post:after {
-    margin-top: -122px;
-}
-
 
 /* -- Início notificações lateral esquerda -- */
 
 .local-nav .session .notification {
   background-color: rgb(230, 230, 230);
-  padding: 3px 3px 2px 3px;
+  padding: 3px 5px 2px 5px;
   color: rgb(77, 173, 214);
   font-weight: normal;
-  display: inline;
-  margin-left: 10px;
+  margin-top: -2px;
+  margin-right: -10px;
   font-size: 11px;
+  float: right;
 }
 
 .textshadow .local-nav .session .notification {
-  text-shadow: 0px 1px 0px rgb(255, 255, 255);
+  text-shadow: 0px -1px 0px rgb(255, 255, 255);
 }
 
 .borderradius .local-nav .session .notification {
@@ -7986,6 +8074,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   float: right;
   margin-top: 10px;
   margin-right: 8px;
+  font-size: 11px;
 }
 
 #statuses .status .status-context .post-grouped-discipline {

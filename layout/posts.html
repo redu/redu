@@ -23,7 +23,8 @@
     <![endif]-->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-    <script src="../public//javascripts/modernizr.js" type="text/javascript"></script>
+    <script src="../public/javascripts/form.redu.jquery.js" type="text/javascript"></script>
+    <script src="../public/javascripts/modernizr.js" type="text/javascript"></script>
     <script type="text/javascript" src="http://use.typekit.com/lpo4rgu.js"></script>
     <script type="text/javascript">try{ Typekit.load(); }catch(e){}</script>
     <link href="../public//stylesheets/new-style.css" rel="stylesheet" type="text/css"/>
@@ -172,19 +173,19 @@
     	<label class="status-icon replacement concave-label" for="status_text">Seu mural</label>
      <textarea rows="1" name="status[text]" id="status_text" cols="40" class="status textarea status-d04c366d concave-input"></textarea>
 			  <div class="new-post no-preview">
+			  <div class="distance-top">Distância para a aba</div>
 			    <hr class="border-post">
 			    <span class="close icon-small icon-delete-gray_8_10">Close</span>
-				  <a hrfe="#" class="title">Redu experimento na Escola do Recife</a>
+				  <a href="#" class="title">Redu nto n nto nnto nnto nexperimento na Escola do Recife</a>
 				  <h3 class="link">www.youtube.com</h3>
 				  <p>Neste vídeo são apresentados os resultados de uma experiência de uso do Redu na Escola do Recife, PE. </p>
-				  <hr class="border-post">
+				  <hr class="border-post-down">
 			  </div>
 			<div class="status-buttons">
 			  <input id="status_submit" class="concave-button" type="submit" value="Enviar" name="commit">
 				<input id="status_submit" class="concave-clean" type="submit" value="Cancelar" name="commit">
 			</div>
 		</fieldset></form></div>
-
 <!-- COM THUMBNAIL -->
  <div class="create-status inform-my-status">
   <form accept-charset="UTF-8" action="/statuses" class="form-loader concave-form" data-remote="true" id="new_status" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="SFLTQcxPE9cX8UFz63+MAQkh5V/dJST5oG1awR9fLF8=" /></div>
@@ -198,12 +199,22 @@
     	<label class="status-icon replacement concave-label" for="status_text">Seu mural</label>
      <textarea rows="1" name="status[text]" id="status_text" cols="40" class="status textarea status-d04c366d concave-input"></textarea>
 			<div class="new-post">
+			   <div class="distance-top">Distância para a aba</div>
 			  <hr class="border-post">
 			  <div class="thumbnail">
 			    <span class="preview-link">seu post aqui</span>
-			    <span class="last"><span class="arrow">L</span></span>
-			    <span class="next"><span class="arrow">N</span></span>
-			    <span class="remove">R<span class="arrow">N</span></span>
+		      <span class="buttons-thumbnail">
+		        <span class="last"><span class="arrow">L</span></span>
+		        <span class="next"><span class="arrow">N</span></span>
+		        <span class="remove">R<span class="arrow">N</span></span>
+		      </span>
+			  </div>
+			  <div class="thumbnail">
+			    <span class="buttons-thumnail desactived">
+			      <span class="last"><span class="arrow">L</span></span>
+			      <span class="next"><span class="arrow">N</span></span>
+			      <span class="remove">R<span class="arrow">N</span></span>
+			    </span>
 			  </div>
 			  <div class="description">
 			    <span class="close icon-small icon-delete-gray_8_10">Close</span>
@@ -211,7 +222,7 @@
 			    <h3 class="link">www.youtube.com</h3>
 			    <p>Neste vídeo são apresentados os resultados de uma experiência de uso do Redu na Escola do Recife, PE.</p>
 				</div>
-				<hr class="border-post">
+				<hr class="border-post-down">
 			</div>
 			<div class="status-buttons">
 			  <input id="status_submit" class="concave-button" type="submit" value="Enviar" name="commit">
@@ -232,6 +243,7 @@
     	<label class="status-icon replacement concave-label" for="status_text">Seu mural</label>
      <textarea rows="1" name="status[text]" id="status_text" cols="40" class="status textarea status-d04c366d concave-input"></textarea>
 			<div class="new-post">
+			  <div class="distance-top">Distância para a aba</div>
 			  <hr class="border-post">
 			  <div class="java-applet">
 			    <span class="icon">cup</span>
@@ -242,7 +254,7 @@
 			    <h3 class="link">www.gregosetroianos.com.br</h3>
 			    <p> </p>
 				</div>
-				<hr class="border-post">
+				<hr class="border-post-down">
 			</div>
 			<div class="status-buttons">
 			  <input id="status_submit" class="concave-button" type="submit" value="Enviar" name="commit">
@@ -264,7 +276,8 @@
         <span class="date">
           17 dias
         </span>
-        <div class="responses new-post vis-new-post create-response">
+        <div class="	new-post vis-new-post create-response">
+        <div class="distance-top">Distância para a aba</div>
           <span class="comment-title">lorem ipsum title </span>
             <div class="thumbnail">
 			        <span class="preview-link">seu post aqui</span>
@@ -276,28 +289,64 @@
 				    </div>
 			  </div>
 
-			  <div class="responses  create-response vis-new-post">
-			    <img width="32" height="32" src="http://s3.amazonaws.com/redu_uploads/users/avatars/1182/thumb_32/sílvia 2011.jpg?1330739994" class="avatar" alt="Sílvia 2011">
-          <a class="username" href="/pessoas/silvia0301">Sílvia Carla da Silva Cardoso</a>
-          <span class="status-info">
-                respondeu
-          </span>
-          <span class="date">
-            17 dias
-          </span>
-          <span class="answer-box">
-            <span class="comment-title">Lorem Ipsum Title</span>
-            <div class="new-post">
-			        <div class="java-applet">
-			          <span class="icon">cup</span>
-			        </div>
-			        <div class="description">
-			          <a href="#" class="title">Parábola circular (produzida por Carlos Cr)</a>
-			          <h3 class="link">www.gregosetroianos.com.br</h3>
-			          <p> </p>
-				      </div>
-			      </div>
-			  </div>
+			  <div class="responses">
+			   <div class="distance-top">Distância para a aba</div>
+			   <a class="last-responses" href="#">Visualizando as últimas repostas</a>
+            <ol>
+              <li id="status-21049">
+                <hr class="border-post">
+                <div class="re-status">
+                  <div class="status-text">
+                    <img width="32" height="32" src="http://s3.amazonaws.com/redu_uploads/users/avatars/4/thumb_32/Guilherme3x4%20copy.jpg?1323711306" class="avatar" alt="Guilherme3x4%20copy">
+                    <a class="username" href="/pessoas/guiocavalcanti">Guilherme Cavalcanti</a>
+                    <span class="status-info">
+                      respondeu
+                    </span>
+                    <span class="date">
+                      há 9 dias
+                    </span>
+                  </div>
+                  <div class="status-message">
+                    <span class="comment-title">Lorem Ipsum Title</span>
+                     <div class="new-post">
+			                <div class="java-applet">
+			                  <span class="icon">cup</span>
+			                </div>
+			                <div class="description">
+			                  <a href="#" class="title">Parábola circular (produzida por Carlos Cr)</a>
+			                  <h3 class="link">www.gregosetroianos.com.br</h3>
+			                  <p> </p>
+				              </div>
+			               </div>
+                  </div>
+                </div>
+              </li>
+<li id="status-21409">
+<hr class="border-post">
+  <div class="re-status">
+    <div class="status-text">
+      <img width="32" height="32" src="http://redu-assets.s3.amazonaws.com/images/new/missing_users_thumb_32.png" class="avatar" alt="Missing_users_thumb_32">
+      <a class="username" href="/pessoas/lourdes">maria de lourdes lourdes</a>
+      <span class="status-info">
+       respondeu
+      </span>
+      <span class="date">
+        há 7 dias
+      </span>
+    </div>
+  <div class="status-message">
+    <p>
+      É um curso muito bom
+    </p>
+  </div>
+  <ul class="actions clearfix">
+  </ul>
+</div>
+<hr class="border-post-down">
+</li>
+            </ol>
+            <a class="toggle-statuses" href="#">Ver todos os <span class="qty">7</span> comentários</a>
+          </div>
 			  <ul class="actions clearfix">
             <li>
               <a class="icon-response-gray_8_10-before reply-status" href="#">Responder</a>
@@ -311,9 +360,10 @@
           <input type="hidden" value="17728" name="status[in_response_to_id]" id="status_in_response_to_id">
           <input type="hidden" value="Activity" name="status[in_response_to_type]" id="status_in_response_to_type">
           <fieldset class="concave-fieldset">
-            <textarea for="status_text" class="status-icon-answer replacement concave-label">Resposta status</textarea>
+            <div class="distance-top">Distância para a aba</div>
+            <label for="status_text" class="status-icon-answer replacement concave-label">Resposta status</label>
             <span class="ui-placeholder-wrap">
-              <input name="status[text]" id="status_text" placeholder="" class="status-answer-28cd0728 concave-input"></input>
+              <textarea name="status[text]" id="status_text" placeholder="" class="status-answer-28cd0728 concave-input"></textarea>
               <span class="ui-placeholder">Digite sua resposta ao comentário acima </span>
             </span>
             <div class="char-limit char-status-answer-28cd0728">
@@ -326,8 +376,7 @@
           </fieldset>
         </form>
       </div>
-
-</li>
+    </li>
 
    </ol>
 
