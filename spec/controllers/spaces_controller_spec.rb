@@ -33,12 +33,8 @@ describe SpacesController do
       course = Factory(:course, :environment => environment)
       space = Factory(:space, :course => course)
       user = Factory(:user)
-      UserEnvironmentAssociation.create(:environment => environment,
-                                        :user => user,
-                                        :role => Role[:environment_admin])
-      UserCourseAssociation.create(:course => course,
-                                   :user => user,
-                                   :role => Role[:environment_admin])
+      space.course.join user, Role[:environment_admin]
+
       activate_authlogic
       UserSession.create user
 

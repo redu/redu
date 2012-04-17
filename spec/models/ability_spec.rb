@@ -515,6 +515,12 @@ describe Ability do
                           :course => @course)
           @ability.should be_able_to(:destroy, space)
         end
+
+        it "can see subject participation report" do
+          @ability.should be_able_to(:subject_participation_report,
+                                     @course)
+        end
+
         it "creates a subject"
         it "destroys any subject"
         it "creates a lecture"

@@ -4764,7 +4764,7 @@ table.spaced tr td {
   width: 240px;
 }
 
-#space-manage #second-header {
+#space-manage .form-header-complement {
   margin-right: 0px;
 }
 
