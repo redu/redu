@@ -6,7 +6,6 @@ module Api
       def space_abilities(user)
         @teacher_role ||= Role[:teacher]
         @administrative_roles = [Role[:teacher], Role[:environment_admin]]
-
         if user
           can(:create, Space) { |s| can? :manage, s.course }
           can :create, Space  do |s|
