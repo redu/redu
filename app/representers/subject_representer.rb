@@ -12,7 +12,7 @@ module SubjectRepresenter
   end
 
   link :lectures do
-    api_course_spaces_subjects_lectures_url(self)
+    api_subject_lectures_url(self)
   end
 
   link :space do
@@ -25,10 +25,6 @@ module SubjectRepresenter
 
   link :environment do
     api_environment_url(self.space.course.environment)
-  end
-
-  link :enrollments do
-    api_course_space_subject_enrollments_url(self)
   end
 
 end
