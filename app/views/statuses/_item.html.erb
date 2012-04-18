@@ -286,7 +286,8 @@
           <%= time_ago_in_words item.created_at %>
         </span>
       </div>
-      <div class="responses-preview new-post vis-new-post">
+      <div class="new-post vis-new-post create-response">
+        <div class="distance-top"></div>
         <span class="comment-title">
           <%= raw auto_link(h(item.text).gsub(/\n/, '</br>'))%>
         </span>
@@ -301,15 +302,22 @@
             </div>
           <% end %>
           <div class="description">
-            <h2 class="title">
-              <%= link_to item.status_resources.first.title, item.status_resources.first.link, :target => "_blank", :rel => "nofollow" %>
-            </h2>
+            <%= link_to item.status_resources.first.title, item.status_resources.first.link, :target => "_blank", :rel => "nofollow", :class => "title" %>
             <h3 class="link">
               <%= item.status_resources.first.provider %>
             </h3>
             <p><%= item.status_resources.first.description %></p>
           </div>
         <% end %>
+      </div>
+      <div class="responses">
+        <div class="distance-top"></div>
+        <%= link_to 'Visualizando as últimas respostas', '#', :class => "last-responses" %>
+        <ol>
+          <%= render :partial => "statuses/response", :collection => item.answers %>
+          <hr class="border-post-down"/>
+        </ol>
+        <a href="#" class="toggle-statuses">Ver todos os <span class="qty"><%= item.answers.count %></span> comentários</a>
       </div>
       <ul class="actions clearfix">
         <% if can? :respond, item %>
@@ -331,12 +339,6 @@
       </ul>
       <%= render :partial => 'statuses/create_response',
         :locals => { :in_response_to => item }%>
-      <div class="responses">
-        <ol>
-          <%= render :partial => "statuses/response", :collection => item.answers %>
-        </ol>
-        <a href="#" class="toggle-statuses">Ver todos os <span class="qty"></span> comentários</a>
-      </div>
     </div>
     <% end %>
   <% end %>
