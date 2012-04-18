@@ -1,27 +1,30 @@
 class CompoundLog < Status
   has_many :logs, :dependent => :destroy
 
-  # 
   def compound!(log)
 	self.logs << log
 	self.compound = false
-	self.visible_at = Time.now
-  	# if compound_log
-    #   # Já existe log composto: verifica se deve habilitá-lo
-    #   if compound_log.logs.count == 4
-    #     compound_log.logs << self
-    #     compound_log.compound = false # Exibe status na view
-    #     new_compound = CompoundLog.new(:statusable_type => self.statusable_type,
-    #                                    :statusable_id => self.statusable_id,
-    #                                    :compound => true) # Não exibe status na view  
-    #   end
-    # else
-    #   # Não existe log composto: cria e associa novo log
-    #   compound_log = CompoundLog.new(:statusable_type => self.statusable_type,
-    #                                  :statusable_id => self.statusable_id,
-    #                                  :compound => true) # Não exibe status na view
-    #   compound_log.logs << self
-    #   self.compound = false # Exibe status na view
-    # end
+	self.compound_visible_at = Time.now
+  end
+
+  scope :by_logeable_type, lambda { |type| where(:logeable_type => type)}
+
+  def self.last_compostable(status, interval=24)
+    statusable = status.statusable
+    logeable_type = status.logeable_type
+
+    compound_logs = CompoundLog.by_statusable(statusable.class.to_s, statusable.id).by_logeable_type(logeable_type)
+
+    compound_log = compound_logs.sort{ |i,j| i.created_at <=> j.created_at }.last
+
+    if compound_log
+      p compound_log
+      compound_log = nil if compound_log.compound_visible_at > interval.hours.ago
+    end
+
+    compound_log ||= CompoundLog.create(:statusable => status.statusable,
+                                          :compound => true,
+                                          :logeable_type => status.logeable.class.to_s,
+                                          :user => status.user)
   end
 end

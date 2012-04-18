@@ -1,4 +1,4 @@
-class AddCompoundedAndCompoundedIdToStatuses < ActiveRecord::Migration
+class AddCompoundAndCompoundLogIdAndCompoundVisibleAtToStatuses < ActiveRecord::Migration
   def self.up
     add_column :statuses, :compound, :boolean
     add_column :statuses, :compound_log_id, :integer
