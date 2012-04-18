@@ -1,12 +1,19 @@
 class Enrollment < ActiveRecord::Base
   # Entidade intermediária entre User e Subject. É criada quando o usuário se
   # matricula num determinado Subject.
+  # Contém informações sobre aulas realizadas, porcentagem do Subject cursado
+  # e informações sobre desempenho no Subject.
+  include VisClient
 
-  after_create :creates_student_profile
+  # Em alguns casos o enrollment é chamado utilizando o gem activerecord-import
+  # por questões de otimização. Este gem desabilita qualquer tipo de callback
+  # cuidado ao adicionar callbacks a esta entidade.
+  after_create :create_assets_reports
 
   belongs_to :user
   belongs_to :subject
-  has_one :student_profile, :dependent => :destroy
+  has_many :asset_reports, :dependent => :destroy
+  has_many :lectures, :through => :asset_reports
 
   enumerate :role
 
@@ -30,8 +37,50 @@ class Enrollment < ActiveRecord::Base
     end
   }
 
+  # Atualiza a porcentagem de cumprimento do módulo.
+  def update_grade!
+    total = self.asset_reports.count
+    done = self.asset_reports.count(:conditions => "done = 1");
+
+    self.grade = (( done.to_f * 100 ) / total)
+    if total == done
+      self.grade = 100
+      self.graduaded = true
+      notify_vis
+    else
+      self.graduaded = false
+    end
+    self.save
+
+    return self.grade
+  end
+
+  def create_assets_reports
+    subject.lectures.each do |lecture|
+      self.asset_reports << AssetReport.create(:subject => self.subject,
+                                               :lecture => lecture)
+    end
+  end
+
   protected
-  def creates_student_profile
-    self.create_student_profile(:user => self.user, :subject => self.subject)
+
+  def notify_vis
+    params = {
+      :user_id => self.user_id,
+      :lecture_id => nil,
+      :subject_id => self.subject_id,
+      :space_id => self.subject.space.id,
+      :course_id => self.subject.space.course.id,
+      :type => "subject_finalized",
+      :status_id => nil,
+      :statusable_id => nil,
+      :statusable_type => nil,
+      :in_response_to_id => nil,
+      :in_response_to_type => nil,
+      :created_at => self.created_at,
+      :updated_at => self.updated_at
+    }
+
+    self.send_async_info(params, Redu::Application.config.vis_client[:url])
   end
 end
