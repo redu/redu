@@ -31,5 +31,4 @@ class Oauth2Verifier < OauthToken
     self.expires_at = 10.minutes.from_now
     self.authorized_at = Time.now
   end
-
 end

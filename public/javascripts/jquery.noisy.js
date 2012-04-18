@@ -5,7 +5,7 @@
 		var uri, localStorageSupported, cachedUri = false;
 		
 		try {
-		    localStorageSupported = 'localStorage' in window && window['localStorage'] !== null;
+		    localStorageSupported = 'localStorage' in window && window['localStorage'] != null;
 		} catch (err) {
 		    localStorageSupported = false;
 		}
