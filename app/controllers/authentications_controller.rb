@@ -38,7 +38,6 @@ class AuthenticationsController < ApplicationController
         redirect_to home_user_path(user)
       else
         # Erro ao criar / atualizar usuário.
-        @error = user.errors.first.second.to_s
         flash[:notice] = "#{t :facebook_connect_error}#{@error}"
         redirect_to home_path
       end
