@@ -6,9 +6,9 @@
       <h2 class= "actual-plan">Plano atual</h2>
     <% else %>
       <% if actual_plan.billable.is_a? Environment %>
-        <%= link_to "Assinar", environment_plans_path(actual_plan.billable, :new_plan => plan_preset, :type => type), :method => :post, :class => "concave-important concave-important-p" %>
+        <%= link_to "Assinar", environment_plans_path(actual_plan.billable, :partner_id => partner, :client_id => client, :new_plan => plan_preset, :type => type), :method => :post, :class => "concave-important concave-important-p" %>
       <% elsif actual_plan.billable.is_a? Course %>
-        <%= link_to "Assinar", environment_course_plans_path(actual_plan.billable.environment, actual_plan.billable, :new_plan => plan_preset, :type => type), :method => :post, :class => "concave-important concave-important-p" %>
+        <%= link_to "Assinar", environment_course_plans_path(actual_plan.billable.environment, actual_plan.billable, :partner_id => partner, :client_id => client, :new_plan => plan_preset, :type => type), :method => :post, :class => "concave-important concave-important-p" %>
       <% end %>
     <% end %>
     <% if plan.members_limit == 1.0/0 # Infinity %>

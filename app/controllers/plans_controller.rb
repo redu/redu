@@ -5,8 +5,13 @@ class PlansController < BaseController
   authorize_resource
   load_and_authorize_resource :user, :only => :index, :find_by => :login
   load_and_authorize_resource :plan, :only => :index, :through => :user
+  load_and_authorize_resource :partner, :only => [:create, :options]
 
   def create
+    if params[:client_id]
+      @client = @partner.partner_environment_associations.find(params[:client_id])
+    end
+
     @environment = Environment.find(params[:environment_id])
     if params[:course_id]
       @course = @environment.courses.find_by_path(params[:course_id])
@@ -17,7 +22,18 @@ class PlansController < BaseController
     @plan.migrate_to @new_plan
 
     flash[:notice] = "O novo plano foi assinado, você pode ver a fatura abaixo."
-    redirect_to plan_invoices_path(@new_plan)
+    respond_to do |format|
+      if @client
+        format.html do
+          redirect_to partner_client_plan_invoices_path(@partner, @client,
+                                                        @new_plan)
+        end
+      else
+        format.html do
+          redirect_to plan_invoices_path(@new_plan)
+        end
+      end
+    end
   end
 
   def index
@@ -29,12 +45,25 @@ class PlansController < BaseController
   end
 
   def options
+    if params[:client_id]
+      @client = @partner.partner_environment_associations.find(params[:client_id])
+    end
+
     @billable_url = if @plan.billable.is_a? Environment
                       environment_url(@plan.billable)
                     elsif @plan.billable.is_a? Course
                       environment_course_url(@plan.billable.environment,
                                               @plan.billable)
                     end
+
+    respond_to do |format|
+      if @client
+        format.html { render "partner_environment_associations/plans/options" }
+      else
+        format.html
+      end
+
+    end
   end
 
   protected
