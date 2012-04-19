@@ -3,8 +3,8 @@ class PlansController < BaseController
   before_filter :find_course_environment, :except => [:index, :create]
 
   authorize_resource
-  load_and_authorize_resource :user, :only => :index, :find_by => :login
-  load_and_authorize_resource :plan, :only => :index, :through => :user
+  load_and_authorize_resource :user, :find_by => :login
+  load_and_authorize_resource :plan, :only => [:index, :options], :through => :user
   load_and_authorize_resource :partner, :only => [:create, :options]
 
   def create
@@ -18,6 +18,8 @@ class PlansController < BaseController
     end
 
     @plan = @course.try(:plan) || @environment.try(:plan)
+    authorize! :migrate, @plan
+
     @new_plan = Plan.from_preset(params[:new_plan].to_sym)
     @plan.migrate_to @new_plan
 
@@ -45,6 +47,8 @@ class PlansController < BaseController
   end
 
   def options
+    authorize! :migrate, @plan
+
     if params[:client_id]
       @client = @partner.partner_environment_associations.find(params[:client_id])
     end
@@ -62,7 +66,6 @@ class PlansController < BaseController
       else
         format.html
       end
-
     end
   end
 

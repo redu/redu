@@ -209,6 +209,12 @@ describe Plan do
         @new_plan = Factory.build(:active_package_plan, :price => 25.40)
       end
 
+      it "should change to migrated" do
+        expect {
+          subject.migrate_to @new_plan
+        }.should change{ subject.state }.to("migrated")
+      end
+
       it "should have new plan as current" do
         subject.migrate_to @new_plan
         @billable.plan.should == @new_plan

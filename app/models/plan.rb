@@ -135,5 +135,6 @@ class Plan < ActiveRecord::Base
     self.billable.plan = new_plan
     new_invoice = new_plan.create_invoice(:invoice => opts, :force => true)
     new_plan.setup_for_migration
+    self.migrate!
   end
 end
