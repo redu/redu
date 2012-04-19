@@ -3,6 +3,5 @@ class SubjectObserver < ActiveRecord::Observer
     # model.notify_subject_added
     notification = NotifySubjectAddedJob.new(:subject_id => model)
     Delayed::Job.enqueue(notification, :queue => 'email')
-    Log.setup(model, :action => :update)
   end
 end

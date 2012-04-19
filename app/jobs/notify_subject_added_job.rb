@@ -5,6 +5,9 @@ class NotifySubjectAddedJob
 
   def perform
     subject = Subject.find_by_id(@subject_id)
-    subject.notify_subject_added if subject
+    if subject
+      subject.notify_subject_added
+      Log.setup(subject, :action => :update)
+    end
   end
 end
