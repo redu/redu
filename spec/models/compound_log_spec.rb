@@ -44,21 +44,36 @@ describe CompoundLog do
 
   describe :last_compostable do
     before do
-      @robert = Factory(:user, :first_name => 'Robert')
-      @ned = Factory(:user, :first_name => 'Ned')
-
-      ActiveRecord::Observer.with_observers(:friendship_observer) do
-        @robert.be_friends_with(@ned)
-        @ned.be_friends_with(@robert)
-        p @status = Status.last
-      end
+      @robert = Factory(:user, :last_name => 'Baratheon')
+      @ned = Factory(:user, :last_name => 'Stark')
     end
 
     context 'when no have compounds created' do
-      it "should be created an new compound log" do
+
+      it "a new compound log should be created" do
         expect {
-          CompoundLog.last_compostable(@status)
-        }.should change(CompoundLog, :count).by(1)
+          ActiveRecord::Observer.with_observers(:friendship_observer) do
+            @robert.be_friends_with(@ned)
+            @ned.be_friends_with(@robert)
+          end
+        }.should change(CompoundLog, :count).by(2)
+        # One compound for each statusable(user)
+      end
+    end
+
+    context "when a compound alread exists" do
+      before do
+        @cercei = Factory(:user, :last_name => 'Lannister')
+
+        ActiveRecord::Observer.with_observers(:friendship_observer) do
+          @robert.be_friends_with(@ned)
+          @ned.be_friends_with(@robert)
+          @cercei.be_friends_with(@robert)
+          @robert.be_friends_with(@cercei)
+        end
+      end
+
+      it "new logs should be included in a compound log" do
       end
     end
   end
