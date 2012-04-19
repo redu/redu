@@ -1,4 +1,4 @@
-class ChangeAdditionToPreviousBalanceOnInvoices < ActiveRecord::Migration
+class ChangeDiscountToPreviousBalanceOnInvoices < ActiveRecord::Migration
   def self.up
     rename_column :invoices, :discount, :previous_balance
   end
