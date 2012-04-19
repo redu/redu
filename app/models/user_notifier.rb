@@ -201,10 +201,10 @@ class UserNotifier < ActionMailer::Base
   def friendship_invitation(invitation)
     @invitation = invitation
     @email = invitation.email
-    @user = invitation.user
-    uca = @user.user_course_associations.approved
-    @contacts = { :total => @user.friends.count }
-    @courses = { :total => @user.courses.count,
+    user = invitation.user
+    uca = user.user_course_associations.approved
+    @contacts = { :total => user.friends.count }
+    @courses = { :total => user.courses.count,
                  :environment_admin => uca.with_roles([:environment_admin]).count,
                  :tutor => uca.with_roles([:tutor]).count,
                  :teacher => uca.with_roles([:teacher]).count }
