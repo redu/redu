@@ -127,7 +127,7 @@ class Log < Status
   def compound
     # Compõe apenas logs com logeable Friendship e Course
     if ["Friendship", "Course"].include? self.logeable.class.to_s
-      compound_log = CompoundLog.last_compostable(self)
+      compound_log = CompoundLog.current_compostable(self)
       if compound_log.logs.count == 4
         compound_log.compound!(self)
       else
