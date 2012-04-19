@@ -47,99 +47,150 @@ describe CompoundLog do
   end
 
   describe :current_compostable do
-    before do
-      @robert = Factory(:user, :login => 'robert_baratheon')
-      @ned = Factory(:user, :login=> 'eddard_stark')
-    end
+    context "when people are getting friends" do
+      before do
+        @robert = Factory(:user, :login => 'robert_baratheon')
+        @ned = Factory(:user, :login=> 'eddard_stark')
+      end
 
-    context 'when no have compounds created' do
-      it "a new compound log should be created" do
-        expect {
+      context "and there aren't compound logs" do
+        it "should create a new one" do
+          expect {
+            ActiveRecord::Observer.with_observers(:friendship_observer) do
+              @robert.be_friends_with(@ned)
+              @ned.be_friends_with(@robert)
+            end
+          }.should change(CompoundLog, :count).by(2)
+          # One compound for each statusable(user)
+        end
+      end
+
+      context "and a compound log already exists" do
+        before do
+          @cercei = Factory(:user, :login => 'cercei_lannister')
+
           ActiveRecord::Observer.with_observers(:friendship_observer) do
             @robert.be_friends_with(@ned)
             @ned.be_friends_with(@robert)
           end
-        }.should change(CompoundLog, :count).by(2)
-        # One compound for each statusable(user)
-      end
-    end
-
-    context "when a compound already exists" do
-      before do
-        @cercei = Factory(:user, :login => 'cercei_lannister')
-
-        ActiveRecord::Observer.with_observers(:friendship_observer) do
-          @robert.be_friends_with(@ned)
-          @ned.be_friends_with(@robert)
         end
-      end
 
-      it "new logs should be included in a compound log" do
-        @robert_compound = CompoundLog.by_statusable('User', @robert.id).last
-        expect {
-          ActiveRecord::Observer.with_observers(:friendship_observer) do
-            @robert.be_friends_with(@cercei)
-            @cercei.be_friends_with(@robert)
-            @robert_compound.reload
-          end
-        }.should change(@robert_compound.logs, :count).from(1).to(2)
-      end
-
-      context "current compostable ttl has expired" do
-        before do
+        it "should include recently created logs" do
           @robert_compound = CompoundLog.by_statusable('User', @robert.id).last
-          @robert_compound.compound_visible_at = 2.day.ago
-          @robert_compound.save
-        end
-
-        it "an new compound should be created for statusable" do
           expect {
             ActiveRecord::Observer.with_observers(:friendship_observer) do
               @robert.be_friends_with(@cercei)
               @cercei.be_friends_with(@robert)
+              @robert_compound.reload
             end
-          }.should change(CompoundLog, :count).by(2)
-          CompoundLog.by_statusable('User', @robert.id).count.should == 2
-          CompoundLog.by_statusable('User', @cercei.id).count.should == 1
+          }.should change(@robert_compound.logs, :count).from(1).to(2)
         end
-      end
 
-      context "when compound group 4 logs" do
-        before do
-          @tyrion = Factory(:user, :login => 'tyrion_lannister')
-          @jhon = Factory(:user, :login => 'jhon_arryn')
-          @loras = Factory(:user, :login => 'loras_tyrel')
-
-          ActiveRecord::Observer.with_observers(:friendship_observer) do
-            @robert.be_friends_with(@cercei)
-            @cercei.be_friends_with(@robert)
-
-            @robert.be_friends_with(@tyrion)
-            @tyrion.be_friends_with(@robert)
-
-            @robert.be_friends_with(@jhon)
-            @jhon.be_friends_with(@robert)
-
-            @robert.be_friends_with(@loras)
-            @loras.be_friends_with(@robert)
+        context "but it's ttl has expired" do
+          before do
+            @robert_compound = CompoundLog.by_statusable('User', @robert.id).last
+            @robert_compound.compound_visible_at = 2.day.ago
+            @robert_compound.save
           end
-          @robert_compounds = CompoundLog.by_statusable('User', @robert.id)
+
+          it "should create a new compound log for statusable" do
+            expect {
+              ActiveRecord::Observer.with_observers(:friendship_observer) do
+                @robert.be_friends_with(@cercei)
+                @cercei.be_friends_with(@robert)
+              end
+            }.should change(CompoundLog, :count).by(2)
+            CompoundLog.by_statusable('User', @robert.id).count.should == 2
+            CompoundLog.by_statusable('User', @cercei.id).count.should == 1
+          end
         end
 
-        it "just have one compoundLog" do
-          @robert_compounds.count.should == 1
-        end
+        context "and it has the minimum number of logs (4) to being visible" do
+          before do
+            @tyrion = Factory(:user, :login => 'tyrion_lannister')
+            @jhon = Factory(:user, :login => 'jhon_arryn')
+            @loras = Factory(:user, :login => 'loras_tyrel')
 
-        it "contains 5 or more logs" do
-          @robert_compounds.last.logs.count.should > 4
-        end
+            ActiveRecord::Observer.with_observers(:friendship_observer) do
+              @robert.be_friends_with(@cercei)
+              @cercei.be_friends_with(@robert)
 
-        it "should be visible" do
-          @robert_compounds.last.compound_visible_at.should_not be_nil
-          @robert_compounds.last.compound.should be_false
-          # display on view
+              @robert.be_friends_with(@tyrion)
+              @tyrion.be_friends_with(@robert)
+
+              @robert.be_friends_with(@jhon)
+              @jhon.be_friends_with(@robert)
+
+              @robert.be_friends_with(@loras)
+              @loras.be_friends_with(@robert)
+            end
+            @robert_compounds = CompoundLog.by_statusable('User', @robert.id)
+          end
+
+          it "just have one compoundLog" do
+            @robert_compounds.count.should == 1
+          end
+
+          it "should contain 5 or more logs" do
+            @robert_compounds.last.logs.count.should > 4
+          end
+
+          it "should be visible" do
+            @robert_compounds.last.compound_visible_at.should_not be_nil
+            @robert_compounds.last.compound.should be_false
+            # display on view
+          end
         end
       end
-    end
+    end # context "when people are getting friends"
+
+    context "when people are enrolling to courses" do
+
+      context "and there aren't compound logs" do
+        it "should create a new one" do
+          expect {
+            ActiveRecord::Observer.with_observers(:course_observer) do
+              course = Factory(:course)
+              user = Factory(:user)
+              course.join(user)
+            end
+          }.should change(CompoundLog, :count).from(0).to(1)
+        end
+      end
+
+      context "and a compound log already exists" do
+        before do
+          ActiveRecord::Observer.with_observers(:course_observer) do
+            @course = Factory(:course)
+            @user = Factory(:user)
+            @course.join(@user)
+          end
+        end
+
+        it "should include new log into existing compound log" do
+          compound_log = CompoundLog.last
+          p CompoundLog.last
+          expect {
+            ActiveRecord::Observer.with_observers(:course_observer) do
+              # course = Factory(:course)
+              some_user = Factory(:user)
+              @course.join(some_user)
+            end
+          }.should change(compound_log.logs, :count).from(1).to(2)
+        end
+
+        context "but it is not related to the new enrollment" do
+          it "should create a new one" do
+            expect {
+              ActiveRecord::Observer.with_observers(:course_observer) do
+                another_course = Factory(:course)
+                user = Factory(:user)
+                another_course.join(user)
+              end
+            }.should change(CompoundLog, :count).from(1).to(2)
+          end
+        end
+      end
+    end # context "when people are enrolling to courses"
   end
-end
+end 
