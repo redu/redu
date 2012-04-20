@@ -67,8 +67,7 @@ class FriendshipsController < BaseController
   def resend_email
     user = @friendship.user
     friend = @friendship.friend
-
-    UserNotifier.friendship_requested(user, friend).deliver
+    UserNotifier.friendship_requested(friend, user).deliver
     respond_to do |format|
       format.js do
         @invitation_id = "request-#{params[:id]}"
