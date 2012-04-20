@@ -93,6 +93,7 @@ stylesheets:
     - public/stylesheets/lectures.css
     - public/stylesheets/exercises.css
     - public/stylesheets/outdated-browser.css
+    - public/stylesheets/bullet-chart.css
   ie:
     - public/stylesheets/ie.css
   chat:
@@ -127,5 +128,3 @@ stylesheets:
     - public/stylesheets/new-fonts.css
     - public/stylesheets/new-style.css
     - public/stylesheets/print.css
-  chart:
-    - public/stylesheets/chart.css
