@@ -193,4 +193,4 @@ describe CompoundLog do
       end
     end # context "when people are enrolling to courses"
   end
-end 
+end

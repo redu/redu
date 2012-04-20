@@ -19,7 +19,7 @@ class CompoundLog < Status
     compound_logs = CompoundLog.by_statusable(statusable.class.to_s,
                                               statusable.id).by_logeable_type(status.logeable_type)
 
-    compound_log = compound_logs.sort{ |i,j| i.created_at <=> j.created_at }.last
+    compound_log = compound_logs.order("created_at ASC").limit(1).last
 
     # Exists compound and has visible
     if compound_log and compound_log.compound_visible_at
