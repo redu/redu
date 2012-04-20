@@ -6,8 +6,7 @@ class Subject < ActiveRecord::Base
   has_many :enrollments, :dependent => :destroy
   has_many :members, :through => :enrollments, :source => :user
   has_many :graduated_members, :through => :enrollments, :source => :user,
-    :include => :student_profiles,
-    :conditions => ["student_profiles.graduaded = 1"]
+    :conditions => ["enrollments.graduaded = 1"]
   has_many :teachers, :through => :enrollments, :source => :user,
     :conditions => ["enrollments.role = ?", 5] # Teacher
   has_many :statuses, :as => :statusable, :order => "created_at DESC"
@@ -65,20 +64,19 @@ class Subject < ActiveRecord::Base
   end
 
   def create_enrollment_associations
-    params_array = []
-    self.space.user_space_associations.each do |users_space|
-      enrollment = self.enrollments.create(:user => users_space.user,
-                                           :subject => self,
-                                           :role => users_space.role)
-      if enrollment
-        params_array << fill_params(enrollment)
-      end
+    enrollments = self.space.user_space_associations.all.collect do |users_space|
+      Enrollment.create(:user_id => users_space.user_id,
+                     :subject => self,
+                     :role => users_space.role)
     end
-    Delayed::Job.enqueue HierarchyNotificationJob.new(params_array)
+
+    delay_hierarchy_notification(enrollments)
+
+    enrollments
   end
 
   def graduated?(user)
-    self.enrolled?(user) and user.get_association_with(self).student_profile.graduaded?
+    self.enrolled?(user) && user.get_association_with(self).graduaded?
   end
 
   # Verifica se o módulo está pronto para ser publicado via
@@ -89,8 +87,8 @@ class Subject < ActiveRecord::Base
 
   # Notifica todos alunos matriculados sobre a adição de Subject
   def notify_subject_added
-    if self.notificable?
-      self.space.users.each { |u| UserNotifier.subject_added(u, self).deliver }
+    if notificable?
+      self.space.users.all.each { |u| UserNotifier.subject_added(u, self).deliver }
     end
   end
 
@@ -114,4 +112,11 @@ class Subject < ActiveRecord::Base
       :updated_at => enrollment.updated_at
     }
   end
+
+  def delay_hierarchy_notification(enrollments)
+    params = enrollments.collect { |e| fill_params(e) }
+    job = HierarchyNotificationJob.new(params)
+    Delayed::Job.enqueue(job, :queue => 'general')
+  end
+
 end

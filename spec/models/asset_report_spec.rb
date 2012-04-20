@@ -7,13 +7,11 @@ describe AssetReport do
     @space.course.join(@subject_owner)
     sub = Factory(:subject, :owner => @subject_owner, :space => @space)
     @lecture = Factory(:lecture, :owner => @subject_owner, :subject => sub)
-    enrollment = Factory(:enrollment, :subject => sub)
-    @student_profile = Factory(:student_profile, :subject => sub,
-                                :enrollment => enrollment)
+    @enrollment = Factory(:enrollment, :subject => sub)
   end
   subject { Factory(:asset_report, :lecture => @lecture,
-                    :student_profile => @student_profile) }
-  it { should belong_to :student_profile }
+                    :enrollment => @enrollment) }
+  it { should belong_to :enrollment }
   it { should belong_to :lecture }
   it { should belong_to :subject }
 
@@ -25,11 +23,11 @@ describe AssetReport do
     it "retrieves done asset reports" do
      assets_done = (1..2).collect { Factory(:asset_report,
                                             :lecture => @lecture,
-                                            :student_profile => @student_profile,
+                                            :enrollment => @enrollment,
                                             :done => true) }
      assets = (1..2).collect { Factory(:asset_report,
                                        :lecture => @lecture,
-                                       :student_profile => @student_profile) }
+                                       :enrollment => @enrollment) }
 
      AssetReport.done.should == assets_done
     end
@@ -40,10 +38,7 @@ describe AssetReport do
                          :space => @space)
       subject2 = Factory(:subject, :owner => @subject_owner,
                          :space => @space)
-      expected_assets = subject1.reload.enrollments.collect do
-        |e| e.student_profile.asset_reports
-      end
-
+      expected_assets = subject1.reload.enrollments.collect(&:asset_reports)
       AssetReport.of_subject(subject1).should == expected_assets.flatten
     end
 
@@ -56,7 +51,7 @@ describe AssetReport do
       subject1.enroll(users[0])
       subject1.enroll(users[1])
       AssetReport.of_user(users[0]).to_set.
-        should == users[0].student_profiles.last.asset_reports.to_set
+        should == users[0].enrollments.last.asset_reports.to_set
     end
   end
 
