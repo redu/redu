@@ -7,6 +7,7 @@ module Api
         if user
           can :manage, User, :id => user.id
         end
+        
       end
     end
   end
