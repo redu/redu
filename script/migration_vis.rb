@@ -1,6 +1,7 @@
+#!/usr/bin/env ruby
 # Script para alimentação do banco da aplicação de vis do Redu
 
-include VisClient
+require 'logger'
 
 class NotModified < StandardError
 end
@@ -29,7 +30,7 @@ def insert_enrollments
           :updated_at => enrollment.updated_at
         }
 
-        self.send_async_info(params_enrol,
+        send_async_info(params_enrol,
                              Redu::Application.config.vis_client[:migration])
       end
     end
@@ -54,7 +55,7 @@ def insert_subject_finalized
       :updated_at => profile.updated_at
     }
 
-    self.send_async_info(params_finalized,
+    send_async_info(params_finalized,
                          Redu::Application.config.vis_client[:migration])
   end
 end
@@ -117,7 +118,7 @@ def send_statuses(status)
     :updated_at => status.updated_at
   }
 
-  self.send_async_info(params_status,
+  send_async_info(params_status,
                        Redu::Application.config.vis_client[:migration])
 end
 
@@ -135,7 +136,7 @@ def get_type(status)
   end
 end
 
-def asend_async_info(params, url)
+def send_async_info(params, url)
   EM.run {
     http = EM::HttpRequest.new(url).post({
       :body => params.to_json,
@@ -148,7 +149,7 @@ def asend_async_info(params, url)
         handle_response(http.response_header.status)
       rescue
         log = Logger.new("log/script_error.log")
-        log.error "Callback, error with code: #{http.response_header.status}"
+        log.error "Callback, error with code: #{http.response_header.status}, with params: #{params.inspect}"
         log.close
       end
     EM.stop
