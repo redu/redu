@@ -6494,7 +6494,7 @@ div.token-input-dropdown {
   width: 250px;
   float: left;
   margin-left: 20px;
-  margin-bottom: 25px;
+  margin-bottom: 35px;
 }
 
 #invoice-show,
@@ -7090,6 +7090,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 #partner-header .partner-title {
   font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 500;
+  letter-spacing: -1px;
   font-size: 2.2em;
   margin-bottom: 5px;
   color: #72C3E5;
@@ -7306,6 +7307,10 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   margin-left: 75px;
 }
 
+.plan-panel .call {
+  float: left;
+}
+
 .plan-panel .call .environment {
   font-family: arial, sans-serif;
   font-weight: normal;
@@ -7343,7 +7348,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 
 #content .explanation-sidebar .explanation .overdue {
   color: rgb(255, 109, 109);
-  font-style: italic;
 }
 
 .plan-panel .payments .data .pending  {
@@ -7352,7 +7356,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 
 .explanation-sidebar .explanation .pending {
   color: rgb(255, 169, 53);
-  font-style: italic;
 }
 
 #content .plan-panel .payments .data .paid  {
@@ -7361,7 +7364,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 
 .explanation-sidebar .explanation .closed {
   color: black;
-  font-style: italic;
 }
 
 .payments .data .icon  {
@@ -7393,7 +7395,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .plan-panel .back {
   font-size: 11px;
   float: right;
-  clear: both;
 }
 
 .plan-panel .back {
@@ -7486,6 +7487,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .plan-panel .options-plan .plans-list .plans .plan .name {
   font-family: museo-slab, arial, sans-serif;
   font-weight: 500;
+  letter-spacing: -1px;
   font-size: 17px;
   color: rgb(95, 192, 128);
   display: block;
@@ -7499,6 +7501,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   font-size: 17px;
   color: rgb(95, 192, 128);
   display: block;
+  margin-bottom: 5px;
 }
 
 .plan-panel .options-plan .plans-list .plans .plan .a-month,
