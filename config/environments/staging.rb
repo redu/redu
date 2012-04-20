@@ -69,7 +69,8 @@ Redu::Application.configure do
 
   # Configurações de VisClient
   config.vis_client = {
-    :url => "http://vis.redu.com.br/hierarchy_notifications.json"
+    :url => "http://vis.redu.com.br/hierarchy_notifications.json",
+    :migration => "http://vis.redu.com.br/database_hierarchy_notifications.json"
   }
 
 
