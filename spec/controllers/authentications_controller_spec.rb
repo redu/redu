@@ -33,6 +33,7 @@ describe AuthenticationsController do
           provider = request.env['omniauth.auth'][:provider]
           uid = request.env['omniauth.auth'][:uid]
           created_auth = Authentication.find_by_provider_and_uid(provider, uid)
+          created_auth.should_not be_nil
           created_auth.user.should == @user
         end
 

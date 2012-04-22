@@ -258,25 +258,32 @@ class UsersController < BaseController
 
   def recover_username
     @recover_username = RecoveryEmail.new(params[:recovery_email])
-    @user = User.find_by_email(@recover_username.email)
-
-    if @user
-      UserNotifier.user_forgot_username(@user).deliver
+    if @recover_username.valid?
+      @user = User.find_by_email(@recover_username.email)
+      if @user
+        UserNotifier.user_forgot_username(@user).deliver
+      else # Email não cadastrado no Redu
+        @recover_username.mark_email_as_invalid!
+      end
     end
   end
 
   def recover_password
     @recover_password = RecoveryEmail.new(params[:recovery_email])
-    @user = User.find_by_email(@recover_password.email)
+    if @recover_password.valid?
+      @user = User.find_by_email(@recover_password.email)
 
-    if @user.try(:reset_password)
-      UserNotifier.user_reseted_password(@user).deliver
-      @user.save
+      if @user.try(:reset_password)
+        UserNotifier.user_reseted_password(@user).deliver
+        @user.save
 
-      # O usuario estava ficando logado, apos o comando @user.save.
-      # Destruindo sessao caso ela exista.
-      if UserSession.find
-        UserSession.find.destroy
+        # O usuario estava ficando logado, apos o comando @user.save.
+        # Destruindo sessao caso ela exista.
+        if UserSession.find
+          UserSession.find.destroy
+        end
+      else # Email não cadastrado no Redu
+        @recover_password.mark_email_as_invalid!
       end
     end
   end

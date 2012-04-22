@@ -50,8 +50,6 @@ class User < ActiveRecord::Base
   has_many :subjects, :order => 'title ASC',
     :conditions => { :finalized => true }
 
-  #student_profile
-  has_many :student_profiles
   has_many :plans
   has_many :course_invitations, :class_name => "UserCourseAssociation",
     :conditions => ["state LIKE 'invited'"]
@@ -486,7 +484,7 @@ class User < ActiveRecord::Base
   end
 
   def profile_for(subject)
-    self.student_profiles.where(:subject_id => subject)
+    self.enrollments.where(:subject_id => subject)
   end
 
   def completeness

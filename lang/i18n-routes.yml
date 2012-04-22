@@ -52,3 +52,6 @@ pt-BR:
     my_wall: "meu_mural"
     invitations: "convites"
     resend_email: "reenviar"
+    recover_username_password: "recuperar_login_senha"
+    recover_username: "recuperar_login"
+    recover_password: "recuperar_senha"
