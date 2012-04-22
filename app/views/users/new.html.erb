@@ -27,6 +27,9 @@
       <% if params[:invitation_token] %>
         <%= hidden_field_tag :invitation_token, params[:invitation_token] %>
       <% end %>
+      <% if params[:friendship_invitation_token] %>
+        <%= hidden_field_tag :friendship_invitation_token, params[:friendship_invitation_token] %>
+      <% end %>
       <%= field_set_tag "Informações pessoais", :class => 'separator' do %>
         <%= f.label :first_name, "Nome:" %>
         <%= f.text_field :first_name, :class => 'small' %>
