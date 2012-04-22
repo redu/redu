@@ -71,14 +71,14 @@ describe FriendshipsController do
     it "destroy a friendship, returning JS" do
       lambda {
         post :destroy, :locale => "pt-BR", :user_id => @user.login,
-          :id => @friendship.id, :format => :js
+        :id => @friendship.id, :format => :js
       }.should change(Friendship, :count).by(-2)
     end
 
     it "destroy a friendship, returning HTML" do
       lambda {
         post :destroy, :locale => "pt-BR", :user_id => @user.login,
-          :id => @friendship.id
+        :id => @friendship.id
       }.should change(Friendship, :count).by(-2)
     end
 
@@ -96,4 +96,47 @@ describe FriendshipsController do
 
   end
 
+  context 'new action' do
+    before do
+      @friend = @friends[0]
+    end
+    context 'when user logged' do
+      before do
+        controller.process_invites({'emails' => 'example.mail.com, teste@mail.com', 'friend_id' => @friend.id}, @user)
+        @params = {:locale => "pt-BR", :user_id => @user.login}
+        UserSession.create(@user)
+        get :new, @params
+      end
+
+      it 'assigns all invitations from current user' do
+        assigns(:invitations).should == @user.invitations
+      end
+
+      it 'assigns all friendship requests with requested current state' do
+        assigns(:friendship_requests).should == @user.friendships.requested
+      end
+
+      it 'render new template' do
+        response.should render_template('new')
+      end
+    end
+  end
+
+
+  context 'When resend invitation email' do
+    before do
+      controller.process_invites({'emails' => 'example1@email.com', 'friend_id' => @friends[0].id}, @user)
+      @friendship_request = @user.friendships.requested.first
+      @params = {:locale => "pt-BR", :id => @friendship_request.id, :user_id => @user.login, :format => 'js'}
+      post :resend_email, @params
+    end
+
+    it 'assigns invitation_id' do
+      assigns(:invitation_id).should == "request-#{@friendship_request.id}"
+    end
+
+    it 'render js template' do
+      response.should render_template('invitations/resend_email')
+    end
+  end
 end

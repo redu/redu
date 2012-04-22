@@ -57,6 +57,13 @@ GIT
       activerecord
 
 GIT
+  remote: git@github.com:redu/invitable.git
+  revision: 171dcdb33d0955357a0af7980d6882925958949c
+  specs:
+    invitable (0.0.5)
+      rails (~> 3.0.10)
+
+GIT
   remote: git@github.com:redu/vis_client.git
   revision: ef3bbcfb8c95c0b8040ca44521de4b866db42f97
   specs:
@@ -350,6 +357,7 @@ DEPENDENCIES
   eventmachine
   exceptional
   factory_girl_rails
+  invitable!
   jammit-s3
   jasmine
   jquery-rails (>= 1.0.3)

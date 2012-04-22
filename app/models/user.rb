@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  include Invitable::Base
+
   require 'community_engine_sha1_crypto_method'
   require 'paperclip'
 
@@ -181,6 +183,11 @@ class User < ActiveRecord::Base
   end
 
   ## Instance Methods
+  def process_invitation!(invitee, invitation)
+    friendship_invitation = self.be_friends_with(invitee)
+    invitation.delete
+  end
+
   def profile_complete?
     (self.first_name and self.last_name and self.gender and
         self.description and self.tags) ? true : false
@@ -255,6 +262,8 @@ class User < ActiveRecord::Base
       self.can_manage?(entity.exercise)
     when 'Exercise'
       self.can_manage?(entity.lecture) && !entity.has_results?
+    when 'Invitation'
+      self.can_manage?(entity.hostable)
     end
   end
 
