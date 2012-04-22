@@ -1,0 +1,11 @@
+<ol id="breadcrumbs" class="clearfix">
+  <li>
+    <%= link_to 'Home', home_user_path(current_user), :class => 'replacement home icon-small icon-home-lightblue_16_18' %>
+  </li>
+  <li>
+    <%= link_to 'Meus Contatos', user_friendships_path(current_user), :class => 'icon-contacts-lightblue_16_18-before' %>
+  </li>
+  <li>
+    <%= link_to 'Convidar Amigos', new_user_friendship_path(current_user), :class => 'icon-add-contact-lightblue_16_18-before' %>
+  </li>
+</ol>
