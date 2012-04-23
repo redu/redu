@@ -560,7 +560,7 @@ describe Ability do
           @ability.should be_able_to(:destroy, space)
         end
 
-        it "can't see subject participation report" do
+        it "can see subject participation report" do
           @ability.should be_able_to(:subject_participation_report,
                                      @course)
         end
@@ -1012,6 +1012,34 @@ describe Ability do
 
       it "can access my wall" do
         @user_ability.should be_able_to(:my_wall, @user)
+      end
+    end
+
+    context "when manage invitations" do
+      before do
+        @bastard = Factory(:user,
+                           :first_name => 'Jhon',
+                           :last_name => 'Snow')
+        @bastard_ability = Ability.new(@bastard)
+        @bastard_invitation = Invitation.invite(:user => @bastard,
+                                                :hostable => @bastard,
+                                                :email => 'mail@teste.com')
+
+        @my_invitation = Invitation.invite(:user => @user,
+                                           :hostable => @user,
+                                           :email => 'mail@teste.com')
+      end
+
+      it "others can't manage my invitations" do
+        @bastard_ability.should_not be_able_to(:manage, @my_invitation)
+      end
+
+      it "can destroy invitation" do
+        @user_ability.should be_able_to(:destroy_invitations, @my_invitation)
+      end
+
+      it "can resend invitation email" do
+        @user_ability.should be_able_to(:resend_email, @my_invitation)
       end
     end
   end
