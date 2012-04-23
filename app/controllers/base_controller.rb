@@ -44,7 +44,7 @@ class BaseController < ApplicationController
     else
       @contact = Contact.create(params[:contact])
       if @contact.valid?
-        if params.has_key? :send_error
+        if @contact.about_an_error?
           @contact.body << "\n\n Stacktrace: \n"
           @contact.body << `tail -n 1500 #{Redu::Application.root}/log/#{Rails.env}.log | grep -C 300 "Completed 500"`
         end

@@ -210,10 +210,26 @@ class UserNotifier < ActionMailer::Base
     end
   end
 
+  def friendship_invitation(invitation)
+    @invitation = invitation
+    @email = invitation.email
+    user = invitation.user
+    uca = user.user_course_associations.approved
+    @contacts = { :total => user.friends.count }
+    @courses = { :total => user.courses.count,
+                 :environment_admin => uca.with_roles([:environment_admin]).count,
+                 :tutor => uca.with_roles([:tutor]).count,
+                 :teacher => uca.with_roles([:teacher]).count }
+
+    mail(:subject => 'Você foi convidado para do Redu', :to => @email) do |format|
+      format.html
+    end
+  end
+
   # Enviado para o usuário requisitado numa requisição de conexão
   def friendship_requested(user, friend)
     @user, @friend = user, friend
-    uca = UserCourseAssociation.where(:user_id => @friend).approved
+    uca = @friend.user_course_associations.approved
 
     @contacts = { :total => @user.friends.count,
                   :in_common => user.friends_in_common_with(@friend).count }

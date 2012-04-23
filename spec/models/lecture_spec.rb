@@ -233,20 +233,20 @@ describe Lecture do
     #FIXME encontrar um jeito melhor de se testar o refresh_students_profiles
     it "should update all students profiles" do
       assets = AssetReport.all(:conditions => {
-                                       :subject_id => subject.subject.id,
-                                       :lecture_id => @lec.id})
+                               :subject_id => subject.subject.id,
+                               :lecture_id => @lec.id})
       assets.each do |asset|
         asset.done = 1
         asset.save
       end
       @lec.refresh_students_profiles
-      grade = StudentProfile.sum('grade', :conditions =>
-                                           {:subject_id => subject.subject.id})
+      grade = Enrollment.sum('grade', :conditions =>
+                             {:subject_id => subject.subject.id})
       grade.should == 100
       @lec.destroy
       @lec.refresh_students_profiles
-      grade = StudentProfile.sum('grade', :conditions =>
-                                           {:subject_id => subject.subject.id})
+      grade = Enrollment.sum('grade', :conditions =>
+                             {:subject_id => subject.subject.id})
       grade.should == 0
     end
   end

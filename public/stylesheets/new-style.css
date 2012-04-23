@@ -2240,7 +2240,7 @@ body {
 }
 
 #content .secondary-sidebar {
-  margin: 20px 0 0 0;
+  margin: 40px 0 0 0;
   float: left;
   width: 170px;
 }
@@ -2764,7 +2764,7 @@ body {
 }
 
 #home .hall,
-#course-invitation .hall {
+#invitation .hall {
   border: 1px solid #B3B2B3;
   padding: 20px;
   background: #F0F0F0 url("../images/new/login-gradient.png") repeat-x;
@@ -2775,14 +2775,14 @@ body {
 }
 
 #home .hall .signup,
-#course-invitation .hall .signup {
+#invitation .hall .signup {
   display: block;
   text-align: center;
   padding: 15px 30px;
 }
 
 #home .hall hr,
-#course-invitation .hall hr {
+#invitation .hall hr {
   border: none;
   border-bottom: 2px dotted #B3B2B3;
   margin-top: 25px;
@@ -2814,6 +2814,43 @@ body {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
+}
+
+.friends-invitations .notice {
+  clear: both;
+  padding-top: 30px;
+  text-align: center;
+}
+
+.friends-invitations .empty-list {
+  padding-top: 60px;
+}
+
+.friends-invitations .form-header {
+  font-weight: 100;
+  font-family: museo-sans, helvetica, arial, sans-serif;
+  font-size: 17px;
+  color: #B3B2B3;
+}
+
+.friends-invitations #breadcrumbs  {
+  border: none;
+  margin-bottom: 0px;
+}
+
+.icon-contacts-lightblue_16_18-before:before,
+.friends-invitations {
+  padding-right:10px;
+}
+
+.friends-invitations #admin-invitations {
+  padding: 20px;
+  margin: 0 -19px 0 -19px;
+  padding-bottom: 1px
+}
+
+.friendship-sidebar .contact-recommendations {
+  margin-top: 112px;
 }
 
 .courses-requisitions li {
@@ -4805,11 +4842,18 @@ table.concave-invitation-table {
   clear: both;
 }
 
+.friends-invitations .concave-invitation-table,
 #course-manage table.concave-invitation-table {
   margin: 0px 50px;
   width: 646px;
   border-collapse: separate;
   border-spacing: 0px 10px;
+}
+
+
+.friends-invitations .concave-invitation-table {
+  margin: 0;
+  width: 580px;
 }
 
 table.concave-invitation-table tr {
@@ -4893,6 +4937,16 @@ table.concave-invitation-table .cell-reinvite .reinvite {
 table.concave-invitation-table .cell-reinvite .reinvited {
   color: rgb(179, 179, 179);
   margin-right: 15px;
+}
+
+.friends-invitations .concave-invitation-table .cell-reinvite .reinvite {
+  display: block;
+  text-align: right;
+}
+
+.friends-invitations .concave-invitation-table .cell-reinvite .reinvited {
+  display: block;
+  text-align: right;
 }
 
 #course-manage .invitation-list input[type="submit"].concave-remove {
@@ -5547,6 +5601,10 @@ table.concave-invitation-table .cell-reinvite .reinvited {
   font-weight: 500px;
 }
 
+.friends-invitations #admin-invitations .invite-title {
+  color: #4CACD5;
+}
+
 #admin-invitations .course-info {
   float: left;
   width: 130px;
@@ -5590,18 +5648,28 @@ table.concave-invitation-table .cell-reinvite .reinvited {
   font-size: 1em;
 }
 
+.friends-invitations #admin-invitations .form-common label {
+  margin-top: 4px;
+  margin-left: 60px;
+}
+
 #admin-invitations #invite_email_button {
   height: 50px;
 }
 
 #admin-invitations .form-common .concave-button {
-  margin: 20px 0px 0px 165px;
+  margin: 10px 0px 0px 165px;
+}
+
+.friends-invitations #admin-invitations .form-common .concave-button {
+  margin-bottom: 5px;
+  margin-left: 188px
 }
 
 #admin-invitations .token-input-list {
   clear: none;
   float: left;
-  margin-top: 20px;
+  margin-top: 10px;
   width: 395px;
   height: 25px;
 
@@ -5609,6 +5677,12 @@ table.concave-invitation-table .cell-reinvite .reinvited {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
+}
+
+.friends-invitations #admin-invitations .token-input-list {
+  float: right;
+  width: 335px;
+  margin-top: -5px;
 }
 
 #admin-invitations .token-input-list .token-input-token.email {
@@ -5637,6 +5711,10 @@ table.concave-invitation-table .cell-reinvite .reinvited {
 
 div.token-input-dropdown {
   width: 385px;
+}
+
+.token-input-dropdown.friendship-dropdown {
+  width: 326px;
 }
 
 #admin-invitations .token-input-list input {
@@ -5893,7 +5971,7 @@ div.token-input-dropdown {
 }
 
 #global-courses .courses .audience,
-#course-invitation .course .audience {
+#invitation .course .audience {
   float: left;
 }
 
@@ -5922,15 +6000,15 @@ div.token-input-dropdown {
 
 #global-courses .courses .statistics li,
 #global-courses .courses .audience li,
-#course-invitation .course .statistics li,
-#course-invitation .course .audience li {
+#invitation .course .statistics li,
+#invitation .course .audience li {
   margin-bottom: 3px;
 }
 
 #global-courses .courses .statistics em,
 #global-courses .courses .audience em,
-#course-invitation .course .statistics em,
-#course-invitation .course .audience em {
+#invitation .course .statistics em,
+#invitation .course .audience em {
   font-size: .9em;
   font-style: oblique;
   display: block;
@@ -5940,42 +6018,42 @@ div.token-input-dropdown {
 }
 
 #global-courses .courses .audience em,
-#course-invitation .course .audience em {
+#invitation .course .audience em {
   margin-bottom: 5px;
 }
 
 #global-courses .courses .statistics span,
 #global-courses .courses .audience a,
-#course-invitation .course .statistics span,
-#course-invitation .course .audience a {
+#invitation .course .statistics span,
+#invitation .course .audience a {
   font-size: .9em;
   font-weight: bold;
   color: #6C6D6E;
 }
 
-#course-invitation .logotipo {
+#invitation .logotipo {
   width: 174px;
   height: 237px;
   background: url("../images/new/logotipo-vertical.png") no-repeat;
 }
 
-#course-invitation {
+#invitation {
   margin-top: 20px;
   padding-bottom: 200px;
 }
 
-#course-invitation .invite {
+#invitation .invite {
   float: left;
 }
 
-#course-invitation .salutation {
+#invitation .salutation {
   display: block;
   margin: 35px 0 25px 0;
   font-size: 1.3em;
   color: black;
 }
 
-#course-invitation .course {
+#invitation .course {
   padding: 10px;
   margin-bottom: 10px;
   margin-right: 20px;
@@ -5987,34 +6065,34 @@ div.token-input-dropdown {
   border-radius: 5px;
 }
 
-#course-invitation .course .informations{
+#invitation .course .informations{
   float: left;
   width: 278px;
 }
 
-#course-invitation .course img {
+#invitation .course img {
   float: left;
   margin-right: 10px;
 }
 
-#course-invitation .course .header {
+#invitation .course .header {
   background: url("../images/new/dots.png") repeat-x bottom;
   padding-bottom: 20px;
 }
 
-#course-invitation .course a.environment {
+#invitation .course a.environment {
   display: block;
   font-size: 0.9em;
 }
 
-#course-invitation .course a.name {
+#invitation .course a.name {
   display: block;
   margin: 5px 0;
   font-size: 1.2em;
   color: black;
 }
 
-#course-invitation .course .description {
+#invitation .course .description {
   display: block;
   background: url("../images/new/dots.png") repeat-x bottom;
   padding: 20px 0;
@@ -6023,7 +6101,7 @@ div.token-input-dropdown {
   color: #6D6E6F;
 }
 
-#course-invitation .course .statistics {
+#invitation .course .statistics {
   float: left;
   width: 120px;
 }
@@ -7775,11 +7853,12 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   padding: 0px;
 }
 
+/*-- #graph-form é o .concave-form do gráfico --*/
 #graph-form .inline {
   float: left;
 }
 
-.concave-form .errors_on_date{
+#graph-form .errors_on_date{
   font-size: .8em;
   color: #FF6D6D;
   overflow: hidden;
@@ -7836,11 +7915,12 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 
 /* Botão convidar amigos */
 .invite-button {
-  width: 150px;
-  height: 90px;
+  width: 130px;
+  height: 80px;
   border: solid 1px rgb(21, 138, 196);
-  padding-left: 5px;
-  padding-right: 5px;
+  padding-right: 5px !important;
+  padding-left: 5px !important;
+  margin-left: 15px;
 }
 
 .invite-button .invite-contact_32_50-before {
@@ -7851,11 +7931,14 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   display: block;
   margin: 11px auto 2px;
 }
+.invite-button .invite-contact_32_50-before {
+  float: left;
+}
 
 .borderradius .invite-button {
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
+  -webkit-border-radius: 10px !important;
+  -moz-border-radius: 10px !important;
+  border-radius: 10px !important;
 }
 
 .boxshadow .invite-button {
