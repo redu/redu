@@ -65,7 +65,7 @@ describe Log do
       end
 
       it "set Course as statusable" do
-        @log.statusable.should == @uca.user
+        @log.statusable.should == @uca.course
       end
     end
   end

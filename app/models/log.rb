@@ -49,7 +49,7 @@ class Log < Status
             if model.notificable?
               model.logs.new(:action => settings[:action],
                              :user => model.user,
-                             :statusable => model.user,
+                             :statusable => model.course,
                              :text => settings[:text])
             end
           when "Space"

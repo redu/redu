@@ -76,7 +76,7 @@ describe CompoundLog do
         end
 
         it "should include recently created logs" do
-          @robert_compound = CompoundLog.by_statusable('User', @robert.id).last
+          @robert_compound = CompoundLog.where(:user_id => @robert.id).last
           expect {
             ActiveRecord::Observer.with_observers(:friendship_observer) do
               @robert.be_friends_with(@cercei)
@@ -88,7 +88,7 @@ describe CompoundLog do
 
         context "but it's ttl has expired" do
           before do
-            @robert_compound = CompoundLog.by_statusable('User', @robert.id).last
+            @robert_compound = CompoundLog.where(:user_id => @robert.id).last
             @robert_compound.compound_visible_at = 2.day.ago
             @robert_compound.save
           end
@@ -100,8 +100,8 @@ describe CompoundLog do
                 @cercei.be_friends_with(@robert)
               end
             }.should change(CompoundLog, :count).by(2)
-            CompoundLog.by_statusable('User', @robert.id).count.should == 2
-            CompoundLog.by_statusable('User', @cercei.id).count.should == 1
+            CompoundLog.where(:user_id => @robert.id).count.should == 2
+            CompoundLog.where(:user_id => @cercei.id).count.should == 1
           end
         end
 
@@ -124,7 +124,7 @@ describe CompoundLog do
               @robert.be_friends_with(@loras)
               @loras.be_friends_with(@robert)
             end
-            @robert_compounds = CompoundLog.by_statusable('User', @robert.id)
+            @robert_compounds = CompoundLog.where(:user_id => @robert.id)
           end
 
           it "just have one compoundLog" do
@@ -165,7 +165,7 @@ describe CompoundLog do
         before do
           ActiveRecord::Observer.with_observers(:user_course_association_observer) do
             @course.join(@pycelle)
-            @pycelle_compounds = CompoundLog.by_statusable('User', @pycelle.id)
+            @pycelle_compounds = CompoundLog.where(:user_id => @pycelle.id)
             @pycelle_compound = @pycelle_compounds.last
           end
         end
@@ -185,7 +185,7 @@ describe CompoundLog do
             ActiveRecord::Observer.with_observers(:user_course_association_observer) do
               @course.join(@pycelle)
             end
-            @pycelle_compound = CompoundLog.by_statusable('User', @pycelle.id).last
+            @pycelle_compound = CompoundLog.where(:user_id => @pycelle.id).last
             @pycelle_compound.compound_visible_at = 2.day.ago
             @pycelle_compound.save
           end
@@ -197,7 +197,7 @@ describe CompoundLog do
                 course.join(@pycelle)
               end
             }.should change(CompoundLog, :count).by(1)
-            CompoundLog.by_statusable('User', @pycelle.id).count.should == 2
+            CompoundLog.where(:user_id => @pycelle.id).count.should == 2
           end
         end
 
@@ -209,7 +209,7 @@ describe CompoundLog do
             ActiveRecord::Observer.with_observers(:user_course_association_observer) do
               @courses.each { |course| course.join(@aemon) }
             end
-            @aemon_compounds = CompoundLog.by_statusable('User', @aemon.id)
+            @aemon_compounds = CompoundLog.where(:user_id => @aemon.id)
           end
 
           it "just have one compoundLog" do
