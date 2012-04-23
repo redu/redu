@@ -77,7 +77,7 @@ describe Subject do
       users = (1..4).collect { Factory(:user) }
       users.each { |u| subject.enroll(u) }
       users[0..1].each do |u|
-        student_profile = u.student_profiles.last
+        student_profile = u.enrollments.last
         student_profile.graduaded = 1
         student_profile.save
       end
@@ -173,7 +173,7 @@ describe Subject do
     graduated = Factory(:user)
     subject.enroll(graduated)
     subject.lectures.each { |l| l.mark_as_done_for!(graduated, true) }
-    graduated.get_association_with(subject).student_profile.update_grade!
+    graduated.get_association_with(subject).update_grade!
     subject.graduated?(graduated).should be_true
   end
 
