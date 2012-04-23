@@ -3,7 +3,7 @@
 
 require 'logger'
 
-class NotModified < StandardError
+class Conflict < StandardError
 end
 class BadRequest < StandardError
 end
@@ -178,11 +178,9 @@ def handle_response(status_code)
     return true
   when 400
     raise BadRequest, "Bad request"
-  when 304
-    raise NotModified, "Not Modified"
+  when 409
+    raise Conflict, "Conflict"
   else
     raise ConnectionError, "Unknown error (status code #{status_code}): #{body}"
   end
 end
-
-
