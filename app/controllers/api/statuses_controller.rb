@@ -49,6 +49,23 @@ module Api
 
     protected
 
+    #FIXME se vc notar, o padRão onde vc faz case..when está se repetindo nesses
+    # métodos protected.
+    # Não seria mais interessante ter um método que faz o find do statusable
+    # e os métodos create_activity, create_on_lecture e statuses usassem ele?
+    # EX:
+    # def statusable(params)
+    #  if params[:space_id]
+    #    Status.where(:statusable_id => Space.find(@values[:space_id]))
+    #  elsif params[:lecture_id]
+    #    Status.where(:statusable_id => Lecture.find(@values[:lecture_id]))
+    #  else
+    #    Status.where(:user_id => User.find(@values[:user_id]))
+    #  end
+    # end
+
+    #FIXME esse método está confiando numa variável global! Se vc quiser usar
+    # os params dentro dele, passa o valor como parâmentro (ex def statuses(params))
     def statuses
       if  @values[:space_id]
         Status.where(:statusable_id => Space.find(@values[:space_id]))
@@ -59,6 +76,8 @@ module Api
       end
     end
 
+    #FIXME esse método está confiando numa variável global! Se vc quiser usar
+    # os params dentro dele, passa o valor como parâmentro (ex def statuses(params))
     def create_activity
       Activity.create(@values[:status]) do |e|
         if @values[:user_id]
@@ -72,6 +91,8 @@ module Api
       end
     end
 
+    #FIXME esse método está confiando numa variável global! Se vc quiser usar
+    # os params dentro dele, passa o valor como parâmentro (ex def statuses(params))
     def create_on_lecture
       if @values[:status][:type] == "help" || @values[:status][:type] == "Help"
         Help.create(@values[:status]) do |e|

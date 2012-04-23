@@ -77,6 +77,7 @@ describe "Statuses" do
       end
     end
 
+    # FIXME esse teste está replicado com o próximo
     it "should return correct statusable" do
       get href_to("statusable", @entity), :oauth_token => @token,
         :format => 'json'
@@ -150,12 +151,14 @@ describe "Statuses" do
     it "should return correct numbers of statuses (Help)" do
       get "/api/users/#{@user.id}/statuses", :type => "help",
         :oauth_token => @token, :format => 'json'
+      # FIXME largura máxima de 80 caracteres
       parse(response.body).count.should == @user_statuses.select {|i| i[:type] == "Help" }.length
     end
 
     it "should return correct numbers of statuses (Log)" do
       get "/api/users/#{@user.id}/statuses", :type => "log",
         :oauth_token => @token, :format => 'json'
+      # FIXME largura máxima de 80 caracteres
       parse(response.body).count.should == @user_statuses.select {|i| i[:type] == "Log" }.length
     end
 
@@ -174,6 +177,7 @@ describe "Statuses" do
     it "should return correct numbers of statuses (Activity)" do
       get "/api/users/#{@user.id}/statuses", :type => 'activity',
         :oauth_token => @token, :format => 'json'
+      # FIXME largura máxima de 80 caracteres
       parse(response.body).count.should == @user_statuses.select {|i| i[:type] == "Activity" }.length
     end
   end
@@ -367,7 +371,7 @@ describe "Statuses" do
     end
   end
 
-  context "when create status on space" do
+  context "when creating status on space" do
     before do
       @space = Factory(:space)
       @params = { 'status' => { :text => "Space Ximbica" },
@@ -417,6 +421,7 @@ describe "Statuses" do
     end
 
     it "should return 201" do
+      # FIXME tenta escolher entre aspas duplas ou simples
       @params['status'][:type] = "Activity"
       post "/api/lectures/#{@lecture.id}/statuses", @params
       response.code.should == "201"
@@ -581,21 +586,21 @@ describe "Statuses" do
   context "when listing an Answer" do
     it "should return code 200 type (activity)" do
       @activity = Factory(:activity)
-      get "/api/statuses/#{@activity.id}/answers", :oauth_token => @token, 
+      get "/api/statuses/#{@activity.id}/answers", :oauth_token => @token,
         :format => 'json'
       response.code.should == "200"
     end
 
     it "should return code 200 type (help)" do
       @help = Factory(:help)
-      get "/api/statuses/#{@help.id}/answers", :oauth_token => @token, 
+      get "/api/statuses/#{@help.id}/answers", :oauth_token => @token,
         :format => 'json'
       response.code.should == "200"
     end
-    
+
     it "should return code 200" do
       @log = Factory(:log)
-      get "/api/statuses/#{@log.id}/answers", :oauth_token => @token, 
+      get "/api/statuses/#{@log.id}/answers", :oauth_token => @token,
         :format => 'json'
       # lista vazia
       response.code.should == "200"
