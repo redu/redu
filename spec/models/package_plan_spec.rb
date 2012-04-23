@@ -31,12 +31,8 @@ describe PackagePlan do
 
       @invoice.amount.round(8).should == expected_amount.round(8)
       @invoice.period_end.should == Date.today.advance(:days => 30)
-      @invoice.period_start.should == Date.tomorrow
-    end
-
-    it "period_start defaults to tomorrow" do
-      subject.create_invoice
-      subject.invoices.first.period_start.should == Date.tomorrow
+      @invoice.period_start.should == Date.today
+      subject.invoice.should == @invoice
     end
 
     it "accepts custom attributes" do
@@ -113,6 +109,19 @@ describe PackagePlan do
            end
          end
        end
+    end
+
+    context "when creating invoice with negative total" do
+      before do
+        @new_invoice = subject.create_invoice(:invoice => {
+          :amount => 50,
+          :previous_balance => -100
+        })
+      end
+
+      it "new invoice is marked as paid" do
+        @new_invoice.should be_paid
+      end
     end
   end
 

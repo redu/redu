@@ -148,7 +148,7 @@ describe Environment do
   it { should respond_to :plan }
 
   it "should return actual plan" do
-    plan = Factory(:active_package_plan, :billable => subject, :created_at => 2.days.ago)
+    plan = Factory(:active_package_plan, :billable => subject, :current => false)
     plan2 = Factory(:active_package_plan, :billable => subject)
 
     subject.plan.should == plan2
@@ -213,7 +213,7 @@ describe Environment do
           plan = Plan.from_preset(:free)
           plan.user = subject.owner
           plan.members_limit = 30
-          subject.plans << plan
+          subject.plan = plan
         end
 
         it "should permit entry" do
@@ -230,7 +230,7 @@ describe Environment do
         before do
           plan = Plan.from_preset(:free, "LicensedPlan")
           plan.user = subject.owner
-          subject.plans << plan
+          subject.plan = plan
         end
 
         it "should permit entry" do
@@ -247,23 +247,26 @@ describe Environment do
     context "when destroying" do
       let(:subject) { Factory(:environment) }
       context "with an associated plan" do
-        it "should persist environment attributes" do
-          plan = Factory(:active_package_plan, :billable => subject)
+        before do
+          subject.reload
+          subject.plans = []
+          subject.courses = []
+          @plan = Factory(:active_package_plan, :billable => subject)
+        end
 
-          plan.billable.audit_billable_and_destroy
-          plan.reload.billable_audit["name"].should == subject.name
-          plan.reload.billable_audit["path"].should == subject.path
+        it "should persist environment attributes" do
+          @plan.billable.audit_billable_and_destroy
+          @plan.reload.billable_audit["name"].should == subject.name
+          @plan.reload.billable_audit["path"].should == subject.path
         end
 
         it "should persist courses" do
-          subject.reload.courses = []
           courses = (1..3).collect { Factory(:course, :environment => subject) }
-          plan = Factory(:active_package_plan, :billable => subject)
 
           subject.audit_billable_and_destroy
 
-          plan.reload.billable_audit[:courses].should_not be_nil
-          plan.reload.billable_audit[:courses].collect { |c| c["name"] }.to_set.
+          @plan.reload.billable_audit[:courses].should_not be_nil
+          @plan.reload.billable_audit[:courses].collect { |c| c["name"] }.to_set.
             should == courses.collect {|c| c.name }.to_set
         end
       end
