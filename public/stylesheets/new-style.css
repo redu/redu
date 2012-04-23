@@ -2029,7 +2029,8 @@ body {
 .statuses .icon-exercise-lightblue_64_66-after:after,
 .statuses .icon-document-lightblue_64_66-after:after,
 .statuses .icon-gruping-lightblue_64_66-after:after,
-.statuses .icon-contact-lightblue_64_66-after:after {
+.statuses .icon-contact-lightblue_64_66-after:after,
+.statuses .icon-grouping-lightblue_64_66-after:after {
   margin-top: -70px;
 }
 
@@ -2051,7 +2052,7 @@ body {
 .statuses .friend-avatar,
 .statuses li .avatar {
   float: left;
-  margin-right: 10px;
+  margin-right: 8px;
 }
 
 .statuses .username {
@@ -2109,6 +2110,11 @@ body {
   border: none;
 }
 
+#statuses .status .post-grouped .status-content .friend-avatar,
+#statuses .status .post-grouped li .friend-avatar {
+  margin-top: 8px;
+}
+
 .statuses li .message {
   padding-left: 37px;
   display: block;
@@ -2151,7 +2157,7 @@ body {
 
 .statuses .status-subject {
   float: left;
-  width: 32px;
+  width: 35px;
   height: 34px;
   margin-right: 5px;
   display: block;
@@ -2160,6 +2166,7 @@ body {
 
 .status {
   position: relative;
+  overflow: hidden;
 }
 
 .statuses .status-context {
@@ -7656,12 +7663,12 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 .textshadow #content .create-status .new-post,
-.textshadow #statuses .status .status-text .new-post {
+.textshadow #statuses .status .new-post {
   text-shadow: 0px 1px 0px rgb(255, 255, 255);
 }
 
 #content .create-status .new-post,
-#statuses .status .status-text .new-post {
+#statuses .status .new-post {
   font-size: 13px;
   font-family: arial, sans-sefif;
   font-weight: normal;
@@ -7682,13 +7689,13 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   border-color: rgb(77, 173, 214);
 }
 
-#statuses .status .status-text .vis-new-post {
+#statuses .status .vis-new-post {
   overflow: hidden;
   margin-top: 20px;
   margin-bottom: 13px;
 }
 
-#statuses .status .status-text .create-response {
+#statuses .status .create-response {
     background: #f0f0f0;
 }
 
@@ -7713,36 +7720,39 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 #content .create-status .new-post .link,
-#statuses .status .status-text .new-post .link {
+#statuses .status .new-post .link {
   color: rgb(204, 204, 204);
   font-weight: normal;
   margin-bottom: 5px;
 }
 
 #content .create-status .new-post .preview-link,
-#statuses .status .status-text .new-post .preview-link {
-  width: 100px;
-  height: 75px;
-  background-color: blue;
+#statuses .status .new-post .preview-link {
   float: left;
-  text-indent: -9999px;
+  width: 100px;
+}
+
+#statuses .status .new-post .preview-link img {
+  width: 100%;
+  display: block;
+  height: 100%;
 }
 
 #content .create-status .new-post .thumbnail,
-#statuses .status .status-text .new-post .thumbnail{
+#statuses .status .new-post .thumbnail {
   clear: both;
   margin-bottom: 10px;
   float: left;
   overflow: hidden;
 }
 
-.status .status-text .statuses .actions li {
+.status .statuses .actions li {
   float: right;
   border: none;
 }
 
 #content .create-status .new-post .description,
-#statuses .status .status-text .new-post .description {
+#statuses .status .new-post .description {
   overflow: hidden;
   padding-left: 10px;
   line-height: 18px;
@@ -7849,7 +7859,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 #content .create-status .new-post .java-applet,
-#statuses .status .status-text .new-post .java-applet {
+#statuses .status .new-post .java-applet {
   clear: both;
   float: left;
   overflow: hidden;
@@ -7905,7 +7915,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 #content .create-status .new-post .java-applet .icon,
-#statuses .status .status-text .new-post .java-applet .icon {
+#statuses .status .new-post .java-applet .icon {
   background-image: url("../images/new/icon-applet.png");
   text-indent: -9999px;
   width: 32px;
@@ -7939,18 +7949,14 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   text-align: center;
 }
 
-#statuses .status .status-text .create-response .ui-placeholder {
+#statuses .status .create-response .ui-placeholder {
   top: 9px;
   font-style: normal;
 }
 
-#statuses .status .status-text .comment-title {
+#statuses .status .comment-title {
   margin: 3px 0px 0px 10px;
   display: block;
-}
-
-#statuses .status .status-text .vis-new-post .comment-title {
-  margin-left: 0px;
 }
 
 #statuses .status .responses {
@@ -7964,7 +7970,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   padding-right: 10px;
 }
 
-#statuses .status .status-text .responses .answer-box {
+#statuses .status .responses .answer-box {
   float: left;
   margin-left: 37px;
   width: 500px;
@@ -7981,11 +7987,21 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
    width: 0;
 }
 
-.status-text .create-response .distance-top:after,
-.status-text .responses .distance-top:after {
+#statuses .status .vis-new-post .comment-title {
+  margin-left: 0px;
+  margin-bottom: 3px;
+}
+
+.re-status .new-post .thumbnail {
+  margin: 5px;
+  padding-left: 25px;
+}
+
+.create-response .distance-top:after,
+.responses .distance-top:after {
    border-color: rgb(240, 240, 240) white;
    border-width: 0 10px 10px;
-   margin-top: -46px;
+   margin-top: -42px;
    border-style: solid;
    content: " ";
    display: block;
@@ -8058,20 +8074,20 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 /* início agrupar-mural */
 
 #statuses .post-grouped {
-  width: 410px;
+  width: 440px;
   overflow: hidden;
-  margin-left: 35px;
-  margin-top: 10px;
+  margin-left: 40px;
+  height:40px;
 }
 
 #statuses .post-grouped .status-content {
   margin: 0px;
 }
 
-#statuses .post-grouped .show-more {
+.statuses .status .show-more {
   display: block;
   clear: both;
-  float: right;
+  width: 902px;
   margin-top: 10px;
   margin-right: 8px;
   font-size: 11px;
@@ -8087,8 +8103,4 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 
 #statuses #status-11859 .post-grouped-courses .status-info {
   margin-left: 10px;
-}
-
-#statuses .status {
-  overflow: hidden;
 }
