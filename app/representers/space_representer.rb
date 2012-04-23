@@ -22,4 +22,8 @@ module SpaceRepresenter
   link :users do
     api_space_users_url(self)
   end
+
+  link :subjects do
+    api_space_subjects_url(self)
+  end
 end

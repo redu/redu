@@ -287,7 +287,12 @@ Redu::Application.routes.draw do
 
     resources :spaces, :except => [:new, :edit, :index, :create] do
       resources :lectures, :except => [:new, :edit], :shallow => true
+      resources :subjects, :only => [:create, :index]
       resources :users, :only => :index
+    end
+
+    resources :subjects, :except => [:new, :edit, :index, :create] do
+      resources :lectures, :only => [:create, :index]
     end
 
     resources :lectures, :except => [:new, :edit, :index, :create] do
