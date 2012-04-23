@@ -68,6 +68,39 @@ describe "Statuses abilities" do
       @log.user = @user
       subject.should_not be_able_to :destroy, @log
     end
-
   end
+
+  context "when Help type" do
+    before do
+      @help = Factory(:help)
+    end
+
+    it "should not be able to read" do
+      subject.should_not be_able_to :read, @help
+    end
+
+    it "should be able to read" do
+      @help.user = @user
+      subject.should be_able_to :read, @help
+    end
+
+    it "should not be able to create" do
+      subject.should_not be_able_to :create, @help
+    end
+
+    it "should be able to create" do
+      @help.user = @user
+      subject.should be_able_to :create, @help
+    end
+
+    it "should not be able to destroy" do
+      subject.should_not be_able_to :destroy, @help
+    end
+
+    it "should be able to destroy" do
+      @help.user = @user
+      subject.should be_able_to :destroy, @help
+    end
+  end
+
 end

@@ -90,7 +90,7 @@ describe "Statuses" do
 
   context "when Help type" do
     before do
-      @help =  Factory(:help)
+      @help =  Factory(:help, :user => @current_user)
       get "/api/statuses/#{@help.id}", :oauth_token => @token, :format => 'json'
       @entity = parse(response.body)
     end
