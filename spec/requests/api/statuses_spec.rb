@@ -64,7 +64,7 @@ describe "Statuses" do
 
   context "when Log type" do
     before do
-      @log = Factory(:log)
+      @log = Factory(:log, :user => @current_user)
       get "/api/statuses/#{@log.id}", :oauth_token => @token, :format => 'json'
       @entity = parse(response.body)
     end
@@ -79,14 +79,9 @@ describe "Statuses" do
       end
     end
 
-    it "should return correct statusable" do
-      get href_to("statusable", @entity), :oauth_token => @token,
-        :format => 'json'
-      response.code.should == "200"
-    end
-
     it "should have the correct link to statusable, self, user and logeable" do
-      %w(statusable self user logeable).each do |attr|
+      %w(self statusable  user logeable).each do |attr|
+        # falha por não ter permissao pro get ao statusable, user e logeable
         get href_to(attr, @entity), :format => 'json', :oauth_token => @token
         response.code.should == "200"
       end
@@ -337,7 +332,7 @@ describe "Statuses" do
     end
 
     it "should return status 200 when help type" do
-      @help = Factory(:help)
+      @help = Factory(:help, :user => @current_user)
       delete "/api/statuses/#{@help.id}", :oauth_token => @token,
         :format => 'json'
 
@@ -345,7 +340,7 @@ describe "Statuses" do
     end
 
     it "should return status 200 when log type" do
-      @log = Factory(:log)
+      @log = Factory(:log, :user => @current_user)
       delete "/api/statuses/#{@log.id}", :oauth_token => @token,
         :format => 'json'
 
@@ -353,7 +348,7 @@ describe "Statuses" do
     end
 
     it "should return status 200 when answer type" do
-      @answer = Factory(:answer)
+      @answer = Factory(:answer, :user => @current_user)
       delete "/api/statuses/#{@answer.id}", :oauth_token => @token,
         :format => 'json'
 
@@ -447,7 +442,6 @@ describe "Statuses" do
       get href_to("statusable", parse(response.body)), :oauth_token => @token,
         :format => 'json'
       # não tem autorização para ver lecture
-
       parse(response.body)['lecture']['name'].should == @lecture.name
     end
 
@@ -477,7 +471,12 @@ describe "Statuses" do
 
   context "when creating status on lecture type (Help)" do
     before do
-      @lecture = Factory(:lecture)
+      @env = Factory(:complete_environment, :owner => @current_user)
+      @course = @env.courses.first
+      @space = @course.spaces.first
+      @subject = Factory(:subject, :owner => @current_user, :space => @space)
+      @lecture = Factory(:lecture, :subject => @subject, :owner => @current_user)
+
       @params = { 'status' => { :text => "Lacture Ximbica" },
         :oauth_token => @token, :format => 'json' }
     end
@@ -502,6 +501,7 @@ describe "Statuses" do
 
       get href_to("statusable", parse(response.body)), :oauth_token => @token,
         :format => 'json'
+      # não tem autorização para ver lecture
       response.code.should == "200"
     end
 
@@ -521,20 +521,20 @@ describe "Statuses" do
     end
 
     it "should return status 201 when activity type" do
-      @activity = Factory(:activity)
+      @activity = Factory(:activity, :user => @current_user)
       post "/api/statuses/#{@activity.id}/answers", @params
       response.code.should == "201"
     end
 
     it "should create an answer" do
-      @activity = Factory(:activity)
+      @activity = Factory(:activity, :user => @current_user)
       post "/api/statuses/#{@activity.id}/answers", @params
 
       parse(response.body)["type"].should == "Answer"
     end
 
     it "should return status 201 when help type" do
-      @help = Factory(:help)
+      @help = Factory(:help, :user => @current_user)
       post "/api/statuses/#{@help.id}/answers", @params
 
       response.code.should == "201"
@@ -548,13 +548,13 @@ describe "Statuses" do
 
     it "should return 422 when invalid" do
       @params['status'][:text] = "" # texto inválido
-      @activity = Factory(:activity)
+      @activity = Factory(:activity, :user => @current_user)
       post "/api/statuses/#{@activity.id}/answers", @params
 
       response.code.should == "422"
     end
 
-    xit "should return 422 when invalid type" do
+    it "should return 422 when invalid type" do
       @log = Factory(:log) # tipo inválido
       post "/api/statuses/#{@log.id}/answers", @params
       # Deve ser atualizado com authorize
@@ -562,7 +562,7 @@ describe "Statuses" do
     end
 
     it "should return correct statusable" do
-      @activity = Factory(:activity)
+      @activity = Factory(:activity, :user => @current_user)
       post "/api/statuses/#{@activity.id}/answers", @params
 
       get href_to("statusable", parse(response.body)), :oauth_token => @token,
@@ -571,7 +571,7 @@ describe "Statuses" do
     end
 
     it "should return corret in_response_to" do
-      @activity = Factory(:activity)
+      @activity = Factory(:activity, :user => @current_user)
       post "/api/statuses/#{@activity.id}/answers", @params
 
       get href_to("in_response_to", parse(response.body)), :oauth_token => @token,
@@ -580,7 +580,7 @@ describe "Statuses" do
     end
 
     it "should return correct in_response_to type (Activity)" do
-      @activity = Factory(:activity)
+      @activity = Factory(:activity, :user => @current_user)
       post "/api/statuses/#{@activity.id}/answers", @params
 
       get href_to("in_response_to", parse(response.body)), :oauth_token => @token,
@@ -589,7 +589,7 @@ describe "Statuses" do
     end
 
     it "should return correct in_response_to type (Help)" do
-      @help = Factory(:help)
+      @help = Factory(:help, :user => @current_user)
       post "/api/statuses/#{@help.id}/answers", @params
 
       get href_to("in_response_to", parse(response.body)), :oauth_token => @token,

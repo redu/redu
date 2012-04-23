@@ -9,13 +9,14 @@ module Api
     end
 
     def create
-      @values = params
-      if @values[:status][:type] == "help" || @values[:status][:type] == "Help"
-        if @values[:lecture_id]
-          @new_status = Help.new(@values[:status])
+      @values = { 'parametros' => params }
+      if @values['parametros'][:status][:type] == "help" || 
+        @values['parametros'][:status][:type] == "Help"
+        if @values['parametros'][:lecture_id]
+          @new_status = Help.new(@values['parametros'][:status])
         end
       else
-        @new_status = Activity.new(@values[:status])
+        @new_status = Activity.new(@values['parametros'][:status])
       end
 
       @status = create_on
@@ -32,16 +33,17 @@ module Api
     end
 
     def index
-      @values = params
-      @who = statuses
-      authorize! :read, @who
-      if @who.class.to_s == "User"
-        @statuses = Status.where(:user_id => @who)
+      @val = params
+      @values = { 'parametros' => params }
+      who = statuses
+      authorize! :read, who
+      if who.class.to_s == "User"
+        @statuses = Status.where(:user_id => who)
       else
-        @statuses = Status.where(:statusable_id => @who)
+        @statuses = Status.where(:statusable_id => who)
       end
 
-      case @values[:type]
+      case @values['parametros'][:type]
       when 'help'
         @statuses = @statuses.where(:type => 'Help')
       when 'log'
@@ -78,22 +80,22 @@ module Api
     protected
 
     def statuses
-      if  @values[:space_id]
-        Space.find(@values[:space_id])
-      elsif params[:lecture_id]
-        Lecture.find(@values[:lecture_id])
+      if @values['parametros'][:space_id]
+        Space.find(@values['parametros'][:space_id])
+      elsif @values['parametros'][:lecture_id]
+        Lecture.find(@values['parametros'][:lecture_id])
       else
-        User.find(@values[:user_id])
+        User.find(@values['parametros'][:user_id])
       end
     end
 
     def create_on
-      if @values[:user_id]
-        @new_status.statusable = User.find(@values[:user_id])
-      elsif @values[:space_id]
-        @new_status.statusable = Space.find(@values[:space_id])
+      if @values['parametros'][:user_id]
+        @new_status.statusable = User.find(@values['parametros'][:user_id])
+      elsif @values['parametros'][:space_id]
+        @new_status.statusable = Space.find(@values['parametros'][:space_id])
       else
-        @new_status.statusable = Lecture.find(@values[:lecture_id])
+        @new_status.statusable = Lecture.find(@values['parametros'][:lecture_id])
       end
       @new_status.user = current_user
     end

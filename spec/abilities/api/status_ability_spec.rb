@@ -23,9 +23,9 @@ describe "Statuses abilities" do
 
     it "should not be able to create" do
       @status = Activity.new(:text => "Ximbica Activity")
-      @status.user = @user
-      @status.statusable = @user
-      subject.should_not be_able_to :create, @activity
+      @status.user = Factory(:user)
+      @status.statusable = @status.user
+      subject.should_not be_able_to :create, @status
     end
 
     it "should be able to create" do
@@ -45,4 +45,5 @@ describe "Statuses abilities" do
     end
   end
 
+  end
 end

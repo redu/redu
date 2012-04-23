@@ -2,6 +2,7 @@ module Api
   class AnswersController < Api::ApiController
     def index
       @status = Status.find(params[:status_id])
+      authorize! :read, @status
       @answers = @status.answers
 
       respond_with(:api, @answers)
@@ -9,6 +10,7 @@ module Api
 
     def create
       @status = Status.find(params[:status_id])
+      authorize! :create, @status
       @answer = @status.answers.create(params[:status]) do |e|
         e.statusable = @status
         e.in_response_to = @status
