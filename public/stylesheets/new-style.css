@@ -2234,7 +2234,7 @@ body {
 }
 
 #content .secondary-sidebar {
-  margin: 20px 0 0 0;
+  margin: 40px 0 0 0;
   float: left;
   width: 170px;
 }
@@ -2808,6 +2808,43 @@ body {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
+}
+
+.friends-invitations .notice {
+  clear: both;
+  padding-top: 30px;
+  text-align: center;
+}
+
+.friends-invitations .empty-list {
+  padding-top: 60px;
+}
+
+.friends-invitations .form-header {
+  font-weight: 100;
+  font-family: museo-sans, helvetica, arial, sans-serif;
+  font-size: 17px;
+  color: #B3B2B3;
+}
+
+.friends-invitations #breadcrumbs  {
+  border: none;
+  margin-bottom: 0px;
+}
+
+.icon-contacts-lightblue_16_18-before:before,
+.friends-invitations {
+  padding-right:10px;
+}
+
+.friends-invitations #admin-invitations {
+  padding: 20px;
+  margin: 0 -19px 0 -19px;
+  padding-bottom: 1px
+}
+
+.friendship-sidebar .contact-recommendations {
+  margin-top: 112px;
 }
 
 .courses-requisitions li {
@@ -4788,11 +4825,18 @@ table.concave-invitation-table {
   clear: both;
 }
 
+.friends-invitations .concave-invitation-table,
 #course-manage table.concave-invitation-table {
   margin: 0px 50px;
   width: 646px;
   border-collapse: separate;
   border-spacing: 0px 10px;
+}
+
+
+.friends-invitations .concave-invitation-table {
+  margin: 0;
+  width: 580px;
 }
 
 table.concave-invitation-table tr {
@@ -4876,6 +4920,16 @@ table.concave-invitation-table .cell-reinvite .reinvite {
 table.concave-invitation-table .cell-reinvite .reinvited {
   color: rgb(179, 179, 179);
   margin-right: 15px;
+}
+
+.friends-invitations .concave-invitation-table .cell-reinvite .reinvite {
+  display: block;
+  text-align: right;
+}
+
+.friends-invitations .concave-invitation-table .cell-reinvite .reinvited {
+  display: block;
+  text-align: right;
 }
 
 #course-manage .invitation-list input[type="submit"].concave-remove {
@@ -5530,6 +5584,10 @@ table.concave-invitation-table .cell-reinvite .reinvited {
   font-weight: 500px;
 }
 
+.friends-invitations #admin-invitations .invite-title {
+  color: #4CACD5;
+}
+
 #admin-invitations .course-info {
   float: left;
   width: 130px;
@@ -5573,18 +5631,28 @@ table.concave-invitation-table .cell-reinvite .reinvited {
   font-size: 1em;
 }
 
+.friends-invitations #admin-invitations .form-common label {
+  margin-top: 4px;
+  margin-left: 60px;
+}
+
 #admin-invitations #invite_email_button {
   height: 50px;
 }
 
 #admin-invitations .form-common .concave-button {
-  margin: 20px 0px 0px 165px;
+  margin: 10px 0px 0px 165px;
+}
+
+.friends-invitations #admin-invitations .form-common .concave-button {
+  margin-bottom: 5px;
+  margin-left: 188px
 }
 
 #admin-invitations .token-input-list {
   clear: none;
   float: left;
-  margin-top: 20px;
+  margin-top: 10px;
   width: 395px;
   height: 25px;
 
@@ -5592,6 +5660,12 @@ table.concave-invitation-table .cell-reinvite .reinvited {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
+}
+
+.friends-invitations #admin-invitations .token-input-list {
+  float: right;
+  width: 335px;
+  margin-top: -5px;
 }
 
 #admin-invitations .token-input-list .token-input-token.email {
@@ -5620,6 +5694,10 @@ table.concave-invitation-table .cell-reinvite .reinvited {
 
 div.token-input-dropdown {
   width: 385px;
+}
+
+.token-input-dropdown.friendship-dropdown {
+  width: 326px;
 }
 
 #admin-invitations .token-input-list input {
@@ -7863,11 +7941,14 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   display: block;
   margin: 11px auto 2px;
 }
+.invite-button .invite-contact_32_50-before {
+  float: left;
+}
 
 .borderradius .invite-button {
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
+  -webkit-border-radius: 10px !important;
+  -moz-border-radius: 10px !important;
+  border-radius: 10px !important;
 }
 
 .boxshadow .invite-button {

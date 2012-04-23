@@ -38,6 +38,9 @@ class Ability
       :update_account, :edit_pro_details, :invite, :activate, :deactivate,
       :account, :home, :my_wall, :to => :manage
 
+    # Invitation
+    alias_action :resend_email, :destroy, :destroy_invitations, :to => :manage
+
     # Lecture
     alias_action :rate, :done, :to => :read
 
