@@ -344,7 +344,7 @@ describe "Statuses" do
       delete "/api/statuses/#{@log.id}", :oauth_token => @token,
         :format => 'json'
 
-      response.status.should == 200
+      response.status.should == 401
     end
 
     it "should return status 200 when answer type" do

@@ -45,5 +45,29 @@ describe "Statuses abilities" do
     end
   end
 
+  context "when Log type" do
+    before do
+      @log = Factory(:log)
+    end
+
+    it "should not be able to read" do
+      subject.should_not be_able_to :read, @log
+    end
+
+    it "should be able to read" do
+      @log.user = @user
+      subject.should be_able_to :read, @log
+    end
+
+    it "should not be able to create" do
+      @log.user = @user
+      subject.should_not be_able_to :create, @log
+    end
+
+    it "should not be able to destroy" do
+      @log.user = @user
+      subject.should_not be_able_to :destroy, @log
+    end
+
   end
 end
