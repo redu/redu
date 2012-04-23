@@ -1,28 +1,71 @@
 class PlansController < BaseController
 
-  before_filter :find_course_environment, :except => :index
+  before_filter :find_course_environment, :except => [:index, :create]
 
   authorize_resource
-  load_and_authorize_resource :user, :only => :index, :find_by => :login
-  load_and_authorize_resource :plan, :only => :index, :through => :user
+  load_and_authorize_resource :user, :find_by => :login
+  load_and_authorize_resource :plan, :only => [:index, :options], :through => :user
+  load_and_authorize_resource :partner, :only => [:create, :options]
 
-  def upgrade
-    if request.post?
-      UserNotifier.upgrade_request(current_user, @plan, params[:plan]).deliver
+  def create
+    if params[:client_id]
+      @client = @partner.partner_environment_associations.find(params[:client_id])
+    end
 
-      respond_to do |format|
-        format.html {
-          render :template => "plans/upgrade_pending"
-        }
+    @environment = Environment.find(params[:environment_id])
+    if params[:course_id]
+      @course = @environment.courses.find_by_path(params[:course_id])
+    end
+
+    @plan = @course.try(:plan) || @environment.try(:plan)
+    authorize! :migrate, @plan
+
+    @new_plan = Plan.from_preset(params[:new_plan].to_sym)
+    @plan.migrate_to @new_plan
+
+    flash[:notice] = "O novo plano foi assinado, você pode ver a fatura abaixo."
+    respond_to do |format|
+      if @client
+        format.html do
+          redirect_to partner_client_plan_invoices_path(@partner, @client,
+                                                        @new_plan)
+        end
+      else
+        format.html do
+          redirect_to plan_invoices_path(@new_plan)
+        end
       end
     end
   end
 
   def index
-    @plans = @user.plans.includes(:billable)
+    @plans = @user.plans.current.includes(:billable)
 
     respond_to do |format|
       format.html
+    end
+  end
+
+  def options
+    authorize! :migrate, @plan
+
+    if params[:client_id]
+      @client = @partner.partner_environment_associations.find(params[:client_id])
+    end
+
+    @billable_url = if @plan.billable.is_a? Environment
+                      environment_url(@plan.billable)
+                    elsif @plan.billable.is_a? Course
+                      environment_course_url(@plan.billable.environment,
+                                              @plan.billable)
+                    end
+
+    respond_to do |format|
+      if @client
+        format.html { render "partner_environment_associations/plans/options" }
+      else
+        format.html
+      end
     end
   end
 

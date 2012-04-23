@@ -78,7 +78,7 @@ class CoursesController < BaseController
           @plan = Plan.from_preset(params[:plan].to_sym)
           @plan.user = current_user
           @course.create_quota
-          @course.plans << @plan
+          @course.plan = @plan
           @plan.create_invoice_and_setup
         end
         @environment.courses << @course

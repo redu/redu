@@ -1,7 +1,12 @@
-<% unless @partner_contact.valid? %>
-  <% partial = (render :partial => 'partners/partner_contacts/new', :locals => { :environment => @environment }) %>
-  var $form = $("#partner-contact-form");
-  $form.replaceWith("<%= escape_javascript(partial) %>");
+var $form = $("#partner-contact-form");
+<% if @partner_contact.valid? %>
+  <% if @partner_contact.migration %>
+    var $confirmation_box = $("<%= escape_javascript render 'shared/confirmation_message', :message => %(A sua mensagem foi enviada, entraremos em contato através do seu e-mail (<span class="client-email">#{@partner_contact.email}</span>)) %>");
+  $form.replaceWith($confirmation_box);
+  <% else %>
+    window.location = "<%= success_partner_path(@partner) %>";
+  <% end %>
 <% else %>
-  window.location = "<%= success_partner_path(@partner) %>";
+  <% partial = (render :partial => 'partners/partner_contacts/new', :locals => { :environment => @environment, :migration => @partner_contact.migration, :billable_url => @partner_contact.billable_url }) %>
+  $form.replaceWith("<%= escape_javascript(partial) %>");
 <% end %>

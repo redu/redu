@@ -7,7 +7,6 @@ describe PackageInvoice do
 
   it { should respond_to :threshold_date }
   it { should respond_to :description }
-  it { should respond_to :discount }
   it { should validate_presence_of :amount }
 
 
@@ -64,6 +63,42 @@ describe PackageInvoice do
       expect {
         PackageInvoice.refresh_states!
       }.should_not raise_error(AASM::InvalidTransition)
+    end
+
+    it "should generate next invoice" do
+      inv = Factory(:package_invoice, :period_start => Date.today - 20.days,
+                    :period_end => Date.today - 1.day)
+      inv.pend!
+      inv.pay!
+
+      PackageInvoice.refresh_states!
+
+      PackageInvoice.pending.should have(2).items
+      PackageInvoice.pending.last.should == inv.plan.invoice
+    end
+  end
+
+  context " when refreshing paid invoices" do
+    before do
+      @current_invoices = (1..3).collect do
+        attrs = {
+          :period_start => Date.today - 60.days,
+          :period_end => Date.today - 35.days
+        }
+        invoice = Factory(:package_invoice)
+        invoice.update_attributes(attrs)
+        invoice.pend!
+        invoice.pay!
+
+        inv = invoice.plan.create_invoice(:invoice => attrs)
+        inv.pend!
+        inv.pay!
+      end
+    end
+
+    it "should take in count only current ones" do
+      PackageInvoice.refresh_states!
+      PackageInvoice.pending.should have(@current_invoices.size).items
     end
   end
 
@@ -154,18 +189,6 @@ describe PackageInvoice do
         UserNotifier.deliveries = []
       end
 
-      it "closes" do
-        expect {
-          subject.close!
-        }.should change(subject, :state).to("closed")
-      end
-
-      it "pays" do
-        expect {
-          subject.close!
-        }.should change(subject, :state).to("closed")
-      end
-
       it "stays on same stage if overdue again" do
         expect {
           subject.overdue!
@@ -222,14 +245,14 @@ describe PackageInvoice do
 
   context "when giving a discount" do
     before do
-      subject.update_attribute(:discount, 10.0)
+      subject.update_attribute(:previous_balance, -10.0)
     end
 
     #FIXME o pagseguro oferece um campo para desconto que o Gem não suporta
     it "should discount from amount" do
       item = subject.to_order_item
 
-      item[:price].should == subject.amount - subject.discount
+      item[:price].should == subject.amount + subject.previous_balance
     end
 
     it "says something about it" do
@@ -248,5 +271,64 @@ describe PackageInvoice do
 
   it "always returns false to open?" do
     subject.should_not be_open
+  end
+
+  context "when creating next invoice" do
+    before do
+      subject.update_attributes(:amount => 50,
+                                :plan => Factory(:active_package_plan))
+      subject.create_next_invoice
+      @new_invoice = subject.plan.invoices.last
+    end
+
+    it "should be persisted" do
+      @new_invoice.should be_persisted
+    end
+
+    it "should have period start one day after last invoice period end" do
+      @new_invoice.period_start.should == subject.period_end.tomorrow
+    end
+  end
+
+  context "when refreshing amount after changing period_end" do
+    before do
+      # Amount R$ 25.81
+      subject.update_attributes(:amount => 50,
+                                :period_start => Date.today - 15.days,
+                                :period_end => Date.today + 15.days)
+      @new_period_end = Date.today
+    end
+
+    context "when calling refresh_amount" do
+      before do
+        @return = subject.refresh_amount(@new_period_end)
+      end
+
+      it "should return BigDecimal" do
+        @return.should be_kind_of(BigDecimal)
+      end
+
+      it "should change period_end to new_period_End" do
+        subject.period_end.should == @new_period_end
+      end
+
+      it "should return difference between amount and used part of it" do
+        @return.round(2).should == BigDecimal.new("24.19")
+      end
+    end
+
+    context "when calling refresh_amount!" do
+      before do
+        @return = subject.refresh_amount!(@new_period_end)
+      end
+
+      it "should update period_end to new_period_End" do
+        subject.period_end.should == @new_period_end
+      end
+
+      it "should update amount value to used part of it" do
+        subject.amount.round(2).should ==  BigDecimal.new("25.81")
+      end
+    end
   end
 end
