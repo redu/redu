@@ -5,7 +5,7 @@ describe CompoundLog do
 
   it { should have_many :logs }
   it { CompoundLog.should respond_to(:current_compostable).with(2).arguments }
-  it { CompoundLog.new.should respond_to(:compound!).with(1).argument }
+  it { CompoundLog.new.should respond_to(:compound!).with(2).argument }
 
   context "when deleting compound log" do
     before do
@@ -145,49 +145,85 @@ describe CompoundLog do
     end # context "when people are getting friends"
 
     context "when people are enrolling to courses" do
+      before do
+        @course = Factory(:course)
+        @pycelle = Factory(:user, :login => 'meistre_pycelle')
+      end
 
       context "and there aren't compound logs" do
         it "should create a new one" do
           expect {
-            ActiveRecord::Observer.with_observers(:course_observer) do
-              course = Factory(:course)
-              user = Factory(:user)
-              course.join(user)
+            ActiveRecord::Observer.with_observers(:user_course_association_observer) do
+              jaime = Factory(:user, :login => "jaime_lannister")
+              @course.join(jaime)
             end
-          }.should change(CompoundLog, :count).from(0).to(1)
+          }.should change(CompoundLog, :count).by(1)
         end
       end
 
       context "and a compound log already exists" do
         before do
-          ActiveRecord::Observer.with_observers(:course_observer) do
-            @course = Factory(:course)
-            @user = Factory(:user)
-            @course.join(@user)
+          ActiveRecord::Observer.with_observers(:user_course_association_observer) do
+            @course.join(@pycelle)
+            @pycelle_compounds = CompoundLog.by_statusable('User', @pycelle.id)
+            @pycelle_compound = @pycelle_compounds.last
           end
         end
 
         it "should include new log into existing compound log" do
-          compound_log = CompoundLog.last
-          p CompoundLog.last
+          course = Factory(:course, :name => "game of thrones")
           expect {
-            ActiveRecord::Observer.with_observers(:course_observer) do
-              # course = Factory(:course)
-              some_user = Factory(:user)
-              @course.join(some_user)
+            ActiveRecord::Observer.with_observers(:user_course_association_observer) do
+              course.join(@pycelle)
+              @pycelle_compound.reload
             end
-          }.should change(compound_log.logs, :count).from(1).to(2)
+          }.should change(@pycelle_compound.logs, :count).from(1).to(2)
         end
 
-        context "but it is not related to the new enrollment" do
-          it "should create a new one" do
+        context "but ttl has expired" do
+          before do
+            ActiveRecord::Observer.with_observers(:user_course_association_observer) do
+              @course.join(@pycelle)
+            end
+            @pycelle_compound = CompoundLog.by_statusable('User', @pycelle.id).last
+            @pycelle_compound.compound_visible_at = 2.day.ago
+            @pycelle_compound.save
+          end
+
+          it "should create a new compound log for statusable" do
+            course = Factory(:course)
             expect {
-              ActiveRecord::Observer.with_observers(:course_observer) do
-                another_course = Factory(:course)
-                user = Factory(:user)
-                another_course.join(user)
+              ActiveRecord::Observer.with_observers(:user_course_association_observer) do
+                course.join(@pycelle)
               end
-            }.should change(CompoundLog, :count).from(1).to(2)
+            }.should change(CompoundLog, :count).by(1)
+            CompoundLog.by_statusable('User', @pycelle.id).count.should == 2
+          end
+        end
+
+        context "and it has the minimum number of logs (4) to being visible" do
+          before do
+            @courses = (1..5).collect { Factory(:course) }
+            @aemon = Factory(:user, :login => "aemon_targaryen")
+
+            ActiveRecord::Observer.with_observers(:user_course_association_observer) do
+              @courses.each { |course| course.join(@aemon) }
+            end
+            @aemon_compounds = CompoundLog.by_statusable('User', @aemon.id)
+          end
+
+          it "just have one compoundLog" do
+            @aemon_compounds.count.should == 1
+          end
+
+          it "should contain 5 or more logs" do
+            @aemon_compounds.last.logs.count.should > 4
+          end
+
+          it "should be visible" do
+            @aemon_compounds.last.compound_visible_at.should_not be_nil
+            @aemon_compounds.last.compound.should be_false
+            # display on view
           end
         end
       end

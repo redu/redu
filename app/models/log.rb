@@ -124,15 +124,12 @@ class Log < Status
     config.fetch('attrs', model.attribute_names)
   end
 
+  private
   def compound
     # Compõe apenas logs com logeable Friendship e Course
     if ["Friendship", "UserCourseAssociation"].include? self.logeable.class.to_s
       compound_log = CompoundLog.current_compostable(self)
-      if compound_log.logs.count == 4
-        compound_log.compound!(self)
-      else
-        compound_log.logs << self
-      end
+      compound_log.compound!(self)
     end
   end
 end

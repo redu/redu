@@ -3,11 +3,13 @@ class CompoundLog < Status
 
   scope :by_logeable_type, lambda { |type| where(:logeable_type => type)}
 
-  def compound!(log)
+  def compound!(log, min_logs=4)
     self.logs << log
-    self.compound_visible_at = Time.now
-    self.compound = false
-    self.save!
+    if self.logs.count == min_logs
+      self.compound_visible_at = Time.now
+      self.compound = false
+      self.save!
+    end
   end
 
   # Return last compound able to group logs.
@@ -17,7 +19,7 @@ class CompoundLog < Status
     statusable = status.statusable
 
     compound_logs = CompoundLog.by_statusable(statusable.class.to_s,
-                                              statusable.id).by_logeable_type(status.logeable_type)
+                                              statusable.id).by_logeable_type(status.logeable.class.to_s)
 
     compound_log = compound_logs.order("created_at ASC").limit(1).last
 
