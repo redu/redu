@@ -581,21 +581,21 @@ describe "Statuses" do
   context "when listing an Answer" do
     it "should return code 200 type (activity)" do
       @activity = Factory(:activity)
-      get "/api/statuses/#{@activity.id}/answers", :oauth_token => @token, 
+      get "/api/statuses/#{@activity.id}/answers", :oauth_token => @token,
         :format => 'json'
       response.code.should == "200"
     end
 
     it "should return code 200 type (help)" do
       @help = Factory(:help)
-      get "/api/statuses/#{@help.id}/answers", :oauth_token => @token, 
+      get "/api/statuses/#{@help.id}/answers", :oauth_token => @token,
         :format => 'json'
       response.code.should == "200"
     end
-    
+
     it "should return code 200" do
       @log = Factory(:log)
-      get "/api/statuses/#{@log.id}/answers", :oauth_token => @token, 
+      get "/api/statuses/#{@log.id}/answers", :oauth_token => @token,
         :format => 'json'
       # lista vazia
       response.code.should == "200"
@@ -623,7 +623,7 @@ describe "Statuses" do
       parse(response.body)[0]['text'].should == "Ximbica over"
     end
 
-    it "should return body not be null" do
+    it "should not return null body" do
       @params = { 'status' => { :text => "Ximbica over" },
         :oauth_token => @token, :format => 'json' }
       post "/api/spaces/#{@space.id}/statuses", @params
@@ -632,18 +632,19 @@ describe "Statuses" do
       parse(response.body).should_not be_empty
     end
 
-    it "should return code 404" do
+    it "should return code 404 when doesnt exist" do
       get "/api/spaces/007/statuses/timeline", @params
       response.code.should == "404"
     end
 
+    # FIXME pelo texto esse teste faz a mesma coisa do teste anterior
     it "should return code 404, not found" do
       @lecture = Factory(:lecture)
       get "/api/spaces/#{@lecture.id}/statuses/timeline", @params
       response.code.should == "404"
     end
   end
-  
+
   context "when listing overview on User (timeline)" do
     before do
       @user = Factory(:user)
@@ -652,12 +653,12 @@ describe "Statuses" do
         @activity = Factory(:activity,
                               :user => @user,
                               :statusable => @user)
-                              
+
         @associations = @user.status_user_associations
         @activity.text = "Ximbica over"
         @params = { 'status' => { :text => @activity.text },
           :oauth_token => @token, :format => 'json' }
-          
+
         post "/api/users/#{@user.id}/statuses", @params
       end
     end
@@ -666,33 +667,33 @@ describe "Statuses" do
       get "/api/users/#{@user.id}/statuses/timeline", @params
       response.code.should == "200"
     end
-    
+
     it "should return id of status created on user" do
       get "/api/users/#{@user.id}/statuses/timeline", @params
       parse(response.body)[0]['id'].should == @activity.id
     end
 
-    it "should return body not be null" do
+    it "should not return null body" do
       get "/api/users/#{@user.id}/statuses/timeline", @params
       parse(response.body).should_not be_empty
     end
 
-    it "should return number of overview" do
+    it "should return the correct number of statuses" do
       get "/api/users/#{@user.id}/statuses/timeline", @params
 
       parse(response.body).count.should == @user.overview.count
     end
 
-    it "should return code 404" do
+    it "should return code 404 doesnt exist" do
       get "/api/users/007/statuses/timeline", @params
       response.code.should == "404"
     end
 
-    it "should return code 404, not found" do
+    it "should return code 404 when not found" do
       @lecture = Factory(:lecture)
       get "/api/users/#{@lecture.id}/statuses/timeline", @params
       response.code.should == "404"
     end
   end
-  
+
 end
