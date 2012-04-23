@@ -31,9 +31,9 @@ var subject_participation_pie = function () {
         series: [{
             type: 'pie',
             data: [
-                ['Quantidade de respostas aos pedidos de ajuda'],
+                ['Pedidos de ajuda sem resposta'],
                 {
-                  name: 'Quantidade de pedidos de ajuda',
+                  name: 'Pedidos de ajuda que tiveram resposta',
                   sliced: true,
                   selected: true
                 },

@@ -428,6 +428,11 @@ describe Ability do
           @ability.should be_able_to(:preview, space)
         end
 
+        it "can't see subject participation report" do
+          @ability.should_not be_able_to(:subject_participation_report,
+                                         @course)
+        end
+
         it "cannot create a subject"
         it "cannot destroy any subject"
         it "cannot create a lecture"
@@ -463,6 +468,11 @@ describe Ability do
           @ability.should_not be_able_to(:destroy, space1)
         end
 
+        it "can't see subject participation report" do
+          @ability.should_not be_able_to(:subject_participation_report,
+                                         @course)
+        end
+
         it "creates a subject"
         it "destroys any subject"
         it "creates a lecture"
@@ -490,6 +500,11 @@ describe Ability do
           @ability.should_not be_able_to(:destroy, Factory(:space,
                                                            :owner => @tutor,
                                                            :course => @course))
+        end
+
+        it "can't see subject participation report" do
+          @ability.should_not be_able_to(:subject_participation_report,
+                                         @course)
         end
 
         it "cannot create a subject"
@@ -544,6 +559,12 @@ describe Ability do
                           :course => @course)
           @ability.should be_able_to(:destroy, space)
         end
+
+        it "can't see subject participation report" do
+          @ability.should be_able_to(:subject_participation_report,
+                                     @course)
+        end
+
         it "creates a subject"
         it "destroys any subject"
         it "creates a lecture"
