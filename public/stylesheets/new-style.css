@@ -7677,16 +7677,18 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   padding-left: 10px;
 }
 
-#content .create-status .status-buttons .concave-clean {
+.create-status .status-buttons .concave-clean {
   float: right;
   height: 28px;
   width: 73px;
   padding: 0px;
   border-color: rgb(204, 204, 204);
+  background-color: rgb(247, 247, 247);
 }
 
 #content .create-status .status-buttons .concave-clean:hover {
   border-color: rgb(77, 173, 214);
+  background-color: rgb(219, 239, 247);
 }
 
 #statuses .status .vis-new-post {
@@ -7732,7 +7734,8 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   width: 100px;
 }
 
-#statuses .status .new-post .preview-link img {
+#statuses .status .new-post .preview-link img,
+#content .create-status .preview-link img {
   width: 100%;
   display: block;
   height: 100%;
