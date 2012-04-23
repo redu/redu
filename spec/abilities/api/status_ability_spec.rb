@@ -103,4 +103,5 @@ describe "Statuses abilities" do
     end
   end
 
+  end
 end

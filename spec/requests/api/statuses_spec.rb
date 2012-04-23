@@ -7,7 +7,8 @@ describe "Statuses" do
 
   context "when Activity type" do
     before do
-      @activity = Factory(:activity, :user => @current_user)
+      @activity = Factory(:activity, :user => @current_user,
+         :statusable => @current_user)
       get "/api/statuses/#{@activity.id}", :oauth_token => @token, :format => 'json'
       @entity = parse(response.body)
     end
@@ -22,16 +23,14 @@ describe "Statuses" do
       end
     end
 
-    xit "should have a link to its Answers" do
+    it "should have a link to its Answers" do
       get href_to('answers', @entity), :format => 'json', :oauth_token => @token
-      # "/api/status_id/answer" ainda n tem authorize
       response.code.should == "200"
     end
 
-    xit "should have the correct links (statusable, user, self)" do
+    it "should have the correct links (statusable, user, self)" do
       %w(statusable self user).each do |attr|
         get href_to(attr, @entity), :format => 'json', :oauth_token => @token
-        # tem que fazer o statusable ser amigo do self
         response.code.should == "200"
       end
     end
@@ -39,7 +38,8 @@ describe "Statuses" do
 
   context "when Answer type" do
     before do
-      @answer = Factory(:answer, :user => @current_user)
+      @answer = Factory(:answer, :in_response_to => Factory(:activity, 
+        :user => @current_user), :user => @current_user)
       get "/api/statuses/#{@answer.id}", :format => 'json', :oauth_token => @token
       @entity = parse(response.body)
     end
@@ -64,7 +64,10 @@ describe "Statuses" do
 
   context "when Log type" do
     before do
-      @log = Factory(:log, :user => @current_user)
+      # current_user e definido como statusable e logeable para ter
+      # autorização para ver os mesmo
+      @log = Factory(:log, :user => @current_user, 
+        :statusable => @current_user, :logeable => @current_user)
       get "/api/statuses/#{@log.id}", :oauth_token => @token, :format => 'json'
       @entity = parse(response.body)
     end
@@ -81,7 +84,6 @@ describe "Statuses" do
 
     it "should have the correct link to statusable, self, user and logeable" do
       %w(self statusable  user logeable).each do |attr|
-        # falha por não ter permissao pro get ao statusable, user e logeable
         get href_to(attr, @entity), :format => 'json', :oauth_token => @token
         response.code.should == "200"
       end
@@ -90,7 +92,7 @@ describe "Statuses" do
 
   context "when Help type" do
     before do
-      @help =  Factory(:help, :user => @current_user)
+      @help =  Factory(:help, :user => @current_user, :statusable => @current_user)
       get "/api/statuses/#{@help.id}", :oauth_token => @token, :format => 'json'
       @entity = parse(response.body)
     end
@@ -313,7 +315,7 @@ describe "Statuses" do
       parse(response.body)["type"].should == "Activity"
     end
 
-    it "should return 422 when invalid" do
+    it "should return 422 when invalTeus caminhosid" do
       @params['status'][:text] = ""
       post "/api/users/#{@user.id}/statuses", @params
 
@@ -441,7 +443,6 @@ describe "Statuses" do
 
       get href_to("statusable", parse(response.body)), :oauth_token => @token,
         :format => 'json'
-      # não tem autorização para ver lecture
       parse(response.body)['lecture']['name'].should == @lecture.name
     end
 
@@ -458,7 +459,6 @@ describe "Statuses" do
 
       get href_to("statusable", parse(response.body)), :oauth_token => @token,
         :format => 'json'
-      # não tem autorização para ver lecture
       parse(response.body)['lecture']['name'].should == @lecture.name
     end
 
@@ -498,10 +498,9 @@ describe "Statuses" do
     it "should return statusable" do
       @params['status'][:type] = "help"
       post "/api/lectures/#{@lecture.id}/statuses", @params
-
       get href_to("statusable", parse(response.body)), :oauth_token => @token,
         :format => 'json'
-      # não tem autorização para ver lecture
+
       response.code.should == "200"
     end
 
@@ -557,8 +556,7 @@ describe "Statuses" do
     it "should return 422 when invalid type" do
       @log = Factory(:log) # tipo inválido
       post "/api/statuses/#{@log.id}/answers", @params
-      # Deve ser atualizado com authorize
-      response.code.should == "422"
+      response.code.should == "401"
     end
 
     it "should return correct statusable" do
@@ -600,14 +598,14 @@ describe "Statuses" do
 
   context "when listing an Answer" do
     it "should return code 200 type (activity)" do
-      @activity = Factory(:activity)
+      @activity = Factory(:activity, :user => @current_user)
       get "/api/statuses/#{@activity.id}/answers", :oauth_token => @token, 
         :format => 'json'
       response.code.should == "200"
     end
 
     it "should return code 200 type (help)" do
-      @help = Factory(:help)
+      @help = Factory(:help, :user => @current_user)
       get "/api/statuses/#{@help.id}/answers", :oauth_token => @token, 
         :format => 'json'
       response.code.should == "200"
@@ -618,7 +616,7 @@ describe "Statuses" do
       get "/api/statuses/#{@log.id}/answers", :oauth_token => @token, 
         :format => 'json'
       # lista vazia
-      response.code.should == "200"
+      response.code.should == "401"
     end
   end
 
@@ -633,7 +631,7 @@ describe "Statuses" do
 
     it "should return code 200" do
       get "/api/spaces/#{@space.id}/statuses/timeline", @params
-      # Retorna 200 mesmo sem nada listado
+      # lista vazia
       response.code.should == "200"
     end
 

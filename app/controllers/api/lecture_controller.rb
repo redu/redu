@@ -2,7 +2,9 @@ module Api
   class LecturesController < ApiController
     def show
       @lecture = Lecture.find(params[:id])
-      respond_with @lecture
+      authorize! :read, @lecture
+
+      respond_with(:api, @lecture)
     end
   end
 end

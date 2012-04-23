@@ -9,6 +9,7 @@ module Api
     include Api::StatusAbility
     include Api::SubjectAbility
     include Api::LectureAbility
+    include Api::AnswerAbility
 
     def initialize(user)
       can :read, :error
