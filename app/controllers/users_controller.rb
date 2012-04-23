@@ -1,11 +1,13 @@
 class UsersController < BaseController
   respond_to :html, :js
 
-  load_and_authorize_resource :except => [:forgot_password,
-    :forgot_username, :resend_activation, :activate, :index],
+  load_and_authorize_resource :except => [:recover_username_password,
+    :recover_username, :recover_password, :resend_activation, :activate,
+    :index],
     :find_by => :login
   load_resource :environment, :only => [:index], :find_by => :path
-  load_resource :course, :only => [:index], :find_by => :path
+  load_resource :course, :only => [:index], :find_by => :path,
+    :through => :environment
   load_resource :space, :only => [:index]
 
   rescue_from CanCan::AccessDenied, :with => :deny_access
@@ -43,6 +45,7 @@ class UsersController < BaseController
       redirect_to removed_page_path and return
     end
 
+    @subscribed_courses_count = @user.user_course_associations.approved.count
     respond_to do |format|
       format.html
     end
@@ -80,14 +83,13 @@ class UsersController < BaseController
 
     respond_to do |format|
       format.html do
-        render :new, :layout => 'clean'
+        render :new, :layout => 'cold'
       end
     end
   end
 
   def create
     @user = User.new(params[:user])
-
     if @user.save
       @user.create_settings!
       if @key
@@ -103,6 +105,12 @@ class UsersController < BaseController
         invite.accept!
       end
 
+      # Invitation Token
+      if params.has_key?(:friendship_invitation_token)
+        invite = Invitation.find_by_token(params[:friendship_invitation_token])
+        invite.accept!(@user)
+      end
+
       flash[:notice] = t(:email_signup_thanks, :email => @user.email)
       redirect_to signup_completed_user_path(@user)
     else
@@ -113,6 +121,15 @@ class UsersController < BaseController
           params[:invitation_token])
           @course = @user_course_invitation.course
           @environment = @course.environment
+      elsif params.has_key?(:friendship_invitation_token)
+        invitation = Invitation.find_by_token(params[:friendship_invitation_token])
+        @invitation_user = invitation.user
+        uca = UserCourseAssociation.where(:user_id => @invitation_user).approved
+        @contacts = {:total => @invitation_user.friends.count}
+        @courses = { :total => @invitation_user.courses.count,
+                     :environment_admin => uca.with_roles([:environment_admin]).count,
+                     :tutor => uca.with_roles([:tutor]).count,
+                     :teacher => uca.with_roles([:teacher]).count }
       end
 
       unless @user.oauth_token.nil?
@@ -127,7 +144,7 @@ class UsersController < BaseController
           render :action => :new
         end
       else
-        render :template => 'users/new', :layout => 'clean'
+        render :template => 'users/new', :layout => 'cold'
       end
     end
   end
@@ -225,7 +242,7 @@ class UsersController < BaseController
 
   def signup_completed
     redirect_to home_path and return unless @user
-    render :template => "users/signup_completed", :layout => "clean"
+    render :template => "users/signup_completed", :layout => "cold"
   end
 
   def welcome_complete
@@ -233,40 +250,45 @@ class UsersController < BaseController
     redirect_to user_path
   end
 
-  def forgot_password
-    return unless request.post?
-    @user = User.find_by_email(params[:email])
+  def recover_username_password
+    @recover_username = RecoveryEmail.new
+    @recover_password = RecoveryEmail.new
+    render :layout => 'cold'
+  end
 
-    if @user && @user.reset_password
-      UserNotifier.user_reseted_password(@user).deliver
-      @user.save
-
-      # O usuario estava ficando logado, apos o comando @user.save.
-      # Destruindo sessao caso ela exista.
-      if UserSession.find
-        UserSession.find.destroy
+  def recover_username
+    @recover_username = RecoveryEmail.new(params[:recovery_email])
+    if @recover_username.valid?
+      @user = User.find_by_email(@recover_username.email)
+      if @user
+        UserNotifier.user_forgot_username(@user).deliver
+      else # Email não cadastrado no Redu
+        @recover_username.mark_email_as_invalid!
       end
-
-      redirect_to home_path
-      flash[:info] = t :your_password_has_been_reset_and_emailed_to_you
-    else
-      flash[:error] = t :sorry_we_dont_recognize_that_email_address
     end
   end
 
-  def forgot_username
-    return unless request.post?
-    if @user = User.find_by_email(params[:email])
-      UserNotifier.user_forgot_username(@user).deliver
-      redirect_to home_path
-      flash[:info] = t :your_username_was_emailed_to_you
-    else
-      flash[:error] = t :sorry_we_dont_recognize_that_email_address
+  def recover_password
+    @recover_password = RecoveryEmail.new(params[:recovery_email])
+    if @recover_password.valid?
+      @user = User.find_by_email(@recover_password.email)
+
+      if @user.try(:reset_password)
+        UserNotifier.user_reseted_password(@user).deliver
+        @user.save
+
+        # O usuario estava ficando logado, apos o comando @user.save.
+        # Destruindo sessao caso ela exista.
+        if UserSession.find
+          UserSession.find.destroy
+        end
+      else # Email não cadastrado no Redu
+        @recover_password.mark_email_as_invalid!
+      end
     end
   end
 
   def resend_activation
-    return unless request.post?
     if params[:email]
       @user = User.find_by_email(params[:email])
     else
@@ -378,6 +400,8 @@ class UsersController < BaseController
     @statusable = @user
     @status = Status.new
 
+    @subscribed_courses_count = @user.user_course_associations.approved.count
+
     respond_to do |format|
       format.html
       format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
@@ -403,10 +427,7 @@ class UsersController < BaseController
     end
 
 
-    @users = @users.includes(:user_environment_associations).
-      includes(:user_course_associations).
-      includes(:user_space_associations).
-      paginate(:page => params[:page], :order => 'first_name ASC',
+    @users = @users.paginate(:page => params[:page], :order => 'first_name ASC',
                :per_page => 18)
 
     respond_to do |format|

@@ -1,0 +1,26 @@
+<li id="requisition-<%= friend.id %>" class="clearfix">
+  <span>Você tem uma nova requisição de contato:</span>
+  <div class="grid_5 friend">
+    <%= image_tag friend.avatar.url(:thumb_32), :class => 'avatar' %>
+    <div class="grid_4 friend-details">
+      <%= link_to friend.display_name, user_path(friend), :class => 'name' %>
+      <span class="counter">
+        <%= pluralize friend.friends_in_common_with(current_user).length,
+          'contato'  %> em comum
+      </span>
+    </div>
+  </div>
+  <div class="actions">
+    <%= form_for [current_user, current_user.friendship_for(friend)],
+      :html => {:method => :delete, :class => "form-loader"}, :remote => true do %>
+      <%= hidden_field_tag "goto_home", true %>
+      <%= submit_tag "Recusar", :class => 'concave-clean' %>
+    <% end %>
+    <%= form_for [current_user, Friendship.new],
+      :remote => true, :html => { :method => :post, :class => "form-loader" } do %>
+      <%= hidden_field_tag "goto_home", true %>
+      <%= hidden_field_tag "friend_id", friend.id %>
+      <%= submit_tag "Aceitar", :class => 'concave-important' %>
+    <% end %>
+  </div>
+</li>

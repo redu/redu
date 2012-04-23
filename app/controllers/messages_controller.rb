@@ -87,6 +87,7 @@ class MessagesController < BaseController
       @message.recipient_id = to# User.find(to)
       @message.sender = @user
       unless @message.valid?
+        @recipients = @user.friends.message_recipients(params[:message_to])
         respond_to do |format|
           format.html do
             render :template => 'messages/new' and return
@@ -109,15 +110,11 @@ class MessagesController < BaseController
   end
 
   def delete_selected
-    if request.post? && current_user.id == params[:user_id].to_i # Caso tentem burlar
-      if params[:delete]
-        params[:delete].each { |id|
-          @message = Message.where(["messages.id = ? AND (sender_id = ? OR recipient_id = ?)", id, @user, @user]).first
-          @message.mark_deleted(@user) unless @message.nil?
-        }
-        flash[:notice] = t :messages_deleted
-      end
-    end
+    authorize! :manage, @user
+
+    @message = Message.where(:id => params[:delete])
+    @message.each {|m| m.mark_deleted(@user) }
+    flash[:notice] = t :messages_deleted
 
     if params[:mailbox] == 'inbox'
       redirect_to user_messages_path(@user)

@@ -12,7 +12,7 @@
     </div>
   <div class="status-message">
     <p>
-      <%= raw auto_link(response.text) %>
+      <%= raw auto_link(h(response.text).gsub(/\n/, '</br>')) %>
     </p>
   </div>
   <ul class="actions clearfix">

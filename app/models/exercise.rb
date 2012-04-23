@@ -105,17 +105,15 @@ class Exercise < ActiveRecord::Base
   end
 
   # Verifica se há pelo menos uma questão e se as questões têm pelo menos
-  # duas alternativas
+  # duas alternativas. Em caso negativo adiciona erros de validação.
   def make_sense?
     questions_remain = questions.reject(&:marked_for_destruction?)
     valid_qs = questions_remain.length > 0
-    valid_alts = questions_remain.inject(true) { |acc,q|
-      acc && q.alternatives.reject(&:marked_for_destruction?).length > 1
-    }
+    valid_alts = questions_remain.inject(true) { |acc,q| acc && q.make_sense? }
 
     return true if valid_qs && valid_alts
-    errors.add(:general, "deve existir no mínimo uma questão e cada " + \
-               "questão deve possuir pelo menos duas alternativas")
+
+    errors.add(:base, "deve existir no mínimo uma questão") unless valid_qs
     return false
   end
 

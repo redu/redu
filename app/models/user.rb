@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  include Invitable::Base
+
   require 'community_engine_sha1_crypto_method'
   require 'paperclip'
 
@@ -24,6 +26,9 @@ class User < ActiveRecord::Base
     :foreign_key => "owner"
   # Course
   has_many :courses, :through => :user_course_associations
+  # Authentication
+  has_many :authentications, :dependent => :destroy
+
 
   #COURSES
   has_many :lectures, :foreign_key => "owner",
@@ -45,8 +50,6 @@ class User < ActiveRecord::Base
   has_many :subjects, :order => 'title ASC',
     :conditions => { :finalized => true }
 
-  #student_profile
-  has_many :student_profiles
   has_many :plans
   has_many :course_invitations, :class_name => "UserCourseAssociation",
     :conditions => ["state LIKE 'invited'"]
@@ -93,7 +96,7 @@ class User < ActiveRecord::Base
 
   scope :popular_teachers, lambda { |quantity|
     includes(:user_course_associations).
-      where("user_course_associations.role" => Role[:teacher]).popular(quantity)
+      where("course_enrollments.role" => Role[:teacher]).popular(quantity)
   }
   scope :with_email_domain_like, lambda { |email|
     where("email LIKE ?", "%#{email.split("@")[1]}%")
@@ -105,8 +108,7 @@ class User < ActiveRecord::Base
           " OR friendships.status = 'pending'" \
           " OR friendships.status = 'requested'")
 
-  scope :message_recipients, lambda { |recipients_ids| select("users.id, users.first_name").
-    where("users.id IN (?)", recipients_ids) }
+  scope :message_recipients, lambda { |recipients_ids| where("users.id IN (?)", recipients_ids) }
 
   attr_accessor :email_confirmation
 
@@ -149,7 +151,7 @@ class User < ActiveRecord::Base
   validates_uniqueness_of   :login, :email, :case_sensitive => false
   validates_exclusion_of    :login, :in => Redu::Application.config.extras["reserved_logins"]
   validates :birthday,
-      :date => { :before => Proc.new { 13.years.ago } }
+      :date => { :before => Proc.new { 13.years.ago } }, :allow_nil => true
   validates_acceptance_of :tos
   validates_confirmation_of :email
   validates_format_of :email,
@@ -184,6 +186,11 @@ class User < ActiveRecord::Base
   end
 
   ## Instance Methods
+  def process_invitation!(invitee, invitation)
+    friendship_invitation = self.be_friends_with(invitee)
+    invitation.delete
+  end
+
   def profile_complete?
     (self.first_name and self.last_name and self.gender and
         self.description and self.tags) ? true : false
@@ -228,9 +235,16 @@ class User < ActiveRecord::Base
       end
     when 'User'
       entity == self
-    when 'Plan'
-      entity.user == self
-    when 'Invoice'
+    when 'Plan', 'PackagePlan', 'LicensedPlan'
+      entity.user == self || self.can_manage?(entity.billable) ||
+        # Caso em que billable foi destruído
+        self.can_manage?(
+          # Não levanta RecordNotFound
+          Partner.where( :id => entity.billable_audit.
+                        try(:[], :partner_environment_association).
+                        try(:[],"partner_id")).first
+      )
+    when 'Invoice', 'LicensedInvoice', 'PackageInvoice'
       self.can_manage?(entity.plan)
     when 'Myfile'
       self.can_manage?(entity.folder)
@@ -251,6 +265,8 @@ class User < ActiveRecord::Base
       self.can_manage?(entity.exercise)
     when 'Exercise'
       self.can_manage?(entity.lecture) && !entity.has_results?
+    when 'Invitation'
+      self.can_manage?(entity.hostable)
     end
   end
 
@@ -270,7 +286,7 @@ class User < ActiveRecord::Base
       when 'Folder'
         self.get_association_with(entity.space).nil? ? false : true
       when 'Status'
-        unless entity.statusable.class.to_s.eql?("User")
+        unless entity.statusable.is_a? User
           self.has_access_to? entity.statusable
         else
           self.friends?(entity.statusable) || self == entity.statusable
@@ -302,20 +318,18 @@ class User < ActiveRecord::Base
   # Método de alto nível, verifica se o object está publicado (caso se aplique)
   # e se o usuário possui acesso (i.e. relacionamento) com o mesmo
   def can_read?(object)
-    if (object.class.to_s.eql? 'Folder') || (object.class.to_s.eql? 'Forum') ||
-       (object.class.to_s.eql? 'Topic') || (object.class.to_s.eql? 'SbPost') ||
-       (object.class.to_s.eql? 'Event') || (object.class.to_s.eql? 'Bulletin') ||
-       (object.class.to_s.eql? 'Status') || (object.class.to_s.eql? 'Help') ||
-       (object.class.to_s.eql? 'User') ||
-       (object.class.to_s.eql? 'Friendship') || (object.class.to_s.eql? 'Plan') ||
-       (object.class.to_s.eql? 'Invoice') ||
-       (object.class.to_s.eql? 'PartnerEnvironmentAssociation') ||
-       (object.class.to_s.eql? 'Partner') || (object.class.to_s.eql? 'Result') ||
-       (object.class.to_s.eql? 'Question')
+    if (object.is_a? Folder)  ||
+       (object.is_a? Status) || (object.is_a? Help) ||
+       (object.is_a? User) || (object.is_a? Friendship) ||
+       (object.is_a? Plan) || (object.is_a? PackagePlan) ||
+       (object.is_a? Invoice) ||
+       (object.is_a? PartnerEnvironmentAssociation) ||
+       (object.is_a? Partner) || (object.is_a? Result) ||
+       (object.is_a? Question)
 
        self.has_access_to?(object)
     else
-      if (object.class.to_s.eql? 'Subject')
+      if (object.is_a? Subject)
         object.visible? && self.has_access_to?(object)
       else
         object.published? && self.has_access_to?(object)
@@ -473,7 +487,7 @@ class User < ActiveRecord::Base
   end
 
   def profile_for(subject)
-    self.student_profiles.where(:subject_id => subject)
+    self.enrollments.where(:subject_id => subject)
   end
 
   def completeness
@@ -564,6 +578,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def friends_in_common_with(user)
+    User.where(:login => 'yayreduyay123')
+  end
+
   # Participam do mesmo curso, mas não são contatos nem possuem requisição
   # de contato pendente.
   def colleagues(quantity)
@@ -572,8 +590,8 @@ class User < ActiveRecord::Base
     User.select("DISTINCT users.id, users.login, users.avatar_file_name," \
                 " users.first_name, users.last_name").
       includes(:user_course_associations).
-      where("user_course_associations.state = 'approved' AND " \
-            "user_course_associations.user_id NOT IN (?, ?)",
+      where("course_enrollments.state = 'approved' AND " \
+            "course_enrollments.user_id NOT IN (?, ?)",
             contacts_ids, self.id).
       limit(quantity)
   end
@@ -601,7 +619,12 @@ class User < ActiveRecord::Base
     educations
   end
 
+  def subjects_id
+    self.lectures.collect{ |lecture| lecture.subject_id }
+  end
+
   protected
+
   def activate_before_save
     self.activated_at = Time.now.utc
     self.activation_code = nil

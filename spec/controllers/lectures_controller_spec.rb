@@ -110,7 +110,7 @@ describe LecturesController do
     it "should call update_grade! and update the grade" do
       post :done, :locale => "pt-BR", :id => @lectures[0].id,
         :subject_id => @subject.id, :space_id => @space.id, :done => "1"
-      @enrolled_user.student_profiles.first.grade.should == 33.3333
+      @enrolled_user.enrollments.first.grade.should == 33.3333
     end
 
     context 'when html request' do
@@ -288,7 +288,7 @@ describe LecturesController do
       it "should validate correctly" do
         post :create, @params
         lecture = assigns[:lecture]
-        lecture.lectureable.errors[:general].should_not be_empty
+        lecture.lectureable.questions[0].errors[:base].should_not be_empty
       end
 
       context "when exercise does not have questions" do

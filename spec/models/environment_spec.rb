@@ -9,6 +9,7 @@ describe Environment do
   it { should have_many(:administrators).through(:user_environment_associations)}
   it { should have_many(:users).through(:user_environment_associations)}
   it { should have_many(:users).through(:user_environment_associations)}
+  it { should have_many(:plans) }
   it { should belong_to(:owner)}
   it { should have_one(:partner).through(:partner_environment_association) }
   it { should have_one(:partner_environment_association) }
@@ -144,6 +145,15 @@ describe Environment do
       subject.user_environment_associations.last.role }.to(Role[:environment_admin])
   end
 
+  it { should respond_to :plan }
+
+  it "should return actual plan" do
+    plan = Factory(:active_package_plan, :billable => subject, :created_at => 2.days.ago)
+    plan2 = Factory(:active_package_plan, :billable => subject)
+
+    subject.plan.should == plan2
+  end
+
   context "callbacks" do
     it "creates an environment association" do
       subject.users.last.should == subject.owner
@@ -169,4 +179,102 @@ describe Environment do
     subject.should be_published
   end
 
+  context "behaves like a billable" do
+    before do
+      users = 4.times.collect { Factory(:user) }
+
+      Factory(:active_package_plan, :billable => subject, :user => subject.owner,
+              :members_limit => 10)
+
+      Factory(:quota, :billable => subject)
+      course = Factory(:course, :environment => subject, :quota => nil)
+      course.join(users[0], Role[:environment_admin])
+      course.join(users[1], Role[:environment_admin])
+      course.join(users[2], Role[:teacher])
+      course.join(users[3], Role[:tutor])
+    end
+
+    it_should_behave_like "a billable" do
+      let(:billable) { subject }
+    end
+
+    context "when verifying members limit and plan is on environment" do
+      before do
+        subject.courses = (1..2).collect { Factory(:course, :environment => nil) }
+        # Sem moderação
+        subject.courses.each do |c|
+          c.subscription_type = 1
+          (1..5).each { c.join(Factory(:user)) }
+        end
+      end
+
+      context "and plan has members limit" do
+        before do
+          plan = Plan.from_preset(:free)
+          plan.user = subject.owner
+          plan.members_limit = 30
+          subject.plans << plan
+        end
+
+        it "should permit entry" do
+          subject.can_add_entry?.should be_true
+        end
+
+        it "should NOT permit entry" do
+          (1..15).each { subject.courses.first.join(Factory(:user)) }
+          subject.can_add_entry?.should be_false
+        end
+      end
+
+      context "and plan dones NOT have members limit" do
+        before do
+          plan = Plan.from_preset(:free, "LicensedPlan")
+          plan.user = subject.owner
+          subject.plans << plan
+        end
+
+        it "should permit entry" do
+          subject.can_add_entry?.should be_true
+        end
+
+        it "should permit entry" do
+          (1..15).each { subject.courses.first.join(Factory(:user)) }
+          subject.can_add_entry?.should be_true
+        end
+      end
+    end
+
+    context "when destroying" do
+      let(:subject) { Factory(:environment) }
+      context "with an associated plan" do
+        it "should persist environment attributes" do
+          plan = Factory(:active_package_plan, :billable => subject)
+
+          plan.billable.audit_billable_and_destroy
+          plan.reload.billable_audit["name"].should == subject.name
+          plan.reload.billable_audit["path"].should == subject.path
+        end
+
+        it "should persist courses" do
+          subject.reload.courses = []
+          courses = (1..3).collect { Factory(:course, :environment => subject) }
+          plan = Factory(:active_package_plan, :billable => subject)
+
+          subject.audit_billable_and_destroy
+
+          plan.reload.billable_audit[:courses].should_not be_nil
+          plan.reload.billable_audit[:courses].collect { |c| c["name"] }.to_set.
+            should == courses.collect {|c| c.name }.to_set
+        end
+      end
+
+      context "withdout an associated plan" do
+        it "should only destroy itself" do
+          expect {
+            subject.audit_billable_and_destroy
+          }.should_not raise_error
+        end
+      end
+    end
+  end
 end

@@ -21,7 +21,7 @@
         <strong class="name tiptip-lite" title="Este plano é dedicado a professores que desejam criar seu primeiro ambiente virtual de ensino e interessados em testar o Redu." >Grátis</strong>
         <ul class="features">
           <li>
-            <strong >10</strong>
+            <strong>50</strong>
             alunos
           </li>
           <li>Vídeos do YouTube <strong >ilimitados</strong></li>
@@ -35,7 +35,7 @@
             de aramazenamento de vídeo no Redu
           </li>
           <li>
-            <strong>3</strong>
+            <strong>6</strong>
             meses grátis
           </li>
         </ul>
@@ -43,7 +43,7 @@
         <%= form_for @environment,
           :url => environments_path(:step => 2) do |f| %>
           <%= hidden_field_tag :plan, 'free' %>
-          <%= f.submit "Assinar", :class => "important" %>
+          <%= f.submit "Assinar", :class => "concave-important" %>
           <div style="display:none;">
             <%= render :partial => 'form', :locals => { :f => f } %>
           </div>
@@ -53,7 +53,7 @@
         <strong class="name">Lite</strong>
         <ul class="features">
           <li>
-            <strong>20</strong>
+            <strong>70</strong>
             alunos
           </li>
           <li>Vídeos do YouTube <strong>ilimitados</strong></li>
@@ -92,7 +92,7 @@
         <%= form_for @environment,
           :url => environments_path(:step => 2) do |f| %>
           <%= hidden_field_tag :plan, 'professor_lite' %>
-          <%= f.submit "Assinar", :class => "important" %>
+          <%= f.submit "Assinar", :class => "concave-important" %>
           <div style="display:none;">
             <%= render :partial => 'form', :locals => { :f => f } %>
           </div>
@@ -141,7 +141,7 @@
         <%= form_for @environment,
           :url => environments_path(:step => 2) do |f| %>
           <%= hidden_field_tag :plan, 'professor_standard' %>
-          <%= f.submit "Assinar", :class => "important" %>
+          <%= f.submit "Assinar", :class => "concave-important" %>
           <div style="display:none;">
             <%= render :partial => 'form', :locals => { :f => f } %>
           </div>
@@ -190,7 +190,7 @@
         <%= form_for @environment,
           :url => environments_path(:step => 2) do |f| %>
           <%= hidden_field_tag :plan, 'professor_plus' %>
-          <%= f.submit "Assinar", :class => "important" %>
+          <%= f.submit "Assinar", :class => "concave-important" %>
           <div style="display:none;">
             <%= render :partial => 'form', :locals => { :f => f } %>
           </div>

@@ -21,11 +21,12 @@ input[type=submit] {
 }
 
 a {
-  color: #158ac4;
+  color: rgb(77, 173, 214);
   text-decoration: none;
 }
 
 a:hover {
+  color: rgb(21, 138, 196);
   text-decoration: underline;
 }
 
@@ -78,6 +79,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .pretty-text p {
   padding-bottom: 1.5em;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .pretty-text ul,

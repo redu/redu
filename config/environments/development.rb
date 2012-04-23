@@ -51,8 +51,22 @@ Redu::Application.configure do
   # Só converte os 5 primeiros segundos (grátis)
   config.zencoder[:test] = 1
 
-  # Configurações do Pusher (redu-development app)
+ # Configurações do Pusher (redu-development app)
   config.pusher = {
   }
+
+  # Configuração da aplicação em omniauth providers
+  config.omniauth = {
+    :facebook => {
+      :app_id => '142857189169463',
+      :app_secret => 'ea0f249a4df83b250c3364ccf097f35c'
+    }
+  }
+
+  # Configurações de VisClient
+  config.vis_client = {
+   :url => "http://localhost:4000/hierarchy_notifications.json"
+  }
+
 end
 

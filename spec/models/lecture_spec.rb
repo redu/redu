@@ -134,13 +134,6 @@ describe Lecture do
         Lecture.documents.should == documents
     end
 
-    it "retrieves lectures related to a specified lecture" do
-      lecture = Factory(:lecture, :subject => @sub, :name => "Item com nome")
-      lecture2 = Factory(:lecture, :subject => @sub, :name => "Item")
-
-      Lecture.related_to(lecture2).should == [lecture]
-    end
-
     it "retrieves recent lectures (created until 1 week ago)" do
       lectures = (1..3).collect { |i| Factory(:lecture,
                                               :created_at => (i*3).day.ago) }
@@ -157,6 +150,26 @@ describe Lecture do
       result = Factory(:result, :exercise => exercise1)
 
       Lecture.exercises_editables.should == [lecture2]
+    end
+
+    it "retrieve lectures in the specified subjects" do
+      subject.reload
+      lecture2 = Factory(:lecture, :subject => @sub, :owner => @user)
+      sub2 = Factory(:subject)
+      lecture3 = Factory(:lecture, :subject => sub2, :owner => @user)
+
+      @user.lectures.by_subjects(@sub.id).to_set.should eq([subject, lecture2].to_set)
+    end
+
+    it "retrieves lectures by day" do
+      subj = Factory(:subject)
+      lec1 = Factory(:lecture, :subject => subj,
+                     :created_at => "2012-02-14".to_date)
+      lec2 = Factory(:lecture, :subject => subj,
+                     :created_at => "2012-02-16".to_date)
+      lectures = Lecture.by_subjects(subj.id)
+
+      lectures.by_day("2012-02-14".to_date).should eq([lec1])
     end
   end
 
@@ -220,20 +233,20 @@ describe Lecture do
     #FIXME encontrar um jeito melhor de se testar o refresh_students_profiles
     it "should update all students profiles" do
       assets = AssetReport.all(:conditions => {
-                                       :subject_id => subject.subject.id,
-                                       :lecture_id => @lec.id})
+                               :subject_id => subject.subject.id,
+                               :lecture_id => @lec.id})
       assets.each do |asset|
         asset.done = 1
         asset.save
       end
       @lec.refresh_students_profiles
-      grade = StudentProfile.sum('grade', :conditions =>
-                                           {:subject_id => subject.subject.id})
+      grade = Enrollment.sum('grade', :conditions =>
+                             {:subject_id => subject.subject.id})
       grade.should == 100
       @lec.destroy
       @lec.refresh_students_profiles
-      grade = StudentProfile.sum('grade', :conditions =>
-                                           {:subject_id => subject.subject.id})
+      grade = Enrollment.sum('grade', :conditions =>
+                             {:subject_id => subject.subject.id})
       grade.should == 0
     end
   end
@@ -322,45 +335,53 @@ describe Lecture do
 
 
     context "when building attributes" do
-      before do
-        @alternatives = {
-          "1" => {:text => "Lorem ipsum dolor", :correct => true},
-          "2" => {:text => "Lorem ipsum dolor"},
-          "3" => {:text => "Lorem ipsum dolor"}
-        }
-        @questions = 3.times.collect do
-          { :statement => "Lorem ipsum dolor sit amet, consectetur?",
-            :explanation => "Lorem ipsum dolor sit amet?",
-            :alternatives_attributes => @alternatives.clone }
+      context "when Exercise" do
+        before do
+          @alternatives = {
+            "1" => {:text => "Lorem ipsum dolor", :correct => true},
+            "2" => {:text => "Lorem ipsum dolor"},
+            "3" => {:text => "Lorem ipsum dolor"}
+          }
+          @questions = 3.times.collect do
+            { :statement => "Lorem ipsum dolor sit amet, consectetur?",
+              :explanation => "Lorem ipsum dolor sit amet?",
+              :alternatives_attributes => @alternatives.clone }
+          end
+
+          @params = { :lecture =>
+                      { :name => "Cool lecture",
+                        :lectureable_attributes =>
+                      { :_type => 'Exercise',
+                        :questions_attributes => @questions }}}
         end
 
-        @params = { :lecture =>
-                    { :name => "Cool lecture",
-                      :lectureable_attributes =>
-                    { :_type => 'Exercise',
-                      :questions_attributes => @questions }}}
-      end
+        it "should build the Exercise" do
+          lecture = Lecture.new(@params[:lecture])
+          lecture.should be_valid
+        end
 
-      it "should build the Exercise" do
-        lecture = Lecture.new(@params[:lecture])
-        lecture.should be_valid
-      end
-
-      it "should create the Exercise" do
-        expect {
-          Lecture.create(@params[:lecture]) do |lecture|
+        it "should create the Exercise" do
+          expect {
+            Lecture.create(@params[:lecture]) do |lecture|
             lecture.owner = @sub.owner
             lecture.subject = @sub
-          end
-        }.should change(Exercise, :count).by(1)
+            end
+          }.should change(Exercise, :count).by(1)
+        end
+
+        it "should return nil when there is not a _type" do
+          subject.build_lectureable({}).should be_nil
+        end
+
+        it "should return nil when type is blank" do
+          subject.build_lectureable({ :_type => '' }).should be_nil
+        end
       end
 
-      it "should return nil when there is not a _type" do
-        subject.build_lectureable({}).should be_nil
-      end
-
-      it "should return nil when type is blank" do
-        subject.build_lectureable({ :_type => '' }).should be_nil
+      context "when Existent" do
+        it "returns nil when type is Existent" do
+          subject.build_lectureable({ :_type => 'Existent'}).should be_nil
+        end
       end
     end
   end

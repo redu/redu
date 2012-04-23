@@ -1,0 +1,35 @@
+<td colspan="2">
+  <table class="request-common">
+    <tr>
+      <td rowspan="3" class="avatar-cell"><%= image_tag @invitation.user.avatar(:thumb_110), :size => "110x110", :class => "contact-avatar" %></td>
+      <td class="connection-name-cell">
+        <%= link_to @invitation.user.display_name, user_url(@invitation.user), :class=> "contact-name" %>
+        <span class="call">deseja iniciar uma conexão com você</span>
+      </td>
+      <td rowspan="3" class="acceptance-cell">
+        <%= image_tag "new/mail/icon-friendship-big.png", :size => "64x64" %>
+        <%= link_to "Aceitar pedido", invitation_url(@invitation), :class => "accept-contact" %>
+      </td>
+    </tr>
+    <tr>
+      <td class="statistics-cell">
+        <table>
+          <tr>
+            <td><%= image_tag "new/mail/icon-friendship-small.png", :class => "friendship-icon", :size => "16x16" %></td>
+            <td><%= @contacts[:total] %> contatos </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <table>
+          <tr>
+            <td><%= image_tag "new/mail/icon-course-small.png", :class => "friendship-icon", :size => "16x16" %></td>
+            <td><%= @courses[:total] %> cursos (professor em <%= @courses[:teacher] %>, tutor em <%= @courses[:tutor] %>)</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</td>

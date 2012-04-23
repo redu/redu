@@ -22,11 +22,7 @@ describe Document do
       @document.stub(:attachment) { @file }
       @document.stub('scribdable?') { true }
 
-      @scribd_user = mock("scribd_user")
-      Scribd::User.stub!(:login).and_return(@scribd_user)
-      @scribd_response = mock('scribd_response', :doc_id => "doc_id",
-                              :access_key => "access_key")
-      @scribd_user.should_receive(:upload).and_return(@scribd_response)
+      mock_scribd_api
     end
 
     it "should upload to scribd" do

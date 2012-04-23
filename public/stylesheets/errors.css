@@ -1,199 +1,137 @@
-/**
-    Error pages stylesheet at Redu
-    URL: http://redu.com.br
-**/
-
-/** @typo **/
-html, body {  height:100%; /* 100% height hack */ }
-
-html {
-    font-family: "Trebuchet MS", "Arial", sans-serif;
-    font-size: .9em;
-   
+/* Páginas de erro */
+#error .logo-top a {
+  background-image: url("../images/new/redu-hi-vert.png");
+  display: block;
+  width: 255px;
+  height: 196px;
+  margin-left: -20px;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  float: left;
+  text-indent: -9999px;
 }
 
-body {
-    background: url("../images/tela-beta_r4_c2.png") repeat-x 0 100px;
-    
+#error .alert {
+  margin-top: 70px;
 }
 
-a {
-   color: #18C8EF;
-   text-decoration: none;
-   font-style: none;
+#error .alert:after {
+  content: "";
+  background-image: url("../images/new/alerta.png");
+  background-repeat: no-repeat;
+  height: 142px;
+  width: 165px;
+  float: right;
+  margin-left: 410px;
+  margin-top: -164px;
+  position: absolute;
+  display: block;
 }
 
-/** header **/
-#logo {
-    background: url("../images/tela-beta_r2_c4.png") no-repeat;
-    height: 47px;
-    margin: 25px 0;
-    text-indent: -9999px;
-    overflow: hidden;
+.textshadow #error .infos {
+  text-shadow: 0px 1px 0px white;
 }
 
-#logo a {
-    display: block;
-    height: 47px;
+#error .infos .warning {
+  font-weight: 100;
 }
 
-#error-header {
-    margin: 25px 0;
+#error .infos .warning,
+#error .infos .warning .ops-call {
+  font-family: museo-sans, "Helvetica Neue", Arial, sans-serif;
+  font-size: 47px;
+  letter-spacing: -4px;
+  color: rgb(193, 39, 45);
 }
 
-h2.message {
-    font-size: 1.9em;
-    font-weight: bold;
-    color: #FF8000;
+#error .infos .warning .ops-call {
+  font-family: museo-slab, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 900;
+  display: block;
 }
 
-.detail {
-    font-weight: bold;
-    margin: 5px 0;
-    display: block;
+#error .infos .error-name {
+  width: 110px;
+  float: left;
+  margin-top: 30px;
+  margin-left: 10px;
 }
 
-.box_notice {
-    border: 1px solid #EFEFEF ;
-    background: #FFFFDF;
-    font-size: .8em;
-    padding: 10px;  
-    margin: 20px 0;
-    display: block;
+#error .infos .error-name .call,
+#error .infos .error-name .number {
+  font-family: museo-sans, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 100;
 }
 
-/* forms */
-
-/** @forms **/
-input[type=text],
-input[type=password],
-textarea {
-    border-color: #A1A1A1 #C1C1C1 #D1D1D1;
-    border-style: solid;
-    border-width: 1px;
-    font-weight: normal;
-    padding: 4px;
-    font-size: 1em;
-    font-family: "Trebuchet Ms", sans-serif;
+#error .infos .error-name .call {
+  font-size: 17px;
+  letter-spacing: 17px;
+  color: rgb(193, 39, 45);
+  float: left;
+  margin-left: 10px;
 }
 
-input.inner-label,
-textarea.inner-label {
-    color: #A1A1A1;
-    font-weight: bold;
-    font-style: oblique;
+#error .infos .error-name .number {
+  font-size: 72px;
+  color: rgb(109, 110, 111);
+  letter-spacing: -6px;
 }
 
-a.button,
-button,
-input[type=submit],
-input[type=button] {
-/*display:block;*/
-margin:0 7px 0 0;
-background-color: #F5F5F5;
-border-top: 1px solid #EEEEEE;
-border-left: 1px solid #EEEEEE;
-border-right: 1px solid #DEDEDE;
-border-bottom: 1px solid #DEDEDE;
-font-family: "Lucida Grande", Tahoma, Arial, Verdana, sans-serif;
-font-size: .9em;
-line-height: 130%;
-text-decoration: none;
-font-weight: bold;
-color: #565656;
-cursor: pointer;
-padding: 5px 10px 6px 7px; /* Links */
+#error .infos .description-error {
+  margin-left: 20px;
+  margin-top: 10px;
 }
 
-button {
-    width: auto;
-    overflow: visible;
-    padding: 4px 10px 3px 7px; /* IE6 */
+#error .infos .description-error .title {
+  font-family: museo-sans, "Helvetica Neue", Arial, sans-serif;
+  font-size: 17px;
+  font-weight: 500;
+  margin-top: 20px;
 }
 
-button[type] {
-    padding: 5px 10px 5px 7px; /* Firefox */
-    line-height:17px; /* Safari */
+#error .infos .description-error p {
+  color: rgb(179, 179, 179);
 }
 
-*:first-child+html button[type] {
-    padding: 4px 10px 3px 7px; /* IE7 */
+#error .infos .description-error .back-call {
+  color: rgb(77, 173, 214);
+  text-decoration: none;
 }
 
-button img, a.button img {
-    margin: 0 3px -3px 0 !important;
-    padding: 0;
-    border: none;
-    width: 16px;
-    height: 16px;
+#error .infos .description-error .suggested-links {
+  padding-top: 3px;
+  list-style-type: disc;
+  font-weight: normal;
+  font-size: 12px;
+  font-family: arial, sans-serif;
 }
 
-form fieldset {
-    padding: 5px;
-    margin: 10px 0 15px 0;
-    display: block; 
-    border: none;
+#error .infos .description-error .suggested-links li {
+  padding: 2px;
 }
 
-form fieldset fieldset {
-    background: url('../images/trans.gif') repeat;
-    border: 1px solid white;
+#error .infos .description-error .suggested-links li a {
+  text-decoration: none;
+  color: rgb(77, 173, 214);
 }
 
-form fieldset .snippet {
-    font-size: .9em;
+#error .infos .concave-form {
+  margin-left: 30px;
 }
 
-form label {
-    display: block;
-    margin: 10px 0 5px 0;
-    color: #4F4F4F;
-    font-size: .9em;
+#error .infos .concave-form .concave-label {
+  width: 98px;
 }
 
-form .inline {
-    display: inline;
+#error .infos .concave-form .concave-button {
+  margin-bottom: 60px;
 }
 
-form label.inline {
-    display: inline;
-    margin: 5px;
-    color: #4F4F4F;
-    font-size: .9em;
+#error .infos .concave-form .errors_on_field {
+  margin-left: 110px;
 }
 
-form em {
-    font-size: .8em;
-    color: gray;
-    margin: 5px 0;
-    display: block;
+#error .infos .confirmation-msg {
+  width: 400px;
+  float: right;
 }
-
-form fieldset legend {
-    font-weight: bold;
-    font-size: .9em;
-    color: #FF8000;
-}
-
-form fieldset label,
-form label {
-    font-weight: bold;
-}
-
-form input[type=checkbox] {
-    display: inline;
-}
-
-form div.errorExplanation {
-    margin: 10px 0;
-    font-size: .9em;
-}
-
-form div.errorExplanation h2 {
-    margin: 5px 0 5px 0;
-}
-
-form div.errorExplanation ul li {
-    margin: 4px 0;
-}
-

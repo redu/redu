@@ -15,9 +15,15 @@
       <div class="plan-info">
         <span class="call">Plano</span>
         <span>
+          <% if @space.course.plan %>
           <%= link_to @space.course.name,
             environment_course_path(@space.course.environment, @space.course),
             :class => "course-name" %> /
+          <% elsif @space.course.environment.plan %>
+            <%= link_to @space.course.environment.name,
+              environment_path(@space.course.environment),
+              :class => "course-name" %> /
+          <% end %>
           <%= link_to @plan.name, plan_invoices_path(@plan),
             :class => "plan-name" %>
           </span>
@@ -25,17 +31,17 @@
           <li>membros:
             <strong class="featured"><%= @plan.billable.users.count %></strong> /
             <%= @plan.members_limit %>
-            <span class="featured">(<%= @space.course.percentage_quota_members.round %>%)</span>
+            <span class="featured">(<%= @space.course.plan ? @space.course.percentage_quota_members.round : @space.course.environment.percentage_quota_members.round %>%)</span>
           </li>
           <li>documentos:
-            <strong class="featured"><%= number_to_human_size(@space.course.quota.files) %></strong> /
+            <strong class="featured"><%= number_to_human_size(@space.course.plan ? @space.course.quota.files : @space.course.environment.quota.files) %></strong> /
             <%= number_to_human_size(@plan.file_storage_limit, :precision => 0) %>
-            <span class="featured">(<%= @space.course.percentage_quota_file.round %>%)</span>
+            <span class="featured">(<%= @space.course.plan ? @space.course.percentage_quota_file.round : @space.course.environment.percentage_quota_file.round %>%)</span>
           </li>
           <li>vídeos:
-            <strong class="featured"><%= number_to_human_size(@space.course.quota.multimedia) %></strong> /
+            <strong class="featured"><%= number_to_human_size(@space.course.plan ? @space.course.quota.multimedia : @space.course.environment.quota.multimedia) %></strong> /
             <%= number_to_human_size(@plan.video_storage_limit, :precision => 0) %>
-            <span class="featured">(<%= @space.course.percentage_quota_multimedia.round %>%)</span>
+            <span class="featured">(<%= @space.course.plan ? @space.course.percentage_quota_multimedia.round : @space.course.environment.percentage_quota_multimedia.round %>%)</span>
           </li>
         </ul>
       </div>

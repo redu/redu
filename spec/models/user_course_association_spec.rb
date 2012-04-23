@@ -77,6 +77,17 @@ describe UserCourseAssociation do
         subject.course.should_receive(:create_hierarchy_associations).with(subject.user, Role[:member])
         subject.accept!
       end
+
+      context "when it is a new record" do
+        before do
+          @ass = Factory.build(:user_course_association, :state => "invited")
+        end
+
+        it "should not call create hierarchy associations" do
+          @ass.course.should_not_receive(:create_hierarchy_associations)
+          @ass.accept!
+        end
+      end
     end
 
     context "when approving" do
@@ -93,6 +104,15 @@ describe UserCourseAssociation do
       it "should create hierachy associations" do
         subject.course.should_receive(:create_hierarchy_associations).with(subject.user, Role[:member])
         subject.approve!
+      end
+
+      context "when it is a new record" do
+        let(:subject) { Factory.build(:user_course_association) }
+
+        it "should not call create hierarchy associations" do
+          subject.course.should_not_receive(:create_hierarchy_associations)
+          subject.approve!
+        end
       end
     end
   end
@@ -118,7 +138,7 @@ describe UserCourseAssociation do
 
       UserCourseAssociation.with_keyword("Andrew").
         should == [user.user_course_associations.last,
-          user2.user_course_associations.last]
+                   user2.user_course_associations.last]
     end
 
     it "retrieves new user_course_associations from 1 week ago" do
@@ -131,10 +151,10 @@ describe UserCourseAssociation do
                       :created_at => 2.weeks.ago)
       user2 = Factory(:user, :first_name => "Joe Andrew")
       assoc2 = Factory(:user_course_association, :user => user2,
-                      :course => @uca.course)
+                       :course => @uca.course)
       user3 = Factory(:user, :first_name => "Alice")
       assoc3 = Factory(:user_course_association, :user => user3,
-                      :course => @uca.course)
+                       :course => @uca.course)
 
       @uca.course.user_course_associations.
         recent.should == [@uca, assoc2, assoc3]
@@ -151,11 +171,11 @@ describe UserCourseAssociation do
       assoc.approve!
       user2 = Factory(:user, :first_name => "Joe Andrew")
       assoc2 = Factory(:user_course_association, :user => user2,
-                      :course => uca.course)
+                       :course => uca.course)
       assoc2.approve!
       user3 = Factory(:user, :first_name => "Alice")
       assoc3 = Factory(:user_course_association, :user => user3,
-                      :course => uca.course)
+                       :course => uca.course)
 
       UserCourseAssociation.approved.should == [uca, assoc, assoc2]
     end
@@ -168,6 +188,7 @@ describe UserCourseAssociation do
 
       UserCourseAssociation.invited.should == @associations[3..4]
     end
+
   end
 
   context "when there are invitations (state is invted)" do

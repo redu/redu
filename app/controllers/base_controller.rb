@@ -10,11 +10,11 @@ class BaseController < ApplicationController
   end
 
   def tos
-    #TODO
+    render :layout => 'clean'
   end
 
   def privacy
-    #TODO
+    render :layout => 'clean'
   end
 
   def teach_index
@@ -42,19 +42,21 @@ class BaseController < ApplicationController
     if request.get?
       @contact = Contact.new
     else
-      @contact = Contact.new
-      @contact.name = params[:contact][:name]
-      @contact.email = params[:contact][:email]
-      @contact.kind = params[:contact][:kind]
-      @contact.subject = params[:contact][:subject]
-      @contact.body = params[:contact][:body]
+      @contact = Contact.create(params[:contact])
       if @contact.valid?
+        if @contact.about_an_error?
+          @contact.body << "\n\n Stacktrace: \n"
+          @contact.body << `tail -n 1500 #{Redu::Application.root}/log/#{Rails.env}.log | grep -C 300 "Completed 500"`
+        end
+
         @contact.deliver
-        flash[:notice] = "Seu e-mail foi enviado, aguarde o nosso contato. Obrigado."
-        redirect_to contact_path
-      else
-        render :action => :contact, :method => :get
+        @boxed = true # CSS style
+        flash[:notice] = 'Seu e-mail foi enviado, aguarde o nosso contato. Obrigado!' unless request.xhr?
       end
+    end
+    respond_to do |format|
+      format.html { render :layout => 'clean' }
+      format.js
     end
   end
 

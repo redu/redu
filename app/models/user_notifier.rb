@@ -52,7 +52,7 @@ class UserNotifier < ActionMailer::Base
     @message = message
 
     mail(:to => @user.email,
-         :subject => "[#{Redu::Application.config.name}] #{message.sender.login} sent you a private message!",
+         :subject => "[#{Redu::Application.config.name}] #{message.sender.display_name} lhe enviou uma mensagem privada.",
          :date => Time.now) do |format|
       format.text
     end
@@ -98,6 +98,34 @@ class UserNotifier < ActionMailer::Base
       format.text
     end
 
+  end
+
+  # Enviado quando LicensedInvoice está pendente
+  def licensed_pending_notice(user, invoice, deadline)
+    @user = user
+    @invoice = invoice
+    @plan = invoice.plan
+    @deadline = deadline
+
+    mail(:to => user.email,
+         :subject => "Pagamento N. #{invoice.id} pendente",
+         :date => Time.now) do |format|
+      format.text
+    end
+
+  end
+
+  # Enviado quando o Plan foi bloqueado
+  def blocked_notice(user, plan)
+    @user = user
+    @plan = plan
+    @billable_name = plan.billable.try(:name) || plan.billable_audit.try(:[], "name")
+
+    mail(:to => user.email,
+         :subject => "Plano do(a) #{@billable_name} foi bloqueado",
+         :date => Time.now) do |format|
+      format.text
+    end
   end
 
   # Enviado quando um upgrade de plano é requisitado
@@ -170,14 +198,30 @@ class UserNotifier < ActionMailer::Base
     end
   end
 
+  def friendship_invitation(invitation)
+    @invitation = invitation
+    @email = invitation.email
+    user = invitation.user
+    uca = user.user_course_associations.approved
+    @contacts = { :total => user.friends.count }
+    @courses = { :total => user.courses.count,
+                 :environment_admin => uca.with_roles([:environment_admin]).count,
+                 :tutor => uca.with_roles([:tutor]).count,
+                 :teacher => uca.with_roles([:teacher]).count }
+
+    mail(:subject => 'Você foi convidado para do Redu', :to => @email) do |format|
+      format.html
+    end
+  end
+
   # Enviado para o usuário requisitado numa requisição de conexão
   def friendship_requested(user, friend)
     @user, @friend = user, friend
-    uca = UserCourseAssociation.where(:user_id => user).approved
+    uca = @friend.user_course_associations.approved
 
     @contacts = { :total => @user.friends.count,
-                  :in_common => user.friends_in_common_with(friend).count }
-    @courses = { :total => @user.courses.count,
+                  :in_common => user.friends_in_common_with(@friend).count }
+    @courses = { :total => @friend.courses.count,
                  :environment_admin => uca.with_roles([:environment_admin]).count,
                  :tutor => uca.with_roles([:tutor]).count,
                  :teacher => uca.with_roles([:teacher]).count }

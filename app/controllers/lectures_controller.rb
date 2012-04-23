@@ -45,12 +45,6 @@ class LecturesController < BaseController
       redirect_to removed_page_path and return
     end
 
-    @subject_users = @subject.members
-
-    #relacionados
-    @related_lectures = Lecture.related_to(@lecture).limit(3).
-      order('rating_average DESC')
-
     @status = Status.new
     @statuses = Status.from_hierarchy(@lecture).
       paginate(:page => params[:page],:order => 'created_at DESC',
@@ -60,7 +54,7 @@ class LecturesController < BaseController
 
     if current_user.get_association_with(@lecture.subject)
       asset_report = @lecture.asset_reports.of_user(current_user).first
-      @student_grade = asset_report.student_profile.grade.to_i
+      @student_grade = asset_report.enrollment.grade.to_i
       @done = asset_report.done
     end
 
@@ -132,10 +126,10 @@ class LecturesController < BaseController
           lectureable.convert! if lectureable.need_transcoding?
         elsif lectureable.is_a? Document
           authorize! :upload_document, @lecture
-          lectureable.upload_to_scribd if lectureable.need_uploading?
         end
 
-        @space.course.quota.refresh
+        @space.course.quota.try(:refresh!)
+        @space.course.environment.quota.try(:refresh!)
         @lecture.published = 1
         @lecture.save
       else
@@ -145,8 +139,8 @@ class LecturesController < BaseController
       end
     end
 
-    @quota = @course.quota
-    @plan = @course.plan
+    @quota = @course.quota || @course.environment.quota
+    @plan = @course.plan || @course.environment.plan
 
     respond_to do |format|
       format.js { render "lectures/admin/create" }
@@ -181,11 +175,12 @@ class LecturesController < BaseController
   # DELETE /lectures/1.xml
   def destroy
     @lecture.destroy
-    @lecture.subject.space.course.quota.refresh
+    @lecture.subject.space.course.quota.try(:refresh!)
+    @lecture.subject.space.course.environment.quota.try(:refresh!)
     @lecture.refresh_students_profiles
 
-    @quota = @course.quota
-    @plan = @course.plan
+    @quota = @course.quota || @course.environment.quota
+    @plan = @course.plan || @course.environment.plan
 
    respond_with(@space, @subject, @lecture) do |format|
      format.js { render "lectures/admin/destroy" }
@@ -205,7 +200,9 @@ class LecturesController < BaseController
     end
     @lecture.mark_as_done_for!(current_user, @done)
 
-    student_profile = current_user.student_profiles.of_subject(@subject).last
+    student_profile = current_user.enrollments.
+      where(:subject_id => @subject).last
+
     @student_grade = student_profile.update_grade!.to_i
 
    respond_to do |format|

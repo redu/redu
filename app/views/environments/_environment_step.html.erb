@@ -28,11 +28,6 @@ $(document).ready(function(){
     $("#url_preview .course").html(slug);
   })
 
-  $("input[name='environment[color]']").hide()
-  $("input[name='environment[color]']").change(function(){
-    color = $(this).css("background-color")
-    $("#create-header").css("background-color", color)
-  })
 
   $("#environment_name").bind('keyup blur', function(){
     $("div.name h3 > a").html($(this).val())
@@ -69,7 +64,7 @@ $(document).ready(function(){
         <hr/>
         <%= render :partial => 'environments/form', :locals => { :f => f } %>
         <%= hidden_field_tag :plan, @plan %>
-        <%= f.submit "Assinar", :class => "important next"%>
+        <%= f.submit "Assinar", :class => "concave-important next"%>
       <% end %>
   </div>
 </div>

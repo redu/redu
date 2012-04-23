@@ -13,7 +13,7 @@ jQuery(function(){
       });
 
       // Apenas mostrar as 3 primeiras respostas e mostrar texto "Ver todos os X comentários"
-      $(".responses", ".statuses").each(function(i, obj){
+      $(".statuses .responses").each(function(i, obj){
           var quantity = $(this).find("ol > li").length;
           if (quantity >= 3) {
             if ($(this).find(".toggle-statuses").is(":visible")) {

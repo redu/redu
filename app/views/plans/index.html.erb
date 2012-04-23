@@ -12,46 +12,7 @@
           </tr>
         </thead>
         <tbody>
-          <% @plans.each do |plan| %>
-            <tr>
-              <td>
-                <% if plan.billable %>
-                  <%=
-                    link_to plan.billable.name, environment_course_path(plan.billable.environment, plan.billable),
-                      :class => "billable"
-                    %>
-                <% else %>
-                  "(curso removido)"
-                <% end %>
-              </td>
-              <td>
-                <% if plan.billable %>
-                  <%=
-                    link_to plan.name, plan_invoices_path(plan),
-                      :class => "name"
-                    %>
-                  <% if plan.pending_payment? %>
-                    <span class="info">Pagamento pendente</span>
-                  <% else %>
-                    <span class="info">Sem pendências</span>
-                  <% end %>
-
-                <% else %>
-                  <span class="name">Não possui</span>
-                <% end %>
-              </td>
-              <td>
-                <% if plan.pending_payment? %>
-                  <%= pagseguro_form plan.create_order, :submit => "Pagar" %>
-                <% else %>
-                  <%=
-                    link_to "Upgrade", upgrade_plan_path(plan),
-                      :class => "important"
-                    %>
-                <% end %>
-              </td>
-            </tr>
-          <% end %>
+          <%= render :partial => 'plans/item', :collection => @plans %>
         </tbody>
       </table>
   <% end %>

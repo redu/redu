@@ -1,5 +1,7 @@
 class Contact
   include ActiveModel::Validations
+  include ActiveModel::Conversion
+  extend ActiveModel::Naming
 
   # ACCESSORS
   attr_accessor :name, :email, :kind, :subject, :body
@@ -18,4 +20,20 @@ class Contact
       false
     end
   end
+
+  def self.create(contact)
+    @stub = Contact.new
+    @stub.name = contact[:name]
+    @stub.email = contact[:email]
+    @stub.kind = contact.try(:[], :kind) || 'Erro 500'
+    @stub.subject = contact[:subject]
+    @stub.body = contact[:body]
+    @stub
+  end
+
+  def about_an_error?
+    self.kind == "Erro 500"
+  end
+
+  def persisted?; false end
 end

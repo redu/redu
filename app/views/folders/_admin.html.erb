@@ -2,7 +2,7 @@
   <% if current_user.can_manage? space %>
     <div style="position: relative;">
       <div class="new-folder">
-        <a href="#" class="button clean" >Criar nova pasta</a>
+        <a href="#" class="concave-clean" >Criar nova pasta</a>
         <div class="new-folder-inner holder" style="display:none;">
           <% @new_folder = Folder.new %>
           <%= form_for [space, @new_folder],
@@ -10,27 +10,27 @@
             <%= f.text_field :name %>
             <%= f.hidden_field :space_id, :value => space.id %>
             <%= f.hidden_field :parent_id, :value => folder.id %>
-            <%= f.submit 'Ok' %>
+            <%= f.submit 'Ok', :class => "concave-button"%>
             <%= image_tag 'spinner.gif', :id => 'new-folder-spinner', :class => "spinner", :style => 'display: none' %>
           <% end %>
         </div>
       </div>
 
       <div class="new-file">
-        <a href="#" class="button upload">Upload de arquivo</a>
+        <a href="#" class="concave-button upload-button">Upload de arquivo</a>
         <div class="new-file-inner holder" style="display:none;">
           <%= form_for(myfile,
                        :url => do_the_upload_space_folder_path(space.id,
                        folder.id),
                        :remote => true, :html => { :multipart => true,
-                                          :class => 'form-common' }) do |f| %>
+                                          :class => 'form-loader' }) do |f| %>
             <div class="file-wrapper clearfix">
               <%= f.file_field :attachment %>
-            <%= link_to "Procurar", "#", :class => "browse button clean" %>
+            <%= link_to "Buscar", "#", :class => "browse concave-clean" %>
             </div>
             <%= f.hidden_field :folder_id, :value => folder.id %>
             <%= hidden_field_tag :space_id,  space.id %>
-            <%= submit_tag 'Ok' %>
+            <%= submit_tag 'Ok', :class => "concave-button" %>
           <% end %>
         </div>
       </div>

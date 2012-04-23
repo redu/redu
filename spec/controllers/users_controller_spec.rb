@@ -117,6 +117,63 @@ describe UsersController do
 
         end
       end
+
+      context "The request contains an invitation token" do
+        before do
+          @email = 'mail@example.com'
+          @invitation = Invitation.invite(:user => @user,
+                                          :hostable => @user,
+                                          :email => 'mail@example.com')
+          @post_params.store(:friendship_invitation_token, @invitation.token)
+        end
+
+        context "User as succcessfully created" do
+          before do
+            post :create, @post_params
+            @created_user = User.find_by_email(@post_params[:user][:email])
+          end
+          it "invite should be accepted (Invitation should be destroyed)" do
+            Invitation.all.should be_empty
+          end
+
+          it "friendship request should be created" do
+            @created_user.friendships.should_not be_empty
+          end
+
+          it "should be redirected to signup completed" do
+            response.should redirect_to signup_completed_user_path(@created_user)
+          end
+        end
+
+        context "User params validation fail" do
+          before do
+            @post_params[:user][:password_confirmation] = "wrong-pass"
+            post :create, @post_params
+            @created_user = User.find_by_email(@post_params[:user][:email])
+          end
+
+          it "assigns user" do
+            assigns(:invitation_user).should == @invitation.user
+          end
+
+          it 'assigns contacts' do
+            assigns(:contacts)[:total].should == @invitation.user.friends.count
+          end
+
+          it 'assigns courses' do
+            uca = UserCourseAssociation.where(:user_id => @invitation.user).approved
+            @courses = { :total => @invitation.user.courses.count,
+                         :environment_admin => uca.with_roles([:environment_admin]).count,
+                         :tutor => uca.with_roles([:tutor]).count,
+                         :teacher => uca.with_roles([:teacher]).count }
+
+            assigns(:courses)[:total].should == @courses[:total]
+            assigns(:courses)[:environment_admin].should == @courses[:environment_admin]
+            assigns(:courses)[:tutor].should == @courses[:tutor]
+            assigns(:courses)[:teacher].should == @courses[:teacher]
+          end
+        end
+      end
     end
   end
 
@@ -377,7 +434,6 @@ describe UsersController do
       @user = Factory(:user)
       activate_authlogic
       UserSession.create @user
-
     end
 
     [:friends, :statuses, :status].each do |var|
@@ -392,6 +448,162 @@ describe UsersController do
       @params = { :locale => "pt-BR", :id => @contact.login }
       get :my_wall, @params
       response.should redirect_to(home_path)
+    end
+  end
+
+  context "GET show" do
+    before do
+      @user = Factory(:user)
+      @courses = 4.times.collect { Factory(:course) }
+      @moderated_courses = 4.times.collect { Factory(:course,
+                                                     :subscription_type => 2) }
+      @approved_courses = @courses[0..2].each { |c| c.join(@user) }
+      @moderated_courses[0..2].each { |c| c.join(@user) }
+
+      activate_authlogic
+      UserSession.create @user
+
+      get :show, :locale => "pt-BR", :id => @user.login
+    end
+
+    it "assigns subscribed_courses_count" do
+      assigns[:subscribed_courses_count].should_not be_nil
+      assigns[:subscribed_courses_count].should == @approved_courses.size
+    end
+  end
+
+  context "GET show_mural" do
+    before do
+      @user = Factory(:user)
+      @courses = 4.times.collect { Factory(:course) }
+      @moderated_courses = 4.times.collect { Factory(:course,
+                                                     :subscription_type => 2) }
+      @approved_courses = @courses[0..2].each { |c| c.join(@user) }
+      @moderated_courses[0..2].each { |c| c.join(@user) }
+
+      activate_authlogic
+      UserSession.create @user
+
+      get :show_mural, :locale => "pt-BR", :id => @user.login
+    end
+
+    it "assigns subscribed_courses_count" do
+      assigns[:subscribed_courses_count].should_not be_nil
+      assigns[:subscribed_courses_count].should == @approved_courses.size
+    end
+  end
+
+  context "when recovering login or password" do
+    context "GET recover_username_password" do
+      before do
+       get :recover_username_password, :locale => "pt-BR"
+      end
+
+      it "assigns recover_username" do
+        assigns[:recover_username].should_not be_nil
+        assigns[:recover_username].should be_kind_of(RecoveryEmail)
+      end
+
+      it "assigns recover_password" do
+        assigns[:recover_password].should_not be_nil
+        assigns[:recover_password].should be_kind_of(RecoveryEmail)
+      end
+    end
+
+    context "POST recover_username" do
+      context "when submitting an registered email" do
+        before do
+          UserNotifier.delivery_method = :test
+          UserNotifier.perform_deliveries = true
+          UserNotifier.deliveries = []
+
+          @user = Factory(:user)
+          post :recover_username, :locale => "pt-BR", :format => "js", :recovery_email => { :email => @user.email }
+
+        end
+
+        it "assigns user" do
+          assigns[:user].should_not be_nil
+          assigns[:user].should be_kind_of(User)
+        end
+
+        it "assigns recover_username" do
+          assigns[:recover_username].should_not be_nil
+          assigns[:recover_username].should be_kind_of(RecoveryEmail)
+        end
+
+        it "sends an email" do
+          UserNotifier.deliveries.size.should == 1
+        end
+      end
+
+      context "when submitting an UNregistered email" do
+        before do
+          @user = Factory(:user)
+          post :recover_username, :locale => "pt-BR", :format => "js", :recovery_email => { :email => "iamnot@redu.com.br" }
+        end
+
+        it "assigns user" do
+          assigns[:user].should be_nil
+        end
+
+        it "assigns recover_username" do
+          assigns[:recover_username].should_not be_nil
+          assigns[:recover_username].should be_kind_of(RecoveryEmail)
+        end
+
+        it "adds an error to recover_username" do
+          assigns[:recover_username].errors.should_not be_empty
+        end
+      end
+    end
+
+    context "POST recover_password" do
+      context "when submitting an registered email" do
+        before do
+          UserNotifier.delivery_method = :test
+          UserNotifier.perform_deliveries = true
+          UserNotifier.deliveries = []
+
+          @user = Factory(:user)
+          post :recover_password, :locale => "pt-BR", :format => "js", :recovery_email => { :email => @user.email }
+
+        end
+
+        it "assigns user" do
+          assigns[:user].should_not be_nil
+          assigns[:user].should be_kind_of(User)
+        end
+
+        it "assigns recover_password" do
+          assigns[:recover_password].should_not be_nil
+          assigns[:recover_password].should be_kind_of(RecoveryEmail)
+        end
+
+        it "sends an email" do
+          UserNotifier.deliveries.size.should == 1
+        end
+      end
+
+      context "when submitting an UNregistered email" do
+        before do
+          @user = Factory(:user)
+          post :recover_password, :locale => "pt-BR", :format => "js", :recovery_email => { :email => "iamnot@redu.com.br" }
+        end
+
+        it "assigns user" do
+          assigns[:user].should be_nil
+        end
+
+        it "assigns recover_password" do
+          assigns[:recover_password].should_not be_nil
+          assigns[:recover_password].should be_kind_of(RecoveryEmail)
+        end
+
+        it "adds an error to recover_password" do
+          assigns[:recover_password].errors.should_not be_empty
+        end
+      end
     end
   end
 end

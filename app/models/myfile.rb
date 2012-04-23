@@ -34,8 +34,6 @@ class Myfile < ActiveRecord::Base
     'image/gif'
   ]
 
-  before_create :overwrite
-
   has_attached_file :attachment, Redu::Application.config.paperclip_myfiles
 
   belongs_to :folder
@@ -47,20 +45,14 @@ class Myfile < ActiveRecord::Base
   validates_uniqueness_of :attachment_file_name, :scope => 'folder_id'
   validates_attachment_content_type :attachment, :content_type => CONTENT_TYPES
 
-  def overwrite
-    existing = Myfile.find_by_attachment_file_name(self.attachment_file_name)
-    if existing
-      existing.destroy
-    end
-  end
-
   # Verifica se o curso tem espaço suficiente para o arquivo
   def can_upload_file?
     space = self.folder.space
-    return false if space.course.plan.state != "active"
+    plan = space.course.plan || space.course.environment.plan
+    return false if plan.state != "active"
 
-    plan = space.course.plan
-    quota = space.course.quota
+    plan = space.course.plan || space.course.environment.plan
+    quota = space.course.quota || space.course.environment.quota
 
     quota.files <= plan.file_storage_limit
   end

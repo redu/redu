@@ -3,10 +3,17 @@ class Status < ActiveRecord::Base
   belongs_to :user
   has_many :answers, :as => :in_response_to,
     :dependent => :destroy,
-    :order => "created_at DESC",
+    :order => "created_at ASC",
     :include => [:user]
   has_many :users, :through => :status_user_associations
   has_many :status_user_associations, :dependent => :destroy
+
+  scope :activity_by_user, lambda { |u|
+    where("type = ? AND user_id = ?", "Activity", u) }
+  scope :helps_and_activities, where("type = ? OR type = ?", "Help", "Activity")
+  scope :by_statusable, lambda { |kind, id| where("statusable_id IN (?) AND statusable_type = ?", id, kind) }
+  scope :by_day, lambda { |day| where(:created_at =>(day..(day+1))) }
+  scope :by_id, lambda { |id| where(:id =>id) }
 
   scope :from_hierarchy, lambda { |c|
     where(build_conditions(c)).includes(:user) \
@@ -20,7 +27,7 @@ class Status < ActiveRecord::Base
   }
 
   # Constrói as condições de busca de status dentro da hierarquia. Aceita
-  # Course, Space e Lecture como raíz
+  # Course, Space e Lecture como raiz
   def self.build_conditions(entity)
     statusables = statuables_on_hierarchy(entity)
     conditions = []
@@ -41,6 +48,17 @@ class Status < ActiveRecord::Base
     users.includes(:status_user_associations).each do |u|
       u.status_user_associations.create(:status => self)
     end
+  end
+
+  def self.associate_with(status, users)
+    associations = users.collect(&:id).collect do |u_id|
+      StatusUserAssociation.new(:user_id => u_id, :status_id => status.id)
+    end
+    StatusUserAssociation.import(associations)
+  end
+
+  def answers_ids(id)
+    answers.where("user_id = ?", id).collect{ |answer| answer.id }
   end
 
   protected

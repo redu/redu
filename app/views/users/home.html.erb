@@ -8,7 +8,7 @@
   </ol>
   <% unless @friends_requisitions.empty? %>
     <ul class="friends-requisitions">
-      <%= render :partial => 'users/friend_requisition',
+      <%= render :partial => 'friendships/friend_requisition',
         :collection => @friends_requisitions, :as => :friend %>
     </ul>
   <% end %>
@@ -28,7 +28,9 @@
     <%= will_paginate @statuses, :renderer => EndlessRenderer %>
   </div><!-- end .statuses -->
 </div><!-- end .main -->
+
 <div class="secondary-sidebar home-sidebar">
+  <%= render :partial => 'friendships/invite_button' %>
   <div class="contact-recommendations">
     <div class="call">
       <span class="icon-contacts-white-green_16_18-before">Conecte-se</span>

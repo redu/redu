@@ -1,4 +1,5 @@
 class FriendshipsController < BaseController
+  include InvitationsProcessor
 
   load_and_authorize_resource :user, :find_by => :login
   load_and_authorize_resource :friendship, :through => :user
@@ -14,14 +15,29 @@ class FriendshipsController < BaseController
     end
   end
 
+  def new
+    @invitations = @user.invitations
+    @friendship_requests = @user.friendships.requested
+    @contacts_recommendations = @user.recommended_contacts(5)
+
+    respond_to do |format|
+      format.html
+    end
+  end
+
   def create
-    @friend = User.find(params[:friend_id])
-    current_user.be_friends_with(@friend)
-    friendship = @friend.friendship_for current_user
+    @friend = process_invites(params.to_hash, current_user)
     respond_to do |format|
       format.html do
         if params.has_key? :goto_home
           redirect_to home_user_path(current_user)
+        elsif params.has_key? :goto_invitations
+          if params[:emails].to_s.strip != "" || params[:friend_id].to_s.strip != ""
+            flash[:notice] = "Convites enviados com sucesso."
+          else
+            flash[:error] = "Nenhum convite para ser enviado."
+          end
+          redirect_to new_user_friendship_path(current_user)
         else
           redirect_to user_path(@friend)
         end
@@ -45,6 +61,18 @@ class FriendshipsController < BaseController
         end
       end
       format.js
+    end
+  end
+
+  def resend_email
+    user = @friendship.user
+    friend = @friendship.friend
+    UserNotifier.friendship_requested(friend, user).deliver
+    respond_to do |format|
+      format.js do
+        @invitation_id = "request-#{params[:id]}"
+        render 'invitations/resend_email'
+      end
     end
   end
 

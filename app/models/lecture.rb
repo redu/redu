@@ -3,8 +3,7 @@ class Lecture < ActiveRecord::Base
   # Entidade polimórfica que representa o objeto de aprendizagem. Pode possuir
   # três especializações: Seminar, InteractiveClass e Page.
 
-  #
-  after_create :create_asset_report
+  after_create :delay_create_asset_report
 
   # ASSOCIATIONS
   has_many :statuses, :as => :statusable, :order => "updated_at DESC",
@@ -15,7 +14,6 @@ class Lecture < ActiveRecord::Base
   #FIXME Falta testar
   has_many :favorites, :as => :favoritable, :dependent => :destroy
   has_many :asset_reports, :dependent => :destroy
-  has_many :student_profiles, :through => :asset_reports, :dependent => :destroy
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
   belongs_to :lectureable, :polymorphic => true, :dependent => :destroy
   belongs_to :subject
@@ -31,11 +29,9 @@ class Lecture < ActiveRecord::Base
   scope :documents, where("lectureable_type LIKE 'Document'")
   scope :exercises, where("lectureable_type LIKE 'Exercise'")
   scope :exercises_editables, where("lectureable_type LIKE 'Exercise' and lectureable_id NOT IN (SELECT exercise_id FROM results)")
-  scope :related_to, lambda { |lecture|
-    where("name LIKE ? AND id != ?", "%#{lecture.name}%", lecture.id)
-  }
   scope :recent, lambda { where('created_at > ?', 1.week.ago) }
-
+  scope :by_subjects, lambda { |subjects_id| where(:subject_id =>subjects_id) }
+  scope :by_day, lambda { |day| where(:created_at =>(day..(day+1))) }
 
   attr_protected :owner, :published, :view_count, :removed, :is_clone
 
@@ -79,10 +75,7 @@ class Lecture < ActiveRecord::Base
   end
 
   def refresh_students_profiles
-    student_profiles = StudentProfile.where(:subject_id => self.subject.id)
-    student_profiles.each do |student_profile|
-      student_profile.update_grade!
-    end
+    self.subject.enrollments.each(&:"update_grade!")
   end
 
   def recent?
@@ -97,7 +90,11 @@ class Lecture < ActiveRecord::Base
   def build_lectureable(params)
     return if params[:_type].blank?
 
-    klass = params.delete(:_type).constantize
+    begin
+      klass = params.delete(:_type).constantize
+    rescue NameError # Caso seja não seja um lectureable válido
+      return nil
+    end
     relation = klass.reflections[:lecture].try(:options)
 
     if relation && relation[:as] == :lectureable
@@ -118,13 +115,26 @@ class Lecture < ActiveRecord::Base
     end
   end
 
-  protected
+  # Cria asset_report entre esta aula e todos os usuários matriculados no
+  # subject.
   def create_asset_report
-    student_profiles = StudentProfile.where(:subject_id => self.subject.id)
-    student_profiles.each do |student_profile|
-      self.asset_reports << AssetReport.create(:subject => self.subject,
-                                               :student_profile => student_profile)
-      student_profile.update_grade!
+    enrollments = Enrollment.where(:subject_id => self.subject.id)
+
+    reports = enrollments.collect do |enrollment|
+      AssetReport.new(:subject => self.subject, :enrollment => enrollment,
+                      :lecture => self)
     end
+    AssetReport.import(reports)
+
+    enrollments.collect(&:"update_grade!")
   end
+
+  protected
+
+  # ver app/jobs/create_asset_report_job.rb
+  def delay_create_asset_report
+    job = CreateAssetReportJob.new(:lecture_id => self.id)
+    Delayed::Job.enqueue(job, :queue => 'general')
+  end
+
 end

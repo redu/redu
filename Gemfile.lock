@@ -1,16 +1,20 @@
 GIT
-  remote: git://github.com/alindeman/no_peeping_toms.git
-  revision: 83dbd4cb993ae8e78a38a0f5cad784ca58bb0dcd
+  remote: git://github.com/apotonick/roar-rails.git
+  revision: 851736e6cf2c4a930bc0b107cd43f750ac67f42b
   specs:
-    no_peeping_toms (2.1.0)
-      activerecord (>= 3.0.0)
-      activesupport (>= 3.0.0)
+    roar-rails (0.0.3)
+      actionpack (~> 3.0)
+      railties (~> 3.0)
+      roar (~> 0.9.2)
+      test_xml
 
 GIT
-  remote: git://github.com/alto/aasm.git
-  revision: a6f77b5fa4981d92695e28d5984af56f1d79388c
+  remote: git://github.com/collectiveidea/delayed_job_active_record.git
+  revision: 2ece2822a5a8b00a24b3a158eba5300d90f92c73
   specs:
-    aasm (2.2.0)
+    delayed_job_active_record (0.3.2)
+      activerecord (> 2.1.0)
+      delayed_job (~> 3.0.0)
 
 GIT
   remote: git://github.com/edgarjs/ajaxful-rating.git
@@ -21,7 +25,8 @@ GIT
 
 GIT
   remote: git://github.com/guiocavalcanti/scribd_fu.git
-  revision: ce15af925afbab9f5806d4038ec0ac5e05b18d2e
+  revision: 422926986f993bf4d72fcaa981dea221ecc86641
+  branch: without-scape
   specs:
     scribd_fu (2.0.11)
       rscribd
@@ -35,6 +40,34 @@ GIT
       actionmailer (>= 3.0.0)
       nokogiri (>= 1.4.4)
       premailer (>= 1.7.1)
+
+GIT
+  remote: git://github.com/patmaddox/no-peeping-toms.git
+  revision: b39544b58bba7c9258d60ddc7dead0ccb6c1aa83
+  specs:
+    no_peeping_toms (2.1.1)
+      activerecord (>= 3.0.0)
+      activesupport (>= 3.0.0)
+
+GIT
+  remote: git://github.com/rubyist/aasm.git
+  revision: ec724d5a486469955a927db38c667f0604d8800f
+  specs:
+    aasm (3.0.3)
+      activerecord
+
+GIT
+  remote: git@github.com:redu/invitable.git
+  revision: 171dcdb33d0955357a0af7980d6882925958949c
+  specs:
+    invitable (0.0.5)
+      rails (~> 3.0.10)
+
+GIT
+  remote: git@github.com:redu/vis_client.git
+  revision: ef3bbcfb8c95c0b8040ca44521de4b866db42f97
+  specs:
+    vis_client (0.0.4)
 
 GEM
   remote: http://rubygems.org/
@@ -69,6 +102,9 @@ GEM
       activesupport (= 3.0.10)
       arel (~> 2.0.10)
       tzinfo (~> 0.3.23)
+    activerecord-import (0.2.9)
+      activerecord (~> 3.0)
+      activerecord (~> 3.0)
     activeresource (3.0.10)
       activemodel (= 3.0.10)
       activesupport (= 3.0.10)
@@ -87,25 +123,38 @@ GEM
       builder
       mime-types
       xml-simple
+    aws-sdk (1.3.9)
+      httparty (~> 0.7)
+      json (~> 1.4)
+      nokogiri (>= 1.4.4)
+      uuidtools (~> 2.1)
     builder (2.1.2)
-    cancan (1.6.4)
+    cancan (1.6.7)
     childprocess (0.2.2)
       ffi (~> 1.0.6)
     ckeditor (3.4.2.pre)
       mime-types (>= 1.16)
     closure-compiler (1.1.1)
+    cocaine (0.2.1)
     columnize (0.3.2)
     crack (0.1.8)
     css_parser (1.2.5)
       addressable
-    daemons (1.1.3)
+    daemons (1.1.8)
     date_validator (0.6.1)
       activemodel (~> 3.0.0)
     deep_cloneable (1.2.3)
+    delayed_job (3.0.2)
+      activesupport (~> 3.0)
     diff-lcs (1.1.3)
     dynamic_form (1.1.4)
+    em-http-request (0.3.0)
+      addressable (>= 2.0.0)
+      escape_utils
+      eventmachine (>= 0.12.9)
     erubis (2.6.6)
       abstract (>= 1.0.0)
+    escape_utils (0.2.4)
     eventmachine (0.12.10)
     exceptional (2.0.32)
       rack
@@ -114,8 +163,16 @@ GEM
     factory_girl_rails (1.3.0)
       factory_girl (~> 2.2.0)
       railties (>= 3.0.0)
+    faraday (0.7.6)
+      addressable (~> 2.2)
+      multipart-post (~> 1.1)
+      rack (~> 1.1)
     ffi (1.0.9)
+    hashie (1.2.0)
     htmlentities (4.3.0)
+    httparty (0.8.1)
+      multi_json
+      multi_xml
     i18n (0.5.0)
     jammit (0.6.0)
       closure-compiler (>= 0.1.0)
@@ -133,7 +190,7 @@ GEM
     jquery-rails (1.0.5)
       railties (~> 3.0)
       thor (~> 0.14)
-    json (1.6.1)
+    json (1.6.6)
     json_pure (1.6.1)
     kaminari (0.12.4)
       rails (>= 3.0.0)
@@ -143,17 +200,32 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    mime-types (1.17.1)
+    mime-types (1.18)
     mimemagic (0.1.8)
     multi_json (1.0.3)
+    multi_xml (0.4.1)
+    multipart-post (1.1.5)
     mysql2 (0.2.7)
     newrelic_rpm (3.0.1)
     nokogiri (1.5.0)
+    oauth2 (0.5.2)
+      faraday (~> 0.7)
+      multi_json (~> 1.0)
+    omniauth (1.0.2)
+      hashie (~> 1.2)
+      rack
+    omniauth-facebook (1.2.0)
+      omniauth-oauth2 (~> 1.0.0)
+    omniauth-oauth2 (1.0.0)
+      oauth2 (~> 0.5.0)
+      omniauth (~> 1.0)
     open4 (1.0.1)
     pagseguro (0.1.12)
-    paperclip (2.3.11)
+    paperclip (2.7.0)
       activerecord (>= 2.3.0)
       activesupport (>= 2.3.2)
+      cocaine (>= 0.0.2)
+      mime-types
     polyglot (0.3.2)
     premailer (1.7.3)
       css_parser (>= 1.1.9)
@@ -164,7 +236,7 @@ GEM
       multi_json (~> 1.0)
       ruby-hmac (~> 0.4.0)
       signature (~> 0.1.2)
-    rack (1.2.4)
+    rack (1.2.5)
     rack-mount (0.6.14)
       rack (>= 1.0.0)
     rack-test (0.5.7)
@@ -190,24 +262,29 @@ GEM
     rake (0.8.7)
     rd_searchlogic (3.0.1)
       activerecord (>= 3.0.0)
-    rdoc (3.11)
+    rdoc (3.12)
       json (~> 1.4)
     remotipart (0.3.4)
+    representable (1.1.1)
+      json
+      nokogiri
+    roar (0.9.2)
+      representable (~> 1.1)
     rscribd (1.3.0)
       mime-types
-    rspec (2.7.0)
-      rspec-core (~> 2.7.0)
-      rspec-expectations (~> 2.7.0)
-      rspec-mocks (~> 2.7.0)
-    rspec-core (2.7.1)
-    rspec-expectations (2.7.0)
-      diff-lcs (~> 1.1.2)
-    rspec-mocks (2.7.0)
-    rspec-rails (2.7.0)
-      actionpack (~> 3.0)
-      activesupport (~> 3.0)
-      railties (~> 3.0)
-      rspec (~> 2.7.0)
+    rspec (2.9.0)
+      rspec-core (~> 2.9.0)
+      rspec-expectations (~> 2.9.0)
+      rspec-mocks (~> 2.9.0)
+    rspec-core (2.9.0)
+    rspec-expectations (2.9.1)
+      diff-lcs (~> 1.1.3)
+    rspec-mocks (2.9.0)
+    rspec-rails (2.9.0)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      railties (>= 3.0)
+      rspec (~> 2.9.0)
     ruby-debug (0.10.4)
       columnize (>= 0.1)
       ruby-debug-base (~> 0.10.4.0)
@@ -228,7 +305,9 @@ GEM
       ruby-hmac
     simple-navigation (3.5.0)
       activesupport (>= 2.3.2)
-    thin (1.2.11)
+    test_xml (0.1.2)
+      nokogiri (>= 1.3.2)
+    thin (1.3.1)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
       rack (>= 1.0.0)
@@ -237,7 +316,8 @@ GEM
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
-    tzinfo (0.3.31)
+    tzinfo (0.3.33)
+    uuidtools (2.1.2)
     whenever (0.6.7)
       aaronh-chronic (>= 0.3.9)
       activesupport (>= 2.3.4)
@@ -256,6 +336,7 @@ DEPENDENCIES
   aasm!
   actionmailer_inline_css!
   active_enum
+  activerecord-import
   acts-as-taggable-on
   acts_as_tree (~> 0.1.1)
   ajaxful_rating!
@@ -263,14 +344,20 @@ DEPENDENCIES
   authlogic
   awesome_nested_fields
   aws-s3
+  aws-sdk
   bundler (~> 1.0.15)
-  cancan
+  cancan (~> 1.6.7)
   ckeditor (= 3.4.2.pre)
+  daemons
   date_validator
   deep_cloneable
+  delayed_job_active_record!
   dynamic_form
+  em-http-request
+  eventmachine
   exceptional
   factory_girl_rails
+  invitable!
   jammit-s3
   jasmine
   jquery-rails (>= 1.0.3)
@@ -279,8 +366,10 @@ DEPENDENCIES
   mysql2 (~> 0.2.1)
   newrelic_rpm (= 3.0.1)
   no_peeping_toms!
+  omniauth
+  omniauth-facebook
   pagseguro (~> 0.1.10)
-  paperclip
+  paperclip (~> 2.7)
   pusher
   rails (= 3.0.10)
   rails-footnotes (>= 3.7.5.rc4)
@@ -288,6 +377,7 @@ DEPENDENCIES
   rake (= 0.8.7)
   rd_searchlogic
   remotipart (>= 0.3.4)
+  roar-rails (~> 0.0.3)!
   rspec-rails (~> 2.6)
   ruby-debug
   scribd_fu!
@@ -296,6 +386,7 @@ DEPENDENCIES
   simple-navigation
   thin
   translate_routes
+  vis_client!
   whenever
   will_paginate (~> 3.0.pre2)
   zencoder

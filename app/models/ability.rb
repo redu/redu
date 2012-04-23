@@ -17,7 +17,8 @@ class Ability
     # Course
     alias_action :admin_spaces, :admin_members_request,
       :moderate_members_requests, :invite_members, :admin_manage_invitations,
-      :admin_invitations, :destroy_invitations, :to => :manage
+      :admin_invitations, :destroy_invitations, :teacher_participation_report,
+      :to => :manage
     alias_action :unjoin, :to => :read
 
     # Space
@@ -37,6 +38,9 @@ class Ability
       :update_account, :edit_pro_details, :invite, :activate, :deactivate,
       :account, :home, :my_wall, :to => :manage
 
+    # Invitation
+    alias_action :resend_email, :destroy, :destroy_invitations, :to => :manage
+
     # Lecture
     alias_action :rate, :done, :to => :read
 
@@ -50,8 +54,12 @@ class Ability
     # Plan
     alias_action :confirm, :address, :pay, :upgrade, :to => :manage
 
+    # Reports
+    alias_action :teacher_participation_interaction, :to => :manage
+
     # Todos podem ver o preview
-    can :preview, [Course, Environment], :published => true
+    can :preview, [Course, Environment]
+    can :preview, Subject, :visible => true
 
     # Todos podem criar usuários
     can :create, User
@@ -121,8 +129,8 @@ class Ability
       end
 
       # Join in a Course
-      can :add_entry, Course do |course|
-        course.can_add_entry?
+      can :add_entry, Course do |el|
+        el.can_add_entry?
       end
 
       # Plan (payment gateway)
@@ -141,9 +149,15 @@ class Ability
 
       # Parceiros
       can :contact, Partner
+      cannot :index, Partner unless user.admin?
 
       # Result
       can :update, Result, :state => 'started', :user_id => user.id
+
+      # Invoice
+      cannot :pay, Invoice do |invoice|
+        !(user.admin? && invoice.pending?)
+      end
     end
   end
 end

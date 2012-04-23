@@ -26,6 +26,12 @@ class SessionsController < BaseController
           invite.accept!
         end
 
+        # Invitation Token
+        if params.has_key?(:friendship_invitation_token)
+          invite = Invitation.find_by_token(params[:friendship_invitation_token])
+          invite.accept!(current_user)
+        end
+
         flash[:notice] = t :thanks_youre_now_logged_in
         redirect_to home_user_path(current_user)
       else
@@ -37,6 +43,17 @@ class SessionsController < BaseController
           @course = @user_course_invitation.course
           @environment = @course.environment
           render :template => 'user_course_invitations/show'
+
+        elsif params.has_key?(:friendship_invitation_token)
+          @invitation = Invitation.find_by_token(params[:friendship_invitation_token])
+          @invitation_user = @invitation.user
+          uca = UserCourseAssociation.where(:user_id => @invitation_user).approved
+          @contacts = {:total => @invitation_user.friends.count}
+          @courses = { :total => @invitation_user.courses.count,
+                       :environment_admin => uca.with_roles([:environment_admin]).count,
+                       :tutor => uca.with_roles([:tutor]).count,
+                       :teacher => uca.with_roles([:teacher]).count }
+          render :template => 'invitations/show'
         else
           render :template => 'base/site_index'
         end
@@ -55,7 +72,7 @@ class SessionsController < BaseController
     user = User.find_by_login_or_email(params[:user_session][:login])
     if user and not user.active? and not user.can_activate? # Passou do tempo de autenticar
       @user_email = user.email
-      render :action => 'expired_activation'
+      render :template => 'sessions/expired_activation', :layout => 'application'
     end
   end
 

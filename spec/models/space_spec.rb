@@ -18,12 +18,8 @@ describe Space do
   it { should have_many :statuses }
 
   it { should validate_presence_of :name}
-  it { should validate_presence_of :description }
-  it { should validate_presence_of :submission_type }
+  it { should_not validate_presence_of :description }
   it { should ensure_length_of(:name).is_at_most 40 }
-  #FIXME falhando por problema de tradução
-  xit { should ensure_length_of(:description).is_at_least(30).is_at_most(250) }
-
 
   [:owner, :removed, :members_count, :course_id, :published].each do |attr|
     it { should_not allow_mass_assignment_of attr }
@@ -160,6 +156,27 @@ describe Space do
                                        :folder => subject.root_folder) }
       subject.myfiles.should == files
     end
+
+    it "retrieves all spaces that user is teacher" do
+      spaces = (1..5).collect { Factory(:space) }
+      user = Factory(:user)
+      spaces[0].course.join(user, Role[:teacher])
+      spaces[1].course.join(user, Role[:teacher])
+      spaces[2].course.join(user, Role[:member])
+      spaces[3].course.join(user, Role[:tutor])
+
+      user.spaces.teachers.to_set.should ==
+        [spaces[0], spaces[1]].to_set
+    end
+
+    it "retrieves all my subjects ids" do
+      subj = (1..2).collect { Factory(:subject, :space => subject) }
+
+      subject.subjects << subj[0]
+      subject.subjects << subj[1]
+
+      subject.subjects_id.to_set.should eq([subj[0].id, subj[1].id].to_set)
+    end
   end
 
   it "changes a user role" do
@@ -192,5 +209,4 @@ describe Space do
       subject.lectures_count.should == @lectures.size
     end
   end
-
 end

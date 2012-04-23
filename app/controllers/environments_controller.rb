@@ -93,14 +93,12 @@ class EnvironmentsController < BaseController
       respond_to do |format|
         @plan = Plan.from_preset(params[:plan].to_sym)
         @plan.user = current_user
-        @environment.courses.first.plan = @plan
+        @environment.courses.first.plans << @plan
         @environment.owner = current_user
         @environment.courses.first.owner = current_user
-        @environment.color = "4DADD6"
         if @environment.save && @plan.save
           @environment.courses.first.create_quota
-          if @plan.price > 0
-            @plan.create_invoice_and_setup
+          if @plan.create_invoice_and_setup
             format.js { render :pay }
             format.html do
               redirect_to confirm_plan_path(@plan)
@@ -145,7 +143,7 @@ class EnvironmentsController < BaseController
   # DELETE /environments/1
   # DELETE /environments/1.xml
   def destroy
-    @environment.destroy
+    @environment.audit_billable_and_destroy
 
     respond_to do |format|
       format.html { redirect_to(teach_index_url) }

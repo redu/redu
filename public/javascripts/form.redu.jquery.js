@@ -1,4 +1,45 @@
 (function($){
+    $.fn.loadingStart = function(options){
+      var config = {
+        "className" : "concave-loading"
+      }
+      $.extend(config, options);
+
+      return this.each(function(){
+          $bt = $(this);
+          $bt.addClass(config.className);
+      });
+    };
+
+    $.fn.loadingComplete = function(options){
+      var config = {
+        "className" : "concave-loading"
+      }
+      $.extend(config, options);
+
+      return this.each(function(){
+          $bt = $(this);
+          $bt.removeClass(config.className);
+      });
+    };
+
+    $.fn.loadingToggle = function(options){
+      var config = {
+        "className" : "concave-loading"
+      }
+      $.extend(config, options);
+
+      return this.each(function(){
+          $bt = $(this);
+
+          if( $bt.hasClass(config.className) ) {
+            $bt.loadingComplete();
+          } else {
+            $bt.loadingStart();
+          }
+      });
+    };
+
     $.fn.refreshForms = function(){
       return this.each(function(){
           // Classes de objetos presentes do form
@@ -11,7 +52,7 @@
           var $fieldset = $form.find("fieldset:not(.inline)");
           var $files = $form.find("input[type=file]");
           var $select = $form.find("select");
-          var $buttons = $form.find("input[type=submit], button, input[type=button]");
+          var $buttons = $form.find("input[type=submit], button, input[type=button]").not(".concave-important, .concave-important-font");
           var $separator = $form.find("hr");
 
           // Cabels
@@ -70,6 +111,30 @@
           $(".concave-form").live('ajax:complete', function(){
               $(this).find("input[type=submit]").loadingComplete({ "className" : "concave-loading" });
           });
+
+        // Padrão de spinner
+        $(".form-common, .form-loader").live('ajax:before', function(e){
+            var $this = $(this);
+            var $target = $(e.target);
+
+            if($target.is($this)){
+              $(this).find("input[type=submit], button").loadingStart({ 'class' : 'concave-loading' });
+            }
+        });
+
+        $(".form-common, .form-loader").live('ajax:complete', function(e){
+            var $this = $(this);
+            var $target = $(e.target);
+
+            if($target.is($this)){
+              $(this).find("input[type=submit], button").loadingComplete({ 'class' : 'concave-loading'});
+            }
+        });
+
+        // Chamada ao jquery.placeholder.
+        try { 
+          $form.find("[placeholder]").placeholder(); 
+        } catch (e) {}
 
       });
     };

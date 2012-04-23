@@ -1,20 +1,22 @@
 <div class="actions clearfix">
   <% if can?(:teach, course) %>
-      <%= link_to 'Criar nova disciplina', new_space_path(:course_id => course.id), :class => "button" %>
+      <%= link_to 'Criar nova disciplina', new_space_path(:course_id => course.id), :class => "concave-button" %>
   <% else %>
     <% unless course.users.include?(current_user) %>
       <% if (current_page? preview_environment_course_path(course.environment,
         course)) %>
-        <% if course.can_add_entry? %>
+        <% if can? :add_entry, course %>
           <%= link_to 'Matricular-se',
             join_environment_course_path(course.environment, course),
-            :method => :post, :class => 'join important'%>
+            :method => :post, :class => 'join concave-important'%>
         <% else %>
           <span class="join waiting">Limite de vagas atingido</span>
         <% end %>
       <% end %>
     <% else %>
-      <% if current_user.has_course_invitation?(course) %>
+      <% if course.published == false %>
+        <span class="join waiting"> O curso está despublicado, para maiores informações consulte o dono do curso.</span>
+      <% elsif current_user.has_course_invitation?(course) %>
         <span class="join waiting">Você já foi convidado.</span>
       <% elsif course.waiting_approval?(current_user) %>
         <span class="join waiting">Aguardando moderação</span>

@@ -8,7 +8,7 @@
     $(".new-file-inner:visible, .new-folder-inner:visible", "#folder-admin").hide();
     <%= render :partial => 'folders/index' %>
   <% else %>
-    $(".new-file-inner .button").text("Procurar");
+    $(".new-file-inner .concave-clean").text("Buscar");
     var $error = $("<div class='errorMessageField'>");
     <% if !@myfile.errors[:attachment_file_name].empty? %>
       $error.html("Já existe um arquivo com este nome.");

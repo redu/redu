@@ -28,6 +28,19 @@
     <%= render :partial => 'environments/admin/clean_header' %>
 
     <%= tabs :environments_admin do %>
+      <% if @environment.plan %>
+        <div class="plan-panel">
+          <div class="plan-use">
+            <span class="plan-type"><%= @header_environment.plan.name %></span>
+            <%= render :partial => "invoices/quotas",
+              :locals => { :quota_file => @environment.percentage_quota_file,
+                           :plan => @environment.plan,
+                           :quota_multimedia => @environment.percentage_quota_multimedia,
+                           :quota_members => @environment.percentage_quota_members,
+                           :quota => @environment.quota } %>
+          </div>
+        </div>
+      <% end %>
 
       <%= form_for @environment, :html => { :class => 'concave-form',
         :multipart => true }, :url => environment_path(@header_environment) do |f| %>

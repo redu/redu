@@ -51,3 +51,8 @@ pt-BR:
     partner_user_associations: "colaboradores"
     my_wall: "meu_mural"
     notifications: "avise_me"
+    invitations: "convites"
+    resend_email: "reenviar"
+    recover_username_password: "recuperar_login_senha"
+    recover_username: "recuperar_login"
+    recover_password: "recuperar_senha"

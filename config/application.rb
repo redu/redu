@@ -76,10 +76,6 @@ module Redu
     # Máximo de caracteres p/ descrição
     config.desc_char_limit = 200
 
-    #TODO Confirmar se IE responde
-    # codigo usado para o IE aceitar header sem ser html
-    #config.action_controller.use_accept_header = false
-
     config.session_store = :active_record_store
 
     # ActionMailer

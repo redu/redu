@@ -63,16 +63,37 @@
 .icon-add-contact-green_16_18-before:before,
 .icon-add-contact-lightgreen_16_18-before:hover:before,
 .subtabs .ui-state-default .icon-add-contact_16_18-before:hover:before {
-  content: "";
+  content: " ";
   width: 16px;
   height: 18px;
   background: url("../images/new/icons-small.png") -400px -2480px no-repeat;
 }
 
 .icon-add-contact-blue_16_18,
-.icon-add-contact-lightblue_16_18:hover { background-position: -160px -2480px; }
+.icon-add-contact-lightblue_16_18:hover {
+  background-position: -160px -2480px;
+}
 
-.icon-add-contact-lightblue_16_18 { background-position: -80px -2480px; }
+.icon-add-contact-lightblue_16_18-before:before,
+.icon-add-contact-lightblue_16_18-before:hover:before,
+.icon-add-contact-blue_16_18-before:before {
+  content: " ";
+  width: 16px;
+  height: 18px;
+}
+
+.icon-add-contact-lightblue_16_18-before:before {
+  background: url("../images/new/icons-small.png") -80px -2480px no-repeat;
+}
+
+.icon-add-contact-lightblue_16_18-before:hover:before,
+.icon-add-contact-blue_16_18-before:before {
+  background: url("../images/new/icons-small.png") -160px -2480px no-repeat;
+}
+
+.icon-add-contact-lightblue_16_18 {
+  background-position: -80px -2480px;
+}
 
 .icon-add-contact-white_16_18 { background-position: -240px -2480px; }
 .icon-add-contact-white_16_18-before:before,
@@ -255,6 +276,14 @@
   width: 16px;
   height: 18px;
   background: url("../images/new/icons-small.png") -80px -2080px no-repeat;
+}
+
+.icon-confirm-white_16_18 { background-position: -160px -2080px; }
+.icon-confirm-white_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -160px -2080px no-repeat;
 }
 
 .icon-contacts-blue_16_18,
@@ -824,6 +853,14 @@
   background: url("../images/new/icons-small.png") -80px -2240px no-repeat;
 }
 
+.icon-home-gray_16_18 { background-position: -560px -2240px; }
+.icon-home-gray_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -560px -2240px no-repeat;
+}
+
 .icon-home-lightblue_16_18 { background-position: 0 -2240px; }
 .icon-home-lightblue_16_18-before:before,
 .local-nav .icon-home_16_18-before:before {
@@ -1243,6 +1280,15 @@
   background-position: -400px -2160px;
   padding: 0px 6px;
   cursor: pointer;
+}
+
+.icon-question-blue_12_12-before:before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  padding: 0px 6px;
+  cursor: pointer;
+  background: url("../images/new/icons-small.png") -400px -2160px no-repeat;
 }
 
 .icon-redu_admin-gray_16_18 { background-position: 0 -720px; }
@@ -1730,10 +1776,18 @@
   background: url("../images/new/icons-small.png") -160px -1920px no-repeat;
 }
 
-.icon-twitter_16_18 { background-position:  -80px -1920px }
+.icon-twitter_16_18 { background-position: -80px -1920px }
 .icon-twitter_16_18-before:before {
   content: "";
   width: 16px;
   height: 18px;
   background: url("../images/new/icons-small.png") -80px -1920px no-repeat;
+}
+
+.invite-contact_32_50 { background-position: -320px -3200px }
+.invite-contact_32_50-before:before {
+  content: "";
+  width: 50px;
+  height: 32px;
+  background: url("../images/new/icons-small.png") -320px -3200px no-repeat;
 }

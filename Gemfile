@@ -7,14 +7,15 @@ gem 'rake', '0.8.7'
 gem 'mysql2', '~> 0.2.1'
 gem 'authlogic'
 gem 'pagseguro', '~> 0.1.10'
-gem 'paperclip'
+gem 'paperclip', '~> 2.7'
 gem 'will_paginate', '~> 3.0.pre2'
 gem 'mime-types'
-gem 'cancan'
+gem 'cancan', '~> 1.6.7'
 gem 'aasm', :require => "aasm",
-  :git => "git://github.com/alto/aasm.git"
+  :git => "git://github.com/rubyist/aasm.git"
 gem 'shuber-sortable'
-gem 'scribd_fu', :git => 'git://github.com/guiocavalcanti/scribd_fu.git'
+gem 'scribd_fu', :git => 'git://github.com/guiocavalcanti/scribd_fu.git',
+  :branch => 'without-scape'
 gem 'factory_girl_rails'
 gem 'ar_mailer_rails3'
 gem 'active_enum'
@@ -40,9 +41,22 @@ gem 'simple-navigation'
 gem 'actionmailer_inline_css',
   :git => 'git://github.com/ndbroadbent/actionmailer_inline_css.git',
   :branch => 'master'
-gem "acts_as_tree", "~> 0.1.1"
+gem 'acts_as_tree', '~> 0.1.1'
 gem 'exceptional'
 gem 'awesome_nested_fields'
+gem 'invitable', :git => 'git@github.com:redu/invitable.git'
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'roar-rails', '~> 0.0.3',
+  :git => 'git://github.com/apotonick/roar-rails.git'
+gem 'eventmachine'
+gem 'em-http-request'
+gem 'delayed_job_active_record',
+  :git => 'git://github.com/collectiveidea/delayed_job_active_record.git'
+gem 'daemons'
+gem 'activerecord-import'
+gem 'aws-sdk'
+gem 'vis_client', :git => "git@github.com:redu/vis_client.git"
 
 # Gems específicos de algum ambiente
 group :development, :test do
@@ -50,7 +64,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'ruby-debug'
   gem 'jasmine'
-  gem 'no_peeping_toms', :git => 'git://github.com/alindeman/no_peeping_toms.git'
+  gem 'no_peeping_toms', :git => 'git://github.com/patmaddox/no-peeping-toms.git'
   gem 'rails3-generators'
 end
 

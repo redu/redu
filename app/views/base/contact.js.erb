@@ -1,0 +1,11 @@
+var $form = $("#contact-form");
+<% if @contact.valid? %>
+  var $confirmationBox = $("<%= escape_javascript render 'shared/confirmation_message', :message => %(<span class="thank-you">Obrigado, <span class="person-name">#{@contact.name}</span></span> <p class="text-confirmation"> Sua contato foi muito importante para nós. Visite a <span class="initial-page"> #{link_to "página inicial", home_path} </span>para recomeçar a navegar no Redu</p>), :boxed => @boxed %>");
+  $form.replaceWith($confirmationBox);
+<% else %>
+  var formClasses = $form.attr('class');
+  var contactForm = "<%= escape_javascript render :partial => 'base/contact_form', :locals => { :remote => true, :css_class => 'concave-form', :id => 'contact-form', :kind => !@contact.about_an_error? } %>"
+  console.log(formClasses)
+  $form.replaceWith(contactForm);
+  $("#contact-form").attr('class', formClasses);
+<% end %>

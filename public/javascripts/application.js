@@ -1,6 +1,5 @@
 jQuery(function(){
 
-    $.verifyCompatibleBrowser();
     $.refreshSubtabs();
 
     // Flash message
@@ -128,9 +127,11 @@ jQuery(function(){
     // Tooltips
     $(".tiptip").tipTip();
     $(".tiptip-right").tipTip({defaultPosition: "right"});
+    $(".tiptip-left").tipTip({defaultPosition: "left"});
     $(document).ajaxComplete(function(){
       $(".tiptip").tipTip();
       $(".tiptip-right").tipTip({defaultPosition: "right"});
+      $(".tiptip-left").tipTip({defaultPosition: "left"});
     });
 
     $(".form-common .tiptip").each(function(){
@@ -159,24 +160,6 @@ jQuery(function(){
         e.preventDefault();
     });
 
-    // Padrão de spinner
-    $(".form-common, .form-loader").live('ajax:before', function(e){
-        var $this = $(this);
-        var $target = $(e.target);
-
-        if($target.is($this)){
-          $(this).find("input[type=submit]").loadingStart();
-        }
-    });
-
-    $(".form-common, .form-loader").live('ajax:complete', function(e){
-        var $this = $(this);
-        var $target = $(e.target);
-
-        if($target.is($this)){
-          $(this).find("input[type=submit]").loadingComplete();
-        }
-    });
 
     $("a[data-remote=true]").live('ajax:before', function(){
         $(this).css('width', $(this).width());
@@ -188,9 +171,21 @@ jQuery(function(){
         $(this).removeClass("link-loading");
     });
 
+    /* Links remotos com estilo de botão */
+    $("a[data-remote=true].concave-button").live('ajax:before', function(){
+      // Remove spinner padrão para links
+      $(this).css('width', 'auto');
+      $(this).removeClass("link-loading");
+      $(this).loadingStart({ 'class' : 'concave-loading'});
+    });
+
+    $("a[data-remote=true].concave-button").live('ajax:complete', function(){
+      $(this).loadingComplete({ 'class' : 'concave-loading'});
+    });
+
     $.fn.loadingStart = function(options){
       var config = {
-        "className" : "bt-loading"
+        "className" : "concave-loading"
       }
       $.extend(config, options);
 
@@ -202,7 +197,7 @@ jQuery(function(){
 
     $.fn.loadingComplete = function(options){
       var config = {
-        "className" : "bt-loading"
+        "className" : "concave-loading"
       }
       $.extend(config, options);
 
@@ -214,7 +209,7 @@ jQuery(function(){
 
     $.fn.loadingToggle = function(options){
       var config = {
-        "className" : "bt-loading"
+        "className" : "concave-loading"
       }
       $.extend(config, options);
 
@@ -269,37 +264,6 @@ function stripAccent(str) {
 
   return str;
 }
-
-/* Verifica se o browser é compatível e esconde o aviso, caso seja. */
-$.verifyCompatibleBrowser = function(){
-  var myBrowser = $.browserInfos();
-  var minVersion = 0; // Para o caso de ser um browser não usual
-
-  if (myBrowser.isChrome()) {
-    minVersion = 11;
-  }else if(myBrowser.isSafari()){
-    minVersion = 4;
-  }else if(myBrowser.isOpera()){
-    minVersion = 11;
-  }else if(myBrowser.isFirefox()){
-    minVersion = 3.6;
-  }else if (myBrowser.isIE()){
-    minVersion = 8;
-  }
-
-  var warned = $.cookie("boring_browser");
-  if(!warned && !(myBrowser.version >= minVersion &&
-    swfobject.hasFlashPlayerVersion("10"))){
-    $("#outdated-browser").show();
-  }
-
-  $("#outdated-browser .close").click(function(){
-      $.cookie("boring_browser", true, { path: "/" });
-      $("#outdated-browser").fadeOut();
-  });
-
-
-};
 
 // Seta o tamanho correto das subtabs
 $.refreshSubtabs = function() {

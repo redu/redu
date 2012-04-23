@@ -1,10 +1,12 @@
 $(function(){
+
   $.fn.refreshExercises = function() {
+    // Deixa uma questão marcada quando o usuário a seleciona
     this.each(function(){
         $(".alternatives li input[type='radio']").live("click", function(){
           $(".alternatives li").removeClass("selected");
           $(this).parent().addClass("selected");
-          $(".exercise-nav li a.actual").parent().addClass("question-answered");
+          $(".exercise-nav li.actual").addClass("question-answered");
         });
     });
   }
@@ -124,7 +126,7 @@ $(function(){
     // Pega numeração da alternativa correta
     var correctAlternative = $fields.find("input:checked").prevAll("label").text();
     if (correctAlternative != ""){
-      $summary.find(".alternatives .correct").text(correctAlternative);
+      $summary.find(".alternatives .correct").text(correctAlternative.split(":")[0]);
     }else{
       $summary.find(".alternatives .correct").text("(não marcada)");
     }
@@ -148,7 +150,7 @@ $(function(){
       var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
       $alternatives.each(function(index){
         var letter = alphabet[index];
-        $(this).find(".alternative-label").text(letter);
+        $(this).find(".alternative-label").text(letter + ":");
       });
     });
   };
@@ -162,7 +164,7 @@ $(function(){
 
   // Habilita alternativas já existentes
   $.fn.refreshAlternativesAppearance = function(){
-    $(this).find(".alternative-container .alternative-item:not([data-new-record='true']):last").click();
+    $(this).find(".alternative-container").find(".alternative-item:not([data-new-record='true']):last").click();
   };
 
   // Deixa apenas uma alternativa marcada como certa

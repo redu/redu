@@ -5,12 +5,11 @@
         addontab: true,
         complete_text: "Digite o nome de um contato...",
         height: 6,
-        cache: true
       });
 
       <% if @recipients %>
         <% @recipients.each do |recipient| %>
-          $("#message_to").trigger("addItem", [{"title":"<%= recipient.first_name.to_s %>", "value":"<%= recipient.id.to_s %>"}])
+          $("#message_to").trigger("addItem", [{"title":"<%= recipient.display_name.to_s %>", "value":"<%= recipient.id.to_s %>"}])
         <% end %>
       <% end %>
     });

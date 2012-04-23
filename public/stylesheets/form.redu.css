@@ -8,6 +8,14 @@
   color: black;
 }
 
+.concave-form .concave-label {
+  padding-top: 7px;
+}
+
+.textshadow .concave-form .concave-label {
+  text-shadow: 0px 1px 0px white;
+}
+
 .concave-form {
   clear: both;
   overflow: hidden;
@@ -23,8 +31,8 @@
     width: 150px;
     margin: 20px 10px 0 0;
     clear: left;
-    height: 30px;
-    font-size: .9em;
+    height: 23px;
+    font-size: 12px;
   }
 
   .concave-form .concave-label-high {
@@ -75,7 +83,8 @@
   }
 
   .concave-form .concave-select {
-    margin-top: 16px;
+    margin-top: 23px;
+    margin-bottom: 9px;
   }
 
   .concave-form .concave-file,
@@ -181,18 +190,37 @@
 
 /* botoes */
   .concave-remove,
-  input[type="submit"].concave-remove,
-  input[type="submit"].concave-button,
   .concave-button,
   .concave-clean,
+  .concave-important,
+  .concave-important-font,
   .concave-cancel {
     padding: 5px 20px 6px 20px;
     color: white;
     display: inline-block;
     line-height: 17px;
     font-weight: bold;
-    font-size: 1em;
+    font-size: 12px;
     text-align: center;
+    cursor: pointer;
+  }
+
+  .concave-remove:hover,
+  .concave-button:hover,
+  .concave-important:hover,
+  .concave-important-font:hover,
+  .concave-cancel:hover {
+    color: white;
+  }
+
+  .concave-important,
+  .concave-important-font {
+    border: 1px solid rgb(75,192,128);
+    background-color: rgb(171, 227, 133);
+  }
+
+  .concave-important-font {
+    font-family: museo-slab, "Helvetica Neue", Arial, sans-serif;
   }
 
   .concave-clean {
@@ -203,20 +231,30 @@
 
   .concave-button,
   .concave-cancel {
-    margin: 20px 20px 0 0;
     border: 1px solid #4CACD5;
     background-color: #73C3E6;
   }
 
-  input[type="submit"].concave-remove,
+  .concave-form .concave-button,
+  .concave-form .concave-important,
+  .concave-form .concave-important-font,
+  .concave-form .concave-cancel {
+    margin: 20px 20px 0 0;
+  }
+
   .concave-remove {
-    margin: 20px 0px 0px 20px;
     border: 1px solid rgb(232, 59, 59);
     color: white;
     background-color: rgb(255, 109, 109);
   }
 
+  .concave-form .concave-remove {
+    margin: 20px 0px 0px 20px;
+  }
+
   .concave-form .concave-button,
+  .concave-form .concave-important,
+  .concave-form .concave-important-font,
   .concave-form .concave-cancel {
     float: right;
   }
@@ -232,6 +270,8 @@
   .concave-clean:hover,
   .concave-remove:hover,
   .concave-button:hover,
+  .concave-important:hover,
+  .concave-important-font:hover,
   .concave-cancel:hover {
     text-decoration: none;
   }
@@ -239,10 +279,18 @@
   .borderradius .concave-clean,
   .borderradius .concave-remove,
   .borderradius .concave-button,
+  .borderradius .concave-important,
+  .borderradius .concave-important-font,
   .borderradius .concave-cancel {
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
+  }
+
+  .cssgradients .concave-important,
+  .cssgradients .concave-important-font {
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(171, 227, 133)), to(rgb(95, 192, 128)));
+    background: -moz-linear-gradient(top, rgb(171, 227, 133), rgb(95, 192, 128));
   }
 
   .cssgradients .concave-button {
@@ -270,6 +318,13 @@
     background: linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 97%); /* W3C */
   }
 
+  .textshadow .concave-important-font,
+  .textshadow .concave-important {
+     -moz-text-shadow: 0px -1px 0 rgb(97, 160, 128);
+     -webkit-text-shadow: 0px -1px 0 rgb(97, 160, 128);
+     text-shadow: 0px -1px 0 rgb(97, 160, 128);
+  }
+
   .textshadow .concave-button {
      -moz-text-shadow: 0px -1px 0 rgb(21, 138, 196);
      -webkit-text-shadow: 0px -1px 0 rgb(21, 138, 196);
@@ -292,6 +347,12 @@
     text-shadow: 0px 1px 0px #ffffff;
   }
 
+  .concave-important-font:hover,
+  .concave-important:hover {
+    border: 1px solid rgb(97,160,128);
+
+  }
+
   .concave-button:hover {
     border: 1px solid #1789C3;
     background: #1789C3;
@@ -311,6 +372,12 @@
     border: 1px solid rgb(76, 172, 213);
 
     background: rgb(255,255,255); /* Old browsers */
+  }
+
+  .cssgradients .concave-important-font:hover,
+  .cssgradients .concave-important:hover {
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(171,227,133)), to(rgb(97,160,128)));
+    background: -moz-linear-gradient(top,  rgb(171,227,133), rgb(97,160,128));
   }
 
   .cssgradients .concave-cancel:hover {
@@ -381,7 +448,7 @@
   .concave-form .error_explanation h2 {
     position: absolute;
     left: 85px;
-    font-family: museo-slab, helvetica, arial, sans-serif;
+    font-family: museo-slab, "Helvetica Neue", Arial, sans-serif;
     font-weight: 900;
     font-size: 2.2em;
     color: #C0262C;
@@ -422,10 +489,19 @@
   }
 
 /* Indicador de estado de carregamento */
-  .concave-form .concave-loading,
-  .concave-form .concave-loading:hover {
+  .concave-loading,
+  .cssgradients .concave-loading,
+  .cssgradients .concave-loading:hover,
+  .concave-loading:hover {
     background: #f1f0f0 url("../images/new/spinner.gif") no-repeat center center;
     color: transparent;
+  }
+
+  .concave-loading *,
+  .cssgradients .concave-loading *,
+  .cssgradients .concave-loading:hover *,
+  .concave-loading:hover * {
+    display: none;
   }
 
   .textshadow .concave-loading {
@@ -433,3 +509,54 @@
      -webkit-text-shadow: none;
      text-shadow: none;
   }
+
+/* For the jquery.placeholder. */
+
+::-webkit-input-placeholder {
+  font-style: italic;
+  font-size: 11px;
+}
+
+:-moz-placeholder {
+  font-style: italic;
+  font-size: 11px;
+}
+
+::-ms-input-placeholder {
+  font-style: italic;
+  font-size: 11px;
+}
+
+.concave-form .ui-placeholder {
+  font-style: italic;
+  font-size: 11px;
+}
+
+.concave-form .ui-placeholder-wrap {
+  position: relative;
+  display: inline-block;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.concave-form .ui-placeholder {
+  position: absolute;
+  top: 30px;
+  left: 10px;
+  display: inline-block;
+  color: rgb(179, 179, 179);
+}
+
+.textshadow .concave-form .concave-input,
+.textshadow .concave-form textarea {
+  text-shadow: 0px 1px 0px white;
+}
+
+.concave-form .concave-input,
+.concave-form textarea {
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  color: rgb(109, 110, 111);
+}

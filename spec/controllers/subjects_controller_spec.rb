@@ -16,31 +16,64 @@ describe SubjectsController do
   end
 
   context "GET 'new'" do
-    before do
-      get :new, :locale => "pt-BR", :space_id => @space.id
+    context "when course have a plan" do
+      before do
+        Factory(:active_package_plan, :billable => @course)
+        @course.create_quota
+        get :new, :locale => "pt-BR", :space_id => @space.id
+      end
+
+      it "assigns a new Subject object" do
+        assigns[:subject].should_not be_nil
+        assigns[:subject].should be_kind_of(Subject)
+        assigns[:subject].should be_new_record
+      end
+
+      it "assigns the space" do
+        assigns[:space].should_not be_nil
+        assigns[:space].should be_kind_of(Space)
+      end
+
+      it "assigns the course" do
+        assigns[:course].should_not be_nil
+        assigns[:course].should be_kind_of(Course)
+      end
+
+      it "assigns the environment" do
+        assigns[:environment].should_not be_nil
+        assigns[:environment].should be_kind_of(Environment)
+      end
+
+      it "assigns the quota" do
+        assigns[:quota].should_not be_nil
+        assigns[:quota].should be_kind_of(Quota)
+      end
+
+      it "assigns the plan" do
+        assigns[:plan].should_not be_nil
+        assigns[:plan].should be_kind_of(Plan)
+      end
     end
 
-    it "assigns a new Subject object" do
-      assigns[:subject].should_not be_nil
-      assigns[:subject].should be_kind_of(Subject)
-      assigns[:subject].should be_new_record
-    end
+    context "when course does not have a plan" do
+      before do
+        @course.plans = []
+        @course.quota = nil
+        Factory(:active_package_plan, :billable => @course.environment)
+        @course.environment.create_quota
+        get :new, :locale => "pt-BR", :space_id => @space.id
+      end
 
-    it "assigns the space" do
-      assigns[:space].should_not be_nil
-      assigns[:space].should be_kind_of(Space)
-    end
+      it "assigns the quota" do
+        assigns[:plan].should_not be_nil
+        assigns[:plan].should be_kind_of(Plan)
+      end
 
-    it "assigns the course" do
-      assigns[:course].should_not be_nil
-      assigns[:course].should be_kind_of(Course)
+      it "assigns the plan" do
+        assigns[:quota].should_not be_nil
+        assigns[:quota].should be_kind_of(Quota)
+      end
     end
-
-    it "assigns the environment" do
-      assigns[:environment].should_not be_nil
-      assigns[:environment].should be_kind_of(Environment)
-    end
-
   end
 
   context "POST 'create'" do
@@ -133,7 +166,7 @@ describe SubjectsController do
         lambda {
           put :update, :locale => "pt-BR", :id => @subject.id,
           :space_id => @space.id,
-          :subject => { :description => "short description" }
+          :subject => { :title => "" }
         }.should_not change{ @subject.reload.description }
       end
 

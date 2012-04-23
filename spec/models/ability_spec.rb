@@ -239,7 +239,7 @@ describe Ability do
           before do
             @course = Factory(:course,:owner => @env_admin,
                               :environment => @environment)
-            @plan = Factory(:plan, :billable => @course)
+            @plan = Factory(:active_package_plan, :billable => @course)
             @plan.block!
             @space = Factory(:space, :owner => @env_admin, :course => @course)
             @sub = Factory(:subject, :owner => @env_admin, :space => @space)
@@ -269,6 +269,16 @@ describe Ability do
 
           # Need Myfile factory
           it "can NOT upload file"
+
+          it "can see reports" do
+            @ability.should be_able_to(:teacher_participation_report,
+                                       @course)
+          end
+
+          it "can access JSON reports" do
+            @ability.should be_able_to(:teacher_participation_interaction,
+                                       @course)
+          end
         end
 
         it "invites members" do
@@ -560,59 +570,180 @@ describe Ability do
       end
     end
 
-    context "on plan" do
-      before do
-        @plan = Factory(:plan)
-        @invoice = Factory(:invoice, :plan => @plan)
-      end
-
-      context "the owner" do
+    context "on plans" do
+      context "on package_plan" do
         before do
-          @ability = Ability.new(@plan.user)
+          @package_plan = Factory(:active_package_plan)
+          @invoice = Factory(:package_invoice, :plan => @package_plan)
         end
 
-        it "read its own plan" do
-          @ability.should be_able_to(:read, @plan)
+        context "the owner" do
+          before do
+            @ability = Ability.new(@package_plan.user)
+          end
+
+          it "read its own package_plan" do
+            @ability.should be_able_to(:read, @package_plan)
+          end
+
+          it "manages its own package_plan" do
+            @ability.should be_able_to(:manage, @package_plan)
+          end
+
+          it "reads package_plan's invoice" do
+            @ability.should be_able_to(:read, @invoice)
+          end
+
+          it "manages package_plan's invoice" do
+            @ability.should be_able_to(:manage, @invoice)
+          end
         end
 
-        it "manages its own plan" do
-          @ability.should be_able_to(:manage, @plan)
+        context "the strange" do
+          before do
+            strange = Factory(:user)
+            @ability = Ability.new(strange)
+          end
+
+          it "can NOT read others package_plans" do
+            @ability.should_not be_able_to(:read, @package_plan)
+          end
+
+          it "can NOT manage others package_plans" do
+            @ability.should_not be_able_to(:manage, @package_plan)
+          end
+
+          it "can NOT read others package_plan's invoice" do
+            @ability.should_not be_able_to(:read, @invoice)
+          end
+
+          it "can NOT manage others package_plan's invoice" do
+            @ability.should_not be_able_to(:manage, @invoice)
+          end
+        end
+      end
+
+      context "on licensed_plan" do
+        before do
+          @licensed_plan = Factory(:active_licensed_plan)
+          @invoice = Factory(:licensed_invoice, :plan => @licensed_plan)
+          @invoice.pend!
         end
 
-        it "reads plan's invoice" do
-          @ability.should be_able_to(:read, @invoice)
+        context "the owner" do
+          before do
+            @ability = Ability.new(@licensed_plan.user)
+          end
+
+          it "read its own licensed_plan" do
+            @ability.should be_able_to(:read, @licensed_plan)
+          end
+
+          it "manages its own licensed_plan" do
+            @ability.should be_able_to(:manage, @licensed_plan)
+          end
+
+          it "reads licensed_plan's invoice" do
+            @ability.should be_able_to(:read, @invoice)
+          end
+
+          it "manages licensed_plan's invoice" do
+            @ability.should be_able_to(:manage, @invoice)
+          end
+
+          it "can NOT pay licensed_plan's invoice" do
+            @ability.should_not be_able_to(:pay, @invoice)
+          end
         end
 
-        it "manages plan's invoice" do
-          @ability.should be_able_to(:manage, @invoice)
+        context "the strange" do
+          before do
+            strange = Factory(:user)
+            @ability = Ability.new(strange)
+          end
+
+          it "can NOT read others licensed_plans" do
+            @ability.should_not be_able_to(:read, @licensed_plan)
+          end
+
+          it "can NOT manage others licensed_plans" do
+            @ability.should_not be_able_to(:manage, @licensed_plan)
+          end
+
+          it "can NOT read others licensed_plan's invoice" do
+            @ability.should_not be_able_to(:read, @invoice)
+          end
+
+          it "can NOT manage others licensed_plan's invoice" do
+            @ability.should_not be_able_to(:manage, @invoice)
+          end
+        end
+
+        context "the partner admin" do
+          before do
+            partner_env_assoc = Factory(:partner_environment_association)
+            partner = partner_env_assoc.partner
+            environment = partner_env_assoc.environment
+
+            partner_admin = Factory(:user)
+            partner.add_collaborator partner_admin
+            @ability = Ability.new(partner_admin)
+
+            @licensed_plan = Factory(:active_licensed_plan,
+                                     :billable => environment)
+            @invoice = Factory(:licensed_invoice, :plan => @licensed_plan)
+            @invoice.pend!
+          end
+
+          it "can read partner licensed_plans" do
+            @ability.should be_able_to(:read, @licensed_plan)
+          end
+
+          it "can read partner licensed_plans of dead billable" do
+            @licensed_plan.billable.audit_billable_and_destroy
+            @ability.should be_able_to(:read, @licensed_plan.reload)
+          end
+
+          it "can manage partner licensed_plans" do
+            @ability.should be_able_to(:manage, @licensed_plan)
+          end
+
+          it "can read partner licensed_plan's invoice" do
+            @ability.should be_able_to(:read, @invoice)
+          end
+
+          it "can manage partner licensed_plan's invoice" do
+            @ability.should be_able_to(:manage, @invoice)
+          end
+
+          it "can NOT pay licensed_plan's invoice" do
+            @ability.should_not be_able_to(:pay, @invoice)
+          end
+        end
+
+        context "the redu admin" do
+          before do
+            redu_admin = Factory(:user, :role => Role[:admin])
+            @ability = Ability.new(redu_admin)
+          end
+
+          it "can pay licensed_plan's invoice" do
+            @ability.should be_able_to(:pay, @invoice)
+          end
+
+          it "can NOT pay a non pending invoice" do
+            @invoice.pay!
+            @ability.should_not be_able_to(:pay, @invoice.reload)
+          end
+
+          it "can maange partner licensed_plans of dead billable" do
+            @licensed_plan.billable.audit_billable_and_destroy
+            @ability.should be_able_to(:manage, @licensed_plan)
+          end
         end
       end
     end
 
-    context "the strange" do
-      before do
-        strange = Factory(:user)
-
-        @plan = Factory(:plan)
-        @invoice = Factory(:invoice, :plan => @plan)
-        @ability = Ability.new(strange)
-      end
-
-      it "can NOT read others plans" do
-        @ability.should_not be_able_to(:read, @plan)
-      end
-
-      it "can NOT manage others plans" do
-        @ability.should_not be_able_to(:manage, @plan)
-      end
-
-      it "can NOT read others plan's invoice" do
-        @ability.should_not be_able_to(:read, @invoice)
-      end
-      it "can NOT manage others plan's invoice" do
-        @ability.should_not be_able_to(:manage, @invoice)
-      end
-    end
   end
 
   context "on user -" do
@@ -856,6 +987,34 @@ describe Ability do
         @user_ability.should be_able_to(:my_wall, @user)
       end
     end
+
+    context "when manage invitations" do
+      before do
+        @bastard = Factory(:user,
+                           :first_name => 'Jhon',
+                           :last_name => 'Snow')
+        @bastard_ability = Ability.new(@bastard)
+        @bastard_invitation = Invitation.invite(:user => @bastard,
+                                                :hostable => @bastard,
+                                                :email => 'mail@teste.com')
+
+        @my_invitation = Invitation.invite(:user => @user,
+                                           :hostable => @user,
+                                           :email => 'mail@teste.com')
+      end
+
+      it "others can't manage my invitations" do
+        @bastard_ability.should_not be_able_to(:manage, @my_invitation)
+      end
+
+      it "can destroy invitation" do
+        @user_ability.should be_able_to(:destroy_invitations, @my_invitation)
+      end
+
+      it "can resend invitation email" do
+        @user_ability.should be_able_to(:resend_email, @my_invitation)
+      end
+    end
   end
 
   context "on PartnerEnvironmentAssociation" do
@@ -928,10 +1087,12 @@ describe Ability do
   end
 
   context "on Partner" do
+    before do
+      @partner = Factory(:partner)
+    end
     context "all common users" do
       before do
         @user = Factory(:user)
-        @partner = Factory(:partner)
         @user_ability = Ability.new(@user)
       end
 
@@ -946,12 +1107,15 @@ describe Ability do
       it "can contact" do
         @user_ability.should be_able_to(:contact, @partner)
       end
+
+      it "cannot view all partners" do
+        @user_ability.should_not be_able_to(:index, Partner)
+      end
     end
 
     context "the collbarator" do
       before do
         @user = Factory(:user)
-        @partner = Factory(:partner)
         @partner.add_collaborator(@user)
 
         @user_ability = Ability.new(@user)
@@ -963,6 +1127,29 @@ describe Ability do
 
       it "can manage" do
         @user_ability.should be_able_to(:manage, @partner)
+      end
+
+      it "cannot view all partners" do
+        @user_ability.should_not be_able_to(:index, Partner)
+      end
+    end
+
+    context "the redu admin" do
+      before do
+        @redu_admin = Factory(:user, :role => Role[:admin])
+        @redu_admin_ability = Ability.new(@redu_admin)
+      end
+
+      it "can view" do
+        @redu_admin_ability.should be_able_to(:read, @partner)
+      end
+
+      it "can manage" do
+        @redu_admin_ability.should be_able_to(:manage, @partner)
+      end
+
+      it "cannot view all partners" do
+        @redu_admin_ability.should be_able_to(:index, Partner)
       end
     end
   end
