@@ -14,4 +14,8 @@ class RecoveryEmail
   def persisted?
     false
   end
+
+  def mark_email_as_invalid!
+    errors.add(:email, :invalid)
+  end
 end

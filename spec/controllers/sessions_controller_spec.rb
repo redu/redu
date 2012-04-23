@@ -12,15 +12,15 @@ describe SessionsController do
       before do
         course = Factory(:course)
         @invite = Factory(:user_course_invitation, :email => @user.email,
-                         :course => course)
+                          :course => course)
         @invite.invite!
       end
 
       context "when logging in successful" do
         before do
           @post_params = {:locale => 'pt-BR', :invitation_token => @invite.token,
-            :user_session => { :remember_me => "0", :password => @user.password,
-                               :login => @user.login}}
+                          :user_session => { :remember_me => "0", :password => @user.password,
+                                             :login => @user.login}}
         end
 
         it "invites the loged user to the course identified by the token invitation" do
@@ -33,8 +33,8 @@ describe SessionsController do
       context "when logging with failure" do
         before do
           @post_params = {:locale => 'pt-BR', :invitation_token => @invite.token,
-            :user_session => { :remember_me => "0", :password => "wrong-pass",
-                               :login => @user.login}}
+                          :user_session => { :remember_me => "0", :password => "wrong-pass",
+                                             :login => @user.login}}
           post :create, @post_params
         end
 
@@ -51,7 +51,79 @@ describe SessionsController do
         it "re-renders UserCourseInvitations#show" do
           response.should render_template('user_course_invitations/show')
         end
+      end
+    end
 
+    context "Request with friendship_invitation_token" do
+      before do
+        @email = 'mail@example.com'
+        @host = Factory(:user)
+        @invitation = Invitation.invite(:user => @host,
+                                        :hostable => @host,
+                                        :email => 'email@example.com')
+      end
+
+      context "Login successfully" do
+        before do
+          @post_params = {:locale => 'pt-BR',
+                          :friendship_invitation_token => @invitation.token,
+                          :user_session => { :remember_me => "0",
+                                             :password => @user.password,
+                                             :login => @user.login}}
+          post :create, @post_params
+        end
+
+        it "invite should be accepted (Invitation should be destroyed)" do
+          Invitation.all.should be_empty
+        end
+
+        it "should redirect do home-user-path" do
+          response.should redirect_to home_user_path(@user)
+        end
+
+        it "friendship request should be created" do
+          @host.friendships.requested.should_not be_empty
+          @user.friendships.pending.should_not be_empty
+        end
+
+      end
+
+      context "User login params validation fail" do
+        before do
+          @post_params = {:locale => 'pt-BR',
+                          :friendship_invitation_token => @invitation.token,
+                          :user_session => {
+                            :remember_me => "0",
+                            :password => "wrong-pass",
+                            :login => @user.login}
+          }
+          post :create, @post_params
+        end
+
+        it "assigns user" do
+          assigns(:invitation_user).should == @invitation.user
+        end
+
+        it 'assigns contacts' do
+          assigns(:contacts)[:total].should == @invitation.user.friends.count
+        end
+
+        it 'assigns courses' do
+          uca = UserCourseAssociation.where(:user_id => @invitation.user).approved
+          @courses = { :total => @invitation.user.courses.count,
+                       :environment_admin => uca.with_roles([:environment_admin]).count,
+                       :tutor => uca.with_roles([:tutor]).count,
+                       :teacher => uca.with_roles([:teacher]).count }
+
+          assigns(:courses)[:total].should == @courses[:total]
+          assigns(:courses)[:environment_admin].should == @courses[:environment_admin]
+          assigns(:courses)[:tutor].should == @courses[:tutor]
+          assigns(:courses)[:teacher].should == @courses[:teacher]
+        end
+
+        it "should render invitations#show template" do
+          response.should render_template("invitations/show")
+        end
       end
     end
   end

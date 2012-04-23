@@ -69,7 +69,8 @@ class SubjectsController < BaseController
           @subject.finalized = true
           @subject.save
           # cria as associações com o subject, replicando a do space
-          @subject.create_enrollment_associations
+          job = CreateEnrollmentJob.new(:subject_id => @subject.id)
+          Delayed::Job.enqueue(job, :queue => 'general')
           flash[:notice] = "O Módulo foi criado."
         end
 

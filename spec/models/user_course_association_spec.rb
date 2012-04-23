@@ -138,7 +138,7 @@ describe UserCourseAssociation do
 
       UserCourseAssociation.with_keyword("Andrew").
         should == [user.user_course_associations.last,
-          user2.user_course_associations.last]
+                   user2.user_course_associations.last]
     end
 
     it "retrieves new user_course_associations from 1 week ago" do
@@ -151,10 +151,10 @@ describe UserCourseAssociation do
                       :created_at => 2.weeks.ago)
       user2 = Factory(:user, :first_name => "Joe Andrew")
       assoc2 = Factory(:user_course_association, :user => user2,
-                      :course => @uca.course)
+                       :course => @uca.course)
       user3 = Factory(:user, :first_name => "Alice")
       assoc3 = Factory(:user_course_association, :user => user3,
-                      :course => @uca.course)
+                       :course => @uca.course)
 
       @uca.course.user_course_associations.
         recent.should == [@uca, assoc2, assoc3]
@@ -171,11 +171,11 @@ describe UserCourseAssociation do
       assoc.approve!
       user2 = Factory(:user, :first_name => "Joe Andrew")
       assoc2 = Factory(:user_course_association, :user => user2,
-                      :course => uca.course)
+                       :course => uca.course)
       assoc2.approve!
       user3 = Factory(:user, :first_name => "Alice")
       assoc3 = Factory(:user_course_association, :user => user3,
-                      :course => uca.course)
+                       :course => uca.course)
 
       UserCourseAssociation.approved.should == [uca, assoc, assoc2]
     end
@@ -188,6 +188,7 @@ describe UserCourseAssociation do
 
       UserCourseAssociation.invited.should == @associations[3..4]
     end
+
   end
 
   context "when there are invitations (state is invted)" do
