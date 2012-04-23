@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/apotonick/roar-rails.git
-  revision: 4f0a0856a80043aa68adc2dfef0989bf00498771
+  revision: d9fa035c609a4f03324cc50ce8d69e125c1dbb0d
   specs:
     roar-rails (0.0.5)
       actionpack (~> 3.0)
@@ -269,7 +269,7 @@ GEM
     rdoc (3.12)
       json (~> 1.4)
     remotipart (0.3.4)
-    representable (1.1.5)
+    representable (1.1.6)
       json
       nokogiri
     roar (0.10.0)
