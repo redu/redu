@@ -51,17 +51,16 @@ describe 'Seminars' do
       end
       s.save
 
-      Factory(:lecture, :owner => subj.owner,
-              :subject => subj, :lectureable => s )
+      Factory(:lecture, :owner => subj.owner, :subject => subj, :lectureable => s )
     end
 
+    before { get "/api/lectures/#{video.id}", params }
+
     it "should return HTTP code 200" do
-      get "/api/lectures/#{video.id}", params
       response.code.should == '200'
     end
 
     it "should have the correct propeties" do
-      get "/api/lectures/#{video.id}", params
       entity = parse(response.body)['lectureable']
 
       %w(state url).each do |attr|
@@ -70,7 +69,6 @@ describe 'Seminars' do
     end
 
     it "should return a valid link" do
-      get "/api/lectures/#{video.id}", params
       url = parse(response.body)['lectureable']['url']
       url.should =~ /video\.MPG/
     end

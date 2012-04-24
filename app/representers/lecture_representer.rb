@@ -9,6 +9,7 @@ module LectureRepresenter
   property :view_count
   property :position
   property :rate_average, :from => :rating
+  property :position
   property :lectureable, :extend => PolymorphicRepresenter
 
   def type

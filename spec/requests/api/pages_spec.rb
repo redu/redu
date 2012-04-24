@@ -20,38 +20,10 @@ describe 'Pages' do
   end
 
   context "GET /api/lectures/:id" do
-    it "should return HTTP code 200" do
-      get "/api/lectures/#{page.id}", params
-      response.code.should == '200'
-    end
-
     it "should have the correct properties" do
-      get "/api/lectures/#{page.id}", params
-      entity = parse(response.body)
-
-      %w(id type name created_at view_count position rating lectureable).
-        each { |attr| entity.should have_key(attr) }
-    end
-
-    it "should have the correct lectureable properties" do
       get "/api/lectures/#{page.id}", params
       entity = parse(response.body)['lectureable']
       entity.should have_key('body')
-    end
-
-    it "should have the correct links" do
-      2.times.collect do
-        Factory(:lecture, :owner => subj.owner, :subject => subj)
-      end
-      page.move_up!
-
-      get "/api/lectures/#{page.id}", params
-      entity = parse(response.body)
-
-      %w(self next_lecture previous_lecture).each do |link|
-        get href_to(link, entity), params
-        response.code.should == '200'
-      end
     end
 
     it "should return HTTP code 404 when doesnt exist" do
