@@ -2142,8 +2142,7 @@ body {
 .statuses .status-content {
   overflow: hidden;
   line-height: 130%;
-  margin: 10px 0 0 38px;
-  display: inline;
+  margin: 10px 0 0 45px;
 }
 
 .statuses .status-subject {
