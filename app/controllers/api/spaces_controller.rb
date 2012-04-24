@@ -3,6 +3,7 @@ module Api
     # GET /api/users/:user_id/spaces?course=1&role=member
     def index
       @context = context # course ou user
+      authorize! :read, @context
       @spaces = @context.spaces
 
       if params[:user_id]
@@ -20,6 +21,7 @@ module Api
 
     def show
       @space = Space.find(params[:id])
+      authorize! :read, @space
 
       respond_with @space
     end
@@ -30,6 +32,7 @@ module Api
         c.course = @course
         c.owner = current_user
       end
+      authorize! :create, @space
       @space.save
 
       respond_with @space
@@ -37,6 +40,7 @@ module Api
 
     def update
       @space = Space.find(params[:id])
+      authorize! :manage, @space
       @space.update_attributes(params[:space])
 
       respond_with @space
@@ -44,6 +48,7 @@ module Api
 
     def destroy
       @space = Space.find(params[:id])
+      authorize! :manage, @space
       @space.destroy
 
       respond_with @space
