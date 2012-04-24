@@ -5,16 +5,16 @@ describe "User" do
     before do
       @user = Factory(:user, :mobile => "+55 (81) 9194-5317",
                       :localization => "Recife", :birth_localization => "Recife")
-      get "/api/users/#{@user.id}", :format => 'json'
-
-      @application, @current_user, @token = generate_token
+      @application, @current_user, @token = generate_token(@user)
+      get "/api/users/#{@user.id}", :oauth_token => @token, :format => 'json'
     end
 
     it "should return status 200 (ok)" do
       response.code.should == "200"
     end
 
-    it "should have login, id, links, email, first_name, last_name, birthday, friends_count, mobile, localization, birth_localization" do
+    it "should have login, id, links, email, first_name, last_name, " + \ +
+       " birthday, friends_count, mobile, localization, birth_localization" do
 
       %w(login id links email first_name last_name birthday friends_count mobile localization birth_localization).each do |attr|
         parse(response.body).should have_key attr
@@ -24,7 +24,7 @@ describe "User" do
     it "should link to itself" do
       link = parse(response.body)['links'].detect { |l| l['rel'] == 'self' }
 
-      get link['href'], :format => 'json'
+      get link['href'], :oauth_token => @token, :format => 'json'
       response.code.should == '200'
     end
 
@@ -40,6 +40,7 @@ describe "User" do
       @environment = Factory(:complete_environment)
       @course = @environment.courses.first
       @space = @course.spaces.first
+      @application, @current_user, @token = generate_token(@course.owner)
 
       @members = 3.times.collect do
         user = Factory(:user)
