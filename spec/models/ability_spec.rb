@@ -269,16 +269,16 @@ describe Ability do
 
           # Need Myfile factory
           it "can NOT upload file"
+        end
 
-          it "can see reports" do
-            @ability.should be_able_to(:teacher_participation_report,
-                                       @course)
-          end
+        it "can see reports" do
+          @ability.should be_able_to(:teacher_participation_report,
+                                     @course)
+        end
 
-          it "can access JSON reports" do
-            @ability.should be_able_to(:teacher_participation_interaction,
-                                       @course)
-          end
+        it "can access JSON reports" do
+          @ability.should be_able_to(:teacher_participation_interaction,
+                                     @course)
         end
 
         it "invites members" do
@@ -428,6 +428,11 @@ describe Ability do
           @ability.should be_able_to(:preview, space)
         end
 
+        it "can't see subject participation report" do
+          @ability.should_not be_able_to(:subject_participation_report,
+                                         @course)
+        end
+
         it "cannot create a subject"
         it "cannot destroy any subject"
         it "cannot create a lecture"
@@ -463,6 +468,11 @@ describe Ability do
           @ability.should_not be_able_to(:destroy, space1)
         end
 
+        it "can't see subject participation report" do
+          @ability.should_not be_able_to(:subject_participation_report,
+                                         @course)
+        end
+
         it "creates a subject"
         it "destroys any subject"
         it "creates a lecture"
@@ -492,6 +502,11 @@ describe Ability do
                                                            :course => @course))
         end
 
+        it "can't see subject participation report" do
+          @ability.should_not be_able_to(:subject_participation_report,
+                                         @course)
+        end
+
         it "cannot create a subject"
         it "cannot destroy any subject"
         it "cannot create a lecture"
@@ -515,6 +530,12 @@ describe Ability do
                           :course => @course)
           @ability.should be_able_to(:destroy, space)
         end
+
+        it "can see subject participation report" do
+          @ability.should be_able_to(:subject_participation_report,
+                                     @course)
+        end
+
         it "creates a subject"
         it "destroys any subject"
         it "creates a lecture"
@@ -538,6 +559,12 @@ describe Ability do
                           :course => @course)
           @ability.should be_able_to(:destroy, space)
         end
+
+        it "can see subject participation report" do
+          @ability.should be_able_to(:subject_participation_report,
+                                     @course)
+        end
+
         it "creates a subject"
         it "destroys any subject"
         it "creates a lecture"
@@ -627,6 +654,15 @@ describe Ability do
 
           it "manages package_plan's invoice" do
             @ability.should be_able_to(:manage, @invoice)
+          end
+
+          it "can pay package_plan's invoice with pagseguro" do
+            @ability.should be_able_to(:pay_with_pagseguro, @invoice)
+          end
+
+          it "can NOT pay paid package_plan's invoice with pagseguro" do
+            @invoice.update_attribute(:state, "paid")
+            @ability.should_not be_able_to(:pay_with_pagseguro, @invoice)
           end
         end
 
@@ -781,6 +817,11 @@ describe Ability do
           it "can NOT pay a non pending invoice" do
             @invoice.pay!
             @ability.should_not be_able_to(:pay, @invoice.reload)
+          end
+
+          it "can pay a overdue invoice" do
+            @invoice.overdue!
+            @ability.should be_able_to(:pay, @invoice.reload)
           end
 
           it "can manage partner licensed_plans of dead billable" do

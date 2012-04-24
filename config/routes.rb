@@ -58,6 +58,7 @@ Redu::Application.routes.draw do
       get :mural
       get :students_endless
       get :admin_subjects
+      get :subject_participation_report
     end
 
     resources :folders, :only => [:update, :create, :index] do

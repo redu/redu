@@ -22,7 +22,8 @@ class Ability
     alias_action :unjoin, :to => :read
 
     # Space
-    alias_action :admin_subjects, :to => :manage
+    alias_action :admin_subjects, :subject_participation_report,
+      :to => :manage
     #TODO action manage gerando recursividade
     alias_action :mural, :students_endless , :to => :read
 
@@ -156,7 +157,11 @@ class Ability
 
       # Invoice
       cannot :pay, Invoice do |invoice|
-        !(user.admin? && invoice.pending?)
+        !(user.admin? && (invoice.pending? || invoice.overdue?))
+      end
+
+      cannot :pay_with_pagseguro, Invoice do |invoice|
+        invoice.paid?
       end
 
       # Plan

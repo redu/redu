@@ -12,6 +12,12 @@ class SpacesController < BaseController
   load_and_authorize_resource :space, :through => :course,
     :except => [:cancel]
 
+  Browser = Struct.new(:browser, :version)
+
+  UNSUPPORTED_BROWSERS = [
+    Browser.new("Internet Explorer", "8.0")
+  ]
+
   rescue_from CanCan::AccessDenied do |exception|
     flash[:notice] = "Você não tem acesso a essa página"
     redirect_to preview_environment_course_path(@environment, @course)
@@ -168,6 +174,15 @@ class SpacesController < BaseController
     end
   end
 
+  def subject_participation_report
+    @user_agent = UserAgent.parse(request.user_agent)
+    @browser_not_supported = self.is_browser_unsupported?
+
+    respond_to do |format|
+      format.html { render "spaces/admin/subject_participation_report" }
+    end
+  end
+
   # Utilizado pelo endless do sidebar
   def students_endless
     @sidebar_students = @space.students.page(params[:page]).per(4)
@@ -192,4 +207,15 @@ class SpacesController < BaseController
     @environment = @course.environment
   end
 
+  def is_browser_unsupported?
+    current_browser = Browser.new(@user_agent.browser, @user_agent.version)
+    browser = UNSUPPORTED_BROWSERS[0].browser
+    version = UNSUPPORTED_BROWSERS[0].version
+
+    if current_browser.browser == browser && current_browser.version <= version
+      return true
+    else
+      return false
+    end
+  end
 end

@@ -73,5 +73,9 @@ Redu::Application.configure do
     :migration => "http://vis.redu.com.br/database_hierarchy_notifications.json"
   }
 
+  config.vis = {
+    :activities => "http://vis.redu.com.br/subjects/activities.json",
+    :activities_d3 => "http://vis.redu.com.br/subjects/activities_d3.json"
+  }
 
 end

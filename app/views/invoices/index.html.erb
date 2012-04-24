@@ -18,7 +18,9 @@
         <%= content_tag :span, @plan.billable_audit["name"] %>
       <% end %>
     </div>
-    <%= link_to "Upgrade", options_plan_path(@plan), :class => "concave-important upgrade-button" %>
+    <% if can? :migrate, @plan %>
+      <%= link_to "Upgrade", options_plan_path(@plan), :class => "concave-important upgrade-button" %>
+    <% end %>
     <% if @quota %>
       <div class="plan-use">
         <span class="plan-type"><%= @plan.name %></span>
@@ -61,7 +63,7 @@
               </span>
             </td>
             <td class="pay-status">
-              <% if invoice.pending? && invoice.is_a?(PackageInvoice) %>
+              <% if can? :pay_with_pagseguro, invoice %>
                 <div class="pagseguro-concave-form">
                   <%= pagseguro_form invoice.plan.create_order, :submit => "Pagar" %>
                 </div>

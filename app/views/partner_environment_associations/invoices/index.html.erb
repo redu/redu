@@ -14,7 +14,9 @@
           <%= content_tag :span, @plan.billable_audit["name"] %>
         <% end %>
       </div>
-      <%= link_to "Upgrade", options_partner_client_plan_path(@partner, @client, @plan), :class => "concave-important upgrade-button" %>
+      <% if can? :migrate, @plan %>
+        <%= link_to "Upgrade", options_partner_client_plan_path(@partner, @client, @plan), :class => "concave-important upgrade-button" %>
+      <% end %>
       <% if @quota %>
         <div class="plan-use">
           <span class="plan-type"><%= @plan.name %></span>

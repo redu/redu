@@ -86,5 +86,9 @@ Redu::Application.configure do
    :migration => "http://localhost:4000/database_hierarchy_notifications.json"
   }
 
+  config.vis = {
+    :activities => "http://localhost:4000/subjects/activities.json",
+    :activities_d3 => "http://localhost:4000/subjects/activities_d3.json"
+  }
 
 end
