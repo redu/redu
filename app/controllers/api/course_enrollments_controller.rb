@@ -2,6 +2,7 @@ module Api
   class CourseEnrollmentsController < ApiController
     def create
       @course = Course.find(params[:course_id])
+      authorize! :manage, @course
       @enrollment = @course.invite_by_email(params[:enrollment][:email])
       decorated = Api::CourseEnrollmentDecorator.new(@enrollment)
 
@@ -12,13 +13,14 @@ module Api
 
     def show
       @enrollment = CourseEnrollment.find(params[:id])
+      authorize! :read, @enrollment
       decorated = Api::CourseEnrollmentDecorator.new(@enrollment)
 
       respond_with(decorated, :with_representer => CourseEnrollmentRepresenter)
     end
 
     def index
-      @entity = find_entity
+      @entity = find_and_authorize_entity
       denrollments = @entity.course_enrollments.collect do |e|
         Api::CourseEnrollmentDecorator.new(e)
       end
@@ -28,6 +30,7 @@ module Api
 
     def destroy
       @enrollment = CourseEnrollment.find(params[:id])
+      authorize! :destroy, @enrollment
       denrollment = Api::CourseEnrollmentDecorator.new(@enrollment)
       denrollment.unenroll
 
@@ -36,11 +39,15 @@ module Api
 
     protected
 
-    def find_entity
+    # /api/users/:user_id/enrollments
+    # /api/courses/:course_id/enrollments
+    def find_and_authorize_entity
       if params.has_key?(:course_id)
-        Course.find(params[:course_id])
+        course = Course.find(params[:course_id])
+        authorize! :read, course
       else
-        User.find(params[:user_id])
+        user = User.find(params[:user_id])
+        authorize! :manage, user
       end
     end
   end

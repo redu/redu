@@ -6,7 +6,7 @@ describe Api::CoursesController do
     environment.courses.first
   end
   before do
-    @application, @current_user, @token = generate_token
+    @application, @current_user, @token = generate_token(subject.owner)
   end
 
   context "the document returned" do
@@ -38,7 +38,8 @@ describe Api::CoursesController do
     end
 
     it "shold be return code 200 passing both ID and path" do
-      get "/api/courses/#{subject.path}", :format => 'json'
+      get "/api/courses/#{subject.path}", :oauth_token => @token,
+        :format => 'json'
 
       response.status.should == 200
     end

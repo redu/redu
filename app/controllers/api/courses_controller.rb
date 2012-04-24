@@ -4,6 +4,7 @@ module Api
 
     def index
       @environment = Environment.find(params[:environment_id])
+      authorize! :read, @environment
       @courses = @environment.try(:courses) || []
 
       respond_with :api, @environment, @courses
@@ -11,11 +12,13 @@ module Api
 
     def show
       @course = Course.find(params[:id])
+      authorize! :read, @course
 
       respond_with :api, @course
     end
 
     def create
+      authorize! :create, Environment
       @environment = Environment.find(params[:environment_id])
       @course = Course.new(params[:course]) do |c|
         c.environment = @environment
@@ -34,6 +37,7 @@ module Api
 
     def update
       @course = Course.find(params[:id])
+      authorize! :manage, @course
       @course.update_attributes(params[:course])
 
       respond_with @course
@@ -41,6 +45,7 @@ module Api
 
     def destroy
       @course = Course.find(params[:id])
+      authorize! :manage, @course
       @course.destroy
 
       respond_with :api, @course
