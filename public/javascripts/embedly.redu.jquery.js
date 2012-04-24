@@ -2,16 +2,16 @@ $.fn.catchAndSendToEmbedly = function() {
   $('textarea#status_text').keyup(function(e){
     var $this = $(this);
     if(e.which == 13 | e.which == 32) {
-      var resultArray = parseUrl($this.val());
-      if(resultArray != null){
-        link = resultArray[0];
+      // Usuário pressionou Enter ou Space
+      var inLineLinks = parseUrl($this.val());
+      if(inLineLinks != null){
+        link = inLineLinks[0];
         var url = escape(link);
         var key = '1068f47e735911e181904040d3dc5c07';
         var api_url = 'http://api.embed.ly/1/oembed?key=' + key + '&url=' + url;//+ '&callback=?';
         if($this.data('last_url') != url){
           $this.data("last_url", url);
-          //jQuery JSON call
-          $.getJSON( api_url, {crossDomain:  true}, function(json) {
+          $.getJSON(api_url, {crossDomain:  true}, function(json) {
             var title = "";
             var description = "";
             var thumbnail_content = "";
@@ -48,7 +48,7 @@ $.fn.catchAndSendToEmbedly = function() {
                 thumbnail_list.push(json.thumbnail_url);
               }
 
-              //Add url list
+              //Add thumbnail's urls list
               $this.data("thumbnail_list", thumbnail_list);
 
               //Add thumbnail img when thumbnail exists
@@ -86,7 +86,7 @@ $.fn.catchAndSendToEmbedly = function() {
       }}
   });
 
-  //close embedded content
+  // Close embedded content
   $('fieldset .description span.close.icon-small').live('click', function(){
     $(this).parents('fieldset').find("textarea#status_text").data('last_url', "");
     $(this).parents('fieldset').find('.new-post').slideUp(function(){
@@ -94,7 +94,7 @@ $.fn.catchAndSendToEmbedly = function() {
     });
   });
 
-  //navigation thumbnail actions
+  // Navigation thumbnail actions
   $('fieldset .thumbnail .buttons-thumbnail span').live('click', function(){
     var button = $(this);
     var thumbnail_list = button.parents("fieldset").find("textarea#status_text").data("thumbnail_list");
@@ -120,6 +120,7 @@ $.fn.catchAndSendToEmbedly = function() {
   });
 }
 
+// Atualiza o thumbnail do recurso de acordo com a resposta do embedly
 function updateThumbnail(root, thumbnail_list, get_next) {
   var img = root.parents('fieldset').find('.thumbnail .preview-link img');
   var id = img[0].id.split('-')[1];
@@ -136,10 +137,12 @@ function updateThumbnail(root, thumbnail_list, get_next) {
   root.parents('fieldset').find('input#resource_thumb_url').attr('value', thumbnail_list[next_id]);
 }
 
+// Inclui informações necessárias (em inputs escondidos) à requisição HTTP
 function appendInput(name, value){
   return '<input id="resource_'+ name +'" type="hidden" name="resource['+ name + ']" value="'+ value +'"/>';
 }
 
+// Deteta links no texto de entrada do usuário e os retorna num array
 function parseUrl(text){
   var regex = /(\b(((https?|ftp|file):\/\/)|(www))[\-A-Z0-9+&@#\/%?=~_|!:,.;]*[\-A-Z0-9+&@#\/%=~_|])/ig;
   var resultArray = text.match(regex);

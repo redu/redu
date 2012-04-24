@@ -8,7 +8,7 @@ class StatusesController < BaseController
 
     @status.user = current_user
 
-    if(params[:resource])
+    if params[:resource]
       @status_resource = StatusResource.create(params[:resource])
       @status.status_resources << @status_resource
     end
