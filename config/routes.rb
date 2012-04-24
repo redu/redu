@@ -27,8 +27,8 @@ Redu::Application.routes.draw do
 
   # Authentications
   resources :authentications, :only => [:create]
-  match '/auth/:provider/callback' => 'authentications#create', :as => :omniauth_auth
-  match '/auth/failure' => 'authentications#fallback', :as => :omniauth_fallback
+  get '/auth/:provider/callback' => 'authentications#create', :as => :omniauth_auth
+  get '/auth/failure' => 'authentications#fallback', :as => :omniauth_fallback
   get 'auth/facebook', :as => :facebook_authentication
 
   get '/recover_username_password' => 'users#recover_username_password',
@@ -58,6 +58,7 @@ Redu::Application.routes.draw do
       get :mural
       get :students_endless
       get :admin_subjects
+      get :subject_participation_report
     end
 
     resources :folders, :only => [:update, :create, :index] do
@@ -91,6 +92,16 @@ Redu::Application.routes.draw do
     end
   end
 
+  #Invitations
+  resources :invitations, :only => [:show, :destroy] do
+    member do
+      post :resend_email
+    end
+    collection do
+      post :destroy_invitations
+    end
+  end
+
   # Users
   resources :users, :except => [:index] do
     member do
@@ -115,9 +126,11 @@ Redu::Application.routes.draw do
 
     resources :social_networks, :only => [:destroy]
 
-    resources :friendships, :only => [:index, :create, :destroy]
-
-    resources :invitations
+    resources :friendships, :only => [:index, :create, :destroy, :new] do
+      member do
+        post :resend_email
+      end
+    end
 
     resources :favorites, :only => [] do
       member do
@@ -151,8 +164,7 @@ Redu::Application.routes.draw do
     member do
       get :confirm
       post :confirm
-      get :upgrade
-      post :upgrade
+      get :options
     end
 
     resources :invoices, :only => [:index, :show] do
@@ -175,6 +187,9 @@ Redu::Application.routes.draw do
     resources :partner_environment_associations, :as => :clients,
       :only => [:create, :index, :new] do
         resources :plans, :only => [:show] do
+          member do
+            get :options
+          end
           resources :invoices, :only => [:index]
         end
     end
@@ -218,6 +233,7 @@ Redu::Application.routes.draw do
         match :roles, :to => 'roles#update', :via => :post, :as => :roles
       end
       resources :user_course_invitations, :only => [:show]
+      resources :plans, :only => [:create]
     end
 
     resources :users, :only => [:index]
@@ -225,6 +241,7 @@ Redu::Application.routes.draw do
       resources :roles, :only => :index
       match :roles, :to => 'roles#update', :via => :post, :as => :roles
     end
+    resources :plans, :only => [:create]
   end
 
 

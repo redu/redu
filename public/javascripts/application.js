@@ -8,8 +8,6 @@ jQuery(function(){
       $(this).parent().slideToggle();
       $("#content").css("marginTop","20px");
       $("#home").css("marginTop","40px");
-
-      e.preventDefault();
     });
 
     // Dropdown de usuário
@@ -163,14 +161,14 @@ jQuery(function(){
     });
 
     /* Links remotos com estilo de botão */
-    $("a[data-remote=true].concave-button").live('ajax:before', function(){
+    $("a[data-remote=true].concave-button, a[data-remote=true].concave-important").live('ajax:before', function(){
       // Remove spinner padrão para links
       $(this).css('width', 'auto');
       $(this).removeClass("link-loading");
       $(this).loadingStart({ 'class' : 'concave-loading'});
     });
 
-    $("a[data-remote=true].concave-button").live('ajax:complete', function(){
+    $("a[data-remote=true].concave-button, a[data-remote=true].concave-important").live('ajax:complete', function(){
       $(this).loadingComplete({ 'class' : 'concave-loading'});
     });
 

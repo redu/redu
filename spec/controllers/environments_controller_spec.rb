@@ -45,7 +45,7 @@ describe EnvironmentsController do
       end
 
       it "assigns the plan" do
-        assigns[:plan].should_not be_nil
+        assigns[:plan].should == @params[:plan]
       end
     end
 
@@ -65,7 +65,7 @@ describe EnvironmentsController do
         end
 
         it "assigns the plan" do
-          assigns[:plan].should_not be_nil
+          assigns[:plan].should == @params[:plan]
         end
       end
 
@@ -128,6 +128,23 @@ describe EnvironmentsController do
 
         it "redirects to confirmation page" do
           should redirect_to(confirm_plan_path(assigns[:plan]))
+        end
+      end
+
+      context "when observers are enabled" do
+        before do
+          @params[:step] = "4"
+          @params[:plan] = "professor_standard"
+          @params[:color] = "f56b00"
+
+        end
+
+        it "associates the plan to the course" do
+          ActiveRecord::Observer.with_observers :course_observer do
+            expect {
+              post :create, @params
+            }.should_not raise_error
+          end
         end
       end
 

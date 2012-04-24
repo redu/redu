@@ -1,6 +1,6 @@
 class Document < ActiveRecord::Base
-  has_ipaper_and_uses 'Paperclip'
   has_attached_file :attachment, Redu::Application.config.paperclip_documents
+  has_ipaper_and_uses 'Paperclip'
   validates_attachment_content_type :attachment,
     :content_type => Redu::Application.config.mimetypes['documents']
 
@@ -27,13 +27,8 @@ class Document < ActiveRecord::Base
     !(self.conversion_processing? or self.conversion_complete?)
   end
 
-  def display_ipaper(options = {})
-    id = options.delete(:id)
-      <<-END
-        var scribd_doc = scribd.Document.getDoc(#{ipaper_id}, '#{ipaper_access_key}');
-        #{js_params(options)}
-        scribd_doc.write("document_stage");
-      END
+  def upload_to_scribd
+    super if persisted?
   end
 
 end

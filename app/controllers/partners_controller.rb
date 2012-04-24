@@ -21,8 +21,11 @@ class PartnersController < BaseController
   end
 
   def contact
-    @environment = Environment.new(params[:environment])
     @partner_contact = PartnerContact.new(params[:partner_contact])
+
+    unless @partner_contact.migration
+      @environment = Environment.new(params[:environment])
+    end
 
     @partner_contact.deliver if @partner_contact.valid?
 

@@ -177,6 +177,18 @@ class UserNotifier < ActionMailer::Base
     end
   end
 
+  # Enviado quando se demonstra interesse em migrar para plano de
+  # empresa/instituição.
+  def partner_environment_migration_notice(partner_contact)
+    @contact = partner_contact
+
+    mail(:to => [Redu::Application.config.email, "cns@redu.com.br"],
+         :subject => "[Redu] Migração para plano empresa/instituição",
+         :date => Time.zone.now) do |format|
+      format.text
+    end
+  end
+
   def subject_added(user, subject)
     @user = user
     @subj = subject
@@ -198,10 +210,26 @@ class UserNotifier < ActionMailer::Base
     end
   end
 
+  def friendship_invitation(invitation)
+    @invitation = invitation
+    @email = invitation.email
+    user = invitation.user
+    uca = user.user_course_associations.approved
+    @contacts = { :total => user.friends.count }
+    @courses = { :total => user.courses.count,
+                 :environment_admin => uca.with_roles([:environment_admin]).count,
+                 :tutor => uca.with_roles([:tutor]).count,
+                 :teacher => uca.with_roles([:teacher]).count }
+
+    mail(:subject => 'Você foi convidado para do Redu', :to => @email) do |format|
+      format.html
+    end
+  end
+
   # Enviado para o usuário requisitado numa requisição de conexão
   def friendship_requested(user, friend)
     @user, @friend = user, friend
-    uca = UserCourseAssociation.where(:user_id => @friend).approved
+    uca = @friend.user_course_associations.approved
 
     @contacts = { :total => @user.friends.count,
                   :in_common => user.friends_in_common_with(@friend).count }

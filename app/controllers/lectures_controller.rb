@@ -54,7 +54,7 @@ class LecturesController < BaseController
 
     if current_user.get_association_with(@lecture.subject)
       asset_report = @lecture.asset_reports.of_user(current_user).first
-      @student_grade = asset_report.student_profile.grade.to_i
+      @student_grade = asset_report.enrollment.grade.to_i
       @done = asset_report.done
     end
 
@@ -126,7 +126,6 @@ class LecturesController < BaseController
           lectureable.convert! if lectureable.need_transcoding?
         elsif lectureable.is_a? Document
           authorize! :upload_document, @lecture
-          lectureable.upload_to_scribd if lectureable.need_uploading?
         end
 
         @space.course.quota.try(:refresh!)
@@ -201,7 +200,9 @@ class LecturesController < BaseController
     end
     @lecture.mark_as_done_for!(current_user, @done)
 
-    student_profile = current_user.student_profiles.of_subject(@subject).last
+    student_profile = current_user.enrollments.
+      where(:subject_id => @subject).last
+
     @student_grade = student_profile.update_grade!.to_i
 
    respond_to do |format|
