@@ -2110,11 +2110,6 @@ body {
   border: none;
 }
 
-#statuses .status .post-grouped .status-content .friend-avatar,
-#statuses .status .post-grouped li .friend-avatar {
-  margin-top: 8px;
-}
-
 .statuses li .message {
   padding-left: 37px;
   display: block;
@@ -7393,10 +7388,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   color: rgb(95, 192, 128);
 }
 
-.payments .data .icon  {
-  text-indent: -9999px;
-}
-
 .plan-panel table.common tbody tr {
   border: none;
 }
@@ -7424,10 +7415,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 
 #invoice-index .plan-panel .courses-list {
   margin-bottom: 30px;
-}
-
-.plan-panel .courses-list {
-	margin-bottom: 30px;
 }
 
 #invoice-index .plan-panel .courses-list a,
@@ -7596,10 +7583,10 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   margin: 0;
 }
 
-#content .create-status .new-post .border-post,
-#content .create-status .new-post .border-post-down,
-#content .responses ol .border-post,
-#content .responses ol .border-post-down {
+.create-status #new_status .new-post .border-post,
+.create-status #new_status  .new-post .border-post-down,
+.responses ol .border-post,
+.responses ol .border-post-down {
   border-top: solid 1px rgb(204, 204, 204);
   border-bottom: solid 1px white;
   border-left: none;
@@ -7663,7 +7650,8 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 .textshadow #content .create-status .new-post,
-.textshadow #statuses .status .new-post {
+.textshadow #statuses .status .new-post,
+.textshadow #statuses .responses .re-status .status-message p {
   text-shadow: 0px 1px 0px rgb(255, 255, 255);
 }
 
@@ -7703,13 +7691,13 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 
 #content .create-status .new-post p,
 #content .create-status .new-post .title,
-#content .create-status .new-post .link {
+#content .create-status .new-post .source-site
   width: 390px;
 }
 
 #content .create-status .no-preview p,
 #content .create-status .no-preview .title,
-#content .create-status .no-preview .link {
+#content .create-status .no-preview .source-site {
   width: 540px;
 }
 
@@ -7721,8 +7709,8 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   height: 8px;
 }
 
-#content .create-status .new-post .link,
-#statuses .status .new-post .link {
+#content .create-status .new-post .source-site,
+#statuses .status .new-post .source-site {
   color: rgb(204, 204, 204);
   font-weight: normal;
   margin-bottom: 5px;
@@ -7732,12 +7720,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 #statuses .status .new-post .preview-link {
   float: left;
   width: 100px;
-}
-
-#statuses .status .new-post .preview-link img,
-#content .create-status .preview-link img {
-  width: 100%;
-  display: block;
   height: 100%;
 }
 
@@ -7754,8 +7736,8 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   border: none;
 }
 
-#content .create-status .new-post .description,
-#statuses .status .new-post .description {
+#content .create-status .new-post .post-text,
+#statuses .status .new-post .post-text {
   overflow: hidden;
   padding-left: 10px;
   line-height: 18px;
@@ -7840,9 +7822,9 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   background: rgb(219, 239, 247); /* Old browsers */
 }
 
-#content .create-status .new-post .thumbnail .desactived .last,
-#content .create-status .new-post .thumbnail .desactived .next,
-#content .create-status .new-post .thumbnail .desactived .remove {
+#content .create-status .new-post .thumbnail .desactivated .last,
+#content .create-status .new-post .thumbnail .desactivated .next,
+#content .create-status .new-post .thumbnail .desactivated .remove {
   background: rgb(247, 247, 247);
 }
 
@@ -7857,35 +7839,43 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   background: linear-gradient(top,  rgb(247,247,247) 0%,rgb(219,239,247) 100%); /* W3C */
 }
 
-#content .create-status .new-post .thumbnail .desactived:hover {
+#content .create-status .new-post .thumbnail .desactivated:hover {
   background-color: rgb(247, 247, 247);
 }
 
-#content .create-status .new-post .java-applet,
-#statuses .status .new-post .java-applet {
+
+#content .create-status .new-post .java-icon,
+#statuses .status .new-post .java-icon {
+  background-image: url("../images/new/icon-applet.png");
+  text-indent: -9999px;
+  width: 32px;
+  height: 34px;
+  display: block;
+  background-repeat: no-repeat;
+  margin-top: -3px;
+  padding: 0px;
   clear: both;
   float: left;
   overflow: hidden;
-  background-color: rgb (192, 128, 64);
 }
 
-#content .create-status .new-post .thumbnail .desactived .last:hover,
-#content .create-status .new-post .thumbnail .desactived .next:hover,
-#content .create-status .new-post .thumbnail .desactived .remove:hover {
+#content .create-status .new-post .thumbnail .desactivated .last:hover,
+#content .create-status .new-post .thumbnail .desactivated .next:hover,
+#content .create-status .new-post .thumbnail .desactivated .remove:hover {
   border: solid 1px rgb(204, 204, 204);
   background: rgb(247, 247, 247);
 }
 
-.cssgradients #content .create-status .new-post .thumbnail:hover .desactived:hover {
+.cssgradients #content .create-status .new-post .thumbnail:hover .desactivated:hover {
   background-color: black;
 }
 
-.cssgradients #content .create-status .new-post .thumbnail .desactived .last,
-.cssgradients #content .create-status .new-post .thumbnail .desactived .next,
-.cssgradients #content .create-status .new-post .thumbnail .desactived .remove,
-.cssgradients #content .create-status .new-post .desactived .last:hover,
-.cssgradients #content .create-status .new-post .desactived .next:hover,
-.cssgradients #content .create-status .new-post .desactived .remove:hover {
+.cssgradients #content .create-status .new-post .thumbnail .desactivated .last,
+.cssgradients #content .create-status .new-post .thumbnail .desactivated .next,
+.cssgradients #content .create-status .new-post .thumbnail .desactivated .remove,
+.cssgradients #content .create-status .new-post .desactivated .last:hover,
+.cssgradients #content .create-status .new-post .desactivated .next:hover,
+.cssgradients #content .create-status .new-post .desactivated .remove:hover {
   background: -moz-linear-gradient(top,  rgb(247,247,247) 0%, rgb(230,230,230) 100%); /* FF3.6+ */
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(247,247,247)), color-stop(100%,rgb(230,230,230))); /* Chrome,Safari4+ */
   background: -webkit-linear-gradient(top,  rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* Chrome10+,Safari5.1+ */
@@ -7902,31 +7892,19 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   border-radius: 4px;
 }
 
-#content .create-status .new-post .thumbnail .desactived .last .arrow {
+#content .create-status .new-post .thumbnail .desactivated .last .arrow {
   background: url("../images/new/icones-p.png") -480px -1919px no-repeat;
   content: '';
 }
 
-#content .create-status .new-post .thumbnail .desactived .next .arrow {
+#content .create-status .new-post .thumbnail .desactivated .next .arrow {
   background: url("../images/new/icones-p.png") -480px -1839px no-repeat;
   content: '';
 }
 
-#content .create-status .new-post .thumbnail .desactived .remove .arrow {
+#content .create-status .new-post .thumbnail .desactivated .remove .arrow {
   background: url("../images/new/icones-p.png") -4px -2163px no-repeat;
   content: '';
-}
-
-#content .create-status .new-post .java-applet .icon,
-#statuses .status .new-post .java-applet .icon {
-  background-image: url("../images/new/icon-applet.png");
-  text-indent: -9999px;
-  width: 32px;
-  height: 34px;
-  display: block;
-  background-repeat: no-repeat;
-  margin-top: -3px;
-  padding: 0px;
 }
 
 #graph-form .inline {
@@ -7950,6 +7928,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   font-size: 0.9em;
   margin-top: -10px;
   text-align: center;
+  cursor: pointer;
 }
 
 #statuses .status .create-response .ui-placeholder {
@@ -7957,7 +7936,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   font-style: normal;
 }
 
-#statuses .status .comment-title {
+#statuses .status .post-title {
   margin: 3px 0px 0px 10px;
   display: block;
 }
@@ -7979,10 +7958,10 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   width: 500px;
 }
 
-#content .create-status .new-post .distance-top:before {
+#content .inform-my-status .distance-top:before {
    border-color: rgb(240, 240, 240) white;
    border-width: 0 10px 10px;
-   margin-top: -58px;
+   margin-top: -20px;
    border-style: solid;
    content: " ";
    display: block;
@@ -7990,7 +7969,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
    width: 0;
 }
 
-#statuses .status .vis-new-post .comment-title {
+#statuses .status .vis-new-post .post-title {
   margin-left: 0px;
   margin-bottom: 3px;
 }
@@ -7998,6 +7977,10 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .re-status .new-post .thumbnail {
   margin: 5px;
   padding-left: 25px;
+}
+
+.responses ol .re-status .no-preview .post-text {
+  margin: 5px 0px 0px 20px;
 }
 
 .create-response .distance-top:after,
@@ -8013,7 +7996,9 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
    width: 0;
 }
 
-.distance-top {
+.create-response .distance-top,
+.create-status .distance-top,
+.responses .distance-top {
   text-indent: -9999px;
   width: 0px;
   height: 0px;
