@@ -6,5 +6,13 @@ module Api
 
       respond_with(@lecture)
     end
+
+    def index
+      @subject = Subject.find(params[:subject_id])
+      authorize! :read, :error
+      @lectures = @subject.try(:lectures, [])
+
+      respond_with(@lectures)
+    end
   end
 end

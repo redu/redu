@@ -81,8 +81,26 @@ describe 'Lectures' do
   end
 
   context "when GET /api/subjects/:subect_id/lectures" do
-    it "should return HTTP code 200"
-    it "should return HTTP code 404 when subject doesnt exist"
+    it "should return HTTP code 200" do
+      get "/api/subjects/#{subj.id}/lectures", params
+      response.code.should == '200'
+    end
+
+    it "should return HTTP code 404 when subject doesnt exist" do
+      get "/api/subjects/21212/lectures", params
+      response.code.should == '404'
+    end
+
+    it "should return the correct number of lectures" do
+      page
+      2.times.collect do
+        Factory(:lecture, :owner => subj.owner, :subject => subj)
+      end
+
+      get "/api/subjects/#{subj.id}/lectures", params
+      parse(response.body).length.should == 3
+    end
+
     it "should filter by lectureable type (page)"
     it "should filter by lectureable type (seminar)"
     it "should filter by lectureable type (document)"
