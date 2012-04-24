@@ -3,7 +3,7 @@
     <div class="container_16 global-messages">
       <div class="flash-message <%=type.to_s%>">
         <span><%= h(flash[type.to_sym]) %></span>
-        <%= link_to 'Fechar', nil,
+        <%= link_to 'Fechar', '',
           :class => 'replacement icon-delete-gray_8_10-before close-flash' %>
       </div>
     </div>
