@@ -50,6 +50,7 @@ pt-BR:
     partner_environment_associations: "clientes"
     partner_user_associations: "colaboradores"
     my_wall: "meu_mural"
+    options: "opcoes"
     invitations: "convites"
     resend_email: "reenviar"
     recover_username_password: "recuperar_login_senha"

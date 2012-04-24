@@ -598,6 +598,33 @@ describe Ability do
     end
 
     context "on plans" do
+      context "on any plan" do
+        before do
+          @plan = Factory(:plan)
+          @ability = Ability.new(@plan.user)
+        end
+
+        context "blocked" do
+          before do
+            @plan.update_attribute(:state, "blocked")
+          end
+
+          it "can NOT be migrated" do
+            @ability.should_not be_able_to(:migrate, @plan)
+          end
+        end
+
+        context "migrated" do
+          before do
+            @plan.update_attribute(:state, "migrated")
+          end
+
+          it "can not be migrated" do
+            @ability.should_not be_able_to(:migrate, @plan)
+          end
+        end
+      end
+
       context "on package_plan" do
         before do
           @package_plan = Factory(:active_package_plan)
@@ -617,12 +644,25 @@ describe Ability do
             @ability.should be_able_to(:manage, @package_plan)
           end
 
+          it "migrates its own package_plan" do
+            @ability.should be_able_to(:migrate, @package_plan)
+          end
+
           it "reads package_plan's invoice" do
             @ability.should be_able_to(:read, @invoice)
           end
 
           it "manages package_plan's invoice" do
             @ability.should be_able_to(:manage, @invoice)
+          end
+
+          it "can pay package_plan's invoice with pagseguro" do
+            @ability.should be_able_to(:pay_with_pagseguro, @invoice)
+          end
+
+          it "can NOT pay paid package_plan's invoice with pagseguro" do
+            @invoice.update_attribute(:state, "paid")
+            @ability.should_not be_able_to(:pay_with_pagseguro, @invoice)
           end
         end
 
@@ -640,6 +680,10 @@ describe Ability do
             @ability.should_not be_able_to(:manage, @package_plan)
           end
 
+          it "can NOT migrate others package_plans" do
+            @ability.should_not be_able_to(:migrate, @package_plan)
+          end
+
           it "can NOT read others package_plan's invoice" do
             @ability.should_not be_able_to(:read, @invoice)
           end
@@ -654,7 +698,7 @@ describe Ability do
         before do
           @licensed_plan = Factory(:active_licensed_plan)
           @invoice = Factory(:licensed_invoice, :plan => @licensed_plan)
-          @invoice.pend!
+          @invoice.update_attribute(:state, "pending")
         end
 
         context "the owner" do
@@ -668,6 +712,10 @@ describe Ability do
 
           it "manages its own licensed_plan" do
             @ability.should be_able_to(:manage, @licensed_plan)
+          end
+
+          it "migrates its own licensed_plan" do
+            @ability.should be_able_to(:migrate, @licensed_plan)
           end
 
           it "reads licensed_plan's invoice" do
@@ -695,6 +743,10 @@ describe Ability do
 
           it "can NOT manage others licensed_plans" do
             @ability.should_not be_able_to(:manage, @licensed_plan)
+          end
+
+          it "can NOT migrate others licensed_plans" do
+            @ability.should_not be_able_to(:migrate, @licensed_plan)
           end
 
           it "can NOT read others licensed_plan's invoice" do
@@ -735,6 +787,10 @@ describe Ability do
             @ability.should be_able_to(:manage, @licensed_plan)
           end
 
+          it "can migrate partner licensed_plans" do
+            @ability.should be_able_to(:migrate, @licensed_plan)
+          end
+
           it "can read partner licensed_plan's invoice" do
             @ability.should be_able_to(:read, @invoice)
           end
@@ -763,9 +819,23 @@ describe Ability do
             @ability.should_not be_able_to(:pay, @invoice.reload)
           end
 
-          it "can maange partner licensed_plans of dead billable" do
+          it "can pay a overdue invoice" do
+            @invoice.overdue!
+            @ability.should be_able_to(:pay, @invoice.reload)
+          end
+
+          it "can manage partner licensed_plans of dead billable" do
             @licensed_plan.billable.audit_billable_and_destroy
             @ability.should be_able_to(:manage, @licensed_plan)
+          end
+
+          it "can migrate a blocked or migrated plan" do
+            @plan = Factory(:plan)
+            @plan.update_attribute(:state, "blocked")
+            @ability.should be_able_to(:migrate, @plan)
+
+            @plan.update_attribute(:state, "blocked")
+            @ability.should be_able_to(:migrate, @plan)
           end
         end
       end

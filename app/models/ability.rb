@@ -53,7 +53,7 @@ class Ability
     alias_action :send_chat_message, :last_messages_with, :to => :subscribe_channel
 
     # Plan
-    alias_action :confirm, :address, :pay, :upgrade, :to => :manage
+    alias_action :confirm, :address, :pay, :to => :manage
 
     # Reports
     alias_action :teacher_participation_interaction, :to => :manage
@@ -157,7 +157,16 @@ class Ability
 
       # Invoice
       cannot :pay, Invoice do |invoice|
-        !(user.admin? && invoice.pending?)
+        !(user.admin? && (invoice.pending? || invoice.overdue?))
+      end
+
+      cannot :pay_with_pagseguro, Invoice do |invoice|
+        invoice.paid?
+      end
+
+      # Plan
+      cannot :migrate, Plan do |plan|
+        (plan.blocked? || plan.migrated?) && !user.admin?
       end
     end
   end

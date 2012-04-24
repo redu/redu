@@ -2,14 +2,51 @@ shared_examples_for "a billable" do
   it { should have_many(:plans) }
   it { should have_one(:quota).dependent(:destroy) }
   it { should respond_to :plan }
+  it { should respond_to :plan= }
 
-  it "should retrieves the current plan" do
-    subject.plans = []
-    plan1 = Factory(:plan, :billable => subject, :created_at => 2.days.ago)
-    plan2 = Factory(:plan, :billable => subject)
-    subject.reload
+  context "when dealing with current plan" do
+    before do
+      subject.plans = []
+    end
 
-    subject.plan.should == plan2
+    it "should retrieve the current plan" do
+      plan1 = Factory(:plan, :billable => subject, :current => false)
+      plan2 = Factory(:plan, :billable => subject)
+      subject.reload
+
+      subject.plan.should == plan2
+    end
+
+    it "should store the plan as current" do
+      plans = (1..2).collect do
+        Factory(:plan, :billable => subject, :current => false)
+      end
+      subject.reload
+
+      plan1 = Factory.build(:plan)
+      subject.plan = plan1
+      subject.save
+      subject.plan.should == plan1
+
+      plan2 = Factory(:plan)
+      subject.plan = plan2
+      subject.plan.should == plan2
+
+      subject.plans.to_set.should == (plans << plan1 << plan2).to_set
+    end
+
+    it "should return nil as current" do
+      plans = (1..2).collect do
+        Factory(:plan, :billable => subject, :current => false)
+      end
+      subject.reload
+
+      plan1 = Factory(:plan)
+      subject.plan = plan1
+
+      subject.plan = nil
+      subject.plan.should be_nil
+    end
   end
 
   it "should stores itself ond plan and self destroy" do

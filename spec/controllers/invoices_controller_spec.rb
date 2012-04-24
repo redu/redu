@@ -62,6 +62,7 @@ describe InvoicesController do
                             :plan => @plan,
                             :period_start => period_start,
                             :period_end => period_end)
+          (1..5).each { Factory(:license, :invoice => invoice) }
           invoice.pend!
           invoice
         end
@@ -95,17 +96,17 @@ describe InvoicesController do
         end
         @partner.add_collaborator(@user)
 
-        @environments[0].plans << Plan.from_preset(:instituicao_superior,
-                                                   "LicensedPlan")
-        @environments[1].plans << Plan.from_preset(:curso_extensao,
-                                                   "LicensedPlan")
-        @environments[2].plans << Plan.from_preset(:curso_corporativo,
-                                                   "LicensedPlan")
-        # Associando owners dos planos
-        @environments.each do |e|
-          plan = e.plans.last
-          plan.update_attributes(:user => @user)
-        end
+        plan = Plan.from_preset(:instituicao_superior, "LicensedPlan")
+        plan.user = @environments[0].owner
+        @environments[0].plan = plan
+
+        plan = Plan.from_preset(:curso_extensao, "LicensedPlan")
+        plan.user = @environments[1].owner
+        @environments[1].plan = plan
+
+        plan = Plan.from_preset(:curso_corporativo, "LicensedPlan")
+        plan.user = @environments[2].owner
+        @environments[2].plan = plan
       end
 
       context "when viewing invoices of a partner" do
@@ -225,7 +226,7 @@ describe InvoicesController do
           UserSession.create Factory(:user, :role => Role[:admin])
 
           @invoice = @environments[0].plan.create_invoice
-          @invoice.pend!
+          @invoice.update_attribute(:state, "pending")
 
           post :pay, :id => @invoice.id, :plan_id => @invoice.plan.id,
             :locale => "pt-BR"

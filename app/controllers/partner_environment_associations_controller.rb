@@ -21,7 +21,7 @@ class PartnerEnvironmentAssociationsController < BaseController
           @plan = Plan.from_preset(key.to_sym, plan_type.classify)
           @plan.user = current_user
           @partner_environment_association.environment.create_quota
-          @partner_environment_association.environment.plans << @plan
+          @partner_environment_association.environment.plan = @plan
           @plan.create_invoice_and_setup
 
           admins = @partner.users.reject { |u| u.eql?(current_user) }

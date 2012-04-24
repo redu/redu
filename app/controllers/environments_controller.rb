@@ -65,6 +65,7 @@ class EnvironmentsController < BaseController
     when "2" # tela dos forms
       @environment.valid?
       @plan = Plan.from_preset(params[:plan].to_sym)
+      @plan.user = current_user
       @plan = params[:plan] if @plan.valid?
 
       @step = 3
@@ -75,6 +76,7 @@ class EnvironmentsController < BaseController
     when "3" # tela de informações
       respond_to do |format|
         @plan = Plan.from_preset(params[:plan].to_sym)
+        @plan.user = current_user
         @plan_humanize = @plan.clone
         @plan = params[:plan] if @plan.valid?
 
@@ -91,12 +93,15 @@ class EnvironmentsController < BaseController
     when "4"
 
       respond_to do |format|
-        @plan = Plan.from_preset(params[:plan].to_sym)
-        @plan.user = current_user
-        @environment.courses.first.plans << @plan
         @environment.owner = current_user
         @environment.courses.first.owner = current_user
-        if @environment.save && @plan.save
+
+        @plan = Plan.from_preset(params[:plan].to_sym)
+        @plan.user = current_user
+
+        if @environment.save && @plan.valid?
+          @environment.courses.first.plan = @plan
+
           @environment.courses.first.create_quota
           if @plan.create_invoice_and_setup
             format.js { render :pay }

@@ -278,11 +278,6 @@ class Course < ActiveRecord::Base
     end
   end
 
-  def plan
-    # TODO rever este código
-    self.plans.order("created_at DESC").limit(1).first
-  end
-
   protected
 
   # Cria licença passando com parâmetro o usuário que acaba de se matricular e o
