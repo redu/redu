@@ -139,7 +139,7 @@ function updateThumbnail(root, thumbnail_list, get_next) {
 
 // Inclui informações necessárias (em inputs escondidos) à requisição HTTP
 function appendInput(name, value){
-  return '<input id="resource_'+ name +'" type="hidden" name="resource['+ name + ']" value="'+ value +'"/>';
+  return '<input id="resource_'+ name +'" type="hidden" name="status[status_resources_attributes][]['+ name + ']" value="'+ value +'"/>';
 }
 
 // Deteta links no texto de entrada do usuário e os retorna num array

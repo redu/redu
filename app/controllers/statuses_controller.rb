@@ -8,11 +8,6 @@ class StatusesController < BaseController
 
     @status.user = current_user
 
-    if params[:resource]
-      @status_resource = StatusResource.create(params[:resource])
-      @status.status_resources << @status_resource
-    end
-
     respond_to do |format|
       if @status.save
         format.html { redirect_to :back }
@@ -36,11 +31,6 @@ class StatusesController < BaseController
     @answer = @status.respond(params[:status], current_user)
     @status.answers << @answer # Sem isso o teste não passa
 
-    if(params[:resource])
-      @status_resource = StatusResource.create(params[:resource])
-      @answer.status_resources << @status_resource
-    end
-
     respond_to do |format|
       unless @answer.new_record?
         format.html { redirect_to :back }
@@ -59,9 +49,6 @@ class StatusesController < BaseController
 
   def destroy
     @status.destroy
-    # Deleta as respostas do Status
-    Status.destroy_all(:in_response_to_id => @status.id,
-                       :in_response_to_type => 'Status')
     respond_to do |format|
       format.js
     end
