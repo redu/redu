@@ -3,8 +3,8 @@ require "api_spec_helper"
 describe "Subjects API" do
   before do
     @application, @current_user, @token = generate_token
-    
-    @environment = Factory(:complete_environment)
+
+    @environment = Factory(:complete_environment, :owner => @current_user)
     @space = @environment.courses.first.spaces.first
 
     @subject = Subject.create(:title => "Test Subject 1",
@@ -109,7 +109,7 @@ describe "Subjects API" do
         @subject.destroy
         delete "api/subjects/#{@subject.id}", @params
       end
-      
+
       it "should return status 404" do
         response.status.should == 404
       end
