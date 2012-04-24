@@ -1,0 +1,19 @@
+/* Como era: */
+#folder-admin .new-file .file-wrapper {
+    cursor: pointer;
+    float: left;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    position: relative;
+    width: 220px;
+}
+
+/* Como será: */
+#folder-admin .new-file .file-wrapper {
+    cursor: pointer;
+    float: left;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    position: relative;
+    width: 206px; /* ( A redução da largura evita a quebra)*/
+}
