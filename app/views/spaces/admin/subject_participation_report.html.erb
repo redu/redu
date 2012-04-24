@@ -1,0 +1,35 @@
+<%= render :partial => 'shared/management_background' %>
+<div class="management-sidebar">
+  <%= render :partial => 'spaces/sidebar', :locals => { :space => @space } %>
+</div>
+<div class="main space grid_12 omega big-col">
+  <%= render :partial => 'spaces/breadcrumbs',
+    :locals => { :space => @space, :header_space => @header_space } %>
+
+  <div id="space-manage" class="body management">
+    <%= render :partial => 'spaces/admin/header',
+      :locals => { :header_space => @header_space, :space => @space }%>
+    <%= render :partial => 'spaces/admin/clean_header' %>
+
+    <%= tabs :spaces_admin do %>
+      <h3 class="form-header">Quantos alunos finalizaram o módulo?</h3>
+      <h3 class="form-header form-header-complement">Quantos pedidos de ajuda foram respondidos?</h3>
+      <div id="subject-chart-admin">
+        <% if @browser_not_supported %>
+          <div class="body">
+            <div class="flash-message notice">
+              <p class="message icons-big-before icon-privacy-lightred_64_66-before">Para visualizar este relatório é necessário que você atualize seu navegador para a versão mais recente. Você pode escolher o navegador de sua preferência:
+                  <%= link_to "Internet Explorer", "http://windows.microsoft.com/pt-Br/internet-explorer/downloads/ie-9/worldwide-languages"%>,
+                  <%= link_to "Google Chrome", "http://www.google.com/chrome" %>, ou
+                  <%= link_to "Mozilla Firefox", "http://br.mozdev.org/" %>
+              </p>
+            </div>
+          </div>
+        <% else %>
+          <%= render :partial => 'spaces/admin/subject_chart_admin',
+            :collection => @space.subjects, :as => :subject %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
