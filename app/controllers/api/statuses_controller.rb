@@ -33,7 +33,6 @@ module Api
     end
 
     def index
-      @val = params
       @values = { 'parametros' => params }
       who = statuses
       authorize! :read, who
