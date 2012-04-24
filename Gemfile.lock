@@ -317,6 +317,7 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.33)
+    useragent (0.4.8)
     uuidtools (2.1.2)
     whenever (0.6.7)
       aaronh-chronic (>= 0.3.9)
@@ -386,6 +387,7 @@ DEPENDENCIES
   simple-navigation
   thin
   translate_routes
+  useragent (~> 0.4.8)
   vis_client!
   whenever
   will_paginate (~> 3.0.pre2)

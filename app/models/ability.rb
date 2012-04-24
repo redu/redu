@@ -22,7 +22,8 @@ class Ability
     alias_action :unjoin, :to => :read
 
     # Space
-    alias_action :admin_subjects, :to => :manage
+    alias_action :admin_subjects, :subject_participation_report,
+      :to => :manage
     #TODO action manage gerando recursividade
     alias_action :mural, :students_endless , :to => :read
 
