@@ -26,4 +26,8 @@ module LectureRepresenter
   link :previous_lecture do
     api_lecture_url(self.previous_item) unless self.first_item?
   end
+
+  link :subject do
+    api_subject_url(self.subject)
+  end
 end
