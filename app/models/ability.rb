@@ -156,7 +156,11 @@ class Ability
 
       # Invoice
       cannot :pay, Invoice do |invoice|
-        !(user.admin? && invoice.pending?)
+        !(user.admin? && (invoice.pending? || invoice.overdue?))
+      end
+
+      cannot :pay_with_pagseguro, Invoice do |invoice|
+        invoice.paid?
       end
 
       # Plan

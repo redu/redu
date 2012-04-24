@@ -628,6 +628,15 @@ describe Ability do
           it "manages package_plan's invoice" do
             @ability.should be_able_to(:manage, @invoice)
           end
+
+          it "can pay package_plan's invoice with pagseguro" do
+            @ability.should be_able_to(:pay_with_pagseguro, @invoice)
+          end
+
+          it "can NOT pay paid package_plan's invoice with pagseguro" do
+            @invoice.update_attribute(:state, "paid")
+            @ability.should_not be_able_to(:pay_with_pagseguro, @invoice)
+          end
         end
 
         context "the strange" do
@@ -781,6 +790,11 @@ describe Ability do
           it "can NOT pay a non pending invoice" do
             @invoice.pay!
             @ability.should_not be_able_to(:pay, @invoice.reload)
+          end
+
+          it "can pay a overdue invoice" do
+            @invoice.overdue!
+            @ability.should be_able_to(:pay, @invoice.reload)
           end
 
           it "can manage partner licensed_plans of dead billable" do
