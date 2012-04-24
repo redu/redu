@@ -48,8 +48,8 @@ Redu::Application.routes.draw do
 
   # Authentications
   resources :authentications, :only => [:create]
-  match '/auth/:provider/callback' => 'authentications#create', :as => :omniauth_auth
-  match '/auth/failure' => 'authentications#fallback', :as => :omniauth_fallback
+  get '/auth/:provider/callback' => 'authentications#create', :as => :omniauth_auth
+  get '/auth/failure' => 'authentications#fallback', :as => :omniauth_fallback
   get 'auth/facebook', :as => :facebook_authentication
 
   get '/recover_username_password' => 'users#recover_username_password',
@@ -112,6 +112,16 @@ Redu::Application.routes.draw do
     end
   end
 
+  #Invitations
+  resources :invitations, :only => [:show, :destroy] do
+    member do
+      post :resend_email
+    end
+    collection do
+      post :destroy_invitations
+    end
+  end
+
   # Users
   resources :users, :except => [:index] do
     member do
@@ -136,9 +146,11 @@ Redu::Application.routes.draw do
 
     resources :social_networks, :only => [:destroy]
 
-    resources :friendships, :only => [:index, :create, :destroy]
-
-    resources :invitations
+    resources :friendships, :only => [:index, :create, :destroy, :new] do
+      member do
+        post :resend_email
+      end
+    end
 
     resources :favorites, :only => [] do
       member do
