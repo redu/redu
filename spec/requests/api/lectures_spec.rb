@@ -101,9 +101,51 @@ describe 'Lectures' do
       parse(response.body).length.should == 3
     end
 
-    it "should filter by lectureable type (page)"
-    it "should filter by lectureable type (seminar)"
-    it "should filter by lectureable type (document)"
-    it "should filter by lectureable type (exercise)"
+    context "filtering" do
+      before do
+        # Page
+        Factory(:lecture, :owner => subj.owner, :subject => subj)
+        # Seminar
+        Factory(:lecture, :owner => subj.owner, :subject => subj,
+                :lectureable => Factory(:seminar_youtube))
+
+        # Document
+        mock_scribd_api
+        doc = Factory.build(:document)
+        document_path = "#{Rails.root}/spec/support/documents/document_test.pdf"
+        File.open(document_path, 'r') { |f| doc.attachment = f }
+        doc.save
+
+        Factory(:lecture, :owner => subj.owner, :subject => subj,
+                :lectureable => doc)
+
+      end
+
+      it "should filter by lectureable type (page)" do
+        get "/api/subjects/#{subj.id}/lectures", params.merge!({:type => 'page'})
+        entity = parse(response.body)
+
+        entity.should_not be_empty
+        entity.all? { |l| l['type'] == 'Page' }.should be_true
+      end
+
+      it "should filter by lectureable type (seminar)" do
+        get "/api/subjects/#{subj.id}/lectures", params.merge!({:type => 'seminar'})
+        entity = parse(response.body)
+
+        entity.should_not be_empty
+        entity.all? { |l| l['type'] == 'Seminar' }.should be_true
+      end
+
+      it "should filter by lectureable type (document)" do
+        get "/api/subjects/#{subj.id}/lectures", params.merge!({:type => 'document'})
+        entity = parse(response.body)
+
+        entity.should_not be_empty
+        entity.all? { |l| l['type'] == 'Document' }.should be_true
+      end
+
+      it "should filter by lectureable type (exercise)"
+    end
   end
 end
