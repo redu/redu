@@ -2,9 +2,8 @@ class PlansController < BaseController
 
   before_filter :find_course_environment, :except => [:index, :create]
 
-  authorize_resource
   load_and_authorize_resource :user, :find_by => :login
-  load_and_authorize_resource :plan, :only => [:index, :options], :through => :user
+  load_and_authorize_resource :plan, :only => [:options], :through => :user
   load_and_authorize_resource :partner, :only => [:create, :options]
 
   def create
