@@ -25,6 +25,9 @@ class User < ActiveRecord::Base
     :foreign_key => "owner"
   # Course
   has_many :courses, :through => :user_course_associations
+  # Authentication
+  has_many :authentications, :dependent => :destroy
+  
 
   #COURSES
   has_many :lectures, :foreign_key => "owner",
@@ -149,7 +152,7 @@ class User < ActiveRecord::Base
   validates_uniqueness_of   :login, :email, :case_sensitive => false
   validates_exclusion_of    :login, :in => Redu::Application.config.extras["reserved_logins"]
   validates :birthday,
-      :date => { :before => Proc.new { 13.years.ago } }
+      :date => { :before => Proc.new { 13.years.ago } }, :allow_nil => true
   validates_acceptance_of :tos
   validates_confirmation_of :email
   validates_format_of :email,
@@ -642,4 +645,5 @@ class User < ActiveRecord::Base
     1.upto(len) { |i| new_password << chars[rand(chars.size-1)] }
     return new_password
   end
+
 end

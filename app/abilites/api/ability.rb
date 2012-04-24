@@ -6,6 +6,10 @@ module Api
     include Api::CourseEnrollmentAbility
     include Api::SpaceAbility
     include Api::UserAbility
+    include Api::StatusAbility
+    include Api::SubjectAbility
+    include Api::LectureAbility
+    include Api::AnswerAbility
 
     def initialize(user)
       can :read, :error

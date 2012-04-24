@@ -13,8 +13,7 @@ describe "User" do
       response.code.should == "200"
     end
 
-    it "should have login, id, links, email, first_name, last_name, " + \ +
-       " birthday, friends_count, mobile, localization, birth_localization" do
+    it "should have login, id, links, email, first_name, last_name, birthday, friends_count, mobile, localization, birth_localization" do
 
       %w(login id links email first_name last_name birthday friends_count mobile localization birth_localization).each do |attr|
         parse(response.body).should have_key attr
@@ -30,6 +29,12 @@ describe "User" do
 
     it "should link to enrollments" do
       link = parse(response.body)['links'].detect { |l| l['rel'] == 'enrollments' }
+
+      link.should_not be_nil
+    end
+    
+    it "should link to statuses" do
+      link = parse(response.body)['links'].detect { |l| l['rel'] == 'statuses' }
 
       link.should_not be_nil
     end

@@ -33,7 +33,7 @@ describe 'API Authorization' do
           {"HTTP_AUTHORIZATION" => "oauth_token=\"#{@token}\""})
 
       user_url = href_to("user", parse(response.body))
-      get(user_url, {:format => 'json'}, {"HTTP_AUTHORIZATION" => "oauth_token=#{@token}"})
+      get(user_url, {:format => 'json'}, {"HTTP_AUTHORIZATION" => "oauth_token=\"#{@token}\""})
       response.code.should == '200'
     end
   end

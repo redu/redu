@@ -46,8 +46,17 @@ Redu::Application.routes.draw do
   match '/signup' => 'users#new', :as => :signup
   match '/logout' => 'sessions#destroy', :as => :logout
 
-  match '/forgot_password' => 'users#forgot_password', :as => :forgot_password
-  match '/forgot_username' => 'users#forgot_username', :as => :forgot_username
+  # Authentications
+  resources :authentications, :only => [:create]
+  match '/auth/:provider/callback' => 'authentications#create', :as => :omniauth_auth
+  match '/auth/failure' => 'authentications#fallback', :as => :omniauth_fallback
+  get 'auth/facebook', :as => :facebook_authentication
+
+  get '/recover_username_password' => 'users#recover_username_password',
+    :as => :recover_username_password
+  post '/recover_username' => 'users#recover_username', :as => :recover_username
+  post '/recover_password' => 'users#recover_password', :as => :recover_password
+
   match '/resend_activation' => 'users#resend_activation',
     :as => :resend_activation
   match '/account/edit' => 'users#edit_account', :as => :edit_account_from_email
@@ -57,6 +66,9 @@ Redu::Application.routes.draw do
   match '/about' => 'base#about', :as => :about
   match '/faq' => 'base#faq', :as => :faq
   match 'contact' => 'base#contact', :as => :contact
+
+  # Recovery Email
+  resources :'recovery_emails'
 
   # Space
   resources :spaces, :except => [:index] do
@@ -264,19 +276,26 @@ Redu::Application.routes.draw do
     resources :spaces, :except => [:new, :edit, :index, :create] do
       resources :lectures, :except => [:new, :edit], :shallow => true
       resources :users, :only => :index
+      resources :statuses, :only => [:index, :create]
+      match 'statuses/timeline',  :to => 'statuses#timeline',  :as => :space_timeline
     end
 
     resources :lectures, :except => [:new, :edit, :index, :create] do
       resources :user, :only => :index
+      resources :statuses, :only => [:index, :create]
     end
 
     resources :users, :only => :show do
       resources :course_enrollments, :only => :index, :path => :enrollments,
         :as => 'enrollments'
       resources :spaces, :only => :index
+      resources :statuses, :only => [:index, :create]
+      match 'statuses/timeline',  :to => 'statuses#timeline',  :as => :user_timeline
     end
 
-    resources :statuses, :only => :show
+    resources :statuses, :only => [:show, :destroy] do
+      resources :answers, :only => [:index, :create]
+    end
 
     # Hack para capturar exceções ActionController::RoutingError
     match '*', :to => 'api#routing_error'
