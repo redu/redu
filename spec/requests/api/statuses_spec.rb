@@ -31,13 +31,13 @@ describe "Statuses" do
       %w(statusable self user).each do |attr|
         get href_to(attr, @entity), :format => 'json', :oauth_token => @token
         response.code.should == "200"
-      end
     end
+      end
   end
 
   context "when Answer type" do
     before do
-      @answer = Factory(:answer)
+      @answer = Factory(:answer, :statusable => Factory(:activity))
       get "/api/statuses/#{@answer.id}", :format => 'json', :oauth_token => @token
       @entity = parse(response.body)
     end
@@ -72,16 +72,9 @@ describe "Statuses" do
     end
 
     it "should have type, created_at and text" do
-      %w(type created_at text).each do |attr|
+      %w(type created_at action_text).each do |attr|
         @entity.should have_key attr
       end
-    end
-
-    # FIXME esse teste está replicado com o próximo
-    it "should return correct statusable" do
-      get href_to("statusable", @entity), :oauth_token => @token,
-        :format => 'json'
-      response.code.should == "200"
     end
 
     it "should have the correct link to statusable, self, user and logeable" do
@@ -151,15 +144,17 @@ describe "Statuses" do
     it "should return correct numbers of statuses (Help)" do
       get "/api/users/#{@user.id}/statuses", :type => "help",
         :oauth_token => @token, :format => 'json'
-      # FIXME largura máxima de 80 caracteres
-      parse(response.body).count.should == @user_statuses.select {|i| i[:type] == "Help" }.length
+
+      parse(response.body).count.should == @user_statuses.
+        select {|i| i[:type] == "Help" }.length
     end
 
     it "should return correct numbers of statuses (Log)" do
       get "/api/users/#{@user.id}/statuses", :type => "log",
         :oauth_token => @token, :format => 'json'
-      # FIXME largura máxima de 80 caracteres
-      parse(response.body).count.should == @user_statuses.select {|i| i[:type] == "Log" }.length
+
+      parse(response.body).count.should == @user_statuses.
+        select {|i| i[:type] == "Log" }.length
     end
 
     it "should filter by status type (log)" do
@@ -177,8 +172,9 @@ describe "Statuses" do
     it "should return correct numbers of statuses (Activity)" do
       get "/api/users/#{@user.id}/statuses", :type => 'activity',
         :oauth_token => @token, :format => 'json'
-      # FIXME largura máxima de 80 caracteres
-      parse(response.body).count.should == @user_statuses.select {|i| i[:type] == "Activity" }.length
+
+      parse(response.body).count.should == @user_statuses.
+        select {|i| i[:type] == "Activity" }.length
     end
   end
 
@@ -421,36 +417,36 @@ describe "Statuses" do
     end
 
     it "should return 201" do
-      # FIXME tenta escolher entre aspas duplas ou simples
-      @params['status'][:type] = "Activity"
+
+      @params["status"][:type] = "Activity"
       post "/api/lectures/#{@lecture.id}/statuses", @params
       response.code.should == "201"
     end
 
     it "should return correct statusable lecture" do
-      @params['status'][:type] = "Activity"
+      @params["status"][:type] = "Activity"
       post "/api/lectures/#{@lecture.id}/statuses", @params
 
       get href_to("statusable", parse(response.body)), :oauth_token => @token,
         :format => 'json'
 
-      parse(response.body)['lecture']['name'].should == @lecture.name
+      parse(response.body)["lecture"]["name"].should == @lecture.name
     end
 
     it "should create an activity" do
-      @params['status'][:type] = "Activity"
+      @params["status"][:type] = "Activity"
       post "/api/lectures/#{@lecture.id}/statuses", @params
 
       parse(response.body)["type"].should == "Activity"
     end
 
     it "should return correct statusable" do
-      @params['status'][:type] = "activity"
+      @params["status"][:type] = "activity"
       post "/api/lectures/#{@lecture.id}/statuses", @params
 
       get href_to("statusable", parse(response.body)), :oauth_token => @token,
         :format => 'json'
-      parse(response.body)['lecture']['name'].should == @lecture.name
+      parse(response.body)["lecture"]["name"].should == @lecture.name
     end
 
     it "should create an activity when there is not type" do
@@ -463,26 +459,26 @@ describe "Statuses" do
   context "when creating status on lecture type (Help)" do
     before do
       @lecture = Factory(:lecture)
-      @params = { 'status' => { :text => "Lacture Ximbica" },
+      @params = { "status" => { :text => "Lacture Ximbica" },
         :oauth_token => @token, :format => 'json' }
     end
 
     it "should create a status with the lecture type help and return 201" do
-      @params['status'][:type] = "Help"
+      @params["status"][:type] = "Help"
       post "/api/lectures/#{@lecture.id}/statuses", @params
 
       response.code.should == "201"
     end
 
     it "should create an help" do
-      @params['status'][:type] = "Help"
+      @params["status"][:type] = "Help"
       post "/api/lectures/#{@lecture.id}/statuses", @params
 
       parse(response.body)["type"].should == "Help"
     end
 
     it "should return statusable" do
-      @params['status'][:type] = "help"
+      @params["status"][:type] = "help"
       post "/api/lectures/#{@lecture.id}/statuses", @params
 
       get href_to("statusable", parse(response.body)), :oauth_token => @token,
@@ -491,8 +487,8 @@ describe "Statuses" do
     end
 
     it "should return 422 when invalid" do
-      @params['status'][:type] = "help"
-      @params['status'][:text] = ""
+      @params["status"][:type] = "help"
+      @params["status"][:text] = ""
       post "/api/lectures/#{@lecture.id}/statuses", @params
 
       response.code.should == "422"
@@ -501,7 +497,7 @@ describe "Statuses" do
 
   context "when creating an answer" do
     before do
-      @params = {'status' => {:text => "Ximbica Answer Test" },
+      @params = {"status" => {:text => "Ximbica Answer Test" },
         :oauth_token => @token, :format => 'json' }
     end
 
@@ -532,7 +528,7 @@ describe "Statuses" do
     end
 
     it "should return 422 when invalid" do
-      @params['status'][:text] = "" # texto inválido
+      @params["status"][:text] = "" # texto inválido
       @activity = Factory(:activity)
       post "/api/statuses/#{@activity.id}/answers", @params
 
