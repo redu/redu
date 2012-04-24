@@ -56,7 +56,8 @@ describe CompoundLog do
       context "and there aren't compound logs" do
         it "should create a new one" do
           expect {
-            ActiveRecord::Observer.with_observers(:friendship_observer) do
+            ActiveRecord::Observer.with_observers(:friendship_observer,
+                                                  :log_observer) do
               @robert.be_friends_with(@ned)
               @ned.be_friends_with(@robert)
             end
@@ -69,7 +70,8 @@ describe CompoundLog do
         before do
           @cercei = Factory(:user, :login => 'cercei_lannister')
 
-          ActiveRecord::Observer.with_observers(:friendship_observer) do
+          ActiveRecord::Observer.with_observers(:friendship_observer,
+                                                :log_observer) do
             @robert.be_friends_with(@ned)
             @ned.be_friends_with(@robert)
           end
@@ -78,7 +80,8 @@ describe CompoundLog do
         it "should include recently created logs" do
           @robert_compound = CompoundLog.where(:user_id => @robert.id).last
           expect {
-            ActiveRecord::Observer.with_observers(:friendship_observer) do
+            ActiveRecord::Observer.with_observers(:friendship_observer,
+                                                  :log_observer) do
               @robert.be_friends_with(@cercei)
               @cercei.be_friends_with(@robert)
               @robert_compound.reload
@@ -95,7 +98,8 @@ describe CompoundLog do
 
           it "should create a new compound log for statusable" do
             expect {
-              ActiveRecord::Observer.with_observers(:friendship_observer) do
+              ActiveRecord::Observer.with_observers(:friendship_observer,
+                                                    :log_observer) do
                 @robert.be_friends_with(@cercei)
                 @cercei.be_friends_with(@robert)
               end
@@ -111,7 +115,8 @@ describe CompoundLog do
             @jhon = Factory(:user, :login => 'jhon_arryn')
             @loras = Factory(:user, :login => 'loras_tyrel')
 
-            ActiveRecord::Observer.with_observers(:friendship_observer) do
+            ActiveRecord::Observer.with_observers(:friendship_observer,
+                                                  :log_observer) do
               @robert.be_friends_with(@cercei)
               @cercei.be_friends_with(@robert)
 
@@ -153,7 +158,8 @@ describe CompoundLog do
       context "and there aren't compound logs" do
         it "should create a new one" do
           expect {
-            ActiveRecord::Observer.with_observers(:user_course_association_observer) do
+            ActiveRecord::Observer.with_observers(:user_course_association_observer,
+                                                  :log_observer) do
               jaime = Factory(:user, :login => "jaime_lannister")
               @course.join(jaime)
             end
@@ -163,7 +169,8 @@ describe CompoundLog do
 
       context "and a compound log already exists" do
         before do
-          ActiveRecord::Observer.with_observers(:user_course_association_observer) do
+          ActiveRecord::Observer.with_observers(:user_course_association_observer,
+                                                :log_observer) do
             @course.join(@pycelle)
             @pycelle_compounds = CompoundLog.where(:user_id => @pycelle.id)
             @pycelle_compound = @pycelle_compounds.last
@@ -173,7 +180,8 @@ describe CompoundLog do
         it "should include new log into existing compound log" do
           course = Factory(:course, :name => "game of thrones")
           expect {
-            ActiveRecord::Observer.with_observers(:user_course_association_observer) do
+            ActiveRecord::Observer.with_observers(:user_course_association_observer,
+                                                  :log_observer) do
               course.join(@pycelle)
               @pycelle_compound.reload
             end
@@ -182,7 +190,8 @@ describe CompoundLog do
 
         context "but ttl has expired" do
           before do
-            ActiveRecord::Observer.with_observers(:user_course_association_observer) do
+            ActiveRecord::Observer.with_observers(:user_course_association_observer,
+                                                  :log_observer) do
               @course.join(@pycelle)
             end
             @pycelle_compound = CompoundLog.where(:user_id => @pycelle.id).last
@@ -193,7 +202,8 @@ describe CompoundLog do
           it "should create a new compound log for statusable" do
             course = Factory(:course)
             expect {
-              ActiveRecord::Observer.with_observers(:user_course_association_observer) do
+              ActiveRecord::Observer.with_observers(:user_course_association_observer,
+                                                    :log_observer) do
                 course.join(@pycelle)
               end
             }.should change(CompoundLog, :count).by(1)
@@ -206,7 +216,8 @@ describe CompoundLog do
             @courses = (1..5).collect { Factory(:course) }
             @aemon = Factory(:user, :login => "aemon_targaryen")
 
-            ActiveRecord::Observer.with_observers(:user_course_association_observer) do
+            ActiveRecord::Observer.with_observers(:user_course_association_observer,
+                                                  :log_observer) do
               @courses.each { |course| course.join(@aemon) }
             end
             @aemon_compounds = CompoundLog.where(:user_id => @aemon.id)

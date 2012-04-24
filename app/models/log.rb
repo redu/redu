@@ -23,8 +23,6 @@ class Log < Status
 
   CONFIG = Redu::Application.config.overview_logger
 
-  after_create :compound
-
   belongs_to :logeable, :polymorphic => true
   belongs_to :compound_log
 
@@ -122,14 +120,5 @@ class Log < Status
     config ||= {}
 
     config.fetch('attrs', model.attribute_names)
-  end
-
-  private
-  def compound
-    # Compõe apenas logs com logeable Friendship e Course
-    if ["Friendship", "UserCourseAssociation"].include? self.logeable.class.to_s
-      compound_log = CompoundLog.current_compostable(self)
-      compound_log.compound!(self)
-    end
   end
 end
