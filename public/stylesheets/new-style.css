@@ -7583,19 +7583,13 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   margin: 0;
 }
 
-.create-status #new_status .new-post .border-post,
-.create-status #new_status  .new-post .border-post-down,
-.responses ol .border-post,
-.responses ol .border-post-down {
+.create-status #new_status .post-resource .border-post,
+.responses ol .border-post {
   border-top: solid 1px rgb(204, 204, 204);
   border-bottom: solid 1px white;
   border-left: none;
   border-right: none;
   margin: 10px 0px 10px 0px;
-}
-
-#content .create-status .new-post .border-post-down  {
-  margin-bottom: 0px;
 }
 
 .plan-panel .concave-admin-table .course .environment,
@@ -7643,20 +7637,20 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 
 /* inicio pré-visualização novo post */
 
-.borderradius #content .create-status {
+.borderradius .create-status {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
 }
 
-.textshadow #content .create-status .new-post,
-.textshadow #statuses .status .new-post,
+.textshadow .create-status .post-resource,
+.textshadow #statuses .status .post-resource,
 .textshadow #statuses .responses .re-status .status-message p {
   text-shadow: 0px 1px 0px rgb(255, 255, 255);
 }
 
-#content .create-status .new-post,
-#statuses .status .new-post {
+.create-status .post-resource,
+#statuses .status .post-resource {
   font-size: 13px;
   font-family: arial, sans-sefif;
   font-weight: normal;
@@ -7674,34 +7668,33 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   background-color: rgb(247, 247, 247);
 }
 
-#content .create-status .status-buttons .concave-clean:hover {
+.create-status .status-buttons .concave-clean:hover {
   border-color: rgb(77, 173, 214);
   background-color: rgb(219, 239, 247);
 }
 
-#statuses .status .vis-new-post {
-  overflow: hidden;
-  margin-top: 20px;
-  margin-bottom: 13px;
+#statuses ol li .status .post-resource,
+#statuses ol li .status .responses {
+  margin-top: 14px;
 }
 
 #statuses .status .create-response {
-    background: #f0f0f0;
+  background: #f0f0f0;
 }
 
-#content .create-status .new-post p,
-#content .create-status .new-post .title,
-#content .create-status .new-post .source-site
+.create-status .post-resource p,
+.create-status .post-resource .title,
+.create-status .post-resource .source-site
   width: 390px;
 }
 
-#content .create-status .no-preview p,
-#content .create-status .no-preview .title,
-#content .create-status .no-preview .source-site {
+.create-status .no-preview p,
+.create-status .no-preview .title,
+.create-status .no-preview .source-site {
   width: 540px;
 }
 
-#content .create-status .new-post .close {
+.create-status .post-resource .close {
   text-indent: -9999px;
   width: 8px;
   float: right;
@@ -7709,22 +7702,22 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   height: 8px;
 }
 
-#content .create-status .new-post .source-site,
-#statuses .status .new-post .source-site {
+.create-status .post-resource .source-site,
+#statuses .status .post-resource .source-site {
   color: rgb(204, 204, 204);
   font-weight: normal;
   margin-bottom: 5px;
 }
 
-#content .create-status .new-post .preview-link,
-#statuses .status .new-post .preview-link {
+.create-status .post-resource .preview-link,
+#statuses .status .post-resource .preview-link {
   float: left;
   width: 100px;
   height: 100%;
 }
 
-#content .create-status .new-post .thumbnail,
-#statuses .status .new-post .thumbnail {
+.create-status .post-resource .thumbnail,
+#statuses .status .post-resource .thumbnail {
   clear: both;
   margin-bottom: 10px;
   float: left;
@@ -7736,8 +7729,8 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   border: none;
 }
 
-#content .create-status .new-post .post-text,
-#statuses .status .new-post .post-text {
+.create-status .post-resource .post-text,
+#statuses .status .post-resource .post-text {
   overflow: hidden;
   padding-left: 10px;
   line-height: 18px;
@@ -7748,12 +7741,12 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   text-shadow: 0px 1px 0px white;
 }
 
-#content .create-status .new-post .thumbnail .buttons-thumbnail {
+.create-status .post-resource .thumbnail .buttons-thumbnail {
   clear: both;
   display: block
 }
 
-#content .create-status .new-post .thumbnail .last .arrow {
+.create-status .post-resource .thumbnail .last .arrow {
   background:  url("../images/new/icons-oembed-nav.png") 0px 0px no-repeat;
   float: right;
   height: 10px;
@@ -7761,11 +7754,11 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   width: 8px;
 }
 
-#content .create-status .new-post .thumbnail .last:hover .arrow {
+.create-status .post-resource .thumbnail .last:hover .arrow {
   background:  url("../images/new/icons-oembed-nav.png") 0px -20px no-repeat;
 }
 
-#content .create-status .new-post .thumbnail .next .arrow {
+.create-status .post-resource .thumbnail .next .arrow {
   background:  url("../images/new/icons-oembed-nav.png") -20px 0px no-repeat;
   float: right;
   height: 10px;
@@ -7773,11 +7766,11 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   width: 8px;
 }
 
-#content .create-status .new-post .thumbnail .next:hover .arrow {
+.create-status .post-resource .thumbnail .next:hover .arrow {
   background:  url("../images/new/icons-oembed-nav.png") -20px -20px no-repeat;
 }
 
-#content .create-status  .new-post .thumbnail .remove .arrow {
+.create-status .post-resource .thumbnail .remove .arrow {
   background:  url("../images/new/icons-oembed-nav.png") -40px 0px no-repeat;
   float: right;
   height: 10px;
@@ -7785,13 +7778,30 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   width: 8px;
 }
 
-#content .create-status  .new-post .thumbnail .remove:hover .arrow {
+.create-status .post-resource .thumbnail .remove:hover .arrow {
   background:  url("../images/new/icons-oembed-nav.png") -40px -20px no-repeat;
 }
 
-#content .create-status .new-post .thumbnail .last,
-#content .create-status .new-post .thumbnail .next,
-#content .create-status .new-post .thumbnail .remove  {
+.cssgradients .create-status .post-resource .thumbnail .control {
+  background: -moz-linear-gradient(top, rgb(255,255,255) 0%, rgb(240,240,240) 97%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(255,255,255)), color-stop(97%,rgb(240,240,240))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 97%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 97%); /* Opera11.10+ */
+  background: -ms-linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 97%); /* IE10+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f0f0f0',GradientType=0 ); /* IE6-9 */
+  background: linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 97%); /* W3C */
+}
+
+.cssgradients .create-status .post-resource .thumbnail .control:hover {
+  background: -moz-linear-gradient(top,  rgb(247,247,247) 0%, rgb(219,239,247) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(247,247,247)), color-stop(100%,rgb(219,239,247))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgb(247,247,247) 0%,rgb(219,239,247) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgb(247,247,247) 0%,rgb(219,239,247) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgb(247,247,247) 0%,rgb(219,239,247) 100%); /* IE10+ */
+  background: linear-gradient(top,  rgb(247,247,247) 0%,rgb(219,239,247) 100%); /* W3C */
+}
+
+.create-status .post-resource .thumbnail .control {
   float: left;
   border: 1px solid rgb(204, 204, 204);
   width: 28px;
@@ -7802,50 +7812,23 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   cursor: pointer;
 }
 
-.cssgradients #content .create-status .new-post .thumbnail .last,
-.cssgradients #content .create-status .new-post .thumbnail .next ,
-.cssgradients #content .create-status .new-post .thumbnail .remove {
-  background: -moz-linear-gradient(top, rgb(255,255,255) 0%, rgb(240,240,240) 97%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(255,255,255)), color-stop(97%,rgb(240,240,240))); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 97%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 97%); /* Opera11.10+ */
-  background: -ms-linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 97%); /* IE10+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f0f0f0',GradientType=0 ); /* IE6-9 */
-  background: linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 97%); /* W3C */
-}
-
-#content .create-status .new-post .thumbnail .last:hover,
-#content .create-status .new-post .thumbnail .next:hover,
-#content .create-status .new-post .thumbnail .remove:hover {
+.create-status .post-resource .thumbnail .control:hover {
   border: solid 1px rgb(115, 195, 230);
   color: rgb(21, 138, 196);
   background: rgb(219, 239, 247); /* Old browsers */
 }
 
-#content .create-status .new-post .thumbnail .desactivated .last,
-#content .create-status .new-post .thumbnail .desactivated .next,
-#content .create-status .new-post .thumbnail .desactivated .remove {
+.create-status .post-resource .thumbnail .desactivated .control {
   background: rgb(247, 247, 247);
 }
 
-.cssgradients #content .create-status .new-post .thumbnail .last:hover,
-.cssgradients #content .create-status .new-post .thumbnail .next:hover,
-.cssgradients #content .create-status .new-post .thumbnail .remove:hover {
-  background: -moz-linear-gradient(top,  rgb(247,247,247) 0%, rgb(219,239,247) 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(247,247,247)), color-stop(100%,rgb(219,239,247))); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top,  rgb(247,247,247) 0%,rgb(219,239,247) 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top,  rgb(247,247,247) 0%,rgb(219,239,247) 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  rgb(247,247,247) 0%,rgb(219,239,247) 100%); /* IE10+ */
-  background: linear-gradient(top,  rgb(247,247,247) 0%,rgb(219,239,247) 100%); /* W3C */
+.create-status .post-resource .thumbnail .desactivated .control:hover {
+  border: solid 1px rgb(204, 204, 204);
+  background: rgb(247, 247, 247);
 }
 
-#content .create-status .new-post .thumbnail .desactivated:hover {
-  background-color: rgb(247, 247, 247);
-}
-
-
-#content .create-status .new-post .java-icon,
-#statuses .status .new-post .java-icon {
+.create-status .post-resource .java-icon,
+#statuses .post-resource .java-icon {
   background-image: url("../images/new/icon-applet.png");
   text-indent: -9999px;
   width: 32px;
@@ -7859,50 +7842,23 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   overflow: hidden;
 }
 
-#content .create-status .new-post .thumbnail .desactivated .last:hover,
-#content .create-status .new-post .thumbnail .desactivated .next:hover,
-#content .create-status .new-post .thumbnail .desactivated .remove:hover {
-  border: solid 1px rgb(204, 204, 204);
-  background: rgb(247, 247, 247);
-}
-
-.cssgradients #content .create-status .new-post .thumbnail:hover .desactivated:hover {
-  background-color: black;
-}
-
-.cssgradients #content .create-status .new-post .thumbnail .desactivated .last,
-.cssgradients #content .create-status .new-post .thumbnail .desactivated .next,
-.cssgradients #content .create-status .new-post .thumbnail .desactivated .remove,
-.cssgradients #content .create-status .new-post .desactivated .last:hover,
-.cssgradients #content .create-status .new-post .desactivated .next:hover,
-.cssgradients #content .create-status .new-post .desactivated .remove:hover {
-  background: -moz-linear-gradient(top,  rgb(247,247,247) 0%, rgb(230,230,230) 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(247,247,247)), color-stop(100%,rgb(230,230,230))); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top,  rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top,  rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* IE10+ */
-  background: linear-gradient(top,  rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* W3C */
-}
-
-.borderradius #content .create-status .new-post .thumbnail .last,
-.borderradius #content .create-status .new-post .thumbnail .next,
-.borderradius #content .create-status .new-post .thumbnail .remove {
+.borderradius .create-status .post-resource .thumbnail .control {
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
   border-radius: 4px;
 }
 
-#content .create-status .new-post .thumbnail .desactivated .last .arrow {
+.create-status .post-resource .thumbnail .desactivated .last .arrow {
   background: url("../images/new/icones-p.png") -480px -1919px no-repeat;
   content: '';
 }
 
-#content .create-status .new-post .thumbnail .desactivated .next .arrow {
+.create-status .post-resource .thumbnail .desactivated .next .arrow {
   background: url("../images/new/icones-p.png") -480px -1839px no-repeat;
   content: '';
 }
 
-#content .create-status .new-post .thumbnail .desactivated .remove .arrow {
+.create-status .post-resource .thumbnail .desactivated .remove .arrow {
   background: url("../images/new/icones-p.png") -4px -2163px no-repeat;
   content: '';
 }
@@ -7928,7 +7884,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   font-size: 0.9em;
   margin-top: -10px;
   text-align: center;
-  cursor: pointer;
 }
 
 #statuses .status .create-response .ui-placeholder {
@@ -7936,8 +7891,13 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   font-style: normal;
 }
 
-#statuses .status .post-title {
-  margin: 3px 0px 0px 10px;
+#statuses .status .responses ol .re-status .post-title {
+  margin: 0px 0px 5px 8px;
+  display: block;
+}
+
+#statuses .status .post-resource .post-title {
+  margin: 0px 0px 5px 0;
   display: block;
 }
 
@@ -7958,7 +7918,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   width: 500px;
 }
 
-#content .inform-my-status .distance-top:before {
+.inform-my-status .distance-top:before {
    border-color: rgb(240, 240, 240) white;
    border-width: 0 10px 10px;
    margin-top: -20px;
@@ -7969,12 +7929,12 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
    width: 0;
 }
 
-#statuses .status .vis-new-post .post-title {
+#statuses .status .create-status .post-title {
   margin-left: 0px;
   margin-bottom: 3px;
 }
 
-.re-status .new-post .thumbnail {
+.re-status .post-resource .thumbnail {
   margin: 5px;
   padding-left: 25px;
 }
