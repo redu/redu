@@ -7583,7 +7583,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   margin: 0;
 }
 
-.create-status #new_status .post-resource .border-post,
+.create-status .post-resource .border-post,
 .responses ol .border-post {
   border-top: solid 1px rgb(204, 204, 204);
   border-bottom: solid 1px white;
@@ -7646,7 +7646,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .textshadow .create-status .post-resource,
 .textshadow #statuses .status .post-resource,
 .textshadow #statuses .responses .re-status .status-message p {
-  text-shadow: 0px 1px 0px rgb(255, 255, 255);
+  text-shadow: 0 1px 0 rgb(255, 255, 255);
 }
 
 .create-status .post-resource,
@@ -7659,27 +7659,13 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   padding-left: 10px;
 }
 
-.create-status .status-buttons .concave-clean {
-  float: right;
-  height: 28px;
-  width: 73px;
-  padding: 0px;
-  border-color: rgb(204, 204, 204);
-  background-color: rgb(247, 247, 247);
-}
-
-.create-status .status-buttons .concave-clean:hover {
-  border-color: rgb(77, 173, 214);
-  background-color: rgb(219, 239, 247);
-}
-
 #statuses .status .create-response {
   background: #f0f0f0;
 }
 
 .create-status .post-resource p,
 .create-status .post-resource .title,
-.create-status .post-resource .source-site
+.create-status .post-resource .source-site {
   width: 390px;
 }
 
@@ -7733,7 +7719,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 
 .textshadow .statuses .status .date,
 .textshadow .statuses .last-responses {
-  text-shadow: 0px 1px 0px white;
+  text-shadow: 0 1px 0 white;
 }
 
 .create-status .post-resource .thumbnail .buttons-thumbnail {
@@ -7742,7 +7728,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 .create-status .post-resource .thumbnail .last .arrow {
-  background:  url("../images/new/icons-oembed-nav.png") 0px 0px no-repeat;
+  background:  url("../images/new/icons-oembed-nav.png") 0 0 no-repeat;
   float: right;
   height: 10px;
   margin: 5px 10px;
@@ -7750,11 +7736,11 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 .create-status .post-resource .thumbnail .last:hover .arrow {
-  background:  url("../images/new/icons-oembed-nav.png") 0px -20px no-repeat;
+  background:  url("../images/new/icons-oembed-nav.png") 0 -20px no-repeat;
 }
 
 .create-status .post-resource .thumbnail .next .arrow {
-  background:  url("../images/new/icons-oembed-nav.png") -20px 0px no-repeat;
+  background:  url("../images/new/icons-oembed-nav.png") -20px 0 no-repeat;
   float: right;
   height: 10px;
   margin: 5px 10px;
@@ -7766,7 +7752,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 .create-status .post-resource .thumbnail .remove .arrow {
-  background:  url("../images/new/icons-oembed-nav.png") -40px 0px no-repeat;
+  background:  url("../images/new/icons-oembed-nav.png") -40px 0 no-repeat;
   float: right;
   height: 10px;
   margin: 5px 10px;
@@ -7803,7 +7789,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   height: 22px;
   text-indent: -9999px;
   background: rgb(255, 255, 255); /* Old browsers */
-  margin: 5px 5px 0px 0px;
+  margin: 5px 5px 0 0;
   cursor: pointer;
 }
 
@@ -7831,7 +7817,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   display: block;
   background-repeat: no-repeat;
   margin-top: -3px;
-  padding: 0px;
+  padding: 0;
   clear: both;
   float: left;
   overflow: hidden;
@@ -7866,11 +7852,11 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   font-size: .8em;
   color: #FF6D6D;
   overflow: hidden;
-  margin-left: 0px;
+  margin-left: 0;
 }
 
 #statuses .post-link {
-  padding: 0px;
+  padding: 0;
 }
 
 .statuses .last-responses {
@@ -7887,18 +7873,18 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 #statuses .status .responses ol .re-status .post-title {
-  margin: 0px 0px 5px 8px;
+  margin: 0 0 5px 8px;
   display: block;
 }
 
 #statuses .status .post-resource .post-title {
-  margin: 0px 0px 5px 0;
+  margin: 0 0 5px 0;
   display: block;
 }
 
 #statuses .status .responses {
-  padding-left: 0px;
-  padding-right: 0px;
+  padding-left: 0;
+  padding-right: 0;
   background-color: rgb(240, 240, 240);
 }
 
@@ -7925,7 +7911,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 #statuses .status .create-status .post-title {
-  margin-left: 0px;
+  margin-left: 0;
   margin-bottom: 3px;
 }
 
@@ -7935,7 +7921,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 .responses ol .re-status .no-preview .post-text {
-  margin: 5px 0px 0px 20px;
+  margin: 5px 0 0 20px;
 }
 
 .create-response .distance-top:after,
@@ -7955,8 +7941,8 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .create-status .distance-top,
 .responses .distance-top {
   text-indent: -9999px;
-  width: 0px;
-  height: 0px;
+  width: 0;
+  height: 0;
 }
 
 /* Botão convidar amigos */
@@ -7984,9 +7970,9 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 .boxshadow .invite-button {
-  -webkit-box-shadow: inset 1px 1px 0px 0px rgb(115, 195, 230),inset -1px -1px 0px 0px rgb(115, 195, 230);
-  -moz-box-shadow: inset 1px 1px 0px 0px rgb(115, 195, 230),inset -1px -1px 0px 0px rgb(115, 195, 230);
-  box-shadow: inset 1px 1px 0px 0px rgb(115, 195, 230),inset -1px -1px 0px 0px rgb(115, 195, 230);
+  -webkit-box-shadow: inset 1px 1px 0 0 rgb(115, 195, 230),inset -1px -1px 0 0 rgb(115, 195, 230);
+  -moz-box-shadow: inset 1px 1px 0 0 rgb(115, 195, 230),inset -1px -1px 0 0 rgb(115, 195, 230);
+  box-shadow: inset 1px 1px 0 0 rgb(115, 195, 230),inset -1px -1px 0 0 rgb(115, 195, 230);
 }
 
 /* FIM botão convidar amigos */
