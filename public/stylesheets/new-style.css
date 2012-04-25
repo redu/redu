@@ -7780,6 +7780,12 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   width: 540px;
 }
 
+.create-status .no-preview .title,
+.create-response .no-preview p,
+.create-status .no-preview .source-site {
+  width: 500px;
+}
+
 .create-status .post-resource .close {
   text-indent: -9999px;
   width: 8px;
@@ -8034,7 +8040,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .responses .distance-top:after {
    border-color: rgb(240, 240, 240) white;
    border-width: 0 10px 10px;
-   margin-top: -42px;
+   margin-top: -30px;
    border-style: solid;
    content: " ";
    display: block;

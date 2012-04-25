@@ -1,6 +1,5 @@
 <%# Status resposta %>
 <li id="status-<%= response.id %>">
-  <hr class="border-post" />
   <div class="re-status">
     <div class="status-text">
       <%= image_tag response.user.avatar.url(:thumb_32), :width => 32,
@@ -12,31 +11,27 @@
       </span>
     </div>
     <div class="status-message">
-      <% if response.status_resources.first %>
-        <span class="comment-title">
-          <%= raw auto_link(h(response.text).gsub(/\n/, '</br>'))%>
-        </span>
-        <div class="new-post">
-        <% if response.status_resources.first.thumb_url %>
-          <div class="thumbnail">
-            <span class="preview-link">
-              <%= link_to response.status_resources.first.link, :target => "_blank", :rel => "nofollow" do %>
-                <%= image_tag(response.status_resources.first.thumb_url) %>
-              <% end %>
-            </span>
-          </div>
-        <% end %>
-        <div class="description">
-          <%= link_to response.status_resources.first.title, response.status_resources.first.link, :target => "_blank", :rel => "nofollow", :class => "title" %>
-          <h3 class="link">
+      <p><%= raw auto_link(h(response.text).gsub(/\n/, '</br>'))%></p>
+    </div>
+    <% if response.status_resources.first %>
+      <div class="post-resource">
+      <% if response.status_resources.first.thumb_url %>
+        <div class="thumbnail">
+          <%= link_to response.status_resources.first.link, :target => "_blank", :rel => "nofollow" do %>
+            <%= image_tag(response.status_resources.first.thumb_url, :class => "preview-link") %>
+          <% end %>
+        </div>
+      <% end %>
+        <div class="post-text">
+          <h3><%= link_to response.status_resources.first.title, response.status_resources.first.link, :target => "_blank", :rel => "nofollow", :class => "title" %></h3>
+          <h4 class="source-site">
             <%= response.status_resources.first.provider %>
-          </h3>
-          <p><%= response.status_resources.first.description %></p>
+          </h4>
+          <p class="post-description"><%= response.status_resources.first.description %></p>
         </div>
       </div>
-      <% else %>
-        <%= raw auto_link(h(response.text).gsub(/\n/, '</br>'))%>
-      <% end %>
-    </div>
+    <% end %>
+    <ul class="actions clearfix"></ul>
   </div>
+<hr class="border-post"/>
 </li>

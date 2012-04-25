@@ -7,7 +7,7 @@
     <%= hidden_field :status, :statusable_id, :value => statusable.id %>
     <%= hidden_field :status, :statusable_type, :value => statusable.class.to_s %>
     <%= hidden_field_tag "status[type]", 'Activity' %>
-
+    <div class="distance-top"></div>
     <%= f.error_messages %>
     <%= field_set_tag do %>
       <%= f.label :text, "Seu mural",
@@ -15,8 +15,7 @@
       <%= f.text_area :text, :rows => 1, :class => "status textarea status-#{random_number}" %>
       <%= render 'shared/limit_char_field', :class_textarea => "status-#{random_number}", :limit => 800 %>
       <div class="status-buttons">
-        <%= f.submit 'Postar' %>
-        <%= f.submit 'Cancelar', :class => 'cancel concave-clean', :type => 'button' %>
+        <%= f.submit 'Enviar' %>
       </div>
   <% end %>
 <% end %>

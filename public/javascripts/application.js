@@ -21,9 +21,6 @@ jQuery(function(){
     $(".inform-my-status textarea").live("focus", function(e){
         $(this).parents("form").find("input[type=submit], .cancel, .char-limit").fadeIn();
     });
-    $(".inform-my-status textarea").live("blur", function(e){
-        $(this).parents("form").find("input[type=submit], .cancel, .char-limit").fadeOut();
-    });
 
     // Adicionar classe focus a um determinado label quando o seu campo
     // correspondente detectar o evento focus

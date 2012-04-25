@@ -40,9 +40,9 @@ $.fn.catchAndSendToEmbedly = function() {
                 for(e in json.thumbnail_url){
                   thumbnail_list.push(json.thumbnail_url[e].url);
                 }
-                thumbnail_navigation = '<span class="last">'+
+                thumbnail_navigation = '<span class="last control">'+
                   '<span class="arrow">L</span>'+
-                  '</span><span class="next">'+
+                  '</span><span class="next control">'+
                   '<span class="arrow">N</span></span>';
               } else {
                 thumbnail_list.push(json.thumbnail_url);
@@ -54,32 +54,32 @@ $.fn.catchAndSendToEmbedly = function() {
               //Add thumbnail img when thumbnail exists
               resource_inputs = resource_inputs + appendInput("thumb_url", thumbnail_list[0]);
               thumbnail_content = '<div class="thumbnail">'+
-                '<span class="preview-link">'+
-                  '<img id="thumbnail-0" src="'+thumbnail_list[0] +'"/>'+
-                '</span>'+
+                '<img id="thumbnail-0" class="preview-link" src="'+thumbnail_list[0] +'"/>'+
                 '<span class="buttons-thumbnail">'+
                   thumbnail_navigation +
-                  '<span class="remove">'+
+                  '<span class="remove control">'+
                   '<span class="arrow">R</span>'+
                 '</span>'+
                 '</div>';
             }
 
             //Preview box
-            $this.parents('fieldset').find('.new-post').remove();
-            $('<div class="new-post">'+resource_inputs +
-                '<div class="distance-top"></div>' +
+            $this.parents('fieldset').find('.post-resource').remove();
+            $('<div class="post-resource">'+resource_inputs +
                 '<hr class="border-post concave-separator"/>' +
                  thumbnail_content +
-                '<div class="description">'+
-                '<span class="close icon-small icon-delete-gray_8_10">Close</span>'+
-                '<a href="'+ url +'">'+title+'</a>'+
-                '<h3 class="link">'+json.provider_url+'</h3>'+
-                '<p>'+description+'</p>'+
-                '</div>'+
-                '<hr class="border-post-down concave-separator"/>' +
+                '<div class="post-text">' +
+                  '<span class="close icon-small icon-delete-gray_8_10">Close</span>'+
+                  '<h3><a href="'+ url +'" class="title">'+title+'</a></h3>'+
+                  '<h4 class="source-site">'+json.provider_url+'</h4>'+
+                  '<p class="post-description">'+description+'</p>'+
+              '</div>'+
+                '<hr class="border-post concave-separator"/>' +
                 '</div>'
              ).insertAfter($this);
+            if (json.thumbnail_url == null){
+              $this.parents('fieldset').find('.post-resource').addClass('no-preview');
+            }
           });
         }
 
@@ -87,9 +87,9 @@ $.fn.catchAndSendToEmbedly = function() {
   });
 
   // Close embedded content
-  $('fieldset .description span.close.icon-small').live('click', function(){
+  $('fieldset .post-text span.close.icon-small').live('click', function(){
     $(this).parents('fieldset').find("textarea#status_text").data('last_url', "");
-    $(this).parents('fieldset').find('.new-post').slideUp(function(){
+    $(this).parents('fieldset').find('.post-resource').slideUp(function(){
       $(this).remove();
     });
   });
@@ -101,7 +101,7 @@ $.fn.catchAndSendToEmbedly = function() {
     if(button.hasClass('remove')){
       button.parents('fieldset').find('.thumbnail').fadeOut();
       button.parents('fieldset').find('input#resource_thumb_url').remove();
-      button.parents('fieldset').find('.new-post').addClass('no-preview');
+      button.parents('fieldset').find('.post-resource').addClass('no-preview');
     } else if(button.hasClass('next')) {
       updateThumbnail(button, thumbnail_list, true);
     } else if(button.hasClass('last')) {
@@ -112,7 +112,7 @@ $.fn.catchAndSendToEmbedly = function() {
   // Faz desaparecer o preview depois de criar a postagem
   $('input#status_submit').live('click', function() {
     $(this).parents('fieldset').find("textarea#status_text").data('last_url', "");
-    $(this).parents('fieldset').find('.new-post').ajaxComplete(function() {
+    $(this).parents('fieldset').find('.post-resource').ajaxComplete(function() {
       $(this).slideUp(function(){
         $(this).remove();
       });
@@ -122,7 +122,7 @@ $.fn.catchAndSendToEmbedly = function() {
 
 // Atualiza o thumbnail do recurso de acordo com a resposta do embedly
 function updateThumbnail(root, thumbnail_list, get_next) {
-  var img = root.parents('fieldset').find('.thumbnail .preview-link img');
+  var img = root.parents('fieldset').find('.thumbnail img.preview-link');
   var id = img[0].id.split('-')[1];
 
   if(get_next){
