@@ -58,6 +58,7 @@ Redu::Application.routes.draw do
       get :mural
       get :students_endless
       get :admin_subjects
+      get :subject_participation_report
     end
 
     resources :folders, :only => [:update, :create, :index] do
@@ -163,8 +164,7 @@ Redu::Application.routes.draw do
     member do
       get :confirm
       post :confirm
-      get :upgrade
-      post :upgrade
+      get :options
     end
 
     resources :invoices, :only => [:index, :show] do
@@ -187,6 +187,9 @@ Redu::Application.routes.draw do
     resources :partner_environment_associations, :as => :clients,
       :only => [:create, :index, :new] do
         resources :plans, :only => [:show] do
+          member do
+            get :options
+          end
           resources :invoices, :only => [:index]
         end
     end
@@ -230,6 +233,7 @@ Redu::Application.routes.draw do
         match :roles, :to => 'roles#update', :via => :post, :as => :roles
       end
       resources :user_course_invitations, :only => [:show]
+      resources :plans, :only => [:create]
     end
 
     resources :users, :only => [:index]
@@ -237,6 +241,7 @@ Redu::Application.routes.draw do
       resources :roles, :only => :index
       match :roles, :to => 'roles#update', :via => :post, :as => :roles
     end
+    resources :plans, :only => [:create]
   end
 
 

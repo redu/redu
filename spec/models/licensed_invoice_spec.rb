@@ -19,7 +19,7 @@ describe LicensedInvoice do
       should be_open
     end
 
-    [:state, :pend!, :pay!, :overdue!].each do |attr|
+    [:state, :pend!, :pay!, :overdue!, :close!].each do |attr|
       it "should respond_to #{attr}" do
         should respond_to attr
       end
@@ -28,27 +28,87 @@ describe LicensedInvoice do
     context "when open" do
       before do
         UserNotifier.deliveries = []
+        (1..5).collect { Factory(:license, :period_end => nil,
+                                 :invoice => subject) }
+      end
 
+      context "when pend!" do
+        before do
+          subject.pend!
+        end
+
+        it "should change to pending" do
+          should be_pending
+        end
+
+        it "should calculate the amount" do
+          subject.amount.should_not be_nil
+        end
+
+        it "should create a new opened invoice" do
+          subject.plan.invoice.should_not == subject
+          subject.plan.invoice.should be_open
+        end
+
+        it "should set invoice's licenses period end" do
+          subject.licenses.reload.in_use.should be_empty
+        end
+
+        it "should send an email" do
+          UserNotifier.deliveries.size.should == 1
+          UserNotifier.deliveries.last.body.should =~ /com pagamento pendente/
+        end
+      end
+
+      context "when pend! an invoice that will have a total less than zero" do
+        before do
+          subject.update_attributes(:previous_balance => - 1000)
+          subject.pend!
+        end
+
+        it "should create a new opened invoice with previous balance" do
+          subject.plan.invoice.previous_balance.should_not be_nil
+          subject.plan.invoice.previous_balance.should be < 0
+          subject.plan.invoice.previous_balance.should == subject.total
+        end
+      end
+
+      context "when closing" do
+        before do
+          subject.close!
+        end
+
+        it "should change to closed" do
+          subject.should be_closed
+        end
+
+        it "should calculate the amount" do
+          subject.amount.should_not be_nil
+        end
+
+        it "should set invoice's licenses period end" do
+          subject.licenses.reload.in_use.should be_empty
+        end
+      end
+    end
+
+    context "when pending and actual invoice has negative total" do
+      before do
+        subject.update_attributes(:amount => 50,
+                                  :previous_balance => -100,
+                                  :plan => Factory(:active_licensed_plan))
         subject.pend!
       end
 
-      it "should change to pending" do
-        should be_pending
-      end
-
-      it "should calculate the amount" do
-        subject.amount.should_not be_nil
-      end
-
-      it "should send an email" do
-        UserNotifier.deliveries.size.should == 1
-        UserNotifier.deliveries.last.body.should =~ /com pagamento pendente/
-        UserNotifier.deliveries.last.body.should =~ /Para visualizar a fatura/
+      it "actual invoice is marked as paid" do
+        subject.should be_paid
       end
     end
 
     context "when pending" do
       before do
+        (1..5).collect { Factory(:license, :period_end => nil,
+                                 :invoice => subject) }
         subject.update_attribute(:state, "pending")
       end
 
@@ -99,6 +159,24 @@ describe LicensedInvoice do
           UserNotifier.deliveries.size.should == 1
           UserNotifier.deliveries.last.body.should =~
           /os serviços estão suspensos/
+        end
+      end
+
+      context "when closing" do
+        before do
+          subject.close!
+        end
+
+        it "should change to closed" do
+          subject.should be_closed
+        end
+
+        it "should calculate the amount" do
+          subject.amount.should_not be_nil
+        end
+
+        it "should set invoice's licenses period end" do
+          subject.licenses.reload.in_use.should be_empty
         end
       end
 
@@ -242,22 +320,7 @@ describe LicensedInvoice do
       end
 
       it "updates to the correct amount" do
-        @invoice.amount.round(2).should == BigDecimal.new("32.90")
-      end
-    end
-
-    context "when creating next invoice" do
-      before do
-        @invoice.send(:create_next_invoice)
-        @new_invoice = @invoice.plan.invoices.last
-      end
-
-      it "should be persisted" do
-        @new_invoice.should be_persisted
-      end
-
-      it "should have period start one day after last invoice period end" do
-        @new_invoice.period_start.should == @invoice.period_end.tomorrow
+        @invoice.amount.round(2).should == BigDecimal.new("34")
       end
     end
 
@@ -295,6 +358,7 @@ describe LicensedInvoice do
       @plan1.create_invoice({:invoice => {
         :period_start => from,
         :period_end => @to,
+        :previous_balance => - 25,
         :created_at => Time.now - 1.hour }
       })
       @invoice1 = @plan1.invoices.last
@@ -330,7 +394,7 @@ describe LicensedInvoice do
     end
 
     it "should calculates invoice1's relative amount" do
-      @invoice1.reload.amount.round(2).should == BigDecimal.new("31.94")
+      @invoice1.reload.amount.round(2).should == BigDecimal.new("33")
     end
 
     it "should NOT calculate invoice2's relative amount" do
@@ -369,6 +433,11 @@ describe LicensedInvoice do
         invoice = @plan1.invoices.first
         @not_in_use_licenses.first.reload.period_end.should_not ==
           invoice.period_end
+      end
+
+      it "should have a discount" do
+        invoice = @plan1.invoices.first
+        invoice.previous_balance.should be < 0
       end
     end
 
@@ -421,6 +490,22 @@ describe LicensedInvoice do
       expect {
         subject.create_license(@user, Role[:member], @course)
       }.should change(License, :count).by(1)
+    end
+  end
+
+  context "when refreshing amount after changing period_end" do
+    before do
+      @new_period_end = Date.today
+    end
+
+    context "when calling refresh_amount!" do
+      before do
+        @return = subject.refresh_amount!(@new_period_end)
+      end
+
+      it "should update period_end to new_period_End" do
+        subject.period_end.should == @new_period_end
+      end
     end
   end
 end

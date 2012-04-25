@@ -33,6 +33,28 @@ class Invoice < ActiveRecord::Base
     self.send_pending_notice
   end
 
+  # Calcula o total do Invoice (levando em conta possíveis descontos
+  # ou adições)
+  def total
+    self.amount + self.previous_balance
+  end
+
+  # Cria o próximo invoice
+  # - Leva em conta possíveis descontos
+  def create_next_invoice
+    previous_balance = self.total if self.total < 0
+    previous_balance ||= 0
+
+    self.plan.create_invoice({ :invoice => {
+      :period_start => self.period_end.tomorrow,
+      :previous_balance => previous_balance
+    }})
+  end
+
+  def total_days
+    (self.period_end - self.period_start + 1).to_i
+  end
+
   protected
 
   # Marca o horário em que o pagamento foi feito

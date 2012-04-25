@@ -9,6 +9,7 @@ FactoryGirl.define do
     yearly_price(29.9 * 12)
     association :billable, :factory => :course
     association :user
+    current true
   end
 
   factory :active_package_plan, :class => :package_plan do
@@ -22,6 +23,7 @@ FactoryGirl.define do
     membership_fee 9.99
     association :billable, :factory => :course
     association :user
+    current true
   end
 
   factory :active_licensed_plan, :class => :licensed_plan do
@@ -32,5 +34,6 @@ FactoryGirl.define do
     price 3.00
     association :billable, :factory => :environment
     association :user
+    current true
   end
 end
