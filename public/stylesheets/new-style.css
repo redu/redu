@@ -1114,6 +1114,7 @@ body {
   display: block;
   font-size: .9em;
   margin-top: 2px;
+
 }
 
 .hierarchy-preview .spaces .name {
@@ -2028,7 +2029,8 @@ body {
 .statuses .icon-exercise-lightblue_64_66-after:after,
 .statuses .icon-document-lightblue_64_66-after:after,
 .statuses .icon-gruping-lightblue_64_66-after:after,
-.statuses .icon-contact-lightblue_64_66-after:after {
+.statuses .icon-contact-lightblue_64_66-after:after,
+.statuses .icon-grouping-lightblue_64_66-after:after {
   margin-top: -70px;
 }
 
@@ -2037,7 +2039,6 @@ body {
 .statuses ol .responses,
 .statuses ol .create-response {
   margin-left: 37px;
-  background: #F0F0F0 url("../images/new/gray-nipple.png") no-repeat left top;
   padding: 20px 10px 10px 10px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -2051,7 +2052,7 @@ body {
 .statuses .friend-avatar,
 .statuses li .avatar {
   float: left;
-  margin-right: 5px;
+  margin-right: 8px;
 }
 
 .statuses .username {
@@ -2077,9 +2078,6 @@ body {
 
 .statuses .toggle-statuses {
   display: block;
-  border-top: 1px solid white;
-  padding-top: 10px;
-  margin-left: 37px;
   text-align: center;
   font-size: .9em;
 }
@@ -2101,6 +2099,11 @@ body {
   float: left;
   padding: 0 10px;
   border-right: 1px solid #C6C6C6;
+}
+
+.statuses .actions li {
+  float: right;
+  border:none;
 }
 
 .statuses .actions li:last-child {
@@ -2130,7 +2133,8 @@ body {
 }
 
 .statuses .status-message p {
-  margin-left: 5px;
+  line-height: 18px;
+  margin-left: 10px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -2147,7 +2151,7 @@ body {
 
 .statuses .status-subject {
   float: left;
-  width: 32px;
+  width: 35px;
   height: 34px;
   margin-right: 5px;
   display: block;
@@ -2156,6 +2160,7 @@ body {
 
 .status {
   position: relative;
+  overflow: hidden;
 }
 
 .statuses .status-context {
@@ -7678,6 +7683,15 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   margin: 0;
 }
 
+.create-status .post-resource .border-post,
+.responses ol .border-post {
+  border-top: solid 1px rgb(204, 204, 204);
+  border-bottom: solid 1px white;
+  border-left: none;
+  border-right: none;
+  margin: 10px 0px 10px 0px;
+}
+
 .plan-panel .concave-admin-table .course .environment,
 .plan-panel .concave-admin-table .course .no-pending {
   font-size: 11px;
@@ -7728,169 +7742,211 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 
 /* inicio pré-visualização novo post */
 
-.textshadow .new-post {
-  text-shadow: 0px 1px 0px rgb(255, 255, 255);
+.borderradius .create-status {
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
 }
 
-.new-post {
+.textshadow .create-status .post-resource,
+.textshadow #statuses .status .post-resource,
+.textshadow #statuses .responses .re-status .status-message p {
+  text-shadow: 0 1px 0 rgb(255, 255, 255);
+}
+
+.create-status .post-resource,
+#statuses .status .post-resource {
   font-size: 13px;
   font-family: arial, sans-sefif;
   font-weight: normal;
   overflow: hidden;
+  clear: both;
+  padding-left: 10px;
 }
 
-.vis-new-post {
-  border-top: solid 1px rgb(255, 255, 255);
-  border-bottom: solid 1px rgb(255, 255, 255);
-  overflow: hidden;
-  padding: 10px 10px 15px 10px;
-  margin-top: 20px;
+#statuses .status .create-response {
+  background: #f0f0f0;
 }
 
-.new-post .close {
+.create-status .post-resource p,
+.create-status .post-resource .title,
+.create-status .post-resource .source-site {
+  width: 390px;
+}
+
+.create-status .no-preview p,
+.create-status .no-preview .title,
+.create-status .no-preview .source-site {
+  width: 540px;
+}
+
+.create-status .post-resource .close {
   text-indent: -9999px;
-  width: 16px;
+  width: 8px;
   float: right;
   cursor: pointer;
-  height: 18px;
+  height: 8px;
 }
 
-.new-post .title {
-  color: rgb(77, 173, 214);
-  font-weight: normal;
-  margin-bottom: 5px;
-}
-
-.new-post .link {
+.create-status .post-resource .source-site,
+#statuses .status .post-resource .source-site {
   color: rgb(204, 204, 204);
   font-weight: normal;
   margin-bottom: 5px;
 }
 
-.new-post .preview-link {
-  width: 100px;
-  height: 75px;
-  background-color: blue;
+.create-status .post-resource .preview-link,
+#statuses .status .post-resource .preview-link {
   float: left;
-  text-indent: -9999px;
+  width: 100px;
+  height: 100%;
 }
 
-.new-post .thumbnail{
+.create-status .post-resource .thumbnail,
+#statuses .status .post-resource .thumbnail {
   clear: both;
+  margin-bottom: 10px;
   float: left;
   overflow: hidden;
 }
 
-.new-post .description {
+.status .statuses .actions li {
+  float: right;
+  border: none;
+}
+
+.create-status .post-resource .post-text,
+#statuses .status .post-resource .post-text {
   overflow: hidden;
   padding-left: 10px;
+  line-height: 18px;
 }
 
-.new-post .thumbnail .last {
+.textshadow .statuses .status .date,
+.textshadow .statuses .last-responses {
+  text-shadow: 0 1px 0 white;
+}
+
+.create-status .post-resource .thumbnail .buttons-thumbnail {
   clear: both;
+  display: block
 }
 
-.new-post .thumbnail .last .arrow {
-  background:  url("../images/new/icons-oembed-nav.png") 0px 0px no-repeat;
+.create-status .post-resource .thumbnail .last .arrow {
+  background:  url("../images/new/icons-oembed-nav.png") 0 0 no-repeat;
   float: right;
   height: 10px;
   margin: 5px 10px;
   width: 8px;
 }
 
-.new-post .thumbnail .last .arrow:hover {
-  background:  url("../images/new/icons-oembed-nav.png") 0px -20px no-repeat;
+.create-status .post-resource .thumbnail .last:hover .arrow {
+  background:  url("../images/new/icons-oembed-nav.png") 0 -20px no-repeat;
 }
 
-.new-post .thumbnail .next .arrow {
-  background:  url("../images/new/icons-oembed-nav.png") -20px 0px no-repeat;
+.create-status .post-resource .thumbnail .next .arrow {
+  background:  url("../images/new/icons-oembed-nav.png") -20px 0 no-repeat;
   float: right;
   height: 10px;
   margin: 5px 10px;
   width: 8px;
 }
 
-.new-post .thumbnail .next .arrow:hover {
+.create-status .post-resource .thumbnail .next:hover .arrow {
   background:  url("../images/new/icons-oembed-nav.png") -20px -20px no-repeat;
 }
 
-.new-post .thumbnail .remove .arrow {
-  background:  url("../images/new/icons-oembed-nav.png") -40px 0px no-repeat;
+.create-status .post-resource .thumbnail .remove .arrow {
+  background:  url("../images/new/icons-oembed-nav.png") -40px 0 no-repeat;
   float: right;
   height: 10px;
   margin: 5px 10px;
   width: 8px;
 }
 
-.new-post .thumbnail .remove .arrow:hover {
+.create-status .post-resource .thumbnail .remove:hover .arrow {
   background:  url("../images/new/icons-oembed-nav.png") -40px -20px no-repeat;
 }
 
-.new-post .thumbnail .last,
-.new-post .thumbnail .next,
-.new-post .thumbnail .remove  {
+.cssgradients .create-status .post-resource .thumbnail .control {
+  background: -moz-linear-gradient(top, rgb(255,255,255) 0%, rgb(240,240,240) 97%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(255,255,255)), color-stop(97%,rgb(240,240,240))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 97%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 97%); /* Opera11.10+ */
+  background: -ms-linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 97%); /* IE10+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f0f0f0',GradientType=0 ); /* IE6-9 */
+  background: linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 97%); /* W3C */
+}
+
+.cssgradients .create-status .post-resource .thumbnail .control:hover {
+  background: -moz-linear-gradient(top,  rgb(247,247,247) 0%, rgb(219,239,247) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(247,247,247)), color-stop(100%,rgb(219,239,247))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgb(247,247,247) 0%,rgb(219,239,247) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgb(247,247,247) 0%,rgb(219,239,247) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgb(247,247,247) 0%,rgb(219,239,247) 100%); /* IE10+ */
+  background: linear-gradient(top,  rgb(247,247,247) 0%,rgb(219,239,247) 100%); /* W3C */
+}
+
+.create-status .post-resource .thumbnail .control {
   float: left;
   border: 1px solid rgb(204, 204, 204);
   width: 28px;
   height: 22px;
   text-indent: -9999px;
-  background: rgb(247,247,247); /* Old browsers */
-  margin: 5px 5px 0px 0px;
+  background: rgb(255, 255, 255); /* Old browsers */
+  margin: 5px 5px 0 0;
   cursor: pointer;
 }
 
-.borderradius .new-post .thumbnail .last,
-.borderradius .new-post .thumbnail .next,
-.borderradius .new-post .thumbnail .remove {
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
-  border-radius: 4px;
-}
-.cssgradients .new-post .thumbnail .last,
-.cssgradients .new-post .thumbnail .next,
-.cssgradients .new-post .thumbnail .remove {
-  background: -moz-linear-gradient(top,  rgb(247,247,247) 0%, rgb(230,230,230) 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(247,247,247)), color-stop(100%,rgb(230,230,230))); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top,  rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top,  rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* IE10+ */
-  background: linear-gradient(top,  rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* W3C */
-}
-
-.new-post .thumbnail .last:hover,
-.new-post .thumbnail .next:hover,
-.new-post .thumbnail .remove:hover {
+.create-status .post-resource .thumbnail .control:hover {
   border: solid 1px rgb(115, 195, 230);
   color: rgb(21, 138, 196);
-  background: rgb(30,87,153); /* Old browsers */
+  background: rgb(219, 239, 247); /* Old browsers */
 }
 
-.cssgradients .new-post .thumbnail .last:hover,
-.cssgradients .new-post .thumbnail .next:hover,
-.cssgradients .new-post .thumbnail .remove:hover {
-  background: -moz-linear-gradient(top,  rgb(30,87,153) 0%, rgb(247,247,247) 2%, rgb(219,239,247) 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(30,87,153)), color-stop(2%,rgb(247,247,247)), color-stop(100%,rgb(219,239,247))); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top,  rgb(30,87,153) 0%,rgb(247,247,247) 2%,rgb(219,239,247) 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top,  rgb(30,87,153) 0%,rgb(247,247,247) 2%,rgb(219,239,247) 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  rgb(30,87,153) 0%,rgb(247,247,247) 2%,rgb(219,239,247) 100%); /* IE10+ */
-  background: linear-gradient(top,  rgb(30,87,153) 0%,rgb(247,247,247) 2%,rgb(219,239,247) 100%); /* W3C */
+.create-status .post-resource .thumbnail .desactivated .control {
+  background: rgb(247, 247, 247);
 }
 
-.new-post .java-applet {
-  clear: both;
-  float: left;
-  overflow: hidden;
-  background-color: rgb (192, 128, 64);
+.create-status .post-resource .thumbnail .desactivated .control:hover {
+  border: solid 1px rgb(204, 204, 204);
+  background: rgb(247, 247, 247);
 }
 
-.new-post .java-applet .icon {
+.create-status .post-resource .java-icon,
+#statuses .post-resource .java-icon {
   background-image: url("../images/new/icon-applet.png");
   text-indent: -9999px;
   width: 32px;
   height: 34px;
   display: block;
   background-repeat: no-repeat;
-  padding: 0px;
+  margin-top: -3px;
+  padding: 0;
+  clear: both;
+  float: left;
+  overflow: hidden;
+}
+
+.borderradius .create-status .post-resource .thumbnail .control {
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+}
+
+.create-status .post-resource .thumbnail .desactivated .last .arrow {
+  background: url("../images/new/icones-p.png") -480px -1919px no-repeat;
+  content: '';
+}
+
+.create-status .post-resource .thumbnail .desactivated .next .arrow {
+  background: url("../images/new/icones-p.png") -480px -1839px no-repeat;
+  content: '';
+}
+
+.create-status .post-resource .thumbnail .desactivated .remove .arrow {
+  background: url("../images/new/icones-p.png") -4px -2163px no-repeat;
+  content: '';
 }
 
 /*-- #graph-form é o .concave-form do gráfico --*/
@@ -7902,55 +7958,97 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   font-size: .8em;
   color: #FF6D6D;
   overflow: hidden;
-  margin-left: 0px;
+  margin-left: 0;
 }
 
 #statuses .post-link {
-  padding: 0px;
+  padding: 0;
 }
 
-.java-applet .icon {
-  float: none;
-  height: 34px;
-  padding-left: 10px;
-  width: 32px;
+.statuses .last-responses {
+  color: rgb(179, 179, 179);
+  display: block;
+  font-size: 0.9em;
+  margin-top: -10px;
+  text-align: center;
 }
 
-.responses .comment-title {
-  margin: 3px 0px;
+#statuses .status .create-response .ui-placeholder {
+  top: 9px;
+  font-style: normal;
+}
+
+#statuses .status .responses ol .re-status .post-title {
+  margin: 0 0 5px 8px;
   display: block;
 }
 
-.responses .answer-box {
+#statuses .status .post-resource .post-title {
+  margin: 0 0 5px 0;
+  display: block;
+}
+
+#statuses .status .responses {
+  padding-left: 0;
+  padding-right: 0;
+  background-color: rgb(240, 240, 240);
+}
+
+#statuses .status .responses .re-status {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#statuses .status .responses .answer-box {
   float: left;
-  margin-left: 30px;
+  margin-left: 37px;
   width: 500px;
 }
 
-.responses .new-post, {
- margin-left: 30px;
+.inform-my-status .distance-top:before {
+   border-color: rgb(240, 240, 240) white;
+   border-width: 0 10px 10px;
+   margin-top: -20px;
+   border-style: solid;
+   content: " ";
+   display: block;
+   position: absolute;
+   width: 0;
 }
 
-/* -- Início notificações lateral esquerda -- */
-
-.local-nav .session .notification {
-  background-color: rgb(230, 230, 230);
-  padding: 3px 3px 2px 3px;
-  color: rgb(77, 173, 214);
-  font-weight: normal;
-  display: inline;
-  margin-left: 10px;
-  font-size: 11px;
+#statuses .status .create-status .post-title {
+  margin-left: 0;
+  margin-bottom: 3px;
 }
 
-.textshadow .local-nav .session .notification {
-  text-shadow: 0px 1px 0px rgb(255, 255, 255);
+.re-status .post-resource .thumbnail {
+  margin: 5px;
+  padding-left: 25px;
 }
 
-.borderradius .local-nav .session .notification {
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+.responses ol .re-status .no-preview .post-text {
+  margin: 5px 0 0 20px;
+}
+
+.create-response .distance-top:after,
+.responses .distance-top:after {
+   border-color: rgb(240, 240, 240) white;
+   border-width: 0 10px 10px;
+   margin-top: -42px;
+   border-style: solid;
+   content: " ";
+   display: block;
+   left: 540px;
+   position: absolute;
+   width: 0;
+}
+
+.create-response .distance-top,
+.create-status .distance-top,
+.responses .distance-top {
+  text-indent: -9999px;
+  width: 0;
+  height: 0;
 }
 
 /* Botão convidar amigos */
@@ -7982,11 +8080,9 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 .boxshadow .invite-button {
-  -webkit-box-shadow: inset 1px 1px 0px 0px rgb(115, 195, 230),inset -1px -1px 0px 0px rgb(115, 195, 230);
-  -moz-box-shadow: inset 1px 1px 0px 0px rgb(115, 195, 230),inset -1px -1px 0px 0px rgb(115, 195, 230);
-  box-shadow: inset 1px 1px 0px 0px rgb(115, 195, 230),inset -1px -1px 0px 0px rgb(115, 195, 230);
+  -webkit-box-shadow: inset 1px 1px 0 0 rgb(115, 195, 230),inset -1px -1px 0 0 rgb(115, 195, 230);
+  -moz-box-shadow: inset 1px 1px 0 0 rgb(115, 195, 230),inset -1px -1px 0 0 rgb(115, 195, 230);
+  box-shadow: inset 1px 1px 0 0 rgb(115, 195, 230),inset -1px -1px 0 0 rgb(115, 195, 230);
 }
 
 /* FIM botão convidar amigos */
-
-/* início agrupar-mural */
