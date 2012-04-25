@@ -3,7 +3,7 @@
   <%= lazy_load(:chart, :jammit => true) do %>
     try{
       var bulletSbjPar = subject_participation_bullet();
-      bulletSbjPar.load_subject_participation_bullet(<%= subject.id %>, "<%= Redu::Application.config.vis[:activities_d3] %>");
+      bulletSbjPar.load_subject_participation_bullet(<%= subject.id %>, "<%= Redu::Application.config.vis[:activities_d3] %>", "#subject-participation-bullet-<%= subject.id %>");
     }catch(e){
     }
   <% end %>
