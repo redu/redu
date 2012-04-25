@@ -7673,11 +7673,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   background-color: rgb(219, 239, 247);
 }
 
-#statuses ol li .status .post-resource,
-#statuses ol li .status .responses {
-  margin-top: 14px;
-}
-
 #statuses .status .create-response {
   background: #f0f0f0;
 }
