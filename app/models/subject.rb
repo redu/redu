@@ -1,4 +1,5 @@
 class Subject < ActiveRecord::Base
+  include EnrollmentVisNotification
 
   belongs_to :space
   belongs_to :owner, :class_name => "User", :foreign_key => :user_id
@@ -29,6 +30,7 @@ class Subject < ActiveRecord::Base
   def enroll(user, role = Role[:member])
     enrollment = self.enrollments.create(:user => user, :role => role)
     enrollment.valid?
+    enrollment
   end
 
   # Desmatricula o usuário
@@ -91,32 +93,4 @@ class Subject < ActiveRecord::Base
       self.space.users.all.each { |u| UserNotifier.subject_added(u, self).deliver }
     end
   end
-
-  protected
-
-  def fill_params(enrollment)
-    course = enrollment.subject.space.course
-    params = {
-      :user_id => enrollment.user_id,
-      :type => "enrollment",
-      :lecture_id => nil,
-      :subject_id => enrollment.subject_id,
-      :space_id => enrollment.subject.space.id,
-      :course_id => course.id,
-      :status_id => nil,
-      :statusable_id => nil,
-      :statusable_type => nil,
-      :in_response_to_id => nil,
-      :in_response_to_type => nil,
-      :created_at => enrollment.created_at,
-      :updated_at => enrollment.updated_at
-    }
-  end
-
-  def delay_hierarchy_notification(enrollments)
-    params = enrollments.collect { |e| fill_params(e) }
-    job = HierarchyNotificationJob.new(params)
-    Delayed::Job.enqueue(job, :queue => 'general')
-  end
-
 end

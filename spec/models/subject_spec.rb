@@ -3,12 +3,12 @@ require 'spec_helper'
 describe Subject do
   before do
     environment = Factory(:environment)
-    course = Factory(:course, :owner => environment.owner,
+    @course = Factory(:course, :owner => environment.owner,
                      :environment => environment)
     @space = Factory(:space, :owner => environment.owner,
-                    :course => course)
+                    :course => @course)
     @user = Factory(:user)
-    course.join(@user)
+    @course.join(@user)
   end
 
 
@@ -188,4 +188,46 @@ describe Subject do
     subject.graduated?(unenrolled_user).should be_false
   end
 
+  context "when create a new subject" do
+    before do
+      WebMock.disable_net_connect!
+      3.times do
+        u = Factory(:user)
+        @course.join(u)
+      end
+      @stub = stub_request(:post, Redu::Application.config.vis_client[:url]).
+        with(:headers => {'Authorization'=>['JOjLeRjcK', 'core-team'],
+                          'Content-Type'=>'application/json'}).
+                          to_return(:status => 200, :body => "", :headers => {})
+
+
+      @subject = Factory(:subject, :owner => @user, :space => @space)
+      @enrollments = @subject.create_enrollment_associations
+    end
+
+    it "should send a notification to visualization" do
+      @enrollments.collect do |enroll|
+        params = {
+          :lecture_id => nil,
+          :subject_id => enroll.subject_id,
+          :space_id => enroll.subject.space_id,
+          :course_id => enroll.subject.space.course_id,
+          :user_id => enroll.user_id,
+          :type => "enrollment",
+          :status_id => nil,
+          :statusable_id => nil,
+          :statusable_type => nil,
+          :in_response_to_id => nil,
+          :in_response_to_type => nil,
+          :created_at => enroll.created_at,
+          :updated_at => enroll.updated_at
+        }
+
+        a_request(:post, Redu::Application.config.vis_client[:url]).
+          with(:body => params.to_json,
+               :headers => {'Authorization'=>['JOjLeRjcK', 'core-team'],
+                            'Content-Type'=>'application/json'}).should have_been_made
+      end
+    end
+  end
 end

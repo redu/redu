@@ -412,8 +412,49 @@ describe Course do
           subject.join(@user)
         }.should change(License, :count).by(1)
       end
-
     end
+
+    it "should send a notification to vis" do
+      WebMock.disable_net_connect!
+      @stub = stub_request(:post, Redu::Application.config.vis_client[:url]).
+        with(:headers => {'Authorization'=>['JOjLeRjcK', 'core-team'],
+                          'Content-Type'=>'application/json'}).
+                          to_return(:status => 200, :body => "", :headers => {})
+
+
+      subj2 = Factory(:subject, :space => @space,
+                              :owner => subject.owner,
+                              :finalized => true)
+
+      enrollments = []
+      subject.join(@user)
+      enrollments << @user.get_association_with(@subj)
+      enrollments << @user.get_association_with(subj2)
+
+      enrollments.each do |enroll|
+        params = {
+          :lecture_id => nil,
+          :subject_id => enroll.subject_id,
+          :space_id => enroll.subject.space_id,
+          :course_id => enroll.subject.space.course_id,
+          :user_id => enroll.user_id,
+          :type => "enrollment",
+          :status_id => nil,
+          :statusable_id => nil,
+          :statusable_type => nil,
+          :in_response_to_id => nil,
+          :in_response_to_type => nil,
+          :created_at => enroll.created_at,
+          :updated_at => enroll.updated_at
+        }
+
+        a_request(:post, Redu::Application.config.vis_client[:url]).
+          with(:body => params.to_json,
+               :headers => {'Authorization'=>['JOjLeRjcK', 'core-team'],
+                            'Content-Type'=>'application/json'}).should have_been_made
+      end
+    end
+
   end
 
   context "removes a user (unjoin)" do
