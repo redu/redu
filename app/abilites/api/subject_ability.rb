@@ -1,19 +1,20 @@
 module Api
   module SubjectAbility
     extend ActiveSupport::Concern
-
     module InstanceMethods
       def subject_abilities(user)
-        alias_action :destroy, :to => :manage
+        administrative_roles = [Role[:teacher],
+                                Role[:course_admin],
+                                Role[:environment_admin]]
 
         if user
           can :read, Subject do |s|
-            can? :read, s.space
+            s.enrollments.exists?(:user_id => user)
           end
 
           can :manage, Subject do |s|
-            can? :manage, s.space
-          end
+            s.enrollments.exists?(:user_id => user, :role => administrative_roles)
+          end          
         end
       end
     end

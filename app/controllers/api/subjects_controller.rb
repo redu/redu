@@ -17,7 +17,7 @@ module Api
 
     def destroy
       @subject = Subject.find(params[:id])
-      authorize! :destroy, @subject
+      authorize! :manage , @subject
       @subject.destroy
       respond_with(@subject)
     end

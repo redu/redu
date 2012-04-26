@@ -11,6 +11,9 @@ describe "Subject(the subject of a space) abilities" do
     @subject = Subject.create(:title => "Test Subject 1",
                               :description => "Test Subject Description",
                               :space => @space)
+    # precisa atualizar manualmente para criar um módulo vazio
+    @subject.update_attribute(:finalized, true)
+
     @application, @current_user, @token = generate_token(@user)
   end
 
@@ -27,6 +30,10 @@ describe "Subject(the subject of a space) abilities" do
 
     it "should be able to read" do
       subject.should be_able_to :read, @subject
+    end
+
+    it "should not be able to destroy" do
+      subject.should_not be_able_to :destroy, @subject
     end
   end
 
@@ -55,6 +62,20 @@ describe "Subject(the subject of a space) abilities" do
 
     it "should not be able to destroy" do
       subject.should_not be_able_to :destroy, @subject
+    end
+  end
+
+  context "when course_admin" do
+    before do
+      @course.join(@user, Role[:course_admin])
+    end
+
+    it "should be able to read" do
+      subject.should be_able_to :read, @subject
+    end
+
+    it "should be able to destroy" do
+      subject.should be_able_to :destroy, @subject
     end
   end
 
