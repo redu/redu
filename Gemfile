@@ -69,6 +69,10 @@ group :development, :test do
   gem 'rails3-generators'
 end
 
+group :test do
+  gem 'webmock'
+end
+
 group :development do
   gem 'thin'
   gem 'rails-footnotes', '>= 3.7.5.rc4'
