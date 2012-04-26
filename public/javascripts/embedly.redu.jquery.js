@@ -22,8 +22,10 @@ $.fn.catchAndSendToEmbedly = function() {
             resource_inputs = resource_inputs + appendInput("provider", json.provider_url);
             if(json.url != null) {
               resource_inputs = resource_inputs + appendInput("link", json.url);
+              url = json.url
             } else {
               resource_inputs = resource_inputs + appendInput("link", url);
+              url = 'http://' + url;
             }
             if(json.title != null) {
               title = json.title;
@@ -70,7 +72,7 @@ $.fn.catchAndSendToEmbedly = function() {
                  thumbnail_content +
                 '<div class="post-text">' +
                   '<span class="close icon-small icon-delete-gray_8_10">Close</span>'+
-                  '<h3><a href="'+ url +'" class="title">'+title+'</a></h3>'+
+                  '<h3><a href="'+ url +'" target="_blank" rel="nofollow" class="title">'+title+'</a></h3>'+
                   '<h4 class="source-site">'+json.provider_url+'</h4>'+
                   '<p class="post-description">'+description+'</p>'+
               '</div>'+

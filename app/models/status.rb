@@ -8,8 +8,9 @@ class Status < ActiveRecord::Base
   has_many :users, :through => :status_user_associations
   has_many :status_user_associations, :dependent => :destroy
   has_many :status_resources, :dependent => :destroy
-  
+
   accepts_nested_attributes_for :status_resources
+  validates_associated :status_resources
 
   scope :activity_by_user, lambda { |u|
     where("type = ? AND user_id = ?", "Activity", u) }

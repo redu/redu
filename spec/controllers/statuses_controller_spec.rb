@@ -24,7 +24,7 @@ describe StatusesController do
                                "magna aliqua. Ut enim ad minim veniam," +
                                "quis nostrud exercitation",
                       :statusable_id => @statusable.id,
-                      :type => "Activity" }, 
+                      :type => "Activity" },
           :locale => "pt-BR"
         }
       end
@@ -54,13 +54,13 @@ describe StatusesController do
       context "with an associated resource" do
         before do
           @resource = Factory.build(:status_resource)
-          @params[:resource] = {
+          @params[:status][:status_resources_attributes] = [{
             :provider => @resource.provider,
             :thumb_url => @resource.thumb_url,
             :title => @resource.title,
             :description => @resource.description,
             :link => @resource.link
-          }
+          }]
         end
 
         it "should create successfully" do
@@ -68,6 +68,19 @@ describe StatusesController do
           post :create, @params
           Status.last.status_resources.should_not be_empty
           Status.last.status_resources[0].provider.should eq(@resource.provider)
+        end
+
+        context "and status resource is invalid" do
+          before do
+            @params[:status][:status_resources_attributes].first.store(:link, nil)
+          end
+
+          it "should no create an status" do
+            request.env["HTTP_REFERER"] = user_url(@statusable)
+            expect {
+              post :create, @params
+            }.should_not change(Activity, :count)
+          end
         end
       end
     end
@@ -175,8 +188,7 @@ describe StatusesController do
       context "that has an associated resource" do
         before do
           subject.type = "Activity"
-          @resource = Factory(:status_resource)
-          subject.status_resources << @resource
+          subject.status_resources << Factory(:status_resource, :status => subject)
           @params = {:id => subject.id, :format => "js", :locale => "pt-BR"}
         end
 
