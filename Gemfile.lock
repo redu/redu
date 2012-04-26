@@ -319,6 +319,9 @@ GEM
     tzinfo (0.3.33)
     useragent (0.4.8)
     uuidtools (2.1.2)
+    webmock (1.7.10)
+      addressable (~> 2.2, > 2.2.5)
+      crack (>= 0.1.7)
     whenever (0.6.7)
       aaronh-chronic (>= 0.3.9)
       activesupport (>= 2.3.4)
@@ -389,6 +392,7 @@ DEPENDENCIES
   translate_routes
   useragent (~> 0.4.8)
   vis_client!
+  webmock
   whenever
   will_paginate (~> 3.0.pre2)
   zencoder
