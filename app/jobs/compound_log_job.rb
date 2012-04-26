@@ -10,7 +10,7 @@ class CompoundLogJob
 
     if log
       compound_log = CompoundLog.current_compostable(log)
-      compound_log.compound!(log)
+      compound_log.compound!(log) if compound_log
     end
   end
 end
