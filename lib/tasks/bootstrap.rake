@@ -77,10 +77,19 @@ namespace :bootstrap do
   task :reduviz_app => :environment do
     ClientApplication.create(:name => "ReduViz",
                              :url => "http://www.redu.com.br")
-  end  
+  end
+
+  desc "AccessToken to ReduViz for bootstraped Users"
+  task :access_tokens => :environment do
+    User.all.each do |user|
+      application = ClientApplication.where(:name => "ReduViz").first
+      AccessToken.create(:client_application => application,
+                         :user => user)
+    end
+  end
 
   desc "Run all bootstrapping tasks"
   task :all => [:roles, :privacies, :audiences,
                 :default_user, :default_admin,
-                :partner, :reduviz_app]
+                :partner, :reduviz_app, :access_tokens]
 end
