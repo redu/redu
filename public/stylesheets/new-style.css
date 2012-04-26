@@ -2024,16 +2024,12 @@ body {
   overflow: hidden;
 }
 
-.statuses .icon-seminar-lightblue_64_66-after:after,
-.statuses .icon-page-lightblue_64_66-after:after,
-.statuses .icon-exercise-lightblue_64_66-after:after,
-.statuses .icon-document-lightblue_64_66-after:after,
-.statuses .icon-gruping-lightblue_64_66-after:after,
-.statuses .icon-contact-lightblue_64_66-after:after {
-  margin-top: -70px;
+.statuses .status:after,
+.statuses .status-context:after {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
-
-
 
 .statuses ol .responses,
 .statuses ol .create-response {
@@ -2166,11 +2162,6 @@ body {
   line-height: 130%;
   width: 510px;
   float: left;
-}
-
-.statuses .status-context:after {
-  position: absolute;
-  right: 0;
 }
 
 .statuses .status-context .status-main {
@@ -7971,27 +7962,27 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 #content .create-status .new-post .distance-top:before {
-   border-color: rgb(240, 240, 240) white;
-   border-width: 0 10px 10px;
-   margin-top: -58px;
-   border-style: solid;
-   content: " ";
-   display: block;
-   position: absolute;
-   width: 0;
+ border-color: rgb(240, 240, 240) white;
+ border-width: 0 10px 10px;
+ margin-top: -58px;
+ border-style: solid;
+ content: " ";
+ display: block;
+ position: absolute;
+ width: 0;
 }
 
 .status-text .create-response .distance-top:after,
 .status-text .responses .distance-top:after {
-   border-color: rgb(240, 240, 240) white;
-   border-width: 0 10px 10px;
-   margin-top: -46px;
-   border-style: solid;
-   content: " ";
-   display: block;
-   left: 540px;
-   position: absolute;
-   width: 0;
+ border-color: rgb(240, 240, 240) white;
+ border-width: 0 10px 10px;
+ margin-top: -46px;
+ border-style: solid;
+ content: " ";
+ display: block;
+ left: 540px;
+ position: absolute;
+ width: 0;
 }
 
 .distance-top {
@@ -8056,24 +8047,23 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 /* FIM botão convidar amigos */
 
 /* início agrupar-mural */
-
 #statuses .post-grouped {
-  width: 410px;
+  width: 440px;
   overflow: hidden;
-  margin-left: 35px;
-  margin-top: 10px;
+  margin-left: 40px;
+  height:40px;
+  float: left;
 }
 
 #statuses .post-grouped .status-content {
   margin: 0px;
 }
 
-#statuses .post-grouped .show-more {
+.statuses .status .show-more {
   display: block;
   clear: both;
-  float: right;
   margin-top: 10px;
-  margin-right: 8px;
+  float: right;
   font-size: 11px;
 }
 
@@ -8089,6 +8079,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   margin-left: 10px;
 }
 
-#statuses .status {
-  overflow: hidden;
+#statuses .status .post-grouped .status-content .friend-avatar,
+#statuses .status .post-grouped li .friend-avatar {
+  margin-top: 8px;
 }
