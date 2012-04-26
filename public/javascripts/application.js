@@ -8,8 +8,6 @@ jQuery(function(){
       $(this).parent().slideToggle();
       $("#content").css("marginTop","20px");
       $("#home").css("marginTop","40px");
-
-      e.preventDefault();
     });
 
     // Dropdown de usuário

@@ -80,11 +80,11 @@ var subject_participation_bullet = function () {
 
     // URL activities_d3
     // Carregamento do bullet
-    var loadBullet = function(subject_id, ur){
+    var loadBullet = function(subject_id, ur, div){
       var url = ur + "?subject_id=" + subject_id;
 
       d3.json(url, function(data) {
-      var vis = d3.select("#subject-participation-bullet-"+subject_id).selectAll("svg")
+      var vis = d3.select(div).selectAll("svg")
         .data(data)
         .enter().append("svg")
         .attr("class", "bullet")
@@ -106,18 +106,18 @@ var subject_participation_bullet = function () {
       // Atributo title para o tooltip
       d3.selectAll("rect")
         .attr("title", "Total de alunos: " + data[0].ranges[0] +
-            "<br/>Total de alunos que finalizarama o módulo: " + data[0].measures[0]);
+            "<br/>Total de alunos que finalizaram o módulo: " + data[0].measures[0]);
 
       // Configuração default do tooltip
-      $('.subject-participation-bullet > svg > g > rect.range').tipTip({defaultPosition: "top"});
-      $('.subject-participation-bullet > svg > g > rect.measure').tipTip({defaultPosition: "top"});
+      $(div).find('> svg > g > rect.range').tipTip({defaultPosition: "top"});
+      $(div).find('> svg > g > rect.measure').tipTip({defaultPosition: "top"});
     });
   };
 
   // Retorno do objeto
   return {
-    load_subject_participation_bullet: function (subject_id, url) {
-      loadBullet(subject_id, url);
+    load_subject_participation_bullet: function (subject_id, url, div) {
+      loadBullet(subject_id, url, div);
     },
   };
 };

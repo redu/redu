@@ -38,6 +38,7 @@ class PlansController < BaseController
   end
 
   def index
+    authorize! :manage, @user
     @plans = @user.plans.current.includes(:billable)
 
     respond_to do |format|
