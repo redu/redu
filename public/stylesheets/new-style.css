@@ -7932,9 +7932,13 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
    border-style: solid;
    content: " ";
    display: block;
-   left: 540px;
+   left: 60px;
    position: absolute;
    width: 0;
+}
+
+#statuses ol li .status .create-status {
+  left: 540px;
 }
 
 .create-response .distance-top,
