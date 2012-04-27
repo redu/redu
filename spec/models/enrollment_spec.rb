@@ -75,37 +75,5 @@ describe Enrollment do
       }.should change(subject, :graduaded).to(false)
     end
 
-    it "when grade is full should send a notification to vis" do
-      WebMock.disable_net_connect!
-      @stub = stub_request(:post, Redu::Application.config.vis_client[:url]).
-        with(:headers => {'Authorization'=>['JOjLeRjcK', 'core-team'],
-                          'Content-Type'=>'application/json'}).
-                          to_return(:status => 200, :body => "", :headers => {})
-      lectures
-      subject.asset_reports.each { |a| a.done = true; a.save }
-      subject.update_grade!
-
-      params = {
-        :user_id => subject.user_id,
-        :lecture_id => nil,
-        :subject_id => subject.subject_id,
-        :space_id => subject.subject.space.id,
-        :course_id => subject.subject.space.course.id,
-        :type => "subject_finalized",
-        :status_id => nil,
-        :statusable_id => nil,
-        :statusable_type => nil,
-        :in_response_to_id => nil,
-        :in_response_to_type => nil,
-        :created_at => subject.created_at,
-        :updated_at => subject.updated_at
-      }
-
-      a_request(:post, Redu::Application.config.vis_client[:url]).
-        with(:body => params.to_json,
-             :headers => {'Authorization'=>['JOjLeRjcK', 'core-team'],
-                          'Content-Type'=>'application/json'}).should have_been_made
-
-    end
   end
 end
