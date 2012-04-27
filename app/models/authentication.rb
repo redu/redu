@@ -23,6 +23,7 @@ class Authentication < ActiveRecord::Base
         end
       end
     end
+    user.create_settings!
 
     user
   end
