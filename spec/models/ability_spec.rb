@@ -197,6 +197,16 @@ describe Ability do
                   :user => @member, :role => :member)
           @ability.should be_able_to(:preview, course)
         end
+
+        it "can't see reports" do
+          @ability.should_not be_able_to(:teacher_participation_report,
+                                     @course)
+        end
+
+        it "can't access JSON reports" do
+          @ability.should_not be_able_to(:teacher_participation_interaction,
+                                     @course)
+        end
       end
 
       context "environment admin" do
@@ -328,6 +338,16 @@ describe Ability do
         it "can teach course" do
           @ability.should be_able_to(:teach, @course)
         end
+
+        it "can't see reports" do
+          @ability.should_not be_able_to(:teacher_participation_report,
+                                     @course)
+        end
+
+        it "can't access JSON reports" do
+          @ability.should_not be_able_to(:teacher_participation_interaction,
+                                     @course)
+        end
       end
 
       context "tutor" do
@@ -351,6 +371,16 @@ describe Ability do
         it "cannot invite members" do
           @ability.should_not be_able_to(:invite_members, @course)
         end
+
+        it "can't see reports" do
+          @ability.should_not be_able_to(:teacher_participation_report,
+                                     @course)
+        end
+
+        it "can't access JSON reports" do
+          @ability.should_not be_able_to(:teacher_participation_interaction,
+                                     @course)
+        end
       end
 
       context "redu admin" do
@@ -371,6 +401,20 @@ describe Ability do
           course = Factory.build(:course,
                                  :environment => @environment)
           @ability.should be_able_to(:destroy, course)
+        end
+
+        it "can see reports" do
+          course = Factory.build(:course,
+                                 :environment => @environment)
+          @ability.should be_able_to(:teacher_participation_report,
+                                     course)
+        end
+
+        it "can access JSON reports" do
+          course = Factory.build(:course,
+                                 :environment => @environment)
+          @ability.should be_able_to(:teacher_participation_interaction,
+                                     course)
         end
       end
 
@@ -433,6 +477,11 @@ describe Ability do
                                          @course)
         end
 
+        it "can't see lecture participation report" do
+          @ability.should_not be_able_to(:lecture_participation_report,
+                                    @course)
+        end
+
         it "cannot create a subject"
         it "cannot destroy any subject"
         it "cannot create a lecture"
@@ -473,6 +522,11 @@ describe Ability do
                                          @course)
         end
 
+        it "can't see lecture participation report" do
+          @ability.should_not be_able_to(:lecture_participation_report,
+                                    @course)
+        end
+
         it "creates a subject"
         it "destroys any subject"
         it "creates a lecture"
@@ -507,6 +561,11 @@ describe Ability do
                                          @course)
         end
 
+        it "can't see lecture participation report" do
+          @ability.should_not be_able_to(:lecture_participation_report,
+                                    @course)
+        end
+
         it "cannot create a subject"
         it "cannot destroy any subject"
         it "cannot create a lecture"
@@ -536,6 +595,11 @@ describe Ability do
                                      @course)
         end
 
+        it "can see lecture participation report" do
+          @ability.should be_able_to(:lecture_participation_report,
+                                    @course)
+        end
+
         it "creates a subject"
         it "destroys any subject"
         it "creates a lecture"
@@ -563,6 +627,11 @@ describe Ability do
         it "can see subject participation report" do
           @ability.should be_able_to(:subject_participation_report,
                                      @course)
+        end
+
+        it "can see lecture participation report" do
+          @ability.should be_able_to(:lecture_participation_report,
+                                    @course)
         end
 
         it "creates a subject"

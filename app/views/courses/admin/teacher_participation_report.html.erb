@@ -24,10 +24,9 @@
       <% else %>
         <h3 class="form-header">Qual a participação do professor na disciplina?</h3>
           <%= lazy_load(:chart, :jammit => true) do %>
-            try{
-              $("#graph-form").before("<div id='teacher-participation-chart' class='teacher-participation-chart'></div>"),
-              $("#graph-form").submit();
-              }catch(e){}
+              $("#graph-form").before($("<div/>", {id: "teacher-participation-chart"}));
+              var graph = teacher_participation_graph();
+              graph.load();
           <% end %>
           <%= form_tag vis_dashboard_teacher_participation_interaction_path, :method => :get, :remote => true, :class => "concave-form", :id => "graph-form" do %>
           <%= label_tag "", "Professor", :id => "form-problem"%>
