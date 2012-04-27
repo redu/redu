@@ -2,6 +2,8 @@ jQuery(function(){
 
     $.refreshSubtabs();
 
+    $.refreshEmbeddedSharing();
+
     // Flash message
     $(".flash-message").parent().next().css("marginTop", "10px");
     $(".flash-message .close-flash").click(function(e){
@@ -212,6 +214,7 @@ jQuery(function(){
 
     $(document).ajaxComplete(function(){
         $.refreshSubtabs();
+        $.refreshEmbeddedSharing();
     });
 });
 
@@ -256,3 +259,9 @@ $.refreshSubtabs = function() {
   var subtabsNav = $(".subtabs .ui-tabs-nav");
   subtabsNav.css("width", subtabsNav.find("li").length * 120);
 };
+
+// Permite ao usuário compartilhar recursos embutidos em suas postagens
+$.refreshEmbeddedSharing = function() {
+  $('.create-status').enableEmbedding();
+}
+

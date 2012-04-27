@@ -1,5 +1,5 @@
-$.fn.catchAndSendToEmbedly = function() {
-  $('textarea#status_text').keyup(function(e){
+$.fn.enableEmbedding = function() {
+  $(this).find('textarea').keyup(function(e) {
     var $this = $(this);
     if(e.which == 13 | e.which == 32) {
       // Usuário pressionou Enter ou Space
@@ -36,10 +36,10 @@ $.fn.catchAndSendToEmbedly = function() {
               resource_inputs = resource_inputs + appendInput("description", description);
             }
 
-            //Process thumbnails
+            // Processa thumbnails
             if(json.thumbnail_url != null) {
-              if(json.thumbnail_url instanceof Array){
-                for(e in json.thumbnail_url){
+              if(json.thumbnail_url instanceof Array) {
+                for(e in json.thumbnail_url) {
                   thumbnail_list.push(json.thumbnail_url[e].url);
                 }
                 thumbnail_navigation = '<span class="last control">'+
@@ -50,10 +50,10 @@ $.fn.catchAndSendToEmbedly = function() {
                 thumbnail_list.push(json.thumbnail_url);
               }
 
-              //Add thumbnail's urls list
+              // Adiciona à lista de URL's de thumbnails
               $this.data("thumbnail_list", thumbnail_list);
 
-              //Add thumbnail img when thumbnail exists
+              // Adiciona imagem de thumbnail (quando existe)
               resource_inputs = resource_inputs + appendInput("thumb_url", thumbnail_list[0]);
               thumbnail_content = '<div class="thumbnail">'+
                 '<img id="thumbnail-0" class="preview-link" src="'+thumbnail_list[0] +'"/>'+
@@ -89,7 +89,7 @@ $.fn.catchAndSendToEmbedly = function() {
   });
 
   // Close embedded content
-  $('fieldset .post-text span.close.icon-small').live('click', function(){
+  $(this).find('.close').live('click', function(){
     $(this).parents('fieldset').find("textarea#status_text").data('last_url', "");
     $(this).parents('fieldset').find('.post-resource').slideUp(function(){
       $(this).remove();
@@ -97,7 +97,7 @@ $.fn.catchAndSendToEmbedly = function() {
   });
 
   // Navigation thumbnail actions
-  $('fieldset .thumbnail .buttons-thumbnail span').live('click', function(){
+  $(this).find('.buttons-thumbnail span').live('click', function(){
     var button = $(this);
     var thumbnail_list = button.parents("fieldset").find("textarea#status_text").data("thumbnail_list");
     if(button.hasClass('remove')){
@@ -112,7 +112,7 @@ $.fn.catchAndSendToEmbedly = function() {
   });
 
   // Faz desaparecer o preview depois de criar a postagem
-  $('input#status_submit').live('click', function() {
+  $(this).find('input').live('click', function() {
     $(this).parents('fieldset').find("textarea#status_text").data('last_url', "");
     $(this).parents('fieldset').find('.post-resource').ajaxComplete(function() {
       $(this).slideUp(function(){
@@ -150,12 +150,3 @@ function parseUrl(text){
   var resultArray = text.match(regex);
   return resultArray;
 }
-
-// Carrega o JavaScript tanto para requisições remotas quanto para não-remotas
-$(document).ready(function(){
-  $(document).catchAndSendToEmbedly();
-
-  $(document).ajaxComplete(function(){
-    $(document).catchAndSendToEmbedly();
-  });
-});
