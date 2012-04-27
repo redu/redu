@@ -1,11 +1,11 @@
 module EnrollmentVisNotification
 
   # preenche os parametros para envio para visualização
-  def fill_enroll_params(enrollment)
+  def fill_enroll_params(enrollment, type)
     course = enrollment.subject.space.course
     params = {
       :user_id => enrollment.user_id,
-      :type => "enrollment",
+      :type => type,
       :lecture_id => nil,
       :subject_id => enrollment.subject_id,
       :space_id => enrollment.subject.space.id,
@@ -21,9 +21,9 @@ module EnrollmentVisNotification
   end
 
   # Cria um delayed_job do tipo HierarchyNotification para enviar requisições para visualização
-  def delay_hierarchy_notification(enrollments)
+  def delay_hierarchy_notification(enrollments, type)
     unless enrollments.empty?
-      params = enrollments.collect { |e| fill_enroll_params(e) }
+      params = enrollments.collect { |e| fill_enroll_params(e, type) }
       job = HierarchyNotificationJob.new(params)
       Delayed::Job.enqueue(job, :queue => 'general')
     end

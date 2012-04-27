@@ -72,7 +72,7 @@ class Subject < ActiveRecord::Base
                      :role => users_space.role)
     end
 
-    delay_hierarchy_notification(enrollments)
+    delay_hierarchy_notification(enrollments, "enrollment")
 
     enrollments
   end

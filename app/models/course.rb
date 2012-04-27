@@ -155,6 +155,7 @@ class Course < ActiveRecord::Base
   end
 
   def unjoin(user)
+    enrollments = []
     course_association = user.get_association_with(self)
     course_association.destroy
 
@@ -167,9 +168,12 @@ class Course < ActiveRecord::Base
 
       space.subjects.each do |subject|
         enrollment = user.get_association_with subject
+        enrollments << enrollment if enrollment
         enrollment.destroy if enrollment
       end
     end
+    # Associa o delayed_job para a remoção dos enrollments em visualização
+    delay_hierarchy_notification(enrollments, "remove_enrollment")
   end
 
   def create_hierarchy_associations(user, role = Role[:member])
@@ -196,7 +200,7 @@ class Course < ActiveRecord::Base
 
     end
     # Associa o delayed_job para a criação dos enrollments em visualização
-    delay_hierarchy_notification(enrollments)
+    delay_hierarchy_notification(enrollments, "enrollment")
   end
 
   # Verifica se o usuário em questão está esperando aprovação num determinado
