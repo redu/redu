@@ -88,15 +88,15 @@ $.fn.enableEmbedding = function() {
       }}
   });
 
-  // Close embedded content
+  // Fechar conteúdo embedded
   $(this).find('.close').live('click', function(){
-    $(this).parents('fieldset').find("textarea#status_text").data('last_url', "");
+    $(this).parents('fieldset').data('last_url', "");
     $(this).parents('fieldset').find('.post-resource').slideUp(function(){
       $(this).remove();
     });
   });
 
-  // Navigation thumbnail actions
+  // Ações de navegação do thumbnail
   $(this).find('.buttons-thumbnail span').live('click', function(){
     var button = $(this);
     var thumbnail_list = button.parents("fieldset").find("textarea#status_text").data("thumbnail_list");
