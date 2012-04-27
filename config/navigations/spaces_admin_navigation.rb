@@ -28,7 +28,17 @@ SimpleNavigation::Configuration.run do |navigation|
       tabs.item :reports, 'Relatório',
         subject_participation_report_space_path(@space),
         :class => 'ui-state-default',
-        :link => { :class => "icon-subject_16_18-before" }
+        :link => { :class => "icon-subject_16_18-before" } do |subtabs|
+          subtabs.dom_class = 'clearfix ui-tabs-nav'
+          subtabs.item :subject_report, "Módulos",
+            subject_participation_report_space_path(@space),
+            :class => 'ui-state-default',
+            :link => { :class => 'icon-list_16_18-before' }
+          subtabs.item :lecture_report, "Aulas",
+            lecture_participation_report_space_path(@space),
+            :class => 'ui-state-default',
+            :link => { :class => 'icon-list_16_18-before' }
+        end
     end
   end
 end
