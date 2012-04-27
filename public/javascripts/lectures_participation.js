@@ -20,7 +20,8 @@ var lecture_participation_graph = function () {
       }
     },
     legend: {
-      layout: 'vertical'
+      layout: 'vertical',
+      x: -40
     },
     tooltip: {
       crosshairs: true,
