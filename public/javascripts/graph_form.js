@@ -1,3 +1,7 @@
+// Função que trata dos elementos do form relacionado aos gráficos HighCharts,
+// Manipulação dos selects das datas, checkboxs e função de submit do form
+// Além de tratar eventos de erro com mensagens
+
 var graphForm = function () {
   // Tratamento das datas
   var time_selected = function (period) {

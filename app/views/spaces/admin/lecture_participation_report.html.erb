@@ -15,23 +15,21 @@
       <%= subtabs :spaces_admin do %>
         <h3 class="form-header">Qual a participação dos alunos nas aulas?</h3>
         <%= lazy_load(:chart, :jammit => true) do %>
-          try{
-            $("#graph-form").before("<div id='lecture-participation-chart' class='teacher-participation-chart'></div>");
-            var graph = lecture_participation_graph();
-            graph.load_lecture_participation_graph();
-          }catch(e){}
+          $("#graph-form").before($("<div/>", {id: "lecture-participation-chart"}));
+          var graph = lecture_participation_graph();
+          graph.load();
         <% end %>
         <%= form_tag Redu::Application.config.vis[:lecture_participation], :method => :get, :remote => true, :class => "concave-form", :id => "graph-form" do %>
           <%= label_tag "", "Aulas", :id => "form-problem" %>
           <ul class="columns">
-            <% @space.subjects.each do |subject| %>
-              <%= render :partial => 'spaces/admin/lecture_item_admin',
-                :collection => subject.lectures, :as => :lecture %>
-            <% end %>
             <li>
               <%= check_box_tag "all-check", "0", true %>
               <%= label_tag "all-check", "Todos" %>
             </li>
+            <% @space.subjects.each do |subject| %>
+              <%= render :partial => 'spaces/admin/lecture_item_admin',
+                :collection => subject.lectures, :as => :lecture %>
+            <% end %>
           </ul>
 
           <%= label_tag "date_start_fake", "Data inicial" %>
@@ -42,7 +40,7 @@
               :style => "display: none;" %>
           <% end %>
 
-          <%= label_tag "date_end", "Data final" %>
+          <%= label_tag "date_end_fake", "Data final" %>
           <%= field_set_tag nil, :id => "date-validate",
             :class => "inline" do %>
             <%= date_select "date_end_fake", nil, :end_year => Date.today.year %>

@@ -61,7 +61,7 @@ var lecture_participation_graph = function () {
   }
 
   return {
-    load_lecture_participation_graph: function () {
+    load: function () {
       var graph = graphForm();
       graph.load_graph(function () {
         options.series[0].data = json.helps_by_day;
