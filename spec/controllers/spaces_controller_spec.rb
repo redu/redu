@@ -27,28 +27,41 @@ describe SpacesController do
     end
   end
 
-  context "GET reports" do
+  context "GET report" do
     before do
       environment = Factory(:environment)
       course = Factory(:course, :environment => environment)
-      space = Factory(:space, :course => course)
+      @space = Factory(:space, :course => course)
       user = Factory(:user)
-      space.course.join user, Role[:environment_admin]
+      @space.course.join user, Role[:environment_admin]
 
       activate_authlogic
       UserSession.create user
-
-      get :subject_participation_report, :id => space.id,
-        :locale => "pt-BR"
     end
 
-    it "when successful" do
-      response.should render_template "spaces/admin/subject_participation_report"
+    context "subject participation" do
+      before do
+        get :subject_participation_report, :id => @space.id,
+          :locale => "pt-BR"
+      end
+
+      it "when successful" do
+        response.should render_template "spaces/admin/subject_participation_report"
+      end
+
+      it "checking user agent" do
+        user = (assigns[:user_agent][0])
+        user.product.should eq("Rails")
+      end
     end
 
-    it "checking user agent" do
-      user = (assigns[:user_agent][0])
-      user.product.should eq("Rails")
+    context "lecture participation" do
+      it "when successful" do
+        get :lecture_participation_report, :id => @space.id,
+          :locale => "pt-BR"
+
+        response.should render_template "spaces/admin/lecture_participation_report"
+      end
     end
   end
 end

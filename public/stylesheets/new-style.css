@@ -7905,6 +7905,13 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   margin-left: 0px;
 }
 
+#graph-form .columns li{
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 #statuses .post-link {
   padding: 0px;
 }
