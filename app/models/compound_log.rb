@@ -5,16 +5,25 @@ class CompoundLog < Status
 
   def compound!(log, min_logs=4)
     self.logs << log
+    log.update_attributes(:compound => true) if self.compound_visible_at
+
     if self.logs.count == min_logs
       self.compound_visible_at = Time.now
       self.compound = false
+      self.hide_logs
       self.save!
     end
   end
 
   def expired?(interval)
-    if self.compound_visible_at
-      self.compound_visible_at <= Time.now.ago(interval.hours)
+    self.compound_visible_at <= Time.now.ago(interval.hours) if self.compound_visible_at
+  end
+
+
+  protected
+  def hide_logs
+    self.logs.each do |log|
+      log.update_attributes(:compound => true)
     end
   end
 
@@ -22,7 +31,7 @@ class CompoundLog < Status
   # If the interval time of compound has expired,
   # a new compound log is created
   def self.current_compostable(log, interval=24)
-    compound_logs = CompoundLog.where(:user_id => log.user,
+    compound_logs = CompoundLog.where(:statusable_id => log.statusable,
                                       :logeable_type => log.logeable.class.to_s)
 
     compound_log = compound_logs.order("created_at ASC").limit(1).last

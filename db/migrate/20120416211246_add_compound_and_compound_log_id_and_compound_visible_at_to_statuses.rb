@@ -1,6 +1,6 @@
 class AddCompoundAndCompoundLogIdAndCompoundVisibleAtToStatuses < ActiveRecord::Migration
   def self.up
-    add_column :statuses, :compound, :boolean
+    add_column :statuses, :compound, :boolean, :default => false
     add_column :statuses, :compound_log_id, :integer
     add_column :statuses, :compound_visible_at, :datetime
   end
