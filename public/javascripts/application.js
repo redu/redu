@@ -217,7 +217,6 @@ jQuery(function(){
 
     $(document).ajaxComplete(function(){
         $.refreshSubtabs();
-        $.refreshLoadingMessage();
     });
 });
 
