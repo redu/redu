@@ -2,14 +2,21 @@ jQuery(function(){
 
     $.refreshSubtabs();
 
-    $.refreshLoadingMessage();
-
     // Flash message
     $(".flash-message").parent().next().css("marginTop", "10px");
     $(".flash-message .close-flash").click(function(e){
       $(this).parent().slideToggle();
       $("#content").css("marginTop","20px");
       $("#home").css("marginTop","40px");
+    });
+
+
+    // Mensagem "Carregando..."
+    $("#content").bind('start.pjax', function() { 
+      $('#loading-message').show();
+    });
+    $("#content").bind('end.pjax', function() { 
+      $('#loading-message').hide();
     });
 
     // Dropdown de usuário
@@ -261,13 +268,3 @@ $.refreshSubtabs = function() {
   var subtabsNav = $(".subtabs .ui-tabs-nav");
   subtabsNav.css("width", subtabsNav.find("li").length * 120);
 };
-
-$.refreshLoadingMessage = function() {
-  // Exibe mensagem de carregando durante processamento da requisição assíncrona
-  $("#content").bind('start.pjax', function() { 
-    $('#loading-message').show();
-  });
-  $("#content").bind('end.pjax', function() { 
-    $('#loading-message').hide();
-  });
-}
