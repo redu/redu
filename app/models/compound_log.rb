@@ -3,7 +3,7 @@ class CompoundLog < Status
 
   scope :by_logeable_type, lambda { |type| where(:logeable_type => type)}
 
-  def compound!(log, min_logs=4)
+  def compound!(log, min_logs=3)
     self.logs << log
     log.update_attributes(:compound => true) if self.compound_visible_at
 

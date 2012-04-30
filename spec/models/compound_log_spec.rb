@@ -111,10 +111,9 @@ describe CompoundLog do
           end
         end
 
-        context "and it has the minimum number of logs (4) to being visible" do
+        context "and it has the minimum number of logs (3) to being visible" do
           before do
             @tyrion = Factory(:user, :login => 'tyrion_lannister')
-            @jhon = Factory(:user, :login => 'jhon_arryn')
             @loras = Factory(:user, :login => 'loras_tyrel')
 
             ActiveRecord::Observer.with_observers(:friendship_observer,
@@ -124,9 +123,6 @@ describe CompoundLog do
 
                                                     @robert.be_friends_with(@tyrion)
                                                     @tyrion.be_friends_with(@robert)
-
-                                                    @robert.be_friends_with(@jhon)
-                                                    @jhon.be_friends_with(@robert)
 
                                                     @robert.be_friends_with(@loras)
                                                     @loras.be_friends_with(@robert)
@@ -138,8 +134,8 @@ describe CompoundLog do
             @robert_compounds.count.should == 1
           end
 
-          it "should contain 5 or more logs" do
-            @robert_compounds.last.logs.count.should > 4
+          it "should contain 3 or more logs" do
+            @robert_compounds.last.logs.count.should > 3
           end
 
           it "should be visible" do
@@ -229,10 +225,10 @@ describe CompoundLog do
           end
         end
 
-        context "and it has the minimum number of logs (4) to being visible" do
+        context "and it has the minimum number of logs (3) to being visible" do
           before do
             @be_one_dothraki = Factory(:course, :name => "Dothraki Lifestyle")
-            @users = (1..5).collect { Factory(:user) }
+            @users = (1..3).collect { Factory(:user) }
 
             ActiveRecord::Observer.with_observers(:user_course_association_observer,
                                                   :log_observer) do
@@ -245,8 +241,8 @@ describe CompoundLog do
             @course_compounds.count.should == 1
           end
 
-          it "should contain 5 or more logs" do
-            @course_compounds.last.logs.count.should > 4
+          it "should contain 3 or more logs" do
+            @course_compounds.last.logs.count.should >= 3
           end
 
           it "should be visible" do
