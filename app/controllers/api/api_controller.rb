@@ -2,6 +2,7 @@ module Api
   class ApiController < ActionController::Base
     respond_to :json
     rescue_from ActiveRecord::RecordNotFound, :with => :not_found
+    rescue_from ActiveModel::MissingAttributeError, :with => :bad_request
 
     def routing_error; bad_request end
 

@@ -31,8 +31,8 @@ describe "Statuses" do
       %w(statusable self user).each do |attr|
         get href_to(attr, @entity), :format => 'json', :oauth_token => @token
         response.code.should == "200"
-    end
       end
+    end
   end
 
   context "when Answer type" do
@@ -87,7 +87,7 @@ describe "Statuses" do
 
   context "when Help type" do
     before do
-      @help =  Factory(:help)
+      @help =  Factory(:help, :statusable => Factory(:lecture))
       get "/api/statuses/#{@help.id}", :oauth_token => @token, :format => 'json'
       @entity = parse(response.body)
     end
@@ -108,27 +108,25 @@ describe "Statuses" do
 
   context "when listing on User" do
     before do
-      # São criados usuarios para validação na filtragem pelo tipo
-      @user = Factory(:user)
       @user_statuses = 4.times.collect do
-        [ Factory(:help, :user => @user),
-        Factory(:activity, :user => @user),
-        Factory(:log, :user => @user) ]
+        [ Factory(:help, :user => @current_user, :statusable => Factory(:lecture)),
+          Factory(:activity, :user => @current_user),
+          Factory(:log, :user => @current_user) ]
       end.flatten
-      3.times.each do
-        @help = Factory(:help)
-        @log = Factory(:log)
-        @activity = Factory(:activity)
-      end
+      # São criados usuarios para validação na filtragem pelo tipo
+      @help = Factory(:help, :statusable => Factory(:lecture))
+      @log = Factory(:log)
+      @activity = Factory(:activity)
     end
 
     it "should return code 200" do
-      get "/api/users/#{@user.id}/statuses",:oauth_token => @token, :format => 'json'
+      get "/api/users/#{@current_user.id}/statuses",:oauth_token => @token,
+      :format => 'json'
       response.code.should == "200"
     end
 
     it "should return correct numbers statuses" do
-      get "/api/users/#{@user.id}/statuses",:oauth_token => @token,
+      get "/api/users/#{@current_user.id}/statuses",:oauth_token => @token,
         :format => 'json'
 
       parse(response.body).count.should == @user_statuses.select {|i| i[:type] ==
@@ -136,13 +134,13 @@ describe "Statuses" do
     end
 
     it "should filter by status type (help)" do
-      get "/api/users/#{@user.id}/statuses", :type => "help",
+      get "/api/users/#{@current_user.id}/statuses", :type => "help",
         :oauth_token => @token, :format => 'json'
       parse(response.body).all? { |s| s["type"] == "Help" }.should be
     end
 
     it "should return correct numbers of statuses (Help)" do
-      get "/api/users/#{@user.id}/statuses", :type => "help",
+      get "/api/users/#{@current_user.id}/statuses", :type => "help",
         :oauth_token => @token, :format => 'json'
 
       parse(response.body).count.should == @user_statuses.
@@ -150,7 +148,7 @@ describe "Statuses" do
     end
 
     it "should return correct numbers of statuses (Log)" do
-      get "/api/users/#{@user.id}/statuses", :type => "log",
+      get "/api/users/#{@current_user.id}/statuses", :type => "log",
         :oauth_token => @token, :format => 'json'
 
       parse(response.body).count.should == @user_statuses.
@@ -158,19 +156,19 @@ describe "Statuses" do
     end
 
     it "should filter by status type (log)" do
-      get "/api/users/#{@user.id}/statuses", :type => "log",
+      get "/api/users/#{@current_user.id}/statuses", :type => "log",
         :oauth_token => @token, :format => 'json'
       parse(response.body).all? { |s| s["type"] == "Log" }.should be
     end
 
     it "should filter by status type (activity)" do
-      get "/api/users/#{@user.id}/statuses", :type => "activity",
+      get "/api/users/#{@current_user.id}/statuses", :type => "activity",
         :oauth_token => @token, :format => 'json'
       parse(response.body).all? { |s| s["type"] == "Activity" }.should be
     end
 
     it "should return correct numbers of statuses (Activity)" do
-      get "/api/users/#{@user.id}/statuses", :type => 'activity',
+      get "/api/users/#{@current_user.id}/statuses", :type => 'activity',
         :oauth_token => @token, :format => 'json'
 
       parse(response.body).count.should == @user_statuses.
@@ -182,12 +180,11 @@ describe "Statuses" do
     before do
       @space = Factory(:space)
       @space_statuses = 3.times.collect do
-        [ Factory(:help, :statusable => @space),
-          Factory(:activity, :statusable => @space),
+        [ Factory(:activity, :statusable => @space),
           Factory(:log, :statusable => @space) ]
       end.flatten
       3.times.each do
-        Factory(:help)
+        Factory(:help, :statusable => Factory(:lecture))
         Factory(:activity)
         Factory(:log)
       end
@@ -202,8 +199,8 @@ describe "Statuses" do
     it "should return correct numbers statuses" do
       get "/api/spaces/#{@space.id}/statuses", :oauth_token => @token,
         :format => 'json'
-      parse(response.body).count.should == @space_statuses.select {|i| i[:type] ==
-       "Help" or i[:type] == "Activity" }.length
+        total = @space_statuses.select { |i| i[:type] == "Activity" }.length
+        parse(response.body).count.should ==  total
     end
 
     it "should filter by status type (help)" do
@@ -234,7 +231,7 @@ describe "Statuses" do
           Factory(:log, :statusable => @lecture) ]
       end.flatten
       4.times.each do
-        Factory(:help)
+        Factory(:help, :statusable => Factory(:lecture))
         Factory(:activity)
         Factory(:log)
       end
@@ -327,7 +324,7 @@ describe "Statuses" do
     end
 
     it "should return status 200 when help type" do
-      @help = Factory(:help)
+      @help = Factory(:help, :statusable => Factory(:lecture))
       delete "/api/statuses/#{@help.id}", :oauth_token => @token,
         :format => 'json'
 
@@ -403,6 +400,13 @@ describe "Statuses" do
 
     it "should return 422 when invalid" do
       @params['status'][:text] = ""
+      post "/api/spaces/#{@space.id}/statuses", @params
+
+      response.code.should == "422"
+    end
+
+    it "should return 422 when invalid statusable_type" do
+      @params['status']['type'] = 'Help'
       post "/api/spaces/#{@space.id}/statuses", @params
 
       response.code.should == "422"
@@ -515,7 +519,7 @@ describe "Statuses" do
     end
 
     it "should return status 201 when help type" do
-      @help = Factory(:help)
+      @help = Factory(:help, :statusable => Factory(:lecture))
       post "/api/statuses/#{@help.id}/answers", @params
 
       response.code.should == "201"
@@ -570,7 +574,7 @@ describe "Statuses" do
     end
 
     it "should return correct in_response_to type (Help)" do
-      @help = Factory(:help)
+      @help = Factory(:help, :statusable => Factory(:lecture))
       post "/api/statuses/#{@help.id}/answers", @params
 
       get href_to("in_response_to", parse(response.body)), :oauth_token => @token,
@@ -588,7 +592,7 @@ describe "Statuses" do
     end
 
     it "should return code 200 type (help)" do
-      @help = Factory(:help)
+      @help = Factory(:help, :statusable => Factory(:lecture))
       get "/api/statuses/#{@help.id}/answers", :oauth_token => @token,
         :format => 'json'
       response.code.should == "200"
@@ -603,4 +607,22 @@ describe "Statuses" do
     end
   end
 
+  context "when trying to create a status with unwanted type" do
+    let(:params) do
+      {"status" => {:text => "Ximbica Answer Test", :type => 'User' },
+       :oauth_token => @token, :format => 'json' }
+    end
+    let(:space) do
+      Factory(:space, :owner => @current_user)
+    end
+
+    it "should not be valid" do
+      post "/api/spaces/#{space.id}/statuses", params
+      response.code.should == '400'
+    end
+  end
+
+  def where_type(statuses, *params)
+    statuses.where(:type => params)
+  end
 end

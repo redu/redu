@@ -8,40 +8,36 @@ module Api
     end
 
     def create
-      if params[:status][:type] == "help" || 
-        params[:status][:type] == "Help"
-        if params[:lecture_id]
-          new_status = Help.new(params[:status])
-        end
-      else
-        new_status = Activity.new(params[:status])
-      end
-      new_status.user = current_user
-      new_status.statusable = statuses(params)
-
-      if new_status.statusable
-        new_status.save
+      status = Status.new(params[:status]) do |s|
+        s.statusable = context(params)
+        s.user = current_user
+        s.type = params[:status].fetch(:type, 'Activity').camelize
       end
 
-      if new_status.valid?
-        respond_with(:api, new_status, :location => api_status_url(new_status))
+      # Transformando numa instancia do filho do sti
+      status = status.becomes(status.type.constantize)
+
+      if status.save
+        respond_with(:api, status, :location => api_status_url(status))
       else
-        respond_with(:api, new_status)
+        respond_with(:api, status)
       end
     end
 
     def index
-      statuses = who(params)
-      case params[:type]
+      statuses = statuses(params)
+
+      statuses = case params[:type]
       when 'help'
-        statuses = statuses.where(:type => 'Help')
+        statuses.where(:type => 'Help')
       when 'log'
-        statuses = statuses.where(:type => 'Log')
+        statuses.where(:type => 'Log')
       when 'activity'
-        statuses = statuses.where(:type => 'Activity')
+        statuses.where(:type => 'Activity')
       else
-        statuses = statuses.where(:type => ['Help', 'Activity'])
+        statuses.where(:type => ['Help', 'Activity'])
       end
+
       respond_with(:api, statuses)
     end
 
@@ -53,10 +49,11 @@ module Api
     end
 
     def timeline
-      if params[:space_id]
-        statuses = Status.from_hierarchy( Space.find(params[:space_id]) )
+      statusable = context(params)
+      statuses = if statusable.is_a?(Space)
+        Status.from_hierarchy(statusable)
       else
-        statuses = User.find(params[:user_id]).overview
+        statusable.overview
       end
 
       respond_with(:api, statuses)
@@ -64,7 +61,7 @@ module Api
 
     protected
 
-    def statuses(params)
+    def context(params)
       if params[:space_id]
         Space.find(params[:space_id])
       elsif params[:lecture_id]
@@ -74,15 +71,15 @@ module Api
       end
     end
 
-    def who(params)
-      context = statuses(params)
-      if context.class.to_s == "User"
-        statuses = Status.where(:user_id => context)
+    def statuses(params)
+      statusable = context(params)
+
+      if statusable.is_a? User
+        Status.where(:user_id => statusable)
       else
-        statuses = Status.where(:statusable_id => context, 
-          :statusable_type => context.class.to_s)
+        Status.where(:statusable_id => statusable,
+                     :statusable_type => statusable.class.to_s)
       end
     end
-
   end
 end
