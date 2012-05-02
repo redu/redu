@@ -17,8 +17,8 @@ var graphForm = function () {
   };
 
   var validate_date = function () {
-    var st = Date.parse(time_selected("start"));
-    var en = Date.parse(time_selected("end"));
+    var st = Date.parse(time_selected("start").replace(/\-/ig, '/'));
+    var en = Date.parse(time_selected("end").replace(/\-/ig, '/'));
 
     return st < en;
   }

@@ -7893,6 +7893,11 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   padding: 0px;
 }
 
+#lecture-participation-chart{
+  overflow: hidden;
+  clear: left;
+}
+
 /*-- #graph-form é o .concave-form do gráfico --*/
 #graph-form .inline {
   float: left;
