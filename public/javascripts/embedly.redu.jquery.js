@@ -7,7 +7,7 @@ $.fn.enableEmbedding = function() {
       if(inLineLinks != null){
         link = inLineLinks[0];
         var url = escape(link);
-        var key = '1068f47e735911e181904040d3dc5c07';
+        var key = 'afbcb52a949111e1a1394040aae4d8c9';
         var api_url = 'http://api.embed.ly/1/oembed?key=' + key + '&url=' + url;//+ '&callback=?';
         if($this.data('last_url') != url){
           $this.data("last_url", url);
