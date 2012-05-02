@@ -1877,7 +1877,6 @@ body {
 
 .create-status .status-buttons {
   float: right;
-  margin-top: 10px;
 }
 
 .create-status .concave-form .concave-input {
@@ -1911,9 +1910,12 @@ body {
   margin: 0 0 0 5px;
 }
 
+.textshadow .create-status .concave-form .cancel{
+  text-shadow: 0 1px 0 white;
+}
+
 .create-status .concave-form .concave-button {
   float: right;
-  margin-right: 5px;
   width: 68px;
   height: 28px;
   padding: 0;
@@ -1921,9 +1923,49 @@ body {
 
 .create-status .concave-form .cancel {
   float: left;
-  padding: 8px 0 8px 0;
-  width: 68px;
-  height: 12px;
+  height: 17px;
+  background: rgb(247, 247, 247);
+  border: 1px solid rgb(204, 204, 204);
+  width: 53px;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+  line-height: 18px;
+  padding-bottom: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  text-align: center;
+}
+
+.cssgradients .create-status .concave-form .cancel {
+  background: -moz-linear-gradient(top, rgb(247,247,247) 0%, rgb(230,230,230) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(247,247,247)), color-stop(100%,rgb(230,230,230))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* IE10+ */
+  background: linear-gradient(top, rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* W3C */
+}
+
+.cssgradients .create-status .concave-form .cancel:hover {
+  background: rgb(247,247,247); /* Old browsers */
+  background: -moz-linear-gradient(top, rgb(247,247,247) 0%, rgb(219,239,247) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(247,247,247)), color-stop(100%,rgb(219,239,247))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgb(247,247,247) 0%,rgb(219,239,247) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgb(247,247,247) 0%,rgb(219,239,247) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgb(247,247,247) 0%,rgb(219,239,247) 100%); /* IE10+ */
+  background: linear-gradient(top, rgb(247,247,247) 0%,rgb(219,239,247) 100%); /* W3C */
+}
+
+.create-status .concave-form .cancel:hover {
+  border-color: rgb(77, 173, 214);
+  background: rgb(219, 239, 247);
+}
+
+.borderradius .create-status .concave-form .cancel {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
 }
 
 .create-status .concave-form .char-limit,
@@ -2137,6 +2179,7 @@ body {
   margin-left: 10px;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: rgb(109, 110, 111);
 }
 
 .statuses .status-message p a {
@@ -7672,7 +7715,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .create-status .no-preview p,
 .create-status .no-preview .title,
 .create-status .no-preview .source-site {
-  width: 540px;
+  width: 530px;
 }
 
 .create-status .post-resource .close {
@@ -7687,7 +7730,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 #statuses .status .post-resource .source-site {
   color: rgb(204, 204, 204);
   font-weight: normal;
-  margin-bottom: 5px;
 }
 
 .create-status .post-resource .preview-link,
@@ -7714,11 +7756,13 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 #statuses .status .post-resource .post-text {
   overflow: hidden;
   padding-left: 10px;
+  color: rgb( 109, 110, 111);
   line-height: 18px;
 }
 
 .textshadow .statuses .status .date,
-.textshadow .statuses .last-responses {
+.textshadow .statuses .last-responses,
+.textshadow .statuses .status-info {
   text-shadow: 0 1px 0 white;
 }
 
@@ -7875,11 +7919,13 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 #statuses .status .responses ol .re-status .post-title {
   margin: 0 0 5px 8px;
   display: block;
+  color: rgb(109, 110, 111);
 }
 
 #statuses .status .post-resource .post-title {
-  margin: 0 0 5px 0;
+  margin: 0 0 10px 0;
   display: block;
+  color: rgb(109, 110, 111);
 }
 
 #statuses .status .responses {
@@ -7893,10 +7939,12 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   padding-right: 10px;
 }
 
-#statuses .status .responses .answer-box {
-  float: left;
-  margin-left: 37px;
-  width: 500px;
+#statuses .status .post-resource {
+  margin-top: 10px;
+}
+
+#statuses .status .re-status .post-resource {
+  margin-top: 0px;
 }
 
 .inform-my-status .distance-top:before {
@@ -7907,6 +7955,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
    content: " ";
    display: block;
    position: absolute;
+   margin-left: 20px;
    width: 0;
 }
 
@@ -7924,29 +7973,40 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   margin: 5px 0 0 20px;
 }
 
-.create-response .distance-top:after,
+.status .create-response:before,
+.status .post-resource .distance-top:before,
 .responses .distance-top:after {
    border-color: rgb(240, 240, 240) white;
    border-width: 0 10px 10px;
-   margin-top: -42px;
    border-style: solid;
+   margin-top: -30px;
    content: " ";
    display: block;
-   left: 60px;
-   position: absolute;
    width: 0;
 }
 
-#statuses ol li .status .create-status {
-  left: 540px;
+.status .create-response:before {
+  margin-right: 30px;
+  float: right;
+}
+
+.responses .distance-top:after {
+  margin-left: 25px;
+  position: absolute;
+  margin-top: -42px;
+}
+
+.status .post-resource .distance-top:before {
+  left: 60px;
+  position: absolute;
 }
 
 .create-response .distance-top,
 .create-status .distance-top,
 .responses .distance-top {
   text-indent: -9999px;
-  width: 0;
-  height: 0;
+  width: 500px;
+  height: 1px;
 }
 
 /* Botão convidar amigos */
@@ -7979,4 +8039,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   box-shadow: inset 1px 1px 0 0 rgb(115, 195, 230),inset -1px -1px 0 0 rgb(115, 195, 230);
 }
 
+.statuses .status .actions {
+  margin-bottom: 0;
+}
 /* FIM botão convidar amigos */
