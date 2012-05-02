@@ -40,7 +40,10 @@ javascripts:
     - public/javascripts/browserdetection.js
     - public/javascripts/outdated-browser.js
     - public/javascripts/jquery.noisy.js
+    - public/javascripts/underscore.js
+    - public/javascripts/underscore-sharing-template.redu.js
     - public/javascripts/embedly.redu.jquery.js
+    - public/javascripts/underscore.js
   chat:
     - public/javascripts/jquery.pjax.js
     - public/javascripts/pusher.js

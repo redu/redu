@@ -12,29 +12,8 @@ $.fn.enableEmbedding = function() {
         if($this.data('last_url') != url){
           $this.data("last_url", url);
           $.getJSON(api_url, {crossDomain:  true}, function(json) {
-            var title = "";
-            var description = "";
-            var thumbnail_content = "";
-            var thumbnail_navigation = "";
             var resource_inputs = "";
             var thumbnail_list = [];
-
-            resource_inputs = resource_inputs + appendInput("provider", json.provider_url);
-            if(json.url != null) {
-              resource_inputs = resource_inputs + appendInput("link", json.url);
-              url = json.url
-            } else {
-              resource_inputs = resource_inputs + appendInput("link", url);
-              url = 'http://' + url;
-            }
-            if(json.title != null) {
-              title = json.title;
-              resource_inputs = resource_inputs + appendInput("title", title);
-            }
-            if(json.description != null) {
-              description = json.description;
-              resource_inputs = resource_inputs + appendInput("description", description);
-            }
 
             // Processa thumbnails
             if(json.thumbnail_url != null) {
@@ -42,101 +21,41 @@ $.fn.enableEmbedding = function() {
                 for(e in json.thumbnail_url) {
                   thumbnail_list.push(json.thumbnail_url[e].url);
                 }
-                thumbnail_navigation = '<span class="last control">'+
-                  '<span class="arrow">L</span>'+
-                  '</span><span class="next control">'+
-                  '<span class="arrow">N</span></span>';
               } else {
                 thumbnail_list.push(json.thumbnail_url);
               }
+              json.first_thumb = thumbnail_list[0];
 
               // Adiciona à lista de URL's de thumbnails
               $this.data("thumbnail_list", thumbnail_list);
 
               // Adiciona imagem de thumbnail (quando existe)
-              resource_inputs = resource_inputs + appendInput("thumb_url", thumbnail_list[0]);
-              thumbnail_content = '<div class="thumbnail">'+
-                '<img id="thumbnail-0" class="preview-link" src="'+thumbnail_list[0] +'"/>'+
-                '<span class="buttons-thumbnail">'+
-                  thumbnail_navigation +
-                  '<span class="remove control">'+
-                  '<span class="arrow">R</span>'+
-                '</span>'+
-                '</div>';
+              resource_inputs = resource_inputs + appendInput("thumb_url", json.first_thumb);
             }
 
-            //Preview box
-            $this.parents('fieldset').find('.post-resource').remove();
-            $('<div class="post-resource">'+resource_inputs +
-                '<hr class="border-post concave-separator"/>' +
-                 thumbnail_content +
-                '<div class="post-text">' +
-                  '<span class="close icon-small icon-delete-gray_8_10">Close</span>'+
-                  '<h3><a href="'+ url +'" target="_blank" rel="nofollow" class="title">'+title+'</a></h3>'+
-                  '<h4 class="source-site">'+json.provider_url+'</h4>'+
-                  '<p class="post-description">'+description+'</p>'+
-              '</div>'+
-                '<hr class="border-post concave-separator"/>' +
-                '</div>'
-             ).insertAfter($this);
-            if (json.thumbnail_url == null){
-              $this.parents('fieldset').find('.post-resource').addClass('no-preview');
+            resource_inputs = resource_inputs + appendInput("provider", json.provider_url);
+            //Url shorted
+            if(json.url != null) {
+              resource_inputs = resource_inputs + appendInput("link", json.url);
+            } else {
+              resource_inputs = resource_inputs + appendInput("link", url);
+              json.url = 'http://' + url;
             }
+            //Title
+            if(json.title != null) {
+              resource_inputs = resource_inputs + appendInput("title", json.title);
+            }
+            //Description
+            if(json.description != null) {
+              resource_inputs = resource_inputs + appendInput("description", json.description);
+            }
+            //Render template
+            $this.renderTemplate(json);
+            $(resource_inputs).insertAfter($this);
           });
         }
-
       }}
   });
-
-  // Fechar conteúdo embedded
-  $(this).find('.close').live('click', function(){
-    $(this).parents('fieldset').data('last_url', "");
-    $(this).parents('fieldset').find('.post-resource').slideUp(function(){
-      $(this).remove();
-    });
-  });
-
-  // Ações de navegação do thumbnail
-  $(this).find('.buttons-thumbnail span').live('click', function(){
-    var button = $(this);
-    var thumbnail_list = button.parents("fieldset").find("textarea#status_text").data("thumbnail_list");
-    if(button.hasClass('remove')){
-      button.parents('fieldset').find('.thumbnail').fadeOut();
-      button.parents('fieldset').find('input#resource_thumb_url').remove();
-      button.parents('fieldset').find('.post-resource').addClass('no-preview');
-    } else if(button.hasClass('next')) {
-      updateThumbnail(button, thumbnail_list, true);
-    } else if(button.hasClass('last')) {
-      updateThumbnail(button, thumbnail_list, false);
-    }
-  });
-
-  // Faz desaparecer o preview depois de criar a postagem
-  $(this).find('input').live('click', function() {
-    $(this).parents('fieldset').find("textarea#status_text").data('last_url', "");
-    $(this).parents('fieldset').find('.post-resource').ajaxComplete(function() {
-      $(this).slideUp(function(){
-        $(this).remove();
-      });
-    });
-  });
-}
-
-// Atualiza o thumbnail do recurso de acordo com a resposta do embedly
-function updateThumbnail(root, thumbnail_list, get_next) {
-  var img = root.parents('fieldset').find('.thumbnail img.preview-link');
-  var id = img[0].id.split('-')[1];
-
-  if(get_next){
-    var next_id = parseInt(id) + 1;
-    if(next_id == thumbnail_list.length) { next_id = next_id -1; }
-  } else {
-    var next_id = parseInt(id) - 1;
-    if(next_id < 0) { next_id = 0; }
-  }
-  img.attr('src', thumbnail_list[next_id]);
-  img.attr('id', 'thumbnail-' + next_id);
-  root.parents('fieldset').find('input#resource_thumb_url').attr('value', thumbnail_list[next_id]);
 }
 
 // Inclui informações necessárias (em inputs escondidos) à requisição HTTP
