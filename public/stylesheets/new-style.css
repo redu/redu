@@ -8047,7 +8047,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 /* FIM botão convidar amigos */
 
 /* início agrupar-mural */
-#statuses .post-grouped {
+#statuses .grouped-photos {
   width: 440px;
   overflow: hidden;
   margin-left: 40px;
@@ -8055,7 +8055,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   float: left;
 }
 
-#statuses .post-grouped .status-content {
+#statuses .grouped-photos .status-content {
   margin: 0px;
 }
 
@@ -8075,11 +8075,15 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   padding-top: 10px;
 }
 
-#statuses #status-11859 .post-grouped-courses .status-info {
+#statuses #status-11859 .isus-info {
   margin-left: 10px;
 }
 
-#statuses .status .post-grouped .status-content .friend-avatar,
-#statuses .status .post-grouped li .friend-avatar {
+#statuses .status .grouped-photos .status-content .friend-avatar,
+#statuses .status .grouped-photos li .friend-avatar {
   margin-top: 8px;
+}
+
+.statuses .status .box {
+  width: 450px;
 }
