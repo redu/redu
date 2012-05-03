@@ -1,19 +1,21 @@
 $.fn.enableEmbedding = function() {
   return this.each(function(){
+    var $this = $(this);
+    var $textarea = $(this).find('textarea')
 
-    $(this).find('textarea').keyup(function(e) {
-      var $this = $(this);
-
+    $textarea.keyup(function(e) {
       if(e.which == 13 | e.which == 32) {
         // Usuário pressionou Enter ou Space
-        var inLineLinks = parseUrl($this.val());
+        var inLineLinks = parseUrl($textarea.val());
+
         if(inLineLinks != null){
           link = inLineLinks[0];
           var url = escape(link);
           var key = 'afbcb52a949111e1a1394040aae4d8c9';
-          var api_url = 'http://api.embed.ly/1/oembed?key=' + key + '&url=' + url;//+ '&callback=?';
-          if($this.data('last_url') != url){
-            $this.data("last_url", url);
+          var api_url = 'http://api.embed.ly/1/oembed?key=' + key + '&url=' + url;
+
+          if($textarea.data('last_url') != url){
+            $textarea.data("last_url", url);
             $.getJSON(api_url, {crossDomain:  true}, function(json) {
               var resource_inputs = "";
               var thumbnail_list = [];
@@ -30,7 +32,7 @@ $.fn.enableEmbedding = function() {
                 json.first_thumb = thumbnail_list[0];
 
                 // Adiciona à lista de URL's de thumbnails
-                $this.data("thumbnail_list", thumbnail_list);
+                $textarea.data("thumbnail_list", thumbnail_list);
 
                 // Adiciona imagem de thumbnail (quando existe)
                 resource_inputs = resource_inputs + appendInput("thumb_url", json.first_thumb);
@@ -54,45 +56,14 @@ $.fn.enableEmbedding = function() {
               }
               //Render template
               $this.renderTemplate(json);
-              $this.parents('fieldset').find('.post-resource').prepend(resource_inputs);
+              $textarea.parents('fieldset').find('.post-resource').prepend(resource_inputs);
             });
           }
         }
       }
     });
 
-    // Fechar conteúdo embedded
-    $(this).find('.close').live('click', function(){
-      $(this).parents('fieldset').find('textarea').data('last_url', "");
-      $(this).parents('fieldset').find('.post-resource').slideUp(function(){
-        $(this).remove();
-      });
-    });
 
-    // Ações de navegação do thumbnail
-    $(this).find('.buttons-thumbnail span').live('click', function(){
-      var button = $(this);
-      var thumbnail_list = button.parents("fieldset").find("textarea#status_text").data("thumbnail_list");
-      if(button.hasClass('remove')){
-        button.parents('fieldset').find('.thumbnail').fadeOut();
-        button.parents('fieldset').find('input#resource_thumb_url').remove();
-        button.parents('fieldset').find('.post-resource').addClass('no-preview');
-      } else if(button.hasClass('next')) {
-        updateThumbnail(button, thumbnail_list, true);
-      } else if(button.hasClass('last')) {
-        updateThumbnail(button, thumbnail_list, false);
-      }
-    });
-
-    // Faz desaparecer o preview depois de criar a postagem
-    $(this).find('input').live('click', function() {
-      $(this).parents('fieldset').find("textarea").data('last_url', "");
-      $(this).parents('fieldset').find('.post-resource').ajaxComplete(function() {
-        $(this).slideUp(function(){
-          $(this).remove();
-        });
-      });
-    });
   });
 }
 
