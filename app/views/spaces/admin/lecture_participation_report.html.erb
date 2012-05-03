@@ -13,7 +13,7 @@
 
     <%= tabs :spaces_admin do %>
       <%= subtabs :spaces_admin do %>
-        <h3 class="form-header">Qual a participação dos alunos nas aulas?</h3>
+        <h3 class="form-header graph-header">Qual a participação dos alunos nas aulas?</h3>
         <%= lazy_load(:chart, :jammit => true) do %>
           $("#graph-form").before($("<div/>", {id: "lecture-participation-chart"}));
           var graph = lecture_participation_graph();
