@@ -264,7 +264,7 @@ GEM
       activerecord (>= 3.0.0)
     rdoc (3.12)
       json (~> 1.4)
-    remotipart (0.3.4)
+    remotipart (1.0.2)
     representable (1.1.1)
       json
       nokogiri
@@ -380,7 +380,7 @@ DEPENDENCIES
   rails3-generators
   rake (= 0.8.7)
   rd_searchlogic
-  remotipart (>= 0.3.4)
+  remotipart (~> 1.0)
   roar-rails (~> 0.0.3)!
   rspec-rails (~> 2.6)
   ruby-debug

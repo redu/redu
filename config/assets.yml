@@ -20,7 +20,7 @@ javascripts:
     - public/javascripts/exercises.js
     - public/javascripts/lectures.js
     - public/javascripts/swfobject.js
-    - public/javascripts/jquery.form.js
+    - public/javascripts/jquery.iframe-transport.js
     - public/javascripts/jquery.remotipart.js
     - public/javascripts/lazyload.js
     - public/javascripts/jquery.fcbkcomplete.min.js
