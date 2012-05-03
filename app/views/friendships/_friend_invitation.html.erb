@@ -22,7 +22,7 @@
     $(".form-common").ajaxComplete(function(){
       if ($(".token-input-dropdown li").length == 0) {
         var emailRegex = /^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/;
-        var entered_value = $("input[autocomplete=off]").val();
+        var entered_value = $("input[autocomplete=off]").val().trim();
         if (emailRegex.test(entered_value)) {
           $("#invite_email").show();
         }else{
