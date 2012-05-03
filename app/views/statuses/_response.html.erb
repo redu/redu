@@ -14,13 +14,15 @@
       <p><%= raw auto_link(h(response.text).gsub(/\n/, '</br>'))%></p>
     </div>
     <% if response.status_resources.first %>
-      <div class="post-resource">
       <% if response.status_resources.first.thumb_url %>
+        <div class="post-resource">
         <div class="thumbnail">
           <%= link_to response.status_resources.first.link, :target => "_blank", :rel => "nofollow" do %>
             <%= image_tag(response.status_resources.first.thumb_url, :class => "preview-link") %>
           <% end %>
         </div>
+      <% else %>
+        <div class="post-resource no-preview">
       <% end %>
         <div class="post-text">
           <h3><%= link_to response.status_resources.first.title, response.status_resources.first.link, :target => "_blank", :rel => "nofollow", :class => "title" %></h3>

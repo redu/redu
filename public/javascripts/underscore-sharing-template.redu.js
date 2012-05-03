@@ -23,41 +23,6 @@ $.fn.renderTemplate = function(json) {
   if (json.thumbnail_url == null){
     $this.parents('fieldset').find('.post-resource').addClass('no-preview');
   }
-
-  debugger
-  // Fechar conteúdo embedded
-  $this.parents('fieldset').find('.close').live('click', function(){
-    $(this).parents('fieldset').find('textarea').data('last_url', "");
-    $(this).parents('fieldset').find('.post-resource').slideUp(function(){
-      $(this).remove();
-    });
-  });
-
-  // Ações de navegação do thumbnail
-  $this.parents('fieldset').find('.buttons-thumbnail span').live('click', function(){
-    var button = $(this);
-    var thumbnail_list = button.parents("fieldset").find("textarea#status_text").data("thumbnail_list");
-    if(button.hasClass('remove')){
-      button.parents('fieldset').find('.thumbnail').fadeOut();
-      button.parents('fieldset').find('input#resource_thumb_url').remove();
-      button.parents('fieldset').find('.post-resource').addClass('no-preview');
-    } else if(button.hasClass('next')) {
-      updateThumbnail(button, thumbnail_list, true);
-    } else if(button.hasClass('last')) {
-      updateThumbnail(button, thumbnail_list, false);
-    }
-  });
-
-  // Faz desaparecer o preview depois de criar a postagem
-  $this.parents('fieldset').find('input').live('click', function() {
-    $(this).parents('fieldset').find("textarea").data('last_url', "");
-    $(this).parents('fieldset').find('.post-resource').ajaxComplete(function() {
-      $(this).slideUp(function(){
-        $(this).remove();
-      });
-    });
-  });
-
 }
 
 // Atualiza o thumbnail do recurso de acordo com a resposta do embedly
