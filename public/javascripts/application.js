@@ -12,6 +12,15 @@ jQuery(function(){
       $("#home").css("marginTop","40px");
     });
 
+
+    // Mensagem "Carregando..."
+    $("#content").bind('start.pjax', function() { 
+      $('#loading-message').show();
+    });
+    $("#content").bind('end.pjax', function() { 
+      $('#loading-message').hide();
+    });
+
     // Dropdown de usuário
     $("#nav-account").hover(function(){
         $(this).find(".username").toggleClass("hover");

@@ -37,6 +37,13 @@ describe AuthenticationsController do
           created_auth.user.should == @user
         end
 
+        it "should not change user settings propriety" do
+          provider = request.env['omniauth.auth'][:provider]
+          uid = request.env['omniauth.auth'][:uid]
+          created_auth = Authentication.find_by_provider_and_uid(provider, uid)
+          @user.settings.should == created_auth.user.settings
+        end
+
         it { should set_the_flash.to(I18n.t("facebook_connect_account_association")) }
         it { should redirect_to(home_user_path(@user))  }
       end
@@ -49,6 +56,13 @@ describe AuthenticationsController do
 
         it "should create a new Redu account using the email" do
           @user.should_not be_nil
+        end
+
+        it "should create the user's settings properly" do
+          provider = request.env['omniauth.auth'][:provider]
+          uid = request.env['omniauth.auth'][:uid]
+          created_auth = Authentication.find_by_provider_and_uid(provider, uid)
+          created_auth.user.settings.should_not be_nil
         end
 
         it { should set_the_flash.to(I18n.t("facebook_connect_new_user")) }
