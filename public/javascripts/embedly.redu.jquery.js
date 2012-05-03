@@ -1,20 +1,28 @@
+// Permite ao usuário embutir recursos (links, imagens, vídeos, etc.) em suas postagens
 $.fn.enableEmbedding = function() {
+
   return this.each(function(){
+
     var $this = $(this);
     var $textarea = $(this).find('textarea')
 
+    // Associa callback ao evento de pressionar teclas
     $textarea.keyup(function(e) {
+
+      // Checa se a tecla pressionada é Enter ou Espaço
       if(e.which == 13 | e.which == 32) {
-        // Usuário pressionou Enter ou Space
+
         var inLineLinks = parseUrl($textarea.val());
 
-        if(inLineLinks != null){
+        if(inLineLinks != null) {
+
           link = inLineLinks[0];
           var url = escape(link);
           var key = 'afbcb52a949111e1a1394040aae4d8c9';
           var api_url = 'http://api.embed.ly/1/oembed?key=' + key + '&url=' + url;
 
-          if($textarea.data('last_url') != url){
+          if($textarea.data('last_url') != url) {
+
             $textarea.data("last_url", url);
             $.getJSON(api_url, {crossDomain:  true}, function(json) {
               var resource_inputs = "";
@@ -39,22 +47,26 @@ $.fn.enableEmbedding = function() {
               }
 
               resource_inputs = resource_inputs + appendInput("provider", json.provider_url);
-              //Url shorted
+
+              // URL encurtada
               if(json.url != null) {
                 resource_inputs = resource_inputs + appendInput("link", json.url);
               } else {
                 resource_inputs = resource_inputs + appendInput("link", url);
                 json.url = 'http://' + url;
               }
-              //Title
+
+              // Título
               if(json.title != null) {
                 resource_inputs = resource_inputs + appendInput("title", json.title);
               }
-              //Description
+
+              // Descrição
               if(json.description != null) {
                 resource_inputs = resource_inputs + appendInput("description", json.description);
               }
-              //Render template
+
+              // Renderiza o template
               $this.renderTemplate(json);
               $textarea.parents('fieldset').find('.post-resource').prepend(resource_inputs);
             });
@@ -63,17 +75,16 @@ $.fn.enableEmbedding = function() {
       }
     });
 
-
   });
 }
 
 // Inclui informações necessárias (em inputs escondidos) à requisição HTTP
-function appendInput(name, value){
+function appendInput(name, value) {
   return '<input id="resource_'+ name +'" type="hidden" name="status[status_resources_attributes][]['+ name + ']" value="'+ value +'"/>';
 }
 
 // Deteta links no texto de entrada do usuário e os retorna num array
-function parseUrl(text){
+function parseUrl(text) {
   var regex = /(\b(((https?|ftp|file):\/\/)|(www))[\-A-Z0-9+&@#\/%?=~_|!:,.;]*[\-A-Z0-9+&@#\/%=~_|])/ig;
   var resultArray = text.match(regex);
   return resultArray;

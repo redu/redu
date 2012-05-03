@@ -4,7 +4,7 @@
   $status = $("#status-<%= status_id %>");
 
   $status.find(".responses").show();
-  $status.find(".create-status.create-response").slideUp();
+  $status.find(".create-status").slideUp();
   $status.find(".toggle-statuses .qty").text($status.find(".responses > ol > li").length);
   $status.find("form textarea").val('');
   $status.find(".responses ol").append(response);
