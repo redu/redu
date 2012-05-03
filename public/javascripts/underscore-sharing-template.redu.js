@@ -2,7 +2,7 @@ $.fn.renderTemplate = function(json) {
   $this = $(this);
 
   //Preview box
-  $this.parents('fieldset').find('.post-resource').remove();
+  $this.find('.post-resource').remove();
 
   //Render template
   var $template = $('#template-preview').html();
@@ -17,12 +17,45 @@ $.fn.renderTemplate = function(json) {
   var rendered = compiled(json);
 
   //Insert rendered template
-  $(rendered).insertAfter($this);
+  $this.find('textarea').after(rendered);
 
   //Change preview class
   if (json.thumbnail_url == null){
-    $this.parents('fieldset').find('.post-resource').addClass('no-preview');
+    $this.find('.post-resource').addClass('no-preview');
   }
+
+  // Fechar conteúdo embedded
+  $this.find('.close').live('click', function(){
+    $(this).parents('fieldset').find('textarea').data('last_url', "");
+    $(this).parents('fieldset').find('.post-resource').slideUp(function(){
+      $(this).remove();
+    });
+  });
+
+  // Ações de navegação do thumbnail
+  $this.find('.buttons-thumbnail span').live('click', function(){
+    var button = $(this);
+    var thumbnail_list = button.parents("fieldset").find("textarea#status_text").data("thumbnail_list");
+    if(button.hasClass('remove')){
+      button.parents('fieldset').find('.thumbnail').fadeOut();
+      button.parents('fieldset').find('input#resource_thumb_url').remove();
+      button.parents('fieldset').find('.post-resource').addClass('no-preview');
+    } else if(button.hasClass('next')) {
+      updateThumbnail(button, thumbnail_list, true);
+    } else if(button.hasClass('last')) {
+      updateThumbnail(button, thumbnail_list, false);
+    }
+  });
+
+  // Faz desaparecer o preview depois de criar a postagem
+  $this.find('input').live('click', function() {
+    $(this).parents('fieldset').find("textarea").data('last_url', "");
+    $(this).parents('fieldset').find('.post-resource').ajaxComplete(function() {
+      $(this).slideUp(function(){
+        $(this).remove();
+      });
+    });
+  });
 }
 
 // Atualiza o thumbnail do recurso de acordo com a resposta do embedly
