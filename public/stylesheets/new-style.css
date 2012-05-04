@@ -7690,7 +7690,8 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   width: 530px;
 }
 
-.create-status .post-resource .close {
+.create-status .post-resource .close,
+.status .responses .re-status .close {
   text-indent: -9999px;
   width: 8px;
   float: right;
