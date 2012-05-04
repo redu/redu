@@ -27,7 +27,7 @@ describe EnrollmentObserver do
                           to_return(:status => 200, :body => "", :headers => {})
     end
 
-    it "when grade is not full (< 100) and became full should send a notification to vis" do
+    it "when grade is not full (< 100) and became full should send a 'subject_finalized' notification to vis" do
      ActiveRecord::Observer.with_observers(:enrollment_observer) do
         lectures
         subject.asset_reports.each { |a| a.done = true; a.save }
@@ -76,17 +76,37 @@ describe EnrollmentObserver do
                :headers => {'Authorization'=>['JOjLeRjcK', 'core-team'],
                             'Content-Type'=>'application/json'}).should_not have_been_made
       end
+
+      it "when grade is updated for less then 100 should send a 'removed_subject_finalized' notification to vis" do
+        lectures
+        subject.asset_reports.each { |a| a.done = true; a.save }
+        subject.update_grade!
+
+        ActiveRecord::Observer.with_observers(:enrollment_observer) do
+          subject.asset_reports[0].done = false;
+          subject.asset_reports[0].save
+          subject.update_grade!
+        end
+
+        params = fill_params(subject, "remove_subject_finalized")
+
+        a_request(:post, Redu::Application.config.vis_client[:url]).
+          with(:body => params.to_json,
+               :headers => {'Authorization'=>['JOjLeRjcK', 'core-team'],
+                            'Content-Type'=>'application/json'}).should have_been_made
+      end
     end
+
   end
 
-  def fill_params(enrollment)
+  def fill_params(enrollment, type = "subject_finalized")
     params = {
       :user_id => enrollment.user_id,
       :lecture_id => nil,
       :subject_id => enrollment.subject_id,
       :space_id => enrollment.subject.space.id,
       :course_id => enrollment.subject.space.course.id,
-      :type => "subject_finalized",
+      :type => type,
       :status_id => nil,
       :statusable_id => nil,
       :statusable_type => nil,
