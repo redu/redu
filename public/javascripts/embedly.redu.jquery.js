@@ -74,7 +74,6 @@ $.fn.enableEmbedding = function() {
         }
       }
     });
-
   });
 }
 

@@ -41,7 +41,7 @@ javascripts:
     - public/javascripts/outdated-browser.js
     - public/javascripts/jquery.noisy.js
     - public/javascripts/underscore.js
-    - public/javascripts/underscore-sharing-template.redu.js
+    - public/javascripts/underscore-sharing-template.redu.jquery.js
     - public/javascripts/embedly.redu.jquery.js
   chat:
     - public/javascripts/jquery.pjax.js
