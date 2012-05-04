@@ -1877,7 +1877,6 @@ body {
 
 .create-status .status-buttons {
   float: right;
-  margin-top: 10px;
 }
 
 .create-status .concave-form .concave-input {
@@ -1913,17 +1912,9 @@ body {
 
 .create-status .concave-form .concave-button {
   float: right;
-  margin-right: 5px;
   width: 68px;
   height: 28px;
   padding: 0;
-}
-
-.create-status .concave-form .cancel {
-  float: left;
-  padding: 8px 0 8px 0;
-  width: 68px;
-  height: 12px;
 }
 
 .create-status .concave-form .char-limit,
@@ -2041,7 +2032,7 @@ body {
 }
 
 .statuses ol .create-response {
-  margin: 0 0 10px 37px;
+  margin: 3px 0 10px 37px;
 }
 
 .statuses .friend-avatar,
@@ -2132,6 +2123,7 @@ body {
   margin-left: 10px;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: rgb(109, 110, 111);
 }
 
 .statuses .status-message p a {
@@ -7757,6 +7749,29 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   background: #f0f0f0;
 }
 
+.create-status .concave-form .concave-clean {
+  padding: 5px 0 6px 0;
+  width: 73px;
+}
+
+.boxshadow .create-status .concave-form .concave-clean  {
+  -webkit-box-shadow: 0 1px 0 0 white inset;
+  -moz-box-shadow: 0 1px 0 0 white inset;
+  box-shadow: 0 1px 0 0 white inset;
+}
+
+.create-status .concave-form .concave-button {
+  padding: 5px 0 6px 0;
+  width: 68px;
+  height: 18px;
+}
+
+.boxshadow .create-status .concave-form .concave-button  {
+  -webkit-box-shadow: 0 1px 0 0 rgb(219, 239, 247) inset;
+  -moz-box-shadow: 0 1px 0 0 rgb(219, 239, 247) inset;
+  box-shadow: 0 1px 0 0 rgb(219, 239, 247) inset;
+}
+
 .create-status .post-resource p,
 .create-status .post-resource .title,
 .create-status .post-resource .source-site {
@@ -7766,10 +7781,11 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .create-status .no-preview p,
 .create-status .no-preview .title,
 .create-status .no-preview .source-site {
-  width: 540px;
+  width: 530px;
 }
 
-.create-status .post-resource .close {
+.create-status .post-resource .close,
+.status .responses .re-status .close {
   text-indent: -9999px;
   width: 8px;
   float: right;
@@ -7781,7 +7797,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 #statuses .status .post-resource .source-site {
   color: rgb(204, 204, 204);
   font-weight: normal;
-  margin-bottom: 5px;
 }
 
 .create-status .post-resource .preview-link,
@@ -7804,15 +7819,21 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   border: none;
 }
 
+.statuses .status .actions {
+  margin-bottom: 0;
+}
+
 .create-status .post-resource .post-text,
 #statuses .status .post-resource .post-text {
   overflow: hidden;
   padding-left: 10px;
+  color: rgb( 109, 110, 111);
   line-height: 18px;
 }
 
 .textshadow .statuses .status .date,
-.textshadow .statuses .last-responses {
+.textshadow .statuses .last-responses,
+.textshadow .statuses .status-info {
   text-shadow: 0 1px 0 white;
 }
 
@@ -7970,11 +7991,13 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 #statuses .status .responses ol .re-status .post-title {
   margin: 0 0 5px 8px;
   display: block;
+  color: rgb(109, 110, 111);
 }
 
 #statuses .status .post-resource .post-title {
-  margin: 0 0 5px 0;
+  margin: 0 0 10px 0;
   display: block;
+  color: rgb(109, 110, 111);
 }
 
 #statuses .status .responses {
@@ -7988,10 +8011,12 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   padding-right: 10px;
 }
 
-#statuses .status .responses .answer-box {
-  float: left;
-  margin-left: 37px;
-  width: 500px;
+#statuses .status .post-resource {
+  margin-top: 10px;
+}
+
+#statuses .status .re-status .post-resource {
+  margin-top: 0px;
 }
 
 #content .create-status .new-post .distance-top:before {
@@ -8018,12 +8043,28 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   width: 0;
 }
 
+.status .create-response:before {
+  margin-right: 30px;
+  float: right;
+}
+
+.responses .distance-top:after {
+  margin-left: 25px;
+  position: absolute;
+  margin-top: -42px;
+}
+
+.status .post-resource .distance-top:before {
+  left: 60px;
+  position: absolute;
+}
+
 .create-response .distance-top,
 .create-status .distance-top,
 .responses .distance-top {
   text-indent: -9999px;
-  width: 0;
-  height: 0;
+  width: 500px;
+  height: 1px;
 }
 
 /* Botão convidar amigos */
