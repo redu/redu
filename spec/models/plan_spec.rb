@@ -442,6 +442,37 @@ describe Plan do
       it "should have a open invoice" do
         @new_plan.invoice.should be_open
       end
+
+    end
+
+    context "when current plan is licensed" do
+      before do
+        subject.update_attribute(:price, 2.5)
+        subject.invoice = Factory(:licensed_invoice,
+                                  :state => "pending",
+                                  :amount => 25.00,
+                                  :period_start => Date.today - 45.days,
+                                  :period_end => Date.today - 16.days)
+        subject.invoice.licenses << 10.times.collect { Factory.build(:license) }
+
+        # Amount 6.25
+        subject.invoice = Factory(:licensed_invoice,
+                                  :state => "open",
+                                  :period_start => Date.today - 15.days,
+                                  :period_end => Date.today + 15.days)
+        subject.invoice.licenses << 5.times.collect { Factory.build(:license) }
+
+        subject.billable = Factory(:environment, :owner => subject.user)
+
+        @new_plan = Factory.build(:active_licensed_plan, :price => 4.5,
+                                 :billable => nil)
+        subject.migrate_to @new_plan
+      end
+
+      it "should add the pending invoice value to the amount too" do
+        @new_plan.invoice.should_not be_nil
+        @new_plan.invoice.previous_balance.round(2).should == BigDecimal.new("31.25")
+      end
     end
   end
 

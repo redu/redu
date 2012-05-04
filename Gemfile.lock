@@ -264,7 +264,7 @@ GEM
       activerecord (>= 3.0.0)
     rdoc (3.12)
       json (~> 1.4)
-    remotipart (0.3.4)
+    remotipart (1.0.2)
     representable (1.1.1)
       json
       nokogiri
@@ -319,6 +319,9 @@ GEM
     tzinfo (0.3.33)
     useragent (0.4.8)
     uuidtools (2.1.2)
+    webmock (1.7.10)
+      addressable (~> 2.2, > 2.2.5)
+      crack (>= 0.1.7)
     whenever (0.6.7)
       aaronh-chronic (>= 0.3.9)
       activesupport (>= 2.3.4)
@@ -377,7 +380,7 @@ DEPENDENCIES
   rails3-generators
   rake (= 0.8.7)
   rd_searchlogic
-  remotipart (>= 0.3.4)
+  remotipart (~> 1.0)
   roar-rails (~> 0.0.3)!
   rspec-rails (~> 2.6)
   ruby-debug
@@ -389,6 +392,7 @@ DEPENDENCIES
   translate_routes
   useragent (~> 0.4.8)
   vis_client!
+  webmock
   whenever
   will_paginate (~> 3.0.pre2)
   zencoder

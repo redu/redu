@@ -5,6 +5,7 @@ require 'rspec/rails'
 require 'db/create_roles'
 require 'db/create_privacies'
 require 'paperclip/matchers'
+require 'webmock/rspec'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -40,4 +41,9 @@ RSpec.configure do |config|
 
   # Desabilita criação de logs nos specs
   ActiveRecord::Observer.disable_observers
+
+  config.before do
+    WebMock.allow_net_connect!
+  end
 end
+

@@ -33,7 +33,7 @@ gem 'acts-as-taggable-on'
 gem 'ckeditor', '3.4.2.pre'
 gem 'jammit-s3'
 gem 'whenever', :require => false
-gem 'remotipart', '>= 0.3.4'
+gem 'remotipart', '~> 1.0'
 gem 'zencoder'
 gem 'pusher'
 gem 'kaminari'
@@ -67,6 +67,10 @@ group :development, :test do
   gem 'jasmine'
   gem 'no_peeping_toms', :git => 'git://github.com/patmaddox/no-peeping-toms.git'
   gem 'rails3-generators'
+end
+
+group :test do
+  gem 'webmock'
 end
 
 group :development do

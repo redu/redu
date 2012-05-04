@@ -1,5 +1,6 @@
 class Course < ActiveRecord::Base
   include ActsAsBillable
+  include EnrollmentVisNotification
 
   # Apenas deve ser chamado na criação do segundo curso em diante
   after_create :create_user_course_association, :unless => "self.environment.nil?"
@@ -154,6 +155,7 @@ class Course < ActiveRecord::Base
   end
 
   def unjoin(user)
+    enrollments = []
     course_association = user.get_association_with(self)
     course_association.destroy
 
@@ -166,12 +168,16 @@ class Course < ActiveRecord::Base
 
       space.subjects.each do |subject|
         enrollment = user.get_association_with subject
+        enrollments << enrollment if enrollment
         enrollment.destroy if enrollment
       end
     end
+    # Associa o delayed_job para a remoção dos enrollments em visualização
+    delay_hierarchy_notification(enrollments, "remove_enrollment")
   end
 
   def create_hierarchy_associations(user, role = Role[:member])
+    enrollments = []
     # FIXME mudar estado do user_course_association para approved
     # Cria as associações no Environment do Course e em todos os seus Spaces.
     UserEnvironmentAssociation.create(:user_id => user.id,
@@ -189,9 +195,12 @@ class Course < ActiveRecord::Base
 
       # Cria as associações com os subjects
       space.subjects.each do |subject|
-        subject.enroll(user, role)
+        enrollments << subject.enroll(user, role)
       end
+
     end
+    # Associa o delayed_job para a criação dos enrollments em visualização
+    delay_hierarchy_notification(enrollments, "enrollment")
   end
 
   # Verifica se o usuário em questão está esperando aprovação num determinado
@@ -304,5 +313,4 @@ class Course < ActiveRecord::Base
       end
     end
   end
-
 end

@@ -58,3 +58,4 @@ pt-BR:
     recover_password: "recuperar_senha"
     teacher_participation_report: "relatorio_participacao_professor"
     subject_participation_report: "relatorio_participacao_modulo"
+    lecture_participation_report: "relatorio_participacao_aulas"

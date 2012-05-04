@@ -23,6 +23,7 @@ class Authentication < ActiveRecord::Base
         end
       end
     end
+    user.create_settings!
 
     user
   end
@@ -35,7 +36,7 @@ class Authentication < ActiveRecord::Base
     if !login
       # Usuário não possui um nickname no Facebook.
       # Gera login a partir de nome e sobrenome.
-      login = info_hash[:first_name] + info_hash[:last_name]
+      login = "#{info_hash[:first_name]}#{info_hash[:last_name]}"
       login = login.delete(' ').parameterize
     end
 

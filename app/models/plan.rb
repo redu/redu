@@ -8,6 +8,9 @@ class Plan < ActiveRecord::Base
   has_many :invoices
 
   scope :blocked, where(:state => "blocked")
+  # Necessário, pois em produção o scope gerado automaticamente estava
+  # fazendo cache de consultas anteriores
+  scope :current, where(:current => true)
 
   validates_presence_of :price, :user
 
@@ -103,24 +106,7 @@ class Plan < ActiveRecord::Base
       :period_start => Date.today
     }
     opts[:period_end] = self.invoice.period_end if self.invoice
-
-    previous_balance = if self.invoice.nil?
-                         0
-                       elsif !self.invoice.paid?
-                         self.invoice.refresh_amount!(Date.yesterday)
-                         self.invoice.close!
-                         self.invoice.total
-                       else # Se já estiver pago
-                         credit = self.invoice.refresh_amount(Date.yesterday)
-                         balance = if self.invoice.total < 0
-                                     # Valor já entra como desconto
-                                     self.invoice.total - credit
-                                   else
-                                     # Valor convertido para desconto
-                                     - credit
-                                   end
-                       end
-    opts[:previous_balance] = previous_balance
+    opts[:previous_balance] = discharge_payment_need!
 
     # Seta o valor relativo para o novo invoice
     if self.invoice
@@ -136,5 +122,47 @@ class Plan < ActiveRecord::Base
     new_invoice = new_plan.create_invoice(:invoice => opts, :force => true)
     new_plan.setup_for_migration
     self.migrate!
+  end
+
+  protected
+
+  # Calcula quanto do plano atual está pendente e fecha tais faturas
+  # - Marca como "closed" as faturas com pagamento necessário
+  # - Retorna o valor das faturas recém-fechadas
+  # - É possível que este valor seja negativo, isto indica
+  #   que o responsável pelo plano possui crédito
+  #
+  # plan.calc_payment_need
+  # => #<BigDecimal:10d1076e8,'0.8146E3',18(36)>
+  def discharge_payment_need!
+    if self.invoice.nil?
+      0
+    elsif !(self.invoices.pending_payment +
+            self.invoices.open).empty?
+      self.invoice.refresh_amount!(Date.yesterday)
+      # Necessário, pois a atualização da data,
+      # feita na linha de cima, não estava sendo levada em
+      # conta no fechamento da fatura.
+      self.invoices.reload
+
+      # Fecha todos os invoices pendentes para adicionar
+      # o valor ao novo invoice
+      need_payment_invoices = self.invoices.pending_payment +
+        self.invoices.open
+      pending_values = need_payment_invoices.collect do |inv|
+        inv.close!
+        inv.total
+      end
+      pending_values.sum
+    else # Se já estiver pago
+      credit = self.invoice.refresh_amount(Date.yesterday)
+      balance = if self.invoice.total < 0
+                  # Valor já entra como desconto
+                  self.invoice.total - credit
+                else
+                  # Valor convertido para desconto
+                  - credit
+                end
+    end
   end
 end
