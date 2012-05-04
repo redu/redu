@@ -8048,7 +8048,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 
 /* início agrupar-mural */
 #statuses .grouped-photos {
-  width: 440px;
   overflow: hidden;
   margin-left: 40px;
   height:40px;
@@ -8065,6 +8064,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   margin-top: 10px;
   float: right;
   font-size: 11px;
+  margin-right: 7px;
 }
 
 #statuses .status .status-context .post-grouped-discipline {
@@ -8075,15 +8075,16 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   padding-top: 10px;
 }
 
-#statuses #status-11859 .isus-info {
-  margin-left: 10px;
+#statuses .status-context .status-info {
+  margin-left: 5px;
 }
 
 #statuses .status .grouped-photos .status-content .friend-avatar,
 #statuses .status .grouped-photos li .friend-avatar {
   margin-top: 8px;
+  margin-right: 8px;
 }
 
 .statuses .status .box {
-  width: 450px;
+  width: 480px;
 }
