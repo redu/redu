@@ -1,8 +1,8 @@
-var teacher_participation_graph = function () {
+var TeacherParticipationGraph = function () {
   // Definição do gráfico
   var options = {
     chart: {
-      renderTo: 'teacher-participation-chart',
+      renderTo: '',
       defaultSeriesType: 'line'
     },
     title: {
@@ -44,9 +44,12 @@ var teacher_participation_graph = function () {
   };
 
   return {
-    load: function () {
-      var graph = graphForm();
-      graph.load_graph(function () {
+    load: function (graphView) {
+      var graph = graphView.form.plotGraphForm(graphView.chart.renderTo);
+
+      graph.loadGraph(function () {
+        $.extend(options, graphView);
+
         options.series[0].data = json.lectures_created;
         options.series[1].data = json.posts;
         options.series[2].data = json.answers;

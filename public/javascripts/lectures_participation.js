@@ -1,9 +1,9 @@
-var lecture_participation_graph = function () {
+var LectureParticipationGraph = function () {
   var chart;
 
   var options ={
     chart: {
-      renderTo: 'lecture-participation-chart',
+      renderTo: '',
       type: 'area'
     },
     title: {
@@ -17,7 +17,8 @@ var lecture_participation_graph = function () {
     yAxis: {
       title: {
         text: 'Participação'
-      }
+      },
+      min: 0
     },
     legend: {
       layout: 'vertical',
@@ -61,9 +62,12 @@ var lecture_participation_graph = function () {
   }
 
   return {
-    load: function () {
-      var graph = graphForm();
-      graph.load_graph(function () {
+    load: function (graphView) {
+      var graph = graphView.form.plotGraphForm(graphView.chart.renderTo);
+
+      graph.loadGraph(function () {
+        $.extend(options, graphView);
+
         options.series[0].data = json.helps_by_day;
         options.series[1].data = json.activities_by_day;
         options.series[2].data = json.answered_helps_by_day;
