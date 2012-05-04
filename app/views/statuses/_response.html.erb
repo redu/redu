@@ -1,6 +1,14 @@
 <%# Status resposta %>
 <li id="status-<%= response.id %>">
   <div class="re-status">
+    <% if can? :manage, response %>
+        <%= link_to 'Fechar',
+          status_path(response),
+          :method => :delete,
+          :remote => true,
+          :class => 'close icon-small icon-delete-gray_8_10 replacement',
+          :confirm => 'Deseja remover a postagem?'%>
+    <% end %>
     <div class="status-text">
       <%= image_tag response.user.avatar.url(:thumb_32), :width => 32,
         :height => 32, :class => 'avatar'%>
@@ -25,6 +33,7 @@
         <div class="post-resource no-preview">
       <% end %>
         <div class="post-text">
+
           <h3><%= link_to response.status_resources.first.title, response.status_resources.first.link, :target => "_blank", :rel => "nofollow", :class => "title" %></h3>
           <h4 class="source-site">
             <%= response.status_resources.first.provider %>
@@ -33,7 +42,6 @@
         </div>
       </div>
     <% end %>
-    <ul class="actions clearfix"></ul>
   </div>
 <hr class="border-post"/>
 </li>

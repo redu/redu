@@ -14,10 +14,10 @@ jQuery(function(){
 
 
     // Mensagem "Carregando..."
-    $("#content").bind('start.pjax', function() { 
+    $("#content").bind('start.pjax', function() {
       $('#loading-message').show();
     });
-    $("#content").bind('end.pjax', function() { 
+    $("#content").bind('end.pjax', function() {
       $('#loading-message').hide();
     });
 
@@ -31,6 +31,9 @@ jQuery(function(){
     $("input[type=submit], .cancel, .char-limit", ".inform-my-status").hide();
     $(".inform-my-status textarea").live("focus", function(e){
         $(this).parents("form").find("input[type=submit], .cancel, .char-limit").fadeIn();
+    });
+    $(".inform-my-status .status-buttons .cancel").live("click", function(){
+        $(this).parents("form").find("input[type=submit], .cancel, .char-limit").fadeOut();
     });
 
     // Adicionar classe focus a um determinado label quando o seu campo
