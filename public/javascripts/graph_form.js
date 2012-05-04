@@ -18,8 +18,8 @@ $.fn.plotGraphForm = function (divRender) {
   };
 
   var validateDate = function () {
-    var st = Date.parse(timeSelected("start"));
-    var en = Date.parse(timeSelected("end"));
+    var st = Date.parse(timeSelected("start").replace(/\-/ig, '/'));
+    var en = Date.parse(timeSelected("end").replace(/\-/ig, '/'));
 
     return st < en;
   }
