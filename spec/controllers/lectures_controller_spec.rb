@@ -110,7 +110,7 @@ describe LecturesController do
     it "should call update_grade! and update the grade" do
       post :done, :locale => "pt-BR", :id => @lectures[0].id,
         :subject_id => @subject.id, :space_id => @space.id, :done => "1"
-      @enrolled_user.student_profiles.first.grade.should == 33.3333
+      @enrolled_user.enrollments.first.grade.should == 33.3333
     end
 
     context 'when html request' do

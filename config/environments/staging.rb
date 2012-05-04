@@ -6,7 +6,7 @@ Redu::Application.configure do
   config.cache_classes = true
 
   # Full error reports are disabled and caching is turned on
-  config.consider_all_requests_local       = false
+  config.consider_all_requests_local       = true
   config.action_controller.perform_caching = true
 
   # Specifies the header that your server uses for sending files
@@ -58,4 +58,24 @@ Redu::Application.configure do
     :key => '3de110621e98059023ca',
     :secret => 'ae4d3ee4e10e13cfe325'
   }
+
+  # Configuração da aplicação em omniauth providers
+  config.omniauth = {
+    :facebook => {
+      :app_id => '142857189169463',
+      :app_secret => 'ea0f249a4df83b250c3364ccf097f35c'
+    }
+  }
+
+  # Configurações de VisClient
+  config.vis_client = {
+    :url => "http://vis.redu.com.br/hierarchy_notifications.json",
+    :migration => "http://vis.redu.com.br/database_hierarchy_notifications.json"
+  }
+
+  config.vis = {
+    :activities => "http://vis.redu.com.br/subjects/activities.json",
+    :activities_d3 => "http://vis.redu.com.br/subjects/activities_d3.json"
+  }
+
 end

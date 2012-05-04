@@ -3,7 +3,7 @@
   background: url("../images/new/error-top-bkg-line.png") repeat-x;
 }
 
-#outdated-browser .content .title {
+#outdated-browser .title {
   width: 140px;
   margin-top: 3px;
   text-align: right;
@@ -11,18 +11,18 @@
   margin-left: 30px;
 }
 
-#outdated-browser .content .ops {
+#outdated-browser .ops {
   font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 900;
   font-size: 3.9em;
   color: white;
 }
 
-.textshadow #outdated-browser .content .ops {
+.textshadow #outdated-browser .ops {
   text-shadow: 0px -1px 0px rgb(249, 167, 55);
 }
 
-#outdated-browser .content .warning {
+#outdated-browser .warning {
   display: block;
   margin-top: 5px;
   font-family: museo-slab, helvetica, arial, sans-serif;
@@ -31,11 +31,11 @@
   color: rgb(193, 39, 45);
 }
 
-.textshadow #outdated-browser .content .warning {
+.textshadow #outdated-browser .warning {
   text-shadow: 0px 1px 0px rgb(255, 238, 215);
 }
 
-#outdated-browser .content .message {
+#outdated-browser .message {
   width: 340px;
   height: 60px;
   float: left;
@@ -43,11 +43,11 @@
   color: white;
 }
 
-.textshadow #outdated-browser .content .message {
+.textshadow #outdated-browser .message {
   text-shadow: 0px -1px 0px rgb(249, 167, 55);
 }
 
-#outdated-browser .content .close {
+#outdated-browser .close {
   display: block;
   width: 16px;
   height: 18px;
@@ -56,44 +56,44 @@
   cursor: pointer;
 }
 
-#outdated-browser .content .suggestions {
+#outdated-browser .suggestions {
   width: 240px;
   float: left;
   margin-top: 20px;
 }
 
-#outdated-browser .content .suggestions li {
+#outdated-browser .suggestions li {
   float:left;
   margin-right: 20px;
 }
 
-#outdated-browser .content .suggestions li:hover .name {
+#outdated-browser .suggestions li:hover .name {
   color: white;
 }
 
-#outdated-browser .content .suggestions .logo {
+#outdated-browser .suggestions .logo {
   display: block;
   width: 100px;
   height: 62px;
 }
 
-#outdated-browser .content .suggestions .chrome {
+#outdated-browser .suggestions .chrome {
   background: url("../images/new/browsers-buttons.png") 0 0 no-repeat;
 }
 
-#outdated-browser .content .suggestions .chrome:hover {
+#outdated-browser .suggestions .chrome:hover {
   background: url("../images/new/browsers-buttons.png") -160px 0 no-repeat;
 }
 
-#outdated-browser .content .suggestions .firefox {
+#outdated-browser .suggestions .firefox {
   background: url("../images/new/browsers-buttons.png") -320px 0 no-repeat;
 }
 
-#outdated-browser .content .suggestions .firefox:hover {
+#outdated-browser .suggestions .firefox:hover {
   background: url("../images/new/browsers-buttons.png") -480px 0 no-repeat;
 }
 
-#outdated-browser .content .suggestions .name {
+#outdated-browser .suggestions .name {
   font-size: .87em;
   font-style: italic;
   color: rgb(249, 167, 55);

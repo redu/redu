@@ -64,4 +64,16 @@ Redu::Application.configure do
       :app_secret => '27e285f90a3ee1db7a3b61641ae14694'
     }
   }
+
+  # Configurações de VisClient
+  config.vis_client = {
+   :url => "http://vis.redu.com.br/hierarchy_notifications.json",
+   :migration => "http://vis.redu.com.br/database_hierarchy_notifications.json"
+ }
+
+  config.vis = {
+    :activities => "http://vis.redu.com.br/subjects/activities.json",
+    :activities_d3 => "http://vis.redu.com.br/subjects/activities_d3.json"
+  }
+
 end

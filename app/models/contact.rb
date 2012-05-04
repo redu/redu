@@ -25,10 +25,14 @@ class Contact
     @stub = Contact.new
     @stub.name = contact[:name]
     @stub.email = contact[:email]
-    @stub.kind = contact[:kind] ? contact[:kind] : 'Erro 500'
-    @stub.kind = contact[:subject]
+    @stub.kind = contact.try(:[], :kind) || 'Erro 500'
+    @stub.subject = contact[:subject]
     @stub.body = contact[:body]
     @stub
+  end
+
+  def about_an_error?
+    self.kind == "Erro 500"
   end
 
   def persisted?; false end

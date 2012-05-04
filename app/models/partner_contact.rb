@@ -2,10 +2,14 @@ class PartnerContact
   include ActiveModel::Validations
   include ActiveModel::MassAssignmentSecurity
 
-  attr_accessor :environment_name, :course_name, :email, :category, :details
+  attr_accessor :environment_name, :course_name, :email, :category, :details,
+    :migration, :billable_url
 
-  validates_presence_of :environment_name, :course_name, :email, :category
+  validates_presence_of  :email, :category
   validates_format_of :email, :with => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i
+
+  validates_presence_of :environment_name, :course_name, :unless => "self.migration"
+  validates_presence_of :billable_url, :if => "self.migration"
 
   def initialize(attributes={})
     attributes.each do |key, value|
@@ -20,6 +24,12 @@ class PartnerContact
   end
 
   def deliver
-    UserNotifier.partner_environment_notice(self).deliver if self.valid?
+    if self.valid?
+      if self.migration
+        UserNotifier.partner_environment_migration_notice(self).deliver
+      else
+        UserNotifier.partner_environment_notice(self).deliver
+      end
+    end
   end
 end

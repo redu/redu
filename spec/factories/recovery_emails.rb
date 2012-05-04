@@ -2,6 +2,6 @@
 
 FactoryGirl.define do
   factory :recovery_email do
-      email "MyString"
+      email "me@redu.com.br"
     end
 end
