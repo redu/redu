@@ -2223,7 +2223,6 @@ body {
 }
 
 .statuses .status-icon {
-  padding-right: 65px;
   overflow: hidden;
 }
 
@@ -8054,8 +8053,9 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   float: left;
 }
 
-#statuses .grouped-photos .status-content {
-  margin: 0px;
+#statuses .grouped-photos .item {
+  display: inline;
+  float: left;
 }
 
 .statuses .status .show-more {
@@ -8079,8 +8079,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   margin-left: 5px;
 }
 
-#statuses .status .grouped-photos .status-content .friend-avatar,
-#statuses .status .grouped-photos li .friend-avatar {
+#statuses .status .grouped-photos .item .user-avatar {
   margin-top: 8px;
   margin-right: 8px;
 }
