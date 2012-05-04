@@ -7254,7 +7254,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 
 #tiptip_holder #tiptip_content ul.features {
   list-style: outside disc;
-}
+}]
 
 #tiptip_holder #tiptip_content .pricing .value {
   font-size: 1.3em;
@@ -7655,12 +7655,12 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   background: #f0f0f0;
 }
 
-.create-status .concave-clean {
+.create-status .concave-form .concave-clean {
   padding: 5px 0 6px 0;
   width: 73px;
 }
 
-.boxshadow .concave-clean  {
+.boxshadow .create-status .concave-form .concave-clean  {
   -webkit-box-shadow: 0 1px 0 0 white inset;
   -moz-box-shadow: 0 1px 0 0 white inset;
   box-shadow: 0 1px 0 0 white inset;
@@ -7672,7 +7672,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   height: 18px;
 }
 
-.boxshadow .concave-form .concave-button  {
+.boxshadow .create-status .concave-form .concave-button  {
   -webkit-box-shadow: 0 1px 0 0 rgb(219, 239, 247) inset;
   -moz-box-shadow: 0 1px 0 0 rgb(219, 239, 247) inset;
   box-shadow: 0 1px 0 0 rgb(219, 239, 247) inset;
