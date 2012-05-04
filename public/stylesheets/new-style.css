@@ -2015,17 +2015,12 @@ body {
   overflow: hidden;
 }
 
-.statuses .icon-seminar-lightblue_64_66-after:after,
-.statuses .icon-page-lightblue_64_66-after:after,
-.statuses .icon-exercise-lightblue_64_66-after:after,
-.statuses .icon-document-lightblue_64_66-after:after,
-.statuses .icon-gruping-lightblue_64_66-after:after,
-.statuses .icon-contact-lightblue_64_66-after:after,
-.statuses .icon-grouping-lightblue_64_66-after:after {
-  margin-top: -70px;
+.statuses .status:after,
+.statuses .status-context:after {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
-
-
 
 .statuses ol .responses,
 .statuses ol .create-response {
@@ -2161,11 +2156,6 @@ body {
   float: left;
 }
 
-.statuses .status-context:after {
-  position: absolute;
-  right: 0;
-}
-
 .statuses .status-context .status-main {
   overflow: hidden;
   font-weight: bold;
@@ -2225,7 +2215,6 @@ body {
 }
 
 .statuses .status-icon {
-  padding-right: 65px;
   overflow: hidden;
 }
 
@@ -8030,42 +8019,28 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   margin-top: 0px;
 }
 
-.inform-my-status .distance-top:before {
-   border-color: rgb(240, 240, 240) white;
-   border-width: 0 10px 10px;
-   margin-top: -20px;
-   border-style: solid;
-   content: " ";
-   display: block;
-   position: absolute;
-   margin-left: 20px;
-   width: 0;
+#content .create-status .new-post .distance-top:before {
+  border-color: rgb(240, 240, 240) white;
+  border-width: 0 10px 10px;
+  margin-top: -58px;
+  border-style: solid;
+  content: " ";
+  display: block;
+  position: absolute;
+  width: 0;
 }
 
-#statuses .status .create-status .post-title {
-  margin-left: 0;
-  margin-bottom: 3px;
-}
-
-.re-status .post-resource .thumbnail {
-  margin: 5px;
-  padding-left: 25px;
-}
-
-.responses ol .re-status .no-preview .post-text {
-  margin: 5px 0 0 20px;
-}
-
-.status .create-response:before,
-.status .post-resource .distance-top:before,
-.responses .distance-top:after {
-   border-color: rgb(240, 240, 240) white;
-   border-width: 0 10px 10px;
-   border-style: solid;
-   margin-top: -30px;
-   content: " ";
-   display: block;
-   width: 0;
+.status-text .create-response .distance-top:after,
+.status-text .responses .distance-top:after {
+  border-color: rgb(240, 240, 240) white;
+  border-width: 0 10px 10px;
+  margin-top: -46px;
+  border-style: solid;
+  content: " ";
+  display: block;
+  left: 540px;
+  position: absolute;
+  width: 0;
 }
 
 .status .create-response:before {
@@ -8127,3 +8102,46 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 /* FIM botão convidar amigos */
+
+/* início agrupar-mural */
+.statuses .status .grouped-photos {
+  overflow: hidden;
+  margin-left: 40px;
+  height:40px;
+  float: left;
+}
+
+.statuses .status .grouped-photos .item {
+  display: inline;
+  float: left;
+}
+
+.statuses .status .show-more {
+  display: block;
+  clear: both;
+  margin-top: 10px;
+  float: right;
+  font-size: 11px;
+  margin-right: 7px;
+}
+
+.statuses .status .status-context .post-grouped-discipline {
+  float: none;
+}
+
+.statuses .status .status-log {
+  padding-top: 10px;
+}
+
+.statuses .status .status-context .status-info {
+  margin-left: 5px;
+}
+
+.statuses .status .grouped-photos .item .user-avatar {
+  margin-top: 8px;
+  margin-right: 8px;
+}
+
+.statuses .status .box {
+  width: 480px;
+}
