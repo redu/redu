@@ -83,6 +83,8 @@ class PackagePlan < Plan
   # a criação de invoices independente do preço do plano, passar a opção
   # :force => true
   #
+  # - Caso o invoice criado tenha total < 0, o mesmo será marcado como pago
+  #
   # Como no exemplo abaixo:
   #
   # plan.price
@@ -93,26 +95,29 @@ class PackagePlan < Plan
   # invoice.period_end
   # => Sat, 12 Feb 2011
   def create_invoice(opts = {})
+    period_start = opts[:invoice].try(:[], :period_start) || Date.today
+    period_end = period_start.advance(:days => 30)
+
     options = {
       :invoice => {
-      :period_start => Date.today.tomorrow,
-      :period_end => Date.today.advance(:days => 30),
+      :period_start => period_start,
+      :period_end => period_end,
       :amount => self.price,
-      :plan => self,
+      :description => "Fatura referente à #{period_end - period_start + 1} dias no plano #{self.name}"
     },
     :force => false
     }.deep_merge(opts)
 
     if options[:force] || (options[:invoice][:amount] > 0)
-      invoice = PackageInvoice.create(options[:invoice])
-      invoice.pend!
-      invoice
+      self.invoice = PackageInvoice.new(options[:invoice])
+      self.invoice.pend!
+      self.invoice.pay! if self.invoice.total <= 0
+      self.invoice
     end
 
   end
 
-  # Cria o primeiro invoice para os primeiros 30 dias mas dobra seu valor
-  # (correspondente a taxa de setup)
+  # Cria o primeiro invoice para os primeiros 30 dias + a taxa de adesão
   def create_invoice_and_setup
     create_invoice(:invoice => {
       :amount => self.price + (self.membership_fee || 0),

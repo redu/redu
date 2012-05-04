@@ -1,23 +1,29 @@
+<script type="text/javascript">
+  jQuery(function(){
+    $(".pagseguro-concave-form input[type=submit]").addClass("concave-important");
+  });
+</script>
 <%= render :partial => 'users/home_sidebar' %>
 <div class="main grid_10" style="width: 580px;">
   <%= render :partial => 'users/breadcrumbs' %>
   <div id="invoice-index">
-    <%= tabs :users do %>
+    <%= tabs :users, :class => "plan-panel" do %>
     <div class="call">
-      <span class="billable">
-        <% if @plan.billable.is_a? Environment %>
-          <%= link_to @plan.billable.name, @plan.billable %>
-        <% elsif @plan.billable.is_a? Course %>
-          <%= link_to @plan.billable.name,
-            environment_course_path(@plan.billable.environment, @plan.billable) %>
-        <% elsif @plan.billable_audit %>
-          <%= content_tag :span, @plan.billable_audit["name"] %>
-        <% end %>
-      </span>
-      <span class="name"><%= @plan.name %></span>
+      <% if @plan.billable.is_a? Environment %>
+        <%= content_tag(:h3, @plan.billable.name, :class => "billable") %>
+      <% elsif @plan.billable.is_a? Course %>
+        <%= content_tag(:h3, @plan.billable.environment.name, :class => "environment") %>
+        <%= content_tag(:h3, @plan.billable.name, :class => "billable") %>
+      <% elsif @plan.billable_audit %>
+        <%= content_tag :span, @plan.billable_audit["name"] %>
+      <% end %>
     </div>
+    <% if can? :migrate, @plan %>
+      <%= link_to "Upgrade", options_plan_path(@plan), :class => "concave-important upgrade-button" %>
+    <% end %>
     <% if @quota %>
       <div class="plan-use">
+        <span class="plan-type"><%= @plan.name %></span>
         <%= render :partial => "invoices/quotas",
           :locals => { :quota_file => @plan.billable.percentage_quota_file,
                        :plan => @plan,
@@ -29,46 +35,48 @@
     <table class="common spaced">
       <thead>
         <tr>
-          <th style="width: 15%">Fatura:</th>
-          <th style="width: 40%">Data:</th>
-          <th style="width: 15%">Estado:</th>
+          <th style="width: 20%">Fatura:</th>
+          <th style="width: 22%">Data:</th>
+          <th style="width: 20%">Estado:</th>
           <th style="width: 20%">Valor:</th>
           <th></th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="payments">
         <% @invoices.each do |invoice| %>
-          <tr>
-            <td><%= invoice.id %></td>
+          <tr class="data">
+            <td class="number"><%= invoice.id.to_s.rjust(10, "0") %></td>
             <td>
               <span class="date">
-                <%= l invoice.period_start %> a
-                <%= l invoice.period_end %>
+                <%= content_tag(:span, "#{l invoice.period_start} a", :class => "start") %>
+                <%= content_tag(:span, (l invoice.period_end), :class => "done") %>
               </span>
             </td>
             <td>
-              <span class="state">
+              <span class="state <%= invoice.state %>">
                 <%= Invoice.human_attribute_name(invoice.state)%>
               </span>
             </td>
             <td>
               <span class="value">
-                <%= number_to_currency(invoice.amount) %>
+                <%= number_to_currency(invoice.total) %>
               </span>
             </td>
-            <td>
-              <% if invoice.pending? && invoice.is_a?(PackageInvoice) %>
-                <div class="concave-form pagseguro-concave-form">
+            <td class="pay-status">
+              <% if can? :pay_with_pagseguro, invoice %>
+                <div class="pagseguro-concave-form">
                   <%= pagseguro_form invoice.plan.create_order, :submit => "Pagar" %>
                 </div>
+              <% elsif invoice.paid? %>
+                <span class="icon icon-small icon-confirm-green_16_18"></span>
               <% end %>
             </td>
           </tr>
         <% end %>
       </tbody>
     </table>
+    <%= link_to "< voltar para lista de planos", user_plans_path(@plan.user), :class => "back bottom" %>
   <% end %>
+  </div>
 </div>
-</div>
-
-
+<%= render "invoices/explanation_sidebar" %>

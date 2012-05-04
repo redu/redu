@@ -2138,8 +2138,7 @@ body {
 .statuses .status-content {
   overflow: hidden;
   line-height: 130%;
-  margin: 10px 0 0 38px;
-  display: inline;
+  margin: 10px 0 0 45px;
 }
 
 .statuses .status-subject {
@@ -2237,7 +2236,7 @@ body {
 }
 
 #content .secondary-sidebar {
-  margin: 20px 0 0 0;
+  margin: 40px 0 0 0;
   float: left;
   width: 170px;
 }
@@ -2761,7 +2760,7 @@ body {
 }
 
 #home .hall,
-#course-invitation .hall {
+#invitation .hall {
   border: 1px solid #B3B2B3;
   padding: 20px;
   background: #F0F0F0 url("../images/new/login-gradient.png") repeat-x;
@@ -2772,14 +2771,14 @@ body {
 }
 
 #home .hall .signup,
-#course-invitation .hall .signup {
+#invitation .hall .signup {
   display: block;
   text-align: center;
   padding: 15px 30px;
 }
 
 #home .hall hr,
-#course-invitation .hall hr {
+#invitation .hall hr {
   border: none;
   border-bottom: 2px dotted #B3B2B3;
   margin-top: 25px;
@@ -2811,6 +2810,43 @@ body {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
+}
+
+.friends-invitations .notice {
+  clear: both;
+  padding-top: 30px;
+  text-align: center;
+}
+
+.friends-invitations .empty-list {
+  padding-top: 60px;
+}
+
+.friends-invitations .form-header {
+  font-weight: 100;
+  font-family: museo-sans, helvetica, arial, sans-serif;
+  font-size: 17px;
+  color: #B3B2B3;
+}
+
+.friends-invitations #breadcrumbs  {
+  border: none;
+  margin-bottom: 0px;
+}
+
+.icon-contacts-lightblue_16_18-before:before,
+.friends-invitations {
+  padding-right:10px;
+}
+
+.friends-invitations #admin-invitations {
+  padding: 20px;
+  margin: 0 -19px 0 -19px;
+  padding-bottom: 1px
+}
+
+.friendship-sidebar .contact-recommendations {
+  margin-top: 112px;
 }
 
 .courses-requisitions li {
@@ -3063,7 +3099,7 @@ body {
 
 #folder-admin .new-file .file-wrapper {
   position: relative;
-  width: 220px;
+  width: 206px;
   float: left;
   overflow: hidden;
   cursor: pointer;
@@ -3665,11 +3701,6 @@ table.common .ext_xls {
 table.common .ext_ppt,
 table.common .ext_pptx {
   background: url("../images/new/ext/ppt.png") no-repeat center center;
-}
-
-.pagseguro-concave-form form .concave-button {
-  margin: 0 0 0 0;
-  width: 95px;
 }
 
 table.files thead th {
@@ -4336,7 +4367,7 @@ table.spaced tr td {
   margin: 0 auto;
   overflow: hidden;
   padding: 20px;
-  min-height: 620px;
+  min-height: 520px;
 }
 
 #partner-plan .partner-call {
@@ -4357,8 +4388,24 @@ table.spaced tr td {
   font-size: .9em;
 }
 
-#partner-plan .concave-form {
+#partner-contact-form {
   clear: left;
+}
+
+#partner-contact-form .concave-fieldset {
+  margin-top: 0;
+}
+
+#partner-contact-form .category-fieldset {
+  overflow: hidden;
+}
+
+#partner-contact-form .single-column {
+  float: none;
+}
+
+#partner-contact-form textarea {
+  height: 72px;
 }
 
 #checkout .customizing {
@@ -4763,6 +4810,12 @@ table.spaced tr td {
 
 #space-manage .form-header {
   margin-bottom: 10px;
+  margin-right: 165px;
+  width: 240px;
+}
+
+#space-manage .form-header-complement {
+  margin-right: 0px;
 }
 
 .management .form-header .strong,
@@ -4771,8 +4824,43 @@ table.spaced tr td {
 #environment-manage .course-path,
 #course-manage .course-path,
 #space-manage .concave-form .section-detail {
-  font-family: museo-sans, helvetica, arial, sans-serif;
+  font-family: museo-sans, "Helvetica Neue", arial, sans-serif;
   font-weight: 500;
+}
+
+.management #subject-chart-admin{
+  display: block;
+  float: left;
+  width: 748px;
+  margin-top: 5px;
+}
+
+.management .subject-participation-list {
+  list-style-type: none;
+  margin-bottom: 30px;
+  margin-left: 60px;
+}
+
+.management .subject-participation-list .form-subheader {
+  color: rgb(179, 179, 179);
+}
+
+.management .subject-participation-list .subject-participation-bullet {
+  width: 380px;
+  height: 140px;
+  float: left;
+}
+
+.management .subject-participation-list .subject-participation-bullet  .subtitle-chart {
+  font-size: 11px;
+  fill: rgb(179, 179, 179);
+}
+
+.management .subject-participation-list .subject-participation-pie {
+  width: 306px;
+  height: 140px;
+  float: left;
+  margin-bottom: 10px;
 }
 
 .management .form-header .strong,
@@ -4791,11 +4879,18 @@ table.concave-invitation-table {
   clear: both;
 }
 
+.friends-invitations .concave-invitation-table,
 #course-manage table.concave-invitation-table {
   margin: 0px 50px;
   width: 646px;
   border-collapse: separate;
   border-spacing: 0px 10px;
+}
+
+
+.friends-invitations .concave-invitation-table {
+  margin: 0;
+  width: 580px;
 }
 
 table.concave-invitation-table tr {
@@ -4879,6 +4974,16 @@ table.concave-invitation-table .cell-reinvite .reinvite {
 table.concave-invitation-table .cell-reinvite .reinvited {
   color: rgb(179, 179, 179);
   margin-right: 15px;
+}
+
+.friends-invitations .concave-invitation-table .cell-reinvite .reinvite {
+  display: block;
+  text-align: right;
+}
+
+.friends-invitations .concave-invitation-table .cell-reinvite .reinvited {
+  display: block;
+  text-align: right;
 }
 
 #course-manage .invitation-list input[type="submit"].concave-remove {
@@ -5533,6 +5638,10 @@ table.concave-invitation-table .cell-reinvite .reinvited {
   font-weight: 500px;
 }
 
+.friends-invitations #admin-invitations .invite-title {
+  color: #4CACD5;
+}
+
 #admin-invitations .course-info {
   float: left;
   width: 130px;
@@ -5576,18 +5685,28 @@ table.concave-invitation-table .cell-reinvite .reinvited {
   font-size: 1em;
 }
 
+.friends-invitations #admin-invitations .form-common label {
+  margin-top: 4px;
+  margin-left: 60px;
+}
+
 #admin-invitations #invite_email_button {
   height: 50px;
 }
 
 #admin-invitations .form-common .concave-button {
-  margin: 20px 0px 0px 165px;
+  margin: 10px 0px 0px 165px;
+}
+
+.friends-invitations #admin-invitations .form-common .concave-button {
+  margin-bottom: 5px;
+  margin-left: 188px
 }
 
 #admin-invitations .token-input-list {
   clear: none;
   float: left;
-  margin-top: 20px;
+  margin-top: 10px;
   width: 395px;
   height: 25px;
 
@@ -5595,6 +5714,12 @@ table.concave-invitation-table .cell-reinvite .reinvited {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
+}
+
+.friends-invitations #admin-invitations .token-input-list {
+  float: right;
+  width: 335px;
+  margin-top: -5px;
 }
 
 #admin-invitations .token-input-list .token-input-token.email {
@@ -5623,6 +5748,10 @@ table.concave-invitation-table .cell-reinvite .reinvited {
 
 div.token-input-dropdown {
   width: 385px;
+}
+
+.token-input-dropdown.friendship-dropdown {
+  width: 326px;
 }
 
 #admin-invitations .token-input-list input {
@@ -5879,7 +6008,7 @@ div.token-input-dropdown {
 }
 
 #global-courses .courses .audience,
-#course-invitation .course .audience {
+#invitation .course .audience {
   float: left;
 }
 
@@ -5908,15 +6037,15 @@ div.token-input-dropdown {
 
 #global-courses .courses .statistics li,
 #global-courses .courses .audience li,
-#course-invitation .course .statistics li,
-#course-invitation .course .audience li {
+#invitation .course .statistics li,
+#invitation .course .audience li {
   margin-bottom: 3px;
 }
 
 #global-courses .courses .statistics em,
 #global-courses .courses .audience em,
-#course-invitation .course .statistics em,
-#course-invitation .course .audience em {
+#invitation .course .statistics em,
+#invitation .course .audience em {
   font-size: .9em;
   font-style: oblique;
   display: block;
@@ -5926,42 +6055,42 @@ div.token-input-dropdown {
 }
 
 #global-courses .courses .audience em,
-#course-invitation .course .audience em {
+#invitation .course .audience em {
   margin-bottom: 5px;
 }
 
 #global-courses .courses .statistics span,
 #global-courses .courses .audience a,
-#course-invitation .course .statistics span,
-#course-invitation .course .audience a {
+#invitation .course .statistics span,
+#invitation .course .audience a {
   font-size: .9em;
   font-weight: bold;
   color: #6C6D6E;
 }
 
-#course-invitation .logotipo {
+#invitation .logotipo {
   width: 174px;
   height: 237px;
   background: url("../images/new/logotipo-vertical.png") no-repeat;
 }
 
-#course-invitation {
+#invitation {
   margin-top: 20px;
   padding-bottom: 200px;
 }
 
-#course-invitation .invite {
+#invitation .invite {
   float: left;
 }
 
-#course-invitation .salutation {
+#invitation .salutation {
   display: block;
   margin: 35px 0 25px 0;
   font-size: 1.3em;
   color: black;
 }
 
-#course-invitation .course {
+#invitation .course {
   padding: 10px;
   margin-bottom: 10px;
   margin-right: 20px;
@@ -5973,34 +6102,34 @@ div.token-input-dropdown {
   border-radius: 5px;
 }
 
-#course-invitation .course .informations{
+#invitation .course .informations{
   float: left;
   width: 278px;
 }
 
-#course-invitation .course img {
+#invitation .course img {
   float: left;
   margin-right: 10px;
 }
 
-#course-invitation .course .header {
+#invitation .course .header {
   background: url("../images/new/dots.png") repeat-x bottom;
   padding-bottom: 20px;
 }
 
-#course-invitation .course a.environment {
+#invitation .course a.environment {
   display: block;
   font-size: 0.9em;
 }
 
-#course-invitation .course a.name {
+#invitation .course a.name {
   display: block;
   margin: 5px 0;
   font-size: 1.2em;
   color: black;
 }
 
-#course-invitation .course .description {
+#invitation .course .description {
   display: block;
   background: url("../images/new/dots.png") repeat-x bottom;
   padding: 20px 0;
@@ -6009,7 +6138,7 @@ div.token-input-dropdown {
   color: #6D6E6F;
 }
 
-#course-invitation .course .statistics {
+#invitation .course .statistics {
   float: left;
   width: 120px;
 }
@@ -6480,20 +6609,7 @@ div.token-input-dropdown {
   width: 250px;
   float: left;
   margin-left: 20px;
-  margin-bottom: 25px;
-}
-
-#invoice-index .call .name {
-  font-size: .9em;
-  color: #B2B2B2;
-  display: block;
-}
-
-#invoice-index .call .billable {
-  font-size: 1.2em;
-  display: block;
-  margin-bottom: 10px;
-  color: black;
+  margin-bottom: 35px;
 }
 
 #invoice-show,
@@ -7089,6 +7205,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 #partner-header .partner-title {
   font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 500;
+  letter-spacing: -1px;
   font-size: 2.2em;
   margin-bottom: 5px;
   color: #72C3E5;
@@ -7282,34 +7399,15 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 /* Aqui modifiquei */
-.plan-panel .upgrade-button .concave-important {
+.panel .upgrade-button {
   float: right;
-  width: 148px;
-  height: 32px;
-  font-size: 15px;
-  margin-bottom: 40px;
-  margin-right: 30px;
 }
-
-.borderradius .plan-panel .call-us .upgrade-button .concave-important {
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-}
-
-.boxshadow .plan-panel .call-us .upgrade-button {
-  -webkit-box-shadow: inset 1px 1px 0px 0px rgb(171, 227, 133), inset -1px -1px 0px 0px rgb(171,227,133);
-  -moz-box-shadow: inset 1px 1px 0px 0px rgb(171, 227, 133), inset -1px -1px 0px 0px rgb(171,227,133);
-  box-shadow: inset 1px 1px 0px 0px rgb(171, 227, 133), inset -1px -1px 0px 0px rgb(171,227,133);
-}
-
-/* início estilo página invoice.html */
 
 #invoice-index .panel .call {
   margin-left: 9px;
 }
 
-#invoice-index .tabs .plan-panel .plan-use:before {
+#invoice-index .plan-panel .plan-use:before {
   background-image: url("../images/new/circulos-peq-cinza.png");
   float: left;
   content: '';
@@ -7319,12 +7417,16 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   margin-top: -10px;
 }
 
-#invoice-index .tabs .plan-panel .plan-use {
+#invoice-index .plan-panel .plan-use {
   text-align: center;
   margin-left: 75px;
 }
 
-#invoice-index .tabs .plan-panel .call .environment p {
+.plan-panel .call {
+  float: left;
+}
+
+.plan-panel .call .environment {
   font-family: arial, sans-serif;
   font-weight: normal;
   font-size: 12px;
@@ -7332,7 +7434,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   padding-bottom: 5px;
 }
 
-.plan-panel .call .call-course {
+.plan-panel .call .billable {
   font-family: museo-sans, arial ,sans-serif;
   font-weight: 500;
   font-size: 17px;
@@ -7345,14 +7447,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
    font-size: 11px;
 }
 
-.plan-panel table .payments .data .number {
-  color: rgb(77, 173, 214);
-}
-
-.plan-panel table .payments .data .icon  {
-  text-indent: -9999px;
-}
-
+.plan-panel table .payments .data .number,
 .plan-panel table .payments .data .date,
 .plan-panel table .payments .data .value {
   color: rgb(109, 110, 111);
@@ -7362,57 +7457,73 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   color: rgb(204, 204, 204);
 }
 
-.plan-panel table .payments .data .arrears {
+.plan-panel .payments .data .overdue {
   color: rgb(255, 109, 109);
 }
 
-#content .explanation-sidebar .explanation .arrears {
+#content .explanation-sidebar .explanation .overdue {
   color: rgb(255, 109, 109);
-  font-style: italic;
 }
 
-.explanation-sidebar .explanation .to-expirate {
+.plan-panel .payments .data .pending  {
   color: rgb(255, 169, 53);
-  font-style: italic;
+}
+
+.explanation-sidebar .explanation .pending {
+  color: rgb(255, 169, 53);
 }
 
 #content .plan-panel .payments .data .paid  {
   color: rgb(95, 192, 128);
 }
 
+.explanation-sidebar .explanation .closed {
+  color: black;
+}
+
+.payments .data .icon  {
+  display: block;
+  width: 16px;
+  height: 18px;
+  margin: 0 auto;
+  padding-left: 0; /* Sobreescreve padrão da tabela */
+}
+
 .plan-panel table.common tbody tr {
   border: none;
 }
 
-.plan-panel table.common .box-gray .data td {
+.plan-panel table.common tbody .odd {
   background-color: #f7f7f7;
   border-top: 1px solid rgb(179, 179, 179);
   border-bottom: 1px solid rgb(179, 179, 179);
 }
 
-.borderradius .plan-panel table.common .box-gray .data td:first-child {
+.borderradius .plan-panel table.common tbody .odd td:first-child {
   border-radius: 5px 0px 0px 5px;
 }
 
-.borderradius .plan-panel table.common .box-gray .data td:last-child {
+.borderradius .plan-panel table.common tbody .odd td:last-child {
   border-radius: 0px 5px 5px 0px;
 }
 
-#invoice-index .plan-panel .courses-list,
-#invoice-index .plan-panel .courses-details {
+.plan-panel .back {
   font-size: 11px;
   float: right;
-  clear: both;
 }
 
-#invoice-index .plan-panel .courses-list {
+.plan-panel .back {
   margin-bottom: 30px;
 }
 
-#invoice-index .plan-panel .courses-list a,
-#invoice-index .plan-panel .courses-details a {
+.plan-panel .back.bottom {
+  margin-top: 30px;
+}
+
+.plan-panel .back a {
+  margin-bottom: 30px;
   color: rgb(77, 73, 214);
-  font-family: arial, sans-serisf;
+  font-family: arial, sans-serif;
 }
 
 .plan-panel table .payments .data .pay-status {
@@ -7491,6 +7602,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .plan-panel .options-plan .plans-list .plans .plan .name {
   font-family: museo-slab, arial, sans-serif;
   font-weight: 500;
+  letter-spacing: -1px;
   font-size: 17px;
   color: rgb(95, 192, 128);
   display: block;
@@ -7504,6 +7616,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   font-size: 17px;
   color: rgb(95, 192, 128);
   display: block;
+  margin-bottom: 5px;
 }
 
 .plan-panel .options-plan .plans-list .plans .plan .a-month,
@@ -7528,12 +7641,8 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   float: right;
 }
 
-.plan-panel .options-plan .concave-form {
-  width: 580px;
-}
-
 .plan-panel .options-plan .plan-user-call {
-  font-family: arial;
+  margin-bottom: 20px;
   font-size: 11px;
   color: rgb(179, 179, 179);
 }
@@ -7542,25 +7651,16 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   text-shadow: 0px 1px 0px rgb(255, 255, 255);
 }
 
-.plan-panel .options-plan .plans-list .call-us .concave-important {
-  margin-right: 28px;
-}
-
-.plan-panel .options-plan .concave-form .columns,
-.plan-panel .options-plan .concave-form .single-column {
-  float: none;
-}
-
-.plan-panel .options-plan .plans-list .your-plan .plans .plan .plan-limit,
-.plan-panel .options-plan .plans-list .your-plan .plans .plan .name {
+.plan-panel .options-plan .plans-list .your-plan .plan .plan-limit,
+.plan-panel .options-plan .plans-list .your-plan .plan .name {
   color: rgb(109, 110, 111);
 }
 
-.plan-panel .options-plan .plans-list .your-plan .plans .plan .price {
+.plan-panel .options-plan .plans-list .your-plan .plan .price {
   color: rgb(179, 179, 179);
 }
 
-.plan-panel .options-plan .plans-list .your-plan .plans .plan .actual-plan {
+.plan-panel .options-plan .plans-list .your-plan .plan .actual-plan {
   font-size: 12px;
   color: rgb(109, 110, 111);
   font-weight: bold;
@@ -7588,7 +7688,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .plan-panel .concave-admin-table .course .no-pending {
   font-size: 11px;
   font-family: arial,sans-serif;
-  font-weight: regular;
   color: rgb(179, 179, 179);
 }
 
@@ -7600,14 +7699,20 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 .plan-panel .concave-admin-table .course .type-user {
-  font-size: 12px;
-  font-family: arial, sans-serif;
-  font-weight: regular;
-  color: rgb(95, 192, 128);
   padding-left: 120px;
 }
 
-.plan-panel .concave-admin-table .course .pending-user {
+.plan-panel .concave-admin-table .course .type-user .name {
+  display: block;
+  font-size: 12px;
+  color: rgb(95, 192, 128);
+}
+
+.plan-panel .concave-admin-table .course .type-user .name:hover {
+  color: rgb(21, 138, 196);
+}
+
+.plan-panel .concave-admin-table .course .type-user .pending-user {
   color: rgb(255, 109, 109);
 }
 
@@ -7865,11 +7970,12 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   content: '';
 }
 
+/*-- #graph-form é o .concave-form do gráfico --*/
 #graph-form .inline {
   float: left;
 }
 
-.concave-form .errors_on_date {
+#graph-form .errors_on_date{
   font-size: .8em;
   color: #FF6D6D;
   overflow: hidden;
@@ -7988,11 +8094,12 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 
 /* Botão convidar amigos */
 .invite-button {
-  width: 150px;
-  height: 90px;
+  width: 130px;
+  height: 80px;
   border: solid 1px rgb(21, 138, 196);
-  padding-left: 5px;
-  padding-right: 5px;
+  padding-right: 5px !important;
+  padding-left: 5px !important;
+  margin-left: 15px;
 }
 
 .invite-button .invite-contact_32_50-before {
@@ -8003,11 +8110,14 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   display: block;
   margin: 11px auto 2px;
 }
+.invite-button .invite-contact_32_50-before {
+  float: left;
+}
 
 .borderradius .invite-button {
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
+  -webkit-border-radius: 10px !important;
+  -moz-border-radius: 10px !important;
+  border-radius: 10px !important;
 }
 
 .boxshadow .invite-button {
