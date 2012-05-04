@@ -7961,27 +7961,27 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 #content .create-status .new-post .distance-top:before {
- border-color: rgb(240, 240, 240) white;
- border-width: 0 10px 10px;
- margin-top: -58px;
- border-style: solid;
- content: " ";
- display: block;
- position: absolute;
- width: 0;
+  border-color: rgb(240, 240, 240) white;
+  border-width: 0 10px 10px;
+  margin-top: -58px;
+  border-style: solid;
+  content: " ";
+  display: block;
+  position: absolute;
+  width: 0;
 }
 
 .status-text .create-response .distance-top:after,
 .status-text .responses .distance-top:after {
- border-color: rgb(240, 240, 240) white;
- border-width: 0 10px 10px;
- margin-top: -46px;
- border-style: solid;
- content: " ";
- display: block;
- left: 540px;
- position: absolute;
- width: 0;
+  border-color: rgb(240, 240, 240) white;
+  border-width: 0 10px 10px;
+  margin-top: -46px;
+  border-style: solid;
+  content: " ";
+  display: block;
+  left: 540px;
+  position: absolute;
+  width: 0;
 }
 
 .distance-top {
@@ -8046,14 +8046,14 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 /* FIM botão convidar amigos */
 
 /* início agrupar-mural */
-#statuses .grouped-photos {
+.statuses .status .grouped-photos {
   overflow: hidden;
   margin-left: 40px;
   height:40px;
   float: left;
 }
 
-#statuses .grouped-photos .item {
+.statuses .status .grouped-photos .item {
   display: inline;
   float: left;
 }
@@ -8067,19 +8067,19 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   margin-right: 7px;
 }
 
-#statuses .status .status-context .post-grouped-discipline {
+.statuses .status .status-context .post-grouped-discipline {
   float: none;
 }
 
-#statuses #status-18748 .status .status-log {
+.statuses .status .status-log {
   padding-top: 10px;
 }
 
-#statuses .status-context .status-info {
+.statuses .status .status-context .status-info {
   margin-left: 5px;
 }
 
-#statuses .status .grouped-photos .item .user-avatar {
+.statuses .status .grouped-photos .item .user-avatar {
   margin-top: 8px;
   margin-right: 8px;
 }
