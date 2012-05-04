@@ -7254,7 +7254,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 
 #tiptip_holder #tiptip_content ul.features {
   list-style: outside disc;
-}]
+}
 
 #tiptip_holder #tiptip_content .pricing .value {
   font-size: 1.3em;
@@ -7869,7 +7869,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   float: left;
 }
 
-.concave-form .errors_on_date{
+.concave-form .errors_on_date {
   font-size: .8em;
   color: #FF6D6D;
   overflow: hidden;
