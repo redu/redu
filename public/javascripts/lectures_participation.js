@@ -1,6 +1,10 @@
+// Módulo respnsável pela criação do gráfico Stacked Area do relatório
+// de participação dos alunos nas aulas da disciplina
+
 var LectureParticipationGraph = function () {
   var chart;
 
+  // Definição do gráfico
   var options ={
     chart: {
       renderTo: '',
@@ -62,9 +66,12 @@ var LectureParticipationGraph = function () {
   }
 
   return {
+    // Carregamento do gráfico
     load: function (graphView) {
+      // Inicializa o form com o gráfico correspondente
       var graph = graphView.form.plotGraphForm(graphView.chart.renderTo);
 
+      // Passa a função de carregamento do gráfico via JSON
       graph.loadGraph(function () {
         $.extend(options, graphView);
 
