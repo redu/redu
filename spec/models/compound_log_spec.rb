@@ -7,44 +7,53 @@ describe CompoundLog do
   it { CompoundLog.should respond_to(:current_compostable).with(2).arguments }
   it { CompoundLog.new.should respond_to(:compound!).with(2).argument }
   it { CompoundLog.new.should respond_to(:expired?).with(1).argument }
-  it { CompoundLog.new.should respond_to(:hide_logs) }
+  it { CompoundLog.new.should respond_to(:update_compounded_logs_compound_property).with(1).argument }
 
   context "when deleting compound log" do
     before do
       @log = Factory(:log)
       subject.logs << @log
+      @log.compound = true
     end
 
     it "should delete successfully" do
       subject.destroy.should == subject
     end
 
-    it "should delete all compounded logs" do
+    it "should not delete compounded logs" do
       expect {
         subject.destroy
-      }.should change(Log, :count).by(-2)
+      }.should change(Log, :count).by(0)
+    end
+
+    it "should change compoundedlog's compound property to false" do
+      compoundedlogs = subject.logs
+      subject.destroy
+      compoundedlogs.each do |compounded|
+        compounded.compound.should be_false
+      end
     end
   end
 
-  context "finder" do
-    before do
-      @compounded_log_friendships = []
-      @compounded_log_course = []
-      @compounded_log_user = []
+  describe :expired? do
+    context "when it's not expired" do
+      before do
+        subject.compound_visible_at = Time.now
+      end
 
-      3.times do
-        @compounded_log_user << Factory(:compound_log)
-        @compounded_log_course << Factory(:compound_log,
-                                          :logeable_type => Course.to_s)
-        @compounded_log_friendships << Factory(:compound_log,
-                                               :logeable_type => Friendship.to_s )
+      it "should return false" do
+        subject.expired?(24).should be_false
       end
     end
 
-    it "retrieves compound logs with especified logeable type" do
-      CompoundLog.by_logeable_type('Friendship').should == @compounded_log_friendships
-      CompoundLog.by_logeable_type('User').should == @compounded_log_user
-      CompoundLog.by_logeable_type('User').count.should == 3
+    context "when it's expired" do
+      before do
+        subject.compound_visible_at = 1.year.ago
+      end
+
+      it "should return true" do
+        subject.expired?(24).should be_true
+      end
     end
   end
 
