@@ -67,6 +67,7 @@
     border: 1px solid #cccbcb;
     padding: 7px 10px;
     color: #6c6d6e;
+    background: white;
   }
 
   .concave-form .field_with_errors .concave-input {
@@ -123,6 +124,7 @@
   .concave-form .concave-input:focus {
     border: 1px solid #4CACD5;
     color: black;
+    background: white;
   }
 
   .cssgradients .concave-form .concave-input:focus {
@@ -198,9 +200,9 @@
     padding: 5px 20px 6px 20px;
     color: white;
     display: inline-block;
-    line-height: 17px;
+    line-height: 18px;
     font-weight: bold;
-    font-size: 12px;
+    font-size: 13px;
     text-align: center;
     cursor: pointer;
   }

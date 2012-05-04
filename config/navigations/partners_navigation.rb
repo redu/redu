@@ -22,6 +22,7 @@ SimpleNavigation::Configuration.run do |navigation|
           :highlights_on => Proc.new {
             action_matcher({'partners' => ['show']}).call ||
               (action_matcher('invoices' => ['index']).call && @client) ||
+              (action_matcher('plans' => ['options']).call && @client) ||
               create_action_matcher('partner_environment_associations').call
           },
           :class => 'ui-state-default',

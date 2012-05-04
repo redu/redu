@@ -93,7 +93,7 @@ describe Partner do
                       :partner => subject).environment
         plan = Plan.from_preset(:instituicao_superior, "LicensedPlan")
         plan.user = env.owner
-        env.plans << plan
+        env.plan = plan
         env.plan.create_invoice
       end
     end
@@ -117,9 +117,10 @@ describe Partner do
         environment = course.environment
         Factory(:partner_environment_association, :partner => subject,
                 :environment => course.environment)
+
         plan = Plan.from_preset(:instituicao_superior, "LicensedPlan")
         plan.user = environment.owner
-        environment.plans << plan
+        environment.plan = plan
         environment.plan.create_invoice
         environment
       end

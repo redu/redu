@@ -67,17 +67,23 @@
   float: right;
   padding: 20px;
   width: 248px;
-  background: rgb(179,220,237); /* Old browsers */
+  background: rgb(240, 240, 240); /* Old browsers */
 }
 
 .cssgradients #invitation .login-box,
 .cssgradients #landing .login-box {
-  background: -moz-linear-gradient(top, rgb(179,220,237) 0%, rgb(240,240,240) 0%, rgb(255,255,255) 50%, rgb(240,240,240) 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(179,220,237)), color-stop(0%,rgb(240,240,240)), color-stop(50%,rgb(255,255,255)), color-stop(100%,rgb(240,240,240))); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, rgb(179,220,237) 0%,rgb(240,240,240) 0%,rgb(255,255,255) 50%,rgb(240,240,240) 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top, rgb(179,220,237) 0%,rgb(240,240,240) 0%,rgb(255,255,255) 50%,rgb(240,240,240) 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top, rgb(179,220,237) 0%,rgb(240,240,240) 0%,rgb(255,255,255) 50%,rgb(240,240,240) 100%); /* IE10+ */
-  background: linear-gradient(top, rgb(179,220,237) 0%,rgb(240,240,240) 0%,rgb(255,255,255) 50%,rgb(240,240,240) 100%); /* W3C */
+  background: -moz-linear-gradient(top, rgb(240,240,240) 0%, rgb(255,255,255) 50%, rgb(240,240,240) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(240,240,240)), color-stop(50%,rgb(255,255,255)), color-stop(100%,rgb(240,240,240))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgb(240,240,240) 0%,rgb(255,255,255) 50%,rgb(240,240,240) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgb(240,240,240) 0%,rgb(255,255,255) 50%,rgb(240,240,240) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgb(240,240,240) 0%,rgb(255,255,255) 50%,rgb(240,240,240) 100%); /* IE10+ */
+  background: linear-gradient(top, rgb(240,240,240) 0%,rgb(255,255,255) 50%,rgb(240,240,240) 100%); /* W3C */
+}
+
+.no-cssgradients #landing .login-box {
+  background: rgb(240,240,240); /* Old browsers */ /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2YwZjBmMCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmMGYwZjAiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0f0f0', endColorstr='#f0f0f0',GradientType=0 ); /* IE6-8 */
 }
 
 .boxshadow #invitation .login-box,

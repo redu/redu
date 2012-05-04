@@ -89,5 +89,66 @@ describe LicensedPlan do
     end
   end
 
-  context "when creating a new order"
+  context "when setting up for migration" do
+    before do
+      subject.invoice = Factory(:licensed_invoice)
+    end
+
+    context "when billable is a course" do
+      before do
+        subject.invoice = Factory(:licensed_invoice)
+        subject.billable = Factory(:course)
+        (1..20).each { subject.billable.join Factory(:user)}
+      end
+
+      it "should create licenses for all course users" do
+        expect {
+          subject.setup_for_migration
+        }.should change(License, :count).
+          by(subject.billable.approved_users.count)
+      end
+
+      it "should create license with correct infos" do
+        subject.setup_for_migration
+
+        user = subject.billable.approved_users.first
+        uca = user.user_course_associations.first
+        lic = subject.invoice.licenses.where(:login => user.login).first
+
+        lic.should_not be_nil
+        lic.course.should == uca.course
+        lic.role.should == uca.role
+      end
+    end
+
+    context "when billable is a environment" do
+      before do
+        subject.billable = Factory(:environment)
+        (1..3).each { Factory(:course, :environment => subject.billable) }
+        subject.billable.reload
+        subject.billable.courses.each do |c|
+          (1..20).each { c.join Factory(:user)}
+        end
+      end
+
+      it "should create licenses for all courses users" do
+        users = subject.billable.courses.collect(&:approved_users)
+        expect {
+          subject.setup_for_migration
+        }.should change(License, :count).by(users.flatten.size)
+      end
+
+      it "should create license with correct infos" do
+        subject.setup_for_migration
+
+        user = subject.billable.courses.first.approved_users.first
+        uca = user.user_course_associations.first
+        lic = subject.invoice.licenses.where(:login => user.login).first
+
+        lic.should_not be_nil
+        lic.course.should == uca.course
+        lic.role.should == uca.role
+      end
+    end
+  end
 end

@@ -10,10 +10,11 @@ module BaseHelper
   end
 
   # Cria markup das big abas
-  def big_tabs(context, &block)
+  def big_tabs(context, opts={}, &block)
     locals = {
       :navigation => render_navigation(:context => context, :level => 2,
                                        :renderer => ListDetailed),
+      :options => opts,
       :body => capture(&block)
     }
 
@@ -22,10 +23,11 @@ module BaseHelper
 
   # Cria markup das abas (compatível com o jQuery UI) a partir da navegação
   # do contexto passado
-  def tabs(context, &block)
+  def tabs(context, opts={}, &block)
     locals = {
       :navigation => render_navigation(:context => context, :level => 2,
                                        :renderer => ListDetailed),
+      :options => opts,
       :body => capture(&block)
     }
 
@@ -34,9 +36,10 @@ module BaseHelper
 
   # Cria markup das sub abas (compatível com jQuery UI) a partir da navegação
   # do contexto passado
-  def subtabs(context, &block)
+  def subtabs(context, opts={}, &block)
     locals = {
       :navigation => render_navigation(:context => context, :level => 3),
+      :options => opts,
       :body => capture(&block)
     }
 
