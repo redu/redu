@@ -65,20 +65,6 @@ describe "Subject(the subject of a space) abilities" do
     end
   end
 
-  context "when course_admin" do
-    before do
-      @course.join(@user, Role[:course_admin])
-    end
-
-    it "should be able to read" do
-      subject.should be_able_to :read, @subject
-    end
-
-    it "should be able to destroy" do
-      subject.should be_able_to :destroy, @subject
-    end
-  end
-
   context "when environment_admin" do
     before do
       @course.join(@user, Role[:environment_admin])

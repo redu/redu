@@ -4,7 +4,6 @@ module Api
     module InstanceMethods
       def subject_abilities(user)
         administrative_roles = [Role[:teacher],
-                                Role[:course_admin],
                                 Role[:environment_admin]]
 
         if user
