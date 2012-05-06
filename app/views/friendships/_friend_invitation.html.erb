@@ -1,28 +1,28 @@
 <script type="text/javascript">
   jQuery(function(){
     $("#invite_email").live("click", function(){
-      var email = $("input[autocomplete=off]").val();
+      var email = $("input[autocomplete=off]").val().trim();
       $("#emails").val($("#emails").val() + "," + email);
       $("input[autocomplete=off]").val("")
 
-      var item = "<li class=\"token-input-token email\"><p title=\"" + email + "\">" + email + "</p><span class=\"invite-to-redu\">(Convidar para o Redu)</span><span class=\"token-input-delete-token-email\">x</span></li>"
+      var item = "<li class=\"token-input-token email\"><p class=\"invited-mail\" title=\"" + email + "\">" + email + "</p><span class=\"invite-to-redu\">(Convidar para o Redu)</span><span class=\"token-input-delete-token-email\">x</span></li>"
       $(".token-input-input-token").before(item);
       $(this).hide();
       return false;
     });
 
-    $(".token-input-delete-token-email").live("click", function(){
+      $(".token-input-delete-token-email").live("click", function(){
         $(this).parent().remove();
         var emails = $("#emails").val();
-        var deleted_email = $(this).prev().get(0).getAttribute("title");
-        var emails = emails.replace(new RegExp(deleted_email), "");
+        var deleted_email = $(this).siblings('.invited-mail')[0].getAttribute("title");
+        var emails = emails.replace(deleted_email, "");
         $("#emails").val(emails);
     });
 
     $(".form-common").ajaxComplete(function(){
       if ($(".token-input-dropdown li").length == 0) {
         var emailRegex = /^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/;
-        var entered_value = $("input[autocomplete=off]").val();
+        var entered_value = $("input[autocomplete=off]").val().trim();
         if (emailRegex.test(entered_value)) {
           $("#invite_email").show();
         }else{
