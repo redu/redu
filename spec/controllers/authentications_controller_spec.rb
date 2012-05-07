@@ -46,6 +46,14 @@ describe AuthenticationsController do
 
         it { should set_the_flash.to(I18n.t("facebook_connect_account_association")) }
         it { should redirect_to(home_user_path(@user))  }
+
+        context "which is activated" do
+
+        end
+
+        context "which is not activated" do
+
+        end
       end
 
       context "and there's not a Redu account associated to email in auth hash" do
