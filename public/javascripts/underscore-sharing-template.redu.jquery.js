@@ -4,15 +4,21 @@ $.fn.renderTemplate = function(json) {
   //Remove o preview
   $this.find('.post-resource').remove();
 
+  var $preview = $('#template-preview').clone();
+
+  //Adiciona a imagem do thumbnail no template
+  //(devido ao erro no firefox não renderizar o template)
+  $preview.find('img.preview-link').attr("src", json.first_thumb);
+
   //Renderiza template
-  var $template = $('#template-preview').html();
+  var template = $preview.html();
 
   //Configs template (scriptlets)
   _.templateSettings = {
     interpolate: /\{\{\=(.+?)\}\}/g,
     evaluate: /\{\{(.+?)\}\}/g
   };
-  var compiled = _.template($template);
+  var compiled = _.template(template);
   var rendered = compiled(json);
 
   //Adicona o template compilado
