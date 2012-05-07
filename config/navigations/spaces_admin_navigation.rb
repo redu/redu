@@ -25,10 +25,10 @@ SimpleNavigation::Configuration.run do |navigation|
         admin_members_space_path(@space),
         :class => 'ui-state-default',
         :link => { :class => "icon-members_16_18-before" }
-      tabs.item :reports, 'Relatório',
+      tabs.item :reports, 'Relatórios',
         subject_participation_report_space_path(@space),
         :class => 'ui-state-default',
-        :link => { :class => "icon-subject_16_18-before" } do |subtabs|
+        :link => { :class => "icon-bio_16_18-before" } do |subtabs|
           subtabs.dom_class = 'clearfix ui-tabs-nav'
           subtabs.item :subject_report, "Módulos",
             subject_participation_report_space_path(@space),

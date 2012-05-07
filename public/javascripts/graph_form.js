@@ -2,35 +2,38 @@
 // Manipulação dos selects das datas, checkboxs e função de submit do form
 // Além de tratar eventos de erro com mensagens
 
-var graphForm = function () {
-  // Tratamento das datas
-  var time_selected = function (period) {
-    var that = this;
+$.fn.plotGraphForm = function (divRender) {
+  var $this = $(this);
 
+  // Tratamento das datas
+  var timeSelected = function (period) {
     select = $("#date_"+period+"_fake__3i");
-    that.day = select[0].options[select[0].selectedIndex].value;
+    var day = select[0].options[select[0].selectedIndex].value;
     select = $("#date_"+period+"_fake__2i");
-    that.month = select[0].options[select[0].selectedIndex].value;
+    var month = select[0].options[select[0].selectedIndex].value;
     select = $("#date_"+period+"_fake__1i");
-    that.year = select[0].options[select[0].selectedIndex].value;
-    return that.year + "-" + that.month + "-" + that.day;
+    var year = select[0].options[select[0].selectedIndex].value;
+    return year + "-" + month + "-" + day;
   };
 
-  var validate_date = function () {
-    var st = Date.parse(time_selected("start").replace(/\-/ig, '/'));
-    var en = Date.parse(time_selected("end").replace(/\-/ig, '/'));
+  // Validando intervalo de datas
+  // O replace é para browsers que não tem o mesmo formato de String do SO,
+  // e portanto retornam NaN no parse
+  var validateDate = function () {
+    var st = Date.parse(timeSelected("start").replace(/\-/ig, '/'));
+    var en = Date.parse(timeSelected("end").replace(/\-/ig, '/'));
 
     return st < en;
   }
 
   // Tratamento dos checkboxes
-  $(".item-chart-check").click(function () {
-    var all = $("#all-check")[0];
+  $this.find(".item-chart-check").click(function () {
+    var all = $this.find("#all-check")[0];
     if (!this.checked){
       all.checked = false;
     }
     else{
-      var ipts = $(".item-chart-check");
+      var ipts = $this.find(".item-chart-check");
       var all_checked = true;
       $.each(ipts, function () {
         if(!this.checked){
@@ -44,8 +47,8 @@ var graphForm = function () {
     }
   });
 
-  $("#all-check").click(function () {
-    var ipts = $(".item-chart-check");
+  $this.find("#all-check").click(function () {
+    var ipts = $this.find(".item-chart-check");
     if (this.checked) {
       $.each(ipts, function () {
         this.checked = true;
@@ -60,40 +63,47 @@ var graphForm = function () {
 
   // Função checa se mensagem de erro está ativa
   var errorExist = function (){
-    return ($(".error_explanation")).length
+    return ($this.find(".error_explanation")).length
   };
 
   // Submissão do gráfico por AJAX
-  $("#graph-form").submit(function(e) {
-    $("#date_start").val(time_selected("start"));
-    $("#date_end").val(time_selected("end"));
+  $this.submit(function(e) {
+    $this.find("#date_start").val(timeSelected("start"));
+    $this.find("#date_end").val(timeSelected("end"));
 
-    if(!validate_date()){
+    // Só submita se a data for válida
+    if(!validateDate()){
       if(!errorExist()){
-        $('#form-problem').before('<div class="error_explanation" id="error_explanation"><h2>Ops!</h2><p>Há problemas para os seguinte(s) campo(s):</p><p class="invalid_fields">Data inicial, Data final</p></div>');
-        $("#date-validate").append('<ul class="errors_on_date"><li>'+"Intervalo de tempo inválido"+'</li></ul>');
+        $this.find('#form-problem').before('<div class="error_explanation" id="error_explanation"><h2>Ops!</h2><p>Há problemas para os seguinte(s) campo(s):</p><p class="invalid_fields">Data inicial, Data final</p></div>');
+        $this.find("#date-validate").append('<ul class="errors_on_date"><li>'+"Intervalo de tempo inválido"+'</li></ul>');
       }
+
+      // Não submita e também não chama o método live
       return false;
     }
   });
 
   // Requisição AJAX para carregamento do gráfico + Tratamento de erros
-  $("#graph-form").live("ajax:complete", function(e, xhr){
+  $this.live("ajax:complete", function(e, xhr){
     json = $.parseJSON(xhr.responseText);
     if(errorExist){
-      $(".error_explanation").remove();
-      $(".errors_on_date").remove();
+      $this.find(".error_explanation").remove();
+      $this.find(".errors_on_date").remove();
     }
 
-    build_graph();
+    buildGraph();
   });
 
-  var build_graph;
+  // Função de carregamento do gráfico
+  var buildGraph;
 
   return {
-    load_graph :function (create_graph) {
-      build_graph = create_graph;
-      $("#graph-form").submit();
+    loadGraph :function (createGraph) {
+      buildGraph = createGraph;
+
+      // Primeiro carregamento do gráfico
+      $this.before($("<div/>", { id: divRender }));
+      $this.submit();
     }
   }
 };
