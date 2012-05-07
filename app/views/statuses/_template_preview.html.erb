@@ -14,8 +14,15 @@
         <span class="next control">
           <span class="arrow">N</span>
         </span>
-        {{ } }}
+        {{ } else { }}
         <!-- end multiplos thumbnails -->
+        <span class="last control desactivated">
+          <span class="arrow">L</span>
+        </span>
+        <span class="next control desactivated">
+          <span class="arrow">N</span>
+        </span>
+        {{ } }}
         <span class="remove control">
           <span class="arrow">R</span>
         </span>
@@ -25,7 +32,7 @@
     <!-- end thumbnail -->
 
     <div class="post-text">
-      <span class="close icon-small icon-delete-gray_8_10">Close</span>
+      <input class="close icon-small icon-delete-gray_8_10"/>
       <h3><a href="{{= url }}" target="_blank" rel="nofollow" class="title">
           {{ if(obj.title) { }}
           {{= title }}

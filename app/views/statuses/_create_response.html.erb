@@ -1,5 +1,5 @@
 <%# Form de Status resposta %>
-<div class="create-status create-response" style = "display: none;">
+<div class="create-status create-response" style="display: none;">
   <%= form_for :status,
     :url => respond_status_path(in_response_to),
     :remote => true, :html => { :class => "form-loader concave-form" } do |f| %>

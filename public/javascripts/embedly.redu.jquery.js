@@ -24,51 +24,58 @@ $.fn.enableEmbedding = function() {
           if($textarea.data('last_url') != url) {
 
             $textarea.data("last_url", url);
-            $.getJSON(api_url, {crossDomain:  true}, function(json) {
-              var resource_inputs = "";
-              var thumbnail_list = [];
 
-              // Processa thumbnails
-              if(json.thumbnail_url != null) {
-                if(json.thumbnail_url instanceof Array) {
-                  for(e in json.thumbnail_url) {
-                    thumbnail_list.push(json.thumbnail_url[e].url);
+            $.ajax({
+              cache: false,
+              url: api_url,
+              dataType: 'jsonp',
+              success: function(json){
+
+                var resource_inputs = "";
+                var thumbnail_list = [];
+
+                // Processa thumbnails
+                if(json.thumbnail_url != null) {
+                  if(json.thumbnail_url instanceof Array) {
+                    for(e in json.thumbnail_url) {
+                      thumbnail_list.push(json.thumbnail_url[e].url);
+                    }
+                  } else {
+                    thumbnail_list.push(json.thumbnail_url);
                   }
-                } else {
-                  thumbnail_list.push(json.thumbnail_url);
+                  json.first_thumb = thumbnail_list[0];
+
+                  // Adiciona à lista de URL's de thumbnails
+                  $textarea.data("thumbnail_list", thumbnail_list);
+
+                  // Adiciona imagem de thumbnail (quando existe)
+                  resource_inputs = resource_inputs + appendInput("thumb_url", json.first_thumb);
                 }
-                json.first_thumb = thumbnail_list[0];
 
-                // Adiciona à lista de URL's de thumbnails
-                $textarea.data("thumbnail_list", thumbnail_list);
+                resource_inputs = resource_inputs + appendInput("provider", json.provider_url);
 
-                // Adiciona imagem de thumbnail (quando existe)
-                resource_inputs = resource_inputs + appendInput("thumb_url", json.first_thumb);
+                // URL encurtada
+                if(json.url != null) {
+                  resource_inputs = resource_inputs + appendInput("link", json.url);
+                } else {
+                  resource_inputs = resource_inputs + appendInput("link", url);
+                  json.url = 'http://' + url;
+                }
+
+                // Título
+                if(json.title != null) {
+                  resource_inputs = resource_inputs + appendInput("title", json.title);
+                }
+
+                // Descrição
+                if(json.description != null) {
+                  resource_inputs = resource_inputs + appendInput("description", json.description);
+                }
+
+                // Renderiza o template
+                $this.renderTemplate(json);
+                $textarea.parents('fieldset').find('.post-resource').prepend(resource_inputs);
               }
-
-              resource_inputs = resource_inputs + appendInput("provider", json.provider_url);
-
-              // URL encurtada
-              if(json.url != null) {
-                resource_inputs = resource_inputs + appendInput("link", json.url);
-              } else {
-                resource_inputs = resource_inputs + appendInput("link", url);
-                json.url = 'http://' + url;
-              }
-
-              // Título
-              if(json.title != null) {
-                resource_inputs = resource_inputs + appendInput("title", json.title);
-              }
-
-              // Descrição
-              if(json.description != null) {
-                resource_inputs = resource_inputs + appendInput("description", json.description);
-              }
-
-              // Renderiza o template
-              $this.renderTemplate(json);
-              $textarea.parents('fieldset').find('.post-resource').prepend(resource_inputs);
             });
           }
         }

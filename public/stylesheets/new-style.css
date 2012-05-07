@@ -7791,11 +7791,13 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 .create-status .post-resource .close,
 .status .responses .re-status .close {
-  text-indent: -9999px;
   width: 8px;
   float: right;
   cursor: pointer;
   height: 8px;
+  display: block;
+  border: none;
+  background-color: transparent;
 }
 
 .create-status .post-resource .source-site,
@@ -7913,17 +7915,21 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   cursor: pointer;
 }
 
+.create-status .post-resource .thumbnail .control .arrow {
+  cursor: pointer;
+}
+
 .create-status .post-resource .thumbnail .control:hover {
   border: solid 1px rgb(115, 195, 230);
   color: rgb(21, 138, 196);
   background: rgb(219, 239, 247); /* Old browsers */
 }
 
-.create-status .post-resource .thumbnail .desactivated .control {
+.create-status .post-resource .thumbnail .control.desactivated {
   background: rgb(247, 247, 247);
 }
 
-.create-status .post-resource .thumbnail .desactivated .control:hover {
+.create-status .post-resource .thumbnail .control.desactivated:hover {
   border: solid 1px rgb(204, 204, 204);
   background: rgb(247, 247, 247);
 }
@@ -7949,17 +7955,17 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   border-radius: 4px;
 }
 
-.create-status .post-resource .thumbnail .desactivated .last .arrow {
+.create-status .post-resource .thumbnail .desactivated.last .arrow {
   background: url("../images/new/icones-p.png") -480px -1919px no-repeat;
   content: '';
 }
 
-.create-status .post-resource .thumbnail .desactivated .next .arrow {
+.create-status .post-resource .thumbnail .desactivated.next .arrow {
   background: url("../images/new/icones-p.png") -480px -1839px no-repeat;
   content: '';
 }
 
-.create-status .post-resource .thumbnail .desactivated .remove .arrow {
+.create-status .post-resource .thumbnail .desactivated.remove .arrow {
   background: url("../images/new/icones-p.png") -4px -2163px no-repeat;
   content: '';
 }

@@ -30,12 +30,13 @@ $.fn.renderTemplate = function(json) {
   }
 
   // Fechar conteúdo embedded
-  $this.find('.close').live('click', function(){
+  $this.find('.close').live('click', function(e){
     var $parents = $(this).parents('fieldset');
     $parents.find('textarea').data('last_url', "");
     $parents.find('.post-resource').slideUp(function(){
       $(this).remove();
     });
+    e.preventDefault();
   });
 
   // Ações de navegação do thumbnail
