@@ -16,7 +16,7 @@ gem 'aasm', :require => "aasm",
 gem 'shuber-sortable'
 gem 'scribd_fu', :git => 'git://github.com/guiocavalcanti/scribd_fu.git',
   :branch => 'without-scape'
-gem 'factory_girl_rails'
+gem 'factory_girl_rails', '~> 1.7.0'
 gem 'ar_mailer_rails3'
 gem 'active_enum'
 gem 'date_validator'
@@ -70,7 +70,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'webmock'
+  gem 'webmock', '~> 1.8.6'
 end
 
 group :development do
