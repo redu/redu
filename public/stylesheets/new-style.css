@@ -4821,6 +4821,11 @@ table.spaced tr td {
   margin-right: 0px;
 }
 
+#space-manage .graph-header{
+  color: black;
+  margin-bottom: 20px;
+}
+
 .management .form-header .strong,
 .management .form-header-closer,
 .management .form-header,
@@ -4998,6 +5003,11 @@ table.concave-invitation-table .cell-reinvite .reinvited {
   display: block;
   margin-left: 50px;
   margin-bottom: 10px;
+}
+
+#course-manage .graph-header{
+  color: black;
+  margin-bottom: 20px;
 }
 
 #space-manage .concave-form .concave-label.added-lectures:before {
@@ -7893,7 +7903,8 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   padding: 0px;
 }
 
-#lecture-participation-chart{
+#lecture-participation-chart,
+#teacher-participation-chart{
   overflow: hidden;
   clear: left;
 }
