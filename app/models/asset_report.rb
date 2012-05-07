@@ -3,7 +3,6 @@ class AssetReport < ActiveRecord::Base
   # Lecture dentro de um subject.
 
   belongs_to :enrollment # existe por questões de otimização
-  belongs_to :student_profile
   belongs_to :lecture
   belongs_to :subject
 
