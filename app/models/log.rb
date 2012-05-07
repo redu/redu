@@ -106,6 +106,11 @@ class Log < Status
     msgs.fetch(action.to_s, "")
   end
 
+  def process_compound
+    job = CompoundLogJob.new(self.id)
+    Delayed::Job.enqueue(job, :queue => 'general')
+  end
+
   protected
 
   # Verifica se o atributo especificado nas configs foi atualizado

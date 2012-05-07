@@ -33,7 +33,7 @@ describe CompoundLog do
         compounded.compound.should be_false
       end
     end
-  end
+  end # context "when deleting compound log"
 
   describe :expired? do
     context "when it's not expired" do
@@ -55,7 +55,7 @@ describe CompoundLog do
         subject.expired?(24).should be_true
       end
     end
-  end
+  end # describe :expired?
 
   describe :current_compostable do
     context "when people are getting friends" do
@@ -66,16 +66,16 @@ describe CompoundLog do
 
       context "and there aren't compound logs" do
         it "should create a new one" do
-          expect {
-            ActiveRecord::Observer.with_observers(:friendship_observer,
-                                                  :log_observer) do
-                                                    @robert.be_friends_with(@ned)
-                                                    @ned.be_friends_with(@robert)
-                                                  end
-          }.should change(CompoundLog, :count).by(2)
-          # One compound for each statusable(user)
+          ActiveRecord::Observer.with_observers(:friendship_observer,
+                                                :log_observer) do
+            expect {
+                @robert.be_friends_with(@ned)
+                @ned.be_friends_with(@robert)
+            }.should change(CompoundLog, :count).by(2)
+            # Um compound para cada statusable(user)
+          end
         end
-      end
+      end # context "and there aren't compound logs"
 
       context "and a compound log already exists" do
         before do
@@ -83,21 +83,21 @@ describe CompoundLog do
 
           ActiveRecord::Observer.with_observers(:friendship_observer,
                                                 :log_observer) do
-                                                  @robert.be_friends_with(@ned)
-                                                  @ned.be_friends_with(@robert)
-                                                end
+            @robert.be_friends_with(@ned)
+            @ned.be_friends_with(@robert)
+          end
         end
 
         it "should include recently created logs" do
           @robert_compound = CompoundLog.where(:statusable_id => @robert.id).last
-          expect {
-            ActiveRecord::Observer.with_observers(:friendship_observer,
-                                                  :log_observer) do
-                                                    @robert.be_friends_with(@cercei)
-                                                    @cercei.be_friends_with(@robert)
-                                                    @robert_compound.reload
-                                                  end
-          }.should change(@robert_compound.logs, :count).from(1).to(2)
+          ActiveRecord::Observer.with_observers(:friendship_observer,
+                                                :log_observer) do
+            expect {
+              @robert.be_friends_with(@cercei)
+              @cercei.be_friends_with(@robert)
+              @robert_compound.reload
+            }.should change(@robert_compound.logs, :count).from(1).to(2)
+          end
         end
 
         context "but it's ttl has expired" do
@@ -108,17 +108,15 @@ describe CompoundLog do
           end
 
           it "should create a new compound log for statusable" do
-            expect {
-              ActiveRecord::Observer.with_observers(:friendship_observer,
-                                                    :log_observer) do
-                                                      @robert.be_friends_with(@cercei)
-                                                      @cercei.be_friends_with(@robert)
-                                                    end
-            }.should change(CompoundLog, :count).by(2)
-            CompoundLog.where(:statusable_id => @robert.id).count.should == 2
-            CompoundLog.where(:statusable_id => @cercei.id).count.should == 1
+            ActiveRecord::Observer.with_observers(:friendship_observer,
+                                                  :log_observer) do
+              expect {
+                @robert.be_friends_with(@cercei)
+                @cercei.be_friends_with(@robert)
+              }.should change(CompoundLog, :count).by(2)
+            end
           end
-        end
+        end # context "but it's ttl has expired"
 
         context "and it has the minimum number of logs (3) to being visible" do
           before do
@@ -126,16 +124,16 @@ describe CompoundLog do
             @loras = Factory(:user, :login => 'loras_tyrel')
 
             ActiveRecord::Observer.with_observers(:friendship_observer,
-                                                  :log_observer) do
-                                                    @robert.be_friends_with(@cercei)
-                                                    @cercei.be_friends_with(@robert)
+                                                :log_observer) do
+              @robert.be_friends_with(@cercei)
+              @cercei.be_friends_with(@robert)
 
-                                                    @robert.be_friends_with(@tyrion)
-                                                    @tyrion.be_friends_with(@robert)
+              @robert.be_friends_with(@tyrion)
+              @tyrion.be_friends_with(@robert)
 
-                                                    @robert.be_friends_with(@loras)
-                                                    @loras.be_friends_with(@robert)
-                                                  end
+              @robert.be_friends_with(@loras)
+              @loras.be_friends_with(@robert)
+            end
             @robert_compounds = CompoundLog.where(:statusable_id => @robert.id)
           end
 
@@ -150,7 +148,7 @@ describe CompoundLog do
           it "should be visible" do
             @robert_compounds.last.compound_visible_at.should_not be_nil
             @robert_compounds.last.compound.should be_false
-            # display on view
+            # exibe na view
           end
 
           it "should make the logs invisible" do
@@ -158,8 +156,8 @@ describe CompoundLog do
               log.compound.should be_true
             end
           end
-        end
-      end
+        end # context "and it has the minimum number of logs (3) to being visible"
+      end # context "and a compound log already exists"
     end # context "when people are getting friends"
 
     context "when people are enrolling to courses" do
@@ -170,53 +168,53 @@ describe CompoundLog do
 
       context "and there aren't compound logs" do
         it "should create a new one" do
-          expect {
-            ActiveRecord::Observer.with_observers(:user_course_association_observer,
-                                                  :log_observer) do
-                                                    @course.join(@pycelle)
-                                                  end
-          }.should change(CompoundLog, :count).by(1)
+          ActiveRecord::Observer.with_observers(:user_course_association_observer,
+                                                :log_observer) do
+            expect {
+              @course.join(@pycelle)
+            }.should change(CompoundLog, :count).by(1)
+          end
         end
 
         it "should have the log of owner" do
           ActiveRecord::Observer.with_observers(:user_course_association_observer,
                                                 :log_observer) do
-                                                  @course.join(@pycelle)
-                                                end
+            @course.join(@pycelle)
+          end
 
           @course_compounds = CompoundLog.where(:statusable_id => @course.id)
           @course_compound = @course_compounds.last
           @course_compound.logs.count.should == 1
         end
-      end
+      end # context "and there aren't compound logs"
 
       context "and a compound log already exists" do
         before do
           ActiveRecord::Observer.with_observers(:user_course_association_observer,
                                                 :log_observer) do
-                                                  @course.join(@pycelle)
-                                                  @course_compounds = CompoundLog.where(:statusable_id => @course.id)
-                                                  @course_compound = @course_compounds.last
-                                                end
+            @course.join(@pycelle)
+            @course_compounds = CompoundLog.where(:statusable_id => @course.id)
+            @course_compound = @course_compounds.last
+          end
         end
 
         it "should include new log into existing compound log" do
           jaime = Factory(:user, :login => "jaime_lannister")
-          expect {
-            ActiveRecord::Observer.with_observers(:user_course_association_observer,
-                                                  :log_observer) do
-                                                    @course.join(jaime)
-                                                    @course_compound.reload
-                                                  end
-          }.should change(@course_compound.logs, :count).from(1).to(2)
+          ActiveRecord::Observer.with_observers(:user_course_association_observer,
+                                                :log_observer) do
+            expect {
+                @course.join(jaime)
+                @course_compound.reload
+            }.should change(@course_compound.logs, :count).from(1).to(2)
+          end
         end
 
-        context "but ttl has expired" do
+        context "but it's ttl has expired" do
           before do
             ActiveRecord::Observer.with_observers(:user_course_association_observer,
                                                   :log_observer) do
-                                                    @course.join(@pycelle)
-                                                  end
+              @course.join(@pycelle)
+            end
             @course_compound = CompoundLog.where(:statusable_id => @course.id).last
             @course_compound.compound_visible_at = 2.day.ago
             @course_compound.save
@@ -224,25 +222,24 @@ describe CompoundLog do
 
           it "should create a new compound log for statusable" do
             varys = Factory(:user, :login => 'spider_varys')
-            expect {
-              ActiveRecord::Observer.with_observers(:user_course_association_observer,
-                                                    :log_observer) do
-                                                      @course.join(varys)
-                                                    end
-            }.should change(CompoundLog, :count).by(1)
-            CompoundLog.where(:statusable_id => @course.id).count.should == 2
+            ActiveRecord::Observer.with_observers(:user_course_association_observer,
+                                                  :log_observer) do
+              expect {
+                @course.join(varys)
+              }.should change(CompoundLog, :count).by(1)
+            end
+              CompoundLog.where(:statusable_id => @course.id).count.should == 2
           end
-        end
+        end # context "but it's ttl has expired"
 
         context "and it has the minimum number of logs (3) to being visible" do
           before do
             @be_one_dothraki = Factory(:course, :name => "Dothraki Lifestyle")
-            @users = (1..3).collect { Factory(:user) }
-
+            @users = 3.times.collect { Factory(:user) }
             ActiveRecord::Observer.with_observers(:user_course_association_observer,
                                                   :log_observer) do
-                                                    @users.each { |user| @be_one_dothraki.join(user) }
-                                                  end
+              @users.each { |user| @be_one_dothraki.join(user) }
+            end
             @course_compounds = CompoundLog.where(:statusable_id => @be_one_dothraki.id)
           end
 
@@ -257,7 +254,7 @@ describe CompoundLog do
           it "should be visible" do
             @course_compounds.last.compound_visible_at.should_not be_nil
             @course_compounds.last.compound.should be_false
-            # display on view
+            # exibe na view
           end
 
           it "should make the logs invisible" do
@@ -265,8 +262,8 @@ describe CompoundLog do
               log.compound.should be_true
             end
           end
-        end
-      end
+        end # context "and it has the minimum number of logs (3) to being visible"
+      end # context "and a compound log already exists"
     end # context "when people are enrolling to courses"
-  end
+  end # describe :current_compostable
 end
