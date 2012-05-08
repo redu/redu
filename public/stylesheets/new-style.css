@@ -1877,6 +1877,7 @@ body {
 
 .create-status .status-buttons {
   float: right;
+  width: 155px;
 }
 
 .create-status .concave-form .concave-input {
@@ -1913,7 +1914,6 @@ body {
 .create-status .concave-form .concave-button {
   float: right;
   width: 68px;
-  height: 28px;
   padding: 0;
 }
 
@@ -7257,7 +7257,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 500;
   font-size: 1.2em;
-
   color: #1788C3;
   text-decoration: underline;
   display: block;
@@ -7763,7 +7762,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .create-status .concave-form .concave-button {
   padding: 5px 0 6px 0;
   width: 68px;
-  height: 18px;
 }
 
 .boxshadow .create-status .concave-form .concave-button  {
@@ -7922,7 +7920,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .create-status .post-resource .thumbnail .control:hover {
   border: solid 1px rgb(115, 195, 230);
   color: rgb(21, 138, 196);
-  background: rgb(219, 239, 247); /* Old browsers */
+  background: rgb(219, 239, 247);
 }
 
 .create-status .post-resource .thumbnail .control.desactivated {
