@@ -23,38 +23,68 @@ describe AuthenticationsController do
     context "when authentication does not exist" do
 
       context "and there's a Redu account associated to email in auth hash" do
-        before do
-          @user = Factory.create(:user)
-          request.env['omniauth.auth'][:info][:email] = @user.email
-          get :create, :locale => 'pt-BR'
-        end
-
-        it "should create a new authentication and associate it to existing account" do
-          provider = request.env['omniauth.auth'][:provider]
-          uid = request.env['omniauth.auth'][:uid]
-          created_auth = Authentication.find_by_provider_and_uid(provider, uid)
-          created_auth.should_not be_nil
-          created_auth.user.should == @user
-        end
-
-        it "should not change user settings propriety" do
-          provider = request.env['omniauth.auth'][:provider]
-          uid = request.env['omniauth.auth'][:uid]
-          created_auth = Authentication.find_by_provider_and_uid(provider, uid)
-          @user.settings.should == created_auth.user.settings
-        end
-
-        it { should set_the_flash.to(I18n.t("facebook_connect_account_association")) }
-        it { should redirect_to(home_user_path(@user))  }
-
+        
         context "which is activated" do
+          before do
+            @user = Factory.create(:user)
+            @user.update_attributes(:activated_at => 2.months.ago)
+            request.env['omniauth.auth'][:info][:email] = @user.email
+            get :create, :locale => 'pt-BR'
+            provider = request.env['omniauth.auth'][:provider]
+            uid = request.env['omniauth.auth'][:uid]
+            @created_auth = Authentication.find_by_provider_and_uid(provider, uid)
+          end
 
+          it "should create a new authentication and associate it to existing account" do
+            @created_auth.should_not be_nil
+            @created_auth.user.should == @user
+          end
+
+          it "should not change user settings propriety" do
+            @user.settings.should == @created_auth.user.settings
+          end
+
+          it "should not change activated_at property" do
+            user = @created_auth.user
+            user.activated_at.to_date.should == @user.activated_at.to_date
+          end
+
+          it { should set_the_flash.to(I18n.t("facebook_connect_account_association")) }
+          it { should redirect_to(home_user_path(@user))  }
         end
 
         context "which is not activated" do
+          before do
+            @user = Factory.create(:user)
+            @user.update_attributes(:activated_at => nil)
+            request.env['omniauth.auth'][:info][:email] = @user.email
+          end
 
-        end
-      end
+          it "should activate account when user connects with Facebook" do
+            get :create, :locale => 'pt-BR'
+            provider = request.env['omniauth.auth'][:provider]
+            uid = request.env['omniauth.auth'][:uid]
+            @created_auth = Authentication.find_by_provider_and_uid(provider, uid)
+            user = @created_auth.user
+            user.activated_at.should_not be_nil
+          end
+
+          context "and activation time limit has expired" do
+            before do
+              @user.update_attributes(:created_at => 2.months.ago)
+              get :create, :locale => 'pt-BR'
+              provider = request.env['omniauth.auth'][:provider]
+              uid = request.env['omniauth.auth'][:uid]
+              @created_auth = Authentication.find_by_provider_and_uid(provider, uid)
+            end
+
+            it "should activate account when user connects with Facebook" do
+              user = @created_auth.user
+              user.activated_at.should_not be_nil
+            end
+          end # context "and activation time limit has expired"
+        end # context "which is not activated"
+      end # context "and there's a Redu account associated to email in auth hash"
 
       context "and there's not a Redu account associated to email in auth hash" do
         before do
@@ -67,10 +97,11 @@ describe AuthenticationsController do
         end
 
         it "should create the user's settings properly" do
-          provider = request.env['omniauth.auth'][:provider]
-          uid = request.env['omniauth.auth'][:uid]
-          created_auth = Authentication.find_by_provider_and_uid(provider, uid)
-          created_auth.user.settings.should_not be_nil
+          @user.settings.should_not be_nil
+        end
+
+        it "should activate user's account" do
+          @user.activated_at.should_not be_nil
         end
 
         it { should set_the_flash.to(I18n.t("facebook_connect_new_user")) }
@@ -81,7 +112,7 @@ describe AuthenticationsController do
 
   describe "GET fallback" do
     before do
-        get :fallback, :locale => 'pt-BR'
+      get :fallback, :locale => 'pt-BR'
     end
 
     it { should set_the_flash.to(I18n.t("you_need_give_us_access_to_your_facebook_data")) }
