@@ -7847,12 +7847,15 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   display: block
 }
 
-.create-status .post-resource .thumbnail .last .arrow {
-  background:  url("../images/new/icons-oembed-nav.png") 0 0 no-repeat;
+.create-status .post-resource .thumbnail .arrow {
   float: right;
   height: 10px;
   margin: 5px 10px;
   width: 8px;
+}
+
+.create-status .post-resource .thumbnail .last .arrow {
+  background:  url("../images/new/icons-oembed-nav.png") 0 0 no-repeat;
 }
 
 .create-status .post-resource .thumbnail .last:hover .arrow {
@@ -7861,10 +7864,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 
 .create-status .post-resource .thumbnail .next .arrow {
   background:  url("../images/new/icons-oembed-nav.png") -20px 0 no-repeat;
-  float: right;
-  height: 10px;
-  margin: 5px 10px;
-  width: 8px;
 }
 
 .create-status .post-resource .thumbnail .next:hover .arrow {
@@ -7873,10 +7872,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 
 .create-status .post-resource .thumbnail .remove .arrow {
   background:  url("../images/new/icons-oembed-nav.png") -40px 0 no-repeat;
-  float: right;
-  height: 10px;
-  margin: 5px 10px;
-  width: 8px;
 }
 
 .create-status .post-resource .thumbnail .remove:hover .arrow {
@@ -7907,13 +7902,8 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   border: 1px solid rgb(204, 204, 204);
   width: 28px;
   height: 22px;
-  text-indent: -9999px;
   background: rgb(255, 255, 255); /* Old browsers */
   margin: 5px 5px 0 0;
-  cursor: pointer;
-}
-
-.create-status .post-resource .thumbnail .control .arrow {
   cursor: pointer;
 }
 
@@ -7925,6 +7915,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 
 .create-status .post-resource .thumbnail .control.desactivated {
   background: rgb(247, 247, 247);
+  cursor: default;
 }
 
 .create-status .post-resource .thumbnail .control.desactivated:hover {

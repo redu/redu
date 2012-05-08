@@ -16,3 +16,7 @@
 .big-tabs > ul li.ui-state-active a {
   color: rgb(21, 138, 196) !important;
 }
+
+.create-status .post-resource .thumbnail .arrow {
+  margin: -7px 10px 5px 10px;
+}

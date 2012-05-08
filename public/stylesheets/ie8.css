@@ -48,3 +48,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   width: 50px;
   font-size: 0;
 }
+
+.create-status .post-resource .thumbnail .arrow {
+  margin-top: 6px;
+}

@@ -8,22 +8,27 @@
       <span class="buttons-thumbnail">
         <!-- multiplos thumbanails -->
         {{ if (obj.thumbnail_url instanceof Array) { }}
-        <span class="last control">
-          <span class="arrow">L</span>
+        <span class="replacement last control">
+          Anterior
+          <span class="arrow">A</span>
         </span>
-        <span class="next control">
-          <span class="arrow">N</span>
+        <span class="replacement next control">
+          Próximo
+          <span class="arrow">P</span>
         </span>
         {{ } else { }}
         <!-- end multiplos thumbnails -->
-        <span class="last control desactivated">
-          <span class="arrow">L</span>
+        <span class="replacement last control desactivated">
+          Anterior
+          <span class="arrow">A</span>
         </span>
-        <span class="next control desactivated">
-          <span class="arrow">N</span>
+        <span class="replacement next control desactivated">
+          Próximo
+          <span class="arrow">P</span>
         </span>
         {{ } }}
-        <span class="remove control">
+        <span class="replacement remove control">
+          Remover
           <span class="arrow">R</span>
         </span>
       </span>
@@ -33,7 +38,7 @@
 
     <div class="post-text">
       <span class="close icon-small icon-delete-gray_8_10 replacement">Fechar</span>
-      <h3><a href="{{= url }}" target="_blank" rel="nofollow" class="title">
+      <h3><a href="#" target="_blank" rel="nofollow" class="title">
           {{ if(obj.title) { }}
           {{= title }}
           {{ } }}

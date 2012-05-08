@@ -10,6 +10,10 @@ $.fn.renderTemplate = function(json) {
   //(devido ao erro no firefox não renderizar o template)
   $preview.find('img.preview-link').attr("src", json.first_thumb);
 
+  //Adiciona a url do link no template
+  //(devido ao erro no firefox não renderizar o template)
+  $preview.find("a.title").attr("href", json.url);
+
   //Renderiza template
   var template = $preview.html();
 

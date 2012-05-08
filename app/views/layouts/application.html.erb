@@ -5,11 +5,11 @@
     <title><%= raw(page_title) %></title>
     <%= csrf_meta_tag %>
     <%= include_stylesheets :common %>
-    <!--[if (gte IE 6)&(lte IE 8)]>
-      <%= stylesheet_link_tag 'ie8' %>
-    <![endif]-->
     <!--[if (gte IE 6)&(lte IE 9)]>
       <%= stylesheet_link_tag 'ie' %>
+    <![endif]-->
+    <!--[if (gte IE 6)&(lte IE 8)]>
+      <%= stylesheet_link_tag 'ie8' %>
     <![endif]-->
     <link href='http://fonts.googleapis.com/css?family=Copse' rel='stylesheet' type='text/css' />
     <%= javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js' %>
