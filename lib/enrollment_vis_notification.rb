@@ -1,4 +1,5 @@
 module EnrollmentVisNotification
+  include VisClient
 
   # preenche os parametros para envio para visualização
   def fill_enroll_params(enrollment, type)
@@ -27,5 +28,11 @@ module EnrollmentVisNotification
       job = HierarchyNotificationJob.new(params)
       Delayed::Job.enqueue(job, :queue => 'general')
     end
+  end
+
+  # Notifica através do em-http-request a criação do enrollment
+  def notify_vis(enrollment, type)
+    params = fill_enroll_params(enrollment, type)
+    self.send_async_info(params, Redu::Application.config.vis_client[:url])
   end
 end
