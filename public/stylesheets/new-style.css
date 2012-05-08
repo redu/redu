@@ -3363,7 +3363,7 @@ body {
 }
 
 .big-tabs .ui-state-default a:before {
-  float: left;
+  float: right;
   display: block;
 }
 
@@ -7787,15 +7787,14 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .create-response .no-preview .source-site {
   width: 490px;
 }
+
 .create-status .post-resource .close,
 .status .responses .re-status .close {
+  display: block;
   width: 8px;
+  height: 10px;
   float: right;
   cursor: pointer;
-  height: 8px;
-  display: block;
-  border: none;
-  background-color: transparent;
 }
 
 .create-status .post-resource .source-site,

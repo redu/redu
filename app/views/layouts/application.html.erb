@@ -6,6 +6,9 @@
     <%= csrf_meta_tag %>
     <%= include_stylesheets :common %>
     <!--[if (gte IE 6)&(lte IE 8)]>
+      <%= stylesheet_link_tag 'ie8' %>
+    <![endif]-->
+    <!--[if (gte IE 6)&(lte IE 9)]>
       <%= stylesheet_link_tag 'ie' %>
     <![endif]-->
     <link href='http://fonts.googleapis.com/css?family=Copse' rel='stylesheet' type='text/css' />
