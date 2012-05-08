@@ -28,11 +28,6 @@ $.fn.renderTemplate = function(json) {
   //Adicona o template compilado
   $this.find('textarea').after(rendered);
 
-  //Muda a classe do preview quando este não tem thumbanail
-  if (json.thumbnail_url == null){
-    $this.find('.post-resource').addClass('no-preview');
-  }
-
   // Fechar conteúdo embedded
   $this.find('.close').live('click', function(e){
     var $parents = $(this).parents('fieldset');
@@ -51,7 +46,6 @@ $.fn.renderTemplate = function(json) {
     if($button.hasClass('remove')){
       $parents.find('.thumbnail').fadeOut();
       $parents.find('#resource_thumb_url').remove();
-      $parents.find('.post-resource').addClass('no-preview');
     } else if($button.hasClass('next')) {
       updateThumbnail($button, thumbnail_list, true);
     } else if($button.hasClass('last')) {

@@ -2025,7 +2025,7 @@ body {
 .statuses ol .responses,
 .statuses ol .create-response {
   margin-left: 37px;
-  padding: 20px 10px 10px 10px;
+  padding: 10px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
@@ -2123,7 +2123,6 @@ body {
   margin-left: 10px;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: rgb(109, 110, 111);
 }
 
 .statuses .status-message p a {
@@ -7770,22 +7769,10 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   box-shadow: 0 1px 0 0 rgb(219, 239, 247) inset;
 }
 
-.create-status .post-resource p,
-.create-status .post-resource .title,
-.create-status .post-resource .source-site {
-  width: 390px;
-}
-
-.create-status .no-preview p,
-.create-status .no-preview .title,
-.create-status .no-preview .source-site {
-  width: 530px;
-}
-
-.create-response .no-preview p,
-.create-response .no-preview .title,
-.create-response .no-preview .source-site {
-  width: 490px;
+.post-resource p,
+.post-resource .title,
+.post-resource .source-site {
+  margin-right: 13px;
 }
 
 .create-status .post-resource .close,
@@ -7991,7 +7978,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   color: rgb(179, 179, 179);
   display: block;
   font-size: 0.9em;
-  margin-top: -10px;
   text-align: center;
 }
 
@@ -8009,7 +7995,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 #statuses .status .post-resource .post-title {
   margin: 0 0 10px 0;
   display: block;
-  color: rgb(109, 110, 111);
 }
 
 #statuses .status .responses {
@@ -8032,15 +8017,8 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 .inform-my-status .distance-top:before {
-   border-color: rgb(240, 240, 240) white;
-   border-width: 0 10px 10px;
-   margin-top: -20px;
-   border-style: solid;
-   content: " ";
-   display: block;
    position: absolute;
    margin-left: 20px;
-   width: 0;
 }
 
 #statuses .status .create-status .post-title {
@@ -8057,13 +8035,14 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   margin: 5px 0 0 20px;
 }
 
+.create-status .distance-top:before,
 .status .create-response:before,
 .status .post-resource .distance-top:before,
 .responses .distance-top:after {
    border-color: rgb(240, 240, 240) white;
    border-width: 0 10px 10px;
    border-style: solid;
-   margin-top: -30px;
+   margin-top: -20px;
    content: " ";
    display: block;
    width: 0;
@@ -8075,14 +8054,19 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 .responses .distance-top:after {
-  margin-left: 25px;
+  /*margin-left: 25px;*/
+  margin-left: 20px;
   position: absolute;
-  margin-top: -30px;
 }
 
 .status .post-resource .distance-top:before {
-  left: 60px;
+  /*left: 60px;*/
+  margin-left: 10px;
   position: absolute;
+}
+
+.status .status-log .post-resource .distance-top:before {
+  /*left: 125px;*/
 }
 
 .create-response .distance-top,
