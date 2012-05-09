@@ -56,14 +56,12 @@ class EnvironmentsController < BaseController
   def create
     case params[:step]
     when "1" # tela de planos
-      @environment.valid?
       @step = 2
 
       respond_to do |format|
         format.html { render :new }
       end
     when "2" # tela dos forms
-      @environment.valid?
       @plan = Plan.from_preset(params[:plan].to_sym)
       @plan.user = current_user
       @plan = params[:plan] if @plan.valid?
