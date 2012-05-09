@@ -1,22 +1,24 @@
-<div class="post-resource create-response">
+<div class="status-contents">
   <div class="distance-top"></div>
-  <span class="post-title">
-    <%= raw auto_link(h(status.text).gsub(/\n/, '</br>'))%>
-  </span>
+  <p class="status-message"><%= raw auto_link(h(status.text).gsub(/\n/, '</br>'))%></p>
+
   <% if status.status_resources.first %>
-    <% if status.status_resources.first.thumb_url %>
-      <div class="thumbnail">
-        <%= link_to status.status_resources.first.link, :target => "_blank", :rel => "nofollow" do %>
-          <%= image_tag(status.status_resources.first.thumb_url, :class => "preview-link") %>
-        <% end %>
+    <div class="post-resource">
+      <% if status.status_resources.first.thumb_url %>
+        <div class="thumbnail">
+          <%= link_to status.status_resources.first.link, :target => "_blank", :rel => "nofollow" do %>
+            <%= image_tag(status.status_resources.first.thumb_url, :class => "preview-link") %>
+          <% end %>
+        </div>
+      <% end %>
+      <div class="post-text">
+        <h3><%= link_to status.status_resources.first.title, status.status_resources.first.link, :target => "_blank", :rel => "nofollow", :class => "title" %></h3>
+        <h4 class="source-site">
+          <%= status.status_resources.first.provider %>
+        </h4>
+        <p class="post-description"><%= status.status_resources.first.description %></p>
       </div>
-    <% end %>
-    <div class="post-text">
-      <h3><%= link_to status.status_resources.first.title, status.status_resources.first.link, :target => "_blank", :rel => "nofollow", :class => "title" %></h3>
-      <h4 class="source-site">
-        <%= status.status_resources.first.provider %>
-      </h4>
-      <p class="post-description"><%= status.status_resources.first.description %></p>
     </div>
   <% end %>
 </div>
+

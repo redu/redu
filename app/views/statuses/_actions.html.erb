@@ -6,7 +6,7 @@
   <% end %>
   <% if can? :manage, status %>
     <li>
-      <%= link_to 'Apagar',
+      <%= link_to 'Excluir',
         status_path(status),
         :confirm => 'Deseja remover a postagem?',
         :method => :delete,

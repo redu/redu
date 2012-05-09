@@ -39,7 +39,7 @@ $.fn.renderTemplate = function(json) {
   });
 
   // Ações de navegação do thumbnail
-  $this.find('.buttons-thumbnail span').live('click', function(){
+  $this.find('.buttons-thumbnail .control').live('click', function(){
     var $button = $(this);
     var $parents = $button.parents('fieldset');
     var thumbnail_list = $parents.find("textarea").data("thumbnail_list");

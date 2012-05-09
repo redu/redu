@@ -19,9 +19,7 @@
         há <%= time_ago_in_words response.created_at %>
       </span>
     </div>
-    <div class="status-message">
-      <p><%= raw auto_link(h(response.text).gsub(/\n/, '</br>'))%></p>
-    </div>
+    <p class="status-message"><%= raw auto_link(h(response.text).gsub(/\n/, '</br>'))%></p>
     <% if response.status_resources.first %>
       <% if response.status_resources.first.thumb_url %>
         <div class="post-resource">
@@ -31,7 +29,7 @@
           <% end %>
         </div>
       <% else %>
-        <div class="post-resource no-preview">
+        <div class="post-resource">
       <% end %>
         <div class="post-text">
 

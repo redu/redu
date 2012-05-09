@@ -1832,14 +1832,32 @@ body {
   margin-top: 4px;
 }
 
-.create-status {
-  background-color: #F0F0F0;
-  padding: 10px;
+.create-status,
+.status .status-contents {
+  background-color: rgb(240, 240, 240);
+  margin-top: 20px;
+  clear: both;
+}
+
+.borderradius .create-status,
+.borderradius .status .status-contents {
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   border-radius: 3px;
-  margin: 20px 0;
-  clear: both;
+}
+
+.status .status-contents {
+  margin-top: 10px;
+}
+
+.create-status {
+  margin-bottom: 20px;
+}
+
+.status .status-contents,
+.status .responses,
+.status .create-response {
+  margin-left: 37px;
 }
 
 .create-status .concave-form {
@@ -1883,27 +1901,33 @@ body {
 .create-status .concave-form .concave-input {
   margin: 0;
   height: 16px;
-  width: 510px;
+  width: 515px;
 }
 
-.create-response .concave-form .concave-input {
-  width: 468px;
+.create-status.create-response .concave-form .concave-input {
+  margin: 0;
+  height: 16px;
+  width: 478px;
+}
+
+.status-log .create-response .concave-form .concave-input {
+  width: 440px;
 }
 
 .status-medium .create-status .concave-form .concave-input {
-  width: 577px;
+  width: 583px;
 }
 
 .status-medium .create-response .concave-form .concave-input {
-  width: 503px;
+  width: 508px;
 }
 
 .status-large .create-status .concave-form .concave-input {
-  width: 678px;
+  width: 683px;
 }
 
 .status-large .create-response .concave-form .concave-input {
-  width: 603px;
+  width: 608px;
 }
 
 .create-status .concave-form .cancel,
@@ -2023,16 +2047,16 @@ body {
 }
 
 .statuses ol .responses,
-.statuses ol .create-response {
-  margin-left: 37px;
+.statuses ol .create-response,
+.create-status, .status .status-contents {
   padding: 10px;
+}
+
+.borderradius .statuses ol .responses,
+.borderradius .statuses ol .create-response {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
-}
-
-.statuses ol .create-response {
-  margin: 3px 0 10px 37px;
 }
 
 .statuses .friend-avatar,
@@ -2071,7 +2095,7 @@ body {
 #statuses .responses .actions,
 #statuses .status .actions {
   font-size: .9em;
-  margin-left: 27px;
+  margin-right: 20px;
   padding: 10px 0;
   float: none;
 }
@@ -2108,24 +2132,23 @@ body {
 }
 
 .statuses .status-message {
+  display: block;
   clear: both;
-  margin-top: 10px;
-  margin-left: 32px;
   line-height: 130%;
 }
 
 .statuses .re-status .status-message {
   margin-top: 0;
+  margin-left: 40px;
 }
 
-.statuses .status-message p {
+.statuses .status-message {
   line-height: 18px;
-  margin-left: 10px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.statuses .status-message p a {
+.statuses .status-message a {
   white-space: nowrap;
 }
 
@@ -2179,21 +2202,8 @@ body {
   margin-left: 38px;
 }
 
-.statuses .status-log .status-message {
-  margin-left: 53px;
-}
-
 .statuses .status-log .status-help {
   color: #f37b38;
-}
-
-.status-log .concave-form .concave-input {
-  width: 435px;
-}
-
-.statuses .status-log .create-response,
-.statuses .status-log .responses {
-  margin-left: 37px;
 }
 
 #statuses .status-log .actions {
@@ -2207,10 +2217,6 @@ body {
 
 #statuses .status-log .actions {
   line-height: 100%;
-}
-
-.statuses .status-log .re-status .status-message {
-  margin-left: 32px;
 }
 
 .statuses .status-icon {
@@ -7740,11 +7746,12 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   font-weight: normal;
   overflow: hidden;
   clear: both;
-  padding-left: 10px;
 }
 
 #statuses .status .create-response {
-  background: #f0f0f0;
+  background: rgb(240, 240 240);
+  margin-top: 2px;
+  margin-bottom: 0;
 }
 
 .create-status .concave-form .concave-clean {
@@ -7767,12 +7774,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   -webkit-box-shadow: 0 1px 0 0 rgb(219, 239, 247) inset;
   -moz-box-shadow: 0 1px 0 0 rgb(219, 239, 247) inset;
   box-shadow: 0 1px 0 0 rgb(219, 239, 247) inset;
-}
-
-.post-resource p,
-.post-resource .title,
-.post-resource .source-site {
-  margin-right: 13px;
 }
 
 .create-status .post-resource .close,
@@ -7800,8 +7801,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 
 .create-status .post-resource .thumbnail,
 #statuses .status .post-resource .thumbnail {
-  clear: both;
-  margin-bottom: 10px;
+  margin-right: 10px;
   float: left;
   overflow: hidden;
 }
@@ -7818,7 +7818,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .create-status .post-resource .post-text,
 #statuses .status .post-resource .post-text {
   overflow: hidden;
-  padding-left: 10px;
   color: rgb( 109, 110, 111);
   line-height: 18px;
 }
@@ -7898,6 +7897,10 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   border: solid 1px rgb(115, 195, 230);
   color: rgb(21, 138, 196);
   background: rgb(219, 239, 247);
+}
+
+.create-status .post-resource .thumbnail .control.remove {
+  margin-right: 0;
 }
 
 .create-status .post-resource .thumbnail .control.desactivated {
@@ -7998,6 +8001,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 #statuses .status .responses {
+  margin-top: 12px;
   padding-left: 0;
   padding-right: 0;
   background-color: rgb(240, 240, 240);
@@ -8008,17 +8012,13 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   padding-right: 10px;
 }
 
-#statuses .status .post-resource {
+#statuses .status .post-resource,
+#statuses .status .re-status .post-resource {
   margin-top: 10px;
 }
 
 #statuses .status .re-status .post-resource {
-  margin-top: 0px;
-}
-
-.inform-my-status .distance-top:before {
-   position: absolute;
-   margin-left: 20px;
+  margin-left: 40px;
 }
 
 #statuses .status .create-status .post-title {
@@ -8026,18 +8026,9 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   margin-bottom: 3px;
 }
 
-.re-status .post-resource .thumbnail {
-  margin: 5px;
-  padding-left: 25px;
-}
-
-.responses ol .re-status .no-preview .post-text {
-  margin: 5px 0 0 20px;
-}
-
 .create-status .distance-top:before,
 .status .create-response:before,
-.status .post-resource .distance-top:before,
+.status .status-contents .distance-top:before,
 .responses .distance-top:after {
    border-color: rgb(240, 240, 240) white;
    border-width: 0 10px 10px;
@@ -8048,33 +8039,30 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
    width: 0;
 }
 
-.status .create-response:before {
-  margin-right: 30px;
-  float: right;
+.inform-my-status .distance-top:before,
+.status .status-contents .distance-top:before {
+   position: absolute;
+   margin-left: 10px;
 }
 
 .responses .distance-top:after {
-  /*margin-left: 25px;*/
   margin-left: 20px;
   position: absolute;
 }
 
-.status .post-resource .distance-top:before {
-  /*left: 60px;*/
-  margin-left: 10px;
-  position: absolute;
+#resource .inform-my-status .distance-top:before {
+  display: none;
 }
 
-.status .status-log .post-resource .distance-top:before {
-  /*left: 125px;*/
+#resource .inform-my-status {
+  -webkit-border-top-left-radius: 0;
+  -moz-border-radius-topleft: 0;
+  border-top-left-radius: 0;
 }
 
-.create-response .distance-top,
-.create-status .distance-top,
-.responses .distance-top {
-  text-indent: -9999px;
-  width: 500px;
-  height: 1px;
+.status .create-response:before {
+  margin-right: 30px;
+  float: right;
 }
 
 /* Botão convidar amigos */
