@@ -43,7 +43,7 @@ class Environment < ActiveRecord::Base
     :message => "Precisa ser único"
   validates_length_of :name, :maximum => 40
   validates_length_of :description, :maximum => 400, :allow_blank => true
-  validates_length_of :initials, :maximum => 10, :allow_blank => true
+  validates_length_of :initials, :maximum => 10
   validates_format_of :path, :with => /^[-_A-Za-z0-9]*$/
 
   accepts_nested_attributes_for :courses
