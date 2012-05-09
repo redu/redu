@@ -7759,7 +7759,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 #statuses .status .create-response {
-  background: rgb(240, 240 240);
+  background: rgb(240, 240, 240);
   margin-top: 2px;
   margin-bottom: 0;
 }
