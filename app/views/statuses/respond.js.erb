@@ -3,9 +3,11 @@
   response = "<%=  escape_javascript (render :partial => 'statuses/response', :locals => { :response => @answer }) %>";
   $status = $("#status-<%= status_id %>");
 
-  $status.find(".responses ol").append(response);
   $status.find(".responses").show();
-  $status.find(".create-response").toggle();
+  $status.find(".create-status").slideUp();
   $status.find(".toggle-statuses .qty").text($status.find(".responses > ol > li").length);
   $status.find("form textarea").val('');
+  $status.find(".responses ol").append(response);
+  $status.find(".responses > ol > li").last().hide();
+  $status.find(".responses > ol > li").last().slideDown();
 <% end %>

@@ -5,11 +5,14 @@
     <title><%= raw(page_title) %></title>
     <%= csrf_meta_tag %>
     <%= include_stylesheets :common %>
-    <!--[if (gte IE 6)&(lte IE 8)]>
+    <!--[if (gte IE 6)&(lte IE 9)]>
       <%= stylesheet_link_tag 'ie' %>
     <![endif]-->
+    <!--[if (gte IE 6)&(lte IE 8)]>
+      <%= stylesheet_link_tag 'ie8' %>
+    <![endif]-->
     <link href='http://fonts.googleapis.com/css?family=Copse' rel='stylesheet' type='text/css' />
-    <%= javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js' %>
+    <%= javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js' %>
     <%= include_javascripts :common %>
     <!--[if (gte IE 6)&(lte IE 8)]>
       <%= include_javascripts :ie %>
@@ -57,6 +60,7 @@
    <body>
     <%= render :partial => 'shared/outdated_browser' %>
     <div id="header" class="container_16">
+      <%= render :partial => 'shared/loading_message' %>
       <h1 id="logotipo" class="grid_3 replacement">
         <a href="<%= application_url %>" title="Página Inicial">Redu: potencializando o talento das pessoas.</a>
       </h1>

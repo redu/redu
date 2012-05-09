@@ -1832,14 +1832,32 @@ body {
   margin-top: 4px;
 }
 
-.create-status {
-  background-color: #F0F0F0;
-  padding: 10px;
+.create-status,
+.status .status-contents {
+  background-color: rgb(240, 240, 240);
+  margin-top: 20px;
+  clear: both;
+}
+
+.borderradius .create-status,
+.borderradius .status .status-contents {
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   border-radius: 3px;
-  margin: 20px 0;
-  clear: both;
+}
+
+.status .status-contents {
+  margin-top: 10px;
+}
+
+.create-status {
+  margin-bottom: 20px;
+}
+
+.status .status-contents,
+.status .responses,
+.status .create-response {
+  margin-left: 37px;
 }
 
 .create-status .concave-form {
@@ -1877,32 +1895,39 @@ body {
 
 .create-status .status-buttons {
   float: right;
+  width: 155px;
 }
 
 .create-status .concave-form .concave-input {
   margin: 0;
   height: 16px;
-  width: 510px;
+  width: 515px;
 }
 
-.create-response .concave-form .concave-input {
-  width: 468px;
+.create-status.create-response .concave-form .concave-input {
+  margin: 0;
+  height: 16px;
+  width: 478px;
+}
+
+.status-log .create-response .concave-form .concave-input {
+  width: 440px;
 }
 
 .status-medium .create-status .concave-form .concave-input {
-  width: 577px;
+  width: 583px;
 }
 
 .status-medium .create-response .concave-form .concave-input {
-  width: 503px;
+  width: 508px;
 }
 
 .status-large .create-status .concave-form .concave-input {
-  width: 678px;
+  width: 683px;
 }
 
 .status-large .create-response .concave-form .concave-input {
-  width: 603px;
+  width: 608px;
 }
 
 .create-status .concave-form .cancel,
@@ -1913,7 +1938,6 @@ body {
 .create-status .concave-form .concave-button {
   float: right;
   width: 68px;
-  height: 28px;
   padding: 0;
 }
 
@@ -2023,16 +2047,16 @@ body {
 }
 
 .statuses ol .responses,
-.statuses ol .create-response {
-  margin-left: 37px;
-  padding: 20px 10px 10px 10px;
+.statuses ol .create-response,
+.create-status, .status .status-contents {
+  padding: 10px;
+}
+
+.borderradius .statuses ol .responses,
+.borderradius .statuses ol .create-response {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
-}
-
-.statuses ol .create-response {
-  margin: 3px 0 10px 37px;
 }
 
 .statuses .friend-avatar,
@@ -2071,7 +2095,7 @@ body {
 #statuses .responses .actions,
 #statuses .status .actions {
   font-size: .9em;
-  margin-left: 27px;
+  margin-right: 20px;
   padding: 10px 0;
   float: none;
 }
@@ -2108,25 +2132,23 @@ body {
 }
 
 .statuses .status-message {
+  display: block;
   clear: both;
-  margin-top: 10px;
-  margin-left: 32px;
   line-height: 130%;
 }
 
 .statuses .re-status .status-message {
   margin-top: 0;
+  margin-left: 40px;
 }
 
-.statuses .status-message p {
+.statuses .status-message {
   line-height: 18px;
-  margin-left: 10px;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: rgb(109, 110, 111);
 }
 
-.statuses .status-message p a {
+.statuses .status-message a {
   white-space: nowrap;
 }
 
@@ -2180,21 +2202,8 @@ body {
   margin-left: 38px;
 }
 
-.statuses .status-log .status-message {
-  margin-left: 53px;
-}
-
 .statuses .status-log .status-help {
   color: #f37b38;
-}
-
-.status-log .concave-form .concave-input {
-  width: 435px;
-}
-
-.statuses .status-log .create-response,
-.statuses .status-log .responses {
-  margin-left: 37px;
 }
 
 #statuses .status-log .actions {
@@ -2208,10 +2217,6 @@ body {
 
 #statuses .status-log .actions {
   line-height: 100%;
-}
-
-.statuses .status-log .re-status .status-message {
-  margin-left: 32px;
 }
 
 .statuses .status-icon {
@@ -3363,7 +3368,7 @@ body {
 }
 
 .big-tabs .ui-state-default a:before {
-  float: left;
+  float: right;
   display: block;
 }
 
@@ -4807,6 +4812,11 @@ table.spaced tr td {
   margin-right: 0px;
 }
 
+#space-manage .graph-header{
+  color: black;
+  margin-bottom: 20px;
+}
+
 .management .form-header .strong,
 .management .form-header-closer,
 .management .form-header,
@@ -4984,6 +4994,11 @@ table.concave-invitation-table .cell-reinvite .reinvited {
   display: block;
   margin-left: 50px;
   margin-bottom: 10px;
+}
+
+#course-manage .graph-header{
+  color: black;
+  margin-bottom: 20px;
 }
 
 #space-manage .concave-form .concave-label.added-lectures:before {
@@ -7257,7 +7272,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 500;
   font-size: 1.2em;
-
   color: #1788C3;
   text-decoration: underline;
   display: block;
@@ -7665,7 +7679,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 .create-status .post-resource .border-post,
-.responses ol .border-post {
+.responses .border-post {
   border-top: solid 1px rgb(204, 204, 204);
   border-bottom: solid 1px white;
   border-left: none;
@@ -7742,11 +7756,12 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   font-weight: normal;
   overflow: hidden;
   clear: both;
-  padding-left: 10px;
 }
 
 #statuses .status .create-response {
-  background: #f0f0f0;
+  background: rgb(240, 240, 240);
+  margin-top: 2px;
+  margin-bottom: 0;
 }
 
 .create-status .concave-form .concave-clean {
@@ -7763,7 +7778,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .create-status .concave-form .concave-button {
   padding: 5px 0 6px 0;
   width: 68px;
-  height: 18px;
 }
 
 .boxshadow .create-status .concave-form .concave-button  {
@@ -7772,25 +7786,13 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   box-shadow: 0 1px 0 0 rgb(219, 239, 247) inset;
 }
 
-.create-status .post-resource p,
-.create-status .post-resource .title,
-.create-status .post-resource .source-site {
-  width: 390px;
-}
-
-.create-status .no-preview p,
-.create-status .no-preview .title,
-.create-status .no-preview .source-site {
-  width: 530px;
-}
-
 .create-status .post-resource .close,
 .status .responses .re-status .close {
-  text-indent: -9999px;
+  display: block;
   width: 8px;
+  height: 10px;
   float: right;
   cursor: pointer;
-  height: 8px;
 }
 
 .create-status .post-resource .source-site,
@@ -7802,14 +7804,14 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .create-status .post-resource .preview-link,
 #statuses .status .post-resource .preview-link {
   float: left;
-  width: 100px;
-  height: 100%;
+  width: 100%;
+  min-height: 34px;
+  max-width: 100px;
 }
 
 .create-status .post-resource .thumbnail,
 #statuses .status .post-resource .thumbnail {
-  clear: both;
-  margin-bottom: 10px;
+  margin-right: 10px;
   float: left;
   overflow: hidden;
 }
@@ -7826,7 +7828,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .create-status .post-resource .post-text,
 #statuses .status .post-resource .post-text {
   overflow: hidden;
-  padding-left: 10px;
   color: rgb( 109, 110, 111);
   line-height: 18px;
 }
@@ -7842,12 +7843,15 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   display: block
 }
 
-.create-status .post-resource .thumbnail .last .arrow {
-  background:  url("../images/new/icons-oembed-nav.png") 0 0 no-repeat;
+.create-status .post-resource .thumbnail .arrow {
   float: right;
   height: 10px;
   margin: 5px 10px;
   width: 8px;
+}
+
+.create-status .post-resource .thumbnail .last .arrow {
+  background:  url("../images/new/icons-oembed-nav.png") 0 0 no-repeat;
 }
 
 .create-status .post-resource .thumbnail .last:hover .arrow {
@@ -7856,10 +7860,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 
 .create-status .post-resource .thumbnail .next .arrow {
   background:  url("../images/new/icons-oembed-nav.png") -20px 0 no-repeat;
-  float: right;
-  height: 10px;
-  margin: 5px 10px;
-  width: 8px;
 }
 
 .create-status .post-resource .thumbnail .next:hover .arrow {
@@ -7868,10 +7868,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 
 .create-status .post-resource .thumbnail .remove .arrow {
   background:  url("../images/new/icons-oembed-nav.png") -40px 0 no-repeat;
-  float: right;
-  height: 10px;
-  margin: 5px 10px;
-  width: 8px;
 }
 
 .create-status .post-resource .thumbnail .remove:hover .arrow {
@@ -7902,7 +7898,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   border: 1px solid rgb(204, 204, 204);
   width: 28px;
   height: 22px;
-  text-indent: -9999px;
   background: rgb(255, 255, 255); /* Old browsers */
   margin: 5px 5px 0 0;
   cursor: pointer;
@@ -7911,14 +7906,19 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .create-status .post-resource .thumbnail .control:hover {
   border: solid 1px rgb(115, 195, 230);
   color: rgb(21, 138, 196);
-  background: rgb(219, 239, 247); /* Old browsers */
+  background: rgb(219, 239, 247);
 }
 
-.create-status .post-resource .thumbnail .desactivated .control {
+.create-status .post-resource .thumbnail .control.remove {
+  margin-right: 0;
+}
+
+.create-status .post-resource .thumbnail .control.desactivated {
   background: rgb(247, 247, 247);
+  cursor: default;
 }
 
-.create-status .post-resource .thumbnail .desactivated .control:hover {
+.create-status .post-resource .thumbnail .control.desactivated:hover {
   border: solid 1px rgb(204, 204, 204);
   background: rgb(247, 247, 247);
 }
@@ -7944,19 +7944,25 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   border-radius: 4px;
 }
 
-.create-status .post-resource .thumbnail .desactivated .last .arrow {
+.create-status .post-resource .thumbnail .desactivated.last .arrow {
   background: url("../images/new/icones-p.png") -480px -1919px no-repeat;
   content: '';
 }
 
-.create-status .post-resource .thumbnail .desactivated .next .arrow {
+.create-status .post-resource .thumbnail .desactivated.next .arrow {
   background: url("../images/new/icones-p.png") -480px -1839px no-repeat;
   content: '';
 }
 
-.create-status .post-resource .thumbnail .desactivated .remove .arrow {
+.create-status .post-resource .thumbnail .desactivated.remove .arrow {
   background: url("../images/new/icones-p.png") -4px -2163px no-repeat;
   content: '';
+}
+
+#lecture-participation-chart,
+#teacher-participation-chart{
+  overflow: hidden;
+  clear: left;
 }
 
 /*-- #graph-form é o .concave-form do gráfico --*/
@@ -7971,6 +7977,13 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   margin-left: 0;
 }
 
+#graph-form .columns li{
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 #statuses .post-link {
   padding: 0;
 }
@@ -7979,7 +7992,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   color: rgb(179, 179, 179);
   display: block;
   font-size: 0.9em;
-  margin-top: -10px;
   text-align: center;
 }
 
@@ -7997,10 +8009,10 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 #statuses .status .post-resource .post-title {
   margin: 0 0 10px 0;
   display: block;
-  color: rgb(109, 110, 111);
 }
 
 #statuses .status .responses {
+  margin-top: 12px;
   padding-left: 0;
   padding-right: 0;
   background-color: rgb(240, 240, 240);
@@ -8011,60 +8023,57 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   padding-right: 10px;
 }
 
-#statuses .status .post-resource {
+#statuses .status .post-resource,
+#statuses .status .re-status .post-resource {
   margin-top: 10px;
 }
 
 #statuses .status .re-status .post-resource {
-  margin-top: 0px;
+  margin-left: 40px;
 }
 
-#content .create-status .new-post .distance-top:before {
-  border-color: rgb(240, 240, 240) white;
-  border-width: 0 10px 10px;
-  margin-top: -58px;
-  border-style: solid;
-  content: " ";
-  display: block;
-  position: absolute;
-  width: 0;
+#statuses .status .create-status .post-title {
+  margin-left: 0;
+  margin-bottom: 3px;
 }
 
-.status-text .create-response .distance-top:after,
-.status-text .responses .distance-top:after {
-  border-color: rgb(240, 240, 240) white;
-  border-width: 0 10px 10px;
-  margin-top: -46px;
-  border-style: solid;
-  content: " ";
-  display: block;
-  left: 540px;
+.create-status .distance-top:before,
+.status .create-response:before,
+.status .status-contents .distance-top:before,
+.responses .distance-top:after {
+   border-color: rgb(240, 240, 240) white;
+   border-width: 0 10px 10px;
+   border-style: solid;
+   margin-top: -20px;
+   content: " ";
+   display: block;
+   width: 0;
+}
+
+.inform-my-status .distance-top:before,
+.status .status-contents .distance-top:before {
+   position: absolute;
+   margin-left: 10px;
+}
+
+.responses .distance-top:after {
+  margin-left: 20px;
   position: absolute;
-  width: 0;
+}
+
+#resource .inform-my-status .distance-top:before {
+  display: none;
+}
+
+#resource .inform-my-status {
+  -webkit-border-top-left-radius: 0;
+  -moz-border-radius-topleft: 0;
+  border-top-left-radius: 0;
 }
 
 .status .create-response:before {
   margin-right: 30px;
   float: right;
-}
-
-.responses .distance-top:after {
-  margin-left: 25px;
-  position: absolute;
-  margin-top: -42px;
-}
-
-.status .post-resource .distance-top:before {
-  left: 60px;
-  position: absolute;
-}
-
-.create-response .distance-top,
-.create-status .distance-top,
-.responses .distance-top {
-  text-indent: -9999px;
-  width: 500px;
-  height: 1px;
 }
 
 /* Botão convidar amigos */
@@ -8102,6 +8111,41 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 /* FIM botão convidar amigos */
+
+.borderradius .system-msg {
+  border-radius: 5px 5px 5px 5px;
+}
+
+.textshadow .system-msg {
+  text-shadow: 0 1px 0 white;
+}
+
+.boxshadow .system-msg {
+  box-shadow: 0 2px 10px 1px rgba(0, 0, 0, 0.4);
+}
+
+.system-msg-busy {
+  background-color: #FFEED7;
+  border-color: #FFA935;
+  color: black;
+  padding: 5px 10px;
+}
+
+.system-msg {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: 13px;
+  font-weight: normal;
+  line-height: 18px;
+  margin-right: -109px;
+  margin-bottom: 18px;
+  display: inline;
+  position: fixed;
+  top: 20px;
+  right: 52%;
+  width: 150px;
+  z-index: 9999;
+  text-align: center;
+}
 
 /* início agrupar-mural */
 .statuses .status .grouped-photos {

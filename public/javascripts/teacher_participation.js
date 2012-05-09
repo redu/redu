@@ -1,10 +1,13 @@
-$(document).ready(function(){
+// Módulo respnsável pela criação do gráfico Basic Line do relatório
+// de participação dos professores nas disciplinas do curso
+
+var TeacherParticipationGraph = function () {
   var chart;
 
   // Definição do gráfico
   var options = {
     chart: {
-      renderTo: 'teacher-participation-chart',
+      renderTo: '',
       defaultSeriesType: 'line'
     },
     title: {
@@ -45,84 +48,23 @@ $(document).ready(function(){
     }]
   };
 
-  // Tratamento das datas
-  var time_selected = function (period) {
-    var that = this;
+  return {
+    // Carregamento do gráfico
+    load: function (graphView) {
+      // Inicializa o form com o gráfico correspondente
+      var graph = graphView.form.plotGraphForm(graphView.chart.renderTo);
 
-    select = $("#date_"+period+"_fake__3i");
-    that.day = select[0].options[select[0].selectedIndex].value;
-    select = $("#date_"+period+"_fake__2i");
-    that.month = select[0].options[select[0].selectedIndex].value;
-    select = $("#date_"+period+"_fake__1i");
-    that.year = select[0].options[select[0].selectedIndex].value;
-    return that.year + "-" + that.month + "-" + that.day;
-  };
+      // Passa a função de carregamento do gráfico via JSON
+      graph.loadGraph(function () {
+        $.extend(options, graphView);
 
-  // Tratamento dos checkboxes
-  $(".item-space-check").click(function () {
-    var all = $("#all-check")[0];
-    if (!this.checked){
-      all.checked = false;
+        options.series[0].data = json.lectures_created;
+        options.series[1].data = json.posts;
+        options.series[2].data = json.answers;
+
+        options.xAxis.categories = json.days;
+        chart = new Highcharts.Chart(options);
+      });
     }
-    else{
-      var ipts = $(".item-space-check");
-      var all_checked = true;
-      $.each(ipts, function () {
-        if(!this.checked){
-          all_checked = false
-        }
-      })
-
-      if (all_checked) {
-        all.checked = true;
-      }
-    }
-  });
-
-  $("#all-check").click(function () {
-    var ipts = $(".item-space-check");
-    if (this.checked) {
-      $.each(ipts, function () {
-        this.checked = true;
-      })
-    }
-    else{
-      $.each(ipts, function () {
-        this.checked = false;
-      })
-    }
-  });
-
-  // Função checa se mensagem de erro está ativa
-  var errorExist = function (){
-    return ($(".error_explanation")).length
-  };
-
-  // Submissão do gráfico por AJAX
-  $("#graph-form").submit(function(e) {
-    $("#date_start").val(time_selected("start"));
-    $("#date_end").val(time_selected("end"));
-  });
-
-  // Requisição AJAX para carregamento do gráfico + Tratamento de erros
-  $("#graph-form").live("ajax:complete", function(e, xhr){
-    json = $.parseJSON(xhr.responseText);
-    if(json.error){
-      if(!errorExist()){
-        $('#form-problem').before('<div class="error_explanation" id="error_explanation"><h2>Ops!</h2><p>Há problemas para os seguinte(s) campo(s):</p><p class="invalid_fields">Data inicial, Data final</p></div>');
-        $("#date-validate").append('<ul class="errors_on_date"><li>'+json.error+'</li></ul>');
-      }
-    }else{
-      if(errorExist){
-        $(".error_explanation").remove();
-        $(".errors_on_date").remove();
-      }
-      options.series[0].data = json.lectures_created;
-      options.series[1].data = json.posts;
-      options.series[2].data = json.answers;
-
-      options.xAxis.categories = json.days;
-      chart = new Highcharts.Chart(options);
-    }
-  });
-});
+  }
+};

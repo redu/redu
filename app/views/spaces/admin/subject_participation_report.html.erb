@@ -12,24 +12,26 @@
     <%= render :partial => 'spaces/admin/clean_header' %>
 
     <%= tabs :spaces_admin do %>
-      <h3 class="form-header">Quantos alunos finalizaram o módulo?</h3>
-      <h3 class="form-header form-header-complement">Quantos pedidos de ajuda foram respondidos?</h3>
-      <div id="subject-chart-admin">
-        <% if @browser_not_supported %>
-          <div class="body">
-            <div class="flash-message notice">
-              <p class="message icons-big-before icon-privacy-lightred_64_66-before">Para visualizar este relatório é necessário que você atualize seu navegador para a versão mais recente. Você pode escolher o navegador de sua preferência:
+      <% subtabs :spaces_admin do %>
+        <h3 class="form-header graph-header">Quantos alunos finalizaram o módulo?</h3>
+        <h3 class="form-header form-header-complement graph-header">Quantos pedidos de ajuda foram respondidos?</h3>
+        <div id="subject-chart-admin">
+          <% if @browser_not_supported %>
+            <div class="body">
+              <div class="flash-message notice">
+                <p class="message icons-big-before icon-privacy-lightred_64_66-before">Para visualizar este relatório é necessário que você atualize seu navegador para a versão mais recente. Você pode escolher o navegador de sua preferência:
                   <%= link_to "Internet Explorer", "http://windows.microsoft.com/pt-Br/internet-explorer/downloads/ie-9/worldwide-languages"%>,
                   <%= link_to "Google Chrome", "http://www.google.com/chrome" %>, ou
                   <%= link_to "Mozilla Firefox", "http://br.mozdev.org/" %>
-              </p>
+                </p>
+              </div>
             </div>
-          </div>
-        <% else %>
-          <%= render :partial => 'spaces/admin/subject_chart_admin',
-            :collection => @space.subjects, :as => :subject %>
-        <% end %>
-      </div>
+          <% else %>
+            <%= render :partial => 'spaces/admin/subject_chart_admin',
+              :collection => @space.subjects, :as => :subject %>
+          <% end %>
+        </div>
+      <% end %>
     <% end %>
   </div>
 </div>

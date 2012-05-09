@@ -1,0 +1,5 @@
+<li>
+  <%= check_box_tag "lectures[]", lecture.id, true,
+    { :class => "item-chart-check", :id => "lecture-#{lecture.id}" } %>
+  <%= label_tag "lecture-#{lecture.id}", lecture.name %>
+</li>

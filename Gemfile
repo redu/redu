@@ -16,7 +16,7 @@ gem 'aasm', :require => "aasm",
 gem 'shuber-sortable'
 gem 'scribd_fu', :git => 'git://github.com/guiocavalcanti/scribd_fu.git',
   :branch => 'without-scape'
-gem 'factory_girl_rails'
+gem 'factory_girl_rails', '~> 1.7.0'
 gem 'ar_mailer_rails3'
 gem 'active_enum'
 gem 'date_validator'
@@ -24,7 +24,7 @@ gem 'deep_cloneable'
 gem 'rd_searchlogic', :require => 'searchlogic'
 gem 'translate_routes'
 gem 'aws-s3', :require => 'aws/s3'
-gem 'jquery-rails', '>= 1.0.3'
+gem 'jquery-rails', '>= 1.0.12'
 gem 'dynamic_form'
 gem 'ajaxful_rating',
   :git => 'git://github.com/edgarjs/ajaxful-rating.git',
@@ -33,7 +33,7 @@ gem 'acts-as-taggable-on'
 gem 'ckeditor', '3.4.2.pre'
 gem 'jammit-s3'
 gem 'whenever', :require => false
-gem 'remotipart', '>= 0.3.4'
+gem 'remotipart', '~> 1.0'
 gem 'zencoder'
 gem 'pusher'
 gem 'kaminari'
@@ -67,6 +67,10 @@ group :development, :test do
   gem 'jasmine'
   gem 'no_peeping_toms', :git => 'git://github.com/patmaddox/no-peeping-toms.git'
   gem 'rails3-generators'
+end
+
+group :test do
+  gem 'webmock', '~> 1.8.6'
 end
 
 group :development do

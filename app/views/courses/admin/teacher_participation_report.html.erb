@@ -22,12 +22,11 @@
         </div>
         </div>
       <% else %>
-        <h3 class="form-header">Qual a participação do professor na disciplina?</h3>
+        <h3 class="form-header graph-header">Qual a participação do professor nas disciplinas?</h3>
           <%= lazy_load(:chart, :jammit => true) do %>
-            try{
-              $("#graph-form").before("<div id='teacher-participation-chart' class='teacher-participation-chart'></div>"),
-              $("#graph-form").submit();
-              }catch(e){}
+              var graph = new TeacherParticipationGraph();
+              graph.load({ chart: { renderTo: "teacher-participation-chart" }  ,
+                           form: $("#graph-form") });
           <% end %>
           <%= form_tag vis_dashboard_teacher_participation_interaction_path, :method => :get, :remote => true, :class => "concave-form", :id => "graph-form" do %>
           <%= label_tag "", "Professor", :id => "form-problem"%>

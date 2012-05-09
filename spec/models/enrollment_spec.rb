@@ -74,6 +74,6 @@ describe Enrollment do
         subject.update_grade!
       }.should change(subject, :graduaded).to(false)
     end
-  end
 
+  end
 end

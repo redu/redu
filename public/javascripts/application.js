@@ -2,12 +2,23 @@ jQuery(function(){
 
     $.refreshSubtabs();
 
+    $.refreshEmbeddedSharing();
+
     // Flash message
     $(".flash-message").parent().next().css("marginTop", "10px");
     $(".flash-message .close-flash").click(function(e){
       $(this).parent().slideToggle();
       $("#content").css("marginTop","20px");
       $("#home").css("marginTop","40px");
+    });
+
+
+    // Mensagem "Carregando..."
+    $("#content").bind('start.pjax', function() {
+      $('#loading-message').show();
+    });
+    $("#content").bind('end.pjax', function() {
+      $('#loading-message').hide();
     });
 
     // Dropdown de usuário
@@ -21,7 +32,7 @@ jQuery(function(){
     $(".inform-my-status textarea").live("focus", function(e){
         $(this).parents("form").find("input[type=submit], .cancel, .char-limit").fadeIn();
     });
-    $(".inform-my-status textarea").live("blur", function(e){
+    $(".inform-my-status .status-buttons .cancel").live("click", function(){
         $(this).parents("form").find("input[type=submit], .cancel, .char-limit").fadeOut();
     });
 
@@ -215,6 +226,7 @@ jQuery(function(){
 
     $(document).ajaxComplete(function(){
         $.refreshSubtabs();
+        $.refreshEmbeddedSharing();
     });
 });
 
@@ -259,3 +271,9 @@ $.refreshSubtabs = function() {
   var subtabsNav = $(".subtabs .ui-tabs-nav");
   subtabsNav.css("width", subtabsNav.find("li").length * 120);
 };
+
+// Permite ao usuário compartilhar recursos embutidos em suas postagens
+$.refreshEmbeddedSharing = function() {
+  $('.create-status').enableEmbedding();
+}
+

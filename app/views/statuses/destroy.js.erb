@@ -1,1 +1,3 @@
-$("#status-<%= @status.id %>").remove();
+$("#status-<%= @status.id %>").slideUp(function(){
+  $(this).remove();
+});

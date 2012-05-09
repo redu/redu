@@ -412,7 +412,6 @@ describe Course do
           subject.join(@user)
         }.should change(License, :count).by(1)
       end
-
     end
   end
 
@@ -452,7 +451,7 @@ describe Course do
       it "should set the period end of a license that" do
         subject.environment.plan.invoice.licenses.last.
           period_end.should_not be_nil
-        end
+      end
     end
   end
 

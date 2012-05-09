@@ -19,7 +19,7 @@ class PlansController < BaseController
     @plan = @course.try(:plan) || @environment.try(:plan)
     authorize! :migrate, @plan
 
-    @new_plan = Plan.from_preset(params[:new_plan].to_sym)
+    @new_plan = Plan.from_preset(params[:new_plan].to_sym, params[:type])
     @plan.migrate_to @new_plan
 
     flash[:notice] = "O novo plano foi assinado, você pode ver a fatura abaixo."
@@ -38,6 +38,7 @@ class PlansController < BaseController
   end
 
   def index
+    authorize! :manage, @user
     @plans = @user.plans.current.includes(:billable)
 
     respond_to do |format|

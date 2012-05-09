@@ -1,48 +1,26 @@
-#header {
-  background: url("../images/new/barra-global.png") no-repeat;
-  height: 70px;
-  padding-left: 10px;
-}
+/* Estilos necessários ao IE8 e IE9 */
 
-#header .nav {
-  margin-top: 12px;
-}
-
-#do_lecture .link-loading {
-  height: 20px;
-  filter: white;
-  border: none;
-  font-size: 0;
-  height: 15px;
-}
-
-.bt-loading,
-.form-common .bt-loading,
-.form-loader .bt-loading,
-* .form-loader input.bt-loading, /* para sobrepor a precedência de input.important */
-.form-loader input.bt-loading:hover,
-.form-common .bt-loading:hover {
-  color: white;
-  text-indent: -9999px;
+.replacement,
+.replacement a,
+.replacement span,
+.replacement:hover,
+.replacement a:hover,
+.replacement span:hover,
+.big-tabs > ul li.ui-state-default a {
+  text-indent: 0 !important;
+  color: transparent !important;
   overflow: hidden;
-  filter: none;
+  white-space: nowrap;
 }
 
-.form-common input[type="submit"] {
-  clear: none;
+.big-tabs > ul li.ui-state-active a {
+  color: rgb(21, 138, 196) !important;
 }
 
-.link-loading,
-a.link-loading,  /* para sobrepor a precedência de input.important */
-.new-subject .new-resource li a.link-loading, /* para sobrepor a precedência */
-a.link-loading:hover,  /* para sobrepor a precedência de input.important */
-.link-loading:hover {
-  color: white;
-  text-indent: -9999px;
-  overflow: hidden;
-  filter: none;
-  height: 15px;
-  display: table-cell;
-  width: 50px;
-  font-size: 0;
+.create-status .post-resource .thumbnail .arrow {
+  margin: -10px 10px 5px 10px;
+}
+
+.inform-my-status .post-resource .thumbnail .arrow {
+  margin-top: -8px;
 }

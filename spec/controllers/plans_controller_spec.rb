@@ -199,7 +199,8 @@ describe PlansController do
           :partner_id => @partner_assoc.partner.id,
           :client_id => @partner_assoc.id,
           :environment_id => @environment.path,
-          :new_plan => "professor_plus",
+          :new_plan => "instituicao_medio",
+          :type => "LicensedPlan",
           :locale => "pt-BR"
         }
         post :create, @params
@@ -216,6 +217,11 @@ describe PlansController do
       it "renders partner_environment_associations plans options" do
         response.should redirect_to partner_client_plan_invoices_path(
           @partner_assoc.partner, @partner_assoc, assigns[:new_plan])
+      end
+
+      it "creates the correct plan" do
+        assigns[:new_plan].name.should ==
+          LicensedPlan::PLANS[@params[:new_plan].to_sym][:name]
       end
     end
   end

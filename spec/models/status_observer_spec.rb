@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe StatusObserver do
   context "after create" do
+
     context "when statusable is user" do
       before do
         @owner = Factory(:user)
@@ -79,19 +80,24 @@ describe StatusObserver do
           acc << user
         end
 
-        ActiveRecord::Observer.with_observers(:status_observer) do
-          @activity = Factory(:activity, :statusable => @lecture,
-                              :user => @poster)
+      end
 
+      context "and status is type of Activity" do
+
+        before do
+          ActiveRecord::Observer.with_observers(:status_observer) do
+            @activity = Factory(:activity, :statusable => @lecture,
+                                :user => @poster)
+          end
         end
-      end
 
-      it "associates the course students" do
-        @course.approved_users.to_set.should == @activity.users.to_set
-      end
+        it "associates the course students" do
+          @course.approved_users.to_set.should == @activity.users.to_set
+        end
 
-      it "cannot associate the poster contacts" do
-        (@poster_contacts.to_set & @activity.users.to_set).should be_empty
+        it "cannot associate the poster contacts" do
+          (@poster_contacts.to_set & @activity.users.to_set).should be_empty
+        end
       end
     end
 
@@ -121,7 +127,6 @@ describe StatusObserver do
         ActiveRecord::Observer.with_observers(:status_observer) do
           @activity = Factory(:activity, :statusable => @space,
                               :user => @poster)
-
         end
       end
 
@@ -132,6 +137,7 @@ describe StatusObserver do
       it "cannot associate the poster contacts" do
         (@poster_contacts.to_set & @activity.users.to_set).should be_empty
       end
+
     end
 
     context "when statusable is UserCourseAssociation" do
@@ -149,8 +155,6 @@ describe StatusObserver do
         # @log.users.count.should == @uca.course.approved_users.count
         @log.users.to_set.should == @uca.course.approved_users.to_set
       end
-
-
     end
   end
 end

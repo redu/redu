@@ -74,7 +74,7 @@ Redu::Application.configure do
   OmniAuth.config.mock_auth[:facebook] = {
     :provider => 'facebook',
     :uid => '123545',
-    :info => {'email' => 'user@example.com',
+    :info => {:email => 'user@example.com',
       :first_name => 'Some',
       :last_name => 'Userville'
     }
@@ -88,7 +88,8 @@ Redu::Application.configure do
 
   config.vis = {
     :activities => "http://localhost:4000/subjects/activities.json",
-    :activities_d3 => "http://localhost:4000/subjects/activities_d3.json"
+    :activities_d3 => "http://localhost:4000/subjects/activities_d3.json",
+    :lecture_participation => "http://localhost:4000/lectures/participation.json"
   }
 
 end
