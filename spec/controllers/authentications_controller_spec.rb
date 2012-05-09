@@ -58,13 +58,13 @@ describe AuthenticationsController do
             @user = Factory.create(:user)
             @user.update_attributes(:activated_at => nil)
             request.env['omniauth.auth'][:info][:email] = @user.email
+            @provider = request.env['omniauth.auth'][:provider]
+            @uid = request.env['omniauth.auth'][:uid]
           end
 
           it "should activate account when user connects with Facebook" do
             get :create, :locale => 'pt-BR'
-            provider = request.env['omniauth.auth'][:provider]
-            uid = request.env['omniauth.auth'][:uid]
-            @created_auth = Authentication.find_by_provider_and_uid(provider, uid)
+            @created_auth = Authentication.find_by_provider_and_uid(@provider, @uid)
             user = @created_auth.user
             user.activated_at.should_not be_nil
           end
@@ -73,9 +73,7 @@ describe AuthenticationsController do
             before do
               @user.update_attributes(:created_at => 2.months.ago)
               get :create, :locale => 'pt-BR'
-              provider = request.env['omniauth.auth'][:provider]
-              uid = request.env['omniauth.auth'][:uid]
-              @created_auth = Authentication.find_by_provider_and_uid(provider, uid)
+              @created_auth = Authentication.find_by_provider_and_uid(@provider, @uid)
             end
 
             it "should activate account when user connects with Facebook" do

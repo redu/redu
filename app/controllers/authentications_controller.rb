@@ -21,9 +21,7 @@ class AuthenticationsController < ApplicationController
         # Existe conta no Redu com o e-mail associado à conta do FB.
         user.authentications.create!(:provider => auth[:provider],
                                      :uid => auth[:uid])
-        unless user.activated_at
-          user.activated_at = Time.now
-        end
+        user.activated_at ||= Time.now
         flash[:notice] = t :facebook_connect_account_association
       else
         # Não existe conta do Redu associada ao e-mail do usuário no FB. 
