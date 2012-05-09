@@ -2,8 +2,10 @@
   <div class="distance-top"></div>
   <span class="last-responses">Visualizando as últimas respostas</span>
   <ol>
-    <hr class="border-post"/>
     <%= render :partial => "statuses/response", :collection => status.answers %>
   </ol>
-  <a href="#" class="toggle-statuses">Ver todos os <span class="qty"><%= status.answers.count %></span> comentários</a>
+  <div class="toggle-statuses">
+    <hr class="border-post" />
+    <a href="#">Ver todos os <span class="qty"><%= status.answers.count %></span> comentários</a>
+  </div>
 </div>

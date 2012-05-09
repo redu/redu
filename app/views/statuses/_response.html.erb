@@ -1,5 +1,6 @@
 <%# Status resposta %>
 <li id="status-<%= response.id %>">
+  <hr class="border-post"/>
   <div class="re-status">
     <% if can? :manage, response %>
         <%= link_to 'Fechar',
@@ -43,5 +44,4 @@
       </div>
     <% end %>
   </div>
-<hr class="border-post"/>
 </li>

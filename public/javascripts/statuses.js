@@ -5,6 +5,8 @@ jQuery(function(){
           var responses = $(this).find("> ol > li");
           if (responses.length <= 3) {
             $(this).find(".toggle-statuses").hide();
+            $(this).find(".last-responses").hide();
+            $(this).find(".border-post:first").hide();
           }
 
           if (responses.length == 0) {

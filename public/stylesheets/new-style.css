@@ -7663,7 +7663,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 .create-status .post-resource .border-post,
-.responses ol .border-post {
+.responses .border-post {
   border-top: solid 1px rgb(204, 204, 204);
   border-bottom: solid 1px white;
   border-left: none;
