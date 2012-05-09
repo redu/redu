@@ -1,4 +1,4 @@
-class AuthenticationsController < ApplicationController
+class AuthenticationsController < BaseController
   
   def create
     auth = request.env['omniauth.auth']
