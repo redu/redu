@@ -2,13 +2,17 @@
   <div class="environment-box clearfix">
     <%= f.label :name, "Seu ambiente de ensino" %>
     <%= f.text_field :name, :class => "big" %>
+    <%= concave_errors_for @environment, :name %>
+
   </div>
   <span class="tip">40 caracteres restantes</span>
   <%= f.label :initials, "Abreviação" %>
   <%= f.text_field :initials %>
-  <span class="tip">40 caracteres restantes</span>
+  <%= concave_errors_for @environment, :initials %>
+  <span class="tip">10 caracteres restantes</span>
   <%= f.label :path, "Endereço eletrônico", :class => "big"%>
   <%= f.text_field :path %>
+  <%= concave_errors_for @environment, :path %>
 </fieldset>
 <hr/>
 <fieldset class="course-fields">
@@ -16,10 +20,11 @@
     <div class="course-box clearfix">
       <%= builder.label :name, "Seu primeiro curso" %>
       <%= builder.text_field :name, :class => "big" %>
+      <%= concave_errors_for @environment.courses.first, :name %>
     </div>
-    <span class="tip">40 caracteres restantes</span>
+    <span class="tip">60 caracteres restantes</span>
     <%= builder.label :path, "Endereço eletrônico" %>
     <%= builder.text_field :path, :class => "big" %>
-    <span class="tip">40 caracteres restantes</span>
+    <%= concave_errors_for @environment.courses.first, :path %>
   <% end %>
 </fieldset>
