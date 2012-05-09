@@ -413,34 +413,6 @@ describe Course do
         }.should change(License, :count).by(1)
       end
     end
-
-    it "should send a notification to vis" do
-      WebMock.disable_net_connect!
-      @stub = stub_request(:post, Redu::Application.config.vis_client[:url]).
-        with(:headers => {'Authorization'=>['JOjLeRjcK', 'core-team'],
-                          'Content-Type'=>'application/json'}).
-                          to_return(:status => 200, :body => "", :headers => {})
-
-
-      subj2 = Factory(:subject, :space => @space,
-                              :owner => subject.owner,
-                              :finalized => true)
-
-      enrollments = []
-      subject.join(@user)
-      enrollments << @user.get_association_with(@subj)
-      enrollments << @user.get_association_with(subj2)
-
-      enrollments.each do |enroll|
-        params = fill_params(enroll, "enrollment")
-
-        a_request(:post, Redu::Application.config.vis_client[:url]).
-          with(:body => params.to_json,
-               :headers => {'Authorization'=>['JOjLeRjcK', 'core-team'],
-                            'Content-Type'=>'application/json'}).should have_been_made
-      end
-    end
-
   end
 
   context "removes a user (unjoin)" do
@@ -475,57 +447,11 @@ describe Course do
       @sub_2.members.should_not include(@user)
     end
 
-    context "notification to vis" do
-      before do
-        subject.join(@user)
-      end
-      it "should send a remove enrollment notification and a remove subject finalized notification to vis" do
-        WebMock.reset!
-        WebMock.disable_net_connect!
-        @stub = stub_request(:post, Redu::Application.config.vis_client[:url]).
-          with(:headers => {'Authorization'=>['JOjLeRjcK', 'core-team'],
-                            'Content-Type'=>'application/json'}).
-                            to_return(:status => 200, :body => "", :headers => {})
-
-        enrollments = []
-        subject.users.each do |user|
-          enrollment = user.get_association_with(@sub)
-          if enrollment
-            enrollment.grade = 100
-            enrollment.graduaded = true
-            enrollment.save
-            enrollments << enrollment
-          end
-          enrollment_2 = user.get_association_with(@sub_2)
-          enrollments << enrollment_2 if enrollment_2
-        end
-        subject.unjoin(@user)
-
-        enrollments.each do |enroll|
-
-          params = fill_params(enroll, "remove_enrollment")
-
-          a_request(:post, Redu::Application.config.vis_client[:url]).
-            with(:body => params.to_json,
-                 :headers => {'Authorization'=>['JOjLeRjcK', 'core-team'],
-                              'Content-Type'=>'application/json'}).should have_been_made
-
-          if enroll.graduaded
-            params = fill_params(enroll, "remove_subject_finalized")
-            a_request(:post, Redu::Application.config.vis_client[:url]).
-              with(:body => params.to_json,
-                   :headers => {'Authorization'=>['JOjLeRjcK', 'core-team'],
-                                'Content-Type'=>'application/json'}).should have_been_made
-          end
-        end
-      end
-   end
-
     context "when plan is licensed" do
       it "should set the period end of a license that" do
         subject.environment.plan.invoice.licenses.last.
           period_end.should_not be_nil
-        end
+      end
     end
   end
 
@@ -881,22 +807,4 @@ describe Course do
       end
     end
   end
-end
-
-def fill_params(enroll, type)
-  params = {
-    :lecture_id => nil,
-    :subject_id => enroll.subject_id,
-    :space_id => enroll.subject.space_id,
-    :course_id => enroll.subject.space.course_id,
-    :user_id => enroll.user_id,
-    :type => type,
-    :status_id => nil,
-    :statusable_id => nil,
-    :statusable_type => nil,
-    :in_response_to_id => nil,
-    :in_response_to_type => nil,
-    :created_at => enroll.created_at,
-    :updated_at => enroll.updated_at
-  }
 end

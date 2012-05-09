@@ -1,9 +1,13 @@
-var lecture_participation_graph = function () {
+// Módulo respnsável pela criação do gráfico Stacked Area do relatório
+// de participação dos alunos nas aulas da disciplina
+
+var LectureParticipationGraph = function () {
   var chart;
 
+  // Definição do gráfico
   var options ={
     chart: {
-      renderTo: 'lecture-participation-chart',
+      renderTo: '',
       type: 'area'
     },
     title: {
@@ -17,7 +21,8 @@ var lecture_participation_graph = function () {
     yAxis: {
       title: {
         text: 'Participação'
-      }
+      },
+      min: 0
     },
     legend: {
       layout: 'vertical',
@@ -61,9 +66,15 @@ var lecture_participation_graph = function () {
   }
 
   return {
-    load: function () {
-      var graph = graphForm();
-      graph.load_graph(function () {
+    // Carregamento do gráfico
+    load: function (graphView) {
+      // Inicializa o form com o gráfico correspondente
+      var graph = graphView.form.plotGraphForm(graphView.chart.renderTo);
+
+      // Passa a função de carregamento do gráfico via JSON
+      graph.loadGraph(function () {
+        $.extend(options, graphView);
+
         options.series[0].data = json.helps_by_day;
         options.series[1].data = json.activities_by_day;
         options.series[2].data = json.answered_helps_by_day;

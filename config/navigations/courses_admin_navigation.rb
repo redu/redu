@@ -49,7 +49,7 @@ SimpleNavigation::Configuration.run do |navigation|
         :highlights_on => action_matcher({
           'courses' => ['teacher_participation_report']}),
         :class => 'ui-state-default',
-        :link => { :class => "icon-space_16_18-before" }
+        :link => { :class => "icon-bio_16_18-before" }
     end
   end
 end

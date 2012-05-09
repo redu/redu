@@ -1,8 +1,13 @@
-var teacher_participation_graph = function () {
+// Módulo respnsável pela criação do gráfico Basic Line do relatório
+// de participação dos professores nas disciplinas do curso
+
+var TeacherParticipationGraph = function () {
+  var chart;
+
   // Definição do gráfico
   var options = {
     chart: {
-      renderTo: 'teacher-participation-chart',
+      renderTo: '',
       defaultSeriesType: 'line'
     },
     title: {
@@ -44,15 +49,21 @@ var teacher_participation_graph = function () {
   };
 
   return {
-    load: function () {
-      var graph = graphForm();
-      graph.load_graph(function () {
+    // Carregamento do gráfico
+    load: function (graphView) {
+      // Inicializa o form com o gráfico correspondente
+      var graph = graphView.form.plotGraphForm(graphView.chart.renderTo);
+
+      // Passa a função de carregamento do gráfico via JSON
+      graph.loadGraph(function () {
+        $.extend(options, graphView);
+
         options.series[0].data = json.lectures_created;
         options.series[1].data = json.posts;
         options.series[2].data = json.answers;
 
         options.xAxis.categories = json.days;
-        var chart = new Highcharts.Chart(options);
+        chart = new Highcharts.Chart(options);
       });
     }
   }
