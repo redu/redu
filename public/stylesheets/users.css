@@ -12,7 +12,7 @@
 }
 
 #biography .remove-network:before {
-  float: left;
+  float: right;
 }
 
 #biography .concave-form .concave-select {
