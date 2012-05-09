@@ -1,5 +1,5 @@
 <%# Form de Status resposta %>
-<div class="create-status create-response" style = "display: none;">
+<div class="create-status create-response" style="display: none;">
   <%= form_for :status,
     :url => respond_status_path(in_response_to),
     :remote => true, :html => { :class => "form-loader concave-form" } do |f| %>
@@ -18,8 +18,8 @@
         :locals => { :class_textarea => "status-answer-#{random_number}", :limit => 800 }%>
 
       <div class="status-buttons">
-        <a href="#" class="cancel">Cancelar</a>
         <%= f.submit 'Postar' %>
+        <%= link_to 'Cancelar', nil, :rel => "nofollow", :class => 'cancel concave-clean' %>
       </div>
     <% end %>
 <% end %>

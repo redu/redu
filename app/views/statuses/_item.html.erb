@@ -136,36 +136,11 @@
               <%= time_ago_in_words item.created_at %>
             </span>
           </div>
-          <div class="status-message">
-            <p>
-              <%= raw auto_link(h(item.text).gsub(/\n/, '</br>')) %>
-            </p>
-          </div>
-          <ul class="actions clearfix">
-            <% if can? :respond, item %>
-              <li>
-                <a href="#" class="icon-response-gray_8_10-before reply-status">Responder</a>
-              </li>
-            <% end %>
-            <% if can? :manage, item %>
-              <li>
-                <%= link_to 'Apagar',
-                  status_path(item),
-                  :confirm => 'Deseja remover a postagem?',
-                  :method => :delete,
-                  :remote => true,
-                  :class => "icon-delete-gray_8_10-before" %>
-              </li>
-            <% end %>
-          </ul>
+          <%= render 'statuses/resource', :status => item %>
+          <%= render 'statuses/responses', :status => item %>
+          <%= render 'statuses/actions', :status => item %>
           <%= render :partial => 'statuses/create_response',
             :locals => { :in_response_to => item }%>
-          <div class="responses">
-            <ol>
-              <%= render :partial => "statuses/response", :collection => item.answers %>
-            </ol>
-            <a href="#" class="toggle-statuses">Ver todos os <span class="qty"></span> comentários</a>
-          </div>
         </div>
       </div>
     <% elsif item.statusable_type.eql?('Lecture') %>
@@ -186,36 +161,11 @@
               <%= time_ago_in_words item.created_at %>
             </span>
           </div>
-          <div class="status-message">
-            <p>
-              <%= raw auto_link(h(item.text).gsub(/\n/, '</br>')) %>
-            </p>
-          </div>
-          <ul class="actions clearfix">
-            <% if can? :respond, item %>
-              <li>
-                <a href="#" class="icon-response-gray_8_10-before reply-status">Responder</a>
-              </li>
-            <% end %>
-            <% if can? :manage, item %>
-              <li>
-                <%= link_to 'Apagar',
-                  status_path(item),
-                  :confirm => 'Deseja remover a postagem?',
-                  :method => :delete,
-                  :remote => true,
-                  :class => "icon-delete-gray_8_10-before" %>
-              </li>
-            <% end %>
-          </ul>
+          <%= render 'statuses/resource', :status => item %>
+          <%= render 'statuses/responses', :status => item %>
+          <%= render 'statuses/actions', :status => item %>
           <%= render :partial => 'statuses/create_response',
             :locals => { :in_response_to => item }%>
-          <div class="responses">
-            <ol>
-              <%= render :partial => "statuses/response", :collection => item.answers %>
-            </ol>
-            <a href="#" class="toggle-statuses">Ver todos os <span class="qty"></span> comentários</a>
-          </div>
         </div>
       </div>
     <% elsif item.statusable_type.eql?('Space') %>
@@ -236,36 +186,11 @@
               <%= time_ago_in_words item.created_at %>
             </span>
           </div>
-          <div class="status-message">
-            <p>
-              <%= raw auto_link(h(item.text).gsub(/\n/, '</br>')) %>
-            </p>
-          </div>
-          <ul class="actions clearfix">
-            <% if can? :respond, item %>
-              <li>
-                <a href="#" class="icon-response-gray_8_10-before reply-status">Responder</a>
-              </li>
-            <% end %>
-            <% if can? :manage, item %>
-              <li>
-                <%= link_to 'Apagar',
-                  status_path(item),
-                  :confirm => 'Deseja remover a postagem?',
-                  :method => :delete,
-                  :remote => true,
-                  :class => "icon-delete-gray_8_10-before" %>
-              </li>
-            <% end %>
-          </ul>
+          <%= render 'statuses/resource', :status => item %>
+          <%= render 'statuses/responses', :status => item %>
+          <%= render 'statuses/actions', :status => item %>
           <%= render :partial => 'statuses/create_response',
             :locals => { :in_response_to => item }%>
-          <div class="responses">
-            <ol>
-              <%= render :partial => "statuses/response", :collection => item.answers %>
-            </ol>
-            <a href="#" class="toggle-statuses">Ver todos os <span class="qty"></span> comentários</a>
-          </div>
         </div>
       </div>
     <% else %>
@@ -286,36 +211,11 @@
           <%= time_ago_in_words item.created_at %>
         </span>
       </div>
-      <div class="status-message">
-        <p>
-          <%= raw auto_link(h(item.text).gsub(/\n/, '</br>')) %>
-        </p>
-      </div>
-      <ul class="actions clearfix">
-        <% if can? :respond, item %>
-          <li>
-            <a href="#" class="icon-response-gray_8_10-before reply-status">Responder</a>
-          </li>
-        <% end %>
-        <% if can? :manage, item %>
-          <li>
-            <%= link_to 'Apagar',
-              status_path(item),
-              :confirm => 'Deseja remover a postagem?',
-              :method => :delete,
-              :remote => true,
-              :class => "icon-delete-gray_8_10-before" %>
-          </li>
-        <% end %>
-      </ul>
+      <%= render 'statuses/resource', :status => item %>
+      <%= render 'statuses/responses', :status => item %>
+      <%= render 'statuses/actions', :status => item %>
       <%= render :partial => 'statuses/create_response',
         :locals => { :in_response_to => item }%>
-      <div class="responses">
-        <ol>
-          <%= render :partial => "statuses/response", :collection => item.answers %>
-        </ol>
-        <a href="#" class="toggle-statuses">Ver todos os <span class="qty"></span> comentários</a>
-      </div>
     </div>
     <% end %>
   <% end %>
