@@ -45,18 +45,28 @@ var subject_participation_pie = function () {
     var loadPie = function(subject_id, ur) {
       var url = ur + "?subject_id=" + subject_id;
 
-      $.getJSON(url, function (json) {
-        options.chart.renderTo = 'subject-participation-pie-'+subject_id;
-        options.series[0].data[0] = {
-          name: 'Pedidos de ajuda que tiveram resposta',
-          sliced: true,
-          selected: true,
-          y: json.helps_answered
-        };
-        options.series[0].data[1] = ['Pedidos de ajuda sem resposta', json.helps_not_answered];
+      $.ajax({
+        cache: false,
+        crossDomain: true,
+        url: url,
+        method: "GET",
+        dataType: 'jsonp',
+        success: function (json) {
+          options.chart.renderTo = 'subject-participation-pie-'+subject_id;
+          options.series[0].data[0] = {
+            name: 'Pedidos de ajuda que tiveram resposta',
+            sliced: true,
+            selected: true,
+            y: json.helps_answered
+          };
+          options.series[0].data[1] = ['Pedidos de ajuda sem resposta', json.helps_not_answered];
 
-        new Highcharts.Chart(options);
-      })
+          new Highcharts.Chart(options);
+        },
+        error: function (a,b,c) {
+          alert(a + "" + b + c);
+        }
+      });
     };
 
     // Retorno do objeto
@@ -83,36 +93,46 @@ var subject_participation_bullet = function () {
     var loadBullet = function(subject_id, ur, div){
       var url = ur + "?subject_id=" + subject_id;
 
-      d3.json(url, function(data) {
-      var vis = d3.select(div).selectAll("svg")
-        .data(data)
-        .enter().append("svg")
-        .attr("class", "bullet")
-        .attr("width", w)
-        .attr("height", h)
-        .append("g")
-        .attr("transform", "translate(" + m[3] + "," + m[0] + ")")
-        .call(d3chart);
+      $.ajax({
+          cache: false,
+          crossDomain: true,
+          url: url,
+          method: "GET",
+          dataType: 'jsonp',
+          success: function(data) {
+            var vis = d3.select(div).selectAll("svg")
+              .data(data)
+              .enter().append("svg")
+              .attr("class", "bullet")
+              .attr("width", w)
+              .attr("height", h)
+              .append("g")
+              .attr("transform", "translate(" + m[3] + "," + m[0] + ")")
+              .call(d3chart);
 
-      var title = vis.append("g")
-        .attr("text-anchor", "start");
+            var title = vis.append("g")
+              .attr("text-anchor", "start");
 
-      // Subtítulo do bullet charts
-      title.append("text")
-        .attr("class", "subtitle-chart")
-        .attr("dy", "4.5em")
-        .text("Total de alunos X Total de alunos que finalizaram o módulo");
+            // Subtítulo do bullet charts
+            title.append("text")
+              .attr("class", "subtitle-chart")
+              .attr("dy", "4.5em")
+              .text("Total de alunos X Total de alunos que finalizaram o módulo");
 
-      // Atributo title para o tooltip
-      d3.selectAll("rect")
-        .attr("title", "Total de alunos: " + data[0].ranges[0] +
-            "<br/>Total de alunos que finalizaram o módulo: " + data[0].measures[0]);
+            // Atributo title para o tooltip
+            d3.selectAll("rect")
+              .attr("title", "Total de alunos: " + data[0].ranges[0] +
+                "<br/>Total de alunos que finalizaram o módulo: " + data[0].measures[0]);
 
-      // Configuração default do tooltip
-      $(div).find('> svg > g > rect.range').tipTip({defaultPosition: "top"});
-      $(div).find('> svg > g > rect.measure').tipTip({defaultPosition: "top"});
-    });
-  };
+            // Configuração default do tooltip
+            $(div).find('> svg > g > rect.range').tipTip({defaultPosition: "top"});
+            $(div).find('> svg > g > rect.measure').tipTip({defaultPosition: "top"});
+        },
+        error: function (a,b,c) {
+          $(div).append("<br/>"+ a + "modifiquei!" + b + c);
+        }
+      });
+    };
 
   // Retorno do objeto
   return {
