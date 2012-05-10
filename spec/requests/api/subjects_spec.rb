@@ -13,7 +13,7 @@ describe "Subjects API" do
     # precisa atualizar manualmente para criar um módulo vazio
     @subject.update_attribute(:finalized, true)
 
-    @params = {:oauth_token => @token, :format => "json"}
+    @params = { :oauth_token => @token, :format => "json" , "subject" => {} }
   end
 
   context "the document returned" do
@@ -113,6 +113,17 @@ describe "Subjects API" do
       it "should return status 404" do
         response.status.should == 404
       end
+    end
+  end
+
+  context "Create a subject" do
+    before do
+      @params["subject"][:title] = "New subject"
+      post "/api/spaces/#{@space.id}/subjects", @params
+    end
+
+    it "should return code 201" do
+      response.code.should == "201"
     end
   end
 

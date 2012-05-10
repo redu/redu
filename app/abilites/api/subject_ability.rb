@@ -11,6 +11,10 @@ module Api
             can? :read, s.space
           end
 
+          can :create, Subject do |s|
+            can? :create, s.space
+          end
+
           can :manage, Subject do |s|
             can? :manage, s.space
           end
