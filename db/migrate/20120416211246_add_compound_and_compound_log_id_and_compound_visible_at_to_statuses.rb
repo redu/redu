@@ -10,4 +10,8 @@ class AddCompoundAndCompoundLogIdAndCompoundVisibleAtToStatuses < ActiveRecord::
     remove_column :statuses, :compound
     remove_column :statuses, :compound_visible_at, :datetime
   end
+
+  add_index :statuses, [:compound], :name => 'index_statuses_compound'
+  add_index :statuses, [:compound_log_id], :name => 'index_statuses_compound_log_id'
+  add_index :statuses, [:compound_visible_at], :name => 'index_statuses_compound_visible_at'
 end
