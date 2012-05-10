@@ -116,15 +116,17 @@ describe "Subjects API" do
     end
   end
 
-  context "Create a subject" do
+  context "Create a Subject" do
     before do
       @params["subject"][:title] = "New subject"
-      post "/api/spaces/#{@space.id}/subjects", @params
+      @params["subject"][:finalized] = true
     end
 
     it "should return code 201" do
+      post "/api/spaces/#{@space.id}/subjects", @params
       response.code.should == "201"
     end
+
   end
 
 end

@@ -9,6 +9,7 @@ module Api
       respond_with(:api, @subjects)
     end
 
+    # GET /api/subjects/:subject_id
     def show
       @subject = Subject.find(params[:id])
       authorize! :read, @subject
@@ -24,7 +25,6 @@ module Api
         s.owner = current_user
         s.space = @space
       end
-
       respond_with(:api, @subject)
     end
 

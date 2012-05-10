@@ -32,6 +32,21 @@ describe "Subject(the subject of a space) abilities" do
     it "should be able to read" do
       subject.should be_able_to :read, @subject
     end
+
+    context "when subject invisible" do
+      before do
+        @subject_invisible = Subject.create(:title => "Test Subject 1",
+                                  :visible => false,
+                                  :description => "Test Subject Description",
+                                  :space => @space)
+
+        @course.join(@user, Role[:member])
+      end
+
+      it "should not able to read when visible false" do
+        subject.should_not be_able_to :read, @subject_invisible
+      end
+    end
   end
 
   context "when teacher" do

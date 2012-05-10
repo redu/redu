@@ -5,10 +5,15 @@ module Api
     module InstanceMethods
       def subject_abilities(user)
         alias_action :destroy, :to => :manage
+        @member ||= Role[:member]
 
         if user
           can :read, Subject do |s|
-            can? :read, s.space
+            if not(s.visible) and s.space.user_space_associations.approved.
+                  exists?(:user_id => user, :role => @member)
+            else
+              can? :read, s.space
+            end
           end
 
           can :create, Subject do |s|
