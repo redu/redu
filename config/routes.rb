@@ -308,6 +308,9 @@ Redu::Application.routes.draw do
 
     resources :statuses, :only => :show
 
+    match "vis/spaces/:space_id/lecture_participation",
+      :to => 'vis#lecture_participation'
+
     # Hack para capturar exceções ActionController::RoutingError
     match '*', :to => 'api#routing_error'
   end
