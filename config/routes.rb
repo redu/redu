@@ -293,7 +293,12 @@ Redu::Application.routes.draw do
 
     resources :spaces, :except => [:new, :edit, :index, :create] do
       resources :lectures, :except => [:new, :edit], :shallow => true
+      resources :subjects, :only => [:create, :index]
       resources :users, :only => :index
+    end
+
+    resources :subjects, :except => [:new, :edit, :index, :create] do
+      resources :lectures, :only => [:create, :index]
     end
 
     resources :lectures, :except => [:new, :edit, :index, :create] do
@@ -310,6 +315,10 @@ Redu::Application.routes.draw do
 
     match "vis/spaces/:space_id/lecture_participation",
       :to => 'vis#lecture_participation'
+    match "vis/subjects/:subject_id/subject_activities",
+      :to => 'vis#subject_activities'
+    match "vis/subjects/:subject_id/subject_activities_d3",
+      :to => 'vis#subject_activities_d3'
 
     # Hack para capturar exceções ActionController::RoutingError
     match '*', :to => 'api#routing_error'

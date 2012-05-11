@@ -60,7 +60,7 @@ gem "useragent", "~> 0.4.8"
 gem 'vis_client', :git => "git@github.com:redu/vis_client.git"
 
 # Gems específicos para a API
-gem "oauth-plugin", ">= 0.4.0.pre1"
+gem "oauth-plugin", '~> 0.4.0'
 gem 'roar-rails', '~> 0.0.3',
   :git => 'git://github.com/apotonick/roar-rails.git'
 
