@@ -19,12 +19,17 @@ module Api
     # POST /api/spaces/:space_id/subjects
     def create
       @space = Space.find(params[:space_id])
-
-      @subject = @space.subjects.create(params[:subject]) do |s|
+      @subject = @space.subjects.new(params[:subject]) do |s|
         authorize! :create, s
         s.owner = current_user
         s.space = @space
       end
+      @subject.save
+
+      if @subject.valid?
+        @subject.update_attribute(:finalized, true)
+      end
+
       respond_with(:api, @subject)
     end
 
