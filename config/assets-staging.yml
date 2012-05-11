@@ -101,6 +101,8 @@ stylesheets:
     - public/stylesheets/bullet-chart.css
   ie:
     - public/stylesheets/ie.css
+  ie8:
+    - public/stylesheets/ie8.css
   chat:
     - public/stylesheets/chat.css
   clean:
