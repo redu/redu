@@ -123,15 +123,18 @@ class LecturesController < BaseController
         lectureable = @lecture.lectureable
         if lectureable.is_a? Seminar
           authorize! :upload_multimedia, @lecture
+          @lecture.save
           lectureable.convert! if lectureable.need_transcoding?
         elsif lectureable.is_a? Document
           authorize! :upload_document, @lecture
+          @lecture.save
+        else
+          @lecture.save
         end
 
         @space.course.quota.try(:refresh!)
         @space.course.environment.quota.try(:refresh!)
         @lecture.published = 1
-        @lecture.save
       else
         if @lecture.lectureable.is_a? Exercise
           @lecture.lectureable.build_question_and_alternative

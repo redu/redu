@@ -1,6 +1,15 @@
 <%# Status resposta %>
 <li id="status-<%= response.id %>">
+  <hr class="border-post"/>
   <div class="re-status">
+    <% if can? :manage, response %>
+        <%= link_to 'Fechar',
+          status_path(response),
+          :method => :delete,
+          :remote => true,
+          :class => 'close icon-small icon-delete-gray_8_10 replacement',
+          :confirm => 'Deseja remover a postagem?'%>
+    <% end %>
     <div class="status-text">
       <%= image_tag response.user.avatar.url(:thumb_32), :width => 32,
         :height => 32, :class => 'avatar'%>
@@ -10,22 +19,27 @@
         há <%= time_ago_in_words response.created_at %>
       </span>
     </div>
-  <div class="status-message">
-    <p>
-      <%= raw auto_link(h(response.text).gsub(/\n/, '</br>')) %>
-    </p>
-  </div>
-  <ul class="actions clearfix">
-    <% if can? :manage, response %>
-      <li>
-      <%= link_to 'Apagar',
-        status_path(response),
-        :confirm => 'Deseja remover a postagem?',
-        :method => :delete,
-        :remote => true,
-        :class => "icon-delete-gray_8_10-before" %>
-      </li>
+    <p class="status-message"><%= raw auto_link(h(response.text).gsub(/\n/, '</br>'))%></p>
+    <% if response.status_resources.first %>
+      <% if response.status_resources.first.thumb_url %>
+        <div class="post-resource">
+        <div class="thumbnail">
+          <%= link_to response.status_resources.first.link, :target => "_blank", :rel => "nofollow" do %>
+            <%= image_tag(response.status_resources.first.thumb_url, :class => "preview-link") %>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="post-resource">
+      <% end %>
+        <div class="post-text">
+
+          <h3><%= link_to response.status_resources.first.title, response.status_resources.first.link, :target => "_blank", :rel => "nofollow", :class => "title" %></h3>
+          <h4 class="source-site">
+            <%= response.status_resources.first.provider %>
+          </h4>
+          <p class="post-description"><%= response.status_resources.first.description %></p>
+        </div>
+      </div>
     <% end %>
-  </ul>
-</div>
+  </div>
 </li>

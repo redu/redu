@@ -2,23 +2,29 @@ jQuery(function(){
     $.fn.refreshStatuses = function(){
       // Esconde as respostas, caso não haja nenhuma
       $(".responses").each(function(){
-          var responses = $(this).find("> ol > li");
+          var $this = $(this);
+          var responses = $this.find("> ol > li");
           if (responses.length <= 3) {
-            $(this).find(".toggle-statuses").hide();
+            $this.find(".toggle-statuses").hide();
+            $this.find(".last-responses").hide();
+            $this.find(".border-post:first").hide();
           }
 
           if (responses.length == 0) {
-            $(this).hide();
+            $this.hide();
           }
       });
 
-      // Apenas mostrar as 3 primeiras respostas e mostrar texto "Ver todos os X comentários"
+      // Apenas mostrar as respostas mais recentes e mostrar texto
+      // "Ver todos os X comentários".
       $(".statuses .responses").each(function(i, obj){
           var quantity = $(this).find("ol > li").length;
-          if (quantity >= 3) {
+          var max = 3;
+          if (quantity >= max) {
             if ($(this).find(".toggle-statuses").is(":visible")) {
-              $(this).find("> ol > li:gt(2)").hide();
-              $(this).find(".toggle-statuses .qty").html(quantity);
+              var $this = $(this);
+              $this.find("> ol > li:lt(" + (quantity - max) + ")").hide();
+              $this.find(".toggle-statuses .qty").html(quantity);
             }
           }
       });
@@ -26,18 +32,23 @@ jQuery(function(){
 
     // Responder status
     $("a.reply-status, .cancel", ".statuses").live("click", function(e){
-        $(this).parents("ul:first").next(".create-response").slideToggle();
-        $(this).parents(".create-response:first").slideToggle();
-        $(this).parents("ul:first").next(".create-response").find("textarea").focus();
-        $(this).parents("ul:first").next(".create-status").find("textarea:first").val("");
-        $(this).parents(".create-status").find("textarea:first").val("");
+        var $this = $(this);
+        var $ul = $this.parents("ul:first");
+        $ul.next(".create-response").slideToggle();
+        $this.parents(".create-response:first").slideToggle();
+        $ul.next(".create-response").find("textarea").focus();
+        $ul.next(".create-status").find("textarea:first").val("");
+        $this.parents(".create-status").find("textarea:first").val("");
         e.preventDefault();
     });
 
     // Mostrar todas as respostas ao clicar em "Ver todos os X comentários"
     $(".toggle-statuses", ".statuses").live("click", function(e){
-        $(this).prev().find("> li:hidden").slideDown();
-        $(this).hide();
+        var $this = $(this);
+        $this.prev().find("> li:hidden").slideDown();
+        $this.hide();
+        $this.siblings(".last-responses").hide();
+        $this.siblings("ol").find(".border-post:first").hide();
         e.preventDefault();
     });
 
@@ -48,6 +59,4 @@ jQuery(function(){
             $(document).refreshStatuses();
         });
     });
-
-
 });

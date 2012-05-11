@@ -1114,6 +1114,7 @@ body {
   display: block;
   font-size: .9em;
   margin-top: 2px;
+
 }
 
 .hierarchy-preview .spaces .name {
@@ -1831,14 +1832,32 @@ body {
   margin-top: 4px;
 }
 
-.create-status {
-  background-color: #F0F0F0;
-  padding: 10px;
+.create-status,
+.status .status-contents {
+  background-color: rgb(240, 240, 240);
+  margin-top: 20px;
+  clear: both;
+}
+
+.borderradius .create-status,
+.borderradius .status .status-contents {
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   border-radius: 3px;
-  margin: 20px 0;
-  clear: both;
+}
+
+.status .status-contents {
+  margin-top: 10px;
+}
+
+.create-status {
+  margin-bottom: 20px;
+}
+
+.status .status-contents,
+.status .responses,
+.status .create-response {
+  margin-left: 37px;
 }
 
 .create-status .concave-form {
@@ -1876,33 +1895,39 @@ body {
 
 .create-status .status-buttons {
   float: right;
-  margin-top: 10px;
+  width: 155px;
 }
 
 .create-status .concave-form .concave-input {
   margin: 0;
   height: 16px;
-  width: 510px;
+  width: 515px;
 }
 
-.create-response .concave-form .concave-input {
-  width: 468px;
+.create-status.create-response .concave-form .concave-input {
+  margin: 0;
+  height: 16px;
+  width: 478px;
+}
+
+.status-log .create-response .concave-form .concave-input {
+  width: 440px;
 }
 
 .status-medium .create-status .concave-form .concave-input {
-  width: 577px;
+  width: 583px;
 }
 
 .status-medium .create-response .concave-form .concave-input {
-  width: 503px;
+  width: 508px;
 }
 
 .status-large .create-status .concave-form .concave-input {
-  width: 678px;
+  width: 683px;
 }
 
 .status-large .create-response .concave-form .concave-input {
-  width: 603px;
+  width: 608px;
 }
 
 .create-status .concave-form .cancel,
@@ -1912,17 +1937,8 @@ body {
 
 .create-status .concave-form .concave-button {
   float: right;
-  margin-right: 5px;
   width: 68px;
-  height: 28px;
   padding: 0;
-}
-
-.create-status .concave-form .cancel {
-  float: left;
-  padding: 8px 0 8px 0;
-  width: 68px;
-  height: 12px;
 }
 
 .create-status .concave-form .char-limit,
@@ -2023,35 +2039,30 @@ body {
   overflow: hidden;
 }
 
-.statuses .icon-seminar-lightblue_64_66-after:after,
-.statuses .icon-page-lightblue_64_66-after:after,
-.statuses .icon-exercise-lightblue_64_66-after:after,
-.statuses .icon-document-lightblue_64_66-after:after,
-.statuses .icon-gruping-lightblue_64_66-after:after,
-.statuses .icon-contact-lightblue_64_66-after:after {
-  margin-top: -70px;
+.statuses .status:after,
+.statuses .status-context:after {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
-
-
 .statuses ol .responses,
-.statuses ol .create-response {
-  margin-left: 37px;
-  background: #F0F0F0 url("../images/new/gray-nipple.png") no-repeat left top;
-  padding: 20px 10px 10px 10px;
+.statuses ol .create-response,
+.create-status, .status .status-contents {
+  padding: 10px;
+}
+
+.borderradius .statuses ol .responses,
+.borderradius .statuses ol .create-response {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
 }
 
-.statuses ol .create-response {
-  margin: 0 0 10px 37px;
-}
-
 .statuses .friend-avatar,
 .statuses li .avatar {
   float: left;
-  margin-right: 5px;
+  margin-right: 8px;
 }
 
 .statuses .username {
@@ -2077,9 +2088,6 @@ body {
 
 .statuses .toggle-statuses {
   display: block;
-  border-top: 1px solid white;
-  padding-top: 10px;
-  margin-left: 37px;
   text-align: center;
   font-size: .9em;
 }
@@ -2087,7 +2095,7 @@ body {
 #statuses .responses .actions,
 #statuses .status .actions {
   font-size: .9em;
-  margin-left: 27px;
+  margin-right: 20px;
   padding: 10px 0;
   float: none;
 }
@@ -2101,6 +2109,11 @@ body {
   float: left;
   padding: 0 10px;
   border-right: 1px solid #C6C6C6;
+}
+
+.statuses .actions li {
+  float: right;
+  border:none;
 }
 
 .statuses .actions li:last-child {
@@ -2119,23 +2132,23 @@ body {
 }
 
 .statuses .status-message {
+  display: block;
   clear: both;
-  margin-top: 10px;
-  margin-left: 32px;
   line-height: 130%;
 }
 
 .statuses .re-status .status-message {
   margin-top: 0;
+  margin-left: 40px;
 }
 
-.statuses .status-message p {
-  margin-left: 5px;
+.statuses .status-message {
+  line-height: 18px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.statuses .status-message p a {
+.statuses .status-message a {
   white-space: nowrap;
 }
 
@@ -2147,7 +2160,7 @@ body {
 
 .statuses .status-subject {
   float: left;
-  width: 32px;
+  width: 35px;
   height: 34px;
   margin-right: 5px;
   display: block;
@@ -2156,17 +2169,13 @@ body {
 
 .status {
   position: relative;
+  overflow: hidden;
 }
 
 .statuses .status-context {
   line-height: 130%;
   width: 510px;
   float: left;
-}
-
-.statuses .status-context:after {
-  position: absolute;
-  right: 0;
 }
 
 .statuses .status-context .status-main {
@@ -2193,21 +2202,8 @@ body {
   margin-left: 38px;
 }
 
-.statuses .status-log .status-message {
-  margin-left: 53px;
-}
-
 .statuses .status-log .status-help {
   color: #f37b38;
-}
-
-.status-log .concave-form .concave-input {
-  width: 435px;
-}
-
-.statuses .status-log .create-response,
-.statuses .status-log .responses {
-  margin-left: 37px;
 }
 
 #statuses .status-log .actions {
@@ -2223,12 +2219,7 @@ body {
   line-height: 100%;
 }
 
-.statuses .status-log .re-status .status-message {
-  margin-left: 32px;
-}
-
 .statuses .status-icon {
-  padding-right: 65px;
   overflow: hidden;
 }
 
@@ -3377,7 +3368,7 @@ body {
 }
 
 .big-tabs .ui-state-default a:before {
-  float: left;
+  float: right;
   display: block;
 }
 
@@ -4821,6 +4812,11 @@ table.spaced tr td {
   margin-right: 0px;
 }
 
+#space-manage .graph-header{
+  color: black;
+  margin-bottom: 20px;
+}
+
 .management .form-header .strong,
 .management .form-header-closer,
 .management .form-header,
@@ -4998,6 +4994,11 @@ table.concave-invitation-table .cell-reinvite .reinvited {
   display: block;
   margin-left: 50px;
   margin-bottom: 10px;
+}
+
+#course-manage .graph-header{
+  color: black;
+  margin-bottom: 20px;
 }
 
 #space-manage .concave-form .concave-label.added-lectures:before {
@@ -7271,7 +7272,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 500;
   font-size: 1.2em;
-
   color: #1788C3;
   text-decoration: underline;
   display: block;
@@ -7678,6 +7678,15 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   margin: 0;
 }
 
+.create-status .post-resource .border-post,
+.responses .border-post {
+  border-top: solid 1px rgb(204, 204, 204);
+  border-bottom: solid 1px white;
+  border-left: none;
+  border-right: none;
+  margin: 10px 0px 10px 0px;
+}
+
 .plan-panel .concave-admin-table .course .environment,
 .plan-panel .concave-admin-table .course .no-pending {
   font-size: 11px;
@@ -7728,172 +7737,230 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 
 /* inicio pré-visualização novo post */
 
-.textshadow .new-post {
-  text-shadow: 0px 1px 0px rgb(255, 255, 255);
+.borderradius .create-status {
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
 }
 
-.new-post {
+.textshadow .create-status .post-resource,
+.textshadow #statuses .status .post-resource,
+.textshadow #statuses .responses .re-status .status-message p {
+  text-shadow: 0 1px 0 rgb(255, 255, 255);
+}
+
+.create-status .post-resource,
+#statuses .status .post-resource {
   font-size: 13px;
   font-family: arial, sans-sefif;
   font-weight: normal;
   overflow: hidden;
+  clear: both;
 }
 
-.vis-new-post {
-  border-top: solid 1px rgb(255, 255, 255);
-  border-bottom: solid 1px rgb(255, 255, 255);
-  overflow: hidden;
-  padding: 10px 10px 15px 10px;
-  margin-top: 20px;
+#statuses .status .create-response {
+  background: rgb(240, 240, 240);
+  margin-top: 2px;
+  margin-bottom: 0;
 }
 
-.new-post .close {
-  text-indent: -9999px;
-  width: 16px;
+.create-status .concave-form .concave-clean {
+  padding: 5px 0 6px 0;
+  width: 73px;
+}
+
+.boxshadow .create-status .concave-form .concave-clean  {
+  -webkit-box-shadow: 0 1px 0 0 white inset;
+  -moz-box-shadow: 0 1px 0 0 white inset;
+  box-shadow: 0 1px 0 0 white inset;
+}
+
+.create-status .concave-form .concave-button {
+  padding: 5px 0 6px 0;
+  width: 68px;
+}
+
+.boxshadow .create-status .concave-form .concave-button  {
+  -webkit-box-shadow: 0 1px 0 0 rgb(219, 239, 247) inset;
+  -moz-box-shadow: 0 1px 0 0 rgb(219, 239, 247) inset;
+  box-shadow: 0 1px 0 0 rgb(219, 239, 247) inset;
+}
+
+.create-status .post-resource .close,
+.status .responses .re-status .close {
+  display: block;
+  width: 8px;
+  height: 10px;
   float: right;
   cursor: pointer;
-  height: 18px;
 }
 
-.new-post .title {
-  color: rgb(77, 173, 214);
-  font-weight: normal;
-  margin-bottom: 5px;
-}
-
-.new-post .link {
+.create-status .post-resource .source-site,
+#statuses .status .post-resource .source-site {
   color: rgb(204, 204, 204);
   font-weight: normal;
-  margin-bottom: 5px;
 }
 
-.new-post .preview-link {
-  width: 100px;
-  height: 75px;
-  background-color: blue;
+.create-status .post-resource .preview-link,
+#statuses .status .post-resource .preview-link {
   float: left;
-  text-indent: -9999px;
+  width: 100%;
+  min-height: 34px;
+  max-width: 100px;
 }
 
-.new-post .thumbnail{
-  clear: both;
+.create-status .post-resource .thumbnail,
+#statuses .status .post-resource .thumbnail {
+  margin-right: 10px;
   float: left;
   overflow: hidden;
 }
 
-.new-post .description {
+.status .statuses .actions li {
+  float: right;
+  border: none;
+}
+
+.statuses .status .actions {
+  margin-bottom: 0;
+}
+
+.create-status .post-resource .post-text,
+#statuses .status .post-resource .post-text {
   overflow: hidden;
-  padding-left: 10px;
+  color: rgb( 109, 110, 111);
+  line-height: 18px;
 }
 
-.new-post .thumbnail .last {
+.textshadow .statuses .status .date,
+.textshadow .statuses .last-responses,
+.textshadow .statuses .status-info {
+  text-shadow: 0 1px 0 white;
+}
+
+.create-status .post-resource .thumbnail .buttons-thumbnail {
   clear: both;
+  display: block
 }
 
-.new-post .thumbnail .last .arrow {
-  background:  url("../images/new/icons-oembed-nav.png") 0px 0px no-repeat;
+.create-status .post-resource .thumbnail .arrow {
   float: right;
   height: 10px;
   margin: 5px 10px;
   width: 8px;
 }
 
-.new-post .thumbnail .last .arrow:hover {
-  background:  url("../images/new/icons-oembed-nav.png") 0px -20px no-repeat;
+.create-status .post-resource .thumbnail .last .arrow {
+  background:  url("../images/new/icons-oembed-nav.png") 0 0 no-repeat;
 }
 
-.new-post .thumbnail .next .arrow {
-  background:  url("../images/new/icons-oembed-nav.png") -20px 0px no-repeat;
-  float: right;
-  height: 10px;
-  margin: 5px 10px;
-  width: 8px;
+.create-status .post-resource .thumbnail .last:hover .arrow {
+  background:  url("../images/new/icons-oembed-nav.png") 0 -20px no-repeat;
 }
 
-.new-post .thumbnail .next .arrow:hover {
+.create-status .post-resource .thumbnail .next .arrow {
+  background:  url("../images/new/icons-oembed-nav.png") -20px 0 no-repeat;
+}
+
+.create-status .post-resource .thumbnail .next:hover .arrow {
   background:  url("../images/new/icons-oembed-nav.png") -20px -20px no-repeat;
 }
 
-.new-post .thumbnail .remove .arrow {
-  background:  url("../images/new/icons-oembed-nav.png") -40px 0px no-repeat;
-  float: right;
-  height: 10px;
-  margin: 5px 10px;
-  width: 8px;
+.create-status .post-resource .thumbnail .remove .arrow {
+  background:  url("../images/new/icons-oembed-nav.png") -40px 0 no-repeat;
 }
 
-.new-post .thumbnail .remove .arrow:hover {
+.create-status .post-resource .thumbnail .remove:hover .arrow {
   background:  url("../images/new/icons-oembed-nav.png") -40px -20px no-repeat;
 }
 
-.new-post .thumbnail .last,
-.new-post .thumbnail .next,
-.new-post .thumbnail .remove  {
+.cssgradients .create-status .post-resource .thumbnail .control {
+  background: -moz-linear-gradient(top, rgb(255,255,255) 0%, rgb(240,240,240) 97%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(255,255,255)), color-stop(97%,rgb(240,240,240))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 97%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 97%); /* Opera11.10+ */
+  background: -ms-linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 97%); /* IE10+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f0f0f0',GradientType=0 ); /* IE6-9 */
+  background: linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 97%); /* W3C */
+}
+
+.cssgradients .create-status .post-resource .thumbnail .control:hover {
+  background: -moz-linear-gradient(top,  rgb(247,247,247) 0%, rgb(219,239,247) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(247,247,247)), color-stop(100%,rgb(219,239,247))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgb(247,247,247) 0%,rgb(219,239,247) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgb(247,247,247) 0%,rgb(219,239,247) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgb(247,247,247) 0%,rgb(219,239,247) 100%); /* IE10+ */
+  background: linear-gradient(top,  rgb(247,247,247) 0%,rgb(219,239,247) 100%); /* W3C */
+}
+
+.create-status .post-resource .thumbnail .control {
   float: left;
   border: 1px solid rgb(204, 204, 204);
   width: 28px;
   height: 22px;
-  text-indent: -9999px;
-  background: rgb(247,247,247); /* Old browsers */
-  margin: 5px 5px 0px 0px;
+  background: rgb(255, 255, 255); /* Old browsers */
+  margin: 5px 5px 0 0;
   cursor: pointer;
 }
 
-.borderradius .new-post .thumbnail .last,
-.borderradius .new-post .thumbnail .next,
-.borderradius .new-post .thumbnail .remove {
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
-  border-radius: 4px;
-}
-.cssgradients .new-post .thumbnail .last,
-.cssgradients .new-post .thumbnail .next,
-.cssgradients .new-post .thumbnail .remove {
-  background: -moz-linear-gradient(top,  rgb(247,247,247) 0%, rgb(230,230,230) 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(247,247,247)), color-stop(100%,rgb(230,230,230))); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top,  rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top,  rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* IE10+ */
-  background: linear-gradient(top,  rgb(247,247,247) 0%,rgb(230,230,230) 100%); /* W3C */
-}
-
-.new-post .thumbnail .last:hover,
-.new-post .thumbnail .next:hover,
-.new-post .thumbnail .remove:hover {
+.create-status .post-resource .thumbnail .control:hover {
   border: solid 1px rgb(115, 195, 230);
   color: rgb(21, 138, 196);
-  background: rgb(30,87,153); /* Old browsers */
+  background: rgb(219, 239, 247);
 }
 
-.cssgradients .new-post .thumbnail .last:hover,
-.cssgradients .new-post .thumbnail .next:hover,
-.cssgradients .new-post .thumbnail .remove:hover {
-  background: -moz-linear-gradient(top,  rgb(30,87,153) 0%, rgb(247,247,247) 2%, rgb(219,239,247) 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(30,87,153)), color-stop(2%,rgb(247,247,247)), color-stop(100%,rgb(219,239,247))); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top,  rgb(30,87,153) 0%,rgb(247,247,247) 2%,rgb(219,239,247) 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top,  rgb(30,87,153) 0%,rgb(247,247,247) 2%,rgb(219,239,247) 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  rgb(30,87,153) 0%,rgb(247,247,247) 2%,rgb(219,239,247) 100%); /* IE10+ */
-  background: linear-gradient(top,  rgb(30,87,153) 0%,rgb(247,247,247) 2%,rgb(219,239,247) 100%); /* W3C */
+.create-status .post-resource .thumbnail .control.remove {
+  margin-right: 0;
 }
 
-.new-post .java-applet {
-  clear: both;
-  float: left;
-  overflow: hidden;
-  background-color: rgb (192, 128, 64);
+.create-status .post-resource .thumbnail .control.desactivated {
+  background: rgb(247, 247, 247);
+  cursor: default;
 }
 
-.new-post .java-applet .icon {
+.create-status .post-resource .thumbnail .control.desactivated:hover {
+  border: solid 1px rgb(204, 204, 204);
+  background: rgb(247, 247, 247);
+}
+
+.create-status .post-resource .java-icon,
+#statuses .post-resource .java-icon {
   background-image: url("../images/new/icon-applet.png");
   text-indent: -9999px;
   width: 32px;
   height: 34px;
   display: block;
   background-repeat: no-repeat;
-  padding: 0px;
+  margin-top: -3px;
+  padding: 0;
+  clear: both;
+  float: left;
+  overflow: hidden;
 }
 
-#lecture-participation-chart{
+.borderradius .create-status .post-resource .thumbnail .control {
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+}
+
+.create-status .post-resource .thumbnail .desactivated.last .arrow {
+  background: url("../images/new/icones-p.png") -480px -1919px no-repeat;
+  content: '';
+}
+
+.create-status .post-resource .thumbnail .desactivated.next .arrow {
+  background: url("../images/new/icones-p.png") -480px -1839px no-repeat;
+  content: '';
+}
+
+.create-status .post-resource .thumbnail .desactivated.remove .arrow {
+  background: url("../images/new/icones-p.png") -4px -2163px no-repeat;
+  content: '';
+}
+
+#lecture-participation-chart,
+#teacher-participation-chart{
   overflow: hidden;
   clear: left;
 }
@@ -7907,7 +7974,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   font-size: .8em;
   color: #FF6D6D;
   overflow: hidden;
-  margin-left: 0px;
+  margin-left: 0;
 }
 
 #graph-form .columns li{
@@ -7918,51 +7985,95 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 #statuses .post-link {
-  padding: 0px;
+  padding: 0;
 }
 
-.java-applet .icon {
-  float: none;
-  height: 34px;
-  padding-left: 10px;
-  width: 32px;
+.statuses .last-responses {
+  color: rgb(179, 179, 179);
+  display: block;
+  font-size: 0.9em;
+  text-align: center;
 }
 
-.responses .comment-title {
-  margin: 3px 0px;
+#statuses .status .create-response .ui-placeholder {
+  top: 9px;
+  font-style: normal;
+}
+
+#statuses .status .responses ol .re-status .post-title {
+  margin: 0 0 5px 8px;
+  display: block;
+  color: rgb(109, 110, 111);
+}
+
+#statuses .status .post-resource .post-title {
+  margin: 0 0 10px 0;
   display: block;
 }
 
-.responses .answer-box {
-  float: left;
-  margin-left: 30px;
-  width: 500px;
+#statuses .status .responses {
+  margin-top: 12px;
+  padding-left: 0;
+  padding-right: 0;
+  background-color: rgb(240, 240, 240);
 }
 
-.responses .new-post, {
- margin-left: 30px;
+#statuses .status .responses .re-status {
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
-/* -- Início notificações lateral esquerda -- */
-
-.local-nav .session .notification {
-  background-color: rgb(230, 230, 230);
-  padding: 3px 3px 2px 3px;
-  color: rgb(77, 173, 214);
-  font-weight: normal;
-  display: inline;
-  margin-left: 10px;
-  font-size: 11px;
+#statuses .status .post-resource,
+#statuses .status .re-status .post-resource {
+  margin-top: 10px;
 }
 
-.textshadow .local-nav .session .notification {
-  text-shadow: 0px 1px 0px rgb(255, 255, 255);
+#statuses .status .re-status .post-resource {
+  margin-left: 40px;
 }
 
-.borderradius .local-nav .session .notification {
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+#statuses .status .create-status .post-title {
+  margin-left: 0;
+  margin-bottom: 3px;
+}
+
+.create-status .distance-top:before,
+.status .create-response:before,
+.status .status-contents .distance-top:before,
+.responses .distance-top:after {
+   border-color: rgb(240, 240, 240) white;
+   border-width: 0 10px 10px;
+   border-style: solid;
+   margin-top: -20px;
+   content: " ";
+   display: block;
+   width: 0;
+}
+
+.inform-my-status .distance-top:before,
+.status .status-contents .distance-top:before {
+   position: absolute;
+   margin-left: 10px;
+}
+
+.responses .distance-top:after {
+  margin-left: 20px;
+  position: absolute;
+}
+
+#resource .inform-my-status .distance-top:before {
+  display: none;
+}
+
+#resource .inform-my-status {
+  -webkit-border-top-left-radius: 0;
+  -moz-border-radius-topleft: 0;
+  border-top-left-radius: 0;
+}
+
+.status .create-response:before {
+  margin-right: 30px;
+  float: right;
 }
 
 /* Botão convidar amigos */
@@ -7994,9 +8105,9 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 .boxshadow .invite-button {
-  -webkit-box-shadow: inset 1px 1px 0px 0px rgb(115, 195, 230),inset -1px -1px 0px 0px rgb(115, 195, 230);
-  -moz-box-shadow: inset 1px 1px 0px 0px rgb(115, 195, 230),inset -1px -1px 0px 0px rgb(115, 195, 230);
-  box-shadow: inset 1px 1px 0px 0px rgb(115, 195, 230),inset -1px -1px 0px 0px rgb(115, 195, 230);
+  -webkit-box-shadow: inset 1px 1px 0 0 rgb(115, 195, 230),inset -1px -1px 0 0 rgb(115, 195, 230);
+  -moz-box-shadow: inset 1px 1px 0 0 rgb(115, 195, 230),inset -1px -1px 0 0 rgb(115, 195, 230);
+  box-shadow: inset 1px 1px 0 0 rgb(115, 195, 230),inset -1px -1px 0 0 rgb(115, 195, 230);
 }
 
 /* FIM botão convidar amigos */
@@ -8037,3 +8148,44 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 /* início agrupar-mural */
+.statuses .status .grouped-photos {
+  overflow: hidden;
+  margin-left: 40px;
+  height:40px;
+  float: left;
+}
+
+.statuses .status .grouped-photos .item {
+  display: inline;
+  float: left;
+}
+
+.statuses .status .show-more {
+  display: block;
+  clear: both;
+  margin-top: 10px;
+  float: right;
+  font-size: 11px;
+  margin-right: 7px;
+}
+
+.statuses .status .status-context .post-grouped-discipline {
+  float: none;
+}
+
+.statuses .status .status-log {
+  padding-top: 10px;
+}
+
+.statuses .status .status-context .status-info {
+  margin-left: 5px;
+}
+
+.statuses .status .grouped-photos .item .user-avatar {
+  margin-top: 8px;
+  margin-right: 8px;
+}
+
+.statuses .status .box {
+  width: 480px;
+}

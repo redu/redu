@@ -40,6 +40,9 @@ javascripts:
     - public/javascripts/browserdetection.js
     - public/javascripts/outdated-browser.js
     - public/javascripts/jquery.noisy.js
+    - public/javascripts/underscore.js
+    - public/javascripts/underscore-sharing-template.redu.jquery.js
+    - public/javascripts/embedly.redu.jquery.js
   chat:
     - public/javascripts/jquery.pjax.js
     - public/javascripts/pusher.js
@@ -98,6 +101,8 @@ stylesheets:
     - public/stylesheets/bullet-chart.css
   ie:
     - public/stylesheets/ie.css
+  ie8:
+    - public/stylesheets/ie8.css
   chat:
     - public/stylesheets/chat.css
   clean:
