@@ -13,7 +13,7 @@ describe "Subjects API" do
     # precisa atualizar manualmente para criar um módulo vazio
     @subject.update_attribute(:finalized, true)
 
-    @params = {:oauth_token => @token, :format => "json"}
+    @params = { :oauth_token => @token, :format => "json" , "subject" => {} }
   end
 
   context "the document returned" do
@@ -114,6 +114,71 @@ describe "Subjects API" do
         response.status.should == 404
       end
     end
+  end
+
+  context "POST a subject" do
+    before do
+      @params["subject"][:title] = "New subject"
+      post "/api/spaces/#{@space.id}/subjects", @params
+    end
+
+    it "should return code 201" do
+      response.code.should == "201"
+    end
+
+    it "should return correct number of subject" do
+      get "/api/spaces/#{@space.id}/subjects", @params
+      parse(response.body).count.should == @space.subjects.length
+    end
+
+    it "should not return status log (user is a member)"
+
+    context "when it's invisible" do
+      before do
+        @new_course = Factory(:course)
+        @new_space = Factory(:space, :course => @new_course)
+        @params["subject"][:visible] = false
+      end
+
+      it "should return code 201 (invisible)" do
+        @new_course.join(@current_user, Role[:environment_admin])
+        post "/api/spaces/#{@new_space.id}/subjects", @params
+        response.code.should == "201"
+      end
+
+      it "should return empty list" do
+        @new_course.join(@current_user, Role[:member])
+        post "/api/spaces/#{@new_space.id}/subjects", @params
+
+        get "/api/spaces/#{@new_space.id}/subjects", @params
+        parse(response.body).should == []
+      end
+
+      it "should return subject list (not empty)" do
+        @new_course.join(@current_user, Role[:teacher])
+        post "/api/spaces/#{@new_space.id}/subjects", @params
+
+        get "/api/spaces/#{@new_space.id}/subjects", @params
+        parse(response.body).should_not == []
+      end
+
+      it "should not return status log (user is a member)"
+    end
+
+    context "when it's invalid" do
+
+      it "should return code 404" do
+        post "/api/spaces/007/subjects", @params
+        response.code.should == "404"
+      end
+
+      it "should return code 422" do
+        @params["subject"][:title] = ""
+        post "/api/spaces/#{@space.id}/subjects", @params
+        response.code.should == "422"
+      end
+    end
+
   end
 
 end
