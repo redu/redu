@@ -55,7 +55,7 @@ jQuery(function(){
     // Mostrar os elementos escondidos do log composto
     $(".show-more").live("click", function(){
         var $container = $(this).parents('.box');
-        var newHeight = Math.ceil($container.find("> .grouped-photos li").length / 11) * 40 - 35;
+        var newHeight = Math.ceil($container.find("> .grouped-photos li").length / 11) * 40 - 30;
         $container.find('.show-more').hide("fast", function() {
           $container.find(".grouped-photos").animate({ height: ("+=" + newHeight) }, 200);
         });

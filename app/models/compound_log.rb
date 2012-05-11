@@ -12,6 +12,7 @@ class CompoundLog < Status
       self.update_compounded_logs_compound_property(true)
       self.save!
     end
+    self.touch
   end
 
   def expired?(interval)
