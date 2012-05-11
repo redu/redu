@@ -66,6 +66,24 @@ $.fn.plotGraphForm = function (divRender) {
     return ($this.find(".error_explanation")).length
   };
 
+  // Opções da requisição AJAX para IE usando dataType jsonp
+  // A função de success é para o gráfico de lectures, que usa a url de vis
+  var ajaxOptions = {
+    cache: false,
+    crossDomain: true,
+    method: "GET",
+    dataType: 'jsonp',
+    success: function (xhr) {
+      var json = xhr;
+      if(errorExist){
+        $this.find(".error_explanation").remove();
+        $this.find(".errors_on_date").remove();
+      }
+
+      buildGraph(json);
+    }
+  };
+
   // Submissão do gráfico por AJAX
   $this.submit(function(e) {
     $this.find("#date_start").val(timeSelected("start"));
@@ -81,17 +99,22 @@ $.fn.plotGraphForm = function (divRender) {
       // Não submita e também não chama o método live
       return false;
     }
+
+    $this.ajaxSubmit(ajaxOptions);
   });
 
   // Requisição AJAX para carregamento do gráfico + Tratamento de erros
   $this.live("ajax:complete", function(e, xhr){
-    json = $.parseJSON(xhr.responseText);
-    if(errorExist){
-      $this.find(".error_explanation").remove();
-      $this.find(".errors_on_date").remove();
-    }
+    var json = $.parseJSON(xhr.responseText);
+      if(errorExist){
+        $this.find(".error_explanation").remove();
+        $this.find(".errors_on_date").remove();
+      }
 
-    buildGraph();
+      try{
+        buildGraph(json);
+      }
+      catch(e){}
   });
 
   // Função de carregamento do gráfico

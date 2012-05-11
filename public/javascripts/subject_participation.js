@@ -45,6 +45,7 @@ var subject_participation_pie = function () {
     var loadPie = function(subject_id, ur) {
       var url = ur + "?subject_id=" + subject_id;
 
+      // Requisição via AJAX puro para que funcione em todos os browsers
       $.ajax({
         cache: false,
         crossDomain: true,
@@ -93,6 +94,7 @@ var subject_participation_bullet = function () {
     var loadBullet = function(subject_id, ur, div){
       var url = ur + "?subject_id=" + subject_id;
 
+      // Requisição via AJAX puro para que funcione em todos os browsers
       $.ajax({
           cache: false,
           crossDomain: true,
