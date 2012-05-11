@@ -15,6 +15,9 @@
           :collection => compound.logs.collect {|log| log.logeable.friend },
           :as => :compound_user %>
       </ul>
+      <% unless compound.logs.count <= 11 %>
+        <a href="#" class="show-more">Ver mais </a>
+      <% end %>
     </div>
   </div>
 </li>
