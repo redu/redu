@@ -460,7 +460,7 @@ class User < ActiveRecord::Base
   end
 
   def home_activity(page = 1)
-    overview.paginate(:page => page,
+    overview.where(:compound => false).paginate(:page => page,
                       :order => 'created_at DESC',
                       :per_page => Redu::Application.config.items_per_page)
   end

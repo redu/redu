@@ -118,9 +118,9 @@
     <% end %>
   <% elsif item.type.eql? 'CompoundLog' %>
     <% if item.logeable_type.eql? 'Friendship' %>
-      <%= render 'statuses/compound', :status => item %>
+      <%= render 'statuses/friendship_compound', :compound => item %>
     <% elsif item.logeable_type.eql? 'UserCourseAssociation' %>
-      <%= render 'statuses/compound', :status => item %>
+      <%= render 'statuses/uca_compound', :compound => item %>
     <% end %>
   <% else %>
     <% if item.statusable_type.eql?('Lecture') && item.type == 'Help' %>

@@ -319,7 +319,7 @@ class UsersController < BaseController
 
   def my_wall
     @friends = @user.friends.paginate(:page => 1, :per_page => 9)
-    @statuses = @user.statuses.
+    @statuses = @user.statuses.where(:compound => false).
       paginate(:page => params[:page], :per_page => 10)
     @status = Status.new
 
@@ -362,7 +362,7 @@ class UsersController < BaseController
       redirect_to removed_page_path and return
     end
 
-    @statuses = @user.statuses.paginate(:page => params[:page],
+    @statuses = @user.statuses.where(:compound => false).paginate(:page => params[:page],
                :per_page => Redu::Application.config.items_per_page)
     @statusable = @user
     @status = Status.new
