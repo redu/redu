@@ -407,6 +407,30 @@ describe User do
     end
   end
 
+  context "when exists compound statuses" do
+    before do
+      @page = 1
+      # Criando friendship (para gerar um status compondable)
+      ActiveRecord::Observer.with_observers(:log_observer,
+                                            :friendship_observer,
+                                            :status_observer) do
+                                              friends = 2.times.collect { Factory(:user) }
+                                              friends[0].be_friends_with(subject)
+                                              subject.be_friends_with(friends[0])
+                                              friends[1].be_friends_with(friends[0])
+                                              friends[0].be_friends_with(friends[1])
+                                            end
+
+      @statuses = subject.overview.where(:compound => false).paginate(:page => @page,
+                                            :order => 'created_at DESC',
+                                            :per_page => Redu::Application.config.items_per_page)
+    end
+
+    it "assigns correctly number of statuses" do
+      subject.home_activity(@page).should == @statuses
+    end
+  end
+
   it "authenticates a user by their login and password" do
     User.authenticate(subject.login, subject.password).should == subject
   end

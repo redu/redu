@@ -1,8 +1,8 @@
 <%# Status e suas respostas  %>
 
-<li id="status-<%= item.id %>">
-  <% if item.type.eql? 'Log' %>
-    <% if item.logeable_type.eql?('User') || item.logeable_type.eql?('Education') || item.logeable_type.eql?('Experience') %>
+<% if item.type.eql? 'Log' %>
+  <% if item.logeable_type.eql?('User') || item.logeable_type.eql?('Education') || item.logeable_type.eql?('Experience') %>
+    <li id="status-<%= item.id %>">
       <div class="status">
         <div class="status-text">
           <%= image_tag item.user.avatar.url(:thumb_32),
@@ -14,7 +14,10 @@
           </span>
         </div>
       </div>
-    <% elsif (item.logeable_type.eql? 'Friendship') %>
+    </li>
+  <% elsif (item.logeable_type.eql? 'Friendship') %>
+    <% if (current_user.id != item.logeable.friend.id) %>
+    <li id="status-<%= item.id %>">
       <div class="status icons-big-after icon-contact-lightblue_64_66-after">
         <div class="status-text">
           <%= image_tag item.user.avatar.url(:thumb_32), :class => "avatar", :width => 32, :height => 32 %>
@@ -31,7 +34,10 @@
           </span>
         </div>
       </div>
-    <% elsif item.logeable_type.eql? 'Course' %>
+    </li>
+  <% end %>
+  <% elsif item.logeable_type.eql? 'Course' %>
+    <li id="status-<%= item.id %>">
       <div class="status icons-big-after icon-course-lightblue_64_66-after">
         <div class="status-context">
           <span class="status-subject icon-small icon-environment-lightblue_32_34">
@@ -44,15 +50,17 @@
             :width => 32, :height => 32, :class => 'friend-avatar' %>
           <div class="status-icon icon-<%= role_at(item.user, item.logeable) %>-gray_16_18-before">
             <%= link_to item.user.display_name, user_path(item.user), :class => "username" %>
-          <span class="status-info"> <%= raw auto_link(item.action_text) %></span>
-          <%= link_to item.logeable.name, environment_course_path(item.logeable.environment, item.logeable), :class => "status-secondary icon-expand-gray_16_18-before" %>
+            <span class="status-info"> <%= raw auto_link(item.action_text) %></span>
+            <%= link_to item.logeable.name, environment_course_path(item.logeable.environment, item.logeable), :class => "status-secondary icon-expand-gray_16_18-before" %>
             <span class="date">
-            <%= time_ago_in_words item.created_at %>
+              <%= time_ago_in_words item.created_at %>
             </span>
           </div>
         </div>
       </div>
-    <% elsif item.logeable_type.eql? 'Space' %>
+    </li>
+  <% elsif item.logeable_type.eql? 'Space' %>
+    <li id="status-<%= item.id %>">
       <div class="status icons-big-after icon-course-lightblue_64_66-after">
         <div class="status-context">
           <span class="status-subject icon-small icon-environment-lightblue_32_34">
@@ -65,15 +73,17 @@
             :width => 32, :height => 32, :class => 'friend-avatar' %>
           <div class="status-icon icon-<%= role_at(item.user, item.logeable) %>-gray_16_18-before">
             <%= link_to item.user.display_name, user_path(item.user), :class => "username" %>
-          <span class="status-info"> <%= raw auto_link(item.action_text) %></span>
-          <%= link_to item.logeable.name, space_path(item.logeable), :class => "status-secondary icon-expand-gray_16_18-before" %>
+            <span class="status-info"> <%= raw auto_link(item.action_text) %></span>
+            <%= link_to item.logeable.name, space_path(item.logeable), :class => "status-secondary icon-expand-gray_16_18-before" %>
             <span class="date">
-            <%= time_ago_in_words item.created_at %>
+              <%= time_ago_in_words item.created_at %>
             </span>
           </div>
         </div>
       </div>
-    <% elsif item.logeable_type.eql? 'Subject' %>
+    </li>
+  <% elsif item.logeable_type.eql? 'Subject' %>
+    <li id="status-<%= item.id %>">
       <div class="status icons-big-after icon-space-lightblue_64_66-after">
         <div class="status-context">
           <span class="status-subject icon-small icon-course-lightblue_32_34">
@@ -86,15 +96,17 @@
             :width => 32, :height => 32, :class => 'friend-avatar' %>
           <div class="status-icon icon-<%= role_at(item.user, item.logeable) %>-gray_16_18-before">
             <%= link_to item.user.display_name, user_path(item.user), :class => "username" %>
-          <span class="status-info"> <%= raw auto_link(item.action_text) %></span>
-          <%= link_to item.logeable.title, space_subject_path(item.logeable.space, item.logeable), :class => "status-secondary icon-expand-gray_16_18-before" %>
+            <span class="status-info"> <%= raw auto_link(item.action_text) %></span>
+            <%= link_to item.logeable.title, space_subject_path(item.logeable.space, item.logeable), :class => "status-secondary icon-expand-gray_16_18-before" %>
             <span class="date">
-            <%= time_ago_in_words item.created_at %>
+              <%= time_ago_in_words item.created_at %>
             </span>
           </div>
         </div>
       </div>
-    <% elsif item.logeable_type.eql? 'Lecture' %>
+    </li>
+  <% elsif item.logeable_type.eql? 'Lecture' %>
+    <li id="status-<%= item.id %>">
       <div class="status icons-big-after icon-document-lightblue_64_66-after">
         <div class="status-context">
           <span class="status-subject icon-small icon-space-lightblue_32_34">
@@ -115,15 +127,19 @@
           </div>
         </div>
       </div>
-    <% end %>
-  <% elsif item.type.eql? 'CompoundLog' %>
+    </li>
+  <% end %>
+<% elsif item.type.eql? 'CompoundLog' %>
+  <li id="status-<%= item.id %>">
     <% if item.logeable_type.eql? 'Friendship' %>
       <%= render 'statuses/friendship_compound', :compound => item %>
     <% elsif item.logeable_type.eql? 'UserCourseAssociation' %>
       <%= render 'statuses/uca_compound', :compound => item %>
     <% end %>
-  <% else %>
-    <% if item.statusable_type.eql?('Lecture') && item.type == 'Help' %>
+  </li>
+<% else %>
+  <% if item.statusable_type.eql?('Lecture') && item.type == 'Help' %>
+    <li id="status-<%= item.id %>">
       <div class="status">
         <div class="status-context icons-big-after icon-request-help-orange_64_66-after">
           <span class="status-subject icon-small icon-course-lightblue_32_34">
@@ -149,7 +165,9 @@
             :locals => { :in_response_to => item }%>
         </div>
       </div>
-    <% elsif item.statusable_type.eql?('Lecture') %>
+    </li>
+  <% elsif item.statusable_type.eql?('Lecture') %>
+    <li id="status-<%= item.id %>">
       <div class="status">
         <div class="status-context">
           <span class="status-subject icon-small icon-course-lightblue_32_34">
@@ -174,7 +192,9 @@
             :locals => { :in_response_to => item }%>
         </div>
       </div>
-    <% elsif item.statusable_type.eql?('Space') %>
+    </li>
+  <% elsif item.statusable_type.eql?('Space') %>
+    <li id="status-<%= item.id %>">
       <div class="status">
         <div class="status-context">
           <span class="status-subject icon-small icon-course-lightblue_32_34">
@@ -199,30 +219,32 @@
             :locals => { :in_response_to => item }%>
         </div>
       </div>
-    <% else %>
-    <div class="status">
-      <div class="status-text">
-        <%= image_tag item.user.avatar.url(:thumb_32), :class => "avatar", :width => 32, :height => 32 %>
-        <%= link_to item.user.display_name, user_path(item.user), :class => "username" %>
-        <span class="status-info">
-          <% if item.statusable_type.eql?('User') %>
-            <% unless item.statusable.eql?(current_user) %>
-              comentou no mural de <%= link_to item.statusable.display_name, show_mural_user_path(item.statusable) %>
-            <% else %>
-              comentou no <%= link_to "seu próprio mural", show_mural_user_path(current_user) %>
+    </li>
+  <% else %>
+    <li id="status-<%= item.id %>">
+      <div class="status">
+        <div class="status-text">
+          <%= image_tag item.user.avatar.url(:thumb_32), :class => "avatar", :width => 32, :height => 32 %>
+          <%= link_to item.user.display_name, user_path(item.user), :class => "username" %>
+          <span class="status-info">
+            <% if item.statusable_type.eql?('User') %>
+              <% unless item.statusable.eql?(current_user) %>
+                comentou no mural de <%= link_to item.statusable.display_name, show_mural_user_path(item.statusable) %>
+              <% else %>
+                comentou no <%= link_to "seu próprio mural", show_mural_user_path(current_user) %>
+              <% end %>
             <% end %>
-          <% end %>
-        </span>
-        <span class="date">
-          <%= time_ago_in_words item.created_at %>
-        </span>
+          </span>
+          <span class="date">
+            <%= time_ago_in_words item.created_at %>
+          </span>
+        </div>
+        <%= render 'statuses/resource', :status => item %>
+        <%= render 'statuses/responses', :status => item %>
+        <%= render 'statuses/actions', :status => item %>
+        <%= render :partial => 'statuses/create_response',
+                   :locals => { :in_response_to => item } %>
       </div>
-      <%= render 'statuses/resource', :status => item %>
-      <%= render 'statuses/responses', :status => item %>
-      <%= render 'statuses/actions', :status => item %>
-      <%= render :partial => 'statuses/create_response',
-        :locals => { :in_response_to => item }%>
-    </div>
-    <% end %>
+    </li>
   <% end %>
-</li>
+<% end %>
