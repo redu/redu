@@ -189,6 +189,12 @@ describe LecturesController do
 
         Lecture.last.lectureable.should == Page.last
       end
+
+      it "should set published to true" do
+        post :create, @post_params
+        lecture = Lecture.last
+        lecture.published.should be_true
+      end
     end
 
     context "GET new (Exercise)" do
@@ -242,6 +248,12 @@ describe LecturesController do
         expect {
           post :create, @params
         }.should change(Lecture, :count).by(1)
+      end
+
+      it "creates the lecture with published true" do
+        post :create, @params
+        lecture = Lecture.last
+        lecture.published.should be_true
       end
 
       it "creates the Exercise" do
