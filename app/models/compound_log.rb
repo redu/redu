@@ -5,14 +5,23 @@ class CompoundLog < Status
 
   def compound!(log, min_logs=3)
     self.logs << log
-    log.update_attributes(:compound => true) if self.compound_visible_at
+
+    if self.compound_visible_at
+      log.update_attributes(:compound => true)
+      self.notify
+      self.touch
+    end
 
     if self.logs.count == min_logs
       self.update_attributes(:compound_visible_at => Time.now, :compound => false)
       self.update_compounded_logs_compound_property(true)
       self.save!
     end
-    self.touch
+  end
+
+  def notify
+    job = CompoundLogJob.new(self.id)
+    Delayed::Job.enqueue(job, :queue => 'general')
   end
 
   def expired?(interval)

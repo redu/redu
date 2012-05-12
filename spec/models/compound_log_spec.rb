@@ -8,6 +8,7 @@ describe CompoundLog do
   it { CompoundLog.new.should respond_to(:compound!).with(2).argument }
   it { CompoundLog.new.should respond_to(:expired?).with(1).argument }
   it { CompoundLog.new.should respond_to(:update_compounded_logs_compound_property).with(1).argument }
+  it { CompoundLog.new.should respond_to(:notify) }
 
   context "when deleting compound log" do
     before do
@@ -67,7 +68,8 @@ describe CompoundLog do
       context "and there aren't compound logs" do
         it "should create a new one" do
           ActiveRecord::Observer.with_observers(:friendship_observer,
-                                                :log_observer) do
+                                                :log_observer,
+                                                :status_observer) do
             expect {
                 @robert.be_friends_with(@ned)
                 @ned.be_friends_with(@robert)
@@ -82,7 +84,8 @@ describe CompoundLog do
           @cercei = Factory(:user, :login => 'cercei_lannister')
 
           ActiveRecord::Observer.with_observers(:friendship_observer,
-                                                :log_observer) do
+                                                :log_observer,
+                                                :status_observer) do
             @robert.be_friends_with(@ned)
             @ned.be_friends_with(@robert)
           end
@@ -91,7 +94,8 @@ describe CompoundLog do
         it "should include recently created logs" do
           @robert_compound = CompoundLog.where(:statusable_id => @robert.id).last
           ActiveRecord::Observer.with_observers(:friendship_observer,
-                                                :log_observer) do
+                                                :log_observer,
+                                                :status_observer) do
             expect {
               @robert.be_friends_with(@cercei)
               @cercei.be_friends_with(@robert)
@@ -109,7 +113,8 @@ describe CompoundLog do
 
           it "should create a new compound log for statusable" do
             ActiveRecord::Observer.with_observers(:friendship_observer,
-                                                  :log_observer) do
+                                                  :log_observer,
+                                                  :status_observer) do
               expect {
                 @robert.be_friends_with(@cercei)
                 @cercei.be_friends_with(@robert)
@@ -124,7 +129,8 @@ describe CompoundLog do
             @loras = Factory(:user, :login => 'loras_tyrel')
 
             ActiveRecord::Observer.with_observers(:friendship_observer,
-                                                :log_observer) do
+                                                  :log_observer,
+                                                  :status_observer) do
               @robert.be_friends_with(@cercei)
               @cercei.be_friends_with(@robert)
 
@@ -156,6 +162,9 @@ describe CompoundLog do
               log.compound.should be_true
             end
           end
+
+          xit "should notify all friends about compound log" do
+          end
         end # context "and it has the minimum number of logs (3) to being visible"
       end # context "and a compound log already exists"
     end # context "when people are getting friends"
@@ -169,7 +178,8 @@ describe CompoundLog do
       context "and there aren't compound logs" do
         it "should create a new one" do
           ActiveRecord::Observer.with_observers(:user_course_association_observer,
-                                                :log_observer) do
+                                                :log_observer,
+                                                :status_observer) do
             expect {
               @course.join(@pycelle)
             }.should change(CompoundLog, :count).by(1)
@@ -178,7 +188,8 @@ describe CompoundLog do
 
         it "should have the log of owner" do
           ActiveRecord::Observer.with_observers(:user_course_association_observer,
-                                                :log_observer) do
+                                                :log_observer,
+                                                :status_observer) do
             @course.join(@pycelle)
           end
 
@@ -191,7 +202,8 @@ describe CompoundLog do
       context "and a compound log already exists" do
         before do
           ActiveRecord::Observer.with_observers(:user_course_association_observer,
-                                                :log_observer) do
+                                                :log_observer,
+                                                :status_observer) do
             @course.join(@pycelle)
             @course_compounds = CompoundLog.where(:statusable_id => @course.id)
             @course_compound = @course_compounds.last
@@ -201,7 +213,8 @@ describe CompoundLog do
         it "should include new log into existing compound log" do
           jaime = Factory(:user, :login => "jaime_lannister")
           ActiveRecord::Observer.with_observers(:user_course_association_observer,
-                                                :log_observer) do
+                                                :log_observer,
+                                                :status_observer) do
             expect {
                 @course.join(jaime)
                 @course_compound.reload
@@ -212,7 +225,8 @@ describe CompoundLog do
         context "but it's ttl has expired" do
           before do
             ActiveRecord::Observer.with_observers(:user_course_association_observer,
-                                                  :log_observer) do
+                                                  :log_observer,
+                                                  :status_observer) do
               @course.join(@pycelle)
             end
             @course_compound = CompoundLog.where(:statusable_id => @course.id).last
@@ -223,7 +237,8 @@ describe CompoundLog do
           it "should create a new compound log for statusable" do
             varys = Factory(:user, :login => 'spider_varys')
             ActiveRecord::Observer.with_observers(:user_course_association_observer,
-                                                  :log_observer) do
+                                                  :log_observer,
+                                                  :status_observer) do
               expect {
                 @course.join(varys)
               }.should change(CompoundLog, :count).by(1)
@@ -237,7 +252,8 @@ describe CompoundLog do
             @be_one_dothraki = Factory(:course, :name => "Dothraki Lifestyle")
             @users = 3.times.collect { Factory(:user) }
             ActiveRecord::Observer.with_observers(:user_course_association_observer,
-                                                  :log_observer) do
+                                                  :log_observer,
+                                                  :status_observer) do
               @users.each { |user| @be_one_dothraki.join(user) }
             end
             @course_compounds = CompoundLog.where(:statusable_id => @be_one_dothraki.id)
@@ -261,6 +277,9 @@ describe CompoundLog do
             @course_compounds.last.logs.each do |log|
               log.compound.should be_true
             end
+          end
+
+          xit "should notify all users aprooved in course about compound log" do
           end
         end # context "and it has the minimum number of logs (3) to being visible"
       end # context "and a compound log already exists"

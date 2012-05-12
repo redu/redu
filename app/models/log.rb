@@ -107,8 +107,8 @@ class Log < Status
   end
 
   def process_compound
-    job = CompoundLogJob.new(self.id)
-    Delayed::Job.enqueue(job, :queue => 'general')
+    compound_log = CompoundLog.current_compostable(self)
+    compound_log.compound!(self)
   end
 
   protected
