@@ -15,6 +15,7 @@ class CompoundLog < Status
     if self.logs.count == min_logs
       self.update_attributes(:compound_visible_at => Time.now, :compound => false)
       self.update_compounded_logs_compound_property(true)
+      self.notify
       self.save!
     end
   end

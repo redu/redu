@@ -163,7 +163,12 @@ describe CompoundLog do
             end
           end
 
-          xit "should notify all friends about compound log" do
+          it "should notify all friends about compound log through status user association" do
+            @robert.friends.each do |friend|
+              StatusUserAssociation.where(:user_id => friend.id,
+                                          :status_id => @robert_compounds.last.id).should_not be_empty
+            end
+
           end
         end # context "and it has the minimum number of logs (3) to being visible"
       end # context "and a compound log already exists"
@@ -279,7 +284,11 @@ describe CompoundLog do
             end
           end
 
-          xit "should notify all users aprooved in course about compound log" do
+          it "should notify all users aprooved in course about compound log" do
+            @be_one_dothraki.approved_users.each do |user|
+              StatusUserAssociation.where(:user_id => user.id,
+                                          :status_id => @course_compounds.last.id).should_not be_nil
+            end
           end
         end # context "and it has the minimum number of logs (3) to being visible"
       end # context "and a compound log already exists"
