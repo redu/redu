@@ -324,7 +324,7 @@ class User < ActiveRecord::Base
        (object.is_a? Partner) || (object.is_a? Result) ||
        (object.is_a? Question)
 
-       self.has_access_to?(object)
+      self.has_access_to?(object)
     else
       if (object.is_a? Subject)
         object.visible? && self.has_access_to?(object)
