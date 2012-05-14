@@ -17,7 +17,7 @@ module Api
           end
 
           can :create, Subject do |s|
-            can? :create, s.space
+            can? :manage, s
           end
 
           can :manage, Subject do |s|
