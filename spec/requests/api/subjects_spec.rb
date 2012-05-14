@@ -126,12 +126,12 @@ describe "Subjects API" do
       response.code.should == "201"
     end
 
-    it "should return correct number of subject" do
+    it "should return correct number of subjects" do
       get "/api/spaces/#{@space.id}/subjects", @params
       parse(response.body).count.should == @space.subjects.length
     end
 
-    it "should not return status log (user is a member)"
+    it "should generate status log (user is a member)"
 
     context "when it's invisible" do
       before do
@@ -146,12 +146,14 @@ describe "Subjects API" do
         response.code.should == "201"
       end
 
+      it "should return subject_enrollments list"
+
       it "should return empty list" do
         @new_course.join(@current_user, Role[:member])
         post "/api/spaces/#{@new_space.id}/subjects", @params
 
         get "/api/spaces/#{@new_space.id}/subjects", @params
-        parse(response.body).should == []
+        parse(response.body).should be_empty
       end
 
       it "should return subject list (not empty)" do
@@ -159,10 +161,10 @@ describe "Subjects API" do
         post "/api/spaces/#{@new_space.id}/subjects", @params
 
         get "/api/spaces/#{@new_space.id}/subjects", @params
-        parse(response.body).should_not == []
+        parse(response.body).should_not be_empty
       end
 
-      it "should not return status log (user is a member)"
+      it "should not generate status log (user is a member)"
     end
 
     context "when it's invalid" do
