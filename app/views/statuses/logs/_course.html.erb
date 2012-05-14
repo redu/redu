@@ -1,8 +1,14 @@
 <li id="status-<%= log.id %>">
   <div class="status icons-big-after icon-course-lightblue_64_66-after">
     <div class="status-context">
-      <span class="status-subject icon-small icon-environment-lightblue_32_34">
-      </span>
+      <% if log.logeable.environment.avatar_file_name %>
+        <%= image_tag log.logeable.environment.avatar.url(:thumb_32),
+          :size => '32x32',
+          :class => 'avatar'
+        %>
+    <% else %>
+      <%= image_tag 'new/missing_courses_thumb_32.png', :class => 'avatar' %>
+    <% end %>
       <%= link_to log.logeable.environment.name, environment_path(log.logeable.environment), :class => "status-main" %>
       <%= link_to log.logeable.name, environment_course_path(log.logeable.environment, log.logeable), :class => "status-secondary icon-expand-gray_8_10-before" %>
     </div>

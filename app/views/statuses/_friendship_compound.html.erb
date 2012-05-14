@@ -11,7 +11,7 @@
     </div>
     <div class="box">
       <ul class="grouped-photos">
-        <%= render :partial => "statuses/compound",
+        <%= render :partial => "statuses/compound_item",
           :collection => compound.logs.collect {|log| log.logeable.friend },
           :as => :compound_user %>
       </ul>
