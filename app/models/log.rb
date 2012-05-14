@@ -106,11 +106,6 @@ class Log < Status
     msgs.fetch(action.to_s, "")
   end
 
-  def process_compound
-    compound_log = CompoundLog.current_compostable(self)
-    compound_log.compound!(self)
-  end
-
   protected
 
   # Verifica se o atributo especificado nas configs foi atualizado

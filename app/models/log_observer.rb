@@ -4,7 +4,8 @@ class LogObserver < ActiveRecord::Observer
     # Compõe apenas logs com logeable Friendship e UserCourseAssociation
     case log.logeable
     when Friendship, UserCourseAssociation
-      log.process_compound
+      compound_log = CompoundLog.current_compostable(log)
+      compound_log.compound!(log)
     end
   end
 end

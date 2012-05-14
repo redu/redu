@@ -4,7 +4,7 @@ class CompoundLog < Status
   before_destroy :update_compounded_logs_compound_property
 
   def compound!(log, min_logs=3)
-    self.logs << log
+    self.logs << Log.find(log.id)
 
     if self.compound_visible_at
       log.update_attributes(:compound => true)
