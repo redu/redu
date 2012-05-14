@@ -5,7 +5,7 @@
     <% if item.logeable_type.eql?('User') || item.logeable_type.eql?('Education') || item.logeable_type.eql?('Experience') %>
       <div class="status">
         <div class="status-text">
-          <%= render "user_detail", :item => item %>
+          <%= render "statuses/user_detail", :item => item %>
           <span class="status-info"> <%= raw auto_link(item.action_text) %></span>
           <span class="date">
             <%= time_ago_in_words item.created_at %>
@@ -15,7 +15,7 @@
     <% elsif (item.logeable_type.eql? 'Friendship') %>
       <div class="status icons-big-after icon-contact-lightblue_64_66-after">
         <div class="status-text">
-          <%= render "user_detail", :item => item %>
+          <%= render "statuses/user_detail", :item => item %>
           <span class="status-info"> <%= raw auto_link(item.action_text) %></span>
           <span class="date">
             <%= time_ago_in_words item.created_at %>
