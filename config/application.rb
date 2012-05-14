@@ -195,7 +195,8 @@ module Redu
                                         :status_observer,
                                         :education_observer,
                                         :experience_observer,
-                                        :enrollment_observer]
+                                        :enrollment_observer,
+                                        :result_observer]
     end
 
     # Redu logger

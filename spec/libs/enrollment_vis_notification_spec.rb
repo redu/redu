@@ -211,22 +211,24 @@ describe EnrollmentVisNotification do
 
 
   end
+
+  def fill_params(enroll, type)
+    params = {
+      :lecture_id => nil,
+      :subject_id => enroll.subject_id,
+      :space_id => enroll.subject.space_id,
+      :course_id => enroll.subject.space.course_id,
+      :user_id => enroll.user_id,
+      :type => type,
+      :status_id => nil,
+      :statusable_id => nil,
+      :statusable_type => nil,
+      :in_response_to_id => nil,
+      :in_response_to_type => nil,
+      :created_at => enroll.created_at,
+      :updated_at => enroll.updated_at
+    }
+  end
 end
 
-def fill_params(enroll, type)
-  params = {
-    :lecture_id => nil,
-    :subject_id => enroll.subject_id,
-    :space_id => enroll.subject.space_id,
-    :course_id => enroll.subject.space.course_id,
-    :user_id => enroll.user_id,
-    :type => type,
-    :status_id => nil,
-    :statusable_id => nil,
-    :statusable_type => nil,
-    :in_response_to_id => nil,
-    :in_response_to_type => nil,
-    :created_at => enroll.created_at,
-    :updated_at => enroll.updated_at
-  }
-end
+
