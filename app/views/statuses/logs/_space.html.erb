@@ -1,0 +1,23 @@
+<li id="status-<%= log.id %>">
+  <div class="status icons-big-after icon-course-lightblue_64_66-after">
+    <div class="status-context">
+      <span class="status-subject icon-small icon-environment-lightblue_32_34">
+      </span>
+      <%= link_to log.logeable.course.environment.name, environment_path(log.logeable.course.environment), :class => "status-main" %>
+      <%= link_to log.logeable.course.name, environment_course_path(log.logeable.course.environment, log.logeable.course), :class => "status-secondary icon-expand-gray_8_10-before" %>
+    </div>
+    <div class="status-log">
+      <%= image_tag log.user.avatar.url(:thumb_32),
+        :width => 32, :height => 32, :class => 'friend-avatar' %>
+      <div class="status-icon icon-<%= role_at(log.user, log.logeable) %>-gray_16_18-before">
+        <%= link_to log.user.display_name, user_path(log.user), :class => "username" %>
+        <span class="status-info"> <%= raw auto_link(log.action_text) %></span>
+        <%= link_to log.logeable.name, space_path(log.logeable), :class => "status-secondary icon-expand-gray_16_18-before" %>
+        <span class="date">
+          <%= time_ago_in_words log.created_at %>
+        </span>
+      </div>
+    </div>
+  </div>
+</li>
+

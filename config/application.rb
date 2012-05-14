@@ -82,12 +82,12 @@ module Redu
     config.action_mailer.raise_delivery_errors = true
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
-      :address => "email-smtp.us-east-1.amazonaws.com",
-      :port => 465,
+      :address => 'smtp.gmail.com',
+      :port => 587,
       :domain => 'redu.com.br',
       :authentication => :login,
-      :user_name => 'AKIAINQ5Y2UPLZJQM3EA',
-      :password => 'AqEmj6PTCT8HJCpUB9qmIXQb+G2SaKEFjKcWrR9MLUaF'
+      :user_name => 'no-reply@redu.com.br',
+      :password => 'penn441\boob'
     }
 
     config.paperclip = {
@@ -195,7 +195,9 @@ module Redu
                                         :status_observer,
                                         :education_observer,
                                         :experience_observer,
-                                        :enrollment_observer]
+                                        :enrollment_observer,
+                                        :log_observer,
+                                        :user_course_association_observer]
     end
 
     # Redu logger

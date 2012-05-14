@@ -1,10 +1,10 @@
 class Log < Status
   # Atributos:
-  #   - logeanle: objecto que foi sujeito a uma determinada acao
+  #   - logeable: objecto que foi sujeito a uma determinada acao
   #   - statusable: entidade cujo mural mostrará o log
   # Logs criados automaticamente
   #   - Criação de Courses
-  #     logeagle: curso
+  #     logeable: curso
   #     statusable: dono do curso (Environment não tem statuses)
   #   - Criaçao de UserCourseAssociation
   #     condição: somente se estiver approved
@@ -24,6 +24,7 @@ class Log < Status
   CONFIG = Redu::Application.config.overview_logger
 
   belongs_to :logeable, :polymorphic => true
+  belongs_to :compound_log
 
   validates_presence_of :action
 
@@ -103,6 +104,11 @@ class Log < Status
     msgs = CONFIG[logeable_type.parameterize].try(:fetch, 'messages')
     msgs ||= {}
     msgs.fetch(action.to_s, "")
+  end
+
+  def process_compound
+    compound_log = CompoundLog.current_compostable(self)
+    compound_log.compound!(self)
   end
 
   protected
