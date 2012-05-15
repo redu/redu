@@ -293,6 +293,7 @@ Redu::Application.routes.draw do
 
     resources :subjects, :except => [:new, :edit, :index, :create] do
       resources :lectures, :only => [:create, :index]
+      match 'enrollments', :to => 'subjects#users_enrolled', :as => 'users_enrolled'
     end
 
     resources :lectures, :except => [:new, :edit, :index, :create] do

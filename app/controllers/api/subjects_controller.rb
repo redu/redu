@@ -41,5 +41,13 @@ module Api
       respond_with(@subject)
     end
 
+    # GET /api/subject/subject_id/enrollments
+    def users_enrolled
+      @subject = Subject.find(params[:subject_id])
+      authorize! :read, @subject
+      @users = @subject.enrollments.collect { |u| User.find(u.user_id) }
+      respond_with(:api, @users)
+    end
+
   end
 end

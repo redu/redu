@@ -36,6 +36,7 @@ describe "Subjects API" do
       links.should include 'space'
       links.should include 'course'
       links.should include 'environment'
+      links.should include 'users'
     end
   end
 
@@ -146,7 +147,14 @@ describe "Subjects API" do
         response.code.should == "201"
       end
 
-      it "should return subject_enrollments list"
+      it "should return subject_enrollments list" do
+        @new_course.join(@current_user, Role[:environment_admin])
+        post "/api/spaces/#{@new_space.id}/subjects", @params
+        @subject_id = parse(response.body)["id"]
+
+        get "/api/subjects/#{@subject_id}/enrollments", @params
+        response.code.should == "200"
+      end
 
       it "should return empty list" do
         @new_course.join(@current_user, Role[:member])
@@ -160,8 +168,22 @@ describe "Subjects API" do
         @new_course.join(@current_user, Role[:teacher])
         post "/api/spaces/#{@new_space.id}/subjects", @params
 
-        get "/api/spaces/#{@new_space.id}/subjects", @params
+        get href_to("users", parse(response.body)), @params
         parse(response.body).should_not be_empty
+      end
+
+      it "should return correct number users" do
+        # Incluindo usuários no curso para teste
+        @users_enrolled = 2.times.collect { @new_course.join(Factory(:user),
+                                                                Role[:member]) }
+
+        @users_enrolled.push( @new_space.owner? )
+        @users_enrolled.push(@new_course.join(@current_user,
+                                                      Role[:environment_admin]))
+        post "/api/spaces/#{@new_space.id}/subjects", @params
+
+        get href_to("users", parse(response.body)), @params
+        parse(response.body).count.should == @users_enrolled.length
       end
 
       it "should not generate status log (user is a member)"
