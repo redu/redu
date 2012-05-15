@@ -7,22 +7,12 @@ module Api
       @space = Space.find(params[:space_id])
       authorize! :manage, @space
 
-      @params = {
-        'lectures[]' => params[:lectures],
-        :date_start => params[:date_start],
-        :date_end => params[:date_end]
-      }
+      @params = { 'lectures[]' => params[:lectures],
+                  :date_start => params[:date_start],
+                  :date_end => params[:date_end] }
+      @url = Redu::Application.config.vis[:lecture_participation]
 
-      url = Redu::Application.config.vis[:lecture_participation]
-      conn = Faraday.new(:url => url)
-
-      resp = conn.get do |req|
-        req.params = @params
-      end
-
-      respond_to do |format|
-        format.json { render :json => resp.body }
-      end
+      create_connection_and_response(@url, @params)
     end
 
     # GET /api/vis/subjects/:subject_id
@@ -30,40 +20,35 @@ module Api
       @subject = Subject.find(params[:subject_id])
       authorize! :manage, @subject
 
-      @params = {
-        :subject_id => @subject.id
-      }
+      @params = { :subject_id => @subject.id }
+      @url = Redu::Application.config.vis[:activities]
 
-      url = Redu::Application.config.vis[:activities]
-      conn = Faraday.new(:url => url)
-
-      resp = conn.get do |req|
-        req.params = @params
-      end
-
-      respond_to do |format|
-        format.json { render :json => resp.body }
-      end
+      create_connection_and_response(@url, @params)
     end
 
-    # GET /api/vis/subjects/:subject_id
     def subject_activities_d3
       @subject = Subject.find(params[:subject_id])
       authorize! :manage, @subject
 
-      @params = {
-        :subject_id => @subject.id
-      }
+      @params = { :subject_id => @subject.id }
+      @url = Redu::Application.config.vis[:activities_d3]
 
-      url = Redu::Application.config.vis[:activities_d3]
-      conn = Faraday.new(:url => url)
+      create_connection_and_response(@url, @params)
+    end
 
-      resp = conn.get do |req|
-        req.params = @params
-      end
+    protected
+
+    def create_connection_and_response(url, param)
+      conn = Faraday.new(:url => url,
+                         :headers => {'Authorization' =>
+                          Base64::encode64("api-team:NyugAkSoP"),
+                                      'Content-Type' => 'application/json' },
+                         :params => param)
+
+      resp = conn.get
 
       respond_to do |format|
-        format.json { render :json => resp.body }
+        format.json { render :json => resp.body, :status => resp.status }
       end
     end
   end
