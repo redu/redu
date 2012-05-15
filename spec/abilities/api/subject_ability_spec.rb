@@ -43,7 +43,8 @@ describe "Subject(the subject of a space) abilities" do
         @course.join(@user, Role[:member])
       end
 
-      it "should not able to read when visible false" do
+      it "should not able to read (visible false)" do
+        @subject_invisible.create_enrollment_associations
         subject.should_not be_able_to :read, @subject_invisible
       end
     end

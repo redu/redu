@@ -9,8 +9,8 @@ module Api
 
         if user
           can :read, Subject do |s|
-            if not(s.visible) and s.space.user_space_associations.approved.
-                  exists?(:user_id => user, :role => @member)
+            if !s.visible && s.enrollments.exists?(:user_id => user,
+                                                               :role => @member)
             else
               can? :read, s.space
             end
