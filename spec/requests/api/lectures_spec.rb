@@ -148,4 +148,9 @@ describe 'Lectures' do
       it "should filter by lectureable type (exercise)"
     end
   end
+
+  context "POST a lecture" do
+    context "when page type" do
+    end
+  end
 end
