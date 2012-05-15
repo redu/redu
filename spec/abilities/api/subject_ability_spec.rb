@@ -25,8 +25,28 @@ describe "Subject(the subject of a space) abilities" do
       @course.join(@user, Role[:member])
     end
 
+    it "should not be able to create" do
+      subject.should_not be_able_to :create, @subject
+    end
+
     it "should be able to read" do
       subject.should be_able_to :read, @subject
+    end
+
+    context "when subject invisible" do
+      before do
+        @subject_invisible = Subject.create(:title => "Test Subject 1",
+                                  :visible => false,
+                                  :description => "Test Subject Description",
+                                  :space => @space)
+
+        @course.join(@user, Role[:member])
+      end
+
+      it "should not able to read (visible false)" do
+        @subject_invisible.create_enrollment_associations
+        subject.should_not be_able_to :read, @subject_invisible
+      end
     end
   end
 
@@ -37,6 +57,10 @@ describe "Subject(the subject of a space) abilities" do
 
     it "should be able to read" do
       subject.should be_able_to :read, @subject
+    end
+
+    it "should be able to create" do
+      subject.should be_able_to :create, @subject
     end
 
     it "should be able to destroy" do
@@ -53,6 +77,10 @@ describe "Subject(the subject of a space) abilities" do
       subject.should be_able_to :read, @subject
     end
 
+    it "should not be able to create" do
+      subject.should_not be_able_to :create, @subject
+    end
+
     it "should not be able to destroy" do
       subject.should_not be_able_to :destroy, @subject
     end
@@ -65,6 +93,10 @@ describe "Subject(the subject of a space) abilities" do
 
     it "should be able to read" do
       subject.should be_able_to :read, @subject
+    end
+
+    it "should be able to create" do
+      subject.should be_able_to :create, @subject
     end
 
     it "should be able to destroy" do
