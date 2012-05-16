@@ -1,5 +1,5 @@
 // Objeto para carregamento do Pie Charts
-var subject_participation_pie = function () {
+var subjectParticipationPie = function () {
     var chart;
 
     // Configuração padrão do pie chart
@@ -61,14 +61,14 @@ var subject_participation_pie = function () {
 
     // Retorno do objeto
     return {
-      load_subject_participation_pie: function (subject_id, url) {
+      load: function (subject_id, url) {
         loadPie(subject_id, url);
       }
     }
 };
 
 // Objeto para carregamento do Bullet Charts
-var subject_participation_bullet = function () {
+var subjectParticipationBullet = function () {
     // Parametros de tamanho do bullet
     var w = 390,
         h = 107.5,
@@ -116,7 +116,7 @@ var subject_participation_bullet = function () {
 
   // Retorno do objeto
   return {
-    load_subject_participation_bullet: function (subject_id, url, div) {
+    load: function (subject_id, url, div) {
       loadBullet(subject_id, url, div);
     },
   };
