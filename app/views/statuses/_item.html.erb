@@ -138,7 +138,7 @@
     <% elsif item.statusable_type.eql?('Lecture') %>
       <div class="status">
         <div class="status-context">
-          <span class="status-subject icon-small icon-course-lightblue_32_34">
+          <span class="status-subject icon-small icon-subject-lightblue_32_34">
           </span>
           <%= link_to item.statusable.subject.space.name, space_path(item.statusable.subject.space), :class => "status-main" %>
           <%= link_to item.statusable.subject.title, space_path(item.statusable.subject.space), :class => "status-secondary icon-expand-gray_8_10-before" %>
@@ -162,7 +162,7 @@
     <% elsif item.statusable_type.eql?('Space') %>
       <div class="status">
         <div class="status-context">
-          <span class="status-subject icon-small icon-course-lightblue_32_34">
+          <span class="status-subject icon-small icon-space-lightblue_32_34">
           </span>
           <%= link_to item.statusable.course.name, environment_course_path(item.statusable.course.environment, item.statusable.course), :class => "status-main" %>
           <%= link_to item.statusable.name, space_path(item.statusable), :class => "status-secondary icon-expand-gray_8_10-before" %>
