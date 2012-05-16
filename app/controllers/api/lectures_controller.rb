@@ -29,6 +29,13 @@ module Api
       respond_with(:api, @lecture)
     end
 
+    def destroy
+      lecture = Lecture.find(params[:id])
+      authorize! :manage, lecture
+      lecture.destroy
+      respond_with(:api, lecture)
+    end
+
     protected
 
     def watershed(param)

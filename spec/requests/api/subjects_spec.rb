@@ -117,8 +117,6 @@ describe "Subjects API" do
     end
   end
 
-<<<<<<< HEAD
-=======
   context "POST a subject" do
     before do
       @params["subject"][:title] = "New subject"
@@ -204,8 +202,5 @@ describe "Subjects API" do
         response.code.should == "422"
       end
     end
-
   end
-
->>>>>>> api-subject-create
 end

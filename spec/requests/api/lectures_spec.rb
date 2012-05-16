@@ -180,4 +180,25 @@ describe 'Lectures' do
       end
     end
   end
+
+  context "DELETE a lecture" do
+
+    it "should return code 200" do
+      delete "/api/lectures/#{page.id}", params
+      response.code.should == "200"
+    end
+
+    it "should return code 404" do
+      delete "/api/lectures/007", params
+      response.code.should == "404"
+    end
+
+    it "should remove lectureable(page)" do
+      # Detalhe page.subject == subj
+      delete "/api/lectures/#{page.id}", params
+
+      get "/api/subjects/#{subj.id}/lectures", params.merge!({:type => 'page'})
+      parse(response.body).should be_empty
+    end
+  end
 end
