@@ -157,7 +157,7 @@ describe 'Lectures' do
                                      :body => "Text body lecture page type" } })
       end
 
-      it "should return code 201" do
+      it "should return code 201 page" do
         post "/api/subjects/#{subj.id}/lectures", params
         response.code.should == "201"
       end
@@ -194,7 +194,7 @@ describe 'Lectures' do
     end
 
     it "should remove lectureable(page)" do
-      # Detalhe page.subject == subj
+      # Detalhe page.subject == subj true
       delete "/api/lectures/#{page.id}", params
 
       get "/api/subjects/#{subj.id}/lectures", params.merge!({:type => 'page'})

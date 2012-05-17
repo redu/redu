@@ -17,10 +17,10 @@ module Api
 
     def create
       @subject = Subject.find(params[:subject_id])
-      authorize! :create, @subject
-      lectureable = watershed(params[:lecture])
+      authorize! :manage, @subject
+      lectureable, lec_features = lectureable_type(params.slice(:lecture))
 
-      @lecture = @subject.lectures.create(params[:lecture]) do |l|
+      @lecture = @subject.lectures.create(lec_features[:lecture]) do |l|
         l.lectureable = lectureable
         l.owner = current_user
         l.subject = @subject
@@ -38,11 +38,11 @@ module Api
 
     protected
 
-    def watershed(param)
-      case params[:lecture][:type].try(:downcase)
+    def lectureable_type(param)
+      case param[:lecture][:type].try(:downcase)
       when 'page'
-        page_body = { :body => params[:lecture].delete(:body) }
-        lectureable = Page.create page_body
+        page_body = { :body => param[:lecture].delete(:body) }
+        lectureable, param = Page.create(page_body), param
       end
     end
 
