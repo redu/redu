@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 class SubjectsController < BaseController
   respond_to :html, :js
 
