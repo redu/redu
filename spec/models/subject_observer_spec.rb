@@ -37,12 +37,22 @@ describe SubjectObserver do
     end
 
     it "should not notify on update" do
-
       ActiveRecord::Observer.with_observers(:subject_observer) do
         @sub.update_attribute(:finalized, true)
         expect {
           @sub.update_attribute(:title, "Novo nome")
         }.should_not change(UserNotifier.deliveries, :count).by(1)
+      end
+    end
+  end
+
+  describe :after_create do
+    it "should create enrollment associations" do
+      ActiveRecord::Observer.with_observers(:subject_observer) do
+        expect {
+          subject = Factory(:subject, :visible => true)
+          Factory(:lecture, :subject => subject)
+        }.should change(Enrollment, :count)
       end
     end
   end

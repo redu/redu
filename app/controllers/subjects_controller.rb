@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class SubjectsController < BaseController
   respond_to :html, :js
 
@@ -68,9 +69,6 @@ class SubjectsController < BaseController
         else
           @subject.finalized = true
           @subject.save
-          # cria as associações com o subject, replicando a do space
-          job = CreateEnrollmentJob.new(:subject_id => @subject.id)
-          Delayed::Job.enqueue(job, :queue => 'general')
           flash[:notice] = "O Módulo foi criado."
         end
 
