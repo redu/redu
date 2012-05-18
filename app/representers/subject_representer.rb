@@ -28,7 +28,7 @@ module SubjectRepresenter
   end
 
   link :users do
-    api_subject_users_enrolled_url(self)
+    api_subject_users_url(self)
   end
 
 end

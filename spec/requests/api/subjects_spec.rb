@@ -152,7 +152,7 @@ describe "Subjects API" do
         post "/api/spaces/#{@new_space.id}/subjects", @params
         @subject_id = parse(response.body)["id"]
 
-        get "/api/subjects/#{@subject_id}/enrollments", @params
+        get "/api/subjects/#{@subject_id}/users", @params
         response.code.should == "200"
       end
 

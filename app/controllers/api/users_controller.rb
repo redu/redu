@@ -9,6 +9,7 @@ module Api
     # /api/spaces/:space_id/users
     # /api/courses/:course_id/users
     # /api/environments/:environment_id/users
+    # /api/subject/:subject_id/users
     def index
       @entity = find_and_authorize_entity
       authorize! :read, @entity
@@ -24,6 +25,8 @@ module Api
         Course.find(params[:course_id])
       elsif params.has_key?(:environment_id)
         Environment.find(params[:environment_id])
+      elsif params.has_key?(:subject_id)
+        Subject.find(params[:subject_id])
       else
         Space.find(params[:space_id])
       end
@@ -42,7 +45,11 @@ module Api
             where(:course_enrollments => { :role => Role[role.to_sym] })
         end
       else
-        entity.users
+        if entity.is_a? Subject
+          entity.members
+        else
+          entity.users
+        end
       end
     end
   end
