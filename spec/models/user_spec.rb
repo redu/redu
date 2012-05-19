@@ -633,6 +633,15 @@ describe User do
     subject.most_important_education.should == [edu2, edu3, edu1]
   end
 
+  context "when application validation fail" do
+    it "should prevent duplicate logins" do
+      @duplicate = Factory.build(:user, :login => subject.login)
+      expect {
+        @duplicate.save(:validate => false)
+      }.should raise_error(ActiveRecord::RecordNotUnique)
+    end
+  end
+
   private
   def create_friendship(user1, user2)
     user1.be_friends_with(user2)
