@@ -620,6 +620,12 @@ class User < ActiveRecord::Base
     self.lectures.collect{ |lecture| lecture.subject_id }
   end
 
+  def has_no_visible_profile_information
+    self.experiences.actual_jobs.empty? && self.educations.empty? && 
+    self.birthday.nil? && self.languages.blank? && 
+    self.birth_localization.blank? && self.localization.blank?
+  end
+
   protected
 
   def activate_before_save

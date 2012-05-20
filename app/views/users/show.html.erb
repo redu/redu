@@ -4,10 +4,7 @@
   <div id="profile">
     <div class="vcard clearfix">
       <h5 class="user-name"><%= @user.display_name %></h5>
-      <% unless @user.experiences.actual_jobs.empty? &&
-                @user.educations.empty? && @user.birthday.nil? &&
-                @user.languages.blank? && @user.birth_localization.blank? &&
-                @user.localization.blank? %>
+      <% unless @user.has_no_visible_profile_information %>
         <div class="user-summary clearfix">
           <ul>
             <li>
