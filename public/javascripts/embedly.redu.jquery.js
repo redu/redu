@@ -58,8 +58,8 @@ $.fn.enableEmbedding = function() {
                 if(json.url != null) {
                   resource_inputs = resource_inputs + appendInput("link", json.url);
                 } else {
-                  resource_inputs = resource_inputs + appendInput("link", url);
-                  json.url = 'http://' + url;
+                  resource_inputs = resource_inputs + appendInput("link", link);
+                  json.url = link;
                 }
 
                 // Título
@@ -69,7 +69,7 @@ $.fn.enableEmbedding = function() {
 
                 // Descrição
                 if(json.description != null) {
-                  resource_inputs = resource_inputs + appendInput("description", json.description);
+                  resource_inputs = resource_inputs + appendInput("description", json.description.replace(/"/g, "'"));
                 }
 
                 // Renderiza o template
