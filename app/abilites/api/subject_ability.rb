@@ -9,11 +9,7 @@ module Api
 
         if user
           can :read, Subject do |s|
-            if !s.visible && s.enrollments.exists?(:user_id => user,
-                                                   :role => @member)
-            else
-              can? :read, s.space
-            end
+            can? :read, s.space if not not_visible_and_member(s, user)
           end
 
           can :manage, Subject do |s|
@@ -22,5 +18,13 @@ module Api
         end
       end
     end
+
+    protected
+
+    def not_visible_and_member(subject, user_current)
+      true if !subject.visible && subject.enrollments.
+                             exists?(:user_id => user_current, :role => @member)
+    end
+
   end
 end
