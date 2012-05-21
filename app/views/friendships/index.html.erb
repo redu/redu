@@ -6,13 +6,10 @@
 <div class="main grid_10" style="width: 580px;">
   <ol id="breadcrumbs" class="clearfix">
     <li>
-      <%= link_to 'Home', home_user_path(current_user), 
-                  :class => 'replacement icon-small home icon-home-lightblue_16_18' %>
+      <%= link_to 'Home', home_user_path(current_user), :class => 'replacement icon-small home icon-home-lightblue_16_18' %>
     </li>
     <li>
-      <%= link_to 'Contatos', user_friendships_path(params[:id], 
-                                                    :profile => true), 
-                  :class => 'icon-contacts-lightblue_16_18-before' %>
+      <%= link_to 'Contatos', user_friendships_path(@user.login, :profile => true), :class => 'icon-contacts-lightblue_16_18-before' %>
     </li>
   </ol>
 
