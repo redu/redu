@@ -4,6 +4,9 @@ class CompoundLog < Status
   before_destroy :update_compounded_logs_compound_property
 
   def compound!(log, min_logs=3)
+    # O find é utilizado pois, em desenvolvimento a classe é carregada
+    # com versões diferentes.
+    # Em produção e teste o erro não ocorre.
     self.logs << Log.find(log.id)
 
     if self.compound_visible_at

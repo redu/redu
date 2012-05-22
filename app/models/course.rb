@@ -180,6 +180,11 @@ class Course < ActiveRecord::Base
     delay_hierarchy_notification(subjects_finalized, "remove_subject_finalized")
   end
 
+
+  def notify(compound_log)
+    Status.associate_with(compound_log, self.approved_users.select('users.id'))
+  end
+
   def create_hierarchy_associations(user, role = Role[:member])
     enrollments = []
     # FIXME mudar estado do user_course_association para approved

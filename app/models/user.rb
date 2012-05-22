@@ -400,6 +400,11 @@ class User < ActiveRecord::Base
 
   end
 
+  # Cria associação do agrupamento de amizade do usuário para seus amigos
+  def notify(compound_log)
+    Status.associate_with(compound_log, self.friends.select('users.id'))
+  end
+
   # Pega associação com Entity (aplica-se a Environment, Course, Space e Subject)
   def get_association_with(entity)
     return false unless entity
