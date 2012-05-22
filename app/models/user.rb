@@ -401,7 +401,9 @@ class User < ActiveRecord::Base
   end
 
   # Cria associação do agrupamento de amizade do usuário para seus amigos
+  # e para o pŕoprio usuário (home_activity)
   def notify(compound_log)
+    self.status_user_associations.create(:status => compound_log)
     Status.associate_with(compound_log, self.friends.select('users.id'))
   end
 

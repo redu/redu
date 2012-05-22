@@ -428,6 +428,8 @@ describe User do
                                               @friends[0].be_friends_with(@friends[1])
                                             end
 
+      @last_compound = CompoundLog.where(:statusable_id => subject.id).last
+
       @statuses = @friends[0].overview.where(:compound => false).paginate(:page => @page,
                                             :order => 'updated_at DESC',
                                             :per_page => Redu::Application.config.items_per_page)
@@ -437,12 +439,16 @@ describe User do
       @friends[0].home_activity(@page).should == @statuses
     end
 
+    it "should create an status user association between compound log and user" do
+      StatusUserAssociation.where(:user_id => subject.id,
+                                  :status_id => @last_compound.id).should_not be_empty
+    end
+
     it "should notify all friends about compound log through status user association" do
-      last_compound = CompoundLog.where(:statusable_id => subject.id).last
 
       subject.friends.each do |friend|
         StatusUserAssociation.where(:user_id => friend.id,
-                                    :status_id => last_compound.id).should_not be_empty
+                                    :status_id => @last_compound.id).should_not be_empty
       end
     end
 
