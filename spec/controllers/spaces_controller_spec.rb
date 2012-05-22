@@ -63,5 +63,14 @@ describe SpacesController do
         response.should render_template "spaces/admin/lecture_participation_report"
       end
     end
+
+    context "students participation" do
+      it "when successful" do
+        get :students_participation_report, :id => @space.id,
+          :locale => "pt-BR"
+
+        response.should render_template "spaces/admin/students_participation_report"
+      end
+    end
   end
 end

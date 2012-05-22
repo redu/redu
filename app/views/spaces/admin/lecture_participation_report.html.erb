@@ -18,7 +18,6 @@
           var graph = new LectureParticipationGraph();
           graph.load({ chart:{ renderTo: "lecture-participation-chart" } ,
                        form: $("#graph-form") });
-          var test = new SpaceTreemap();
         <% end %>
         <%= form_tag Redu::Application.config.vis[:lecture_participation], :method => :get, :remote => true, :class => "concave-form", :id => "graph-form" do %>
           <%= label_tag "", "Aulas", :id => "form-problem" %>

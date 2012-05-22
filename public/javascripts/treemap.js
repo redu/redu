@@ -15,10 +15,10 @@ var SpaceTreemap = function () {
     .sticky(true)
     .value(function(d) { return d.size; });
 
-  var svg = d3.select(".panel").append("div")
+  var svg = d3.select(".panel .panel").append("div")
     .attr("class", "chart")
     .style("width", w + "px")
-    .style("height", h + "px")
+    .style("height", h + 54 + "px") // 54 é o tamanho da div do título do form
     .append("svg:svg")
     .attr("width", w)
     .attr("height", h)

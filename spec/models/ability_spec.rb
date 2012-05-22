@@ -482,6 +482,10 @@ describe Ability do
                                     @course)
         end
 
+        it "can't see students participation report" do
+          @ability.should_not be_able_to(:students_participation_report,
+                                    @course)
+        end
         it "cannot create a subject"
         it "cannot destroy any subject"
         it "cannot create a lecture"
@@ -527,6 +531,11 @@ describe Ability do
                                     @course)
         end
 
+        it "can't see studenst participation report" do
+          @ability.should_not be_able_to(:students_participation_report,
+                                    @course)
+        end
+
         it "creates a subject"
         it "destroys any subject"
         it "creates a lecture"
@@ -566,6 +575,11 @@ describe Ability do
                                     @course)
         end
 
+        it "can't see students participation report" do
+          @ability.should_not be_able_to(:students_participation_report,
+                                    @course)
+        end
+
         it "cannot create a subject"
         it "cannot destroy any subject"
         it "cannot create a lecture"
@@ -600,6 +614,11 @@ describe Ability do
                                     @course)
         end
 
+        it "can see students participation report" do
+          @ability.should be_able_to(:students_participation_report,
+                                    @course)
+        end
+
         it "creates a subject"
         it "destroys any subject"
         it "creates a lecture"
@@ -631,6 +650,11 @@ describe Ability do
 
         it "can see lecture participation report" do
           @ability.should be_able_to(:lecture_participation_report,
+                                    @course)
+        end
+
+        it "can see students participation report" do
+          @ability.should be_able_to(:students_participation_report,
                                     @course)
         end
 

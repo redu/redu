@@ -1,0 +1,23 @@
+<%= render :partial => 'shared/management_background' %>
+<div class="management-sidebar">
+  <%= render :partial => 'spaces/sidebar', :locals => { :space => @space } %>
+</div>
+<div class="main space grid_12 omega big-col">
+  <%= render :partial => 'spaces/breadcrumbs',
+    :locals => { :space => @space, :header_space => @header_space } %>
+
+  <div id="space-manage" class="body management">
+    <%= render :partial => 'spaces/admin/header',
+      :locals => { :header_space => @header_space, :space => @space }%>
+    <%= render :partial => 'spaces/admin/clean_header' %>
+
+    <%= tabs :spaces_admin do %>
+      <%= subtabs :spaces_admin do %>
+        <h3 class="form-header graph-header">Qual a participação dos alunos na disciplina?</h3>
+        <%= lazy_load(:chart, :jammit => true) do %>
+          var test = new SpaceTreemap();
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
