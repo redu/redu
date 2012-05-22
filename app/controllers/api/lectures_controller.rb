@@ -42,7 +42,7 @@ module Api
       case param[:lecture][:type].try(:downcase)
       when 'page'
         page_body = { :body => param[:lecture].delete(:body) }
-        Page.create(page_body), param
+        lectureable = Page.create(page_body), param
       end
     end
 
