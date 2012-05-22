@@ -151,5 +151,11 @@ describe Status do
         @activity_statuses.first.answers_ids(@user).should eq(id)
       end
     end
-  end
+
+    describe :visible do
+      it "should return visible statuses" do
+        Status.visible.where_values_hash.should == { :compound => false }
+      end
+    end
+  end # context scope
 end
