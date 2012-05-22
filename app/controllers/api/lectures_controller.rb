@@ -18,9 +18,9 @@ module Api
     def create
       @subject = Subject.find(params[:subject_id])
       authorize! :manage, @subject
-      lectureable, lec_features = lectureable_type(params.slice(:lecture))
+      lectureable, params_lecture = lectureable_type(params)
 
-      @lecture = @subject.lectures.create(lec_features[:lecture]) do |l|
+      @lecture = @subject.lectures.create(params_lecture[:lecture]) do |l|
         l.lectureable = lectureable
         l.owner = current_user
         l.subject = @subject
@@ -41,9 +41,21 @@ module Api
     def lectureable_type(param)
       case param[:lecture][:type].try(:downcase)
       when 'page'
-        page_body = { :body => param[:lecture].delete(:body) }
-        lectureable, param = Page.create(page_body), param
+        params_page = { :body => param[:lecture].delete(:body) }
+        lectureable = Page.new(params_page), param
+      when 'seminar'
+        params_seminar = { :external_resource_type => 
+                                            validate_url(param[:lecture][:url]),
+                             :external_resource => param[:lecture].delete(:url),
+                   :original_file_name => param[:lecture].delete(:media_title) }
+
+        lectureable = Seminar.new(params_seminar), param
       end
+    end
+
+    def validate_url(url)
+      'youtube' if url.
+               scan(/youtube\.com\/watch\?v=([A-Za-z0-9._%-]*)[&\w;=\+_\-]*/)[0]
     end
 
     def lectures(subject, type)

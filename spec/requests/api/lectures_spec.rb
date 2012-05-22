@@ -179,6 +179,44 @@ describe 'Lectures' do
         response.code.should == "404"
       end
     end
+
+    context "when seminar type" do
+      before do
+        params.merge!( { :lecture => { :name => "New Lecture seminar type",
+                                       :type => "seminar" } } )
+      end
+
+      context "when external resource" do
+        before do
+          params[:lecture].merge!( { :media_title => "Media ttle test", :url => 
+                     "http://www.youtube.com/watch?v=kMygTh9NsYE&feature=fvst"})
+        end
+
+        it "should return code 201" do
+          post "/api/subjects/#{subj.id}/lectures", params
+          response.code.should == "201"
+        end
+
+        it "should return code 422 (media type not youtube)" do
+          params[:lecture][:url] = "http://vimeo.com/17853047"
+          post "/api/subjects/#{subj.id}/lectures", params
+          response.code.should == "422"
+        end
+
+        it "should return original media file name"
+
+        it "should return code 422" do
+          params[:lecture][:url] = ""
+          post "/api/subjects/#{subj.id}/lectures", params
+          response.code.should == "422"
+        end
+
+        it "should return code 404" do
+          post "/api/subjects/007/lectures", params
+          response.code.should == "404"
+        end
+      end
+    end
   end
 
   context "DELETE a lecture" do
