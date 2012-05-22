@@ -44,7 +44,7 @@ module Api
         params_page = { :body => param[:lecture].delete(:body) }
         lectureable = Page.new(params_page), param
       when 'seminar'
-        params_seminar = { :external_resource_type => 
+        params_seminar = { :external_resource_type =>
                                             validate_url(param[:lecture][:url]),
                              :external_resource => param[:lecture].delete(:url),
                    :original_file_name => param[:lecture].delete(:media_title) }
