@@ -26,47 +26,54 @@ var SpaceTreemap = function () {
     .attr("transform", "translate(.5,.5)");
 
   d3.json("http://localhost:3000/vis/dashboard/flare.json", function(data) {
-    node = root = data;
-
-    nodes = buildJSON(data, data);
+    node = root = buildJSON(data, data);
 
     var nodes = treemap.nodes(root)
     .filter(function(d) { return !d.children; });
 
-  var cell = svg.selectAll("g")
-    .data(nodes)
-    .enter().append("svg:g")
-    .attr("class", "cell")
-    .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
+    var cell = svg.selectAll("g")
+      .data(nodes)
+     .enter().append("svg:g")
+      .attr("class", "cell")
+      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
+      .attr("title", function (d) { return d.name })
 
     cell.append("svg:rect")
-    .attr("width", function(d) { return d.dx - 1; })
-    .attr("height", function(d) { return d.dy - 1; })
-    .style("fill", function(d) { return fill(d.grade); });
+      .attr("width", function(d) { return d.dx - 1; })
+      .attr("height", function(d) { return d.dy - 1; })
+      .style("fill", function(d) { return fill(d.grade); });
 
-  cell.append("svg:text")
-    .attr("x", function(d) { return d.dx / 2; })
-    .attr("y", function(d) { return d.dy / 2; })
-    .attr("dy", ".35em")
-    .attr("text-anchor", "middle")
-    .text(function(d) { return d.name; })
-    .style("opacity", function(d) { d.w = this.getComputedTextLength(); return d.dx > d.w ? 1 : 0; });
+    cell.append("svg:text")
+      .attr("x", function(d) { return d.dx / 2; })
+      .attr("y", function(d) { return d.dy / 2; })
+      .attr("dy", ".35em")
+      .attr("text-anchor", "middle")
+      .text(function(d) { return d.name; })
+      .style("opacity", function(d) { d.w = this.getComputedTextLength(); return d.dx > d.w ? 1 : 0; });
 
+    $(".cell").tipTip();
   });
 
   var fill = function (grade){
-    if (grade < 5.0) {
+    if (grade < -1.0) {
+      return white;
+    }
+    else if (grade < 5.0) {
       if (grade < 3.0) {
         return color[0]
-      }else{
+      }
+      else{
         return color[1]
       };
-    }else{
+    }
+    else{
       if(grade < 7.0){
         return color[2]
-      }else if (grade < 9.0) {
+      }
+      else if (grade < 9.0) {
         return color[3]
-      }else{
+      }
+      else{
         return color[4]
       };
     };
