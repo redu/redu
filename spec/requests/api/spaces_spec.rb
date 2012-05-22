@@ -29,6 +29,7 @@ describe "Spaces API" do
       links.should include 'environment'
       links.should include 'users'
       links.should include 'statuses'
+      links.should include 'timeline'
     end
   end
 

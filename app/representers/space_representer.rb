@@ -30,4 +30,8 @@ module SpaceRepresenter
   link :statuses do
      api_space_statuses_url(self)
   end
+
+  link :timeline do
+    timeline_api_space_statuses_url(self)
+  end
 end
