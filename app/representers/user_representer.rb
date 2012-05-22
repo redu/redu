@@ -21,5 +21,9 @@ module UserRepresenter
   link :enrollments do
     api_user_enrollments_url(self)
   end
+  
+  link :statuses do
+     api_user_statuses_url(self)
+  end
 
 end

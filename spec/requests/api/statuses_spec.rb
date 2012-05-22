@@ -2,76 +2,627 @@ require "api_spec_helper"
 
 describe "Statuses" do
   before do
-    @activity = Factory(:activity)
     @application, @current_user, @token = generate_token
   end
 
-  it "should return status 200 (ok)" do
-    get "/api/statuses/#{@activity.id}", :token => @token, :format => 'json'
-
-    response.code.should == '200'
-  end
-
-  it "should have id, text, created_at, links, action and type" do
-    get "/api/statuses/#{@activity.id}", :token => @token, :format => 'json'
-
-    %w(id text created_at links action type).each do |attr|
-      parse(response.body).should have_key attr
+  context "when Activity type" do
+    before do
+      @activity = Factory(:activity)
+      get "/api/statuses/#{@activity.id}", :oauth_token => @token, :format => 'json'
+      @entity = parse(response.body)
     end
-  end
 
-  it "should have the correct links (statusable, user, self)" do
-    get "/api/statuses/#{@activity.id}", :token => @token, :format => 'json'
-    entity = parse(response.body)
+    it "should return status 200 (ok)" do
+      response.code.should == '200'
+    end
 
-    %w(statusable self user).each do |attr|
-      get href_to(attr, entity), :format => 'json', :token => @token
+    it "should have id, text, created_at, links and type" do
+      %w(id text created_at links type).each do |attr|
+        @entity.should have_key attr
+      end
+    end
+
+    it "should have a link to its Answers" do
+      get href_to('answers', @entity), :format => 'json', :oauth_token => @token
       response.code.should == "200"
+    end
+
+    it "should have the correct links (statusable, user, self)" do
+      %w(statusable self user).each do |attr|
+        get href_to(attr, @entity), :format => 'json', :oauth_token => @token
+        response.code.should == "200"
+      end
     end
   end
 
   context "when Answer type" do
+    before do
+      @answer = Factory(:answer, :statusable => Factory(:activity))
+      get "/api/statuses/#{@answer.id}", :format => 'json', :oauth_token => @token
+      @entity = parse(response.body)
+    end
+
     it "should return code 200" do
-      answer = Factory(:answer)
-      get "/api/statuses/#{answer.id}", :token => @token, :format => 'json'
       response.code.should == "200"
     end
 
-    it "should have a link to activity (in_response_to)"
+    it "should have type, text, created_at" do
+      %w(type text created_at).each do |attr|
+        parse(response.body).should have_key attr
+      end
+    end
+
+    it "should have the correct links (self, user, in_response_to and statusable)" do
+      %w(self user in_response_to statusable).each do |attr|
+        get href_to(attr, @entity), :oauth_token => @token, :format => 'json'
+        response.code.should == "200"
+      end
+    end
   end
 
   context "when Log type" do
+    before do
+      @log = Factory(:log)
+      get "/api/statuses/#{@log.id}", :oauth_token => @token, :format => 'json'
+      @entity = parse(response.body)
+    end
+
     it "should return code 200" do
-      answer = Factory(:answer)
-      get "/api/statuses/#{answer.id}", :token => @token, :format => 'json'
       response.code.should == "200"
     end
 
-    it "should have a link to logeable"
+    it "should have type, created_at and text" do
+      %w(type created_at action_text).each do |attr|
+        @entity.should have_key attr
+      end
+    end
+
+    it "should have the correct link to statusable, self, user and logeable" do
+      %w(statusable self user logeable).each do |attr|
+        get href_to(attr, @entity), :format => 'json', :oauth_token => @token
+        response.code.should == "200"
+      end
+    end
   end
 
-  context "when Activity type" do
-    it "should have a link to its Answers"
+  context "when Help type" do
+    before do
+      @help =  Factory(:help, :statusable => Factory(:lecture))
+      get "/api/statuses/#{@help.id}", :oauth_token => @token, :format => 'json'
+      @entity = parse(response.body)
+    end
+
+    it "should have type, text, created_at" do
+      %w(type text created_at).each do |attr|
+        @entity.should have_key attr
+      end
+    end
+
+    it "should have a link statusable, self, user and answers" do
+      %w(statusable self user answers).each do |attr|
+        get href_to(attr, @entity), :oauth_token => @token, :format => 'json'
+        response.code.should == "200"
+      end
+    end
   end
 
-  context "when listing User statuses" do
-    it "should return code 200"
-    it "should filter by status type (help)"
-    it "should filter by status type (log)"
-    it "should filter by status type (activity)"
+  context "when listing on User" do
+    before do
+      @user_statuses = 4.times.collect do
+        [ Factory(:help, :user => @current_user, :statusable => Factory(:lecture)),
+          Factory(:activity, :user => @current_user),
+          Factory(:log, :user => @current_user) ]
+      end.flatten
+      # São criados usuarios para validação na filtragem pelo tipo
+      @help = Factory(:help, :statusable => Factory(:lecture))
+      @log = Factory(:log)
+      @activity = Factory(:activity)
+    end
+
+    it "should return code 200" do
+      get "/api/users/#{@current_user.id}/statuses",:oauth_token => @token,
+      :format => 'json'
+      response.code.should == "200"
+    end
+
+    it "should return correct numbers statuses" do
+      get "/api/users/#{@current_user.id}/statuses",:oauth_token => @token,
+        :format => 'json'
+
+      parse(response.body).count.should == @user_statuses.select {|i| i[:type] ==
+        "Activity" or i[:type] == "Help"}.length
+    end
+
+    it "should filter by status type (help)" do
+      get "/api/users/#{@current_user.id}/statuses", :type => "help",
+        :oauth_token => @token, :format => 'json'
+      parse(response.body).all? { |s| s["type"] == "Help" }.should be
+    end
+
+    it "should return correct numbers of statuses (Help)" do
+      get "/api/users/#{@current_user.id}/statuses", :type => "help",
+        :oauth_token => @token, :format => 'json'
+
+      parse(response.body).count.should == @user_statuses.
+        select {|i| i[:type] == "Help" }.length
+    end
+
+    it "should return correct numbers of statuses (Log)" do
+      get "/api/users/#{@current_user.id}/statuses", :type => "log",
+        :oauth_token => @token, :format => 'json'
+
+      parse(response.body).count.should == @user_statuses.
+        select {|i| i[:type] == "Log" }.length
+    end
+
+    it "should filter by status type (log)" do
+      get "/api/users/#{@current_user.id}/statuses", :type => "log",
+        :oauth_token => @token, :format => 'json'
+      parse(response.body).all? { |s| s["type"] == "Log" }.should be
+    end
+
+    it "should filter by status type (activity)" do
+      get "/api/users/#{@current_user.id}/statuses", :type => "activity",
+        :oauth_token => @token, :format => 'json'
+      parse(response.body).all? { |s| s["type"] == "Activity" }.should be
+    end
+
+    it "should return correct numbers of statuses (Activity)" do
+      get "/api/users/#{@current_user.id}/statuses", :type => 'activity',
+        :oauth_token => @token, :format => 'json'
+
+      parse(response.body).count.should == @user_statuses.
+        select {|i| i[:type] == "Activity" }.length
+    end
   end
 
-  context "when listing space statuses" do
-    it "should return code 200"
-    it "should filter by status type (help)"
-    it "should filter by status type (log)"
-    it "should filter by status type (activity)"
+  context "when listing on Space" do
+    before do
+      @space = Factory(:space)
+      @space_statuses = 3.times.collect do
+        [ Factory(:activity, :statusable => @space),
+          Factory(:log, :statusable => @space) ]
+      end.flatten
+      3.times.each do
+        Factory(:help, :statusable => Factory(:lecture))
+        Factory(:activity)
+        Factory(:log)
+      end
+    end
+
+    it "should return code 200" do
+      get "/api/spaces/#{@space.id}/statuses", :oauth_token => @token,
+        :format => 'json'
+      response.code.should == "200"
+    end
+
+    it "should return correct numbers statuses" do
+      get "/api/spaces/#{@space.id}/statuses", :oauth_token => @token,
+        :format => 'json'
+        total = @space_statuses.select { |i| i[:type] == "Activity" }.length
+        parse(response.body).count.should ==  total
+    end
+
+    it "should filter by status type (help)" do
+      get "/api/spaces/#{@space.id}/statuses", :type => 'help',
+        :oauth_token => @token, :format => 'json'
+      parse(response.body).all? { |s| s["type"] == "Help" }.should be
+    end
+
+    it "should filter by status type (log)" do
+      get "/api/spaces/#{@space.id}/statuses", :type => 'log',
+        :oauth_token => @token, :format => 'json'
+      parse(response.body).all? { |s| s["type"] == "Log" }.should be
+    end
+
+    it "should filter by status type (activity)" do
+      get "/api/spaces/#{@space.id}/statuses", :type => 'activity',
+        :oauth_token => @token, :format => 'json'
+      parse(response.body).all? { |s| s["type"] == "Activity" }.should be
+    end
   end
 
-  context "when listing lectures statuses" do
-    it "should return code 200"
-    it "should filter by status type (help)"
-    it "should filter by status type (log)"
-    it "should filter by status type (activity)"
+  context "when listing on Lecture" do
+    before do
+      @lecture = Factory(:lecture)
+      @lecture_statuses = 3.times.collect do
+        [ Factory(:help, :statusable => @lecture),
+          Factory(:activity, :statusable => @lecture),
+          Factory(:log, :statusable => @lecture) ]
+      end.flatten
+      4.times.each do
+        Factory(:help, :statusable => Factory(:lecture))
+        Factory(:activity)
+        Factory(:log)
+      end
+    end
+
+    it "should return code 200" do
+      get "/api/lectures/#{@lecture.id}/statuses", :oauth_token => @token,
+        :format => 'json'
+        response.code.should == "200"
+    end
+
+    it "should return correct numbers statuses" do
+      get "/api/lectures/#{@lecture.id}/statuses", :oauth_token => @token,
+        :format => 'json'
+      parse(response.body).count.should ==
+        @lecture_statuses.select {|i| i[:type] == "Activity" or i[:type] == "Help" }.length
+    end
+
+    it "should filter by status type (help)" do
+      get "/api/lectures/#{@lecture.id}/statuses", :type => 'help' ,
+        :oauth_token => @token, :format => 'json'
+      parse(response.body).all? { |s| s["type"] == "Help" }.should be
+    end
+
+    it "should filter by status type (log)" do
+      get "/api/lectures/#{@lecture.id}/statuses", :type => 'log' ,
+        :oauth_token => @token, :format => 'json'
+      parse(response.body).all? { |s| s["type"] == "Log" }.should be
+    end
+
+    it "should filter by status type (activity)" do
+      get "/api/lectures/#{@lecture.id}/statuses", :type => 'activity',
+        :oauth_token => @token, :format => 'json'
+
+      parse(response.body).all? { |s| s["type"] == "Activity" }.should be
+    end
+  end
+
+  context "when creating a status on user" do
+    before do
+      @user = Factory(:user)
+
+      @params = { 'status' => { :text => 'Ximbica' },
+        :oauth_token => @token, :format => 'json' }
+    end
+
+    it "should return 201" do
+      post "/api/users/#{@user.id}/statuses", @params
+      response.code.should == "201"
+    end
+
+    it "should create status with the correct statusable" do
+      post "/api/users/#{@user.id}/statuses", @params
+
+      get href_to("statusable", parse(response.body)), :oauth_token => @token,
+        :format => 'json'
+      response.code.should == "200"
+    end
+
+    it "should return statusable user" do
+      post "/api/users/#{@user.id}/statuses", @params
+
+      get href_to("statusable", parse(response.body)), :oauth_token => @token,
+        :format => 'json'
+      parse(response.body)["first_name"].should == @user.first_name
+    end
+
+    it "should create an activity" do
+      post "/api/users/#{@user.id}/statuses", @params
+
+      parse(response.body)["type"].should == "Activity"
+    end
+
+    it "should return 422 when invalid" do
+      @params['status'][:text] = ""
+      post "/api/users/#{@user.id}/statuses", @params
+
+      response.code.should == "422"
+    end
+  end
+
+  context "when deleting status" do
+
+    it "should return status 200 when activity type" do
+      @activity = Factory(:activity)
+      delete "/api/statuses/#{@activity.id}", :oauth_token => @token,
+       :format => 'json'
+
+      response.status.should == 200
+    end
+
+    it "should return status 200 when help type" do
+      @help = Factory(:help, :statusable => Factory(:lecture))
+      delete "/api/statuses/#{@help.id}", :oauth_token => @token,
+        :format => 'json'
+
+      response.status.should == 200
+    end
+
+    it "should return status 200 when log type" do
+      @log = Factory(:log)
+      delete "/api/statuses/#{@log.id}", :oauth_token => @token,
+        :format => 'json'
+
+      response.status.should == 200
+    end
+
+    it "should return status 200 when answer type" do
+      @answer = Factory(:answer)
+      delete "/api/statuses/#{@answer.id}", :oauth_token => @token,
+        :format => 'json'
+
+      response.status.should == 200
+    end
+
+    it "should return status 404 when not found" do
+      @activity = Factory(:activity)
+      delete "/api/statuses/#{@activity.id}", :oauth_token => @token,
+        :format => 'json'
+
+      # id valido porém já removido
+      delete "/api/statuses/#{@activity.id}", :oauth_token => @token,
+        :format => 'json'
+      response.status.should == 404
+    end
+
+    it "should return status 404 when does not exist" do
+      delete "/api/statuses/007", :oauth_token => @token, :format => 'json'
+      response.status.should == 404
+    end
+  end
+
+  context "when creating status on space" do
+    before do
+      @space = Factory(:space)
+      @params = { 'status' => { :text => "Space Ximbica" },
+        :oauth_token => @token, :format => 'json' }
+    end
+
+    it "should return 201" do
+      post "/api/spaces/#{@space.id}/statuses", @params
+      response.code.should == "201"
+    end
+
+    it "should create status with the correct statusable" do
+      post "/api/spaces/#{@space.id}/statuses", @params
+
+      get href_to("statusable", parse(response.body)), :oauth_token => @token,
+        :format => 'json'
+      response.code.should == "200"
+    end
+
+    it "should return statusable space" do
+      post "/api/spaces/#{@space.id}/statuses", @params
+
+      get href_to("statusable", parse(response.body)), :oauth_token => @token,
+        :format => 'json'
+      parse(response.body)['name'].should == @space.name
+    end
+
+    it "should create an activity" do
+      post "/api/spaces/#{@space.id}/statuses", @params
+
+      parse(response.body)["type"].should == "Activity"
+    end
+
+    it "should return 422 when invalid" do
+      @params['status'][:text] = ""
+      post "/api/spaces/#{@space.id}/statuses", @params
+
+      response.code.should == "422"
+    end
+
+    it "should return 422 when invalid statusable_type" do
+      @params['status']['type'] = 'Help'
+      post "/api/spaces/#{@space.id}/statuses", @params
+
+      response.code.should == "422"
+    end
+  end
+
+  context "when creating status on lecture type (Activity)" do
+    before do
+      @lecture = Factory(:lecture)
+      @params = { 'status' => { :text => "Lacture Ximbica" },
+        :oauth_token => @token, :format => 'json' }
+    end
+
+    it "should return 201" do
+
+      @params["status"][:type] = "Activity"
+      post "/api/lectures/#{@lecture.id}/statuses", @params
+      response.code.should == "201"
+    end
+
+    it "should return correct statusable lecture" do
+      @params["status"][:type] = "Activity"
+      post "/api/lectures/#{@lecture.id}/statuses", @params
+
+      get href_to("statusable", parse(response.body)), :oauth_token => @token,
+        :format => 'json'
+
+      parse(response.body)["lecture"]["name"].should == @lecture.name
+    end
+
+    it "should create an activity" do
+      @params["status"][:type] = "Activity"
+      post "/api/lectures/#{@lecture.id}/statuses", @params
+
+      parse(response.body)["type"].should == "Activity"
+    end
+
+    it "should return correct statusable" do
+      @params["status"][:type] = "activity"
+      post "/api/lectures/#{@lecture.id}/statuses", @params
+
+      get href_to("statusable", parse(response.body)), :oauth_token => @token,
+        :format => 'json'
+      parse(response.body)["lecture"]["name"].should == @lecture.name
+    end
+
+    it "should create an activity when there is not type" do
+      post "/api/lectures/#{@lecture.id}/statuses", @params
+
+      parse(response.body)["type"].should == "Activity"
+    end
+  end
+
+  context "when creating status on lecture type (Help)" do
+    before do
+      @lecture = Factory(:lecture)
+      @params = { "status" => { :text => "Lacture Ximbica" },
+        :oauth_token => @token, :format => 'json' }
+    end
+
+    it "should create a status with the lecture type help and return 201" do
+      @params["status"][:type] = "Help"
+      post "/api/lectures/#{@lecture.id}/statuses", @params
+
+      response.code.should == "201"
+    end
+
+    it "should create an help" do
+      @params["status"][:type] = "Help"
+      post "/api/lectures/#{@lecture.id}/statuses", @params
+
+      parse(response.body)["type"].should == "Help"
+    end
+
+    it "should return statusable" do
+      @params["status"][:type] = "help"
+      post "/api/lectures/#{@lecture.id}/statuses", @params
+
+      get href_to("statusable", parse(response.body)), :oauth_token => @token,
+        :format => 'json'
+      response.code.should == "200"
+    end
+
+    it "should return 422 when invalid" do
+      @params["status"][:type] = "help"
+      @params["status"][:text] = ""
+      post "/api/lectures/#{@lecture.id}/statuses", @params
+
+      response.code.should == "422"
+    end
+  end
+
+  context "when creating an answer" do
+    before do
+      @params = {"status" => {:text => "Ximbica Answer Test" },
+        :oauth_token => @token, :format => 'json' }
+    end
+
+    it "should return status 201 when activity type" do
+      @activity = Factory(:activity)
+      post "/api/statuses/#{@activity.id}/answers", @params
+      response.code.should == "201"
+    end
+
+    it "should create an answer" do
+      @activity = Factory(:activity)
+      post "/api/statuses/#{@activity.id}/answers", @params
+
+      parse(response.body)["type"].should == "Answer"
+    end
+
+    it "should return status 201 when help type" do
+      @help = Factory(:help, :statusable => Factory(:lecture))
+      post "/api/statuses/#{@help.id}/answers", @params
+
+      response.code.should == "201"
+    end
+
+    it "should return 404 when doesnt exists" do
+      post "/api/statuses/007/answers", @params # id não existente
+
+      response.code.should == "404"
+    end
+
+    it "should return 422 when invalid" do
+      @params["status"][:text] = "" # texto inválido
+      @activity = Factory(:activity)
+      post "/api/statuses/#{@activity.id}/answers", @params
+
+      response.code.should == "422"
+    end
+
+    xit "should return 422 when invalid type" do
+      @log = Factory(:log) # tipo inválido
+      post "/api/statuses/#{@log.id}/answers", @params
+      # Deve ser atualizado com authorize
+      response.code.should == "422"
+    end
+
+    it "should return correct statusable" do
+      @activity = Factory(:activity)
+      post "/api/statuses/#{@activity.id}/answers", @params
+
+      get href_to("statusable", parse(response.body)), :oauth_token => @token,
+        :format => 'json'
+      response.code.should == "200"
+    end
+
+    it "should return corret in_response_to" do
+      @activity = Factory(:activity)
+      post "/api/statuses/#{@activity.id}/answers", @params
+
+      get href_to("in_response_to", parse(response.body)), :oauth_token => @token,
+        :format => 'json'
+      response.code.should == "200"
+    end
+
+    it "should return correct in_response_to type (Activity)" do
+      @activity = Factory(:activity)
+      post "/api/statuses/#{@activity.id}/answers", @params
+
+      get href_to("in_response_to", parse(response.body)), :oauth_token => @token,
+        :format => 'json'
+      parse(response.body)["type"].should == "Activity"
+    end
+
+    it "should return correct in_response_to type (Help)" do
+      @help = Factory(:help, :statusable => Factory(:lecture))
+      post "/api/statuses/#{@help.id}/answers", @params
+
+      get href_to("in_response_to", parse(response.body)), :oauth_token => @token,
+        :format => 'json'
+      parse(response.body)["type"].should == "Help"
+    end
+  end
+
+  context "when listing an Answer" do
+    it "should return code 200 type (activity)" do
+      @activity = Factory(:activity)
+      get "/api/statuses/#{@activity.id}/answers", :oauth_token => @token,
+        :format => 'json'
+      response.code.should == "200"
+    end
+
+    it "should return code 200 type (help)" do
+      @help = Factory(:help, :statusable => Factory(:lecture))
+      get "/api/statuses/#{@help.id}/answers", :oauth_token => @token,
+        :format => 'json'
+      response.code.should == "200"
+    end
+
+    it "should return code 200" do
+      @log = Factory(:log)
+      get "/api/statuses/#{@log.id}/answers", :oauth_token => @token,
+        :format => 'json'
+      # lista vazia
+      response.code.should == "200"
+    end
+  end
+
+  context "when trying to create a status with unwanted type" do
+    let(:params) do
+      {"status" => {:text => "Ximbica Answer Test", :type => 'User' },
+       :oauth_token => @token, :format => 'json' }
+    end
+    let(:space) do
+      Factory(:space, :owner => @current_user)
+    end
+
+    it "should not be valid" do
+      post "/api/spaces/#{space.id}/statuses", params
+      response.code.should == '400'
+    end
+  end
+
+  def where_type(statuses, *params)
+    statuses.where(:type => params)
   end
 end

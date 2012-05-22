@@ -28,6 +28,7 @@ describe "Spaces API" do
       links.should include 'course'
       links.should include 'environment'
       links.should include 'users'
+      links.should include 'statuses'
     end
   end
 

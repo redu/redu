@@ -69,6 +69,13 @@ GIT
   specs:
     vis_client (0.0.4)
 
+GIT
+  remote: https://github.com/apotonick/roar.git
+  revision: 46fb88d1a79338188a9d05d353fc721d6a058e4e
+  specs:
+    roar (0.10.1)
+      representable (>= 1.1.7)
+
 GEM
   remote: http://rubygems.org/
   remote: http://gems.github.com/
@@ -269,11 +276,9 @@ GEM
     rdoc (3.12)
       json (~> 1.4)
     remotipart (0.3.4)
-    representable (1.1.5)
+    representable (1.1.7)
       json
       nokogiri
-    roar (0.10.0)
-      representable (>= 1.1.3)
     rscribd (1.3.0)
       mime-types
     rspec (2.9.0)
@@ -382,6 +387,7 @@ DEPENDENCIES
   rake (= 0.8.7)
   rd_searchlogic
   remotipart (>= 0.3.4)
+  roar!
   roar-rails (~> 0.0.3)!
   rspec-rails (~> 2.8)
   ruby-debug
