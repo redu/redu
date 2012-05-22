@@ -27,6 +27,27 @@ module Vis
       end
     end
 
+    def flare
+      @json = {
+        "name" => "flare",
+        "children" =>
+        [{"name" => "0", "grade" => 0.0, "size" => 10},
+         {"name" => "1", "grade" => 1.0, "size" => 10},
+         {"name" => "2", "grade" => 2.0, "size" => 130},
+         {"name" => "3", "grade" => 3.0, "size" => 10},
+         {"name" => "4", "grade" => 4.0, "size" => 10},
+         {"name" => "5", "grade" => 5.0, "size" => 10},
+         {"name" => "6", "grade" => 6.0, "size" => 50},
+         {"name" => "7", "grade" => 7.0, "size" => 10},
+         {"name" => "8", "grade" => 8.0, "size" => 10},
+         {"name" => "9", "grade" => 9.0, "size" => 1}]
+      }
+
+      respond_to do |format|
+        format.json { render :json => @json}
+      end
+
+    end
     protected
 
     def generate_erro(msg)
