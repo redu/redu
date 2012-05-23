@@ -61,9 +61,6 @@ var subject_participation_pie = function () {
           options.series[0].data[1] = ['Pedidos de ajuda sem resposta', json.helps_not_answered];
 
           new Highcharts.Chart(options);
-        },
-        error: function (a,b,c) {
-          alert(a + "" + b + c);
         }
       });
     };
@@ -125,9 +122,6 @@ var subject_participation_bullet = function () {
             // Configuração default do tooltip
             $(div).find('> svg > g > rect.range').tipTip({defaultPosition: "top"});
             $(div).find('> svg > g > rect.measure').tipTip({defaultPosition: "top"});
-        },
-        error: function (a,b,c) {
-          $(div).append("<br/>"+ a + "modifiquei!" + b + c);
         }
       });
     };
