@@ -16,7 +16,7 @@ module Api
         end
       end
 
-      respond_with :api, @context, @spaces
+      respond_with :api, @spaces
     end
 
     def show

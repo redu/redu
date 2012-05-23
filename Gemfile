@@ -47,6 +47,8 @@ gem 'awesome_nested_fields'
 gem 'invitable', :git => 'git@github.com:redu/invitable.git'
 gem 'omniauth'
 gem 'omniauth-facebook'
+gem 'roar',
+  :git => 'https://github.com/apotonick/roar.git'
 gem 'roar-rails', '~> 0.0.3',
   :git => 'git://github.com/apotonick/roar-rails.git'
 gem 'eventmachine'
