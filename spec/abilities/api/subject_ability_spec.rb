@@ -37,7 +37,7 @@ describe "Subject(the subject of a space) abilities" do
       subject.should be_able_to :read, @subject
     end
 
-    context "when subject invisible || visible" do
+    context "when subject invisible or visible" do
       before do
         @subject_invisible = Subject.create(:title => "Test Subject 1",
                                   :visible => false,

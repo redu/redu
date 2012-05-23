@@ -4,10 +4,9 @@ require 'cancan/matchers'
 describe "Lecture abilities" do
   subject { Api::Ability.new(@user) }
   before do
-    @course = Factory(:course)
-    @space = Factory(:space, :course => @course)
+    @course = Factory(:complete_course)
     @user = Factory(:user)
-    @subject = Factory(:subject, :space => @space)
+    @subject = Factory(:subject, :space => @course.spaces.first)
     @subject.update_attribute(:finalized, true)
     @lecture = Factory(:lecture, :subject => @subject)
 
@@ -29,8 +28,8 @@ describe "Lecture abilities" do
       subject.should be_able_to :read, @lecture
     end
 
-    it "should not be able to create a lecture" do
-      subject.should_not be_able_to :create, @lecture
+    it "should not be able to manage a lecture" do
+      subject.should_not be_able_to :manage, @lecture
     end
   end
 
@@ -39,17 +38,10 @@ describe "Lecture abilities" do
       @course.join(@user, Role[:teacher])
     end
 
-    it "should be able to read" do
-      subject.should be_able_to :read, @lecture
+    it "should be able to manage" do
+      subject.should be_able_to :manage, @lecture
     end
 
-    it "should be able to create" do
-      subject.should be_able_to :create, @lecture
-    end
-
-    it "should be able to destroy" do
-      subject.should be_able_to :destroy, @lecture
-    end
   end
 
   context "when tutor" do
@@ -61,12 +53,8 @@ describe "Lecture abilities" do
       subject.should be_able_to :read, @lecture
     end
 
-    it "should not be able to create a lecture" do
-      subject.should_not be_able_to :create, @lecture
-    end
-
-    it "should not be able to destroy" do
-      subject.should_not be_able_to :destroy, @lecture
+    it "should not be able to manage a lecture" do
+      subject.should_not be_able_to :manage, @lecture
     end
   end
 
@@ -75,16 +63,8 @@ describe "Lecture abilities" do
       @course.join(@user, Role[:environment_admin])
     end
 
-    it "should be able to read" do
-      subject.should be_able_to :read, @lecture
-    end
-
-    it "should be able to create" do
-      subject.should be_able_to :create, @lecture
-    end
-
-    it "should be able to destroy" do
-      subject.should be_able_to :destroy, @lecture
+    it "should be able to manage" do
+      subject.should be_able_to :manage, @lecture
     end
   end
 end
