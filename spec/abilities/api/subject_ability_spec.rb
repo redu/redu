@@ -25,24 +25,18 @@ describe "Subject(the subject of a space) abilities" do
       @course.join(@user, Role[:member])
     end
 
-    it "should not be able to create" do
-      subject.should_not be_able_to :create, @subject
-    end
-
-    it "should not be able to update" do
-      subject.should_not be_able_to :update, @subject
+    it "should not be able to manage" do
+      subject.should_not be_able_to :manage, @subject
     end
 
     it "should be able to read" do
       subject.should be_able_to :read, @subject
     end
 
-    context "when subject invisible or visible" do
+    context "when subject invisible" do
       before do
-        @subject_invisible = Subject.create(:title => "Test Subject 1",
-                                  :visible => false,
-                                  :description => "Test Subject Description",
-                                  :space => @space)
+        @subject_invisible =  Factory(:subject, :visible => false,
+                                      :space => @space)
 
         @course.join(@user, Role[:member])
       end
@@ -50,12 +44,6 @@ describe "Subject(the subject of a space) abilities" do
       it "should not be able to read (visible false)" do
         @subject_invisible.create_enrollment_associations
         subject.should_not be_able_to :read, @subject_invisible
-      end
-
-      it "should be able to read (visible true)" do
-        @subject_invisible.visible = true
-        @subject_invisible.create_enrollment_associations
-        subject.should be_able_to :read, @subject_invisible
       end
     end
   end
@@ -65,20 +53,8 @@ describe "Subject(the subject of a space) abilities" do
       @course.join(@user, Role[:teacher])
     end
 
-    it "should be able to read" do
-      subject.should be_able_to :read, @subject
-    end
-
-    it "should be able to create" do
-      subject.should be_able_to :create, @subject
-    end
-
-      it "should be able to update" do
-        subject.should be_able_to :update, @subject
-      end
-
-    it "should be able to destroy" do
-      subject.should be_able_to :destroy, @subject
+    it "should be able to manage" do
+      subject.should be_able_to :manage, @subject
     end
   end
 
@@ -91,16 +67,8 @@ describe "Subject(the subject of a space) abilities" do
       subject.should be_able_to :read, @subject
     end
 
-    it "should not be able to update" do
-      subject.should_not be_able_to :update, @subject
-    end
-
-    it "should not be able to create" do
-      subject.should_not be_able_to :create, @subject
-    end
-
-    it "should not be able to destroy" do
-      subject.should_not be_able_to :destroy, @subject
+    it "should not be able to manage" do
+      subject.should_not be_able_to :manage, @subject
     end
   end
 
@@ -109,20 +77,8 @@ describe "Subject(the subject of a space) abilities" do
       @course.join(@user, Role[:environment_admin])
     end
 
-    it "should be able to read" do
-      subject.should be_able_to :read, @subject
-    end
-
-    it "should be able to create" do
-      subject.should be_able_to :create, @subject
-    end
-
-    it "should be able to update" do
-      subject.should be_able_to :update, @subject
-    end
-
-    it "should be able to destroy" do
-      subject.should be_able_to :destroy, @subject
+    it "should be able to manage" do
+      subject.should be_able_to :manage, @subject
     end
   end
 end

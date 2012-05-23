@@ -8,9 +8,6 @@ describe 'Lectures' do
   let(:params) do
     { :oauth_token => @token, :format  => 'json' }
   end
-  let(:params) do
-    { :oauth_token => @token, :format  => 'json' }
-  end
   let(:environment) do
     Factory(:complete_environment, :owner => @current_user)
   end
@@ -153,11 +150,11 @@ describe 'Lectures' do
   context "POST a lecture" do
     context "when page type" do
       before do
-        params.merge!( { :lecture => { :name => "New Lecture", :type => "Page",
-                                     :body => "Text body lecture page type" } })
+        params.merge!({ :lecture => { :name => "New Lecture", :type => "Page",
+                                      :body => "Text body lecture page type" }})
       end
 
-      it "should return code 201 page" do
+      it "should return code 201" do
         post "/api/subjects/#{subj.id}/lectures", params
         response.code.should == "201"
       end
@@ -168,7 +165,7 @@ describe 'Lectures' do
         response.code.should == "422"
       end
 
-      it "should return code 422 (body empty)" do
+      it "should return code 422 when there is no body" do
         params[:lecture][:body] = ""
         post "/api/subjects/#{subj.id}/lectures", params
         response.code.should == "422"
@@ -182,28 +179,26 @@ describe 'Lectures' do
 
     context "when seminar type" do
       before do
-        params.merge!( { :lecture => { :name => "New Lecture seminar type",
-                                       :type => "seminar" } } )
+        params.merge!({ :lecture => { :name => "New Lecture seminar type",
+                                      :type => "seminar" } })
       end
 
       context "when external resource" do
         before do
-          params[:lecture].merge!( { :media_title => "Media ttle test", :url => 
+          params[:lecture].merge!( { :url => 
                      "http://www.youtube.com/watch?v=kMygTh9NsYE&feature=fvst"})
         end
 
-        it "should return code 201" do
+        it "should return code 201 seminar" do
           post "/api/subjects/#{subj.id}/lectures", params
           response.code.should == "201"
         end
 
-        it "should return code 422 (media type not youtube)" do
+        it "should return code 422 when media type is not youtube" do
           params[:lecture][:url] = "http://vimeo.com/17853047"
           post "/api/subjects/#{subj.id}/lectures", params
           response.code.should == "422"
         end
-
-        it "should return original media file name"
 
         it "should return code 422" do
           params[:lecture][:url] = ""
