@@ -70,9 +70,9 @@ Redu::Application.configure do
   }
 
   config.vis = {
-    :activities => "http://192.168.1.20:4000/subjects/activities.json",
-    :activities_d3 => "http://192.168.1.20:4000/subjects/activities_d3.json",
-    :lecture_participation => "http://192.168.1.20:4000/lectures/participation.json"
+    :activities => "http://localhost:4000/subjects/activities.json",
+    :activities_d3 => "http://localhost:4000/subjects/activities_d3.json",
+    :lecture_participation => "http://localhost:4000/lectures/participation.json"
   }
 
 end

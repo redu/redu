@@ -66,13 +66,12 @@ $.fn.plotGraphForm = function (divRender) {
     return ($this.find(".error_explanation")).length
   };
 
-  // Opções da requisição AJAX para IE usando dataType jsonp
-  // A função de success é para o gráfico de lectures, que usa a url de vis
+  // Opções da requisição AJAX do form para IE usando dataType jsonp
   var ajaxOptions = {
-    cache: false,
-    crossDomain: true,
     method: "GET",
     dataType: 'jsonp',
+    // Esse success é para requisições cross-domain que tem por callback
+    // apenas um parametro
     success: function (xhr) {
       var json = xhr;
       if(errorExist){
@@ -111,6 +110,9 @@ $.fn.plotGraphForm = function (divRender) {
         $this.find(".errors_on_date").remove();
       }
 
+      // As requisições cross-domain não devolvem este callback,
+      // sendo necessário outro callback do tipo sucess, o try cach
+      // não deixa a exceção ser levantada para o usuário
       try{
         buildGraph(json);
       }

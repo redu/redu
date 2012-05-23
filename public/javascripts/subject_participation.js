@@ -47,8 +47,6 @@ var subject_participation_pie = function () {
 
       // Requisição via AJAX puro para que funcione em todos os browsers
       $.ajax({
-        cache: false,
-        crossDomain: true,
         url: url,
         method: "GET",
         dataType: 'jsonp',
@@ -96,8 +94,6 @@ var subject_participation_bullet = function () {
 
       // Requisição via AJAX puro para que funcione em todos os browsers
       $.ajax({
-          cache: false,
-          crossDomain: true,
           url: url,
           method: "GET",
           dataType: 'jsonp',
