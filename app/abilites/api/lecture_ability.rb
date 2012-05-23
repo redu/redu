@@ -7,12 +7,12 @@ module Api
         alias_action :create, :destroy, :to => :manage
 
         if user
-          can :read, Lecture do |l|
-            can? :read, l.subject
+          can :read, Lecture do |lecture|
+            can? :read, lecture.subject
           end
 
-          can :manage, Lecture do |l|
-            can? :manage, l.subject
+          can :manage, Lecture do |lecture|
+            can? :manage, lecture.subject
           end
         end
       end

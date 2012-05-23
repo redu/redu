@@ -22,4 +22,12 @@ module UserRepresenter
     api_user_enrollments_url(self)
   end
 
+  link :statuses do
+     api_user_statuses_url(self)
+  end
+
+  link :timeline do
+    timeline_api_user_statuses_url(self)
+  end
+
 end
