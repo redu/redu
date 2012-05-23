@@ -7,7 +7,7 @@
   <div class="clearfix invite">
     <span class="salutation">Olá, você foi convidado para participar do curso:</span>
     <div  class="clearfix course">
-      <%= image_tag 'new/missing_environments_thumb_32.png',
+      <%= image_tag @environment.avatar(:thumb_32),
         :class => 'avatar' %>
       <div class="informations">
         <div class="header">

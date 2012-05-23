@@ -5,6 +5,9 @@ $(function(){
           if($("#lights_dimmed").length == 0) {
             $overlay = $("<div/>", { 'id' : 'lights_dimmed', 'class' : 'clearfix'}).hide();
             $("body").prepend($overlay);
+          }else{
+            // Garantindo que a luz começará apagada
+            $("#lights_dimmed").fadeOut();
           }
 
           // Luzes
