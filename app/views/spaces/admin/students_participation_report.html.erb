@@ -13,9 +13,9 @@
 
     <%= tabs :spaces_admin do %>
       <%= subtabs :spaces_admin do %>
-        <h3 class="form-header graph-header">Qual a participação dos alunos na disciplina?</h3>
+        <h3 class="form-header graph-header">Qual a participação dos alunos?</h3>
         <%= lazy_load(:chart, :jammit => true) do %>
-          var test = new SpaceTreemap();
+          var treemap = new StudentsTreemap();
         <% end %>
       <% end %>
     <% end %>
