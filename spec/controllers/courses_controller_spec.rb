@@ -405,30 +405,59 @@ describe CoursesController do
       end
 
       @user = Factory(:user)
-      @course.join @user
       @subjects.each { |sub| sub.enroll @user }
       activate_authlogic
       UserSession.create @user
 
       @params = { :locale => 'pt-BR', :environment_id => @environment.path,
         :id => @course.path }
-      post :unjoin, @params
     end
 
-    it "assigns course" do
-    end
+    context "and it's the unique course which user has joined" do
+      before do
+        @course.join @user
+        post :unjoin, @params
+      end
+      it "assigns course"
+      it "removes the user from itself" do
+        @course.users.should_not include(@user)
+      end
+      it "removes the user from all spaces" do
+        @spaces.collect { |s| s.users.should_not include(@user) }
+      end
+      it "removes the user from all enrolled subjects" do
+        @subjects.collect { |s| s.members.should_not include(@user) }
+      end
+      it "should remove user from environment" do
+        @environment.users.should_not include(@user)
+      end
+    end # context "and it's the unique course which user has joined"
 
-    it "removes the user from itself" do
-      @course.users.should_not include(@user)
-    end
-    it "removes the user from all spaces" do
-      @spaces.collect { |s| s.users.should_not include(@user) }
-    end
-    it "removes the user from all enrolled subjects" do
-      @subjects.collect { |s| s.members.should_not include(@user) }
-    end
+    context "and it's not the unique course which user has joined" do
+      before do
+        @course2 = Factory(:course, :environment => @environment, :owner => @ower)
+        @course2.join @user
+        @course.join @user
+        post :unjoin, @params
+      end
 
-  end
+      it "should remove the user from itself" do
+        @course.users.should_not include(@user)
+      end
+      it "should remove the user from all spaces" do
+        @spaces.collect { |s| s.users.should_not include(@user) }
+      end
+      it "should remove the user from all enrolled subjects" do
+        @subjects.collect { |s| s.members.should_not include(@user) }
+      end
+      it "should not remove user from others courses" do
+        @course2.users.should include(@user)
+      end
+      it "should not remove user from environment" do
+        @environment.users.should include(@user)
+      end
+    end # context "and it's not the unique course which user has joined"
+  end # context "when unjoin from a course (POST unjoin)"
 
   context "when responding a course invitation" do
     before do
