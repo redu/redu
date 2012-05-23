@@ -68,10 +68,16 @@ $(function(){
     // Scroll os botões de student-actions de acordo com o #resource
     $(document).scroll(function(){
       if ($("#resource").length > 0) {
-        if(($("#resource").offset().top - $(window).scrollTop() < 30)) {
-          $(".student-actions").css({'position': 'fixed', 'top':'10px'})
+
+        var $actions = $(".student-actions");
+        var limit = $(window).scrollTop()- $("#resource").offset().top;
+
+        if(limit > -9) {
+          if(limit < 490 ){
+            $(".student-actions").css({'top' : limit + 'px'});
+          }
         } else {
-          $(".student-actions").css({'position': 'relative'})
+          $(".student-actions").css({'top' : '0px'});
         }
       }
     });
@@ -81,7 +87,6 @@ $(function(){
 
         $(document).ajaxComplete(function(){
           $(document).refreshLectures();
-          $(".student-actions").css({'position': 'relative'});
         });
     });
 });
