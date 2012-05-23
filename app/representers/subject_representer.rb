@@ -27,4 +27,8 @@ module SubjectRepresenter
     api_environment_url(self.space.course.environment)
   end
 
+  link :users do
+    api_subject_users_url(self)
+  end
+
 end

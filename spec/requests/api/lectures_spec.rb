@@ -4,6 +4,7 @@ describe 'Lectures' do
   before do
     @application, @current_user, @token = generate_token
   end
+
   let(:params) do
     { :oauth_token => @token, :format  => 'json' }
   end
@@ -146,6 +147,96 @@ describe 'Lectures' do
       end
 
       it "should filter by lectureable type (exercise)"
+    end
+  end
+
+  context "POST a lecture" do
+    context "when page type" do
+      before do
+        params.merge!( { :lecture => { :name => "New Lecture", :type => "Page",
+                                     :body => "Text body lecture page type" } })
+      end
+
+      it "should return code 201 page" do
+        post "/api/subjects/#{subj.id}/lectures", params
+        response.code.should == "201"
+      end
+
+      it "should return code 422" do
+        params[:lecture][:name] = ""
+        post "/api/subjects/#{subj.id}/lectures", params
+        response.code.should == "422"
+      end
+
+      it "should return code 422 (body empty)" do
+        params[:lecture][:body] = ""
+        post "/api/subjects/#{subj.id}/lectures", params
+        response.code.should == "422"
+      end
+
+      it "should return code 404 (not found)" do
+        post "/api/subjects/007/lectures", params
+        response.code.should == "404"
+      end
+    end
+
+    context "when seminar type" do
+      before do
+        params.merge!( { :lecture => { :name => "New Lecture seminar type",
+                                       :type => "seminar" } } )
+      end
+
+      context "when external resource" do
+        before do
+          params[:lecture].merge!( { :media_title => "Media ttle test", :url => 
+                     "http://www.youtube.com/watch?v=kMygTh9NsYE&feature=fvst"})
+        end
+
+        it "should return code 201" do
+          post "/api/subjects/#{subj.id}/lectures", params
+          response.code.should == "201"
+        end
+
+        it "should return code 422 (media type not youtube)" do
+          params[:lecture][:url] = "http://vimeo.com/17853047"
+          post "/api/subjects/#{subj.id}/lectures", params
+          response.code.should == "422"
+        end
+
+        it "should return original media file name"
+
+        it "should return code 422" do
+          params[:lecture][:url] = ""
+          post "/api/subjects/#{subj.id}/lectures", params
+          response.code.should == "422"
+        end
+
+        it "should return code 404" do
+          post "/api/subjects/007/lectures", params
+          response.code.should == "404"
+        end
+      end
+    end
+  end
+
+  context "DELETE a lecture" do
+
+    it "should return code 200" do
+      delete "/api/lectures/#{page.id}", params
+      response.code.should == "200"
+    end
+
+    it "should return code 404" do
+      delete "/api/lectures/007", params
+      response.code.should == "404"
+    end
+
+    it "should remove lectureable(page)" do
+      # Detalhe page.subject == subj true
+      delete "/api/lectures/#{page.id}", params
+
+      get "/api/subjects/#{subj.id}/lectures", params.merge!({:type => 'page'})
+      parse(response.body).should be_empty
     end
   end
 end
