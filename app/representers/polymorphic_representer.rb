@@ -1,4 +1,6 @@
 module PolymorphicRepresenter
+  extend Api::RepresenterInflector
+
   def self.extended(model)
     if representer = representer_name_for(model)
       model.extend(representer)
@@ -6,9 +8,9 @@ module PolymorphicRepresenter
   end
 
   def self.representer_name_for(model)
-    representer_name = "#{model.class.to_s.split("::").last}Representer"
-    if Object.const_defined?(representer_name)
-      representer_name.constantize
+    name = representer_name(model)
+    if const_exists?(name)
+      name.constantize
     else
       nil
     end
