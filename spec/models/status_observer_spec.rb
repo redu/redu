@@ -152,7 +152,6 @@ describe StatusObserver do
 
       it "associates the course students" do
         @log.users.should_not be_empty
-        # @log.users.count.should == @uca.course.approved_users.count
         @log.users.to_set.should == @uca.course.approved_users.to_set
       end
     end

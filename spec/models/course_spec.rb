@@ -718,18 +718,20 @@ describe Course do
     before do
       @users = 3.times.collect { Factory(:user) }
 
-      ActiveRecord::Observer.with_observers(:user_course_association_observer,
-                                            :log_observer,
-                                            :status_observer) do
-                                              @users.each { |user| subject.join(user) }
-                                            end
-                                            @course_compounds = CompoundLog.where(:statusable_id => subject.id)
+      ActiveRecord::Observer.with_observers(
+        :user_course_association_observer,
+        :log_observer,
+        :status_observer) do
+          @users.each { |user| subject.join(user) }
+      end
+      @course_compounds = CompoundLog.where(:statusable_id => subject.id)
     end
 
     it "should notify all users approved in course about compound log" do
       subject.approved_users.each do |user|
-        StatusUserAssociation.where(:user_id => user.id,
-                                    :status_id => @course_compounds.last.id).should_not be_empty
+        StatusUserAssociation.where(
+          :user_id => user.id,
+          :status_id => @course_compounds.last.id).should_not be_empty
       end
     end
   end

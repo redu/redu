@@ -27,10 +27,10 @@ describe CompoundLog do
       }.should change(Log, :count).by(0)
     end
 
-    it "should change compoundedlog's compound property to false" do
-      compoundedlogs = subject.logs
+    it "should change compounded log's compound property to false" do
+      compounded_logs = subject.logs
       subject.destroy
-      compoundedlogs.each do |compounded|
+      compounded_logs.each do |compounded|
         compounded.compound.should be_false
       end
     end

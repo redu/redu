@@ -319,41 +319,41 @@ describe Log do
 
           context "and compound log already exists" do
             before do
-              ActiveRecord::Observer.
-                with_observers(:friendship_observer,
-                               :status_observer,
-                               :log_observer) do
-                                 @robert.be_friends_with(@ned)
-                                 @ned.be_friends_with(@robert)
-                               end
+              ActiveRecord::Observer.with_observers(
+                :friendship_observer,
+                :status_observer,
+                :log_observer) do
+                  @robert.be_friends_with(@ned)
+                  @ned.be_friends_with(@robert)
+              end
             end
 
             it "should include new logs when these appear" do
               @robert_compound = CompoundLog.where(:statusable_id => @robert.id).last
-              ActiveRecord::Observer.
-                with_observers(:friendship_observer,
-                               :status_observer,
-                               :log_observer) do
-                                 expect {
-                                   @robert.be_friends_with(@jhon)
-                                   @jhon.be_friends_with(@robert)
-                                   @robert_compound.reload
-                                 }.should change(@robert_compound.logs, :count).from(1).to(2)
-                               end
+              ActiveRecord::Observer.with_observers(
+                :friendship_observer,
+                :status_observer,
+                :log_observer) do
+                  expect {
+                    @robert.be_friends_with(@jhon)
+                    @jhon.be_friends_with(@robert)
+                    @robert_compound.reload
+                  }.should change(@robert_compound.logs, :count).from(1).to(2)
+              end
             end
           end
 
           context "and compound log don't exists" do
             it "should create a new compound log for each user" do
-              ActiveRecord::Observer.
-                with_observers(:friendship_observer,
-                               :status_observer,
-                               :log_observer) do
-                                 expect {
-                                   @robert.be_friends_with(@ned)
-                                   @ned.be_friends_with(@robert)
-                                 }.should change(CompoundLog, :count).by(2)
-                               end
+              ActiveRecord::Observer.with_observers(
+                :friendship_observer,
+                :status_observer,
+                :log_observer) do
+                  expect {
+                    @robert.be_friends_with(@ned)
+                    @ned.be_friends_with(@robert)
+                  }.should change(CompoundLog, :count).by(2)
+              end
             end
           end
         end
@@ -366,40 +366,40 @@ describe Log do
 
           context "and compound log already exists" do
             before do
-              ActiveRecord::Observer.
-                with_observers(:user_course_association_observer,
-                               :status_observer,
-                               :log_observer) do
-                                 @course = Factory(:course)
-                                 @course.join(@aemon)
-                               end
+              ActiveRecord::Observer.with_observers(
+                :user_course_association_observer,
+                :status_observer,
+                :log_observer) do
+                  @course = Factory(:course)
+                  @course.join(@aemon)
+              end
             end
 
             it "should include new logs when these appear" do
               @course_compound = CompoundLog.where(:statusable_id => @course.id).last
-              ActiveRecord::Observer.
-                with_observers(:user_course_association_observer,
-                               :status_observer,
-                               :log_observer) do
-                                 expect {
-                                  @users.each { |u| @course.join(u) }
-                                  @course_compound.reload
-                                 }.should change(@course_compound.logs, :count)
-                               end
+              ActiveRecord::Observer.with_observers(
+                :user_course_association_observer,
+                :status_observer,
+                :log_observer) do
+                  expect {
+                    @users.each { |u| @course.join(u) }
+                    @course_compound.reload
+                  }.should change(@course_compound.logs, :count)
+              end
             end
           end
 
           context "and compound log don't exists" do
             it "should create a new compound log for each user" do
-              ActiveRecord::Observer.
-                with_observers(:user_course_association_observer,
-                               :status_observer,
-                               :log_observer) do
-                                 expect {
-                                   @course = Factory(:course)
-                                   @course.join(@aemon)
-                                 }.should change(CompoundLog, :count).by(1)
-                               end
+              ActiveRecord::Observer.with_observers(
+                :user_course_association_observer,
+                :status_observer,
+                :log_observer) do
+                  expect {
+                    @course = Factory(:course)
+                    @course.join(@aemon)
+                  }.should change(CompoundLog, :count).by(1)
+              end
             end
           end
         end

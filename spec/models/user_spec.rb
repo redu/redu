@@ -413,26 +413,28 @@ describe User do
     before do
       @page = 1
       # Criando friendship (para gerar um status compondable)
-      ActiveRecord::Observer.with_observers(:log_observer,
-                                            :friendship_observer,
-                                            :status_observer) do
-                                              @friends = 3.times.collect { Factory(:user) }
-                                              @friends[0].be_friends_with(subject)
-                                              subject.be_friends_with(@friends[0])
-                                              @friends[1].be_friends_with(subject)
-                                              subject.be_friends_with(@friends[1])
-                                              @friends[2].be_friends_with(subject)
-                                              subject.be_friends_with(@friends[2])
+      ActiveRecord::Observer.with_observers(
+        :log_observer,
+        :friendship_observer,
+        :status_observer) do
+          @friends = 3.times.collect { Factory(:user) }
+          @friends[0].be_friends_with(subject)
+          subject.be_friends_with(@friends[0])
+          @friends[1].be_friends_with(subject)
+          subject.be_friends_with(@friends[1])
+          @friends[2].be_friends_with(subject)
+          subject.be_friends_with(@friends[2])
 
-                                              @friends[1].be_friends_with(@friends[0])
-                                              @friends[0].be_friends_with(@friends[1])
-                                            end
+          @friends[1].be_friends_with(@friends[0])
+          @friends[0].be_friends_with(@friends[1])
+       end
 
       @last_compound = CompoundLog.where(:statusable_id => subject.id).last
 
-      @statuses = @friends[0].overview.where(:compound => false).paginate(:page => @page,
-                                            :order => 'updated_at DESC',
-                                            :per_page => Redu::Application.config.items_per_page)
+      @statuses = @friends[0].overview.where(:compound => false).
+        paginate(:page => @page,
+                 :order => 'updated_at DESC',
+                 :per_page => Redu::Application.config.items_per_page)
     end
 
     it "assigns correctly number of statuses" do
