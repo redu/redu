@@ -4,9 +4,11 @@ class CompoundLog < Status
   before_destroy :update_compounded_logs_compound_property
 
   def compound!(log, min_logs=3)
-    # O find é utilizado pois, em desenvolvimento a classe é carregada
-    # com versões diferentes.
-    # Em produção e teste o erro não ocorre.
+  # O find é utilizado pois, em desenvolvimento a classe é carregada
+  # com versões diferentes, assim o erro ActiveRecord::AssociationTypeMismatch
+  # é levantando quando o log a ser composto é adicionado ao compound.
+  # Como alternativa para resolver esse problema, foi buscar o log diretamente na base de dados.
+  # Em produção e teste o erro não ocorre.
     self.logs << Log.find(log.id)
 
     if self.compound_visible_at
