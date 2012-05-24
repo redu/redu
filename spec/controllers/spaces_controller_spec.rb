@@ -37,6 +37,9 @@ describe SpacesController do
 
       activate_authlogic
       UserSession.create user
+
+      application = ClientApplication.where(:name => "ReduViz").first
+      AccessToken.create(:client_application => application, :user => user)
     end
 
     context "subject participation" do
@@ -53,14 +56,26 @@ describe SpacesController do
         user = (assigns[:user_agent][0])
         user.product.should eq("Rails")
       end
+
+      it "assign a valid token" do
+        token = assigns[:token]
+        token.should eq(AccessToken.first.token)
+      end
     end
 
     context "lecture participation" do
-      it "when successful" do
+      before do
         get :lecture_participation_report, :id => @space.id,
           :locale => "pt-BR"
+      end
 
+      it "when successful" do
         response.should render_template "spaces/admin/lecture_participation_report"
+      end
+
+      it "assign a valid token" do
+        token = assigns[:token]
+        token.should eq(AccessToken.first.token)
       end
     end
   end

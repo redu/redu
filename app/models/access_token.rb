@@ -8,6 +8,10 @@ class AccessToken < OauthToken
   #   {:invalidate=>"/oauth/invalidate",:capabilities=>"/oauth/capabilities"}
   # end
 
+  scope :user_token, lambda {
+    |user, app| where(:user_id => user,
+                      :client_application_id => app) }
+
   protected
 
   def set_authorized_at

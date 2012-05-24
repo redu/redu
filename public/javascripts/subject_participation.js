@@ -42,8 +42,8 @@ var subjectParticipationPie = function () {
     }
 
     // Carregamento do Pie Chart
-    var loadPie = function(subject_id, ur) {
-      var url = ur + "?subject_id=" + subject_id;
+    var loadPie = function(ur, div, token) {
+      var url = ur + "?oauth_token=" + token;
 
       // Requisição via AJAX puro para que funcione em todos os browsers
       $.ajax({
@@ -51,7 +51,7 @@ var subjectParticipationPie = function () {
         method: "GET",
         dataType: 'jsonp',
         success: function (json) {
-          options.chart.renderTo = 'subject-participation-pie-'+subject_id;
+          options.chart.renderTo = div;
           options.series[0].data[0] = {
             name: 'Pedidos de ajuda que tiveram resposta',
             sliced: true,
@@ -67,8 +67,8 @@ var subjectParticipationPie = function () {
 
     // Retorno do objeto
     return {
-      load: function (subject_id, url) {
-        loadPie(subject_id, url);
+      load: function (url, div, token) {
+        loadPie(url, div, token);
       }
     }
 };
@@ -86,8 +86,8 @@ var subjectParticipationBullet = function () {
 
     // URL activities_d3
     // Carregamento do bullet
-    var loadBullet = function(subject_id, ur, div){
-      var url = ur + "?subject_id=" + subject_id;
+    var loadBullet = function(ur, div, token){
+      var url = ur + "?oauth_token=" + token;
 
       // Requisição via AJAX puro para que funcione em todos os browsers
       $.ajax({
@@ -128,8 +128,8 @@ var subjectParticipationBullet = function () {
 
   // Retorno do objeto
   return {
-    load: function (subject_id, url, div) {
-      loadBullet(subject_id, url, div);
+    load: function (url, div, token) {
+      loadBullet(url, div, token);
     },
   };
 };

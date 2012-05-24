@@ -3,9 +3,9 @@
   <%= lazy_load(:chart, :jammit => true) do %>
     try{
       var bulletSbjPar = subjectParticipationBullet();
-      bulletSbjPar.load(<%= subject.id %>,
-                        "<%= api_vis_subject_activities_path(subject.id) %>",
-                        "#subject-participation-bullet-<%= subject.id %>");
+      bulletSbjPar.load("<%= api_vis_subject_activities_d3_path(subject.id) %>",
+                        "#subject-participation-bullet-<%= subject.id %>",
+                        "<%= @token %>");
     }catch(e){
     }
   <% end %>
