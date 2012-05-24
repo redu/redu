@@ -29,20 +29,17 @@ describe "User" do
     end
 
     it "should link to enrollments" do
-      link = parse(response.body)['links'].detect { |l| l['rel'] == 'enrollments' }
-
+      link = href_to("enrollments", parse(response.body))
       link.should_not be_nil
     end
 
     it "should link to statuses" do
-      link = parse(response.body)['links'].detect { |l| l['rel'] == 'statuses' }
-
+      link = href_to("statuses", parse(response.body))
       link.should_not be_nil
     end
 
     it "should link to timeline" do
-      link = parse(response.body)['links'].detect { |l| l['rel'] == 'timeline' }
-
+      link = href_to("timeline", parse(response.body))
       link.should_not be_nil
     end
   end

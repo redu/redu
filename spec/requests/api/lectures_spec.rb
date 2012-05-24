@@ -177,7 +177,7 @@ describe 'Lectures' do
       end
     end
 
-    context "when seminar type" do
+    context "when type seminar" do
       before do
         params.merge!({ :lecture => { :name => "New Lecture seminar type",
                                       :type => "seminar" } })

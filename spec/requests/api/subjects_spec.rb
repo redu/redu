@@ -13,7 +13,7 @@ describe "Subjects API" do
     # precisa atualizar manualmente para criar um módulo vazio
     @subject.update_attribute(:finalized, true)
 
-    @params = { :oauth_token => @token, :format => "json" , "subject" => {} }
+    @params = { :oauth_token => @token, :format => "json" }
   end
 
   context "the document returned" do
@@ -119,7 +119,8 @@ describe "Subjects API" do
 
   context "POST a subject" do
     before do
-      @params["subject"][:title] = "New subject"
+      @params.merge!({ :subject => {:title => "New subject" }})
+#      @params["subject"][:title] = 
       post "/api/spaces/#{@space.id}/subjects", @params
     end
 
@@ -138,7 +139,7 @@ describe "Subjects API" do
       before do
         @new_course = Factory(:course)
         @new_space = Factory(:space, :course => @new_course)
-        @params["subject"][:visible] = false
+        @params[:subject][:visible] = false
       end
 
       it "should return code 201 (invisible)" do
@@ -175,11 +176,11 @@ describe "Subjects API" do
       it "should return correct number users" do
         # Incluindo usuários no curso para teste
         @users_enrolled = 2.times.collect { @new_course.join(Factory(:user),
-                                                                Role[:member]) }
+                                                             Role[:member]) }
 
         @users_enrolled.push( @new_space.owner? )
         @users_enrolled.push(@new_course.join(@current_user,
-                                                      Role[:environment_admin]))
+                                              Role[:environment_admin]))
         post "/api/spaces/#{@new_space.id}/subjects", @params
 
         get href_to("users", parse(response.body)), @params
@@ -197,7 +198,7 @@ describe "Subjects API" do
       end
 
       it "should return code 422" do
-        @params["subject"][:title] = ""
+        @params[:subject][:title] = ""
         post "/api/spaces/#{@space.id}/subjects", @params
         response.code.should == "422"
       end

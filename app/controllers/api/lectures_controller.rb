@@ -4,7 +4,7 @@ module Api
       lecture = Lecture.find(params[:id])
       authorize! :read, lecture
 
-      respond_with(lecture)
+      respond_with(:api, lecture)
     end
 
     def index
@@ -18,10 +18,10 @@ module Api
     def create
       subject = Subject.find(params[:subject_id])
       authorize! :manage, subject
-      lectureable, params_lecture = lectureable_type(params)
 
-      lecture = subject.lectures.create(params_lecture[:lecture]) do |l|
-        l.lectureable = lectureable
+      lecture = subject.lectures.create do |l|
+        l.name = params[:lecture][:name]
+        l.lectureable = lectureable(params)
         l.owner = current_user
         l.subject = subject
       end
@@ -38,23 +38,31 @@ module Api
 
     protected
 
-    def lectureable_type(param)
-      case param[:lecture][:type].try(:downcase)
+    def lectureable(params)
+      case params[:lecture][:type].try(:downcase)
       when 'page'
-        params_page = { :body => param[:lecture].delete(:body) }
-        lectureable = Page.new(params_page), param
+        create_page(params)
       when 'seminar'
-        params_seminar = { :external_resource_type =>
-                                        validate_youtube(param[:lecture][:url]),
-                           :external_resource => param[:lecture].delete(:url)}
-
-        lectureable = Seminar.new(params_seminar), param
+        create_seminar(params)
       end
     end
 
     def validate_youtube(url)
+      # Esperar a resolução do issue #837 para remover esse método.
+      # Delegar validações para o modelo.
       'youtube' if url.
                scan(/youtube\.com\/watch\?v=([A-Za-z0-9._%-]*)[&\w;=\+_\-]*/)[0]
+    end
+
+    def create_page(params)
+      Page.new({ :body => params[:lecture].delete(:body) }) 
+    end
+
+    def create_seminar(params)
+      Seminar.new do |seminar|
+        seminar.external_resource_type = validate_youtube(params[:lecture][:url])
+        seminar.external_resource = params[:lecture][:url]
+      end
     end
 
     def lectures(subject, type)
