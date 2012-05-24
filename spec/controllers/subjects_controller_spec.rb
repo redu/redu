@@ -80,7 +80,7 @@ describe SubjectsController do
 
     context "when successful" do
       before do
-        @post_params = {:title => "Subject 1",
+        @post_params = {:name => "Subject 1",
           :description => "Lorem ipsum dolor sit amet, consectetur magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
           :space_id => @space.id.to_s}
       end
@@ -103,7 +103,7 @@ describe SubjectsController do
 
     context "when failing" do
       before do
-        @post_params = {:title => "",
+        @post_params = {:name => "",
           :description => "Lorem ipsum dolor sit amet, consectetur magna aliqua.",
           :space_id => @space.id.to_s}
       end
@@ -148,14 +148,14 @@ describe SubjectsController do
         lambda {
           put :update, :locale => "pt-BR", :id => @subject.id,
           :space_id => @space.id,
-          :subject => { :title => "Módulo"}
-        }.should change{ @subject.reload.title }.to("Módulo")
+          :subject => { :name => "Módulo"}
+        }.should change{ @subject.reload.name }.to("Módulo")
       end
 
       it "assigns the subject" do
         put :update, :locale => "pt-BR", :id => @subject.id,
           :space_id => @space.id,
-          :subject => { :title => "Módulo"}
+          :subject => { :name => "Módulo"}
         assigns[:subject].should == @subject
       end
 
@@ -166,7 +166,7 @@ describe SubjectsController do
         lambda {
           put :update, :locale => "pt-BR", :id => @subject.id,
           :space_id => @space.id,
-          :subject => { :title => "" }
+          :subject => { :name => "" }
         }.should_not change{ @subject.reload.description }
       end
 

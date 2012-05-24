@@ -74,14 +74,14 @@
           <span class="status-subject icon-small icon-course-lightblue_32_34">
           </span>
           <%= link_to item.logeable.space.course.name, environment_course_path(item.logeable.space.course.environment, item.logeable.space.course), :class => "status-main" %>
-          <%= link_to item.logeable.title, space_subject_path(item.logeable.space, item.logeable), :class => "status-secondary icon-expand-gray_8_10-before" %>
+          <%= link_to item.logeable.name, space_subject_path(item.logeable.space, item.logeable), :class => "status-secondary icon-expand-gray_8_10-before" %>
         </div>
         <div class="status-log">
           <%= render "statuses/user_image", :item => item %>
           <div class="status-icon icon-<%= item.user ? role_at(item.user, item.logeable) : "member" %>-gray_16_18-before">
             <%= render "statuses/user_name", :item => item %>
             <span class="status-info"> <%= raw auto_link(item.action_text) %></span>
-            <%= link_to item.logeable.title, space_subject_path(item.logeable.space, item.logeable), :class => "status-secondary icon-expand-gray_16_18-before" %>
+            <%= link_to item.logeable.name, space_subject_path(item.logeable.space, item.logeable), :class => "status-secondary icon-expand-gray_16_18-before" %>
             <span class="date">
             <%= time_ago_in_words item.created_at %>
             </span>
@@ -94,7 +94,7 @@
           <span class="status-subject icon-small icon-space-lightblue_32_34">
           </span>
           <%= link_to item.logeable.subject.space.name, space_path(item.logeable.subject.space), :class => "status-main" %>
-          <%= link_to item.logeable.subject.title, space_subject_lecture_path(item.logeable.subject.space, item.logeable.subject, item.logeable), :class => "status-secondary icon-expand-gray_8_10-before" %>
+          <%= link_to item.logeable.subject.name, space_subject_lecture_path(item.logeable.subject.space, item.logeable.subject, item.logeable), :class => "status-secondary icon-expand-gray_8_10-before" %>
         </div>
         <div class="status-log">
           <%= render "statuses/user_image", :item => item %>
@@ -116,7 +116,7 @@
           <span class="status-subject icon-small icon-course-lightblue_32_34">
           </span>
           <%= link_to item.statusable.subject.space.name, space_path(item.statusable.subject.space), :class => "status-main" %>
-          <%= link_to item.statusable.subject.title, space_path(item.statusable.subject.space), :class => "status-secondary icon-expand-gray_8_10-before" %>
+          <%= link_to item.statusable.subject.name, space_path(item.statusable.subject.space), :class => "status-secondary icon-expand-gray_8_10-before" %>
         </div>
         <div class="status-log">
           <%= render "statuses/user_image", :item => item %>
@@ -141,7 +141,7 @@
           <span class="status-subject icon-small icon-course-lightblue_32_34">
           </span>
           <%= link_to item.statusable.subject.space.name, space_path(item.statusable.subject.space), :class => "status-main" %>
-          <%= link_to item.statusable.subject.title, space_path(item.statusable.subject.space), :class => "status-secondary icon-expand-gray_8_10-before" %>
+          <%= link_to item.statusable.subject.name, space_path(item.statusable.subject.space), :class => "status-secondary icon-expand-gray_8_10-before" %>
         </div>
         <div class="status-log">
           <%= render "statuses/user_image", :item => item %>
