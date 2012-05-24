@@ -160,15 +160,15 @@ jQuery(function(){
         e.preventDefault();
     });
 
-
+    /* Spinner em links remotos */
     $("a[data-remote=true]").live('ajax:before', function(){
         $(this).css('width', $(this).width());
-        $(this).addClass("link-loading");
+        $(this).loadingStart({ "className" : "link-loading" });
     });
 
     $("a[data-remote=true]").live('ajax:complete', function(){
         $(this).css('width', 'auto');
-        $(this).removeClass("link-loading");
+        $(this).loadingComplete({ "className" : "link-loading" });
     });
 
     /* Links remotos com estilo de botão */
@@ -176,40 +176,63 @@ jQuery(function(){
       // Remove spinner padrão para links
       $(this).css('width', 'auto');
       $(this).removeClass("link-loading");
-      $(this).loadingStart({ 'class' : 'concave-loading'});
+      $(this).loadingStart();
     });
 
     $("a[data-remote=true].concave-button, a[data-remote=true].concave-important").live('ajax:complete', function(){
-      $(this).loadingComplete({ 'class' : 'concave-loading'});
+      $(this).loadingComplete();
     });
 
+    /* Impede que links desabilitados tenham funcionem quando clicados */
+    $("a.disabled").live('click', function(e){
+      e.preventDefault();
+    });
+
+    /* Mostra o spinner e desabilita o elemento */
     $.fn.loadingStart = function(options){
       var config = {
-        "className" : "concave-loading"
+        "className" : "concave-loading",
+        "disabledClass" : "disabled"
       }
       $.extend(config, options);
 
       return this.each(function(){
           $bt = $(this);
           $bt.addClass(config.className);
+          $bt.addClass(config.disabledClass);
+
+          if($bt.is("input[type=submit]") || $bt.is("button")){
+            $bt.attr("disabled", true)
+          }
       });
     };
 
+    /* Esconde o spinner e habilita o elemento */
     $.fn.loadingComplete = function(options){
       var config = {
-        "className" : "concave-loading"
+        "className" : "concave-loading",
+        "disabledClass" : "disabled"
       }
       $.extend(config, options);
 
       return this.each(function(){
           $bt = $(this);
           $bt.removeClass(config.className);
+          $bt.removeClass(config.disabledClass);
+
+          if($bt.is("input[type=submit]") || $bt.is("button")){
+            $bt.attr("disabled", false)
+          }
       });
     };
 
+    /* Mostra o spinner e desabilita o elemento
+     * ou
+     * esconde o spinner e habilita o elemento */
     $.fn.loadingToggle = function(options){
       var config = {
-        "className" : "concave-loading"
+        "className" : "concave-loading",
+        "disabledClass" : "disabled"
       }
       $.extend(config, options);
 
@@ -217,9 +240,9 @@ jQuery(function(){
           $bt = $(this);
 
           if( $bt.hasClass(config.className) ) {
-            $bt.loadingComplete();
+            $bt.loadingComplete(config);
           } else {
-            $bt.loadingStart();
+            $bt.loadingStart(config);
           }
       });
     };

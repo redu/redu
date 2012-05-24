@@ -1,45 +1,4 @@
 (function($){
-    $.fn.loadingStart = function(options){
-      var config = {
-        "className" : "concave-loading"
-      }
-      $.extend(config, options);
-
-      return this.each(function(){
-          $bt = $(this);
-          $bt.addClass(config.className);
-      });
-    };
-
-    $.fn.loadingComplete = function(options){
-      var config = {
-        "className" : "concave-loading"
-      }
-      $.extend(config, options);
-
-      return this.each(function(){
-          $bt = $(this);
-          $bt.removeClass(config.className);
-      });
-    };
-
-    $.fn.loadingToggle = function(options){
-      var config = {
-        "className" : "concave-loading"
-      }
-      $.extend(config, options);
-
-      return this.each(function(){
-          $bt = $(this);
-
-          if( $bt.hasClass(config.className) ) {
-            $bt.loadingComplete();
-          } else {
-            $bt.loadingStart();
-          }
-      });
-    };
-
     $.fn.refreshForms = function(){
       return this.each(function(){
           // Classes de objetos presentes do form
@@ -104,12 +63,12 @@
 
               if($this.is($target)){
                 var $submit = $(this).find("input[type=submit]");
-                $submit.loadingStart({ "className" : "concave-loading" });
+                $submit.loadingStart();
               }
         });
 
           $(".concave-form").live('ajax:complete', function(){
-              $(this).find("input[type=submit]").loadingComplete({ "className" : "concave-loading" });
+              $(this).find("input[type=submit]").loadingComplete();
           });
 
         // Padrão de spinner
@@ -118,7 +77,7 @@
             var $target = $(e.target);
 
             if($target.is($this)){
-              $(this).find("input[type=submit], button").loadingStart({ 'class' : 'concave-loading' });
+              $(this).find("input[type=submit], button").loadingStart();
             }
         });
 
@@ -127,13 +86,13 @@
             var $target = $(e.target);
 
             if($target.is($this)){
-              $(this).find("input[type=submit], button").loadingComplete({ 'class' : 'concave-loading'});
+              $(this).find("input[type=submit], button").loadingComplete();
             }
         });
 
         // Chamada ao jquery.placeholder.
-        try { 
-          $form.find("[placeholder]").placeholder(); 
+        try {
+          $form.find("[placeholder]").placeholder();
         } catch (e) {}
 
       });

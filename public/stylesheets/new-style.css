@@ -8192,3 +8192,10 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .statuses .status .box {
   width: 480px;
 }
+
+a.disabled,
+input[disabled=disabled],
+button[disabled=disabled] {
+  cursor: default;
+}
+
