@@ -66,8 +66,13 @@ class Lecture < ActiveRecord::Base
   end
 
   def clone_for_subject!(subject_id)
-    clone = self.clone :include => :lectureable,
+    if self.lectureable.is_a?(Exercise)
+      nested_attrs = { :questions => :alternatives }
+    end
+
+    clone = self.clone :include => { :lectureable => nested_attrs },
       :except => [:rating_average, :view_count, :position, :subject_id]
+
     clone.is_clone = true
     clone.subject = Subject.find(subject_id)
     clone.save
