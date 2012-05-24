@@ -40,7 +40,7 @@ describe SubjectObserver do
       ActiveRecord::Observer.with_observers(:subject_observer) do
         @sub.update_attribute(:finalized, true)
         expect {
-          @sub.update_attribute(:title, "Novo nome")
+          @sub.update_attribute(:name, "Novo nome")
         }.should_not change(UserNotifier.deliveries, :count).by(1)
       end
     end

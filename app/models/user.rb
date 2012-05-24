@@ -47,7 +47,7 @@ class User < ActiveRecord::Base
   has_many :enrollments, :dependent => :destroy
 
   #subject
-  has_many :subjects, :order => 'title ASC',
+  has_many :subjects, :order => 'name ASC',
     :conditions => { :finalized => true }
 
   has_many :plans
