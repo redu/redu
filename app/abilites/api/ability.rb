@@ -16,6 +16,9 @@ module Api
 
     def initialize(user)
       can :read, :error
+      # Administrador do Redu
+      can :manage, :all if user.try(:role) == Role[:admin]
+
       execute_rules(user)
     end
 
