@@ -175,6 +175,7 @@ describe 'Lectures' do
         post "/api/subjects/007/lectures", params
         response.code.should == "404"
       end
+
     end
 
     context "when type seminar" do
