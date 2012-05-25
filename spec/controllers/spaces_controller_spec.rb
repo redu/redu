@@ -56,11 +56,18 @@ describe SpacesController do
     end
 
     context "lecture participation" do
-      it "when successful" do
+      before do
         get :lecture_participation_report, :id => @space.id,
           :locale => "pt-BR"
+      end
 
+      it "when successful" do
         response.should render_template "spaces/admin/lecture_participation_report"
+      end
+
+      it "checking user agent" do
+        user = (assigns[:user_agent][0])
+        user.product.should eq("Rails")
       end
     end
   end
