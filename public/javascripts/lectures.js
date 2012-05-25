@@ -65,6 +65,17 @@ $(function(){
       e.preventDefault();
     });
 
+
+    // Setando o tamanho do iframe do conteúdo da página simples
+    $.fn.setIframeHeight = function(){
+      $("#page-iframe").load(function(){
+          $("#page-iframe").height($("#page-iframe").contents().height());
+          $("#page-iframe").contents().each( function(i){
+              $(this).find("a").attr('target', '_blank');
+          })
+      });
+    }
+
     // Scroll os botões de student-actions de acordo com o #resource
     $(document).scroll(function(){
       if ($("#resource").length > 0) {
@@ -78,9 +89,11 @@ $(function(){
 
     $(document).ready(function(){
         $(document).refreshLectures();
+        $(document).setIframeHeight();
 
         $(document).ajaxComplete(function(){
           $(document).refreshLectures();
+          $(document).setIframeHeight();
           $(".student-actions").css({'position': 'relative'});
         });
     });

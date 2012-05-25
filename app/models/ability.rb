@@ -26,7 +26,7 @@ class Ability
       :lecture_participation_report, :to => :manage
 
     #TODO action manage gerando recursividade
-    alias_action :mural, :students_endless , :to => :read
+    alias_action :mural, :students_endless, :to => :read
 
     # Folder
     alias_action :do_the_upload, :upload, :rename,
@@ -44,7 +44,7 @@ class Ability
     alias_action :resend_email, :destroy, :destroy_invitations, :to => :manage
 
     # Lecture
-    alias_action :rate, :done, :to => :read
+    alias_action :rate, :done, :page_content, :to => :read
 
     # Message
     alias_action :delete_selected, :to => :manage

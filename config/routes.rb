@@ -79,6 +79,7 @@ Redu::Application.routes.draw do
         member do
           post :rate
           post :done
+          get :page_content
         end
       end
     end
