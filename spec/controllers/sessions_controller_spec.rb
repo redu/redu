@@ -27,7 +27,6 @@ describe SessionsController do
           expect {
             post :create, @post_params
           }.should change(UserCourseAssociation, :count).by(1)
-          @invite.reload.should be_approved
         end
       end
 

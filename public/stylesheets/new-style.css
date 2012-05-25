@@ -6291,10 +6291,10 @@ div.token-input-dropdown {
 }
 
 #profile .vcard .details:hover {
-  background-image: -moz-linear-gradient(left, #4cacd5, #ffffff);
+  background-image: -moz-linear-gradient(left, #dbeff7, #ffffff);
   background-image: -webkit-gradient(linear, left top, right top, from(#dbeff7), to(#ffffff));
-  background-image: -o-linear-gradient(left, #4cacd5, #ffffff);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4cacd5', endColorstr='#ffffff');
+  background-image: -o-linear-gradient(left, #dbeff7, #ffffff);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#dbeff7', endColorstr='#ffffff');
 
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;

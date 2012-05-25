@@ -16,9 +16,10 @@
     <div class="resource-content clearfix">
       <%= render :partial => 'lectures/details',
         :locals => { :lecture => @lecture} %>
-      <div class="pretty-text stage page-content content">
-        <%= raw @lecture.lectureable.body %>
-      </div>
+      <div class="stage page-content content">
+        <iframe id="page-iframe" width="100%" src="<%= page_content_space_subject_lecture_path(@space, @subject, @lecture) %>">
+        </iframe>
+     </div>
     </div>
 
     <%= render 'lectures/create_statuses', :lecture => @lecture, :statuses => @statuses %>
