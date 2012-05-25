@@ -55,7 +55,7 @@ var TeacherParticipationGraph = function () {
       var graph = graphView.form.plotGraphForm(graphView.chart.renderTo);
 
       // Passa a função de carregamento do gráfico via JSON
-      graph.loadGraph(function () {
+      graph.loadGraph(function (json) {
         $.extend(options, graphView);
 
         options.series[0].data = json.lectures_created;

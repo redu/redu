@@ -17,7 +17,7 @@
       <span class="price"><%= number_to_currency plan.price %><span class="a-month">/mês</span></span>
       <%= content_tag(:span, pluralize(plan.members_limit, "membro"), :class => "plan-limit") %>
     <% end %>
-    <%= content_tag(:span, "#{number_to_human_size(plan.video_storage_limit, :precision => 0)} de armazenamento de documentos", :class => "plan-limit") %>
+    <%= content_tag(:span, "#{number_to_human_size(plan.file_storage_limit, :precision => 0)} de armazenamento de documentos", :class => "plan-limit") %>
     <%= content_tag(:span, "#{number_to_human_size(plan.video_storage_limit, :precision => 0)} de armazenamento de vídeos", :class => "plan-limit") %>
   </span>
 </div>

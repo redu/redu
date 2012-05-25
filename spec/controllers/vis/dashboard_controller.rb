@@ -63,7 +63,8 @@ describe Vis::DashboardController do
         activate_authlogic
         UserSession.create @user
 
-        @course.join(@user, Role[:environment_admin])      end
+        @course.join(@user, Role[:environment_admin])
+      end
 
       it "should generate error with invalid range of time" do
         @params = { :course_id => @course.id,
@@ -110,6 +111,22 @@ describe Vis::DashboardController do
         body.should have(4).items
         lectures = body['lectures_created']
         lectures.should_not be_empty
+      end
+
+      it "should return params callback" do
+        callback = "myFunct"
+        @params = { :course_id => @course.id,
+                    :teacher_id => @course.teachers.first.id,
+                    :date_start => "2012-03-01",
+                    :date_end => "2012-03-10",
+                    :spaces => [@space.id.to_s],
+                    :format => :json,
+                    :locale => "pt-BR",
+                    :callback => callback }
+
+        get :teacher_participation_interaction, @params
+
+        response.body.should include "#{callback}("
       end
     end
   end
