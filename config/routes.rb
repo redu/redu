@@ -42,7 +42,7 @@ Redu::Application.routes.draw do
   resources :sessions
 
   # site routes
-  match '/about' => 'base#about', :as => :about
+  match '/about' => redirect('http://tech.redu.com.br'), :as => :about
   match '/faq' => 'base#faq', :as => :faq
   match 'contact' => 'base#contact', :as => :contact
 
