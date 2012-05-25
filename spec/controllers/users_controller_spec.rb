@@ -87,7 +87,6 @@ describe UsersController do
             expect {
               post :create, @post_params
             }.should change(UserCourseAssociation, :count).by(1)
-            @invite.reload.should be_approved
             UserCourseAssociation.last.user.email.
               should == @post_params[:user][:email]
           end
@@ -111,7 +110,6 @@ describe UsersController do
             expect {
               post :create, @post_params
             }.should change(UserCourseAssociation, :count).by(1)
-            @invite.reload.should be_approved
             UserCourseAssociation.last.user.email.should == @another_email
           end
 

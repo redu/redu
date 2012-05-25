@@ -6,12 +6,12 @@
 
     if($this.is($target)){
       var $submit = $(this).find("input[type=submit]");
-      $submit.loadingStart({ "className" : "concave-loading" });
+      $submit.loadingStart();
     }
   });
 
   $(".admin-filter-form").live('ajax:complete', function(){
-    $(this).find("input[type=submit]").loadingComplete({ "className" : "concave-loading" });
+    $(this).find("input[type=submit]").loadingComplete();
   });
 
   // Atualiza path do curso (slug)

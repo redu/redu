@@ -11,6 +11,7 @@ class Status < ActiveRecord::Base
 
   accepts_nested_attributes_for :status_resources
   validates_associated :status_resources
+  validates :type, :inclusion => { :in => %w(Status Activity Help Answer Log) }
 
   scope :activity_by_user, lambda { |u|
     where("type = ? AND user_id = ?", "Activity", u) }

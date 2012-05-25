@@ -212,18 +212,88 @@ describe Lecture do
     end
   end
 
-  it "generates a clone of itself" do
-    subject_owner = Factory(:user)
-    space = Factory(:space)
-    space.course.join subject_owner
-    subject1 = Factory(:subject, :owner => subject_owner,
-                       :space => space)
+  context "when generating a clone of itself" do
+    before do
+      subject_owner = Factory(:user)
+      space = Factory(:space)
+      space.course.join subject_owner
+      @new_subject = Factory(:subject, :owner => subject_owner,
+                         :space => space)
+    end
 
-    new_lecture = subject.clone_for_subject!(subject1.id)
-    new_lecture.should_not == subject
-    new_lecture.should be_is_clone
-    new_lecture.subject.should == subject1
+    context "and itself is a page" do
+      let(:subject) do
+        Factory(:lecture, :subject => @sub, :owner => @sub.owner,
+                :lectureable => Factory(:page))
+      end
+
+      before do
+        @new_lecture = subject.clone_for_subject!(@new_subject.id)
+      end
+
+      it "generates a lecture differente of itself" do
+        @new_lecture.should_not == subject
+      end
+
+      it "generates a clone" do
+        @new_lecture.should be_is_clone
+      end
+
+      it "generates a clone that belongs to correct subject" do
+        @new_lecture.subject.should == @new_subject
+      end
+    end
+
+    context "and itself is a exercise" do
+      let(:subject) do
+        Factory(:lecture, :subject => @sub, :owner => @sub.owner,
+                :lectureable => Factory(:complete_exercise))
+      end
+
+      before do
+        @new_lecture = subject.clone_for_subject!(@new_subject.id)
+      end
+
+      it "generates a lecture differente of itself" do
+        @new_lecture.should_not == subject
+      end
+
+      it "generates a clone" do
+        @new_lecture.should be_is_clone
+      end
+
+      it "generates a clone that belongs to correct subject" do
+        @new_lecture.subject.should == @new_subject
+      end
+
+      context "when cloning questions" do
+        it "generates a clone that contains all questions" do
+          subject_q = attrs_except(subject.lectureable.questions,
+                                   ["id","exercise_id"])
+          new_lecture_q = attrs_except(@new_lecture.lectureable.questions,
+                                       ["id","exercise_id"])
+
+          subject_q.to_set.should == new_lecture_q.to_set
+        end
+
+        context "when cloning alternatives" do
+          it "generates a clone that each question contain all alternatives" do
+            subject_a = subject.lectureable.questions.collect do |q|
+              attrs_except(q.alternatives, ["id","question_id"])
+            end
+            new_lecture_a = @new_lecture.lectureable.questions.collect do |q|
+              attrs_except(q.alternatives, ["id","question_id"])
+            end
+
+            subject_a.to_set.should == new_lecture_a.to_set
+          end
+        end
+      end
+
+    end
   end
+
+
   context "destroy" do
     before do
       @lec = Factory(:lecture, :subject => @sub,
@@ -383,6 +453,18 @@ describe Lecture do
           subject.build_lectureable({ :_type => 'Existent'}).should be_nil
         end
       end
+    end
+  end
+
+  protected
+  def attrs_except(entities, attrs_to_remove)
+    entities.collect do |entity|
+      attrs = entity.attributes
+
+      attrs_to_remove.each do |attr|
+        attrs.delete(attr)
+      end
+      attrs
     end
   end
 end
