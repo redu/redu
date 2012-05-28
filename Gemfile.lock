@@ -208,7 +208,7 @@ GEM
     mime-types (1.17.1)
     mimemagic (0.1.8)
     multi_json (1.0.3)
-    multi_xml (0.4.2)
+    multi_xml (0.5.1)
     multipart-post (1.1.5)
     mysql2 (0.2.7)
     newrelic_rpm (3.0.1)
@@ -274,7 +274,6 @@ GEM
     rd_searchlogic (3.0.1)
       activerecord (>= 3.0.0)
     rdoc (3.12)
-      json (~> 1.4)
     remotipart (1.0.2)
     representable (1.1.7)
       json
