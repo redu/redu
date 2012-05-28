@@ -3,13 +3,19 @@ require 'cancan/matchers'
 
 describe Api::Ability do
   context "when user" do
-    subject { Api::Ability.new(@user) }
-    before do
-      @user = Factory(:user)
-    end
+    subject { Api::Ability.new(user) }
+    let(:user) { Factory(:user) }
 
     it "should be able to manage itself" do
-      subject.should be_able_to :manage, @user
+      subject.should be_able_to :manage, user
+    end
+  end
+
+  context "when redu_admin" do
+    subject { Api::Ability.new(user) }
+    let(:user) { Factory(:user, :role => Role[:admin]) }
+    it "should be able to manage all" do
+      subject.should be_able_to :manage, :all
     end
   end
 

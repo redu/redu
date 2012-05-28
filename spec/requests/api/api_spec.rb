@@ -30,10 +30,11 @@ describe 'API Authorization' do
     it "should create an environment" do
       post("/api/environments",
           {:environment => @params, :format => 'json' },
-          {"HTTP_AUTHORIZATION" => "oauth_token=\"#{@token}\""})
+          {"HTTP_AUTHORIZATION" => "OAuth #{@token}"})
 
       user_url = href_to("user", parse(response.body))
-      get(user_url, {:format => 'json'}, {"HTTP_AUTHORIZATION" => "oauth_token=\"#{@token}\""})
+
+      get(user_url, {:format => 'json'}, {"HTTP_AUTHORIZATION" => "OAuth #{@token}"})
       response.code.should == '200'
     end
   end

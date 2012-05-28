@@ -93,15 +93,16 @@ describe OauthClientsController do
   end
 
   describe "POST create" do
+
+    it "creates a new client_application" do
+      expect {
+        post :create, @params.merge!(@locale)
+      }.to change(ClientApplication, :count).by(1)
+    end
+
     context "with valid params" do
       before do
         post :create, @params.merge!(@locale)
-      end
-
-      it "creates a new client_application" do
-        expect {
-          post :create, @params.merge!(@locale)
-        }.to change(ClientApplication, :count).by(1)
       end
 
       it "assigns a newly created client_application as @client_application" do

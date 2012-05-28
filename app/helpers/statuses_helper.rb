@@ -5,4 +5,14 @@ module StatusesHelper
 
     Role[association.try(:role)]
   end
+
+  def status_message(msg)
+    # Processa quebras de linha
+    status = msg.gsub(/\n/, '</br>')
+
+    # Processa aspas envolvendo links
+    status = h(status).gsub(/&quot;/, '"')
+
+    raw auto_link(status)
+  end
 end

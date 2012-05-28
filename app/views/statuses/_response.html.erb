@@ -11,15 +11,21 @@
           :confirm => 'Deseja remover a postagem?'%>
     <% end %>
     <div class="status-text">
-      <%= image_tag response.user.avatar.url(:thumb_32), :width => 32,
-        :height => 32, :class => 'avatar'%>
-      <%= link_to response.user.display_name, user_path(response.user),
-        { :class => 'username' } %>
-      <span class="date">
+      <% if response.user %>
+        <%= image_tag response.user.avatar.url(:thumb_32), :width => 32,
+          :height => 32, :class => 'avatar'%>
+        <%= link_to response.user.display_name, user_path(response.user),
+          { :class => 'username' } %>
+      <% else %>
+        <%= image_tag "/images/new/missing_users_thumb_32.png", :width => 32, :height => 32,
+          :class => 'friend-avatar'%>
+        <span class="username">[Usuário Removido]</span>
+      <% end %>
+     <span class="date">
         há <%= time_ago_in_words response.created_at %>
       </span>
     </div>
-    <p class="status-message"><%= raw auto_link(h(response.text).gsub(/\n/, '</br>'))%></p>
+    <p class="status-message"><%= status_message(response.text) %></p>
     <% if response.status_resources.first %>
       <% if response.status_resources.first.thumb_url %>
         <div class="post-resource">

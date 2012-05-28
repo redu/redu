@@ -33,6 +33,18 @@ describe "User" do
 
       link.should_not be_nil
     end
+
+    it "should link to statuses" do
+      link = parse(response.body)['links'].detect { |l| l['rel'] == 'statuses' }
+
+      link.should_not be_nil
+    end
+
+    it "should link to timeline" do
+      link = parse(response.body)['links'].detect { |l| l['rel'] == 'timeline' }
+
+      link.should_not be_nil
+    end
   end
 
   context "when listing users" do

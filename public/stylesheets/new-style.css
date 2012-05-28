@@ -349,7 +349,7 @@ body {
 }
 
 #content .sidebar .student-actions li > a {
-  width: 85px;
+  width: 88px;
   height: 71px;
   font-size: 1em;
   text-align: center;
@@ -602,7 +602,7 @@ body {
   font-weight: 500;
   color: rgb(77, 173, 214);
   display: block;
-  width: 630px;
+  width: 625px;
 }
 
 #hierarchy-header .name a:hover,
@@ -1800,8 +1800,13 @@ body {
 .hierarchy-listing .child .lectures > li .infos .title,
 #space-manage .resources > li .title {
   float: left;
-  margin-top: 3px;
-  max-width: 365px;
+  line-height: 16px;
+  margin-top: 2px;
+  max-width: 285px;
+}
+
+#space-manage .resources > li .title {
+  max-width: 420px;
 }
 
 
@@ -1809,7 +1814,7 @@ body {
 #space-manage .resources > li .title:before {
   float: left;
   margin-right: 3px;
-  margin-top: -2px;
+  margin-top: -1px;
 }
 
 .hierarchy-listing .child .lectures > li .infos .type,
@@ -1819,7 +1824,10 @@ body {
   color: rgb(179, 179, 179);
   float: left;
   margin-left: 5px;
-  margin-top: 4px;
+}
+
+.hierarchy-listing .child .lectures > li .infos .type {
+  margin-top: 3px;
 }
 
 .hierarchy-listing .child .grade {
@@ -5073,8 +5081,7 @@ table.concave-invitation-table .cell-reinvite .reinvited {
 
 #space-manage .resources > li {
   width: 535px;
-  height: 20px;
-  padding: 0 2px;
+  padding: 2px;
   border: solid 1px white;
   clear: left;
 }
@@ -5137,10 +5144,6 @@ table.concave-invitation-table .cell-reinvite .reinvited {
 #space-manage .resources > li .edit {
   margin-top: 3px;
   margin-right: 10px;
-}
-
-#space-manage .resources > li .delete {
-  margin-top: 1px;
 }
 
 #space-manage .resources > li .edit:before {
@@ -6288,10 +6291,10 @@ div.token-input-dropdown {
 }
 
 #profile .vcard .details:hover {
-  background-image: -moz-linear-gradient(left, #4cacd5, #ffffff);
+  background-image: -moz-linear-gradient(left, #dbeff7, #ffffff);
   background-image: -webkit-gradient(linear, left top, right top, from(#dbeff7), to(#ffffff));
-  background-image: -o-linear-gradient(left, #4cacd5, #ffffff);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4cacd5', endColorstr='#ffffff');
+  background-image: -o-linear-gradient(left, #dbeff7, #ffffff);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#dbeff7', endColorstr='#ffffff');
 
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
@@ -8189,3 +8192,10 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .statuses .status .box {
   width: 480px;
 }
+
+a.disabled,
+input[disabled=disabled],
+button[disabled=disabled] {
+  cursor: default;
+}
+

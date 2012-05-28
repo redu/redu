@@ -100,6 +100,7 @@ Redu::Application.routes.draw do
         member do
           post :rate
           post :done
+          get :page_content
         end
       end
     end
@@ -295,6 +296,9 @@ Redu::Application.routes.draw do
       resources :lectures, :except => [:new, :edit], :shallow => true
       resources :subjects, :only => [:create, :index]
       resources :users, :only => :index
+      resources :statuses, :only => [:index, :create] do
+        get 'timeline', :on => :collection
+      end
     end
 
     resources :subjects, :except => [:new, :edit, :index, :create] do
@@ -303,15 +307,21 @@ Redu::Application.routes.draw do
 
     resources :lectures, :except => [:new, :edit, :index, :create] do
       resources :user, :only => :index
+      resources :statuses, :only => [:index, :create]
     end
 
     resources :users, :only => :show do
       resources :course_enrollments, :only => :index, :path => :enrollments,
         :as => 'enrollments'
       resources :spaces, :only => :index
+      resources :statuses, :only => [:index, :create] do
+        get 'timeline', :on => :collection
+      end
     end
 
-    resources :statuses, :only => :show
+    resources :statuses, :only => [:show, :destroy] do
+      resources :answers, :only => [:index, :create]
+    end
 
     match "vis/spaces/:space_id/lecture_participation",
       :to => 'vis#lecture_participation',

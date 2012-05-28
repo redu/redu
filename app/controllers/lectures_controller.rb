@@ -120,6 +120,7 @@ class LecturesController < BaseController
       @lecture.subject = Subject.find(params[:subject_id])
 
       if @lecture.valid? && @lecture.make_sense?
+        @lecture.published = 1
         lectureable = @lecture.lectureable
         if lectureable.is_a? Seminar
           authorize! :upload_multimedia, @lecture
@@ -134,7 +135,6 @@ class LecturesController < BaseController
 
         @space.course.quota.try(:refresh!)
         @space.course.environment.quota.try(:refresh!)
-        @lecture.published = 1
       else
         if @lecture.lectureable.is_a? Exercise
           @lecture.lectureable.build_question_and_alternative
@@ -214,6 +214,12 @@ class LecturesController < BaseController
                                                           @subject,
                                                           @lecture) }
    end
+  end
+
+  def page_content
+    respond_to do |format|
+      format.html { render :layout => false }
+    end
   end
 
   protected

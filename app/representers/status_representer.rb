@@ -3,18 +3,16 @@ module StatusRepresenter
   include Roar::Representer::Feature::Hypermedia
 
   property :id
-  property :text
   property :created_at
-  property :action
   property :type
+  property :text
 
   link :self do
     api_status_url self
-    # polymorphic_url([:api, self])
   end
 
   link :statusable do
-    if statusable.is_a?(User) || statusable.is_a?(Space)
+    if statusable.is_a?(User) || statusable.is_a?(Space) || statusable.is_a?(Lecture)
       polymorphic_url([:api, self.statusable])
     end
   end
