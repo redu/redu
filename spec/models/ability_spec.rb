@@ -1499,4 +1499,33 @@ describe Ability do
    end
   end
 
+  context "on Canvas" do
+    let(:course) do
+      environment = Factory(:complete_environment)
+      environment.courses.first
+    end
+    let(:canvas) do
+      Factory(:canvas, :container => course.spaces.first, :user => course.owner)
+    end
+    let(:user) { Factory(:user) }
+    let(:ability) { Ability.new(user) }
+
+    context "when member" do
+      before do
+        course.join(user)
+      end
+
+      it "should be able to read" do
+        ability.should be_able_to :read, canvas
+      end
+    end
+
+    context "when outsider" do
+      it "should not be able to read" do
+        ability.should_not be_able_to :read, canvas
+      end
+
+    end
+  end
+
 end

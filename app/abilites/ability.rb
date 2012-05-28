@@ -177,6 +177,14 @@ class Ability
       cannot :migrate, Plan do |plan|
         (plan.blocked? || plan.migrated?) && !user.admin?
       end
+
+      # Canvas
+      can :read, Api::Canvas do |canvas|
+        can? :read, canvas.container
+      end
+      cannot :read, Api::Canvas do |canvas|
+        cannot? :read, canvas.container
+      end
     end
   end
 end

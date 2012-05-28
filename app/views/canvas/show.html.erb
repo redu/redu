@@ -1,0 +1,17 @@
+<%= render :partial => 'spaces/sidebar', :locals => { :space => @space } %>
+<div class="main space grid_12 omega big-col">
+  <%= render :partial => 'spaces/breadcrumbs', :locals => { :space => @space } %>
+  <%= render :partial => 'spaces/header',
+    :locals => { :space => @space }%>
+
+  <div class="body clearfix space-canvas">
+    <div class="header clearfix">
+      <h4 class="title"><%= @client_application.name %></h4>
+      <span class="detail">plataforma de aplicativos</span>
+    </div>
+
+    <iframe src="<%= "#{@client_application.url}?space_id=#{@space.id}" %>" frameborder="0" width="748px" class="iframe-canvas" scrolling="no"></iframe>
+  </div><!-- end #environment-courses -->
+
+</div><!-- end main -->
+
