@@ -24,7 +24,7 @@ class SpacesController < BaseController
   end
 
   def admin_members
-    @memberships = @space.user_space_associations.approved.
+    @memberships = @space.user_space_associations.
       paginate(:page => params[:page],:order => 'updated_at DESC',
                :per_page => Redu::Application.config.items_per_page)
 
@@ -148,9 +148,6 @@ class SpacesController < BaseController
 
     respond_to do |format|
       if @space.update_attributes(params[:space])
-        if params[:space][:subscription_type].eql? "1" # Entrada de membros passou a ser livre, aprovar todos os membros pendentes
-          UserSpaceAssociation.update_all("status = 'approved'", ["space_id = ? AND status = 'pending'", @space.id])
-        end
         flash[:notice] = 'A disciplina foi atualizada com sucesso!'
         format.html { redirect_to(@space) }
         format.xml  { head :ok }
