@@ -192,11 +192,9 @@ class Course < ActiveRecord::Base
 
     self.create_license(user, role)
     self.spaces.each do |space|
-      #FIXME tirar status quando remover moderacao de space
       UserSpaceAssociation.create(:user_id => user.id,
                                   :space_id => space.id,
-                                  :role => role,
-                                  :status => "approved")
+                                  :role => role)
 
       # Cria as associações com os subjects
       space.subjects.each do |subject|
