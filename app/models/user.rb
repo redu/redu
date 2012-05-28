@@ -404,6 +404,13 @@ class User < ActiveRecord::Base
 
   end
 
+  # Cria associação do agrupamento de amizade do usuário para seus amigos
+  # e para o pŕoprio usuário (home_activity)
+  def notify(compound_log)
+    self.status_user_associations.create(:status => compound_log)
+    Status.associate_with(compound_log, self.friends.select('users.id'))
+  end
+
   # Pega associação com Entity (aplica-se a Environment, Course, Space e Subject)
   def get_association_with(entity)
     return false unless entity
@@ -464,8 +471,8 @@ class User < ActiveRecord::Base
   end
 
   def home_activity(page = 1)
-    overview.paginate(:page => page,
-                      :order => 'created_at DESC',
+    overview.where(:compound => false).paginate(:page => page,
+                      :order => 'updated_at DESC',
                       :per_page => Redu::Application.config.items_per_page)
   end
 

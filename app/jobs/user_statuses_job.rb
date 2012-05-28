@@ -11,8 +11,12 @@ class UserStatusesJob
     status = Status.find(status_id)
 
     if user && status
-      Status.associate_with(status, user.friends.select("users.id"))
-      Status.associate_with(status, status.statusable.friends.select("users.id"))
+      if status.is_a?(Log) and status.logeable_type == "Friendship"
+        Status.associate_with(status, status.logeable.user.friends.select("users.id") - [status.logeable.friend])
+      else
+        Status.associate_with(status, user.friends.select("users.id"))
+        Status.associate_with(status, status.statusable.friends.select("users.id"))
+      end
     end
   end
 end
