@@ -8,6 +8,13 @@ class AccessToken < OauthToken
   #   {:invalidate=>"/oauth/invalidate",:capabilities=>"/oauth/capabilities"}
   # end
 
+  scope :valid, where("invalidated_at IS NULL AND authorized_at IS NOT NULL")
+
+  def self.user_token_for(user, application)
+    where(:user_id => user).valid.first(:conditions => {
+      :client_application_id => application })
+  end
+
   protected
 
   def set_authorized_at
