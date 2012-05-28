@@ -1,3 +1,4 @@
+/* BULLET CHARTS */
 .range.s0{
   fill: #ddd;
 }
@@ -13,4 +14,9 @@
 
 .tick text{
   font-size: 12px;
+}
+
+/* HIGHCHARTS */
+.highcharts-container{
+  line-height: 120%;
 }
