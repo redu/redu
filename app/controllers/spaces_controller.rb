@@ -179,7 +179,7 @@ class SpacesController < BaseController
     @browser_not_supported = self.is_browser_unsupported?
 
     application = ClientApplication.where(:name => "ReduViz").first
-    @token = AccessToken.user_token(current_user.id, application.id)[0].token
+    @token = AccessToken.user_token_for(current_user, application).token
 
     respond_to do |format|
       format.html { render "spaces/admin/subject_participation_report" }
@@ -188,7 +188,7 @@ class SpacesController < BaseController
 
   def lecture_participation_report
     application = ClientApplication.where(:name => "ReduViz").first
-    @token = AccessToken.user_token(current_user.id, application.id)[0].token
+    @token = AccessToken.user_token_for(current_user, application).token
 
     respond_to do |format|
       format.html { render "spaces/admin/lecture_participation_report" }

@@ -38,7 +38,8 @@ describe SpacesController do
       activate_authlogic
       UserSession.create user
 
-      application = ClientApplication.where(:name => "ReduViz").first
+      application = ClientApplication.create(:name => "ReduViz",
+                                             :url => "http://www.redu.com.br")
       AccessToken.create(:client_application => application, :user => user)
     end
 

@@ -81,7 +81,6 @@ describe "Vis Api" do
         param = { :subject_id => @subject.id }
 
         WebMock.disable_net_connect!(:allow_localhost => true)
-        debugger
         @stub = stub_request(:get,
                 Redu::Application.config.vis[:activities]).
           with(:query => param,

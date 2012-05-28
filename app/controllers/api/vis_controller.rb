@@ -12,7 +12,8 @@ module Api
                   :date_end => params[:date_end] }
       url = Redu::Application.config.vis[:lecture_participation]
 
-      create_connection(url, param)
+      request_resp = request_vis(url, param)
+      create_response(request_resp)
     end
 
     # GET /api/vis/subjects/:subject_id
@@ -23,7 +24,8 @@ module Api
       params = { :subject_id => subject.id }
       url = Redu::Application.config.vis[:activities]
 
-      create_connection(url, params)
+      request_resp = request_vis(url, params)
+      create_response(request_resp)
     end
 
     def subject_activities_d3
@@ -33,12 +35,13 @@ module Api
       params = { :subject_id => subject.id }
       url = Redu::Application.config.vis[:activities_d3]
 
-      create_connection(url, params)
+      request_resp = request_vis(url, params)
+      create_response(request_resp)
     end
 
     protected
 
-    def create_connection(url, param)
+    def request_vis(url, param)
       password = Redu::Application.config.vis_data_authentication[:password]
       username = Redu::Application.config.vis_data_authentication[:username]
       conn = Faraday.new(:url => url,
@@ -48,8 +51,6 @@ module Api
                          :params => param)
 
       resp = conn.get
-
-      create_response(resp)
     end
 
     def create_response(resp)

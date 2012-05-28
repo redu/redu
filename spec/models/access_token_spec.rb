@@ -8,7 +8,7 @@ describe AccessToken do
                                 :client_application => application)
     token = access.token
 
-    AccessToken.user_token(user.id, application.id)[0].token.should \
+    AccessToken.user_token_for(user, application).token.should \
       == token
   end
 end
