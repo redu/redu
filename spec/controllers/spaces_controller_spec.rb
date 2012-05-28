@@ -49,9 +49,9 @@ describe SpacesController do
         response.should render_template "spaces/admin/subject_participation_report"
       end
 
-      it "checking user agent" do
-        user = (assigns[:user_agent][0])
-        user.product.should eq("Rails")
+      it "browser should be supported" do
+        supported = assigns[:browser_not_supported]
+        supported.should_not be_true
       end
     end
 
@@ -65,9 +65,9 @@ describe SpacesController do
         response.should render_template "spaces/admin/lecture_participation_report"
       end
 
-      it "checking user agent" do
-        user = (assigns[:user_agent][0])
-        user.product.should eq("Rails")
+      it "browser should be supported" do
+        supported = assigns[:browser_not_supported]
+        supported.should_not be_true
       end
     end
   end

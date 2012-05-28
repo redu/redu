@@ -175,8 +175,8 @@ class SpacesController < BaseController
   end
 
   def subject_participation_report
-    @user_agent = UserAgent.parse(request.user_agent)
-    @browser_not_supported = self.is_browser_unsupported?
+    user_agent = UserAgent.parse(request.user_agent)
+    @browser_not_supported = self.is_browser_unsupported?(user_agent)
 
     respond_to do |format|
       format.html { render "spaces/admin/subject_participation_report" }
@@ -184,8 +184,8 @@ class SpacesController < BaseController
   end
 
   def lecture_participation_report
-    @user_agent = UserAgent.parse(request.user_agent)
-    @browser_not_supported = self.is_browser_unsupported?
+    user_agent = UserAgent.parse(request.user_agent)
+    @browser_not_supported = self.is_browser_unsupported?(user_agent)
 
     respond_to do |format|
       format.html { render "spaces/admin/lecture_participation_report" }
@@ -216,8 +216,8 @@ class SpacesController < BaseController
     @environment = @course.environment
   end
 
-  def is_browser_unsupported?
-    current_browser = Browser.new(@user_agent.browser, @user_agent.version)
+  def is_browser_unsupported?(user_agent)
+    current_browser = Browser.new(user_agent.browser, user_agent.version)
     browser = UNSUPPORTED_BROWSERS[0].browser
 
     if current_browser.browser == browser
