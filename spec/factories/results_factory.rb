@@ -5,4 +5,8 @@ FactoryGirl.define do
     association :user
     association :exercise
   end
+
+  factory :finalized_result, :parent => :result do
+    state "finalized"
+  end
 end
