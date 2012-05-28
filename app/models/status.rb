@@ -31,6 +31,9 @@ class Status < ActiveRecord::Base
     where(build_conditions(c)).where('created_at > ?', 1.week.ago)
   }
 
+  # Retorna apenas status visíveis
+  scope :visible, where(:compound => false)
+
   # Constrói as condições de busca de status dentro da hierarquia. Aceita
   # Course, Space e Lecture como raiz
   def self.build_conditions(entity)
