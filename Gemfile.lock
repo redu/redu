@@ -248,6 +248,8 @@ GEM
       ruby-hmac (~> 0.4.0)
       signature (~> 0.1.2)
     rack (1.2.5)
+    rack-cors (0.2.6)
+      rack
     rack-mount (0.6.14)
       rack (>= 1.0.0)
     rack-test (0.5.7)
@@ -385,6 +387,7 @@ DEPENDENCIES
   pagseguro (~> 0.1.10)
   paperclip (~> 2.7)
   pusher
+  rack-cors
   rails (= 3.0.10)
   rails-footnotes (>= 3.7.5.rc4)
   rails3-generators
