@@ -663,6 +663,181 @@ describe Ability do
                           :environment => @environment)
         @space = Factory(:space, :owner => @env_admin, :course => @course)
         @subject = Factory(:subject, :owner => @env_admin, :space => @space)
+
+        @lecture_page = Factory(:lecture, :subject => @subject,
+                                :lectureable => Factory(:page))
+        @lecture_exercise = Factory(:lecture, :subject => @subject,
+                                    :lectureable => Factory(:complete_exercise))
+        @lecture_seminar = Factory(:lecture, :subject => @subject,
+                                   :lectureable => Factory(:seminar_youtube))
+        mock_scribd_api
+        @lecture_document = Factory(:lecture, :subject => @subject,
+                                    :lectureable => Factory(:document))
+
+        @course.join @teacher, Role[:teacher]
+        @course.join @tutor, Role[:tutor]
+        @course.join @member, Role[:member]
+      end
+
+      context "environment_admin" do
+        before do
+          @ability = Ability.new(@env_admin)
+        end
+
+        context "can manage all kinds of lectures" do
+          it "(page)" do
+            @ability.should be_able_to(:manage, @lecture_page)
+          end
+          it "(exercise)" do
+            @ability.should be_able_to(:manage, @lecture_exercise)
+          end
+          it "(seminar)" do
+            @ability.should be_able_to(:manage, @lecture_seminar)
+          end
+          it "(document)" do
+            @ability.should be_able_to(:manage, @lecture_document)
+          end
+        end
+
+        context "can update many kinds of lectures" do
+          it "(page)" do
+            @ability.should be_able_to(:update, @lecture_page)
+          end
+
+          it "(exercise)" do
+            @ability.should be_able_to(:update, @lecture_exercise)
+          end
+        end
+
+
+        context "can NOT update many kinds of lectures" do
+          it "(seminar)" do
+            @ability.should_not be_able_to(:update, @lecture_seminar)
+          end
+
+          it "(document)" do
+            @ability.should_not be_able_to(:update, @lecture_document)
+          end
+
+          it "(exercise) with that was already answered" do
+            Factory(:finalized_result, :exercise => @lecture_exercise.lectureable)
+            @lecture_exercise.lectureable.reload
+            @ability.should_not be_able_to(:update, @lecture_exercise)
+          end
+        end
+      end
+
+      context "teacher" do
+        before do
+          @ability = Ability.new(@teacher)
+        end
+
+        context "can manage all kinds of lectures" do
+          it "(page)" do
+            @ability.should be_able_to(:manage, @lecture_page)
+          end
+          it "(exercise)" do
+            @ability.should be_able_to(:manage, @lecture_exercise)
+          end
+          it "(seminar)" do
+            @ability.should be_able_to(:manage, @lecture_seminar)
+          end
+          it "(document)" do
+            @ability.should be_able_to(:manage, @lecture_document)
+          end
+        end
+
+        context "can update many kinds of lectures" do
+          it "(page)" do
+            @ability.should be_able_to(:update, @lecture_page)
+          end
+
+          it "(exercise)" do
+            @ability.should be_able_to(:update, @lecture_exercise)
+          end
+        end
+
+
+        context "can NOT update many kinds of lectures" do
+          it "(seminar)" do
+            @ability.should_not be_able_to(:update, @lecture_seminar)
+          end
+          it "(document)" do
+            @ability.should_not be_able_to(:update, @lecture_document)
+          end
+        end
+      end
+
+      context "tutor" do
+        before do
+          @ability = Ability.new(@tutor)
+        end
+
+        context "can NOT manage all kinds of lectures" do
+          it "(page)" do
+            @ability.should_not be_able_to(:manage, @lecture_page)
+          end
+          it "(exercise)" do
+            @ability.should_not be_able_to(:manage, @lecture_exercise)
+          end
+          it "(seminar)" do
+            @ability.should_not be_able_to(:manage, @lecture_seminar)
+          end
+          it "(document)" do
+            @ability.should_not be_able_to(:manage, @lecture_document)
+          end
+        end
+
+        context "can NOT update all kinds of lectures" do
+          it "(page)" do
+            @ability.should_not be_able_to(:update, @lecture_page)
+          end
+          it "(exercise)" do
+            @ability.should_not be_able_to(:update, @lecture_exercise)
+          end
+          it "(seminar)" do
+            @ability.should_not be_able_to(:update, @lecture_seminar)
+          end
+          it "(document)" do
+            @ability.should_not be_able_to(:update, @lecture_document)
+          end
+        end
+      end
+
+      context "member" do
+        before do
+          @ability = Ability.new(@member)
+        end
+
+        context "can NOT manage all kinds of lectures" do
+          it "(page)" do
+            @ability.should_not be_able_to(:manage, @lecture_page)
+          end
+          it "(exercise)" do
+            @ability.should_not be_able_to(:manage, @lecture_exercise)
+          end
+          it "(seminar)" do
+            @ability.should_not be_able_to(:manage, @lecture_seminar)
+          end
+          it "(document)" do
+            @ability.should_not be_able_to(:manage, @lecture_document)
+          end
+        end
+
+        context "can NOT update all kinds of lectures" do
+          it "(page)" do
+            @ability.should_not be_able_to(:update, @lecture_page)
+          end
+          it "(exercise)" do
+            @ability.should_not be_able_to(:update, @lecture_exercise)
+          end
+          it "(seminar)" do
+            @ability.should_not be_able_to(:update, @lecture_seminar)
+          end
+          it "(document)" do
+            @ability.should_not be_able_to(:update, @lecture_document)
+          end
+        end
       end
     end
 

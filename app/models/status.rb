@@ -11,7 +11,9 @@ class Status < ActiveRecord::Base
 
   accepts_nested_attributes_for :status_resources
   validates_associated :status_resources
-  validates :type, :inclusion => { :in => %w(Status Activity Help Answer Log) }
+  validates :type, :inclusion => {
+    :in => %w(Status Activity Help Answer Log CompoundLog)
+  }
 
   scope :activity_by_user, lambda { |u|
     where("type = ? AND user_id = ?", "Activity", u) }
@@ -30,6 +32,9 @@ class Status < ActiveRecord::Base
   scope :recent_from_hierarchy, lambda { |c|
     where(build_conditions(c)).where('created_at > ?', 1.week.ago)
   }
+
+  # Retorna apenas status visíveis
+  scope :visible, where(:compound => false)
 
   # Constrói as condições de busca de status dentro da hierarquia. Aceita
   # Course, Space e Lecture como raiz
