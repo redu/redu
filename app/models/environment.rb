@@ -9,7 +9,7 @@ class Environment < ActiveRecord::Base
 
   has_many :courses, :dependent => :destroy
   has_many :user_environment_associations, :dependent => :destroy
-  belongs_to :owner, :class_name => "User", :foreign_key => "owner"
+  belongs_to :owner, :class_name => "User", :foreign_key => "user_id"
   has_many :users, :through => :user_environment_associations
   # environment_admins
   has_many :administrators, :through => :user_environment_associations,
