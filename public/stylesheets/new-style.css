@@ -5762,6 +5762,7 @@ div.token-input-dropdown {
 
 #admin-invitations .token-input-list input {
   margin: 0;
+  border: none;
 }
 
 #admin-invitations .common input[type=text] {
