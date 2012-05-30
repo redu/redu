@@ -40,7 +40,7 @@ describe SpacesController do
 
       application = ClientApplication.create(:name => "ReduViz",
                                              :url => "http://www.redu.com.br")
-      AccessToken.create(:client_application => application, :user => user)
+      Oauth2Token.create(:client_application => application, :user => user)
     end
 
     context "subject participation" do
