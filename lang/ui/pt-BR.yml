@@ -163,6 +163,8 @@ pt-BR:
       space:
         name: "Nome"
         description: "Descrição"
+      status:
+        text: "Texto"
       question:
         statement: "Enunciado"
         explanation: "Justificativa"
