@@ -28,7 +28,7 @@ describe UserCourseInvitation do
     end
   end
 
-  context "retrievers" do
+  context do
     before do
       @invites = (1..5).collect { Factory(:user_course_invitation) }
       @invites.each {|i| i.invite! }
@@ -48,14 +48,6 @@ describe UserCourseInvitation do
                                                      :email => email) }
 
       UserCourseInvitation.with_email(email).should == same_email_invites
-    end
-
-    it "retrivers invitations with state 'approved'" do
-      @invites[0..2].each do |i|
-        i.user = Factory(:user)
-        i.accept!
-      end
-      UserCourseInvitation.invitations_approved.should == @invites[0..2]
     end
   end
 
@@ -80,7 +72,8 @@ describe UserCourseInvitation do
 
       it "sends an email" do
         subject.reload
-        UserNotifier.deliveries.last.subject.should =~ /Você foi convidado para realizar um curso a distância/
+        UserNotifier.deliveries.last.subject.should =~
+          /Você foi convidado para realizar um curso a distância/
         UserNotifier.deliveries.last.body.should =~ /#{subject.course.name}/
       end
     end
@@ -105,6 +98,13 @@ describe UserCourseInvitation do
         assoc.course.should == subject.course
         assoc.user.should == subject.user
         assoc.should be_invited
+      end
+
+      it "should destroy itself" do
+        subject.user = Factory(:user)
+        expect {
+          subject.accept!
+        }.should change(UserCourseInvitation, :count).by(-1)
       end
     end
   end

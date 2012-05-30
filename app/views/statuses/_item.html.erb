@@ -1,116 +1,16 @@
 <%# Status e suas respostas  %>
 
-<li id="status-<%= item.id %>">
-  <% if item.type.eql? 'Log' %>
-    <% if item.logeable_type.eql?('User') || item.logeable_type.eql?('Education') || item.logeable_type.eql?('Experience') %>
-      <div class="status">
-        <div class="status-text">
-          <%= render "statuses/user_detail", :item => item %>
-          <span class="status-info"> <%= raw auto_link(item.action_text) %></span>
-          <span class="date">
-            <%= time_ago_in_words item.created_at %>
-          </span>
-        </div>
-      </div>
-    <% elsif (item.logeable_type.eql? 'Friendship') %>
-      <div class="status icons-big-after icon-contact-lightblue_64_66-after">
-        <div class="status-text">
-          <%= render "statuses/user_detail", :item => item %>
-          <span class="status-info"> <%= raw auto_link(item.action_text) %></span>
-          <span class="date">
-            <%= time_ago_in_words item.created_at %>
-          </span>
-        </div>
-        <div class="status-content">
-          <%= image_tag item.logeable.friend.avatar.url(:thumb_32), :width => 32, :height => 32, :class => 'friend-avatar' %>
-          <%= link_to item.logeable.friend.display_name, user_path(item.logeable.friend), :class => "username" %>
-          <span class="friend-summary">
-          </span>
-        </div>
-      </div>
-    <% elsif item.logeable_type.eql? 'Course' %>
-      <div class="status icons-big-after icon-course-lightblue_64_66-after">
-        <div class="status-context">
-          <span class="status-subject icon-small icon-environment-lightblue_32_34">
-          </span>
-          <%= link_to item.logeable.environment.name, environment_path(item.logeable.environment), :class => "status-main" %>
-          <%= link_to item.logeable.name, environment_course_path(item.logeable.environment, item.logeable), :class => "status-secondary icon-expand-gray_8_10-before" %>
-        </div>
-        <div class="status-log">
-          <%= render "statuses/user_image", :item => item %>
-          <div class="status-icon icon-<%= item.user ? role_at(item.user, item.logeable) : "member" %>-gray_16_18-before">
-            <%= render "statuses/user_name", :item => item %>
-            <span class="status-info"> <%= raw auto_link(item.action_text) %></span>
-            <%= link_to item.logeable.name, environment_course_path(item.logeable.environment, item.logeable), :class => "status-secondary icon-expand-gray_16_18-before" %>
-            <span class="date">
-              <%= time_ago_in_words item.created_at %>
-            </span>
-          </div>
-        </div>
-      </div>
-    <% elsif item.logeable_type.eql? 'Space' %>
-      <div class="status icons-big-after icon-course-lightblue_64_66-after">
-        <div class="status-context">
-          <span class="status-subject icon-small icon-environment-lightblue_32_34">
-          </span>
-          <%= link_to item.logeable.course.environment.name, environment_path(item.logeable.course.environment), :class => "status-main" %>
-          <%= link_to item.logeable.course.name, environment_course_path(item.logeable.course.environment, item.logeable.course), :class => "status-secondary icon-expand-gray_8_10-before" %>
-        </div>
-        <div class="status-log">
-          <%= render "statuses/user_image", :item => item %>
-          <div class="status-icon icon-<%= item.user ? role_at(item.user, item.logeable) : "member" %>-gray_16_18-before">
-            <%= render "statuses/user_name", :item => item %>
-            <span class="status-info"> <%= raw auto_link(item.action_text) %></span>
-            <%= link_to item.logeable.name, space_path(item.logeable), :class => "status-secondary icon-expand-gray_16_18-before" %>
-            <span class="date">
-              <%= time_ago_in_words item.created_at %>
-            </span>
-          </div>
-        </div>
-      </div>
-    <% elsif item.logeable_type.eql? 'Subject' %>
-      <div class="status icons-big-after icon-space-lightblue_64_66-after">
-        <div class="status-context">
-          <span class="status-subject icon-small icon-course-lightblue_32_34">
-          </span>
-          <%= link_to item.logeable.space.course.name, environment_course_path(item.logeable.space.course.environment, item.logeable.space.course), :class => "status-main" %>
-          <%= link_to item.logeable.name, space_subject_path(item.logeable.space, item.logeable), :class => "status-secondary icon-expand-gray_8_10-before" %>
-        </div>
-        <div class="status-log">
-          <%= render "statuses/user_image", :item => item %>
-          <div class="status-icon icon-<%= item.user ? role_at(item.user, item.logeable) : "member" %>-gray_16_18-before">
-            <%= render "statuses/user_name", :item => item %>
-            <span class="status-info"> <%= raw auto_link(item.action_text) %></span>
-            <%= link_to item.logeable.name, space_subject_path(item.logeable.space, item.logeable), :class => "status-secondary icon-expand-gray_16_18-before" %>
-            <span class="date">
-            <%= time_ago_in_words item.created_at %>
-            </span>
-          </div>
-        </div>
-      </div>
-    <% elsif item.logeable_type.eql? 'Lecture' %>
-      <div class="status icons-big-after icon-document-lightblue_64_66-after">
-        <div class="status-context">
-          <span class="status-subject icon-small icon-space-lightblue_32_34">
-          </span>
-          <%= link_to item.logeable.subject.space.name, space_path(item.logeable.subject.space), :class => "status-main" %>
-          <%= link_to item.logeable.subject.name, space_subject_lecture_path(item.logeable.subject.space, item.logeable.subject, item.logeable), :class => "status-secondary icon-expand-gray_8_10-before" %>
-        </div>
-        <div class="status-log">
-          <%= render "statuses/user_image", :item => item %>
-          <div class="status-icon icon-<%= item.user ? role_at(item.user, item.logeable) : "member" %>-gray_16_18-before">
-            <%= render "statuses/user_name", :item => item %>
-            <span class="status-info"><%= raw item.action_text %></span>
-            <%= link_to item.logeable.name, space_subject_lecture_path(item.logeable.subject.space, item.logeable.subject, item.logeable) %>
-            <span class="date">
-              <%= time_ago_in_words item.created_at %>
-            </span>
-          </div>
-        </div>
-      </div>
+<% if item.type.eql? 'Log' %>
+  <%= render "statuses/log", :log => item %>
+<% elsif item.type.eql? 'CompoundLog' %>
+    <% if item.logeable_type.eql? 'Friendship' %>
+      <%= render 'statuses/friendship_compound', :compound => item %>
+    <% elsif item.logeable_type.eql? 'UserCourseAssociation' %>
+      <%= render 'statuses/uca_compound', :compound => item %>
     <% end %>
-  <% else %>
-    <% if item.statusable_type.eql?('Lecture') && item.type == 'Help' %>
+<% else %>
+  <% if item.statusable_type.eql?('Lecture') && item.type == 'Help' %>
+    <li id="status-<%= item.id %>">
       <div class="status">
         <div class="status-context icons-big-after icon-request-help-orange_64_66-after">
           <span class="status-subject icon-small icon-course-lightblue_32_34">
@@ -135,7 +35,9 @@
             :locals => { :in_response_to => item }%>
         </div>
       </div>
-    <% elsif item.statusable_type.eql?('Lecture') %>
+    </li>
+  <% elsif item.statusable_type.eql?('Lecture') %>
+    <li id="status-<%= item.id %>">
       <div class="status">
         <div class="status-context">
           <span class="status-subject icon-small icon-course-lightblue_32_34">
@@ -159,7 +61,9 @@
             :locals => { :in_response_to => item }%>
         </div>
       </div>
-    <% elsif item.statusable_type.eql?('Space') %>
+    </li>
+  <% elsif item.statusable_type.eql?('Space') %>
+    <li id="status-<%= item.id %>">
       <div class="status">
         <div class="status-context">
           <span class="status-subject icon-small icon-course-lightblue_32_34">
@@ -183,17 +87,20 @@
             :locals => { :in_response_to => item }%>
         </div>
       </div>
-    <% else %>
-    <div class="status">
-      <div class="status-text">
-        <%= image_tag (item.user ? item.user.avatar.url(:thumb_32) : "/images/new/missing_users_thumb_32.png"),
-          :class => "avatar", :width => 32, :height => 32 %>
-        <% if item.user %>
-          <%= link_to item.user.display_name, user_path(item.user), :class => "username" %>
-        <% else %>
-          <span class="username">[Usuário Removido]</span>
-        <% end %>
-        <span class="status-info">
+    </li>
+  <% else %>
+    <li id="status-<%= item.id %>">
+      <div class="status">
+        <div class="status-text">
+          <%= image_tag (item.user ? item.user.avatar.url(:thumb_32) : "/images/new/missing_users_thumb_32.png"),
+            :class => "avatar", :width => 32, :height => 32 %>
+          <% if item.user %>
+            <%= link_to item.user.display_name, user_path(item.user), :class => "username" %>
+          <% else %>
+            <span class="username">[Usuário Removido]</span>
+          <% end %>
+
+          <span class="status-info">
           <% if item.statusable_type.eql?('User') %>
             <% unless item.statusable.eql?(current_user) %>
               comentou no mural de <%= link_to item.statusable.display_name, show_mural_user_path(item.statusable) %>
@@ -201,17 +108,17 @@
               comentou no <%= link_to "seu próprio mural", show_mural_user_path(current_user) %>
             <% end %>
           <% end %>
-        </span>
-        <span class="date">
-          <%= time_ago_in_words item.created_at %>
-        </span>
+          </span>
+          <span class="date">
+            <%= time_ago_in_words item.created_at %>
+          </span>
+        </div>
+        <%= render 'statuses/resource', :status => item %>
+        <%= render 'statuses/responses', :status => item %>
+        <%= render 'statuses/actions', :status => item %>
+        <%= render :partial => 'statuses/create_response',
+          :locals => { :in_response_to => item } %>
       </div>
-      <%= render 'statuses/resource', :status => item %>
-      <%= render 'statuses/responses', :status => item %>
-      <%= render 'statuses/actions', :status => item %>
-      <%= render :partial => 'statuses/create_response',
-        :locals => { :in_response_to => item }%>
-    </div>
-    <% end %>
+    </li>
   <% end %>
-</li>
+<% end %>

@@ -25,6 +25,7 @@ Redu::Application.configure do
 
   # Nome e URL do app
   config.url = "0.0.0.0:3000"
+  config.representer.default_url_options = {:host => "127.0.0.1:3000"}
 
   config.action_mailer.default_url_options = { :host => config.url }
   config.action_mailer.asset_host = config.url

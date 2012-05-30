@@ -15,7 +15,7 @@ class SpacesController < BaseController
   Browser = Struct.new(:browser, :version)
 
   UNSUPPORTED_BROWSERS = [
-    Browser.new("Internet Explorer", "8.0")
+    Browser.new("Internet Explorer")
   ]
 
   rescue_from CanCan::AccessDenied do |exception|
@@ -24,7 +24,7 @@ class SpacesController < BaseController
   end
 
   def admin_members
-    @memberships = @space.user_space_associations.approved.
+    @memberships = @space.user_space_associations.
       paginate(:page => params[:page],:order => 'updated_at DESC',
                :per_page => Redu::Application.config.items_per_page)
 
@@ -148,9 +148,6 @@ class SpacesController < BaseController
 
     respond_to do |format|
       if @space.update_attributes(params[:space])
-        if params[:space][:subscription_type].eql? "1" # Entrada de membros passou a ser livre, aprovar todos os membros pendentes
-          UserSpaceAssociation.update_all("status = 'approved'", ["space_id = ? AND status = 'pending'", @space.id])
-        end
         flash[:notice] = 'A disciplina foi atualizada com sucesso!'
         format.html { redirect_to(@space) }
         format.xml  { head :ok }
@@ -175,8 +172,8 @@ class SpacesController < BaseController
   end
 
   def subject_participation_report
-    @user_agent = UserAgent.parse(request.user_agent)
-    @browser_not_supported = self.is_browser_unsupported?
+    user_agent = UserAgent.parse(request.user_agent)
+    @browser_not_supported = self.is_browser_unsupported?(user_agent)
 
     respond_to do |format|
       format.html { render "spaces/admin/subject_participation_report" }
@@ -184,6 +181,9 @@ class SpacesController < BaseController
   end
 
   def lecture_participation_report
+    user_agent = UserAgent.parse(request.user_agent)
+    @browser_not_supported = self.is_browser_unsupported?(user_agent)
+
     respond_to do |format|
       format.html { render "spaces/admin/lecture_participation_report" }
     end
@@ -213,12 +213,11 @@ class SpacesController < BaseController
     @environment = @course.environment
   end
 
-  def is_browser_unsupported?
-    current_browser = Browser.new(@user_agent.browser, @user_agent.version)
+  def is_browser_unsupported?(user_agent)
+    current_browser = Browser.new(user_agent.browser, user_agent.version)
     browser = UNSUPPORTED_BROWSERS[0].browser
-    version = UNSUPPORTED_BROWSERS[0].version
 
-    if current_browser.browser == browser && current_browser.version <= version
+    if current_browser.browser == browser
       return true
     else
       return false

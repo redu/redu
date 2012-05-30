@@ -69,12 +69,18 @@ namespace :bootstrap do
   task :partner => :environment do
     Partner.create(:name => "CNS",
                    :email => "cns@redu.com.br",
-                   :cnpj => "123445667",
+                   :cnpj => "12.123.123/1234-12",
                    :address => "Beaker street")
+  end
+
+  desc "Create OAuth Client Application for ReduViz"
+  task :reduvis_app => :environment do
+    ClientApplication.create(:name => "ReduViz",
+                             :url => "http://www.redu.com.br")
   end
 
   desc "Run all bootstrapping tasks"
   task :all => [:roles, :privacies, :audiences,
                 :default_user, :default_admin,
-                :partner]
+                :partner, :reduvis_app]
 end

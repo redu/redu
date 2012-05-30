@@ -1,6 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+require 'oauth/rack/oauth_filter'
 
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.
@@ -77,6 +78,7 @@ module Redu
     config.desc_char_limit = 200
 
     config.session_store = :active_record_store
+    config.representer.default_url_options = {:host => "127.0.0.1:3000"}
 
     # ActionMailer
     config.action_mailer.raise_delivery_errors = true
@@ -196,12 +198,16 @@ module Redu
                                         :education_observer,
                                         :experience_observer,
                                         :enrollment_observer,
-                                        :result_observer,
-                                        :user_course_association_observer]
+                                        :log_observer,
+                                        :user_course_association_observer,
+                                        :result_observer]
     end
 
     # Redu logger
     config.overview_logger = YAML.load_file("#{Rails.root}/config/logs.yml")
     config.overview_logger = config.overview_logger['config']
+
+    #Oauth
+    config.middleware.use OAuth::Rack::OAuthFilter
   end
 end

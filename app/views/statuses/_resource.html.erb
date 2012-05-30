@@ -1,6 +1,6 @@
 <div class="status-contents">
   <div class="distance-top"></div>
-  <p class="status-message"><%= raw auto_link(h(status.text).gsub(/\n/, '</br>'))%></p>
+  <p class="status-message"><%= status_message(status.text) %></p>
 
   <% if status.status_resources.first %>
     <div class="post-resource">

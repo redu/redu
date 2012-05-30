@@ -54,6 +54,7 @@ javascripts:
     - public/javascripts/highcharts/highcharts.js
     - public/javascripts/d3/d3.js
     - public/javascripts/d3/d3.chart.js
+    - public/javascripts/jquery.form.js
     - public/javascripts/teacher_participation.js
     - public/javascripts/subject_participation.js
     - public/javascripts/lectures_participation.js
@@ -98,7 +99,7 @@ stylesheets:
     - public/stylesheets/lectures.css
     - public/stylesheets/exercises.css
     - public/stylesheets/outdated-browser.css
-    - public/stylesheets/bullet-chart.css
+    - public/stylesheets/chart.css
   ie:
     - public/stylesheets/ie.css
   ie8:
@@ -135,3 +136,6 @@ stylesheets:
     - public/stylesheets/new-fonts.css
     - public/stylesheets/new-style.css
     - public/stylesheets/print.css
+  page:
+    - public/stylesheets/reset.css
+    - public/stylesheets/new-fonts.css
