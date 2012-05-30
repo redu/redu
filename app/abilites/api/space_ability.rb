@@ -14,12 +14,11 @@ module Api
               exists?(:user_id => user, :role => @teacher_role)
           end
           can :read, Space do |s|
-            s.user_space_associations.approved.
-              exists?(:user_id => user)
+            s.user_space_associations.exists?(:user_id => user)
           end
           can :manage, Space do |s|
-            s.user_space_associations.approved.
-              exists?(:user_id => user, :role => @administrative_roles)
+            s.user_space_associations.exists?(:user_id => user,
+                                              :role => @administrative_roles)
           end
         end
       end

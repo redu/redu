@@ -7,12 +7,7 @@ module StatusesHelper
   end
 
   def status_message(msg)
-    # Processa quebras de linha
-    status = msg.gsub(/\n/, '</br>')
-
-    # Processa aspas envolvendo links
-    status = h(status).gsub(/&quot;/, '"')
-
-    raw auto_link(status)
+    # Processa aspas envolvendo links e quebras de linha
+    raw auto_link(h(msg).gsub(/\n/, '</br>').gsub(/&quot\;/, '"'))
   end
 end

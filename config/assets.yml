@@ -99,7 +99,7 @@ stylesheets:
     - public/stylesheets/lectures.css
     - public/stylesheets/exercises.css
     - public/stylesheets/outdated-browser.css
-    - public/stylesheets/bullet-chart.css
+    - public/stylesheets/chart.css
   ie:
     - public/stylesheets/ie.css
   ie8:

@@ -14,7 +14,7 @@ class Lecture < ActiveRecord::Base
   #FIXME Falta testar
   has_many :favorites, :as => :favoritable, :dependent => :destroy
   has_many :asset_reports, :dependent => :destroy
-  belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
+  belongs_to :owner , :class_name => "User" , :foreign_key => "user_id"
   belongs_to :lectureable, :polymorphic => true, :dependent => :destroy
   belongs_to :subject
 

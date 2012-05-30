@@ -44,6 +44,8 @@ describe Course do
   it { should_not allow_mass_assignment_of :published }
   it { should_not allow_mass_assignment_of :environment }
 
+  it { Course.new.should respond_to(:notify).with(1).argument}
+
 
   context "validations" do
     it "ensure format for path: doesn't accept no ascii" do
@@ -708,6 +710,28 @@ describe Course do
           UserNotifier.deliveries.last.subject.should =~ /Você foi convidado para realizar um curso a distância/
             UserNotifier.deliveries.last.body.should =~ /#{invitation.course.name}/
         end
+      end
+    end
+  end
+
+  context "when 3 or more people are enrolling to courses" do
+    before do
+      @users = 3.times.collect { Factory(:user) }
+
+      ActiveRecord::Observer.with_observers(
+        :user_course_association_observer,
+        :log_observer,
+        :status_observer) do
+          @users.each { |user| subject.join(user) }
+      end
+      @course_compounds = CompoundLog.where(:statusable_id => subject.id)
+    end
+
+    it "should notify all users approved in course about compound log" do
+      subject.approved_users.each do |user|
+        StatusUserAssociation.where(
+          :user_id => user.id,
+          :status_id => @course_compounds.last.id).should_not be_empty
       end
     end
   end

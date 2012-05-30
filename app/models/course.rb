@@ -10,7 +10,7 @@ class Course < ActiveRecord::Base
   has_many :user_course_associations, :dependent => :destroy
   has_many :user_course_invitations, :dependent => :destroy
   has_many :course_enrollments
-  belongs_to :owner, :class_name => "User", :foreign_key => "owner"
+  belongs_to :owner, :class_name => "User", :foreign_key => "user_id"
   has_many :users, :through => :user_course_associations
   has_many :approved_users, :through => :user_course_associations,
     :source => :user, :conditions => [ "course_enrollments.state = ?",
@@ -181,6 +181,11 @@ class Course < ActiveRecord::Base
     delay_hierarchy_notification(subjects_finalized, "remove_subject_finalized")
   end
 
+
+  def notify(compound_log)
+    Status.associate_with(compound_log, self.approved_users.select('users.id'))
+  end
+
   def create_hierarchy_associations(user, role = Role[:member])
     enrollments = []
     # FIXME mudar estado do user_course_association para approved
@@ -192,11 +197,9 @@ class Course < ActiveRecord::Base
 
     self.create_license(user, role)
     self.spaces.each do |space|
-      #FIXME tirar status quando remover moderacao de space
       UserSpaceAssociation.create(:user_id => user.id,
                                   :space_id => space.id,
-                                  :role => role,
-                                  :status => "approved")
+                                  :role => role)
 
       # Cria as associações com os subjects
       space.subjects.each do |subject|
