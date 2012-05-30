@@ -43,6 +43,7 @@ javascripts:
     - public/javascripts/underscore.js
     - public/javascripts/underscore-sharing-template.redu.jquery.js
     - public/javascripts/embedly.redu.jquery.js
+    - public/javascripts/canvas.js
   chat:
     - public/javascripts/jquery.pjax.js
     - public/javascripts/pusher.js
@@ -100,6 +101,7 @@ stylesheets:
     - public/stylesheets/exercises.css
     - public/stylesheets/outdated-browser.css
     - public/stylesheets/chart.css
+    - public/stylesheets/canvas.css
   ie:
     - public/stylesheets/ie.css
   ie8:
@@ -136,3 +138,6 @@ stylesheets:
     - public/stylesheets/new-fonts.css
     - public/stylesheets/new-style.css
     - public/stylesheets/print.css
+  page:
+    - public/stylesheets/reset.css
+    - public/stylesheets/new-fonts.css

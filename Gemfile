@@ -64,6 +64,7 @@ gem 'vis_client', :git => "git@github.com:redu/vis_client.git"
 gem "oauth-plugin", '~> 0.4.0'
 gem 'roar-rails', '~> 0.0.3',
   :git => 'git://github.com/apotonick/roar-rails.git'
+gem 'rack-cors', :require => 'rack/cors'
 
 # Gems específicos de algum ambiente
 group :development, :test do
