@@ -3,10 +3,16 @@ class StatusesController < BaseController
   load_and_authorize_resource :status, :except => [:index]
 
   def create
-    @status = Status.new(params[:status])
-    @status.type = params[:status][:type]
+    @status = Status.new(params[:status]) do |s|
+      s.user = current_user
+      s.type = params[:status].fetch(:type, 'Activity').camelize
+    end
 
-    @status.user = current_user
+    # A chamada do becomes não preveserva nested attributes não persistidos
+    # no banco de dados, logo, estes devem ser carregados separadamente.
+    resources = @status.status_resources
+    @status = @status.becomes(@status.type.constantize)
+    @status.status_resources = resources
 
     respond_to do |format|
       if @status.save
