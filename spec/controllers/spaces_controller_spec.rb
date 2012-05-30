@@ -37,6 +37,10 @@ describe SpacesController do
 
       activate_authlogic
       UserSession.create user
+
+      application = ClientApplication.create(:name => "ReduViz",
+                                             :url => "http://www.redu.com.br")
+      AccessToken.create(:client_application => application, :user => user)
     end
 
     context "subject participation" do
@@ -53,6 +57,11 @@ describe SpacesController do
         supported = assigns[:browser_not_supported]
         supported.should_not be_true
       end
+
+      it "assign a valid token" do
+        token = assigns[:token]
+        token.should eq(AccessToken.first.token)
+      end
     end
 
     context "lecture participation" do
@@ -63,6 +72,11 @@ describe SpacesController do
 
       it "when successful" do
         response.should render_template "spaces/admin/lecture_participation_report"
+      end
+
+      it "assign a valid token" do
+        token = assigns[:token]
+        token.should eq(AccessToken.first.token)
       end
 
       it "browser should be supported" do
