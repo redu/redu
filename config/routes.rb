@@ -1,5 +1,4 @@
 Redu::Application.routes.draw do
-
   resources :oauth_clients
 
   match '/oauth/test_request',  :to => 'oauth#test_request',  :as => :test_request
@@ -106,6 +105,7 @@ Redu::Application.routes.draw do
     end
 
     resources :users, :only => [:index]
+    resources :canvas, :only => [:show]
  end
 
   resources :exercises, :only => :show do
@@ -276,6 +276,10 @@ end
 ActionDispatch::Routing::Translator.translate_from_file('lang/i18n-routes.yml')
 
 Redu::Application.routes.draw do
+  get "canvas/show"
+
+  get "canvas/index"
+
   namespace 'api' do
     resources :environments, :except => [:new, :edit] do
       resources :courses, :except => [:new, :edit], :shallow => true

@@ -185,6 +185,15 @@ class Ability
          (lec.is_a?(Exercise) && lec.has_results?)) &&
          (can? :manage, lecture)
       end
+
+      # Canvas
+      can :read, Api::Canvas do |canvas|
+        can? :read, canvas.container
+      end
+      cannot :read, Api::Canvas do |canvas|
+        cannot? :read, canvas.container
+      end
+
     end
   end
 end
