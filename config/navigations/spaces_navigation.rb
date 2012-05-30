@@ -19,6 +19,11 @@ SimpleNavigation::Configuration.run do |navigation|
       :link => { :class => 'icon-wall_16_18-before' }
     primary.item :files, 'Arquivos de Apoio', space_folders_path(@space),
       :link => { :class => 'icon-file_16_18-before' }
+    @space.canvas.each do |canvas|
+      primary.item :canvas, canvas.client_application.name,
+        space_canvas_path(@space),
+        :link => { :class => 'icon-file_16_18-before' }
+    end
     primary.item :members, "Membros: #{@space.users.count}",
       space_users_path(@space), :class => 'big-separator',
       :link => { :class => 'icon-members_16_18-before' } do |tabs|

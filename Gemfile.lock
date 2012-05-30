@@ -208,7 +208,7 @@ GEM
     mime-types (1.17.1)
     mimemagic (0.1.8)
     multi_json (1.0.3)
-    multi_xml (0.4.2)
+    multi_xml (0.5.1)
     multipart-post (1.1.5)
     mysql2 (0.2.7)
     newrelic_rpm (3.0.1)
@@ -248,6 +248,8 @@ GEM
       ruby-hmac (~> 0.4.0)
       signature (~> 0.1.2)
     rack (1.2.5)
+    rack-cors (0.2.6)
+      rack
     rack-mount (0.6.14)
       rack (>= 1.0.0)
     rack-test (0.5.7)
@@ -274,7 +276,6 @@ GEM
     rd_searchlogic (3.0.1)
       activerecord (>= 3.0.0)
     rdoc (3.12)
-      json (~> 1.4)
     remotipart (1.0.2)
     representable (1.1.7)
       json
@@ -385,6 +386,7 @@ DEPENDENCIES
   pagseguro (~> 0.1.10)
   paperclip (~> 2.7)
   pusher
+  rack-cors
   rails (= 3.0.10)
   rails-footnotes (>= 3.7.5.rc4)
   rails3-generators

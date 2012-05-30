@@ -209,5 +209,10 @@ module Redu
 
     #Oauth
     config.middleware.use OAuth::Rack::OAuthFilter
+
+    config.vis_data_authentication = {
+      :password => "NyugAkSoP",
+      :username => "api-team"
+    }
   end
 end

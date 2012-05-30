@@ -17,14 +17,14 @@ class User < ActiveRecord::Base
   # Space
   has_many :spaces, :through => :user_space_associations
   has_many :user_space_associations, :dependent => :destroy
-  has_many :spaces_owned, :class_name => "Space" , :foreign_key => "owner"
+  has_many :spaces_owned, :class_name => "Space" , :foreign_key => "user_id"
   # Environment
   has_many :user_environment_associations, :dependent => :destroy
   has_many :environments, :through => :user_environment_associations
   has_many :user_course_associations, :dependent => :destroy
   has_many :course_enrollments, :dependent => :destroy
   has_many :environments_owned, :class_name => "Environment",
-    :foreign_key => "owner"
+    :foreign_key => "user_id"
   # Course
   has_many :courses, :through => :user_course_associations
   # Authentication
@@ -32,10 +32,10 @@ class User < ActiveRecord::Base
 
 
   #COURSES
-  has_many :lectures, :foreign_key => "owner",
+  has_many :lectures, :foreign_key => "user_id",
     :conditions => {:is_clone => false, :published => true}
   has_many :courses_owned, :class_name => "Course",
-    :foreign_key => "owner"
+    :foreign_key => "user_id"
   has_many :favorites, :order => "created_at desc", :dependent => :destroy
   enumerate :role
   has_many :recently_active_friends, :through => :friendships, :source => :friend,

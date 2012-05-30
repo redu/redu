@@ -26,18 +26,7 @@ var TeacherParticipationGraph = function () {
     },
     tooltip: {
       crosshairs: true,
-      shared: true,
-      formatter: function () {
-        var s = '<tspan style="font-weight:bold; text-align:center">'+this.x+'</tspan><br/>';
-        $.each(this.points, function (i) {
-          s += '<tspan style="fill:'+this.series.color+'">'
-            +this.series.name+'</tspan>'
-          s += '<span dx="3">: </span>'
-          s += '<span style="font-weight:bold; text-align:right" dx="3">'
-            +this.y+'</span><br/>'
-        })
-        return s;
-      }
+      shared: true
     },
     series: [{
       name: 'Quantidade de Aulas Criadas',
