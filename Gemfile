@@ -11,8 +11,7 @@ gem 'paperclip', '~> 2.7'
 gem 'will_paginate', '~> 3.0.pre2'
 gem 'mime-types'
 gem 'cancan', '~> 1.6.7'
-gem 'aasm', :require => "aasm",
-  :git => "git://github.com/rubyist/aasm.git"
+gem 'aasm'
 gem 'shuber-sortable'
 gem 'scribd_fu', :git => 'git://github.com/guiocavalcanti/scribd_fu.git',
   :branch => 'without-scape'
