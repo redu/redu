@@ -342,6 +342,7 @@ body {
 
 #content .sidebar .student-actions {
   margin: 40px 20px 30px 20px;
+  position: relative;
 }
 
 #content .sidebar .student-actions li {
