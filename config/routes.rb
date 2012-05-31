@@ -276,10 +276,6 @@ end
 ActionDispatch::Routing::Translator.translate_from_file('lang/i18n-routes.yml')
 
 Redu::Application.routes.draw do
-  get "canvas/show"
-
-  get "canvas/index"
-
   namespace 'api' do
     resources :environments, :except => [:new, :edit] do
       resources :courses, :except => [:new, :edit], :shallow => true
@@ -322,6 +318,8 @@ Redu::Application.routes.draw do
         get 'timeline', :on => :collection
       end
     end
+
+    match 'me' => 'users#show'
 
     resources :statuses, :only => [:show, :destroy] do
       resources :answers, :only => [:index, :create]
