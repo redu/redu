@@ -21,7 +21,7 @@ SimpleNavigation::Configuration.run do |navigation|
       :link => { :class => 'icon-file_16_18-before' }
     @space.canvas.each do |canvas|
       primary.item :canvas, canvas.client_application.name,
-        space_canvas_path(@space),
+        space_canvas_path(@space, canvas),
         :link => { :class => 'icon-file_16_18-before' }
     end
     primary.item :members, "Membros: #{@space.users.count}",
