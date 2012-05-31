@@ -3065,7 +3065,7 @@ body {
 #folder-admin .new-folder-inner,
 #folder-admin .new-file-inner {
   position: absolute;
-  z-index: 9999;
+  z-index: 1;
   border: 1px solid
 }
 
