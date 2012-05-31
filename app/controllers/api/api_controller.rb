@@ -20,6 +20,7 @@ module Api
 
     def not_found
       authorize! :read, :error
+
       respond_to do |format|
         format.json { render :nothing => true, :status => :not_found }
       end

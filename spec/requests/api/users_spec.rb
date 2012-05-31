@@ -1,11 +1,14 @@
 require "api_spec_helper"
 
 describe "User" do
+  before do
+    @user = Factory(:user, :mobile => "+55 (81) 9194-5317",
+                    :localization => "Recife", :birth_localization => "Recife")
+    @application, @current_user, @token = generate_token(@user)
+  end
+
   context "when GET /user/:id" do
     before do
-      @user = Factory(:user, :mobile => "+55 (81) 9194-5317",
-                      :localization => "Recife", :birth_localization => "Recife")
-      @application, @current_user, @token = generate_token(@user)
       get "/api/users/#{@user.id}", :oauth_token => @token, :format => 'json'
     end
 
@@ -22,37 +25,41 @@ describe "User" do
     end
 
     it "should link to itself" do
-      link = parse(response.body)['links'].detect { |l| l['rel'] == 'self' }
+      link = href_to('self', parse(response.body))
 
-      get link['href'], :oauth_token => @token, :format => 'json'
+      get link, :oauth_token => @token, :format => 'json'
       response.code.should == '200'
     end
 
     it "should link to enrollments" do
-      link = parse(response.body)['links'].detect { |l| l['rel'] == 'enrollments' }
-
+      link = href_to('enrollments', parse(response.body))
       link.should_not be_nil
     end
 
     it "should link to statuses" do
-      link = parse(response.body)['links'].detect { |l| l['rel'] == 'statuses' }
-
+      link = href_to('statuses', parse(response.body))
       link.should_not be_nil
     end
 
     it "should link to timeline" do
-      link = parse(response.body)['links'].detect { |l| l['rel'] == 'timeline' }
-
+      link = href_to('timeline', parse(response.body))
       link.should_not be_nil
+    end
+  end
+
+  context "when GET /me" do
+    it "should show current_user info" do
+      get "/api/me", :oauth_token => @token, :format => 'json'
+
+      parse(response.body)['id'].should == @current_user.id
     end
   end
 
   context "when listing users" do
     before do
-      @environment = Factory(:complete_environment)
+      @environment = Factory(:complete_environment, :owner => @current_user)
       @course = @environment.courses.first
       @space = @course.spaces.first
-      @application, @current_user, @token = generate_token(@course.owner)
 
       @members = 3.times.collect do
         user = Factory(:user)
