@@ -418,16 +418,21 @@ describe CoursesController do
         @course.join @user
         post :unjoin, @params
       end
+
       it "assigns course"
+      
       it "removes the user from itself" do
         @course.users.should_not include(@user)
       end
+      
       it "removes the user from all spaces" do
         @spaces.collect { |s| s.users.should_not include(@user) }
       end
+      
       it "removes the user from all enrolled subjects" do
         @subjects.collect { |s| s.members.should_not include(@user) }
       end
+      
       it "should remove user from environment" do
         @environment.users.should_not include(@user)
       end

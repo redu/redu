@@ -3,10 +3,11 @@ class SubjectObserver < ActiveRecord::Observer
     # model.notify_subject_added
     notification = NotifySubjectAddedJob.new(:subject_id => model)
     Delayed::Job.enqueue(notification, :queue => 'email')
-  end
 
-  def after_create(subject)
-    job = CreateEnrollmentJob.new(:subject_id => subject.id)
-    Delayed::Job.enqueue(job, :queue => 'general')
+    # Cria enrollments caso o subject tenha sido finalizado
+    if (model.finalized_changed? & model.finalized == true)
+      job = CreateEnrollmentJob.new(:subject_id => model.id)
+      Delayed::Job.enqueue(job, :queue => 'general')
+    end
   end
 end

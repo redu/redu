@@ -259,11 +259,6 @@ class CoursesController < BaseController
   def unjoin
     @course.unjoin current_user
 
-    # Desassocia o usuário do ambiente se ele não participar de outros cursos
-    unless (current_user.courses & @course.environment.courses).count > 0
-      current_user.get_association_with(@course.environment).destroy
-    end
-
     flash[:notice] = "Você não participa mais do curso #{@course.name}"
     redirect_to environment_course_path(@course.environment, @course)
   end
