@@ -297,7 +297,6 @@ Redu::Application.routes.draw do
         :path => 'enrollments', :as => 'enrollments'
 
     resources :spaces, :except => [:new, :edit, :index, :create] do
-      resources :lectures, :except => [:new, :edit], :shallow => true
       resources :subjects, :only => [:create, :index]
       resources :users, :only => :index
       resources :statuses, :only => [:index, :create] do
