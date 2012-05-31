@@ -1,11 +1,11 @@
-<% content_tag(:div, :class => "subject-participation-pie",
+<%= content_tag(:div, :class => "subject-participation-pie",
                :id => "subject-participation-pie-#{subject.id}") do %>
   <%= lazy_load(:chart, :jammit => true) do %>
     try{
       var pieSbjPar = subjectParticipationPie();
-      pieSbjPar.load("<%= api_vis_subject_activities_path(subject.id) %>",
+      pieSbjPar.load("<%= Redu::Application.config.vis[:activities] %>",
                      "subject-participation-pie-<%= subject.id %>",
-                     "<%= @token %>");
+                     "<%= subject.id %>");
     }catch(e){
     }
   <% end %>

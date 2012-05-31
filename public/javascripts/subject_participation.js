@@ -42,8 +42,8 @@ var subjectParticipationPie = function () {
     }
 
     // Carregamento do Pie Chart
-    var loadPie = function(ur, div, token) {
-      var url = ur + "?oauth_token=" + token;
+    var loadPie = function(ur, div, subject_id) {
+      var url = ur + "?subject_id=" + subject_id;
 
       // Requisição via AJAX puro para que funcione em todos os browsers
       $.ajax({
@@ -86,8 +86,8 @@ var subjectParticipationBullet = function () {
 
     // URL activities_d3
     // Carregamento do bullet
-    var loadBullet = function(ur, div, token){
-      var url = ur + "?oauth_token=" + token;
+    var loadBullet = function(ur, div, subject_id){
+      var url = ur + "?subject_id=" + subject_id;
 
       // Requisição via AJAX puro para que funcione em todos os browsers
       $.ajax({

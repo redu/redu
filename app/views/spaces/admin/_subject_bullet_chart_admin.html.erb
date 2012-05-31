@@ -1,11 +1,11 @@
-<% content_tag(:div, :class => "subject-participation-bullet",
+<%= content_tag(:div, :class => "subject-participation-bullet",
                :id => "subject-participation-bullet-#{subject.id}") do %>
   <%= lazy_load(:chart, :jammit => true) do %>
     try{
       var bulletSbjPar = subjectParticipationBullet();
-      bulletSbjPar.load("<%= api_vis_subject_activities_d3_path(subject.id) %>",
+      bulletSbjPar.load("<%= Redu::Application.config.vis[:activities_d3] %>",
                         "#subject-participation-bullet-<%= subject.id %>",
-                        "<%= @token %>");
+                        "<%= subject.id %>");
     }catch(e){
     }
   <% end %>

@@ -12,7 +12,7 @@
     <%= render :partial => 'spaces/admin/clean_header' %>
 
     <%= tabs :spaces_admin do %>
-      <% subtabs :spaces_admin do %>
+      <%= subtabs :spaces_admin do %>
         <div id="subject-chart-admin">
           <% if @browser_not_supported %>
             <%= render :partial =>'spaces/admin/disclaimer_chart' %>

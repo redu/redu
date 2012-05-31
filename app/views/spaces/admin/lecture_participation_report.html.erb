@@ -22,7 +22,7 @@
             graph.load({ chart:{ renderTo: "lecture-participation-chart" } ,
             form: $("#graph-form") });
           <% end %>
-          <%= form_tag api_vis_lecture_participation_path(@space.id), :method => :get,
+          <%= form_tag Redu::Application.config.vis[:lecture_participation], :method => :get,
             :remote => true, :class => "concave-form", :id => "graph-form" do %>
             <%= label_tag "", "Aulas", :id => "form-problem" %>
             <ul class="columns">
