@@ -1,0 +1,44 @@
+<div class="flash"><%= flash[:notice] %></div>
+<h1>Seus Aplicativos</h1>
+<% unless @tokens.empty? %>
+<p>Esses são os aplicativos que podem acessar sua conta.</p>
+<table>
+  <tr><th>Aplicativo</th><th>Registro</th><th>&nbsp;</th></tr>
+  <% @tokens.each do |token|%>
+    <% content_tag_for :tr, token do %>
+      <td><%= link_to token.client_application.name, token.client_application.url %></td>
+      <td><%= token.authorized_at %></td>
+      <td>
+        <% form_tag :controller => 'oauth', :action => 'revoke' do %>
+        <%= hidden_field_tag 'token', token.token %>
+        <%= submit_tag "Revogar Acesso" %>
+        <% end %>
+      </td>
+    <% end %>
+  <% end %>
+
+</table>
+<% end %>
+<hr/>
+<h3>Área do Desenvolvedor</h3>
+<% if @client_applications.empty? %>
+  <p>
+    Você tem um aplicativo que gostaria de registar utilizando o padrão <a href="http://oauth.net">OAuth</a>?
+  </p>
+  <p>
+    Você precisa registrar seu aplicativo antes de poder fazer requisições autorizadas para o Redu.
+  </p>
+<% else %>
+  <p>
+    Você tem os seguintes aplicativos registrados:
+  </p>
+  <% @client_applications.each do |client|%>
+    <%= div_for client do %>
+      <%= link_to client.name, oauth_client_path(client) %>-
+        <%= link_to 'Editar', edit_oauth_client_path(client) %>
+        <%= link_to 'Excluir', oauth_client_path(client), :confirm => "Você tem certeza?", :method => :delete %>
+    <% end %>
+  <% end %>
+<% end %>
+<br />
+<h3><%= link_to "Registre seu Aplicativo!", :action => :new %></h3>

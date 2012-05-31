@@ -14,7 +14,7 @@ class Lecture < ActiveRecord::Base
   #FIXME Falta testar
   has_many :favorites, :as => :favoritable, :dependent => :destroy
   has_many :asset_reports, :dependent => :destroy
-  belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
+  belongs_to :owner , :class_name => "User" , :foreign_key => "user_id"
   belongs_to :lectureable, :polymorphic => true, :dependent => :destroy
   belongs_to :subject
 
@@ -66,8 +66,13 @@ class Lecture < ActiveRecord::Base
   end
 
   def clone_for_subject!(subject_id)
-    clone = self.clone :include => :lectureable,
+    if self.lectureable.is_a?(Exercise)
+      nested_attrs = { :questions => :alternatives }
+    end
+
+    clone = self.clone :include => { :lectureable => nested_attrs },
       :except => [:rating_average, :view_count, :position, :subject_id]
+
     clone.is_clone = true
     clone.subject = Subject.find(subject_id)
     clone.save

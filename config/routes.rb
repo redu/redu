@@ -1,4 +1,24 @@
 Redu::Application.routes.draw do
+  resources :oauth_clients
+
+  match '/oauth/test_request',  :to => 'oauth#test_request',  :as => :test_request
+
+  match '/oauth/token',         :to => 'oauth#token',         :as => :token
+
+  match '/oauth/access_token',  :to => 'oauth#access_token',  :as => :access_token
+
+  match '/oauth/request_token', :to => 'oauth#request_token', :as => :request_token
+
+  match '/oauth/authorize',     :to => 'oauth#authorize',     :as => :authorize
+
+  match '/oauth',               :to => 'oauth#index',         :as => :oauth
+  match '/oauth/revoke', :to => 'oauth#revoke'
+
+  match '/oauth/revoke',        :to => 'oauth#revoke',        :as => :oauth_revoke
+
+  match '/oauth/invalidate',    :to => 'oauth#invalidate',    :as => :oauth_invalidate
+
+  match '/oauth/capabilities',  :to => 'oauth#capabilities',  :as => :oauth_capabilities
 
   post "presence/auth"
   post "presence/multiauth"
@@ -79,11 +99,13 @@ Redu::Application.routes.draw do
         member do
           post :rate
           post :done
+          get :page_content
         end
       end
     end
 
     resources :users, :only => [:index]
+    resources :canvas, :only => [:show]
  end
 
   resources :exercises, :only => :show do
@@ -251,5 +273,71 @@ Redu::Application.routes.draw do
 
 end
 
-ActionDispatch::Routing::Translator.translate_from_file('lang','i18n-routes.yml')
+ActionDispatch::Routing::Translator.translate_from_file('lang/i18n-routes.yml')
 
+Redu::Application.routes.draw do
+  get "canvas/show"
+
+  get "canvas/index"
+
+  namespace 'api' do
+    resources :environments, :except => [:new, :edit] do
+      resources :courses, :except => [:new, :edit], :shallow => true
+      resources :users, :only => :index
+    end
+
+    resources :courses, :except => [:new, :edit, :index, :create] do
+      resources :spaces, :except => [:new, :edit], :shallow => true
+      resources :users, :only => :index
+      resources :course_enrollments, :only => [:create, :index],
+        :path => 'enrollments', :as => 'enrollments'
+    end
+
+    resources :course_enrollments, :only => [:show, :destroy],
+        :path => 'enrollments', :as => 'enrollments'
+
+    resources :spaces, :except => [:new, :edit, :index, :create] do
+      resources :lectures, :except => [:new, :edit], :shallow => true
+      resources :subjects, :only => [:create, :index]
+      resources :users, :only => :index
+      resources :statuses, :only => [:index, :create] do
+        get 'timeline', :on => :collection
+      end
+    end
+
+    resources :subjects, :except => [:new, :edit, :index, :create] do
+      resources :lectures, :only => [:create, :index]
+    end
+
+    resources :lectures, :except => [:new, :edit, :index, :create] do
+      resources :user, :only => :index
+      resources :statuses, :only => [:index, :create]
+    end
+
+    resources :users, :only => :show do
+      resources :course_enrollments, :only => :index, :path => :enrollments,
+        :as => 'enrollments'
+      resources :spaces, :only => :index
+      resources :statuses, :only => [:index, :create] do
+        get 'timeline', :on => :collection
+      end
+    end
+
+    resources :statuses, :only => [:show, :destroy] do
+      resources :answers, :only => [:index, :create]
+    end
+
+    match "vis/spaces/:space_id/lecture_participation",
+      :to => 'vis#lecture_participation',
+      :as => :vis_lecture_participation
+    match "vis/subjects/:subject_id/subject_activities",
+      :to => 'vis#subject_activities',
+      :as => :vis_subject_activities
+    match "vis/subjects/:subject_id/subject_activities_d3",
+      :to => 'vis#subject_activities_d3',
+      :as => :vis_subject_activities_d3
+
+    # Hack para capturar exceções ActionController::RoutingError
+    match '*', :to => 'api#routing_error'
+  end
+end

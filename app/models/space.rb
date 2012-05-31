@@ -14,41 +14,26 @@ class Space < ActiveRecord::Base
   belongs_to :course
 
   # USERS
-  belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
+  belongs_to :owner , :class_name => "User" , :foreign_key => "user_id"
   has_many :user_space_associations, :dependent => :destroy
-  has_many :users, :through => :user_space_associations,
-    :conditions => ["user_space_associations.status LIKE 'approved'"]
+  has_many :users, :through => :user_space_associations
   # environment_admins
   has_many :administrators, :through => :user_space_associations,
-    :source => :user,
-    :conditions => \
-    [ "user_space_associations.role = ? AND user_space_associations.status = ?",
-      3, 'approved' ]
+    :source => :user, :conditions => ["user_space_associations.role = ?", 3]
   # teachers
   has_many :teachers, :through => :user_space_associations,
-    :source => :user,
-    :conditions => \
-    [ "user_space_associations.role = ? AND user_space_associations.status = ?",
-      5, 'approved' ]
+    :source => :user, :conditions => ["user_space_associations.role = ?", 5]
   # tutors
   has_many :tutors, :through => :user_space_associations,
-    :source => :user,
-    :conditions => \
-    [ "user_space_associations.role = ? AND user_space_associations.status = ?",
-      6, 'approved' ]
+    :source => :user, :conditions => [ "user_space_associations.role = ?", 6]
   # students (member)
   has_many :students, :through => :user_space_associations,
-    :source => :user,
-    :conditions => \
-    [ "user_space_associations.role = ? AND user_space_associations.status = ?",
-      2, 'approved' ]
+    :source => :user, :conditions => [ "user_space_associations.role = ?", 2]
 
  # new members (form 1 week ago)
   has_many :new_members, :through => :user_space_associations,
     :source => :user,
-    :conditions => [ "user_space_associations.status = ? " + \
-                     "AND user_space_associations.updated_at >= ?",
-                     'approved', 1.week.ago]
+    :conditions => ["user_space_associations.updated_at >= ?", 1.week.ago]
   has_many :folders, :dependent => :destroy
   has_many :subjects, :dependent => :destroy,
     :conditions => { :finalized => true }
@@ -57,6 +42,7 @@ class Space < ActiveRecord::Base
     :dependent => :destroy
   has_many :statuses, :as => :statusable, :order => "updated_at DESC",
     :dependent => :destroy
+  has_many :canvas, :as => :container, :class_name => 'Api::Canvas'
 
   scope :of_course, lambda { |course_id| where(:course_id => course_id) }
   scope :published, where(:published => true)
@@ -95,7 +81,6 @@ class Space < ActiveRecord::Base
     course_users.each do |assoc|
       UserSpaceAssociation.create({:user => assoc.user,
                                   :space => self,
-                                  :status => "approved",
                                   :role => assoc.role})
     end
 

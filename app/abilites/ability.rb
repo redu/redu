@@ -26,7 +26,7 @@ class Ability
       :lecture_participation_report, :to => :manage
 
     #TODO action manage gerando recursividade
-    alias_action :mural, :students_endless , :to => :read
+    alias_action :mural, :students_endless, :to => :read
 
     # Folder
     alias_action :do_the_upload, :upload, :rename,
@@ -44,7 +44,7 @@ class Ability
     alias_action :resend_email, :destroy, :destroy_invitations, :to => :manage
 
     # Lecture
-    alias_action :rate, :done, :to => :read
+    alias_action :rate, :done, :page_content, :to => :read
 
     # Message
     alias_action :delete_selected, :to => :manage
@@ -71,6 +71,14 @@ class Ability
 
       # Ter acesso ao 'Ensine', só usuários logados
       can :teach_index, :base
+
+      # Autorizar apps OAuth
+      can :authorize_oauth, :base
+
+      # Somente usuários parceiros e  admin gerenciam apps OAuth
+      can :manage, :client_applications do
+        !user.partners.empty? || user.admin?
+      end
 
       # Gerencial
       can :manage, :all do |object|
@@ -169,6 +177,23 @@ class Ability
       cannot :migrate, Plan do |plan|
         (plan.blocked? || plan.migrated?) && !user.admin?
       end
+
+      cannot :update, Lecture do |lecture|
+        lec = lecture.lectureable
+
+        (lec.is_a?(Seminar) || lec.is_a?(Document) ||
+         (lec.is_a?(Exercise) && lec.has_results?)) &&
+         (can? :manage, lecture)
+      end
+
+      # Canvas
+      can :read, Api::Canvas do |canvas|
+        can? :read, canvas.container
+      end
+      cannot :read, Api::Canvas do |canvas|
+        cannot? :read, canvas.container
+      end
+
     end
   end
 end

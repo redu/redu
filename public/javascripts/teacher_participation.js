@@ -26,18 +26,7 @@ var TeacherParticipationGraph = function () {
     },
     tooltip: {
       crosshairs: true,
-      shared: true,
-      formatter: function () {
-        var s = '<tspan style="font-weight:bold; text-align:center">'+this.x+'</tspan><br/>';
-        $.each(this.points, function (i) {
-          s += '<tspan style="fill:'+this.series.color+'">'
-            +this.series.name+'</tspan>'
-          s += '<span dx="3">: </span>'
-          s += '<span style="font-weight:bold; text-align:right" dx="3">'
-            +this.y+'</span><br/>'
-        })
-        return s;
-      }
+      shared: true
     },
     series: [{
       name: 'Quantidade de Aulas Criadas',
@@ -55,7 +44,7 @@ var TeacherParticipationGraph = function () {
       var graph = graphView.form.plotGraphForm(graphView.chart.renderTo);
 
       // Passa a função de carregamento do gráfico via JSON
-      graph.loadGraph(function () {
+      graph.loadGraph(function (json) {
         $.extend(options, graphView);
 
         options.series[0].data = json.lectures_created;

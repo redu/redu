@@ -1,0 +1,11 @@
+<li id="status-<%= log.id %>">
+  <div class="status">
+    <div class="status-text">
+      <%= render "statuses/user_detail", :item => log %>
+      <span class="status-info"> <%= raw auto_link(log.action_text) %></span>
+      <span class="date">
+        <%= time_ago_in_words log.created_at %>
+      </span>
+    </div>
+  </div>
+</li>

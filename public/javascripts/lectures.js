@@ -5,6 +5,9 @@ $(function(){
           if($("#lights_dimmed").length == 0) {
             $overlay = $("<div/>", { 'id' : 'lights_dimmed', 'class' : 'clearfix'}).hide();
             $("body").prepend($overlay);
+          }else{
+            // Garantindo que a luz começará apagada
+            $("#lights_dimmed").fadeOut();
           }
 
           // Luzes
@@ -62,23 +65,41 @@ $(function(){
       e.preventDefault();
     });
 
+
+    // Setando o tamanho do iframe do conteúdo da página simples
+    $.fn.setIframeHeight = function(){
+      $("#page-iframe").load(function(){
+          $("#page-iframe").height($("#page-iframe").contents().height());
+          $("#page-iframe").contents().each( function(i){
+              $(this).find("a").attr('target', '_blank');
+          })
+      });
+    }
+
     // Scroll os botões de student-actions de acordo com o #resource
     $(document).scroll(function(){
       if ($("#resource").length > 0) {
-        if(($("#resource").offset().top - $(window).scrollTop() < 30)) {
-          $(".student-actions").css({'position': 'fixed', 'top':'10px'})
+
+        var $actions = $(".student-actions");
+        var limit = $(window).scrollTop()- $("#resource").offset().top;
+
+        if(limit > -9) {
+          if(limit < 490 ){
+            $(".student-actions").css({'top' : limit + 'px'});
+          }
         } else {
-          $(".student-actions").css({'position': 'relative'})
+          $(".student-actions").css({'top' : '0px'});
         }
       }
     });
 
     $(document).ready(function(){
         $(document).refreshLectures();
+        $(document).setIframeHeight();
 
         $(document).ajaxComplete(function(){
           $(document).refreshLectures();
-          $(".student-actions").css({'position': 'relative'});
+          $(document).setIframeHeight();
         });
     });
 });
