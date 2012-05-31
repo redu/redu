@@ -43,6 +43,7 @@ javascripts:
     - public/javascripts/underscore.js
     - public/javascripts/underscore-sharing-template.redu.jquery.js
     - public/javascripts/embedly.redu.jquery.js
+    - public/javascripts/canvas.js
   chat:
     - public/javascripts/jquery.pjax.js
     - public/javascripts/pusher.js
@@ -55,6 +56,7 @@ javascripts:
     - public/javascripts/d3/d3.js
     - public/javascripts/d3/d3.chart.js
     - public/javascripts/d3/d3.layout.js
+    - public/javascripts/jquery.form.js
     - public/javascripts/teacher_participation.js
     - public/javascripts/subject_participation.js
     - public/javascripts/lectures_participation.js
@@ -100,7 +102,8 @@ stylesheets:
     - public/stylesheets/lectures.css
     - public/stylesheets/exercises.css
     - public/stylesheets/outdated-browser.css
-    - public/stylesheets/bullet-chart.css
+    - public/stylesheets/chart.css
+    - public/stylesheets/canvas.css
   ie:
     - public/stylesheets/ie.css
   ie8:
@@ -137,3 +140,6 @@ stylesheets:
     - public/stylesheets/new-fonts.css
     - public/stylesheets/new-style.css
     - public/stylesheets/print.css
+  page:
+    - public/stylesheets/reset.css
+    - public/stylesheets/new-fonts.css

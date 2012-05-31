@@ -964,11 +964,13 @@ describe CoursesController do
     end
   end
 
-  context "when course is unpublised" do
-    context "GET preview" do
-      before do
-        @course = Factory(:course, :published => false)
+  context "when course is unpublished" do
+    before do
+      @course = Factory(:course, :published => false)
+    end
 
+    context "GET show" do
+      before do
         get :show, @params = { :locale => 'pt-BR', :environment_id => @course.environment.path,
         :id => @course.path }
       end
@@ -976,6 +978,61 @@ describe CoursesController do
       it "should show the preview page" do
         response.should redirect_to(preview_environment_course_path(@course.environment,
                                                                     @course))
+      end
+    end
+  end
+
+  context "GET preview" do
+    before do
+      @course = Factory(:course)
+    end
+
+    context "when have permission to see the course" do
+      before do
+        @user = Factory(:user)
+        @course.join @user
+        activate_authlogic
+        UserSession.create @user
+
+        get :preview, :locale => "pt-BR",
+          :environment_id => @course.environment.to_param,
+          :id => @course.to_param
+      end
+
+      it "redirects to #show" do
+        response.should redirect_to(environment_course_path(@course.environment,
+                                                            @course))
+      end
+    end
+
+
+    context "when is course's admin" do
+      before do
+        @env_admin = Factory(:user)
+        @course.join @env_admin, Role[:environment_admin]
+        activate_authlogic
+        UserSession.create @env_admin
+
+        get :preview, :locale => "pt-BR",
+          :environment_id => @course.environment.to_param,
+          :id => @course.to_param
+      end
+
+      it "redirects to #show" do
+        response.should redirect_to(environment_course_path(@course.environment,
+                                                            @course))
+      end
+    end
+
+    context "when does NOT have permission to see the course" do
+      before do
+        get :preview, :locale => "pt-BR",
+          :environment_id => @course.environment.to_param,
+          :id => @course.to_param
+      end
+
+      it "renders preview" do
+        response.should  render_template("courses/preview")
       end
     end
   end

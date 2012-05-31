@@ -3,6 +3,8 @@ class BaseController < ApplicationController
   # Work around (ver método self.login_required_base)
 
   rescue_from CanCan::AccessDenied, :with => :deny_access
+  rescue_from ActiveRecord::RecordNotUnique,
+    :with => Proc.new { redirect_to application_path }
 
   caches_action :site_index, :if => Proc.new{|c| c.cache_action? }
   def cache_action?

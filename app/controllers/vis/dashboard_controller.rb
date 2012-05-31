@@ -62,7 +62,8 @@ module Vis
       @participation.extend(TeacherParticipationRepresenter)
 
       respond_to do |format|
-        format.json { render :json => @participation }
+        format.json { render :json => @participation,
+                      :callback => params[:callback] }
       end
     end
   end
