@@ -795,6 +795,43 @@ describe "Statuses" do
     end
   end
 
+  context "when invalid status" do
+    let(:params) { { :oauth_token => @token, :format => 'json' } }
+
+    it "should not allow using help instead of activity" do
+      help = { :status => { :type => 'Help', :text => 'Lorem' } }
+      post "/api/users/#{@current_user.id}/statuses", params.merge(help)
+
+      response.code.should == "422"
+    end
+
+    %w(Help Activity Log Status).each do |type|
+      it "should not allow answering an activity with a #{type}" do
+        activity = { :status => { :text => 'Lorem' } }
+        post "/api/users/#{@current_user.id}/statuses", params.merge(activity)
+
+        url = href_to('answers', parse(response.body))
+        activity[:status][:type] = type
+
+        post url, params.merge(activity)
+        parse(response.body)['type'].should == 'Answer'
+      end
+    end
+
+    it "should not allow creating anything with status type" do
+      activity = { :status => { :text => 'Lorem' } }
+      post "/api/users/#{@current_user.id}/statuses", params.merge(activity)
+
+      parse(response.body)['type'].should == 'Activity'
+    end
+
+    it "should not allow creating a status with log type" do
+      activity = { :status => { :text => 'Lorem', :type => 'Log' } }
+      post "/api/users/#{@current_user.id}/statuses", params.merge(activity)
+
+      response.code.should == "422"
+    end
+  end
 
   def where_type(statuses, *params)
     statuses.where(:type => params)
