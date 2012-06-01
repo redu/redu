@@ -175,18 +175,12 @@ class SpacesController < BaseController
     user_agent = UserAgent.parse(request.user_agent)
     @browser_not_supported = self.is_browser_unsupported?(user_agent)
 
-    application = ClientApplication.where(:name => "ReduViz").first
-    @token = Oauth2Token.user_token_for(current_user, application).token
-
     respond_to do |format|
       format.html { render "spaces/admin/subject_participation_report" }
     end
   end
 
   def lecture_participation_report
-    application = ClientApplication.where(:name => "ReduViz").first
-    @token = Oauth2Token.user_token_for(current_user, application).token
-
     user_agent = UserAgent.parse(request.user_agent)
     @browser_not_supported = self.is_browser_unsupported?(user_agent)
 
@@ -196,6 +190,12 @@ class SpacesController < BaseController
   end
 
   def students_participation_report
+    user_agent = UserAgent.parse(request.user_agent)
+    @browser_not_supported = self.is_browser_unsupported?(user_agent)
+
+    application = ClientApplication.where(:name => "ReduViz").first
+    @token = Oauth2Token.user_token_for(current_user, application).token
+
     respond_to do |format|
       format.html { render "spaces/admin/students_participation_report" }
     end

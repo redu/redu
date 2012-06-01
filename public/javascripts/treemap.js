@@ -1,13 +1,12 @@
 var StudentsTreemap = function () {
-
   // Configurações do layout do treemap
   var w = 748,
       h = 400,
       x = d3.scale.linear().range([0, w]),
       y = d3.scale.linear().range([0, h]),
-      color = [d3.rgb(193,39,45), d3.rgb(243,94,0),
-      d3.rgb(255,200,0), d3.rgb(95,192,128), d3.rgb(77,173,214)],
-      // Vermelho, Laranja, Amarelo, Verde, Azul
+      color = [d3.rgb(193,39,45), d3.rgb(243,94,0), d3.rgb(255,200,0),
+        d3.rgb(95,192,128), d3.rgb(77,173,214), d3.rgb(255, 255, 255)],
+      // Vermelho, Laranja, Amarelo, Verde, Azul, Branco
       root,
       node;
 
@@ -18,23 +17,10 @@ var StudentsTreemap = function () {
     .sticky(true)
     .value(function(d) { return d.size; });
 
-  // Div onde o treemap será carregado
-  var svg = d3.select(".panel .panel").append("div")
-    .attr("class", "chart")
-    .style("width", w + "px")
-    .style("height", h + 54 + "px") // 54 é o tamanho da div do título do form
-    .append("svg:svg")
-    .attr("width", w)
-    .attr("height", h)
-    .append("svg:g")
-    .attr("transform", "translate(.5,.5)");
-
-  });
-
-  // Função para preenchimento das cores da células, se grade = -1 preenchimento vazio
+  // Função para preenchimento das cores da células, se grade = null preenchimento vazio
   var fill = function (grade){
-    if (grade < -1.0) {
-      return white;
+    if (grade === undefined) {
+      return color[5];
     }
     else if (grade < 5.0) {
       if (grade < 3.0) {
@@ -62,30 +48,67 @@ var StudentsTreemap = function () {
     return d.size;
   }
 
-  // TODO IMPLEMENTAR COM URLS VERDADEIRAS
-  // Função para carregamento do treemap, é preciso duas urls, uma que acessará a plicação de visualização
-  // obtendo os dados de participação e nota dos alunos, e uma que acessará a API do Redu obtendo as
-  // informações adicionais das células, que são os nomes dos alunos.
-  var loadTreemap = function (spaceId, "http://localhost:3000/vis/dashboard/flare.json", urlApi) {
-    var url = urlVis + "?space_id=" + spaceId;
-    // Requisição via AJAX puro para que funcione em todos os browsers
-    $.ajax({
-      cache: false,
-      crossDomain: true,
-      url: url,
-      method: "GET",
-      dataType: 'jsonp',
-      success: function (jsonVis) {
+  // Função para construção padrão do JSON do treemap
+  var buildJSON = function (vis, api) {
+    // JSON conterá apenas um nó pai com seus filhos
+    var json = {"name": "treemap",
+                "children": []};
 
-        // Ao obter o dado de Vis, faz logo em seguida a requisição para API
-        url = urlApi;
+    // Para cada aluno do Space eu monto um filho no JSON que será retornado
+    $.each(vis, function (index, object) {
+      var item = {};
+      // Busca o nome do aluno nos dados da API
+      var user = searchUser(vis[index].user_id, api)[0];
+      if (user) {
+        item.name = user.first_name + " " + user.last_name;
+      };
+      item.size = participation(object.data);
+      item.grade = object.average_grade;
+
+      // Adiciona novo filho ao JSON
+      json.children.push(item);
+    })
+
+    return json;
+  }
+
+  var participation = function (data) {
+    var part = data.helps + data.activities +
+      data.answered_activities + data.answered_helps;
+
+    return part;
+  }
+
+  // Função que busca o nome do usuário pelo seu id
+  var searchUser = function (userId, api) {
+    // O retorno conterá apenas um elemento visto que um id só pode pertencer a um usuário
+    return api.filter(function (item) {
+      return item.id === userId;
+    });
+  }
+
+  var urlApi;
+  // Função visível para a view, carregamento do treemap
+  return {
+    load: function (graphView) {
+      var graph = graphView.form.plotGraphForm(graphView.renderTo);
+
+      graph.loadGraph(function (jsonVis) {
         $.ajax({
-          cache: false,
-          crossDomain: true,
-          url: url,
+          url: graphView.url,
           method: "GET",
-          dataType: 'jsonp',
           success: function (jsonApi) {
+            // Div onde o treemap será carregado
+            var svg = d3.select("#"+graphView.renderTo).append("div")
+              .attr("class", "chart")
+              .style("width", w + "px")
+              .style("height", h + 54 + "px") // 54 é o tamanho da div do título do form
+              .append("svg:svg")
+              .attr("width", w)
+              .attr("height", h)
+              .append("svg:g")
+              .attr("transform", "translate(.5,.5)");
+
             // Constrói o JSON característico do treemap usando os dados retornados das duas requisições
             root = buildJSON(jsonVis, jsonApi);
 
@@ -117,78 +140,7 @@ var StudentsTreemap = function () {
             $(".cell").tipTip();
           }
         })
-      }
-    })
-  }
-
-  // TODO FUNÇÃO AINDA EM CONSTRUÇÃO
-  // Função para construção padrão do JSON do treemap
-  var buildJSON = function (vis, api) {
-    // JSON conterá apenas um nó pai com seus filhos
-    var json = {"name": "treemap",
-                "children": []};
-
-    // JSON característico da API
-    api = [{
-      "id": 1,
-        "last_name": "User",
-        "birthday": "1992-02-29",
-        "links": [{
-          "href": "http://127.0.0.1:3000/api/users/test_user",
-          "rel": "self"
-        }, {
-          "href": "http://127.0.0.1:3000/api/users/test_user/enrollments",
-          "rel": "enrollments"
-        }],
-        "login": "test_user",
-        "friends_count": 0,
-        "email": "test_user@example.com",
-        "first_name": "Test"
-    }, {
-      "id": 3,
-        "last_name": "Cavalcanti",
-        "birthday": "1987-03-06",
-        "links": [{
-          "href": "http://127.0.0.1:3000/api/users/guiocavalcanti",
-          "rel": "self"
-        }, {
-          "href": "http://127.0.0.1:3000/api/users/guiocavalcanti/enrollments",
-          "rel": "enrollments"
-        }],
-        "login": "guiocavalcanti",
-        "friends_count": 0,
-        "email": "guiocavalcanti@gmail.com",
-        "first_name": "Guilherme"
-    }]
-
-    // Para cada aluno do Space eu monto um filho no JSON que será retornado
-    $.each(vis.children, function (index, object) {
-      var item = {};
-      // Busca o nome do aluno nos dados da API
-      var user = searchUser(1, api)[0];
-      item.name = user.first_name + " " + user.last_name;
-      item.size = object.size;
-      item.grade = object.grade;
-
-      // Adiciona novo filho ao JSON
-      json.children.push(item);
-    })
-
-    return json;
-  }
-
-  // Função que busca o nome do usuário pelo seu id
-  var searchUser = function (userId, api) {
-    // O retorno conterá apenas um elemento visto que um id só pode pertencer a um usuário
-    return api.filter(function (item) {
-      return item.id === userId;
-    });
-  }
-
-  // Função visível para a view, carregamento do treemap
-  return {
-    load: function (spaceId, url) {
-      loadTreemap(spaceId, url);
+      })
     }
   }
 }
