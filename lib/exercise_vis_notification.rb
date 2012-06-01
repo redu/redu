@@ -18,7 +18,7 @@ module ExerciseVisNotification
       :course_id => space.course.id,
       :user_id => result.user_id,
       :type => "exercise_finalized",
-      :grade => result.grade.to_i,
+      :grade => result.grade,
       :status_id => nil,
       :statusable_id => nil,
       :statusable_type => nil,

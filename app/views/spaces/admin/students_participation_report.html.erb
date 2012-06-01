@@ -16,7 +16,7 @@
         <% if @browser_not_supported %>
           <%= render :partial => 'spaces/admin/disclaimer_chart' %>
         <% else %>
-          <h3 class="form-header graph-header">Qual a participação dos alunos?</h3>
+          <h3 class="form-header graph-header">Qual o desempenho dos alunos?</h3>
           <%= lazy_load(:chart, :jammit => true) do %>
             var treemap = new StudentsTreemap();
             treemap.load({ form: $("#graph-form"),

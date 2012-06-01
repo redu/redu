@@ -53,10 +53,15 @@ var StudentsTreemap = function () {
       // Busca o nome do aluno nos dados da API
       var user = searchUser(vis[index].user_id, api)[0];
       if (user) {
-        item.name = user.first_name + " " + user.last_name;
+        item.name = user.first_name;
+        item.last_name = user.last_name;
       };
 
       // Participação + nota do aluno
+      item.activities = object.data.activities;
+      item.helps = object.data.helps;
+      item.answered_activities = object.data.answered_activities;
+      item.answered_helps = object.data.answered_helps;
       item.size = participation(object.data);
       item.grade = object.data.average_grade;
 
@@ -84,6 +89,7 @@ var StudentsTreemap = function () {
     });
   }
 
+  // Função usada para remover treemap antigo, caso houver
   var removeTremap = function (div) {
     $("#"+div +" > .chart").remove();
   }
@@ -101,6 +107,7 @@ var StudentsTreemap = function () {
           url: graphView.url,
           method: "GET",
           success: function (jsonApi) {
+            // remove treemap antigo
             removeTremap(graphView.renderTo);
 
             // Layout vazio do treemap
@@ -131,7 +138,14 @@ var StudentsTreemap = function () {
               .enter().append("svg:g")
               .attr("class", "cell")
               .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
-              .attr("title", function (d) { return d.name })
+              .attr("title", function (d) {
+                var nota = d.grade !== null ? d.grade : "nenhum exercício realizado"
+                return "Nome: " + d.name + " " + d.last_name
+                        + "</br>Comentários: " + d.activities
+                        + "</br>Pedidos de Ajuda: " + d.helps
+                        + "</br>Respostas à comentários: " + d.answered_activities
+                        + "</br>Respostas à pedidos de ajuda: " + d.answered_helps
+                        + "</br>Nota: " + nota})
 
             // Cor
             cell.append("svg:rect")
