@@ -157,8 +157,8 @@ class User < ActiveRecord::Base
   has_private_messages
 
   # VALIDATIONS
-  validates_presence_of     :first_name, :last_name, :login, :email, :password,  
-                            :email_confirmation, :password_confirmation
+  validates_presence_of     :first_name, :last_name, :login, :email,  
+                            :email_confirmation
   validates_uniqueness_of   :login, :email, :case_sensitive => false
   validates_exclusion_of    :login, :in => Redu::Application.config.extras["reserved_logins"]
   validates :birthday, :allow_nil => true,

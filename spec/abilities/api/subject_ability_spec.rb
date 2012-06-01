@@ -8,7 +8,7 @@ describe "Subject(the subject of a space) abilities" do
     @course = @environment.courses.first
     @space = @course.spaces.first
     @user = Factory(:user)
-    @subject = Subject.create(:title => "Test Subject 1",
+    @subject = Subject.create(:name => "Test Subject 1",
                               :description => "Test Subject Description",
                               :space => @space)
     @application, @current_user, @token = generate_token(@user)
