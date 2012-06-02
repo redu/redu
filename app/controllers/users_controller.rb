@@ -11,6 +11,8 @@ class UsersController < BaseController
   load_resource :space, :only => [:index]
 
   rescue_from CanCan::AccessDenied, :with => :deny_access
+  rescue_from ActiveRecord::RecordNotUnique,
+    :with => Proc.new { redirect_to application_path }
 
   ## User
   def activate
