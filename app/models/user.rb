@@ -48,7 +48,7 @@ class User < ActiveRecord::Base
   has_many :enrollments, :dependent => :destroy
 
   #subject
-  has_many :subjects, :order => 'title ASC',
+  has_many :subjects, :order => 'name ASC',
     :conditions => { :finalized => true }
 
   has_many :plans
@@ -127,16 +127,26 @@ class User < ActiveRecord::Base
   acts_as_authentic do |c|
     c.crypto_provider = CommunityEngineSha1CryptoMethod
 
-    c.validates_length_of_password_field_options = { :within => 6..20, :if => :password_required? }
-    c.validates_length_of_password_confirmation_field_options = { :within => 6..20, :if => :password_required? }
+    # Valida password
+    c.validates_length_of_password_field_options = { :within => 6..20, 
+                                                     :if => :password_required?,
+                                                     :allow_blank => true }
+    c.validates_length_of_password_confirmation_field_options = { 
+                                                     :within => 6..20, 
+                                                     :if => :password_required?, 
+                                                     :allow_blank => true }
+    c.validates_confirmation_of_password_field_options = { :allow_blank => true }
 
-    c.validates_length_of_login_field_options = { :within => 5..20 }
-    c.validates_format_of_login_field_options = { :with => /^[A-Za-z0-9_-]+$/ }
+    # Valida login
+    c.validates_length_of_login_field_options = { :within => 5..20, 
+                                                  :allow_blank => true }
+    c.validates_format_of_login_field_options = { :with => /^[A-Za-z0-9_-]+$/, 
+                                                  :allow_blank => true }
 
-    #FIXME Não está validando, verificar motivo. Foi adicionado um
-    # validates_format_of.
-    c.validates_length_of_email_field_options = { :within => 3..100 }
-    c.validates_format_of_email_field_options = { :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/ }
+    # Valida e-mail
+    c.validates_length_of_email_field_options = { :within => 3..100, :allow_blank => true }
+    c.validates_format_of_email_field_options = { :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/, 
+                                                  :allow_blank => true }
   end
 
   has_attached_file :avatar, Redu::Application.config.paperclip_user
@@ -147,19 +157,17 @@ class User < ActiveRecord::Base
   has_private_messages
 
   # VALIDATIONS
-  validates_presence_of     :login, :email, :first_name, :last_name,
-    :email_confirmation
+  validates_presence_of     :first_name, :last_name, :login, :email,  
+                            :email_confirmation
   validates_uniqueness_of   :login, :email, :case_sensitive => false
   validates_exclusion_of    :login, :in => Redu::Application.config.extras["reserved_logins"]
-  validates :birthday,
-      :date => { :before => Proc.new { 13.years.ago } }, :allow_nil => true
+  validates :birthday, :allow_nil => true,
+            :date => { :before => Proc.new { 13.years.ago } }
   validates_acceptance_of :tos
-  validates_confirmation_of :email
-  validates_format_of :email,
-    :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/
+  validates_confirmation_of :email, :allow_blank => true
   validates_format_of :mobile,
-      :with => /^\+\d{2}\s\(\d{2}\)\s\d{4}-\d{4}$/,
-      :allow_blank => true
+                      :with => /^\+\d{2}\s\(\d{2}\)\s\d{4}-\d{4}$/,
+                      :allow_blank => true
 
   # override activerecord's find to allow us to find by name or id transparently
   def self.find(*args)
@@ -629,6 +637,12 @@ class User < ActiveRecord::Base
 
   def subjects_id
     self.lectures.collect{ |lecture| lecture.subject_id }
+  end
+
+  def has_no_visible_profile_information
+    self.experiences.actual_jobs.empty? && self.educations.empty? && 
+    self.birthday.nil? && self.languages.blank? && 
+    self.birth_localization.blank? && self.localization.blank?
   end
 
   protected

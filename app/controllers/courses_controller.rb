@@ -94,7 +94,7 @@ class CoursesController < BaseController
 
     paginating_params = {
       :page => params[:page],
-      :order => 'name ASC',
+      :order => 'updated_at DESC',
       :per_page => Redu::Application.config.items_per_page
     }
 

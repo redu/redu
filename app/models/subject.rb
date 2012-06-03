@@ -19,7 +19,7 @@ class Subject < ActiveRecord::Base
 
   attr_protected :owner, :finalized
 
-  validates_presence_of :title
+  validates_presence_of :name
 
   def recent?
     self.created_at > 1.week.ago

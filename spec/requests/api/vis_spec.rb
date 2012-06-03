@@ -62,7 +62,7 @@ describe "Vis Api" do
       @environment = Factory(:complete_environment, :owner => @current_user)
       @space = @environment.courses.first.spaces.first
 
-      @subject = Subject.create(:title => "Test Subject 1",
+      @subject = Subject.create(:name => "Test Subject 1",
                                 :description => "Test Subject Description",
                                 :space => @space)
       # precisa atualizar manualmente para criar um módulo vazio

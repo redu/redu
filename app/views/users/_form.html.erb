@@ -11,6 +11,7 @@
     raw("Foto de seu perfil: <span class='snippet'>(tamanho máximo: 100MB)</span>") %>
   <%= f.file_field :avatar %>
   <%= concave_errors_for(f.object, :avatar) %>
+  <span class="tip">Adicione uma imagem de proporção igual ou similar a um quadrado</span>
 
   <%= f.label :first_name, "Nome:" %>
   <%= f.text_field :first_name %>

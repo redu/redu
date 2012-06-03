@@ -54,8 +54,10 @@
         <%= f.label :email, t( :email ) + ':' %>
         <%= f.text_field :email, :class => 'small' %>
         <%= concave_errors_for @user, :email %>
+
         <%= f.label :email_confirmation, "Confirmação:" %>
         <%= f.text_field :email_confirmation, :class => 'small' %>
+        <%= concave_errors_for @user, :email_confirmation %>
       <% end %>
       <%= field_set_tag "Senha", :class => 'separator' do %>
         <%= f.label :password, t( :password ) + ':' %>

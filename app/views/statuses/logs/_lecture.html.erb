@@ -4,7 +4,7 @@
       <span class="status-subject icon-small icon-space-lightblue_32_34">
       </span>
       <%= link_to log.logeable.subject.space.name, space_path(log.logeable.subject.space), :class => "status-main" %>
-      <%= link_to log.logeable.subject.title, space_subject_lecture_path(log.logeable.subject.space, log.logeable.subject, log.logeable), :class => "status-secondary icon-expand-gray_8_10-before" %>
+      <%= link_to log.logeable.subject.name, space_subject_lecture_path(log.logeable.subject.space, log.logeable.subject, log.logeable), :class => "status-secondary icon-expand-gray_8_10-before" %>
     </div>
     <div class="status-log">
       <%= render "statuses/user_image", :item => log %>

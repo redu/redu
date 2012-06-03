@@ -5,7 +5,7 @@
       <%= image_tag @course.environment.avatar.url(:thumb_90),
         :alt => 'profile', :size => "90x90", :class => "environment"%>
     <% end %>
-    <span class="subject icons-big icon-subject-white_64_66 replacement"><%=  @subject.title %></span>
+    <span class="subject icons-big icon-subject-white_64_66 replacement"><%=  @subject.name %></span>
   </div>
 
   <%= render :partial => "lectures/student_actions" %>

@@ -195,7 +195,7 @@ class UserNotifier < ActionMailer::Base
     @environment = subject.space.course.environment
     @course = @subj.space.course
 
-    mail(:subject => "Novo módulo #{@subj.title}", :to => @user.email) do |format|
+    mail(:subject => "Novo módulo #{@subj.name}", :to => @user.email) do |format|
       format.html
     end
   end

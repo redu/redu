@@ -3,7 +3,7 @@ module SubjectRepresenter
   include Roar::Representer::Feature::Hypermedia
 
   property :id
-  property :title
+  property :name
   property :description
   property :created_at
 
