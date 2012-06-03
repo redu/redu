@@ -90,62 +90,69 @@ class UsersController < BaseController
 
   def create
     @user = User.new(params[:user])
-    if @user.save
-      @user.create_settings!
-      if @key
-        @key.user = @user
-        @key.save
-      end
-
-      # Se tem um token de convite para o curso, aprova o convite para o
-      # usuário recém-cadastrado
-      if params.has_key?(:invitation_token)
-        invite = UserCourseInvitation.find_by_token(params[:invitation_token])
-        invite.user = @user
-        invite.accept!
-      end
-
-      # Invitation Token
-      if params.has_key?(:friendship_invitation_token)
-        invite = Invitation.find_by_token(params[:friendship_invitation_token])
-        invite.accept!(@user)
-      end
-
-      flash[:notice] = t(:email_signup_thanks, :email => @user.email)
-      redirect_to signup_completed_user_path(@user)
-    else
-      # Se tem um token de convite para o curso, atribui as variáveis
-      # necessárias para mostrar o convite em Users#new
-      if params.has_key?(:invitation_token)
-        @user_course_invitation = UserCourseInvitation.find_by_token(
-          params[:invitation_token])
-          @course = @user_course_invitation.course
-          @environment = @course.environment
-      elsif params.has_key?(:friendship_invitation_token)
-        invitation = Invitation.find_by_token(params[:friendship_invitation_token])
-        @invitation_user = invitation.user
-        uca = UserCourseAssociation.where(:user_id => @invitation_user).approved
-        @contacts = {:total => @invitation_user.friends.count}
-        @courses = { :total => @invitation_user.courses.count,
-                     :environment_admin => uca.with_roles([:environment_admin]).count,
-                     :tutor => uca.with_roles([:tutor]).count,
-                     :teacher => uca.with_roles([:teacher]).count }
-      end
-
-      unless @user.oauth_token.nil?
-        @user = User.find_by_oauth_token(@user.oauth_token)
-        unless @user.nil?
-          @user_session = UserSession.create(@user)
-          current_user = @user_session.record
-          flash[:notice] = t :thanks_youre_now_logged_in
-          redirect_back_or_default user_path(current_user)
-        else
-          flash[:notice] = t :uh_oh_we_couldnt_log_you_in_with_the_username_and_password_you_entered_try_again
-          render :action => :new
+    begin
+      if @user.save
+        @user.create_settings!
+        if @key
+          @key.user = @user
+          @key.save
         end
+
+        # Se tem um token de convite para o curso, aprova o convite para o
+        # usuário recém-cadastrado
+        if params.has_key?(:invitation_token)
+          invite = UserCourseInvitation.find_by_token(params[:invitation_token])
+          invite.user = @user
+          invite.accept!
+        end
+
+        # Invitation Token
+        if params.has_key?(:friendship_invitation_token)
+          invite = Invitation.find_by_token(params[:friendship_invitation_token])
+          invite.accept!(@user)
+        end
+
+        flash[:notice] = t(:email_signup_thanks, :email => @user.email)
+        redirect_to signup_completed_user_path(@user)
       else
-        render :template => 'users/new', :layout => 'cold'
+        # Se tem um token de convite para o curso, atribui as variáveis
+        # necessárias para mostrar o convite em Users#new
+        if params.has_key?(:invitation_token)
+          @user_course_invitation = UserCourseInvitation.find_by_token(
+            params[:invitation_token])
+            @course = @user_course_invitation.course
+            @environment = @course.environment
+        elsif params.has_key?(:friendship_invitation_token)
+          invitation = Invitation.find_by_token(params[:friendship_invitation_token])
+          @invitation_user = invitation.user
+          uca = UserCourseAssociation.where(:user_id => @invitation_user).approved
+          @contacts = {:total => @invitation_user.friends.count}
+          @courses = { :total => @invitation_user.courses.count,
+                       :environment_admin => uca.with_roles([:environment_admin]).count,
+                       :tutor => uca.with_roles([:tutor]).count,
+                       :teacher => uca.with_roles([:teacher]).count }
+        end
+
+        unless @user.oauth_token.nil?
+          @user = User.find_by_oauth_token(@user.oauth_token)
+          unless @user.nil?
+            @user_session = UserSession.create(@user)
+            current_user = @user_session.record
+            flash[:notice] = t :thanks_youre_now_logged_in
+            redirect_back_or_default user_path(current_user)
+          else
+            flash[:notice] = t :uh_oh_we_couldnt_log_you_in_with_the_username_and_password_you_entered_try_again
+            render :action => :new
+          end
+        else
+          render :template => 'users/new', :layout => 'cold'
+        end
       end
+    # FIXME Após migrar o Rails (> 3.0.10) ver se a solução clean funciona.
+    # Necessário pois o rescue_from estava dando conflito com o
+    # rescue_from Exception (mais geral). See #863.
+    rescue ActiveRecord::RecordNotUnique
+      redirect_to application_path
     end
   end
 

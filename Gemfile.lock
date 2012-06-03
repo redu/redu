@@ -50,13 +50,6 @@ GIT
       activesupport (>= 3.0.0)
 
 GIT
-  remote: git://github.com/rubyist/aasm.git
-  revision: ec724d5a486469955a927db38c667f0604d8800f
-  specs:
-    aasm (3.0.3)
-      activerecord
-
-GIT
   remote: git@github.com:redu/invitable.git
   revision: 171dcdb33d0955357a0af7980d6882925958949c
   specs:
@@ -85,6 +78,8 @@ GEM
       open4
     Platform (0.4.0)
     aaronh-chronic (0.3.9)
+    aasm (3.0.6)
+      activerecord
     abstract (1.0.0)
     actionmailer (3.0.10)
       actionpack (= 3.0.10)
@@ -347,7 +342,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  aasm!
+  aasm
   actionmailer_inline_css!
   active_enum
   activerecord-import

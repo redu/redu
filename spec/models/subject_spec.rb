@@ -23,7 +23,7 @@ describe Subject do
   it { should have_many(:statuses) }
   it { should have_many(:logs) }
 
-  it { should validate_presence_of :title }
+  it { should validate_presence_of :name }
   #FIXME falhando por problema de tradução
   xit { should ensure_length_of(:description).is_at_least(30).is_at_most(250) }
 

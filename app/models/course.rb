@@ -164,6 +164,11 @@ class Course < ActiveRecord::Base
     # Atualizando license atual para setar o period_end
     set_period_end(user)
 
+    # Desassocia o usuário do ambiente se ele não participar de outros cursos
+    unless (user.courses & self.environment.courses).count > 0
+      user.get_association_with(self.environment).destroy
+    end
+
     self.spaces.each do |space|
       space_association = user.get_association_with(space)
       space_association.destroy
