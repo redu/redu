@@ -179,6 +179,7 @@ describe UsersController do
 
           # Forcing skip validation
           User.any_instance.stub(:valid?) { true }
+          Rails.application.config.consider_all_requests_local = false
         end
 
 
@@ -191,6 +192,10 @@ describe UsersController do
         it "redirects to application_path" do
           post :create, @post_params
           response.should redirect_to application_path
+        end
+
+        after do
+          Rails.application.config.consider_all_requests_local = true
         end
       end
     end
