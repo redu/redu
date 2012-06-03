@@ -6,7 +6,7 @@
       <span class="visible icon-small icon-visible-gray_16_18 replacement">Visível para os alunos</span>
     <% end %>
   <% end %>
-  <%= link_to item.title, "#",
+  <%= link_to item.name, "#",
     :class => 'subject-name name icon-content-lightblue_32_34-before' %>
   <% if item.graduated? current_user %>
     <span class="graduated icon-small icon-confirm-green_16_18 replacement">Módulo finalizado</span>

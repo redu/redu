@@ -7,7 +7,7 @@ describe "Subjects API" do
     @environment = Factory(:complete_environment, :owner => @current_user)
     @space = @environment.courses.first.spaces.first
 
-    @subject = Subject.create(:title => "Test Subject 1",
+    @subject = Subject.create(:name => "Test Subject 1",
                               :description => "Test Subject Description",
                               :space => @space)
     # precisa atualizar manualmente para criar um módulo vazio
@@ -22,7 +22,7 @@ describe "Subjects API" do
     end
 
     it "should have the correct keys" do
-      %w(id title description created_at links).each do |attr|
+      %w(id name description created_at links).each do |attr|
         parse(response.body).should have_key attr
       end
     end
@@ -51,7 +51,7 @@ describe "Subjects API" do
 
       it "should return a list of subjects" do
         parse(response.body).should be_kind_of Array
-        parse(response.body).first["title"].should == @subject.title
+        parse(response.body).first["name"].should == @subject.name
       end
     end
 

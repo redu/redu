@@ -1,8 +1,8 @@
 <%# Form de Subject (e somente ele) %>
-<%= f.label :title, "Nome", :class => "icon-content-gray_32_34-before" %>
-<%= f.text_field :title, { :class => 'big' } %>
+<%= f.label :name, "Nome", :class => "icon-content-gray_32_34-before" %>
+<%= f.text_field :name, { :class => 'big' } %>
 <span class="tip">Nome do módulo</span>
-<%= concave_errors_for(f.object, :title) %>
+<%= concave_errors_for(f.object, :name) %>
 
 <%= f.label :description, t(:description) %>
 <%= f.text_area :description, :class => 'subject-description' %>
