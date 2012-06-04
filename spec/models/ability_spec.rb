@@ -436,12 +436,15 @@ describe Ability do
         @environment = Factory(:environment, :owner => @env_admin)
         @course = Factory(:course, :owner => @env_admin,
                           :environment => @environment)
+        @space = Factory(:space, :course => @course)
       end
       context "member" do
         before do
           Factory(:user_environment_association, :environment => @environment,
                   :user => @member, :role => :member)
           Factory(:user_course_association, :course => @course,
+                  :user => @member, :role => :member)
+          Factory(:user_space_association, :space => @space,
                   :user => @member, :role => :member)
           @ability = Ability.new(@member)
         end
@@ -459,32 +462,26 @@ describe Ability do
         end
 
         it "can use students_endless on a space" do
-          space = Factory(:space, :course => @course)
-          Factory(:user_space_association, :space => space,
-                  :user => @member, :role => :member)
-          @ability.should be_able_to(:students_endless, space)
+          @ability.should be_able_to(:students_endless, @space)
         end
 
         it "can preview a space" do
-          space = Factory(:space, :course => @course)
-          Factory(:user_space_association, :space => space,
-                  :user => @member, :role => :member)
-          @ability.should be_able_to(:preview, space)
+          @ability.should be_able_to(:preview, @space)
         end
 
         it "can't see subject participation report" do
           @ability.should_not be_able_to(:subject_participation_report,
-                                         @course)
+                                          @space)
         end
 
         it "can't see lecture participation report" do
           @ability.should_not be_able_to(:lecture_participation_report,
-                                    @course)
+                                          @space)
         end
 
         it "can't see students participation report" do
           @ability.should_not be_able_to(:students_participation_report,
-                                    @course)
+                                          @space)
         end
         it "cannot create a subject"
         it "cannot destroy any subject"
@@ -522,18 +519,18 @@ describe Ability do
         end
 
         it "can't see subject participation report" do
-          @ability.should_not be_able_to(:subject_participation_report,
-                                         @course)
+          @ability.should be_able_to(:subject_participation_report,
+                                      @space)
         end
 
         it "can't see lecture participation report" do
-          @ability.should_not be_able_to(:lecture_participation_report,
-                                    @course)
+          @ability.should be_able_to(:lecture_participation_report,
+                                      @space)
         end
 
         it "can't see studenst participation report" do
-          @ability.should_not be_able_to(:students_participation_report,
-                                    @course)
+          @ability.should be_able_to(:students_participation_report,
+                                      @space)
         end
 
         it "creates a subject"
@@ -567,17 +564,17 @@ describe Ability do
 
         it "can't see subject participation report" do
           @ability.should_not be_able_to(:subject_participation_report,
-                                         @course)
+                                          @space)
         end
 
         it "can't see lecture participation report" do
           @ability.should_not be_able_to(:lecture_participation_report,
-                                    @course)
+                                          @space)
         end
 
         it "can't see students participation report" do
           @ability.should_not be_able_to(:students_participation_report,
-                                    @course)
+                                          @space)
         end
 
         it "cannot create a subject"
@@ -592,31 +589,29 @@ describe Ability do
       context "environment admin" do
         before do
           @ability = Ability.new(@env_admin)
+          @space = Factory(:space, :owner => @env_admin,
+                          :course => @course)
         end
         it "creates a space" do
-          space = Factory(:space, :owner => @env_admin,
-                          :course => @course)
-          @ability.should be_able_to(:create, space)
+          @ability.should be_able_to(:create, @space)
         end
         it "destroys a space" do
-          space = Factory(:space, :owner => @env_admin,
-                          :course => @course)
-          @ability.should be_able_to(:destroy, space)
+          @ability.should be_able_to(:destroy, @space)
         end
 
         it "can see subject participation report" do
           @ability.should be_able_to(:subject_participation_report,
-                                     @course)
+                                      @space)
         end
 
         it "can see lecture participation report" do
           @ability.should be_able_to(:lecture_participation_report,
-                                    @course)
+                                      @space)
         end
 
         it "can see students participation report" do
           @ability.should be_able_to(:students_participation_report,
-                                    @course)
+                                      @space)
         end
 
         it "creates a subject"
@@ -631,6 +626,8 @@ describe Ability do
       context "redu admin" do
         before do
           @ability = Ability.new(@redu_admin)
+          @space = Factory(:space, :owner => @env_admin,
+                          :course => @course)
         end
         it "creates a space" do
           space = Factory(:space, :owner => @redu_admin,
@@ -638,24 +635,22 @@ describe Ability do
           @ability.should be_able_to(:create, space)
         end
         it "destroys a space" do
-          space = Factory(:space, :owner => @env_admin,
-                          :course => @course)
-          @ability.should be_able_to(:destroy, space)
+          @ability.should be_able_to(:destroy, @space)
         end
 
         it "can see subject participation report" do
           @ability.should be_able_to(:subject_participation_report,
-                                     @course)
+                                      @space)
         end
 
         it "can see lecture participation report" do
           @ability.should be_able_to(:lecture_participation_report,
-                                    @course)
+                                      @space)
         end
 
         it "can see students participation report" do
           @ability.should be_able_to(:students_participation_report,
-                                    @course)
+                                      @space)
         end
 
         it "creates a subject"

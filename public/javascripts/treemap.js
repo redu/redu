@@ -5,32 +5,36 @@ var StudentsTreemap = function () {
       x = d3.scale.linear().range([0, w]),
       y = d3.scale.linear().range([0, h]),
       root,
-      color = [d3.rgb(193,39,45), d3.rgb(243,94,0), d3.rgb(255,200,0),
-        d3.rgb(95,192,128), d3.rgb(77,173,214), d3.rgb(230, 230, 230)];
-        // Vermelho, Laranja, Amarelo, Verde, Azul, Cinza
+      color = { red: d3.rgb(193,39,45),
+                orange: d3.rgb(243,94,0),
+                yellow: d3.rgb(255,200,0),
+                green: d3.rgb(95,192,128),
+                blue: d3.rgb(77,173,214),
+                gray: d3.rgb(230, 230, 230) }
+                // Vermelho, Laranja, Amarelo, Verde, Azul, Cinza
 
   // Função para preenchimento das cores da células, se grade = null preenchimento neutro
   var fill = function (grade){
     if (grade === null) {
-      return color[5];
+      return color.gray;
     }
     else if (grade < 5.0) {
       if (grade < 3.0) {
-        return color[0]
+        return color.red;
       }
       else{
-        return color[1]
+        return color.orange;
       };
     }
     else{
       if(grade < 7.0){
-        return color[2]
+        return color.yellow;
       }
       else if (grade < 9.0) {
-        return color[3]
+        return color.green;
       }
       else{
-        return color[4]
+        return color.blue;
       };
     };
   }
@@ -119,9 +123,12 @@ var StudentsTreemap = function () {
 
             // Div onde o treemap será carregado
             var svg = d3.select("#"+graphView.renderTo).append("div")
-              .attr("class", "chart") .style("width", w + "px") .style("height", h
-                + 54 + "px") // 54 é o tamanho da div do título do form
-              .append("svg:svg") .attr("width", w) .attr("height", h)
+              .attr("class", "chart")
+              .style("width", w + "px")
+              .style("height", h + 54 + "px") // 54 é o tamanho da div do título do form
+              .append("svg:svg")
+              .attr("width", w)
+              .attr("height", h)
               .append("svg:g")
               .attr("transform", "translate(.5,.5)");
 

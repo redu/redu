@@ -74,7 +74,8 @@ Redu::Application.configure do
   config.vis = {
     :activities => "http://vis.redu.com.br/subjects/activities.json",
     :activities_d3 => "http://vis.redu.com.br/subjects/activities_d3.json",
-    :lecture_participation => "http://vis.redu.com.br/lectures/participation.json"
+    :lecture_participation => "http://vis.redu.com.br/lectures/participation.json",
+    :students_participation => "http://vis.redu.com.br/user_spaces/participation.json"
   }
 
 end
