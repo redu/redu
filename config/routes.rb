@@ -80,6 +80,7 @@ Redu::Application.routes.draw do
       get :admin_subjects
       get :subject_participation_report
       get :lecture_participation_report
+      get :students_participation_report
     end
 
     resources :folders, :only => [:update, :create, :index] do

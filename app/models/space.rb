@@ -110,4 +110,8 @@ class Space < ActiveRecord::Base
   def subjects_id
     self.subjects.collect{ |subject| subject.id }
   end
+
+  def students_id
+    self.students.collect{ |student| student.id }
+  end
 end
