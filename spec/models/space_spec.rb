@@ -178,6 +178,20 @@ describe Space do
 
       subject.subjects_id.to_set.should eq([subj[0].id, subj[1].id].to_set)
     end
+
+    it "retrieves all my students ids" do
+      students_id = []
+      teacher = Factory(:user)
+      subject.course.join(teacher, Role[:teacher])
+
+      2.times do
+        user = Factory(:user)
+        subject.course.join(user, Role[:member])
+        students_id << user.id
+      end
+
+      subject.students_id.to_set.should == students_id.to_set
+    end
   end
 
   it "changes a user role" do

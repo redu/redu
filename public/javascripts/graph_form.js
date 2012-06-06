@@ -66,23 +66,6 @@ $.fn.plotGraphForm = function (divRender) {
     return ($this.find(".error_explanation")).length
   };
 
-  // Opções da requisição AJAX do form para IE usando dataType jsonp
-  var ajaxOptions = {
-    method: "GET",
-    dataType: 'jsonp',
-    // Esse success é para requisições cross-domain que tem por callback
-    // apenas um parametro
-    success: function (xhr) {
-      var json = xhr;
-      if(errorExist){
-        $this.find(".error_explanation").remove();
-        $this.find(".errors_on_date").remove();
-      }
-
-      buildGraph(json);
-    }
-  };
-
   // Submissão do gráfico por AJAX
   $this.submit(function(e) {
     $this.find("#date_start").val(timeSelected("start"));
@@ -98,8 +81,6 @@ $.fn.plotGraphForm = function (divRender) {
       // Não submita e também não chama o método live
       return false;
     }
-
-    $this.ajaxSubmit(ajaxOptions);
   });
 
   // Requisição AJAX para carregamento do gráfico + Tratamento de erros
