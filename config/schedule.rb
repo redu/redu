@@ -19,19 +19,27 @@
 
 # Learn more: http://github.com/javan/whenever
 
-log_dir = Dir.pwd
-log_dir += "/../../current" if @environment.eql?('production')
-set :output, log_dir + "/log/whenever.log"
+set :output, "log/whenever.log"
+bin_folder = @environment.eql?('development') ? "bin" : "ey_bundler_binstubs"
 
 unless @environment.eql?('production')
-  every 1.minute do
+  every 30.minute do
     runner "PackageInvoice.refresh_states!"
     runner "LicensedInvoice.refresh_states!"
+
+    # Comentado para evitar custos em staging
+    #command "cd #{@path} && #{bin_folder}/backup perform -t production_backup" \
+      #" -r backup"
   end
 else
   every 1.day, :at => '21 pm' do
     runner "PackageInvoice.refresh_states!"
     runner "LicensedInvoice.refresh_states!"
+  end
+
+  every 1.day, :at => '23 pm' do
+    command "cd #{@path} && #{bin_folder}/backup perform -t production_backup" \
+      " -r backup"
   end
 end
 
