@@ -368,6 +368,15 @@ describe "Statuses" do
 
       response.code.should == "422"
     end
+
+    context "when using an invalid Accept header (html)" do
+      it "should create the status and return it as json" do
+        post "/api/users/#{@current_user.id}/statuses",
+          params.merge(:format => 'html')
+        response.code.should == "201"
+        response.content_type.to_s.should == 'application/json'
+      end
+    end
   end
 
   context "when deleting status" do

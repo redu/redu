@@ -277,7 +277,7 @@ end
 ActionDispatch::Routing::Translator.translate_from_file('lang/i18n-routes.yml')
 
 Redu::Application.routes.draw do
-  namespace 'api' do
+  namespace 'api', :defaults => { :format => 'json' } do
     resources :environments, :except => [:new, :edit] do
       resources :courses, :except => [:new, :edit], :shallow => true
       resources :users, :only => :index
