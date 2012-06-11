@@ -833,7 +833,34 @@ describe "Statuses" do
     end
   end
 
-  def where_type(statuses, *params)
-    statuses.where(:type => params)
+  context "when there are Compound Logs" do
+    let(:compound) { Factory(:compound_log, :user => @current_user) }
+    let(:params) { { :oauth_token => @token, :format => 'json' } }
+    before do
+      compound.statusable = @current_user
+      compound.save
+      Status.associate_with(compound, [@current_user])
+    end
+
+    it "should not be showed on timeline" do
+      get "/api/users/#{@current_user.id}/statuses/timeline", params
+      parse(response.body).should be_empty
+    end
+
+    it "should not be showed" do
+      get "/api/statuses/#{compound.id}", params
+      response.code.should == "401"
+    end
+
+    it "should not be indexed" do
+      get "/api/users/#{@current_user.id}/statuses", params
+      parse(response.body).should be_empty
+    end
+
+    it "should not be answered" do
+      status = { :status => { :text => 'Answer' } }
+      post "/api/statuses/#{compound.id}/answers", params.merge!(status)
+      response.code.should == "401"
+    end
   end
 end
