@@ -7,8 +7,8 @@ class UserStatusesJob
   end
 
   def perform
-    user = User.find(user_id)
-    status = Status.find(status_id)
+    user = User.find_by_id(user_id)
+    status = Status.find_by_id(status_id)
 
     if user && status
       if status.is_a?(Log) and status.logeable_type == "Friendship"
