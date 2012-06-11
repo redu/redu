@@ -80,6 +80,7 @@ Redu::Application.routes.draw do
       get :admin_subjects
       get :subject_participation_report
       get :lecture_participation_report
+      get :students_participation_report
     end
 
     resources :folders, :only => [:update, :create, :index] do
@@ -293,7 +294,6 @@ Redu::Application.routes.draw do
         :path => 'enrollments', :as => 'enrollments'
 
     resources :spaces, :except => [:new, :edit, :index, :create] do
-      resources :lectures, :except => [:new, :edit], :shallow => true
       resources :subjects, :only => [:create, :index]
       resources :users, :only => :index
       resources :statuses, :only => [:index, :create] do

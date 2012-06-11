@@ -57,11 +57,6 @@ describe SpacesController do
         supported = assigns[:browser_not_supported]
         supported.should_not be_true
       end
-
-      it "assign a valid token" do
-        token = assigns[:token]
-        token.should eq(AccessToken.first.token)
-      end
     end
 
     context "lecture participation" do
@@ -74,14 +69,30 @@ describe SpacesController do
         response.should render_template "spaces/admin/lecture_participation_report"
       end
 
-      it "assign a valid token" do
-        token = assigns[:token]
-        token.should eq(AccessToken.first.token)
+      it "browser should be supported" do
+        supported = assigns[:browser_not_supported]
+        supported.should_not be_true
+      end
+    end
+
+    context "students participation" do
+      before do
+        get :students_participation_report, :id => @space.id,
+          :locale => "pt-BR"
+      end
+
+      it "when successful" do
+        response.should render_template "spaces/admin/students_participation_report"
       end
 
       it "browser should be supported" do
         supported = assigns[:browser_not_supported]
         supported.should_not be_true
+      end
+
+      it "assign a valid token" do
+        token = assigns[:token]
+        token.should eq(Oauth2Token.first.token)
       end
     end
   end
