@@ -3,8 +3,8 @@ module Api
     check_authorization
     respond_to :json
     rescue_from ActiveRecord::RecordNotFound, :with => :not_found
-    rescue_from CanCan::AccessDenied, :with => :not_authorized
     rescue_from ActiveModel::MissingAttributeError, :with => :bad_request
+    rescue_from CanCan::AccessDenied, :with => :not_authorized
 
     def routing_error; bad_request end
 

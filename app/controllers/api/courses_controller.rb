@@ -27,7 +27,7 @@ module Api
       @course.save
       @plan = Plan.from_preset(params[:course][:plan].try(:to_sym))
       @plan.user = current_user
-      @course.plans << @plan
+      @course.plan = @plan
       @plan.save
       @course.create_quota
       @plan.create_invoice_and_setup

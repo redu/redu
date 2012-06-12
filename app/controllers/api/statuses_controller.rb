@@ -64,7 +64,7 @@ module Api
         statusable.overview
       end
 
-      respond_with(:api, statuses)
+      respond_with(:api, statuses.not_compound_log)
     end
 
     protected
@@ -80,12 +80,13 @@ module Api
     end
 
     def statuses(context)
-      if context.is_a? User
+      statuses = if context.is_a? User
         Status.where(:user_id => context)
       else
         Status.where(:statusable_id => context,
                      :statusable_type => context.class.to_s)
       end
+      statuses.not_compound_log
     end
   end
 end

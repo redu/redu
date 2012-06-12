@@ -277,7 +277,7 @@ end
 ActionDispatch::Routing::Translator.translate_from_file('lang/i18n-routes.yml')
 
 Redu::Application.routes.draw do
-  namespace 'api' do
+  namespace 'api', :defaults => { :format => 'json' } do
     resources :environments, :except => [:new, :edit] do
       resources :courses, :except => [:new, :edit], :shallow => true
       resources :users, :only => :index
@@ -317,6 +317,8 @@ Redu::Application.routes.draw do
       resources :statuses, :only => [:index, :create] do
         get 'timeline', :on => :collection
       end
+      resources :users, :only => :index, :path => :contacts,
+        :as => :contacts
     end
 
     match 'me' => 'users#show'

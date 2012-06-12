@@ -13,6 +13,7 @@ module Api
     include Api::LogAbility
     include Api::HelpAbility
     include Api::AnswerAbility
+    include Api::CompoundLogAbility
 
     def initialize(user)
       can :read, :error

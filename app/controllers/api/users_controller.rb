@@ -15,40 +15,45 @@ module Api
     # /api/courses/:course_id/users
     # /api/environments/:environment_id/users
     def index
-      @entity = find_and_authorize_entity
-      authorize! :read, @entity
-      @users = filter_roles(@entity, params[:role])
+      context = context(params)
+      authorize! :read, context
 
-      respond_with(:api, @entity, @users)
+      users = users_with_indiferent_access(context)
+      users = filter_by_role(context, users, params[:role]) if params[:role]
+
+      respond_with(:api, context, users)
     end
 
     protected
 
-    def find_and_authorize_entity
+    def context(params)
       if params.has_key?(:course_id)
         Course.find(params[:course_id])
       elsif params.has_key?(:environment_id)
         Environment.find(params[:environment_id])
+      elsif params.has_key?(:user_id)
+        User.find(params[:user_id])
       else
         Space.find(params[:space_id])
       end
     end
 
-    def filter_roles(entity, role)
-      if role
-        if entity.is_a? Space
-          entity.users.
-            where(:user_space_associations => { :role => Role[role.to_sym] })
-        elsif entity.is_a? Environment
-          entity.users.
-            where(:user_environment_associations => { :role => Role[role.to_sym] })
-        else
-          entity.users.
-            where(:course_enrollments => { :role => Role[role.to_sym] })
-        end
+    def filter_by_role(context, users, role)
+      case context
+      when Space
+        users.where(:user_space_associations => { :role => Role[role.to_sym] })
+      when Environment
+        users.where(:user_environment_associations => { :role => Role[role.to_sym] })
+      when Course
+        users.where(:course_enrollments => { :role => Role[role.to_sym] })
       else
-        entity.users
+        users
       end
+    end
+
+    def users_with_indiferent_access(context)
+      # please Anything#users by convetion.
+      context.respond_to?(:users) ? context.users : context.friends
     end
   end
 end
