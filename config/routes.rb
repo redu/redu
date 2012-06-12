@@ -317,6 +317,8 @@ Redu::Application.routes.draw do
       resources :statuses, :only => [:index, :create] do
         get 'timeline', :on => :collection
       end
+      resources :users, :only => :index, :path => :contacts,
+        :as => :contacts
     end
 
     match 'me' => 'users#show'

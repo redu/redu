@@ -30,4 +30,8 @@ module UserRepresenter
     timeline_api_user_statuses_url(self)
   end
 
+  link :contacts do
+    api_user_contacts_url(self)
+  end
+
 end

@@ -24,26 +24,13 @@ describe "User" do
       end
     end
 
-    it "should link to itself" do
-      link = href_to('self', parse(response.body))
+    %w(self enrollments statuses timeline contacts).each do |rel|
+      it "should link to #{rel}" do
+        link = href_to(rel, parse(response.body))
 
-      get link, :oauth_token => @token, :format => 'json'
-      response.code.should == '200'
-    end
-
-    it "should link to enrollments" do
-      link = href_to('enrollments', parse(response.body))
-      link.should_not be_nil
-    end
-
-    it "should link to statuses" do
-      link = href_to('statuses', parse(response.body))
-      link.should_not be_nil
-    end
-
-    it "should link to timeline" do
-      link = href_to('timeline', parse(response.body))
-      link.should_not be_nil
+        get link, :oauth_token => @token, :format => 'json'
+        response.code.should == '200'
+      end
     end
   end
 
@@ -94,6 +81,21 @@ describe "User" do
         let(:members) { @members }
         let(:entity_name) { "#{subject.class.to_s.tableize}" }
       end
+    end
+  end
+
+  context "when listing contacts" do
+    let(:friend) { Factory(:user) }
+    before do
+      @current_user.be_friends_with(friend)
+      friend.be_friends_with(@current_user)
+    end
+
+    it "should return the correct number of contacts" do
+      get "/api/users/#{@current_user.id}/contacts", :oauth_token => @token,
+        :format => 'json'
+
+      parse(response.body).length.should == 1
     end
   end
 
