@@ -2,14 +2,27 @@ require 'spec_helper'
 
 describe UserCourseAssociationObserver do
   context "when UserCourseAssociation" do
+    before do
+      @uca = Factory.build(:user_course_association)
+    end
+
     xit "logs approval" do
       ActiveRecord::Observer.with_observers(:user_course_association_observer) do
-        uca = Factory.build(:user_course_association)
         expect {
-          uca.save
-          uca.approve!
-        }.should change(uca.logs, :count).by(1)
+          @uca.save
+          @uca.approve!
+        }.should change(@uca.logs, :count).by(1)
       end
+    end
+
+    it "should update course attribute updated_at" do
+      ActiveRecord::Observer.with_observers(
+        :user_course_association_observer) do
+          @uca.save
+          expect {
+            @uca.approve!
+          }.should change(@uca.course, :updated_at)
+        end
     end
   end
 

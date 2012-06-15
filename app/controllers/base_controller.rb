@@ -60,6 +60,10 @@ class BaseController < ApplicationController
     end
   end
 
+  def about
+    redirect_to "http://tech.redu.com.br"
+  end
+
   protected
 
   # Mostra ou não o layout com base na presença do header x-pjax

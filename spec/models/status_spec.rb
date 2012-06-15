@@ -112,10 +112,10 @@ describe Status do
       end
 
       it "Helps and Activities" do
-        @activity_statuses << Factory(:help, :statusable => @spaces.first, :user => @user)
-        @activity_statuses << Factory(:help, :statusable => @spaces.first, :user => @user)
+        @activity_statuses << Factory(:help, :statusable => @lectures.first, :user => @user)
+        @activity_statuses << Factory(:help, :statusable => @lectures.first, :user => @user)
 
-        @spaces.first.statuses.helps_and_activities.count.should eq(9)
+        @lectures.first.statuses.helps_and_activities.count.should eq(8)
       end
 
       it "by statusable" do
@@ -151,5 +151,11 @@ describe Status do
         @activity_statuses.first.answers_ids(@user).should eq(id)
       end
     end
-  end
+
+    describe :visible do
+      it "should return visible statuses" do
+        Status.visible.where_values_hash.should == { :compound => false }
+      end
+    end
+  end # context scope
 end

@@ -405,30 +405,64 @@ describe CoursesController do
       end
 
       @user = Factory(:user)
-      @course.join @user
       @subjects.each { |sub| sub.enroll @user }
       activate_authlogic
       UserSession.create @user
 
       @params = { :locale => 'pt-BR', :environment_id => @environment.path,
         :id => @course.path }
-      post :unjoin, @params
     end
 
-    it "assigns course" do
-    end
+    context "and it's the unique course which user has joined" do
+      before do
+        @course.join @user
+        post :unjoin, @params
+      end
 
-    it "removes the user from itself" do
-      @course.users.should_not include(@user)
-    end
-    it "removes the user from all spaces" do
-      @spaces.collect { |s| s.users.should_not include(@user) }
-    end
-    it "removes the user from all enrolled subjects" do
-      @subjects.collect { |s| s.members.should_not include(@user) }
-    end
+      it "assigns course"
+      
+      it "removes the user from itself" do
+        @course.users.should_not include(@user)
+      end
+      
+      it "removes the user from all spaces" do
+        @spaces.collect { |s| s.users.should_not include(@user) }
+      end
+      
+      it "removes the user from all enrolled subjects" do
+        @subjects.collect { |s| s.members.should_not include(@user) }
+      end
+      
+      it "should remove user from environment" do
+        @environment.users.should_not include(@user)
+      end
+    end # context "and it's the unique course which user has joined"
 
-  end
+    context "and it's not the unique course which user has joined" do
+      before do
+        @course2 = Factory(:course, :environment => @environment, :owner => @owner)
+        @course2.join @user
+        @course.join @user
+        post :unjoin, @params
+      end
+
+      it "should remove the user from itself" do
+        @course.users.should_not include(@user)
+      end
+      it "should remove the user from all spaces" do
+        @spaces.collect { |s| s.users.should_not include(@user) }
+      end
+      it "should remove the user from all enrolled subjects" do
+        @subjects.collect { |s| s.members.should_not include(@user) }
+      end
+      it "should not remove user from others courses" do
+        @course2.users.should include(@user)
+      end
+      it "should not remove user from environment" do
+        @environment.users.should include(@user)
+      end
+    end # context "and it's not the unique course which user has joined"
+  end # context "when unjoin from a course (POST unjoin)"
 
   context "when responding a course invitation" do
     before do
@@ -964,11 +998,13 @@ describe CoursesController do
     end
   end
 
-  context "when course is unpublised" do
-    context "GET preview" do
-      before do
-        @course = Factory(:course, :published => false)
+  context "when course is unpublished" do
+    before do
+      @course = Factory(:course, :published => false)
+    end
 
+    context "GET show" do
+      before do
         get :show, @params = { :locale => 'pt-BR', :environment_id => @course.environment.path,
         :id => @course.path }
       end
@@ -976,6 +1012,61 @@ describe CoursesController do
       it "should show the preview page" do
         response.should redirect_to(preview_environment_course_path(@course.environment,
                                                                     @course))
+      end
+    end
+  end
+
+  context "GET preview" do
+    before do
+      @course = Factory(:course)
+    end
+
+    context "when have permission to see the course" do
+      before do
+        @user = Factory(:user)
+        @course.join @user
+        activate_authlogic
+        UserSession.create @user
+
+        get :preview, :locale => "pt-BR",
+          :environment_id => @course.environment.to_param,
+          :id => @course.to_param
+      end
+
+      it "redirects to #show" do
+        response.should redirect_to(environment_course_path(@course.environment,
+                                                            @course))
+      end
+    end
+
+
+    context "when is course's admin" do
+      before do
+        @env_admin = Factory(:user)
+        @course.join @env_admin, Role[:environment_admin]
+        activate_authlogic
+        UserSession.create @env_admin
+
+        get :preview, :locale => "pt-BR",
+          :environment_id => @course.environment.to_param,
+          :id => @course.to_param
+      end
+
+      it "redirects to #show" do
+        response.should redirect_to(environment_course_path(@course.environment,
+                                                            @course))
+      end
+    end
+
+    context "when does NOT have permission to see the course" do
+      before do
+        get :preview, :locale => "pt-BR",
+          :environment_id => @course.environment.to_param,
+          :id => @course.to_param
+      end
+
+      it "renders preview" do
+        response.should  render_template("courses/preview")
       end
     end
   end

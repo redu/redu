@@ -7,8 +7,8 @@ class HierarchyStatusesJob
   end
 
   def perform
-    course = Course.find(course_id)
-    status = Status.find(status_id)
+    course = Course.find_by_id(course_id)
+    status = Status.find_by_id(status_id)
 
     if course && status
       Status.associate_with(status, course.approved_users.select("users.id"))

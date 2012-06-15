@@ -87,7 +87,6 @@ describe UsersController do
             expect {
               post :create, @post_params
             }.should change(UserCourseAssociation, :count).by(1)
-            @invite.reload.should be_approved
             UserCourseAssociation.last.user.email.
               should == @post_params[:user][:email]
           end
@@ -111,7 +110,6 @@ describe UsersController do
             expect {
               post :create, @post_params
             }.should change(UserCourseAssociation, :count).by(1)
-            @invite.reload.should be_approved
             UserCourseAssociation.last.user.email.should == @another_email
           end
 
@@ -172,6 +170,32 @@ describe UsersController do
             assigns(:courses)[:tutor].should == @courses[:tutor]
             assigns(:courses)[:teacher].should == @courses[:teacher]
           end
+        end
+      end
+
+      context "when application validation fail" do
+        before do
+          @existent_user = User.create(@post_params[:user])
+
+          # Forcing skip validation
+          User.any_instance.stub(:valid?) { true }
+          Rails.application.config.consider_all_requests_local = false
+        end
+
+
+        it "does NOT create a new user" do
+          expect {
+            post :create, @post_params
+          }.should_not change(User, :count)
+        end
+
+        it "redirects to application_path" do
+          post :create, @post_params
+          response.should redirect_to application_path
+        end
+
+        after do
+          Rails.application.config.consider_all_requests_local = true
         end
       end
     end
@@ -449,6 +473,27 @@ describe UsersController do
       get :my_wall, @params
       response.should redirect_to(home_path)
     end
+
+    context "when exists compound logs" do
+      before do
+        @params = {:locale => "pt-BR", :id => @user.login }
+        @statuses = @user.statuses.where(:compound => false)
+
+        # Criando friendship (para gerar um status compondable)
+        ActiveRecord::Observer.with_observers(:log_observer,
+                                              :friendship_observer) do
+                                                friend = Factory(:user)
+                                                friend.be_friends_with(@user)
+                                                @user.be_friends_with(friend)
+                                              end
+
+        get :my_wall, @params
+      end
+
+      it "assigns correctly number of statuses." do
+        assigns[:statuses].should == @statuses
+      end
+    end
   end
 
   context "GET show" do
@@ -478,18 +523,40 @@ describe UsersController do
       @courses = 4.times.collect { Factory(:course) }
       @moderated_courses = 4.times.collect { Factory(:course,
                                                      :subscription_type => 2) }
+
       @approved_courses = @courses[0..2].each { |c| c.join(@user) }
       @moderated_courses[0..2].each { |c| c.join(@user) }
 
+      @params = {:locale => "pt-BR", :id => @user.login }
+
       activate_authlogic
       UserSession.create @user
-
-      get :show_mural, :locale => "pt-BR", :id => @user.login
     end
 
     it "assigns subscribed_courses_count" do
+      get :show_mural, @params
       assigns[:subscribed_courses_count].should_not be_nil
       assigns[:subscribed_courses_count].should == @approved_courses.size
+    end
+
+    context "when exists compound logs" do
+      before do
+        @statuses = @user.statuses.where(:compound => false)
+
+        # Criando friendship (para gerar um status compondable)
+        ActiveRecord::Observer.with_observers(:log_observer,
+                                              :friendship_observer) do
+                                                friend = Factory(:user)
+                                                friend.be_friends_with(@user)
+                                                @user.be_friends_with(friend)
+                                              end
+
+        get :show_mural, @params
+      end
+
+      it "assigns correctly number of statuses." do
+        assigns[:statuses].should == @statuses
+      end
     end
   end
 

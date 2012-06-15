@@ -1,0 +1,5 @@
+<h1>Registre um novo aplicativo</h1>
+<%= form_for :client_application, :url => { :action => :create } do |f| %>
+   <%= render :partial => "form", :locals => { :f => f } %>
+   <%= submit_tag "Registrar" %>
+<% end %>

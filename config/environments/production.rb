@@ -50,6 +50,7 @@ Redu::Application.configure do
 
   config.action_mailer.default_url_options = \
     { :host => config.url }
+  config.representer.default_url_options = { :host => config.url }
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
@@ -74,7 +75,8 @@ Redu::Application.configure do
   config.vis = {
     :activities => "http://vis.redu.com.br/subjects/activities.json",
     :activities_d3 => "http://vis.redu.com.br/subjects/activities_d3.json",
-    :lecture_participation => "http://vis.redu.com.br/lectures/participation.json"
+    :lecture_participation => "http://vis.redu.com.br/lectures/participation.json",
+    :students_participation => "http://vis.redu.com.br/user_spaces/participation.json"
   }
 
 end

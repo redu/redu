@@ -196,6 +196,7 @@
   bottom: 0;
   left: 178px;
   pointer-events:none;
+  z-index: 1;
 }
 
 #chat-windows-list > li {

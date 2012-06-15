@@ -38,6 +38,10 @@ SimpleNavigation::Configuration.run do |navigation|
             lecture_participation_report_space_path(@space),
             :class => 'ui-state-default',
             :link => { :class => 'icon-list_16_18-before' }
+          subtabs.item :students_report, "Alunos",
+            students_participation_report_space_path(@space),
+            :class => 'ui-state-default',
+            :link => { :class => 'icon-list_16_18-before' }
         end
     end
   end

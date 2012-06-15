@@ -94,7 +94,7 @@ class CoursesController < BaseController
 
     paginating_params = {
       :page => params[:page],
-      :order => 'name ASC',
+      :order => 'updated_at DESC',
       :per_page => Redu::Application.config.items_per_page
     }
 
@@ -138,7 +138,7 @@ class CoursesController < BaseController
       redirect_to preview_environment_course_path(@environment, Course.find(88)) and return
     end
 
-    if (can? :read, @course) && (!can? :manage, @course)
+    if can? :read, @course
       redirect_to environment_course_path(@environment, @course) and return
     end
 

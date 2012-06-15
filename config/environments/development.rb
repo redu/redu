@@ -25,6 +25,7 @@ Redu::Application.configure do
 
   # Nome e URL do app
   config.url = "0.0.0.0:3000"
+  config.representer.default_url_options = {:host => "127.0.0.1:3000"}
 
   config.action_mailer.default_url_options = { :host => config.url }
   config.action_mailer.asset_host = config.url
@@ -72,7 +73,8 @@ Redu::Application.configure do
   config.vis = {
     :activities => "http://localhost:4000/subjects/activities.json",
     :activities_d3 => "http://localhost:4000/subjects/activities_d3.json",
-    :lecture_participation => "http://localhost:4000/lectures/participation.json"
+    :lecture_participation => "http://localhost:4000/lectures/participation.json",
+    :students_participation => "http://localhost:4000/user_spaces/participation.json"
   }
 
 end

@@ -69,14 +69,15 @@ Redu::Application.configure do
 
   # Configurações de VisClient
   config.vis_client = {
-    :url => "http://vis.redu.com.br/hierarchy_notifications.json",
-    :migration => "http://vis.redu.com.br/database_hierarchy_notifications.json"
+    :url => "http://localhost:3000/hierarchy_notifications.json",
+    :migration => "http://localhost:3000/database_hierarchy_notifications.json"
   }
 
   config.vis = {
-    :activities => "http://vis.redu.com.br/subjects/activities.json",
-    :activities_d3 => "http://vis.redu.com.br/subjects/activities_d3.json",
-    :lecture_participation => "http://vis.redu.com.br/lectures/participation.json"
+    :activities => "http://localhost:4000/subjects/activities.json",
+    :activities_d3 => "http://localhost:4000/subjects/activities_d3.json",
+    :lecture_participation => "http://localhost:4000/lectures/participation.json",
+    :students_participation => "http://localhost:4000/user_spaces/participation.json"
   }
 
 end

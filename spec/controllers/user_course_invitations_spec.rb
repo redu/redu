@@ -10,10 +10,10 @@ describe UserCourseInvitationsController do
 
   context "GET show" do
     before do
-      course = Factory(:course)
-      @invite = course.invite_by_email("email@example.com")
-      @params = {:locale => 'pt-BR', :environment_id => course.environment.path,
-        :course_id => course.path, :id => @invite.id }
+      @course = Factory(:course)
+      @invite = @course.invite_by_email("email@example.com")
+      @params = {:locale => 'pt-BR', :environment_id => @course.environment.path,
+        :course_id => @course.path, :id => @invite.id }
     end
 
     context "when the user is logged in" do
@@ -24,7 +24,8 @@ describe UserCourseInvitationsController do
       end
 
       it "accepts the invite" do
-        @invite.reload.should be_approved
+        association = @logged_user.get_association_with(@course)
+        association.should be_invited
       end
 
       it "redirects to user's home" do
@@ -62,17 +63,6 @@ describe UserCourseInvitationsController do
 
       it "assigns the user_session" do
         assigns[:user_session].should_not be_nil
-      end
-    end
-    context "when the invite was used ('approved')" do
-      before do
-        @invite.user = Factory(:user)
-        @invite.accept!
-        get :show, @params
-      end
-
-      it "redirects to site index" do
-        response.should redirect_to(application_path)
       end
     end
   end

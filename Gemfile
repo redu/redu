@@ -11,8 +11,7 @@ gem 'paperclip', '~> 2.7'
 gem 'will_paginate', '~> 3.0.pre2'
 gem 'mime-types'
 gem 'cancan', '~> 1.6.7'
-gem 'aasm', :require => "aasm",
-  :git => "git://github.com/rubyist/aasm.git"
+gem 'aasm'
 gem 'shuber-sortable'
 gem 'scribd_fu', :git => 'git://github.com/guiocavalcanti/scribd_fu.git',
   :branch => 'without-scape'
@@ -47,6 +46,8 @@ gem 'awesome_nested_fields'
 gem 'invitable', :git => 'git@github.com:redu/invitable.git'
 gem 'omniauth'
 gem 'omniauth-facebook'
+gem 'roar',
+  :git => 'https://github.com/apotonick/roar.git'
 gem 'roar-rails', '~> 0.0.3',
   :git => 'git://github.com/apotonick/roar-rails.git'
 gem 'eventmachine'
@@ -59,9 +60,15 @@ gem 'aws-sdk'
 gem "useragent", "~> 0.4.8"
 gem 'vis_client', :git => "git@github.com:redu/vis_client.git"
 
+# Gems específicos para a API
+gem "oauth-plugin", '~> 0.4.0'
+gem 'roar-rails', '~> 0.0.3',
+  :git => 'git://github.com/apotonick/roar-rails.git'
+gem 'rack-cors', :require => 'rack/cors'
+
 # Gems específicos de algum ambiente
 group :development, :test do
-  gem 'rspec-rails', '~> 2.6'
+  gem 'rspec-rails', '~> 2.8'
   gem 'shoulda-matchers'
   gem 'ruby-debug'
   gem 'jasmine'

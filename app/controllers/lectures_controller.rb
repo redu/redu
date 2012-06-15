@@ -216,6 +216,12 @@ class LecturesController < BaseController
    end
   end
 
+  def page_content
+    respond_to do |format|
+      format.html { render :layout => false }
+    end
+  end
+
   protected
 
   def authenticate

@@ -436,12 +436,15 @@ describe Ability do
         @environment = Factory(:environment, :owner => @env_admin)
         @course = Factory(:course, :owner => @env_admin,
                           :environment => @environment)
+        @space = Factory(:space, :course => @course)
       end
       context "member" do
         before do
           Factory(:user_environment_association, :environment => @environment,
                   :user => @member, :role => :member)
           Factory(:user_course_association, :course => @course,
+                  :user => @member, :role => :member)
+          Factory(:user_space_association, :space => @space,
                   :user => @member, :role => :member)
           @ability = Ability.new(@member)
         end
@@ -459,29 +462,27 @@ describe Ability do
         end
 
         it "can use students_endless on a space" do
-          space = Factory(:space, :course => @course)
-          Factory(:user_space_association, :space => space,
-                  :user => @member, :role => :member)
-          @ability.should be_able_to(:students_endless, space)
+          @ability.should be_able_to(:students_endless, @space)
         end
 
         it "can preview a space" do
-          space = Factory(:space, :course => @course)
-          Factory(:user_space_association, :space => space,
-                  :user => @member, :role => :member)
-          @ability.should be_able_to(:preview, space)
+          @ability.should be_able_to(:preview, @space)
         end
 
         it "can't see subject participation report" do
           @ability.should_not be_able_to(:subject_participation_report,
-                                         @course)
+                                          @space)
         end
 
         it "can't see lecture participation report" do
           @ability.should_not be_able_to(:lecture_participation_report,
-                                    @course)
+                                          @space)
         end
 
+        it "can't see students participation report" do
+          @ability.should_not be_able_to(:students_participation_report,
+                                          @space)
+        end
         it "cannot create a subject"
         it "cannot destroy any subject"
         it "cannot create a lecture"
@@ -518,13 +519,18 @@ describe Ability do
         end
 
         it "can't see subject participation report" do
-          @ability.should_not be_able_to(:subject_participation_report,
-                                         @course)
+          @ability.should be_able_to(:subject_participation_report,
+                                      @space)
         end
 
         it "can't see lecture participation report" do
-          @ability.should_not be_able_to(:lecture_participation_report,
-                                    @course)
+          @ability.should be_able_to(:lecture_participation_report,
+                                      @space)
+        end
+
+        it "can't see studenst participation report" do
+          @ability.should be_able_to(:students_participation_report,
+                                      @space)
         end
 
         it "creates a subject"
@@ -558,12 +564,17 @@ describe Ability do
 
         it "can't see subject participation report" do
           @ability.should_not be_able_to(:subject_participation_report,
-                                         @course)
+                                          @space)
         end
 
         it "can't see lecture participation report" do
           @ability.should_not be_able_to(:lecture_participation_report,
-                                    @course)
+                                          @space)
+        end
+
+        it "can't see students participation report" do
+          @ability.should_not be_able_to(:students_participation_report,
+                                          @space)
         end
 
         it "cannot create a subject"
@@ -578,26 +589,29 @@ describe Ability do
       context "environment admin" do
         before do
           @ability = Ability.new(@env_admin)
+          @space = Factory(:space, :owner => @env_admin,
+                          :course => @course)
         end
         it "creates a space" do
-          space = Factory(:space, :owner => @env_admin,
-                          :course => @course)
-          @ability.should be_able_to(:create, space)
+          @ability.should be_able_to(:create, @space)
         end
         it "destroys a space" do
-          space = Factory(:space, :owner => @env_admin,
-                          :course => @course)
-          @ability.should be_able_to(:destroy, space)
+          @ability.should be_able_to(:destroy, @space)
         end
 
         it "can see subject participation report" do
           @ability.should be_able_to(:subject_participation_report,
-                                     @course)
+                                      @space)
         end
 
         it "can see lecture participation report" do
           @ability.should be_able_to(:lecture_participation_report,
-                                    @course)
+                                      @space)
+        end
+
+        it "can see students participation report" do
+          @ability.should be_able_to(:students_participation_report,
+                                      @space)
         end
 
         it "creates a subject"
@@ -612,6 +626,8 @@ describe Ability do
       context "redu admin" do
         before do
           @ability = Ability.new(@redu_admin)
+          @space = Factory(:space, :owner => @env_admin,
+                          :course => @course)
         end
         it "creates a space" do
           space = Factory(:space, :owner => @redu_admin,
@@ -619,19 +635,22 @@ describe Ability do
           @ability.should be_able_to(:create, space)
         end
         it "destroys a space" do
-          space = Factory(:space, :owner => @env_admin,
-                          :course => @course)
-          @ability.should be_able_to(:destroy, space)
+          @ability.should be_able_to(:destroy, @space)
         end
 
         it "can see subject participation report" do
           @ability.should be_able_to(:subject_participation_report,
-                                     @course)
+                                      @space)
         end
 
         it "can see lecture participation report" do
           @ability.should be_able_to(:lecture_participation_report,
-                                    @course)
+                                      @space)
+        end
+
+        it "can see students participation report" do
+          @ability.should be_able_to(:students_participation_report,
+                                      @space)
         end
 
         it "creates a subject"
@@ -663,6 +682,181 @@ describe Ability do
                           :environment => @environment)
         @space = Factory(:space, :owner => @env_admin, :course => @course)
         @subject = Factory(:subject, :owner => @env_admin, :space => @space)
+
+        @lecture_page = Factory(:lecture, :subject => @subject,
+                                :lectureable => Factory(:page))
+        @lecture_exercise = Factory(:lecture, :subject => @subject,
+                                    :lectureable => Factory(:complete_exercise))
+        @lecture_seminar = Factory(:lecture, :subject => @subject,
+                                   :lectureable => Factory(:seminar_youtube))
+        mock_scribd_api
+        @lecture_document = Factory(:lecture, :subject => @subject,
+                                    :lectureable => Factory(:document))
+
+        @course.join @teacher, Role[:teacher]
+        @course.join @tutor, Role[:tutor]
+        @course.join @member, Role[:member]
+      end
+
+      context "environment_admin" do
+        before do
+          @ability = Ability.new(@env_admin)
+        end
+
+        context "can manage all kinds of lectures" do
+          it "(page)" do
+            @ability.should be_able_to(:manage, @lecture_page)
+          end
+          it "(exercise)" do
+            @ability.should be_able_to(:manage, @lecture_exercise)
+          end
+          it "(seminar)" do
+            @ability.should be_able_to(:manage, @lecture_seminar)
+          end
+          it "(document)" do
+            @ability.should be_able_to(:manage, @lecture_document)
+          end
+        end
+
+        context "can update many kinds of lectures" do
+          it "(page)" do
+            @ability.should be_able_to(:update, @lecture_page)
+          end
+
+          it "(exercise)" do
+            @ability.should be_able_to(:update, @lecture_exercise)
+          end
+        end
+
+
+        context "can NOT update many kinds of lectures" do
+          it "(seminar)" do
+            @ability.should_not be_able_to(:update, @lecture_seminar)
+          end
+
+          it "(document)" do
+            @ability.should_not be_able_to(:update, @lecture_document)
+          end
+
+          it "(exercise) with that was already answered" do
+            Factory(:finalized_result, :exercise => @lecture_exercise.lectureable)
+            @lecture_exercise.lectureable.reload
+            @ability.should_not be_able_to(:update, @lecture_exercise)
+          end
+        end
+      end
+
+      context "teacher" do
+        before do
+          @ability = Ability.new(@teacher)
+        end
+
+        context "can manage all kinds of lectures" do
+          it "(page)" do
+            @ability.should be_able_to(:manage, @lecture_page)
+          end
+          it "(exercise)" do
+            @ability.should be_able_to(:manage, @lecture_exercise)
+          end
+          it "(seminar)" do
+            @ability.should be_able_to(:manage, @lecture_seminar)
+          end
+          it "(document)" do
+            @ability.should be_able_to(:manage, @lecture_document)
+          end
+        end
+
+        context "can update many kinds of lectures" do
+          it "(page)" do
+            @ability.should be_able_to(:update, @lecture_page)
+          end
+
+          it "(exercise)" do
+            @ability.should be_able_to(:update, @lecture_exercise)
+          end
+        end
+
+
+        context "can NOT update many kinds of lectures" do
+          it "(seminar)" do
+            @ability.should_not be_able_to(:update, @lecture_seminar)
+          end
+          it "(document)" do
+            @ability.should_not be_able_to(:update, @lecture_document)
+          end
+        end
+      end
+
+      context "tutor" do
+        before do
+          @ability = Ability.new(@tutor)
+        end
+
+        context "can NOT manage all kinds of lectures" do
+          it "(page)" do
+            @ability.should_not be_able_to(:manage, @lecture_page)
+          end
+          it "(exercise)" do
+            @ability.should_not be_able_to(:manage, @lecture_exercise)
+          end
+          it "(seminar)" do
+            @ability.should_not be_able_to(:manage, @lecture_seminar)
+          end
+          it "(document)" do
+            @ability.should_not be_able_to(:manage, @lecture_document)
+          end
+        end
+
+        context "can NOT update all kinds of lectures" do
+          it "(page)" do
+            @ability.should_not be_able_to(:update, @lecture_page)
+          end
+          it "(exercise)" do
+            @ability.should_not be_able_to(:update, @lecture_exercise)
+          end
+          it "(seminar)" do
+            @ability.should_not be_able_to(:update, @lecture_seminar)
+          end
+          it "(document)" do
+            @ability.should_not be_able_to(:update, @lecture_document)
+          end
+        end
+      end
+
+      context "member" do
+        before do
+          @ability = Ability.new(@member)
+        end
+
+        context "can NOT manage all kinds of lectures" do
+          it "(page)" do
+            @ability.should_not be_able_to(:manage, @lecture_page)
+          end
+          it "(exercise)" do
+            @ability.should_not be_able_to(:manage, @lecture_exercise)
+          end
+          it "(seminar)" do
+            @ability.should_not be_able_to(:manage, @lecture_seminar)
+          end
+          it "(document)" do
+            @ability.should_not be_able_to(:manage, @lecture_document)
+          end
+        end
+
+        context "can NOT update all kinds of lectures" do
+          it "(page)" do
+            @ability.should_not be_able_to(:update, @lecture_page)
+          end
+          it "(exercise)" do
+            @ability.should_not be_able_to(:update, @lecture_exercise)
+          end
+          it "(seminar)" do
+            @ability.should_not be_able_to(:update, @lecture_seminar)
+          end
+          it "(document)" do
+            @ability.should_not be_able_to(:update, @lecture_document)
+          end
+        end
       end
     end
 
@@ -1497,6 +1691,35 @@ describe Ability do
        ability.should be_able_to(:manage, @lecture)
      end
    end
+  end
+
+  context "on Canvas" do
+    let(:course) do
+      environment = Factory(:complete_environment)
+      environment.courses.first
+    end
+    let(:canvas) do
+      Factory(:canvas, :container => course.spaces.first, :user => course.owner)
+    end
+    let(:user) { Factory(:user) }
+    let(:ability) { Ability.new(user) }
+
+    context "when member" do
+      before do
+        course.join(user)
+      end
+
+      it "should be able to read" do
+        ability.should be_able_to :read, canvas
+      end
+    end
+
+    context "when outsider" do
+      it "should not be able to read" do
+        ability.should_not be_able_to :read, canvas
+      end
+
+    end
   end
 
 end

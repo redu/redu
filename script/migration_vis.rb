@@ -60,6 +60,16 @@ def insert_subject_finalized
   end
 end
 
+def insert_exercise_finalized
+  Exercise.all.each do |exercise|
+    exercise.results.finalized.each do |finalized|
+      params = build_hash_to_vis(finalized)
+      send_async_info(params,
+                      Redu::Application.config.vis_client[:migration])
+    end
+  end
+end
+
 def insert_statuses
   Status.where(:type => ["Activity", "Help", "Answer"]).each do |status|
 
@@ -134,6 +144,27 @@ def get_type(status)
   else
     nil
   end
+end
+
+def build_hash_to_vis(result)
+  exercise = result.exercise
+  space = exercise.lecture.subject.space
+  params = {
+    :lecture_id => exercise.lecture.id,
+    :subject_id => exercise.lecture.subject.id,
+    :space_id => space.id,
+    :course_id => space.course.id,
+    :user_id => result.user_id,
+    :type => "exercise_finalized",
+    :grade => result.grade,
+    :status_id => nil,
+    :statusable_id => nil,
+    :statusable_type => nil,
+    :in_response_to_id => nil,
+    :in_response_to_type => nil,
+    :created_at => result.created_at,
+    :updated_at => result.updated_at
+  }
 end
 
 def send_async_info(params, url)

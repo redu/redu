@@ -163,6 +163,8 @@ pt-BR:
       space:
         name: "Nome"
         description: "Descrição"
+      status:
+        text: "Texto"
       question:
         statement: "Enunciado"
         explanation: "Justificativa"
@@ -215,29 +217,31 @@ pt-BR:
         user:
           attributes:
             first_name:
-              blank: "não pode ser deixado em branco"
+              blank: "Por favor, informe seu nome."
             last_name:
-              blank: "não pode ser deixado em branco"
+              blank: "Por favor, informe seu sobrenome."
             login:
-              blank: ": Por favor, digite um login."
-              too_short: ": Login muito curto (mínimo de 5 caracteres)."
+              blank: "Por favor, digite um login."
+              too_short: "Login muito curto (mínimo de 5 caracteres)."
               invalid:  "Utilize apenas letras (a-z), números (0-9), traço (-) e sublinhado (_)."
               taken: "Por favor, escolha outro login. Este já existe no Redu."
             login_slug:
               taken: "Por favor, escolha outro login. Este já existe no Redu."
             email:
-              blank: ": Por favor, digite um e-mail."
-              too_short: ": E-mail muito curto (mínimo de 3 caracteres)."
+              blank: "Por favor, digite um e-mail."
+              too_short: "E-mail muito curto (mínimo de 3 caracteres)."
               invalid: "E-mail inválido."
-              taken: ": Este e-mail já está cadastrado."
-              confirmation: "é diferente da confirmação."
+              taken: "Este e-mail já está cadastrado."
+              confirmation: "É diferente da confirmação."
+            email_confirmation:
+              blank: "Por favor, confirme seu e-mail."
             password:
-              blank: ": Por favor, digite a senha."
-              too_short: ": Senha muito curta (mínimo de 6 caracteres)."
-              confirmation: ": A confirmação não confere."
+              blank: "Por favor, digite a senha."
+              too_short: "Senha muito curta (mínimo de 6 caracteres)."
+              confirmation: "A confirmação não confere."
             password_confirmation:
-              blank: ": Por favor, digite a senha de confirmação."
-              too_short: ": Senha muito curta (mínimo de 6 caracteres)."
+              blank: "Por favor, digite a senha de confirmação."
+              too_short: "Senha muito curta (mínimo de 6 caracteres)."
             mobile:
               invalid: "inválido."
             localization:
@@ -247,7 +251,7 @@ pt-BR:
         space:
           attributes:
             path:
-              invalid: ": caminho inválido."
+              invalid: "caminho inválido."
             description:
               too_short: " muito curta."
         subject:
@@ -261,15 +265,15 @@ pt-BR:
         message:
           attributes:
             body:
-              blank: ": Por favor, digite uma mensagem."
+              blank: "Por favor, digite uma mensagem."
             subject:
-              blank: ": Por favor, digite um assunto."
+              blank: "Por favor, digite um assunto."
             recipient:
-              blank: ": Destinatário inexistente, digite um válido."
+              blank: "Destinatário inexistente, digite um válido."
         lazy_asset:
           attributes:
            name:
-            blank: ": Escolha um nome para o recurso."
+            blank: ":Escolha um nome para o recurso."
         partner_environment_association:
           attributes:
             cnpj:

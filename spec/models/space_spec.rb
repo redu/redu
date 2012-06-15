@@ -16,6 +16,7 @@ describe Space do
 
   it { should have_many :logs }
   it { should have_many :statuses }
+  it { should have_many :canvas }
 
   it { should validate_presence_of :name}
   it { should_not validate_presence_of :description }
@@ -176,6 +177,20 @@ describe Space do
       subject.subjects << subj[1]
 
       subject.subjects_id.to_set.should eq([subj[0].id, subj[1].id].to_set)
+    end
+
+    it "retrieves all my students ids" do
+      students_id = []
+      teacher = Factory(:user)
+      subject.course.join(teacher, Role[:teacher])
+
+      2.times do
+        user = Factory(:user)
+        subject.course.join(user, Role[:member])
+        students_id << user.id
+      end
+
+      subject.students_id.to_set.should == students_id.to_set
     end
   end
 

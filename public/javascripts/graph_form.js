@@ -85,13 +85,19 @@ $.fn.plotGraphForm = function (divRender) {
 
   // Requisição AJAX para carregamento do gráfico + Tratamento de erros
   $this.live("ajax:complete", function(e, xhr){
-    json = $.parseJSON(xhr.responseText);
-    if(errorExist){
-      $this.find(".error_explanation").remove();
-      $this.find(".errors_on_date").remove();
-    }
+    var json = $.parseJSON(xhr.responseText);
+      if(errorExist){
+        $this.find(".error_explanation").remove();
+        $this.find(".errors_on_date").remove();
+      }
 
-    buildGraph();
+      // As requisições cross-domain não devolvem este callback,
+      // sendo necessário outro callback do tipo sucess, o try cach
+      // não deixa a exceção ser levantada para o usuário
+      try{
+        buildGraph(json);
+      }
+      catch(e){}
   });
 
   // Função de carregamento do gráfico
