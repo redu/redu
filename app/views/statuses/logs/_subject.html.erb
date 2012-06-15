@@ -1,7 +1,7 @@
 <li id="status-<%= log.id %>">
   <div class="status icons-big-after icon-space-lightblue_64_66-after">
     <div class="status-context">
-      <span class="status-subject icon-small icon-course-lightblue_32_34">
+      <span class="status-subject icon-small icon-space-lightblue_32_34">
       </span>
       <%= link_to log.logeable.space.course.name, environment_course_path(log.logeable.space.course.environment, log.logeable.space.course), :class => "status-main" %>
       <%= link_to log.logeable.name, space_subject_path(log.logeable.space, log.logeable), :class => "status-secondary icon-expand-gray_8_10-before" %>
