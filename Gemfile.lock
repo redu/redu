@@ -85,7 +85,6 @@ GEM
       Platform (>= 0.4.0)
       open4
     Platform (0.4.0)
-    aaronh-chronic (0.3.9)
     aasm (3.0.6)
       activerecord
     abstract (1.0.0)
@@ -141,6 +140,7 @@ GEM
     builder (2.1.2)
     cancan (1.6.7)
     childprocess (0.3.1)
+    chronic (0.6.7)
     ckeditor (3.4.2.pre)
       mime-types (>= 1.16)
     closure-compiler (1.1.1)
@@ -350,9 +350,9 @@ GEM
     webmock (1.8.6)
       addressable (>= 2.2.7)
       crack (>= 0.1.7)
-    whenever (0.6.7)
-      aaronh-chronic (>= 0.3.9)
+    whenever (0.7.3)
       activesupport (>= 2.3.4)
+      chronic (~> 0.6.3)
     will_paginate (3.0.pre2)
     xml-simple (1.0.15)
     yui-compressor (0.9.6)

@@ -29,11 +29,7 @@ Backup::Model.new(:production_backup, 'Backup of the production database') do
     db.port               = 3306
     db.socket             = "/tmp/mysql.sock"
     db.skip_tables        = ["sessions"]
-    #db.only_tables        = ["only", "these" "tables"]
     db.additional_options = ["--quick", "--single-transaction"]
-    # Optional: Use to set the location of this utility
-    #   if it cannot be found by name in your $PATH
-    # db.mysqldump_utility = "/opt/local/bin/mysqldump"
   end
 
   ##
@@ -53,11 +49,11 @@ Backup::Model.new(:production_backup, 'Backup of the production database') do
     s3.region            = "us-east-1"
     s3.bucket            = "redu-backup"
     s3.path              = "/production-backups"
-    s3.keep              = 10
+    s3.keep              = 20
   end
 
   encrypt_with OpenSSL do |encryption|
-    encryption.password = 'penn441\boob'
+    encryption.password = 'NPR30nursed'
     encryption.base64 = true
     encryption.salt = true
   end

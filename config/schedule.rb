@@ -32,14 +32,27 @@ unless @environment.eql?('production')
       #" -r backup"
   end
 else
-  every 1.day, :at => '21 pm' do
+  # 1am horário local
+  every 1.day, :at => '9pm' do
     runner "PackageInvoice.refresh_states!"
     runner "LicensedInvoice.refresh_states!"
   end
 
-  every 1.day, :at => '23 pm' do
+  # 2pm e 2am horário local
+  every '0 10,22 * * *' do
     command "cd #{@path} && #{bin_folder}/backup perform -t production_backup" \
       " -r backup"
+  end
+
+  # 3pm e 3am horário local
+  every '0 11,23 * * *' do
+    command "s3cmd sync --delete-removed --exclude=thumb_*/*" \
+      " --include=ckeditor/*" \
+      " s3://redu_uploads s3://redu-backup-static-files/redu_uploads/"
+    command "s3cmd sync --delete-removed" \
+      " s3://redu-videos s3://redu-backup-static-files/redu-videos/"
+    command "s3cmd sync --delete-removed" \
+      " s3://redu_files s3://redu-backup-static-files/redu_files/"
   end
 end
 
