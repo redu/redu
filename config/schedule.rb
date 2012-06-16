@@ -19,7 +19,7 @@
 
 # Learn more: http://github.com/javan/whenever
 
-set :output, "log/whenever.log"
+set :output, "#{@path}/log/whenever.log"
 bin_folder = @environment.eql?('development') ? "bin" : "ey_bundler_binstubs"
 
 unless @environment.eql?('production')
