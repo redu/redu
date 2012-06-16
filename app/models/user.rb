@@ -128,24 +128,24 @@ class User < ActiveRecord::Base
     c.crypto_provider = CommunityEngineSha1CryptoMethod
 
     # Valida password
-    c.validates_length_of_password_field_options = { :within => 6..20, 
+    c.validates_length_of_password_field_options = { :within => 6..20,
                                                      :if => :password_required?,
                                                      :allow_blank => true }
-    c.validates_length_of_password_confirmation_field_options = { 
-                                                     :within => 6..20, 
-                                                     :if => :password_required?, 
+    c.validates_length_of_password_confirmation_field_options = {
+                                                     :within => 6..20,
+                                                     :if => :password_required?,
                                                      :allow_blank => true }
     c.validates_confirmation_of_password_field_options = { :allow_blank => true }
 
     # Valida login
-    c.validates_length_of_login_field_options = { :within => 5..20, 
+    c.validates_length_of_login_field_options = { :within => 5..20,
                                                   :allow_blank => true }
-    c.validates_format_of_login_field_options = { :with => /^[A-Za-z0-9_-]+$/, 
+    c.validates_format_of_login_field_options = { :with => /^[A-Za-z0-9_-]+$/,
                                                   :allow_blank => true }
 
     # Valida e-mail
     c.validates_length_of_email_field_options = { :within => 3..100, :allow_blank => true }
-    c.validates_format_of_email_field_options = { :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/, 
+    c.validates_format_of_email_field_options = { :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/,
                                                   :allow_blank => true }
   end
 
@@ -157,7 +157,7 @@ class User < ActiveRecord::Base
   has_private_messages
 
   # VALIDATIONS
-  validates_presence_of     :first_name, :last_name, :login, :email,  
+  validates_presence_of     :first_name, :last_name, :login, :email,
                             :email_confirmation
   validates_uniqueness_of   :login, :email, :case_sensitive => false
   validates_exclusion_of    :login, :in => Redu::Application.config.extras["reserved_logins"]
@@ -594,10 +594,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def friends_in_common_with(user)
-    User.where(:login => 'yayreduyay123')
-  end
-
   # Participam do mesmo curso, mas não são contatos nem possuem requisição
   # de contato pendente.
   def colleagues(quantity)
@@ -640,8 +636,8 @@ class User < ActiveRecord::Base
   end
 
   def has_no_visible_profile_information
-    self.experiences.actual_jobs.empty? && self.educations.empty? && 
-    self.birthday.nil? && self.languages.blank? && 
+    self.experiences.actual_jobs.empty? && self.educations.empty? &&
+    self.birthday.nil? && self.languages.blank? &&
     self.birth_localization.blank? && self.localization.blank?
   end
 
