@@ -59,6 +59,9 @@ gem 'activerecord-import'
 gem 'aws-sdk'
 gem "useragent", "~> 0.4.8"
 gem 'vis_client', :git => "git@github.com:redu/vis_client.git"
+gem 'backup',
+  :git => 'git://github.com/meskyanichi/backup.git'
+gem 'fog', '~> 1.1.0' # Necessário ao backup
 
 # Gems específicos para a API
 gem "oauth-plugin", '~> 0.4.0'

@@ -18,3 +18,5 @@ public/assets/*
 public/images/users/*
 public/images/myfiles/*
 config/initializers/rails_footnotes.rb
+backup/data/*
+backup/log/*

@@ -19,19 +19,40 @@
 
 # Learn more: http://github.com/javan/whenever
 
-log_dir = Dir.pwd
-log_dir += "/../../current" if @environment.eql?('production')
-set :output, log_dir + "/log/whenever.log"
+set :output, "log/whenever.log"
+bin_folder = @environment.eql?('development') ? "bin" : "ey_bundler_binstubs"
 
 unless @environment.eql?('production')
-  every 1.minute do
+  every 30.minute do
+    runner "PackageInvoice.refresh_states!"
+    runner "LicensedInvoice.refresh_states!"
+
+    # Comentado para evitar custos em staging
+    #command "cd #{@path} && #{bin_folder}/backup perform -t production_backup" \
+      #" -r backup"
+  end
+else
+  # 1am horário local
+  every 1.day, :at => '9pm' do
     runner "PackageInvoice.refresh_states!"
     runner "LicensedInvoice.refresh_states!"
   end
-else
-  every 1.day, :at => '21 pm' do
-    runner "PackageInvoice.refresh_states!"
-    runner "LicensedInvoice.refresh_states!"
+
+  # 2pm e 2am horário local
+  every '0 10,22 * * *' do
+    command "cd #{@path} && #{bin_folder}/backup perform -t production_backup" \
+      " -r backup"
+  end
+
+  # 3pm e 3am horário local
+  every '0 11,23 * * *' do
+    command "s3cmd sync --delete-removed --exclude=thumb_*/*" \
+      " --include=ckeditor/*" \
+      " s3://redu_uploads s3://redu-backup-static-files/redu_uploads/"
+    command "s3cmd sync --delete-removed" \
+      " s3://redu-videos s3://redu-backup-static-files/redu-videos/"
+    command "s3cmd sync --delete-removed" \
+      " s3://redu_files s3://redu-backup-static-files/redu_files/"
   end
 end
 
