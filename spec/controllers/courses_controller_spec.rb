@@ -440,7 +440,7 @@ describe CoursesController do
 
     context "and it's not the unique course which user has joined" do
       before do
-        @course2 = Factory(:course, :environment => @environment, :owner => @ower)
+        @course2 = Factory(:course, :environment => @environment, :owner => @owner)
         @course2.join @user
         @course.join @user
         post :unjoin, @params
