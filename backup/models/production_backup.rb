@@ -1,6 +1,8 @@
 # encoding: utf-8
 s3_config = YAML.load_file('./config/s3.yml')['production']
-db_config = YAML.load_file('./config/database.yml')
+# Necessário, pois contém código ruby
+require 'erb'
+db_config = YAML.load(ERB.new(IO.read('./config/database.yml')).result)['production']
 
 ##
 # Backup Generated: production_backup
