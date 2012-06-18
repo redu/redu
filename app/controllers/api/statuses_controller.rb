@@ -42,6 +42,8 @@ module Api
         statuses.where(:type => ['Help', 'Activity'])
       end
 
+      statuses = statuses.page(params[:page])
+
       respond_with(:api, statuses)
     end
 
@@ -63,6 +65,8 @@ module Api
       else
         statusable.overview
       end
+
+      statuses = statuses.page(params[:page])
 
       respond_with(:api, statuses.not_compound_log)
     end
