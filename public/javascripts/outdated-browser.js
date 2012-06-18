@@ -16,7 +16,7 @@ $.verifyCompatibleBrowser = function(){
   }else if(myBrowser.isFirefox()){
     minVersion = 3.6;
   }else if (myBrowser.isIE()){
-    minVersion = 8;
+    minVersion = 9;
   }
 
   var warned = $.cookie("boring_browser");
