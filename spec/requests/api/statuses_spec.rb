@@ -132,7 +132,7 @@ describe "Statuses" do
     end
   end
 
-  context "when listing on User" do
+  context "when listing User statuses" do
     let(:space) do
       environment = Factory(:complete_environment, :owner => @current_user)
       environment.courses.first.spaces.first
@@ -212,6 +212,20 @@ describe "Statuses" do
 
       parse(response.body).count.should == @user_statuses.
         select {|i| i[:type] == "Activity" }.length
+    end
+  end
+
+  context "when listing user statuses" do
+    it_should_behave_like "pagination" do
+      let(:entities) do
+        4.times.collect do
+          Factory(:activity, :user => @current_user, :statusable => @current_user)
+        end
+      end
+      let(:params) do
+        ["/api/users/#{@current_user.id}/statuses",
+         { :oauth_token => @token, :format => 'json' }]
+      end
     end
   end
 
@@ -757,7 +771,60 @@ describe "Statuses" do
     end
   end
 
-  context "when listing overview on User" do
+  context "when listing overview on Space" do
+    let(:environment) do
+      Factory(:complete_environment, :owner => @current_user)
+    end
+    let(:space) { environment.courses.first.spaces.first }
+
+    before do
+      4.times do
+        Factory(:activity, :statusable => space, :user => @current_user)
+      end
+    end
+
+    it_should_behave_like "pagination" do
+      let(:params) do
+        [ "/api/spaces/#{space.id}/statuses/timeline",
+          { :oauth_token => @token, :format => 'json' }]
+      end
+      let(:entities) { space.statuses }
+    end
+
+  end
+
+  context "when listing User overview" do
+    let(:environment) do
+      Factory(:complete_environment, :owner => @current_user)
+    end
+    let(:space) { environment.courses.first.spaces.first }
+    before do
+      ActiveRecord::Observer.with_observers(:status_observer) do
+        params = { :oauth_token => @token, :format => 'json' }
+        create_params = params.merge({ :status => { :text => "text" } })
+
+        # Postando no próprio mural
+        2.times do
+          post "/api/users/#{@current_user.id}/statuses", create_params
+        end
+
+        # Postando na disciplina
+        2.times do
+          post "/api/spaces/#{space.id}/statuses", create_params
+        end
+      end
+    end
+
+    it_should_behave_like "pagination" do
+      let(:entities) { @current_user.overview }
+      let(:params) do
+        ["/api/users/#{@current_user.id}/statuses/timeline",
+         { :oauth_token => @token, :format => 'json' }]
+      end
+    end
+
+  end
+  context "when listing User overview" do
     let(:params) do
       { :oauth_token => @token, :format => 'json' }
     end
@@ -872,4 +939,5 @@ describe "Statuses" do
       response.code.should == "401"
     end
   end
+
 end
