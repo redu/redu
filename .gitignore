@@ -21,3 +21,4 @@ config/initializers/rails_footnotes.rb
 backup/data/*
 backup/log/*
 backup/.tmp/*
+chromedriver.log
