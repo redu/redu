@@ -1,5 +1,6 @@
 require 'db/create_roles'
 require 'db/create_privacies'
+require 'db/create_standard_partner'
 
 namespace :bootstrap do
 
@@ -67,10 +68,7 @@ namespace :bootstrap do
 
   desc "Inser standard partner"
   task :partner => :environment do
-    Partner.create(:name => "CNS",
-                   :email => "cns@redu.com.br",
-                   :cnpj => "12.123.123/1234-12",
-                   :address => "Beaker street")
+    create_standard_partner
   end
 
   desc "Create OAuth Client Application for ReduViz"

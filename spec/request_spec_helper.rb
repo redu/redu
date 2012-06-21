@@ -11,6 +11,7 @@ RSpec.configure do |config|
 
   #Database cleaner
   config.before do
+    except_tables = %w(roles privacies)
     if example.metadata[:js]
       DatabaseCleaner.strategy = :truncation
     else
@@ -21,6 +22,8 @@ RSpec.configure do |config|
 
   config.after do
     DatabaseCleaner.clean
+    # O parceiro CNS é necessário em algumas páginas
+    create_standard_partner
   end
 
   ActiveRecord::Observer.enable_observers
