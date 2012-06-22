@@ -8,15 +8,8 @@ def invite_friend_registred_by_email(user)
 end
 
 def invite_friend_by_email(param)
-  if param.is_a? User
-    invite_friend(param.display_name)
-    within '.friendship-dropdown' do
-      all('li').each { |li| li.click if li.text == param.display_name }
-    end
-  else
-    invite_friend(param)
-    find('#invite_email').click
-  end
+  invite_friend(param)
+  find('#invite_email').click
 end
 
 def invite_friend_by_login(user)
@@ -42,6 +35,14 @@ def invite_friend(key)
   find('form#invite-members ul li input[autocomplete=off]').set(key)
   sleep 3
 end
+
+# Testes de integração: Friendship
+# > Criação de convites por:
+#   > Nome
+#   > Email (existente)
+#   > Email (novo usuário)
+# > Visualização dos convites criados (listagem)
+# > Convites criados em batch
 
 describe "MailInvitation" do
   let(:batman) { Factory(:user, :login => 'batman',
@@ -106,14 +107,12 @@ describe "MailInvitation" do
       current_path.should == new_user_friendship_path(batman)
     end
 
-    it "when input user login, name or email(if registred), a dropdown list should appear and user should able to add in invitation list", :js => true do
-      [superman, wonder_woman, flash].each do |hero|
+    it "when input user login or name, a dropdown list should appear and user should able to add in invitation list", :js => true do
+      [superman, wonder_woman].each do |hero|
         if hero == superman
           invite_friend_by_login(hero)
         elsif hero == wonder_woman
           invite_friend_by_name(hero)
-        else
-          invite_friend_registred_by_email(hero)
         end
 
         find('.token-input-list').should have_content hero.display_name
@@ -129,7 +128,46 @@ describe "MailInvitation" do
   end
 
   describe 'Mail invitation' do
+    before do
+      visit new_user_friendship_path(batman)
+      sleep 1
+      current_path.should == new_user_friendship_path(batman)
+    end
+
     context 'when an email already exists at Redu' do
+      it 'should be created a friendship request instead of invitation by email', :js => true do
+        heroes = [flash, superman]
+        heroes.each do |hero|
+          invite_friend_registred_by_email(hero)
+          find('.token-input-list').should have_content hero.display_name
+        end
+
+        click_on 'Enviar convites'
+        sleep 2
+        heroes.each do |hero|
+          page.should have_content 'Convites enviados com sucesso.'
+          invitations = find('.concave-invitation-table')
+          invitations.should have_link hero.display_name
+          invitations.should have_link 'Reenviar convite'
+          invitations.should have_content 'O usuário ainda não aceitou o convite de amizade.'
+        end
+      end
+    end
+
+    context 'when create friendship invitations', :js => true do
+      it 'should create invitation by email' do
+        lex = 'lex@luthorcorp.org'
+        invite_friend_by_email(lex)
+        page.should have_content '(Convidar para o Redu)'
+
+        click_on 'Enviar convites'
+        sleep 3
+        page.should have_content 'Convites enviados com sucesso.'
+        invitations = find('.concave-invitation-table')
+        invitations.should have_link 'Reenviar convite'
+        invitations.should have_content lex
+        invitations.should have_content 'O usuário ainda não aceitou o convite de amizade.'
+      end
     end
   end
 
@@ -143,10 +181,11 @@ describe "MailInvitation" do
     it "should recive sucess message 'Convites enviados com sucesso.'", :js => true do
       justice_league = [superman,'ajax@redu.com.br' ,wonder_woman, 'thor@asgard.br', 'hall_jordam@redu.com.br']
       justice_league.each do |hero|
-        invite_friend_by_email(hero)
         if(hero.is_a? User)
+          invite_friend_by_name(hero)
           find('.token-input-list').should have_content hero.display_name
         else
+          invite_friend_by_email(hero)
           find('.token-input-list').should have_content hero
         end
       end
