@@ -1,19 +1,24 @@
 require 'spec_helper'
 require 'capybara/rails'
 require 'capybara/rspec'
-require 'selenium/webdriver'
+require 'db/create_standard_partner'
+require 'db/create_audiences'
 
 RSpec.configure do |config|
   config.use_transactional_fixtures = false
+
+  # Dados necessários ao teste
+  create_standard_partner
+  create_audiences
 
   # Login support
   config.include RequestsHelper
 
   # Database cleaner
   config.before do
-    except_tables = %w(roles privacies)
+    except_tables = %w(roles privacies audiences)
     if example.metadata[:js]
-      DatabaseCleaner.strategy = :truncation
+      DatabaseCleaner.strategy = :truncation, { :except => except_tables }
     else
       DatabaseCleaner.strategy = :transaction
     end
