@@ -30,49 +30,53 @@ describe "CourseInvitations" do
     before do
       # transforma João em administrador
       @course.change_role @joao, Role[:environment_admin]
-      visit environment_course_path(@course.environment, @course)
-      click_link "Membros do Curso"
-      click_link "Convidar membros"
+      visit admin_invitations_environment_course_path(@course.environment, @course)
     end
 
     it "he can invite other users with their e-mail", :js => true do
-      invite_by_email 'maria@foo.com'
-      invite_by_email 'jose@bar.com'
+      fill_in_email_or_username 'maria@foo.com'
+      click_link 'invite_email'
+      fill_in_email_or_username 'jose@bar.com'
+      click_link 'invite_email'
       click_button 'Enviar convites'
       page.should have_content(success_message)
     end
 
     it "he can invite registered users with their names", :js => true do
       fred = Factory(:user, :first_name => 'Fred', :last_name => 'Krueger')
-      page.find('form#invite-members ul li input[autocomplete=off]').set(fred.display_name)
-      sleep 2
-      within '.token-input-dropdown' do
-        all('li').each { |li| li.click if li.text == fred.display_name }
-      end
-      find('#admin-invitations').click # Tive de fazer isso já que a mensagem impede o click no botão
+      fill_in_email_or_username 'Fred Krueger'
+      select_from_helper_list(fred.display_name)
+      click_out
       click_button 'Enviar convites'
       page.should have_content(success_message)
     end
 
     it "he may use the dropdown search box to find and invite users", :js => true do
       mike = Factory(:user, :first_name => 'Michael', :last_name => 'Myers')
-      page.find('form#invite-members ul li input[autocomplete=off]').set(mike.display_name.first(3))
-      sleep 2
-      within '.token-input-dropdown' do
-        all('li').each { |li| li.click if li.text == mike.display_name }
-      end
-      find('#admin-invitations').click # Tive de fazer isso já que a mensagem impede o click no botão
+      fill_in_email_or_username 'Mic'
+      select_from_helper_list(mike.display_name)
+      click_out
       click_button 'Enviar convites'
       page.should have_content(success_message)
     end
-  end
+  end # context "when current user is the course administrator"
 
   private
 
-  def invite_by_email(email)
-    page.find('form#invite-members ul li input[autocomplete=off]').set(email)
+  def fill_in_email_or_username(key)
+    page.find('form#invite-members ul li input[autocomplete=off]').set(key)
     sleep 2
-    click_link 'invite_email'
+  end
+
+  def select_from_helper_list(key)
+    within '.token-input-dropdown' do
+      all('li').each { |li| li.click if li.text == key }
+    end
+  end
+
+  def click_out
+    # Tive de fazer isso já que a mensagem impede o click no botão
+    find('#admin-invitations').click
   end
 
   def success_message
