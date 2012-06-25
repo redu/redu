@@ -110,7 +110,30 @@ describe "Invitations Management" do
     end
 
     context "when resend invitations" do
-      xit "should change link name to 'Convite reenviado'" do
+      context "and those invitations are email invitations" do
+        before do
+          @invitation = @invitations.first
+        end
+
+        it "should change link name to 'Convite reenviado'", :js => true do
+          within "#invitation-#{@invitation.to_param}" do
+            click_on 'Reenviar convite'
+          end
+          find("#invitation-#{@invitation.to_param}").should have_content 'Convite reenviado'
+        end
+      end
+
+      context "and those invitations are friendship requests"do
+        before do
+          @friendship_request = @friendship_requests.first
+        end
+
+        it "should change link name to 'Convite reenviado'", :js => true do
+          within "#request-#{@friendship_request.to_param}" do
+            click_on 'Reenviar convite'
+          end
+          find("#request-#{@friendship_request.to_param}").should have_content 'Convite reenviado'
+        end
       end
     end
   end
