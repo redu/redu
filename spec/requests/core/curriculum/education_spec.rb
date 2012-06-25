@@ -11,6 +11,7 @@ end
 describe "Education" do
   let(:user) { Factory(:user) }
 
+  let(:edit) { ".edit-education" }
   let(:item) { ".educations li" }
 
   before do
@@ -29,7 +30,7 @@ describe "Education" do
       let(:button_submit) { "#high_school_submit" }
 
       let(:create_high_school) {
-        find(institution_item).set("UPE")
+        find(institution_item).set("CPI")
         find(button_submit).click
       }
 
@@ -42,10 +43,10 @@ describe "Education" do
 
       # Creation
       it "can create an high school" do
-        find(institution_item).set("UPE")
+        find(institution_item).set("CPI")
         find(button_submit).click
 
-        find(item).should have_content("Ensino Médio em UPE")
+        find(item).should have_content("Ensino Médio em CPI")
       end
 
       it "can create another high school" do
@@ -55,10 +56,26 @@ describe "Education" do
         another_education
 
         page.should have_css(form, :visible => true)
-        find(institution_item).set("Rural")
+        find(institution_item).set("Agnes")
         find(button_submit).click
 
-        page.should have_content("Ensino Médio em Rural")
+        page.should have_content("Ensino Médio em Agnes")
+      end
+
+      # Editing
+      it "can edit and save a high school" do
+        create_high_school
+        sleep 2
+
+        find(item).find(edit).click
+        page.should have_css(item, :visible => false)
+
+        page.select '2010', :from => 'high_school_end_year_1i'
+        find('#high_school_description').set("Primeiro ano do Ensino Médio")
+        find(button_submit).click
+
+        page.should have_content("2010")
+        page.should have_content("Primeiro ano do Ensino Médio")
       end
     end
 
@@ -79,6 +96,7 @@ describe "Education" do
         change_select("Ensino Superior")
       end
 
+      # Validations
       it "can't create higher education without course" do
         find(institution_item).set("Unicap")
         find(button_submit).click
@@ -93,6 +111,7 @@ describe "Education" do
         find(form).should have_xpath('div', :class => 'field_with_erros')
       end
 
+      # Creation
       it "can create a higher education course" do
         find(institution_item).set("Unicap")
         find(course_item).set("Medicina")
@@ -122,6 +141,7 @@ describe "Education" do
           page.select "Doutorado", :from => "higher_education_kind"
         end
 
+        # Validations
         it "can't create higher education without area" do
           find(institution_item).set("Unicap")
           find(button_submit).click
@@ -129,6 +149,7 @@ describe "Education" do
           find(form).should have_xpath('div', :class => 'field_with_erros')
         end
 
+        # Creation
         it "can create a higher education area" do
           find(institution_item).set("Unicap")
           find(area_item).set("Pediatria")
@@ -136,6 +157,22 @@ describe "Education" do
 
           page.should have_content("Pediatria pela Unicap")
         end
+      end
+
+      # Editing
+      it "can edit and save a higher education" do
+        create_higher_education
+        sleep 2
+
+        find(item).find(edit).click
+        page.should have_css(item, :visible => false)
+
+        page.select '2008', :from => 'higher_education_start_year_1i'
+        find('#higher_education_description').set("Muito difícil")
+        find(button_submit).click
+
+        page.should have_content("2008")
+        page.should have_content("Muito difícil")
       end
     end
 
@@ -206,6 +243,21 @@ describe "Education" do
         page.should have_content("Curso Técnico pela Senai")
         page.should have_content("50 horas")
       end
+
+      it "can edit and save a complementary course" do
+        create_complementary_course
+        sleep 2
+
+        find(item).find(edit).click
+        page.should have_css(item, :visible => false)
+
+        page.select '2008', :from => 'complementary_course_year_1i'
+        find('#complementary_course_description').set("Qualificada")
+        find(button_submit).click
+
+        page.should have_content("2008")
+        page.should have_content("Qualificada")
+      end
     end
 
     context "new event" do
@@ -250,38 +302,40 @@ describe "Education" do
 
         page.should have_content("Convenção, participante")
       end
+
+      it "can edit and save an event" do
+        create_event
+        sleep 2
+
+        find(item).find(edit).click
+        page.should have_css(item, :visible => false)
+
+        page.select '2007', :from => 'event_education_year_1i'
+        page.select 'Palestrante', :from => 'event_education_role'
+        find(button_submit).click
+
+        page.should have_content("2007")
+        page.should have_content("Congresso, palestrante")
+      end
     end
   end
 
-  it "user can remove an education", :js => true do
-    visit curriculum_user_path(user)
-    create_high_school
-    find(item).find('.remove-education').click
+  # Remove
+  context "Removing" do
+    let(:institution_item) { "#high_school_institution" }
+    let(:button_submit) { "#high_school_submit" }
 
-    alert = page.driver.browser.switch_to.alert
-    alert.accept
-
-    page.should have_css(item, :visible => false)
-  end
-
-  context "Edit an education", :js => true do
-    before do
+    it "user can remove an education", :js => true do
       visit curriculum_user_path(user)
-      create_experience
-    end
+      find(institution_item).set("CPI")
+      find(button_submit).click
 
-    it "user can save an edited experience" do
-      find(item).find('.edit-experience').click
+      find(item).find('.remove-education').click
+
+      alert = page.driver.browser.switch_to.alert
+      alert.accept
 
       page.should have_css(item, :visible => false)
-      page.should have_css('.edit-form', :visible => true)
-
-      page.select 'Janeiro', :from => 'experience_start_date_2i'
-      find('#experience_description').set("Trabalho atualmente")
-      submit
-
-      page.should have_content("January")
-      page.should have_content("Trabalho atualmente")
     end
   end
 end
