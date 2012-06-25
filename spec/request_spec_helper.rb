@@ -31,7 +31,12 @@ RSpec.configure do |config|
     create_standard_partner
   end
 
-  ActiveRecord::Observer.enable_observers
+  # Removendo dados das tabelas de setup (roles, privacies e audiences) para
+  # evitar duplicação nas próximas vezes que a suite for executada.
+  config.after(:suite) do
+    DatabaseCleaner.strategy = :truncation
+    DatabaseCleaner.clean
+  end
 
   # Utiliza o webdriver para o Chrome
   Capybara.register_driver :selenium do |app|
