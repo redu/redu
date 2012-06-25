@@ -12,6 +12,8 @@ module UserRepresenter
   property :mobile
   property :localization
   property :birth_localization
+  collection :social_networks, :extend => SocialNetworkRepresenter,
+    :class => SocialNetwork
 
 
   link :self do
