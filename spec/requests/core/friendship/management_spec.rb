@@ -33,7 +33,7 @@ describe "Invitations Management" do
           within '.friends-requisitions' do
             click_on 'Recusar'
           end
-          sleep 1
+          sleep 2
           current_path.should == home_user_path(usuario1)
           find('.friends-requisitions li').visible?.should be_false
         end
@@ -41,7 +41,6 @@ describe "Invitations Management" do
     end
 
   end
-
 
   describe "Resend or Remove Invitations" do
     before do
@@ -68,7 +67,7 @@ describe "Invitations Management" do
       page.should have_content "Aguardando a resposta de #{invitations.count} membro(s)"
     end
 
-    context "when remove sended friendship invitations", :js => true do
+    context "when remove sended friendship invitations" do
       it "should can destroy unique invitation" do
         within "#invitation-#{@invitations.first.to_param}" do
           check('invitations_ids[]')
@@ -119,11 +118,12 @@ describe "Invitations Management" do
           within "#invitation-#{@invitation.to_param}" do
             click_on 'Reenviar convite'
           end
+          sleep 1
           find("#invitation-#{@invitation.to_param}").should have_content 'Convite reenviado'
         end
       end
 
-      context "and those invitations are friendship requests"do
+      context "and those invitations are friendship requests" do
         before do
           @friendship_request = @friendship_requests.first
         end
@@ -132,6 +132,7 @@ describe "Invitations Management" do
           within "#request-#{@friendship_request.to_param}" do
             click_on 'Reenviar convite'
           end
+          sleep 1
           find("#request-#{@friendship_request.to_param}").should have_content 'Convite reenviado'
         end
       end

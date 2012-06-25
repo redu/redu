@@ -23,6 +23,7 @@ end
 
 def invite_friend_by_name(user)
   invite_friend(user.display_name)
+  invite_friend(user.display_name) unless find('.friendship-dropdown').has_content? user.display_name
   within '.friendship-dropdown' do
     all('li').each do |li|
       li.click if li.text == user.display_name
@@ -33,7 +34,7 @@ end
 private
 def invite_friend(key)
   find('form#invite-members ul li input[autocomplete=off]').set(key)
-  sleep 3
+  sleep 2
 end
 
 # Testes de integração: Friendship
@@ -86,15 +87,15 @@ describe "MailInvitation" do
 
     it "> invalid name or email should generate the error message: 'Nenhum convite para ser enviado.'", :js => true do
       page.find('form#invite-members ul li input[autocomplete=off]').set('invalid_text')
-      find('#admin-invitations').click # Tive de fazer isso já que a mensagem impede o click no botão
-      click_on 'Enviar convite'
+      find('#admin-invitations').click # Tive de fazer isso já que a mensagem impede o click no botão FIXME: falar com Sérgio sobre o posicionamento.
+      click_on 'Enviar convites'
       sleep 2
       page.should have_content 'Nenhum convite para ser enviado.'
     end
 
     it "> blank submission should generate the error message: 'Nenhum convite para ser enviado.'", :js => true do
       page.find('form#invite-members ul li input[autocomplete=off]').text.should be_empty
-      click_on 'Enviar convite'
+      click_on 'Enviar convites'
       sleep 2
       page.should have_content 'Nenhum convite para ser enviado.'
     end
@@ -116,6 +117,7 @@ describe "MailInvitation" do
         end
 
         find('.token-input-list').should have_content hero.display_name
+        find('#admin-invitations').click # Tive de fazer isso já que a mensagem impede o click no botão FIXME: falar com Sérgio sobre o posicionamento.
         click_on 'Enviar convites'
         sleep 3
         page.should have_content 'Convites enviados com sucesso.'
@@ -179,7 +181,7 @@ describe "MailInvitation" do
     end
 
     it "should recive sucess message 'Convites enviados com sucesso.'", :js => true do
-      justice_league = [superman,'ajax@redu.com.br' ,wonder_woman, 'thor@asgard.br', 'hall_jordam@redu.com.br']
+      justice_league = [superman,'ajax@redu.com.br' ,wonder_woman, 'thor@asgard.br', 'hall_jordam@redu.com.br', flash]
       justice_league.each do |hero|
         if(hero.is_a? User)
           invite_friend_by_name(hero)
