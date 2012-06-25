@@ -199,7 +199,8 @@ module Redu
                                         :experience_observer,
                                         :enrollment_observer,
                                         :user_course_association_observer,
-                                        :result_observer]
+                                        :result_observer,
+                                        :vis_status_observer]
     end
 
     # Redu logger
