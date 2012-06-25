@@ -11,11 +11,11 @@ describe 'CourseInvitationAcceptances' do
                       :environment => Factory(:environment, :name => 'JTraining',
                                               :plan => Factory(:plan), 
                                               :owner => @kenobi))
-    @course.invite @anakin
   end
 
   context 'when invitation receiver is logged' do
     before do
+      @course.invite @anakin
       login_as @anakin
     end
 
@@ -43,6 +43,35 @@ describe 'CourseInvitationAcceptances' do
       it 'should enroll the receiver' do
         @course.users.should include @anakin
       end
+    end
+  end
+
+  context 'when invitation receiver does not own an account' do
+    before do
+      @darth = Factory.build(:user, :login => 'DarthV', :first_name => 'Darth',
+                             :last_name => 'Vader', :email => 'darth@siths.com')
+      @course.invite_by_email @darth.email
+    end
+
+    it 'allows him creating a new one through invitation view and accept invitation', 
+       :js => true do
+      visit environment_course_user_course_invitation_path(@course.environment,
+                                                           @course,
+                                                           (@course.invited? @darth.email))
+      click_link 'Que tal se cadastrar?'
+      fill_in 'Nome', :with => @darth.first_name
+      fill_in 'Sobrenome', :with => @darth.last_name
+      fill_in 'Login', :with => @darth.login
+      fill_in 'E-mail', :with => @darth.email
+      fill_in 'user_email_confirmation', :with => @darth.email
+      fill_in 'Senha', :with => @darth.password
+      fill_in 'user_password_confirmation', :with => @darth.password
+      check 'user_tos'
+      click_button 'Cadastre'
+      click_link 'Conheça a Home'
+      click_button 'Aceitar'
+      @darth = User.find('DarthV')
+      assert_that_element_was_hidden("#requisition-#{(@darth.get_association_with @course).id}")
     end
   end
 
