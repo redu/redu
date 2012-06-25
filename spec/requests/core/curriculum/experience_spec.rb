@@ -19,6 +19,8 @@ describe "Experience" do
 
   let(:company_item) { "#experience_company" }
 
+  let(:form) { "#new-experience" }
+
   before do
     login_as(user)
   end
@@ -32,14 +34,14 @@ describe "Experience" do
     it "can't create an experience without function" do
       submit
 
-      find('.edit-form').should have_xpath('div', :class => 'field_with_erros')
+      find(form).should have_xpath('div', :class => 'field_with_erros')
     end
 
     it "can't create an experience without a company" do
       find(title_item).set("Desenvolvedor")
       submit
 
-      find('.edit-form').should have_xpath('div', :class => 'field_with_erros')
+      find(form).should have_xpath('div', :class => 'field_with_erros')
     end
 
     it "can't create an experience with date range incorrect" do
@@ -48,7 +50,7 @@ describe "Experience" do
       page.select 'Janeiro', :from => 'experience_end_date_2i'
       submit
 
-      find('.edit-form').should have_xpath('div', :class => 'field_with_erros')
+      find(form).should have_xpath('div', :class => 'field_with_erros')
     end
 
     # Creation
@@ -65,7 +67,7 @@ describe "Experience" do
       sleep 2
       find('.new-experience-button').click
 
-      page.should have_css(".edit-form", :visible => true)
+      page.should have_css(form, :visible => true)
       find(title_item).set("Varredor")
       find(company_item).set("Cais")
       submit
@@ -95,7 +97,7 @@ describe "Experience" do
       find(item).find('.edit-experience').click
 
       page.should have_css(item, :visible => false)
-      page.should have_css('.edit-form', :visible => true)
+      page.should have_css(form, :visible => true)
 
       page.select 'Janeiro', :from => 'experience_start_date_2i'
       find('#experience_description').set("Trabalho atualmente")
