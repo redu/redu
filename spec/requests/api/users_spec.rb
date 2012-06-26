@@ -8,24 +8,44 @@ describe "User" do
   end
 
   context "when GET /user/:id" do
+    let(:social_networks) do
+      2.times.collect { Factory(:social_network, :user => @current_user) }
+    end
     before do
-      get "/api/users/#{@user.id}", :oauth_token => @token, :format => 'json'
     end
 
     it "should return status 200 (ok)" do
+      get "/api/users/#{@user.id}", :oauth_token => @token, :format => 'json'
       response.code.should == "200"
     end
 
     it "should have login, id, links, email, first_name, last_name, " + \
        " birthday, friends_count, mobile, localization, birth_localization" do
+      get "/api/users/#{@user.id}", :oauth_token => @token, :format => 'json'
 
-      %w(login id links email first_name last_name birthday friends_count mobile localization birth_localization).each do |attr|
+      %w(login id links email first_name last_name birthday friends_count mobile localization birth_localization social_networks).each do |attr|
         parse(response.body).should have_key attr
       end
     end
 
+    it "should hold user social networks" do
+      @current_user.social_networks << social_networks
+      get "/api/users/#{@user.id}", :oauth_token => @token, :format => 'json'
+
+      parse(response.body)['social_networks'].count.should == 2
+    end
+
+    it "should hold the correct social network" do
+      @current_user.social_networks << social_networks
+      get "/api/users/#{@user.id}", :oauth_token => @token, :format => 'json'
+
+      sn = parse(response.body)['social_networks'].first
+      sn['profile'].should == social_networks.first.url
+    end
+
     %w(self enrollments statuses timeline contacts).each do |rel|
       it "should link to #{rel}" do
+        get "/api/users/#{@user.id}", :oauth_token => @token, :format => 'json'
         link = href_to(rel, parse(response.body))
 
         get link, :oauth_token => @token, :format => 'json'
