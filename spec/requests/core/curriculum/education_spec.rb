@@ -11,19 +11,16 @@ end
 describe "Education" do
   let(:user) { Factory(:user) }
 
-  let(:edit) { ".edit-education" }
   let(:item) { ".educations li" }
+  let(:edit) { ".edit-education" }
 
   before do
     login_as(user)
+    visit curriculum_user_path(user)
   end
 
-  context "Creating", :js => true do
-    before do
-      visit curriculum_user_path(user)
-    end
-
-    context "new high school" do
+  context "new", :js => true do
+    context "high school" do
       let(:institution_item) { "#high_school_institution" }
 
       let(:form) { "#new_high_school" }
@@ -35,37 +32,23 @@ describe "Education" do
       }
 
       # Validation
-      it "can't create an high school without institution" do
+      it "can't be created without institution" do
         find(button_submit).click
 
         find(form).should have_xpath('div', :class => 'field_with_erros')
       end
 
       # Creation
-      it "can create an high school" do
+      it "can be created" do
         find(institution_item).set("CPI")
         find(button_submit).click
 
         find(item).should have_content("Ensino Médio em CPI")
       end
 
-      it "can create another high school" do
-        create_high_school
-        sleep 2
-
-        another_education
-
-        page.should have_css(form, :visible => true)
-        find(institution_item).set("Agnes")
-        find(button_submit).click
-
-        page.should have_content("Ensino Médio em Agnes")
-      end
-
       # Editing
-      it "can edit and save a high school" do
+      it "can be edited and updated" do
         create_high_school
-        sleep 2
 
         find(item).find(edit).click
         page.should have_css(item, :visible => false)
@@ -79,7 +62,7 @@ describe "Education" do
       end
     end
 
-    context "new higher education" do
+    context "higher education" do
       let(:institution_item) { "#higher_education_institution" }
       let(:course_item) { "#higher_education_course" }
 
@@ -97,14 +80,14 @@ describe "Education" do
       end
 
       # Validations
-      it "can't create higher education without course" do
+      it "can't be created without course" do
         find(institution_item).set("Unicap")
         find(button_submit).click
 
         find(form).should have_xpath('div', :class => 'field_with_erros')
       end
 
-      it "can't create higher education without institution" do
+      it "can't be created without institution" do
         find(course_item).set("Medicina")
         find(button_submit).click
 
@@ -112,26 +95,12 @@ describe "Education" do
       end
 
       # Creation
-      it "can create a higher education course" do
+      it "can be created with course" do
         find(institution_item).set("Unicap")
         find(course_item).set("Medicina")
         find(button_submit).click
 
         page.should have_content("Medicina pela Unicap")
-      end
-
-      it "can create another higher education" do
-        create_higher_education
-        sleep 2
-
-        another_education
-
-        change_select("Ensino Superior")
-        find(institution_item).set("Fafire")
-        find(course_item).set("Engenharia")
-        find(button_submit).click
-
-        page.should have_content("Engenharia pela Fafire")
       end
 
       context "area" do
@@ -142,7 +111,7 @@ describe "Education" do
         end
 
         # Validations
-        it "can't create higher education without area" do
+        it "can't be created without area" do
           find(institution_item).set("Unicap")
           find(button_submit).click
 
@@ -150,7 +119,7 @@ describe "Education" do
         end
 
         # Creation
-        it "can create a higher education area" do
+        it "can be created with area" do
           find(institution_item).set("Unicap")
           find(area_item).set("Pediatria")
           find(button_submit).click
@@ -160,9 +129,8 @@ describe "Education" do
       end
 
       # Editing
-      it "can edit and save a higher education" do
+      it "can be edited and updated" do
         create_higher_education
-        sleep 2
 
         find(item).find(edit).click
         page.should have_css(item, :visible => false)
@@ -176,7 +144,7 @@ describe "Education" do
       end
     end
 
-    context "new complementary course" do
+    context "complementary course" do
       let(:course_item) { "#complementary_course_course" }
       let(:institution_item) { "#complementary_course_institution" }
       let(:worload_item) { "#complementary_course_workload" }
@@ -196,20 +164,23 @@ describe "Education" do
       end
 
       # Validations
-      it "can't create a complementary course without course" do
+      it "can't be created without course" do
+        find(institution_item).set("Senac")
+        find(worload_item).set("20")
         find(button_submit).click
 
         find(form).should have_xpath('div', :class => 'field_with_erros')
       end
 
-      it "can't create a complementary course without institution" do
+      it "can't be created without institution" do
         find(course_item).set("Qualificação")
+        find(worload_item).set("20")
         find(button_submit).click
 
         find(form).should have_xpath('div', :class => 'field_with_erros')
       end
 
-      it "can't create a complementary course without workload" do
+      it "can't be created without workload" do
         find(course_item).set("Qualificação")
         find(institution_item).set("Senac")
         find(button_submit).click
@@ -228,25 +199,9 @@ describe "Education" do
         page.should have_content("20 horas")
       end
 
-      it "can create another complementary course" do
+      # Editing
+      it "can be edited and updated" do
         create_complementary_course
-        sleep 2
-
-        another_education
-
-        change_select("Curso Complementar")
-        find(course_item).set("Curso Técnico")
-        find(institution_item).set("Senai")
-        find(worload_item).set("50")
-        find(button_submit).click
-
-        page.should have_content("Curso Técnico pela Senai")
-        page.should have_content("50 horas")
-      end
-
-      it "can edit and save a complementary course" do
-        create_complementary_course
-        sleep 2
 
         find(item).find(edit).click
         page.should have_css(item, :visible => false)
@@ -260,7 +215,7 @@ describe "Education" do
       end
     end
 
-    context "new event" do
+    context "event" do
       let(:name_item) { "#event_education_name" }
 
       let(:form) { "#new_event_education" }
@@ -276,36 +231,23 @@ describe "Education" do
       end
 
       # Validations
-      it "can't create an event without a name" do
+      it "can't be created without a name" do
         find(button_submit).click
 
         find(form).should have_xpath('div', :class => 'field_with_erros')
       end
 
       # Creation
-      it "can create an event" do
+      it "can be created" do
         find(name_item).set("Congresso")
         find(button_submit).click
 
         page.should have_content("Congresso, participante")
       end
 
-      it "can create another event" do
+      # Editing
+      it "can be edited and updated" do
         create_event
-        sleep 2
-
-        another_education
-
-        change_select("Evento")
-        find(name_item).set("Convenção")
-        find(button_submit).click
-
-        page.should have_content("Convenção, participante")
-      end
-
-      it "can edit and save an event" do
-        create_event
-        sleep 2
 
         find(item).find(edit).click
         page.should have_css(item, :visible => false)
@@ -325,8 +267,7 @@ describe "Education" do
     let(:institution_item) { "#high_school_institution" }
     let(:button_submit) { "#high_school_submit" }
 
-    it "user can remove an education", :js => true do
-      visit curriculum_user_path(user)
+    it "an education", :js => true do
       find(institution_item).set("CPI")
       find(button_submit).click
 
