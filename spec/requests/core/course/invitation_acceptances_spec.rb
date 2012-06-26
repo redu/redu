@@ -46,18 +46,18 @@ describe 'CourseInvitationAcceptances' do
     end
   end
 
-  context 'when invitation receiver does not own an account' do
+  context 'when invited email is not associated with an account' do
     before do
       @darth = Factory.build(:user, :login => 'DarthV', :first_name => 'Darth',
                              :last_name => 'Vader', :email => 'darth@siths.com')
       @course.invite_by_email @darth.email
-    end
-
-    it 'allows him creating a new one through invitation view and accept invitation', 
-       :js => true do
       visit environment_course_user_course_invitation_path(@course.environment,
                                                            @course,
                                                            (@course.invited? @darth.email))
+    end
+
+    it 'allows the creation of a new one through invitation view and further accepts the invitation', 
+       :js => true do
       click_link 'Que tal se cadastrar?'
       fill_in 'Nome', :with => @darth.first_name
       fill_in 'Sobrenome', :with => @darth.last_name
@@ -72,6 +72,17 @@ describe 'CourseInvitationAcceptances' do
       click_button 'Aceitar'
       @darth = User.find('DarthV')
       assert_that_element_was_hidden("#requisition-#{(@darth.get_association_with @course).id}")
+    end
+
+    context 'but the invitation receiver owns an account with another email' do
+      it 'allows the login with another account and associates the invitation with it', 
+         :js => true do
+        fill_in 'user_session_login', :with => @anakin.login
+        fill_in 'user_session_password', :with => @anakin.password
+        click_button 'Entrar'
+        click_button 'Aceitar'
+        assert_that_element_was_hidden("#requisition-#{(@anakin.get_association_with @course).id}")
+      end
     end
   end
 
