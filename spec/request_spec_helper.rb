@@ -1,19 +1,24 @@
 require 'spec_helper'
 require 'capybara/rails'
 require 'capybara/rspec'
-require "selenium/webdriver"
+require 'db/create_standard_partner'
+require 'db/create_audiences'
 
 RSpec.configure do |config|
   config.use_transactional_fixtures = false
 
-  #Login support
+  # Dados necessários ao teste
+  create_standard_partner
+  create_audiences
+
+  # Login support
   config.include RequestsHelper
 
-  #Database cleaner
+  # Database cleaner
   config.before do
-    except_tables = %w(roles privacies)
+    except_tables = %w(roles privacies audiences)
     if example.metadata[:js]
-      DatabaseCleaner.strategy = :truncation
+      DatabaseCleaner.strategy = :truncation, { :except => except_tables }
     else
       DatabaseCleaner.strategy = :transaction
     end
@@ -26,8 +31,14 @@ RSpec.configure do |config|
     create_standard_partner
   end
 
-  ActiveRecord::Observer.enable_observers
+  # Removendo dados das tabelas de setup (roles, privacies e audiences) para
+  # evitar duplicação nas próximas vezes que a suite for executada.
+  config.after(:suite) do
+    DatabaseCleaner.strategy = :truncation
+    DatabaseCleaner.clean
+  end
 
+  # Utiliza o webdriver para o Chrome
   Capybara.register_driver :selenium do |app|
     Capybara::Selenium::Driver.new(app, :browser => :chrome)
   end

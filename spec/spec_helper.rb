@@ -4,7 +4,6 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'db/create_roles'
 require 'db/create_privacies'
-require 'db/create_standard_partner'
 require 'paperclip/matchers'
 require 'webmock/rspec'
 
@@ -22,9 +21,6 @@ RSpec.configure do |config|
   # config.mock_with :rr
   config.mock_with :rspec
 
-  # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  config.fixture_path = "#{::Rails.root}/spec/fixtures"
-
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
@@ -39,7 +35,6 @@ RSpec.configure do |config|
   # Adiciona os papéis ao BD, pois estes são necessários nos testes.
   create_roles
   create_privacies
-  create_standard_partner
 
   # Desabilita criação de logs nos specs
   ActiveRecord::Observer.disable_observers

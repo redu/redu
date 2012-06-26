@@ -1,8 +1,6 @@
-# Read about factories at http://github.com/thoughtbot/factory_girl
-
 FactoryGirl.define do
   factory :invitation do
-      email "test@redu.com.br"
+      sequence(:email) { |i| "usuario#{i}@redu.com.br" }
       token "MyT0k3n"
     end
  end
