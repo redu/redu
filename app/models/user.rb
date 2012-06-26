@@ -240,6 +240,8 @@ class User < ActiveRecord::Base
             self.can_manage?(entity.statusable.space)
         when 'Lecture'
           self.can_manage?(entity.statusable.subject)
+        when 'Answer', 'Activity', 'Help'
+          self.can_manage?(entity.statusable)
         end
       end
     when 'User'
