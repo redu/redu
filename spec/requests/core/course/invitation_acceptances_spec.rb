@@ -56,7 +56,7 @@ describe 'CourseInvitationAcceptances' do
                                                            (@course.invited? @darth.email))
     end
 
-    it 'allows the creation of a new one through invitation view and further accepts the invitation', 
+    it 'allows the creation of a new one and further the invitation acceptance', 
        :js => true do
       click_link 'Que tal se cadastrar?'
       fill_in 'Nome', :with => @darth.first_name

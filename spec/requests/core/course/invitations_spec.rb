@@ -1,6 +1,6 @@
 require 'request_spec_helper'
 
-describe "CourseInvitations" do
+describe 'CourseInvitations' do
 
   before do
     @joao = Factory(:user, :login => 'joaoo', :email => 'joaoo@example.com')
