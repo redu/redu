@@ -2,6 +2,7 @@ require 'request_spec_helper'
 
 def invite_friend_registred_by_email(user)
   invite_friend(user.email)
+  invite_friend(user.display_name) unless find('.friendship-dropdown').has_content? user.display_name
   within '.friendship-dropdown' do
     all('li').each { |li| li.click if li.text == user.display_name }
   end
@@ -14,6 +15,7 @@ end
 
 def invite_friend_by_login(user)
   invite_friend(user.login)
+  invite_friend(user.display_name) unless find('.friendship-dropdown').has_content? user.display_name
   within '.friendship-dropdown' do
     all('li').each do |li|
       li.click if li.text == user.display_name
