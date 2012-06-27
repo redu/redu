@@ -72,8 +72,11 @@ describe Page do
 
       within '#resources-edition' do
         fill_in 'Título', :with => lecture_name
-        evaluate_script  "CKEDITOR.instances[$('.editor').attr('id')]." \
+        evaluate_script "CKEDITOR.instances[$('.editor').attr('id')]." \
           "setData('#{lecture_body}');"
+
+        # Para evitar que o teste falhe por causa da imagem do typekit
+        evaluate_script "window.scrollBy(0,500)"
         click_on 'Salvar'
       end
     end
@@ -95,14 +98,6 @@ describe Page do
     page.should have_content attrs[:name]
     within_frame 'page-iframe' do
       page.should have_content attrs[:body]
-    end
-  end
-
-  # Confere o item da aula recém-criado
-  def verify_item_created(lecture, name)
-    within '#resources_list' do
-      page.should have_content name
-      page.should have_css "##{lecture.id}-item"
     end
   end
 end
