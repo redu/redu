@@ -62,6 +62,35 @@ describe Seminar do
           })
         end
       end
+
+      context 'when filling all form' do
+        let(:seminar_name) { 'Meu vídeo' }
+        let(:youtube_url) { 'http://www.youtube.com/watch?v=jLMKkXTf92o' }
+        let(:youtube_embed_url) { 'http://www.youtube.com/embed/jLMKkXTf92o' }
+
+        before do
+          fill_in 'URL', :with => youtube_url
+          fill_in 'Título', :with => seminar_name
+        end
+
+        it 'shows the preview and creates the lecture with the informed name' do
+          within '#new_lecture' do
+            # Verifica se o preview do vídeo apareceu
+            page.should have_css "#youtube_preview " \
+              "iframe[src='#{youtube_embed_url}']"
+
+            click_on 'Adicionar'
+          end
+
+          page.should have_no_css '#new_lecture'
+
+          verify_item_created(Lecture.last, seminar_name)
+          verify_page_show(Lecture.last, {
+            :name => seminar_name,
+            :player_css => "object[type='application/x-shockwave-flash']"
+          })
+        end
+      end
     end
   end
 
