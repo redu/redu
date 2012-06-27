@@ -198,7 +198,6 @@ module Redu
                                         :education_observer,
                                         :experience_observer,
                                         :enrollment_observer,
-                                        :log_observer,
                                         :user_course_association_observer,
                                         :result_observer]
     end
