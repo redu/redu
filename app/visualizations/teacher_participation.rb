@@ -56,8 +56,8 @@ class TeacherParticipation
     @statuses = Status.from_hierarchy(@course)
     @total_posts = @statuses.activity_by_user(@user_id)
 
-    lectures = Lecture.by_subjects(@subjects_space)
-    @statusable_ids = @total_posts.by_statusable("Lecture", lectures)
+    @lectures = Lecture.by_subjects(@subjects_space)
+    @statusable_ids = @total_posts.by_statusable("Lecture", @lectures)
     @statusable_ids += @total_posts.by_statusable("Space", @spaces)
 
     @total_posts = @total_posts.by_id(@statusable_ids)
@@ -67,7 +67,12 @@ class TeacherParticipation
   # do professor naquelas disciplinas + aulas
   def answers_by_space
     helps_activities = @statuses.helps_and_activities
-    @total_helps_and_activities = helps_activities.by_id(@statusable_ids)
+
+    # Respostas à qualquer post da disciplina + aulas
+    statusable_ids = helps_activities.by_statusable("Lecture", @lectures)
+    statusable_ids += helps_activities.by_statusable("Space", @spaces)
+
+    @total_helps_and_activities = helps_activities.by_id(statusable_ids)
     @answers_ids = @total_helps_and_activities.inject([]) do |acc, help|
       acc.concat(help.answers_ids(@user_id))
     end
