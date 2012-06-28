@@ -33,7 +33,9 @@ class SessionsController < BaseController
         end
 
         flash[:notice] = t :thanks_youre_now_logged_in
-        redirect_to home_user_path(current_user)
+
+        redirect_to session[:return_to] || home_user_path(current_user)
+        session[:return_to] = nil
       else
         # Se tem um token de convite para o curso, atribui as variáveis
         # necessárias para mostrar o convite
@@ -62,6 +64,7 @@ class SessionsController < BaseController
   end
 
   def destroy
+    session[:return_to] = nil
     current_user_session.destroy if current_user_session
     redirect_to home_path
   end

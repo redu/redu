@@ -2,6 +2,7 @@ class EnvironmentsController < BaseController
   load_and_authorize_resource :except => :index, :find_by => :path
 
   rescue_from CanCan::AccessDenied do |exception|
+    session[:return_to] = request.fullpath
     flash[:notice] = "Você não tem acesso a essa página"
     redirect_to preview_environment_path(@environment)
   end
