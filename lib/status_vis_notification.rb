@@ -64,8 +64,6 @@ module StatusVisNotification
     params
   end
 
-  protected
-
   def fill_params(status, destroy_status, options={})
     params = {
       :user_id => status.user_id,
