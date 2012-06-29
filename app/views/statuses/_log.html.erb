@@ -10,4 +10,6 @@
   <%= render "statuses/logs/subject", :log => log %>
 <% elsif log.logeable_type.eql? 'Lecture' %>
   <%= render "statuses/logs/lecture", :log => log %>
+<% elsif log.logeable_type.eql? 'CourseEnrollment' %>
+  <%= render "statuses/logs/user_course_association", :log => log %>
 <% end %>
