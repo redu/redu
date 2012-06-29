@@ -92,6 +92,61 @@ describe Seminar do
         end
       end
     end
+
+    context 'Upload' do
+      before do
+        choose 'Upload'
+      end
+
+      context 'when title field is not filled' do
+        before do
+          click_button 'Adicionar'
+        end
+
+        it 'shows validation error message' do
+          page.should have_content 'não pode ser deixado em branco'
+        end
+      end
+
+      context 'when uploading an invalid format file' do
+        before do
+          fill_in 'Título', :with => 'Minha Aula de Vídeo'
+          File.open 'imagem.png', 'w'
+          attach_file 'Upload', 'imagem.png'
+          click_button 'Adicionar'
+        end
+
+        after do
+          File.delete 'imagem.png'
+        end
+
+        it 'shows validation error message' do
+          page.should have_content 'Formato inválido'
+        end
+      end
+
+      context 'when uploading a valid format file and filling title properly' do
+        before do
+          @file = 'video_aula.mp4'
+          File.open(@file, 'w')
+        end
+
+        after do
+          File.delete(@file)
+          # TODO verificar a lógica para criação (path) do arquivo abaixo
+          File.delete "public/images/seminars/originals/1/original/#{@file}"
+        end
+
+        it 'shows success message' do
+          Seminar.any_instance.stub(:transcode).and_return { nil }
+          fill_in 'Título', :with => 'Minha Aula de Vídeo'
+          attach_file 'Upload', @file
+          click_button 'Adicionar'
+          page.should have_content 'Minha Aula de Vídeo'
+        end
+      end
+    end
+
   end
 
   private
