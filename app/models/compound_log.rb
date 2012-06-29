@@ -27,7 +27,10 @@ class CompoundLog < Status
 
   def notify
     job = CompoundLogJob.new(self.id)
-    Delayed::Job.enqueue(job, :queue => 'general')
+    if Delayed::Job.where(:handler => job.to_yaml,
+                          :locked_at => nil).empty?
+      Delayed::Job.enqueue(job, :queue => 'general')
+    end
   end
 
   def expired?(interval)
