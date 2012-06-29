@@ -1,5 +1,5 @@
 class AuthenticationsController < BaseController
-  
+
   def create
     auth = request.env['omniauth.auth']
     authentication = Authentication.find_by_provider_and_uid(auth[:provider],
@@ -13,7 +13,9 @@ class AuthenticationsController < BaseController
         @user_session.save
       end
       flash[:notice] = t :thanks_youre_now_logged_in
-      redirect_to home_user_path(user)
+
+      redirect_to session[:return_to] || home_user_path(user)
+      session[:return_to] = nil
     else
       # Autenticação inexistente.
       user = User.find_by_email(auth[:info][:email])
@@ -24,7 +26,7 @@ class AuthenticationsController < BaseController
         user.activated_at ||= Time.now
         flash[:notice] = t :facebook_connect_account_association
       else
-        # Não existe conta do Redu associada ao e-mail do usuário no FB. 
+        # Não existe conta do Redu associada ao e-mail do usuário no FB.
         user = Authentication.build_user(auth)
         user.update_attributes(:activated_at => Time.now)
         user.authentications.build(:provider => auth[:provider],
@@ -37,7 +39,8 @@ class AuthenticationsController < BaseController
         @user_session = UserSession.new(user)
         @user_session.save
         # Usuário criado / atualizado com sucesso.
-        redirect_to home_user_path(user)
+        redirect_to session[:return_to] || home_user_path(user)
+        session[:return_to] = nil
       else
         # Erro ao criar / atualizar usuário.
         flash[:notice] = t :facebook_connect_error
@@ -45,7 +48,7 @@ class AuthenticationsController < BaseController
       end
     end
   end
-  
+
   def fallback
     flash[:notice] = t :you_need_give_us_access_to_your_facebook_data
     redirect_to home_path
