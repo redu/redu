@@ -54,6 +54,58 @@ describe Page do
     end
   end
 
+  context 'Reuse existent lecture' do
+    context 'when user does not have existent lectures', :js => true do
+      before do
+        visit edit_space_subject_path(space, subj)
+        click_on 'Aula já existente'
+        sleep 1
+      end
+
+      it 'should show error message.' do
+        page.should have_content "Você não possui nenhuma aula. Crie uma nova!"
+      end
+    end
+
+    context 'when user does have existent lectures', :js => true do
+      before do
+        @my_lectures = 2.times.collect do
+          Factory(:lecture, :subject => subj, :owner => user)
+        end
+        2.times do
+          @my_lectures << Factory(:lecture,
+                                  :subject => Factory(:subject),
+                                  :owner => user)
+        end
+
+        visit edit_space_subject_path(space, subj)
+        page.execute_script "window.scrollBy(0,10000)"
+        click_on 'Aula já existente'
+      end
+
+      it 'should list lectures created by user and accept their reuse' do
+        @my_lectures.each do |lecture|
+          within '.existent-lectures' do
+            page.should have_content lecture.name
+          end
+        end
+
+        chosen_lecture = @my_lectures.last
+        select chosen_lecture.name, :from => 'lecture_id'
+        click_on 'Adicionar'
+
+        within '#lectures_index' do
+          page.should have_content chosen_lecture.name
+        end
+
+        click_on 'Finalizar módulo'
+        sleep 3
+        page.find('.expand').click
+        page.should have_content chosen_lecture.name
+      end
+    end
+  end
+
   context 'Edition', :js => true do
     let(:lecture) do
       Factory(:lecture, :subject => subj)
