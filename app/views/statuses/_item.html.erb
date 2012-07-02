@@ -102,10 +102,10 @@
 
           <span class="status-info">
           <% if item.statusable_type.eql?('User') %>
-            <% unless item.statusable.eql?(current_user) %>
+            <% unless item.statusable.eql?(item.user) %>
               comentou no mural de <%= link_to item.statusable.display_name, show_mural_user_path(item.statusable) %>
             <% else %>
-              comentou no <%= link_to "seu próprio mural", show_mural_user_path(current_user) %>
+              comentou no <%= link_to "seu próprio mural", show_mural_user_path(item.user) %>
             <% end %>
           <% end %>
           </span>

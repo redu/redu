@@ -81,6 +81,9 @@ end
 
 group :test do
   gem 'webmock', '~> 1.8.6'
+  gem 'capybara'
+  gem 'launchy'
+  gem 'database_cleaner'
 end
 
 group :development do
