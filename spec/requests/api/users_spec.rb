@@ -23,7 +23,7 @@ describe "User" do
        " birthday, friends_count, mobile, localization, birth_localization" do
       get "/api/users/#{@user.id}", :oauth_token => @token, :format => 'json'
 
-      %w(login id links email first_name last_name birthday friends_count mobile localization birth_localization social_networks).each do |attr|
+      %w(login id links email first_name last_name birthday friends_count mobile localization birth_localization social_networks thumbnails).each do |attr|
         parse(response.body).should have_key attr
       end
     end
@@ -41,6 +41,13 @@ describe "User" do
 
       sn = parse(response.body)['social_networks'].first
       sn['profile'].should == social_networks.first.url
+    end
+
+    it "should hold the correct thumbnail" do
+      get "/api/users/#{@user.id}", :oauth_token => @token, :format => 'json'
+
+      thumb = parse(response.body)['thumbnails'].first
+      thumb['href'].should == @current_user.avatar.url(:thumb_32)
     end
 
     %w(self enrollments statuses timeline contacts).each do |rel|
