@@ -7931,28 +7931,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
  margin-left: 30px;
 }
 
-/* -- Início notificações lateral esquerda -- */
-
-.local-nav .session .notification {
-  background-color: rgb(230, 230, 230);
-  padding: 3px 3px 2px 3px;
-  color: rgb(77, 173, 214);
-  font-weight: normal;
-  display: inline;
-  margin-left: 10px;
-  font-size: 11px;
-}
-
-.textshadow .local-nav .session .notification {
-  text-shadow: 0px 1px 0px rgb(255, 255, 255);
-}
-
-.borderradius .local-nav .session .notification {
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-}
-
 /* Botão convidar amigos */
 .invite-button {
   width: 130px;
@@ -7989,13 +7967,12 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 
 /* FIM botão convidar amigos */
 
-/* lateral */
+/* Início definição de estilos da Coluna Lateral */
 
 .local-nav .session .notification {
   background-color: rgb(230, 230, 230);
   padding: 3px 5px 2px 5px;
   color: rgb(77, 173, 214);
-  font-weight: normal;
   margin-top: -2px;
   margin-right: -10px;
   font-size: 11px;
@@ -8003,7 +7980,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 .textshadow .local-nav .session .notification {
-  text-shadow: 0px -1px 0px rgb(255, 255, 255);
+  text-shadow: 0px -1px 0px white;
 }
 
 .borderradius .local-nav .session .notification {
@@ -8011,3 +7988,5 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   -moz-border-radius: 3px;
   border-radius: 3px;
 }
+
+/* Fim definição de estilos da Coluna Lateral */
