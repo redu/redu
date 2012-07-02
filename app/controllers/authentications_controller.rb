@@ -34,17 +34,23 @@ class AuthenticationsController < BaseController
         flash[:notice] = t :facebook_connect_new_user
       end
 
-      # Tenta atualizar os dados do usuário (possivelmente recém-criado).
-      if user.save
-        @user_session = UserSession.new(user)
-        @user_session.save
-        # Usuário criado / atualizado com sucesso.
-        redirect_to session[:return_to] || home_user_path(user)
-        session[:return_to] = nil
-      else
-        # Erro ao criar / atualizar usuário.
-        flash[:notice] = t :facebook_connect_error
-        redirect_to home_path
+      begin
+        if user.save
+          @user_session = UserSession.new(user)
+          @user_session.save
+          # Usuário criado / atualizado com sucesso.
+          redirect_to session[:return_to] || home_user_path(user)
+          session[:return_to] = nil
+        else
+          # Erro ao criar / atualizar usuário.
+          flash[:notice] = t :facebook_connect_error
+          redirect_to home_path
+        end
+      # FIXME Após migrar o Rails (> 3.0.10) ver se a solução clean funciona.
+      # Necessário pois o rescue_from estava dando conflito com o
+      # rescue_from Exception (mais geral). See #863.
+      rescue ActiveRecord::RecordNotUnique
+        redirect_to application_path
       end
     end
   end
