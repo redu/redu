@@ -180,18 +180,20 @@ describe StatusVisNotification do
           activity_space.destroy
         end
 
-        params = fill_params_by_space(activity_space, "activity_destroyed")
+        params = fill_params_by_space(activity_space, "remove_activity")
 
         checking_request(params)
       end
 
-      it "and status is Answer and statusable is Activity should send notification to visualization" do
+      it "and status is Answer and statusable is Activity should send
+        notification to visualization" do
         ActiveRecord::Observer.with_observers(:vis_status_observer) do
           stubing_request
           answer_activity_space.destroy
         end
 
-        params = fill_params_by_space_type_answer(activity_space, answer_activity_space, "answered_activity_destroyed")
+        params = fill_params_by_space_type_answer(activity_space,
+                  answer_activity_space, "remove_answered_activity")
 
         checking_request(params)
       end
@@ -223,7 +225,7 @@ describe StatusVisNotification do
         end
 
         params = fill_params_by_lecture(activity_lecture,
-                                        "activity_destroyed")
+                                        "remove_activity")
 
         checking_request(params)
 
@@ -235,20 +237,21 @@ describe StatusVisNotification do
           help_lecture.destroy
         end
 
-        params = fill_params_by_lecture(help_lecture, "help_destroyed")
+        params = fill_params_by_lecture(help_lecture, "remove_help")
 
         checking_request(params)
       end
 
       context "and status is Answer" do
-        it "and statusable is Activity should send notification to visualization" do
+        it "and statusable is Activity should send notification
+        to visualization" do
           ActiveRecord::Observer.with_observers(:vis_status_observer) do
             stubing_request
             answer_activity_lecture.destroy
           end
 
-          params = fill_params_by_lecture_type_answer(activity_lecture, answer_activity_lecture,
-                                                      "answered_activity_destroyed")
+          params = fill_params_by_lecture_type_answer(activity_lecture,
+                      answer_activity_lecture, "remove_answered_activity")
 
           checking_request(params)
         end
@@ -259,8 +262,8 @@ describe StatusVisNotification do
             answer_help_lecture.destroy
           end
 
-          params = fill_params_by_lecture_type_answer(help_lecture, answer_help_lecture,
-                                                      "answered_help_destroyed")
+          params = fill_params_by_lecture_type_answer(help_lecture,
+                      answer_help_lecture, "remove_answered_help")
 
           checking_request(params)
         end
@@ -350,7 +353,8 @@ describe StatusVisNotification do
     a_request(:post, Redu::Application.config.vis_client[:url]).
       with(:body => params.to_json,
            :headers => {'Authorization' => ['JOjLeRjcK', 'core-team'],
-                        'Content-Type'=>'application/json'}).should have_been_made
+                        'Content-Type'=> 'application/json'}).
+                        should have_been_made
   end
 
 end

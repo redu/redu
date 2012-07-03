@@ -79,15 +79,17 @@ module StatusVisNotification
     params.merge(options)
   end
 
-  # Método responsável por recuperar o tipo de um status e preenche-lo de acordo, para ser notificado para vis
+  # Método responsável por recuperar o tipo de um status e preenche-lo de
+  # acordo, para ser notificado para vis
   # params: status, destroy_status
   # status: corresponde ao status corrente para ser avaliado
-  # destroy_status: booleano que coloca o type de acordo com a sua ação, de destruição ou não
+  # destroy_status: booleano que coloca o type de acordo com a sua ação,
+  # de destruição ou não
   def get_type(status, destroy_status = false)
     if status.type == "Help" or status.type == "Activity"
       type = status.type.downcase
-      # se houver uma ação de destruição, concatena _destroyed no final
-      type = type + "_destroyed" if destroy_status
+      # se houver uma ação de destruição, concatena remove_ no começo
+      type = + "remove_" + type if destroy_status
       type
     elsif status.type == "Answer"
       type = if status.statusable.type == "Help"
@@ -95,7 +97,7 @@ module StatusVisNotification
              else
                "answered_activity"
              end
-      type = type + "_destroyed" if destroy_status
+      type = "remove_" + type if destroy_status
       type
     else
       nil
