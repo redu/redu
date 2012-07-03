@@ -181,7 +181,6 @@ describe StatusVisNotification do
         end
 
         params = fill_params_by_space(activity_space, "remove_activity")
-
         checking_request(params)
       end
 

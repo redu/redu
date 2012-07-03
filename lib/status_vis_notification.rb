@@ -103,5 +103,4 @@ module StatusVisNotification
       nil
     end
   end
-
 end
