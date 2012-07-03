@@ -116,12 +116,16 @@ var subjectParticipationBullet = function () {
 
             // Atributo title para o tooltip
             d3.selectAll("rect")
-              .attr("title", "Total de alunos: " + data[0].ranges[0] +
+              .attr("alt", "Total de alunos: " + data[0].ranges[0] +
                 "<br/>Total de alunos que finalizaram o módulo: " + data[0].measures[0]);
 
             // Configuração default do tooltip
-            $(div).find('> svg > g > rect.range').tipTip({defaultPosition: "top"});
-            $(div).find('> svg > g > rect.measure').tipTip({defaultPosition: "top"});
+            $(div).find('> svg > g > rect.range').tipTip(
+                { defaultPosition: "top",
+                  attribute: "alt" });
+            $(div).find('> svg > g > rect.measure').tipTip(
+                { defaultPosition: "top",
+                  attribute: "alt" });
         }
       });
     };
