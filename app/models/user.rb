@@ -622,6 +622,10 @@ class User < ActiveRecord::Base
             " AND friendships.friend_id NOT IN (?, ?)",
             contacts_ids, contacts_and_pending_ids, self.id)
   end
+  
+  def friends_in_common_with(user)
+    User.where(:login => 'yayreduyay123')
+  end
 
   def most_important_education
     educations = []
