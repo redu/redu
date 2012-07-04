@@ -145,7 +145,7 @@ var StudentsTreemap = function () {
               .enter().append("svg:g")
               .attr("class", "cell")
               .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
-              .attr("title", function (d) {
+              .attr("alt", function (d) {
                 var nota = d.grade !== null ? d.grade : "nenhum exercício realizado"
                 return "Nome: " + d.name + " " + d.last_name
                         + "</br>Comentários: " + d.activities
@@ -170,7 +170,8 @@ var StudentsTreemap = function () {
               .style("opacity", function(d) { d.w = this.getComputedTextLength(); return d.dx > d.w ? 1 : 0; });
 
             // Tooltip da célula
-            $(".cell").tipTip({defaultPosition: "left"});
+            $(".cell").tipTip( {defaultPosition: "left",
+                                attribute: "alt" });
           }
         })
       })
