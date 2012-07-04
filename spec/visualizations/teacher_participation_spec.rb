@@ -108,7 +108,8 @@ describe TeacherParticipation do
       subject.subjects_by_space.should eq([@id])
     end
 
-    it "retrieves the lectures ids that belongs the User from the especified spaces" do
+    it "retrieves the lectures ids that belongs the User from the
+    especified spaces" do
       subject.spaces = [@course.spaces.first]
       @lecture = Factory(:lecture,
                          :subject => subject.spaces.first.subjects.first,
@@ -123,14 +124,15 @@ describe TeacherParticipation do
         Factory(:activity,
                 :statusable => subject.spaces.first, :user => @owner)
         Factory(:activity,
-                :statusable => subject.spaces.first.subjects.first.lectures.first,
+                :statusable => subject.spaces.first.subjects.first.
+                               lectures.first,
                 :user => @owner)
       end
 
       subject.spaces = @course.spaces[0..1]
       subject.subjects_by_space
       subject.posts_by_space.collect{|s| s.id}.to_set.should \
-        eq((@space_statuses + @lecture_statuses).collect{|s|s.id}.to_set)
+        eq((@space_statuses + @lecture_statuses).collect{ |s| s.id }.to_set)
     end
 
     it "retrieves all answers made by User from specified spaces" do
@@ -138,7 +140,8 @@ describe TeacherParticipation do
         Factory(:activity,
                 :statusable => subject.spaces.first, :user => @owner)
         Factory(:activity,
-                :statusable => subject.spaces.first.subjects.first.lectures.first,
+                :statusable => subject.spaces.first.subjects.first.
+                               lectures.first,
                 :user => @owner)
       end
 
