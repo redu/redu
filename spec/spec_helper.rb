@@ -42,7 +42,7 @@ RSpec.configure do |config|
   # Desabilita criação de logs nos specs
   ActiveRecord::Observer.disable_observers
 
-  config.before do
+  config.before(:each) do
     WebMock.allow_net_connect!
   end
 end
