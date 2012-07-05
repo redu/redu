@@ -89,7 +89,7 @@ module StatusVisNotification
     if status.type == "Help" or status.type == "Activity"
       type = status.type.downcase
       # se houver uma ação de destruição, concatena remove_ no começo
-      type = + "remove_" + type if destroy_status
+      type = "remove_" + type if destroy_status
       type
     elsif status.type == "Answer"
       type = if status.statusable.type == "Help"
