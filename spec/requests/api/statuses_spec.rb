@@ -35,6 +35,12 @@ describe "Statuses" do
         response.code.should == "200"
       end
     end
+
+    it_should_behave_like "embeds user" do
+      let(:embeder) { activity }
+      let(:user) { embeder.user }
+      let(:entity) { @entity }
+    end
   end
 
   context "when Answer type" do
@@ -65,6 +71,12 @@ describe "Statuses" do
         get href_to(attr, @entity), :oauth_token => @token, :format => 'json'
         response.code.should == "200"
       end
+    end
+
+    it_should_behave_like "embeds user" do
+      let(:embeder) { answer }
+      let(:user) { embeder.user }
+      let(:entity) { @entity }
     end
   end
 
@@ -99,6 +111,12 @@ describe "Statuses" do
         response.code.should == "200"
       end
     end
+
+    it_should_behave_like "embeds user" do
+      let(:embeder) { log }
+      let(:user) { embeder.user }
+      let(:entity) { @entity }
+    end
   end
 
   context "when Help type" do
@@ -129,6 +147,12 @@ describe "Statuses" do
         get href_to(attr, @entity), :oauth_token => @token, :format => 'json'
         response.code.should == "200"
       end
+    end
+
+    it_should_behave_like "embeds user" do
+      let(:embeder) { help }
+      let(:user) { embeder.user }
+      let(:entity) { @entity }
     end
   end
 
