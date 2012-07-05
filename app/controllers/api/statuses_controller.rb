@@ -2,7 +2,7 @@ module Api
   class StatusesController < Api::ApiController
 
     def show
-      status = Status.find(params[:id])
+      status = Status.includes(:user => :social_networks).find(params[:id])
       authorize! :read, status
 
       respond_with(:api, status)
@@ -66,9 +66,10 @@ module Api
         statusable.overview
       end
 
+      statuses = filter_and_includes(statuses)
       statuses = statuses.page(params[:page])
 
-      respond_with(:api, statuses.not_compound_log)
+      respond_with(:api, statuses)
     end
 
     protected
@@ -90,7 +91,12 @@ module Api
         Status.where(:statusable_id => context,
                      :statusable_type => context.class.to_s)
       end
-      statuses.not_compound_log
+      filter_and_includes(statuses)
+    end
+
+    def filter_and_includes(statuses)
+      statuses = statuses.not_compound_log
+      statuses = statuses.includes(:user => :social_networks)
     end
   end
 end
