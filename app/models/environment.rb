@@ -84,6 +84,15 @@ class Environment < ActiveRecord::Base
     self.users.count < self.plan.members_limit
   end
 
+  # Remove os usuários do ambiente
+  def remove_users(users)
+    users.each do |user|
+      (user.courses & self.courses).each do |c|
+        c.unjoin user
+      end
+    end
+  end
+
   protected
 
   def create_environment_association

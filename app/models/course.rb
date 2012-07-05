@@ -165,7 +165,8 @@ class Course < ActiveRecord::Base
     set_period_end(user)
 
     # Desassocia o usuário do ambiente se ele não participar de outros cursos
-    unless (user.courses & self.environment.courses).count > 0
+    # Reload necessário devido cache do BD
+    unless (user.courses.reload & self.environment.courses).count > 0
       user.get_association_with(self.environment).destroy
     end
 

@@ -210,22 +210,13 @@ class EnvironmentsController < BaseController
   # Remove um ou mais usuários de um Environment destruindo todos os relacionamentos
   # entre usuário e os níveis mais baixos da hierarquia.
   def destroy_members
-    # Course.id do environment
-    courses = @environment.courses
-    # Spaces do environment (unidimensional)
-    spaces = courses.collect{ |c| c.spaces }.flatten
     users_ids = []
     users_ids = params[:users].collect{|u| u.to_i} if params[:users]
 
     unless users_ids.empty?
-      User.with_ids(users_ids).includes(:user_environment_associations,
-                             :user_course_associations,
-                             :user_space_associations).each do |user|
+      users = User.with_ids(users_ids).includes(:user_course_associations)
+      @environment.remove_users(users)
 
-        user.spaces.delete(spaces)
-        user.courses.delete(courses)
-        user.environments.delete(@environment)
-      end
       flash[:notice] = "Os usuários foram removidos do ambiente #{@environment.name}"
     end
 

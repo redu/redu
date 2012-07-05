@@ -280,4 +280,41 @@ describe Environment do
       end
     end
   end
+
+  context "when removes users" do
+    let(:courses) do
+      (1..3).collect { Factory(:course, :environment => subject) }
+    end
+    let(:users) { (1..3).collect { Factory(:user) } }
+
+    before do
+      courses.each do |c|
+        (1..2).each { Factory(:space, :course => c) }
+        c.spaces.reload
+      end
+      subject.courses.reload
+
+      courses[0].join users[0]
+      courses[0].join users[1]
+      courses[0].join users[2]
+      courses[0].users.reload
+
+      courses[1].join users[1]
+      courses[2].join users[2]
+      courses[1].users.reload
+      courses[2].users.reload
+
+      subject.remove_users(users[0..1])
+    end
+
+    it "removes the users from the environment" do
+      subject.users.should_not include(users[0..1])
+    end
+
+    # Tentativa de verificar a chamada ao unjoin
+    it "removes the users from all courses" do
+      courses[0].users.should_not include(users[0..1])
+      courses[1].users.should_not include(users[0..1])
+    end
+  end
 end

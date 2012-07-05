@@ -290,5 +290,40 @@ describe EnvironmentsController do
         @plan.reload.billable_audit.should_not be_nil
       end
     end
+
+    context "POST destroy_members" do
+      before do
+        @courses.each do |c|
+          (1..2).each { Factory(:space, :course => c) }
+          c.spaces.reload
+        end
+
+        @users = (1..3).collect { Factory(:user) }
+        @courses[0].join @users[0]
+        @courses[0].join @users[1]
+        @courses[0].join @users[2]
+
+        @courses[1].join @users[1]
+        @courses[2].join @users[2]
+      end
+
+      it "calls remove_users" do
+        Environment.any_instance.should_receive(:remove_users).
+          with(@users[0..1])
+        post_destroy_members(@environment, @users[0..1])
+      end
+
+      it 'sets flash properly' do
+        post_destroy_members(@environment, @users[0..1])
+
+        should set_the_flash.to("Os usuários foram removidos do ambiente #{@environment.name}")
+      end
+    end
+  end
+
+  def post_destroy_members(environment, users)
+    post :destroy_members, :locale => 'pt-BR',
+      :id => environment.to_param,
+      :users => users.collect { |u| u.id }
   end
 end

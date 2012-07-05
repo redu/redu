@@ -432,27 +432,53 @@ describe Course do
       @user = Factory(:user)
       subject.join @user
       subject.reload
-      subject.unjoin @user
     end
 
     it "removes a user from itself" do
+      subject.unjoin @user
       subject.users.should_not include(@user)
     end
 
     it "removes a user from all spaces" do
+      subject.unjoin @user
       @space.users.should_not include(@user)
       @space_2.users.should_not include(@user)
     end
 
     it "removes a user from all enrolled subjects" do
+      subject.unjoin @user
       @sub.members.should_not include(@user)
       @sub_2.members.should_not include(@user)
     end
 
     context "when plan is licensed" do
       it "should set the period end of a license that" do
+        subject.unjoin @user
         subject.environment.plan.invoice.licenses.last.
           period_end.should_not be_nil
+      end
+    end
+
+    context "when user is enrolled with just one course" do
+      it "removes the user from the environment" do
+        expect {
+          subject.unjoin @user
+        }.should change(UserEnvironmentAssociation, :count).by(-1)
+        @environment.users.should_not include(@user)
+      end
+    end
+
+    context "when user is enrolled with more than one course" do
+      before do
+        @other_course = Factory(:course, :environment => @environment)
+        @other_course.join @user
+      end
+
+      it "let the user as a member of the environment"  do
+        expect {
+          subject.unjoin @user
+        }.should_not change(UserEnvironmentAssociation, :count)
+        @environment.users.should include(@user)
       end
     end
   end
