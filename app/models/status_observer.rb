@@ -14,18 +14,20 @@ class StatusObserver < ActiveRecord::Observer
         Delayed::Job.enqueue(job, :queue => 'general')
 
         # Used to send information to vis application
-        send_to_vis(status)
+        send_to_vis(status, false)
       when "Space"
         job = HierarchyStatusesJob.new(status.id, status.statusable.course.id)
         Delayed::Job.enqueue(job, :queue => 'general')
 
         # Used to send information to vis application
-        send_to_vis(status)
+        send_to_vis(status, false)
       when "Course"
         job = HierarchyStatusesJob.new(status.id, status.statusable.id)
         Delayed::Job.enqueue(job, :queue => 'general')
       when "Activity", "Help"
-        send_to_vis(status)
+        unless status.statusable.statusable.is_a? User
+          send_to_vis(status, false)
+        end
       end
     end
   end

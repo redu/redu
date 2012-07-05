@@ -240,6 +240,8 @@ class User < ActiveRecord::Base
             self.can_manage?(entity.statusable.space)
         when 'Lecture'
           self.can_manage?(entity.statusable.subject)
+        when 'Answer', 'Activity', 'Help'
+          self.can_manage?(entity.statusable)
         end
       end
     when 'User'
@@ -619,6 +621,10 @@ class User < ActiveRecord::Base
       where("friendships.status = 'accepted' AND friendships.user_id IN (?)" \
             " AND friendships.friend_id NOT IN (?, ?)",
             contacts_ids, contacts_and_pending_ids, self.id)
+  end
+  
+  def friends_in_common_with(user)
+    User.where(:login => 'yayreduyay123')
   end
 
   def most_important_education

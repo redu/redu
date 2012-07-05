@@ -489,8 +489,44 @@ describe Ability do
         it "cannot destroy any lecture"
         it "cannot upload a file"
         it "cannot destroy any file"
-        it "crates a post"
 
+        context "member posts on wall" do
+          before do
+            @activity = Factory(:activity,
+                                :user => @member,
+                                :statusable => @space)
+
+            @answer_activity = Factory(:answer,
+                                       :statusable => @activity,
+                                       :in_response_to => @activity)
+
+            @strange_activity = Factory(:activity, :statusable => @space)
+
+            @strange_answer = Factory(:answer,
+                                      :statusable => @strange_activity,
+                                      :in_response_to => @strange_activity)
+          end
+
+          it "can creates a post" do
+            @ability.should be_able_to(:create, @activity)
+          end
+
+          it "can destroy a post" do
+            @ability.should be_able_to(:destroy, @activity)
+          end
+
+          it "can destroy answers from your posts" do
+            @ability.should be_able_to(:destroy, @answer_activity)
+          end
+
+          it "can't destroy posts by other users" do
+            @ability.should_not be_able_to(:destroy, @strange_activity)
+          end
+
+          it "can't destroy answers for posts by other users" do
+            @ability.should_not be_able_to(:destroy, @strange_answer)
+          end
+        end
       end
 
       context "teacher" do
@@ -531,6 +567,26 @@ describe Ability do
         it "can't see studenst participation report" do
           @ability.should be_able_to(:students_participation_report,
                                       @space)
+        end
+
+        context "manage posts" do
+          before do
+            @activity = Factory(:activity,
+                                :user => @member,
+                                :statusable => @space)
+
+            @answer = Factory(:answer,
+                              :statusable => @activity,
+                              :in_response_to => @activity)
+          end
+
+          it "teacher can destroy a posts by students" do
+            @ability.should be_able_to(:destroy, @activity)
+          end
+
+          it "teacher can destroy a answers by students" do
+            @ability.should be_able_to(:destroy, @answer)
+          end
         end
 
         it "creates a subject"
@@ -592,6 +648,7 @@ describe Ability do
           @space = Factory(:space, :owner => @env_admin,
                           :course => @course)
         end
+
         it "creates a space" do
           @ability.should be_able_to(:create, @space)
         end
@@ -612,6 +669,25 @@ describe Ability do
         it "can see students participation report" do
           @ability.should be_able_to(:students_participation_report,
                                       @space)
+        end
+
+        context "manage posts" do
+          before do
+            @activity = Factory(:activity,
+                                :user => @env_admin,
+                                :statusable => @space)
+
+            @answer = Factory(:answer,
+                              :statusable => @activity,
+                              :in_response_to => @activity)
+          end
+          it "teacher can destroy a posts by students" do
+            @ability.should be_able_to(:destroy, @activity)
+          end
+
+          it "teacher can destroy a answers by students" do
+            @ability.should be_able_to(:destroy, @answer)
+          end
         end
 
         it "creates a subject"
@@ -728,6 +804,26 @@ describe Ability do
           end
         end
 
+        context "can manage posts" do
+          before do
+            @activity = Factory(:activity,
+                                :user => @member,
+                                :statusable => @lecture_page)
+
+            @answer = Factory(:answer,
+                              :statusable => @activity,
+                              :in_response_to => @activity)
+          end
+
+          it "teacher can destroy a posts by students" do
+            @ability.should be_able_to(:destroy, @activity)
+          end
+
+          it "teacher can destroy a answers by students" do
+            @ability.should be_able_to(:destroy, @answer)
+          end
+        end
+
 
         context "can NOT update many kinds of lectures" do
           it "(seminar)" do
@@ -776,6 +872,25 @@ describe Ability do
           end
         end
 
+        context "can manage posts" do
+          before do
+            @activity = Factory(:activity,
+                                :user => @member,
+                                :statusable => @lecture_page)
+
+            @answer = Factory(:answer,
+                              :statusable => @activity,
+                              :in_response_to => @activity)
+          end
+
+          it "teacher can destroy a posts by students" do
+            @ability.should be_able_to(:destroy, @activity)
+          end
+
+          it "teacher can destroy a answers by students" do
+            @ability.should be_able_to(:destroy, @answer)
+          end
+        end
 
         context "can NOT update many kinds of lectures" do
           it "(seminar)" do
@@ -840,6 +955,61 @@ describe Ability do
           end
           it "(document)" do
             @ability.should_not be_able_to(:manage, @lecture_document)
+          end
+        end
+
+        context "member posts on wall" do
+          before do
+            @activity = Factory(:activity,
+                                :user => @member,
+                                :statusable => @lecture_document)
+
+            @help = Factory(:help,
+                            :user => @member,
+                            :statusable => @lecture_document)
+
+            @answer_activity = Factory(:answer,
+                                       :statusable => @activity,
+                                       :in_response_to => @activity)
+
+            @answer_help = Factory(:answer,
+                                   :statusable => @help,
+                                   :in_response_to => @help)
+
+
+            @strange_activity = Factory(:activity,
+                                        :statusable => @lecture_document)
+
+            @strange_help = Factory(:help,
+                                    :statusable => @lecture_document)
+
+            @strange_answer = Factory(:answer,
+                                      :statusable => @strange_activity,
+                                      :in_response_to => @strange_activity)
+          end
+
+          it "can creates a post" do
+            @ability.should be_able_to(:create, @activity)
+            @ability.should be_able_to(:create, @help)
+          end
+
+          it "can destroy a post" do
+            @ability.should be_able_to(:destroy, @activity)
+            @ability.should be_able_to(:destroy, @help)
+          end
+
+          it "can destroy answers from your posts" do
+            @ability.should be_able_to(:destroy, @answer_activity)
+            @ability.should be_able_to(:destroy, @answer_help)
+          end
+
+          it "can't destroy posts by other users" do
+            @ability.should_not be_able_to(:destroy, @strange_activity)
+            @ability.should_not be_able_to(:destroy, @strange_help)
+          end
+
+          it "can't destroy answers for posts by other users" do
+            @ability.should_not be_able_to(:destroy, @strange_answer)
           end
         end
 

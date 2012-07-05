@@ -6,6 +6,7 @@ module StatusRepresenter
   property :created_at
   property :type
   property :text
+  property :user, :extend => UserRepresenter, :class => User
 
   link :self do
     api_status_url self

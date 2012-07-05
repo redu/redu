@@ -11,29 +11,34 @@ describe TeacherParticipation do
     @lecture_statuses = []
     @ans = []
 
+    @ini = "2012-02-15".to_date
+    @end = "2012-02-16".to_date
+
     2.times.collect  do
       s = Factory(:space, :course => @course)
       su = Factory(:subject, :space => s,
                    :owner => @owner, :finalized => true)
       l = Factory(:lecture, :subject => su, :owner => @teacher,
-                  :created_at => "2012-02-16".to_date)
+                  :created_at => @end)
 
       @space_statuses += 3.times.collect do
         Factory(:activity,
                 :statusable => s, :user => @teacher,
-                :created_at => "2012-02-16".to_date)
+                :created_at => @end)
       end
 
       @lecture_statuses += 3.times.collect do
         Factory(:activity,
                 :statusable => l, :user => @teacher,
-                :created_at => "2012-02-16".to_date)
+                :created_at => @end)
       end
 
       @ans += 2.times.collect do
+        acti = Factory(:activity, :statusable => l, :user => Factory(:user),
+               :created_at => @end)
         Factory(:answer, :statusable => l,
-                :in_response_to => l.statuses.first, :user => @teacher,
-                :created_at => "2012-02-16".to_date)
+                :in_response_to => acti, :user => @teacher,
+                :created_at => @end)
       end
 
       su.lectures << l
@@ -46,24 +51,24 @@ describe TeacherParticipation do
     su = Factory(:subject, :space => s,
                  :owner => @owner, :finalized => true)
     l = Factory(:lecture, :subject => su,
-                :owner => @teacher, :created_at => "2012-02-15".to_date)
+                :owner => @teacher, :created_at => @ini)
 
     3.times.collect do
       Factory(:activity,
               :statusable => s, :user => @teacher,
-              :created_at => "2012-02-15".to_date)
+              :created_at => @ini)
     end
 
     3.times.collect do
       Factory(:activity,
               :statusable => l, :user => @teacher,
-              :created_at => "2012-02-15".to_date)
+              :created_at => @ini)
     end
 
     2.times.collect do
       Factory(:answer, :statusable => l,
               :in_response_to => l.statuses.first, :user => @teacher,
-              :created_at => "2012-02-15".to_date)
+              :created_at => @ini)
     end
 
     su.lectures << l
@@ -103,7 +108,8 @@ describe TeacherParticipation do
       subject.subjects_by_space.should eq([@id])
     end
 
-    it "retrieves the lectures ids that belongs the User from the especified spaces" do
+    it "retrieves the lectures ids that belongs the User from the
+    especified spaces" do
       subject.spaces = [@course.spaces.first]
       @lecture = Factory(:lecture,
                          :subject => subject.spaces.first.subjects.first,
@@ -118,14 +124,15 @@ describe TeacherParticipation do
         Factory(:activity,
                 :statusable => subject.spaces.first, :user => @owner)
         Factory(:activity,
-                :statusable => subject.spaces.first.subjects.first.lectures.first,
+                :statusable => subject.spaces.first.subjects.first.
+                               lectures.first,
                 :user => @owner)
       end
 
       subject.spaces = @course.spaces[0..1]
       subject.subjects_by_space
       subject.posts_by_space.collect{|s| s.id}.to_set.should \
-        eq((@space_statuses + @lecture_statuses).collect{|s|s.id}.to_set)
+        eq((@space_statuses + @lecture_statuses).collect{ |s| s.id }.to_set)
     end
 
     it "retrieves all answers made by User from specified spaces" do
@@ -133,7 +140,8 @@ describe TeacherParticipation do
         Factory(:activity,
                 :statusable => subject.spaces.first, :user => @owner)
         Factory(:activity,
-                :statusable => subject.spaces.first.subjects.first.lectures.first,
+                :statusable => subject.spaces.first.subjects.first.
+                               lectures.first,
                 :user => @owner)
       end
 
@@ -147,8 +155,8 @@ describe TeacherParticipation do
 
   context "building" do
     it "queries by specified days" do
-      subject.start = "2012-02-15".to_date
-      subject.end = "2012-02-16".to_date
+      subject.start = @ini
+      subject.end = @end
       subject.generate!
 
       subject.lectures_created[0].should == 1

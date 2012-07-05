@@ -416,6 +416,7 @@ class UsersController < BaseController
 
   protected
   def deny_access(exception)
+    session[:return_to] = request.fullpath
     if exception.action == :preview && exception.subject.class == Space
       flash[:notice] = "Você não tem acesso a essa página"
       redirect_to preview_environment_course_path(@space.course.environment,
