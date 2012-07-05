@@ -1,6 +1,6 @@
 require "spec_helper"
-require "helpers/api/oauth"
-require "helpers/api/base"
+require "support/api/oauth"
+require "support/api/base"
 
 RSpec.configure do |config|
   include Api::Helpers
