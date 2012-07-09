@@ -49,7 +49,7 @@ vagrant@lucid32:/vagrant$ sudo /etc/nginx/sbin/nginx
 Pronto. A aplicação funcionará na porta 8080 da máquina host (porta 80 da VM).
 
 ```sh
-vagrant@lucid32:/vagrant$ script/delayed_job start
+vagrant@lucid32:/vagrant$  RAILS_ENV=performance script/delayed_job start
 ```
 
 ## Parando o servidor
