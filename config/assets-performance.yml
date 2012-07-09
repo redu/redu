@@ -1,0 +1,133 @@
+embed_assets: on
+
+javascripts:
+  common:
+    - public/javascripts/rails.js
+    - public/javascripts/application.js
+    - public/javascripts/modernizr.js
+    - public/javascripts/jquery.tipTip.minified.js
+    - public/javascripts/folders.js
+    - public/javascripts/exercises.js
+    - public/javascripts/lectures.js
+    - public/javascripts/swfobject.js
+    - public/javascripts/jquery.iframe-transport.js
+    - public/javascripts/jquery.remotipart.js
+    - public/javascripts/lazyload.js
+    - public/javascripts/jquery.fcbkcomplete.min.js
+    - public/javascripts/jquery.tokeninput.js
+    - public/javascripts/jquery.filestyle.mini.js
+    - public/javascripts/jquery.placeholder.js
+    - public/javascripts/form.redu.jquery.js
+    - public/javascripts/asyncjs.jquery.js
+    - public/javascripts/users.js
+    - public/javascripts/jquery.cookie.js
+    - public/javascripts/ytpreview.jquery.js
+    - public/javascripts/subjects.js
+    - public/javascripts/statuses.js
+    - public/javascripts/admin.js
+    - public/javascripts/partner.js
+    - public/javascripts/jquery.nested-fields.js
+    - public/javascripts/browserdetection.js
+    - public/javascripts/outdated-browser.js
+    - public/javascripts/jquery.noisy.js
+    - public/javascripts/underscore.js
+    - public/javascripts/underscore-sharing-template.redu.jquery.js
+    - public/javascripts/embedly.redu.jquery.js
+    - public/javascripts/canvas.js
+  chat:
+    - public/javascripts/jquery.pjax.js
+    - public/javascripts/pusher.js
+    - public/javascripts/jquery.json.js
+    - public/javascripts/jquery.linkify-1.0.js
+    - public/javascripts/chat.jquery.js
+    - public/javascripts/chat.js
+  chart:
+    - public/javascripts/highcharts/highcharts.js
+    - public/javascripts/d3/d3.js
+    - public/javascripts/d3/d3.chart.js
+    - public/javascripts/jquery.form.js
+    - public/javascripts/teacher_participation.js
+    - public/javascripts/subject_participation.js
+    - public/javascripts/lectures_participation.js
+    - public/javascripts/graph_form.js
+  ie:
+    - public/javascripts/json2.js
+    - public/javascripts/selectivizr.js
+  user:
+    - public/javascripts/jquery.maskedinput.js
+  ckeditor:
+    - public/javascripts/ckeditor/ckeditor.js
+  clean:
+    - public/javascripts/rails.js
+    - public/javascripts/modernizr.js
+    - public/javascripts/lazyload.js
+    - public/javascripts/asyncjs.jquery.js
+    - public/javascripts/jquery.noisy.js
+    - public/javascripts/jquery.placeholder.js
+    - public/javascripts/form.redu.jquery.js
+    - public/javascripts/swfobject.js # Necessário ao browserdetection.js
+    - public/javascripts/browserdetection.js
+    - public/javascripts/jquery.cookie.js
+    - public/javascripts/outdated-browser.js
+    - public/javascripts/clean.js
+
+stylesheets:
+  common:
+    - public/stylesheets/reset.css
+    - public/stylesheets/960.css
+    - public/stylesheets/new-fonts.css
+    - public/stylesheets/token-input.css
+    - public/stylesheets/utils.css
+    - public/stylesheets/new-style.css
+    - public/stylesheets/tipTip.css
+    - public/stylesheets/ajaxful_rating.css
+    - public/stylesheets/fb_style.css
+    - public/stylesheets/form.redu.css
+    - public/stylesheets/table.redu.css
+    - public/stylesheets/icons.big.redu.css
+    - public/stylesheets/icons.redu.css
+    - public/stylesheets/users.css
+    - public/stylesheets/lectures.css
+    - public/stylesheets/exercises.css
+    - public/stylesheets/outdated-browser.css
+    - public/stylesheets/chart.css
+    - public/stylesheets/canvas.css
+  ie:
+    - public/stylesheets/ie.css
+  ie8:
+    - public/stylesheets/ie8.css
+  chat:
+    - public/stylesheets/chat.css
+  clean:
+    - public/stylesheets/reset.css
+    - public/stylesheets/960.css
+    - public/stylesheets/new-fonts.css
+    - public/stylesheets/utils.css
+    - public/stylesheets/icons.redu.css
+    - public/stylesheets/tipTip.css
+    - public/stylesheets/form.redu.css
+    - public/stylesheets/outdated-browser.css
+    - public/stylesheets/clean.css
+    - public/stylesheets/landing.css
+    - public/stylesheets/fb-login.css
+  cold:
+    - public/stylesheets/reset.css
+    - public/stylesheets/960.css
+    - public/stylesheets/new-fonts.css
+    - public/stylesheets/utils.css
+    - public/stylesheets/tipTip.css
+    - public/stylesheets/form.redu.css
+    - public/stylesheets/icons.big.redu.css
+    - public/stylesheets/icons.redu.css
+    - public/stylesheets/outdated-browser.css
+    - public/stylesheets/cold.css
+    - public/stylesheets/errors.css
+    - public/stylesheets/recover.css
+  print:
+    - public/stylesheets/reset.css
+    - public/stylesheets/new-fonts.css
+    - public/stylesheets/new-style.css
+    - public/stylesheets/print.css
+  page:
+    - public/stylesheets/reset.css
+    - public/stylesheets/new-fonts.css
