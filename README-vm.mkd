@@ -11,9 +11,13 @@ Esta imagem de máquina virtual possui um servidor instalado com as mesmas confi
 
 Os arquivos estáticos são servidos através do ngnix na porta 3000 (da máquina virtual) e aplicação através do Passenger na porta 80.
 
-## Setup
+## Setup do Vagrant
 
-Adiciona uma cópia da máquina virtual ao vagrant. Para ter acesso a esta cópia entre em contato com guilhermec [at] redu.com.br ou o líder técnico do seu time.
+Para instalar o Vagrant siga os passos descritos em [no README](http://vagrantup.com/v1/docs/getting-started/index.html). Graças a conflitos nas versões das dependedências do Vagrant e do Redu não é possível adicioná-lo ao Gemfile do projeto. Uma ideia é instalar no Gemset global do RVM.
+
+## Setup da VM
+
+Basta adicionar uma cópia da máquina virtual ao vagrant. Para ter acesso a esta cópia entre em contato com guilhermec [at] redu.com.br ou o líder técnico do seu time.
 
 ```sh
 $ vagrant box add package.box
