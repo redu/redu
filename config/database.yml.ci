@@ -1,6 +1,0 @@
-test:
-  adapter: mysql2
-  username: root
-  password:
-  database: integrity
-  host: localhost
