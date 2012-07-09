@@ -17,5 +17,8 @@ production:
 development:
   <<: *staging
 
+performance:
+  <<: *staging
+
 test:
   <<: *staging

@@ -1,0 +1,75 @@
+# VM do ambiente de produção
+
+Esta imagem de máquina virtual possui um servidor instalado com as mesmas configurações de produção. A infraestrutura existente é a seguintes:
+
+1. nginx
+    - Servindo os arquivos estáticos
+    - Funcionando como proxy para o passenger
+2. passenger
+    - Servindo a aplicação
+3. MySQL
+
+Os arquivos estáticos são servidos através do ngnix na porta 3000 (da máquina virtual) e aplicação através do Passenger na porta 80.
+
+## Setup
+
+Adiciona uma cópia da máquina virtual ao vagrant. Para ter acesso a esta cópia entre em contato com guilhermec [at] redu.com.br ou o líder técnico do seu time.
+
+```sh
+$ vagrant box add package.box
+```
+
+Em seguida incialize a máquina virtual e crie uma base de dados:
+
+```sh
+$ vagrant up
+$ vagrant ssh
+vagrant@lucid32:~$ cd /vagrant/
+vagrant@lucid32:/vagrant$ mysql -u root
+```
+
+```mysql
+mysql> create database redu_performance;
+Query OK, 1 row affected (0.00 sec)
+mysql> exit;
+# Bye
+```
+
+Baixe um dump do banco de produção de salve dentro da pasta do Redu. Para carregar o dump no MySQL da VM rode o comando:
+
+```sh
+vagrant@lucid32:/vagrant$ mysql -u root redu_performance < redu_rails3.2012-07-09T02-10-09
+```
+
+## Iniciando servidor
+```sh
+vagrant@lucid32:/vagrant$ sudo /etc/nginx/sbin/nginx
+```
+
+Pronto. A aplicação funcionará na porta 8080 da máquina host (porta 80 da VM).
+
+```sh
+vagrant@lucid32:/vagrant$ script/delayed_job start
+```
+
+## Parando o servidor
+
+```sh
+vagrant@lucid32:/vagrant$ pgrep nginx
+# 8811
+# 8812
+# 8813
+# 8814
+vagrant@lucid32:/vagrant$ sudo kill -9  8811 8812 8813 8814
+```
+
+## Delisgando a VM:
+
+```sh
+$ vagrant halt
+```
+
+# Referências
+
+1. http://www.modrails.com/documentation/Users%20guide%20Nginx.html
+2. http://railscasts.com/episodes/293-nginx-unicorn?view=asciicast
