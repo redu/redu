@@ -23,12 +23,13 @@ Basta adicionar uma cópia da máquina virtual ao vagrant. Para ter acesso a est
 $ vagrant box add redu package.box
 ```
 
-Em seguida incialize a máquina virtual e crie uma base de dados:
+Em seguida incialize a máquina virtual e crie uma base de dados e crie ``database.yml`` para o ambiente de performance.
 
 ```sh
 $ vagrant up
 $ vagrant ssh
 vagrant@lucid32:~$ cd /vagrant/
+vagrant@lucid32:~$ cp config/database.yml.example config/database.yml
 vagrant@lucid32:/vagrant$ bundle exec rake db:create RAILS_ENV=performance
 ```
 
