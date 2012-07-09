@@ -20,7 +20,7 @@ Para instalar o Vagrant siga os passos descritos em [no README](http://vagrantup
 Basta adicionar uma cópia da máquina virtual ao vagrant. Para ter acesso a esta cópia entre em contato com guilhermec [at] redu.com.br ou o líder técnico do seu time.
 
 ```sh
-$ vagrant box add package.box
+$ vagrant box add redu package.box
 ```
 
 Em seguida incialize a máquina virtual e crie uma base de dados:
@@ -46,7 +46,7 @@ vagrant@lucid32:/vagrant$ sudo /etc/nginx/sbin/nginx
 Pronto. A aplicação funcionará na porta 8080 da máquina host (porta 80 da VM).
 
 ```sh
-vagrant@lucid32:/vagrant$  RAILS_ENV=performance script/delayed_job start
+vagrant@lucid32:/vagrant$  RAILS_ENV=performance script/delayed_job restart --queues=email,general,general -n 3
 ```
 
 ## Parando o servidor
