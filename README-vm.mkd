@@ -29,7 +29,7 @@ Em seguida incialize a máquina virtual e crie uma base de dados e crie ``databa
 $ vagrant up
 $ vagrant ssh
 vagrant@lucid32:~$ cd /vagrant/
-vagrant@lucid32:~$ cp config/database.yml.example config/database.yml
+vagrant@lucid32:/vagrant$ cp config/database.yml.example config/database.yml
 vagrant@lucid32:/vagrant$ bundle exec rake db:create RAILS_ENV=performance
 ```
 
