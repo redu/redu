@@ -23,7 +23,7 @@ Basta adicionar uma cópia da máquina virtual ao vagrant. Para ter acesso a est
 $ vagrant box add redu package.box
 ```
 
-Em seguida incialize a máquina virtual e crie uma base de dados e crie ``database.yml`` para o ambiente de performance.
+Em seguida incialize a máquina virtual e crie uma base de dados e crie ``database.yml`` para o ambiente de performance. Também é necessário processar os arquivos estáticos utilizando o jammit.
 
 ```sh
 $ vagrant up
@@ -31,6 +31,7 @@ $ vagrant ssh
 vagrant@lucid32:~$ cd /vagrant/
 vagrant@lucid32:/vagrant$ cp config/database.yml.example config/database.yml
 vagrant@lucid32:/vagrant$ bundle exec rake db:create RAILS_ENV=performance
+vagrant@lucid32:/vagrant$ bundle exec jammit -c config/assets-performance.yml 
 ```
 
 Baixe um dump do banco de produção de salve dentro da pasta do Redu. Para carregar o dump no MySQL da VM rode o comando:
