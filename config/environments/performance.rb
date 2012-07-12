@@ -46,9 +46,9 @@ Redu::Application.configure do
   config.i18n.fallbacks = true
 
   # Nome e URL do app
-  config.url = "0.0.0.0:8080"
+  config.url = "192.168.1.19"
   config.representer.default_url_options = config.url
-  config.action_controller.asset_host = "0.0.0.0:8081"
+  config.action_controller.asset_host = "192.168.1.19:3000"
 
   config.action_mailer.default_url_options = { :host => config.url }
   config.action_mailer.asset_host =  config.action_controller.asset_host
