@@ -30,8 +30,13 @@ $ vagrant up
 $ vagrant ssh
 vagrant@lucid32:~$ cd /vagrant/
 vagrant@lucid32:/vagrant$ cp config/database.yml.example config/database.yml
+```
+Faça o setup do Redu normalmente:
+
+```sh
 vagrant@lucid32:/vagrant$ bundle exec rake db:create RAILS_ENV=performance
 vagrant@lucid32:/vagrant$ bundle exec jammit -c config/assets-performance.yml 
+vagrant@lucid32:/vagrant$  RAILS_ENV=performance script/delayed_job restart --queues=email,general,general -n 3
 ```
 
 Baixe um dump do banco de produção de salve dentro da pasta do Redu. Para carregar o dump no MySQL da VM rode o comando:
@@ -41,25 +46,28 @@ vagrant@lucid32:/vagrant$ mysql -u root redu_performance < redu_rails3.2012-07-0
 ```
 
 ## Iniciando servidor
+
+No primeiro acesso é necessário instalar o script que inicializa o nginix no init.d do sistema:
+
 ```sh
-vagrant@lucid32:/vagrant$ sudo /etc/nginx/sbin/nginx
+vagrant@lucid32:/vagrant$ sudo cp config/vagrant/nginx /etc/init.d/
+vagrant@lucid32:/vagrant$ sudo chmod +x /etc/init.d/nginx
 ```
+
+Para iniciar o servidor:
+
+```sh
+vagrant@lucid32:/vagrant$ sudo cp config/vagrant/nginx /etc/init.d/
+vagrant@lucid32:/vagrant$ sudo /etc/init.d/nginx start
+```
+
 
 Pronto. A aplicação funcionará na porta 8080 da máquina host (porta 80 da VM).
-
-```sh
-vagrant@lucid32:/vagrant$  RAILS_ENV=performance script/delayed_job restart --queues=email,general,general -n 3
-```
 
 ## Parando o servidor
 
 ```sh
-vagrant@lucid32:/vagrant$ pgrep nginx
-# 8811
-# 8812
-# 8813
-# 8814
-vagrant@lucid32:/vagrant$ sudo kill -9  8811 8812 8813 8814
+vagrant@lucid32:/vagrant$ sudo /etc/init.d/nginx stop
 ```
 
 ## Delisgando a VM:
