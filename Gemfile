@@ -81,6 +81,7 @@ end
 
 group :test do
   gem 'webmock', '~> 1.8.6'
+  gem 'ruby-prof'
 end
 
 group :development do

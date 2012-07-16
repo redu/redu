@@ -51,7 +51,11 @@ Redu::Application.configure do
   # Nome e URL do app
   config.url = "192.168.1.39"
   config.representer.default_url_options = config.url
-  config.action_controller.asset_host = "192.168.1.39:3000"
+
+  # Send deprecation notices to registered listeners
+  config.active_support.deprecation = :notify
+
+  config.action_controller.asset_host = "192.168.1.19:3000"
 
   config.action_mailer.default_url_options = { :host => config.url }
   config.action_mailer.asset_host =  config.action_controller.asset_host
