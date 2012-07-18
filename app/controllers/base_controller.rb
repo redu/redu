@@ -4,11 +4,6 @@ class BaseController < ApplicationController
 
   rescue_from CanCan::AccessDenied, :with => :deny_access
 
-  caches_action :site_index, :if => Proc.new{|c| c.cache_action? }
-  def cache_action?
-    !logged_in? && controller_name.eql?('base') && params[:format].blank?
-  end
-
   def tos
     render :layout => 'clean'
   end
