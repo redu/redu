@@ -69,6 +69,7 @@ class Ability
 
     # Usuários logados podem
     unless user.nil?
+      is_admin = is_admin
 
       # Ter acesso ao 'Ensine', só usuários logados
       can :teach_index, :base
@@ -78,7 +79,7 @@ class Ability
 
       # Somente usuários parceiros e  admin gerenciam apps OAuth
       can :manage, :client_applications do
-        !user.partners.empty? || user.admin?
+        !user.partners.empty? || is_admin
       end
 
       # Gerencial
@@ -160,14 +161,14 @@ class Ability
 
       # Parceiros
       can :contact, Partner
-      cannot :index, Partner unless user.admin?
+      cannot :index, Partner unless is_admin
 
       # Result
       can :update, Result, :state => 'started', :user_id => user.id
 
       # Invoice
       cannot :pay, Invoice do |invoice|
-        !(user.admin? && (invoice.pending? || invoice.overdue?))
+        !(is_admin && (invoice.pending? || invoice.overdue?))
       end
 
       cannot :pay_with_pagseguro, Invoice do |invoice|
@@ -176,7 +177,7 @@ class Ability
 
       # Plan
       cannot :migrate, Plan do |plan|
-        (plan.blocked? || plan.migrated?) && !user.admin?
+        (plan.blocked? || plan.migrated?) && !is_admin
       end
 
       cannot :update, Lecture do |lecture|
