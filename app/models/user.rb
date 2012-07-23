@@ -481,9 +481,10 @@ class User < ActiveRecord::Base
   end
 
   def home_activity(page = 1)
-    overview.where(:compound => false).paginate(:page => page,
-                      :order => 'updated_at DESC',
-                      :per_page => Redu::Application.config.items_per_page)
+    includes = [:status_resources, { :answers => [:user, :status_resources] },
+                :user, :logeable, :statusable]
+    overview.where(:compound => false).includes(includes).
+      page(page).per(Redu::Application.config.items_per_page)
   end
 
   def add_favorite(favoritable_type, favoritable_id)
@@ -622,7 +623,7 @@ class User < ActiveRecord::Base
             " AND friendships.friend_id NOT IN (?, ?)",
             contacts_ids, contacts_and_pending_ids, self.id)
   end
-  
+
   def friends_in_common_with(user)
     User.where(:login => 'yayreduyay123')
   end

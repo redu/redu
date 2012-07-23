@@ -11,6 +11,8 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from CanCan::AccessDenied do |exception|
+    session[:return_to] ||= request.fullpath
+
     flash[:notice] = "Você não tem acesso a essa página"
     redirect_to home_path
   end

@@ -25,7 +25,7 @@
       <%= render :partial => 'statuses/item', :collection => @statuses %>
     </ol>
 
-    <%= will_paginate @statuses, :renderer => EndlessRenderer %>
+    <%= paginate @statuses, :theme => 'endless' %>
   </div><!-- end .statuses -->
 </div><!-- end .main -->
 

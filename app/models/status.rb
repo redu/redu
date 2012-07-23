@@ -1,5 +1,6 @@
 class Status < ActiveRecord::Base
   belongs_to :statusable, :polymorphic => true
+  belongs_to :logeable, :polymorphic => true
   belongs_to :user
   has_many :answers, :as => :in_response_to,
     :dependent => :destroy,
