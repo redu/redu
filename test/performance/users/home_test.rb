@@ -2,7 +2,7 @@ require 'performance_test_helper'
 
 class HomeTest < ActionDispatch::PerformanceTest
   def setup
-    @user = User.find('guiocavalcanti')
+    @user = User.find('julianalucena')
   end
 
   def test_query_friends
@@ -13,7 +13,7 @@ class HomeTest < ActionDispatch::PerformanceTest
     @user.friends_pending
   end
 
-  def test_query_course_requisitions
+  def test_query_course_invitations
     @user.course_invitations
   end
 

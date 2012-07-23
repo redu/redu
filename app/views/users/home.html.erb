@@ -9,7 +9,7 @@
   <% unless @friends_requisitions.empty? %>
     <ul class="friends-requisitions">
       <%= render :partial => 'friendships/friend_requisition',
-        :collection => @friends_requisitions, :as => :friend %>
+        :collection => @friends_requisitions, :as => :friendship %>
     </ul>
   <% end %>
   <% if current_user.has_course_invitation? %>

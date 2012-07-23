@@ -602,19 +602,24 @@ class User < ActiveRecord::Base
   def colleagues(quantity)
     contacts_ids = User.contacts_and_pending_contacts_ids.
       where("friendships.user_id = ?", self.id)
+
     User.select("DISTINCT users.id, users.login, users.avatar_file_name," \
-                " users.first_name, users.last_name").
-      includes(:user_course_associations).
-      where("course_enrollments.state = 'approved' AND " \
-            "course_enrollments.user_id NOT IN (?, ?)",
+                "users.first_name, users.last_name").
+      joins("LEFT OUTER JOIN course_enrollments ON" \
+            " course_enrollments.user_id = users.id AND" \
+            " course_enrollments.type = 'UserCourseAssociation'").
+      where("course_enrollments.state = 'approved' AND" \
+            " course_enrollments.user_id NOT IN (?, ?)",
             contacts_ids, self.id).
       limit(quantity)
   end
 
   def friends_of_friends
     contacts_ids = self.friends.select("users.id")
+
     contacts_and_pending_ids = User.contacts_and_pending_contacts_ids.
       where("friendships.user_id = ?", self.id)
+
     User.select("DISTINCT users.id, users.login, users.avatar_file_name," \
                 " users.first_name, users.last_name").
       joins("LEFT OUTER JOIN `friendships`" \
