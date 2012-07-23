@@ -15,7 +15,7 @@ var StudentsTreemap = function () {
 
   // Função para preenchimento das cores da células, se grade = null preenchimento neutro
   var fill = function (grade){
-    if (grade === null) {
+    if (grade === -1.0) {
       return color.gray;
     }
     else if (grade < 5.0) {
@@ -146,7 +146,7 @@ var StudentsTreemap = function () {
               .attr("class", "cell")
               .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
               .attr("alt", function (d) {
-                var nota = d.grade !== null ? d.grade : "nenhum exercício realizado"
+                var nota = d.grade !== -1 ? d.grade : "nenhum exercício realizado"
                 return "Nome: " + d.name + " " + d.last_name
                         + "</br>Comentários: " + d.activities
                         + "</br>Pedidos de Ajuda: " + d.helps
