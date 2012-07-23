@@ -8,13 +8,13 @@ class AuthenticationsController < BaseController
     if authentication
       # Autenticação já existe.
       user = authentication.user
-      unless current_user
-        @user_session = UserSession.new(user)
-        @user_session.save
-      end
+      @user_session = UserSession.new(user)
+      current_user = @user_session.record if @user_session.save
       flash[:notice] = t :thanks_youre_now_logged_in
 
-      redirect_to session[:return_to] || home_user_path(user)
+      puts home_user_path(current_user)
+
+      redirect_to session[:return_to] || home_user_path(current_user)
       session[:return_to] = nil
     else
       # Autenticação inexistente.
@@ -37,14 +37,14 @@ class AuthenticationsController < BaseController
       begin
         if user.save
           @user_session = UserSession.new(user)
-          @user_session.save
+          current_user = @user_session.record if @user_session.save
           # Usuário criado / atualizado com sucesso.
-          redirect_to session[:return_to] || home_user_path(user)
+          redirect_to session[:return_to] || home_user_path(current_user)
           session[:return_to] = nil
         else
           # Erro ao criar / atualizar usuário.
           flash[:notice] = t :facebook_connect_error
-          redirect_to home_path
+          redirect_to home_user_path(current_user)
         end
       # FIXME Após migrar o Rails (> 3.0.10) ver se a solução clean funciona.
       # Necessário pois o rescue_from estava dando conflito com o

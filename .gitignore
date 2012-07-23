@@ -22,3 +22,4 @@ backup/data/*
 backup/log/*
 backup/.tmp/*
 .vagrant
+chromedriver.log
