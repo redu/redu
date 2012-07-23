@@ -12,9 +12,7 @@
         <%= render "statuses/user_name", :item => log %>
         <span class="status-info"> <%= raw auto_link(log.action_text) %></span>
         <%= link_to log.logeable.name, space_path(log.logeable), :class => "status-secondary icon-expand-gray_16_18-before" %>
-        <span class="date">
-          <%= time_ago_in_words log.created_at %>
-        </span>
+        <%= render :partial => 'statuses/timeago', :locals => { :item => log } %>
       </div>
     </div>
   </div>

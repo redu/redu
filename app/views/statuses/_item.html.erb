@@ -24,9 +24,7 @@
             <%= render "statuses/user_name", :item => item %>
             <span class="status-info">solicitou <span class="status-help">ajuda</span> em</span>
             <%= link_to item.statusable.name, space_subject_lecture_path(item.statusable.subject.space, item.statusable.subject, item.statusable) %>
-            <span class="date">
-              <%= time_ago_in_words item.created_at %>
-            </span>
+            <%= render :partial => 'statuses/timeago', :locals => { :item => item } %>
           </div>
           <%= render 'statuses/resource', :status => item %>
           <%= render 'statuses/responses', :status => item %>
@@ -50,9 +48,7 @@
           <div class="status-icon icon-<%= item.user ? role_at(item.user, item.statusable) : "member" %>-gray_16_18-before ">
             <%= render "statuses/user_name", :item => item %>
             <span class="status-info">comentou no mural da aula  <%= link_to item.statusable.name, space_subject_lecture_path(item.statusable.subject.space, item.statusable.subject, item.statusable) %></span>
-            <span class="date">
-              <%= time_ago_in_words item.created_at %>
-            </span>
+            <%= render :partial => 'statuses/timeago', :locals => { :item => item } %>
           </div>
           <%= render 'statuses/resource', :status => item %>
           <%= render 'statuses/responses', :status => item %>
@@ -76,9 +72,7 @@
           <div class="status-icon icon-<%= item.user ? role_at(item.user, item.statusable) : "member" %>-gray_16_18-before ">
             <%= render "statuses/user_name", :item => item %>
             <span class="status-info">comentou no mural da disciplina  <%= link_to item.statusable.name, mural_space_path(item.statusable) %></span>
-            <span class="date">
-              <%= time_ago_in_words item.created_at %>
-            </span>
+            <%= render :partial => 'statuses/timeago', :locals => { :item => item } %>
           </div>
           <%= render 'statuses/resource', :status => item %>
           <%= render 'statuses/responses', :status => item %>
@@ -109,9 +103,7 @@
             <% end %>
           <% end %>
           </span>
-          <span class="date">
-            <%= time_ago_in_words item.created_at %>
-          </span>
+          <%= render :partial => 'statuses/timeago', :locals => { :item => item } %>
         </div>
         <%= render 'statuses/resource', :status => item %>
         <%= render 'statuses/responses', :status => item %>

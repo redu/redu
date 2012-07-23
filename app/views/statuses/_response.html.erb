@@ -21,9 +21,7 @@
           :class => 'friend-avatar'%>
         <span class="username">[Usuário Removido]</span>
       <% end %>
-     <span class="date">
-        há <%= time_ago_in_words response.created_at %>
-      </span>
+      <%= render :partial => 'statuses/timeago', :locals => { :item => response } %>
     </div>
     <p class="status-message"><%= status_message(response.text) %></p>
     <% if response.status_resources.first %>
