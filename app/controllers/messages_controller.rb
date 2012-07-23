@@ -11,7 +11,7 @@ class MessagesController < BaseController
         format.html
         format.js do
           render_endless 'messages/item', @messages, '#messages > tbody',
-            { :mailbox => :inbox }
+            :partial_locals => { :mailbox => :inbox }
         end
       end
   end
@@ -25,7 +25,7 @@ class MessagesController < BaseController
         format.html
         format.js do
           render_endless 'messages/item', @messages, '#messages > tbody',
-            { :mailbox => :outbox }
+            :partial_locals => { :mailbox => :outbox }
         end
     end
   end

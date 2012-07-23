@@ -320,7 +320,8 @@ class UsersController < BaseController
 
     respond_to do |format|
       format.html
-      format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
+      format.js { render_endless('statuses/item', @statuses, '#statuses > ol',
+                                 :template => 'shared/endless_kaminari') }
     end
   end
 
@@ -409,7 +410,7 @@ class UsersController < BaseController
       end
       format.js do
           render_endless 'users/item', @users, '#users-list',
-            { :entity => entity }
+            :partial_locals => { :entity => entity }
       end
     end
   end

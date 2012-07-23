@@ -86,6 +86,8 @@ end
 group :development do
   gem 'rails-footnotes', '>= 3.7.5.rc4'
   gem 'thin'
+  # gem 'uniform_notifier'
+  # gem 'bullet'
 end
 
 group :production do

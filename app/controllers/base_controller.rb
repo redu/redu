@@ -78,16 +78,20 @@ class BaseController < ApplicationController
   end
 
   # Renderiza a resposta do endless de acordo com os parâmetros passados
-  def render_endless(partial, collection, selector,
-                     partial_locals={},  paginate_opts={})
+  def render_endless(partial, collection, selector, opts={})
+
+    template = opts[:template] || 'shared/endless'
+
     locals = {
       :partial => partial, # Partial do itens a serem renderizados
       :collection => collection, # Coleção em questão
       :selector => selector, # Seletor do HTML que receberá os itens
-      :partial_locals => partial_locals, # Locals necessários no partial do item
-      :paginate_opts => paginate_opts # Options para o will_paginate
+      # Locals necessários no partial do item
+      :partial_locals => opts[:partial_locals] || {},
+      :paginate_opts => opts[:paginate_opts] || {} # Options para o will_paginate
     }
-      render :template => 'shared/endless', :locals => locals
+
+    render :template => template, :locals => locals
   end
 
   # Renderiza a resposta do endless de acordo com os parâmetros passados
