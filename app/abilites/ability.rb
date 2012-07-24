@@ -69,7 +69,7 @@ class Ability
 
     # Usuários logados podem
     unless user.nil?
-      is_admin = is_admin
+      is_admin = user.admin?
 
       # Ter acesso ao 'Ensine', só usuários logados
       can :teach_index, :base
