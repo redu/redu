@@ -23,19 +23,19 @@
     <%= render :partial => 'courses/privacy', :locals => { :course => item } %>
     <ul class="numbers clearfix">
       <li>
-        <span class="count"><%= item.approved_users.length %></span>
+        <span class="count"><%= item.approved_users.count %></span>
         <em class="role">membros</em>
       </li>
       <li>
-        <span class="count"><%= item.teachers.length %></span>
+        <span class="count"><%= item.teachers.count %></span>
         <em class="role">professores</em>
       </li>
       <li>
-        <span class="count"><%= item.tutors.length %></span>
+        <span class="count"><%= item.tutors.count %></span>
         <em class="role">tutores</em>
       </li>
       <li>
-        <span class="count"><%= item.students.length %></span>
+        <span class="count"><%= item.students.count %></span>
         <em class="role">alunos</em>
       </li>
     </ul>
