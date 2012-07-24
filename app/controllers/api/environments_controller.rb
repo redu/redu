@@ -9,8 +9,8 @@ module Api
     end
 
     def index
-      @environments = current_user.environments
       authorize! :manage, current_user
+      @environments = current_user.environments
 
       respond_with @environments
     end
