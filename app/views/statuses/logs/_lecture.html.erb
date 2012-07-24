@@ -12,9 +12,7 @@
         <%= render "statuses/user_name", :item => log %>
         <span class="status-info"><%= raw log.action_text %></span>
         <%= link_to log.logeable.name, space_subject_lecture_path(log.logeable.subject.space, log.logeable.subject, log.logeable) %>
-        <span class="date">
-          <%= time_ago_in_words log.created_at %>
-        </span>
+        <%= render :partial => 'statuses/timeago', :locals => { :item => log } %>
       </div>
     </div>
   </div>

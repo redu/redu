@@ -34,6 +34,8 @@ javascripts:
     - public/javascripts/underscore-sharing-template.redu.jquery.js
     - public/javascripts/embedly.redu.jquery.js
     - public/javascripts/canvas.js
+    - public/javascripts/jquery.timeago.js
+    - public/javascripts/timeago.js
   chat:
     - public/javascripts/jquery.pjax.js
     - public/javascripts/pusher.js
