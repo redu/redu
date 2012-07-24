@@ -50,7 +50,7 @@ class AuthenticationsController < BaseController
       # Necessário pois o rescue_from estava dando conflito com o
       # rescue_from Exception (mais geral). See #863.
       rescue ActiveRecord::RecordNotUnique
-        redirect_to application_path
+        redirect_to home_user_path(current_user)
       end
     end
   end
