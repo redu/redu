@@ -10,8 +10,8 @@
           :title => 'editar', :class => 'edit' %>
       </li>
       <%# Menu de parceiros  %>
-      <% unless current_user.partners.empty? %>
-        <%= render 'shared/user_partner_item', :collection => current_user.partners %>
+      <% current_user.partners.each do |partner| %>
+        <li><%= link_to partner.name, partner_path(partner) %></li>
       <% end %>
       <% if can? :index, Partner %>
         <li><%= link_to "Parceiros", partners_path %></li>
