@@ -451,7 +451,7 @@ class User < ActiveRecord::Base
   end
 
   def admin?
-    role && role.eql?(Role[:admin])
+    @is_admin ||= role.eql?(Role[:admin])
   end
 
   def teacher?(entity)
@@ -481,9 +481,7 @@ class User < ActiveRecord::Base
   end
 
   def home_activity(page = 1)
-    includes = [:status_resources, { :answers => [:user, :status_resources] },
-                :user, :logeable, :statusable]
-    overview.where(:compound => false).includes(includes).
+    overview.where(:compound => false).
       page(page).per(Redu::Application.config.items_per_page)
   end
 
