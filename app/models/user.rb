@@ -481,7 +481,9 @@ class User < ActiveRecord::Base
   end
 
   def home_activity(page = 1)
-    overview.where(:compound => false).
+    associateds = [:status_resources, { :answers => [:user, :status_resources] },
+                   :user, :logeable, :statusable]
+    overview.where(:compound => false).includes(associateds).
       page(page).per(Redu::Application.config.items_per_page)
   end
 
@@ -600,9 +602,8 @@ class User < ActiveRecord::Base
   def colleagues(quantity)
     contacts_ids = User.contacts_and_pending_contacts_ids.
       where("friendships.user_id = ?", self.id)
-
     User.select("DISTINCT users.id, users.login, users.avatar_file_name," \
-                "users.first_name, users.last_name").
+                " users.first_name, users.last_name").
       joins("LEFT OUTER JOIN course_enrollments ON" \
             " course_enrollments.user_id = users.id AND" \
             " course_enrollments.type = 'UserCourseAssociation'").
@@ -614,10 +615,8 @@ class User < ActiveRecord::Base
 
   def friends_of_friends
     contacts_ids = self.friends.select("users.id")
-
     contacts_and_pending_ids = User.contacts_and_pending_contacts_ids.
       where("friendships.user_id = ?", self.id)
-
     User.select("DISTINCT users.id, users.login, users.avatar_file_name," \
                 " users.first_name, users.last_name").
       joins("LEFT OUTER JOIN `friendships`" \
