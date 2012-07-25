@@ -56,7 +56,7 @@ class AuthenticationsController < BaseController
 
   def fallback
     flash[:notice] = t :you_need_give_us_access_to_your_facebook_data
-    redirect_to home_path
+    redirect_to application_path
   end
 
 end
