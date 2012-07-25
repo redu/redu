@@ -22,8 +22,8 @@
           <%= f.label :remember_me, "Matenha-me conectado", :class => "label-stay-connect" %>
           <%= link_to "Recuperar login & senha", recover_username_password_path, :class => "recover-login" %>
         </div>
-        <%= link_to "Logar com Facebook", facebook_authentication_path,
-                    :class => "fb-login", :value => "login-facebook" %>
+        <%= link_to "Entre com sua conta do Facebook", facebook_authentication_path,
+                    :class => "uibutton confirm large", :value => "login-facebook" %>
         <p class="or-call">&minus; ou &minus;</p>
       <% end %>
     <% end %>
