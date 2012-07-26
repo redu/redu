@@ -1,10 +1,13 @@
 require 'spec_helper'
+require 'authlogic/test_case'
+include Authlogic::TestCase
 
 describe AuthenticationsController do
 
   describe "GET create" do
 
     before do
+      activate_authlogic
       request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:facebook] 
     end
 
@@ -14,6 +17,10 @@ describe AuthenticationsController do
         auth = Factory.create(:authentication, :user => @user)
         request.env['omniauth.auth'][:uid] = auth.uid
         get :create, :locale => 'pt-BR'
+      end
+
+      it "should set current user" do
+        UserSession.find.should_not be_nil
       end
 
       it { should set_the_flash.to(I18n.t("thanks_youre_now_logged_in")) }
@@ -49,6 +56,10 @@ describe AuthenticationsController do
             user.activated_at.to_date.should == @user.activated_at.to_date
           end
 
+          it "should set current user" do
+            UserSession.find.should_not be_nil
+          end
+
           it { should set_the_flash.to(I18n.t("facebook_connect_account_association")) }
           it { should redirect_to(home_user_path(@user))  }
         end
@@ -69,6 +80,11 @@ describe AuthenticationsController do
             user.activated_at.should_not be_nil
           end
 
+          it "should set current user" do
+            get :create, :locale => 'pt-BR'
+            UserSession.find.should_not be_nil
+          end
+
           context "and activation time limit has expired" do
             before do
               @user.update_attributes(:created_at => 2.months.ago)
@@ -79,6 +95,10 @@ describe AuthenticationsController do
             it "should activate account when user connects with Facebook" do
               user = @created_auth.user
               user.activated_at.should_not be_nil
+            end
+
+            it "should set current user" do
+              UserSession.find.should_not be_nil
             end
           end # context "and activation time limit has expired"
         end # context "which is not activated"
@@ -100,6 +120,10 @@ describe AuthenticationsController do
 
         it "should activate user's account" do
           @user.activated_at.should_not be_nil
+        end
+
+        it "should set current user" do
+          UserSession.find.should_not be_nil
         end
 
         it { should set_the_flash.to(I18n.t("facebook_connect_new_user")) }
