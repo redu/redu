@@ -1017,6 +1017,27 @@ describe Course do
         original_spaces_names.should include cloned_space.name
       end
     end
+=======
+  context "when cloning" do
+    before do
+      @mimetic = Course.new(:environment => Factory(:environment))
+      @course = Factory(:course, :environment => Factory(:environment))
+      5.times do
+        @course.spaces << Factory(:space)
+      end
+      @mimetic.mimetize! @course
+    end
+
+    it "clone and cloned courses aren't the same" do
+      @mimetic.should_not == @course
+    end
+
+    it "clones all spaces from cloned course" do
+      original_spaces_names = @course.spaces.collect { |space| space.name }
+      @mimetic.spaces.each do |cloned_space|
+        original_spaces_names.should include cloned_space.name
+      end
+    end
 
     it "cloned and original spaces aren't the same" do
       @sith101.spaces.each do |cloned_space|
@@ -1101,7 +1122,6 @@ describe Course do
       @jedi101.spaces.each do |space|
         original += space.lectures_count
       end
-
 
       # Conta as aulas clonadas
       @sith101.spaces.each do |space|
@@ -1193,5 +1213,4 @@ describe Course do
       cloned.should == original
     end
   end # context "when cloning"
-
 end
