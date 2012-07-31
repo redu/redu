@@ -343,6 +343,14 @@ class Course < ActiveRecord::Base
     end
   end
 
+  def mimetize!(course)
+    course.spaces.each do |space|
+      self.spaces << (space.clone :include => { :subjects => { :lectures => { :questions => :alternatives } } } )
+    end
+
+    self.save
+  end
+
   protected
 
   # Cria licença passando com parâmetro o usuário que acaba de se matricular e o

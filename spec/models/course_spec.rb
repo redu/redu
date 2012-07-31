@@ -915,6 +915,42 @@ describe Course do
         subject.destroy
       }.to change(Space, :count).by(-1)
     end
+  end # context "with a space marked for destruction"
+
+  context "when cloning" do
+    before do
+      @mimetic = Course.new(:environment => Factory(:environment))
+      @course = Factory(:course, :environment => Factory(:environment))
+      5.times do
+        @course.spaces << Factory(:space)
+      end
+      @mimetic.mimetize! @course
+    end
+
+    it "clone and cloned courses aren't the same" do
+      @mimetic.should_not == @course
+    end
+
+    it "clones all spaces from cloned course" do
+      original_spaces_names = @course.spaces.collect { |space| space.name }
+      @mimetic.spaces.each do |cloned_space|
+        original_spaces_names.should include cloned_space.name
+      end
+    end
+
+    it "clones all lectures within spaces cloned from original course" do
+
+    end
+
+    it "cloned and original spaces aren't the same" do
+      @mimetic.spaces.each do |cloned_space|
+        @course.spaces.should_not include cloned_space
+      end
+    end
+
+    it "does not clone course environment" do
+      @mimetic.environment.should_not == @course.environment
+    end
   end
 
 end
