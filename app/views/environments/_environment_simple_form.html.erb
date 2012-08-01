@@ -26,6 +26,17 @@ $(document).ready(function(){
       <span class="tip">Digite o nome do seu primeiro curso</span>
         <%= course.hidden_field :path %>
     <% end %>
+
+    <div class="basic-content">
+      <span class="concave-label"> Conteúdo Básico para Ensino Médio </span>
+      <span class="tiptip-right icon-small icon-question-blue_12_12" title="<%= "#{render 'courses/basic_content'}" %>"></span>
+
+      <%= radio_button_tag :basic_content, "1" %>
+      <%= label_tag :basic_content_1, "Sim" %>
+      <%= radio_button_tag :basic_content, "2", :checked => true %>
+      <%= label_tag :basic_content_2, "Não" %>
+    </div>
+
     <%= submit_tag "Avançar", :class => "concave-important-font next" %>
   </fieldset>
 <% end %>
