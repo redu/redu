@@ -867,39 +867,243 @@ describe Course do
   end
 
   context "when cloning" do
-    before do
-      @mimetic = Course.new(:environment => Factory(:environment))
-      @course = Factory(:course, :environment => Factory(:environment))
-      5.times do
-        @course.spaces << Factory(:space)
+
+    # FIXME
+    # Atentar para o uso do before(:all)
+    before(:all) do
+      # Seta o curso original
+      @jedi101 = Factory(:course, :environment => Factory(:environment),
+                         :name => "Jedi101")
+      5.times do |n|
+        space = Factory(:space)
+        subject = Factory(:subject)
+        lecture = Factory(:lecture)
+        if n.even?
+          exercise = Factory(:complete_exercise)
+          lecture.lectureable = exercise
+        end
+        @jedi101.spaces << space
       end
-      @mimetic.mimetize! @course
+
+      # Cria o clone
+      @sith101 = Course.new(:environment => Factory(:environment),
+                            :name => "Sith101")
+      @sith101.mimetize! @jedi101
     end
 
-    it "clone and cloned courses aren't the same" do
-      @mimetic.should_not == @course
+    after(:all) do
+      User.all.each do |user|
+        user.destroy
+      end
+
+      Environment.all.each do |environment|
+        environment.destroy
+      end
+
+      Course.all.each do |course|
+        course.destroy
+      end
+
+      Subject.all.each do |subject|
+        subject.destroy
+      end
+
+      Exercise.all.each do |exercise|
+        exercise.destroy
+      end
+    end
+
+    # ENVIRONMENT
+    it "does not clone course environment" do
+      @sith101.environment.should_not == @jedi101.environment
+    end
+
+    # COURSE
+    it "clone and original courses aren't the same" do
+      @sith101.should_not == @jedi101
+    end
+
+    # SPACES
+    it "number of original and cloned spaces is the same" do
+      @sith101.spaces.count.should == @jedi101.spaces.count
     end
 
     it "clones all spaces from cloned course" do
-      original_spaces_names = @course.spaces.collect { |space| space.name }
-      @mimetic.spaces.each do |cloned_space|
+      original_spaces_names = @jedi101.spaces.collect { |space| space.name }
+      @sith101.spaces.each do |cloned_space|
         original_spaces_names.should include cloned_space.name
       end
     end
 
-    it "clones all lectures within spaces cloned from original course" do
-
-    end
-
     it "cloned and original spaces aren't the same" do
-      @mimetic.spaces.each do |cloned_space|
-        @course.spaces.should_not include cloned_space
+      @sith101.spaces.each do |cloned_space|
+        @jedi101.spaces.should_not include cloned_space
       end
     end
 
-    it "does not clone course environment" do
-      @mimetic.environment.should_not == @course.environment
+    # SUBJECTS
+    it "number of original and cloned subjects is the same" do
+      original_subjects = cloned_subjects = 0
+
+      # Conta os módulos originais
+      @jedi101.spaces.each do |space|
+        original_subjects += space.subjects.count
+      end
+
+      # Conta os módulos clonados
+      @sith101.spaces.each do |space|
+        cloned_subjects += space.subjects.count
+      end
+
+      cloned_subjects.should == original_subjects
     end
-  end
+
+    it "clones all subjects within spaces cloned from original course" do
+      original_subjects_names = []
+      cloned_subjects_names = []
+
+      # Recupera os nomes de todos os módulos originais
+      @jedi101.spaces.each do |original_space|
+        original_subjects_names = original_space.subjects.collect { |sub| sub.name }
+      end
+
+      # Recupera os nomes de todos os módulos clonados
+      @sith101.spaces.each do |cloned_space|
+        cloned_subjects_names = cloned_space.subjects.collect { |sub| sub.name }
+      end
+
+      # Assegura que todo módulo original está contido no conjunto dos clonados
+      original_subjects_names.each do |original_name|
+        cloned_subjects_names.should include original_name
+      end
+    end
+
+    it "cloned and original subjects aren't the same" do
+      original_subjects = []
+      cloned_subjects = []
+
+      # Recupera todos os módulos originais
+      @jedi101.spaces.each do |original_space|
+        original_space.subjects.each do |subject|
+          original_subjects << subject
+        end
+      end
+
+      # Recupera todos os módulos clonados
+      @sith101.spaces.each do |cloned_space|
+        cloned_space.subjects.each do |subject|
+          cloned_subjects << subject
+        end
+      end
+
+      # Assegura que nenhum dos módulos originais está contido nos módulos clonados
+      original_subjects.each do |original_subject|
+        cloned_subjects.should_not include original_subject
+      end
+    end
+
+    # LECTURES
+    it "number of original and cloned lectures is the same" do
+      original = cloned = 0
+
+      # Conta as aulas originais
+      @jedi101.spaces.each do |space|
+        space.subjects.each do |subject|
+          original += subject.lectures.count
+        end
+      end
+
+      # Conta as aulas clonadas
+      @sith101.spaces.each do |space|
+        space.subjects.each do |subject|
+          cloned += subject.lectures.count
+        end
+      end
+
+      original.should == cloned
+    end
+
+    it "clones all lectures within subjects cloned from original course" do
+      original = []
+      cloned = []
+
+      # Recupera os nomes de todas as aulas originais
+      @jedi101.spaces.each do |original_space|
+        original_space.subjects.each do |subject|
+          original = subject.lectures.collect { |lecture| lecture.name }
+        end
+      end
+
+      # Recupera os nomes de todas as aulas clonadas
+      @sith101.spaces.each do |cloned_space|
+        cloned_space.subjects.each do |subject|
+          cloned = subject.lectures.collect { |lecture| lecture.name }
+        end
+      end
+      
+      # Assegura que todos os nomes de aulas originais estão contidos no conjunto
+      # dos nomes das aulas clonadas
+      original.each do |original_name|
+        cloned.should include original_name
+      end
+    end
+
+    it "cloned and original lectures aren't the same" do
+      original_lectures = []
+      cloned_lectures = []
+
+      # Recupera todas as aulas originais
+      @jedi101.spaces.each do |original_space|
+        original_space.subjects.each do |subject|
+          subject.lectures.each do |lecture|
+            original_lectures << lecture
+          end
+        end
+      end
+
+      # Recupera todas as aulas clonadas
+      @sith101.spaces.each do |cloned_space|
+        cloned_space.subjects.each do |subject|
+          subject.lectures.each do |lecture|
+            cloned_lectures << lecture
+          end
+        end
+      end
+
+      # Assegura que nenhuma das aulas originais está entre as aulas clonadas
+      original_lectures.each do |original_lecture|
+        cloned_lectures.should_not include original_lecture
+      end
+    end
+
+    # QUESTIONS
+    it "number of original and cloned questions within exercises is the same" do
+      original = cloned = 0
+
+      # Conta os exercícios originais
+      @jedi101.spaces.each do |space|
+        space.subjects.each do |subject|
+          subject.lectures.each do |lecture|
+            if lecture.lectureable.is_a?(Exercise)
+              original += lecture.lectureable.questions.count
+            end
+          end
+        end
+      end
+
+      # Conta os exercícios clonados
+      @sith101.spaces.each do |space|
+        space.subjects.each do |subject|
+          subject.lectures.each do |lecture|
+            if lecture.lectureable.is_a?(Exercise)
+              original += lecture.lectureable.questions.count
+            end
+          end
+        end
+      end
+
+      cloned.should == original
+    end
+  end # context "when cloning"
 
 end

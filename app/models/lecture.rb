@@ -1,7 +1,7 @@
 class Lecture < ActiveRecord::Base
   require 'sortable'
   # Entidade polimórfica que representa o objeto de aprendizagem. Pode possuir
-  # três especializações: Seminar, InteractiveClass e Page.
+  # três especializações: Seminar, Exercise e Page.
 
   after_create :delay_create_asset_report
 
