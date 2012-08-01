@@ -4001,6 +4001,33 @@ table.spaced tr td {
   margin-top: 26px;
 }
 
+#teach-index .basic-content {
+  margin: 20px 0 0 30px;
+}
+
+#teach-index .basic-content .concave-label,
+#teach-index .basic-content .concave-multiple {
+  margin: 0;
+}
+
+#teach-index .basic-content .concave-label{
+  font-weight: normal;
+  padding-top: 1px;
+  clear: none;
+}
+
+#teach-index .basic-content .concave-multiple {
+  clear: both;
+  margin-right: 3px;
+  float: left;
+}
+
+#teach-index .basic-content span.concave-label {
+  width: 208px;
+  font-weight: bold;
+}
+
+
 /* Devido a precedência do background do .concave-form .concave-label */
 #teach-index .concave-form .environment {
   background: url("../images/new/icons-small.png") 0 0 no-repeat;
