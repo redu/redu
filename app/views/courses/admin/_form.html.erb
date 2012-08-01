@@ -64,6 +64,21 @@
   </ul>
 </div>
 
+<hr />
+<div class="clearfix">
+  <%= label_tag :basic_content, raw("Importar Conteúdo Básico <span class='snippet'>Ensino Médio</span>") %>
+    <ul class="single-column">
+    <li>
+      <%= radio_button_tag :basic_content, "1" %>
+      <%= label_tag :basic_content_1, "Sim" %>
+      <span class="tiptip-right icon-small icon-question-blue_12_12" title="<%= "#{render 'courses/basic_content'}" %>"></span>
+    </li>
+    <li>
+      <%= radio_button_tag :basic_content, "2", :checked => true %>
+      <%= label_tag :basic_content_2, "Não" %>
+    </li>
+  </ul>
+</div>
 <% unless edit || @environment.plan %>
   <hr />
   <div class="clearfix">
