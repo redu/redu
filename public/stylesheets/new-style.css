@@ -7463,8 +7463,16 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   margin-bottom: 8px;
 }
 
+#tiptip_holder #tiptip_content .basic-content {
+  margin-top: 5px;
+}
+
 #tiptip_holder #tiptip_content ul.features {
   list-style: outside disc;
+}
+
+#tiptip_holder #tiptip_content ul.basic-content li {
+  padding-top: 10px;
 }
 
 #tiptip_holder #tiptip_content .pricing .value {
