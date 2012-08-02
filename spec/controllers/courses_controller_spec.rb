@@ -99,7 +99,6 @@ describe CoursesController do
         post :create, @params
         assigns[:course].spaces.each.count.should_not == 0
       end
-      
     end # context "which should import basic content"
   end # context "when creating a course for an existing environment"
 
