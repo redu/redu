@@ -8,34 +8,23 @@ module Api
       authorize! :manage, space
 
       param = { 'lectures[]' => params[:lectures],
-                  :date_start => params[:date_start],
-                  :date_end => params[:date_end] }
+                :date_start => params[:date_start],
+                :date_end => params[:date_end] }
       url = Redu::Application.config.vis[:lecture_participation]
 
       request_resp = request_vis(url, param)
       create_response(request_resp)
     end
 
-    # GET /api/vis/subjects/:subject_id
+    # GET /api/vis/spaces/:space_id
     def subject_activities
-      subject = Subject.find(params[:subject_id])
-      authorize! :manage, subject
+      space = Space.find(params[:space_id])
+      authorize! :manage, space
 
-      params = { :subject_id => subject.id }
+      param = { 'subjects[]' => params[:subjects] }
       url = Redu::Application.config.vis[:activities]
 
-      request_resp = request_vis(url, params)
-      create_response(request_resp)
-    end
-
-    def subject_activities_d3
-      subject = Subject.find(params[:subject_id])
-      authorize! :manage, subject
-
-      params = { :subject_id => subject.id }
-      url = Redu::Application.config.vis[:activities_d3]
-
-      request_resp = request_vis(url, params)
+      request_resp = request_vis(url, param)
       create_response(request_resp)
     end
 

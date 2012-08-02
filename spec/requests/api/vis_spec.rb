@@ -7,15 +7,15 @@ describe "Vis Api" do
   # pois a requisição já envia este parametro encodado e o Webmock
   # intercepta ele assim.
 
+  before do
+    environment = Factory(:complete_environment)
+    course = environment.courses.first
+    @space = course.spaces.first
+
+    application, current_user, @token = generate_token(course.owner)
+  end
+
   context "get /vis/spaces/:space_id/lecture_participation" do
-    before do
-      @environment = Factory(:complete_environment)
-      @course = @environment.courses.first
-      @space = @course.spaces.first
-
-      @application, @current_user, @token = generate_token(@course.owner)
-    end
-
     it "should send request to vis" do
       @params = {
         :lectures => ["2", "3"],
@@ -30,8 +30,8 @@ describe "Vis Api" do
                 :date_end => @params[:date_end] }
 
       WebMock.disable_net_connect!(:allow_localhost => true)
-      @stub = stub_request(:get,
-              Redu::Application.config.vis[:lecture_participation]).
+      @stub = stub_request(
+        :get, Redu::Application.config.vis[:lecture_participation]).
         with(:query => param,
              :headers => {'Authorization'=> 'YXBpLXRlYW06Tnl1Z0FrU29Q',
                           'Content-Type'=>'application/json'}).
@@ -55,91 +55,39 @@ describe "Vis Api" do
     end
   end
 
-  context "get" do
-    before do
-      @application, @current_user, @token = generate_token
+  context "get /vis/space/:space_id/subject_activities" do
+    it "should return status 200" do
+      @params = {
+        :subjects => ["2", "3"],
+        :oauth_token => @token,
+        :format => 'json' }
 
-      @environment = Factory(:complete_environment, :owner => @current_user)
-      @space = @environment.courses.first.spaces.first
+      param = { :subjects => @params[:subjects] }
 
-      @subject = Subject.create(:name => "Test Subject 1",
-                                :description => "Test Subject Description",
-                                :space => @space)
-      # precisa atualizar manualmente para criar um módulo vazio
-      @subject.update_attribute(:finalized, true)
-
-      @params = {:oauth_token => @token, :format => "json"}
-    end
-
-    context "/vis/subjects/:subject_id/subject_activities" do
-      it "should return status 200" do
-        @params = {
-          :oauth_token => @token,
-          :format => 'json'
-        }
-
-        param = { :subject_id => @subject.id }
-
-        WebMock.disable_net_connect!(:allow_localhost => true)
-        @stub = stub_request(:get,
-                Redu::Application.config.vis[:activities]).
-          with(:query => param,
-               :headers => {'Authorization'=> 'YXBpLXRlYW06Tnl1Z0FrU29Q',
-                            'Content-Type'=>'application/json'}).
-                            to_return(:status => 200, :body => "", :headers => {})
-
-        get "/api/vis/subjects/#{@subject.id}/subject_activities", @params
-
-        a_request(:get, Redu::Application.config.vis[:activities]).
+      WebMock.disable_net_connect!(:allow_localhost => true)
+      @stub = stub_request(
+        :get, Redu::Application.config.vis[:activities]).
         with(:query => param,
              :headers => {'Authorization'=> 'YXBpLXRlYW06Tnl1Z0FrU29Q',
                           'Content-Type'=>'application/json'}).
-                          should have_been_made
+        to_return(:status => 200, :body => "",
+                  :headers => {})
 
-      end
+      get "/api/vis/spaces/#{@space.id}/subject_activities", @params
 
-      it "should return 404 when doesnt exists" do
-        get "/api/vis/subjects/121212/subject_activities",
-          :oauth_token => @token,
-          :format => 'json'
-
-        response.code.should == "404"
-      end
+      a_request(:get, Redu::Application.config.vis[:activities]).
+      with(:query => param,
+           :headers => {'Authorization'=> 'YXBpLXRlYW06Tnl1Z0FrU29Q',
+                        'Content-Type'=>'application/json'}).
+      should have_been_made
     end
 
-    context "/vis/subjects/:subject_id/subject_activities_d3" do
-      it "should return status 200" do
-        @params = {
-          :oauth_token => @token,
-          :format => 'json'
-        }
+    it "should return 404 when doesn't exists" do
+      get "/api/vis/spaces/121212/subject_activities",
+        :oauth_token => @token,
+        :format => 'json'
 
-        param = { :subject_id => @subject.id }
-
-        WebMock.disable_net_connect!(:allow_localhost => true)
-        @stub = stub_request(:get,
-                Redu::Application.config.vis[:activities_d3]).
-          with(:query => param,
-               :headers => {'Authorization'=> 'YXBpLXRlYW06Tnl1Z0FrU29Q',
-                            'Content-Type'=>'application/json'}).
-                            to_return(:status => 200, :body => "", :headers => {})
-
-        get "/api/vis/subjects/#{@subject.id}/subject_activities_d3", @params
-
-        a_request(:get, Redu::Application.config.vis[:activities_d3]).
-        with(:query => param,
-             :headers => {'Authorization'=> 'YXBpLXRlYW06Tnl1Z0FrU29Q',
-                          'Content-Type'=>'application/json'}).
-                          should have_been_made
-      end
-
-      it "should return 404 when doesnt exists" do
-        get "/api/vis/subjects/121212/subject_activities_d3",
-          :oauth_token => @token,
-          :format => 'json'
-
-        response.code.should == "404"
-      end
+      response.code.should == "404"
     end
   end
 end
