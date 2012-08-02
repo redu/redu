@@ -35,6 +35,8 @@ $(document).ready(function(){
       <%= label_tag :basic_content_1, "Sim" %>
       <%= radio_button_tag :basic_content, "2", :checked => true %>
       <%= label_tag :basic_content_2, "Não" %>
+
+      <%= hidden_field_tag :base_course_id, Redu::Application.config.base_course['id'] %>
     </div>
 
     <%= submit_tag "Avançar", :class => "concave-important-font next" %>
