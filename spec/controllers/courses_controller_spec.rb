@@ -62,9 +62,43 @@ describe CoursesController do
         }.should_not change(Invoice, :count)
       end
     end
-  end
 
-  context "when updating a couse" do
+    # Testa a criação de cursos com conteúdo básico do ensino médio
+    context "which should import basic content" do
+
+      #FIXME precisa ser before(:each) ???
+      before do
+        base_course = Factory(:course)
+        base_course.spaces << Factory(:space, :course => base_course)
+        base_course.save
+        hash = { :basic_content => true, :base_course_id => base_course.id }
+        @params = @params.merge hash
+      end
+
+      it "should have :basic_content param set to true" do
+        @params[:basic_content].should be_true
+      end
+
+      it "should pass the id of the course from which content is imported" do
+        @params[:base_course_id].should_not be_nil
+      end
+
+      it "should  pass the id of one course that does have at least one space" do
+        Course.find(@params[:base_course_id]).spaces.each.count.should_not == 0
+      end
+
+      it "should exist a course with passed base_course_id" do
+        Course.find(@params[:base_course_id]).should_not be_nil
+      end
+
+      it "should create a course with nonzero number of spaces" do
+        post :create, @params
+        assigns[:course].spaces.each.count.should_not == 0
+      end
+    end # context "which should import basic content"
+  end # context "when creating a course for an existing environment"
+
+  context "when updating a course" do
     context "POST update - updating a subscription_type to 1" do
       before do
         @user = Factory(:user)

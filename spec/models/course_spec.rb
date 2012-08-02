@@ -866,6 +866,22 @@ describe Course do
     end
   end
 
+  # Testa a clonagem do curso de conteúdo básico do ensino médio
+  #
+  # A abordagem utilizada para os testes foi realizar testes para os elementos
+  # da hierarquia que estão abaixo de Course:
+  # * Space;
+  # * Subject; e
+  # * Lecture;
+  # além de algumas verificações relacionadas às questões de exercícios para
+  # lectures que possuem lectureable tipo Exercise.
+  # Os testes foram esquematizados para assegurar as seguintes características
+  # dos elementos colocados acima:
+  # * número de elementos clonados é o mesmo de elementos originais;
+  # * nome de elementos hierárquicos clonados é idêntico ao original; e
+  # * elementos clonados e originais são diferentes (possuem id diferente);
+  # além de assegurar que o id dos cursos (original e clone) são diferentes e
+  # que o ambiente do curso original não é clonado.
   context "when cloning" do
 
     # FIXME
