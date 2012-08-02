@@ -75,6 +75,9 @@ class CoursesController < BaseController
   def create
     authorize! :manage, @environment #Talvez seja necessario pois o @environment não está sendo autorizado.
 
+    # Importação de conteúdo básico do ensino médio
+    #TODO definir o curso a ser clonado
+    @course.mimetize! Course.find(params[:base_course_id]) if params[:basic_content]
     @course.owner = current_user
     respond_to do |format|
       if @course.save
