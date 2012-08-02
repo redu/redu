@@ -45,7 +45,7 @@ describe Course do
   it { should_not allow_mass_assignment_of :environment }
 
   it { Course.new.should respond_to(:notify).with(1).argument}
-
+  it { Course.new.should respond_to(:has_basic_content)}
 
   context "validations" do
     it "ensure format for path: doesn't accept no ascii" do
@@ -1056,7 +1056,7 @@ describe Course do
           cloned = subject.lectures.collect { |lecture| lecture.name }
         end
       end
-      
+
       # Assegura que todos os nomes de aulas originais estão contidos no conjunto
       # dos nomes das aulas clonadas
       original.each do |original_name|

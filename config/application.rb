@@ -65,6 +65,12 @@ module Redu
       config.mimetypes = YAML.load_file file
     end
 
+    # Curso base conteúdo mínimo ensino médio
+    if File.exists? File.join(Rails.root, 'config', 'course_basic_content.yml')
+      file = File.join(Rails.root, 'config', 'course_basic_content.yml')
+      config.base_course = YAML.load_file file
+    end
+
     # Meta dados da aplicação
     config.name = "Redu"
     config.tagline = "A Rede Social Educacional"
