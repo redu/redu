@@ -24,8 +24,10 @@ module Api
       param = { 'subjects[]' => params[:subjects] }
       url = Redu::Application.config.vis[:activities]
 
-      request_resp = request_vis(url, param)
-      create_response(request_resp)
+      self.class.benchmark "< ========================= MÓDULOS ========================= >" do
+        request_resp = request_vis(url, param)
+        create_response(request_resp)
+      end
     end
 
     protected
@@ -33,11 +35,12 @@ module Api
     def request_vis(url, param)
       password = Redu::Application.config.vis_data_authentication[:password]
       username = Redu::Application.config.vis_data_authentication[:username]
-      conn = Faraday.new(:url => url,
-                         :headers => {'Authorization' =>
-                                      Base64::encode64("#{username}:#{password}"),
-                                      'Content-Type' => 'application/json' },
-                         :params => param)
+      conn = Faraday.new(
+        :url => url,
+        :headers => {'Authorization' =>
+                     Base64::encode64("#{username}:#{password}"),
+                     'Content-Type' => 'application/json' },
+        :params => param)
 
       resp = conn.get
     end
