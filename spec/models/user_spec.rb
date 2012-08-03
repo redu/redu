@@ -190,12 +190,6 @@ describe User do
       User.with_ids([users[0].id, users[1].id]).should == [users[0], users[1]]
     end
 
-    it "retrives recent users order by last_request_at" do
-      users = (1..12).collect { |n| Factory(:user, :created_at => n.hour.ago,
-                                            :last_request_at => (13-n).minute.ago) }
-      User.n_recent(3).should == [users[11], users[10], users[9]]
-    end
-
     it "retrieves a user by his login slug" do
       user = Factory(:user)
       User.find(subject.login).should == subject

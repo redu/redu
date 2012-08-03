@@ -80,9 +80,6 @@ class User < ActiveRecord::Base
   scope :without_ids, lambda {|ids|
     where("users.id NOT IN (?)", ids)
   }
-  scope :n_recent, lambda { |limit|
-    order('users.last_request_at DESC').limit(limit)
-  }
   scope :with_keyword, lambda { |keyword|
     where("LOWER(login) LIKE :keyword OR " + \
       "LOWER(first_name) LIKE :keyword OR " + \
