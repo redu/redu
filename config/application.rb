@@ -201,7 +201,9 @@ module Redu
                                         :log_observer,
                                         :user_course_association_observer,
                                         :result_observer,
-                                        :vis_status_observer]
+                                        :vis_status_observer,
+                                        :user_vis_application_observer,
+                                        ]
     end
 
     # Redu logger
