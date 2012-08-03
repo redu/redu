@@ -4,12 +4,16 @@
     <%= image_tag current_user.avatar.url(:thumb_110),
       :alt => 'profile', :size => "110x110" %>
   </div>
-  <%= local_nav :users %>
-  <ul class="connections clearfix">
-    <%= render :partial => 'users/item_short',
-      :collection => current_user.recently_active_friends %>
-  </ul><!-- end .connections -->
-  <%= link_to 'Ver mais', user_friendships_path(current_user),
-    :class => 'more' %>
+  <% cache ['home_sidebar_environments', current_user.id] do %>
+    <%= local_nav :users %>
+  <% end %>
+  <% cache ['home_sidebar_connections', current_user.id] do %>
+    <ul class="connections clearfix">
+      <%= render :partial => 'users/item_short',
+        :collection => current_user.recently_active_friends %>
+    </ul><!-- end .connections -->
+    <%= link_to 'Ver mais', user_friendships_path(current_user),
+      :class => 'more' %>
+  <% end %>
 </div>
 

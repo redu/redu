@@ -311,7 +311,6 @@ class UsersController < BaseController
   end
 
   def home
-    @friends = @user.friends.paginate(:page => 1, :per_page => 9)
     @friends_requisitions = @user.friendships.includes(:friend).pending
     @course_invitations = @user.course_invitations.
       includes(:course =>[:environment])

@@ -201,7 +201,13 @@ module Redu
                                         :log_observer,
                                         :user_course_association_observer,
                                         :result_observer,
-                                        :vis_status_observer]
+                                        :vis_status_observer,
+                                        :user_environment_association_cache_observer,
+                                        :environment_cache_observer,
+                                        :friendship_cache_observer,
+                                        :user_cache_observer,
+                                        :user_course_association_cache_observer,
+                                        :course_cache_observer]
     end
 
     # Redu logger

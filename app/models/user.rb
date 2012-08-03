@@ -528,11 +528,6 @@ class User < ActiveRecord::Base
     (done/total*100).round
   end
 
-  # True se o usuário possui convite
-  def has_course_invitation?(course = nil)
-    UserCourseAssociation.has_invitation_for?(self, course)
-  end
-
   def email_confirmation
     @email_confirmation || self.email
   end
