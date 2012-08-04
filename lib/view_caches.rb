@@ -1,3 +1,8 @@
+# Este módulo contém todos os métodos necessários para expirar
+# caches de fragmentos.
+#
+# Os métodos para expirar os caches podem receber tanto um único objeto,
+# como uma lista de objetos.
 module ViewCaches
   def expire_sidebar_environments_for(users)
     expire_fragments('home_sidebar_environments', users)

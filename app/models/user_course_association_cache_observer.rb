@@ -2,14 +2,6 @@ class UserCourseAssociationCacheObserver < ActiveRecord::Observer
   include ViewCaches
   observe UserCourseAssociation
 
-  def expire_all_course_requisitions(uca)
-    #FIXME Refactor please
-    invited_users = uca.course.user_course_associations.invited.
-      includes(:user).collect(&:user)
-
-    expire_courses_requisitions_for(invited_users)
-  end
-
   def after_create(uca)
     expire_courses_requisitions_for(uca.user)
   end
@@ -27,4 +19,14 @@ class UserCourseAssociationCacheObserver < ActiveRecord::Observer
       expire_all_course_requisitions(uca)
     end
   end
+
+  protected
+  def expire_all_course_requisitions(uca)
+    #FIXME Refactor please
+    invited_users = uca.course.user_course_associations.invited.
+      includes(:user).collect(&:user)
+
+    expire_courses_requisitions_for(invited_users)
+  end
+
 end
