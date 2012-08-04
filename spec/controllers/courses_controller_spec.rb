@@ -420,19 +420,19 @@ describe CoursesController do
       end
 
       it "assigns course"
-      
+
       it "removes the user from itself" do
         @course.users.should_not include(@user)
       end
-      
+
       it "removes the user from all spaces" do
         @spaces.collect { |s| s.users.should_not include(@user) }
       end
-      
+
       it "removes the user from all enrolled subjects" do
         @subjects.collect { |s| s.members.should_not include(@user) }
       end
-      
+
       it "should remove user from environment" do
         @environment.users.should_not include(@user)
       end
@@ -596,7 +596,7 @@ describe CoursesController do
       @users.each do |u|
         @course.user_course_associations.reload
         u.reload
-        u.has_course_invitation?(@course).should be_true
+        @course.waiting_user_approval?(u).should be_true
       end
 
       @emails.each do |e|

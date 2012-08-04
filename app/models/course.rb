@@ -233,6 +233,14 @@ class Course < ActiveRecord::Base
     assoc.rejected?
   end
 
+  # Verifica se o usuário em questão foi convidade para um determinado
+  # Course, mas ainda não aceitou o convite
+  def waiting_user_approval?(user)
+    assoc = user.get_association_with self
+    return false if assoc.nil?
+    assoc.invited?
+  end
+
   # Método de alto nível que convida um determinado usuário para o curso.
   # - Caso o usuário não faça parte do curso uma UCA será criada com o estado
   #   invited.
