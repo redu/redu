@@ -20,6 +20,10 @@ module ViewCaches
     expire_fragments('home_courses_requisitions', users)
   end
 
+  def expire_nav_account_for(users)
+    expire_fragments('nav_account', users)
+  end
+
   protected
   def expire_fragments(name, entities)
     ([] << entities).flatten.each do |entity|
