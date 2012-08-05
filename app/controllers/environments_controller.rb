@@ -19,8 +19,7 @@ class EnvironmentsController < BaseController
 
     if can? :manage, @environment
       @courses = @environment.courses.
-        includes([:environment,
-                  :tags]).
+        includes([:environment, :tags]).
         paginate(paginating_params)
     else
       @courses = @environment.courses.
