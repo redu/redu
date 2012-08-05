@@ -9,9 +9,9 @@ class UserCourseAssociationCacheObserver < ActiveRecord::Observer
   def after_update(uca)
     if uca.state_changed? && uca.approved?
       expire_all_course_requisitions(uca)
-      expire_course_members_count(uca.course)
+      expire_course_members_count_for(uca.course)
     elsif uca.role_changed?
-      expire_course_members_count(uca.course)
+      expire_course_members_count_for(uca.course)
     end
   end
 
@@ -21,7 +21,7 @@ class UserCourseAssociationCacheObserver < ActiveRecord::Observer
     else
       expire_all_course_requisitions(uca)
     end
-    expire_course_members_count(uca.course)
+    expire_course_members_count_for(uca.course)
   end
 
   protected
