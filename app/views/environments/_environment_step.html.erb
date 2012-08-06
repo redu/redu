@@ -64,6 +64,8 @@ $(document).ready(function(){
         <hr/>
         <%= render :partial => 'environments/form', :locals => { :f => f } %>
         <%= hidden_field_tag :plan, @plan %>
+        <%= hidden_field_tag :basic_content, @has_basic_content %>
+        <%= hidden_field_tag :base_course_id, @base_course_id %>
         <%= f.submit "Assinar", :class => "concave-important next"%>
       <% end %>
   </div>

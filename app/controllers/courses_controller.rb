@@ -36,7 +36,7 @@ class CoursesController < BaseController
     respond_to do |format|
       flash[:notice] = "Curso removido."
       format.html { redirect_to(environment_path(@environment)) }
-      format.xml  { head :ok }
+      format.xml { head :ok }
     end
   end
 
@@ -58,7 +58,7 @@ class CoursesController < BaseController
         format.xml { head :ok }
       else
         format.html { render 'courses/admin/edit' }
-        format.xml  { render :xml => @course.errors, :status => :unprocessable_entity }
+        format.xml { render :xml => @course.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -72,12 +72,12 @@ class CoursesController < BaseController
   def create
     authorize! :manage, @environment #Talvez seja necessario pois o @environment não está sendo autorizado.
 
-    # Importação de conteúdo básico do ensino médio
-    #TODO definir o curso a ser clonado
-    @course.mimetize! Course.find(params[:base_course_id]) if params[:basic_content]
     @course.owner = current_user
     respond_to do |format|
       if @course.save
+        # Importação de conteúdo básico do ensino médio
+        @course.mimetize! Course.find(params[:base_course_id]) if params[:basic_content]
+
         if @environment.plan.nil?
           @plan = Plan.from_preset(params[:plan].to_sym)
           @plan.user = current_user
