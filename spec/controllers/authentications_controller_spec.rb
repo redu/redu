@@ -24,7 +24,7 @@ describe AuthenticationsController do
       end
 
       it { should set_the_flash.to(I18n.t("thanks_youre_now_logged_in")) }
-      it { should redirect_to(home_user_path(@user))  }
+      it { should redirect_to(home_user_path(@user)) }
     end
 
     context "when authentication does not exist" do

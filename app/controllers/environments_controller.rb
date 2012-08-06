@@ -54,6 +54,8 @@ class EnvironmentsController < BaseController
   # POST /environments
   # POST /environments.xml
   def create
+    @has_basic_content = params[:basic_content]
+    @base_course_id = params[:base_course_id]
     case params[:step]
     when "1" # tela de planos
       @step = 2
@@ -99,8 +101,13 @@ class EnvironmentsController < BaseController
 
         if @environment.save && @plan.valid?
           @environment.courses.first.plan = @plan
-
+          
           @environment.courses.first.create_quota
+
+          if @has_basic_content
+            @environment.courses.first.mimetize! Course.find(@base_course_id)
+          end
+
           if @plan.create_invoice_and_setup
             format.js { render :pay }
             format.html do
@@ -117,7 +124,7 @@ class EnvironmentsController < BaseController
         else
           format.js { render :new }
           format.html { render :new }
-          format.xml  { render :xml => @environment.errors,
+          format.xml { render :xml => @environment.errors,
             :status => :unprocessable_entity }
         end
       end
@@ -133,10 +140,10 @@ class EnvironmentsController < BaseController
       if @environment.update_attributes(params[:environment])
         flash[:notice] = 'Ambiente atualizado com sucesso.'
         format.html { redirect_to(@environment) }
-        format.xml  { head :ok }
+        format.xml { head :ok }
       else
         format.html { render 'environments/admin/edit' }
-        format.xml  { render :xml => @environment.errors, :status => :unprocessable_entity }
+        format.xml { render :xml => @environment.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -148,7 +155,7 @@ class EnvironmentsController < BaseController
 
     respond_to do |format|
       format.html { redirect_to(teach_index_url) }
-      format.xml  { head :ok }
+      format.xml { head :ok }
     end
   end
 
@@ -171,7 +178,7 @@ class EnvironmentsController < BaseController
     respond_to do |format|
       format.html
       format.js { render_endless 'courses/item', @courses, '#courses_list' }
-      format.xml  { render :xml => @environment }
+      format.xml { render :xml => @environment }
     end
   end
 

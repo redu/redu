@@ -66,11 +66,9 @@ describe CoursesController do
     # Testa a criação de cursos com conteúdo básico do ensino médio
     context "which should import basic content" do
 
-      #FIXME precisa ser before(:each) ???
       before do
-        base_course = Factory(:course)
-        base_course.spaces << Factory(:space, :course => base_course)
-        base_course.save
+        base_course = Factory(:complete_course,
+                              :name => 'Conteúdo Básico para E.M.')
         hash = { :basic_content => true, :base_course_id => base_course.id }
         @params = @params.merge hash
       end
@@ -91,10 +89,17 @@ describe CoursesController do
         Course.find(@params[:base_course_id]).should_not be_nil
       end
 
+      it "should create a new course" do
+        expect {
+          post :create, @params
+        }.should change(Course, :count).by(1)
+      end
+
       it "should create a course with nonzero number of spaces" do
         post :create, @params
         assigns[:course].spaces.each.count.should_not == 0
       end
+      
     end # context "which should import basic content"
   end # context "when creating a course for an existing environment"
 
