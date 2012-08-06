@@ -18,55 +18,83 @@ describe EnvironmentsController do
                                    :path => "gestao-de-ti"}],
         :path => "faculdade-mauricio-de-nassau"},
         :locale => "pt-BR"}
+
+      # Para a importação de conteúdo básico para Ensino Médio
+      @base_course = Factory(:complete_course, 
+                             :name => 'Conteúdo Básico para E.M.')
     end
 
     context "at step 1" do
-      before do
-        post :create, @params
-      end
 
       it "assigns the environment" do
+        post :create, @params
         assigns[:environment].should_not be_nil
         assigns[:environment].should be_valid
         assigns[:step].should == 2
       end
-    end
+
+      # Para os outros passos, o bloco abaixo é usado a partir de 
+      # basic_content_proxy_shared_examples.rb
+      context "with a course which imports basic content" do
+        before do
+          hash = { :basic_content => true, :base_course_id => @base_course.id }
+          @params = @params.merge hash
+        end
+
+        it "assigns basic content variables" do
+          post :create, @params
+          assigns[:has_basic_content].should be_true
+          assigns[:base_course_id].should_not be_nil
+        end
+      end
+    end # context "at step 1"
 
     context "at step 2" do
       before do
         @params[:step] = "2"
         @params[:plan] = "professor_standard"
-        post :create, @params
       end
 
       it "assigns the environment" do
+        post :create, @params
         assigns[:environment].should_not be_nil
         assigns[:environment].should be_valid
         assigns[:step].should == 3
       end
 
       it "assigns the plan" do
+        post :create, @params
         assigns[:plan].should == @params[:plan]
+      end
+
+      it_should_behave_like "a basic content variables proxy" do
+        let(:params) { @params }
+        let(:base_course) { @base_course }
       end
     end
 
     context "at step 3" do
-
       context "when is valid" do
         before do
           @params[:step] = "3"
           @params[:plan] = "professor_standard"
-          post :create, @params
         end
 
         it "assigns the environment" do
+          post :create, @params
           assigns[:environment].should_not be_nil
           assigns[:environment].should be_valid
           assigns[:step].should == 4
         end
 
         it "assigns the plan" do
+          post :create, @params
           assigns[:plan].should == @params[:plan]
+        end
+
+        it_should_behave_like "a basic content variables proxy" do
+          let(:params) { @params }
+          let(:base_course) { @base_course }
         end
       end
 
@@ -87,8 +115,14 @@ describe EnvironmentsController do
         it "assigns the plan" do
           assigns[:plan].should_not be_nil
         end
+
+        it_should_behave_like "a basic content variables proxy" do
+          let(:params) { @params }
+          let(:base_course) { @base_course }
+        end
       end
     end
+
     context "at step 4" do
       context "when plain request" do
         before do
@@ -130,6 +164,11 @@ describe EnvironmentsController do
         it "redirects to confirmation page" do
           should redirect_to(confirm_plan_path(assigns[:plan]))
         end
+
+        it_should_behave_like "a basic content variables proxy" do
+          let(:params) { @params }
+          let(:base_course) { @base_course }
+        end
       end
 
       context "when observers are enabled" do
@@ -137,7 +176,6 @@ describe EnvironmentsController do
           @params[:step] = "4"
           @params[:plan] = "professor_standard"
           @params[:color] = "f56b00"
-
         end
 
         it "associates the plan to the course" do
@@ -155,7 +193,6 @@ describe EnvironmentsController do
           @params[:plan] = "professor_standard"
           @params[:color] = "f56b00"
           @params[:body] = "js"
-
           post :create, @params
         end
 
@@ -197,12 +234,23 @@ describe EnvironmentsController do
         @params[:color] = "f56b00"
         @params[:locale] = "pt-BR"
         @params[:format] = "js"
-
-        post :create, @params
       end
 
       it "redirects to course page" do
+        post :create, @params
         response.should render_template "environments/redirect"
+      end
+
+      context "with a course which imports basic content" do
+        before do
+          hash = { :basic_content => true, :base_course_id => @base_course.id }
+          @params = @params.merge hash
+        end
+
+        it "creates a course with a nonzero number of initial spaces" do
+          post :create, @params
+          assigns[:environment].courses.first.spaces.each.count.should_not == 0
+        end
       end
     end
   end
