@@ -29,9 +29,8 @@ class EnvironmentsController < BaseController
 
     respond_to do |format|
       format.html
-      format.js { render_endless 'courses/item', @courses,
-                  '#courses_list' }
-      format.xml  { render :xml => @environment }
+      format.js { render_endless 'courses/item', @courses, '#courses_list' }
+      format.xml { render :xml => @environment }
     end
   end
 
