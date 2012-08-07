@@ -2,21 +2,25 @@
 <div class="main grid_10 omega" style="width: 580px;">
   <ol id="breadcrumbs" class="clearfix">
     <li>
-      <%= link_to 'Home', home_user_path(current_user),
+      <%= link_to 'Home', home_user_path(@user),
         :class => 'replacement home icon-small icon-home-lightblue_16_18' %>
     </li>
   </ol>
-  <% unless @friends_requisitions.empty? %>
-    <ul class="friends-requisitions">
-      <%= render :partial => 'friendships/friend_requisition',
-        :collection => @friends_requisitions, :as => :friend %>
-    </ul>
+  <% cache ['home_friends_requisitions', @user.id] do %>
+    <% unless @friends_requisitions.all.empty? %>
+      <ul class="friends-requisitions">
+        <%= render :partial => 'friendships/friend_requisition',
+          :collection => @friends_requisitions, :as => :friendship %>
+      </ul>
+    <% end %>
   <% end %>
-  <% if current_user.has_course_invitation? %>
-    <ul class="courses-requisitions">
-      <%= render :partial => 'courses/item_invitation',
-        :collection => @course_invitations %>
-    </ul>
+  <% cache ['home_courses_requisitions', @user.id] do %>
+    <% unless @course_invitations.all.empty? %>
+      <ul class="courses-requisitions">
+        <%= render :partial => 'courses/item_invitation',
+          :collection => @course_invitations %>
+      </ul>
+    <% end %>
   <% end %>
   <%= render :partial => 'statuses/create_status',
     :locals => { :statusable => current_user } %>

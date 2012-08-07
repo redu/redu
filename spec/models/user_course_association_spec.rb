@@ -191,16 +191,6 @@ describe UserCourseAssociation do
 
   end
 
-  context "when there are invitations (state is invted)" do
-    before do
-      subject.invite!
-    end
-
-    it "should return true" do
-      UserCourseAssociation.has_invitation_for?(subject.user).should be_true
-    end
-  end
-
   context "when notifying pending moderation" do
     before do
       UserNotifier.delivery_method = :test

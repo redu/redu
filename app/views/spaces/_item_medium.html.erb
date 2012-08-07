@@ -1,7 +1,7 @@
 <li>
   <%= link_to item_medium.name, space_path(item_medium), :class => "name enrolled" %>
   <ul class="resources clearfix">
-    <li class="subjects icon-subject-gray_16_18-before"><%= pluralize item_medium.subjects.visible.count,  "módulo" %></li>
+    <li class="subjects icon-subject-gray_16_18-before"><%= pluralize item_medium.subjects.visible.length,  "módulo" %></li>
     <li class="lectures icon-lecture-gray_16_18-before"><%= pluralize item_medium.lectures_count, "aula" %></li>
     <li class="comments icon-wall-gray_16_18-before"><%= pluralize item_medium.statuses.count, "comentário" %> no mural</li>
     <li class="files icon-file-gray_16_18-before"><%= pluralize item_medium.myfiles.count, "arquivo" %> de apoio</li>

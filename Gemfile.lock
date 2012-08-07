@@ -322,6 +322,7 @@ GEM
     ruby-debug-base (0.10.4)
       linecache (>= 0.3)
     ruby-hmac (0.4.0)
+    ruby-prof (0.11.2)
     rubyzip (0.9.6.1)
     s3 (0.3.8)
       proxies (~> 0.2.0)
@@ -420,6 +421,7 @@ DEPENDENCIES
   roar-rails (~> 0.0.3)!
   rspec-rails (~> 2.8)
   ruby-debug
+  ruby-prof
   scribd_fu!
   shoulda-matchers
   shuber-sortable

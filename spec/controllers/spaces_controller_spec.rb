@@ -1,5 +1,7 @@
 require 'spec_helper'
 require 'authlogic/test_case'
+require 'vis_application_additions'
+
 include Authlogic::TestCase
 
 describe SpacesController do
@@ -28,6 +30,8 @@ describe SpacesController do
   end
 
   context "GET report" do
+    include VisApplicationAdditions::Utils
+
     before do
       environment = Factory(:environment)
       course = Factory(:course, :environment => environment)
@@ -40,7 +44,7 @@ describe SpacesController do
 
       application = ClientApplication.create(:name => "ReduViz",
                                              :url => "http://www.redu.com.br")
-      Oauth2Token.create(:client_application => application, :user => user)
+      create_token_for(user)
     end
 
     context "subject participation" do

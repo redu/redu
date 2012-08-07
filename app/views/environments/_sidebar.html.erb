@@ -15,7 +15,7 @@
 
  <ul class="connections clearfix">
     <%= render :partial => 'users/item_short',
-      :collection => environment.users.n_recent(16) %>
+      :collection => environment.users.limit(16) %>
   </ul><!-- end .connections -->
 </div>
 

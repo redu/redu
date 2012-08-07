@@ -12,6 +12,8 @@
     var $error = $("<div class='errorMessageField'>");
     <% if !@myfile.errors[:attachment_file_name].empty? %>
       $error.html("Já existe um arquivo com este nome.");
+    <% elsif !@myfile.errors[:attachment].empty? %>
+      $error.html("Arquivo muito grande. Tamanho máximo é 100mb.");
     <% else %>
       $error.html("Formato de arquivo inválido.");
     <% end %>
