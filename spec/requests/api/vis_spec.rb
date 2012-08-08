@@ -15,6 +15,46 @@ describe "Vis Api" do
     application, current_user, @token = generate_token(course.owner)
   end
 
+  context "get /vis/spaces/:space_id/students_participation" do
+    it "should send request to vis" do
+      @params = {
+        :users => ["2", "3"],
+        :date_start => "2012-02-10",
+        :date_end => "2012-02-11",
+        :oauth_token => @token,
+        :format => 'json'
+      }
+
+      param = { :users => @params[:users],
+                :date_start => @params[:date_start],
+                :date_end => @params[:date_end] }
+
+      WebMock.disable_net_connect!(:allow_localhost => true)
+      @stub = stub_request(
+        :get, Redu::Application.config.vis[:students_participation]).
+        with(:query => param,
+             :headers => {'Authorization'=> 'YXBpLXRlYW06Tnl1Z0FrU29Q',
+                          'Content-Type'=>'application/json'}).
+        to_return(:status => 200, :body => "", :headers => {})
+
+      get "/api/vis/spaces/#{@space.id}/students_participation", @params
+
+      a_request(:get, Redu::Application.config.vis[:students_participation]).
+      with(:query => param,
+           :headers => {'Authorization'=> 'YXBpLXRlYW06Tnl1Z0FrU29Q',
+                        'Content-Type'=>'application/json'}).
+                        should have_been_made
+    end
+
+    it "should return 404 when doesnt exists" do
+      get "/api/vis/spaces/1212121/students_participation",
+        :oauth_token => @token,
+        :format => 'json'
+
+      response.code.should == "404"
+    end
+  end
+
   context "get /vis/spaces/:space_id/lecture_participation" do
     it "should send request to vis" do
       @params = {
@@ -66,7 +106,7 @@ describe "Vis Api" do
 
       WebMock.disable_net_connect!(:allow_localhost => true)
       @stub = stub_request(
-        :get, Redu::Application.config.vis[:activities]).
+        :get, Redu::Application.config.vis[:subject_activities]).
         with(:query => param,
              :headers => {'Authorization'=> 'YXBpLXRlYW06Tnl1Z0FrU29Q',
                           'Content-Type'=>'application/json'}).
@@ -75,7 +115,7 @@ describe "Vis Api" do
 
       get "/api/vis/spaces/#{@space.id}/subject_activities", @params
 
-      a_request(:get, Redu::Application.config.vis[:activities]).
+      a_request(:get, Redu::Application.config.vis[:subject_activities]).
       with(:query => param,
            :headers => {'Authorization'=> 'YXBpLXRlYW06Tnl1Z0FrU29Q',
                         'Content-Type'=>'application/json'}).

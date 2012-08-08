@@ -2,6 +2,21 @@ require "net/http"
 
 module Api
   class VisController < Api::ApiController
+
+    # GET /api/vis/spaces/:space_id
+    def students_participation
+      space = Space.find(params[:space_id])
+      authorize! :manage, space
+
+      param = { 'users[]' => params[:users],
+                :date_start => params[:date_start],
+                :date_end => params[:date_end] }
+      url = Redu::Application.config.vis[:students_participation]
+
+      request_resp = request_vis(url, param)
+      create_response(request_resp)
+    end
+
     # GET /api/vis/spaces/:space_id
     def lecture_participation
       space = Space.find(params[:space_id])
@@ -22,7 +37,7 @@ module Api
       authorize! :manage, space
 
       param = { 'subjects[]' => params[:subjects] }
-      url = Redu::Application.config.vis[:activities]
+      url = Redu::Application.config.vis[:subject_activities]
 
       request_resp = request_vis(url, param)
       create_response(request_resp)
