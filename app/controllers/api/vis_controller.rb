@@ -24,10 +24,8 @@ module Api
       param = { 'subjects[]' => params[:subjects] }
       url = Redu::Application.config.vis[:activities]
 
-      self.class.benchmark "< ========================= MÓDULOS ========================= >" do
-        request_resp = request_vis(url, param)
-        create_response(request_resp)
-      end
+      request_resp = request_vis(url, param)
+      create_response(request_resp)
     end
 
     protected
@@ -48,7 +46,7 @@ module Api
     def create_response(resp)
       respond_to do |format|
         format.json { render :json => resp.body, :status => resp.status,
-                      :callback => params[:callback]}
+                      :callback => params[:callback] }
       end
     end
   end
