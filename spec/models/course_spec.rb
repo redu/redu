@@ -1022,6 +1022,10 @@ describe Course do
       @sith101.spaces.first.owner.should_not == @jedi101.spaces.first.owner
     end
 
+    it "does not clone space owner" do
+      @sith101.spaces.first.owner.should_not == @jedi101.spaces.first.owner
+    end
+
     # SUBJECTS
     it "number of original and cloned subjects is the same" do
       original_subjects = cloned_subjects = 0
@@ -1095,6 +1099,7 @@ describe Course do
       @jedi101.spaces.each do |space|
         original += space.lectures_count
       end
+
 
       # Conta as aulas clonadas
       @sith101.spaces.each do |space|
