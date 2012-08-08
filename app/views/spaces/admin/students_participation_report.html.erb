@@ -15,6 +15,15 @@
       <%= subtabs :spaces_admin do %>
         <% if @browser_not_supported %>
           <%= render :partial => 'spaces/admin/disclaimer_chart' %>
+        <% elsif @space.students_id.empty? %>
+          <div class="body">
+            <div class="flash-message notice">
+              <ul class="message icons-big-before icon-privacy-lightred_64_66-before">
+                <li>O conteúdo desta página não está disponível para o curso que não possui alunos matriculados.</li>
+                <li>Você pode <%= link_to "convidar pessoas a ser tornarem membros", admin_manage_invitations_environment_course_path(@course.environment, @course)%>.</li>
+              <ul>
+            </div>
+          </div>
         <% else %>
           <h3 class="form-header graph-header">Qual o desempenho dos alunos?</h3>
           <%= lazy_load(:chart, :jammit => true) do %>
