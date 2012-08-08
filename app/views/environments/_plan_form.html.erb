@@ -43,6 +43,8 @@
         <%= form_for @environment,
           :url => environments_path(:step => 2) do |f| %>
           <%= hidden_field_tag :plan, 'free' %>
+          <%= hidden_field_tag :basic_content, @has_basic_content %>
+          <%= hidden_field_tag :base_course_id, @base_course_id %>
           <%= f.submit "Assinar", :class => "concave-important" %>
           <div style="display:none;">
             <%= render :partial => 'form', :locals => { :f => f } %>
@@ -92,6 +94,8 @@
         <%= form_for @environment,
           :url => environments_path(:step => 2) do |f| %>
           <%= hidden_field_tag :plan, 'professor_lite' %>
+          <%= hidden_field_tag :basic_content, @has_basic_content %>
+          <%= hidden_field_tag :base_course_id, @base_course_id %>
           <%= f.submit "Assinar", :class => "concave-important" %>
           <div style="display:none;">
             <%= render :partial => 'form', :locals => { :f => f } %>
@@ -141,6 +145,8 @@
         <%= form_for @environment,
           :url => environments_path(:step => 2) do |f| %>
           <%= hidden_field_tag :plan, 'professor_standard' %>
+          <%= hidden_field_tag :basic_content, @has_basic_content %>
+          <%= hidden_field_tag :base_course_id, @base_course_id %>
           <%= f.submit "Assinar", :class => "concave-important" %>
           <div style="display:none;">
             <%= render :partial => 'form', :locals => { :f => f } %>
@@ -190,6 +196,8 @@
         <%= form_for @environment,
           :url => environments_path(:step => 2) do |f| %>
           <%= hidden_field_tag :plan, 'professor_plus' %>
+          <%= hidden_field_tag :basic_content, @has_basic_content %>
+          <%= hidden_field_tag :base_course_id, @base_course_id %>
           <%= f.submit "Assinar", :class => "concave-important" %>
           <div style="display:none;">
             <%= render :partial => 'form', :locals => { :f => f } %>

@@ -31,9 +31,9 @@ $(document).ready(function(){
       <span class="concave-label"> Conteúdo Básico para Ensino Médio </span>
       <span class="tiptip-right icon-small icon-question-blue_12_12" title="<%= "#{render 'courses/basic_content'}" %>"></span>
 
-      <%= radio_button_tag :basic_content, "1" %>
+      <%= radio_button_tag :basic_content, "true" %>
       <%= label_tag :basic_content_1, "Sim" %>
-      <%= radio_button_tag :basic_content, "2", :checked => true %>
+      <%= radio_button_tag :basic_content, "false", :checked => true %>
       <%= label_tag :basic_content_2, "Não" %>
 
       <%= hidden_field_tag :base_course_id, Redu::Application.config.base_course['id'] %>
