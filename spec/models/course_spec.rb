@@ -898,12 +898,15 @@ describe Course do
           exercise = Factory(:complete_exercise)
           lecture.lectureable = exercise
         end
+        subject.lectures << lecture
+        space.subjects << subject
         @jedi101.spaces << space
       end
 
       # Cria o clone
-      @sith101 = Course.new(:environment => Factory(:environment),
-                            :name => "Sith101")
+      @sith101 = Factory.build(:course, :environment => Factory(:environment),
+                            :name => "Sith101", :path => "sith101")
+      @sith101.save
       @sith101.mimetize! @jedi101
     end
 
@@ -929,9 +932,17 @@ describe Course do
       end
     end
 
+    it "should create a new course" do
+      Course.find(@sith101.name).should_not be_nil
+    end
+
     # ENVIRONMENT
     it "does not clone course environment" do
       @sith101.environment.should_not == @jedi101.environment
+    end
+
+    it "does not clone environment owner" do
+      @sith101.environment.owner.should_not == @jedi101.environment.owner
     end
 
     # COURSE
@@ -939,9 +950,13 @@ describe Course do
       @sith101.should_not == @jedi101
     end
 
+    it "does not clone course owner" do
+      @sith101.owner.should_not == @jedi101.owner
+    end
+
     # SPACES
     it "number of original and cloned spaces is the same" do
-      @sith101.spaces.count.should == @jedi101.spaces.count
+      @sith101.spaces.each.count.should == @jedi101.spaces.each.count
     end
 
     it "clones all spaces from cloned course" do
@@ -955,6 +970,10 @@ describe Course do
       @sith101.spaces.each do |cloned_space|
         @jedi101.spaces.should_not include cloned_space
       end
+    end
+
+    it "does not clone space owner" do
+      @sith101.spaces.first.owner.should_not == @jedi101.spaces.first.owner
     end
 
     # SUBJECTS
@@ -1018,25 +1037,26 @@ describe Course do
       end
     end
 
+    it "does not clone subject owner" do
+      @sith101.spaces.first.subjects.first.owner.should_not == @jedi101.spaces.first.subjects.first.owner.should_not
+    end
+
     # LECTURES
     it "number of original and cloned lectures is the same" do
       original = cloned = 0
 
       # Conta as aulas originais
       @jedi101.spaces.each do |space|
-        space.subjects.each do |subject|
-          original += subject.lectures.count
-        end
+        original += space.lectures_count
       end
+
 
       # Conta as aulas clonadas
       @sith101.spaces.each do |space|
-        space.subjects.each do |subject|
-          cloned += subject.lectures.count
-        end
+        cloned += space.lectures_count
       end
 
-      original.should == cloned
+      cloned.should == original
     end
 
     it "clones all lectures within subjects cloned from original course" do

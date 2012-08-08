@@ -242,7 +242,7 @@ describe EnvironmentsController do
 
       context "with a course which imports basic content" do
         before do
-          hash = { :basic_content => true, :base_course_id => @base_course.id }
+          hash = { :basic_content => "true", :base_course_id => @base_course.id }
           @params = @params.merge hash
         end
 

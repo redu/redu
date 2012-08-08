@@ -58,8 +58,9 @@ class EnvironmentsController < BaseController
   # POST /environments
   # POST /environments.xml
   def create
-    @has_basic_content = params[:basic_content]
+    @has_basic_content = params[:basic_content] == "true"
     @base_course_id = params[:base_course_id]
+
     case params[:step]
     when "1" # tela de planos
       @step = 2
