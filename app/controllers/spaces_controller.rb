@@ -1,4 +1,6 @@
 class SpacesController < BaseController
+  include VisApplicationAdditions::Controller
+
   respond_to :html, :js
 
   # Necessário pois Space não é nested route de course
@@ -199,9 +201,7 @@ class SpacesController < BaseController
   def students_participation_report
     user_agent = UserAgent.parse(request.user_agent)
     @browser_not_supported = self.is_browser_unsupported?(user_agent)
-
-    application = ClientApplication.where(:name => "ReduViz").first
-    @token = Oauth2Token.user_token_for(current_user, application).token
+    @token = current_vis_token # lib/vis_application_additions...
 
     respond_to do |format|
       format.html { render "spaces/admin/students_participation_report" }

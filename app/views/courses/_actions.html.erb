@@ -20,7 +20,7 @@
     <% else %>
       <% if course.published == false %>
         <span class="join waiting"> O curso está despublicado, para maiores informações consulte o dono do curso.</span>
-      <% elsif current_user.has_course_invitation?(course) %>
+      <% elsif course.waiting_user_approval?(current_user) %>
         <span class="join waiting">Você já foi convidado.</span>
       <% elsif course.waiting_approval?(current_user) %>
         <span class="join waiting">Aguardando moderação</span>

@@ -37,6 +37,6 @@
   </ul><!-- end .roles -->
   <ul class="connections clearfix">
     <%= render :partial => 'users/item_short',
-      :collection => course.approved_users.n_recent(16) %>
+      :collection => course.approved_users.limit(16) %>
   </ul><!-- end .connections -->
 </div>

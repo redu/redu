@@ -104,7 +104,9 @@ class Space < ActiveRecord::Base
   end
 
   def lectures_count
-    self.subjects.select(:id).collect{ |subject| subject.lectures.count }.sum
+    unless self.subjects.empty?
+      Lecture.by_subjects(self.subjects).count
+    end
   end
 
   def subjects_id

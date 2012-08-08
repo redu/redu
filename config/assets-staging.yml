@@ -43,7 +43,6 @@ javascripts:
     - public/javascripts/underscore.js
     - public/javascripts/underscore-sharing-template.redu.jquery.js
     - public/javascripts/embedly.redu.jquery.js
-    - public/javascripts/canvas.js
     - public/javascripts/jquery.timeago.js
     - public/javascripts/timeago.js
   chat:
@@ -57,11 +56,13 @@ javascripts:
     - public/javascripts/highcharts/highcharts.js
     - public/javascripts/d3/d3.js
     - public/javascripts/d3/d3.chart.js
+    - public/javascripts/d3/d3.layout.js
     - public/javascripts/jquery.form.js
     - public/javascripts/teacher_participation.js
     - public/javascripts/subject_participation.js
     - public/javascripts/lectures_participation.js
     - public/javascripts/graph_form.js
+    - public/javascripts/treemap.js
   ie:
     - public/javascripts/json2.js
     - public/javascripts/selectivizr.js
@@ -82,6 +83,9 @@ javascripts:
     - public/javascripts/jquery.cookie.js
     - public/javascripts/outdated-browser.js
     - public/javascripts/clean.js
+  canvas:
+    - public/javascripts/easyXDM.js
+    - public/javascripts/canvas.js
 
 stylesheets:
   common:

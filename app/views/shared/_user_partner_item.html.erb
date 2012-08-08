@@ -1,6 +1,0 @@
-<% user.partners.each do |p| %>
-  <li><%= link_to p.name, partner_path(p) %></li>
-<% end %>
-<% if can? :index, Partner %>
-  <li><%= link_to "Parceiros", partners_path %></li>
-<% end %>

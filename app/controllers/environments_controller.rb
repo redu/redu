@@ -18,16 +18,19 @@ class EnvironmentsController < BaseController
     }
 
     if can? :manage, @environment
-      @courses = @environment.courses.includes(:user_course_associations).
-        includes(:spaces).paginate(paginating_params)
+      @courses = @environment.courses.
+        includes([:environment, :tags]).
+        paginate(paginating_params)
     else
-      @courses = @environment.courses.includes(:user_course_associations).
-        includes(:spaces).published.paginate(paginating_params)
+      @courses = @environment.courses.
+        includes([:environment, :tags]).
+                 published.paginate(paginating_params)
     end
 
     respond_to do |format|
       format.html
-      format.js { render_endless 'courses/item', @courses, '#courses_list' }
+      format.js { render_endless 'courses/item', @courses,
+                  '#courses_list' }
       format.xml  { render :xml => @environment }
     end
   end

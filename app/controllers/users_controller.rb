@@ -311,9 +311,9 @@ class UsersController < BaseController
   end
 
   def home
-    @friends = @user.friends.paginate(:page => 1, :per_page => 9)
-    @friends_requisitions = @user.friends_pending
-    @course_invitations = @user.course_invitations
+    @friends_requisitions = @user.friendships.includes(:friend).pending
+    @course_invitations = @user.course_invitations.
+      includes(:course =>[:environment])
     @statuses = @user.home_activity(params[:page])
     @status = Status.new
     @contacts_recommendations = @user.recommended_contacts(5)

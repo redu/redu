@@ -63,15 +63,6 @@ class UserCourseAssociation < CourseEnrollment
 
   validates_uniqueness_of :user_id, :scope => [:course_id, :type]
 
-  # Verificar se há UCA com estado pending para um determinado usuário.
-  # Opcionalmente pode-se passar o curso.
-  def self.has_invitation_for?(user, course = nil)
-    conditions = { :state => 'invited', :user_id => user }
-    conditions[:course_id] = course unless course.nil?
-
-    UserCourseAssociation.where(conditions).count > 0
-  end
-
   def send_course_invitation_notification
     UserNotifier.course_invitation(self.user, self.course).deliver
   end

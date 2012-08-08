@@ -500,6 +500,14 @@ describe Course do
     subject.rejected_participation?(user).should be_true
   end
 
+  it "verifies if the course is waiting for user approval" do
+    user = Factory(:user)
+    subject.update_attribute(:subscription_type, 2)
+    subject.invite(user)
+
+    subject.waiting_user_approval?(user).should be_true
+  end
+
   context "when creating hierarchy associations" do
     before do
       @space = Factory(:space, :course => subject)

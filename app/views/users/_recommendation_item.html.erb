@@ -3,9 +3,6 @@
     :height => 32, :class => 'avatar' %>
   <%= link_to recommendation_item.display_name, user_path(recommendation_item),
     :class => 'name' %>
-  <span class="count">
-    <%= current_user.friends_in_common_with(recommendation_item).count %> em comum
-  </span>
   <%= link_to "+ Adicionar",
     user_friendships_path(current_user, :friend_id => recommendation_item.login,
                           :recommendation => true), :method => :post,

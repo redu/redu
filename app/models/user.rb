@@ -80,9 +80,6 @@ class User < ActiveRecord::Base
   scope :without_ids, lambda {|ids|
     where("users.id NOT IN (?)", ids)
   }
-  scope :n_recent, lambda { |limit|
-    order('users.last_request_at DESC').limit(limit)
-  }
   scope :with_keyword, lambda { |keyword|
     where("LOWER(login) LIKE :keyword OR " + \
       "LOWER(first_name) LIKE :keyword OR " + \
@@ -481,7 +478,9 @@ class User < ActiveRecord::Base
   end
 
   def home_activity(page = 1)
-    overview.where(:compound => false).
+    associateds = [:status_resources, { :answers => [:user, :status_resources] },
+                   :user, :logeable, :statusable]
+    overview.where(:compound => false).includes(associateds).
       page(page).per(Redu::Application.config.items_per_page)
   end
 
@@ -524,11 +523,6 @@ class User < ActiveRecord::Base
 
     done = total - undone
     (done/total*100).round
-  end
-
-  # True se o usuário possui convite
-  def has_course_invitation?(course = nil)
-    UserCourseAssociation.has_invitation_for?(self, course)
   end
 
   def email_confirmation
@@ -602,9 +596,11 @@ class User < ActiveRecord::Base
       where("friendships.user_id = ?", self.id)
     User.select("DISTINCT users.id, users.login, users.avatar_file_name," \
                 " users.first_name, users.last_name").
-      includes(:user_course_associations).
-      where("course_enrollments.state = 'approved' AND " \
-            "course_enrollments.user_id NOT IN (?, ?)",
+      joins("LEFT OUTER JOIN course_enrollments ON" \
+            " course_enrollments.user_id = users.id AND" \
+            " course_enrollments.type = 'UserCourseAssociation'").
+      where("course_enrollments.state = 'approved' AND" \
+            " course_enrollments.user_id NOT IN (?, ?)",
             contacts_ids, self.id).
       limit(quantity)
   end
