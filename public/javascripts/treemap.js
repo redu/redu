@@ -13,7 +13,7 @@ var StudentsTreemap = function () {
                 gray: d3.rgb(230, 230, 230) }
                 // Vermelho, Laranja, Amarelo, Verde, Azul, Cinza
 
-  // Função para preenchimento das cores da células, se grade = null preenchimento neutro
+  // Função para preenchimento das cores da células, se grade = -1 preenchimento neutro
   var fill = function (grade){
     if (grade === -1.0) {
       return color.gray;

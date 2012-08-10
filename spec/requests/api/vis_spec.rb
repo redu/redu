@@ -18,14 +18,14 @@ describe "Vis Api" do
   context "get /vis/spaces/:space_id/students_participation" do
     it "should send request to vis" do
       @params = {
-        :users => ["2", "3"],
+        :users_id => ["2", "3"],
         :date_start => "2012-02-10",
         :date_end => "2012-02-11",
         :oauth_token => @token,
         :format => 'json'
       }
 
-      param = { :users => @params[:users],
+      param = { :users_id => @params[:users_id],
                 :date_start => @params[:date_start],
                 :date_end => @params[:date_end] }
 

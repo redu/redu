@@ -57,6 +57,7 @@
               <%= text_field_tag :date_end, nil, :style => "display: none;" %>
             <% end %>
 
+            <%= hidden_field_tag :oauth_token, @token %>
             <%= submit_tag "Atualizar", :class=>"concave-submit" %>
           <% end %>
         <% end %>

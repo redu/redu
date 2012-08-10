@@ -15,10 +15,7 @@ class SpacesController < BaseController
     :except => [:cancel]
 
   Browser = Struct.new(:browser, :version)
-
-  UNSUPPORTED_BROWSERS = [
-    Browser.new("Internet Explorer")
-  ]
+  UNSUPPORTED_BROWSERS = [Browser.new("Internet Explorer")]
 
   rescue_from CanCan::AccessDenied do |exception|
     session[:return_to] = request.fullpath
@@ -175,11 +172,8 @@ class SpacesController < BaseController
   end
 
   def subject_participation_report
-    user_agent = UserAgent.parse(request.user_agent)
-    @browser_not_supported = self.is_browser_unsupported?(user_agent)
-
-    application = ClientApplication.where(:name => "ReduViz").first
-    @token = Oauth2Token.user_token_for(current_user, application).token
+    @browser_not_supported = self.is_browser_unsupported?
+    @token = current_vis_token # lib/vis_application_additions...
 
     respond_to do |format|
       format.html { render "spaces/admin/subject_participation_report" }
@@ -187,11 +181,8 @@ class SpacesController < BaseController
   end
 
   def lecture_participation_report
-    user_agent = UserAgent.parse(request.user_agent)
-    @browser_not_supported = self.is_browser_unsupported?(user_agent)
-
-    application = ClientApplication.where(:name => "ReduViz").first
-    @token = Oauth2Token.user_token_for(current_user, application).token
+    @browser_not_supported = self.is_browser_unsupported?
+    @token = current_vis_token # lib/vis_application_additions...
 
     respond_to do |format|
       format.html { render "spaces/admin/lecture_participation_report" }
@@ -199,8 +190,7 @@ class SpacesController < BaseController
   end
 
   def students_participation_report
-    user_agent = UserAgent.parse(request.user_agent)
-    @browser_not_supported = self.is_browser_unsupported?(user_agent)
+    @browser_not_supported = self.is_browser_unsupported?
     @token = current_vis_token # lib/vis_application_additions...
 
     respond_to do |format|
@@ -232,7 +222,8 @@ class SpacesController < BaseController
     @environment = @course.environment
   end
 
-  def is_browser_unsupported?(user_agent)
+  def is_browser_unsupported?
+    user_agent = UserAgent.parse(request.user_agent)
     current_browser = Browser.new(user_agent.browser, user_agent.version)
     browser = UNSUPPORTED_BROWSERS[0].browser
 
