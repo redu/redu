@@ -81,13 +81,5 @@ SimpleNavigation::Configuration.run do |navigation|
         :details => { :text => 'detalhes', :class => "details",
           :if => action_matcher({'invoices' => ['index']}) }
       end
-
-    current_user.environments.each do |env|
-      primary.item :environment, env.name, environment_path(env),
-        :link => { :class => 'icon-environment_16_18-before' }
-    end
-
-    primary.item :contacts, 'Contatos', user_friendships_path(current_user),
-      :link => { :class => 'icon-contacts_16_18-before' }
   end
 end

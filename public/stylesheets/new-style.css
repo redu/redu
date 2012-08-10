@@ -162,6 +162,10 @@ body {
   margin-top: 17px;
 }
 
+#content .sidebar .auxiliary-local-nav {
+  margin-top: 0;
+}
+
 #content .sidebar .local-nav li {
   margin: 2px 0;
 }

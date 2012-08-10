@@ -35,6 +35,10 @@ RSpec.configure do |config|
   # Inclui o helper para fazer mock da API do scribd
   config.include ScribdSpecHelper
 
+  # Inclui o helper para habilitar a utilização de cache
+  # em determinados contextos
+  config.include CacheSpecHelper
+
   # Adiciona os papéis ao BD, pois estes são necessários nos testes.
   create_roles
   create_privacies

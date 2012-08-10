@@ -4,9 +4,13 @@
     <%= image_tag current_user.avatar.url(:thumb_110),
       :alt => 'profile', :size => "110x110" %>
   </div>
+  <%= local_nav :users %>
   <% cache ['home_sidebar_environments', current_user.id] do %>
-    <%= local_nav :users %>
+    <ul class="local-nav auxiliary-local-nav">
+      <%= render :partial => 'users/sidebar_environments_item', :collection => current_user.environments %>
+    </ul>
   <% end %>
+  <%= local_nav :user_contacts %>
   <% cache ['home_sidebar_connections', current_user.id] do %>
     <ul class="connections clearfix">
       <%= render :partial => 'users/item_short',
