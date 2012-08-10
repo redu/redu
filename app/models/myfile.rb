@@ -15,7 +15,7 @@ class Myfile < ActiveRecord::Base
 
   validates_attachment_presence :attachment
   validates_attachment_size :attachment,
-    :less_than => 10.megabytes
+    :less_than => 100.megabytes
   validates_uniqueness_of :attachment_file_name, :scope => 'folder_id'
   validates_attachment_content_type :attachment, :content_type => CONTENT_TYPES
 

@@ -1,3 +1,60 @@
 .space-canvas .iframe-canvas {
   height: 1000px;
+  overflow: scroll;
+  clear: left;
+}
+
+#content .main {
+  position: relative;
+}
+
+#content.full .main {
+  width: 100%;
+}
+
+#content.full .sidebar {
+  display: none;
+}
+
+#content .expander {
+  display: none;
+}
+
+#content.full .expander {
+  display: block;
+}
+
+.boxshadow .space .expander {
+  -webkit-box-shadow: inset 0 1px 0 0 white;
+  -moz-box-shadow: inset 0 1px 0 0 #fff;
+  box-shadow: inset 0 1px 0 0 white;
+}
+
+.cssgradients  .space .expander {
+  background: -moz-linear-gradient(left, #F7F7F7 60%, #E6E6E6 100%);
+  background: -webkit-gradient(linear, left top, right top, color-stop(60%, #F7F7F7), color-stop(100%, #E6E6E6));
+}
+
+.borderradius .space .expander {
+  -webkit-border-radius: 0px 10px 10px 0px;
+  border-radius: 0px 10px 10px 0px;
+}
+
+.space .expander {
+  border: 1px solid #ccc;
+  width: 25px;
+  top: 266px;
+  left: 0;
+  position: absolute;
+  z-index: 10;
+}
+
+.space .expander a {
+  padding: 30px 8px;
+  display: block;
+  font-size: 11px;
+}
+
+.space .expander a:hover {
+  text-decoration: none;
 }

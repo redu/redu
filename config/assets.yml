@@ -43,7 +43,6 @@ javascripts:
     - public/javascripts/underscore.js
     - public/javascripts/underscore-sharing-template.redu.jquery.js
     - public/javascripts/embedly.redu.jquery.js
-    - public/javascripts/canvas.js
     - public/javascripts/jquery.timeago.js
     - public/javascripts/timeago.js
   chat:
@@ -84,6 +83,9 @@ javascripts:
     - public/javascripts/jquery.cookie.js
     - public/javascripts/outdated-browser.js
     - public/javascripts/clean.js
+  canvas:
+    - public/javascripts/easyXDM.js
+    - public/javascripts/canvas.js
 
 stylesheets:
   common:
