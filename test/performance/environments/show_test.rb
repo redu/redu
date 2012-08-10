@@ -18,4 +18,10 @@ class EnvironmentShowTest < ActionDispatch::PerformanceTest
   def test_environment_show
     get '/ium'
   end
+
+  # Testando space#show com a disciplina de eng. de software educativo
+  # path: /espacos/521
+  def test_space_show
+    get '/espacos/521'
+  end
 end

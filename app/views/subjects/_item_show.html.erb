@@ -25,6 +25,6 @@
   <ol class="lectures clearfix" style="display: <%= display_css %>;">
     <strong class="title icon-lecture-gray_16_18-before">Aulas (<%= item.lectures.count %>)</strong>
     <%= render :partial => 'lectures/item_preview',
-      :collection => item.lectures %>
+      :collection => item.lectures, :locals => {:subject => item} %>
   </ol>
 </li>

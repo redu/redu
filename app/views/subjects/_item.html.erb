@@ -8,21 +8,22 @@
   <% end %>
   <%= link_to item.name, "#",
     :class => 'subject-name name icon-content-lightblue_32_34-before' %>
-  <% if item.graduated? current_user %>
+  <% item_graduated = item.graduated? current_user %>
+  <% user_association_item = current_user.get_association_with(item) %>
+  <% if item_graduated %>
     <span class="graduated icon-small icon-confirm-green_16_18 replacement">Módulo finalizado</span>
   <% end %>
   <% if item.recent? %>
     <span class="new">Novo</span>
   <% end %>
-  <% if !item.graduated?(current_user) &&
-    !current_user.get_association_with(item).nil?  %>
-    <span class="grade">(<%= current_user.get_association_with(item).grade.to_i %>% cursado)</span>
+  <% if !item_graduated && !user_association_item.nil?  %>
+    <span class="grade">(<%= user_association_item.grade.to_i %>% cursado)</span>
   <% end %>
   <p class="description"><%= item.description %></p>
   <span class="expand icon-small icon-expand_down-gray_16_18 replacement">Mais detalhes</span>
   <ol class="lectures clearfix" style="display: none;">
-    <strong class="title icon-lecture-gray_16_18-before">Aulas (<%= item.lectures.count %>)</strong>
+    <strong class="title icon-lecture-gray_16_18-before">Aulas (<%= item.lectures.length %>)</strong>
     <%= render :partial => 'lectures/item_preview',
-      :collection => item.lectures %>
+      :collection => item.lectures, :locals => {:subject => item} %>
   </ol>
 </li>

@@ -1,27 +1,27 @@
 <div class="sidebar space alpha grid_3">
   <div class="image-frame space-frame">
-    <%= link_to (space.course.environment) do %>
+    <%= link_to(space.course.environment) do %>
       <%= image_tag space.course.environment.avatar.url(:thumb_90),
         :size => "90x90", :alt => 'profile', :class => "environment" %>
     <% end %>
     <span class="space icons-big icon-space-white_64_64 replacement"><%=  space.name %></span>
   </div>
   <%= local_nav(:spaces) %>
-  <% unless space.teachers.count == 0 %>
-    <span class="call icon-teacher-gray_16_18-before">Professores: <%= link_to space.teachers.count, space_users_path(space, :role => :teachers), :class => "count" %></span>
+  <% unless space.teachers.length == 0 %>
+    <span class="call icon-teacher-gray_16_18-before">Professores: <%= link_to space.teachers.length, space_users_path(space, :role => :teachers), :class => "count" %></span>
     <ul class="connections clearfix">
       <%= render :partial => 'users/item_medium_24',
         :collection => space.teachers.limit(2) %>
     </ul><!-- end .connections -->
   <% end %>
-  <% unless space.tutors.count == 0 %>
-    <span class="call icon-tutor-gray_16_18-before">Tutores: <%= link_to space.tutors.count, space_users_path(space, :role => :tutors), :class => "count" %></span>
+  <% unless space.tutors.length == 0 %>
+    <span class="call icon-tutor-gray_16_18-before">Tutores: <%= link_to space.tutors.length, space_users_path(space, :role => :tutors), :class => "count" %></span>
     <ul class="connections clearfix">
       <%= render :partial => 'users/item_medium_24',
         :collection => space.tutors.limit(2) %>
     </ul><!-- end .connections -->
   <% end %>
-  <span class="call icon-member-gray_16_18-before">Alunos: <%= link_to space.students.count, space_users_path(space, :role => :students), :class => "count" %></span>
+  <span class="call icon-member-gray_16_18-before">Alunos: <%= link_to space.students.length, space_users_path(space, :role => :students), :class => "count" %></span>
   <ul class="connections students clearfix">
     <% @sidebar_students = space.students.page(params[:page]).per(4) %>
     <%= render :partial => 'users/item_medium_24',

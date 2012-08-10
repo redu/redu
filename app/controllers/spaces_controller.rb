@@ -81,11 +81,11 @@ class SpacesController < BaseController
   # GET /spaces/1.xml
   def show
     if can? :manage, @space
-      @subjects = @space.subjects.paginate(:page => params[:page],
-                                           :order => 'updated_at ASC',
-                                           :per_page => Redu::Application.config.items_per_page)
+      @subjects = @space.subjects.includes([:lectures, :space]).
+        paginate(:page => params[:page], :order => 'updated_at ASC',
+                 :per_page => Redu::Application.config.items_per_page)
     else
-      @subjects = @space.subjects.visible.
+      @subjects = @space.subjects.visible.includes([:lectures, :space]).
         paginate(:page => params[:page],
                  :order => 'updated_at ASC',
                  :per_page => Redu::Application.config.items_per_page)
