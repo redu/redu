@@ -1,8 +1,8 @@
 require 'spec_helper'
 require 'authlogic/test_case'
-include Authlogic::TestCase
 
 describe CanvasController do
+  include Authlogic::TestCase
 
   describe "GET 'show'" do
     let(:current_user) { Factory(:user) }

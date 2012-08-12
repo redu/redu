@@ -1,8 +1,8 @@
 require 'spec_helper'
 require 'authlogic/test_case'
-include Authlogic::TestCase
 
 describe SocialNetworksController do
+  include Authlogic::TestCase
 
   context "POST destroy" do
     before do

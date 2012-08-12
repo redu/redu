@@ -1,8 +1,9 @@
 require "spec_helper"
 require 'authlogic/test_case'
-include Authlogic::TestCase
 
 describe Vis::DashboardController do
+  include Authlogic::TestCase
+
   before do
     @environment = Factory(:environment)
     @course = Factory(:course, :environment => @environment,

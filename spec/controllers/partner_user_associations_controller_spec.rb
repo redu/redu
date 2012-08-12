@@ -1,8 +1,9 @@
 require 'spec_helper'
 require 'authlogic/test_case'
-include Authlogic::TestCase
 
 describe PartnerUserAssociationsController do
+  include Authlogic::TestCase
+
   context "when listing collaborators from a partner" do
     before do
       @user = Factory(:user)

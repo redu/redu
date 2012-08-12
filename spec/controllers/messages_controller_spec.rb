@@ -1,8 +1,9 @@
 require 'spec_helper'
 require 'authlogic/test_case'
-include Authlogic::TestCase
 
 describe MessagesController do
+  include Authlogic::TestCase
+
   context "POST delete_selected" do
     before do
       @user = Factory(:user)

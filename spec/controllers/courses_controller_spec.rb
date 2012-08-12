@@ -1,8 +1,9 @@
 require 'spec_helper'
 require 'authlogic/test_case'
-include Authlogic::TestCase
 
 describe CoursesController do
+  include Authlogic::TestCase
+
   context "when creating a course for an existing environment" do
     before do
       @user = Factory(:user)

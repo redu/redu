@@ -1,8 +1,8 @@
 require 'spec_helper'
 require 'authlogic/test_case'
-include Authlogic::TestCase
 
 describe OauthClientsController do
+  include Authlogic::TestCase
 
   before do
     @user = Factory(:partner_user)
