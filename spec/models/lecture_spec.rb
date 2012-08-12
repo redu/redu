@@ -313,7 +313,9 @@ describe Lecture do
       grade = Enrollment.sum('grade', :conditions =>
                              {:subject_id => subject.subject.id})
       grade.should == 100
+
       @lec.destroy
+      @lec.subject.reload
       @lec.refresh_students_profiles
       grade = Enrollment.sum('grade', :conditions =>
                              {:subject_id => subject.subject.id})

@@ -5,12 +5,9 @@ describe AssetReport do
     @space = Factory(:space)
     @subject_owner = Factory(:user)
     @space.course.join(@subject_owner)
-    sub = Factory(:subject, :owner => @subject_owner, :space => @space)
-    @lecture = Factory(:lecture, :owner => @subject_owner, :subject => sub)
-    @enrollment = Factory(:enrollment, :subject => sub)
   end
-  subject { Factory(:asset_report, :lecture => @lecture,
-                    :enrollment => @enrollment) }
+
+  subject { Factory(:asset_report) }
   it { should belong_to :enrollment }
   it { should belong_to :lecture }
   it { should belong_to :subject }
@@ -22,12 +19,8 @@ describe AssetReport do
   context "finders" do
     it "retrieves done asset reports" do
      assets_done = (1..2).collect { Factory(:asset_report,
-                                            :lecture => @lecture,
-                                            :enrollment => @enrollment,
                                             :done => true) }
-     assets = (1..2).collect { Factory(:asset_report,
-                                       :lecture => @lecture,
-                                       :enrollment => @enrollment) }
+     assets = (1..2).collect { Factory(:asset_report) }
 
      AssetReport.done.should == assets_done
     end

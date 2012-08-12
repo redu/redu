@@ -71,6 +71,7 @@ describe Enrollment do
 
       expect {
         Factory(:lecture, :subject => @sub, :owner => @sub.owner)
+        subject.reload
         subject.update_grade!
       }.should change(subject, :graduaded).to(false)
     end

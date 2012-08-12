@@ -128,9 +128,10 @@ class Lecture < ActiveRecord::Base
       AssetReport.new(:subject => self.subject, :enrollment => enrollment,
                       :lecture => self)
     end
-    AssetReport.import(reports)
+    AssetReport.import(reports, :validate => false)
 
-    enrollments.collect(&:"update_grade!")
+    enrollments.includes(:asset_reports).where('grade > 0').
+      collect(&:update_grade!)
   end
 
   protected
