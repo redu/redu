@@ -293,11 +293,17 @@ describe LicensedInvoice do
       @plan.create_invoice({:invoice => {
         :period_start => from,
         :period_end => from.end_of_month }
-      })
+      }) # 17 dias
       @invoice = @plan.invoices.last
-      (1..10).collect do
+      (1..5).collect do
         Factory(:license, :invoice => @invoice, :course => course,
-                :role => Role[:member])
+                :role => Role[:member], :period_start => from,
+                :period_end => from.end_of_month - 5.days) # 12 dias
+      end
+      (1..5).collect do
+        Factory(:license, :invoice => @invoice, :course => course,
+                :role => Role[:member], :period_start => from,
+                :period_end => from.end_of_month - 10.days) # 7 dias
       end
       (1..3).collect do
         Factory(:license, :invoice => @invoice, :course => course,
@@ -308,8 +314,9 @@ describe LicensedInvoice do
                 :role => Role[:environment_admin])
       end
       @in_use_licenses = (1..10).collect do
-        Factory(:license, :invoice => @invoice, :period_end => nil,
-                :course => course, :role => Role[:member])
+        Factory(:license, :invoice => @invoice, :period_start => from,
+                :period_end => nil, :course => course,
+                :role => Role[:member]) # 17 dias
       end
 
     end
@@ -320,7 +327,7 @@ describe LicensedInvoice do
       end
 
       it "updates to the correct amount" do
-        @invoice.amount.round(2).should == BigDecimal.new("34")
+        @invoice.amount.round(2).should == BigDecimal.new("26.5")
       end
     end
 
@@ -362,20 +369,22 @@ describe LicensedInvoice do
         :created_at => Time.now - 1.hour }
       })
       @invoice1 = @plan1.invoices.last
+
+      @in_use_licenses = (1..10).collect do
+        Factory(:license, :invoice => @invoice1, :period_start => from,
+                :period_end => nil, :course => course)
+      end
+      @not_in_use_licenses = (1..20).collect do
+        Factory(:license, :invoice => @invoice1, :period_start => from,
+                :period_end => from + 9.days, :course => course)
+      end
+
       from = Date.today
       plan2.create_invoice({:invoice => {
         :period_start => from }
       })
       @invoice2 = plan2.invoices.last
 
-      @in_use_licenses = (1..10).collect do
-        Factory(:license, :invoice => @invoice1, :period_end => nil,
-                :course => course)
-      end
-      @not_in_use_licenses = (1..20).collect do
-        Factory(:license, :invoice => @invoice1,
-                :course => course)
-      end
       (1..20).collect { Factory(:license, :invoice => @invoice2,
                                 :course => course) }
 
@@ -394,7 +403,7 @@ describe LicensedInvoice do
     end
 
     it "should calculates invoice1's relative amount" do
-      @invoice1.reload.amount.round(2).should == BigDecimal.new("33")
+      @invoice1.reload.amount.round(2).should == BigDecimal.new("31")
     end
 
     it "should NOT calculate invoice2's relative amount" do

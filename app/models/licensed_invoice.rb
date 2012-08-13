@@ -104,10 +104,18 @@ class LicensedInvoice < Invoice
   # => #<BigDecimal:104a9fbf0,'0.0',9(18)>
   def calculate_amount!
     days_of_month = 30
-    # Preço diário * # de dias usados * # de licenças pagáveis utilizadas
-    amount = (self.plan.price / days_of_month) * self.total_days *
-      self.licenses.payable.count
-    self.update_attributes(:amount => amount)
+    # Preço diário
+    factor = self.plan.price / days_of_month
+    # Valor diário * quantidade de dias da licença
+    amount = self.licenses.payable.collect do |license|
+      if license.period_end.nil?
+        # Não salva, apenas altera temporariamente
+        license.period_end = self.period_end
+      end
+      license.total_days * factor
+    end
+
+    self.update_attributes(:amount => amount.sum)
   end
 
   # Marca invoice recém pendente como pago, caso possua total < 0
