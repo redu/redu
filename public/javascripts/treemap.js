@@ -152,7 +152,7 @@ var StudentsTreemap = function () {
                         + "</br>Pedidos de Ajuda: " + d.helps
                         + "</br>Respostas à comentários: " + d.answered_activities
                         + "</br>Respostas à pedidos de ajuda: " + d.answered_helps
-                        + "</br>Nota: " + nota})
+                        + "</br>Nota: " + nota })
 
             // Cor
             cell.append("svg:rect")
