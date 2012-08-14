@@ -25,7 +25,7 @@
             <%= lazy_load(:chart, :jammit => true) do %>
               try{
               var par = new SubjectParticipation();
-              par.load("<%= api_vis_subject_activities_path (@space.id) %>",
+              par.load("<%= api_vis_subject_activities_path(@space.id) %>",
               "<%= @token %>",
               "<%= @space.subjects.map do |subj| "&subjects[]=#{subj.id}" end %>"
               );

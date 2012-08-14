@@ -22,28 +22,14 @@ describe "Vis Api" do
         :date_start => "2012-02-10",
         :date_end => "2012-02-11",
         :oauth_token => @token,
-        :format => 'json'
-      }
+        :format => 'json' }
 
       param = { :users_id => @params[:users_id],
                 :date_start => @params[:date_start],
-                :date_end => @params[:date_end] }
+                :date_end => @params[:date_end],
+                :space_id => "#{@space.id}" }
 
-      WebMock.disable_net_connect!(:allow_localhost => true)
-      @stub = stub_request(
-        :get, Redu::Application.config.vis[:students_participation]).
-        with(:query => param,
-             :headers => {'Authorization'=> 'YXBpLXRlYW06Tnl1Z0FrU29Q',
-                          'Content-Type'=>'application/json'}).
-        to_return(:status => 200, :body => "", :headers => {})
-
-      get "/api/vis/spaces/#{@space.id}/students_participation", @params
-
-      a_request(:get, Redu::Application.config.vis[:students_participation]).
-      with(:query => param,
-           :headers => {'Authorization'=> 'YXBpLXRlYW06Tnl1Z0FrU29Q',
-                        'Content-Type'=>'application/json'}).
-                        should have_been_made
+      test_request(:students_participation, param)
     end
 
     it "should return 404 when doesnt exists" do
@@ -62,28 +48,13 @@ describe "Vis Api" do
         :date_start => "2012-02-10",
         :date_end => "2012-02-11",
         :oauth_token => @token,
-        :format => 'json'
-      }
+        :format => 'json' }
 
       param = { :lectures => @params[:lectures],
                 :date_start => @params[:date_start],
                 :date_end => @params[:date_end] }
 
-      WebMock.disable_net_connect!(:allow_localhost => true)
-      @stub = stub_request(
-        :get, Redu::Application.config.vis[:lecture_participation]).
-        with(:query => param,
-             :headers => {'Authorization'=> 'YXBpLXRlYW06Tnl1Z0FrU29Q',
-                          'Content-Type'=>'application/json'}).
-        to_return(:status => 200, :body => "", :headers => {})
-
-      get "/api/vis/spaces/#{@space.id}/lecture_participation", @params
-
-      a_request(:get, Redu::Application.config.vis[:lecture_participation]).
-      with(:query => param,
-           :headers => {'Authorization'=> 'YXBpLXRlYW06Tnl1Z0FrU29Q',
-                        'Content-Type'=>'application/json'}).
-                        should have_been_made
+      test_request(:lecture_participation, param)
     end
 
     it "should return 404 when doesnt exists" do
@@ -104,22 +75,7 @@ describe "Vis Api" do
 
       param = { :subjects => @params[:subjects] }
 
-      WebMock.disable_net_connect!(:allow_localhost => true)
-      @stub = stub_request(
-        :get, Redu::Application.config.vis[:subject_activities]).
-        with(:query => param,
-             :headers => {'Authorization'=> 'YXBpLXRlYW06Tnl1Z0FrU29Q',
-                          'Content-Type'=>'application/json'}).
-        to_return(:status => 200, :body => "",
-                  :headers => {})
-
-      get "/api/vis/spaces/#{@space.id}/subject_activities", @params
-
-      a_request(:get, Redu::Application.config.vis[:subject_activities]).
-      with(:query => param,
-           :headers => {'Authorization'=> 'YXBpLXRlYW06Tnl1Z0FrU29Q',
-                        'Content-Type'=>'application/json'}).
-      should have_been_made
+      test_request(:subject_activities, param)
     end
 
     it "should return 404 when doesn't exists" do
@@ -129,5 +85,24 @@ describe "Vis Api" do
 
       response.code.should == "404"
     end
+  end
+
+  def test_request(url, param)
+    WebMock.disable_net_connect!(:allow_localhost => true)
+    @stub = stub_request(
+        :get, Redu::Application.config.vis[url]).
+        with(:query => param,
+             :headers => {'Authorization'=> 'YXBpLXRlYW06Tnl1Z0FrU29Q',
+                          'Content-Type'=>'application/json'}).
+        to_return(:status => 200, :body => "",
+                  :headers => {})
+
+      get "/api/vis/spaces/#{@space.id}/#{url}", @params
+
+      a_request(:get, Redu::Application.config.vis[url]).
+      with(:query => param,
+           :headers => {'Authorization'=> 'YXBpLXRlYW06Tnl1Z0FrU29Q',
+                        'Content-Type'=>'application/json'}).
+      should have_been_made
   end
 end
