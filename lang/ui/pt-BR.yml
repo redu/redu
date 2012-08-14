@@ -218,12 +218,14 @@ pt-BR:
           attributes:
             first_name:
               blank: "Por favor, informe seu nome."
+              invalid:  "Utilize apenas letras (a-z), números (0-9), traço (-) e sublinhado (_). Não deixe espaços no início ou final."
             last_name:
               blank: "Por favor, informe seu sobrenome."
+              invalid:  "Utilize apenas letras (a-z), números (0-9), traço (-) e sublinhado (_). Não deixe espaços no início ou final."
             login:
               blank: "Por favor, digite um login."
               too_short: "Login muito curto (mínimo de 5 caracteres)."
-              invalid:  "Utilize apenas letras (a-z), números (0-9), traço (-) e sublinhado (_)."
+              invalid:  "Utilize apenas letras (a-z), números (0-9), traço (-) e sublinhado (_). Não deixe espaços no início ou final."
               taken: "Por favor, escolha outro login. Este já existe no Redu."
             login_slug:
               taken: "Por favor, escolha outro login. Este já existe no Redu."

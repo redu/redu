@@ -124,6 +124,18 @@ describe User do
       u.mobile = "81 2131-2123"
       u.should_not be_valid
     end
+
+    it "validates first name format" do
+      u = Factory.build(:user, :first_name => "Nome com espaço     ")
+      u.should_not be_valid
+      u.errors[:first_name].should_not be_empty
+    end
+
+    it "validates last name format" do
+      u = Factory.build(:user, :last_name => "Nome com espaço     ")
+      u.should_not be_valid
+      u.errors[:last_name].should_not be_empty
+    end
   end
 
   context "associations" do
@@ -218,8 +230,10 @@ describe User do
       users << Factory(:user, :first_name => "Guilherme")
       users << Factory(:user, :login => "guilherme")
       users << Factory(:user, :email => "guiocavalcanti@redu.com.br")
+      users << Factory(:user, :first_name => "TARCISIO   ", :last_name => "COUTINHO")
 
       User.with_keyword("guilherme").to_set.should == [users[0], users[1]].to_set
+      User.with_keyword("tarcisio coutinho").to_set.should == [users[3]].to_set
     end
 
     it "should retrieve a presence channel name" do
