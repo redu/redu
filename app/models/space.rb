@@ -8,7 +8,7 @@ class Space < ActiveRecord::Base
 
   # CALLBACKS
   after_create :create_root_folder
-  after_create :create_space_association_for_users_course
+  after_create :delay_create_space_association_for_users_course
 
   # ASSOCIATIONS
   belongs_to :course
@@ -74,16 +74,22 @@ class Space < ActiveRecord::Base
   # Após a criação do space, todos os usuários do course ao qual
   # o space pertence tem que ser associados ao space
   def create_space_association_for_users_course
-
     course_users = UserCourseAssociation.where(:state => 'approved',
-                                               :course_id => self.course)
+                                               :course_id => self.course).
+                                               includes(:user)
 
-    course_users.each do |assoc|
-      UserSpaceAssociation.create({:user => assoc.user,
-                                  :space => self,
-                                  :role => assoc.role})
+    usas = course_users.collect do |assoc|
+      UserSpaceAssociation.new(:user => assoc.user,
+                               :space => self,
+                               :role => assoc.role)
     end
+    UserSpaceAssociation.import(usas, :validate => false)
+  end
 
+  # ver app/jobs/create_user_space_association_job.rb
+  def delay_create_space_association_for_users_course
+    job = CreateUserSpaceAssociationJob.new(:space_id => self.id)
+    Delayed::Job.enqueue(job, :queue => 'general')
   end
 
   def myfiles
@@ -101,6 +107,12 @@ class Space < ActiveRecord::Base
         UserNotifier.space_added(u, self).deliver
       end
     end
+  end
+
+  # ver app/jobs/notify_space_added_job.rb
+  def delay_notify_space_added
+    job = NotifySpaceAddedJob.new(:space_id => self.id)
+    Delayed::Job.enqueue(job, :queue => 'general')
   end
 
   def lectures_count
