@@ -39,6 +39,7 @@ describe Enrollment do
   context "grade" do
     let :lectures do
       3.times.collect do
+        subject
         Factory(:lecture, :subject => @sub, :owner => @sub.owner)
       end
     end

@@ -202,17 +202,17 @@ class Course < ActiveRecord::Base
 
 
     self.create_license(user, role)
-    self.spaces.each do |space|
-      UserSpaceAssociation.create(:user_id => user.id,
-                                  :space_id => space.id,
-                                  :role => role)
 
-      # Cria as associações com os subjects
-      space.subjects.each do |subject|
-        enrollments << subject.enroll(user, role)
-      end
-
+    usas = self.spaces.collect do |space|
+      UserSpaceAssociation.new(:user_id => user.id,
+                               :space_id => space.id,
+                               :role => role)
     end
+    UserSpaceAssociation.import(usas, :validate => false)
+
+    subjects = self.spaces.includes(:subjects).collect(&:subjects).flatten
+    enrollments = Subject.enroll(user, subjects, role)
+
     # Associa o delayed_job para a criação dos enrollments em visualização
     delay_hierarchy_notification(enrollments, "enrollment")
   end

@@ -54,9 +54,11 @@ class Enrollment < ActiveRecord::Base
   end
 
   def create_assets_reports
-    subject.lectures.each do |lecture|
-      self.asset_reports << AssetReport.create(:subject => self.subject,
-                                               :lecture => lecture)
+    assets = subject.lectures.collect do |lecture|
+      AssetReport.new(:subject => self.subject,
+                         :lecture => lecture)
     end
+
+    AssetReport.import(assets, :validate => false)
   end
 end
