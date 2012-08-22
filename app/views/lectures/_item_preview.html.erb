@@ -1,3 +1,4 @@
+<%= cache ["space_lecture_item", item_preview.id, current_user.id] do %>
 <li class="clearfix">
   <% if item_preview.recent? %>
     <span class="new">NOVO</span>
@@ -24,3 +25,4 @@
       <% end %>
   </div>
 </li>
+<% end %>

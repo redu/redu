@@ -214,7 +214,9 @@ module Redu
                                         :course_cache_observer,
                                         :partner_user_association_cache_observer,
                                         :partner_cache_observer,
-                                        :message_cache_observer]
+                                        :message_cache_observer,
+                                        :lecture_cache_observer,
+                                        :asset_report_cache_observer]
     end
 
     # Redu logger

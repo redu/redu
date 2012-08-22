@@ -34,6 +34,10 @@ module ViewCaches
     expire_fragments('course_members_count', course)
   end
 
+  def expire_space_lectures_item_for(lecture, users)
+    expire_nested_fragments('space_lecture_item', lecture, users)
+  end
+
   protected
   # Método genérico para expirar caches de fragmento para um ou
   # mais de um elemento.
@@ -44,6 +48,12 @@ module ViewCaches
   def expire_fragments(name, *entities)
     entities.flatten.each do |entity|
       ActionController::Base.new.expire_fragment([name, entity.id])
+    end
+  end
+
+  def expire_nested_fragments(name, entity, *entities)
+    entities.flatten.each do |ent|
+      ActionController::Base.new.expire_fragment([name, entity.id, ent.id])
     end
   end
 end
