@@ -29,7 +29,9 @@ class Subject < ActiveRecord::Base
     end
 
     Enrollment.import(enrolls, :validate => false)
-    Enrollment.where('user_id = ? AND subject_id IN (?)', user, subjects)
+    enrollments = Enrollment.where('user_id = ? AND subject_id IN (?)', user, subjects).includes(:subject => [:lectures])
+    enrollments.each { |e| e.create_assets_reports }
+    enrollments
   end
 
   def recent?
