@@ -1,4 +1,7 @@
 class UserSpaceAssociation < ActiveRecord::Base
+  # Em alguns casos o enrollment é chamado utilizando o gem activerecord-import
+  # por questões de otimização. Este gem desabilita qualquer tipo de callback
+  # cuidado ao adicionar callbacks a esta entidade.
   belongs_to :user
   belongs_to :space
 

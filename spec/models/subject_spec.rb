@@ -176,6 +176,23 @@ describe Subject do
         enrollments.collect(&:user).to_set.should have(1).item
         enrollments.collect(&:subject).to_set.should == subjects.to_set
       end
+
+      context 'when that has many lectures' do
+        before do
+          subjects.each do |s|
+            (1..3).each do
+              Factory(:lecture, :subject => s)
+            end
+          end
+        end
+
+        it 'creates the assets reports for each enrollment' do
+          enrolls = Subject.enroll(@enrolled_user, subjects)
+          enrolls.each do |e|
+            e.asset_reports.should have(3).items
+          end
+        end
+      end
     end
   end
 
