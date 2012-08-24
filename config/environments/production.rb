@@ -68,15 +68,15 @@ Redu::Application.configure do
 
   # Configurações de VisClient
   config.vis_client = {
-   :url => "http://vis.redu.com.br/hierarchy_notifications.json",
-   :migration => "http://vis.redu.com.br/database_hierarchy_notifications.json"
+   :url => "http://ec2-72-44-40-238.compute-1.amazonaws.com/hierarchy_notifications.json",
+   :migration => "http://ec2-72-44-40-238.compute-1.amazonaws.com/database_hierarchy_notifications.json"
  }
 
   config.vis = {
-    :activities => "http://vis.redu.com.br/subjects/activities.json",
-    :activities_d3 => "http://vis.redu.com.br/subjects/activities_d3.json",
-    :lecture_participation => "http://vis.redu.com.br/lectures/participation.json",
-    :students_participation => "http://vis.redu.com.br/user_spaces/participation.json"
+    :activities => "http://ec2-72-44-40-238.compute-1.amazonaws.com/subjects/activities.json",
+    :activities_d3 => "http://ec2-72-44-40-238.compute-1.amazonaws.com/subjects/activities_d3.json",
+    :lecture_participation => "http://ec2-72-44-40-238.compute-1.amazonaws.com/lectures/participation.json",
+    :students_participation => "http://ec2-72-44-40-238.compute-1.amazonaws.com/user_spaces/participation.json"
   }
 
 end
