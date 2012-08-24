@@ -128,7 +128,8 @@ class Lecture < ActiveRecord::Base
       AssetReport.new(:subject => self.subject, :enrollment => enrollment,
                       :lecture => self)
     end
-    AssetReport.import(reports, :validate => false)
+    AssetReport.import(reports, :validate => false,
+                       :on_duplicate_key_update => [:done])
 
     enrollments.includes(:asset_reports).where('grade > 0').
       collect(&:update_grade!)

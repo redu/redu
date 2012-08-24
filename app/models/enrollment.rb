@@ -59,6 +59,7 @@ class Enrollment < ActiveRecord::Base
                          :lecture => lecture)
     end
 
-    AssetReport.import(assets, :validate => false)
+    AssetReport.import(assets, :validate => false,
+                       :on_duplicate_key_update => [:done])
   end
 end
