@@ -106,4 +106,13 @@ class Subject < ActiveRecord::Base
       self.space.users.all.each { |u| UserNotifier.subject_added(u, self).deliver }
     end
   end
+
+  def clone_for_space!(space_id)
+    space = Space.find(space_id)
+    subject = (self.clone :except => [:space_id, :subject_id])
+    space.subjects << subject
+    self.lectures.each do |lecture|
+      lecture.clone_for_subject!(subject.id)
+    end
+  end
 end

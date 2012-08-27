@@ -345,10 +345,10 @@ class Course < ActiveRecord::Base
 
   def mimetize!(course)
     course.spaces.each do |space|
-      cloned_space = (space.clone :include => :subjects, :except => [:space_id])
+      cloned_space = (space.clone :include => {:subjects => {:lectures => {:lectureable => {:questions => :alternatives}}}}, :except => [:space_id])
+      cloned_space.course = self
       cloned_space.owner = self.owner
       cloned_space.save
-      debugger
       self.spaces << cloned_space
     end
 
