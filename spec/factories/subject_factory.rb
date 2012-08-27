@@ -10,6 +10,7 @@ FactoryGirl.define do
   # Módulo completo, com aulas
   factory :complete_subject, :parent => :subject do 
     after_create do |subject|
+      subject.finalized = true
       subject.lectures << Factory(:lecture)
     end
   end

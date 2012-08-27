@@ -230,4 +230,27 @@ describe Subject do
       end
     end
   end
+
+  context "when cloning itself" do
+    before do
+      @basic_space = Factory(:space)
+      @new_space = Factory(:space)
+      @subject = Factory(:complete_subject)
+      @subject.update_attribute(:finalized, true)
+      @basic_space.subjects << @subject
+      @subject.clone_for_space!(@new_space.id)
+    end
+
+    it "should create a new subject" do
+      @new_space.subjects.first.should_not == @subject
+    end
+
+    it "should create a cloned subject with same name" do
+      @new_space.subjects.first.name.should == @subject.name
+    end
+
+    it "should create a cloned subject with same number of lectures" do
+      @new_space.subjects.first.lectures.each.count.should == @subject.lectures.each.count
+    end
+  end
 end
