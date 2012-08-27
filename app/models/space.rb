@@ -128,4 +128,16 @@ class Space < ActiveRecord::Base
   def students_id
     self.students.collect{ |student| student.id }
   end
+
+  def clone_for_course!(course_id)
+    course = Course.find(course_id)
+    clone = self.clone :except => [:course_id, :space_id]
+    clone.save
+    debugger
+    course.spaces << clone
+    self.subjects.each do |subject|
+      subject.clone_for_space!(clone.id)
+    end
+    clone.save
+  end
 end
