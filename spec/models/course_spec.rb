@@ -942,11 +942,12 @@ describe Course do
       @jedi101 = Factory(:course, :environment => Factory(:environment),
                          :name => "Jedi101")
       5.times do |n|
-        space = Factory(:space)
-        subject = Factory(:subject)
-        lecture = Factory(:lecture)
+        space = Factory(:space, :course => @jedi101)
+        subject = Factory(:subject, :space => space)
+        subject.update_attribute(:finalized, true)
+        lecture = Factory(:lecture, :subject => subject)
         if n.even?
-          exercise = Factory(:complete_exercise)
+          exercise = Factory(:complete_exercise, :lecture => lecture)
           lecture.lectureable = exercise
         end
         subject.lectures << lecture
@@ -1172,7 +1173,7 @@ describe Course do
         space.subjects.each do |subject|
           subject.lectures.each do |lecture|
             if lecture.lectureable.is_a?(Exercise)
-              original += lecture.lectureable.questions.count
+              cloned += lecture.lectureable.questions.count
             end
           end
         end
