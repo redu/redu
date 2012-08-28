@@ -53,11 +53,12 @@ class Seminar < ActiveRecord::Base
   end
   # Retorna parâmetro da URL que identifica unicamente o vídeo
   def truncate_youtube_url
-      if self.external_resource_type.eql?('youtube')
-        capture = self.external_resource.scan(/youtube\.com\/watch\?v=([A-Za-z0-9._%-]*)[&\w;=\+_\-]*/)[0][0]
-        # TODO criar validacao pra essa url
-        self.external_resource = capture
-      end
+    if self.external_resource_type.eql?('youtube')
+      capture = self.external_resource.scan(/youtube\.com\/watch\?v=([A-Za-z0-9._%-]*)[&\w;=\+_\-]*/)
+      # Pegando texto capturado ou retornando nil se o regex falhar
+      capture = capture.try(:first).try(:first)
+      self.external_resource = capture
+    end
   end
 
   # Converte o video para FLV (Zencoder)
