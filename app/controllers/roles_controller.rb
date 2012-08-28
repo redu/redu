@@ -4,6 +4,8 @@ class RolesController < BaseController
   load_and_authorize_resource :user, :through => :environment, :find_by => :login
 
   def index
+    authorize! :manage, @environment
+
     @courses = @user.user_course_associations.
       where(:course_id => @environment.courses).
       includes(:course => [{ :spaces => :user_space_associations }])
