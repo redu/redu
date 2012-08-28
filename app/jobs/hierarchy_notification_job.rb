@@ -1,8 +1,8 @@
 class HierarchyNotificationJob
   attr_accessor :params_array
 
-  def initialize(params_array)
-    @params_array = params_array
+  def initialize(opts)
+    @params_array = opts[:params_array]
   end
 
   def perform

@@ -2,8 +2,8 @@ class CompoundLogJob
   attr_accessor :compound_log_id
 
   # Asssocia os agrupamentos aos stakeholders
-  def initialize(compound_log_id)
-    @compound_log_id = compound_log_id
+  def initialize(opts)
+    @compound_log_id = opts[:compound_log_id]
   end
 
   def perform

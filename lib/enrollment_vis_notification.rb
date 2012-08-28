@@ -25,7 +25,7 @@ module EnrollmentVisNotification
   def delay_hierarchy_notification(enrollments, type)
     unless enrollments.empty?
       params = enrollments.collect { |e| fill_enroll_params(e, type) }
-      job = HierarchyNotificationJob.new(params)
+      job = HierarchyNotificationJob.new(:params_array => params)
       Delayed::Job.enqueue(job, :queue => 'general')
     end
   end
