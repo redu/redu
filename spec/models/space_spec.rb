@@ -234,18 +234,19 @@ describe Space do
       @space.subjects << subject
 
       # Course que receberá o clone do space acima
-      @clone_c = Factory(:course)
+      @new_course = Factory(:course)
 
-      @space.clone_for_course!(@clone_c.id)
+      @space.clone_for_course!(@new_course)
+      @new_course.spaces.reload
     end
 
     it "should create a new space" do
-      @clone_c.spaces.first.should_not be_nil
-      @clone_c.spaces.first.should_not == @space
+      @new_course.spaces.first.should_not be_nil
+      @new_course.spaces.first.should_not == @space
     end
 
-    it "should create create a clone with same names for subjects" do
-      cloned_names = @clone_c.spaces.first.subjects.collect { |sub| sub.name }
+    it "should create a clone with same names for subjects" do
+      cloned_names = @new_course.spaces.first.subjects.collect { |sub| sub.name }
       original_names = @space.subjects.collect { |sub| sub.name }
       cloned_names.should == original_names
     end
