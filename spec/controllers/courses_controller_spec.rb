@@ -939,10 +939,6 @@ describe CoursesController do
         assigns[:course].should_not be_nil
       end
 
-      it "assigns header_course" do
-        assigns[:header_course].should_not be_nil
-      end
-
       it "renders admin/edit" do
         response.should render_template "courses/admin/edit"
       end

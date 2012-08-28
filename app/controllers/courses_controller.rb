@@ -25,9 +25,6 @@ class CoursesController < BaseController
   end
 
   def edit
-    @header_course = @course.clone :include => [:new_members,
-      :approved_users, :teachers, :students, :tutors, :quota]
-
     respond_to do |format|
       format.html { render 'courses/admin/edit' }
     end
