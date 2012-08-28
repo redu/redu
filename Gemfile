@@ -85,10 +85,13 @@ group :test do
 end
 
 group :development do
-  gem 'rails-footnotes', '>= 3.7.5.rc4'
   gem 'thin'
   # gem 'uniform_notifier'
+
+  # Gems úteis p/ análise performance
   # gem 'bullet'
+  # gem 'rack-mini-profiler'
+  # gem 'rails-footnotes', '>= 3.7.5.rc4'
 end
 
 group :production do

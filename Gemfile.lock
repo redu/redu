@@ -282,8 +282,6 @@ GEM
       activesupport (= 3.0.10)
       bundler (~> 1.0)
       railties (= 3.0.10)
-    rails-footnotes (3.7.5.rc4)
-      rails (>= 3.0.0)
     rails3-generators (0.17.4)
       railties (>= 3.0.0)
     railties (3.0.10)
@@ -412,7 +410,6 @@ DEPENDENCIES
   pusher
   rack-cors
   rails (= 3.0.10)
-  rails-footnotes (>= 3.7.5.rc4)
   rails3-generators
   rake (= 0.8.7)
   rd_searchlogic
