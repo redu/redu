@@ -129,14 +129,13 @@ class Space < ActiveRecord::Base
     self.students.collect{ |student| student.id }
   end
 
-  def clone_for_course!(course_id)
-    course = Course.find(course_id)
-
-    clone = (self.clone :include => :subjects, :except => [:course_id, :space_id])
-    clone.course = course
+  def clone_for_course!(course)
+    clone = (self.clone :except => [:course_id, :space_id])
     clone.owner = course.owner
     clone.save
-
+    self.subjects.each do |subject|
+      subject.clone_for_space!(clone.id)
+    end
     course.spaces << clone
   end
 end
