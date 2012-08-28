@@ -276,7 +276,7 @@ describe Subject do
       @subject = Factory(:complete_subject)
       @subject.update_attribute(:finalized, true)
       basic_space.subjects << @subject
-      @subject.clone_for_space!(@new_space.id)
+      @subject.clone_for_space!(@new_space)
     end
 
     it "should create a new subject" do
