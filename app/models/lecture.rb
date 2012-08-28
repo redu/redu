@@ -64,7 +64,7 @@ class Lecture < ActiveRecord::Base
     assets.last.done?
   end
 
-  def clone_for_subject!(subject_id)
+  def clone_for_subject!(subject)
     if self.lectureable.is_a?(Exercise)
       nested_attrs = { :questions => :alternatives }
     end
@@ -73,7 +73,7 @@ class Lecture < ActiveRecord::Base
       :except => [:rating_average, :view_count, :position, :subject_id]
 
     clone.is_clone = true
-    clone.subject = Subject.find(subject_id)
+    clone.subject = Subject.find(subject)
     clone.save
     clone
   end

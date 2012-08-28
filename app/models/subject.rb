@@ -107,8 +107,7 @@ class Subject < ActiveRecord::Base
     end
   end
 
-  def clone_for_space!(space_id)
-    space = Space.find(space_id)
+  def clone_for_space!(space)
     subject = (self.clone :except => [:space_id, :subject_id])
     space.subjects << subject
     self.lectures.each do |lecture|

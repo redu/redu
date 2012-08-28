@@ -228,7 +228,7 @@ describe Lecture do
       end
 
       before do
-        @new_lecture = subject.clone_for_subject!(@new_subject.id)
+        @new_lecture = subject.clone_for_subject!(@new_subject)
       end
 
       it "generates a lecture differente of itself" do
