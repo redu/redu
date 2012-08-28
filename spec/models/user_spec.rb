@@ -230,11 +230,22 @@ describe User do
       users << Factory(:user, :first_name => "Guilherme")
       users << Factory(:user, :login => "guilherme")
       users << Factory(:user, :email => "guiocavalcanti@redu.com.br")
-      users << Factory(:user, :first_name => "TARCISIO   ", :last_name => "COUTINHO")
 
       User.with_keyword("guilherme").to_set.should == [users[0], users[1]].to_set
-      User.with_keyword("tarcisio coutinho").to_set.should == [users[3]].to_set
     end
+
+    context 'when a user has multiple spaces in the end of his name' do
+      before do
+        # Usuários old style
+        @tarci = Factory.build(:user, :first_name => "TARCISIO   ",
+                              :last_name => "COUTINHO")
+        @tarci.save(:validate => false)
+      end
+
+      it 'retrieves a user by name' do
+        User.with_keyword("tarcisio coutinho").to_set.should == [@tarci].to_set
+      end
+  end
 
     it "should retrieve a presence channel name" do
       subject.presence_channel.should == "presence-user-#{subject.id}"
