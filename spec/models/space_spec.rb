@@ -227,23 +227,27 @@ describe Space do
 
   context "when cloning itself" do
     before do
-      @basic_course = Factory(:course)
+      # Space que terá seu conteúdo clonado
       @space = Factory(:space)
-      subject = Factory(:subject)
+      subject = Factory(:complete_subject)
       subject.update_attribute(:finalized, true)
       @space.subjects << subject
-      @basic_course.spaces << Factory(:space)
-      @new_course = Factory(:course)
-      @space.clone_for_course!(@new_course.id)
+
+      # Course que receberá o clone do space acima
+      @clone_c = Factory(:course)
+
+      @space.clone_for_course!(@clone_c.id)
     end
 
     it "should create a new space" do
-      @new_course.spaces.first.should_not == @space
+      @clone_c.spaces.first.should_not be_nil
+      @clone_c.spaces.first.should_not == @space
     end
 
-    it "should create create a clone with same number of subjects" do
-      debugger
-      @new_course.spaces.first.subjects.each.count == @space.subjects.each.count
+    it "should create create a clone with same names for subjects" do
+      cloned_names = @clone_c.spaces.first.subjects.collect { |sub| sub.name }
+      original_names = @space.subjects.collect { |sub| sub.name }
+      cloned_names.should == original_names
     end
   end
 end
