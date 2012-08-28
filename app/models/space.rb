@@ -122,7 +122,7 @@ class Space < ActiveRecord::Base
     clone.owner = course.owner
     clone.save
     self.subjects.each do |subject|
-      subject.clone_for_space!(clone.id)
+      subject.clone_for_space!(clone)
     end
     course.spaces << clone
   end

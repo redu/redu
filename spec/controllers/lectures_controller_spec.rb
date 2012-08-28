@@ -319,6 +319,53 @@ describe LecturesController do
       end
     end
 
+    context "POST create existent (Page)" do
+      before do
+        @original_lecture = Factory(:lecture)
+        @post_params = { :locale => "pt-BR", :format => "js" }
+        @post_params.merge!({ :space_id => @space, :subject_id => @subject,
+                              :lecture_id => @original_lecture.id })
+      end
+
+      it "creates a new lecture" do
+        expect {
+          post :create, @post_params
+        }.should change(Lecture, :count).by(1)
+      end
+
+      it "creates a lecture with same name as original lecture" do
+        post :create, @post_params
+        Lecture.last.name.should == @original_lecture.name
+      end
+    end
+
+    context "POST create existent (Exercise)" do
+      before do
+        @original_lecture = Factory(:lecture, 
+                                    :lectureable => Factory(:complete_exercise))
+        @params = { :locale => 'pt-BR', :format => 'js', :space_id => @space.id,
+                    :subject_id => @subject.id, 
+                    :lecture_id => @original_lecture.id }
+      end
+
+      it "creates a new lecture" do
+        expect {
+          post :create, @params
+        }.should change(Lecture, :count).by(1)
+      end
+
+      it "creates a lecture with same name as original lecture" do
+        post :create, @params
+        Lecture.last.name.should == @original_lecture.name
+      end
+
+      it "creates a lecture with same number of original questions" do
+        post :create, @params
+        Lecture.last.lectureable.questions.count.should ==
+          @original_lecture.lectureable.questions.count
+      end
+    end
+
     context "POST update (Exercise)" do
       subject { Factory(:lecture,
                         :lectureable => Factory(:complete_exercise),
