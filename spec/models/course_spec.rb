@@ -1182,7 +1182,7 @@ describe Course do
         space.subjects.each do |subject|
           subject.lectures.each do |lecture|
             if lecture.lectureable.is_a?(Exercise)
-              original += lecture.lectureable.questions.count
+              cloned += lecture.lectureable.questions.count
             end
           end
         end
