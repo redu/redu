@@ -5,7 +5,7 @@ require 'oauth/rack/oauth_filter'
 
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.
-Bundler.require(:default, Rails.env) if defined?(Bundler)
+Bundler.require(:default, :assets, Rails.env) if defined?(Bundler)
 
 module Redu
   class Application < Rails::Application

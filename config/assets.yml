@@ -11,6 +11,9 @@ s3_upload_files:
   - public/stylesheets/**
 
 javascripts:
+  landing:
+    - public/javascripts/bootstrap-redu.js
+    - public/javascripts/lazyload.js
   common:
     - public/javascripts/rails.js
     - public/javascripts/application.js
@@ -88,6 +91,8 @@ javascripts:
     - public/javascripts/canvas.js
 
 stylesheets:
+  landing:
+    - public/stylesheets/bootstrap-redu.min.css
   common:
     - public/stylesheets/reset.css
     - public/stylesheets/960.css

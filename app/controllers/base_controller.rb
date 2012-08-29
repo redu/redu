@@ -34,6 +34,14 @@ class BaseController < ApplicationController
     end
   end
 
+  def landing
+    respond_to do |format|
+      format.html do
+        render :layout => 'landing'
+      end
+    end
+  end
+
   def contact
     if request.get?
       @contact = Contact.new
