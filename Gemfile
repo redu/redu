@@ -1,6 +1,10 @@
 source 'http://rubygems.org'
 source 'http://gems.github.com'
 
+group :assets do
+  gem 'compass-rails'
+end
+
 gem 'aasm'
 gem 'actionmailer_inline_css',
   :git => 'git://github.com/ndbroadbent/actionmailer_inline_css.git',
