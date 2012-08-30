@@ -41,16 +41,15 @@ class CoursesController < BaseController
   end
 
   def update
-    @header_course = @course.clone :include => [:new_members,
-      :approved_users, :teachers, :students, :tutors]
+    @header_course = @course.clone
 
     respond_to do |format|
       if @course.update_attributes(params[:course])
-        if params[:course][:subscription_type].eql? "1" # Entrada de membros passou a ser livre, aprovar todos os membros pendentes
+        if params[:course][:subscription_type].eql? "1"
+          #FIXME delay
           @course.user_course_associations.waiting.each do |ass|
             ass.approve!
           end
-
         end
 
         flash[:notice] = 'O curso foi editado.'
@@ -58,7 +57,8 @@ class CoursesController < BaseController
         format.xml { head :ok }
       else
         format.html { render 'courses/admin/edit' }
-        format.xml  { render :xml => @course.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @course.errors,
+                      :status => :unprocessable_entity }
       end
     end
   end
