@@ -156,10 +156,13 @@ class CoursesController < BaseController
 
   # Aba Disciplinas.
   def admin_spaces
-    @spaces = @course.spaces.includes(:owner, :user_space_associations, :subjects).
+    @spaces = @course.spaces.includes(:subjects).
       paginate(:page => params[:page],
                :order => 'updated_at DESC',
                :per_page => Redu::Application.config.items_per_page)
+    # Para evitar diversas consultas, a conta de membros é feita apenas
+    # uma vez
+    @member_count = @spaces.first.users.count if @spaces.first
 
     respond_to do |format|
       format.html { render "courses/admin/admin_spaces" }
