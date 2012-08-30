@@ -26,7 +26,8 @@ class User < ActiveRecord::Base
   has_many :environments_owned, :class_name => "Environment",
     :foreign_key => "user_id"
   # Course
-  has_many :courses, :through => :user_course_associations
+  has_many :courses, :through => :user_course_associations,
+    :conditions => { :destroy_soon => false }
   # Authentication
   has_many :authentications, :dependent => :destroy
 

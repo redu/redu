@@ -58,6 +58,14 @@ GIT
       activesupport (>= 3.0.0)
 
 GIT
+  remote: git://github.com/redu/destroy-soon.git
+  revision: 648cce55d71bd1e63cf11ff09cbc23f9938a744f
+  specs:
+    destroy_soon (0.0.2)
+      activerecord (~> 3.0.10)
+      delayed_job_active_record (~> 0.3.2)
+
+GIT
   remote: git@github.com:redu/invitable.git
   revision: 171dcdb33d0955357a0af7980d6882925958949c
   specs:
@@ -387,6 +395,7 @@ DEPENDENCIES
   date_validator
   deep_cloneable
   delayed_job_active_record!
+  destroy_soon!
   dynamic_form
   em-http-request
   eventmachine

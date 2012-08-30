@@ -1,6 +1,7 @@
 class Course < ActiveRecord::Base
   include ActsAsBillable
   include EnrollmentVisNotification
+  include DestroySoon::ModelAdditions
 
   # Apenas deve ser chamado na criação do segundo curso em diante
   after_create :create_user_course_association, :unless => "self.environment.nil?"
