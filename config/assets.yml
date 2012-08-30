@@ -12,8 +12,9 @@ s3_upload_files:
 
 javascripts:
   landing:
-    - public/javascripts/bootstrap-redu.js
+    - public/javascripts/vendor/modernizr.js
     - public/javascripts/lazyload.js
+    - public/javascripts/bootstrap-redu.js
   common:
     - public/javascripts/rails.js
     - public/javascripts/application.js
@@ -93,6 +94,7 @@ javascripts:
 stylesheets:
   landing:
     - public/stylesheets/bootstrap-redu.min.css
+    - public/stylesheets/landing-new.css
   common:
     - public/stylesheets/reset.css
     - public/stylesheets/960.css
