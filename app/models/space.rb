@@ -132,10 +132,10 @@ class Space < ActiveRecord::Base
   def clone_for_course!(course)
     clone = (self.clone :except => [:course_id, :space_id])
     clone.owner = course.owner
+    course.spaces << clone
     clone.save
     self.subjects.each do |subject|
       subject.clone_for_space!(clone)
     end
-    course.spaces << clone
   end
 end
