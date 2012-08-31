@@ -1,0 +1,24 @@
+@import "compass/css3/images";
+
+// Importadas do UI-components.
+@import "mixins";
+
+%background-light {
+  @include size(300px, 70px);
+
+  &:hover { background-image: url("../images/landing/background-light.png"); }
+}
+
+@import "landing-variables";
+@import "landing-layout";
+@import "landing-header";
+@import "landing-welcome";
+@import "landing-navigation";
+@import "landing-filters";
+@import "landing-segments";
+@import "landing-footer";
+
+
+
+
+

@@ -12,9 +12,8 @@
       <%= include_javascripts :ie %>
     <![endif]-->
     <%= include_javascripts :landing %>
-    <%= lazy_load("http://use.typekit.com/lpo4rgu.js", :jammit => false) do %>
-      try{Typekit.load();}catch(e){}
-    <% end %>
+    <script src="http://use.typekit.com/lpo4rgu.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
     <%= render :partial => "shared/analytics" %>
   </head>
   <body>
