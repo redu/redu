@@ -157,7 +157,7 @@ class Course < ActiveRecord::Base
 
   def unjoin(user)
     enrollments = []
-    subjects_finalized = []
+    enrollments_finalized = []
     course_association = user.get_association_with(self)
     course_association.destroy
 
@@ -177,14 +177,14 @@ class Course < ActiveRecord::Base
       space.subjects.each do |subject|
         enrollment = user.get_association_with subject
         enrollments << enrollment if enrollment
-        subjects_finalized << enrollment if enrollment.graduaded
+        enrollments_finalized << enrollment if enrollment.graduaded
         enrollment.destroy if enrollment
       end
     end
     # Associa o delayed_job para a remoção dos enrollments em visualização
     delay_hierarchy_notification(enrollments, "remove_enrollment")
     # Envia notificação de remove_subject_finalized para visualização
-    delay_hierarchy_notification(subjects_finalized, "remove_subject_finalized")
+    delay_hierarchy_notification(enrollments_finalized, "remove_subject_finalized")
   end
 
 
