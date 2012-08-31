@@ -147,7 +147,7 @@ describe EnrollmentVisNotification do
           subject.update_grade!
 
           ActiveRecord::Observer.with_observers(:enrollment_observer) do
-            subject.role = 2
+            subject.role = 4
             subject.save
           end
 
