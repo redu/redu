@@ -182,7 +182,6 @@ class EnvironmentsController < BaseController
   end
 
   def admin_courses
-    @environment = Environment.find(params[:id])
     @courses = @environment.courses.paginate(:page => params[:page],
                                              :per_page => Redu::Application.config.items_per_page)
 
