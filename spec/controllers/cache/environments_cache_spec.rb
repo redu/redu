@@ -67,4 +67,52 @@ describe "EnvironmentsController" do
       end
     end
   end
+
+  context 'environment_sidebar_connections_with_count' do
+    let(:cache_identifier) do
+      "views/environment_sidebar_connections_with_count/#{environment.id}"
+    end
+
+    context 'writing' do
+      #spec/support/shared_examples/cache_writing...
+      it_should_behave_like 'cache writing' do
+        let(:controller) { EnvironmentsController.new }
+        let(:requisition) do
+          get :show, :id => environment.to_param, :locale => 'pt-BR'
+        end
+      end
+    end
+
+    context 'expiration' do
+      let(:course) { Factory(:course, :environment => environment) }
+
+      it 'when a user starts to be a part of an environment' do
+        ActiveRecord::Observer.with_observers(
+          :user_environment_association_cache_observer) do
+            performing_cache(cache_identifier) do |cache|
+              course.join Factory(:user)
+
+              cache.should_not exist(cache_identifier)
+            end
+        end
+      end
+
+      context 'when a user participates on a environment' do
+        before do
+          course.join user
+        end
+
+        it 'expire cache when the user goes out' do
+          ActiveRecord::Observer.with_observers(
+            :user_environment_association_cache_observer) do
+              performing_cache(cache_identifier) do |cache|
+                course.unjoin user
+
+                cache.should_not exist(cache_identifier)
+              end
+          end
+        end
+      end
+    end
+  end
 end
