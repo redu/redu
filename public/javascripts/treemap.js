@@ -98,9 +98,21 @@ var StudentsTreemap = function () {
     $("#"+div +" > .chart").remove();
   }
 
+  var fillLegend = function () {
+    $("svg > #gray").css("fill", color.gray);
+    $("svg > #red").css("fill", color.red);
+    $("svg > #orange").css("fill", color.orange);
+    $("svg > #yellow").css("fill", color.yellow);
+    $("svg > #green").css("fill", color.green);
+    $("svg > #blue").css("fill", color.blue);
+  }
+
   // Função visível para a view, carregamento do treemap
   return {
     load: function (graphView) {
+      //Preenche as cores da legenda
+      fillLegend();
+
       // Inicializa o javascript do form
       var graph = graphView.form.plotGraphForm(graphView.renderTo);
 

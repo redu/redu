@@ -4832,6 +4832,34 @@ table.spaced tr td {
   margin-bottom: 20px;
 }
 
+#space-manage .tip{
+  float: left;
+  font-family: museo-sans, "Helvetica Neue", arial, sans-serif;
+  font-size: 12px;
+  margin-bottom: 3px;
+}
+
+#space-manage #legend{
+  clear: both;
+  display: block;
+  margin: 5px;
+  width: auto;
+  height: 12px;
+  padding: 2px;
+}
+
+#space-manage #legend svg{
+  width: 20px;
+  height: 10px;
+  float: left;
+}
+
+#space-manage .item-legend{
+  float: left;
+  margin-left: 3px;
+  margin-right: 20px;
+}
+
 .management .form-header .strong,
 .management .form-header-closer,
 .management .form-header,
