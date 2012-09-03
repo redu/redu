@@ -26,38 +26,40 @@
           </div>
         <% else %>
           <h3 class="form-header graph-header">Qual o desempenho dos alunos?</h3>
-          <p class="tip">
-            Este mapa é uma representação do desempenho dos alunos matriculados na disciplina.
-          </p>
-          <p class="tip">
-            Cada aluno está representado por um retângulo, o seu tamanho é proporcional à sua participação nas aulas e módulos e sua cor é determinada pela média obtida no exercícios da disciplina.
-          </p>
-          <p class="tip">
-            As cores e as notas estão relacionadas segundo a legenda a seguir:
-          </p>
-          <div id="legend">
-            <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+          <div id="explanation">
+            <p class="tip">
+              Este mapa é uma representação do desempenho dos alunos matriculados na disciplina.
+            </p>
+            <p class="tip">
+              Cada aluno está representado por um retângulo, o seu tamanho é proporcional à sua participação nas aulas e módulos e sua cor é determinada pela média obtida no exercícios da disciplina.
+            </p>
+            <p class="tip">
+              As cores e as notas estão relacionadas segundo a legenda a seguir:
+            </p>
+            <div id="legend">
+              <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
               <rect width="30" height="10" id="gray"/> </svg>
-              <span class="item-legend">Nenhum exercício realizado.</span>
+              <span class="item-legend">Nenhum exercício realizado</span>
               <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-                <rect width="30" height="10" id="red"/> </svg>
-              <span class="item-legend">0-3</span>
+              <rect width="30" height="10" id="red"/> </svg>
+              <span class="item-legend">0 - 3</span>
               <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-                <rect width="30" height="10" id="orange"/> </svg>
-              <span class="item-legend">3-5</span>
+              <rect width="30" height="10" id="orange"/> </svg>
+              <span class="item-legend">3 - 5</span>
               <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-                <rect width="30" height="10" id="yellow"/> </svg>
-              <span class="item-legend">5-7</span>
+              <rect width="30" height="10" id="yellow"/> </svg>
+              <span class="item-legend">5 - 7</span>
               <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-                <rect width="30" height="10" id="green"/> </svg>
-              <span class="item-legend">7-9</span>
+              <rect width="30" height="10" id="green"/> </svg>
+              <span class="item-legend">7 - 9</span>
               <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-                <rect width="30" height="10" id="blue"/> </svg>
-              <span class="item-legend">9-10</span>
+              <rect width="30" height="10" id="blue"/> </svg>
+              <span class="item-legend">9 - 10</span>
+            </div>
+            <p class="tip">
+                Para ver mais informações dos alunos passe o mouse por cima do mapa ou clique nos retângulos.
+            </p>
           </div>
-          <p class="tip">
-            Para ver mais informações dos alunos passe o mouse por cima do mapa ou clique nos retângulos.
-          </p>
 
           <%= lazy_load(:chart, :jammit => true) do %>
             var treemap = new StudentsTreemap();
@@ -65,6 +67,7 @@
             renderTo: "treemap-chart",
             url: "<%= api_space_users_path(@space.id, :oauth_token => @token, :role=>"member") %>"});
           <% end %>
+
           <%= form_tag Redu::Application.config.vis[:students_participation], :method => :get,
             :remote => true, :class => "concave-form", :id => "graph-form" do %>
             <% @space.students_id.each do |id| %>

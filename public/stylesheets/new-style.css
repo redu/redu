@@ -4832,7 +4832,7 @@ table.spaced tr td {
   margin-bottom: 20px;
 }
 
-#space-manage .tip{
+#space-manage #explanation .tip{
   float: left;
   font-family: museo-sans, "Helvetica Neue", arial, sans-serif;
   font-size: 12px;
@@ -4842,7 +4842,8 @@ table.spaced tr td {
 #space-manage #legend{
   clear: both;
   display: block;
-  margin: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   width: auto;
   height: 12px;
   padding: 2px;

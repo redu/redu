@@ -59,6 +59,7 @@ var StudentsTreemap = function () {
       if (user) {
         item.name = user.first_name;
         item.last_name = user.last_name;
+        item.id = vis[index].user_id;
       };
 
       // Participação + nota do aluno
@@ -107,9 +108,43 @@ var StudentsTreemap = function () {
     $("svg > #blue").css("fill", color.blue);
   }
 
+  var reportDescription = function (form, data) {
+      form.before($("<span/>", { id: "report-description", class: "concave-button", text: "Mostrar informações detalhadas" }));
+      $("#report-description").click(function (){
+          $("#report").slideToggle('slow');
+      });
+
+      form.before($("<table/>", { id: "report", class: "concave-admin-table" }));
+
+      var report = $("#report");
+      report.hide();
+      report.append($("<tbody/>"));
+
+      $.each(data.children, function(index, object){
+          report.find("tbody").append($("<tr/>", { id: "" + object.id, class: "row" }));
+
+          var row = report.find("#" + object.id);
+          row.append($("<td/>", { class: "cell" }));
+          row.find(".cell").append($("<div/>", { class: "student-info" }));
+
+          var div = row.find(".student-info");
+          div.append($("<h4/>", { class: "student-name",
+              text: object.name + " " + object.last_name }));
+          div.append($("<span/>", { class: "participation",
+              text: "Participação: " + object.activities + " comentários, " +
+              object.answered_activities + " respostas a comentários, " +
+              object.helps + " pedidos de ajuda, " +
+              object.answered_helps + " respostas a pedidos de ajuda.  Média dos exercícios: "
+              + object.grade }));
+
+          row.append($("<td/>", { class: "cell treemap-link" }));
+          row.find(".treemap-link").append($("<a/>", { text: "no treemap", href: "#" }))
+      });
+  }
+
   // Função visível para a view, carregamento do treemap
   return {
-    load: function (graphView) {
+   load: function (graphView) {
       //Preenche as cores da legenda
       fillLegend();
 
@@ -184,6 +219,8 @@ var StudentsTreemap = function () {
             // Tooltip da célula
             $(".cell").tipTip( {defaultPosition: "left",
                                 attribute: "alt" });
+
+            reportDescription(graphView.form, root);
           }
         })
       })
