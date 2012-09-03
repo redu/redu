@@ -12,7 +12,7 @@
     </tr>
   </thead>
   <tbody>
-    <%= render :partial => 'courses/admin/user_item_admin', :collection => @memberships %>
+    <%= render :partial => 'courses/admin/user_item_admin', :collection => @memberships, :locals => { :spaces_count => @spaces_count } %>
   </tbody>
 </table>
 <div class="remove-actions">

@@ -18,7 +18,7 @@
           <% end %>
           <div id="user_list">
             <%= render :partial => 'courses/admin/user_list_admin',
-              :locals => {:memberships => @memberships}%>
+              :locals => {:memberships => @memberships, :spaces_count => @spaces_count}%>
           </div>
         <% else %>
           <div class="box_notice">Não há usuários no curso.</div>
