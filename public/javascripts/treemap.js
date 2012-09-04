@@ -99,6 +99,12 @@ var StudentsTreemap = function () {
     $("#"+div +" > .chart").remove();
   }
 
+  // Função usada para remover o relatório descritivo antigo, caso houver
+  var removeReportDescription = function () {
+    $("#report-description").remove();
+    $("#report").remove();
+  }
+
   var fillLegend = function () {
     $("svg > #gray").css("fill", color.gray);
     $("svg > #red").css("fill", color.red);
@@ -111,34 +117,59 @@ var StudentsTreemap = function () {
   var reportDescription = function (form, data) {
       form.before($("<span/>", { id: "report-description", class: "concave-button", text: "Mostrar informações detalhadas" }));
       $("#report-description").click(function (){
-          $("#report").slideToggle('slow');
+          $("#report").slideToggle('fast');
       });
 
-      form.before($("<table/>", { id: "report", class: "concave-admin-table" }));
+      form.before($("<table/>", { id: "report", class: "table-report-students" }));
 
       var report = $("#report");
       report.hide();
       report.append($("<tbody/>"));
 
+      report.find("tbody").append($("<tr/>", { class: "row-head" }));
+      report.find(".row-head").append($("<th/>", { class: "head", text: "Nome" }));
+      report.find(".row-head").append($("<th/>", { class: "head", text: "Comentários" }));
+      report.find(".row-head").append($("<th/>", { class: "head", text: "Resposta a comentários" }));
+      report.find(".row-head").append($("<th/>", { class: "head", text: "Pedidos de ajuda" }));
+      report.find(".row-head").append($("<th/>", { class: "head", text: "Resposta a pedidos de ajuda" }));
+      report.find(".row-head").append($("<th/>", { class: "head", text: "Média dos exercícios" }));
+      report.find(".row-head").append($("<th/>", { class: "head", text: "Link" }));
+
       $.each(data.children, function(index, object){
-          report.find("tbody").append($("<tr/>", { id: "" + object.id, class: "row" }));
+          report.find("tbody").append($("<tr/>",
+                  { id: "" + object.id, class: "row" }));
 
           var row = report.find("#" + object.id);
           row.append($("<td/>", { class: "cell" }));
           row.find(".cell").append($("<div/>", { class: "student-info" }));
 
           var div = row.find(".student-info");
-          div.append($("<h4/>", { class: "student-name",
+          div.append($("<span/>", { class: "student-name",
               text: object.name + " " + object.last_name }));
-          div.append($("<span/>", { class: "participation",
-              text: "Participação: " + object.activities + " comentários, " +
-              object.answered_activities + " respostas a comentários, " +
-              object.helps + " pedidos de ajuda, " +
-              object.answered_helps + " respostas a pedidos de ajuda.  Média dos exercícios: "
-              + object.grade }));
+
+          row.append($("<td/>", { id: "activities", class: "cell" }));
+          row.find("#activities").append($("<span/>",
+                  { class: "participation", text: object.activities }));
+
+          row.append($("<td/>", { id: "answered_activities", class: "cell" }));
+          row.find("#answered_activities").append($("<span/>",
+                  { class: "participation", text: object.answered_activities }));
+
+          row.append($("<td/>", { id: "helps", class: "cell" }));
+          row.find("#helps").append($("<span/>",
+                  { class: "participation", text: object.helps }));
+
+          row.append($("<td/>", { id: "answered_helps", class: "cell" }));
+          row.find("#answered_helps").append($("<span/>",
+                  { class: "participation", text: object.answered_helps }));
+
+          row.append($("<td/>", { id: "grade", class: "cell" }));
+          row.find("#grade").append($("<span/>",
+                  { class: "participation",
+                    text: object.grade === -1 ? "Não realizou" : object.grade }));
 
           row.append($("<td/>", { class: "cell treemap-link" }));
-          row.find(".treemap-link").append($("<a/>", { text: "no treemap", href: "#" }))
+          row.find(".treemap-link").append($("<a/>", { text: "treemap", href: "#" }))
       });
   }
 
@@ -220,6 +251,7 @@ var StudentsTreemap = function () {
             $(".cell").tipTip( {defaultPosition: "left",
                                 attribute: "alt" });
 
+            removeReportDescription();
             reportDescription(graphView.form, root);
           }
         })
