@@ -66,8 +66,7 @@ Redu::Application.configure do
 
   # Configurações de VisClient
   config.vis_client = {
-    :url => "http://localhost:4000/hierarchy_notifications.json",
-    :migration => "http://localhost:4000/database_hierarchy_notifications.json"
+    :url => "http://localhost:4000/hierarchy_notifications.json"
   }
 
   config.vis = {
