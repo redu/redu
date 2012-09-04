@@ -41,10 +41,9 @@ describe EnvironmentsController do
           @params = @params.merge hash
         end
 
-        it "assigns basic content variables" do
-          post :create, @params
-          assigns[:has_basic_content].should be_true
-          assigns[:base_course_id].should_not be_nil
+        it_should_behave_like "a basic content variables proxy" do
+          let(:params) { @params }
+          let(:base_course) { @base_course }
         end
       end
     end # context "at step 1"
