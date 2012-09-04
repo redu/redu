@@ -1,0 +1,48 @@
+// ==========================================================================
+// PLANS
+// ==========================================================================
+.landing-plans {
+  margin: 0 0 0 8px;
+
+  .type-plan {
+    margin: 0 9px;
+    width: 208px;
+    display: inline-block;
+    border: 1px solid rgb(115, 195, 230);
+    background-color: rgb(247, 247, 247);
+
+    .borderradius & { @include border-radius(10px); }
+
+    .type-plan-icon {
+      padding: 10px;
+      height: 100px;
+      display: block;
+
+      h3 {
+        margin-top: 10px;
+        font-size: 18px;
+        text-align: center;
+      }
+
+      img {
+        display: block;
+        margin: 0 auto;
+      }
+    }
+
+    .free-plan {
+      display: block;
+      background-color: rgb(225, 241, 225);
+
+      hr {
+        margin: 0;
+      }
+    }
+
+    .learn-plan {
+      display: block;
+      padding: 10px;
+      text-align: center;
+    }
+  }
+}
