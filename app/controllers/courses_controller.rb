@@ -31,7 +31,7 @@ class CoursesController < BaseController
   end
 
   def destroy
-    @course.destroy
+    @course.async_destroy
 
     respond_to do |format|
       flash[:notice] = "Curso removido."

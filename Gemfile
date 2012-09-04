@@ -68,6 +68,7 @@ gem 'oauth-plugin', '~> 0.4.0'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'roar-rails', '~> 0.0.3',
   :git => 'git://github.com/apotonick/roar-rails.git'
+gem 'destroy_soon', :git => 'git://github.com/redu/destroy-soon.git'
 
 # Gems específicos de algum ambiente
 group :development, :test do
