@@ -710,22 +710,6 @@ describe User do
     end
   end
 
-
-  context "when destroying" do
-    context "with a course marked for destruction" do
-      let(:course) { Factory(:complete_environment, :owner => subject ).courses.first }
-      before do
-        course.update_attribute(:destroy_soon, true)
-      end
-
-      it "should destroy associated course" do
-        expect {
-          subject.destroy
-        }.to change(Course, :count).by(-1)
-      end
-    end
-  end
-
   private
   def create_friendship(user1, user2)
     user1.be_friends_with(user2)
