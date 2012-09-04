@@ -48,6 +48,15 @@ $gray5:   rgb(179, 179, 179) !default;
 $gray6:   rgb(109, 110, 111) !default;
 
 
+// Tipografia.
+// ==========================================================================
+
+$baseFontFamily:      "Helvetica Neue", Arial, sans-serif !default;
+$museoSans:           museo-sans, $baseFontFamily;
+$museoSlab:           museo-slab, Georgia, $baseFontFamily;
+$monospaceFontFamily: "Lucida Console", Courier, monospace;
+
+
 // Rodapé.
 // ==========================================================================
 
