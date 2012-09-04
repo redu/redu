@@ -127,9 +127,6 @@ class EnvironmentsController < BaseController
   # PUT /environments/1
   # PUT /environments/1.xml
   def update
-    @header_environment = @environment.clone :include => [:users,
-      :administrators, :teachers, :tutors]
-    @header_environment.id = @environment.id
 
     respond_to do |format|
       if @environment.update_attributes(params[:environment])
@@ -137,6 +134,7 @@ class EnvironmentsController < BaseController
         format.html { redirect_to(@environment) }
         format.xml  { head :ok }
       else
+        @header_environment = @environment.clone
         format.html { render 'environments/admin/edit' }
         format.xml  { render :xml => @environment.errors, :status => :unprocessable_entity }
       end
