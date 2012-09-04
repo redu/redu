@@ -46,10 +46,6 @@ class EnvironmentsController < BaseController
 
   # GET /environments/1/edit
   def edit
-    @header_environment = @environment.clone :include => [:users,
-      :administrators, :teachers, :tutors]
-    @header_environment.id = @environment.id
-
     respond_to do |format|
       format.html { render 'environments/admin/edit' }
     end

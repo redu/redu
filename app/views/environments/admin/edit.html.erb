@@ -15,14 +15,14 @@
 <%= render :partial => 'shared/management_background' %>
 <div class="management-sidebar">
   <%= render :partial => 'environments/sidebar',
-    :locals => { :environment => @header_environment } %>
+    :locals => { :environment => @header_environment || @environment } %>
  </div>
 <div class="main grid_12 omega big-col management-wrapper">
   <%= render :partial => 'environments/breadcrumbs',
-    :locals => { :environment => @header_environment } %>
+    :locals => { :environment => @header_environment || @environment } %>
 
   <%= render :partial => 'environments/admin/header',
-    :locals => { :environment => @header_environment } %>
+    :locals => { :environment => @header_environment || @environment } %>
 
   <div id="environment-manage" class="body management">
     <%= render :partial => 'environments/admin/clean_header' %>
