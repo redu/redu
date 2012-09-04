@@ -21,6 +21,17 @@
             <h3 class="form-header form-header-complement graph-header">Quantos pedidos de ajuda foram respondidos?</h3>
             <%= render :partial => 'spaces/admin/subject_chart_admin',
               :collection => @space.subjects, :as => :subject %>
+
+            <%= lazy_load(:chart, :jammit => true) do %>
+              try{
+              var par = new SubjectParticipation();
+              par.load("<%= api_vis_subject_activities_path(@space.id) %>",
+              "<%= @token %>",
+              "<%= @space.subjects.map do |subj| "&subjects[]=#{subj.id}" end %>"
+              );
+              }catch(e){}
+            <% end %>
+
           <% end %>
         </div>
       <% end %>
