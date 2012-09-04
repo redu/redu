@@ -15,7 +15,8 @@ class User < ActiveRecord::Base
   # ASSOCIATIONS
   has_many :chat_messages
   # Space
-  has_many :spaces, :through => :user_space_associations
+  has_many :spaces, :through => :user_space_associations,
+    :conditions => ["spaces.destroy_soon = ?", false]
   has_many :user_space_associations, :dependent => :destroy
   has_many :spaces_owned, :class_name => "Space" , :foreign_key => "user_id"
   # Environment

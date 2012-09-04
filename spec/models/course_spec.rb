@@ -865,4 +865,17 @@ describe Course do
       end
     end
   end
+
+  context "with a space marked for destruction" do
+    it "should destroy associated space" do
+      subject.spaces << \
+        Factory(:space, :owner => subject.owner, :course => subject,
+                :destroy_soon => true)
+      subject.spaces.reload
+      expect {
+        subject.destroy
+      }.to change(Space, :count).by(-1)
+    end
+  end
+
 end

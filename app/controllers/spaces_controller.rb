@@ -163,7 +163,7 @@ class SpacesController < BaseController
   # DELETE /spaces/1
   # DELETE /spaces/1.xml
   def destroy
-    @space.destroy
+    @space.async_destroy
 
     respond_to do |format|
       format.html { redirect_to(environment_course_path(@space.course.environment, @space.course)) }

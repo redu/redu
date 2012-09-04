@@ -7,7 +7,9 @@ class Course < ActiveRecord::Base
   after_create :create_user_course_association, :unless => "self.environment.nil?"
 
   belongs_to :environment
-  has_many :spaces, :dependent => :destroy
+  has_many :spaces, :dependent => :destroy,
+    :conditions => ["spaces.destroy_soon = ?", false]
+  has_many :all_spaces, :dependent => :destroy, :class_name => "Space"
   has_many :user_course_associations, :dependent => :destroy
   has_many :user_course_invitations, :dependent => :destroy
   has_many :course_enrollments
