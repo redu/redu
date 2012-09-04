@@ -427,23 +427,22 @@ class User < ActiveRecord::Base
   def get_association_with(entity)
     return false unless entity
 
-    case entity.class.to_s
+    association = case entity.class.to_s
     when 'Space'
-      association = UserSpaceAssociation.where('user_id = ? AND space_id = ?',
-                                                 self.id, entity.id).first
+      self.user_space_associations.
+        find(:first, :conditions => { :space_id => entity.id })
     when 'Course'
-      association = UserCourseAssociation.where('user_id = ? AND course_id = ?',
-                                                  self.id, entity.id).first
+      self.user_course_associations.
+        find(:first, :conditions => { :course_id => entity.id })
     when 'Environment'
-      association = UserEnvironmentAssociation.
-                      where('user_id = ? AND environment_id = ?', self.id,
-                              entity.id).first
+      self.user_environment_associations.
+        find(:first, :conditions => { :environment_id => entity.id })
     when 'Subject'
-      association = Enrollment.where('user_id = ? AND subject_id = ?', self.id,
-                                       entity.id).first
+      self.enrollments.
+        find(:first, :conditions => { :subject_id => entity.id })
     when 'Lecture'
-      association = Enrollment.where('user_id = ? AND subject_id = ?', self.id,
-                                      entity.subject.id).first
+      self.enrollments.
+        find(:first, :conditions => { :subject_id => entity.subject.id })
     end
   end
 
