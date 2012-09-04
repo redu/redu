@@ -1,8 +1,9 @@
 require 'spec_helper'
 require 'authlogic/test_case'
-include Authlogic::TestCase
 
 describe SessionsController do
+  include Authlogic::TestCase
+
   before do
     @user = Factory(:user)
   end

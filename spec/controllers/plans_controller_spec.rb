@@ -1,8 +1,9 @@
 require 'spec_helper'
 require 'authlogic/test_case'
-include Authlogic::TestCase
 
 describe PlansController do
+  include Authlogic::TestCase
+
   context "for User" do
     before do
       @user = Factory(:user)

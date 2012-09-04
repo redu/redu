@@ -2,9 +2,9 @@ require 'spec_helper'
 require 'authlogic/test_case'
 require 'vis_application_additions'
 
-include Authlogic::TestCase
-
 describe SpacesController do
+  include Authlogic::TestCase
+
   context "GET students_endless" do
     before do
       environment = Factory(:environment, :published => true)

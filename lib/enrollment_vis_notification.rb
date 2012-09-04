@@ -24,8 +24,12 @@ module EnrollmentVisNotification
   # Cria um delayed_job do tipo HierarchyNotification para enviar requisições para visualização
   def delay_hierarchy_notification(enrollments, type)
     unless enrollments.empty?
-      params = enrollments.collect { |e| fill_enroll_params(e, type) }
-      job = HierarchyNotificationJob.new(params)
+     if type == "enrollment"
+        params = enrollments.collect { |e| e.id }
+      else
+        params = enrollments.collect { |e| fill_enroll_params(e, type) }
+      end
+      job = HierarchyNotificationJob.new(params, type)
       Delayed::Job.enqueue(job, :queue => 'general')
     end
   end

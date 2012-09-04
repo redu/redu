@@ -1,6 +1,9 @@
 class CoursesController < BaseController
   respond_to :html, :js
 
+  before_filter Proc.new {
+    @course = Course.find_by_path(params[:id], :include => [:audiences])
+  }, :only => :edit
   load_resource :environment, :find_by => :path
   load_and_authorize_resource :course, :through => :environment,
     :except => [:index], :find_by => :path
@@ -22,16 +25,13 @@ class CoursesController < BaseController
   end
 
   def edit
-    @header_course = @course.clone :include => [:new_members,
-      :approved_users, :teachers, :students, :tutors, :quota]
-
     respond_to do |format|
       format.html { render 'courses/admin/edit' }
     end
   end
 
   def destroy
-    @course.destroy
+    @course.async_destroy
 
     respond_to do |format|
       flash[:notice] = "Curso removido."
@@ -41,16 +41,15 @@ class CoursesController < BaseController
   end
 
   def update
-    @header_course = @course.clone :include => [:new_members,
-      :approved_users, :teachers, :students, :tutors]
+    @header_course = @course.clone
 
     respond_to do |format|
       if @course.update_attributes(params[:course])
-        if params[:course][:subscription_type].eql? "1" # Entrada de membros passou a ser livre, aprovar todos os membros pendentes
+        if params[:course][:subscription_type].eql? "1"
+          #FIXME delay
           @course.user_course_associations.waiting.each do |ass|
             ass.approve!
           end
-
         end
 
         flash[:notice] = 'O curso foi editado.'
@@ -58,7 +57,8 @@ class CoursesController < BaseController
         format.xml { head :ok }
       else
         format.html { render 'courses/admin/edit' }
-        format.xml  { render :xml => @course.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @course.errors,
+                      :status => :unprocessable_entity }
       end
     end
   end
@@ -156,10 +156,13 @@ class CoursesController < BaseController
 
   # Aba Disciplinas.
   def admin_spaces
-    @spaces = @course.spaces.includes(:owner, :user_space_associations, :subjects).
+    @spaces = @course.spaces.includes(:subjects).
       paginate(:page => params[:page],
                :order => 'updated_at DESC',
                :per_page => Redu::Application.config.items_per_page)
+    # Para evitar diversas consultas, a conta de membros é feita apenas
+    # uma vez
+    @member_count = @spaces.first.users.count if @spaces.first
 
     respond_to do |format|
       format.html { render "courses/admin/admin_spaces" }
@@ -283,9 +286,10 @@ class CoursesController < BaseController
   # Aba Membros.
   def admin_members
     @memberships = @course.user_course_associations.approved.
-                     includes(:user => [{:user_space_associations => {:space => :course}}]).
+                     includes(:user).
                      paginate(:page => params[:page],:order => 'updated_at DESC',
                               :per_page => Redu::Application.config.items_per_page)
+    @spaces_count = @course.spaces.count
 
       respond_to do |format|
         format.html { render "courses/admin/admin_members" }

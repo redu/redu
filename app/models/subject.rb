@@ -21,6 +21,19 @@ class Subject < ActiveRecord::Base
 
   validates_presence_of :name
 
+  # Associa um usuário a vários subjects
+  # - Retorna os enrollments criados
+  def self.enroll(user, subjects, role = Role[:member])
+    enrolls = subjects.collect do |subject|
+      Enrollment.new(:subject => subject, :user => user, :role => role)
+    end
+
+    Enrollment.import(enrolls, :validate => false)
+    enrollments = Enrollment.where('user_id = ? AND subject_id IN (?)', user, subjects).includes(:subject => [:lectures])
+    enrollments.each { |e| e.create_assets_reports }
+    enrollments
+  end
+
   def recent?
     self.created_at > 1.week.ago
   end

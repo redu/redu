@@ -255,7 +255,9 @@ describe Plan do
                                     :previous_balance => -4,
                                     :period_start => Date.today - 15.days,
                                     :period_end => Date.today + 15.days)
-          (1..10).each { Factory(:license, :invoice => subject.invoice)}
+          (1..10).each { Factory(:license, :invoice => subject.invoice,
+                                 :period_start => Date.today - 15.days,
+                                 :period_end => nil)}
         end
 
         it "should change last invoice to closed" do
@@ -362,7 +364,9 @@ describe Plan do
                                     :period_start => Date.today - 15.days,
                                     :period_end => Date.today + 15.days)
           (1..10).each { Factory(:license, :role => Role[:member],
-                                 :invoice => subject.invoice)}
+                                 :invoice => subject.invoice,
+                                 :period_start => Date.today - 15.days,
+                                 :period_end => nil)}
 
           subject.migrate_to @new_plan
         end
@@ -453,14 +457,20 @@ describe Plan do
                                   :amount => 25.00,
                                   :period_start => Date.today - 45.days,
                                   :period_end => Date.today - 16.days)
-        subject.invoice.licenses << 10.times.collect { Factory.build(:license) }
+        subject.invoice.licenses << 10.times.collect do
+          Factory.build(:license, :period_start => Date.today - 45.days,
+                        :period_end => nil)
+        end
 
         # Amount 6.25
         subject.invoice = Factory(:licensed_invoice,
                                   :state => "open",
                                   :period_start => Date.today - 15.days,
                                   :period_end => Date.today + 15.days)
-        subject.invoice.licenses << 5.times.collect { Factory.build(:license) }
+        subject.invoice.licenses << 5.times.collect do
+          Factory.build(:license, :period_start => Date.today - 15.days,
+                        :period_end => nil)
+        end
 
         subject.billable = Factory(:environment, :owner => subject.user)
 

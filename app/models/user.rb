@@ -26,7 +26,8 @@ class User < ActiveRecord::Base
   has_many :environments_owned, :class_name => "Environment",
     :foreign_key => "user_id"
   # Course
-  has_many :courses, :through => :user_course_associations
+  has_many :courses, :through => :user_course_associations,
+    :conditions => { :destroy_soon => false }
   # Authentication
   has_many :authentications, :dependent => :destroy
 
@@ -84,7 +85,7 @@ class User < ActiveRecord::Base
     where("LOWER(login) LIKE :keyword OR " + \
       "LOWER(first_name) LIKE :keyword OR " + \
       "LOWER(last_name) LIKE :keyword OR " +\
-      "CONCAT(LOWER(first_name), ' ', LOWER(last_name)) LIKE :keyword OR " +\
+      "CONCAT(TRIM(LOWER(first_name)), ' ', TRIM(LOWER(last_name))) LIKE :keyword OR " +\
       "LOWER(email) LIKE :keyword", { :keyword => "%#{keyword.downcase}%" }).
       limit(10).select("users.id, users.first_name, users.last_name, users.login, users.email, users.avatar_file_name")
   }
@@ -165,6 +166,8 @@ class User < ActiveRecord::Base
   validates_format_of :mobile,
                       :with => /^\+\d{2}\s\(\d{2}\)\s\d{4}-\d{4}$/,
                       :allow_blank => true
+  validates_format_of :first_name, :with => /^\S(\S|\s)*\S$/
+  validates_format_of :last_name, :with => /^\S(\S|\s)*\S$/
 
   # override activerecord's find to allow us to find by name or id transparently
   def self.find(*args)

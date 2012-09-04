@@ -1,8 +1,9 @@
 require "spec_helper"
 require 'authlogic/test_case'
-include Authlogic::TestCase
 
 describe RolesController do
+  include Authlogic::TestCase
+
   before do
     @environment = Factory(:environment)
     @owner = @environment.owner
@@ -71,6 +72,19 @@ describe RolesController do
 
       @owner.get_association_with(@courses.first).role.should ==
         Role[:environment_admin]
+    end
+  end
+
+  context 'when a commom member is logged in' do
+    before do
+      UserSession.create @member
+    end
+
+    it 'Roles#index should not be accessible' do
+      get :index, :environment_id => @environment.to_param,
+        :user_id => @member.to_param, :locale => 'pt-BR'
+
+      response.should_not be_success
     end
   end
 end

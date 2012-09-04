@@ -39,6 +39,7 @@ describe Enrollment do
   context "grade" do
     let :lectures do
       3.times.collect do
+        subject
         Factory(:lecture, :subject => @sub, :owner => @sub.owner)
       end
     end
@@ -71,6 +72,7 @@ describe Enrollment do
 
       expect {
         Factory(:lecture, :subject => @sub, :owner => @sub.owner)
+        subject.reload
         subject.update_grade!
       }.should change(subject, :graduaded).to(false)
     end

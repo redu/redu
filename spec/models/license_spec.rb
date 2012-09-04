@@ -111,4 +111,10 @@ describe License do
       License.get_open_license_with(@another_user, @course).role == Role[:tutor]
     end
   end
+
+  it "should return the total of days" do
+    subject.period_start = Date.today
+    subject.period_end = Date.today + 15.days
+    subject.total_days.should == 16
+  end
 end

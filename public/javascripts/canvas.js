@@ -10,6 +10,8 @@ $(document).ready(function(){
     this.thresholdWidth = 740;
     this.normalHeight = 1000;
     this.maxWidth = 920;
+    this.defaultWidth = 748;
+    this.defaultHeight = 1000;
 
     this.socket = this.initSocket({
       remote : options.remote,
@@ -90,6 +92,7 @@ $(document).ready(function(){
     var socket = new easyXDM.Socket({
       container : options.container[0],
       remote : options.remote,
+      props : { width : canvas.defaultWidth, height: canvas.defaultHeight },
       onMessage : function(message, origin) {
         var remote = Canvas.parseUri(this.remote),
           actual = Canvas.parseUri(origin),

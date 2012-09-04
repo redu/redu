@@ -1,8 +1,9 @@
 require 'spec_helper'
 require 'authlogic/test_case'
-include Authlogic::TestCase
 
 describe InvoicesController do
+  include Authlogic::TestCase
+
   subject { Factory(:package_invoice) }
 
   context "when PackageInvoice" do

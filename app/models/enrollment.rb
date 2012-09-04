@@ -38,14 +38,14 @@ class Enrollment < ActiveRecord::Base
 
   # Atualiza a porcentagem de cumprimento do módulo.
   def update_grade!
-    total = self.asset_reports.count
-    done = self.asset_reports.count(:conditions => "done = 1");
+    total = self.asset_reports.size
+    done = self.asset_reports.select { |asset| asset.done? }.size
 
-    self.grade = (( done.to_f * 100 ) / total)
     if total == done
       self.grade = 100
       self.graduaded = true
     else
+      self.grade = (( done.to_f * 100 ) / total)
       self.graduaded = false
     end
     self.save
@@ -54,9 +54,12 @@ class Enrollment < ActiveRecord::Base
   end
 
   def create_assets_reports
-    subject.lectures.each do |lecture|
-      self.asset_reports << AssetReport.create(:subject => self.subject,
-                                               :lecture => lecture)
+    assets = subject.lectures.collect do |lecture|
+      AssetReport.new(:enrollment => self, :subject => self.subject,
+                         :lecture => lecture)
     end
+
+    AssetReport.import(assets, :validate => false,
+                       :on_duplicate_key_update => [:done])
   end
 end

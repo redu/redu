@@ -1,8 +1,8 @@
 require 'spec_helper'
 require 'authlogic/test_case'
-include Authlogic::TestCase
 
 describe UsersController do
+  include Authlogic::TestCase
 
   before do
     users = (1..4).collect { Factory(:user) }
@@ -351,7 +351,7 @@ describe UsersController do
       get :home, @params
     end
 
-    [:friends, :friends_requisitions, :course_invitations, :statuses, :status,
+    [:friends_requisitions, :course_invitations, :statuses, :status,
       :contacts_recommendations].each do |var|
       it "assigns @#{var}" do
         assigns[var].should_not be_nil

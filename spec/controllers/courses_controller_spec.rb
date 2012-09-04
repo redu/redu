@@ -1,8 +1,9 @@
 require 'spec_helper'
 require 'authlogic/test_case'
-include Authlogic::TestCase
 
 describe CoursesController do
+  include Authlogic::TestCase
+
   context "when creating a course for an existing environment" do
     before do
       @user = Factory(:user)
@@ -936,10 +937,6 @@ describe CoursesController do
 
       it "assigns course" do
         assigns[:course].should_not be_nil
-      end
-
-      it "assigns header_course" do
-        assigns[:header_course].should_not be_nil
       end
 
       it "renders admin/edit" do

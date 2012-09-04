@@ -18,6 +18,11 @@ class License < ActiveRecord::Base
     end
   end
 
+  # Quantidade de dias da licença
+  def total_days
+    (self.period_end - self.period_start + 1).to_i
+  end
+
   # Recupera o último license criado e modifica a role passada como parâmetro
   def self.change_role(user, course, role)
     license = License.get_open_license_with(user, course)

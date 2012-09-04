@@ -1,8 +1,8 @@
 require 'spec_helper'
 require 'authlogic/test_case'
-include Authlogic::TestCase
 
 describe PresenceController do
+  include Authlogic::TestCase
   render_views
 
   before do

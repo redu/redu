@@ -60,9 +60,8 @@ class Lecture < ActiveRecord::Base
 
   def done?(user)
     assets = asset_reports.of_user(user)
-    return false if assets.empty?
-
-    asset_reports.of_user(user).last.done?
+    return false if assets.length == 0
+    assets.last.done?
   end
 
   def clone_for_subject!(subject_id)
@@ -129,9 +128,11 @@ class Lecture < ActiveRecord::Base
       AssetReport.new(:subject => self.subject, :enrollment => enrollment,
                       :lecture => self)
     end
-    AssetReport.import(reports)
+    AssetReport.import(reports, :validate => false,
+                       :on_duplicate_key_update => [:done])
 
-    enrollments.collect(&:"update_grade!")
+    enrollments.includes(:asset_reports).where('grade > 0').
+      collect(&:update_grade!)
   end
 
   protected

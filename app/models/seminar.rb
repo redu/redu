@@ -45,19 +45,14 @@ class Seminar < ActiveRecord::Base
   validates_attachment_size :original, :less_than => 1.gigabyte,
     :unless => :external?
 
-  def validate_youtube_url
-    if self.valid? and external_resource_type.eql?('youtube')
-      capture = external_resource.scan(/youtube\.com\/watch\?v=([A-Za-z0-9._%-]*)[&\w;=\+_\-]*/)[0]
-      errors.add(:external_resource, "Link inválido") unless capture
-    end
-  end
   # Retorna parâmetro da URL que identifica unicamente o vídeo
   def truncate_youtube_url
-      if self.external_resource_type.eql?('youtube')
-        capture = self.external_resource.scan(/youtube\.com\/watch\?v=([A-Za-z0-9._%-]*)[&\w;=\+_\-]*/)[0][0]
-        # TODO criar validacao pra essa url
-        self.external_resource = capture
-      end
+    if self.external_resource_type.eql?('youtube')
+      capture = self.external_resource.scan(/youtube\.com\/watch\?v=([A-Za-z0-9._%-]*)[&\w;=\+_\-]*/)
+      # Pegando texto capturado ou retornando nil se o regex falhar
+      capture = capture.try(:first).try(:first)
+      self.external_resource = capture
+    end
   end
 
   # Converte o video para FLV (Zencoder)

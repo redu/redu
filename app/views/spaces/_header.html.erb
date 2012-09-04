@@ -18,9 +18,10 @@
           <%= space.description %>
         </span>
       <% end %>
-      <% unless space.tags.empty? %>
+      <% space_tags = space.tags %>
+      <% unless space_tags.empty? %>
         <ul class="tags icon-tag-gray_16_18-before clearfix <%= space.description.blank? ? "" : "separator" %>">
-          <% space.tags.each do |tag| %>
+          <% space_tags.each do |tag| %>
             <li>
               <%= link_to tag, nil %>
             </li>

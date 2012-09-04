@@ -1,8 +1,9 @@
 require 'spec_helper'
 require 'authlogic/test_case'
-include Authlogic::TestCase
 
 describe EnvironmentsController do
+  include Authlogic::TestCase
+
   context "when creating a paid Environment" do
     before do
       User.maintain_sessions = false

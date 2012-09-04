@@ -1,8 +1,9 @@
 require 'spec_helper'
 require 'authlogic/test_case'
-include Authlogic::TestCase
 
 describe InvitationsController do
+  include Authlogic::TestCase
+
   before do
     User.maintain_sessions = false
     activate_authlogic

@@ -2,8 +2,8 @@
   <td class="cell cell-400">
     <div class="space-info icon-space-gray_16_18-before">
       <%= link_to item_admin.name, space_path(item_admin), :class => "space-name" %>
-      <span class="space-detail members"><%= item_admin.users.count %> membros</span>
-      <span class="space-detail subject-count"><%= item_admin.subjects.count %> módulos</span>
+      <span class="space-detail members"><%= pluralize member_count, 'membro' %> </span>
+      <span class="space-detail subject-count"><%= item_admin.subjects.length %> módulos</span>
       <span class="space-detail created-at">criado em <%= l(item_admin.created_at, :format => :admin) %></span>
     </div>
   </td>

@@ -1,14 +1,14 @@
 require 'spec_helper'
 require 'authlogic/test_case'
-include Authlogic::TestCase
 
 describe AuthenticationsController do
+  include Authlogic::TestCase
 
   describe "GET create" do
 
     before do
       activate_authlogic
-      request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:facebook] 
+      request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:facebook]
     end
 
     context "when authentication already exists" do
@@ -30,7 +30,7 @@ describe AuthenticationsController do
     context "when authentication does not exist" do
 
       context "and there's a Redu account associated to email in auth hash" do
-        
+
         context "which is activated" do
           before do
             @user = Factory.create(:user)

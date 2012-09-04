@@ -66,7 +66,7 @@ class Status < ActiveRecord::Base
     associations = users.collect(&:id).collect do |u_id|
       StatusUserAssociation.new(:user_id => u_id, :status_id => status.id)
     end
-    StatusUserAssociation.import(associations)
+    StatusUserAssociation.import(associations, :validate => false)
   end
 
   def answers_ids(id)

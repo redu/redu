@@ -2,6 +2,10 @@ class AssetReport < ActiveRecord::Base
   # Modelo intermediário que especifica que um User finalizou uma determinada
   # Lecture dentro de um subject.
 
+  # Em alguns casos o enrollment é chamado utilizando o gem activerecord-import
+  # por questões de otimização. Este gem desabilita qualquer tipo de callback
+  # cuidado ao adicionar callbacks a esta entidade.
+
   belongs_to :enrollment # existe por questões de otimização
   belongs_to :lecture
   belongs_to :subject

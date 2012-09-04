@@ -156,6 +156,44 @@ describe Subject do
     it "verifies if an user is not enrolled" do
       subject.enrolled?(@enrolled_user).should be_false
     end
+
+    context 'when enrolling to many subjects' do
+      let(:subjects) { (1..4).collect { Factory(:subject) } }
+
+      it 'creates the enrollments' do
+        expect {
+          Subject.enroll(@enrolled_user, subjects)
+        }.should change(Enrollment, :count).by(subjects.length)
+      end
+
+      it 'returns the created enrollments' do
+        Subject.enroll(@enrolled_user, subjects).to_set.should ==
+          Enrollment.all.to_set
+      end
+
+      it 'creates enrollments with the correct user and subjects' do
+        enrollments = Subject.enroll(@enrolled_user, subjects)
+        enrollments.collect(&:user).to_set.should have(1).item
+        enrollments.collect(&:subject).to_set.should == subjects.to_set
+      end
+
+      context 'when that has many lectures' do
+        before do
+          subjects.each do |s|
+            (1..3).each do
+              Factory(:lecture, :subject => s)
+            end
+          end
+        end
+
+        it 'creates the assets reports for each enrollment' do
+          enrolls = Subject.enroll(@enrolled_user, subjects)
+          enrolls.each do |e|
+            e.asset_reports.should have(3).items
+          end
+        end
+      end
+    end
   end
 
   context "lectures" do

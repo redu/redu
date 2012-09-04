@@ -1,3 +1,4 @@
+<%= cache ["space_lecture_item", item_preview.id, current_user.id] do %>
 <li class="clearfix">
   <% if item_preview.recent? %>
     <span class="new">NOVO</span>
@@ -7,16 +8,16 @@
   <% end %>
       <span class="position"><%= item_preview.position %>.</span>
       <%= link_to item_preview.name,
-        space_subject_lecture_path(item_preview.subject.space,
-                                   item_preview.subject, item_preview),
-        :class => "title icon-#{item_preview.lectureable.class.to_s.downcase}-lightblue_16_18-before",
+        space_subject_lecture_path(subject.space,
+                                   subject, item_preview),
+        :class => "title icon-#{item_preview.lectureable_type.to_s.downcase}-lightblue_16_18-before",
         :id => "#{item_preview.id}-item" %>
       <span class="type">(<%= t item_preview.lectureable_type %>)</span>
       <div class="ratings" id="rating_video">
         <%= ratings_for item_preview, :static , :small => true,
           :remote_options => {
-          :url => rate_space_subject_lecture_path(item_preview.subject.space,
-                                                  item_preview.subject,
+          :url => rate_space_subject_lecture_path(subject.space,
+                                                  subject,
                                                   item_preview)} %>
       </div>
       <% if item_preview.done? current_user %>
@@ -24,3 +25,4 @@
       <% end %>
   </div>
 </li>
+<% end %>
