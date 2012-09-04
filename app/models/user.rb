@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
     :foreign_key => "user_id"
   # Course
   has_many :courses, :through => :user_course_associations,
-    :conditions => { :destroy_soon => false }
+    :conditions => ["courses.destroy_soon = ?", false]
   # Authentication
   has_many :authentications, :dependent => :destroy
 
@@ -37,6 +37,9 @@ class User < ActiveRecord::Base
     :conditions => {:is_clone => false, :published => true}
   has_many :courses_owned, :class_name => "Course",
     :foreign_key => "user_id"
+  # Para o caso de um curso estar marcado p/ destruíção
+  has_many :all_courses, :class_name => "Course", :foreign_key => "user_id",
+    :dependent => :destroy
   has_many :favorites, :order => "created_at desc", :dependent => :destroy
   enumerate :role
   has_many :recently_active_friends, :through => :friendships, :source => :friend,

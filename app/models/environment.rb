@@ -8,7 +8,8 @@ class Environment < ActiveRecord::Base
   after_create :create_course_association, :unless => "self.courses.empty?"
 
   has_many :courses, :dependent => :destroy,
-    :conditions => { :destroy_soon => false }
+    :conditions => ["courses.destroy_soon = ?", false]
+  has_many :all_courses, :dependent => :destroy, :class_name => "Course"
   has_many :user_environment_associations, :dependent => :destroy
   belongs_to :owner, :class_name => "User", :foreign_key => "user_id"
   has_many :users, :through => :user_environment_associations

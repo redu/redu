@@ -59,10 +59,11 @@ GIT
 
 GIT
   remote: git://github.com/redu/destroy-soon.git
-  revision: 2f7dad23333d322267c8e2e6497c8d0f6be7e1f6
+  revision: 6129601802a0a0ae0d7f3e60d0c31dcd01c94d6c
   specs:
-    destroy_soon (0.0.2)
+    destroy_soon (0.0.3)
       activerecord (~> 3.0.10)
+      activesupport (~> 3.0.10)
       delayed_job_active_record (~> 0.3.2)
       rake
 
