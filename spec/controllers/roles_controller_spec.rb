@@ -74,4 +74,17 @@ describe RolesController do
         Role[:environment_admin]
     end
   end
+
+  context 'when a commom member is logged in' do
+    before do
+      UserSession.create @member
+    end
+
+    it 'Roles#index should not be accessible' do
+      get :index, :environment_id => @environment.to_param,
+        :user_id => @member.to_param, :locale => 'pt-BR'
+
+      response.should_not be_success
+    end
+  end
 end

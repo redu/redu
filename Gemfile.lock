@@ -11,11 +11,11 @@ GIT
 
 GIT
   remote: git://github.com/collectiveidea/delayed_job_active_record.git
-  revision: 2ece2822a5a8b00a24b3a158eba5300d90f92c73
+  revision: bade04ddeb692d102f5e2c094a7b9935c48f82b8
   specs:
     delayed_job_active_record (0.3.2)
-      activerecord (> 2.1.0)
-      delayed_job (~> 3.0.0)
+      activerecord (>= 2.1.0, < 4)
+      delayed_job (~> 3.0)
 
 GIT
   remote: git://github.com/edgarjs/ajaxful-rating.git
@@ -57,6 +57,15 @@ GIT
     no_peeping_toms (2.1.1)
       activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
+
+GIT
+  remote: git://github.com/redu/destroy-soon.git
+  revision: 2f7dad23333d322267c8e2e6497c8d0f6be7e1f6
+  specs:
+    destroy_soon (0.0.2)
+      activerecord (~> 3.0.10)
+      delayed_job_active_record (~> 0.3.2)
+      rake
 
 GIT
   remote: git@github.com:redu/invitable.git
@@ -161,7 +170,7 @@ GEM
     date_validator (0.6.1)
       activemodel (~> 3.0.0)
     deep_cloneable (1.2.3)
-    delayed_job (3.0.2)
+    delayed_job (3.0.3)
       activesupport (~> 3.0)
     diff-lcs (1.1.3)
     dynamic_form (1.1.4)
@@ -293,8 +302,6 @@ GEM
       activesupport (= 3.0.10)
       bundler (~> 1.0)
       railties (= 3.0.10)
-    rails-footnotes (3.7.5.rc4)
-      rails (>= 3.0.0)
     rails3-generators (0.17.4)
       railties (>= 3.0.0)
     railties (3.0.10)
@@ -406,6 +413,7 @@ DEPENDENCIES
   date_validator
   deep_cloneable
   delayed_job_active_record!
+  destroy_soon!
   dynamic_form
   em-http-request
   eventmachine
@@ -429,7 +437,6 @@ DEPENDENCIES
   pusher
   rack-cors
   rails (= 3.0.10)
-  rails-footnotes (>= 3.7.5.rc4)
   rails3-generators
   rake (= 0.8.7)
   rd_searchlogic

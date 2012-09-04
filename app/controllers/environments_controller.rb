@@ -182,7 +182,6 @@ class EnvironmentsController < BaseController
   end
 
   def admin_courses
-    @environment = Environment.find(params[:id])
     @courses = @environment.courses.paginate(:page => params[:page],
                                              :per_page => Redu::Application.config.items_per_page)
 
@@ -195,9 +194,9 @@ class EnvironmentsController < BaseController
   end
 
   def admin_members
-    @memberships = UserEnvironmentAssociation.of_environment(@environment).
+    @memberships = @environment.user_environment_associations.
       paginate(
-        :include => [{ :user => {:user_course_associations => { :course => :environment }} }],
+        :include => :user,
         :page => params[:page],
         :order => 'updated_at DESC',
         :per_page => Redu::Application.config.items_per_page)

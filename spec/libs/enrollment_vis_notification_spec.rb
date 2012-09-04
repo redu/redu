@@ -22,11 +22,7 @@ describe EnrollmentVisNotification do
 
       it "should send a notification to vis" do
         WebMock.disable_net_connect!
-        @stub = stub_request(:post, Redu::Application.config.vis_client[:url]).
-          with(:headers => {'Authorization'=>['JOjLeRjcK', 'core-team'],
-                            'Content-Type'=>'application/json'}).
-                            to_return(:status => 200, :body => "", :headers => {})
-
+        stubing_request
 
         subj2 = Factory(:subject, :space => @space,
                         :owner => subject.owner,
@@ -40,15 +36,12 @@ describe EnrollmentVisNotification do
         enrollments.each do |enroll|
           params = fill_params(enroll, "enrollment")
 
-          a_request(:post, Redu::Application.config.vis_client[:url]).
-            with(:body => params.to_json,
-                 :headers => {'Authorization'=>['JOjLeRjcK', 'core-team'],
-                              'Content-Type'=>'application/json'}).should have_been_made
+          webmock_request(params).should have_been_made
         end
       end
     end
 
-    context "removes a user (unjoin)" do
+    context "removes an user (unjoin)" do
       before do
         @plan = Factory(:active_licensed_plan, :billable => @environment)
         @plan.create_invoice_and_setup
@@ -68,10 +61,7 @@ describe EnrollmentVisNotification do
       it "should send a remove enrollment notification and a remove subject finalized notification to vis" do
         WebMock.reset!
         WebMock.disable_net_connect!
-        @stub = stub_request(:post, Redu::Application.config.vis_client[:url]).
-          with(:headers => {'Authorization'=>['JOjLeRjcK', 'core-team'],
-                            'Content-Type'=>'application/json'}).
-                            to_return(:status => 200, :body => "", :headers => {})
+        stubing_request
 
         enrollments = []
         subject.users.each do |user|
@@ -91,22 +81,14 @@ describe EnrollmentVisNotification do
 
           params = fill_params(enroll, "remove_enrollment")
 
-          a_request(:post, Redu::Application.config.vis_client[:url]).
-            with(:body => params.to_json,
-                 :headers => {'Authorization'=>['JOjLeRjcK', 'core-team'],
-                              'Content-Type'=>'application/json'}).should have_been_made
+          webmock_request(params).should have_been_made
 
           if enroll.graduaded
             params = fill_params(enroll, "remove_subject_finalized")
-            a_request(:post, Redu::Application.config.vis_client[:url]).
-              with(:body => params.to_json,
-                   :headers => {'Authorization'=>['JOjLeRjcK', 'core-team'],
-                                'Content-Type'=>'application/json'}).should have_been_made
+            webmock_request(params).should have_been_made
           end
         end
-
       end
-
     end
   end
 
@@ -131,10 +113,7 @@ describe EnrollmentVisNotification do
 
       before do
         WebMock.disable_net_connect!
-        @stub = stub_request(:post, Redu::Application.config.vis_client[:url]).
-          with(:headers => {'Authorization'=>['JOjLeRjcK', 'core-team'],
-                            'Content-Type'=>'application/json'}).
-                            to_return(:status => 200, :body => "", :headers => {})
+        stubing_request
       end
 
       it "when grade is not full (< 100) and became full should send a 'subject_finalized' notification to vis" do
@@ -146,10 +125,7 @@ describe EnrollmentVisNotification do
 
         params = fill_params(subject, "subject_finalized")
 
-        a_request(:post, Redu::Application.config.vis_client[:url]).
-          with(:body => params.to_json,
-               :headers => {'Authorization'=>['JOjLeRjcK', 'core-team'],
-                            'Content-Type'=>'application/json'}).should have_been_made
+        webmock_request(params).should have_been_made
       end
 
       it "when grade is not full (<100) and continue not full (<100) should not send a notification to vis" do
@@ -161,11 +137,7 @@ describe EnrollmentVisNotification do
 
         params = fill_params(subject, "subject_finalized")
 
-        a_request(:post, Redu::Application.config.vis_client[:url]).
-          with(:body => params.to_json,
-               :headers => {'Authorization'=>['JOjLeRjcK', 'core-team'],
-                            'Content-Type'=>'application/json'}).should_not have_been_made
-
+        webmock_request(params).should_not have_been_made
       end
 
       context "and grade is filled" do
@@ -175,16 +147,13 @@ describe EnrollmentVisNotification do
           subject.update_grade!
 
           ActiveRecord::Observer.with_observers(:enrollment_observer) do
-            subject.role = 2
+            subject.role = 4
             subject.save
           end
 
           params = fill_params(subject, "subject_finalized")
 
-          a_request(:post, Redu::Application.config.vis_client[:url]).
-            with(:body => params.to_json,
-                 :headers => {'Authorization'=>['JOjLeRjcK', 'core-team'],
-                              'Content-Type'=>'application/json'}).should_not have_been_made
+          webmock_request(params).should_not have_been_made
         end
 
         it "when grade is updated for less then 100 should send a 'removed_subject_finalized' notification to vis" do
@@ -200,16 +169,24 @@ describe EnrollmentVisNotification do
 
           params = fill_params(subject, "remove_subject_finalized")
 
-          a_request(:post, Redu::Application.config.vis_client[:url]).
-            with(:body => params.to_json,
-                 :headers => {'Authorization'=>['JOjLeRjcK', 'core-team'],
-                              'Content-Type'=>'application/json'}).should have_been_made
+          webmock_request(params).should have_been_made
         end
       end
-
     end
+  end
 
+  def stubing_request
+    stub_request(:post, Redu::Application.config.vis_client[:url]).
+      with(:headers => {'Authorization'=>['JOjLeRjcK', 'core-team'],
+                        'Content-Type'=>'application/json'}).
+                        to_return(:status => 200, :body => "", :headers => {})
+  end
 
+  def webmock_request(params)
+    a_request(:post, Redu::Application.config.vis_client[:url]).
+      with(:body => params.to_json,
+           :headers => {'Authorization'=>['JOjLeRjcK', 'core-team'],
+                        'Content-Type'=>'application/json'})
   end
 
   def fill_params(enroll, type)
