@@ -5501,7 +5501,7 @@ table.concave-invitation-table .cell-reinvite .reinvited {
 }
 
 .moderate-members-table tr {
-  width: 655px;
+  width: 675px;
   display: inline-block;
 }
 
@@ -5545,6 +5545,7 @@ table.concave-invitation-table .cell-reinvite .reinvited {
   overflow: hidden;
   background-color: #f1f0f0;
   width: 550px;
+  margin-top: -10px;
 }
 
 .borderradius .moderate-member {

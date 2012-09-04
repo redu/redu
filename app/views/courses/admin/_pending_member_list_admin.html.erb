@@ -1,7 +1,7 @@
 <% if pending_members && pending_members.size > 0 %>
   <%= form_tag  moderate_members_requests_environment_course_path(@environment, @course),
     :method => :post, :class => "concave-form moderate-members-form" do %>
-    <h3 class="form-header"><%= pending_members.count %> usuário(s) com incrição pendente</h3>
+    <h3 class="form-header"><%= pending_members.count %> usuário(s) com inscrição pendente</h3>
     <table id="pending_member_list" class="moderate-members-table" >
       <thead style="display: none;">
         <th>Aceitar</th>
