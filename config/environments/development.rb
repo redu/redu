@@ -75,5 +75,18 @@ Redu::Application.configure do
     :students_participation => "http://localhost:4000/user_spaces/participation.json"
   }
 
+  Footnotes.run! if defined?(Footnotes)
+
+  if defined?(Bullet)
+    config.after_initialize do
+      Bullet.enable = true
+      Bullet.alert = true
+      Bullet.bullet_logger = true
+      Bullet.console = true
+      Bullet.rails_logger = true
+      Bullet.disable_browser_cache = true
+    end
+  end
 end
+
 
