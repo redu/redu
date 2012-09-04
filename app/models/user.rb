@@ -21,7 +21,8 @@ class User < ActiveRecord::Base
   has_many :spaces_owned, :class_name => "Space" , :foreign_key => "user_id"
   # Environment
   has_many :user_environment_associations, :dependent => :destroy
-  has_many :environments, :through => :user_environment_associations
+  has_many :environments, :through => :user_environment_associations,
+    :conditions => ["environments.destroy_soon = ?", false]
   has_many :user_course_associations, :dependent => :destroy
   has_many :course_enrollments, :dependent => :destroy
   has_many :environments_owned, :class_name => "Environment",

@@ -1,5 +1,6 @@
 class Environment < ActiveRecord::Base
   include ActsAsBillable
+  include DestroySoon::ModelAdditions
 
   # Representa o ambiente onde o ensino a distância acontece. Pode ser visto
   # como um instituição o provedor de ensino dentro do sistema.
