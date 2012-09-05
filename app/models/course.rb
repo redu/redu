@@ -65,7 +65,7 @@ class Course < ActiveRecord::Base
 
   scope :with_audiences, lambda { |audiences_ids|
     joins(:audiences).where('audiences_courses.audience_id IN (?)',
-                             audiences_ids).group(:id)
+                             audiences_ids).group('courses.id')
   }
 
   scope :user_behave_as_administrator, lambda { |user_id|

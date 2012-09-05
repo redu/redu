@@ -101,16 +101,20 @@ class CoursesController < BaseController
 
     if params.has_key? :role
       if params[:role] == 'student'
-        @courses = Course.published.user_behave_as_student(current_user)
+        @courses = Course.published.
+          user_behave_as_student(current_user).includes([:tags, :audiences, :environment])
       elsif params[:role] == 'tutor'
-        @courses = Course.published.user_behave_as_tutor(current_user)
+        @courses = Course.published.
+          user_behave_as_tutor(current_user).includes([:tags, :audiences, :environment])
       elsif params[:role] == 'teacher'
-        @courses = Course.published.user_behave_as_teacher(current_user)
+        @courses = Course.published.
+          user_behave_as_teacher(current_user).includes([:tags, :audiences, :environment])
       elsif params[:role] == 'administrator'
-        @courses = Course.user_behave_as_administrator(current_user)
+        @courses = Course.user_behave_as_administrator(current_user).
+          includes([:tags, :audiences, :environment])
       end
     else
-      @courses = Course.published
+      @courses = Course.published.includes([:tags, :audiences, :environment])
     end
 
     if params.has_key?(:search) && params[:search] != ''
@@ -122,13 +126,15 @@ class CoursesController < BaseController
       @courses = @courses.with_audiences(params[:audiences_ids])
     end
 
-    # Workaround p bug do will_paginate
-    paginating_params[:total_entries] = @courses.group("courses.id").all.length
-    @courses = @courses.paginate(paginating_params)
+    @courses = @courses.page(params[:page]).
+      per(Redu::Application.config.items_per_page).order('updated_at DESC')
 
     respond_to do |format|
       format.html
-      format.js
+      format.js do
+        render_endless('courses/item_detailed', @courses, '#courses_list',
+                       :template => 'shared/endless_kaminari')
+      end
     end
   end
 
