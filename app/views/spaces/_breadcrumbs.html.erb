@@ -14,8 +14,7 @@
       :class => 'replacement icon-small icon-course-lightblue_16_18' %>
   </li>
   <li class="icon-expand-gray_16_18-before">
-    <%= link_to @header_space ? @header_space.name : space.name,
-      space_path(space),
+    <%= link_to space.name, space_path(space),
       :class => 'icon-space-lightblue_16_18-before' %>
   </li>
 </ol>

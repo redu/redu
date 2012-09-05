@@ -8,7 +8,7 @@
 
   <div id="space-manage" class="body management">
     <%= render :partial => 'spaces/admin/header',
-      :locals => { :header_space => @header_space, :space => @space }%>
+      :locals => { :space => @header_space || @space }%>
     <%= render :partial => 'spaces/admin/clean_header' %>
 
     <%= tabs :spaces_admin do %>
@@ -36,7 +36,7 @@
           <li>documentos:
             <strong class="featured"><%= number_to_human_size(@billable.quota.files) %></strong> /
             <%= number_to_human_size(@plan.file_storage_limit, :precision => 0) %>
-            <span class="featured">(<%= @billable.percentage_quota_file %>%)</span>
+            <span class="featured">(<%= @billable.percentage_quota_file.round %>%)</span>
           </li>
           <li>vídeos:
             <strong class="featured"><%= number_to_human_size(@billable.quota.multimedia) %></strong> /

@@ -8,7 +8,7 @@
 
   <div id="space-manage" class="body management">
     <%= render :partial => 'spaces/admin/header',
-      :locals => { :header_space => @header_space, :space => @space }%>
+      :locals => { :space =>  @space }%>
     <%= render :partial => 'spaces/admin/clean_header' %>
 
     <%= tabs :spaces_admin do %>

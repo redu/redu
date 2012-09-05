@@ -152,6 +152,7 @@ class SpacesController < BaseController
         format.html { redirect_to(@space) }
         format.xml  { head :ok }
       else
+        @header_space = @space.clone
         format.html do
           render :template => 'spaces/admin/edit'
         end
