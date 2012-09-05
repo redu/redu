@@ -4,6 +4,10 @@
 .landing-plans {
   margin: 0 0 0 8px;
 
+  .landing-navigation-title {
+    margin-bottom: 30px;
+  }
+
   .type-plan {
     margin: 0 9px;
     width: 208px;
@@ -14,13 +18,12 @@
     .borderradius & { @include border-radius(10px); }
 
     .type-plan-icon {
-      padding: 10px;
+      padding: 10px 10px 0 10px;
       height: 100px;
       display: block;
 
-      h3 {
+      h4 {
         margin-top: 10px;
-        font-size: 18px;
         text-align: center;
       }
 
@@ -31,17 +34,26 @@
     }
 
     .free-plan {
+      text-align: center;
       display: block;
       background-color: rgb(225, 241, 225);
 
-      hr {
-        margin: 0;
+      h5 {
+        font-size: 13px;
+      }
+
+      h5, h2 {
+        color: rgb(95, 192, 128);
+      }
+
+      h2 {
+        font-weight: 300;
       }
     }
 
     .learn-plan {
       display: block;
-      padding: 10px;
+      padding: 0 10px 10px 10px;
       text-align: center;
     }
   }
