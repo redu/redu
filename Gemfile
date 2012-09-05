@@ -69,7 +69,7 @@ gem 'rack-cors', :require => 'rack/cors'
 gem 'roar-rails', '~> 0.0.3',
   :git => 'git://github.com/apotonick/roar-rails.git'
 gem 'destroy_soon', :git => 'git://github.com/redu/destroy-soon.git'
-gem 'lazy_high_charts'
+gem 'redu_analytics', :path => '/Users/guiocavalcanti/workspace/work/redu_analytics'
 
 # Gems específicos de algum ambiente
 group :development, :test do

@@ -87,6 +87,12 @@ GIT
     roar (0.10.1)
       representable (>= 1.1.7)
 
+PATH
+  remote: ../redu_analytics
+  specs:
+    redu_analytics (0.0.1)
+      lazy_high_charts
+
 GEM
   remote: http://rubygems.org/
   remote: http://gems.github.com/
@@ -411,7 +417,6 @@ DEPENDENCIES
   jasmine
   jquery-rails (>= 1.0.12)
   kaminari
-  lazy_high_charts
   mime-types
   mysql2 (~> 0.2.1)
   newrelic_rpm (= 3.0.1)
@@ -427,6 +432,7 @@ DEPENDENCIES
   rails3-generators
   rake (= 0.8.7)
   rd_searchlogic
+  redu_analytics!
   remotipart (~> 1.0)
   roar!
   roar-rails (~> 0.0.3)!
