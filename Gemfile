@@ -91,7 +91,7 @@ group :development do
 
   # Gems úteis p/ análise performance
   # gem 'bullet'
-  # gem 'rack-mini-profiler'
+  # gem 'rack-mini-profiler', '0.1.10'
   # gem 'rails-footnotes', '>= 3.7.5.rc4'
 end
 
