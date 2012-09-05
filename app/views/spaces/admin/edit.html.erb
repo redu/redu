@@ -4,7 +4,7 @@
 </div>
 <div class="main space grid_12 omega big-col">
   <%= render :partial => 'spaces/breadcrumbs',
-    :locals => { :space => @space, :header_space => @header_space } %>
+    :locals => { :space => @header_space || @space } %>
 
   <div id="space-manage" class="body management">
     <%= render :partial => 'spaces/admin/header',

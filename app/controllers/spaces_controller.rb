@@ -145,6 +145,8 @@ class SpacesController < BaseController
   def update
     @plan = @space.course.plan || @space.course.environment.plan
     @billable = @plan.billable
+    @header_space = @space.clone
+    @header_space.id = @space.id
 
     respond_to do |format|
       if @space.update_attributes(params[:space])
@@ -152,9 +154,8 @@ class SpacesController < BaseController
         format.html { redirect_to(@space) }
         format.xml  { head :ok }
       else
-        @header_space = @space.clone
         format.html do
-          render :template => 'spaces/admin/edit'
+          render 'spaces/admin/edit'
         end
         format.xml  { render :xml => @space.errors, :status => :unprocessable_entity }
       end
