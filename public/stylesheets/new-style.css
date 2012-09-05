@@ -2916,7 +2916,8 @@ body {
 }
 
 .friends-requisitions li .actions,
-.courses-requisitions li .actions {
+.courses-requisitions li .actions,
+#report .concave-button{
   float: right;
   margin-top: 10px;
 }
@@ -4681,7 +4682,8 @@ table.spaced tr td {
   color: #B2B2B2;
 }
 
-#environment-manage .user-info .info {
+#environment-manage .user-info .info,
+#report #table-report{
   display: block;
 }
 

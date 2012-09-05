@@ -124,7 +124,7 @@ var StudentsTreemap = function () {
 
       var report = $("#report");
       report.hide();
-      report.append($("<tbody/>"));
+      report.append($("<tbody/>", { id: "table-report" }));
 
       report.find("tbody").append($("<tr/>", { class: "row-head" }));
       report.find(".row-head").append($("<th/>", { class: "head", text: "Nome" }));
@@ -157,7 +157,7 @@ var StudentsTreemap = function () {
 
           row.append($("<td/>", { id: "helps", class: "cell" }));
           row.find("#helps").append($("<span/>",
-                  { class: "participation", text: object.helps }));
+                  { class: "part }ipation", text: object.helps }));
 
           row.append($("<td/>", { id: "answered_helps", class: "cell" }));
           row.find("#answered_helps").append($("<span/>",
@@ -178,6 +178,8 @@ var StudentsTreemap = function () {
               css("stroke", "black");
           });
       });
+
+      report.append($("<a/>", { class: "concave-button", text: "Imprimir" }));
   }
 
   // Função visível para a view, carregamento do treemap
