@@ -29,19 +29,19 @@
           </span>
         <ul class="plan-data">
           <li>membros:
-            <strong class="featured"><%= @plan.billable.users.count %></strong> /
+            <strong class="featured"><%= @billable.users.count %></strong> /
             <%= @plan.members_limit %>
-            <span class="featured">(<%= @space.course.plan ? @space.course.percentage_quota_members.round : @space.course.environment.percentage_quota_members.round %>%)</span>
+            <span class="featured">(<%= @billable.percentage_quota_members.round %>%)</span>
           </li>
           <li>documentos:
-            <strong class="featured"><%= number_to_human_size(@space.course.plan ? @space.course.quota.files : @space.course.environment.quota.files) %></strong> /
+            <strong class="featured"><%= number_to_human_size(@billable.quota.files) %></strong> /
             <%= number_to_human_size(@plan.file_storage_limit, :precision => 0) %>
-            <span class="featured">(<%= @space.course.plan ? @space.course.percentage_quota_file.round : @space.course.environment.percentage_quota_file.round %>%)</span>
+            <span class="featured">(<%= @billable.percentage_quota_file %>%)</span>
           </li>
           <li>vídeos:
-            <strong class="featured"><%= number_to_human_size(@space.course.plan ? @space.course.quota.multimedia : @space.course.environment.quota.multimedia) %></strong> /
+            <strong class="featured"><%= number_to_human_size(@billable.quota.multimedia) %></strong> /
             <%= number_to_human_size(@plan.video_storage_limit, :precision => 0) %>
-            <span class="featured">(<%= @space.course.plan ? @space.course.percentage_quota_multimedia.round : @space.course.environment.percentage_quota_multimedia.round %>%)</span>
+            <span class="featured">(<%= @billable.percentage_quota_multimedia.round %>%)</span>
           </li>
         </ul>
       </div>

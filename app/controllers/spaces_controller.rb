@@ -108,8 +108,8 @@ class SpacesController < BaseController
 
   # GET /spaces/1/edit
   def edit
-    @header_space = @space.clone :include => [:teachers, :students, :tutors]
     @plan = @space.course.plan || @space.course.environment.plan
+    @billable = @plan.billable
 
     respond_to do |format|
       format.html { render "spaces/admin/edit" }
@@ -143,8 +143,8 @@ class SpacesController < BaseController
   # PUT /spaces/1
   # PUT /spaces/1.xml
   def update
-    @header_space = @space.clone
     @plan = @space.course.plan || @space.course.environment.plan
+    @billable = @plan.billable
 
     respond_to do |format|
       if @space.update_attributes(params[:space])
