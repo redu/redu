@@ -31,18 +31,10 @@ $landing-segment-button-offset: 80px;
 
 
 // Encapsulador externo.
-.landing-segment-outer-wrapper { padding: 20px 40px 20px 20px; }
+.landing-segment-outer-wrapper { 
+  padding: 20px 40px 20px 20px; 
 
-// Texto.
-.landing-segment-text {
-  margin: 0 0 5px 30px;
-  display: block;
-  font-family: $museo-sans;
-  font-size: 18px;
-  letter-spacing: -1px;
-  font-weight: 500;
-  line-height: 21px;
-  color: $gray6;
+  h4 { margin: 0 0 5px 20px; }
 }
 
 // Encapsulador de cada segmento.
@@ -148,11 +140,13 @@ $landing-segment-button-offset: 80px;
   }
 
   .boxshadow & { @include box-shadow(1px 0 0 $gray3 inset); }
+
+  > ul { list-style: disc inside none; }
 }
 
 .landing-segment-sublist {
   list-style: none;
-  margin-bottom: 5px;
+  margin: 0 0 5px 50px;
 
   li { margin-top: 5px; }
 }
