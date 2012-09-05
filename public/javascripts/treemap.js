@@ -169,7 +169,14 @@ var StudentsTreemap = function () {
                     text: object.grade === -1 ? "Não realizou" : object.grade }));
 
           row.append($("<td/>", { class: "cell treemap-link" }));
-          row.find(".treemap-link").append($("<a/>", { text: "treemap", href: "#" }))
+          row.find(".treemap-link").append($("<a/>",
+                      { text: "no mapa", href: "#" + object.id }));
+
+          row.find(".treemap-link").click(function(){
+              $("rect").css("stroke-width", 0);
+              $("g > #" + object.id).css("stroke-width", 5).
+              css("stroke", "black");
+          });
       });
   }
 
@@ -230,13 +237,19 @@ var StudentsTreemap = function () {
                         + "</br>Pedidos de Ajuda: " + d.helps
                         + "</br>Respostas à comentários: " + d.answered_activities
                         + "</br>Respostas à pedidos de ajuda: " + d.answered_helps
-                        + "</br>Nota: " + nota})
+                        + "</br>Nota: " + nota })
 
             // Cor
             cell.append("svg:rect")
               .attr("width", function(d) { return d.dx - 1; })
               .attr("height", function(d) { return d.dy - 1; })
-              .style("fill", function(d) { return fill(d.grade); });
+              .attr("id", function (d) { return d.id; })
+              .style("fill", function(d) { return fill(d.grade); })
+              .on("click", function(){
+                  $("rect").css("stroke-width", 0);
+                  $(this).css("stroke-width", 5)
+                  .css("stroke", "black");
+              });
 
             // Texto
             cell.append("svg:text")
@@ -248,9 +261,10 @@ var StudentsTreemap = function () {
               .style("opacity", function(d) { d.w = this.getComputedTextLength(); return d.dx > d.w ? 1 : 0; });
 
             // Tooltip da célula
-            $(".cell").tipTip( {defaultPosition: "left",
+            $(".cell").tipTip({ defaultPosition: "left",
                                 attribute: "alt" });
 
+            // Relatório descritivo
             removeReportDescription();
             reportDescription(graphView.form, root);
           }
