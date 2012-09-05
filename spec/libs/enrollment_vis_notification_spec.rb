@@ -68,7 +68,7 @@ describe EnrollmentVisNotification do
           enrollment = user.get_association_with(@sub)
           if enrollment
             enrollment.grade = 100
-            enrollment.graduaded = true
+            enrollment.graduated = true
             enrollment.save
             enrollments << enrollment
           end
@@ -83,7 +83,7 @@ describe EnrollmentVisNotification do
 
           webmock_request(params).should have_been_made
 
-          if enroll.graduaded
+          if enroll.graduated
             params = fill_params(enroll, "remove_subject_finalized")
             webmock_request(params).should have_been_made
           end

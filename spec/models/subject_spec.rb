@@ -78,7 +78,7 @@ describe Subject do
       users.each { |u| subject.enroll(u) }
       users[0..1].each do |u|
         student_profile = u.enrollments.last
-        student_profile.graduaded = 1
+        student_profile.graduated = 1
         student_profile.save
       end
 

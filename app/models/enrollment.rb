@@ -43,10 +43,10 @@ class Enrollment < ActiveRecord::Base
 
     if total == done
       self.grade = 100
-      self.graduaded = true
+      self.graduated = true
     else
       self.grade = (( done.to_f * 100 ) / total)
-      self.graduaded = false
+      self.graduated = false
     end
     self.save
 

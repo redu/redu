@@ -20,7 +20,7 @@ describe Enrollment do
   end
 
   it "responds to graduated" do
-    should respond_to :graduaded
+    should respond_to :graduated
   end
 
   context "callbacks" do
@@ -55,14 +55,14 @@ describe Enrollment do
         subject.update_grade!
       }.should change(subject, :grade).by_at_most(66.6666666666667 + 10e-5).
         by_at_least(66.6666666666667 - 10e-5) # Aproximação
-      subject.graduaded.should be_false
+      subject.graduated.should be_false
     end
 
     it "marks as graduated when all grade is completed" do
       lectures
       subject.asset_reports.each { |a| a.done = true; a.save }
       subject.update_grade!
-      subject.graduaded.should be_true
+      subject.graduated.should be_true
     end
 
     it "changes to false when more lectures are added" do
@@ -74,7 +74,7 @@ describe Enrollment do
         Factory(:lecture, :subject => @sub, :owner => @sub.owner)
         subject.reload
         subject.update_grade!
-      }.should change(subject, :graduaded).to(false)
+      }.should change(subject, :graduated).to(false)
     end
   end
 
