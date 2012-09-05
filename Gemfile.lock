@@ -87,15 +87,10 @@ GIT
     roar (0.10.1)
       representable (>= 1.1.7)
 
-PATH
-  remote: ../redu_analytics
-  specs:
-    redu_analytics (0.0.1)
-      lazy_high_charts
-
 GEM
   remote: http://rubygems.org/
   remote: http://gems.github.com/
+  remote: https://gems.gemfury.com/osgw8uXWxBETrcXLyE2p/
   specs:
     POpen4 (0.1.4)
       Platform (>= 0.4.0)
@@ -313,6 +308,8 @@ GEM
       activerecord (>= 3.0.0)
     rdoc (3.12)
       json (~> 1.4)
+    redu_analytics (0.0.1)
+      lazy_high_charts
     remotipart (1.0.2)
     representable (1.1.7)
       json
@@ -432,7 +429,7 @@ DEPENDENCIES
   rails3-generators
   rake (= 0.8.7)
   rd_searchlogic
-  redu_analytics!
+  redu_analytics
   remotipart (~> 1.0)
   roar!
   roar-rails (~> 0.0.3)!
