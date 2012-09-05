@@ -35,6 +35,7 @@
   color: $gray3;
   line-height: 56px;
   letter-spacing: -3px;
+  display: block;
 
   .textshadow & { text-shadow: 0 1px 0 rgb(178, 178, 178); }
 }
