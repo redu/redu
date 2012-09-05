@@ -226,6 +226,8 @@ GEM
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
       railties (>= 3.0.0)
+    lazy_high_charts (1.2.2)
+      bundler (~> 1.0)
     linecache (0.43)
     mail (2.2.19)
       activesupport (>= 2.3.6)
@@ -409,6 +411,7 @@ DEPENDENCIES
   jasmine
   jquery-rails (>= 1.0.12)
   kaminari
+  lazy_high_charts
   mime-types
   mysql2 (~> 0.2.1)
   newrelic_rpm (= 3.0.1)
