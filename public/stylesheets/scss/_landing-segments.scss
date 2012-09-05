@@ -2,7 +2,6 @@
 // Segmentos.
 // ==========================================================================
 
-
 // Variáveis.
 // ==========================================================================
 
@@ -38,7 +37,7 @@ $landing-segment-button-offset: 80px;
 .landing-segment-text {
   margin: 0 0 5px 30px;
   display: block;
-  font-family: $museoSans;
+  font-family: $museo-sans;
   font-size: 18px;
   letter-spacing: -1px;
   font-weight: 500;
@@ -105,9 +104,9 @@ $landing-segment-button-offset: 80px;
 }
 
 .landing-segment-type { 
+  display: table;
   float: left;
   padding: 0 20px 0 30px;
-  display: table;
   height: 112px;
 
   // Caso especial para o segmento de R.H.
@@ -126,11 +125,8 @@ $landing-segment-button-offset: 80px;
 .landing-segment-title {
   display: table-cell;
   vertical-align: middle;
-  font-family: $museoSans;
-  font-size: 36px;
-  font-weight: 300;
+  font: 300 36px/36px $museo-sans;
   letter-spacing: -2px;
-  line-height: 36px;
 }
 
 .landing-segment-benefits {
@@ -150,7 +146,6 @@ $landing-segment-button-offset: 80px;
   .landing-segment:first-child:last-child & {
     .borderradius & { @include border-radius(0 $landing-segment-border-radius $landing-segment-border-radius 0); }
   }
-
 
   .boxshadow & { @include box-shadow(1px 0 0 $gray3 inset); }
 }

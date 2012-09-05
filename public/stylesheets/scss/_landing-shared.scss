@@ -1,0 +1,20 @@
+// ==========================================================================
+// Compartilhado.
+// ==========================================================================
+
+// No hover, inclui a imagem de luz no fundo.
+%background-light {
+  @include size(300px, 70px);
+
+  &:hover { background-image: url("../images/landing/background-light.png"); }
+}
+
+// Títulos da área de navegação. 
+.landing-navigation-title {
+  display: block;
+  font: 500 60px/56px $museo-sans-rounded;
+  color: $gray3;
+  letter-spacing: -3px;
+
+  .textshadow & { text-shadow: 0 1px 0 $gray-drop-shadow; }
+}

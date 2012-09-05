@@ -144,7 +144,7 @@
 // Fontes.
 // ==========================================================================
 
-@mixin font-family-sans-serif { font-family: $baseFontFamily; }
+@mixin font-family-sans-serif { font-family: $base-font-family; }
 
 @mixin font-shorthand($size: $baseFontSize, $weight: normal, $lineHeight: $baseLineHeight) {
   font-size: $size;
