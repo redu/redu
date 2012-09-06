@@ -41,6 +41,11 @@ h4 { font-size: 14px;  }
   width: 40px;
 }
 
+/* RELATÓRIOS*/
+.graph-header{
+  margin-top: 10px;
+}
+
 #report{
   clear: both;
   margin: 0 auto;
@@ -60,5 +65,13 @@ h4 { font-size: 14px;  }
 
 #report .head{
   width: 123px;
+}
+
+#report .head:first-child{
+  width: 300px;
+}
+
+#report .row{
+  border-bottom: 1px solid black;
 }
 
