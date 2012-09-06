@@ -26,21 +26,60 @@
           </div>
         <% else %>
           <h3 class="form-header graph-header">Qual o desempenho dos alunos?</h3>
+          <div id="explanation">
+            <p class="text">
+              Este mapa é uma representação do desempenho dos alunos matriculados na disciplina.
+            </p>
+            <p class="text">
+              Cada aluno está representado por um retângulo, o seu tamanho é proporcional à sua participação nas aulas e módulos e sua cor é determinada pela média obtida no exercícios da disciplina.
+            </p>
+            <p class="text">
+              As cores e as notas estão relacionadas segundo a legenda a seguir:
+            </p>
+            <div id="legend">
+              <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+              <rect width="30" height="10" id="gray"/> </svg>
+              <span class="item-legend">Nenhum exercício realizado</span>
+              <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+              <rect width="30" height="10" id="red"/> </svg>
+              <span class="item-legend">0 - 3</span>
+              <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+              <rect width="30" height="10" id="orange"/> </svg>
+              <span class="item-legend">3 - 5</span>
+              <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+              <rect width="30" height="10" id="yellow"/> </svg>
+              <span class="item-legend">5 - 7</span>
+              <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+              <rect width="30" height="10" id="green"/> </svg>
+              <span class="item-legend">7 - 9</span>
+              <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+              <rect width="30" height="10" id="blue"/> </svg>
+              <span class="item-legend">9 - 10</span>
+            </div>
+            <p class="text">
+                Para ver mais informações dos alunos passe o mouse por cima do mapa ou clique nos retângulos.
+            </p>
+          </div>
 
           <%= lazy_load(:chart, :jammit => true) do %>
             var treemap = new StudentsTreemap();
             treemap.load({ form: $("#graph-form"),
             renderTo: "treemap-chart",
-            url: "<%= api_space_users_path(@space.id, :oauth_token => @token, :role=>"member") %>"});
+            url: "<%= api_space_users_path(@space.id, :oauth_token => @token, :role=>"member") %>",
+            print: "<%= students_participation_report_show_space_path(@space.id) %>"});
           <% end %>
 
-          <%= form_tag api_vis_students_participation_path(@space.id), :method => :get,
+         <%= form_tag api_vis_students_participation_path(@space.id), :method => :get,
             :remote => true, :class => "concave-form", :id => "graph-form" do %>
             <% @space.students_id.each do |id| %>
               <%= hidden_field_tag "users_id[]", id %>
             <% end %>
 
             <%= hidden_field_tag :space_id, @space.id %>
+
+            <p id="form-explanation">
+                Selecione o período da informação que vai obter:
+            </p>
 
             <%= label_tag "date_start_fake", "Data inicial", :id => "form-problem" %>
             <%= field_set_tag nil, :class => "inline" do %>
