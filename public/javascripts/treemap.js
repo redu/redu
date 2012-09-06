@@ -138,6 +138,8 @@ var StudentsTreemap = function () {
           report.find(".row-head").append($("<th/>", { class: "head", text: "Link" }));
       }
 
+      data.children.sort(compare);
+
       $.each(data.children, function(index, object){
           report.find("tbody").append($("<tr/>",
                   { id: "" + object.id, class: "row" }));
@@ -191,6 +193,14 @@ var StudentsTreemap = function () {
 
           $(this).attr("href", url + "?date_start=" + start + "&date_end=" + end);
       });
+  }
+
+  function compare(a,b) {
+      if ((a.name + "  " + a.last_name).toUpperCase() < (b.name + "  " + b.last_name).toUpperCase())
+          return -1;
+      if ((a.name + "  " + a.last_name).toUpperCase() > (b.name + "  " + b.last_name).toUpperCase())
+          return 1;
+      return 0;
   }
 
   var timeSelected = function (period) {

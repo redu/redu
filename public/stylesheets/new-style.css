@@ -2916,8 +2916,7 @@ body {
 }
 
 .friends-requisitions li .actions,
-.courses-requisitions li .actions,
-#report .concave-button{
+.courses-requisitions li .actions{
   float: right;
   margin-top: 10px;
 }
@@ -4335,8 +4334,7 @@ table.spaced tr td {
   margin-bottom: 60px;
 }
 
-.plan-container .features li,
-#space-manage #report-description{
+.plan-container .features li{
   margin-bottom: 15px;
 }
 
@@ -4682,8 +4680,7 @@ table.spaced tr td {
   color: #B2B2B2;
 }
 
-#environment-manage .user-info .info,
-#report #table-report{
+#environment-manage .user-info .info{
   display: block;
 }
 
@@ -4879,6 +4876,19 @@ table.spaced tr td {
 #space-manage #report{
   clear: both;
   margin: 0 auto;
+}
+
+#space-manage #report #table-report{
+  display: block;
+}
+
+#space-manage #report-description{
+  margin-bottom: 15px;
+}
+
+#report .concave-button{
+  float: right;
+  margin-top: 10px;
 }
 
 .management .form-header .strong,
