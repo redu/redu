@@ -52,6 +52,7 @@ javascripts:
     - public/javascripts/jquery.linkify-1.0.js
     - public/javascripts/chat.jquery.js
     - public/javascripts/chat.js
+    - public/javascripts/loading.js
   chart:
     - public/javascripts/highcharts/highcharts.js
     - public/javascripts/d3/d3.js

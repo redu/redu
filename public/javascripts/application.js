@@ -13,14 +13,6 @@ jQuery(function(){
     });
 
 
-    // Mensagem "Carregando..."
-    $("#content").bind('start.pjax', function() {
-      $('#loading-message').show();
-    });
-    $("#content").bind('end.pjax', function() {
-      $('#loading-message').hide();
-    });
-
     // Dropdown de usuário
     $("#nav-account").live("hover", function(){
         $(this).find(".username").toggleClass("hover");
