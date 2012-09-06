@@ -4876,6 +4876,11 @@ table.spaced tr td {
   font-weight: bold;
 }
 
+#space-manage #report{
+  clear: both;
+  margin: 0 auto;
+}
+
 .management .form-header .strong,
 .management .form-header-closer,
 .management .form-header,
