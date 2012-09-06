@@ -1,8 +1,8 @@
-#header, #footer, #chat {
+#header, #footer, #chat, #graph-form{
   display: none;
 }
 
-body { font-size: 9px; }
+body { font-size: 12px; }
 h2 { font-size: 18px;  }
 h3 { font-size: 16px;  }
 h4 { font-size: 14px;  }
@@ -40,3 +40,38 @@ h4 { font-size: 14px;  }
 #partner-invoice-index .invoice .courses .licenses .date {
   width: 40px;
 }
+
+/* RELATÓRIOS*/
+.graph-header{
+  margin-top: 10px;
+}
+
+#report{
+  clear: both;
+  margin: 0 auto;
+}
+
+#report .cell {
+  text-align: center;
+}
+
+#report .cell:first-child{
+  text-align: left;
+}
+
+#report .participation{
+  color: black;
+}
+
+#report .head{
+  width: 123px;
+}
+
+#report .head:first-child{
+  width: 300px;
+}
+
+#report .row{
+  border-bottom: 1px solid black;
+}
+

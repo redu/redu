@@ -79,6 +79,7 @@ Redu::Application.routes.draw do
       get :subject_participation_report
       get :lecture_participation_report
       get :students_participation_report
+      get :students_participation_report_show
     end
 
     resources :folders, :only => [:update, :create, :index] do

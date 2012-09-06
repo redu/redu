@@ -1305,7 +1305,8 @@ body {
   text-shadow: 0px 1px 0px #ffffff;
 }
 
-.body.preview .notice .message {
+.body.preview .notice .message,
+.cell .participation{
   color: rgb(109, 110, 111);
 }
 
@@ -2915,7 +2916,7 @@ body {
 }
 
 .friends-requisitions li .actions,
-.courses-requisitions li .actions {
+.courses-requisitions li .actions{
   float: right;
   margin-top: 10px;
 }
@@ -4333,7 +4334,7 @@ table.spaced tr td {
   margin-bottom: 60px;
 }
 
-.plan-container .features li {
+.plan-container .features li{
   margin-bottom: 15px;
 }
 
@@ -4679,7 +4680,7 @@ table.spaced tr td {
   color: #B2B2B2;
 }
 
-#environment-manage .user-info .info {
+#environment-manage .user-info .info{
   display: block;
 }
 
@@ -4830,6 +4831,64 @@ table.spaced tr td {
 #space-manage .graph-header{
   color: black;
   margin-bottom: 20px;
+}
+
+#space-manage #explanation .text,
+#space-manage #form-explanation{
+  float: left;
+  font-family: museo-sans, "Helvetica Neue", arial, sans-serif;
+  font-size: 12px;
+  margin-bottom: 3px;
+}
+
+#space-manage #form-explanation{
+  margin-top: 15px;
+}
+
+#space-manage #legend{
+  clear: both;
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: auto;
+  height: 12px;
+  padding: 2px;
+}
+
+#space-manage #legend svg{
+  width: 20px;
+  height: 10px;
+  float: left;
+}
+
+#space-manage .item-legend{
+  float: left;
+  margin-left: 3px;
+  margin-right: 20px;
+}
+
+#space-manage .table-report-students .student-info{
+  height: 30px;
+  padding-top: 12px;
+  font-weight: bold;
+}
+
+#space-manage #report{
+  clear: both;
+  margin: 0 auto;
+}
+
+#space-manage #report #table-report{
+  display: block;
+}
+
+#space-manage #report-description{
+  margin-bottom: 15px;
+}
+
+#report .concave-button{
+  float: right;
+  margin-top: 10px;
 }
 
 .management .form-header .strong,

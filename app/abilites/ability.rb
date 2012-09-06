@@ -24,7 +24,7 @@ class Ability
     # Space
     alias_action :admin_subjects, :subject_participation_report,
       :lecture_participation_report, :students_participation_report,
-      :to => :manage
+      :students_participation_report_show, :to => :manage
 
     #TODO action manage gerando recursividade
     alias_action :mural, :students_endless, :to => :read

@@ -200,6 +200,17 @@ class SpacesController < BaseController
     end
   end
 
+  def students_participation_report_show
+    @token = current_vis_token # lib/vis_application_additions...
+
+    @start = params[:date_start]
+    @end = params[:date_end]
+
+    respond_to do |format|
+      format.html { render "spaces/admin/students_participation_show" }
+    end
+  end
+
   # Utilizado pelo endless do sidebar
   def students_endless
     respond_to do |format|
