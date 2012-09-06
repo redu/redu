@@ -1,72 +1,1126 @@
-<table class="table-with-borderradius">
-      <thead>
-        <tr>
-          <th>Benefícios</th>
-          <th>Grátis</th>
-          <th>Prata</th>
-          <th>Ouro</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Número de Alunos Permitidos</td>
-          <td>60</td>
-          <td>Ilimitado</td>
-          <td>Ilimitado</td>
-        </tr>
-        <tr>
-          <td>Armazenamento</td>
-          <td>15 MB</td>
-          <td>Ilimitado</td>
-          <td>Ilimitado</td>
-        </tr>
-        <tr>
-          <td>Rede Social</td>
-          <td>x</td>
-          <td>x</td>
-          <td>x</td>
-        </tr>
-        <tr>
-          <td>Relatório Básico</td>
-          <td>x</td>
-          <td>x</td>
-          <td>x</td>
-        </tr>
-         <tr>
-          <td>Mural de Discussão</td>
-          <td>x</td>
-          <td>x</td>
-          <td>x</td>
-        </tr>
-         <tr>
-          <td>Aulas Multimídia</td>
-          <td>x</td>
-          <td>x</td>
-          <td>x</td>
-        </tr>
-         <tr>
-          <td>Gerenciamento do Ambiente Virtual de Aprendizagem</td>
-          <td>x</td>
-          <td>x</td>
-          <td>x</td>
-        </tr>
-        <tr>
-          <td>Acesso à API do Redu</td>
-          <td>x</td>
-          <td>x</td>
-          <td>x</td>
-        </tr>
-        <tr>
-          <td>Suporte Online</td>
-          <td>x</td>
-          <td>x</td>
-          <td>x</td>
-        </tr>
-        <tr>
-          <td>Mobile</td>
-          <td>x</td>
-          <td>x</td>
-          <td>x</td>
-        </tr>
-      </tbody>
-    </table>
+
+  <!--<div class="modal hide fade" id="modal-plan-ensino-fund-med">-->
+    <div class="modal-window">
+      <span class="modal-name">
+        <%= image_tag "landing/icon-48px-instituicao.png",
+          :alt => "Instituição",
+          :title => "Instituição"
+        %>
+        <h3>Planos para Ensino Médio e Fundamental</h3>
+      </span>
+    <hr>
+    <span class="plan-information">
+      <table class="table-without-borderradius">
+            <thead>
+              <tr>
+                <th>Benefícios</th>
+                <th>Grátis</th>
+                <th>Prata
+                  <span class="icon-medal">
+                    <%= image_tag "landing/medal-silver.png",
+                      :alt => "Prata",
+                      :title => "Prata"
+                    %>
+                  </span>
+                </th>
+                <th>Ouro
+                  <span class="icon-medal">
+                    <%= image_tag "landing/medal-gold.png",
+                      :alt => "Ouro",
+                      :title => "Ouro"
+                    %>
+                  </span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Número de Alunos Permitidos</td>
+                <td>60</td>
+                <td>Ilimitado</td>
+                <td>Ilimitado</td>
+              </tr>
+              <tr>
+                <td>Armazenamento</td>
+                <td>15 MB</td>
+                <td>Ilimitado</td>
+                <td>Ilimitado</td>
+              </tr>
+              <tr>
+                <td>Rede Social</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Relatório Básico</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+               <tr>
+                <td>Mural de Discussão</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+               <tr>
+                <td>Aulas Multimídia</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Exercícios Múltipla Escolha</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+               <tr>
+                <td>Gerenciamento do Ambiente Virtual de Aprendizagem</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Integração dos Recursos Educacionais Abertos</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Acesso à API do Redu</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Suporte Online</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Mobile</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Formação dos Professores</td>
+                <td>Não</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Consultoria na Estruturação dos Recursos Midiáticos</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Banco de questões: ENEM e Vestibulares</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Customização de Relatórios</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Integração com Sistemas de Gestão Acadêmico</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Integração com o Portal da Escola</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Suporte Prioritário</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Importação / Exportação de Cursos do Moodle</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Preços</td>
+                <td>Grátis</td>
+                <td>R$ 5 por licença</td>
+                <td>Peça um orçamento</td>
+              </tr>
+            </tbody>
+          </table>
+      </span>
+      <hr>
+      <button class="button-default">Voltar</button>
+    </div>
+  <!--</div>-->
+
+<div class="modal-window">
+      <span class="modal-name">
+        <%= image_tag "landing/icon-48px-instituicao.png",
+          :alt => "Instituição",
+          :title => "Instituição"
+        %>
+        <h3>Planos para o Ensino Superior</h3>
+      </span>
+    <hr>
+    <span class="plan-information">
+      <table class="table-without-borderradius">
+            <thead>
+              <tr>
+                <th>Benefícios</th>
+                <th>Grátis</th>
+                <th>Prata
+                  <span class="icon-medal">
+                    <%= image_tag "landing/medal-silver.png",
+                      :alt => "Prata",
+                      :title => "Prata"
+                    %>
+                  </span>
+                </th>
+                <th>Ouro
+                  <span class="icon-medal">
+                    <%= image_tag "landing/medal-gold.png",
+                      :alt => "Ouro",
+                      :title => "Ouro"
+                    %>
+                  </span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Número de Alunos Permitidos</td>
+                <td>60</td>
+                <td>Ilimitado</td>
+                <td>Ilimitado</td>
+              </tr>
+              <tr>
+                <td>Armazenamento</td>
+                <td>15 MB</td>
+                <td>Ilimitado</td>
+                <td>Ilimitado</td>
+              </tr>
+              <tr>
+                <td>Rede Social</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Relatório Básico</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+               <tr>
+                <td>Mural de Discussão</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+               <tr>
+                <td>Aulas Multimídia</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Exercícios Múltipla Escolha</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+               <tr>
+                <td>Gerenciamento do Ambiente Virtual de Aprendizagem</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Integração dos Recursos Educacionais Abertos</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Acesso à API do Redu</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Suporte Online</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Mobile</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Formação dos Professores</td>
+                <td>Não</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Consultoria na Estruturação dos Recursos Midiáticos</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Customização de Relatórios</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Customização de Exercícios</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Integração com Sistemas de Gestão Acadêmico</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Integração com o Portal da Faculdade</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Criação do Portal de Venda de Cursos Online</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Suporte Prioriário</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Importação / Exportação de Cursos do Moodle</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Preços</td>
+                <td>Grátis</td>
+                <td>R$ 5 por licença</td>
+                <td>Peça um orçamento</td>
+              </tr>
+            </tbody>
+          </table>
+      </span>
+      <hr>
+      <button class="button-default">Voltar</button>
+    </div>
+
+<div class="modal-window">
+      <span class="modal-name">
+        <%= image_tag "landing/icon-48px-produtor.png",
+          :alt => "Instituição",
+          :title => "Instituição"
+        %>
+        <h3>Planos para o Produtor Independente</h3>
+      </span>
+    <hr>
+    <span class="plan-information">
+      <table class="table-without-borderradius">
+            <thead>
+              <tr>
+                <th>Benefícios</th>
+                <th>Grátis</th>
+                <th>Prata
+                  <span class="icon-medal">
+                    <%= image_tag "landing/medal-silver.png",
+                      :alt => "Prata",
+                      :title => "Prata"
+                    %>
+                  </span>
+                </th>
+                <th>Ouro
+                  <span class="icon-medal">
+                    <%= image_tag "landing/medal-gold.png",
+                      :alt => "Ouro",
+                      :title => "Ouro"
+                    %>
+                  </span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Número de Alunos Permitidos</td>
+                <td>60</td>
+                <td>Ilimitado</td>
+                <td>Ilimitado</td>
+              </tr>
+              <tr>
+                <td>Armazenamento</td>
+                <td>15 MB</td>
+                <td>Ilimitado</td>
+                <td>Ilimitado</td>
+              </tr>
+              <tr>
+                <td>Rede Social</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Relatório Básico</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+               <tr>
+                <td>Mural de Discussão</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+               <tr>
+                <td>Aulas Multimídia</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Exercícios Múltipla Escolha</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+               <tr>
+                <td>Gerenciamento do Ambiente Virtual de Aprendizagem</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Integração dos Recursos Educacionais Abertos</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Acesso à API do Redu</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Suporte Online</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Mobile</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Consultoria na Estruturação dos Recursos Midiáticos</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Customização de Relatórios</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Customização de Exercícios</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Criação do Portal de Venda de Cursos Online</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Suporte Prioriário</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Importação / Exportação de Cursos do Moodle</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Preços</td>
+                <td>Grátis</td>
+                <td>R$ 5 por licença</td>
+                <td>Peça um orçamento</td>
+              </tr>
+            </tbody>
+          </table>
+      </span>
+      <hr>
+      <button class="button-default">Voltar</button>
+    </div>
+
+<div class="modal-window">
+      <span class="modal-name">
+        <%= image_tag "landing/icon-48px-instituicao.png",
+          :alt => "Instituição",
+          :title => "Instituição"
+        %>
+        <h3>Planos para Consultoria e treinamento de R.H.</h3>
+      </span>
+    <hr>
+    <span class="plan-information">
+      <table class="table-without-borderradius">
+            <thead>
+              <tr>
+                <th>Benefícios</th>
+                <th>Grátis</th>
+                <th>Prata
+                  <span class="icon-medal">
+                    <%= image_tag "landing/medal-silver.png",
+                      :alt => "Prata",
+                      :title => "Prata"
+                    %>
+                  </span>
+                </th>
+                <th>Ouro
+                  <span class="icon-medal">
+                    <%= image_tag "landing/medal-gold.png",
+                      :alt => "Ouro",
+                      :title => "Ouro"
+                    %>
+                  </span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Número de Alunos Permitidos</td>
+                <td>60</td>
+                <td>Ilimitado</td>
+                <td>Ilimitado</td>
+              </tr>
+              <tr>
+                <td>Armazenamento</td>
+                <td>15 MB</td>
+                <td>Ilimitado</td>
+                <td>Ilimitado</td>
+              </tr>
+              <tr>
+                <td>Rede Social</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Relatório Básico</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+               <tr>
+                <td>Mural de Discussão</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+               <tr>
+                <td>Aulas Multimídia</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Exercícios Múltipla Escolha</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+               <tr>
+                <td>Gerenciamento do Ambiente Virtual de Aprendizagem</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Integração dos Recursos Educacionais Abertos</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Acesso à API do Redu</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Suporte Online</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Mobile</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Formação dos Professores</td>
+                <td>Não</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Consultoria na Estruturação dos Recursos Midiáticos</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Customização de Relatórios</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Customização de Exercícios</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Integração com o Site da Empresa</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Criação do Portal de Venda de Cursos Online</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Suporte Prioriário</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Importação / Exportação de Cursos do Moodle</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><%= image_tag "landing/arrow-green.png",
+                      :alt => "Sim",
+                      :title => "Sim"
+                  %></td>
+              </tr>
+              <tr>
+                <td>Preços</td>
+                <td>Grátis</td>
+                <td>R$ 5 por licença</td>
+                <td>Peça um orçamento</td>
+              </tr>
+            </tbody>
+          </table>
+      </span>
+      <hr>
+      <button class="button-default">Voltar</button>
+    </div>

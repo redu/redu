@@ -1,0 +1,46 @@
+.modal-window {
+  background: $gray1;
+  overflow: hidden;
+  display: block;
+  width: 820px;
+  margin: 20px auto;
+  background: $gray1;
+ .borderradius & { @include border-radius(7px); }
+
+    button {
+      float: right;
+      margin: 20px;
+    }
+
+  hr {
+    margin: 1px 0 0 0;
+  }
+
+  .modal-name {
+    margin: 10px 20px;
+    display: block;
+    overflow: hidden;
+
+    img {
+      float: left;
+    }
+
+    h3 {
+      margin: 10px;
+      display: inline-block;
+    }
+  }
+
+  .plan-information {
+    padding: 20px;
+    background: $white;
+    display: block;
+
+     .icon-medal {
+      img {
+        vertical-align: middle;
+        margin: -2px 0 0 2px;
+      }
+    }
+  }
+}
