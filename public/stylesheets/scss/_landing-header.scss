@@ -1,0 +1,45 @@
+// ==========================================================================
+// Cabeçalho.
+// ==========================================================================
+
+
+// Wrapper de tudo.
+.landing-header {
+  height: 85px;
+  background-color: $gray3;
+
+  .boxshadow & {
+    $box-shadow:
+      0 -1px 0 $white inset
+    , 0  1px 0 $landing-header-footer-dropshadow;
+    @include box-shadow($box-shadow);
+  }
+
+  // Adiciona uma borda já que o IE8 não tem box-shadow.
+  .ie8 & { border-bottom: 1px solid $landing-header-footer-dropshadow; }
+
+}
+
+// Wrapper do logo.
+.landing-logo-wrapper { 
+  @extend %background-light;
+  float: left; 
+  position: relative;
+  margin-left: -45px;
+}
+
+// Logo.
+.landing-logo {
+  position: absolute;
+  right: -3px;
+  bottom: 0;
+}
+
+// Wrapper dos botões.
+.landing-header-buttons {
+  float: right;
+  margin-top: 20px;
+}
+
+.landing-button-sign-up + 
+.landing-button-sign-in { margin-left: 40px; }

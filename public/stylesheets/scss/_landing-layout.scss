@@ -1,0 +1,23 @@
+// ==========================================================================
+// Layout.
+// ==========================================================================
+
+
+html, 
+body { height: 100%; }
+
+body { background-image: url("../images/landing/background.png"); }
+
+
+// Prendendo o rodapé no final da página: sticky footer.
+
+.landing-wrapper {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto (- $landing-footer-height);
+}
+
+.landing-pusher { height: $landing-footer-height; }
+
+.alpha-half { margin-left: 10px; }

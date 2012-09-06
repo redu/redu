@@ -1,0 +1,108 @@
+// ==========================================================================
+// Rodapé.
+// ==========================================================================
+
+
+// Wrapper de tudo.
+.landing-footer { 
+  height: $landing-footer-height; 
+  background-color: $gray3;
+
+  .boxshadow & {
+    $box-shadow:
+      0 1px 0 $white inset
+    , 0 -1px 0 $landing-header-footer-dropshadow;
+    @include box-shadow($box-shadow);
+  }
+
+  // Adiciona uma borda já que o IE8 não tem box-shadow.
+  .ie8 & { border-top: 1px solid $landing-header-footer-dropshadow; }
+}
+
+
+// Logo do Redu Tech.
+// ==========================================================================
+
+// Wrapper para o logo.
+.landing-footer-logo-wrapper { position: relative; }
+
+// Link do logo.
+.landing-footer-logo-link {
+  @extend %background-light;
+  position: absolute;
+  top: 0;
+  left: -115px;
+}
+
+// Imagem do logo.
+.landing-footer-logo-img {
+  position: absolute;
+  left: 115px;
+  top: 20px;
+}
+
+
+// Links de navegação.
+// ==========================================================================
+
+.landing-footer-navigation {
+  margin: 25px 0 0;
+  list-style: none;
+}
+
+
+// Redes sociais.
+// ==========================================================================
+
+.landing-footer-social-networks-legend {
+  margin-top: 40px;
+  height: 28px;
+  text-align: center;
+
+  .legend { 
+    display: inline-block;
+    max-width: 55px; 
+  }
+}
+
+.landing-footer-social-networks-legend + 
+.landing-footer-social-networks { margin-top: 5px; }
+
+.landing-footer-social-networks { 
+  text-align: center; 
+
+  a + a { margin-left: 10px; }
+
+  img {
+    .borderradius & { @include border-radius(16px); }
+
+    .boxshadow & { @include box-shadow(0 1px 0 $white); }
+  }
+}
+
+
+// Contato.
+// ==========================================================================
+
+.landing-footer-contact {
+  margin-top: 25px;
+  text-align: right;
+
+  h3 + .legend { margin-top: 10px; }
+
+  &:hover { 
+    background: transparent url("../images/landing/talk-to-us-background-light.png") no-repeat center; 
+
+    .legend { color: $gray6; }
+
+    a { color: $blue4; }
+
+    .landing-footer-talk-to-us-balloons { background-image: url("../images/landing/talk-to-us-dark-blue.png"); }
+  }
+}
+
+.landing-footer-talk-to-us-balloons {
+  @include size(48px, 96px);
+  display: block;
+  background-image: url("../images/landing/talk-to-us-light-blue.png");
+}

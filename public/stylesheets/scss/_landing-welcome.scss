@@ -1,0 +1,39 @@
+// ==========================================================================
+// Mensagem de bem vindo.
+// ==========================================================================
+
+
+// Wrapper de tudo.
+.landing-welcome {
+  @include box-sizing(border-box);
+  height: 470px;
+  padding-top: 60px;
+  background: transparent url('../images/landing/illustration.png') no-repeat center;
+}
+
+// Título.
+.landing-welcome-title {
+  font-family: museo-sans-rounded, museo-sans;
+  font-size: 60px;
+  font-weight: 500;
+  color: $white;
+  line-height: 56px;
+  letter-spacing: -3px;
+
+  .textshadow & { text-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5); }
+}
+
+.landing-welcome-title + 
+.landing-welcome-message { margin-top: 20px; }
+
+// Mensagem.
+.landing-welcome-message {
+  font-family: museo-sans-rounded, museo-sans;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 28px;
+  letter-spacing: -1px;
+  max-width: 280px;
+
+  .textshadow & { text-shadow: 1px 1px $white; }
+}

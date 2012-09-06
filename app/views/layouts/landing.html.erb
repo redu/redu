@@ -1,0 +1,29 @@
+<!doctype html>
+<!--[if IE 8]><html class="ie8" lang="pt-br"><![endif]-->
+<!--[if gt IE 8]><html class="gt-ie8" lang="pt-br"><![endif]-->
+<!--[if gt IE 8]><!--><html lang="pt-br"><!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <title><%= raw(page_title) %></title>
+    <%= csrf_meta_tag %>
+    <%= include_stylesheets :landing %>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <!--[if (gte IE 6)&(lte IE 8)]>
+      <%= include_javascripts :ie %>
+    <![endif]-->
+    <%= include_javascripts :landing %>
+    <script src="http://use.typekit.com/lpo4rgu.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+    <%= render :partial => "shared/analytics" %>
+  </head>
+  <body>
+    <%= render :partial => 'shared/outdated_browser' %>
+    <div class="landing-wrapper">
+      <%= render :partial => "landing/header" %>
+      <%= render :partial => "landing/welcome" %>
+      <%= yield %>
+      <div class="landing-pusher"></div>
+    </div>
+    <%= render :partial => "landing/footer" %>
+  </body>
+</html>

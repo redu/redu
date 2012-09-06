@@ -1,0 +1,16 @@
+<div class="landing-header">
+  <div class="container">
+    <%= link_to landing_path, 
+        :class => "landing-logo-wrapper" do %>
+      <%= image_tag "landing/logo.png",
+          :class => "landing-logo",
+          :alt => "Redu",
+          :title => "Redu"
+      %>
+    <% end %>
+    <div class="landing-header-buttons">
+      <button class="landing-button-sign-up button-big button-success">Não possui conta? Cadastre-se, é grátis</button>
+      <button class="landing-button-sign-in button-big button-primary">Entre no Redu</button>
+    </div>
+  </div>
+</div>
