@@ -24,7 +24,7 @@ class SpacesController < BaseController
   end
 
   def admin_members
-    @memberships = @space.user_space_associations.
+    @memberships = @space.user_space_associations.includes(:user).
       paginate(:page => params[:page],:order => 'updated_at DESC',
                :per_page => Redu::Application.config.items_per_page)
 
@@ -202,8 +202,6 @@ class SpacesController < BaseController
 
   # Utilizado pelo endless do sidebar
   def students_endless
-    @sidebar_students = @space.students.page(params[:page]).per(4)
-
     respond_to do |format|
       format.js do
         render_sidebar_endless 'users/item_medium_24',
