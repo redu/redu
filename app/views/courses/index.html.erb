@@ -26,7 +26,7 @@
               :collection => @courses %>
           <% end %>
         </ul>
-        <%= will_paginate @courses, :renderer => EndlessRenderer %>
+        <%= paginate @courses, :theme => 'endless' %>
       <% end %>
     </div><!-- end .main -->
   <% end %>

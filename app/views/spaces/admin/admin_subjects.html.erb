@@ -15,7 +15,7 @@
         <h3 class="form-header">
           <%= @space.subjects.count %> módulos(s)
         </h3>
-        <%= render :partial => "subjects/admin/index_admin" %>
+        <%= render "subjects/admin/index_admin", :subjects => @subjects, :space => @space %>
         <%= link_to "Sair", space_path(@space), :class => "manage exit icon-manage-gray_8_10-before" %>
       <% end %>
     </div><!-- end #space-manage -->

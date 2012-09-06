@@ -92,7 +92,7 @@ $.fn.plotGraphForm = function (divRender) {
       }
 
       // As requisições cross-domain não devolvem este callback,
-      // sendo necessário outro callback do tipo sucess, o try cach
+      // sendo necessário outro callback do tipo sucess, o try catch
       // não deixa a exceção ser levantada para o usuário
       try{
         buildGraph(json);

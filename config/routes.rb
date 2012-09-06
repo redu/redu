@@ -328,12 +328,12 @@ Redu::Application.routes.draw do
     match "vis/spaces/:space_id/lecture_participation",
       :to => 'vis#lecture_participation',
       :as => :vis_lecture_participation
-    match "vis/subjects/:subject_id/subject_activities",
+    match "vis/spaces/:space_id/subject_activities",
       :to => 'vis#subject_activities',
       :as => :vis_subject_activities
-    match "vis/subjects/:subject_id/subject_activities_d3",
-      :to => 'vis#subject_activities_d3',
-      :as => :vis_subject_activities_d3
+    match "vis/spaces/:space_id/students_participation",
+      :to => 'vis#students_participation',
+      :as => :vis_students_participation
 
     # Hack para capturar exceções ActionController::RoutingError
     match '*', :to => 'api#routing_error'

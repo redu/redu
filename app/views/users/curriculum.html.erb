@@ -11,7 +11,7 @@
           </div>
           <ul class="experiences">
             <%= render :partial => 'experiences/item',
-              :collection => @user.experiences %>
+              :collection => @experiences %>
           </ul>
           <%= render :partial => 'experiences/form', :locals => {
             :user => @user, :experience => @experience } %>
@@ -24,7 +24,7 @@
           </div>
           <ul class="educations">
             <%= render :partial => "educations/item",
-              :collection => @user.educations %>
+              :collection => @educations %>
           </ul>
           <%= render :partial => 'educations/form', :locals => {
             :high_school => @high_school, :higher_education => @higher_education,

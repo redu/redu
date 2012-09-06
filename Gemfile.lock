@@ -10,11 +10,11 @@ GIT
 
 GIT
   remote: git://github.com/collectiveidea/delayed_job_active_record.git
-  revision: 2ece2822a5a8b00a24b3a158eba5300d90f92c73
+  revision: bade04ddeb692d102f5e2c094a7b9935c48f82b8
   specs:
     delayed_job_active_record (0.3.2)
-      activerecord (> 2.1.0)
-      delayed_job (~> 3.0.0)
+      activerecord (>= 2.1.0, < 4)
+      delayed_job (~> 3.0)
 
 GIT
   remote: git://github.com/edgarjs/ajaxful-rating.git
@@ -56,6 +56,16 @@ GIT
     no_peeping_toms (2.1.1)
       activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
+
+GIT
+  remote: git://github.com/redu/destroy-soon.git
+  revision: 6129601802a0a0ae0d7f3e60d0c31dcd01c94d6c
+  specs:
+    destroy_soon (0.0.3)
+      activerecord (~> 3.0.10)
+      activesupport (~> 3.0.10)
+      delayed_job_active_record (~> 0.3.2)
+      rake
 
 GIT
   remote: git@github.com:redu/invitable.git
@@ -153,7 +163,7 @@ GEM
     date_validator (0.6.1)
       activemodel (~> 3.0.0)
     deep_cloneable (1.2.3)
-    delayed_job (3.0.2)
+    delayed_job (3.0.3)
       activesupport (~> 3.0)
     diff-lcs (1.1.3)
     dynamic_form (1.1.4)
@@ -387,6 +397,7 @@ DEPENDENCIES
   date_validator
   deep_cloneable
   delayed_job_active_record!
+  destroy_soon!
   dynamic_form
   em-http-request
   eventmachine

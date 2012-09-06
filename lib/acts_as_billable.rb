@@ -61,7 +61,7 @@ module ActsAsBillable
     # Guarda suas informações no plano e se destrói
     def audit_billable_and_destroy
       plan.audit_billable! if self.plan
-      self.destroy
+      self.async_destroy
     end
   end
 end

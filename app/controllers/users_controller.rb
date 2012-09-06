@@ -164,6 +164,11 @@ class UsersController < BaseController
   end
 
   def curriculum
+    # Usuário incluído para evitar diversas consultas; não foi passado o
+    # @user para não perder legibilidade
+    @experiences = @user.experiences.includes(:user)
+    @educations = @user.educations.includes(:educationable, :user)
+
     @experience = Experience.new
     @high_school = HighSchool.new
     @higher_education = HigherEducation.new

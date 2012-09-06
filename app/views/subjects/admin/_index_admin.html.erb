@@ -1,16 +1,16 @@
-<% if @subjects && @subjects.size > 0 %>
+<% if subjects && subjects.length > 0 %>
   <div class="management-actions">
-    <%= link_to 'Criar novo módulo', new_space_subject_path(@space), :class => 'concave-button' %>
+    <%= link_to 'Criar novo módulo', new_space_subject_path(space), :class => 'concave-button' %>
   </div>
   <table id="subjects_list" class="concave-admin-table">
     <thead style="display: none;">
       <th>Nome</th><th>Visível</th><th>Gerenciar</th><th>Remover</th>
     </thead>
-    <%= render :partial => 'subjects/admin/item_admin', :collection => @subjects %>
+    <%= render :partial => 'subjects/admin/item_admin', :collection => subjects, :locals => { :space => space } %>
   </table>
 <% else %>
   <div class="box_notice">
     Não existe nenhum módulo.
-    <%= link_to "Criar novo módulo", new_space_subject_path(@space) %>
+    <%= link_to "Criar novo módulo", new_space_subject_path(space) %>
   </div>
 <% end %>

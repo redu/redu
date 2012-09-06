@@ -1,6 +1,10 @@
 class AuthenticationsController < BaseController
 
   def create
+    # Logging...
+    logger.info "Logging in with facebook"
+    logger.info request.env['omniauth.auth']
+
     auth = request.env['omniauth.auth']
     authentication = Authentication.find_by_provider_and_uid(auth[:provider],
                                                              auth[:uid])
@@ -19,38 +23,21 @@ class AuthenticationsController < BaseController
       user = User.find_by_email(auth[:info][:email])
       if user
         # Existe conta no Redu com o e-mail associado à conta do FB.
+        user.activated_at ||= Time.now
         user.authentications.create!(:provider => auth[:provider],
                                      :uid => auth[:uid])
-        user.activated_at ||= Time.now
         flash[:notice] = t :facebook_connect_account_association
       else
         # Não existe conta do Redu associada ao e-mail do usuário no FB.
-        user = Authentication.build_user(auth)
-        user.update_attributes(:activated_at => Time.now)
-        user.authentications.build(:provider => auth[:provider],
-                                   :uid => auth[:uid])
+        user = Authentication.create_user(auth)
         flash[:notice] = t :facebook_connect_new_user
       end
 
-      begin
-        if user.save
-          @user_session = UserSession.new(user)
-          current_user = @user_session.record if @user_session.save
-          # Usuário criado / atualizado com sucesso.
-          redirect_to session[:return_to] || home_user_path(current_user)
-          session[:return_to] = nil
-        else
-          # Erro ao criar / atualizar usuário.
-          flash[:notice] = t :facebook_connect_error
-          redirect_to application_path
-        end
-      # FIXME Após migrar o Rails (> 3.0.10) ver se a solução clean funciona.
-      # Necessário pois o rescue_from estava dando conflito com o
-      # rescue_from Exception (mais geral). See #863.
-      rescue ActiveRecord::RecordNotUnique
-        flash[:notice] = t :facebook_connect_error
-        redirect_to application_path
-      end
+      @user_session = UserSession.new(user)
+      current_user = @user_session.record if @user_session.save
+      # Usuário criado / atualizado com sucesso.
+      redirect_to session[:return_to] || home_user_path(current_user)
+      session[:return_to] = nil
     end
   end
 

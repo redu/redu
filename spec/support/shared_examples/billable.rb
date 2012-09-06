@@ -51,7 +51,7 @@ shared_examples_for "a billable" do
 
   it "should stores itself ond plan and self destroy" do
     Factory(:plan, :billable => subject)
-    subject.should_receive(:destroy)
+    subject.should_receive(:async_destroy)
     subject.audit_billable_and_destroy
     subject.plan.billable_audit.should_not be_nil
   end

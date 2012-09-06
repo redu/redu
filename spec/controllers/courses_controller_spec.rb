@@ -374,8 +374,8 @@ describe CoursesController do
           should == Course.published.all(:limit => 10).to_set
       end
 
-      it "should render courses/index" do
-        response.should render_template('courses/index')
+      it "should render shared/endless_kaminari" do
+        response.should render_template('shared/endless_kaminari')
       end
     end
 

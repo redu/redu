@@ -1,8 +1,8 @@
 <li class="subject-participation-list">
   <h4 class="form-subheader"> <%= subject.name %> </h3>
+  <div class="subject-participation-bullet",
+    id="subject-participation-bullet-<%= subject.id %>"></div>
 
-  <%= render :partial => 'spaces/admin/subject_bullet_chart_admin',
-    :locals => { :subject => subject }%>
-  <%= render :partial => 'spaces/admin/subject_pie_chart_admin',
-    :locals => { :subject => subject } %>
+  <div class="subject-participation-pie",
+    id="subject-participation-pie-<%= subject.id %>"></div>
 </li>

@@ -15,18 +15,21 @@ class User < ActiveRecord::Base
   # ASSOCIATIONS
   has_many :chat_messages
   # Space
-  has_many :spaces, :through => :user_space_associations
+  has_many :spaces, :through => :user_space_associations,
+    :conditions => ["spaces.destroy_soon = ?", false]
   has_many :user_space_associations, :dependent => :destroy
   has_many :spaces_owned, :class_name => "Space" , :foreign_key => "user_id"
   # Environment
   has_many :user_environment_associations, :dependent => :destroy
-  has_many :environments, :through => :user_environment_associations
+  has_many :environments, :through => :user_environment_associations,
+    :conditions => ["environments.destroy_soon = ?", false]
   has_many :user_course_associations, :dependent => :destroy
   has_many :course_enrollments, :dependent => :destroy
   has_many :environments_owned, :class_name => "Environment",
     :foreign_key => "user_id"
   # Course
-  has_many :courses, :through => :user_course_associations
+  has_many :courses, :through => :user_course_associations,
+    :conditions => ["courses.destroy_soon = ?", false]
   # Authentication
   has_many :authentications, :dependent => :destroy
 
@@ -424,23 +427,22 @@ class User < ActiveRecord::Base
   def get_association_with(entity)
     return false unless entity
 
-    case entity.class.to_s
+    association = case entity.class.to_s
     when 'Space'
-      association = UserSpaceAssociation.where('user_id = ? AND space_id = ?',
-                                                 self.id, entity.id).first
+      self.user_space_associations.
+        find(:first, :conditions => { :space_id => entity.id })
     when 'Course'
-      association = UserCourseAssociation.where('user_id = ? AND course_id = ?',
-                                                  self.id, entity.id).first
+      self.user_course_associations.
+        find(:first, :conditions => { :course_id => entity.id })
     when 'Environment'
-      association = UserEnvironmentAssociation.
-                      where('user_id = ? AND environment_id = ?', self.id,
-                              entity.id).first
+      self.user_environment_associations.
+        find(:first, :conditions => { :environment_id => entity.id })
     when 'Subject'
-      association = Enrollment.where('user_id = ? AND subject_id = ?', self.id,
-                                       entity.id).first
+      self.enrollments.
+        find(:first, :conditions => { :subject_id => entity.id })
     when 'Lecture'
-      association = Enrollment.where('user_id = ? AND subject_id = ?', self.id,
-                                      entity.subject.id).first
+      self.enrollments.
+        find(:first, :conditions => { :subject_id => entity.subject.id })
     end
   end
 

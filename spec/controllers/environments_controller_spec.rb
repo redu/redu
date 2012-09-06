@@ -287,10 +287,6 @@ describe EnvironmentsController do
         assigns[:environment].should_not be_nil
       end
 
-      it "assigns header_environment" do
-        assigns[:header_environment].should_not be_nil
-      end
-
       it "renders admin/edit" do
         response.should render_template "environments/admin/edit"
       end

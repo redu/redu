@@ -1,7 +1,8 @@
+<%# Parâmetros: space e subject  %>
 <tr class="row">
   <td class="cell cell-280">
     <div class="subject-info">
-      <%= link_to item_admin.name, edit_space_subject_path(item_admin.space, item_admin), :class => "subject-name" %>
+      <%= link_to item_admin.name, edit_space_subject_path(space, item_admin), :class => "subject-name" %>
       <span class="subject-detail lecture-count"><%= item_admin.lectures.count %> aula(s)</span>
       <span class="subject-detail created-at">Criado em <%= l(item_admin.created_at, :format => :admin) %></span>
     </div>
@@ -13,9 +14,9 @@
       <span class="subject-invisible">Invisível</span>
     <% end %>
   </td>
-  <td class="cell centered-cell"><%= link_to 'Gerenciar módulo', edit_space_subject_path(item_admin.space, item_admin),
+  <td class="cell centered-cell"><%= link_to 'Gerenciar módulo', edit_space_subject_path(space, item_admin),
     :class => "option icon-manage-gray_8_10-before" %> </td>
-  <td class="cell centered-cell"><%= link_to 'Remover', space_subject_path(item_admin.space, item_admin),
+  <td class="cell centered-cell"><%= link_to 'Remover', space_subject_path(space, item_admin),
     :confirm => 'Você tem certeza que deseja remover este módulo?',
     :method => :delete,
     :class => "option icon-delete-gray_8_10-before" %> </td>

@@ -2,10 +2,13 @@ class UserEnvironmentAssociationCacheObserver < ActiveRecord::Observer
   include ViewCaches
   observe UserEnvironmentAssociation
 
-  def expire_sidebar_environments(uea)
+  def after_create(uea)
     expire_sidebar_environments_for(uea.user)
+    expire_environment_sidebar_connections_with_count_for(uea.environment)
   end
 
-  alias_method :after_create, :expire_sidebar_environments
-  alias_method :after_destroy, :expire_sidebar_environments
+  def after_destroy(uea)
+    expire_sidebar_environments_for(uea.user)
+    expire_environment_sidebar_connections_with_count_for(uea.environment)
+  end
 end

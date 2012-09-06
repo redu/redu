@@ -6,11 +6,10 @@ class RolesController < BaseController
   def index
     authorize! :manage, @environment
 
-    @courses = @user.user_course_associations.
-      where(:course_id => @environment.courses).
-      includes(:course => [{ :spaces => :user_space_associations }])
+    @courses_memberships = @user.user_course_associations.
+      where(:course_id => @environment.courses.select('id')).includes(:course)
     @environment_membership = @user.user_environment_associations.
-      where(:environment_id => @environment.id,:user_id => @user.id).first
+      where(:environment_id => @environment.id).includes(:user).first
 
     respond_to do |format|
       format.html do

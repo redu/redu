@@ -8,7 +8,7 @@
 
   <div id="space-manage" class="body management">
     <%= render :partial => 'spaces/admin/header',
-      :locals => { :header_space => @header_space, :space => @space }%>
+      :locals => { :space => @space }%>
     <%= render :partial => 'spaces/admin/clean_header' %>
 
     <%= tabs :spaces_admin do %>
@@ -17,12 +17,14 @@
            <%= render :partial => 'spaces/admin/disclaimer_chart' %>
         <% else %>
           <h3 class="form-header graph-header">Qual a participação dos alunos nas aulas?</h3>
+
           <%= lazy_load(:chart, :jammit => true) do %>
             var graph = new LectureParticipationGraph();
             graph.load({ chart:{ renderTo: "lecture-participation-chart" } ,
             form: $("#graph-form") });
           <% end %>
-          <%= form_tag Redu::Application.config.vis[:lecture_participation], :method => :get,
+
+          <%= form_tag api_vis_lecture_participation_path(@space.id), :method => :get,
             :remote => true, :class => "concave-form", :id => "graph-form" do %>
             <%= label_tag "", "Aulas", :id => "form-problem" %>
             <ul class="columns">
