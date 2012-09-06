@@ -11,10 +11,16 @@
 
 // Títulos da área de navegação. 
 .landing-navigation-title {
+  $color: $gray3;
+  color: $color;
   display: block;
   font: 500 60px/56px $museo-sans-rounded;
-  color: $gray3;
   letter-spacing: -3px;
+
+  &:hover { 
+    text-decoration: none; 
+    color: $color;
+  }
 
   .textshadow & { text-shadow: 0 1px 0 $gray-drop-shadow; }
 }
