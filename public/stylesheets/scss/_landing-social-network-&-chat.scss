@@ -1,0 +1,43 @@
+// ==========================================================================
+// Área de rede social & chat.
+// ==========================================================================
+
+// Encapsulador dos dois.
+.landing-social-network-n-chat-wrapper {
+
+}
+
+// Posicionamento das imagens de fundo.
+
+.landing-social-network-wrapper,
+.landing-chat-wrapper { position: relative; }
+
+.icon-social-network-gray_128_130,
+.landing-chat-balloon {
+  position: absolute;
+  display: block;
+}
+
+.icon-social-network-gray_128_130 {
+  @include size(128px, 130px);
+  background-image: url("../images/landing/icon-social-network-gray_128_130.png");
+  left: -155px;
+  top: 15px;
+}
+
+.landing-chat-balloon {
+  @include size(217px, 118px);
+  background-image: url("../images/landing/chat-background.png");
+  left: 150px;
+  top: -65px;
+}
+
+// Rede social.
+.landing-social-network-wrapper { text-align: right; }
+
+// Chat.
+.landing-chat-wrapper {
+  text-align: left;
+
+  h4 { width: 280px; }
+}

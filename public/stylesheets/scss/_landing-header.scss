@@ -2,7 +2,6 @@
 // Cabeçalho.
 // ==========================================================================
 
-
 // Wrapper de tudo.
 .landing-header {
   height: 85px;
@@ -11,13 +10,11 @@
   .boxshadow & {
     $box-shadow:
       0 -1px 0 $white inset
-    , 0  1px 0 $landing-header-footer-dropshadow;
+    , 0  1px 0 $gray-drop-shadow;
     @include box-shadow($box-shadow);
   }
 
-  // Adiciona uma borda já que o IE8 não tem box-shadow.
-  .ie8 & { border-bottom: 1px solid $landing-header-footer-dropshadow; }
-
+  .ie8 & { border-bottom: 1px solid $gray-drop-shadow; }
 }
 
 // Wrapper do logo.

@@ -1,0 +1,14 @@
+// ==========================================================================
+// Funcionalidades.
+// ==========================================================================
+
+.landing-functionalities {
+  .landing-navigation-title { margin: 20px; }
+
+  p { color: $gray-drop-shadow; }
+
+  h2 + h4,
+  h4 + p { margin-top: 20px; }
+}
+
+.landing-functionality:hover p { color: $gray6; }

@@ -1,3 +1,6 @@
+// ==========================================================================
+// Área da navegação.
+// ==========================================================================
 
 .landing-navigation {
   @include box-sizing(border-box);
@@ -9,6 +12,8 @@
   .borderradius & { @include border-radius(10px); }
 
   .boxshadow & { @include box-shadow(0 1px 10px 1px rgba(0, 0, 0, 0.5)); }
+
+  h4 { color: $gray6; }
 }
 
 .landing-navigation-item {
@@ -27,16 +32,3 @@
   .boxshadow &:last-child { @include box-shadow(0 1px 0 $white inset); }
   
 }
-
-.landing-navigation-title {
-  font-family: museo-sans-rounded, museo-sans;
-  font-size: 60px;
-  font-weight: 500;
-  color: $gray3;
-  line-height: 56px;
-  letter-spacing: -3px;
-  display: block;
-
-  .textshadow & { text-shadow: 0 1px 0 rgb(178, 178, 178); }
-}
-
