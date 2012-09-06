@@ -32,24 +32,6 @@
   <% end %>
 </ul>
 
-<% unless @course.has_basic_content %>
-  <div class="clearfix">
-    <%= label_tag :basic_content, raw("Importar Conteúdo Básico <span class='snippet'>Ensino Médio</span>") %>
-    <ul class="single-column">
-      <li>
-        <%= radio_button_tag :basic_content, "1" %>
-        <%= label_tag :basic_content_1, "Sim" %>
-        <span class="tiptip-right icon-small icon-question-blue_12_12" title="<%= "#{render 'courses/basic_content'}" %>"></span>
-      </li>
-      <li>
-        <%= radio_button_tag :basic_content, "2", :checked => true %>
-        <%= label_tag :basic_content_2, "Não" %>
-      </li>
-    </ul>
-    <%= hidden_field_tag :base_course_id, Redu::Application.config.base_course['id'] %>
-  </div>
-<% end %>
-
 <div class="clearfix">
   <%= f.label :subscription_type, raw("Inscrição <span class='snippet'>entrada dos membros</span>") %>
   <ul class="single-column">
@@ -63,6 +45,25 @@
     </li>
   </ul>
 </div>
+
+<hr />
+<% unless @course.has_basic_content %>
+  <div class="clearfix">
+    <%= label_tag :basic_content, raw("Importar Conteúdo Básico <span class='snippet'>Ensino Médio</span>") %>
+    <ul class="single-column">
+      <li>
+        <%= radio_button_tag :basic_content, "true" %>
+        <%= label_tag :basic_content_1, "Sim" %>
+        <span class="tiptip-right icon-small icon-question-blue_12_12" title="<%= "#{render 'courses/basic_content'}" %>"></span>
+      </li>
+      <li>
+        <%= radio_button_tag :basic_content, "false", :checked => true %>
+        <%= label_tag :basic_content_2, "Não" %>
+      </li>
+    </ul>
+    <%= hidden_field_tag :base_course_id, Redu::Application.config.base_course['id'] %>
+  </div>
+<% end %>
 
 <% unless edit || @environment.plan %>
   <hr />

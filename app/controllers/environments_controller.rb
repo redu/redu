@@ -110,6 +110,8 @@ class EnvironmentsController < BaseController
 
           if @has_basic_content
             @environment.courses.first.mimetize! Course.find(@base_course_id)
+            @environment.courses.first.quota.try(:refresh!)
+            @environment.quota.try(:refresh!)
           end
 
           if @plan.create_invoice_and_setup

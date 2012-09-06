@@ -69,7 +69,7 @@ describe CoursesController do
       before do
         base_course = Factory(:complete_course,
                               :name => 'Conteúdo Básico para E.M.')
-        hash = { :basic_content => true, :base_course_id => base_course.id }
+        hash = { :basic_content => "true", :base_course_id => base_course.id }
         @params = @params.merge hash
       end
 

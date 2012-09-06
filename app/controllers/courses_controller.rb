@@ -76,7 +76,7 @@ class CoursesController < BaseController
     respond_to do |format|
       if @course.save
         # Importação de conteúdo básico do ensino médio
-        @course.mimetize! Course.find(params[:base_course_id]) if params[:basic_content]
+        @course.mimetize! Course.find(params[:base_course_id]) if params[:basic_content] == "true"
 
         if @environment.plan.nil?
           @plan = Plan.from_preset(params[:plan].to_sym)
@@ -86,6 +86,11 @@ class CoursesController < BaseController
           @plan.create_invoice_and_setup
         end
         @environment.courses << @course
+
+        # Atualiza a quota
+        @course.quota.try(:refresh!)
+        @environment.quota.try(:refresh!)
+
         format.html { redirect_to environment_course_path(@environment, @course) }
       else
         format.html { render 'courses/admin/new' }
