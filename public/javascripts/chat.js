@@ -1,6 +1,6 @@
 // Utilizando pjax
 var $pjaxLinks = $("a:not([data-remote]):not([href^='#']):not([rel='nofollow']):not([href^='javascript\:']):not([onClick])");;
-$pjaxLinks.pjax("#content", { timeout: null });
+$pjaxLinks.pjax("body", { timeout: null });
 
 var buildChat = (function(){
 // Constrói um novo objeto Chat

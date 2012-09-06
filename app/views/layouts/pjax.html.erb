@@ -1,0 +1,12 @@
+<%# Layout utilizado em requisições pjax  %>
+
+<%= render :partial => 'shared/outdated_browser' %>
+<%= render :partial => 'shared/header' %>
+<%= render :partial => 'shared/flash_message' %>
+
+<div id="content" class="container_16 clearfix">
+  <%= yield :layout %>
+</div><!-- end #content -->
+
+<%= render :partial => 'shared/footer' %>
+<%= yield :footer_scripts_and_styles %>
