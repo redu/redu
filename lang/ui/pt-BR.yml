@@ -280,6 +280,10 @@ pt-BR:
           attributes:
             cnpj:
               invalid: "formato inválido"
+        seminar:
+          attributes:
+            original:
+              empty: "Você não está esquecendo de algo? Acho que pode ser o vídeo :)"
 
   helpers:
     submit:
