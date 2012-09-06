@@ -46,10 +46,6 @@ class EnvironmentsController < BaseController
 
   # GET /environments/1/edit
   def edit
-    @header_environment = @environment.clone :include => [:users,
-      :administrators, :teachers, :tutors]
-    @header_environment.id = @environment.id
-
     respond_to do |format|
       format.html { render 'environments/admin/edit' }
     end
@@ -131,9 +127,7 @@ class EnvironmentsController < BaseController
   # PUT /environments/1
   # PUT /environments/1.xml
   def update
-    @header_environment = @environment.clone :include => [:users,
-      :administrators, :teachers, :tutors]
-    @header_environment.id = @environment.id
+    @header_environment = @environment.clone
 
     respond_to do |format|
       if @environment.update_attributes(params[:environment])
@@ -182,7 +176,6 @@ class EnvironmentsController < BaseController
   end
 
   def admin_courses
-    @environment = Environment.find(params[:id])
     @courses = @environment.courses.paginate(:page => params[:page],
                                              :per_page => Redu::Application.config.items_per_page)
 
@@ -195,9 +188,9 @@ class EnvironmentsController < BaseController
   end
 
   def admin_members
-    @memberships = UserEnvironmentAssociation.of_environment(@environment).
+    @memberships = @environment.user_environment_associations.
       paginate(
-        :include => [{ :user => {:user_course_associations => { :course => :environment }} }],
+        :include => :user,
         :page => params[:page],
         :order => 'updated_at DESC',
         :per_page => Redu::Application.config.items_per_page)

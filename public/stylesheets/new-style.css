@@ -5560,6 +5560,8 @@ table.concave-invitation-table .cell-reinvite .reinvited {
 }
 
 .moderate-members-table tr {
+  width: 675px;
+  display: inline-block;
 }
 
 .moderate-members-table tr td {
@@ -5571,6 +5573,8 @@ table.concave-invitation-table .cell-reinvite .reinvited {
   font-size: .77em;
   text-align: center;
   width: 45px;
+  float: left;
+  display: block;
   color: rgb(179, 179, 179);
 }
 
@@ -5596,9 +5600,11 @@ table.concave-invitation-table .cell-reinvite .reinvited {
 }
 
 .moderate-member {
+  margin-left: 15px;
   overflow: hidden;
   background-color: #f1f0f0;
   width: 550px;
+  margin-top: -10px;
 }
 
 .borderradius .moderate-member {
@@ -8265,4 +8271,3 @@ input[disabled=disabled],
 button[disabled=disabled] {
   cursor: default;
 }
-

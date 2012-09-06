@@ -1,5 +1,6 @@
 class Environment < ActiveRecord::Base
   include ActsAsBillable
+  include DestroySoon::ModelAdditions
 
   # Representa o ambiente onde o ensino a distância acontece. Pode ser visto
   # como um instituição o provedor de ensino dentro do sistema.
@@ -7,7 +8,9 @@ class Environment < ActiveRecord::Base
   after_create :create_environment_association
   after_create :create_course_association, :unless => "self.courses.empty?"
 
-  has_many :courses, :dependent => :destroy
+  has_many :courses, :dependent => :destroy,
+    :conditions => ["courses.destroy_soon = ?", false]
+  has_many :all_courses, :dependent => :destroy, :class_name => "Course"
   has_many :user_environment_associations, :dependent => :destroy
   belongs_to :owner, :class_name => "User", :foreign_key => "user_id"
   has_many :users, :through => :user_environment_associations

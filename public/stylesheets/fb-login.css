@@ -1,16 +1,21 @@
+.fb-login {
+    text-align: center;
+    margin-top: 20px;
+}
+
 .uibutton {
     position: relative;
     z-index: 1;
     overflow: visible;
     display: inline-block;
     padding: 0.3em 0.6em 0.375em;
-    margin-top: 20px;
-    margin-left: 5px;
     border: 1px solid #999;
     border-bottom-color: #888;
     text-decoration: none;
     text-align: center;
-    font: bold 11px/normal 'lucida grande', tahoma, verdana, arial, sans-serif;
+    font-weight: bold;
+    font-size: 11px;
+    font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
     white-space: nowrap;
     cursor: pointer;
     /* outline: none; */
@@ -48,10 +53,6 @@
 .uibutton::-moz-focus-inner {
     padding: 0;
     border: 0;
-}
-
-.uibutton.large {
-    font-size: 13px;
 }
 
 .uibutton.confirm {

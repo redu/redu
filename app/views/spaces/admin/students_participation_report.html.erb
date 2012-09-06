@@ -8,7 +8,7 @@
 
   <div id="space-manage" class="body management">
     <%= render :partial => 'spaces/admin/header',
-      :locals => { :header_space => @header_space, :space => @space }%>
+      :locals => { :space =>  @space }%>
     <%= render :partial => 'spaces/admin/clean_header' %>
 
     <%= tabs :spaces_admin do %>
@@ -69,7 +69,7 @@
             print: "<%= students_participation_report_show_space_path(@space.id) %>"});
           <% end %>
 
-          <%= form_tag Redu::Application.config.vis[:students_participation], :method => :get,
+         <%= form_tag api_vis_students_participation_path(@space.id), :method => :get,
             :remote => true, :class => "concave-form", :id => "graph-form" do %>
             <% @space.students_id.each do |id| %>
               <%= hidden_field_tag "users_id[]", id %>
@@ -96,6 +96,7 @@
               <%= text_field_tag :date_end, nil, :style => "display: none;" %>
             <% end %>
 
+            <%= hidden_field_tag :oauth_token, @token %>
             <%= submit_tag "Atualizar", :class=>"concave-submit" %>
           <% end %>
         <% end %>

@@ -1,12 +1,15 @@
 class Course < ActiveRecord::Base
   include ActsAsBillable
   include EnrollmentVisNotification
+  include DestroySoon::ModelAdditions
 
   # Apenas deve ser chamado na criação do segundo curso em diante
   after_create :create_user_course_association, :unless => "self.environment.nil?"
 
   belongs_to :environment
-  has_many :spaces, :dependent => :destroy
+  has_many :spaces, :dependent => :destroy,
+    :conditions => ["spaces.destroy_soon = ?", false]
+  has_many :all_spaces, :dependent => :destroy, :class_name => "Space"
   has_many :user_course_associations, :dependent => :destroy
   has_many :user_course_invitations, :dependent => :destroy
   has_many :course_enrollments
@@ -62,7 +65,7 @@ class Course < ActiveRecord::Base
 
   scope :with_audiences, lambda { |audiences_ids|
     joins(:audiences).where('audiences_courses.audience_id IN (?)',
-                             audiences_ids).group(:id)
+                             audiences_ids).group('courses.id')
   }
 
   scope :user_behave_as_administrator, lambda { |user_id|
@@ -155,9 +158,18 @@ class Course < ActiveRecord::Base
     end
   end
 
+  # Desassocia o usuário do curso
+  # - Remove a associação do usuário com o Course
+  # - Remove a associação do usuário com o Environment, caso ele passe
+  #   a não fazer parte de nenhum Course
+  # - Remove as associações com os Spaces
+  # - Remove as associações com os Subjects
+  # - Notifica Vis em relação a remoção dos enrollments
+  #
+  # * Pode ser chamado mesmo se o usuário estiver sob moderação
   def unjoin(user)
     enrollments = []
-    subjects_finalized = []
+    enrollments_finalized = []
     course_association = user.get_association_with(self)
     course_association.destroy
 
@@ -167,24 +179,25 @@ class Course < ActiveRecord::Base
     # Desassocia o usuário do ambiente se ele não participar de outros cursos
     # Reload necessário devido cache do BD
     unless (user.courses.reload & self.environment.courses).count > 0
-      user.get_association_with(self.environment).destroy
+      user.get_association_with(self.environment).try(:destroy)
     end
 
     self.spaces.each do |space|
       space_association = user.get_association_with(space)
-      space_association.destroy
+      space_association.try(:destroy)
 
       space.subjects.each do |subject|
         enrollment = user.get_association_with subject
-        enrollments << enrollment if enrollment
-        subjects_finalized << enrollment if enrollment.graduaded
-        enrollment.destroy if enrollment
+        enrollments << enrollment
+        enrollments_finalized << enrollment if enrollment.try(:graduaded)
+        enrollment.try(:destroy)
       end
     end
     # Associa o delayed_job para a remoção dos enrollments em visualização
-    delay_hierarchy_notification(enrollments, "remove_enrollment")
+    delay_hierarchy_notification(enrollments.compact, "remove_enrollment")
     # Envia notificação de remove_subject_finalized para visualização
-    delay_hierarchy_notification(subjects_finalized, "remove_subject_finalized")
+    delay_hierarchy_notification(enrollments_finalized.compact,
+                                 "remove_subject_finalized")
   end
 
 
@@ -330,8 +343,7 @@ class Course < ActiveRecord::Base
       invoice = plan.invoice
       if invoice.is_a? LicensedInvoice
         license = License.get_open_license_with(user, self)
-        license.period_end = DateTime.now
-        license.save
+        license.try(:update_attributes, {:period_end => DateTime.now})
       end
     end
   end

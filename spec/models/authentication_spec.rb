@@ -20,14 +20,14 @@ describe Authentication do
         before { Factory.create(:user, :login => 'SomeUserville') }
         
         it "should return a valid user" do
-          Authentication.build_user(@omniauth).should be_valid
+          Authentication.create_user(@omniauth).should be_valid
         end
 
         context "and the most obvious nickname is taken too" do
           before { Factory.create(:user, :login => 'SomeUserville1') }
 
           it "should return a valid user" do
-            Authentication.build_user(@omniauth).should be_valid
+            Authentication.create_user(@omniauth).should be_valid
           end
         end
       end

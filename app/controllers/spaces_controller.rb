@@ -15,10 +15,7 @@ class SpacesController < BaseController
     :except => [:cancel]
 
   Browser = Struct.new(:browser, :version)
-
-  UNSUPPORTED_BROWSERS = [
-    Browser.new("Internet Explorer")
-  ]
+  UNSUPPORTED_BROWSERS = [Browser.new("Internet Explorer")]
 
   rescue_from CanCan::AccessDenied do |exception|
     session[:return_to] = request.fullpath
@@ -27,7 +24,7 @@ class SpacesController < BaseController
   end
 
   def admin_members
-    @memberships = @space.user_space_associations.
+    @memberships = @space.user_space_associations.includes(:user).
       paginate(:page => params[:page],:order => 'updated_at DESC',
                :per_page => Redu::Application.config.items_per_page)
 
@@ -111,8 +108,8 @@ class SpacesController < BaseController
 
   # GET /spaces/1/edit
   def edit
-    @header_space = @space.clone :include => [:teachers, :students, :tutors]
     @plan = @space.course.plan || @space.course.environment.plan
+    @billable = @plan.billable
 
     respond_to do |format|
       format.html { render "spaces/admin/edit" }
@@ -146,8 +143,10 @@ class SpacesController < BaseController
   # PUT /spaces/1
   # PUT /spaces/1.xml
   def update
-    @header_space = @space.clone
     @plan = @space.course.plan || @space.course.environment.plan
+    @billable = @plan.billable
+    @header_space = @space.clone
+    @header_space.id = @space.id
 
     respond_to do |format|
       if @space.update_attributes(params[:space])
@@ -156,7 +155,7 @@ class SpacesController < BaseController
         format.xml  { head :ok }
       else
         format.html do
-          render :template => 'spaces/admin/edit'
+          render 'spaces/admin/edit'
         end
         format.xml  { render :xml => @space.errors, :status => :unprocessable_entity }
       end
@@ -166,7 +165,7 @@ class SpacesController < BaseController
   # DELETE /spaces/1
   # DELETE /spaces/1.xml
   def destroy
-    @space.destroy
+    @space.async_destroy
 
     respond_to do |format|
       format.html { redirect_to(environment_course_path(@space.course.environment, @space.course)) }
@@ -175,8 +174,8 @@ class SpacesController < BaseController
   end
 
   def subject_participation_report
-    user_agent = UserAgent.parse(request.user_agent)
-    @browser_not_supported = self.is_browser_unsupported?(user_agent)
+    @browser_not_supported = self.is_browser_unsupported?
+    @token = current_vis_token # lib/vis_application_additions...
 
     respond_to do |format|
       format.html { render "spaces/admin/subject_participation_report" }
@@ -184,8 +183,8 @@ class SpacesController < BaseController
   end
 
   def lecture_participation_report
-    user_agent = UserAgent.parse(request.user_agent)
-    @browser_not_supported = self.is_browser_unsupported?(user_agent)
+    @browser_not_supported = self.is_browser_unsupported?
+    @token = current_vis_token # lib/vis_application_additions...
 
     respond_to do |format|
       format.html { render "spaces/admin/lecture_participation_report" }
@@ -193,8 +192,7 @@ class SpacesController < BaseController
   end
 
   def students_participation_report
-    user_agent = UserAgent.parse(request.user_agent)
-    @browser_not_supported = self.is_browser_unsupported?(user_agent)
+    @browser_not_supported = self.is_browser_unsupported?
     @token = current_vis_token # lib/vis_application_additions...
 
     respond_to do |format|
@@ -215,8 +213,6 @@ class SpacesController < BaseController
 
   # Utilizado pelo endless do sidebar
   def students_endless
-    @sidebar_students = @space.students.page(params[:page]).per(4)
-
     respond_to do |format|
       format.js do
         render_sidebar_endless 'users/item_medium_24',
@@ -237,7 +233,8 @@ class SpacesController < BaseController
     @environment = @course.environment
   end
 
-  def is_browser_unsupported?(user_agent)
+  def is_browser_unsupported?
+    user_agent = UserAgent.parse(request.user_agent)
     current_browser = Browser.new(user_agent.browser, user_agent.version)
     browser = UNSUPPORTED_BROWSERS[0].browser
 

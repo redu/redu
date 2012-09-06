@@ -22,4 +22,5 @@ backup/data/*
 backup/log/*
 backup/.tmp/*
 .vagrant
+.rvmrc
 chromedriver.log
