@@ -7,8 +7,8 @@
 
   p { color: $gray-drop-shadow; }
 
-  &:hover p { color: $gray6; }
-
   h2 + h4,
   h4 + p { margin-top: 20px; }
 }
+
+.landing-functionality:hover p { color: $gray6; }
