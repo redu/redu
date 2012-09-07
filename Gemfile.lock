@@ -308,7 +308,7 @@ GEM
       activerecord (>= 3.0.0)
     rdoc (3.12)
       json (~> 1.4)
-    redu_analytics (0.0.1)
+    redu_analytics (0.0.2)
       lazy_high_charts
     remotipart (1.0.2)
     representable (1.1.7)
