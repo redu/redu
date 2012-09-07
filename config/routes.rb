@@ -2,21 +2,20 @@ Redu::Application.routes.draw do
   resources :oauth_clients
 
   match '/oauth/token',         :to => 'oauth#token',         :as => :token
-
   match '/oauth/access_token',  :to => 'oauth#access_token',  :as => :access_token
-
   match '/oauth/request_token', :to => 'oauth#request_token', :as => :request_token
-
   match '/oauth/authorize',     :to => 'oauth#authorize',     :as => :authorize
-
   match '/oauth',               :to => 'oauth#index',         :as => :oauth
   match '/oauth/revoke', :to => 'oauth#revoke'
-
   match '/oauth/revoke',        :to => 'oauth#revoke',        :as => :oauth_revoke
-
   match '/oauth/invalidate',    :to => 'oauth#invalidate',    :as => :oauth_invalidate
-
   match '/oauth/capabilities',  :to => 'oauth#capabilities',  :as => :oauth_capabilities
+
+  match '/analytics/dashboard', :to => 'analytics_dashboard#dashboard'
+  match '/analytics/signup_by_date', :to => 'analytics_dashboard#signup_by_date'
+  match '/analytics/environment_by_date', :to => 'analytics_dashboard#environment_by_date'
+  match '/analytics/course_by_date', :to => 'analytics_dashboard#course_by_date'
+  match '/analytics/post_by_date', :to => 'analytics_dashboard#post_by_date'
 
   post "presence/auth"
   post "presence/multiauth"

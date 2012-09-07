@@ -1,5 +1,6 @@
 source 'http://rubygems.org'
 source 'http://gems.github.com'
+source 'https://gems.gemfury.com/osgw8uXWxBETrcXLyE2p'
 
 gem 'aasm'
 gem 'actionmailer_inline_css',
@@ -69,6 +70,7 @@ gem 'rack-cors', :require => 'rack/cors'
 gem 'roar-rails', '~> 0.0.3',
   :git => 'git://github.com/apotonick/roar-rails.git'
 gem 'destroy_soon', :git => 'git://github.com/redu/destroy-soon.git'
+gem 'redu_analytics'
 
 # Gems específicos de algum ambiente
 group :development, :test do
