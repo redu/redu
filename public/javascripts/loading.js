@@ -1,9 +1,9 @@
 (function(){
   // Mensagem "Carregando..."
-  $("body").bind('start.pjax', function() {
+  $("#pjax-container").bind('start.pjax', function() {
     $('#loading-message').show();
   });
-  $("body").bind('end.pjax', function() {
+  $("#pjax-container").bind('end.pjax', function() {
     $('#loading-message').hide();
   });
 })();
