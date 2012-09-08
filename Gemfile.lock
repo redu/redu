@@ -90,7 +90,7 @@ GIT
 GEM
   remote: http://rubygems.org/
   remote: http://gems.github.com/
-  remote: https://gems.gemfury.com/osgw8uXWxBETrcXLyE2p/
+  remote: http://reduadmin:pomp64bozos@the-shire.herokuapp.com/
   specs:
     POpen4 (0.1.4)
       Platform (>= 0.4.0)

@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 source 'http://gems.github.com'
-source 'https://gems.gemfury.com/osgw8uXWxBETrcXLyE2p'
+source 'http://reduadmin:pomp64bozos@the-shire.herokuapp.com/'
 
 gem 'aasm'
 gem 'actionmailer_inline_css',
