@@ -371,8 +371,6 @@ GEM
       activesupport (>= 2.3.4)
       chronic (~> 0.6.3)
     will_paginate (3.0.pre2)
-    win32-open3 (0.3.2)
-    win32-open3 (0.3.2-x86-mingw32)
     xml-simple (1.0.15)
     yui-compressor (0.9.6)
       POpen4 (>= 0.1.4)
@@ -398,7 +396,7 @@ DEPENDENCIES
   aws-s3
   aws-sdk
   backup!
-  bundler (~> 1.0.15)
+  bundler
   cancan (~> 1.6.7)
   ckeditor (= 3.4.2.pre)
   compass-rails
@@ -450,5 +448,4 @@ DEPENDENCIES
   webmock (~> 1.8.6)
   whenever
   will_paginate (~> 3.0.pre2)
-  win32-open3
   zencoder
