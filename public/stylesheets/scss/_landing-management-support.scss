@@ -4,15 +4,30 @@
 
 .landing-management-support {
   // @include box-sizing(border-box);
-  // overflow: hidden;
+  overflow: hidden;
   height: 210px;
   background-color: $white;
+
+  h2 {
+    margin-top: 20px;
+  }
 }
 
+.icon-129px-configuracoes, .bkg-suporte {
+  position: absolute;
+  display: block;
+}
 
+.icon-129px-configuracoes {
+  @include size(128px, 130px);
+  background-image: url("../images/landing/icon-129px-configuracoes.png");
+  left: 226px;
+}
 
 .landing-support-content {
-  background: url("../images/landing/bkg-suporte.png") no-repeat scroll right center $white;
+  @include size(395px, 120px);
+  background: url("../images/landing/bkg-suporte.png");
   height: 210px;
+  float: right;
 }
 
