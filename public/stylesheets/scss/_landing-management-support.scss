@@ -1,0 +1,18 @@
+// ==========================================================================
+// Área do mural de gerenciamento e suporte
+// ==========================================================================
+
+.landing-management-support {
+  // @include box-sizing(border-box);
+  // overflow: hidden;
+  height: 210px;
+  background-color: $white;
+}
+
+
+
+.landing-support-content {
+  background: url("../images/landing/bkg-suporte.png") no-repeat scroll right center $white;
+  height: 210px;
+}
+
