@@ -9,6 +9,14 @@
 
   h2 + h4,
   h4 + p { margin-top: 20px; }
+
+  hr {
+    background-color: $gray3;
+    height: 3px;
+    margin: 0;
+    border-color: $white;
+    border-right-width: 0;
+  }
 }
 
 .landing-functionality:hover p { color: $gray6; }
