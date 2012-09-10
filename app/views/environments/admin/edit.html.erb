@@ -31,7 +31,7 @@
       <% if @environment.plan %>
         <div class="plan-panel">
           <div class="plan-use">
-            <span class="plan-type"><%= @header_environment.plan.name %></span>
+            <span class="plan-type"><%= @environment.plan.name %></span>
             <%= render :partial => "invoices/quotas",
               :locals => { :quota_file => @environment.percentage_quota_file,
                            :plan => @environment.plan,
@@ -43,7 +43,7 @@
       <% end %>
 
       <%= form_for @environment, :html => { :class => 'concave-form',
-        :multipart => true }, :url => environment_path(@header_environment) do |f| %>
+        :multipart => true }, :url => environment_path(@header_environment || @environment) do |f| %>
         <%= concave_error_messages_for(@environment) %>
         <%= f.label :name, "Nome" %>
         <%= f.text_field :name  %>
