@@ -21,4 +21,6 @@
     top: 0;
     right: 0;
   }
+
+  [class*="icon-"][class*="-before"]:before { margin-right: 10px; }
 }

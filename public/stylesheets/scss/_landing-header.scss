@@ -40,3 +40,14 @@
 
 .landing-button-sign-up + 
 .landing-button-sign-in { margin-left: 40px; }
+
+.landing-button-sign-up, 
+.landing-button-sign-in {
+  display: inline-block;
+  overflow: hidden;
+    
+  [class*="icon-"] {
+    margin: 5px 10px 0 0;
+    float: left;
+  }
+}
