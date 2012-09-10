@@ -2,7 +2,6 @@
   background: $gray1;
   overflow: hidden;
   display: block;
-  width: 820px;
   margin: 20px auto;
   background: $gray1;
  .borderradius & { @include border-radius(7px); }
@@ -42,5 +41,7 @@
         margin: -2px 0 0 2px;
       }
     }
+
+    table { .free { color: rgb(95, 192, 128); } }
   }
 }

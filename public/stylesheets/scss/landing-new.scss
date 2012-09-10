@@ -6,7 +6,6 @@
 @import "compass/css3/images";
 // Mixins do UI-components.
 @import "mixins";
-
 // Variáveis.
 @import "landing-variables";
 // Estilos compartilhados.
@@ -46,3 +45,7 @@
 @import "landing-others";
 // Estilos da área de parceiros.
 @import "landing-partners";
+// Estilos da área de Relatórios Básicos.
+@import "landing-basic-reports";
+//Estilos da área de gerenciamento e suporte.
+@import "landing-management-support";
