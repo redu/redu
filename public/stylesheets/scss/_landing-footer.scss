@@ -22,7 +22,10 @@
 // ==========================================================================
 
 // Wrapper para o logo.
-.landing-footer-logo-wrapper { position: relative; }
+.landing-footer-logo-wrapper { 
+  position: relative; 
+  height: 125px;
+}
 
 // Link do logo.
 .landing-footer-logo-link {
@@ -37,6 +40,14 @@
   position: absolute;
   left: 115px;
   top: 20px;
+}
+
+// CNPJ.
+.landing-footer-cnpj {
+  font-size: 9px;
+  color: $gray-drop-shadow;
+  position: absolute;
+  bottom: 0;
 }
 
 
