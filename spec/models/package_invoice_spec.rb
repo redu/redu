@@ -76,6 +76,22 @@ describe PackageInvoice do
       PackageInvoice.pending.should have(2).items
       PackageInvoice.pending.last.should == inv.plan.invoice
     end
+
+    context "when the billable was destroyed" do
+      before do
+        @inv = Factory(:package_invoice, :period_start => Date.today - 20.days,
+                      :period_end => Date.today - 1.day)
+        @inv.pend!
+        @inv.plan.billable.destroy
+        @inv.pay!
+      end
+
+      it "should not generate next invoice" do
+        PackageInvoice.refresh_states!
+
+        PackageInvoice.pending.should have(1).items
+      end
+    end
   end
 
   context " when refreshing paid invoices" do

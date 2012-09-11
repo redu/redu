@@ -79,4 +79,47 @@ describe Invoice do
     subject.period_end = Date.today + 15.days
     subject.total_days.should == 16
   end
+
+  context "when verifying if the next invoice can be created" do
+    context "when the period_end has finished" do
+      before do
+        subject.update_attribute(:period_end, Date.today - 3.days)
+      end
+
+      it "can create next invoice" do
+        subject.can_create_next_invoice?.should be_true
+      end
+    end
+
+   context "when the period_end has not finished" do
+      before do
+        subject.update_attribute(:period_end, Date.today + 3.days)
+      end
+
+      it "can NOT create next invoice" do
+        subject.can_create_next_invoice?.should be_false
+      end
+   end
+
+    context "when the billable has been removed" do
+      before do
+        subject.plan.billable.destroy
+      end
+
+      it "can NOT create next invoice" do
+        subject.can_create_next_invoice?.should be_false
+      end
+    end
+
+    context "when the billable has not been removed" do
+      before do
+        subject.update_attribute(:period_end, Date.today - 3.days)
+        subject.plan.billable = Factory(:environment)
+      end
+
+      it "can create next invoice" do
+        subject.can_create_next_invoice?.should be_true
+      end
+    end
+  end
 end
