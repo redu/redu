@@ -215,6 +215,7 @@ class SpacesController < BaseController
   def students_endless
     respond_to do |format|
       format.js do
+        @sidebar_students = @space.students.page(params[:page]).per(4)
         render_sidebar_endless 'users/item_medium_24',
           @sidebar_students, '.connections.students',
           "Mostrando os <X> últimos alunos da disciplina"
