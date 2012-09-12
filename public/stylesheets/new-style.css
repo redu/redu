@@ -2618,7 +2618,7 @@ body {
 
 #space-manage .new-resource .resources-types li .option,
 #space-manage .edit-resource .resources-types li .option {
-  margin: 50px 5px 10px 5px;
+  padding: 50px 5px 10px 5px;
   display: block;
   text-align: center;
   color: rgb(77, 173, 214);
@@ -7210,7 +7210,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .link-loading:hover {
   background-image:  url("../images/new/loading-horizontal.gif");
   background-repeat: no-repeat;
-  background-position: left center;
   border: none;
   color: transparent;
 }
@@ -7227,6 +7226,8 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 #space-manage .new-resource .resources-types li .option.link-loading,
 #space-manage .new-resource .resources-types li:hover .option.link-loading {
   background-position: center center;
+  padding: 0;
+  margin: 50px 5px 10px 5px;
 }
 
 .ui-helper-clearfix:after,
