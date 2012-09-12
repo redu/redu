@@ -12,8 +12,8 @@
           return this.urlRegex.test(value);
         },
         ytCode : function(value){
-          var result = value.match(/http\:\/\/www\.youtube\.com\/watch\?v=([A-Za-z0-9-_]{11})/);
-          return (result === null) ? false : result[1]
+          var result = value.match(/http\:\/\/(m|w{3})\.youtube\.com\/\S*v=([A-Za-z0-9-_]{11})/);
+          return (result === null) ? false : result[2]
         },
         ytEmbedURL : function(code){
           return "http://www.youtube.com/embed/" + code;
