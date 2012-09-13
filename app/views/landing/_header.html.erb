@@ -1,6 +1,6 @@
 <div class="landing-header">
   <div class="container">
-    <%= link_to landing_path, 
+    <%= link_to landing_path,
         :class => "landing-logo-wrapper" do %>
       <%= image_tag "landing/logo.png",
           :class => "landing-logo",
@@ -12,11 +12,50 @@
       <div class="landing-button-sign-up">
         <span class="icon-add-friend-darkgray_32_34"></span>
         <button class="button-big button-success">Não possui conta? Cadastre-se, é grátis</button>
-      </div><!-- 
+      </div><!--
    --><div class="landing-button-sign-in">
         <span class="icon-profile-darkgray_32_34"></span>
         <button class="button-big button-primary">Entre no Redu</button>
       </div>
+    </div>
+  </div>
+    <div class="form-login">
+    <form class="user-dates">
+      <div class="control-group">
+        <div class="control-label">
+          <label for="name-or-email">Login</label>
+        </div>
+        <div class="controls">
+          <input type="text" id="name-or-email" placeholder="Seu login ou e-mail cadastrado">
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="control-label">
+          <label for="password">Senha</label>
+        </div>
+        <div class="controls">
+          <input type="text" id="password" placeholder="Sua senha">
+        </div>
+      </div>
+      <button class="button-primary">Enviar</button>
+      <form>
+        <div class="control-group">
+          <div class="controls">
+            <label class="control-checkbox">
+              <input type="checkbox">
+              Mantenha-me conectado
+            </label>
+          </div>
+        </div>
+      </form>
+    </form>
+    <hr>
+    <div class="fb-login">
+      <a href="/auth/facebook" class="uibutton confirm large" value="login-facebook">Entre com sua conta do Facebook</a>
+    </div>
+    <hr>
+    <div class="recover-login">
+      <a>Esqueceu seu login ou senha? Clique aqui</a>
     </div>
   </div>
 </div>
