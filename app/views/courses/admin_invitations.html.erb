@@ -1,7 +1,7 @@
   <script type="text/javascript">
     jQuery(function(){
       $("#invite_email").live("click", function(){
-        var email = $("input[autocomplete=off]").val().trim();
+        var email = $.trim($("input[autocomplete=off]").val());
         $("#emails").val($("#emails").val() + "," + email);
         $("input[autocomplete=off]").val("")
 
@@ -22,7 +22,7 @@
       $(".form-common").ajaxComplete(function(){
         if ($(".token-input-dropdown li").length == 0) {
           var emailRegex = /^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/;
-          var entered_value = $("input[autocomplete=off]").val().trim();
+          var entered_value = $.trim($("input[autocomplete=off]").val());
           if (emailRegex.test(entered_value)) {
             $("#invite_email").show();
           }else{
