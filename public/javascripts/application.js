@@ -109,7 +109,7 @@ jQuery(function(){
 
         if (email_val != confirmation_val) {
           $("#user_email_confirmation-error").remove();
-          $(this).after("<p id=\"user_email_confirmation-error\" class=\"errorMessageField\">Os e-mails digitados não são iguais.</p>");
+          $(this).next(".errors_on_field").append("<p id=\"user_email_confirmation-error\" class=\"errorMessageField\">Os e-mails digitados não são iguais.</p>");
 
         } else {
           $("#user_email_confirmation-error").remove();
