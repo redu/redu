@@ -23,7 +23,7 @@ describe "User" do
        " birthday, friends_count, mobile, localization, birth_localization" do
       get "/api/users/#{@user.id}", :oauth_token => @token, :format => 'json'
 
-      %w(login id links email first_name last_name birthday friends_count mobile localization birth_localization social_networks thumbnails).each do |attr|
+      %w(login id links email first_name last_name birthday friends_count created_at updated_at mobile localization birth_localization social_networks thumbnails).each do |attr|
         parse(response.body).should have_key attr
       end
     end

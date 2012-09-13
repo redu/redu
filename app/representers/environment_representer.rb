@@ -5,6 +5,7 @@ module EnvironmentRepresenter
   property :name
   property :description
   property :created_at
+  property :updated_at
   property :path
   property :initials
   property :id

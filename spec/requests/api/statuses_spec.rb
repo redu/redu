@@ -19,7 +19,7 @@ describe "Statuses" do
     end
 
     it "should have id, text, created_at, links and type" do
-      %w(id text created_at links type).each do |attr|
+      %w(id text created_at links updated_at type).each do |attr|
         @entity.should have_key attr
       end
     end

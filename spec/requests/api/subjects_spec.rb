@@ -22,7 +22,7 @@ describe "Subjects API" do
     end
 
     it "should have the correct keys" do
-      %w(id name description created_at links).each do |attr|
+      %w(id name description created_at updated_at links).each do |attr|
         parse(response.body).should have_key attr
       end
     end

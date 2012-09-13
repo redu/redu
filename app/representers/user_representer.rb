@@ -13,6 +13,8 @@ module UserRepresenter
   property :localization
   property :birth_localization
   property :thumbnails
+  property :created_at
+  property :updated_at
   collection :social_networks, :extend => SocialNetworkRepresenter,
     :class => SocialNetwork
 
