@@ -2,7 +2,10 @@ class CoursesController < BaseController
   respond_to :html, :js
 
   before_filter Proc.new {
-    @course = Course.find_by_path(params[:id], :include => [:audiences])
+    @environment = Environment.find_by_path(params[:environment_id])
+    @course = @environment.courses.find(:first,
+                                        :conditions => { :path => params[:id] },
+                                        :include => [:audiences])
   }, :only => :edit
   load_resource :environment, :find_by => :path
   load_and_authorize_resource :course, :through => :environment,
