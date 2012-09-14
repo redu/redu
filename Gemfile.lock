@@ -76,9 +76,9 @@ GIT
 
 GIT
   remote: git@github.com:redu/vis_client.git
-  revision: ef3bbcfb8c95c0b8040ca44521de4b866db42f97
+  revision: f09f35d64daf6bdbcf32b865ff066ccd85f8b9de
   specs:
-    vis_client (0.0.4)
+    vis_client (0.0.5)
 
 GIT
   remote: https://github.com/apotonick/roar.git
@@ -131,7 +131,7 @@ GEM
     activesupport (3.0.10)
     acts-as-taggable-on (2.0.6)
     acts_as_tree (0.1.1)
-    addressable (2.2.8)
+    addressable (2.3.2)
     ar_mailer_rails3 (2.1.12)
     arel (2.0.10)
     authlogic (3.0.2)
@@ -157,6 +157,7 @@ GEM
     closure-compiler (1.1.1)
     cocaine (0.2.1)
     columnize (0.3.2)
+    cookiejar (0.3.0)
     crack (0.1.8)
     css_parser (1.2.5)
       addressable
@@ -168,14 +169,17 @@ GEM
       activesupport (~> 3.0)
     diff-lcs (1.1.3)
     dynamic_form (1.1.4)
-    em-http-request (0.3.0)
-      addressable (>= 2.0.0)
-      escape_utils
-      eventmachine (>= 0.12.9)
+    em-http-request (1.0.3)
+      addressable (>= 2.2.3)
+      cookiejar
+      em-socksify
+      eventmachine (>= 1.0.0.beta.4)
+      http_parser.rb (>= 0.5.3)
+    em-socksify (0.2.1)
+      eventmachine (>= 1.0.0.beta.4)
     erubis (2.6.6)
       abstract (>= 1.0.0)
-    escape_utils (0.2.4)
-    eventmachine (0.12.10)
+    eventmachine (1.0.0)
     exceptional (2.0.32)
       rack
     excon (0.9.6)
@@ -202,6 +206,7 @@ GEM
     formatador (0.2.3)
     hashie (1.2.0)
     htmlentities (4.3.0)
+    http_parser.rb (0.5.3)
     httparty (0.8.1)
       multi_json
       multi_xml
