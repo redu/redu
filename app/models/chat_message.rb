@@ -1,6 +1,8 @@
 class ChatMessage < ActiveRecord::Base
   belongs_to :user
   belongs_to :contact, :class_name => 'User', :foreign_key => 'contact_id'
+  has_many :chat_message_associations
+  has_many :chats, :through => :chat_message_associations
 
   scope :log_by_time_and_limit, lambda { |curr_user ,contact, time, limit|
     where('created_at >= ? AND ((user_id = ? AND contact_id = ?) OR (user_id = ? AND contact_id = ?))',

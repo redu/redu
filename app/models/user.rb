@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
     :conditions => ["courses.destroy_soon = ?", false]
   # Authentication
   has_many :authentications, :dependent => :destroy
-
+  has_many :chats, :dependent => :destroy
 
   #COURSES
   has_many :lectures, :foreign_key => "user_id",

@@ -4,6 +4,7 @@ describe ChatMessage do
 
   it { should belong_to :user }
   it { should belong_to :contact }
+  it { should have_many(:chats).through(:chat_message_associations) }
 
   before do
     @user = Factory(:user)
