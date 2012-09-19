@@ -4,6 +4,7 @@ module ChatMessageRepresenter
 
   property :id
   property :created_at
+  property :updated_at
   property :message
 
   link :self do
@@ -26,7 +27,7 @@ module ChatMessageRepresenter
 
   link :receiver_chat do
     receiver = self.chats.
-      find(:first, :conditions => { :contact_id => self.contact_id })
+      find(:first, :conditions => { :user_id => self.contact_id })
     api_chat_url(receiver)
   end
 

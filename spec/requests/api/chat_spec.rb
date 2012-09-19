@@ -40,4 +40,33 @@ describe "Chat" do
       response.code.should == "401"
     end
   end
+
+  context "when GET /users/:id/chats" do
+    before do
+      Factory(:chat, :user => @current_user)
+    end
+
+    it "should return code 200" do
+      get "/api/users/#{@current_user.id}/chats", :oauth_token => @token,
+        :format => 'json'
+
+      response.code.should == "200"
+    end
+
+    it "should return a list of chats" do
+      get "/api/users/#{ @current_user.id }/chats", :oauth_token => @token,
+        :format => 'json'
+
+      parse(response.body).should be_a Array
+    end
+
+    it "should return a list of chats where the user is the sender" do
+      2.times { Factory(:chat, :contact => @current_user) }
+
+      get "/api/users/#{@current_user.id}/chats", :oauth_token => @token,
+        :format => 'json'
+
+      parse(response.body).length.should == 1
+    end
+  end
 end

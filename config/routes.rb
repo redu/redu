@@ -317,6 +317,7 @@ Redu::Application.routes.draw do
       end
       resources :users, :only => :index, :path => :contacts,
         :as => :contacts
+      resources :chats, :only => :index
     end
 
     match 'me' => 'users#show'
@@ -328,6 +329,8 @@ Redu::Application.routes.draw do
     resources :chats, :only => :show do
       resources :chat_messages, :only => :index, :as => :messages
     end
+
+    resources :chat_messages, :only => :show
 
     match "vis/spaces/:space_id/lecture_participation",
       :to => 'vis#lecture_participation',
