@@ -45,4 +45,8 @@ module UserRepresenter
     api_user_contacts_url(self)
   end
 
+  link :chats do
+    api_user_chats_url(self)
+  end
+
 end

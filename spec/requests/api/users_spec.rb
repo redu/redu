@@ -50,7 +50,7 @@ describe "User" do
       thumb['href'].should == @current_user.avatar.url(:thumb_32)
     end
 
-    %w(self enrollments statuses timeline contacts).each do |rel|
+    %w(self enrollments statuses timeline contacts chats).each do |rel|
       it "should link to #{rel}" do
         get "/api/users/#{@user.id}", :oauth_token => @token, :format => 'json'
         link = href_to(rel, parse(response.body))
