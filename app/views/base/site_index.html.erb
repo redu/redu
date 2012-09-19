@@ -1,38 +1,106 @@
-<%= content_for :wrapper_class do %>overlay landing<% end %>
-<div id="landing" class="body container_16">
-  <div class="presentation">
-    <h1 class="top"><%= link_to "Redu: a rede social educacional", application_path %></h1>
-    <h2 class="learn-call">Aprender nunca foi tão fácil.</h2>
-    <h2 class="teach-call">Ensinar nunca foi tão conveniente.</h2>
-    <p class="welcome">Bem-vindo(a) ao Redu, uma plataforma de ensino que foi construída tendo como base as interações sociais. Aqui, a diversão é uma aliada da produtividade e a colaboração o núcleo do enriquecimento cultural.</p>
+<div class="modal-window">
+  <span class="modal-name">
+    <%= image_tag "landing/icon-48px-instituicao.png",
+      :alt => "Instituição",
+      :title => "Instituição"
+    %>
+    <h3 class="call-cadaster">Cadastre-se no Redu. <h3 class="call-cadaster">É gratuito, rápido e fácil.</h3></h3>
+  </span>
+  <div class="modal-cadaster">
+    <p>Caso tenha uma conta no Facebook, você pode evitar o trabalho de preencher formulários ao associar sua conta ao Redu. Desta forma, o cadastro é feito de forma automática.</p>
+    <span class="legend">Opcional</span>
   </div>
-  <div class="login-box">
-    <h3 class="new-version-call">Já possui uma conta? Acesse nossa versão <span class="beta-call" >beta</span>.</h3>
-    <%= form_for @user_session, :html => { :class => "concave-form" }, :url => sessions_path do |f| %>
-      <%= field_set_tag do %>
-        <%= f.text_field :login, :placeholder => "Digite seu login e, abaixo, sua senha" %>
-        <%= concave_errors_for @user_session, :login %>
-
-        <%= f.password_field :password %>
-        <%= concave_errors_for @user_session, :password %>
-        <button>Entrar</button>
-
-        <div class="short-options">
-          <%= f.check_box :remember_me, :class => "check-stay-connect" %>
-          <%= f.label :remember_me, "Matenha-me conectado", :class => "label-stay-connect" %>
-          <%= link_to "Recuperar login & senha", recover_username_password_path, :class => "recover-login" %>
+  <hr>
+  <div class="modal-cadaster">
+  <%= form_for @user, :html => { :class => "form-horizontal" } do |f| %>
+    <p>Ou preencha os formulários abaixo e crie seu perfil no Redu.</p>
+    <div class="form-left">
+      <div class="control-group row control-big">
+        <div class="control-label span2">
+          <%= f.label :first_name, "Nome" %>
         </div>
-        <%= link_to "Entre com sua conta do Facebook", facebook_authentication_path,
-                    :class => "uibutton confirm large", :value => "login-facebook" %>
-        <p class="or-call">&minus; ou &minus;</p>
-      <% end %>
-    <% end %>
-    <%= link_to "Que tal se cadastrar?", signup_path, :class => "concave-important" %>
+        <div class="controls span5">
+          <%= f.text_field :first_name, :placeholder =>'Seu primeiro nome' %>
+        </div>
+      </div>
+      <div class="control-group row control-big">
+        <div class="control-label span2">
+          <%= f.label :last_name, "Sobrenome" %>
+        </div>
+        <div class="controls span5">
+          <%= f.text_field :last_name, :placeholder => "Seu primeiro nome" %>
+        </div>
+      </div>
   </div>
-  <div class="staging grid_11">
-    <h3 class="book-ad"><%= link_to "Professor, aprenda como educar com o Redu", "http://educarcom.redu.com.br" %></h3>
-    <div class="facebook-like">
-      <iframe src="http://www.facebook.com/plugins/like.php?app_id=221316171245047&amp;href=http%3A%2F%2Fwww.facebook.com%2Fredesocialeducacional&amp;send=false&amp;layout=standard&amp;width=280&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:280px; height:80px;" allowTransparency="true"></iframe>
+    <div class="form-right">
+    <div class="control-group row control-big">
+      <div class="control-label span2">
+        <%= f.label :e_mail, "E-mail" %>
+      </div>
+      <div class="controls span5">
+        <%= f.text_field :email, :placeholder => "Seu e-mail de contato" %>
+      </div>
+    </div>
+    <div class="control-group row control-big">
+      <div class="control-label span2">
+        <%= f.label :email_confirmation, "Confirmação" %>
+      </div>
+      <div class="controls span5">
+        <%= f.text_field :email_confirmation, :placeholder => "Digite novamente o e-mail" %>
+      </div>
+    </div>
+  <% end %>
+</div>
+</div>
+<hr>
+<div class="modal-cadaster">
+<%= form_for @user, :html => { :class => "form-horizontal"} do |f| %>
+<div class="form-left">
+<div class="control-group row control-big">
+  <div class="control-label span2">
+    <%= f.label :login, "Login" %>
+  </div>
+  <div class="controls span5">
+    <%= f.text_field :login, :placeholder => "Como será o seu apelido?" %>
+  </div>
+</div>
+<p class="legend">O Login define como será o endereço de sua página no Redu.
+Ex.: redu.com.br/pessoas/<b>seulogin</b></p>
+</div>
+<div class="form-right">
+<div class="control-group row control-big">
+  <div class="control-label span2">
+    <%= f.label :password, "Senha" %>
+  </div>
+  <div class="controls span5">
+    <%= f.password_field :password, :placeholder => "Digite sua senha"%>
+  </div>
+</div>
+<div class="control-group row control-big">
+  <div class="control-label span2">
+    <%= f.label :password_confirmation, "Confirmação" %>
+  </div>
+  <div class="controls span5">
+    <%= f.password_field :password_confirmation, :placeholder => "Confirme sua senha" %>
+  </div>
+</div>
+</div>
+</div>
+<div class="submit-cadaster">
+  <div class="control-group">
+  <%= field_set_tag " ", :class => 'control-checkbox' do %>
+          <%= check_box "user", "tos" %>
+          <%= f.label "tos", raw("Li e aceito os #{link_to "termos de uso", tos_path} da plataforma Redu") %>
+      <% end %>
+      <%= submit_tag t(:sign_up), :class => 'button-big button-success' %>
+      <%= hidden_field_tag :inviter_id, params[:inviter_id] %>
+      <%= hidden_field_tag :inviter_code, params[:inviter_code] %>
+    <% end %>
+
+    <!--<button class="button-big button-success">Cadastrar sua conta</button>
+    <button class="button-big button-default">Cancelar</button>-->
     </div>
   </div>
 </div>
+</div>
+

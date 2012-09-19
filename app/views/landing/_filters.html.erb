@@ -1,4 +1,35 @@
-<div class="landing-filters">
+<SCRIPT LANGUAGE="javascript" TYPE="text/javascript">
+$(function() {
+
+  var $win = $(window);
+
+  var $landingfilters = $(".landingfilters");
+
+  var landingfiltersFixed = 0;
+  var landingfiltersTop = $(".landingfilters").length && $(".landingfilters").offset().top;
+
+  var scrollLandingFilters = function() {
+    var _, scrollTop = $win.scrollTop();
+    if (scrollTop >= landingfiltersTop && !landingfiltersFixed) {
+      landingfiltersFixed = 1;
+      $landingfilters.addClass("page-nav-fixed");
+    }
+    else if (scrollTop <= landingfiltersTop && landingfiltersFixed) {
+      landingfiltersFixed = 0;
+      $landingfilters.removeClass("page-nav-fixed");
+    }
+  }
+
+  scrollLandingFilters();
+
+  $win.bind("scroll", scrollLandingFilters);
+
+  $("a[rel='tooltip']").tooltip({ placement: "bottom" });
+});
+
+</SCRIPT>
+
+<div class="landingfilters">
   <div class="filters">
     <%= link_to "Segmentos",
         landing_path(:anchor => "segmentos"),
@@ -18,3 +49,4 @@
     %>
   </div>
 </div>
+

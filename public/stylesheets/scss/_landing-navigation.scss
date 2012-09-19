@@ -30,5 +30,5 @@
   }
 
   .boxshadow &:last-child { @include box-shadow(0 1px 0 $white inset); }
-  
+
 }

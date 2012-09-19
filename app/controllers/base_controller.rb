@@ -1,5 +1,5 @@
 class BaseController < ApplicationController
-  layout :choose_layout, :except => [:site_index]
+  layout :choose_layout, :except => [:landing]
   # Work around (ver método self.login_required_base)
 
   rescue_from CanCan::AccessDenied, :with => :deny_access
@@ -23,13 +23,14 @@ class BaseController < ApplicationController
   def site_index
     # FIXME verificar se causa algum prejuízo na performance, ou só criar a sessão se o current_user for nil
     @user_session = UserSession.new
+    @user = User.new
 
     respond_to do |format|
       format.html do
         if current_user
           redirect_to home_user_path(current_user) and return
         end
-        render :layout => 'clean'
+        render :layout => 'landing'
       end
     end
   end
