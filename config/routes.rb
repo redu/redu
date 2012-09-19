@@ -325,6 +325,10 @@ Redu::Application.routes.draw do
       resources :answers, :only => [:index, :create]
     end
 
+    resources :chats, :only => :show do
+      resources :chat_messages, :only => :index, :as => :messages
+    end
+
     match "vis/spaces/:space_id/lecture_participation",
       :to => 'vis#lecture_participation',
       :as => :vis_lecture_participation
