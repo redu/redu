@@ -12,6 +12,7 @@ s3_upload_files:
 
 javascripts:
   landing:
+    - public/javascripts/rails.js
     - public/javascripts/vendor/modernizr.js
     - public/javascripts/lazyload.js
     - public/javascripts/bootstrap-redu.js

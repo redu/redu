@@ -145,7 +145,7 @@ class UsersController < BaseController
             render :action => :new
           end
         else
-          render :template => 'users/new', :layout => 'cold'
+          respond_with(@user)
         end
       end
     # FIXME Após migrar o Rails (> 3.0.10) ver se a solução clean funciona.

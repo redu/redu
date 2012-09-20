@@ -1,0 +1,3 @@
+var $form = $("#form-cadaster")
+var $newForm = $("<%= escape_javascript render 'base/form-cadaster', :user => @user %>");
+  $form.replaceWith($newForm);
