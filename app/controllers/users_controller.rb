@@ -113,7 +113,7 @@ class UsersController < BaseController
         end
 
         flash[:notice] = t(:email_signup_thanks, :email => @user.email)
-        redirect_to signup_completed_user_path(@user)
+        respond_with(@user)
       else
         # Se tem um token de convite para o curso, atribui as variáveis
         # necessárias para mostrar o convite em Users#new
