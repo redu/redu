@@ -1051,7 +1051,7 @@ $(function() {
           , otherFilters = filter.siblings()
 
         filter.on('click', function(e) {
-          // e.preventDefault()
+          e.preventDefault()
           // Desativa os outros filtros.
           otherFilters.removeClass(settings.filterActiveClass)
           filter.toggleClass(settings.filterActiveClass)
@@ -1232,6 +1232,117 @@ $(function() {
       })
     },
 
+    // Ajusta a altura do textarea de acordo com seu atributo rows.
+    resizeByRows: function(options) {
+      return this.each(function() {
+        var $textarea = $(this)
+          , rowsTemp = $textarea.attr('rows')
+          , rows = (rowsTemp !== '' ? parseInt(rowsTemp, 10) : 0)
+
+        if (rows !== 0) {
+          var pxToInt = function(value) {
+            if (typeof value !== 'undefined') {
+              return parseInt(value.replace('px', ''), 10)
+            } else {
+              return 0;
+            }
+          }
+
+          var lineHeight = pxToInt($textarea.css('line-height'))
+            , borderTop = pxToInt($textarea.css('border-top-width'))
+            , borderBottom = pxToInt($textarea.css('border-bottom-width'))
+            , marginTop = pxToInt($textarea.css('margin-top'))
+            , marginBottom = pxToInt($textarea.css('margin-bottom'))
+            , paddingTop = pxToInt($textarea.css('padding-top'))
+            , paddingBottom = pxToInt($textarea.css('padding-bottom'))
+
+          $textarea.height((rows * lineHeight) + borderTop + borderBottom + marginTop + marginBottom + paddingTop + paddingBottom)
+        }
+      })
+    },
+
+    styleInputFile: function(options) {
+      var settings = $.extend({
+        buttonDefault: 'button-default'
+      , buttonText: 'Escolher arquivo'
+      , filePath: 'control-file-text'
+      , filePathText: 'Nenhum arquivo selecionado.'
+      , wrapper: 'control-file-wrapper'
+      }, options)
+
+      return this.each(function() {
+        var $input = $(this).css('opacity', 0)
+          , inputVal = $input.val()
+          , $button = $(document.createElement('a')).addClass(settings.buttonDefault).text(settings.buttonText)
+          , $filePath = $(document.createElement('span')).addClass(settings.filePath).text(settings.filePathText)
+          , $wrapper = $(document.createElement('div')).addClass(settings.wrapper).append($button).append($filePath)
+          , $controlParent = $input.parent()
+
+        $wrapper.appendTo($controlParent)
+        // Ajusta a altura do pai.
+        $controlParent.height($wrapper.height())
+
+        // No FF, se um arquivo for escolhido e der refresh, o input mantém o valor.
+        if (inputVal !== '') {
+          $filePath.text(inputVal)
+        }
+
+        // Repassa o clique pro input file.
+        $button.on('click', function(e) {
+          e.preventDefault
+          $input.trigger('click')
+        })
+
+        // Repassa o nome do arquivo para o span.
+        $input.on('change', function() {
+          var value = $input.val()
+
+          if (value === '') {
+            value = settings.filePathText
+          } else {
+            // Remove o 'C:\fakepath\' que alguns navegadores adicionam.
+            value = value.replace('C:\\fakepath\\', '')
+          }
+
+          $filePath.text(value)
+        })
+      })
+    },
+
+    // Abilita o submit quando pelo menos um checkbox esta marcado.
+    formChecklist: function(options) {
+      return this.each(function() {
+        var $form = $(this)
+          , $checkboxes = $form.find('input[type="checkbox"]')
+          , $submit = $form.find('input[type="submit"]')
+
+        // Desabilita o submit por padrão.
+        $submit.attr('disabled', 'disabled')
+
+        // Verifica inicialmente se existe algum checkbox marcardo.
+        // É o caso do refresh depois de marcar um checkbox.
+        if ($checkboxes.filter(':checked').length > 0) {
+          $submit.removeAttr('disabled')
+        }
+
+        $checkboxes.each(function() {
+          var $checkbox = $(this)
+
+          $checkbox.on('change', function() {
+            // Se o checkbox foi selecionado, abilita o submit.
+            if ($checkbox.is(':checked')) {
+              $submit.removeAttr('disabled')
+            } else {
+              // Se foi o último a ser desmarcado, desabilita o submit.
+              if ($checkboxes.filter(':checked').length === 0) {
+                $submit.attr('disabled', 'disabled')
+              }
+            }
+          })
+        })
+      })
+    },
+
     init: function() {}
   }
 
@@ -1258,6 +1369,16 @@ $(function() {
 
   $('.control-option-list').reduForm('optionList')
 
+  $('textarea[rows]').reduForm('resizeByRows')
+
+  $('input[type="file"]').reduForm('styleInputFile')
+
+  $('.form-checklist').reduForm('formChecklist')
+
+  // Plugins.
+
+  $('textarea').autosize()
+
   placeHolderConfig = {
     // Nome da classe usada para estilizar o placeholder.
     className: 'placeholder'
@@ -1281,23 +1402,26 @@ $(function() {
   , autoInit : true
   }
 })
+
 !(function($) {
 
-  "use strict";
+  'use strict';
 
   var methods = {
 
     init: function(options) {
       var settings = $.extend({
-          "linkTargetClass": "link-target"
+          'linkTargetClass': 'link-target'
         }, options)
 
       return this.each(function() {
         var container = $(this)
-          , link = container.find("." + settings.linkTargetClass)
+          , link = container.find('.' + settings.linkTargetClass)
 
-          container.live("click", function() {
-            window.location = link.attr("href")
+          container.on('click', function(e) {
+            if (!$(e.target).is('input[type="checkbox"]')) {
+              window.location = link.attr('href')
+            }
           })
         })
       }
@@ -1307,17 +1431,17 @@ $(function() {
   $.fn.reduLinks = function(method) {
     if (methods[method]) {
       return methods[method].apply(this, Array.prototype.slice.call(arguments, 1))
-    } else if (typeof method === "object" || !method) {
+    } else if (typeof method === 'object' || !method) {
       return methods.init.apply(this, arguments)
     } else {
-      $.error("O método " + method + " não existe em jQuery.reduLinks")
+      $.error('O método ' + method + ' não existe em jQuery.reduLinks')
     }
   }
 
 }) (window.jQuery)
 
 $(function() {
-  $(".link-container").reduLinks()
+  $('.link-container').reduLinks()
 })
 !(function($) {
 
@@ -1401,3 +1525,451 @@ $("a.reply-status, .cancel", ".statuses").live("click", function(e){
     $(this).parents("ul:first").next(".create-response").slideToggle(150, "swing");
     $(this).parents("ul:first").next(".create-response").find("textarea").focus();
 });
+!(function($) {
+
+  'use strict';
+
+  var methods = {
+
+    init: function(options) {
+      var settings = $.extend({
+          'checkboxSelectedClass': 'table-checkbox-selected'
+        }, options)
+
+      return this.each(function() {
+        var checkbox = $(this),
+            row = checkbox.parents('tr')
+
+        if (checkbox.is(':checked')) {
+          row.addClass(settings.checkboxSelectedClass)
+        }
+
+        checkbox.on('change', function() {
+          row.toggleClass(settings.checkboxSelectedClass)
+        })
+      })
+    }
+  }
+
+  $.fn.reduTables = function(method) {
+    if (methods[method]) {
+      return methods[method].apply(this, Array.prototype.slice.call(arguments, 1))
+    } else if (typeof method === 'object' || !method) {
+      return methods.init.apply(this, arguments)
+    } else {
+      $.error('O método ' + method + ' não existe em jQuery.reduTables')
+    }
+  }
+
+}) (window.jQuery)
+
+$(function() {
+  $('.form-checklist td input[type="checkbox"]').reduTables()
+})
+
+!(function($) {
+
+  'use strict';
+
+  var settings = {
+    originalInput: 'control-autocomplete-input'
+  , tokenInputPrefix: 'token-input-'
+  , triggerInviteByMail: 'inviteByMail.reduAutocomplete'
+  , dropdown: 'control-autocomplete-dropdown'
+  , name: 'control-autocomplete-name'
+  , mail: 'control-autocomplete-mail'
+  , suggestion: 'control-autocomplete-suggestion'
+  , inviteClickText: 'Clique aqui para convidar este endereço de e-mail'
+  , buttonStyle: 'button-primary'
+  , listMix: 'list-mix'
+  , listMixItem: 'list-mix-item'
+  , listMixInner: 'list-mix-inner'
+  , close: 'control-autocomplete-close'
+  , iconClose: 'icon-close-gray_16_18 show'
+  , addedInfo: 'control-autocomplete-added-info'
+  , inviteText: '(Convidar para o Redu)'
+  , invites: 'control-autocomplete-invites'
+  }
+
+  var methods = {
+    // Cria um elemento usado para convidar alguém para o Redu por e-mail.
+    createInvite: function(mail) {
+      return $('<li class="' + settings.listMixItem + '"><div class="' + settings.listMixInner + '"><span class="' + settings.close + '"><span class="' + settings.iconClose + '"></span></span><div class="' + settings.addedInfo + '"><span class="' + settings.name + '">' + mail + '</span><span class="' + settings.mail + '">' + settings.inviteText + '</span></div></div></li>')
+    }
+
+    // Quando um e-mail é digitado, sugere o envio do convite ao Redu.
+  , inviteByMail: function(options) {
+      settings = $.extend(settings, options)
+
+      return this.each(function() {
+        var control = $(this)
+          , originalInput = control.find('.' + settings.originalInput)
+
+        // Este evento será lançado quando nenhum resultado for encontrado.
+        originalInput.on(settings.triggerInviteByMail, function() {
+          var input = $.trim(control.find('#' + settings.tokenInputPrefix + originalInput.attr('id')).val())
+            , emailRegex = /^([a-zA-Z0-9])+@([a-zA-Z0-9])+\.([a-zA-Z])+([a-zA-Z])+/
+
+          // Verifica se é um e-mail.
+          if (emailRegex.test(input)) {
+            var dropdown = control.find('.' + settings.dropdown)
+              , inviteButton = $(document.createElement('button')).addClass(settings.buttonStyle).text(settings.inviteClickText)
+              , listMix = control.find('.' + settings.listMix)
+
+            // Incli o botão de adicionar.
+            dropdown.html(inviteButton)
+            inviteButton.on('click', function(e) {
+              e.preventDefault()
+              var isAlreadyIn = false
+                , inputInvites = control.find('.' + settings.invites)
+
+              // Verifica se o e-mail já está incluso.
+              if (inputInvites.val().indexOf(input) >= 0) {
+                isAlreadyIn = true
+              }
+
+              // Adiciona se não estiver.
+              if (!isAlreadyIn) {
+                var inviteChosen = methods.createInvite(input)
+                  , close = inviteChosen.find('.' + settings.close)
+
+                // Adiciona o remover para o ícone de fechar.
+                close.on('click', function(e) {
+                  e.preventDefault
+                  var item = $(this).parents('.' + settings.listMixItem)
+
+                  item.remove()
+                  // Remove o e-mail dos valores do input hidden.
+                  inputInvites.val($.trim(inputInvites.val().replace(',', ' ').replace(input, '')).replace(' ', ',').replace(',,', ','))
+                })
+
+                // Adiciona o e-mail aos valores do input hidden.
+                var mails = $.trim(inputInvites.val() + ' ' + input)
+                inputInvites.val((mails.split(' ')).join(','))
+
+                // Adiciona a lista.
+                listMix.append(inviteChosen)
+              }
+            })
+          }
+        })
+      })
+    }
+
+  , init: function(options) {
+      methods.inviteByMail(options)
+    }
+  }
+
+  $.fn.reduAutocomplete = function(method) {
+    if (methods[method]) {
+      return methods[method].apply(this, Array.prototype.slice.call(arguments, 1))
+    } else if (typeof method === 'object' || !method) {
+      return methods.init.apply(this, arguments)
+    } else {
+      $.error('O método ' + method + ' não existe em jQuery.reduAutocomplete')
+    }
+  }
+
+}) (window.jQuery)
+
+$(function() {
+  $('.control-invite-by-mail').reduAutocomplete('inviteByMail')
+})
+
+!(function($) {
+
+  "use strict";
+
+  var methods = {
+    checkLabel: function(checkbox) {
+      var label = checkbox.siblings("label")
+      if (checkbox.prop("checked")) {
+        label.addClass("local-nav-checked icon-confirm-green_16_18-after")
+      } else {
+        label.removeClass("local-nav-checked icon-confirm-green_16_18-after")
+      }
+    },
+
+    init: function() {
+      return this.each(function() {
+        var localNav = $(this)
+
+        localNav.find("li").click(function(e) {
+          window.location = $(this).children("a").first().attr("href")
+        })
+
+        var checkboxes = localNav.find('input[type="checkbox"]')
+        checkboxes.filter(":checked").each(function() {
+          methods.checkLabel($(this))
+        })
+
+        checkboxes.change(function(e) {
+          methods.checkLabel($(this))
+        })
+      })
+    }
+  }
+
+  $.fn.localNav = function(method) {
+    if (methods[method]) {
+      return methods[method].apply(this, Array.prototype.slice.call(arguments, 1))
+    } else if (typeof method === "object" || !method) {
+      return methods.init.apply(this, arguments)
+    } else {
+      $.error("O método " + method + " não existe em jQuery.localNav")
+    }
+  }
+
+}) (window.jQuery)
+
+$(function() {
+  $(".local-nav").localNav();
+})
+!(function($) {
+
+  'use strict';
+
+  var classes = {
+    // Wrapper.
+    modal: 'modal'
+    // Conteúdo.
+  , modalBody: 'modal-body'
+    // Seta.
+  , scrollArrow: 'modal-scroll-arrow'
+  }
+
+  var methods = {
+    // Usado para conseguir o tamanho de um elemento com display none.
+    displayHidden: function($element) {
+      $element.css({
+        'visibility': 'hidden'
+      , 'display': 'block'})
+    }
+
+    // Retorna o elemento para display none.
+  , displayVisible: function($element) {
+      $element.css({
+        'visibility': 'visible'
+      , 'display': 'none'})
+    }
+
+    // Preenche verticalmente a janela modal.
+  , fillHeight: function(options) {
+      var settings = $.extend({
+          // Margem inferior.
+          bottomMargin: 80
+        }, options)
+
+      return this.each(function() {
+        var $modal = $(this)
+          , $modalBody = $modal.find('.' + classes.modalBody)
+          , modalTop = parseInt($modal.css('top'), 10)
+
+        methods.displayHidden($modal)
+
+        // O novo tamanho do corpo é: tamanho atual + (altura visível do navegador - espaçamento inferior - topo do modal - altura do modal)
+        var newHeight = $modalBody.height() + $(window).height() - settings.bottomMargin - modalTop - $modal.height() + "px"
+        $modalBody.css('max-height', newHeight)
+        $modalBody.css('height', newHeight)
+
+        methods.displayVisible($modal)
+      })
+    }
+
+    // Verifica se um elemento apresenta a barra de scroll vertical.
+  , hasScrollBar: function($element) {
+      var element = $element.get(0)
+      return (element.scrollHeight > element.clientHeight)
+    }
+
+    // Controla a seta mostrada quando há barra de scroll vertical.
+  , scrollArrow: function(options) {
+      var settings = $.extend({
+        // Caractere simbolizando uma seta para cima.
+        arrowUp: '↑'
+        // Caractere simbolizando uma seta para baixo.
+      , arrowDown: '↓'
+        // Largura da seta.
+      , arrowWidth: 9
+      }, options)
+
+      return this.each(function() {
+        var $modalBody = $(this)
+          , $modal = $modalBody.parent('.' + classes.modal)
+
+        methods.displayHidden($modal)
+
+        if (methods.hasScrollBar($modalBody)) {
+          var $scrollArrow =
+                $(document.createElement('span'))
+                  .addClass(classes.scrollArrow)
+                  .html(settings.arrowDown)
+            , modalBodyOffset = $modalBody.offset()
+            , margin = (parseInt($modalBody.css('padding-left'), 10) - settings.arrowWidth) / 2
+            , arrowUpPosition = modalBodyOffset.top - $(window).scrollTop()
+            , arrowDownPosition = arrowUpPosition + $modalBody.height() - margin
+
+          $scrollArrow.css({
+            'top': arrowDownPosition
+          , 'left': modalBodyOffset.left + margin
+          })
+
+          $modalBody.append($scrollArrow)
+          $modalBody.scroll(function() {
+            var scrollTop = $modalBody.scrollTop()
+
+            if (scrollTop === 0) {
+              // Barra de rolagem no topo, exibe seta para baixo.
+              $scrollArrow.css('top', arrowDownPosition).html(settings.arrowDown)
+            } else if (scrollTop + $modalBody.innerHeight() >= $modalBody.get(0).scrollHeight) {
+              // Barra de rolagem no fundo, exibe seta para cima.
+              $scrollArrow.css('top', arrowUpPosition).html(settings.arrowUp)
+            }
+          })
+        }
+
+        methods.displayVisible($modal)
+      })
+    }
+  }
+
+  $.fn.reduModal = function(method) {
+    if (methods[method]) {
+      return methods[method].apply(this, Array.prototype.slice.call(arguments, 1))
+    } else if (typeof method === 'object' || !method) {
+      return methods.init.apply(this, arguments)
+    } else {
+      $.error('O método ' + method + ' não existe em jQuery.reduModal')
+    }
+  }
+
+}) (window.jQuery)
+
+$(function() {
+  $('.modal-fill-height').reduModal('fillHeight')
+  $('.modal-scroll').reduModal('scrollArrow')
+})
+
+!(function($) {
+
+  'use strict';
+
+  var methods = {
+    init: function(options) {
+      var settings = $.extend({
+        buttonDefault: 'button-default'
+      , buttonPrimary: 'button-primary'
+      , buttonDanger: 'button-danger'
+      , buttonSuccess: 'button-success'
+      , buttonDisabled: 'button-disabled'
+      , linkSecondary: 'link-secondary'
+      , spinnerHorizontalBlue: 'spinner-horizontal-blue'
+      , spinnerCircularGray: 'spinner-circular-gray'
+      , imgPath: 'img/'
+      , spinnerCircularBlueGif: 'spinner-blue.gif'
+      , spinnerCircularGrayGif: 'spinner-grey.gif'
+      , spinnerCSS: {
+          'display': 'inline-block'
+        , 'vertical-align': 'middle'
+        }
+      }, options)
+
+      return this.each(function() {
+        var $element = $(this)
+
+        // Se for um botão.
+        if ($element.hasClass(settings.buttonDefault)
+            || $element.hasClass(settings.buttonPrimary)
+            || $element.hasClass(settings.buttonDanger)
+            || $element.hasClass(settings.buttonSuccess)) {
+          // Botão padrão usa o spinner azul e os outros cinza.
+          var spinner = settings.imgPath + settings.spinnerCircularGrayGif
+          if ($element.hasClass(settings.buttonDefault)) {
+            spinner = settings.imgPath + settings.spinnerCircularBlueGif
+          }
+
+          // Retorna as outras classes, que não a do botão.
+          var otherClasses = function(classes) {
+            var otherClasses = []
+            
+            classes = classes.split(' ')
+            $.each(classes, function(index, value) {
+              if (value !== settings.buttonDefault
+                  && value !== settings.buttonPrimary
+                  && value !== settings.buttonDanger
+                  && value !== settings.buttonSuccess
+                  && value !== '') {
+                otherClasses.push(value)
+              }
+            })
+
+            return otherClasses.join(' ')
+          }
+
+          $element.on({
+            ajaxSend: function(e, request, options) {
+              var button = $(this)
+                , content = button.html()
+                , width = button.outerWidth()
+                , height = button.outerHeight()
+                , classes = otherClasses(button.attr('class'))
+                , $spinner = $(document.createElement('img')).attr('src', spinner).css(settings.spinnerCSS)
+
+              button
+                .addClass(settings.buttonDisabled)
+                .removeClass(classes)
+                .data('content', content)
+                .data('class', classes)
+                .html($spinner)
+                .css({'width': width, 'height': height})
+            }
+          , ajaxComplete: function(e, request, options) {
+              var button = $(this)
+                , content = button.data('content')
+                , classes = button.data('class')
+
+              button
+                .removeClass(settings.buttonDisabled)
+                .addClass(classes)
+                .html(content)
+            }
+          })
+        }
+
+        // Se for um link de texto.
+        if ($element.is('a')) {
+          // Link secundário usa o spinner horizontal azul e os outros circular cinza.
+          var spinnerClass = settings.spinnerCircularGray
+          if ($element.hasClass(settings.linkSecondary)) {
+            spinnerClass = settings.spinnerHorizontalBlue
+          }
+          
+          $element.on({
+            ajaxSend: function(e, request, options) {
+              $(this).addClass(spinnerClass)
+            }
+          , ajaxComplete: function(e, request, options) {
+              $(this).removeClass(spinnerClass)
+            }
+          })
+        }
+      })
+    }
+  }
+
+  $.fn.reduSpinners = function(method) {
+    if (methods[method]) {
+      return methods[method].apply(this, Array.prototype.slice.call(arguments, 1))
+    } else if (typeof method === 'object' || !method) {
+      return methods.init.apply(this, arguments)
+    } else {
+      $.error('O método ' + method + ' não existe em jQuery.reduSpinners')
+    }
+  }
+
+}) (window.jQuery)
+
+$(function() {
+  $('[data-remote=true]').reduSpinners()
+})
