@@ -158,7 +158,7 @@ class User < ActiveRecord::Base
 
   # VALIDATIONS
   validates_presence_of     :first_name, :last_name, :login, :email,
-                            :email_confirmation
+                            :password
   validates_uniqueness_of   :login, :email, :case_sensitive => false
   validates_exclusion_of    :login, :in => Redu::Application.config.extras["reserved_logins"]
   validates :birthday, :allow_nil => true,
