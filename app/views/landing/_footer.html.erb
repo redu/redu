@@ -18,33 +18,33 @@
       <div class="span3">
         <ul class="landing-footer-navigation">
           <li>
-            <%= link_to "Sobre o Redu", 
-                landing_path, 
-                :title => "Sobre o Redu" 
+            <%= link_to "Sobre o Redu",
+                landing_path,
+                :title => "Sobre o Redu"
             %>
           </li>
           <li>
-            <%= link_to "Segmentos", 
-                landing_path(:anchor => "segmentos"), 
-                :title => "Segmentos" 
+            <%= link_to "Segmentos",
+                landing_path(:anchor => "segmentos"),
+                :title => "Segmentos"
             %>
           </li>
           <li>
-            <%= link_to "Vantagens", 
-                landing_path(:anchor => "vantagens"), 
-                :title => "Vantagens" 
+            <%= link_to "Vantagens",
+                landing_path(:anchor => "vantagens"),
+                :title => "Vantagens"
             %>
           </li>
           <li>
-            <%= link_to "Funcionalidades", 
-                landing_path(:anchor => "funcionalidades"), 
-                :title => "Funcionalidades" 
+            <%= link_to "Funcionalidades",
+                landing_path(:anchor => "funcionalidades"),
+                :title => "Funcionalidades"
             %>
           </li>
           <li>
-            <%= link_to "Planos", 
-                landing_path(:anchor => "planos"), 
-                :title => "Planos" 
+            <%= link_to "Planos",
+                landing_path(:anchor => "planos"),
+                :title => "Planos"
             %>
           </li>
         </ul>
@@ -52,38 +52,40 @@
       <div class="span3">
         <ul class="landing-footer-navigation">
           <li>
-            <%= link_to "Central de Ajuda", 
-                "/", 
-                :title => "Central de Ajuda" 
+            <%= link_to "Central de Ajuda",
+                "/",
+                :title => "Central de Ajuda"
             %>
           </li>
           <li>
-            <%= link_to "Blog", 
-                "http://blog.redu.com.br/", 
-                :title => "Blog" 
+            <%= link_to "Blog",
+                "http://blog.redu.com.br/",
+                :title => "Blog"
             %>
           </li>
           <li>
-            <%= link_to "Desenvolvedores", 
-                "http://developers.redu.com.br/", 
-                :title => "Desenvolvedores" 
+            <%= link_to "Desenvolvedores",
+                "http://developers.redu.com.br/",
+                :title => "Desenvolvedores"
             %>
           </li>
           <li>
-            <%= link_to "Política de Privacidade", 
-                "#politica-privacidade", 
+            <%= link_to "Política de Privacidade",
+                "#politica-privacidade",
                 :title => "Política de Privacidade",
-                "data-toggle" => "modal" 
+                "data-toggle" => "modal"
             %>
           </li>
           <li>
-            <%= link_to "Termos de Uso", 
-                "#termos-uso", 
+            <%= link_to "Termos de Uso",
+                "#termos-uso",
                 :title => "Termos de Uso",
                 "data-toggle" => "modal"
             %>
           </li>
         </ul>
+        <%= render :partial => "landing/modal-tos" %>
+        <%= render :partial => "landing/modal-privacy-policy" %>
       </div>
       <div class="span3">
         <div class="landing-footer-social-networks-legend">
@@ -109,7 +111,7 @@
           <div class="row">
             <div class="span2">
               <h3>
-                <%= link_to "Fale Conosco", 
+                <%= link_to "Fale Conosco",
                       "#",
                       :title => "Fale Conosco",
                       :class => "link-target"

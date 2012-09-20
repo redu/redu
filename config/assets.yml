@@ -15,6 +15,7 @@ javascripts:
     - public/javascripts/rails.js
     - public/javascripts/vendor/modernizr.js
     - public/javascripts/lazyload.js
+    - public/javascripts/jquery.autosize.min.js
     - public/javascripts/bootstrap-redu.js
   common:
     - public/javascripts/rails.js
