@@ -6,7 +6,7 @@
   background: $gray1;
  .borderradius & { @include border-radius(7px); }
 
-    .button-big {
+    .button-big, button {
       float: right;
       margin: 20px;
     }
@@ -44,6 +44,7 @@
   .plan-information, .modal-cadaster {
     padding: 20px;
     background: $white;
+    overflow: hidden;
     display: block;
   }
 
@@ -59,29 +60,30 @@
       text-align: center;
     }
 
+    .form-right {
+      float: right;
+    }
+
+    .form-left, .form-right {
+      width: 400px;
+    }
+
+    .form-left {
+      float: left;
+
+      .legend {
+        margin-bottom: 20px;
+        width: 218px;
+        text-align: left;
+        margin-left: 100px;
+        margin-top: 20px;
+      }
+    }
+
     .form-horizontal {
       overflow: hidden;
       p { margin-bottom: 20px; }
 
-      .form-right{
-        float: right;
-      }
-
-      .form-left, .form-right {
-        width: 400px;
-      }
-
-      .form-left {
-        float: left;
-
-        .legend {
-          margin-bottom: 20px;
-          width: 218px;
-          text-align: left;
-          margin-left: 100px;
-          margin-top: 20px;
-        }
-      }
     }
 
 

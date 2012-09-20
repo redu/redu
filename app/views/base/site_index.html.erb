@@ -11,96 +11,97 @@
     <span class="legend">Opcional</span>
   </div>
   <hr>
-  <div class="modal-cadaster">
-  <%= form_for @user, :html => { :class => "form-horizontal" } do |f| %>
-    <p>Ou preencha os formulários abaixo e crie seu perfil no Redu.</p>
-    <div class="form-left">
-      <div class="control-group row control-big">
-        <div class="control-label span2">
-          <%= f.label :first_name, "Nome" %>
+  <%= form_for @user, :html => { :class => "form-horizontal", :id => "form-cadaster" } do |f| %>
+    <div class="modal-cadaster">
+      <p>Ou preencha os formulários abaixo e crie seu perfil no Redu.</p>
+      <div class="form-left">
+        <div class="control-group row control-big">
+          <div class="control-label span2">
+            <%= f.label :first_name, "Nome" %>
+          </div>
+          <div class="controls span5">
+            <%= f.text_field :first_name, :placeholder =>'Seu primeiro nome' %>
+            <%= concave_errors_for @user, :first_name %>
+          </div>
         </div>
-        <div class="controls span5">
-          <%= f.text_field :first_name, :placeholder =>'Seu primeiro nome' %>
+        <div class="control-group row control-big">
+          <div class="control-label span2">
+            <%= f.label :last_name, "Sobrenome" %>
+          </div>
+          <div class="controls span5">
+            <%= f.text_field :last_name, :placeholder => "Seu primeiro nome" %>
+            <%= concave_errors_for @user, :last_name %>
+          </div>
         </div>
       </div>
-      <div class="control-group row control-big">
-        <div class="control-label span2">
-          <%= f.label :last_name, "Sobrenome" %>
+      <div class="form-right">
+        <div class="control-group row control-big">
+          <div class="control-label span2">
+            <%= f.label :e_mail, "E-mail" %>
+          </div>
+          <div class="controls span5">
+            <%= f.text_field :email, :placeholder => "Seu e-mail de contato" %>
+            <%= concave_errors_for @user, :email %>
+          </div>
         </div>
-        <div class="controls span5">
-          <%= f.text_field :last_name, :placeholder => "Seu primeiro nome" %>
+        <div class="control-group row control-big">
+          <div class="control-label span2">
+            <%= f.label :email_confirmation, "Confirmação" %>
+          </div>
+          <div class="controls span5">
+            <%= f.text_field :email_confirmation, :placeholder => "Digite novamente o e-mail" %>
+            <%= concave_errors_for @user, :email_confirmation %>
+          </div>
         </div>
-      </div>
-  </div>
-    <div class="form-right">
-    <div class="control-group row control-big">
-      <div class="control-label span2">
-        <%= f.label :e_mail, "E-mail" %>
-      </div>
-      <div class="controls span5">
-        <%= f.text_field :email, :placeholder => "Seu e-mail de contato" %>
       </div>
     </div>
-    <div class="control-group row control-big">
-      <div class="control-label span2">
-        <%= f.label :email_confirmation, "Confirmação" %>
+    <hr>
+    <div class="modal-cadaster">
+      <div class="form-left">
+        <div class="control-group row control-big">
+          <div class="control-label span2">
+            <%= f.label :login, "Login" %>
+          </div>
+          <div class="controls span5">
+            <%= f.text_field :login, :placeholder => "Como será o seu apelido?" %>
+            <%= concave_errors_for @user, :login %>
+          </div>
+        </div>
+        <p class="legend">O Login define como será o endereço de sua página no Redu.
+        Ex.: redu.com.br/pessoas/<b>seulogin</b></p>
       </div>
-      <div class="controls span5">
-        <%= f.text_field :email_confirmation, :placeholder => "Digite novamente o e-mail" %>
+      <div class="form-right">
+        <div class="control-group row control-big">
+          <div class="control-label span2">
+            <%= f.label :password, "Senha" %>
+          </div>
+          <div class="controls span5">
+            <%= f.password_field :password, :placeholder => "Digite sua senha"%>
+            <%= concave_errors_for @user, :password %>
+          </div>
+        </div>
+        <div class="control-group row control-big">
+          <div class="control-label span2">
+            <%= f.label :password_confirmation, "Confirmação" %>
+          </div>
+          <div class="controls span5">
+            <%= f.password_field :password_confirmation, :placeholder => "Confirme sua senha" %>
+            <%= concave_errors_for @user, :password_confirmation %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="submit-cadaster">
+      <div class="control-group">
+      <%= field_set_tag " ", :class => 'control-checkbox' do %>
+              <%= check_box "user", "tos" %>
+              <%= f.label "tos", raw("Li e aceito os #{link_to "termos de uso", tos_path} da plataforma Redu") %>
+          <% end %>
+          <%= submit_tag t(:sign_up), :class => 'button-big button-success' %>
+          <%= hidden_field_tag :inviter_id, params[:inviter_id] %>
+          <%= hidden_field_tag :inviter_code, params[:inviter_code] %>
+          <%= link_to 'Cancelar', nil, :rel => "nofollow","data-dismiss" => "modal", :class => 'button-big button-default' %>
       </div>
     </div>
   <% end %>
 </div>
-</div>
-<hr>
-<div class="modal-cadaster">
-<%= form_for @user, :html => { :class => "form-horizontal"} do |f| %>
-<div class="form-left">
-<div class="control-group row control-big">
-  <div class="control-label span2">
-    <%= f.label :login, "Login" %>
-  </div>
-  <div class="controls span5">
-    <%= f.text_field :login, :placeholder => "Como será o seu apelido?" %>
-  </div>
-</div>
-<p class="legend">O Login define como será o endereço de sua página no Redu.
-Ex.: redu.com.br/pessoas/<b>seulogin</b></p>
-</div>
-<div class="form-right">
-<div class="control-group row control-big">
-  <div class="control-label span2">
-    <%= f.label :password, "Senha" %>
-  </div>
-  <div class="controls span5">
-    <%= f.password_field :password, :placeholder => "Digite sua senha"%>
-  </div>
-</div>
-<div class="control-group row control-big">
-  <div class="control-label span2">
-    <%= f.label :password_confirmation, "Confirmação" %>
-  </div>
-  <div class="controls span5">
-    <%= f.password_field :password_confirmation, :placeholder => "Confirme sua senha" %>
-  </div>
-</div>
-</div>
-</div>
-<div class="submit-cadaster">
-  <div class="control-group">
-  <%= field_set_tag " ", :class => 'control-checkbox' do %>
-          <%= check_box "user", "tos" %>
-          <%= f.label "tos", raw("Li e aceito os #{link_to "termos de uso", tos_path} da plataforma Redu") %>
-      <% end %>
-      <%= submit_tag t(:sign_up), :class => 'button-big button-success' %>
-      <%= hidden_field_tag :inviter_id, params[:inviter_id] %>
-      <%= hidden_field_tag :inviter_code, params[:inviter_code] %>
-    <% end %>
-
-    <!--<button class="button-big button-success">Cadastrar sua conta</button>
-    <button class="button-big button-default">Cancelar</button>-->
-    </div>
-  </div>
-</div>
-</div>
-
