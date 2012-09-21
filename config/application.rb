@@ -36,6 +36,10 @@ module Redu
     # JavaScript files you want as :defaults (application.js is always included).
     # config.action_view.javascript_expansions[:defaults] = %w(jquery rails)
 
+    config.action_view.field_error_proc = Proc.new { |html_tag, instance|
+      "<div class='control-error field_with_errors'>#{html_tag}</div>".html_safe
+    }
+
     config.generators do |g|
       g.orm :active_record
       g.test_framework :rspec

@@ -19,7 +19,18 @@
       </div>
     </div>
   </div>
-  <%= render :partial => 'form-login' %>
+
+  <div class="form-login">
+    <%= render :partial => 'form_login' %>
+    <hr>
+    <div class="fb-login">
+      <%= link_to "Entre com sua conta do Facebook", facebook_authentication_path, :value => "login-facebook", :class => "uibutton confirm large" %>
+    </div>
+    <hr>
+    <div class="recover-login">
+      <%= link_to "Esqueceu seu login ou senha? Clique aqui", recover_username_password_path %>
+    </div>
+  </div>
 </div>
 
 <div class="modal-window">

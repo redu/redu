@@ -1,4 +1,6 @@
 class SessionsController < BaseController
+  respond_to :html, :js
+
   layout 'clean'
   before_filter :less_than_30_days_of_registration_required, :only => :create
 
@@ -57,7 +59,7 @@ class SessionsController < BaseController
                        :teacher => uca.with_roles([:teacher]).count }
           render :template => 'invitations/show'
         else
-          render :template => 'base/site_index'
+          respond_with(@user_session)
         end
       end
     end

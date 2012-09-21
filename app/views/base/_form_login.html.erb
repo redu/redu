@@ -1,0 +1,30 @@
+<%= form_for @user_session, :remote => true, :url => sessions_path , :html => { :class => "user-dates", :id => "form-login" } do |f| %>
+  <div class="control-group">
+    <div class="control-label">
+      <%= f.label :login,"Login" %>
+    </div>
+    <div class="controls">
+      <%= f.text_field :login, :placeholder =>'Seu login ou e-mail cadastrado' %>
+      <%= concave_errors_for @user_session, :login %>
+    </div>
+  </div>
+  <div class="control-group">
+    <div class="control-label">
+      <%= f.label :password, "Senha" %>
+    </div>
+    <div class="controls">
+      <%= f.password_field :password, :placeholder =>'Sua senha' %>
+      <%= concave_errors_for @user_session, :password %>
+    </div>
+  </div>
+  <%= f.submit 'Enviar', :class => 'button-primary' %>
+  <div class="control-group">
+    <div class="controls">
+      <%= field_set_tag " ", :class => 'control-checkbox' do %>
+        <%= f.check_box :remember_me %>
+        <%= f.label :remember_me, "Matenha-me conectado" %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+

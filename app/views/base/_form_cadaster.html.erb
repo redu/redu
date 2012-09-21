@@ -8,8 +8,8 @@
           </div>
           <div class="controls span5">
             <%= f.text_field :first_name, :placeholder =>'Seu primeiro nome' %>
-            <%= concave_errors_for @user, :first_name %>
           </div>
+          <%= concave_errors_for @user, :first_name %>
         </div>
         <div class="control-group row control-big">
           <div class="control-label span2">
@@ -17,8 +17,8 @@
           </div>
           <div class="controls span5">
             <%= f.text_field :last_name, :placeholder => "Seu primeiro nome" %>
-            <%= concave_errors_for @user, :last_name %>
           </div>
+          <%= concave_errors_for @user, :last_name %>
         </div>
       </div>
       <div class="form-right">
@@ -28,8 +28,8 @@
           </div>
           <div class="controls span5">
             <%= f.text_field :email, :placeholder => "Seu e-mail de contato" %>
-            <%= concave_errors_for @user, :email %>
           </div>
+          <%= concave_errors_for @user, :email %>
         </div>
         <div class="control-group row control-big">
           <div class="control-label span2">
@@ -37,8 +37,8 @@
           </div>
           <div class="controls span5">
             <%= f.text_field :email_confirmation, :placeholder => "Digite novamente o e-mail" %>
-            <%= concave_errors_for @user, :email_confirmation %>
           </div>
+          <%= concave_errors_for @user, :email_confirmation %>
         </div>
       </div>
     </div>
@@ -51,8 +51,8 @@
           </div>
           <div class="controls span5">
             <%= f.text_field :login, :placeholder => "Como será o seu apelido?" %>
-            <%= concave_errors_for @user, :login %>
           </div>
+          <%= concave_errors_for @user, :login %>
         </div>
         <p class="legend">O Login define como será o endereço de sua página no Redu.
         Ex.: redu.com.br/pessoas/<b>seulogin</b></p>
@@ -64,8 +64,8 @@
           </div>
           <div class="controls span5">
             <%= f.password_field :password, :placeholder => "Digite sua senha"%>
-            <%= concave_errors_for @user, :password %>
           </div>
+          <%= concave_errors_for @user, :password %>
         </div>
         <div class="control-group row control-big">
           <div class="control-label span2">
@@ -73,8 +73,8 @@
           </div>
           <div class="controls span5">
             <%= f.password_field :password_confirmation, :placeholder => "Confirme sua senha" %>
-            <%= concave_errors_for @user, :password_confirmation %>
           </div>
+          <%= concave_errors_for @user, :password_confirmation %>
         </div>
       </div>
     </div>
