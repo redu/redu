@@ -1,3 +1,45 @@
+// Janela Modal Login
+.form-login {
+  float: right;
+  width: 240px;
+  background-color: $white;
+  overflow: hidden;
+  display: block;
+
+  hr { margin: 0;}
+
+  .control-checkbox {
+    label {
+      margin-left: -5px;
+    }
+  }
+
+  .user-dates {
+    overflow: hidden;
+    padding: 20px 10px 10px 10px;
+  }
+
+  .control-group + .control-group { margin-top: 0; }
+
+  .button-primary {
+    margin-top: 10px;
+    float: right;
+  }
+
+  .fb-login {
+    margin: 20px 0;
+    text-align: center;
+  }
+
+  .recover-login {
+    text-align: center;
+    font-size: 11px;
+    padding: 10px;
+  }
+}
+
+
+//Janelas Modais Em geral
 .modal-window {
   background: $gray1;
   overflow: hidden;
@@ -6,7 +48,7 @@
   background: $gray1;
  .borderradius & { @include border-radius(7px); }
 
-    .button-primary, button, .button-default {
+    .button-primary, button, .button-default, .button-success {
       float: right;
       margin: 20px;
     }

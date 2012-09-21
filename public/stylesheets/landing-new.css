@@ -1,0 +1,1534 @@
+/* line 6, scss/_landing-shared.scss */
+.landing-logo-wrapper, .landing-footer-logo-link {
+  width: 300px;
+  height: 70px;
+}
+/* line 9, scss/_landing-shared.scss */
+.landing-logo-wrapper:hover, .landing-footer-logo-link:hover {
+  background-image: url("../images/landing/background-light.png");
+}
+
+/* line 13, scss/_landing-shared.scss */
+.landing-navigation-title {
+  color: #e6e6e6;
+  display: block;
+  font: 500 60px/56px museo-sans-rounded, museo-sans, "Helvetica Neue", Arial, sans-serif;
+  letter-spacing: -3px;
+}
+/* line 20, scss/_landing-shared.scss */
+.landing-navigation-title:hover {
+  text-decoration: none;
+  color: #e6e6e6;
+}
+/* line 25, scss/_landing-shared.scss */
+.textshadow .landing-navigation-title {
+  text-shadow: 0 1px 0 #b2b2b2;
+}
+
+/* line 6, scss/_landing-layout.scss */
+html,
+body {
+  height: 100%;
+}
+
+/* line 8, scss/_landing-layout.scss */
+body {
+  background-image: url("../images/landing/background.png");
+}
+
+/* line 13, scss/_landing-layout.scss */
+.landing-wrapper {
+  min-height: 100%;
+  margin: 0 auto -140px;
+}
+
+/* line 18, scss/_landing-layout.scss */
+.landing-pusher {
+  height: 140px;
+}
+
+/* line 21, scss/_landing-layout.scss */
+.alpha-half {
+  margin-left: 10px;
+}
+
+/* line 6, scss/_landing-header.scss */
+.landing-header {
+  height: 85px;
+  background-color: #e6e6e6;
+}
+/* line 10, scss/_landing-header.scss */
+.boxshadow .landing-header {
+  -webkit-box-shadow: 0 -1px 0 white inset, 0 1px 0 #b2b2b2;
+  -moz-box-shadow: 0 -1px 0 white inset, 0 1px 0 #b2b2b2;
+  box-shadow: 0 -1px 0 white inset, 0 1px 0 #b2b2b2;
+}
+/* line 17, scss/_landing-header.scss */
+.ie8 .landing-header {
+  border-bottom: 1px solid #b2b2b2;
+}
+
+/* line 21, scss/_landing-header.scss */
+.landing-logo-wrapper {
+  float: left;
+  position: relative;
+  margin-left: -112px;
+}
+
+/* line 29, scss/_landing-header.scss */
+.landing-logo {
+  position: absolute;
+  right: -3px;
+  bottom: 0;
+}
+
+/* line 36, scss/_landing-header.scss */
+.landing-header-buttons {
+  float: right;
+  margin-top: 20px;
+}
+
+/* line 42, scss/_landing-header.scss */
+.landing-button-sign-up +
+.landing-button-sign-in {
+  margin-left: 40px;
+}
+
+/* line 45, scss/_landing-header.scss */
+.landing-button-sign-up,
+.landing-button-sign-in {
+  display: inline-block;
+  overflow: hidden;
+}
+/* line 49, scss/_landing-header.scss */
+.landing-button-sign-up [class*="icon-"],
+.landing-button-sign-in [class*="icon-"] {
+  margin: 5px 10px 0 0;
+  float: left;
+}
+
+/* line 6, scss/_landing-welcome.scss */
+.landing-welcome {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  height: 470px;
+  padding-top: 60px;
+  background: transparent url("../images/landing/illustration.png") no-repeat center;
+}
+
+/* line 14, scss/_landing-welcome.scss */
+.landing-welcome-title {
+  font: 500 60px/56px museo-sans-rounded, museo-sans, "Helvetica Neue", Arial, sans-serif;
+  color: white;
+  letter-spacing: -3px;
+  margin-left: -3px;
+}
+/* line 20, scss/_landing-welcome.scss */
+.textshadow .landing-welcome-title {
+  text-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* line 24, scss/_landing-welcome.scss */
+.landing-welcome-title +
+.landing-welcome-message {
+  margin-top: 20px;
+}
+
+/* line 27, scss/_landing-welcome.scss */
+.landing-welcome-message {
+  font: 700 21px/28px museo-sans-rounded, museo-sans, "Helvetica Neue", Arial, sans-serif;
+  letter-spacing: -1px;
+  max-width: 280px;
+}
+/* line 32, scss/_landing-welcome.scss */
+.textshadow .landing-welcome-message {
+  text-shadow: 1px 1px 0 white;
+}
+
+/* line 5, scss/_landing-navigation.scss */
+.landing-navigation {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: -70px 0 40px;
+  background-color: white;
+  border: 1px solid #f7f7f7;
+  list-style: none;
+}
+/* line 12, scss/_landing-navigation.scss */
+.borderradius .landing-navigation {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+/* line 14, scss/_landing-navigation.scss */
+.boxshadow .landing-navigation {
+  -webkit-box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.5);
+}
+/* line 16, scss/_landing-navigation.scss */
+.landing-navigation h4 {
+  color: #6d6e6f;
+}
+
+/* line 21, scss/_landing-navigation.scss */
+.boxshadow .landing-navigation-item:first-child {
+  -webkit-box-shadow: 0 -1px 0 white inset;
+  -moz-box-shadow: 0 -1px 0 white inset;
+  box-shadow: 0 -1px 0 white inset;
+}
+/* line 23, scss/_landing-navigation.scss */
+.landing-navigation-item + .landing-navigation-item {
+  border-top: 1px solid #e6e6e6;
+}
+/* line 29, scss/_landing-navigation.scss */
+.boxshadow .landing-navigation-item + .landing-navigation-item {
+  -webkit-box-shadow: 0 1px 0 white inset, 0 -1px 0 white inset;
+  -moz-box-shadow: 0 1px 0 white inset, 0 -1px 0 white inset;
+  box-shadow: 0 1px 0 white inset, 0 -1px 0 white inset;
+}
+/* line 32, scss/_landing-navigation.scss */
+.boxshadow .landing-navigation-item:last-child {
+  -webkit-box-shadow: 0 1px 0 white inset;
+  -moz-box-shadow: 0 1px 0 white inset;
+  box-shadow: 0 1px 0 white inset;
+}
+
+/* line 5, scss/_landing-filters.scss */
+.landing-filters {
+  text-align: center;
+  padding: 20px 0 19px;
+}
+/* line 9, scss/_landing-filters.scss */
+.landing-filters .filters {
+  display: inline-block;
+}
+/* line 11, scss/_landing-filters.scss */
+.landing-filters .filter {
+  font-size: 16px;
+  line-height: 28px;
+}
+
+/* line 17, scss/_landing-filters.scss */
+.logado {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 999;
+}
+
+/* line 24, scss/_landing-filters.scss */
+.page-nav-fixed.landing-filters {
+  position: fixed;
+  top: 0;
+  z-index: 999;
+  text-align: center;
+  padding: 20px 0 19px;
+  width: 940px;
+}
+/* line 32, scss/_landing-filters.scss */
+.cssgradients .page-nav-fixed.landing-filters {
+  background-image: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgba(255, 255, 255, 0)), color-stop(20%, #ffffff));
+  background-image: -webkit-linear-gradient(bottom, rgba(255, 255, 255, 0), #ffffff 20%);
+  background-image: -moz-linear-gradient(bottom, rgba(255, 255, 255, 0), #ffffff 20%);
+  background-image: -o-linear-gradient(bottom, rgba(255, 255, 255, 0), #ffffff 20%);
+  background-image: linear-gradient(bottom, rgba(255, 255, 255, 0), #ffffff 20%);
+}
+/* line 34, scss/_landing-filters.scss */
+.no-cssgradients.gt-ie8 .page-nav-fixed.landing-filters {
+  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjcwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9Ijk5JSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIwIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiIHN0b3Atb3BhY2l0eT0iMCIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+}
+/* line 39, scss/_landing-filters.scss */
+.borderradius .page-nav-fixed.landing-filters {
+  -webkit-border-radius: 10px 10px 0 0;
+  -moz-border-radius: 10px 10px 0 0;
+  border-radius: 10px 10px 0 0;
+}
+/* line 42, scss/_landing-filters.scss */
+.page-nav-fixed.landing-filters .filters {
+  display: inline-block;
+}
+/* line 44, scss/_landing-filters.scss */
+.page-nav-fixed.landing-filters .filter {
+  font-size: 16px;
+  line-height: 28px;
+}
+
+/* line 18, scss/_landing-segments.scss */
+.landing-segment-button-school, .landing-segment-button-independent, .landing-segment-button-hr {
+  width: 112px;
+  height: 112px;
+  display: block;
+  position: absolute;
+  left: -80px;
+  top: -webkit-calc(50% - 56px);
+  top: -moz-calc(50% - 56px);
+  top: calc(50% - 56px);
+}
+/* line 29, scss/_landing-segments.scss */
+.landing-segment-button-school .ie8, .landing-segment-button-independent .ie8, .landing-segment-button-hr .ie8 {
+  top: 20%;
+}
+
+/* line 34, scss/_landing-segments.scss */
+.landing-segment-outer-wrapper {
+  padding: 20px 40px 20px 20px;
+}
+/* line 37, scss/_landing-segments.scss */
+.landing-segment-outer-wrapper h4 {
+  margin: 0 0 5px 20px;
+}
+
+/* line 41, scss/_landing-segments.scss */
+.landing-segment-wrapper {
+  position: relative;
+  margin-left: 80px;
+}
+/* line 45, scss/_landing-segments.scss */
+.landing-segment-wrapper + .landing-segment-wrapper {
+  margin-top: 20px;
+}
+
+/* line 50, scss/_landing-segments.scss */
+.landing-segment-button-school {
+  background-image: url("../images/landing/button-school.png");
+}
+
+/* line 55, scss/_landing-segments.scss */
+.landing-segment-button-independent {
+  background-image: url("../images/landing/button-independent.png");
+}
+
+/* line 60, scss/_landing-segments.scss */
+.landing-segment-button-hr {
+  background-image: url("../images/landing/button-hr.png");
+}
+
+/* line 66, scss/_landing-segments.scss */
+.landing-segments {
+  margin: 0;
+  list-style: none;
+  border: 1px solid #73c3e6;
+  background-color: #f0f0f0;
+}
+/* line 72, scss/_landing-segments.scss */
+.borderradius .landing-segments {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+/* line 74, scss/_landing-segments.scss */
+.boxshadow .landing-segments {
+  -webkit-box-shadow: 1px 1px 0 white inset, -1px -1px 0 white inset;
+  -moz-box-shadow: 1px 1px 0 white inset, -1px -1px 0 white inset;
+  box-shadow: 1px 1px 0 white inset, -1px -1px 0 white inset;
+}
+/* line 81, scss/_landing-segments.scss */
+.landing-segments > .landing-segment + .landing-segment {
+  border-top: 1px solid #73c3e6;
+}
+/* line 84, scss/_landing-segments.scss */
+.boxshadow .landing-segments > .landing-segment + .landing-segment {
+  -webkit-box-shadow: 0 1px 0 white inset;
+  -moz-box-shadow: 0 1px 0 white inset;
+  box-shadow: 0 1px 0 white inset;
+}
+
+/* line 90, scss/_landing-segments.scss */
+.landing-segment {
+  overflow: hidden;
+}
+
+/* line 93, scss/_landing-segments.scss */
+.landing-segment-type,
+.landing-segment-benefits {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 50%;
+}
+
+/* line 98, scss/_landing-segments.scss */
+.landing-segment-type {
+  display: table;
+  float: left;
+  padding: 0 20px 0 30px;
+  height: 112px;
+}
+/* line 105, scss/_landing-segments.scss */
+.landing-segment-hr .landing-segment-type {
+  height: 165px;
+}
+/* line 109, scss/_landing-segments.scss */
+.borderradius .landing-segment:first-child .landing-segment-type {
+  -webkit-border-radius: 10px 0 0 0;
+  -moz-border-radius: 10px 0 0 0;
+  border-radius: 10px 0 0 0;
+}
+/* line 111, scss/_landing-segments.scss */
+.borderradius .landing-segment:last-child .landing-segment-type {
+  -webkit-border-radius: 0 0 0 10px;
+  -moz-border-radius: 0 0 0 10px;
+  border-radius: 0 0 0 10px;
+}
+/* line 113, scss/_landing-segments.scss */
+.borderradius .landing-segment:first-child:last-child .landing-segment-type {
+  -webkit-border-radius: 10px 0 0 10px;
+  -moz-border-radius: 10px 0 0 10px;
+  border-radius: 10px 0 0 10px;
+}
+
+/* line 117, scss/_landing-segments.scss */
+.landing-segment-title {
+  display: table-cell;
+  vertical-align: middle;
+  font: 300 36px/36px museo-sans, "Helvetica Neue", Arial, sans-serif;
+  letter-spacing: -2px;
+}
+
+/* line 124, scss/_landing-segments.scss */
+.landing-segment-benefits {
+  overflow: hidden;
+  background-color: #f7f7f7;
+  padding: 20px;
+  border-left: 1px solid white;
+}
+/* line 131, scss/_landing-segments.scss */
+.borderradius .landing-segment:first-child .landing-segment-benefits {
+  -webkit-border-radius: 0 10px 0 0;
+  -moz-border-radius: 0 10px 0 0;
+  border-radius: 0 10px 0 0;
+}
+/* line 135, scss/_landing-segments.scss */
+.borderradius .landing-segment:last-child .landing-segment-benefits {
+  -webkit-border-radius: 0 0 10px 0;
+  -moz-border-radius: 0 0 10px 0;
+  border-radius: 0 0 10px 0;
+}
+/* line 139, scss/_landing-segments.scss */
+.borderradius .landing-segment:first-child:last-child .landing-segment-benefits {
+  -webkit-border-radius: 0 10px 10px 0;
+  -moz-border-radius: 0 10px 10px 0;
+  border-radius: 0 10px 10px 0;
+}
+/* line 142, scss/_landing-segments.scss */
+.boxshadow .landing-segment-benefits {
+  -webkit-box-shadow: 1px 0 0 #e6e6e6 inset;
+  -moz-box-shadow: 1px 0 0 #e6e6e6 inset;
+  box-shadow: 1px 0 0 #e6e6e6 inset;
+}
+/* line 144, scss/_landing-segments.scss */
+.landing-segment-benefits > ul {
+  list-style: disc inside none;
+}
+
+/* line 147, scss/_landing-segments.scss */
+.landing-segment-sublist {
+  list-style: none;
+  margin: 0 0 5px 50px;
+}
+/* line 151, scss/_landing-segments.scss */
+.landing-segment-sublist li {
+  margin-top: 5px;
+}
+
+/* line 6, scss/_landing-footer.scss */
+.landing-footer {
+  height: 140px;
+  background-color: #e6e6e6;
+}
+/* line 10, scss/_landing-footer.scss */
+.boxshadow .landing-footer {
+  -webkit-box-shadow: 0 1px 0 white inset, 0 -1px 0 #b2b2b2;
+  -moz-box-shadow: 0 1px 0 white inset, 0 -1px 0 #b2b2b2;
+  box-shadow: 0 1px 0 white inset, 0 -1px 0 #b2b2b2;
+}
+/* line 17, scss/_landing-footer.scss */
+.ie8 .landing-footer {
+  border-top: 1px solid #b2b2b2;
+}
+
+/* line 25, scss/_landing-footer.scss */
+.landing-footer-logo-wrapper {
+  position: relative;
+  height: 125px;
+}
+
+/* line 31, scss/_landing-footer.scss */
+.landing-footer-logo-link {
+  position: absolute;
+  top: 0;
+  left: -115px;
+}
+
+/* line 39, scss/_landing-footer.scss */
+.landing-footer-logo-img {
+  position: absolute;
+  left: 115px;
+  top: 20px;
+}
+
+/* line 46, scss/_landing-footer.scss */
+.landing-footer-cnpj {
+  font-size: 9px;
+  color: #b2b2b2;
+  position: absolute;
+  bottom: 0;
+}
+
+/* line 57, scss/_landing-footer.scss */
+.landing-footer-navigation {
+  margin: 25px 0 0;
+  list-style: none;
+}
+
+/* line 66, scss/_landing-footer.scss */
+.landing-footer-social-networks-legend {
+  margin-top: 40px;
+  height: 28px;
+  text-align: center;
+}
+/* line 71, scss/_landing-footer.scss */
+.landing-footer-social-networks-legend .legend {
+  display: inline-block;
+  max-width: 55px;
+}
+
+/* line 78, scss/_landing-footer.scss */
+.landing-footer-social-networks-legend +
+.landing-footer-social-networks {
+  margin-top: 5px;
+}
+
+/* line 80, scss/_landing-footer.scss */
+.landing-footer-social-networks {
+  text-align: center;
+}
+/* line 83, scss/_landing-footer.scss */
+.landing-footer-social-networks a + a {
+  margin-left: 10px;
+}
+/* line 86, scss/_landing-footer.scss */
+.borderradius .landing-footer-social-networks img {
+  -webkit-border-radius: 16px;
+  -moz-border-radius: 16px;
+  border-radius: 16px;
+}
+/* line 88, scss/_landing-footer.scss */
+.boxshadow .landing-footer-social-networks img {
+  -webkit-box-shadow: 0 1px 0 white;
+  -moz-box-shadow: 0 1px 0 white;
+  box-shadow: 0 1px 0 white;
+}
+
+/* line 96, scss/_landing-footer.scss */
+.landing-footer-contact {
+  margin-top: 25px;
+  text-align: right;
+}
+/* line 100, scss/_landing-footer.scss */
+.landing-footer-contact h3 + .legend {
+  margin-top: 10px;
+}
+/* line 102, scss/_landing-footer.scss */
+.landing-footer-contact:hover {
+  background: transparent url("../images/landing/talk-to-us-background-light.png") no-repeat center;
+}
+/* line 105, scss/_landing-footer.scss */
+.landing-footer-contact:hover .legend {
+  color: #6d6e6f;
+}
+/* line 107, scss/_landing-footer.scss */
+.landing-footer-contact:hover a {
+  color: #158ac4;
+}
+/* line 109, scss/_landing-footer.scss */
+.landing-footer-contact:hover .landing-footer-talk-to-us-balloons {
+  background-image: url("../images/landing/talk-to-us-dark-blue.png");
+}
+
+/* line 113, scss/_landing-footer.scss */
+.landing-footer-talk-to-us-balloons {
+  width: 48px;
+  height: 96px;
+  display: block;
+  background-image: url("../images/landing/talk-to-us-light-blue.png");
+}
+
+/* line 4, scss/_landing-advantages.scss */
+.landing-advantages {
+  width: 100%;
+  display: inline-block;
+}
+/* line 8, scss/_landing-advantages.scss */
+.landing-advantages .landing-navigation-title {
+  margin: 20px;
+}
+/* line 10, scss/_landing-advantages.scss */
+.landing-advantages .type-user {
+  display: block;
+  float: left;
+  max-width: 200px;
+}
+/* line 15, scss/_landing-advantages.scss */
+.landing-advantages .type-user .call + .call {
+  margin-top: 20px;
+}
+/* line 17, scss/_landing-advantages.scss */
+.landing-advantages .type-user .call {
+  text-align: center;
+  font-size: 13px;
+  line-height: 18px;
+  width: 200px;
+  font-family: arial;
+}
+/* line 25, scss/_landing-advantages.scss */
+.landing-advantages .type-user.teacher {
+  margin: 0 39px;
+}
+/* line 27, scss/_landing-advantages.scss */
+.landing-advantages .type-user.teacher .call {
+  color: #ff7c35;
+}
+/* line 30, scss/_landing-advantages.scss */
+.landing-advantages .type-user.teacher .button-user h5 {
+  margin-left: 65px;
+}
+/* line 32, scss/_landing-advantages.scss */
+.landing-advantages .type-user.teacher .button-user h6 {
+  margin-left: 79px;
+}
+/* line 35, scss/_landing-advantages.scss */
+.textshadow .landing-advantages .type-user.teacher .button-user h6 {
+  text-shadow: 0 -1px 0 #f24a00;
+}
+/* line 40, scss/_landing-advantages.scss */
+.landing-advantages .type-user.gestor {
+  margin: 0 39px 0 0;
+}
+/* line 43, scss/_landing-advantages.scss */
+.landing-advantages .type-user.gestor .call {
+  color: #158ac4;
+}
+/* line 45, scss/_landing-advantages.scss */
+.landing-advantages .type-user.gestor .button-user h5 {
+  margin-left: 48px;
+}
+/* line 48, scss/_landing-advantages.scss */
+.landing-advantages .type-user.developer {
+  margin-right: 10px;
+}
+/* line 51, scss/_landing-advantages.scss */
+.landing-advantages .type-user.developer .call {
+  color: #ff6d6d;
+}
+/* line 54, scss/_landing-advantages.scss */
+.landing-advantages .type-user.developer .button-user h5 {
+  margin-left: 70px;
+}
+/* line 56, scss/_landing-advantages.scss */
+.landing-advantages .type-user.developer .button-user h6 {
+  margin-left: 68px;
+}
+/* line 59, scss/_landing-advantages.scss */
+.textshadow .landing-advantages .type-user.developer .button-user h6 {
+  text-shadow: 0 -1px 0 #c0272d;
+}
+/* line 64, scss/_landing-advantages.scss */
+.landing-advantages .type-user.student {
+  margin-left: 10px;
+  float: left;
+}
+/* line 68, scss/_landing-advantages.scss */
+.landing-advantages .type-user.student .call {
+  color: #61a080;
+}
+/* line 72, scss/_landing-advantages.scss */
+.landing-advantages .type-user .button-user h5 {
+  color: white;
+  position: absolute;
+  margin-top: -85px;
+  margin-left: 56px;
+  font-size: 36px;
+}
+/* line 79, scss/_landing-advantages.scss */
+.textshadow .landing-advantages .type-user .button-user h5 {
+  text-shadow: 0 1px 3px black;
+}
+/* line 82, scss/_landing-advantages.scss */
+.landing-advantages .type-user .button-user h6 {
+  font-size: 10px;
+  font-family: arial, sans-serif;
+  position: absolute;
+  color: white;
+  margin-top: -60px;
+  letter-spacing: 0;
+}
+
+/* line 4, scss/_landing-plans.scss */
+.landing-plans {
+  margin: 0 0 0 8px;
+}
+/* line 7, scss/_landing-plans.scss */
+.landing-plans .landing-navigation-title {
+  margin-bottom: 30px;
+}
+/* line 11, scss/_landing-plans.scss */
+.landing-plans .type-plan {
+  margin: 0 9px;
+  width: 208px;
+  display: inline-block;
+  border: 1px solid #73c3e6;
+  background-color: #f7f7f7;
+}
+/* line 18, scss/_landing-plans.scss */
+.borderradius .landing-plans .type-plan {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+/* line 20, scss/_landing-plans.scss */
+.landing-plans .type-plan .type-plan-icon {
+  padding: 10px 10px 0 10px;
+  height: 100px;
+  display: block;
+}
+/* line 25, scss/_landing-plans.scss */
+.landing-plans .type-plan .type-plan-icon h4 {
+  margin-top: 10px;
+  text-align: center;
+}
+/* line 30, scss/_landing-plans.scss */
+.landing-plans .type-plan .type-plan-icon img {
+  display: block;
+  margin: 0 auto;
+}
+/* line 36, scss/_landing-plans.scss */
+.landing-plans .type-plan .free-plan {
+  text-align: center;
+  display: block;
+  background-color: #e1f1e1;
+}
+/* line 41, scss/_landing-plans.scss */
+.landing-plans .type-plan .free-plan h5 {
+  font-size: 13px;
+}
+/* line 45, scss/_landing-plans.scss */
+.landing-plans .type-plan .free-plan h5, .landing-plans .type-plan .free-plan h2 {
+  color: #5fc080;
+}
+/* line 49, scss/_landing-plans.scss */
+.landing-plans .type-plan .free-plan h2 {
+  font-weight: 300;
+}
+/* line 54, scss/_landing-plans.scss */
+.landing-plans .type-plan .learn-plan {
+  display: block;
+  padding: 0 10px 10px 10px;
+  text-align: center;
+}
+
+/* line 2, scss/_modals-windows.scss */
+.form-login {
+  float: right;
+  width: 240px;
+  background-color: white;
+  overflow: hidden;
+  display: block;
+}
+/* line 9, scss/_modals-windows.scss */
+.form-login hr {
+  margin: 0;
+}
+/* line 12, scss/_modals-windows.scss */
+.form-login .control-checkbox label {
+  margin-left: -5px;
+}
+/* line 17, scss/_modals-windows.scss */
+.form-login .user-dates {
+  overflow: hidden;
+  padding: 20px 10px 10px 10px;
+}
+/* line 22, scss/_modals-windows.scss */
+.form-login .control-group + .control-group {
+  margin-top: 0;
+}
+/* line 24, scss/_modals-windows.scss */
+.form-login .button-primary {
+  margin-top: 10px;
+  float: right;
+}
+/* line 29, scss/_modals-windows.scss */
+.form-login .fb-login {
+  margin: 20px 0;
+  text-align: center;
+}
+/* line 34, scss/_modals-windows.scss */
+.form-login .recover-login {
+  text-align: center;
+  font-size: 11px;
+  padding: 10px;
+}
+
+/* line 43, scss/_modals-windows.scss */
+.modal-window {
+  background: #f7f7f7;
+  overflow: hidden;
+  display: block;
+  margin: 20px auto;
+  background: #f7f7f7;
+}
+/* line 49, scss/_modals-windows.scss */
+.borderradius .modal-window {
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  border-radius: 7px;
+}
+/* line 51, scss/_modals-windows.scss */
+.modal-window .button-primary, .modal-window button, .modal-window .button-default, .modal-window .button-success {
+  float: right;
+  margin: 20px;
+}
+/* line 56, scss/_modals-windows.scss */
+.modal-window hr {
+  margin: 1px 0 0 0;
+}
+/* line 60, scss/_modals-windows.scss */
+.modal-window .modal-name {
+  margin: 10px 20px;
+  display: block;
+  overflow: hidden;
+}
+/* line 65, scss/_modals-windows.scss */
+.modal-window .modal-name img {
+  float: left;
+}
+/* line 69, scss/_modals-windows.scss */
+.modal-window .modal-name h3 {
+  margin: 0 10px;
+  display: inline-block;
+}
+/* line 74, scss/_modals-windows.scss */
+.modal-window .modal-name .call-cadaster {
+  color: #61a080;
+  width: 230px;
+  margin-top: 0;
+}
+/* line 80, scss/_modals-windows.scss */
+.modal-window .modal-name .call-cadaster + .call-cadaster {
+  display: block;
+  margin-left: 57px;
+}
+/* line 86, scss/_modals-windows.scss */
+.modal-window .plan-information, .modal-window .modal-cadaster {
+  padding: 20px;
+  background: white;
+  overflow: hidden;
+  display: block;
+}
+/* line 94, scss/_modals-windows.scss */
+.modal-window .modal-cadaster p {
+  color: #6d6e6f;
+  margin-bottom: 40px;
+}
+/* line 99, scss/_modals-windows.scss */
+.modal-window .modal-cadaster .legend {
+  display: block;
+  font-style: italic;
+  text-align: center;
+}
+/* line 105, scss/_modals-windows.scss */
+.modal-window .modal-cadaster .form-right {
+  float: right;
+}
+/* line 109, scss/_modals-windows.scss */
+.modal-window .modal-cadaster .form-left, .modal-window .modal-cadaster .form-right {
+  width: 400px;
+}
+/* line 113, scss/_modals-windows.scss */
+.modal-window .modal-cadaster .form-left {
+  float: left;
+}
+/* line 116, scss/_modals-windows.scss */
+.modal-window .modal-cadaster .form-left .legend {
+  margin-bottom: 20px;
+  width: 218px;
+  text-align: left;
+  margin-left: 100px;
+  margin-top: 20px;
+}
+/* line 125, scss/_modals-windows.scss */
+.modal-window .modal-cadaster .form-horizontal {
+  overflow: hidden;
+}
+/* line 127, scss/_modals-windows.scss */
+.modal-window .modal-cadaster .form-horizontal p {
+  margin-bottom: 20px;
+}
+/* line 132, scss/_modals-windows.scss */
+.modal-window .modal-cadaster .control-group {
+  overflow: hidden;
+}
+/* line 135, scss/_modals-windows.scss */
+.modal-window .modal-cadaster .control-group input {
+  margin-top: 4px;
+  margin-right: 4px;
+  margin-bottom: 4px;
+}
+/* line 141, scss/_modals-windows.scss */
+.modal-window .modal-cadaster .control-group label.control-checkbox {
+  float: left;
+}
+/* line 145, scss/_modals-windows.scss */
+.modal-window .modal-cadaster .control-group .legend {
+  width: 218px;
+}
+/* line 150, scss/_modals-windows.scss */
+.modal-window .submit-cadaster {
+  padding: 20px;
+  overflow: hidden;
+}
+/* line 154, scss/_modals-windows.scss */
+.modal-window .submit-cadaster .button-big {
+  margin: 0 10px 0 0;
+}
+/* line 156, scss/_modals-windows.scss */
+.modal-window .submit-cadaster .control-checkbox {
+  float: left;
+}
+/* line 161, scss/_modals-windows.scss */
+.modal-window .plan-information .icon-medal img {
+  vertical-align: middle;
+  margin: -2px 0 0 2px;
+}
+/* line 167, scss/_modals-windows.scss */
+.modal-window .plan-information table .free {
+  color: #5fc080;
+}
+/* line 170, scss/_modals-windows.scss */
+.modal-window .call {
+  background: white;
+  padding: 20px;
+}
+/* line 175, scss/_modals-windows.scss */
+.modal-window .container {
+  color: black;
+  width: auto;
+  background: white;
+  padding: 20px 60px;
+}
+/* line 181, scss/_modals-windows.scss */
+.modal-window .container .section {
+  font-size: 16px;
+  display: inline-block;
+  font-weight: 700;
+  font-family: museo-sans, "Helvetica Neue", Arial, sans-serif;
+  margin-top: 20px;
+}
+/* line 189, scss/_modals-windows.scss */
+.modal-window .container p {
+  margin-top: 20px;
+}
+/* line 192, scss/_modals-windows.scss */
+.modal-window .container .standout {
+  font-weight: bold;
+}
+/* line 195, scss/_modals-windows.scss */
+.modal-window .cadaster-success {
+  background: white;
+  border: 1px solid #6d6e6f;
+}
+/* line 198, scss/_modals-windows.scss */
+.borderradius .modal-window .cadaster-success {
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  border-radius: 7px;
+}
+/* line 201, scss/_modals-windows.scss */
+.modal-window .cadaster-success .modal-name .call-cadaster {
+  width: 100%;
+  margin-left: 0;
+}
+/* line 207, scss/_modals-windows.scss */
+.modal-window .cadaster-success .call {
+  padding: 0 20px 20px 20px;
+}
+/* line 209, scss/_modals-windows.scss */
+.modal-window .cadaster-success .modal-window {
+  margin: 0;
+}
+/* line 211, scss/_modals-windows.scss */
+.borderradius .modal-window .cadaster-success .modal-window {
+  -webkit-border-radius: none;
+  -moz-border-radius: none;
+  border-radius: none;
+}
+
+/* line 217, scss/_modals-windows.scss */
+.modal-landing p + p {
+  margin-top: 20px;
+}
+/* line 219, scss/_modals-windows.scss */
+.modal-landing .modal-header [class*="icon"]:before {
+  vertical-align: middle;
+}
+/* line 221, scss/_modals-windows.scss */
+.modal-landing .modal-body {
+  padding: 20px 40px 20px 60px;
+}
+
+/* line 6, scss/_landing-functionalities.scss */
+.landing-functionalities .landing-navigation-title {
+  margin: 20px;
+}
+/* line 8, scss/_landing-functionalities.scss */
+.landing-functionalities p {
+  color: #b2b2b2;
+}
+/* line 11, scss/_landing-functionalities.scss */
+.landing-functionalities h2 + h4,
+.landing-functionalities h4 + p {
+  margin-top: 20px;
+}
+/* line 13, scss/_landing-functionalities.scss */
+.landing-functionalities hr {
+  background-color: #e6e6e6;
+  height: 3px;
+  margin: 0;
+  border-color: white;
+  border-right-width: 0;
+}
+
+/* line 22, scss/_landing-functionalities.scss */
+.landing-functionality:hover p {
+  color: #6d6e6f;
+}
+
+/* line 5, scss/_landing-social-network-&-chat.scss */
+.landing-social-network-n-chat {
+  margin-bottom: 20px;
+}
+
+/* line 10, scss/_landing-social-network-&-chat.scss */
+.landing-social-network-wrapper,
+.landing-chat-wrapper {
+  position: relative;
+}
+
+/* line 13, scss/_landing-social-network-&-chat.scss */
+.icon-social-network-gray_128_130,
+.landing-chat-balloon {
+  position: absolute;
+  display: block;
+}
+
+/* line 18, scss/_landing-social-network-&-chat.scss */
+.icon-social-network-gray_128_130 {
+  width: 128px;
+  height: 130px;
+  background-image: url("../images/landing/icon-social-network-gray_128_130.png");
+  left: -155px;
+  top: 15px;
+}
+
+/* line 25, scss/_landing-social-network-&-chat.scss */
+.landing-chat-balloon {
+  width: 217px;
+  height: 118px;
+  background-image: url("../images/landing/chat-background.png");
+  left: 150px;
+  top: -65px;
+}
+
+/* line 33, scss/_landing-social-network-&-chat.scss */
+.landing-social-network-wrapper {
+  text-align: right;
+}
+
+/* line 36, scss/_landing-social-network-&-chat.scss */
+.landing-chat-wrapper {
+  text-align: left;
+}
+/* line 39, scss/_landing-social-network-&-chat.scss */
+.landing-chat-wrapper h4 {
+  width: 280px;
+}
+
+/* line 5, scss/_landing-discussion-wall.scss */
+.landing-discussion-wall {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 20px;
+  height: 230px;
+  background-color: #f7f7f7;
+  background: url("../images/landing/wall-background.png") no-repeat scroll right center #f7f7f7;
+}
+/* line 12, scss/_landing-discussion-wall.scss */
+.multiplebgs .landing-discussion-wall {
+  background: url("../images/landing/icon-wall-gray_128_130.png") no-repeat scroll center center, url("../images/landing/wall-background.png") no-repeat scroll right center #f7f7f7;
+}
+
+/* line 19, scss/_landing-discussion-wall.scss */
+.landing-discussion-wall-content {
+  width: 340px;
+}
+
+/* line 9, scss/_landing-multimedia-classes.scss */
+.landing-multimedia-video, .landing-multimedia-document, .landing-multimedia-presentation, .landing-multimedia-exercise {
+  width: 65px;
+  height: 65px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: block;
+  padding: 5px;
+}
+
+/* line 18, scss/_landing-multimedia-classes.scss */
+.landing-multimedia-outer-wrapper {
+  padding: 20px;
+}
+
+/* line 21, scss/_landing-multimedia-classes.scss */
+.landing-multimedia-inner-wrapper {
+  background: white url("../images/landing/icon-exercise-gray_128_130.png") no-repeat right center;
+}
+
+/* line 24, scss/_landing-multimedia-classes.scss */
+.landing-multimedia-description {
+  width: 340px;
+}
+
+/* line 27, scss/_landing-multimedia-classes.scss */
+.landing-multimedia-description +
+.landing-multimedia-types {
+  margin-left: 35px;
+}
+
+/* line 32, scss/_landing-multimedia-classes.scss */
+.landing-multimedia-description,
+.landing-multimedia-types,
+.landing-multimedia-types-left,
+.landing-multimedia-types-right {
+  display: inline-block;
+}
+
+/* line 36, scss/_landing-multimedia-classes.scss */
+.landing-multimedia-types {
+  width: 350px;
+}
+
+/* line 39, scss/_landing-multimedia-classes.scss */
+.landing-multimedia-video {
+  background-image: url("../images/landing/multimedia-video.png");
+}
+
+/* line 45, scss/_landing-multimedia-classes.scss */
+.landing-multimedia-document {
+  background-image: url("../images/landing/multimedia-document.png");
+}
+
+/* line 51, scss/_landing-multimedia-classes.scss */
+.landing-multimedia-presentation {
+  background-image: url("../images/landing/multimedia-presentation.png");
+}
+
+/* line 59, scss/_landing-multimedia-classes.scss */
+.landing-multimedia-video +
+.landing-multimedia-document,
+.landing-multimedia-document +
+.landing-multimedia-presentation {
+  margin-top: 10px;
+}
+
+/* line 62, scss/_landing-multimedia-classes.scss */
+.landing-multimedia-exercise {
+  background-image: url("../images/landing/multimedia-exercise.png");
+  position: absolute;
+  top: -10px;
+  left: -10px;
+}
+
+/* line 70, scss/_landing-multimedia-classes.scss */
+.landing-multimedia-type-circle {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  -webkit-transition: border-width 0.15s linear;
+  -moz-transition: border-width 0.15s linear;
+  -ms-transition: border-width 0.15s linear;
+  -o-transition: border-width 0.15s linear;
+  transition: border-width 0.15s linear;
+  display: none;
+  border: 1px solid white;
+}
+/* line 77, scss/_landing-multimedia-classes.scss */
+.borderradius .landing-multimedia-type-circle {
+  -webkit-border-radius: 40px;
+  -moz-border-radius: 40px;
+  border-radius: 40px;
+}
+/* line 79, scss/_landing-multimedia-classes.scss */
+.landing-multimedia-outer-wrapper:hover .landing-multimedia-type-circle {
+  display: block;
+}
+/* line 81, scss/_landing-multimedia-classes.scss */
+.landing-multimedia-type-circle:hover {
+  border-width: 5px;
+}
+
+/* line 85, scss/_landing-multimedia-classes.scss */
+.landing-multimedia-types-left +
+.landing-multimedia-types-right {
+  margin-left: 20px;
+}
+
+/* line 87, scss/_landing-multimedia-classes.scss */
+.landing-multimedia-types-right {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 265px;
+  padding: 10px 0 10px 10px;
+  vertical-align: top;
+}
+
+/* line 95, scss/_landing-multimedia-classes.scss */
+.landing-multimedia-exercise-box {
+  padding: 10px;
+  background-color: #e1f1e1;
+  border: 1px solid #abe385;
+  position: relative;
+}
+/* line 101, scss/_landing-multimedia-classes.scss */
+.borderradius .landing-multimedia-exercise-box {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+/* line 103, scss/_landing-multimedia-classes.scss */
+.boxshadow .landing-multimedia-exercise-box {
+  -webkit-box-shadow: 1px 1px 1px white inset;
+  -moz-box-shadow: 1px 1px 1px white inset;
+  box-shadow: 1px 1px 1px white inset;
+}
+/* line 105, scss/_landing-multimedia-classes.scss */
+.landing-multimedia-exercise-box h4 {
+  margin-left: 55px;
+  color: black;
+}
+/* line 110, scss/_landing-multimedia-classes.scss */
+.landing-multimedia-exercise-box p {
+  color: #6d6e6f;
+}
+/* line 112, scss/_landing-multimedia-classes.scss */
+.landing-multimedia-exercise-box p + p {
+  margin-top: 10px;
+}
+/* line 114, scss/_landing-multimedia-classes.scss */
+.landing-multimedia-exercise-box h4 + p {
+  margin-top: 13px;
+}
+
+/* line 13, scss/_landing-oer.scss */
+.landing-oer-outer-wrapper {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  height: 190px;
+  padding: 20px 0;
+  background-color: #1c75bb;
+}
+/* line 19, scss/_landing-oer.scss */
+.cssgradients .landing-oer-outer-wrapper {
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(0, 0, 0, 0.4)), color-stop(5%, #1c75bb), color-stop(95%, #1c75bb), color-stop(100%, rgba(0, 0, 0, 0.4)));
+  background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.4), #1c75bb 5%, #1c75bb 95%, rgba(0, 0, 0, 0.4) 100%);
+  background-image: -moz-linear-gradient(rgba(0, 0, 0, 0.4), #1c75bb 5%, #1c75bb 95%, rgba(0, 0, 0, 0.4) 100%);
+  background-image: -o-linear-gradient(rgba(0, 0, 0, 0.4), #1c75bb 5%, #1c75bb 95%, rgba(0, 0, 0, 0.4) 100%);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), #1c75bb 5%, #1c75bb 95%, rgba(0, 0, 0, 0.4) 100%);
+}
+/* line 21, scss/_landing-oer.scss */
+.no-cssgradients.gt-ie8 .landing-oer-outer-wrapper {
+  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUlIiBzdG9wLWNvbG9yPSIjMWM3NWJiIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iOTUlIiBzdG9wLWNvbG9yPSIjMWM3NWJiIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
+}
+
+/* line 28, scss/_landing-oer.scss */
+.landing-oer-inner-wrapper {
+  background: url("../images/landing/oer-logo.png") no-repeat right center;
+}
+/* line 31, scss/_landing-oer.scss */
+.textshadow .landing-oer-inner-wrapper {
+  text-shadow: 0 1px 0 black;
+}
+
+/* line 35, scss/_landing-oer.scss */
+.landing-oer-title {
+  position: relative;
+}
+/* line 38, scss/_landing-oer.scss */
+.landing-oer-title .label-doubts {
+  position: absolute;
+}
+/* line 40, scss/_landing-oer.scss */
+.landing-oer-title h2 {
+  text-align: right;
+  color: white;
+}
+
+/* line 47, scss/_landing-oer.scss */
+.landing-oer-description {
+  padding-top: 10px;
+}
+/* line 50, scss/_landing-oer.scss */
+.landing-oer-description h4 {
+  color: #f0f0f0;
+}
+/* line 52, scss/_landing-oer.scss */
+.landing-oer-description p {
+  color: white;
+}
+/* line 55, scss/_landing-oer.scss */
+.landing-functionality:hover .landing-oer-description p {
+  color: white;
+}
+
+/* line 7, scss/_landing-api.scss */
+.landing-api {
+  padding: 20px;
+}
+
+/* line 10, scss/_landing-api.scss */
+.landing-api-description {
+  display: inline-block;
+  width: 340px;
+}
+
+/* line 16, scss/_landing-api.scss */
+.landing-api-description +
+.landing-api-link {
+  margin-left: 60px;
+}
+
+/* line 19, scss/_landing-api.scss */
+.landing-api-link {
+  width: 225px;
+  height: 225px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: inline-block;
+  border: 10px solid #dbeff7;
+  background: transparent url("../images/landing/icon-api-gray_128_130.png") no-repeat 30px 20px;
+  position: relative;
+}
+/* line 27, scss/_landing-api.scss */
+.landing-api-link:hover {
+  border-color: #73c3e6;
+}
+/* line 29, scss/_landing-api.scss */
+.borderradius .landing-api-link {
+  -webkit-border-radius: 130px;
+  -moz-border-radius: 130px;
+  border-radius: 130px;
+}
+/* line 31, scss/_landing-api.scss */
+.landing-api-link a {
+  position: absolute;
+  bottom: 0;
+  left: 40px;
+  width: 128px;
+  text-align: center;
+}
+
+/* line 41, scss/_landing-api.scss */
+.landing-api-link +
+.landing-api-illustration {
+  margin-left: 30px;
+}
+
+/* line 44, scss/_landing-api.scss */
+.landing-api-illustration {
+  width: 240px;
+  height: 240px;
+  display: inline-block;
+  background-image: url("../images/landing/keko-playing.png");
+}
+/* line 49, scss/_landing-api.scss */
+.landing-api:hover .landing-api-illustration {
+  background-image: url("../images/landing/keko-playing-hover.png");
+}
+
+/* line 6, scss/_landing-others.scss */
+.landing-others {
+  padding: 50px 20px 20px;
+  background: transparent url("../images/landing/plus.png") no-repeat center 10px;
+  overflow: hidden;
+}
+
+/* line 12, scss/_landing-others.scss */
+.landing-other {
+  width: 286px;
+  float: left;
+  position: relative;
+}
+/* line 17, scss/_landing-others.scss */
+.landing-other + .landing-other {
+  margin-left: 20px;
+}
+/* line 19, scss/_landing-others.scss */
+.landing-other .label-doubts {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+/* line 25, scss/_landing-others.scss */
+.landing-other [class*="icon-"][class*="-before"]:before {
+  margin-right: 10px;
+}
+
+/* line 6, scss/_landing-partners.scss */
+.landing-partners-wrapper {
+  padding: 20px 20px 40px;
+}
+/* line 9, scss/_landing-partners.scss */
+.landing-partners-wrapper h4 {
+  color: #e6e6e6;
+}
+/* line 12, scss/_landing-partners.scss */
+.textshadow .landing-partners-wrapper h4 {
+  text-shadow: 0 1px 0 #b3b3b3;
+}
+/* line 15, scss/_landing-partners.scss */
+.landing-partners-wrapper h4 + .landing-partners {
+  margin-top: 20px;
+}
+
+/* line 18, scss/_landing-partners.scss */
+.landing-partners {
+  overflow: hidden;
+}
+
+/* line 21, scss/_landing-partners.scss */
+.landing-partner {
+  width: 133px;
+  height: 133px;
+  float: left;
+}
+/* line 25, scss/_landing-partners.scss */
+.landing-partner + .landing-partner {
+  margin-left: 20px;
+}
+
+/* line 30, scss/_landing-partners.scss */
+.landing-partner-ade {
+  background-image: url("../images/landing/partner-ade.png");
+}
+/* line 33, scss/_landing-partners.scss */
+.landing-partner-ade:hover {
+  background-image: url("../images/landing/partner-ade-hover.png");
+}
+
+/* line 36, scss/_landing-partners.scss */
+.landing-partner-ufpe {
+  background-image: url("../images/landing/partner-ufpe.png");
+}
+/* line 39, scss/_landing-partners.scss */
+.landing-partner-ufpe:hover {
+  background-image: url("../images/landing/partner-ufpe-hover.png");
+}
+
+/* line 42, scss/_landing-partners.scss */
+.landing-partner-facig {
+  background-image: url("../images/landing/partner-facig.png");
+}
+/* line 45, scss/_landing-partners.scss */
+.landing-partner-facig:hover {
+  background-image: url("../images/landing/partner-facig-hover.png");
+}
+
+/* line 48, scss/_landing-partners.scss */
+.landing-partner-etr {
+  background-image: url("../images/landing/partner-etr.png");
+}
+/* line 51, scss/_landing-partners.scss */
+.landing-partner-etr:hover {
+  background-image: url("../images/landing/partner-etr-hover.png");
+}
+
+/* line 54, scss/_landing-partners.scss */
+.landing-partner-univasf {
+  background-image: url("../images/landing/partner-univasf.png");
+}
+/* line 57, scss/_landing-partners.scss */
+.landing-partner-univasf:hover {
+  background-image: url("../images/landing/partner-univasf-hover.png");
+}
+
+/* line 60, scss/_landing-partners.scss */
+.landing-partner-fafire {
+  background-image: url("../images/landing/partner-fafire.png");
+}
+/* line 63, scss/_landing-partners.scss */
+.landing-partner-fafire:hover {
+  background-image: url("../images/landing/partner-fafire-hover.png");
+}
+
+/* line 5, scss/_landing-basic-reports.scss */
+.landing-basic-reports {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 20px;
+  height: 213px;
+  background-color: #f7f7f7;
+  background: url("../images/landing/treemap.png") no-repeat scroll right center #f7f7f7;
+}
+/* line 12, scss/_landing-basic-reports.scss */
+.multiplebgs .landing-basic-reports {
+  background: url("../images/landing/icon-128px-relatorios-basicos.png") no-repeat scroll center center, url("../images/landing/treemap.png") no-repeat scroll left center #f7f7f7;
+}
+
+/* line 19, scss/_landing-basic-reports.scss */
+.landing-basic-reports-content {
+  float: right;
+  width: 340px;
+}
+
+/* line 5, scss/_landing-management-support.scss */
+.landing-management-support {
+  overflow: hidden;
+  height: 210px;
+  background-color: white;
+}
+/* line 11, scss/_landing-management-support.scss */
+.landing-management-support h2 {
+  margin-top: 20px;
+}
+
+/* line 16, scss/_landing-management-support.scss */
+.icon-129px-configuracoes, .bkg-suporte {
+  position: absolute;
+  display: block;
+}
+
+/* line 21, scss/_landing-management-support.scss */
+.icon-129px-configuracoes {
+  width: 128px;
+  height: 130px;
+  background-image: url("../images/landing/icon-129px-configuracoes.png");
+  margin-left: -160px;
+}
+
+/* line 27, scss/_landing-management-support.scss */
+.landing-support-content {
+  width: 395px;
+  height: 120px;
+  background: url("../images/landing/bkg-suporte.png");
+  height: 210px;
+  float: right;
+}

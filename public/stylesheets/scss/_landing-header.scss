@@ -15,41 +15,6 @@
   }
 
   .ie8 & { border-bottom: 1px solid $gray-drop-shadow; }
-
-  .form-login {
-    float: right;
-    width: 240px;
-    background-color: $white;
-    overflow: hidden;
-    display: block;
-
-    hr { margin: 0;}
-
-    .control-checkbox { font-size: 11px; }
-
-    .user-dates {
-      overflow: hidden;
-      padding: 20px 10px 10px 10px;
-    }
-
-    .control-group + .control-group { margin-top: 0; }
-
-    button {
-      margin-top: 10px;
-      float: right;
-    }
-
-    .fb-login {
-      margin: 20px 0;
-      text-align: center;
-    }
-
-    .recover-login {
-      text-align: center;
-      font-size: 11px;
-      padding: 10px;
-    }
-  }
 }
 
 // Wrapper do logo.

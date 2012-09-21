@@ -1,4 +1,5 @@
-<%= form_for @user_session, :remote => true, :url => sessions_path , :html => { :class => "user-dates", :id => "form-login" } do |f| %>
+<div class="form-login">
+    <%= form_for @user_session, :remote => true, :url => sessions_path , :html => { :class => "user-dates", :id => "form-login" } do |f| %>
   <div class="control-group">
     <div class="control-label">
       <%= f.label :login,"Login" %>
@@ -27,4 +28,13 @@
     </div>
   </div>
 <% end %>
+    <hr>
+    <div class="fb-login">
+      <%= link_to "Entre com sua conta do Facebook", facebook_authentication_path, :value => "login-facebook", :class => "uibutton confirm large" %>
+    </div>
+    <hr>
+    <div class="recover-login">
+      <%= link_to "Esqueceu seu login ou senha? Clique aqui", recover_username_password_path %>
+    </div>
+  </div>
 
