@@ -17,6 +17,7 @@ javascripts:
     - public/javascripts/lazyload.js
     - public/javascripts/jquery.autosize.min.js
     - public/javascripts/bootstrap-redu.js
+    - public/javascripts/landing.js
   common:
     - public/javascripts/rails.js
     - public/javascripts/application.js

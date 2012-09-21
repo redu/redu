@@ -6,7 +6,7 @@
   background: $gray1;
  .borderradius & { @include border-radius(7px); }
 
-    .button-big, button {
+    .button-primary, button, .button-default {
       float: right;
       margin: 20px;
     }

@@ -1,3 +1,27 @@
+<div class="landing-header">
+  <div class="container">
+    <%= link_to landing_path,
+        :class => "landing-logo-wrapper" do %>
+      <%= image_tag "landing/logo.png",
+          :class => "landing-logo",
+          :alt => "Redu",
+          :title => "Redu"
+      %>
+    <% end %>
+    <div class="landing-header-buttons">
+      <div class="landing-button-sign-up">
+        <span class="icon-add-friend-darkgray_32_34"></span>
+        <%= link_to "Não possui conta? Cadastre-se, é grátis", "Modal Cadastro", :class => "button-big button-success" %>
+      </div><!--
+   --><div class="landing-button-sign-in">
+        <span class="icon-profile-darkgray_32_34"></span>
+        <%= link_to "Entre no Redu", "Modal Login", :class => "button-big button-primary" %>
+      </div>
+    </div>
+  </div>
+  <%= render :partial => 'form-login' %>
+</div>
+
 <div class="modal-window">
   <span class="modal-name">
     <%= image_tag "landing/icon-48px-instituicao.png",
@@ -12,4 +36,49 @@
   </div>
   <hr>
   <%= render :partial => 'form_cadaster' %>
+    <div class="row">
+    <div class="span10 offset1">
+      <div class="system-message message-warning fade in">
+        <span data-dismiss="alert" class="message-close">×</span>
+        <p><strong>Ops!</strong> Quando alguma coisa não funciona bem, este aviso é mostrado...</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="landing-functionality landing-multimedia-outer-wrapper">
+  <div class="landing-multimedia-inner-wrapper">
+    <div class="landing-multimedia-description">
+      <h2>Aulas Multimídia</h2>
+      <h4>Assista aulas de vídeo, leia artigos, documentos e apresentações dos professores.</h4>
+      <p>Os meios podem ser diversos, mas os fins são os mesmos: a construção do conhecimento. Em qualquer formato, as aulas estarão disponíveis a todos os membros do curso.</p>
+    </div><!--
+ --><div class="landing-multimedia-types">
+      <div class="landing-multimedia-types-left">
+        <%= link_to nil, "#modal-landing-multimedia-video", "data-toggle" => "modal", :class => "landing-multimedia-video" do %>
+          <span class="landing-multimedia-type-circle"></span>
+          <% end %>
+
+        <%= link_to nil, "#moldal-landing-multimedia-document", "data-toggle" => "modal", :class => "landing-multimedia-document" do %>
+          <span class="landing-multimedia-type-circle"></span>
+        <% end %>
+
+        <%= link_to nil, "#modal-landing-multimedia-presentation", "data-toggle" => "modal", :class => "landing-multimedia-presentation" do %>
+          <span class="landing-multimedia-type-circle"></span>
+        <% end %>
+
+      </div><!--
+   --><div class="landing-multimedia-types-right">
+        <div class="landing-multimedia-exercise-box">
+          <%= link_to nil, "#modal-landing-multimedia-exercise", "data-toggle" => "modal", :class => "landing-multimedia-exercise" do %>
+          <span class="landing-multimedia-type-circle"></span>
+
+          <% end %>
+          <h4>Exercícios de múltipla escolha</h4>
+          <p><strong>Avalie conhecimentos através de exercícios on-line.</strong></p>
+          <p>Teste conhecimentos em questões de múltipla escolha. É possível acompanhar o desempenho e evolução nesse tipo de avaliação.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

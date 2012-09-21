@@ -320,13 +320,13 @@
                 <td>Preços <strong>(por licença)</strong></td>
                 <td><span class="free">Grátis</span></td>
                 <td><strong>R$ 5</strong></td>
-                <td><a href="http://#">Consulte-nos</a></td>
+                <td><%= link_to "Consulte-nos", "#" %></td>
               </tr>
             </tbody>
           </table>
       </span>
       <hr>
-      <button class="button-default">Voltar</button>
+      <%= link_to 'Voltar', nil, :rel => "nofollow","data-dismiss" => "modal", :class => 'button-default' %>
     </div>
   <!--</div>-->
 
@@ -666,13 +666,15 @@
               <td>Preços <strong>(por licença)</strong></td>
               <td><span class="free">Grátis</span></td>
               <td><strong>R$ 5</strong></td>
-              <td><a href="http://#">Consulte-nos</a></td>
+              <td>
+                <%= link_to "Consulte-nos", "#" %>
+              </td>
             </tr>
           </tbody>
         </table>
       </span>
       <hr>
-      <button class="button-default">Voltar</button>
+      <%= link_to 'Voltar', nil, :rel => "nofollow","data-dismiss" => "modal", :class => 'button-default' %>
     </div>
 
 <div class="modal-window">
@@ -965,13 +967,13 @@
             <td>Preços <strong>(por licença)</strong></td>
             <td><span class="free">Grátis</span></td>
             <td><strong>R$ 5</strong></td>
-            <td><a href="http://#">Consulte-nos</a></td>
+            <td><%= link_to "Consulte-nos", "#" %></td>
           </tr>
         </tbody>
       </table>
   </span>
   <hr>
-  <button class="button-default">Voltar</button>
+  <%= link_to 'Voltar', nil, :rel => "nofollow","data-dismiss" => "modal", :class => 'button-default' %>
 </div>
 
 <div class="modal-window">
@@ -1294,13 +1296,13 @@
             <td>Preços <strong>(por licença)</strong></td>
             <td><span class="free">Grátis</span></td>
             <td><strong>R$ 5</strong></td>
-            <td><a href="http://#">Consulte-nos</a></td>
+            <td><%= link_to "Consulte-nos", "#" %></td>
           </tr>
         </tbody>
       </table>
   </span>
   <hr>
-  <button class="button-default">Voltar</button>
+  <%= link_to 'Voltar', nil, :rel => "nofollow","data-dismiss" => "modal", :class => 'button-default' %>
 </div>
 <div class="modal-window">
   <span class="modal-name">
@@ -1421,7 +1423,7 @@ Ex.: redu.com.br/pessoas/<b>seulogin</b></p>
       <p> Olá. Seu cadastro foi efetuado com sucesso. No entanto, é necessário que você o confirme. Enviamos um e-mail para sua caixa de entrada contendo um link – basta clicá-lo. Mas não se preocupe: você tem até 30 dias para realizar esta etapa. Até lá, experimente o Redu e não hesite em entrar em contato conosco caso surjam dúvidas, reclamações ou sugestões. </p>
     </div>
     <div class="modal-window">
-    <button class="button-primary">Experimentar o Redu</button>
-  </div>
+      <%= link_to "Experimentar o Redu", "http://www.redu.com.br/home", :class => 'button-primary' %>
+    </div>
   </div>
 </div>

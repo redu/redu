@@ -4,24 +4,28 @@
       <h2>Aulas Multimídia</h2>
       <h4>Assista aulas de vídeo, leia artigos, documentos e apresentações dos professores.</h4>
       <p>Os meios podem ser diversos, mas os fins são os mesmos: a construção do conhecimento. Em qualquer formato, as aulas estarão disponíveis a todos os membros do curso.</p>
-    </div><!-- 
+    </div><!--
  --><div class="landing-multimedia-types">
       <div class="landing-multimedia-types-left">
-        <a data-toggle="modal" href="#modal-landing-multimedia-video" class="landing-multimedia-video">
+        <%= link_to " ", "#modal-landing-multimedia-video", "data-toggle" => "modal", :class => "landing-multimedia-video"
           <span class="landing-multimedia-type-circle"></span>
-        </a>
-        <a data-toggle="modal" href="#moldal-landing-multimedia-document" class="landing-multimedia-document">
+
+        %>
+        <%= link_to " ", "#moldal-landing-multimedia-document", "data-toggle" => "modal", :class => "landing-multimedia-document"
           <span class="landing-multimedia-type-circle"></span>
-        </a>
-        <a data-toggle="modal" href="#modal-landing-multimedia-presentation" class="landing-multimedia-presentation">
+
+        %>
+        <%= link_to " ", "#modal-landing-multimedia-presentation", "data-toggle" => "modal", :class => "landing-multimedia-presentation"
           <span class="landing-multimedia-type-circle"></span>
-        </a>
-      </div><!-- 
+
+        %>
+      </div><!--
    --><div class="landing-multimedia-types-right">
         <div class="landing-multimedia-exercise-box">
-          <a data-toggle="modal" href="#modal-landing-multimedia-exercise" class="landing-multimedia-exercise">
-            <span class="landing-multimedia-type-circle"></span>
-          </a>
+          <%= link_to " ", "#modal-landing-multimedia-exercise", "data-toggle" => "modal", :class => "landing-multimedia-exercise"
+          <span class="landing-multimedia-type-circle"></span>
+
+          %>
           <h4>Exercícios de múltipla escolha</h4>
           <p><strong>Avalie conhecimentos através de exercícios on-line.</strong></p>
           <p>Teste conhecimentos em questões de múltipla escolha. É possível acompanhar o desempenho e evolução nesse tipo de avaliação.</p>
