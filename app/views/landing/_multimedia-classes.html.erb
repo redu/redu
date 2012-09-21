@@ -7,25 +7,21 @@
     </div><!--
  --><div class="landing-multimedia-types">
       <div class="landing-multimedia-types-left">
-        <%= link_to " ", "#modal-landing-multimedia-video", "data-toggle" => "modal", :class => "landing-multimedia-video"
+        <%= link_to "#modal-landing-multimedia-video", "data-toggle" => "modal", :class => "landing-multimedia-video" do %>
           <span class="landing-multimedia-type-circle"></span>
-
-        %>
-        <%= link_to " ", "#moldal-landing-multimedia-document", "data-toggle" => "modal", :class => "landing-multimedia-document"
+        <% end %>
+        <%= link_to "#moldal-landing-multimedia-document", "data-toggle" => "modal", :class => "landing-multimedia-document" do %>
           <span class="landing-multimedia-type-circle"></span>
-
-        %>
-        <%= link_to " ", "#modal-landing-multimedia-presentation", "data-toggle" => "modal", :class => "landing-multimedia-presentation"
+        <% end %>
+        <%= link_to "#modal-landing-multimedia-presentation", "data-toggle" => "modal", :class => "landing-multimedia-presentation" do %>
           <span class="landing-multimedia-type-circle"></span>
-
-        %>
+        <% end %>
       </div><!--
    --><div class="landing-multimedia-types-right">
         <div class="landing-multimedia-exercise-box">
-          <%= link_to " ", "#modal-landing-multimedia-exercise", "data-toggle" => "modal", :class => "landing-multimedia-exercise"
-          <span class="landing-multimedia-type-circle"></span>
-
-          %>
+          <%= link_to "#modal-landing-multimedia-exercise", "data-toggle" => "modal", :class => "landing-multimedia-exercise" do %>
+            <span class="landing-multimedia-type-circle"></span>
+          <% end %>
           <h4>Exercícios de múltipla escolha</h4>
           <p><strong>Avalie conhecimentos através de exercícios on-line.</strong></p>
           <p>Teste conhecimentos em questões de múltipla escolha. É possível acompanhar o desempenho e evolução nesse tipo de avaliação.</p>

@@ -16,8 +16,7 @@
        <hr>
       </span>
       <span class="learn-plan">
-        <%= link_to "Conheça o planos", nil, :class => 'button-big button-primary' %>
-        <!--<button class="button-primary button-big" data-toggle="modal" href="#modal-plan-ensino-fund-med">Conheça os planos</button>-->
+        <%= link_to "Conheça o planos", "#plano-ensino-medio-e-fundamental", "data-toggle" => "modal", :class => 'button-big button-primary' %>
       </span>
   </div>
   <div class="type-plan">
@@ -36,7 +35,7 @@
        <hr>
       </span>
       <span class="learn-plan">
-        <%= link_to "Conheça o planos", nil, :class => 'button-big button-primary' %>
+        <%= link_to "Conheça o planos", "#plano-ensino-superior", "data-toggle" => "modal", :class => 'button-big button-primary' %>
       </span>
   </div>
   <div class="type-plan">
@@ -55,7 +54,7 @@
        <hr>
       </span>
       <span class="learn-plan">
-        <%= link_to "Conheça o planos", nil, :class => 'button-big button-primary' %>
+        <%= link_to "Conheça o planos", "#plano-produtor-independente", "data-toggle" => "modal", :class => 'button-big button-primary' %>
       </span>
   </div>
   <div class="type-plan">
@@ -74,9 +73,11 @@
        <hr>
       </span>
       <span class="learn-plan">
-        <%= link_to "Conheça o planos", nil, :class => 'button-big button-primary' %>
-      </span>
+        <%= link_to "Conheça o planos", "#plano-consultoria-treinamento-rh", "data-toggle" => "modal", :class => 'button-big button-primary' %>
   </div>
 </div>
+<%= render :partial => 'landing/modal-plan-high-school' %>
+<%= render :partial => 'landing/modal-plan-university' %>
+<%= render :partial => 'landing/modal-plan-independent' %>
+<%= render :partial => 'landing/modal-plan-consultancy-hr' %>
 <%= render :partial => 'landing/modals-windows' %>
-
