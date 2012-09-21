@@ -1,7 +1,5 @@
 Redu::Application.routes.draw do
 
-  match '/landing', :to => 'base#landing'
-
   resources :oauth_clients
 
   match '/oauth/token',         :to => 'oauth#token',         :as => :token
