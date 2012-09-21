@@ -129,8 +129,7 @@ class User < ActiveRecord::Base
 
     # Valida password
     c.validates_length_of_password_field_options = { :within => 6..20,
-                                                     :if => :password_required?,
-                                                     :allow_blank => true }
+                                                     :if => :password_required? }
     c.validates_length_of_password_confirmation_field_options = {
                                                      :within => 6..20,
                                                      :if => :password_required?,
@@ -158,7 +157,7 @@ class User < ActiveRecord::Base
 
   # VALIDATIONS
   validates_presence_of     :first_name, :last_name, :login, :email,
-                            :password
+                            :email_confirmation
   validates_uniqueness_of   :login, :email, :case_sensitive => false
   validates_exclusion_of    :login, :in => Redu::Application.config.extras["reserved_logins"]
   validates :birthday, :allow_nil => true,
