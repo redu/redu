@@ -6,11 +6,12 @@
 // ==========================================================================
 
 // Comum aos sprites de tipos de aula.
-%landing-multimedia-type {
-  @include square(65px);
+.landing-multimedia-type {
   @include box-sizing(border-box);
   display: block;
   padding: 5px;
+
+  & + & { margin-top: 10px; }
 }
 
 
@@ -35,33 +36,9 @@
 
 .landing-multimedia-types { width: 350px; }
 
-// Vídeo.
-.landing-multimedia-video {
-  @extend %landing-multimedia-type;
-  background-image: url("../images/landing/multimedia-video.png");
-}
-
-// Documento.
-.landing-multimedia-document {
-  @extend %landing-multimedia-type;
-  background-image: url("../images/landing/multimedia-document.png");
-}
-
-// Apresentação.
-.landing-multimedia-presentation {
-  @extend %landing-multimedia-type;
-  background-image: url("../images/landing/multimedia-presentation.png");
-}
-
-.landing-multimedia-video +
-.landing-multimedia-document,
-.landing-multimedia-document +
-.landing-multimedia-presentation { margin-top: 10px; }
-
 // Exercício.
 .landing-multimedia-exercise {
-  @extend %landing-multimedia-type;
-  background-image: url("../images/landing/multimedia-exercise.png");
+  @extend .landing-multimedia-type;
   position: absolute;
   top: -10px;
   left: -10px;
@@ -84,10 +61,10 @@
 .landing-multimedia-types-left +
 .landing-multimedia-types-right { margin-left: 20px; }
 
-.landing-multimedia-types-right { 
+.landing-multimedia-types-right {
   @include box-sizing(border-box);
   width: 265px;
-  padding: 10px 0 10px 10px; 
+  padding: 10px 0 10px 10px;
   vertical-align: top;
 }
 
@@ -101,10 +78,10 @@
   .borderradius & { @include border-radius(10px); }
 
   .boxshadow & { @include box-shadow(1px 1px 1px $white inset); }
-  
-  h4 { 
+
+  h4 {
     margin-left: 55px;
-    color: $black; 
+    color: $black;
   }
 
   p { color: $gray6; }

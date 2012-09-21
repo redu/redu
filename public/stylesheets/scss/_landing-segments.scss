@@ -11,28 +11,9 @@ $landing-segment-border-radius: 10px;
 $landing-segment-button-offset: 80px;
 
 
-// Placeholders.
-// ==========================================================================
-
-// Comum aos botões.
-%landing-segment-button {
-  $button-size: 112px;
-  @include square($button-size);
-  display: block;
-  position: absolute;
-  left: (- $landing-segment-button-offset);
-  // 50% - ($button-size / 2) 
-  top: -webkit-calc(50% - 56px);
-  top:    -moz-calc(50% - 56px);
-  top:         calc(50% - 56px);
-
-  .ie8 { top: 20%; }
-}
-
-
 // Encapsulador externo.
-.landing-segment-outer-wrapper { 
-  padding: 20px 40px 20px 20px; 
+.landing-segment-outer-wrapper {
+  padding: 20px 40px 20px 20px;
 
   h4 { margin: 0 0 5px 20px; }
 }
@@ -46,20 +27,15 @@ $landing-segment-button-offset: 80px;
 }
 
 // Botões.
+.landing-segment-button {
+  position: absolute;
+  left: (- $landing-segment-button-offset);
+  // 50% - ($button-size / 2)
+  top: -webkit-calc(50% - 56px);
+  top:    -moz-calc(50% - 56px);
+  top:         calc(50% - 56px);
 
-.landing-segment-button-school {
-  @extend %landing-segment-button;
-  background-image: url("../images/landing/button-school.png");
-}
-
-.landing-segment-button-independent {
-  @extend %landing-segment-button;
-  background-image: url("../images/landing/button-independent.png");
-}
-
-.landing-segment-button-hr {
-  @extend %landing-segment-button;
-  background-image: url("../images/landing/button-hr.png");
+  .ie8 { top: 20%; }
 }
 
 // List de segmentos.
@@ -71,11 +47,11 @@ $landing-segment-button-offset: 80px;
 
   .borderradius & { @include border-radius($landing-segment-border-radius); }
 
-  .boxshadow & { 
+  .boxshadow & {
     $box-shadow:
        1px  1px 0 $white inset
     , -1px -1px 0 $white inset;
-    @include box-shadow($box-shadow); 
+    @include box-shadow($box-shadow);
   }
 
   > .landing-segment + .landing-segment {
@@ -90,12 +66,12 @@ $landing-segment-button-offset: 80px;
 .landing-segment { overflow: hidden; }
 
 .landing-segment-type,
-.landing-segment-benefits { 
+.landing-segment-benefits {
   @include box-sizing(border-box);
-  width: 50%; 
+  width: 50%;
 }
 
-.landing-segment-type { 
+.landing-segment-type {
   display: table;
   float: left;
   padding: 0 20px 0 30px;

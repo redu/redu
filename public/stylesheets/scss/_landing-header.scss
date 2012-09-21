@@ -54,10 +54,12 @@
 
 // Wrapper do logo.
 .landing-logo-wrapper {
-  @extend %background-light;
+  @include size(300px, 70px);
   float: left;
   position: relative;
   margin-left: -112px;
+
+  &:hover { @include sprite-sprite(light-logo); }
 }
 
 // Logo.

@@ -28,23 +28,14 @@
 
   .borderradius & { @include border-radius(130px); }
 
-  a { 
+  a {
     position: absolute;
     bottom: 0;
     left: 40px;
-    width: 128px; 
+    width: 128px;
     text-align: center;
   }
 }
 
 .landing-api-link +
 .landing-api-illustration { margin-left: 30px; }
-
-// Ilustração.
-.landing-api-illustration {
-  @include square(240px);
-  display: inline-block;
-  background-image: url("../images/landing/keko-playing.png");
-
-  .landing-api:hover & { background-image: url("../images/landing/keko-playing-hover.png"); }
-}

@@ -6,8 +6,8 @@
 .landing-partners-wrapper {
   padding: 20px 20px 40px;
 
-  h4 { 
-    color: $gray3; 
+  h4 {
+    color: $gray3;
 
     .textshadow & { text-shadow: 0 1px 0 $gray5; }
   }
@@ -19,46 +19,7 @@
 
 // Patrocinador.
 .landing-partner {
-  @include square(133px);
   float: left;
 
   & + & { margin-left: 20px; }
-}
-
-// Sprites dos partceiros.
-
-.landing-partner-ade { 
-  background-image: url("../images/landing/partner-ade.png");
-
-  &:hover { background-image: url("../images/landing/partner-ade-hover.png"); }
-}
-
-.landing-partner-ufpe { 
-  background-image: url("../images/landing/partner-ufpe.png");
-
-  &:hover { background-image: url("../images/landing/partner-ufpe-hover.png"); }
-}
-
-.landing-partner-facig { 
-  background-image: url("../images/landing/partner-facig.png");
-
-  &:hover { background-image: url("../images/landing/partner-facig-hover.png"); }
-}
-
-.landing-partner-etr { 
-  background-image: url("../images/landing/partner-etr.png");
-
-  &:hover { background-image: url("../images/landing/partner-etr-hover.png"); }
-}
-
-.landing-partner-univasf { 
-  background-image: url("../images/landing/partner-univasf.png");
-
-  &:hover { background-image: url("../images/landing/partner-univasf-hover.png"); }
-}
-
-.landing-partner-fafire { 
-  background-image: url("../images/landing/partner-fafire.png");
-
-  &:hover { background-image: url("../images/landing/partner-fafire-hover.png"); }
 }

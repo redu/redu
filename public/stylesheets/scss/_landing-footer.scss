@@ -3,8 +3,8 @@
 // ==========================================================================
 
 // Wrapper de tudo.
-.landing-footer { 
-  height: $landing-footer-height; 
+.landing-footer {
+  height: $landing-footer-height;
   background-color: $gray3;
 
   .boxshadow & {
@@ -22,17 +22,19 @@
 // ==========================================================================
 
 // Wrapper para o logo.
-.landing-footer-logo-wrapper { 
-  position: relative; 
+.landing-footer-logo-wrapper {
+  position: relative;
   height: 125px;
 }
 
 // Link do logo.
 .landing-footer-logo-link {
-  @extend %background-light;
+  @include size(300px, 70px);
   position: absolute;
   top: 0;
   left: -115px;
+
+  &:hover { @include sprite-sprite(light-logo); }
 }
 
 // Imagem do logo.
@@ -68,25 +70,25 @@
   height: 28px;
   text-align: center;
 
-  .legend { 
+  .legend {
     display: inline-block;
-    max-width: 55px; 
+    max-width: 55px;
   }
 }
 
-.landing-footer-social-networks-legend + 
+.landing-footer-social-networks-legend +
 .landing-footer-social-networks { margin-top: 5px; }
 
-.landing-footer-social-networks { 
-  text-align: center; 
+.landing-footer-social-networks { text-align: center; }
 
-  a + a { margin-left: 10px; }
+.landing-footer-social-network {
+  vertical-align: top;
 
-  img {
-    .borderradius & { @include border-radius(16px); }
+  & + & { margin-left: 10px; }
 
-    .boxshadow & { @include box-shadow(0 1px 0 $white); }
-  }
+  .borderradius & { @include border-radius(16px); }
+
+  .boxshadow & { @include box-shadow(0 1px 0 $white); }
 }
 
 
@@ -99,19 +101,13 @@
 
   h3 + .legend { margin-top: 10px; }
 
-  &:hover { 
-    background: transparent url("../images/landing/talk-to-us-background-light.png") no-repeat center; 
+  &:hover {
+    @include sprite-sprite(light-talk-to-us);
 
     .legend { color: $gray6; }
 
     a { color: $blue4; }
 
-    .landing-footer-talk-to-us-balloons { background-image: url("../images/landing/talk-to-us-dark-blue.png"); }
+    .landing-footer-talk-to-us-balloons { @include sprite-sprite(talk-to-us_hover); }
   }
-}
-
-.landing-footer-talk-to-us-balloons {
-  @include size(48px, 96px);
-  display: block;
-  background-image: url("../images/landing/talk-to-us-light-blue.png");
 }

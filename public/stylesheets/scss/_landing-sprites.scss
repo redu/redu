@@ -1,0 +1,34 @@
+@import "compass/utilities/sprites/base";
+
+$sprite-layout: smart;
+$sprite-sprite-dimensions: true;
+$sprite-sprite-base-class: ".sprite" !default;
+
+@import "landing/sprite/*.png";
+@include all-sprite-sprites;
+
+.sprite-before:before { @include pseudo-before(5px, false); }
+.sprite-after:after { @include pseudo-after(5px, false); }
+
+.sprite { display: inline-block; }
+
+.sprite-plan-institution-before {
+  &:before { @extend .sprite-plan-institution; }
+}
+
+.sprite-plan-independent-before {
+  &:before { @extend .sprite-plan-independent; }
+}
+
+.sprite-plan-consultancy-hr-before {
+  &:before { @extend .sprite-plan-consultancy-hr; }
+}
+
+.sprite-medal-silver-after {
+  &:after { @extend .sprite-medal-silver; }
+}
+
+.sprite-medal-gold-after {
+  &:after { @extend .sprite-medal-gold; }
+}
+
