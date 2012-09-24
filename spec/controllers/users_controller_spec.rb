@@ -123,6 +123,7 @@ describe UsersController do
                                           :hostable => @user,
                                           :email => 'mail@example.com')
           @post_params.store(:friendship_invitation_token, @invitation.token)
+          @post_params.store(:format, "js")
         end
 
         context "User as succcessfully created" do
@@ -130,6 +131,7 @@ describe UsersController do
             post :create, @post_params
             @created_user = User.find_by_email(@post_params[:user][:email])
           end
+
           it "invite should be accepted (Invitation should be destroyed)" do
             Invitation.all.should be_empty
           end
@@ -138,8 +140,8 @@ describe UsersController do
             @created_user.friendships.should_not be_empty
           end
 
-          it "should be redirected to signup completed" do
-            response.should redirect_to signup_completed_user_path(@created_user)
+          it "response should be success" do
+            response.should be_success
           end
         end
 

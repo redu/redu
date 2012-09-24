@@ -79,7 +79,7 @@ describe SessionsController do
         end
 
         it "should redirect do home-user-path" do
-          response.should redirect_to home_user_path(@user)
+          response.body.should == "window.location = '#{ home_user_path(@user) }'"
         end
 
         it "friendship request should be created" do

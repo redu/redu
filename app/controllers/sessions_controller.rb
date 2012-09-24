@@ -1,5 +1,5 @@
 class SessionsController < BaseController
-  respond_to :html, :js
+  respond_to :html
 
   layout 'clean'
   before_filter :less_than_30_days_of_registration_required, :only => :create
@@ -36,7 +36,7 @@ class SessionsController < BaseController
 
         flash[:notice] = t :thanks_youre_now_logged_in
 
-        redirect_to session[:return_to] || home_user_path(current_user)
+        render :js => "window.location = '#{ session[:return_to] || home_user_path(current_user) }'"
         session[:return_to] = nil
       else
         # Se tem um token de convite para o curso, atribui as variáveis

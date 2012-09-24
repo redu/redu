@@ -1,9 +1,5 @@
 var $form = $("#form-sign-in")
 
-<% if @user_session.errors.empty? %>
-
-<% else %>
-  var $newForm = $("<%= escape_javascript render 'landing/form_sign_in',
-                   :user_session => @user_session %>");
-  $form.replaceWith($newForm);
-<% end %>
+var $newForm = $("<%= escape_javascript render 'landing/form_sign_in',
+                 :user_session => @user_session %>");
+$form.replaceWith($newForm);
