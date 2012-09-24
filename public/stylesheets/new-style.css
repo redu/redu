@@ -2156,6 +2156,15 @@ body {
   margin-left: 40px;
 }
 
+.statuses .re-status .icons-small {
+  width: 16px;
+}
+
+.status-info + a.icon-small, a + a.icon-small {
+  float: right;
+  width: 16px;
+}
+
 .statuses .status-message {
   line-height: 18px;
   overflow: hidden;
