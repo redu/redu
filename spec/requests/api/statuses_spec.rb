@@ -201,6 +201,13 @@ describe "Statuses" do
 
       parse(response.body).all? { |s| s["type"] == "Help" }.should be
     end
+    #####
+    it "should filter by status type (not case sensitive)(help)" do
+      get "/api/users/#{@current_user.id}/statuses", :type => "Help",
+        :oauth_token => @token, :format => 'json'
+
+      parse(response.body).all? { |s| s["type"] == "Help" }.should be
+    end
 
     it "should return correct numbers of statuses (Help)" do
       get "/api/users/#{@current_user.id}/statuses", :type => "help",
@@ -209,7 +216,15 @@ describe "Statuses" do
       helps = @user_statuses.select {|i| i[:type] == "Help" }
       parse(response.body).count.should == helps.length
     end
+    ####
+    it "should return correct numbers of statuses (not case sensitive)(Help)" do
+      get "/api/users/#{@current_user.id}/statuses", :type => "Help",
+        :oauth_token => @token, :format => 'json'
 
+      helps = @user_statuses.select {|i| i[:type] == "Help" }
+      parse(response.body).count.should == helps.length
+    end
+    #####
     it "should return correct numbers of statuses (Log)" do
       get "/api/users/#{@current_user.id}/statuses", :type => "log",
         :oauth_token => @token, :format => 'json'
@@ -217,6 +232,15 @@ describe "Statuses" do
       parse(response.body).count.should == @user_statuses.
         select {|i| i[:type] == "Log" }.length
     end
+    ######
+    it "should return correct numbers of statuses (not case sensitive)(Log)" do
+      get "/api/users/#{@current_user.id}/statuses", :type => "Log",
+        :oauth_token => @token, :format => 'json'
+
+      parse(response.body).count.should == @user_statuses.
+        select {|i| i[:type] == "Log" }.length
+    end
+    ######
 
     it "should filter by status type (log)" do
       get "/api/users/#{@current_user.id}/statuses", :type => "log",
@@ -224,11 +248,27 @@ describe "Statuses" do
       parse(response.body).all? { |s| s["type"] == "Log" }.should be
     end
 
+    #######
+    it "should filter by status type (not case sensitive)(log)" do
+      get "/api/users/#{@current_user.id}/statuses", :type => "Log",
+        :oauth_token => @token, :format => 'json'
+      parse(response.body).all? { |s| s["type"] == "Log" }.should be
+    end
+    #######
+
     it "should filter by status type (activity)" do
       get "/api/users/#{@current_user.id}/statuses", :type => "activity",
         :oauth_token => @token, :format => 'json'
       parse(response.body).all? { |s| s["type"] == "Activity" }.should be
     end
+
+    ########
+    it "should filter by status type (not case sensitive)(activity)" do
+      get "/api/users/#{@current_user.id}/statuses", :type => "Activity",
+        :oauth_token => @token, :format => 'json'
+      parse(response.body).all? { |s| s["type"] == "Activity" }.should be
+    end
+    #######
 
     it "should return correct numbers of statuses (Activity)" do
       get "/api/users/#{@current_user.id}/statuses", :type => 'activity',
@@ -237,6 +277,16 @@ describe "Statuses" do
       parse(response.body).count.should == @user_statuses.
         select {|i| i[:type] == "Activity" }.length
     end
+
+    ######
+    it "should return correct numbers of statuses (not case sensitive)(Activity)" do
+      get "/api/users/#{@current_user.id}/statuses", :type => 'Activity',
+        :oauth_token => @token, :format => 'json'
+
+      parse(response.body).count.should == @user_statuses.
+        select {|i| i[:type] == "Activity" }.length
+    end
+    ######
   end
 
   context "when listing user statuses" do
