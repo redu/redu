@@ -1,28 +1,27 @@
-/* line 6, scss/_landing-shared.scss */
-.landing-logo-wrapper, .landing-footer-logo-link {
-  width: 300px;
-  height: 70px;
-}
-/* line 9, scss/_landing-shared.scss */
-.landing-logo-wrapper:hover, .landing-footer-logo-link:hover {
-  background-image: url("../images/landing/background-light.png");
-}
-
-/* line 13, scss/_landing-shared.scss */
+/* line 7, scss/_landing-shared.scss */
 .landing-navigation-title {
   color: #e6e6e6;
   display: block;
   font: 500 60px/56px museo-sans-rounded, museo-sans, "Helvetica Neue", Arial, sans-serif;
   letter-spacing: -3px;
 }
-/* line 20, scss/_landing-shared.scss */
+/* line 14, scss/_landing-shared.scss */
 .landing-navigation-title:hover {
   text-decoration: none;
   color: #e6e6e6;
 }
-/* line 25, scss/_landing-shared.scss */
+/* line 19, scss/_landing-shared.scss */
 .textshadow .landing-navigation-title {
   text-shadow: 0 1px 0 #b2b2b2;
+}
+
+/* line 23, scss/_landing-shared.scss */
+.landing-facebook-sign-in {
+  text-align: center;
+}
+/* line 27, scss/_landing-shared.scss */
+.landing-facebook-sign-in a {
+  margin: 0;
 }
 
 /* line 6, scss/_landing-layout.scss */
@@ -52,6 +51,365 @@ body {
   margin-left: 10px;
 }
 
+/* line 442, landing/sprite/*.png */
+.sprite, .sprite-advantage-developer, .sprite-advantage-manager, .sprite-advantage-student, .sprite-advantage-teacher, .sprite-background-chat, .sprite-background-management, .sprite-background-treemap, .sprite-background-wall, .sprite-icon-chat, .sprite-icon-close, .sprite-icon-correct, .sprite-icon-developer, .sprite-icon-exercise, .sprite-icon-management, .sprite-icon-plus, .sprite-icon-report, .sprite-keko-playing, .sprite-light-logo, .sprite-light-talk-to-us, .sprite-logo-oer, .sprite-logo-redu-tech, .sprite-medal-gold, .sprite-medal-gold-after:after, .sprite-medal-silver, .sprite-medal-silver-after:after, .sprite-multimedia-document, .sprite-multimedia-exercise, .sprite-multimedia-presentation, .sprite-multimedia-video, .sprite-partner-ade, .sprite-partner-etr, .sprite-partner-facig, .sprite-partner-fafire, .sprite-partner-ufpe, .sprite-partner-univasf, .sprite-plan-consultancy-hr, .sprite-plan-consultancy-hr-before:before, .sprite-plan-independent, .sprite-plan-independent-before:before, .sprite-plan-institution, .sprite-plan-institution-before:before, .sprite-segment-consultancy-hr, .sprite-segment-independent, .sprite-segment-institution, .sprite-sign-up-green_32_34, .sprite-sign-up-green_32_34-before:before, .sprite-social-facebook, .sprite-social-twitter, .sprite-talk-to-us, .landing-logo-wrapper:hover, .landing-footer-logo-link:hover, .landing-footer-contact:hover, .landing-footer-contact:hover .landing-footer-talk-to-us-balloons {
+  background: url('/images/landing/sprite-s3fba85c316.png') no-repeat;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-advantage-developer {
+  background-position: -200px -1462px;
+  height: 200px;
+  width: 200px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-advantage-manager {
+  background-position: -133px -1122px;
+  height: 200px;
+  width: 200px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-advantage-student {
+  background-position: 0 -1662px;
+  height: 200px;
+  width: 200px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-advantage-teacher {
+  background-position: 0 -1462px;
+  height: 200px;
+  width: 200px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-background-chat {
+  background-position: -228px -242px;
+  height: 118px;
+  width: 217px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-background-management {
+  background-position: 0 -1902px;
+  height: 210px;
+  width: 395px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-background-treemap {
+  background-position: 0 -2112px;
+  height: 213px;
+  width: 470px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-background-wall {
+  background-position: 0 -2325px;
+  height: 230px;
+  width: 469px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-icon-chat {
+  background-position: 0 -723px;
+  height: 130px;
+  width: 128px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-icon-close {
+  background-position: 0 -112px;
+  height: 18px;
+  width: 16px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-icon-correct {
+  background-position: -16px -242px;
+  height: 18px;
+  width: 16px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-icon-developer {
+  background-position: -160px -112px;
+  height: 130px;
+  width: 128px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-icon-exercise {
+  background-position: -288px -112px;
+  height: 130px;
+  width: 128px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-icon-management {
+  background-position: -338px -360px;
+  height: 130px;
+  width: 129px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-icon-plus {
+  background-position: -32px -242px;
+  height: 20px;
+  width: 20px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-icon-report {
+  background-position: 0 -590px;
+  height: 130px;
+  width: 128px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-keko-playing {
+  background-position: -200px -1662px;
+  height: 240px;
+  width: 240px;
+}
+/* line 43, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-keko-playing:hover, .sprite-keko-playing.keko-playing_hover, .sprite-keko-playing.keko-playing-hover {
+  background-position: 0 -2555px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-light-logo {
+  background-position: -160px -490px;
+  height: 70px;
+  width: 300px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-light-talk-to-us {
+  background-position: 0 -490px;
+  height: 100px;
+  width: 160px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-logo-oer {
+  background-position: 0 -1322px;
+  height: 140px;
+  width: 279px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-logo-redu-tech {
+  background-position: -178px -360px;
+  height: 90px;
+  width: 160px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-medal-gold, .sprite-medal-gold-after:after {
+  background-position: -16px -112px;
+  height: 18px;
+  width: 16px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-medal-silver, .sprite-medal-silver-after:after {
+  background-position: 0 -242px;
+  height: 18px;
+  width: 16px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-multimedia-document {
+  background-position: -96px 0;
+  height: 65px;
+  width: 65px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-multimedia-exercise {
+  background-position: -48px -360px;
+  height: 65px;
+  width: 65px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-multimedia-presentation {
+  background-position: -161px 0;
+  height: 65px;
+  width: 65px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-multimedia-video {
+  background-position: -113px -360px;
+  height: 65px;
+  width: 65px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-partner-ade {
+  background-position: -133px -856px;
+  height: 133px;
+  width: 133px;
+}
+/* line 43, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-partner-ade:hover, .sprite-partner-ade.partner-ade_hover, .sprite-partner-ade.partner-ade-hover {
+  background-position: -128px -590px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-partner-etr {
+  background-position: -261px -590px;
+  height: 133px;
+  width: 133px;
+}
+/* line 43, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-partner-etr:hover, .sprite-partner-etr.partner-etr_hover, .sprite-partner-etr.partner-etr-hover {
+  background-position: -128px -723px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-partner-facig {
+  background-position: -261px -723px;
+  height: 133px;
+  width: 133px;
+}
+/* line 43, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-partner-facig:hover, .sprite-partner-facig.partner-facig_hover, .sprite-partner-facig.partner-facig-hover {
+  background-position: 0 -989px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-partner-fafire {
+  background-position: 0 -856px;
+  height: 133px;
+  width: 133px;
+}
+/* line 43, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-partner-fafire:hover, .sprite-partner-fafire.partner-fafire_hover, .sprite-partner-fafire.partner-fafire-hover {
+  background-position: 0 -1122px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-partner-ufpe {
+  background-position: -266px -856px;
+  height: 133px;
+  width: 133px;
+}
+/* line 43, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-partner-ufpe:hover, .sprite-partner-ufpe.partner-ufpe_hover, .sprite-partner-ufpe.partner-ufpe-hover {
+  background-position: -133px -989px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-partner-univasf {
+  background-position: -266px -989px;
+  height: 133px;
+  width: 133px;
+}
+/* line 43, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-partner-univasf:hover, .sprite-partner-univasf.partner-univasf_hover, .sprite-partner-univasf.partner-univasf-hover {
+  background-position: -279px -1322px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-plan-consultancy-hr, .sprite-plan-consultancy-hr-before:before {
+  background-position: 0 -360px;
+  height: 50px;
+  width: 48px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-plan-independent, .sprite-plan-independent-before:before {
+  background-position: -64px -112px;
+  height: 50px;
+  width: 48px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-plan-institution, .sprite-plan-institution-before:before {
+  background-position: -112px -112px;
+  height: 50px;
+  width: 48px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-segment-consultancy-hr {
+  background-position: -116px -242px;
+  height: 112px;
+  width: 112px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-segment-independent {
+  background-position: -226px 0;
+  height: 112px;
+  width: 112px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-segment-institution {
+  background-position: -338px 0;
+  height: 112px;
+  width: 112px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-sign-up-green_32_34, .sprite-sign-up-green_32_34-before:before {
+  background-position: -32px -112px;
+  height: 34px;
+  width: 32px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-social-facebook {
+  background-position: -52px -242px;
+  height: 32px;
+  width: 32px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-social-twitter {
+  background-position: -84px -242px;
+  height: 32px;
+  width: 32px;
+}
+
+/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-talk-to-us {
+  background-position: 0 0;
+  height: 96px;
+  width: 48px;
+}
+/* line 43, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-talk-to-us:hover, .sprite-talk-to-us.talk-to-us_hover, .sprite-talk-to-us.talk-to-us-hover {
+  background-position: -48px 0;
+}
+
+/* line 14, scss/_landing-sprites.scss */
+.sprite-before:before {
+  content: "";
+  display: inline-block;
+  vertical-align: bottom;
+  margin-right: 5px;
+}
+
+/* line 15, scss/_landing-sprites.scss */
+.sprite-after:after {
+  content: "";
+  display: inline-block;
+  vertical-align: bottom;
+  margin-left: 5px;
+}
+
+/* line 17, scss/_landing-sprites.scss */
+.sprite, .sprite-advantage-developer, .sprite-advantage-manager, .sprite-advantage-student, .sprite-advantage-teacher, .sprite-background-chat, .sprite-background-management, .sprite-background-treemap, .sprite-background-wall, .sprite-icon-chat, .sprite-icon-close, .sprite-icon-correct, .sprite-icon-developer, .sprite-icon-exercise, .sprite-icon-management, .sprite-icon-plus, .sprite-icon-report, .sprite-keko-playing, .sprite-light-logo, .sprite-light-talk-to-us, .sprite-logo-oer, .sprite-logo-redu-tech, .sprite-medal-gold, .sprite-medal-gold-after:after, .sprite-medal-silver, .sprite-medal-silver-after:after, .sprite-multimedia-document, .sprite-multimedia-exercise, .sprite-multimedia-presentation, .sprite-multimedia-video, .sprite-partner-ade, .sprite-partner-etr, .sprite-partner-facig, .sprite-partner-fafire, .sprite-partner-ufpe, .sprite-partner-univasf, .sprite-plan-consultancy-hr, .sprite-plan-consultancy-hr-before:before, .sprite-plan-independent, .sprite-plan-independent-before:before, .sprite-plan-institution, .sprite-plan-institution-before:before, .sprite-segment-consultancy-hr, .sprite-segment-independent, .sprite-segment-institution, .sprite-sign-up-green_32_34, .sprite-sign-up-green_32_34-before:before, .sprite-social-facebook, .sprite-social-twitter, .sprite-talk-to-us, .landing-logo-wrapper:hover, .landing-footer-logo-link:hover, .landing-footer-contact:hover, .landing-footer-contact:hover .landing-footer-talk-to-us-balloons {
+  display: inline-block;
+}
+
 /* line 6, scss/_landing-header.scss */
 .landing-header {
   height: 85px;
@@ -70,41 +428,166 @@ body {
 
 /* line 21, scss/_landing-header.scss */
 .landing-logo-wrapper {
+  width: 300px;
+  height: 70px;
   float: left;
   position: relative;
   margin-left: -112px;
 }
+/* line 27, scss/_landing-header.scss */
+.landing-logo-wrapper:hover {
+  background-position: -160px -490px;
+  height: 70px;
+  width: 300px;
+}
 
-/* line 29, scss/_landing-header.scss */
+/* line 31, scss/_landing-header.scss */
 .landing-logo {
   position: absolute;
   right: -3px;
   bottom: 0;
 }
 
-/* line 36, scss/_landing-header.scss */
+/* line 38, scss/_landing-header.scss */
 .landing-header-buttons {
   float: right;
   margin-top: 20px;
 }
 
-/* line 42, scss/_landing-header.scss */
+/* line 44, scss/_landing-header.scss */
 .landing-button-sign-up +
 .landing-button-sign-in {
   margin-left: 40px;
 }
 
-/* line 45, scss/_landing-header.scss */
+/* line 47, scss/_landing-header.scss */
 .landing-button-sign-up,
 .landing-button-sign-in {
   display: inline-block;
-  overflow: hidden;
 }
-/* line 49, scss/_landing-header.scss */
+/* line 50, scss/_landing-header.scss */
 .landing-button-sign-up [class*="icon-"],
 .landing-button-sign-in [class*="icon-"] {
   margin: 5px 10px 0 0;
   float: left;
+}
+
+/* line 8, scss/_landing-sign-up.scss */
+.modal-sign-up .modal-body {
+  padding: 0;
+  color: #6d6e6f;
+}
+/* line 13, scss/_landing-sign-up.scss */
+.modal-sign-up .line-gray3, .modal-sign-up .landing-functionalities hr, .landing-functionalities .modal-sign-up hr {
+  margin: 20px 0;
+}
+/* line 16, scss/_landing-sign-up.scss */
+.modal-sign-up .line-gray3 +
+.row, .modal-sign-up .landing-functionalities hr +
+.row, .landing-functionalities .modal-sign-up hr +
+.row {
+  margin-bottom: 25px;
+}
+
+/* line 20, scss/_landing-sign-up.scss */
+.modal-sign-up-title {
+  color: #61a080;
+  line-height: 22px;
+}
+/* line 25, scss/_landing-sign-up.scss */
+.modal-sign-up-title.sprite-before:before {
+  position: relative;
+  top: 5px;
+  float: left;
+}
+
+/* line 32, scss/_landing-sign-up.scss */
+.modal-sign-up-section {
+  padding: 20px 20px 10px;
+}
+/* line 36, scss/_landing-sign-up.scss */
+.modal-sign-up-section p +
+.landing-facebook-sign-in {
+  margin-top: 50px;
+}
+
+/* line 40, scss/_landing-sign-up.scss */
+.list-separator +
+.modal-sign-up-section {
+  padding: 10px 20px 20px;
+}
+
+/* line 43, scss/_landing-sign-up.scss */
+.modal-sign-up-tos {
+  float: left;
+  text-align: left;
+}
+
+/* line 49, scss/_landing-sign-up.scss */
+.modal-sign-up-buttons {
+  float: right;
+}
+/* line 53, scss/_landing-sign-up.scss */
+.modal-sign-up-buttons input[type="submit"].button-big {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+/* line 60, scss/_landing-sign-up.scss */
+.modal-sign-up-login-explaination {
+  margin-top: 20px;
+}
+/* line 63, scss/_landing-sign-up.scss */
+.modal-sign-up-login-explaination .legend {
+  color: #6d6e6f;
+}
+
+/* line 67, scss/_landing-sign-up.scss */
+.modal-sign-up-success .modal-body {
+  padding: 0 20px 20px;
+  color: black;
+}
+/* line 72, scss/_landing-sign-up.scss */
+.modal-sign-up-success .modal-body p +
+p {
+  margin-top: 20px;
+}
+
+/* line 6, scss/_landing-dropdown-sign-in.scss */
+.landing-button-sign-in .button-group {
+  position: relative;
+  display: inline-block;
+}
+/* line 11, scss/_landing-dropdown-sign-in.scss */
+.landing-button-sign-in .landing-facebook-sign-in {
+  padding: 20px 17px;
+  font-size: 11px;
+}
+
+/* line 17, scss/_landing-dropdown-sign-in.scss */
+.landing-sign-in-recover {
+  padding: 10px 10px 8px;
+  text-align: center;
+}
+
+/* line 22, scss/_landing-dropdown-sign-in.scss */
+.landing-sign-in-form {
+  padding: 20px 10px;
+}
+/* line 26, scss/_landing-dropdown-sign-in.scss */
+.landing-sign-in-form .control-group +
+.control-group {
+  margin-top: 2px;
+}
+
+/* line 29, scss/_landing-dropdown-sign-in.scss */
+.landing-sign-in-form-submit {
+  margin-top: 10px;
+  overflow: hidden;
+}
+/* line 33, scss/_landing-dropdown-sign-in.scss */
+.landing-sign-in-form-submit .legend {
+  color: #6d6e6f;
 }
 
 /* line 6, scss/_landing-welcome.scss */
@@ -256,92 +739,74 @@ body {
   line-height: 28px;
 }
 
+/* line 15, scss/_landing-segments.scss */
+.landing-segment-outer-wrapper {
+  padding: 20px 40px 20px 20px;
+}
 /* line 18, scss/_landing-segments.scss */
-.landing-segment-button-school, .landing-segment-button-independent, .landing-segment-button-hr {
-  width: 112px;
-  height: 112px;
-  display: block;
+.landing-segment-outer-wrapper h4 {
+  margin: 0 0 5px 20px;
+}
+
+/* line 22, scss/_landing-segments.scss */
+.landing-segment-wrapper {
+  position: relative;
+  margin-left: 80px;
+}
+/* line 26, scss/_landing-segments.scss */
+.landing-segment-wrapper + .landing-segment-wrapper {
+  margin-top: 20px;
+}
+
+/* line 30, scss/_landing-segments.scss */
+.landing-segment-button {
   position: absolute;
   left: -80px;
   top: -webkit-calc(50% - 56px);
   top: -moz-calc(50% - 56px);
   top: calc(50% - 56px);
 }
-/* line 29, scss/_landing-segments.scss */
-.landing-segment-button-school .ie8, .landing-segment-button-independent .ie8, .landing-segment-button-hr .ie8 {
+/* line 38, scss/_landing-segments.scss */
+.landing-segment-button .ie8 {
   top: 20%;
 }
 
-/* line 34, scss/_landing-segments.scss */
-.landing-segment-outer-wrapper {
-  padding: 20px 40px 20px 20px;
-}
-/* line 37, scss/_landing-segments.scss */
-.landing-segment-outer-wrapper h4 {
-  margin: 0 0 5px 20px;
-}
-
-/* line 41, scss/_landing-segments.scss */
-.landing-segment-wrapper {
-  position: relative;
-  margin-left: 80px;
-}
-/* line 45, scss/_landing-segments.scss */
-.landing-segment-wrapper + .landing-segment-wrapper {
-  margin-top: 20px;
-}
-
-/* line 50, scss/_landing-segments.scss */
-.landing-segment-button-school {
-  background-image: url("../images/landing/button-school.png");
-}
-
-/* line 55, scss/_landing-segments.scss */
-.landing-segment-button-independent {
-  background-image: url("../images/landing/button-independent.png");
-}
-
-/* line 60, scss/_landing-segments.scss */
-.landing-segment-button-hr {
-  background-image: url("../images/landing/button-hr.png");
-}
-
-/* line 66, scss/_landing-segments.scss */
+/* line 42, scss/_landing-segments.scss */
 .landing-segments {
   margin: 0;
   list-style: none;
   border: 1px solid #73c3e6;
   background-color: #f0f0f0;
 }
-/* line 72, scss/_landing-segments.scss */
+/* line 48, scss/_landing-segments.scss */
 .borderradius .landing-segments {
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;
 }
-/* line 74, scss/_landing-segments.scss */
+/* line 50, scss/_landing-segments.scss */
 .boxshadow .landing-segments {
   -webkit-box-shadow: 1px 1px 0 white inset, -1px -1px 0 white inset;
   -moz-box-shadow: 1px 1px 0 white inset, -1px -1px 0 white inset;
   box-shadow: 1px 1px 0 white inset, -1px -1px 0 white inset;
 }
-/* line 81, scss/_landing-segments.scss */
+/* line 57, scss/_landing-segments.scss */
 .landing-segments > .landing-segment + .landing-segment {
   border-top: 1px solid #73c3e6;
 }
-/* line 84, scss/_landing-segments.scss */
+/* line 60, scss/_landing-segments.scss */
 .boxshadow .landing-segments > .landing-segment + .landing-segment {
   -webkit-box-shadow: 0 1px 0 white inset;
   -moz-box-shadow: 0 1px 0 white inset;
   box-shadow: 0 1px 0 white inset;
 }
 
-/* line 90, scss/_landing-segments.scss */
+/* line 66, scss/_landing-segments.scss */
 .landing-segment {
   overflow: hidden;
 }
 
-/* line 93, scss/_landing-segments.scss */
+/* line 69, scss/_landing-segments.scss */
 .landing-segment-type,
 .landing-segment-benefits {
   -webkit-box-sizing: border-box;
@@ -350,37 +815,37 @@ body {
   width: 50%;
 }
 
-/* line 98, scss/_landing-segments.scss */
+/* line 74, scss/_landing-segments.scss */
 .landing-segment-type {
   display: table;
   float: left;
   padding: 0 20px 0 30px;
   height: 112px;
 }
-/* line 105, scss/_landing-segments.scss */
+/* line 81, scss/_landing-segments.scss */
 .landing-segment-hr .landing-segment-type {
   height: 165px;
 }
-/* line 109, scss/_landing-segments.scss */
+/* line 85, scss/_landing-segments.scss */
 .borderradius .landing-segment:first-child .landing-segment-type {
   -webkit-border-radius: 10px 0 0 0;
   -moz-border-radius: 10px 0 0 0;
   border-radius: 10px 0 0 0;
 }
-/* line 111, scss/_landing-segments.scss */
+/* line 87, scss/_landing-segments.scss */
 .borderradius .landing-segment:last-child .landing-segment-type {
   -webkit-border-radius: 0 0 0 10px;
   -moz-border-radius: 0 0 0 10px;
   border-radius: 0 0 0 10px;
 }
-/* line 113, scss/_landing-segments.scss */
+/* line 89, scss/_landing-segments.scss */
 .borderradius .landing-segment:first-child:last-child .landing-segment-type {
   -webkit-border-radius: 10px 0 0 10px;
   -moz-border-radius: 10px 0 0 10px;
   border-radius: 10px 0 0 10px;
 }
 
-/* line 117, scss/_landing-segments.scss */
+/* line 93, scss/_landing-segments.scss */
 .landing-segment-title {
   display: table-cell;
   vertical-align: middle;
@@ -388,48 +853,48 @@ body {
   letter-spacing: -2px;
 }
 
-/* line 124, scss/_landing-segments.scss */
+/* line 100, scss/_landing-segments.scss */
 .landing-segment-benefits {
   overflow: hidden;
   background-color: #f7f7f7;
   padding: 20px;
   border-left: 1px solid white;
 }
-/* line 131, scss/_landing-segments.scss */
+/* line 107, scss/_landing-segments.scss */
 .borderradius .landing-segment:first-child .landing-segment-benefits {
   -webkit-border-radius: 0 10px 0 0;
   -moz-border-radius: 0 10px 0 0;
   border-radius: 0 10px 0 0;
 }
-/* line 135, scss/_landing-segments.scss */
+/* line 111, scss/_landing-segments.scss */
 .borderradius .landing-segment:last-child .landing-segment-benefits {
   -webkit-border-radius: 0 0 10px 0;
   -moz-border-radius: 0 0 10px 0;
   border-radius: 0 0 10px 0;
 }
-/* line 139, scss/_landing-segments.scss */
+/* line 115, scss/_landing-segments.scss */
 .borderradius .landing-segment:first-child:last-child .landing-segment-benefits {
   -webkit-border-radius: 0 10px 10px 0;
   -moz-border-radius: 0 10px 10px 0;
   border-radius: 0 10px 10px 0;
 }
-/* line 142, scss/_landing-segments.scss */
+/* line 118, scss/_landing-segments.scss */
 .boxshadow .landing-segment-benefits {
   -webkit-box-shadow: 1px 0 0 #e6e6e6 inset;
   -moz-box-shadow: 1px 0 0 #e6e6e6 inset;
   box-shadow: 1px 0 0 #e6e6e6 inset;
 }
-/* line 144, scss/_landing-segments.scss */
+/* line 120, scss/_landing-segments.scss */
 .landing-segment-benefits > ul {
   list-style: disc inside none;
 }
 
-/* line 147, scss/_landing-segments.scss */
+/* line 123, scss/_landing-segments.scss */
 .landing-segment-sublist {
   list-style: none;
   margin: 0 0 5px 50px;
 }
-/* line 151, scss/_landing-segments.scss */
+/* line 127, scss/_landing-segments.scss */
 .landing-segment-sublist li {
   margin-top: 5px;
 }
@@ -458,19 +923,27 @@ body {
 
 /* line 31, scss/_landing-footer.scss */
 .landing-footer-logo-link {
+  width: 300px;
+  height: 70px;
   position: absolute;
   top: 0;
   left: -115px;
 }
+/* line 37, scss/_landing-footer.scss */
+.landing-footer-logo-link:hover {
+  background-position: -160px -490px;
+  height: 70px;
+  width: 300px;
+}
 
-/* line 39, scss/_landing-footer.scss */
+/* line 41, scss/_landing-footer.scss */
 .landing-footer-logo-img {
   position: absolute;
   left: 115px;
   top: 20px;
 }
 
-/* line 46, scss/_landing-footer.scss */
+/* line 48, scss/_landing-footer.scss */
 .landing-footer-cnpj {
   font-size: 9px;
   color: #b2b2b2;
@@ -478,83 +951,84 @@ body {
   bottom: 0;
 }
 
-/* line 57, scss/_landing-footer.scss */
+/* line 59, scss/_landing-footer.scss */
 .landing-footer-navigation {
   margin: 25px 0 0;
   list-style: none;
 }
 
-/* line 66, scss/_landing-footer.scss */
+/* line 68, scss/_landing-footer.scss */
 .landing-footer-social-networks-legend {
   margin-top: 40px;
   height: 28px;
   text-align: center;
 }
-/* line 71, scss/_landing-footer.scss */
+/* line 73, scss/_landing-footer.scss */
 .landing-footer-social-networks-legend .legend {
   display: inline-block;
   max-width: 55px;
 }
 
-/* line 78, scss/_landing-footer.scss */
+/* line 80, scss/_landing-footer.scss */
 .landing-footer-social-networks-legend +
 .landing-footer-social-networks {
   margin-top: 5px;
 }
 
-/* line 80, scss/_landing-footer.scss */
+/* line 82, scss/_landing-footer.scss */
 .landing-footer-social-networks {
   text-align: center;
 }
-/* line 83, scss/_landing-footer.scss */
-.landing-footer-social-networks a + a {
+
+/* line 84, scss/_landing-footer.scss */
+.landing-footer-social-network {
+  vertical-align: top;
+}
+/* line 87, scss/_landing-footer.scss */
+.landing-footer-social-network + .landing-footer-social-network {
   margin-left: 10px;
 }
-/* line 86, scss/_landing-footer.scss */
-.borderradius .landing-footer-social-networks img {
+/* line 89, scss/_landing-footer.scss */
+.borderradius .landing-footer-social-network {
   -webkit-border-radius: 16px;
   -moz-border-radius: 16px;
   border-radius: 16px;
 }
-/* line 88, scss/_landing-footer.scss */
-.boxshadow .landing-footer-social-networks img {
+/* line 91, scss/_landing-footer.scss */
+.boxshadow .landing-footer-social-network {
   -webkit-box-shadow: 0 1px 0 white;
   -moz-box-shadow: 0 1px 0 white;
   box-shadow: 0 1px 0 white;
 }
 
-/* line 96, scss/_landing-footer.scss */
+/* line 98, scss/_landing-footer.scss */
 .landing-footer-contact {
   margin-top: 25px;
   text-align: right;
 }
-/* line 100, scss/_landing-footer.scss */
+/* line 102, scss/_landing-footer.scss */
 .landing-footer-contact h3 + .legend {
   margin-top: 10px;
 }
-/* line 102, scss/_landing-footer.scss */
+/* line 104, scss/_landing-footer.scss */
 .landing-footer-contact:hover {
-  background: transparent url("../images/landing/talk-to-us-background-light.png") no-repeat center;
+  background-position: 0 -490px;
+  height: 100px;
+  width: 160px;
 }
-/* line 105, scss/_landing-footer.scss */
+/* line 107, scss/_landing-footer.scss */
 .landing-footer-contact:hover .legend {
   color: #6d6e6f;
 }
-/* line 107, scss/_landing-footer.scss */
+/* line 109, scss/_landing-footer.scss */
 .landing-footer-contact:hover a {
   color: #158ac4;
 }
-/* line 109, scss/_landing-footer.scss */
+/* line 111, scss/_landing-footer.scss */
 .landing-footer-contact:hover .landing-footer-talk-to-us-balloons {
-  background-image: url("../images/landing/talk-to-us-dark-blue.png");
-}
-
-/* line 113, scss/_landing-footer.scss */
-.landing-footer-talk-to-us-balloons {
-  width: 48px;
+  background-position: -48px 0;
   height: 96px;
-  display: block;
-  background-image: url("../images/landing/talk-to-us-light-blue.png");
+  width: 48px;
 }
 
 /* line 4, scss/_landing-advantages.scss */
@@ -730,7 +1204,30 @@ body {
   text-align: center;
 }
 
-/* line 2, scss/_modals-windows.scss */
+/* line 62, scss/_landing-plans.scss */
+.landing-plan-icon {
+  display: block;
+  margin: 0 auto;
+}
+
+/* line 67, scss/_landing-plans.scss */
+.landing-plan-medal {
+  vertical-align: top;
+}
+
+/* line 1, scss/_modals-windows.scss */
+.errors_on_field li {
+  color: #ff6d6d;
+  font-size: 11px;
+  list-style: none;
+}
+
+/* line 7, scss/_modals-windows.scss */
+.tos .control-error label {
+  color: #6d6e6f;
+}
+
+/* line 13, scss/_modals-windows.scss */
 .form-login {
   float: right;
   width: 240px;
@@ -738,41 +1235,41 @@ body {
   overflow: hidden;
   display: block;
 }
-/* line 9, scss/_modals-windows.scss */
+/* line 20, scss/_modals-windows.scss */
 .form-login hr {
   margin: 0;
 }
-/* line 12, scss/_modals-windows.scss */
+/* line 23, scss/_modals-windows.scss */
 .form-login .control-checkbox label {
   margin-left: -5px;
 }
-/* line 17, scss/_modals-windows.scss */
+/* line 28, scss/_modals-windows.scss */
 .form-login .user-dates {
   overflow: hidden;
   padding: 20px 10px 10px 10px;
 }
-/* line 22, scss/_modals-windows.scss */
+/* line 33, scss/_modals-windows.scss */
 .form-login .control-group + .control-group {
   margin-top: 0;
 }
-/* line 24, scss/_modals-windows.scss */
+/* line 35, scss/_modals-windows.scss */
 .form-login .button-primary {
   margin-top: 10px;
   float: right;
 }
-/* line 29, scss/_modals-windows.scss */
+/* line 40, scss/_modals-windows.scss */
 .form-login .fb-login {
   margin: 20px 0;
   text-align: center;
 }
-/* line 34, scss/_modals-windows.scss */
+/* line 45, scss/_modals-windows.scss */
 .form-login .recover-login {
   text-align: center;
   font-size: 11px;
   padding: 10px;
 }
 
-/* line 43, scss/_modals-windows.scss */
+/* line 54, scss/_modals-windows.scss */
 .modal-window {
   background: #f7f7f7;
   overflow: hidden;
@@ -780,78 +1277,78 @@ body {
   margin: 20px auto;
   background: #f7f7f7;
 }
-/* line 49, scss/_modals-windows.scss */
+/* line 60, scss/_modals-windows.scss */
 .borderradius .modal-window {
   -webkit-border-radius: 7px;
   -moz-border-radius: 7px;
   border-radius: 7px;
 }
-/* line 51, scss/_modals-windows.scss */
+/* line 62, scss/_modals-windows.scss */
 .modal-window .button-primary, .modal-window button, .modal-window .button-default, .modal-window .button-success {
   float: right;
   margin: 20px;
 }
-/* line 56, scss/_modals-windows.scss */
+/* line 67, scss/_modals-windows.scss */
 .modal-window hr {
   margin: 1px 0 0 0;
 }
-/* line 60, scss/_modals-windows.scss */
+/* line 71, scss/_modals-windows.scss */
 .modal-window .modal-name {
   margin: 10px 20px;
   display: block;
   overflow: hidden;
 }
-/* line 65, scss/_modals-windows.scss */
+/* line 76, scss/_modals-windows.scss */
 .modal-window .modal-name img {
   float: left;
 }
-/* line 69, scss/_modals-windows.scss */
+/* line 80, scss/_modals-windows.scss */
 .modal-window .modal-name h3 {
   margin: 0 10px;
   display: inline-block;
 }
-/* line 74, scss/_modals-windows.scss */
+/* line 85, scss/_modals-windows.scss */
 .modal-window .modal-name .call-cadaster {
   color: #61a080;
   width: 230px;
   margin-top: 0;
 }
-/* line 80, scss/_modals-windows.scss */
+/* line 91, scss/_modals-windows.scss */
 .modal-window .modal-name .call-cadaster + .call-cadaster {
   display: block;
   margin-left: 57px;
 }
-/* line 86, scss/_modals-windows.scss */
+/* line 97, scss/_modals-windows.scss */
 .modal-window .plan-information, .modal-window .modal-cadaster {
   padding: 20px;
   background: white;
   overflow: hidden;
   display: block;
 }
-/* line 94, scss/_modals-windows.scss */
+/* line 105, scss/_modals-windows.scss */
 .modal-window .modal-cadaster p {
   color: #6d6e6f;
   margin-bottom: 40px;
 }
-/* line 99, scss/_modals-windows.scss */
+/* line 110, scss/_modals-windows.scss */
 .modal-window .modal-cadaster .legend {
   display: block;
   font-style: italic;
   text-align: center;
 }
-/* line 105, scss/_modals-windows.scss */
+/* line 116, scss/_modals-windows.scss */
 .modal-window .modal-cadaster .form-right {
   float: right;
 }
-/* line 109, scss/_modals-windows.scss */
+/* line 120, scss/_modals-windows.scss */
 .modal-window .modal-cadaster .form-left, .modal-window .modal-cadaster .form-right {
   width: 400px;
 }
-/* line 113, scss/_modals-windows.scss */
+/* line 124, scss/_modals-windows.scss */
 .modal-window .modal-cadaster .form-left {
   float: left;
 }
-/* line 116, scss/_modals-windows.scss */
+/* line 127, scss/_modals-windows.scss */
 .modal-window .modal-cadaster .form-left .legend {
   margin-bottom: 20px;
   width: 218px;
@@ -859,67 +1356,67 @@ body {
   margin-left: 100px;
   margin-top: 20px;
 }
-/* line 125, scss/_modals-windows.scss */
+/* line 136, scss/_modals-windows.scss */
 .modal-window .modal-cadaster .form-horizontal {
   overflow: hidden;
 }
-/* line 127, scss/_modals-windows.scss */
+/* line 138, scss/_modals-windows.scss */
 .modal-window .modal-cadaster .form-horizontal p {
   margin-bottom: 20px;
 }
-/* line 132, scss/_modals-windows.scss */
+/* line 143, scss/_modals-windows.scss */
 .modal-window .modal-cadaster .control-group {
   overflow: hidden;
 }
-/* line 135, scss/_modals-windows.scss */
+/* line 146, scss/_modals-windows.scss */
 .modal-window .modal-cadaster .control-group input {
   margin-top: 4px;
   margin-right: 4px;
   margin-bottom: 4px;
 }
-/* line 141, scss/_modals-windows.scss */
+/* line 152, scss/_modals-windows.scss */
 .modal-window .modal-cadaster .control-group label.control-checkbox {
   float: left;
 }
-/* line 145, scss/_modals-windows.scss */
+/* line 156, scss/_modals-windows.scss */
 .modal-window .modal-cadaster .control-group .legend {
   width: 218px;
 }
-/* line 150, scss/_modals-windows.scss */
+/* line 160, scss/_modals-windows.scss */
 .modal-window .submit-cadaster {
   padding: 20px;
   overflow: hidden;
 }
-/* line 154, scss/_modals-windows.scss */
+/* line 164, scss/_modals-windows.scss */
 .modal-window .submit-cadaster .button-big {
   margin: 0 10px 0 0;
 }
-/* line 156, scss/_modals-windows.scss */
+/* line 166, scss/_modals-windows.scss */
 .modal-window .submit-cadaster .control-checkbox {
   float: left;
 }
-/* line 161, scss/_modals-windows.scss */
+/* line 171, scss/_modals-windows.scss */
 .modal-window .plan-information .icon-medal img {
   vertical-align: middle;
   margin: -2px 0 0 2px;
 }
-/* line 167, scss/_modals-windows.scss */
+/* line 177, scss/_modals-windows.scss */
 .modal-window .plan-information table .free {
   color: #5fc080;
 }
-/* line 170, scss/_modals-windows.scss */
+/* line 180, scss/_modals-windows.scss */
 .modal-window .call {
   background: white;
   padding: 20px;
 }
-/* line 175, scss/_modals-windows.scss */
+/* line 185, scss/_modals-windows.scss */
 .modal-window .container {
   color: black;
   width: auto;
   background: white;
   padding: 20px 60px;
 }
-/* line 181, scss/_modals-windows.scss */
+/* line 191, scss/_modals-windows.scss */
 .modal-window .container .section {
   font-size: 16px;
   display: inline-block;
@@ -927,73 +1424,60 @@ body {
   font-family: museo-sans, "Helvetica Neue", Arial, sans-serif;
   margin-top: 20px;
 }
-/* line 189, scss/_modals-windows.scss */
+/* line 199, scss/_modals-windows.scss */
 .modal-window .container p {
   margin-top: 20px;
 }
-/* line 192, scss/_modals-windows.scss */
+/* line 202, scss/_modals-windows.scss */
 .modal-window .container .standout {
   font-weight: bold;
 }
-/* line 195, scss/_modals-windows.scss */
+/* line 205, scss/_modals-windows.scss */
 .modal-window .cadaster-success {
   background: white;
   border: 1px solid #6d6e6f;
 }
-/* line 198, scss/_modals-windows.scss */
+/* line 208, scss/_modals-windows.scss */
 .borderradius .modal-window .cadaster-success {
   -webkit-border-radius: 7px;
   -moz-border-radius: 7px;
   border-radius: 7px;
 }
-/* line 201, scss/_modals-windows.scss */
+/* line 211, scss/_modals-windows.scss */
 .modal-window .cadaster-success .modal-name .call-cadaster {
   width: 100%;
   margin-left: 0;
 }
-/* line 207, scss/_modals-windows.scss */
+/* line 217, scss/_modals-windows.scss */
 .modal-window .cadaster-success .call {
   padding: 0 20px 20px 20px;
 }
-/* line 209, scss/_modals-windows.scss */
+/* line 219, scss/_modals-windows.scss */
 .modal-window .cadaster-success .modal-window {
   margin: 0;
 }
-/* line 211, scss/_modals-windows.scss */
+/* line 221, scss/_modals-windows.scss */
 .borderradius .modal-window .cadaster-success .modal-window {
   -webkit-border-radius: none;
   -moz-border-radius: none;
   border-radius: none;
 }
 
-/* line 217, scss/_modals-windows.scss */
+/* line 227, scss/_modals-windows.scss */
 .modal-landing p + p {
   margin-top: 20px;
 }
-/* line 219, scss/_modals-windows.scss */
-.modal-landing .modal-header [class*="icon"]:before {
+/* line 229, scss/_modals-windows.scss */
+.modal-landing .modal-header .sprite-before:before {
   vertical-align: middle;
 }
-/* line 221, scss/_modals-windows.scss */
+/* line 231, scss/_modals-windows.scss */
 .modal-landing .modal-body {
   padding: 20px 40px 20px 60px;
 }
 
-/* line 6, scss/_landing-functionalities.scss */
-.landing-functionalities .landing-navigation-title {
-  margin: 20px;
-}
-/* line 8, scss/_landing-functionalities.scss */
-.landing-functionalities p {
-  color: #b2b2b2;
-}
-/* line 11, scss/_landing-functionalities.scss */
-.landing-functionalities h2 + h4,
-.landing-functionalities h4 + p {
-  margin-top: 20px;
-}
-/* line 13, scss/_landing-functionalities.scss */
-.landing-functionalities hr {
+/* line 5, scss/_landing-functionalities.scss */
+.line-gray3, .landing-functionalities hr {
   background-color: #e6e6e6;
   height: 3px;
   margin: 0;
@@ -1001,7 +1485,21 @@ body {
   border-right-width: 0;
 }
 
-/* line 22, scss/_landing-functionalities.scss */
+/* line 14, scss/_landing-functionalities.scss */
+.landing-functionalities .landing-navigation-title {
+  margin: 20px;
+}
+/* line 16, scss/_landing-functionalities.scss */
+.landing-functionalities p {
+  color: #b2b2b2;
+}
+/* line 19, scss/_landing-functionalities.scss */
+.landing-functionalities h2 + h4,
+.landing-functionalities h4 + p {
+  margin-top: 20px;
+}
+
+/* line 24, scss/_landing-functionalities.scss */
 .landing-functionality:hover p {
   color: #6d6e6f;
 }
@@ -1017,41 +1515,30 @@ body {
   position: relative;
 }
 
-/* line 13, scss/_landing-social-network-&-chat.scss */
-.icon-social-network-gray_128_130,
-.landing-chat-balloon {
+/* line 12, scss/_landing-social-network-&-chat.scss */
+.landing-social-network-sprite {
   position: absolute;
-  display: block;
-}
-
-/* line 18, scss/_landing-social-network-&-chat.scss */
-.icon-social-network-gray_128_130 {
-  width: 128px;
-  height: 130px;
-  background-image: url("../images/landing/icon-social-network-gray_128_130.png");
   left: -155px;
   top: 15px;
 }
 
-/* line 25, scss/_landing-social-network-&-chat.scss */
-.landing-chat-balloon {
-  width: 217px;
-  height: 118px;
-  background-image: url("../images/landing/chat-background.png");
+/* line 18, scss/_landing-social-network-&-chat.scss */
+.landing-chat-sprite {
+  position: absolute;
   left: 150px;
   top: -65px;
 }
 
-/* line 33, scss/_landing-social-network-&-chat.scss */
+/* line 25, scss/_landing-social-network-&-chat.scss */
 .landing-social-network-wrapper {
   text-align: right;
 }
 
-/* line 36, scss/_landing-social-network-&-chat.scss */
+/* line 28, scss/_landing-social-network-&-chat.scss */
 .landing-chat-wrapper {
   text-align: left;
 }
-/* line 39, scss/_landing-social-network-&-chat.scss */
+/* line 31, scss/_landing-social-network-&-chat.scss */
 .landing-chat-wrapper h4 {
   width: 280px;
 }
@@ -1077,38 +1564,40 @@ body {
 }
 
 /* line 9, scss/_landing-multimedia-classes.scss */
-.landing-multimedia-video, .landing-multimedia-document, .landing-multimedia-presentation, .landing-multimedia-exercise {
-  width: 65px;
-  height: 65px;
+.landing-multimedia-type, .landing-multimedia-exercise {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   display: block;
   padding: 5px;
 }
+/* line 14, scss/_landing-multimedia-classes.scss */
+.landing-multimedia-type + .landing-multimedia-type, .landing-multimedia-exercise + .landing-multimedia-type, .landing-multimedia-type + .landing-multimedia-exercise, .landing-multimedia-exercise + .landing-multimedia-exercise {
+  margin-top: 10px;
+}
 
-/* line 18, scss/_landing-multimedia-classes.scss */
+/* line 19, scss/_landing-multimedia-classes.scss */
 .landing-multimedia-outer-wrapper {
   padding: 20px;
 }
 
-/* line 21, scss/_landing-multimedia-classes.scss */
+/* line 22, scss/_landing-multimedia-classes.scss */
 .landing-multimedia-inner-wrapper {
   background: white url("../images/landing/icon-exercise-gray_128_130.png") no-repeat right center;
 }
 
-/* line 24, scss/_landing-multimedia-classes.scss */
+/* line 25, scss/_landing-multimedia-classes.scss */
 .landing-multimedia-description {
   width: 340px;
 }
 
-/* line 27, scss/_landing-multimedia-classes.scss */
+/* line 28, scss/_landing-multimedia-classes.scss */
 .landing-multimedia-description +
 .landing-multimedia-types {
   margin-left: 35px;
 }
 
-/* line 32, scss/_landing-multimedia-classes.scss */
+/* line 33, scss/_landing-multimedia-classes.scss */
 .landing-multimedia-description,
 .landing-multimedia-types,
 .landing-multimedia-types-left,
@@ -1116,43 +1605,19 @@ body {
   display: inline-block;
 }
 
-/* line 36, scss/_landing-multimedia-classes.scss */
+/* line 37, scss/_landing-multimedia-classes.scss */
 .landing-multimedia-types {
   width: 350px;
 }
 
-/* line 39, scss/_landing-multimedia-classes.scss */
-.landing-multimedia-video {
-  background-image: url("../images/landing/multimedia-video.png");
-}
-
-/* line 45, scss/_landing-multimedia-classes.scss */
-.landing-multimedia-document {
-  background-image: url("../images/landing/multimedia-document.png");
-}
-
-/* line 51, scss/_landing-multimedia-classes.scss */
-.landing-multimedia-presentation {
-  background-image: url("../images/landing/multimedia-presentation.png");
-}
-
-/* line 59, scss/_landing-multimedia-classes.scss */
-.landing-multimedia-video +
-.landing-multimedia-document,
-.landing-multimedia-document +
-.landing-multimedia-presentation {
-  margin-top: 10px;
-}
-
-/* line 62, scss/_landing-multimedia-classes.scss */
+/* line 40, scss/_landing-multimedia-classes.scss */
 .landing-multimedia-exercise {
-  background-image: url("../images/landing/multimedia-exercise.png");
   position: absolute;
   top: -10px;
   left: -10px;
 }
 
-/* line 70, scss/_landing-multimedia-classes.scss */
+/* line 47, scss/_landing-multimedia-classes.scss */
 .landing-multimedia-type-circle {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -1167,28 +1632,28 @@ body {
   display: none;
   border: 1px solid white;
 }
-/* line 77, scss/_landing-multimedia-classes.scss */
+/* line 54, scss/_landing-multimedia-classes.scss */
 .borderradius .landing-multimedia-type-circle {
   -webkit-border-radius: 40px;
   -moz-border-radius: 40px;
   border-radius: 40px;
 }
-/* line 79, scss/_landing-multimedia-classes.scss */
+/* line 56, scss/_landing-multimedia-classes.scss */
 .landing-multimedia-outer-wrapper:hover .landing-multimedia-type-circle {
   display: block;
 }
-/* line 81, scss/_landing-multimedia-classes.scss */
+/* line 58, scss/_landing-multimedia-classes.scss */
 .landing-multimedia-type-circle:hover {
   border-width: 5px;
 }
 
-/* line 85, scss/_landing-multimedia-classes.scss */
+/* line 62, scss/_landing-multimedia-classes.scss */
 .landing-multimedia-types-left +
 .landing-multimedia-types-right {
   margin-left: 20px;
 }
 
-/* line 87, scss/_landing-multimedia-classes.scss */
+/* line 64, scss/_landing-multimedia-classes.scss */
 .landing-multimedia-types-right {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -1198,39 +1663,39 @@ body {
   vertical-align: top;
 }
 
-/* line 95, scss/_landing-multimedia-classes.scss */
+/* line 72, scss/_landing-multimedia-classes.scss */
 .landing-multimedia-exercise-box {
   padding: 10px;
   background-color: #e1f1e1;
   border: 1px solid #abe385;
   position: relative;
 }
-/* line 101, scss/_landing-multimedia-classes.scss */
+/* line 78, scss/_landing-multimedia-classes.scss */
 .borderradius .landing-multimedia-exercise-box {
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;
 }
-/* line 103, scss/_landing-multimedia-classes.scss */
+/* line 80, scss/_landing-multimedia-classes.scss */
 .boxshadow .landing-multimedia-exercise-box {
   -webkit-box-shadow: 1px 1px 1px white inset;
   -moz-box-shadow: 1px 1px 1px white inset;
   box-shadow: 1px 1px 1px white inset;
 }
-/* line 105, scss/_landing-multimedia-classes.scss */
+/* line 82, scss/_landing-multimedia-classes.scss */
 .landing-multimedia-exercise-box h4 {
   margin-left: 55px;
   color: black;
 }
-/* line 110, scss/_landing-multimedia-classes.scss */
+/* line 87, scss/_landing-multimedia-classes.scss */
 .landing-multimedia-exercise-box p {
   color: #6d6e6f;
 }
-/* line 112, scss/_landing-multimedia-classes.scss */
+/* line 89, scss/_landing-multimedia-classes.scss */
 .landing-multimedia-exercise-box p + p {
   margin-top: 10px;
 }
-/* line 114, scss/_landing-multimedia-classes.scss */
+/* line 91, scss/_landing-multimedia-classes.scss */
 .landing-multimedia-exercise-box h4 + p {
   margin-top: 13px;
 }
@@ -1351,18 +1816,6 @@ body {
   margin-left: 30px;
 }
 
-/* line 44, scss/_landing-api.scss */
-.landing-api-illustration {
-  width: 240px;
-  height: 240px;
-  display: inline-block;
-  background-image: url("../images/landing/keko-playing.png");
-}
-/* line 49, scss/_landing-api.scss */
-.landing-api:hover .landing-api-illustration {
-  background-image: url("../images/landing/keko-playing-hover.png");
-}
-
 /* line 6, scss/_landing-others.scss */
 .landing-others {
   padding: 50px 20px 20px;
@@ -1415,67 +1868,11 @@ body {
 
 /* line 21, scss/_landing-partners.scss */
 .landing-partner {
-  width: 133px;
-  height: 133px;
   float: left;
 }
-/* line 25, scss/_landing-partners.scss */
+/* line 24, scss/_landing-partners.scss */
 .landing-partner + .landing-partner {
   margin-left: 20px;
-}
-
-/* line 30, scss/_landing-partners.scss */
-.landing-partner-ade {
-  background-image: url("../images/landing/partner-ade.png");
-}
-/* line 33, scss/_landing-partners.scss */
-.landing-partner-ade:hover {
-  background-image: url("../images/landing/partner-ade-hover.png");
-}
-
-/* line 36, scss/_landing-partners.scss */
-.landing-partner-ufpe {
-  background-image: url("../images/landing/partner-ufpe.png");
-}
-/* line 39, scss/_landing-partners.scss */
-.landing-partner-ufpe:hover {
-  background-image: url("../images/landing/partner-ufpe-hover.png");
-}
-
-/* line 42, scss/_landing-partners.scss */
-.landing-partner-facig {
-  background-image: url("../images/landing/partner-facig.png");
-}
-/* line 45, scss/_landing-partners.scss */
-.landing-partner-facig:hover {
-  background-image: url("../images/landing/partner-facig-hover.png");
-}
-
-/* line 48, scss/_landing-partners.scss */
-.landing-partner-etr {
-  background-image: url("../images/landing/partner-etr.png");
-}
-/* line 51, scss/_landing-partners.scss */
-.landing-partner-etr:hover {
-  background-image: url("../images/landing/partner-etr-hover.png");
-}
-
-/* line 54, scss/_landing-partners.scss */
-.landing-partner-univasf {
-  background-image: url("../images/landing/partner-univasf.png");
-}
-/* line 57, scss/_landing-partners.scss */
-.landing-partner-univasf:hover {
-  background-image: url("../images/landing/partner-univasf-hover.png");
-}
-
-/* line 60, scss/_landing-partners.scss */
-.landing-partner-fafire {
-  background-image: url("../images/landing/partner-fafire.png");
-}
-/* line 63, scss/_landing-partners.scss */
-.landing-partner-fafire:hover {
-  background-image: url("../images/landing/partner-fafire-hover.png");
 }
 
 /* line 5, scss/_landing-basic-reports.scss */
