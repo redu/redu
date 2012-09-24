@@ -129,8 +129,7 @@ class User < ActiveRecord::Base
 
     # Valida password
     c.validates_length_of_password_field_options = { :within => 6..20,
-                                                     :if => :password_required?,
-                                                     :allow_blank => true }
+                                                     :if => :password_required? }
     c.validates_length_of_password_confirmation_field_options = {
                                                      :within => 6..20,
                                                      :if => :password_required?,
