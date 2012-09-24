@@ -1,17 +1,8 @@
 <div class="nav-global">
-  <%= render :partial => 'shared/loading_message' %>
     <div class="nav-global-inner">
       <div class="container">
-        <%= render :partial => 'landing/loading_message' %>
         <div class="nav-global-container">
-           <%= link_to home_path,
-              :class => "landing-logo-wrapper" do %>
-            <%= image_tag "landing/logo.png",
-                :class => "landing-logo",
-                :alt => "Redu",
-                :title => "Redu"
-            %>
-          <% end %>
+          <%= link_to "Redu", home_path, :title => "Redu", :class => "nav-global-brand logo-redu-gray_140_40" %>
           <div class="nav-global-buttons">
             <% if current_user %>
             <%= link_to 'Início', home_user_path(current_user), :class => "nav-global-button", :title => "Início" %>
