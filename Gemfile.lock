@@ -395,7 +395,7 @@ DEPENDENCIES
   aws-s3
   aws-sdk
   backup!
-  bundler (~> 1.0.15)
+  bundler (~> 1.2)
   cancan (~> 1.6.7)
   ckeditor (= 3.4.2.pre)
   daemons
