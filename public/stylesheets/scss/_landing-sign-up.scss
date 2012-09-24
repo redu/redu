@@ -1,0 +1,74 @@
+// ==========================================================================
+// Janela modal de cadastro.
+// ==========================================================================
+
+
+// Wrapper.
+.modal-sign-up {
+  .modal-body {
+    padding: 0;
+    color: $gray6;
+  }
+
+  .line-gray3 { margin: 20px 0; }
+
+  .line-gray3 +
+  .row { margin-bottom: 25px; }
+}
+
+// Título.
+.modal-sign-up-title {
+  color: $green4;
+  line-height: 22px;
+
+  // Ajusta a posição do ícone.
+  &.sprite-before:before {
+    position: relative;
+    top: 5px;
+    float: left;
+  }
+}
+
+.modal-sign-up-section {
+  padding: 20px 20px 10px;
+
+  p +
+  .landing-facebook-sign-in { margin-top: 50px; }
+}
+
+.list-separator +
+.modal-sign-up-section { padding: 10px 20px 20px; }
+
+// Área com o checkbox de aceitação dos termos de uso.
+.modal-sign-up-tos {
+  float: left;
+  text-align: left;
+}
+
+// Área com os botões de cancelar e cadastrar.
+.modal-sign-up-buttons {
+  float: right;
+
+  // TODO: Fix que deveria estar no ui-components. Remover quando organizado.
+  input[type="submit"].button-big {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
+
+// Explicação do login.
+.modal-sign-up-login-explaination {
+  margin-top: 20px;
+
+  .legend { color: $gray6; }
+}
+
+.modal-sign-up-success {
+  .modal-body {
+    padding: 0 20px 20px;
+    color: $black;
+
+    p +
+    p { margin-top: 20px; }
+  }
+}

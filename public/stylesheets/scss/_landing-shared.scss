@@ -18,3 +18,11 @@
 
   .textshadow & { text-shadow: 0 1px 0 $gray-drop-shadow; }
 }
+
+// Botão de entrar com o Facebook.
+.landing-facebook-sign-in {
+  text-align: center;
+
+  // TODO: O estilo do botão não deveria ter nenhuma margem. Remover esta linha quando o estilo do botão for organizado.
+  a { margin: 0; }
+}

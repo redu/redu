@@ -1,8 +1,8 @@
-var $form = $("#form-cadaster")
+var $form = $("#cadastro")
 <% if @user.errors.empty? %>
 
 <% else %>
-  var $newForm = $("<%= escape_javascript render 'base/form_cadaster',
+  var $newForm = $("<%= escape_javascript render 'landing/modal-sign-up',
                    :user => @user %>");
   $form.replaceWith($newForm);
 <% end %>

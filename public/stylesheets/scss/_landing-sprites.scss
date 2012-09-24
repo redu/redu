@@ -1,3 +1,7 @@
+// ==========================================================================
+// Sprites.
+// ==========================================================================
+
 @import "compass/utilities/sprites/base";
 
 $sprite-layout: smart;
@@ -32,3 +36,6 @@ $sprite-sprite-base-class: ".sprite" !default;
   &:after { @extend .sprite-medal-gold; }
 }
 
+.sprite-sign-up-green_32_34-before {
+  &:before { @extend .sprite-sign-up-green_32_34; }
+}

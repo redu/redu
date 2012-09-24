@@ -11,7 +11,8 @@
     <div class="landing-header-buttons">
       <div class="landing-button-sign-up">
         <span class="icon-add-friend-darkgray_32_34"></span>
-        <%= link_to "Não possui conta? Cadastre-se, é grátis", "Modal Cadastro", :class => "button-big button-success" %>
+        <%= link_to "Não possui conta? Cadastre-se, é grátis", "#cadastro", :class => "button-big button-success", "data-toggle" => "modal" %>
+        <%= render :partial => "landing/modal-sign-up" %>
       </div><!--
    --><div class="landing-button-sign-in">
         <span class="icon-profile-darkgray_32_34"></span>
