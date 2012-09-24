@@ -186,6 +186,9 @@ module Redu
     # Observers têm direito a um lar
     config.autoload_paths << "#{config.root}/app/observers"
 
+    # Observers que criam políticas de acesso
+    config.autoload_paths << "#{config.root}/app/policy"
+
     # Configurações do Pusher (redu app)
     config.pusher = {
       :app_id => '4577',
@@ -224,6 +227,7 @@ module Redu
                                         :lecture_cache_observer,
                                         :asset_report_cache_observer,
                                         :chat_message_observer,
+                                        :space_policy_observer,
       ]
     end
 
