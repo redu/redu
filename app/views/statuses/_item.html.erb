@@ -30,7 +30,7 @@
                 :method => :delete,
                 :remote => true,
                 :class => 'close icon-small icon-delete-gray_8_10 replacement',
-                :confirm => 'Deseja remover a postagem?'%>
+                :confirm => 'Ao remover o pedido de ajuda, todo o tópico será apagado. Deseja removê-lo?'%>
           <% end %>
             <%= render :partial => 'statuses/timeago', :locals => { :item => item } %>
           </div>
@@ -62,7 +62,7 @@
                 :method => :delete,
                 :remote => true,
                 :class => 'close icon-small icon-delete-gray_8_10 replacement',
-                :confirm => 'Deseja remover a postagem?'%>
+                :confirm => 'Ao remover o comentário, todo o tópico será apagado. Deseja removê-lo?' %>
           <% end %>
             <%= render :partial => 'statuses/timeago', :locals => { :item => item } %>
           </div>
@@ -94,7 +94,7 @@
                 :method => :delete,
                 :remote => true,
                 :class => 'close icon-small icon-delete-gray_8_10 replacement',
-                :confirm => 'Deseja remover a postagem?'%>
+                :confirm => 'Ao remover o comentário, todo o tópico será apagado. Deseja removê-lo?' %>
           <% end %>
             <%= render :partial => 'statuses/timeago', :locals => { :item => item } %>
           </div>
