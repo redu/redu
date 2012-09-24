@@ -10,5 +10,15 @@ var $form = $("#form-sign-up")
 <% else %>
   var $newForm = $("<%= escape_javascript render 'landing/form_sign_up',
                    :user => @user %>");
+
+  <% unless @user.errors[:tos].empty? %>
+    $newForm.append(
+        '<div class="system-message message-warning fade in">' +
+          '<a data-dismiss="alert" class="message-close">×</a>' +
+          '<p>Você não pode se cadastrar se não aceitar os termos de uso do Redu.</p>' +
+        '</div>');
+  <% end %>
+
   $form.replaceWith($newForm);
 <% end %>
+
