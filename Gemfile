@@ -24,7 +24,7 @@ gem 'aws-s3', :require => 'aws/s3'
 gem 'aws-sdk'
 gem 'backup',
   :git => 'git://github.com/meskyanichi/backup.git'
-gem 'bundler'
+gem 'bundler', '~> 1.2'
 gem 'cancan', '~> 1.6.7'
 gem 'ckeditor', '3.4.2.pre'
 gem 'daemons'
