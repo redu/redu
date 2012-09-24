@@ -1,3 +1,14 @@
+.errors_on_field li {
+  color: rgb(255, 109, 109);
+  font-size: 11px ;
+  list-style: none ;
+}
+
+.tos .control-error label {
+  color: rgb(109, 110, 111);
+}
+
+
 // Janela Modal Login
 .form-login {
   float: right;
@@ -144,7 +155,6 @@
 
       .legend { width: 218px; }
     }
-
   }
 
     .submit-cadaster {
