@@ -9,14 +9,19 @@
       %>
     <% end %>
     <div class="landing-header-buttons">
-      <div class="landing-button-sign-up">
+      <div class="landing-button-sign-up clearfix">
         <span class="icon-add-friend-darkgray_32_34"></span>
         <%= link_to "Não possui conta? Cadastre-se, é grátis", "#cadastro", :class => "button-big button-success", "data-toggle" => "modal" %>
         <%= render :partial => "landing/modal-sign-up" %>
       </div><!--
-   --><div class="landing-button-sign-in">
+   --><div class="landing-button-sign-in clearfix">
         <span class="icon-profile-darkgray_32_34"></span>
-        <%= link_to "Entre no Redu", "Modal Login", :class => "button-big button-primary" %>
+        <div class="button-group">
+          <button class="button-big button-primary dropdown-toggle" data-toggle="dropdown">Entre no Redu</button>
+          <div class="dropdown-menu">
+            <%= render :partial => "landing/dropdown-signin" %>
+          </div>
+        </div>
       </div>
     </div>
   </div>
