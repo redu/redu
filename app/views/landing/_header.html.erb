@@ -6,11 +6,23 @@
           <%= link_to "Redu", home_path, :title => "Redu", :class => "nav-global-brand logo-redu-gray_140_40" %>
           <div class="nav-global-buttons">
             <% if current_user %>
-            <%= link_to 'Início', home_user_path(current_user), :class => "nav-global-button", :title => "Início" %>
+              <% if current_page?(home_user_path(current_user)) %>
+                <%= link_to 'Início', home_user_path(current_user), :class => "nav-global-button nav-global-button-active", :title => "Início" %>
+              <% else %>
+                <%= link_to 'Início', home_user_path(current_user), :class => "nav-global-button", :title => "Início" %>
+              <% end %>
             <% else %>
-            <%= link_to 'Início', application_path, :class => "nav-global-button", :title => "Início" %>
+              <% if current_page?(application_path) %>
+                <%= link_to 'Início', application_path, :class => "nav-global-button nav-global-button-active", :title => "Início" %>
+              <% else %>
+                <%= link_to 'Início', application_path, :class => "nav-global-button", :title => "Início" %>
+              <% end %>
             <% end %>
-           <%= link_to "Ambientes", courses_index_path, :class => "nav-global-button", :title => "Ambientes" %>
+            <% if current_page?(courses_index_path) %>
+              <%= link_to "Ambientes", courses_index_path, :class => "nav-global-button nav-global-button-active", :title => "Ambientes" %>
+            <% else %>
+              <%= link_to "Ambientes", courses_index_path, :class => "nav-global-button", :title => "Ambientes" %>
+            <% end %>
           </div>
         </div>
     </div>
