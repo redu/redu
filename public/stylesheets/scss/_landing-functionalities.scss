@@ -3,11 +3,12 @@
 // ==========================================================================
 
 .line-gray3 {
-    background-color: $gray3;
-    height: 3px;
-    margin: 0;
-    border-color: $white;
-    border-right-width: 0;
+  @include box-sizing(border-box);
+  background-color: $gray3;
+  height: 3px;
+  margin: 0;
+  border-color: $white;
+  border-right-width: 0;
 }
 
 .landing-functionalities {
