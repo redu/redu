@@ -1809,7 +1809,7 @@ $(function() {
   , fillHeight: function(options) {
       var settings = $.extend({
           // Margem inferior.
-          bottomMargin: 80
+          bottomMargin: 20
         }, options)
 
       return this.each(function() {
@@ -1843,8 +1843,6 @@ $(function() {
       , arrowDown: '↓'
         // Largura da seta.
       , arrowWidth: 9
-        // Margem vertical da seta.
-      , arrowVerticalMargin: 5
       }, options)
 
       return this.each(function() {
@@ -1860,8 +1858,8 @@ $(function() {
                   .html(settings.arrowDown)
             , modalBodyOffset = $modalBody.offset()
             , margin = (parseInt($modalBody.css('padding-left'), 10) - settings.arrowWidth) / 2
-            , arrowUpPosition = modalBodyOffset.top - $(window).scrollTop() + settings.arrowVerticalMargin
-            , arrowDownPosition = arrowUpPosition + $modalBody.height() - (settings.arrowVerticalMargin * 2)
+            , arrowUpPosition = modalBodyOffset.top - $(window).scrollTop()
+            , arrowDownPosition = arrowUpPosition + $modalBody.height() - margin
 
           $scrollArrow.css({
             'top': arrowDownPosition
