@@ -13,11 +13,7 @@ var $form = $("#form-sign-up")
                    :user => @user %>");
 
   <% unless @user.errors[:tos].empty? %>
-    $newForm.append(
-        '<div class="system-message message-warning fade in">' +
-          '<a data-dismiss="alert" class="message-close">×</a>' +
-          '<p>Você não pode se cadastrar se não aceitar os termos de uso do Redu.</p>' +
-        '</div>');
+    $newForm.append("<%= escape_javascript render 'shared/system_message', :message => 'Você não pode se cadastrar se não aceitar os Termos de Uso do Redu.', :type => 'warning' %>");
   <% end %>
 
   $form.replaceWith($newForm);
