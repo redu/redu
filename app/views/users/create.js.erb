@@ -1,7 +1,13 @@
 var $form = $("#form-sign-up")
+
 <% if @user.errors.empty? %>
-  $("#cadastro").modal("hide");
-  $("#cadastro-sucesso").modal("show");
+  var $modal = $("#cadastro");
+  $modal.modal("hide");
+
+  var $modalSuccess = $("<%= escape_javascript render 'landing/modal_sign_up_success',
+                        :user => @user %>");
+  $modalSuccess.insertAfter($modal).modal("show");
+
 <% else %>
   var $newForm = $("<%= escape_javascript render 'landing/form_sign_up',
                    :user => @user %>");
@@ -16,4 +22,3 @@ var $form = $("#form-sign-up")
 
   $form.replaceWith($newForm);
 <% end %>
-
