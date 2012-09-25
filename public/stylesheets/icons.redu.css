@@ -1749,13 +1749,13 @@
   background: url("../images/new/icons-small.png") -320px -3200px no-repeat;
 }
 
-.icon-16px-close {
+.icon-close-gray_16_16 {
   content: "";
   width: 16px;
-  background: url("../images/new/icon-16px-close.png") no-repeat;
+  background: url("../images/new/icon-close-gray_16_16.png") no-repeat;
   height: 16px;
 }
 
-.icon-16px-close:hover {
-  background: url("../images/new/icon-16px-close-hover.png") no-repeat;
+.icon-close-gray_16_16:hover {
+  background: url("../images/new/icon-close-red_16_16.png") no-repeat;
 }
