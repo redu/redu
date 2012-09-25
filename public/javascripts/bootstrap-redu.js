@@ -1051,7 +1051,6 @@ $(function() {
           , otherFilters = filter.siblings()
 
         filter.on('click', function(e) {
-          e.preventDefault()
           // Desativa os outros filtros.
           otherFilters.removeClass(settings.filterActiveClass)
           filter.toggleClass(settings.filterActiveClass)
@@ -1078,6 +1077,7 @@ $(function() {
   // Adiciona os eventos dos filtros da visão geral.
   $('.filters-general-view').reduFilter()
 })
+
 !(function($) {
 
   "use strict";
@@ -1364,7 +1364,7 @@ $(function() {
   $('input[type="text"], input[type="password"], input[type="file"], textarea, select').reduForm('focusLabel')
 
   $('input[type="radio"], input[type="checkbox"]').reduForm('darkLabel')
-  
+
   $(".form-search").reduForm("search")
 
   $('.control-option-list').reduForm('optionList')
@@ -1512,12 +1512,12 @@ $(function() {
 $(function() {
   $(".list-mix").reduList("listMix")
 })
-$(function() { 
+$(function() {
   //Desabilita href dos links com estilo de botão, quando no estado desabilidado.
   $(".button-disabled").live("click", function(e) {
     e.preventDefault()
-  });  
-}); 
+  });
+});
 
  // Responder status
 $("a.reply-status, .cancel", ".statuses").live("click", function(e){
@@ -1894,7 +1894,7 @@ $(function() {
           // Retorna as outras classes, que não a do botão.
           var otherClasses = function(classes) {
             var otherClasses = []
-            
+
             classes = classes.split(' ')
             $.each(classes, function(index, value) {
               if (value !== settings.buttonDefault
@@ -1946,7 +1946,7 @@ $(function() {
           if ($element.hasClass(settings.linkSecondary)) {
             spinnerClass = settings.spinnerHorizontalBlue
           }
-          
+
           $element.on({
             ajaxSend: function(e, request, options) {
               $(this).addClass(spinnerClass)
