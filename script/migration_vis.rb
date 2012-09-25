@@ -38,7 +38,7 @@ def insert_enrollments
 end
 
 def insert_subject_finalized
-  Enrollment.where(:grade => 100, :graduaded => true).each do |profile|
+  Enrollment.where(:grade => 100, :graduated => true).each do |profile|
     params_finalized = {
       :user_id => profile.user_id,
       :type => "subject_finalized",

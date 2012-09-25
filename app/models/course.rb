@@ -189,7 +189,7 @@ class Course < ActiveRecord::Base
       space.subjects.each do |subject|
         enrollment = user.get_association_with subject
         enrollments << enrollment
-        enrollments_finalized << enrollment if enrollment.try(:graduaded)
+        enrollments_finalized << enrollment if enrollment.try(:graduated)
         enrollment.try(:destroy)
       end
     end

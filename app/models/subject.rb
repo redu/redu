@@ -7,7 +7,7 @@ class Subject < ActiveRecord::Base
   has_many :enrollments, :dependent => :destroy
   has_many :members, :through => :enrollments, :source => :user
   has_many :graduated_members, :through => :enrollments, :source => :user,
-    :conditions => ["enrollments.graduaded = 1"]
+    :conditions => ["enrollments.graduated = 1"]
   has_many :teachers, :through => :enrollments, :source => :user,
     :conditions => ["enrollments.role = ?", 5] # Teacher
   has_many :statuses, :as => :statusable, :order => "created_at DESC"
@@ -91,7 +91,7 @@ class Subject < ActiveRecord::Base
   end
 
   def graduated?(user)
-    self.enrolled?(user) && user.get_association_with(self).graduaded?
+    self.enrolled?(user) && user.get_association_with(self).graduated?
   end
 
   # Verifica se o módulo está pronto para ser publicado via
