@@ -26,3 +26,12 @@
   // TODO: O estilo do botão não deveria ter nenhuma margem. Remover esta linha quando o estilo do botão for organizado.
   a { margin: 0; }
 }
+
+// Usado pelas modais de planos, termos de uso e política de privacidade.
+.modal-landing {
+  p + p { margin-top: 20px; }
+
+  .modal-header .sprite-before:before { vertical-align: middle; }
+
+  .modal-body { padding: 20px 40px 20px 60px; }
+}

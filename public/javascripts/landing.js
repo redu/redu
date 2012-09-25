@@ -24,11 +24,7 @@ $(function() {
 
   $win.bind("scroll", scrollLandingFilters);
 
-  $("a[rel='tooltip']").tooltip({ placement: "bottom" });
-
   $(".nav-global").each(function() {
     $(".landing-filters").css('marginTop', '42px')
   });
-
 });
-
