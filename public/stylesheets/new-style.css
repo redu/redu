@@ -7654,7 +7654,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   border: solid 1px rgb(204, 204, 204);
   background: rgb(255,255,255); /* Old browsers */
   margin-top: -1px;
-  padding: 0 	20px;
+  padding: 0  20px;
 }
 
 .borderradius .plan-panel .options-plan .plans-list .plans .plan {
@@ -7875,8 +7875,8 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .create-status .post-resource .close,
 .status .responses .re-status .close {
   display: block;
-  width: 8px;
-  height: 10px;
+  width: 16px;
+  height: 16px;
   float: right;
   cursor: pointer;
 }

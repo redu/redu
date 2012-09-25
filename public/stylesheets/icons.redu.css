@@ -1748,3 +1748,14 @@
   height: 32px;
   background: url("../images/new/icons-small.png") -320px -3200px no-repeat;
 }
+
+.icon-16px-close {
+  content: "";
+  width: 16px;
+  background: url("../images/new/icon-16px-close.png") no-repeat;
+  height: 16px;
+}
+
+.icon-16px-close:hover {
+  background: url("../images/new/icon-16px-close-hover.png") no-repeat;
+}
