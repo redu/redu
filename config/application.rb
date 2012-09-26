@@ -225,7 +225,7 @@ module Redu
                                         :lecture_cache_observer,
                                         :asset_report_cache_observer,
                                         :chat_message_observer,
-                                        :space_policy_observer,
+                                        :user_space_association_policy_observer,
       ]
     end
 
