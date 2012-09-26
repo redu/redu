@@ -24,6 +24,23 @@
   margin: 0;
 }
 
+/* line 32, scss/_landing-shared.scss */
+.modal-landing p + p {
+  margin-top: 20px;
+}
+/* line 34, scss/_landing-shared.scss */
+.modal-landing .modal-header .sprite-before:before {
+  vertical-align: middle;
+}
+/* line 36, scss/_landing-shared.scss */
+.modal-landing .modal-body {
+  padding: 20px 40px 20px 60px;
+}
+/* line 38, scss/_landing-shared.scss */
+.modal-landing th.plan-column {
+  width: 60px;
+}
+
 /* line 6, scss/_landing-layout.scss */
 html,
 body {
@@ -488,66 +505,76 @@ body {
 .row {
   margin-bottom: 25px;
 }
+/* line 18, scss/_landing-sign-up.scss */
+.modal-sign-up .errors_on_field li {
+  color: #ff6d6d;
+  font-size: 11px;
+  list-style: none;
+}
+/* line 24, scss/_landing-sign-up.scss */
+.modal-sign-up .tos .control-error label {
+  color: #6d6e6f;
+}
 
-/* line 20, scss/_landing-sign-up.scss */
+/* line 28, scss/_landing-sign-up.scss */
 .modal-sign-up-title {
   color: #61a080;
   line-height: 22px;
 }
-/* line 25, scss/_landing-sign-up.scss */
+/* line 33, scss/_landing-sign-up.scss */
 .modal-sign-up-title.sprite-before:before {
   position: relative;
   top: 5px;
   float: left;
 }
 
-/* line 32, scss/_landing-sign-up.scss */
+/* line 40, scss/_landing-sign-up.scss */
 .modal-sign-up-section {
   padding: 20px 20px 10px;
 }
-/* line 36, scss/_landing-sign-up.scss */
+/* line 44, scss/_landing-sign-up.scss */
 .modal-sign-up-section p +
 .landing-facebook-sign-in {
   margin-top: 50px;
 }
 
-/* line 40, scss/_landing-sign-up.scss */
+/* line 48, scss/_landing-sign-up.scss */
 .list-separator +
 .modal-sign-up-section {
   padding: 10px 20px 20px;
 }
 
-/* line 43, scss/_landing-sign-up.scss */
+/* line 51, scss/_landing-sign-up.scss */
 .modal-sign-up-tos {
   float: left;
   text-align: left;
 }
 
-/* line 49, scss/_landing-sign-up.scss */
+/* line 57, scss/_landing-sign-up.scss */
 .modal-sign-up-buttons {
   float: right;
 }
-/* line 53, scss/_landing-sign-up.scss */
+/* line 61, scss/_landing-sign-up.scss */
 .modal-sign-up-buttons input[type="submit"].button-big {
   padding-top: 10px;
   padding-bottom: 10px;
 }
 
-/* line 60, scss/_landing-sign-up.scss */
+/* line 68, scss/_landing-sign-up.scss */
 .modal-sign-up-login-explaination {
   margin-top: 20px;
 }
-/* line 63, scss/_landing-sign-up.scss */
+/* line 71, scss/_landing-sign-up.scss */
 .modal-sign-up-login-explaination .legend {
   color: #6d6e6f;
 }
 
-/* line 67, scss/_landing-sign-up.scss */
+/* line 75, scss/_landing-sign-up.scss */
 .modal-sign-up-success .modal-body {
   padding: 0 20px 20px;
   color: black;
 }
-/* line 72, scss/_landing-sign-up.scss */
+/* line 80, scss/_landing-sign-up.scss */
 .modal-sign-up-success .modal-body p +
 p {
   margin-top: 20px;
@@ -1153,317 +1180,57 @@ p {
 .landing-plans .type-plan .type-plan-icon {
   padding: 10px 10px 0 10px;
   height: 100px;
-  display: block;
 }
-/* line 25, scss/_landing-plans.scss */
+/* line 24, scss/_landing-plans.scss */
 .landing-plans .type-plan .type-plan-icon h4 {
   margin-top: 10px;
   text-align: center;
 }
-/* line 30, scss/_landing-plans.scss */
+/* line 29, scss/_landing-plans.scss */
 .landing-plans .type-plan .type-plan-icon img {
   display: block;
   margin: 0 auto;
 }
-/* line 36, scss/_landing-plans.scss */
+/* line 35, scss/_landing-plans.scss */
 .landing-plans .type-plan .free-plan {
   text-align: center;
-  display: block;
   background-color: #e1f1e1;
 }
-/* line 41, scss/_landing-plans.scss */
+/* line 39, scss/_landing-plans.scss */
 .landing-plans .type-plan .free-plan h5 {
   font-size: 13px;
 }
-/* line 45, scss/_landing-plans.scss */
+/* line 43, scss/_landing-plans.scss */
 .landing-plans .type-plan .free-plan h5, .landing-plans .type-plan .free-plan h2 {
   color: #5fc080;
 }
-/* line 49, scss/_landing-plans.scss */
+/* line 47, scss/_landing-plans.scss */
 .landing-plans .type-plan .free-plan h2 {
   font-weight: 300;
 }
-/* line 54, scss/_landing-plans.scss */
+/* line 52, scss/_landing-plans.scss */
 .landing-plans .type-plan .learn-plan {
   display: block;
   padding: 0 10px 10px 10px;
   text-align: center;
 }
 
-/* line 62, scss/_landing-plans.scss */
+/* line 60, scss/_landing-plans.scss */
 .landing-plan-icon {
   display: block;
   margin: 0 auto;
 }
 
-/* line 67, scss/_landing-plans.scss */
+/* line 65, scss/_landing-plans.scss */
 .landing-plan-medal {
   vertical-align: top;
 }
 
-/* line 1, scss/_modals-windows.scss */
-.errors_on_field li {
-  color: #ff6d6d;
-  font-size: 11px;
-  list-style: none;
-}
-
-/* line 7, scss/_modals-windows.scss */
-.tos .control-error label {
-  color: #6d6e6f;
-}
-
-/* line 13, scss/_modals-windows.scss */
-.form-login {
-  float: right;
-  width: 240px;
-  background-color: white;
-  overflow: hidden;
-  display: block;
-}
-/* line 20, scss/_modals-windows.scss */
-.form-login hr {
-  margin: 0;
-}
-/* line 23, scss/_modals-windows.scss */
-.form-login .control-checkbox label {
-  margin-left: -5px;
-}
-/* line 28, scss/_modals-windows.scss */
-.form-login .user-dates {
-  overflow: hidden;
-  padding: 20px 10px 10px 10px;
-}
-/* line 33, scss/_modals-windows.scss */
-.form-login .control-group + .control-group {
-  margin-top: 0;
-}
-/* line 35, scss/_modals-windows.scss */
-.form-login .button-primary {
-  margin-top: 10px;
-  float: right;
-}
-/* line 40, scss/_modals-windows.scss */
-.form-login .fb-login {
-  margin: 20px 0;
-  text-align: center;
-}
-/* line 45, scss/_modals-windows.scss */
-.form-login .recover-login {
-  text-align: center;
-  font-size: 11px;
-  padding: 10px;
-}
-
-/* line 54, scss/_modals-windows.scss */
-.modal-window {
-  background: #f7f7f7;
-  overflow: hidden;
-  display: block;
-  margin: 20px auto;
-  background: #f7f7f7;
-}
-/* line 60, scss/_modals-windows.scss */
-.borderradius .modal-window {
-  -webkit-border-radius: 7px;
-  -moz-border-radius: 7px;
-  border-radius: 7px;
-}
-/* line 62, scss/_modals-windows.scss */
-.modal-window .button-primary, .modal-window button, .modal-window .button-default, .modal-window .button-success {
-  float: right;
-  margin: 20px;
-}
-/* line 67, scss/_modals-windows.scss */
-.modal-window hr {
-  margin: 1px 0 0 0;
-}
-/* line 71, scss/_modals-windows.scss */
-.modal-window .modal-name {
-  margin: 10px 20px;
-  display: block;
-  overflow: hidden;
-}
-/* line 76, scss/_modals-windows.scss */
-.modal-window .modal-name img {
-  float: left;
-}
-/* line 80, scss/_modals-windows.scss */
-.modal-window .modal-name h3 {
-  margin: 0 10px;
-  display: inline-block;
-}
-/* line 85, scss/_modals-windows.scss */
-.modal-window .modal-name .call-cadaster {
-  color: #61a080;
-  width: 230px;
-  margin-top: 0;
-}
-/* line 91, scss/_modals-windows.scss */
-.modal-window .modal-name .call-cadaster + .call-cadaster {
-  display: block;
-  margin-left: 57px;
-}
-/* line 97, scss/_modals-windows.scss */
-.modal-window .plan-information, .modal-window .modal-cadaster {
-  padding: 20px;
-  background: white;
-  overflow: hidden;
-  display: block;
-}
-/* line 105, scss/_modals-windows.scss */
-.modal-window .modal-cadaster p {
-  color: #6d6e6f;
-  margin-bottom: 40px;
-}
-/* line 110, scss/_modals-windows.scss */
-.modal-window .modal-cadaster .legend {
-  display: block;
-  font-style: italic;
-  text-align: center;
-}
-/* line 116, scss/_modals-windows.scss */
-.modal-window .modal-cadaster .form-right {
-  float: right;
-}
-/* line 120, scss/_modals-windows.scss */
-.modal-window .modal-cadaster .form-left, .modal-window .modal-cadaster .form-right {
-  width: 400px;
-}
-/* line 124, scss/_modals-windows.scss */
-.modal-window .modal-cadaster .form-left {
-  float: left;
-}
-/* line 127, scss/_modals-windows.scss */
-.modal-window .modal-cadaster .form-left .legend {
-  margin-bottom: 20px;
-  width: 218px;
-  text-align: left;
-  margin-left: 100px;
-  margin-top: 20px;
-}
-/* line 136, scss/_modals-windows.scss */
-.modal-window .modal-cadaster .form-horizontal {
-  overflow: hidden;
-}
-/* line 138, scss/_modals-windows.scss */
-.modal-window .modal-cadaster .form-horizontal p {
-  margin-bottom: 20px;
-}
-/* line 143, scss/_modals-windows.scss */
-.modal-window .modal-cadaster .control-group {
-  overflow: hidden;
-}
-/* line 146, scss/_modals-windows.scss */
-.modal-window .modal-cadaster .control-group input {
-  margin-top: 4px;
-  margin-right: 4px;
-  margin-bottom: 4px;
-}
-/* line 152, scss/_modals-windows.scss */
-.modal-window .modal-cadaster .control-group label.control-checkbox {
-  float: left;
-}
-/* line 156, scss/_modals-windows.scss */
-.modal-window .modal-cadaster .control-group .legend {
-  width: 218px;
-}
-/* line 160, scss/_modals-windows.scss */
-.modal-window .submit-cadaster {
-  padding: 20px;
-  overflow: hidden;
-}
-/* line 164, scss/_modals-windows.scss */
-.modal-window .submit-cadaster .button-big {
-  margin: 0 10px 0 0;
-}
-/* line 166, scss/_modals-windows.scss */
-.modal-window .submit-cadaster .control-checkbox {
-  float: left;
-}
-/* line 171, scss/_modals-windows.scss */
-.modal-window .plan-information .icon-medal img {
-  vertical-align: middle;
-  margin: -2px 0 0 2px;
-}
-/* line 177, scss/_modals-windows.scss */
-.modal-window .plan-information table .free {
-  color: #5fc080;
-}
-/* line 180, scss/_modals-windows.scss */
-.modal-window .call {
-  background: white;
-  padding: 20px;
-}
-/* line 185, scss/_modals-windows.scss */
-.modal-window .container {
-  color: black;
-  width: auto;
-  background: white;
-  padding: 20px 60px;
-}
-/* line 191, scss/_modals-windows.scss */
-.modal-window .container .section {
-  font-size: 16px;
-  display: inline-block;
-  font-weight: 700;
-  font-family: museo-sans, "Helvetica Neue", Arial, sans-serif;
-  margin-top: 20px;
-}
-/* line 199, scss/_modals-windows.scss */
-.modal-window .container p {
-  margin-top: 20px;
-}
-/* line 202, scss/_modals-windows.scss */
-.modal-window .container .standout {
-  font-weight: bold;
-}
-/* line 205, scss/_modals-windows.scss */
-.modal-window .cadaster-success {
-  background: white;
-  border: 1px solid #6d6e6f;
-}
-/* line 208, scss/_modals-windows.scss */
-.borderradius .modal-window .cadaster-success {
-  -webkit-border-radius: 7px;
-  -moz-border-radius: 7px;
-  border-radius: 7px;
-}
-/* line 211, scss/_modals-windows.scss */
-.modal-window .cadaster-success .modal-name .call-cadaster {
-  width: 100%;
-  margin-left: 0;
-}
-/* line 217, scss/_modals-windows.scss */
-.modal-window .cadaster-success .call {
-  padding: 0 20px 20px 20px;
-}
-/* line 219, scss/_modals-windows.scss */
-.modal-window .cadaster-success .modal-window {
-  margin: 0;
-}
-/* line 221, scss/_modals-windows.scss */
-.borderradius .modal-window .cadaster-success .modal-window {
-  -webkit-border-radius: none;
-  -moz-border-radius: none;
-  border-radius: none;
-}
-
-/* line 227, scss/_modals-windows.scss */
-.modal-landing p + p {
-  margin-top: 20px;
-}
-/* line 229, scss/_modals-windows.scss */
-.modal-landing .modal-header .sprite-before:before {
-  vertical-align: middle;
-}
-/* line 231, scss/_modals-windows.scss */
-.modal-landing .modal-body {
-  padding: 20px 40px 20px 60px;
-}
-
 /* line 5, scss/_landing-functionalities.scss */
 .line-gray3, .landing-functionalities hr {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
   background-color: #e6e6e6;
   height: 3px;
   margin: 0;
@@ -1471,21 +1238,21 @@ p {
   border-right-width: 0;
 }
 
-/* line 14, scss/_landing-functionalities.scss */
+/* line 15, scss/_landing-functionalities.scss */
 .landing-functionalities .landing-navigation-title {
   margin: 20px;
 }
-/* line 16, scss/_landing-functionalities.scss */
+/* line 17, scss/_landing-functionalities.scss */
 .landing-functionalities p {
   color: #b2b2b2;
 }
-/* line 19, scss/_landing-functionalities.scss */
+/* line 20, scss/_landing-functionalities.scss */
 .landing-functionalities h2 + h4,
 .landing-functionalities h4 + p {
   margin-top: 20px;
 }
 
-/* line 24, scss/_landing-functionalities.scss */
+/* line 25, scss/_landing-functionalities.scss */
 .landing-functionality:hover p {
   color: #6d6e6f;
 }
@@ -1799,6 +1566,7 @@ p {
 /* line 41, scss/_landing-api.scss */
 .landing-api-link +
 .landing-api-illustration {
+  float: right;
   margin-left: 30px;
 }
 
