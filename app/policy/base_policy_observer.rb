@@ -20,7 +20,7 @@ class BasePolicyObserver < ActiveRecord::Observer
 
   def permit_id(model)
     raise "Model not persisted. The model should have a unique ID to have it's" + \
-          " Policy defined." unless model.persisted?
+          " Policy defined." if model.new_record?
 
     name = model.class.to_s.underscore
     "core:#{name}_#{model.id}"
