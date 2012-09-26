@@ -25,6 +25,8 @@ describe Course do
   it { should have_many(:students).through :user_course_associations }
   it { should have_many(:teachers_and_tutors).through :user_course_associations }
 
+  it { should have_many(:invited_users).through :user_course_associations }
+
   it { should have_and_belong_to_many :audiences }
   it { should have_one(:quota).dependent(:destroy) }
 
@@ -94,6 +96,42 @@ describe Course do
   end
 
   context "finders" do
+    context "invited users"  do
+      before(:each) do
+        @users = 10.times.inject([]){|res, i| res << Factory(:user)}
+      end
+
+    it "retrieves correct number of invited users" do
+      subject.invite(@users[0])
+      subject.invite(@users[1])
+      subject.invite(@users[2])
+      subject.invite(@users[3])
+      subject.invite(@users[4])
+      subject.invited_users.to_set.should == [@users[0],@users[1],
+      @users[2], @users[3], @users[4]].to_set
+    end
+
+    it "should not include members" do
+      subject.subscription_type = 2
+      subject.save
+
+      subject.invite(@users[0])
+      subject.invite(@users[5])
+      subject.join(@users[1], Role[:member])
+      subject.join(@users[2], Role[:tutor])
+      subject.join(@users[3], Role[:member])
+      subject.join(@users[8], Role[:environment_admin])
+      subject.join(@users[7], Role[:admin])
+      subject.join(@users[6], Role[:teacher])
+      subject.invited_users.should_not include(@users[1], @users[2], @users[3],
+        @users[8], @users[7], @users[6])
+      subject.invited_users.should include(@users[0], @users[5])
+    end
+
+    end
+
+
+
     it "retrieves all courses of an specified environment" do
       course2 = Factory(:course, :environment => subject.environment)
       course3 = Factory(:course)
@@ -302,6 +340,7 @@ describe Course do
         Course.user_behave_as_student(@user).should == @courses[0..1]
       end
     end
+
   end
 
   it "changes a user role" do

@@ -47,6 +47,10 @@ class Course < ActiveRecord::Base
     :source => :user,
     :conditions => [ "course_enrollments.state = ? AND course_enrollments.updated_at >= ?", 'approved', 1.week.ago]
 
+  has_many :invited_users, :through => :user_course_associations,
+    :source => :user,
+    :conditions => ["course_enrollments.state = ?", "invited"]
+
   has_many :teachers_and_tutors, :through => :user_course_associations,
     :source => :user, :select => 'users.id',
     :conditions => [ "(course_enrollments.role = ? OR course_enrollments.role = ?) AND course_enrollments.state = ?", 6, 5, 'approved']
