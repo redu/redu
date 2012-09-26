@@ -103,6 +103,7 @@
 
   &:hover {
     @include sprite-sprite(light-talk-to-us);
+    display: block;
 
     .legend { color: $gray6; }
 
