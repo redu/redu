@@ -31,7 +31,7 @@ module Api
       authorize! :read, context
       statuses = statuses(context)
 
-      statuses = case params[:type]
+      statuses = case params.fetch(:type, "").downcase
       when 'help'
         statuses.where(:type => 'Help')
       when 'log'
