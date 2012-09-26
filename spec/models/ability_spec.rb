@@ -1892,4 +1892,23 @@ describe Ability do
     end
   end
 
+  context "client applications" do
+    let(:user) { Factory(:user) }
+    let(:client_application) { ClientApplication.new }
+    let(:ability) { Ability.new(user) }
+    let(:redu_admin) {Factory(:user, :role => :admin)}
+    let(:admin_abilty) {Ability.new(redu_admin)}
+    context "user" do
+      it "should not be able to manage" do
+        ability.should_not be_able_to :manage, client_application
+      end
+    end
+
+    context "admin" do
+      it "should be able to manage" do
+        admin_abilty.should be_able_to :manage, client_application
+      end
+    end
+  end
+
 end
