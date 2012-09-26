@@ -29,7 +29,7 @@
                 status_path(item),
                 :method => :delete,
                 :remote => true,
-                :class => 'close icon-small icon-delete-gray_8_10 replacement',
+                :class => 'close icon-small icon-close-gray_16_16 replacement',
                 :confirm => 'Ao remover o pedido de ajuda, as respostas também serão apagadas. Deseja removê-lo?'%>
           <% end %>
             <%= render :partial => 'statuses/timeago', :locals => { :item => item } %>
@@ -61,7 +61,7 @@
                 status_path(item),
                 :method => :delete,
                 :remote => true,
-                :class => 'close icon-small icon-delete-gray_8_10 replacement',
+                :class => 'close icon-small icon-close-gray_16_16 replacement',
                 :confirm => 'Ao remover o comentário, todas as respostas serão apagadas. Deseja removê-lo?' %>
           <% end %>
             <%= render :partial => 'statuses/timeago', :locals => { :item => item } %>
@@ -93,7 +93,7 @@
                 status_path(item),
                 :method => :delete,
                 :remote => true,
-                :class => 'close icon-small icon-delete-gray_8_10 replacement',
+                :class => 'close icon-small icon-close-gray_16_16 replacement',
                 :confirm => 'Ao remover o comentário, todas as respostas serão apagadas. Deseja removê-lo?' %>
           <% end %>
             <%= render :partial => 'statuses/timeago', :locals => { :item => item } %>
@@ -132,8 +132,8 @@
                 status_path(item),
                 :method => :delete,
                 :remote => true,
-                :class => 'close icon-small icon-delete-gray_8_10 replacement',
-                :confirm => 'Deseja remover a postagem?'%>
+                :class => 'close icon-small icon-close-gray_16_16 replacement',
+                :confirm => 'Ao remover esta postagem, as respostas também serão excluídas. Deseja removê-la?'%>
           <% end %>
           <%= render :partial => 'statuses/timeago', :locals => { :item => item } %>
         </div>
