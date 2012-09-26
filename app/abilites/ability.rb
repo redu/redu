@@ -79,7 +79,7 @@ class Ability
 
       # Somente usuários parceiros e  admin gerenciam apps OAuth
       can :manage, :client_applications do
-        !user.partners.empty? || is_admin
+        is_admin
       end
 
       # Gerencial
