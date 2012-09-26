@@ -1,9 +1,19 @@
 class BasePolicyObserver < ActiveRecord::Observer
-  def delay_policy_creation(model, &block)
-    Permit::PolicyJob.new(:resource_id => permit_id(model),
-                          :service_name => "core") do |policy|
+
+  def sync_create_policy_for(model, &block)
+    producer = Permit::Producer.new(:service_name => "core")
+    policy = Permit::Policy.
+      new(:resource_id => permit_id(model), :producer => producer)
+    block.call(policy)
+    policy.commit
+  end
+
+  def async_create_policy_for(model, &block)
+    job = Permit::PolicyJob.new(:resource_id => permit_id(model),
+                                :service_name => "core") do |policy|
       block.call(policy)
     end
+    Delayed::Job.enqueue(job)
   end
 
   protected
