@@ -1,5 +1,5 @@
 class SessionsController < BaseController
-  respond_to :html
+  respond_to :html, :js
 
   layout 'clean'
   before_filter :less_than_30_days_of_registration_required, :only => :create
