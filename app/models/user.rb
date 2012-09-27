@@ -41,13 +41,6 @@ class User < ActiveRecord::Base
     :foreign_key => "user_id"
   has_many :favorites, :order => "created_at desc", :dependent => :destroy
   enumerate :role
-  has_many :recently_active_friends, :through => :friendships, :source => :friend,
-    :order => "users.last_request_at ASC", :limit => 9,
-    :conditions => "friendships.status = 'accepted'",
-    :select => ["users.id, users.first_name, users.last_name, users.login, " + \
-                "users.avatar_file_name, users.avatar_file_size, " + \
-                "users.avatar_content_type"]
-
   has_many :enrollments, :dependent => :destroy
 
   #subject
