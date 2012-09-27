@@ -1,0 +1,18 @@
+<%#
+  Modal dos tipos de aula
+  Variáveis:
+    type => o tipo de aula [video|presentation|documen|exercise]
+    title => o título da janela
+    image => a imagem
+%>
+<div class="modal hide modal-grids-14" id="modal-landing-multimedia-<%= type %>">
+  <div class="modal-header">
+    <h3 class="modal-title"><%= title %></h3>
+  </div>
+  <div class="modal-body">
+    <%= image_tag(image) %>
+  </div>
+  <div class="modal-footer">
+    <button class="button-default" data-dismiss="modal">Voltar</button>
+  </div>
+</div>
