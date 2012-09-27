@@ -1,47 +1,44 @@
+// Deixa o menu dos filtros fixos
 $(function() {
 
   var $win = $(window);
 
-  var $landingfilters = $(".landing-filters");
+  var $landingFilters = $(".landing-filters");
 
-  var landingfiltersFixed = 0;
-  var landingfiltersTop = $(".landing-filters").length && $(".landing-filters").offset().top;
+  var landingFiltersFixed = 0;
+  var landingFiltersTop = $landingFilters.length && $landingFilters.offset().top;
 
-  var scrollLandingFilters = function() {
+  var scrolllandingFilters = function() {
     var _, scrollTop = $win.scrollTop();
-    if (scrollTop >= landingfiltersTop && !landingfiltersFixed) {
-      landingfiltersFixed = 1;
-      $landingfilters.addClass("page-nav-fixed");
+    if (scrollTop >= landingFiltersTop && !landingFiltersFixed) {
+      landingFiltersFixed = 1;
+      $landingFilters.addClass("page-nav-fixed");
     }
-    else if (scrollTop <= landingfiltersTop && landingfiltersFixed) {
-      landingfiltersFixed = 0;
-      $landingfilters.removeClass("page-nav-fixed");
+    else if (scrollTop <= landingFiltersTop && landingFiltersFixed) {
+      landingFiltersFixed = 0;
+      $landingFilters.removeClass("page-nav-fixed");
     }
   }
 
-  scrollLandingFilters();
+  // Faz com que o menu dos filtros fique com top e fixo, quando o usuário estiver logado.
+  scrolllandingFilters();
 
-  $win.bind("scroll", scrollLandingFilters);
+  $win.bind("scroll", scrolllandingFilters);
 
   $(".nav-global").each(function() {
-    $(".landing-filters").css('marginTop', '42px')
+    $landingFilters.css('marginTop', '42px')
   });
 
+  // Faz com que os títulos das navegações apareçam
   $(".filter").click( function(event) {
     event.preventDefault();
     var offset = $($(this).attr('href')).offset().top;
     var height = 175;
 
-    if ($(".landing-filters").css('top') === "0px") {
+    if ($landingFilters.css('top') === "0px") {
       height = 85;
     }
 
     $('html, body').animate({scrollTop: (offset - height)}, 500);
   });
 });
-
-
-
-
-
-

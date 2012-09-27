@@ -19,7 +19,7 @@
       <tbody>
         <tr>
           <td>Número de Alunos Permitidos</td>
-          <td>60</td>
+          <td>30</td>
           <td>Ilimitado</td>
           <td>Ilimitado</td>
         </tr>
@@ -147,7 +147,12 @@
           <td>Preços <strong>(por licença)</strong></td>
           <td><span class="free">Grátis</span></td>
           <td><strong>R$ 5</strong></td>
-          <td><a href="http://#">Consulte-nos</a></td>
+          <td><%= link_to "Consulte-nos",
+                      contact_path,
+                      :title => "Consulte-nos",
+                      :class => "link-target"
+                %>
+          </td>
         </tr>
       </tbody>
     </table>
