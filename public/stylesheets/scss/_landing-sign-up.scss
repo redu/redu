@@ -41,7 +41,13 @@
   padding: 20px 20px 10px;
 
   p +
-  .landing-facebook-sign-in { margin-top: 50px; }
+  .facebook-sign-up { margin-top: 20px; }
+
+  .facebook-sign-up-button +
+  .legend {
+    margin-top: 5px;
+    display: block;
+  }
 }
 
 .list-separator +
