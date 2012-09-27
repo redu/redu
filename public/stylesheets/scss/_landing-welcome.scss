@@ -28,6 +28,9 @@
   font: 700 21px/28px $museo-sans-rounded;
   letter-spacing: -1px;
   max-width: 280px;
+  background-image: url('../images/landing/light-welcome.png');
+  background-repeat: no-repeat;
+  background-position: center center;
 
   .textshadow & { text-shadow: 1px 1px 0 $white; }
 }
