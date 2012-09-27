@@ -29,7 +29,7 @@ describe 'UserSpaceAssociationPolicy' do
   end
 
   %w(tutor member).each do |role|
-    it "should add read permission whem #{role}" do
+    it "should add read permission when #{role}" do
       policy.should_receive(:add).with(:subject_id=>"core:user_#{user.id}",
                                        :action => :read)
       active_observer do
