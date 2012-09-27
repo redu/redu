@@ -83,3 +83,10 @@
     @include box-shadow($box-shadow);
   }
 }
+
+// Erros dos formulários.
+.errors_on_field {
+  color: rgb(255, 109, 109);
+  font-size: 11px ;
+  list-style: none ;
+}
