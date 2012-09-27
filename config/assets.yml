@@ -15,6 +15,7 @@ javascripts:
     - public/javascripts/rails.js
     - public/javascripts/vendor/modernizr.js
     - public/javascripts/lazyload.js
+    - public/javascripts/asyncjs.jquery.js
     - public/javascripts/jquery.autosize.min.js
     - public/javascripts/bootstrap-redu.js
     - public/javascripts/vendor/bootstrap-scrollspy.js
