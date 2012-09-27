@@ -142,7 +142,7 @@ class UsersController < BaseController
             redirect_back_or_default user_path(current_user)
           else
             flash[:notice] = t :uh_oh_we_couldnt_log_you_in_with_the_username_and_password_you_entered_try_again
-            render :action => :new
+            respond_with(@user)
           end
         else
           respond_with(@user)
