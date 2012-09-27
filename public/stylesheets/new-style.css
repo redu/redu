@@ -7875,8 +7875,8 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .create-status .post-resource .close,
 .status .responses .re-status .close {
   display: block;
-  width: 8px;
-  height: 10px;
+  width: 16px;
+  height: 16px;
   float: right;
   cursor: pointer;
 }
