@@ -1,4 +1,3 @@
-// Código que torna o menu dos filtros fixo.
 $(function() {
 
   var $win = $(window);
@@ -27,4 +26,22 @@ $(function() {
   $(".nav-global").each(function() {
     $(".landing-filters").css('marginTop', '42px')
   });
+
+  $(".filter").click( function(event) {
+    event.preventDefault();
+    var offset = $($(this).attr('href')).offset().top;
+    var height = 175;
+
+    if ($(".landing-filters").css('top') === "0px") {
+      height = 85;
+    }
+
+    $('html, body').animate({scrollTop: (offset - height)}, 500);
+  });
 });
+
+
+
+
+
+
