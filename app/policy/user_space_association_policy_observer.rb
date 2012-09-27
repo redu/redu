@@ -2,7 +2,7 @@ class UserSpaceAssociationPolicyObserver < BasePolicyObserver
   observe :user_space_association
 
   def after_create(usa)
-    sync_create_policy_for(usa.space) do |policy|
+    sync_policy_for(usa.space) do |policy|
       if usa.role?(:environment_admin) || usa.role?(:teacher)
         policy.add(:subject_id => "core:user_#{usa.user.id}", :action => :manage)
       else
@@ -12,7 +12,7 @@ class UserSpaceAssociationPolicyObserver < BasePolicyObserver
   end
 
   def after_destroy(usa)
-    async_create_policy_for(usa.space) do |policy|
+    async_policy_for(usa.space) do |policy|
       policy.remove(:subject_id => "core:user_#{usa.user.id}")
     end
   end
