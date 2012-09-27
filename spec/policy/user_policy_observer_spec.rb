@@ -5,7 +5,7 @@ describe 'UserPolicyObserver' do
   before do
     @@policy = policy # necessário para ser visível abaixo
     class BasePolicyObserver < ActiveRecord::Observer
-      def sync_create_policy_for(model, &block)
+      def sync_policy_for(model, &block)
         block.call @@policy
       end
     end

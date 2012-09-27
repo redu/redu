@@ -1,14 +1,14 @@
 class BasePolicyObserver < ActiveRecord::Observer
 
-  def sync_create_policy_for(model, &block)
+  def sync_policy_for(model, &block)
     producer = Permit::Producer.new(:service_name => "core")
     policy = Permit::Policy.
       new(:resource_id => permit_id(model), :producer => producer)
-    block.call(policy)
+    policy.add(&block)
     policy.commit
   end
 
-  def async_create_policy_for(model, &block)
+  def async_policy_for(model, &block)
     job = Permit::PolicyJob.new(:resource_id => permit_id(model),
                                 :service_name => "core") do |policy|
       block.call(policy)
