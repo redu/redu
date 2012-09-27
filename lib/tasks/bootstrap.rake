@@ -73,10 +73,13 @@ namespace :bootstrap do
                    :address => "Beaker street")
   end
 
-  desc "Create OAuth Client Application for ReduViz"
+  desc "Create OAuth Client Application for ReduVis"
   task :reduvis_app => :environment do
-    ClientApplication.create(:name => "ReduViz",
-                             :url => "http://www.redu.com.br")
+    user_admin = User.find_by_id(2)
+
+    ClientApplication.create(:name => "ReduVis",
+                             :url => "http://www.redu.com.br",
+                             :user => user_admin)
   end
 
   desc "Run all bootstrapping tasks"
