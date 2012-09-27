@@ -12,11 +12,11 @@ $(function() {
     var _, scrollTop = $win.scrollTop();
     if (scrollTop >= landingFiltersTop && !landingFiltersFixed) {
       landingFiltersFixed = 1;
-      $landingFilters.addClass("page-nav-fixed");
+      $landingFilters.addClass("landing-filters-fixed");
     }
     else if (scrollTop <= landingFiltersTop && landingFiltersFixed) {
       landingFiltersFixed = 0;
-      $landingFilters.removeClass("page-nav-fixed");
+      $landingFilters.removeClass("landing-filters-fixed");
     }
   }
 
@@ -30,13 +30,13 @@ $(function() {
   });
 
   // Faz com que os títulos das navegações apareçam
-  $(".filter").click( function(event) {
+  $(".filter, .landing-footer-navigation a").click( function(event) {
     event.preventDefault();
-    var offset = $($(this).attr('href')).offset().top;
-    var height = 175;
+    var offset = $($(this).attr('href').replace('/', '')).offset().top;
+    var height = 120;
 
     if ($landingFilters.css('top') === "0px") {
-      height = 85;
+      height = 60;
     }
 
     $('html, body').animate({scrollTop: (offset - height)}, 500);
