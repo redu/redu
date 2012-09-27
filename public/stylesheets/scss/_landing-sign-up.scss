@@ -54,15 +54,7 @@
 }
 
 // Área com os botões de cancelar e cadastrar.
-.modal-sign-up-buttons {
-  float: right;
-
-  // TODO: Fix que deveria estar no ui-components. Remover quando organizado.
-  input[type="submit"].button-big {
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
-}
+.modal-sign-up-buttons { float: right; }
 
 // Explicação do login.
 .modal-sign-up-login-explaination {

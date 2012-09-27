@@ -31,59 +31,6 @@
 
 }
 
-// Comum aos dois botões do Facebook.
-%facebook-button {
-  $color: $white;
-  display: inline-block;
-  border-style: solid;
-  border-width: 1px;
-  padding: 6px 7px;
-  color: $color;
-  font-family: 'lucida grande',tahoma,verdana,arial,sans-serif;
-  font-weight: bold;
-  line-height: 13px;
-  cursor: pointer;
-
-  &:hover,
-  &:visited {
-    text-decoration: none;
-    color: $color;
-  }
-
-  .textshadow & { text-shadow: none; }
-}
-
-.facebook-sign-up,
-.facebook-sign-in { text-align: center; }
-
-// Botão de cadastro.
-.facebook-sign-up-button {
-  @extend %facebook-button;
-  border-color: rgb(59, 110, 34) rgb(59, 110, 34) rgb(44, 81, 21);
-  background-color: rgb(105, 167, 78);
-
-  .boxshadow & {
-    $box-shadow:
-      0 1px 0 rgba(0, 0, 0, 0.1)
-    , 0 1px 0 rgb(152, 192, 130) inset;
-    @include box-shadow($box-shadow);
-  }
-}
-
-// Botão de login.
-.facebook-sign-in-button {
-  @extend %facebook-button;
-  border-color: rgb(41, 68, 126) rgb(41, 68, 126) rgb(26, 53, 110);
-  background-color: rgb(95, 120, 171);
-
-  .boxshadow & {
-    $box-shadow:
-      0 1px 0 rgba(0, 0, 0, 0.1)
-    , 0 1px 0 rgb(98, 122, 173) inset;
-    @include box-shadow($box-shadow);
-  }
-}
-
 // Erros dos formulários.
 .errors_on_field {
   color: rgb(255, 109, 109);
