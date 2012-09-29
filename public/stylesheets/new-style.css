@@ -2223,8 +2223,6 @@ body {
   clear: left;
   line-height: 130%;
   margin-left: 38px;
-  z-index: 1;
-  position: relative;
 }
 
 .statuses .status-log .status-help {
