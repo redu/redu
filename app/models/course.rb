@@ -217,11 +217,11 @@ class Course < ActiveRecord::Base
     self.create_license(user, role)
 
     usas = self.spaces.collect do |space|
-      UserSpaceAssociation.new(:user_id => user.id,
-                               :space_id => space.id,
+      UserSpaceAssociation.new(:user_id => user.id, :space_id => space.id,
                                :role => role)
     end
     UserSpaceAssociation.import(usas, :validate => false)
+    UserSpaceAssociation.create_policy_for(usas)
 
     subjects = self.spaces.includes(:subjects).collect(&:subjects).flatten
     enrollments = Subject.enroll(user, subjects, role)
