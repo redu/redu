@@ -8,9 +8,6 @@
     <%= csrf_meta_tag %>
     <%= include_stylesheets :landing %>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <!--[if (gte IE 6)&(lte IE 8)]>
-      <%= include_javascripts :ie %>
-    <![endif]-->
     <%= include_javascripts :landing %>
     <%= lazy_load("http://use.typekit.com/lpo4rgu.js", :jammit => false) do %>
       try{
