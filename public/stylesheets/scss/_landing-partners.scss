@@ -6,13 +6,20 @@
 .landing-partners-wrapper {
   padding: 20px 20px 40px;
 
-  h4 {
+  h2 {
     color: $gray3;
 
     .textshadow & { text-shadow: 0 1px 0 $gray5; }
   }
 
-  h4 + .landing-partners { margin-top: 20px; }
+  h2 + .landing-partners { margin-top: 20px; }
+
+  .partners-title {
+    font-size: 18px !important;
+    line-height: 21px;
+    letter-spacing: -1px;
+    font-weight: 500;
+  }
 }
 
 .landing-partners { overflow: hidden; }

@@ -30,9 +30,9 @@
       .call { color: rgb(255, 124, 53); }
 
       .button-user {
-        h5 { margin-left: 65px; }
+        h3 { margin-left: 65px; }
 
-        h6 {
+        legend {
           margin-left: 79px;
 
           .textshadow & { text-shadow: 0 -1px 0 rgb(242, 74, 0); }
@@ -45,7 +45,7 @@
 
       .call { color: rgb(21, 138, 196); }
 
-      .button-user h5 { margin-left: 48px; }
+      .button-user h3 { margin-left: 48px; }
     }
 
      &.developer {
@@ -54,9 +54,9 @@
       .call { color: rgb(255, 109, 109); }
 
       .button-user {
-        h5 { margin-left: 70px; }
+        h3 { margin-left: 70px; }
 
-        h6 {
+        legend {
           margin-left: 68px;
 
           .textshadow & { text-shadow: 0 -1px 0 rgb(192, 39, 45); }
@@ -72,7 +72,7 @@
     }
 
     .button-user {
-      h5 {
+      h3 {
         color: white;
         position: absolute;
         margin-top: -85px;
@@ -82,7 +82,7 @@
         .textshadow & { text-shadow: 0 1px 3px $black; }
       }
 
-      h6 {
+      legend {
         font-size: 10px;
         font-family: arial, sans-serif;
         position: absolute;

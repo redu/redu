@@ -16,7 +16,7 @@
 
   p { color: $gray-drop-shadow; }
 
-  h2 + h4,
+  h3 + h4,
   h4 + p { margin-top: 20px; }
 
   hr { @extend .line-gray3; }
