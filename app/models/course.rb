@@ -158,7 +158,21 @@ class Course < ActiveRecord::Base
     end
   end
 
+
+  def join!(user, role  = Role[:member])
+    association = UserCourseAssociation.create(:user_id => user.id,
+                                               :course_id => self.id,
+                                               :role => role)
+    association = user.get_association_with(self) if association.new_record?
+    if association.waiting?
+      association.approve!
+    elsif association.invited?
+      association.accept!
+    end
+  end
+
   # Desassocia o usuário do curso
+
   # - Remove a associação do usuário com o Course
   # - Remove a associação do usuário com o Environment, caso ele passe
   #   a não fazer parte de nenhum Course
