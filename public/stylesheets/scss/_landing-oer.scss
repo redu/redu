@@ -25,19 +25,19 @@ $landing-oer-background-color: rgb(28, 117, 187);
 }
 
 // Image de fundo.
-.landing-oer-inner-wrapper { 
-  background: url("../images/landing/oer-logo.png") no-repeat right center; 
+.landing-oer-inner-wrapper {
+  background: url("../images/landing/oer-logo.png") no-repeat right center;
 
   .textshadow & { text-shadow: 0 1px 0 $black; }
 }
 
 // Título.
-.landing-oer-title { 
-  position: relative; 
+.landing-oer-title {
+  position: relative;
 
   .label-doubts { position: absolute; }
 
-  h2 {
+  h3 {
     text-align: right;
     color: $white;
   }
@@ -46,10 +46,10 @@ $landing-oer-background-color: rgb(28, 117, 187);
 // Descrição.
 .landing-oer-description {
   padding-top: 10px;
-  
+
   h4 { color: $gray2; }
 
-  p { 
+  p {
     color: $white;
 
     .landing-functionality:hover & { color: $white; }
