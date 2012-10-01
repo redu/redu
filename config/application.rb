@@ -227,6 +227,7 @@ module Redu
                                         :chat_message_observer,
                                         :user_space_association_policy_observer,
                                         :friendship_policy_observer,
+                                        :user_setting_policy_observer,
                                         :user_policy_observer,
       ]
     end
