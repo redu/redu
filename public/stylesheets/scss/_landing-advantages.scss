@@ -12,10 +12,7 @@
     float: left;
     max-width: 200px;
 
-    .call + .call {
-      margin-top: 20px;
-      margin-bottom: 10px;
-    }
+    .call + .call { margin: 20px 0; }
 
     .call {
       text-align: center;
