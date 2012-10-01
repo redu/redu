@@ -71,8 +71,8 @@ module Redu
 
     # Meta dados da aplicação
     config.name = "Redu"
-    config.tagline = "A Rede Social Educacional"
-    config.description = "A Rede Social Educacional"
+    config.tagline = "Rede Social Educacional"
+    config.description = "Rede Social Educacional"
     config.email = "contato@redu.com.br"
 
     # Will paginate
