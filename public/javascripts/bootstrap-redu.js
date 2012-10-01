@@ -1821,6 +1821,13 @@ $(function() {
 
         // O novo tamanho do corpo é: tamanho atual + (altura visível do navegador - espaçamento inferior - topo do modal - altura do modal)
         var newHeight = $modalBody.height() + $(window).height() - settings.bottomMargin - modalTop - $modal.height() + "px"
+
+        var innerHeight = $modalBody[0].scrollHeight - (parseInt($modalBody.css('padding-top'), 10) + parseInt($modalBody.css('padding-bottom'), 10))
+
+        if (innerHeight <= parseInt(newHeight, 10)) {
+          newHeight = innerHeight
+        }
+
         $modalBody.css('max-height', newHeight)
         $modalBody.css('height', newHeight)
 
@@ -1898,7 +1905,7 @@ $(function() {
 }) (window.jQuery)
 
 $(function() {
-  $('.modal-fill-height').reduModal('fillHeight')
+  $('.modal').reduModal('fillHeight')
   $('.modal-scroll').reduModal('scrollArrow')
 })
 
