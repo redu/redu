@@ -1906,106 +1906,128 @@ $(function() {
 
   'use strict';
 
+  var settings = {
+    buttonDefault: 'button-default'
+  , buttonPrimary: 'button-primary'
+  , buttonDanger: 'button-danger'
+  , buttonSuccess: 'button-success'
+  , buttonDisabled: 'button-disabled'
+  , linkSecondary: 'link-secondary'
+  , spinnerHorizontalBlue: 'spinner-horizontal-blue'
+  , spinnerCircularGray: 'spinner-circular-gray'
+  , spinnerCircularBlue: 'spinner-circular-blue'
+  , imgPath: 'images/'
+  , spinnerCircularBlueGif: 'spinner-blue.gif'
+  , spinnerCircularGrayGif: 'spinner-grey.gif'
+  , spinnerCSS: {
+      'display': 'inline-block'
+    , 'vertical-align': 'middle'
+    }
+  }
+
   var methods = {
-    init: function(options) {
-      var settings = $.extend({
-        buttonDefault: 'button-default'
-      , buttonPrimary: 'button-primary'
-      , buttonDanger: 'button-danger'
-      , buttonSuccess: 'button-success'
-      , buttonDisabled: 'button-disabled'
-      , linkSecondary: 'link-secondary'
-      , spinnerHorizontalBlue: 'spinner-horizontal-blue'
-      , spinnerCircularGray: 'spinner-circular-gray'
-      , imgPath: 'img/'
-      , spinnerCircularBlueGif: 'spinner-blue.gif'
-      , spinnerCircularGrayGif: 'spinner-grey.gif'
-      , spinnerCSS: {
-          'display': 'inline-block'
-        , 'vertical-align': 'middle'
-        }
-      }, options)
-
-      return this.each(function() {
-        var $element = $(this)
-
-        // Se for um botão.
-        if ($element.hasClass(settings.buttonDefault)
+    // Verifica se o elemento tem alguma classe de botão.
+    hasButtonClass: function($element) {
+      return ($element.hasClass(settings.buttonDefault)
             || $element.hasClass(settings.buttonPrimary)
             || $element.hasClass(settings.buttonDanger)
-            || $element.hasClass(settings.buttonSuccess)) {
-          // Botão padrão usa o spinner azul e os outros cinza.
-          var spinner = settings.imgPath + settings.spinnerCircularGrayGif
-          if ($element.hasClass(settings.buttonDefault)) {
-            spinner = settings.imgPath + settings.spinnerCircularBlueGif
-          }
+            || $element.hasClass(settings.buttonSuccess))
+    }
 
-          // Retorna as outras classes, que não a do botão.
-          var otherClasses = function(classes) {
-            var otherClasses = []
+    // Chamado antes da requesição AJAX.
+  , ajaxBefore: function(options) {
+      settings = $.extend(settings, options)
 
-            classes = classes.split(' ')
-            $.each(classes, function(index, value) {
-              if (value !== settings.buttonDefault
-                  && value !== settings.buttonPrimary
-                  && value !== settings.buttonDanger
-                  && value !== settings.buttonSuccess
-                  && value !== '') {
-                otherClasses.push(value)
-              }
-            })
+      var $this = $(this)
 
-            return otherClasses.join(' ')
-          }
+      // Se for um formulário.
+      if ($this.is('form')) {
+        var $submit = $this.find('input:submit')
+          , spinnerClass = settings.spinnerCircularGray
 
-          $element.on({
-            ajaxSend: function(e, request, options) {
-              var button = $(this)
-                , content = button.html()
-                , width = button.outerWidth()
-                , height = button.outerHeight()
-                , classes = otherClasses(button.attr('class'))
-                , $spinner = $(document.createElement('img')).attr('src', spinner).css(settings.spinnerCSS)
-
-              button
-                .addClass(settings.buttonDisabled)
-                .removeClass(classes)
-                .data('content', content)
-                .data('class', classes)
-                .html($spinner)
-                .css({'width': width, 'height': height})
-            }
-          , ajaxComplete: function(e, request, options) {
-              var button = $(this)
-                , content = button.data('content')
-                , classes = button.data('class')
-
-              button
-                .removeClass(settings.buttonDisabled)
-                .addClass(classes)
-                .html(content)
-            }
-          })
+        if ($submit.hasClass(settings.buttonDefault)) {
+          spinnerClass = settings.spinnerCircularBlue
         }
 
-        // Se for um link de texto.
-        if ($element.is('a')) {
-          // Link secundário usa o spinner horizontal azul e os outros circular cinza.
-          var spinnerClass = settings.spinnerCircularGray
-          if ($element.hasClass(settings.linkSecondary)) {
-            spinnerClass = settings.spinnerHorizontalBlue
-          }
+        $submit.addClass(spinnerClass)
+        $submit.prop('disabled', true)
+      }
 
-          $element.on({
-            ajaxSend: function(e, request, options) {
-              $(this).addClass(spinnerClass)
-            }
-          , ajaxComplete: function(e, request, options) {
-              $(this).removeClass(spinnerClass)
+      // Se for um botão.
+      if (methods.hasButtonClass($this)) {
+        // Botão padrão usa o spinner azul e os outros cinza.
+        var spinnerImg = settings.imgPath
+        if ($this.hasClass(settings.buttonDefault)) {
+          spinnerImg += settings.spinnerCircularBlueGif
+        } else {
+          spinnerImg += settings.spinnerCircularGrayGif
+        }
+
+        // Retorna as outras classes, que não a do botão.
+        var otherClasses = function(classes) {
+          var otherClasses = []
+
+          classes = classes.split(' ')
+          $.each(classes, function(index, value) {
+            if (value !== settings.buttonDefault
+                && value !== settings.buttonPrimary
+                && value !== settings.buttonDanger
+                && value !== settings.buttonSuccess
+                && value !== '') {
+              otherClasses.push(value)
             }
           })
+
+          return otherClasses.join(' ')
         }
-      })
+
+        var content = $this.html()
+          , width = $this.outerWidth()
+          , height = $this.outerHeight()
+          , classes = otherClasses($this.attr('class'))
+          , $spinner = $(document.createElement('img')).attr('src', spinnerImg).css(settings.spinnerCSS)
+
+        $this
+          .addClass(settings.buttonDisabled)
+          .removeClass(classes)
+          .data('content', content)
+          .data('class', classes)
+          .html($spinner)
+          .css({'width': width, 'height': height})
+      } else if ($this.is('a')) {
+        // Link secundário usa o spinner horizontal azul, o normal usa o circular cinza.
+        var linkSpinnerClass = settings.spinnerCircularGray
+        if ($this.hasClass(settings.linkSecondary)) {
+          linkSpinnerClass = settings.spinnerHorizontalBlue
+        }
+
+        $this.data('spinnerClass', linkSpinnerClass)
+        $this.addClass(linkSpinnerClass)
+      }
+    }
+
+    // Chamado depois da requisição AJAX.
+  , ajaxComplete: function(options) {
+      settings = $.extend(settings, options)
+
+      var $this = $(this)
+
+      if ($this.is('form')) {
+        var $submit = $this.find('input:submit')
+
+        $submit.removeClass($submit.data('spinnerClass'))
+        $submit.prop('disabled', false)
+      }
+
+      // Se for um botão.
+      if (methods.hasButtonClass($this)) {
+        $this
+          .removeClass(settings.buttonDisabled)
+          .addClass($this.data('class'))
+          .html($this.data('content'))
+      } else if ($this.is('a')) {
+        $this.removeClass($this.data('spinnerClass'))
+      }
     }
   }
 
@@ -2022,5 +2044,11 @@ $(function() {
 }) (window.jQuery)
 
 $(function() {
-  $('[data-remote=true]').reduSpinners()
+  $(document)
+    .on('ajax:beforeSend', '[data-remote="true"]', function(xhr, settings) {
+      $(this).reduSpinners('ajaxBefore')
+    })
+    .on('ajax:complete', '[data-remote="true"]', function(xhr, status) {
+      $(this).reduSpinners('ajaxComplete')
+    })
 })
