@@ -16,6 +16,11 @@
   .row { margin-bottom: 25px; }
 
   .tos .control-error label { color: rgb(109, 110, 111); }
+
+  .modal-footer {
+    .button-default +
+    .button-success { margin-left: 10px; }
+  }
 }
 
 // Título.
