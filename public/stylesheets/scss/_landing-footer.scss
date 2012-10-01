@@ -99,6 +99,8 @@
   margin-top: 25px;
   text-align: right;
 
+  .landing-footer-talk-to-us-balloons { display: block; }
+
   h3 + .legend { margin-top: 10px; }
 
   &:hover {
@@ -109,6 +111,9 @@
 
     a { color: $blue4; }
 
-    .landing-footer-talk-to-us-balloons { @include sprite-sprite(talk-to-us_hover); }
+    .landing-footer-talk-to-us-balloons {
+      display: block;
+      @include sprite-sprite(talk-to-us_hover);
+    }
   }
 }
