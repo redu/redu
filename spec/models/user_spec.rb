@@ -243,7 +243,7 @@ describe User do
       it 'retrieves a user by name' do
         User.with_keyword("tarcisio coutinho").to_set.should == [@tarci].to_set
       end
-  end
+    end
 
     it "should retrieve a presence channel name" do
       subject.presence_channel.should == "presence-user-#{subject.id}"
@@ -705,6 +705,65 @@ describe User do
       expect {
         @duplicate.save(:validate => false)
       }.should raise_error(ActiveRecord::RecordNotUnique)
+    end
+  end
+
+  describe 'create_with_omniauth' do
+    before do
+      @auth = {
+        :info => {
+          :nickname => 'edgar.allan.poe',
+          :email => 'edgar@imortals.com',
+          :first_name => 'Edgar',
+          :last_name => 'Poe'
+        },
+        :uid => rand(9999999),
+        :provider => 'facebook'
+      }
+    end
+
+    it 'should create a new user' do
+      expect { 
+        User.create_with_omniauth(@auth)
+      }.to change(User, :count).by(1)
+    end
+
+    it 'should set login for new user properly' do
+      User.create_with_omniauth(@auth).login.should_not be_nil
+    end
+
+    it 'should set e-mail for new user properly' do
+      User.create_with_omniauth(@auth).email.should == @auth[:info][:email]
+    end
+
+    it 'should set first name for new user properly' do
+      User.create_with_omniauth(@auth).first_name.should == @auth[:info][:first_name]
+    end
+
+    it 'should set last name for new user properly' do
+      User.create_with_omniauth(@auth).last_name.should == @auth[:info][:last_name]
+    end
+
+    it 'should create a new authentication' do
+      expect {
+        User.create_with_omniauth(@auth)
+      }.to change(Authentication, :count).by(1)
+    end
+
+    it 'should create a new authentication for correct user' do
+      User.create_with_omniauth(@auth)
+      Authentication.find_by_uid(@auth[:uid]).user.should == User.
+        find('edgarallanpoe')
+    end
+
+    it 'should set uid for new authentication properly' do
+      User.create_with_omniauth(@auth)
+      Authentication.find_by_uid(@auth[:uid]).should_not be_nil
+    end
+
+    it 'should set provider for new authentication properly' do
+      User.create_with_omniauth(@auth)
+      Authentication.find_by_uid(@auth[:uid]).provider.should == @auth[:provider]
     end
   end
 
