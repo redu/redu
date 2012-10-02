@@ -21,32 +21,36 @@
         <ul class="landing-footer-navigation">
           <li>
             <%= link_to "Sobre o Redu",
-                home_path,
+                home_path(:anchor => ""),
                 :title => "Sobre o Redu"
             %>
           </li>
           <li>
             <%= link_to "Segmentos",
                 home_path(:anchor => "segmentos"),
-                :title => "Segmentos"
+                :title => "Segmentos",
+                :class => "landing-scroll"
             %>
           </li>
           <li>
             <%= link_to "Vantagens",
                 home_path(:anchor => "vantagens"),
-                :title => "Vantagens"
+                :title => "Vantagens",
+                :class => "landing-scroll"
             %>
           </li>
           <li>
             <%= link_to "Funcionalidades",
                 home_path(:anchor => "funcionalidades"),
-                :title => "Funcionalidades"
+                :title => "Funcionalidades",
+                :class => "landing-scroll"
             %>
           </li>
           <li>
             <%= link_to "Planos",
                 home_path(:anchor => "planos"),
-                :title => "Planos"
+                :title => "Planos",
+                :class => "landing-scroll"
             %>
           </li>
         </ul>
