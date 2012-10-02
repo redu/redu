@@ -1,12 +1,12 @@
 <div class="landing-header">
   <div class="container">
     <%= link_to home_path, :title => "Redu", :class => "landing-logo-wrapper" do %>
-      <h1 class="landing-logo sprite-logo text-replacement">Redu</h1>
+      <h1 class="landing-logo sprite-logo text-replacement" title="Redu">Redu</h1>
     <% end %>
     <div class="landing-header-buttons">
       <div class="landing-button-sign-up">
         <span class="icon-add-friend-darkgray_32_34 text-replacement">Cadastrar</span>
-        <%= link_to "Não possui conta? Cadastre-se, é grátis", "#cadastro", :class => "button-big button-success pull-right", "data-toggle" => "modal" %>
+        <%= link_to "Não possui conta? Cadastre-se, é grátis", "#modal-sign-up", :class => "button-big button-success pull-right", "data-toggle" => "modal" %>
         <%= render :partial => "landing/modal_sign_up" %>
       </div>
       <div class="landing-button-sign-in">
