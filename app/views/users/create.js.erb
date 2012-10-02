@@ -1,7 +1,7 @@
-var $form = $("#form-sign-up")
+var $form = $("#form-sign-up");
+var $modal = $("#cadastro");
 
 <% if @user.errors.empty? %>
-  var $modal = $("#cadastro");
   $modal.modal("hide");
 
   var $modalSuccess = $("<%= escape_javascript render 'landing/modal_sign_up_success',
@@ -17,4 +17,5 @@ var $form = $("#form-sign-up")
   <% end %>
 
   $form.replaceWith($newForm);
+  $modal.reduModal('fillHeight');
 <% end %>
