@@ -347,6 +347,7 @@
           , e = $.Event('show')
 
         this.$element.trigger(e)
+        this.$element.trigger('fitContent.redu')
 
         if (this.isShown || e.isDefaultPrevented()) return
 
@@ -518,6 +519,7 @@
   })
 
 }(window.jQuery);
+
 /* ===========================================================
  * bootstrap-tooltip.js v2.0.4
  * http://twitter.github.com/bootstrap/javascript.html#tooltips
@@ -1793,9 +1795,15 @@ $(function() {
   var methods = {
     // Usado para conseguir o tamanho de um elemento com display none.
     displayHidden: function($element) {
-      $element.css({
-        'visibility': 'hidden'
-      , 'display': 'block'})
+      var wasVisible = true
+      if ($element.css('display') === 'none') {
+        $element.css({
+          'visibility': 'hidden'
+        , 'display': 'block'})
+        wasVisible = false
+      }
+
+      return wasVisible
     }
 
     // Retorna o elemento para display none.
@@ -1804,6 +1812,30 @@ $(function() {
         'visibility': 'visible'
       , 'display': 'none'})
     }
+
+  , fitContent: function($modal, settings) {
+    var $modalBody = $modal.find('.' + classes.modalBody)
+      , modalTop = parseInt($modal.css('top'), 10)
+      , wasVisible
+
+    wasVisible = methods.displayHidden($modal)
+
+    // O novo tamanho do corpo é: tamanho atual + (altura visível do navegador - espaçamento inferior - topo do modal - altura do modal)
+    var newHeight = $modalBody.height() + $(window).height() - settings.bottomMargin - modalTop - $modal.height() + "px"
+
+    var innerHeight = $modalBody[0].scrollHeight - (parseInt($modalBody.css('padding-top'), 10) + parseInt($modalBody.css('padding-bottom'), 10))
+
+    if (innerHeight <= parseInt(newHeight, 10)) {
+      newHeight = innerHeight
+    }
+
+    $modalBody.css('max-height', newHeight)
+    $modalBody.css('height', newHeight)
+
+    if (!wasVisible) {
+      methods.displayVisible($modal)
+    }
+  }
 
     // Preenche verticalmente a janela modal.
   , fillHeight: function(options) {
@@ -1814,24 +1846,10 @@ $(function() {
 
       return this.each(function() {
         var $modal = $(this)
-          , $modalBody = $modal.find('.' + classes.modalBody)
-          , modalTop = parseInt($modal.css('top'), 10)
-
-        methods.displayHidden($modal)
-
-        // O novo tamanho do corpo é: tamanho atual + (altura visível do navegador - espaçamento inferior - topo do modal - altura do modal)
-        var newHeight = $modalBody.height() + $(window).height() - settings.bottomMargin - modalTop - $modal.height() + "px"
-
-        var innerHeight = $modalBody[0].scrollHeight - (parseInt($modalBody.css('padding-top'), 10) + parseInt($modalBody.css('padding-bottom'), 10))
-
-        if (innerHeight <= parseInt(newHeight, 10)) {
-          newHeight = innerHeight
-        }
-
-        $modalBody.css('max-height', newHeight)
-        $modalBody.css('height', newHeight)
-
-        methods.displayVisible($modal)
+        $modal.on('fitContent.redu', function(e) {
+          methods.fitContent($modal, settings)
+        })
+        $modal.trigger('fitContent.redu')
       })
     }
 
@@ -1865,8 +1883,8 @@ $(function() {
                   .html(settings.arrowDown)
             , modalBodyOffset = $modalBody.offset()
             , margin = (parseInt($modalBody.css('padding-left'), 10) - settings.arrowWidth) / 2
-            , arrowUpPosition = modalBodyOffset.top - $(window).scrollTop()
-            , arrowDownPosition = arrowUpPosition + $modalBody.height() - margin
+            , arrowUpPosition = modalBodyOffset.top - $(window).scrollTop() + 5
+            , arrowDownPosition = arrowUpPosition + $modalBody.height()
 
           $scrollArrow.css({
             'top': arrowDownPosition
@@ -1923,7 +1941,7 @@ $(function() {
   , spinnerHorizontalBlue: 'spinner-horizontal-blue'
   , spinnerCircularGray: 'spinner-circular-gray'
   , spinnerCircularBlue: 'spinner-circular-blue'
-  , imgPath: 'images/'
+  , imgPath: 'img/'
   , spinnerCircularBlueGif: 'spinner-blue.gif'
   , spinnerCircularGrayGif: 'spinner-grey.gif'
   , spinnerCSS: {
