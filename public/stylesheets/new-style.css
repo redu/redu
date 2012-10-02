@@ -7221,6 +7221,13 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   color: transparent;
 }
 
+.status a.close.link-loading,
+.status a.close.link-loading:hover {
+  background: url("../images/new/spinner-blue-horiz.gif") no-repeat center center;
+  color: transparent;
+}
+
+
 .textshadow .link-loading,
 .textshadow a.link-loading,  /* para sobrepor a precedência de input.important */
 .textshadow #space-manage .new-resource .resources-types li a.link-loading, /* para sobrepor a precedência */
