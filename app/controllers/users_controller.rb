@@ -113,7 +113,7 @@ class UsersController < BaseController
         end
 
         flash[:notice] = t(:email_signup_thanks, :email => @user.email)
-        redirect_to signup_completed_user_path(@user)
+        respond_with(@user)
       else
         # Se tem um token de convite para o curso, atribui as variáveis
         # necessárias para mostrar o convite em Users#new
@@ -142,10 +142,10 @@ class UsersController < BaseController
             redirect_back_or_default user_path(current_user)
           else
             flash[:notice] = t :uh_oh_we_couldnt_log_you_in_with_the_username_and_password_you_entered_try_again
-            render :action => :new
+            respond_with(@user)
           end
         else
-          render :template => 'users/new', :layout => 'cold'
+          respond_with(@user)
         end
       end
     # FIXME Após migrar o Rails (> 3.0.10) ver se a solução clean funciona.

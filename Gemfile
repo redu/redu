@@ -2,6 +2,10 @@ source 'http://rubygems.org'
 source 'http://gems.github.com'
 source 'http://reduadmin:pomp64bozos@the-shire.herokuapp.com/'
 
+group :assets do
+  gem 'compass-rails'
+end
+
 gem 'aasm'
 gem 'actionmailer_inline_css',
   :git => 'git://github.com/ndbroadbent/actionmailer_inline_css.git',
@@ -20,7 +24,7 @@ gem 'aws-s3', :require => 'aws/s3'
 gem 'aws-sdk'
 gem 'backup',
   :git => 'git://github.com/meskyanichi/backup.git'
-gem 'bundler', '~> 1.0.15'
+gem 'bundler'
 gem 'cancan', '~> 1.6.7'
 gem 'ckeditor', '3.4.2.pre'
 gem 'daemons'
