@@ -117,7 +117,7 @@ class PackageInvoice < Invoice
     end
 
     PackageInvoice.current.paid.each do |i|
-      i.create_next_invoice if i.period_end < Date.today
+      i.create_next_invoice if i.can_create_next_invoice?
     end
   end
 end

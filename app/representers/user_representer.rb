@@ -13,6 +13,8 @@ module UserRepresenter
   property :localization
   property :birth_localization
   property :thumbnails
+  property :created_at
+  property :updated_at
   collection :social_networks, :extend => SocialNetworkRepresenter,
     :class => SocialNetwork
 
@@ -41,6 +43,10 @@ module UserRepresenter
 
   link :contacts do
     api_user_contacts_url(self)
+  end
+
+  link :chats do
+    api_user_chats_url(self)
   end
 
 end

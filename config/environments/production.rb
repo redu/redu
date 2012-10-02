@@ -9,6 +9,9 @@ Redu::Application.configure do
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
+  # Use a different cache store in production
+  config.cache_store = :file_store, "#{config.root}/tmp/cache"
+
   # Specifies the header that your server uses for sending files
   config.action_dispatch.x_sendfile_header = "X-Sendfile"
 
@@ -23,9 +26,6 @@ Redu::Application.configure do
 
   # Use a different logger for distributed setups
   # config.logger = SyslogLogger.new
-
-  # Use a different cache store in production
-  # config.cache_store = :mem_cache_store
 
   # Disable Rails's static asset server
   # In production, Apache or nginx will already do this
@@ -68,15 +68,13 @@ Redu::Application.configure do
 
   # Configurações de VisClient
   config.vis_client = {
-   :url => "http://ec2-72-44-40-238.compute-1.amazonaws.com/hierarchy_notifications.json",
-   :migration => "http://ec2-72-44-40-238.compute-1.amazonaws.com/database_hierarchy_notifications.json"
- }
+    :url => "http://vis.redu.com.br/hierarchy_notifications.json"
+  }
 
   config.vis = {
-    :activities => "http://ec2-72-44-40-238.compute-1.amazonaws.com/subjects/activities.json",
-    :activities_d3 => "http://ec2-72-44-40-238.compute-1.amazonaws.com/subjects/activities_d3.json",
-    :lecture_participation => "http://ec2-72-44-40-238.compute-1.amazonaws.com/lectures/participation.json",
-    :students_participation => "http://ec2-72-44-40-238.compute-1.amazonaws.com/user_spaces/participation.json"
+    :subject_activities => "http://vis.redu.com.br/subjects/activities.json",
+    :lecture_participation => "http://vis.redu.com.br/lectures/participation.json",
+    :students_participation => "http://vis.redu.com.br/user_spaces/participation.json"
   }
 
 end

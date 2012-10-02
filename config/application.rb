@@ -220,7 +220,9 @@ module Redu
                                         :partner_cache_observer,
                                         :message_cache_observer,
                                         :lecture_cache_observer,
-                                        :asset_report_cache_observer]
+                                        :asset_report_cache_observer,
+                                        :chat_message_observer,
+      ]
     end
 
     # Redu logger

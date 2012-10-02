@@ -481,6 +481,20 @@ describe Course do
         @environment.users.should include(@user)
       end
     end
+
+    context 'when the user is with pending moderation' do
+      before do
+        @user_pending = Factory(:user)
+        subject.update_attribute(:subscription_type, 2) # Com Moderação
+        subject.join @user_pending
+      end
+
+      it 'dont raise an error' do
+        expect {
+          subject.unjoin @user_pending
+        }.should_not raise_error
+      end
+    end
   end
 
   it "verifies if the user is waiting for approval" do
@@ -865,4 +879,17 @@ describe Course do
       end
     end
   end
+
+  context "with a space marked for destruction" do
+    it "should destroy associated space" do
+      subject.spaces << \
+        Factory(:space, :owner => subject.owner, :course => subject,
+                :destroy_soon => true)
+      subject.spaces.reload
+      expect {
+        subject.destroy
+      }.to change(Space, :count).by(-1)
+    end
+  end
+
 end

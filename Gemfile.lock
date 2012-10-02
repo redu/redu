@@ -11,11 +11,11 @@ GIT
 
 GIT
   remote: git://github.com/collectiveidea/delayed_job_active_record.git
-  revision: 2ece2822a5a8b00a24b3a158eba5300d90f92c73
+  revision: bade04ddeb692d102f5e2c094a7b9935c48f82b8
   specs:
     delayed_job_active_record (0.3.2)
-      activerecord (> 2.1.0)
-      delayed_job (~> 3.0.0)
+      activerecord (>= 2.1.0, < 4)
+      delayed_job (~> 3.0)
 
 GIT
   remote: git://github.com/edgarjs/ajaxful-rating.git
@@ -59,6 +59,16 @@ GIT
       activesupport (>= 3.0.0)
 
 GIT
+  remote: git://github.com/redu/destroy-soon.git
+  revision: 6129601802a0a0ae0d7f3e60d0c31dcd01c94d6c
+  specs:
+    destroy_soon (0.0.3)
+      activerecord (~> 3.0.10)
+      activesupport (~> 3.0.10)
+      delayed_job_active_record (~> 0.3.2)
+      rake
+
+GIT
   remote: git@github.com:redu/invitable.git
   revision: 171dcdb33d0955357a0af7980d6882925958949c
   specs:
@@ -67,9 +77,9 @@ GIT
 
 GIT
   remote: git@github.com:redu/vis_client.git
-  revision: ef3bbcfb8c95c0b8040ca44521de4b866db42f97
+  revision: f5ff7ffc8c914f1cc43e454bdd09c093025032ef
   specs:
-    vis_client (0.0.4)
+    vis_client (0.0.6)
 
 GIT
   remote: https://github.com/apotonick/roar.git
@@ -81,6 +91,7 @@ GIT
 GEM
   remote: http://rubygems.org/
   remote: http://gems.github.com/
+  remote: http://reduadmin:pomp64bozos@the-shire.herokuapp.com/
   specs:
     POpen4 (0.1.4)
       Platform (>= 0.4.0)
@@ -121,7 +132,7 @@ GEM
     activesupport (3.0.10)
     acts-as-taggable-on (2.0.6)
     acts_as_tree (0.1.1)
-    addressable (2.2.8)
+    addressable (2.3.2)
     ar_mailer_rails3 (2.1.12)
     arel (2.0.10)
     authlogic (3.0.2)
@@ -154,25 +165,29 @@ GEM
       sass (~> 3.1)
     compass-rails (1.0.3)
       compass (>= 0.12.2, < 0.14)
-    crack (0.1.8)
+    cookiejar (0.3.0)
+    crack (0.3.1)
     css_parser (1.2.5)
       addressable
     daemons (1.1.8)
     date_validator (0.6.1)
       activemodel (~> 3.0.0)
     deep_cloneable (1.2.3)
-    delayed_job (3.0.2)
+    delayed_job (3.0.3)
       activesupport (~> 3.0)
     diff-lcs (1.1.3)
     dynamic_form (1.1.4)
-    em-http-request (0.3.0)
-      addressable (>= 2.0.0)
-      escape_utils
-      eventmachine (>= 0.12.9)
+    em-http-request (1.0.3)
+      addressable (>= 2.2.3)
+      cookiejar
+      em-socksify
+      eventmachine (>= 1.0.0.beta.4)
+      http_parser.rb (>= 0.5.3)
+    em-socksify (0.2.1)
+      eventmachine (>= 1.0.0.beta.4)
     erubis (2.6.6)
       abstract (>= 1.0.0)
-    escape_utils (0.2.4)
-    eventmachine (0.12.10)
+    eventmachine (1.0.0)
     exceptional (2.0.32)
       rack
     excon (0.9.6)
@@ -201,6 +216,7 @@ GEM
     hashie (1.2.0)
     hooks (0.2.1)
     htmlentities (4.3.0)
+    http_parser.rb (0.5.3)
     httparty (0.8.1)
       multi_json
       multi_xml
@@ -226,6 +242,8 @@ GEM
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
       railties (>= 3.0.0)
+    lazy_high_charts (1.2.2)
+      bundler (~> 1.0)
     linecache (0.43)
     mail (2.2.19)
       activesupport (>= 2.3.6)
@@ -234,7 +252,7 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.18)
     mimemagic (0.1.8)
-    multi_json (1.0.3)
+    multi_json (1.0.4)
     multi_xml (0.5.1)
     multipart-post (1.1.5)
     mysql2 (0.2.7)
@@ -273,10 +291,8 @@ GEM
       css_parser (>= 1.1.9)
       htmlentities (>= 4.0.0)
     proxies (0.2.1)
-    pusher (0.8.1)
-      crack (~> 0.1.0)
+    pusher (0.9.4)
       multi_json (~> 1.0)
-      ruby-hmac (~> 0.4.0)
       signature (~> 0.1.2)
     rack (1.2.5)
     rack-cors (0.2.6)
@@ -293,8 +309,6 @@ GEM
       activesupport (= 3.0.10)
       bundler (~> 1.0)
       railties (= 3.0.10)
-    rails-footnotes (3.7.5.rc4)
-      rails (>= 3.0.0)
     rails3-generators (0.17.4)
       railties (>= 3.0.0)
     railties (3.0.10)
@@ -308,6 +322,8 @@ GEM
       activerecord (>= 3.0.0)
     rdoc (3.12)
       json (~> 1.4)
+    redu_analytics (0.0.2)
+      lazy_high_charts
     remotipart (1.0.2)
     representable (1.2.5)
       json
@@ -346,8 +362,7 @@ GEM
       rubyzip
     shoulda-matchers (1.0.0.beta2)
     shuber-sortable (1.0.6)
-    signature (0.1.2)
-      ruby-hmac
+    signature (0.1.4)
     simple-navigation (3.5.0)
       activesupport (>= 2.3.2)
     test_xml (0.1.2)
@@ -364,7 +379,7 @@ GEM
     tzinfo (0.3.33)
     useragent (0.4.8)
     uuidtools (2.1.2)
-    webmock (1.8.6)
+    webmock (1.8.10)
       addressable (>= 2.2.7)
       crack (>= 0.1.7)
     whenever (0.7.3)
@@ -404,6 +419,7 @@ DEPENDENCIES
   date_validator
   deep_cloneable
   delayed_job_active_record!
+  destroy_soon!
   dynamic_form
   em-http-request
   eventmachine
@@ -427,10 +443,10 @@ DEPENDENCIES
   pusher
   rack-cors
   rails (= 3.0.10)
-  rails-footnotes (>= 3.7.5.rc4)
   rails3-generators
   rake (= 0.8.7)
   rd_searchlogic
+  redu_analytics
   remotipart (~> 1.0)
   roar!
   roar-rails (~> 0.0.3)!

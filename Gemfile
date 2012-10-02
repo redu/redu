@@ -1,5 +1,6 @@
 source 'http://rubygems.org'
 source 'http://gems.github.com'
+source 'http://reduadmin:pomp64bozos@the-shire.herokuapp.com/'
 
 group :assets do
   gem 'compass-rails'
@@ -72,6 +73,8 @@ gem 'oauth-plugin', '~> 0.4.0'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'roar-rails', '~> 0.0.3',
   :git => 'git://github.com/apotonick/roar-rails.git'
+gem 'destroy_soon', :git => 'git://github.com/redu/destroy-soon.git'
+gem 'redu_analytics'
 
 # Gems específicos de algum ambiente
 group :development, :test do
@@ -89,10 +92,13 @@ group :test do
 end
 
 group :development do
-  gem 'rails-footnotes', '>= 3.7.5.rc4'
   gem 'thin'
   # gem 'uniform_notifier'
+
+  # Gems úteis p/ análise performance
   # gem 'bullet'
+  # gem 'rack-mini-profiler', '0.1.10'
+  # gem 'rails-footnotes', '>= 3.7.5.rc4'
 end
 
 group :production do

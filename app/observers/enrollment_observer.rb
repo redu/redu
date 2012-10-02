@@ -2,10 +2,9 @@ class EnrollmentObserver < ActiveRecord::Observer
   include EnrollmentVisNotification
 
   def before_update(enrollment)
-    old_enroll = Enrollment.find(enrollment.id)
-    if enrollment.graduaded and old_enroll.grade != enrollment.grade
+    if enrollment.graduated? and enrollment.grade_changed?
       notify_vis(enrollment, "subject_finalized")
-    elsif enrollment.graduaded == false and old_enroll.grade == 100
+    elsif !enrollment.graduated? and enrollment.changed_attributes['grade'] == 100
       notify_vis(enrollment, "remove_subject_finalized")
     end
   end

@@ -517,4 +517,20 @@ describe LicensedInvoice do
       end
     end
   end
+
+  context "when billable was destroyed" do
+    before do
+      @plan = Factory(:active_licensed_plan)
+      @plan.create_invoice({:invoice => {
+        :period_start => Date.today - 1.month}
+      })
+      @plan.billable.destroy
+
+      LicensedInvoice.refresh_states!
+    end
+
+    it "should not generate new invoice" do
+      @plan.invoices.length.should == 1
+    end
+  end
 end

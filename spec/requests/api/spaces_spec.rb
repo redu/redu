@@ -15,7 +15,7 @@ describe "Spaces API" do
     end
 
     it "should have the correct keys" do
-      %w(name description created_at links id).each do |attr|
+      %w(name description created_at updated_at links id).each do |attr|
         parse(response.body).should have_key attr
       end
     end

@@ -195,6 +195,8 @@ pt-BR:
         localization: "Cidade onde vive"
         mobile: "Celular"
         password: "Senha"
+        password_confirmation: "Confirmação da senha"
+        email_confirmation: "Confirmação de E-mail"
       partner:
         name: "Nome"
       partner_environment_association:
@@ -280,6 +282,10 @@ pt-BR:
           attributes:
             cnpj:
               invalid: "formato inválido"
+        seminar:
+          attributes:
+            original:
+              empty: "Você não está esquecendo de algo? Acho que pode ser o vídeo :)"
 
   helpers:
     submit:

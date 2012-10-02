@@ -19,7 +19,7 @@ describe "Statuses" do
     end
 
     it "should have id, text, created_at, links and type" do
-      %w(id text created_at links type).each do |attr|
+      %w(id text created_at links updated_at type).each do |attr|
         @entity.should have_key attr
       end
     end
@@ -195,48 +195,21 @@ describe "Statuses" do
       parse(response.body).count.should == activity_or_help.length
     end
 
-    it "should filter by status type (help)" do
-      get "/api/users/#{@current_user.id}/statuses", :type => "help",
+    %w(Help help Log log  Activity activity).each do |filter|
+      it "should filter by statatus type #{filter}" do
+        get "/api/users/#{@current_user.id}/statuses", :type => filter,
         :oauth_token => @token, :format => 'json'
+        parse(response.body).all? { |s| s["type"] == filter.classify }.should be
+      end
 
-      parse(response.body).all? { |s| s["type"] == "Help" }.should be
+      it "should return correct number of statuses #{filter}" do
+        get "/api/users/#{@current_user.id}/statuses", :type => filter,
+        :oauth_token => @token, :format => 'json'
+        stats = @user_statuses.select {|i| i[:type] == filter.classify}
+        parse(response.body).count.should == stats.length
+      end
     end
 
-    it "should return correct numbers of statuses (Help)" do
-      get "/api/users/#{@current_user.id}/statuses", :type => "help",
-        :oauth_token => @token, :format => 'json'
-
-      helps = @user_statuses.select {|i| i[:type] == "Help" }
-      parse(response.body).count.should == helps.length
-    end
-
-    it "should return correct numbers of statuses (Log)" do
-      get "/api/users/#{@current_user.id}/statuses", :type => "log",
-        :oauth_token => @token, :format => 'json'
-
-      parse(response.body).count.should == @user_statuses.
-        select {|i| i[:type] == "Log" }.length
-    end
-
-    it "should filter by status type (log)" do
-      get "/api/users/#{@current_user.id}/statuses", :type => "log",
-        :oauth_token => @token, :format => 'json'
-      parse(response.body).all? { |s| s["type"] == "Log" }.should be
-    end
-
-    it "should filter by status type (activity)" do
-      get "/api/users/#{@current_user.id}/statuses", :type => "activity",
-        :oauth_token => @token, :format => 'json'
-      parse(response.body).all? { |s| s["type"] == "Activity" }.should be
-    end
-
-    it "should return correct numbers of statuses (Activity)" do
-      get "/api/users/#{@current_user.id}/statuses", :type => 'activity',
-        :oauth_token => @token, :format => 'json'
-
-      parse(response.body).count.should == @user_statuses.
-        select {|i| i[:type] == "Activity" }.length
-    end
   end
 
   context "when listing user statuses" do

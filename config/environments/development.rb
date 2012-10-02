@@ -66,16 +66,27 @@ Redu::Application.configure do
 
   # Configurações de VisClient
   config.vis_client = {
-    :url => "http://localhost:4000/hierarchy_notifications.json",
-    :migration => "http://localhost:4000/database_hierarchy_notifications.json"
+    :url => "http://localhost:4000/hierarchy_notifications.json"
   }
 
   config.vis = {
-    :activities => "http://localhost:4000/subjects/activities.json",
-    :activities_d3 => "http://localhost:4000/subjects/activities_d3.json",
+    :subject_activities => "http://localhost:4000/subjects/activities.json",
     :lecture_participation => "http://localhost:4000/lectures/participation.json",
     :students_participation => "http://localhost:4000/user_spaces/participation.json"
   }
 
+  Footnotes.run! if defined?(Footnotes)
+
+  if defined?(Bullet)
+    config.after_initialize do
+      Bullet.enable = true
+      Bullet.alert = true
+      Bullet.bullet_logger = true
+      Bullet.console = true
+      Bullet.rails_logger = true
+      Bullet.disable_browser_cache = true
+    end
+  end
 end
+
 

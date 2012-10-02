@@ -65,7 +65,7 @@ class BaseController < ApplicationController
 
   # Mostra ou não o layout com base na presença do header x-pjax
   def choose_layout
-    return request.headers['X-PJAX'].nil? ?  'application' : false
+    return request.headers['X-PJAX'].nil? ?  'application' : 'pjax'
   end
 
   def logged_in?

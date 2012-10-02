@@ -5,9 +5,9 @@
 </div>
 <div class="main grid_12 omega big-col management-wrapper">
   <%= render :partial => 'courses/breadcrumbs',
-    :locals => { :course => @header_course } %>
+    :locals => { :course => @header_course || @course } %>
   <%= render :partial => 'courses/admin/header',
-    :locals => { :course => @header_course } %>
+    :locals => { :course => @header_course || @course } %>
   <div id="course-manage" class="body management">
     <%= render :partial => 'courses/admin/clean_header' %>
     <%= tabs :courses_admin do %>
@@ -25,7 +25,7 @@
         </div>
       <% end %>
       <%= form_for @course,
-        :url => environment_course_path(@environment, @header_course),
+        :url => environment_course_path(@environment, @header_course || @course),
         :html => { :class => "concave-form" } do |f| %>
         <%= concave_error_messages_for @course %>
         <%= render :partial => 'courses/admin/form', :locals => { :f => f, :edit => true, :partner => @environment.partner } %>
@@ -43,7 +43,7 @@
           :confirm => 'Você tem certeza que deseja remover este curso?', :method => :delete,
           :class => "concave-remove" %>
       <% end %>
-      <%= link_to "Sair", environment_course_path(@environment, @header_course),
+      <%= link_to "Sair", environment_course_path(@environment, @header_course || @course),
         :class => "manage exit icon-manage-gray_8_10-before" %>
     <% end %>
   </div>

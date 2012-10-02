@@ -6,6 +6,8 @@ module StatusRepresenter
   property :created_at
   property :type
   property :text
+  property :created_at
+  property :updated_at
   property :user, :extend => UserRepresenter, :class => User
 
   link :self do

@@ -6,6 +6,7 @@ module CourseEnrollmentRepresenter
   property :id
   property :email #works only for UCI
   property :created_at
+  property :updated_at
   property :token
 
   link :self do

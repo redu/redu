@@ -164,6 +164,11 @@ class UsersController < BaseController
   end
 
   def curriculum
+    # Usuário incluído para evitar diversas consultas; não foi passado o
+    # @user para não perder legibilidade
+    @experiences = @user.experiences.includes(:user)
+    @educations = @user.educations.includes(:educationable, :user)
+
     @experience = Experience.new
     @high_school = HighSchool.new
     @higher_education = HigherEducation.new
@@ -348,7 +353,8 @@ class UsersController < BaseController
     if params[:q] # Usado em invitations: todos os users
       @users = User.with_keyword(params[:q])
       @users = @users.map do |u|
-        { :id => u.id, :name => u.display_name, :avatar_32 => u.avatar.url(:thumb_32) }
+        { :id => u.id, :name => u.display_name, :avatar_32 => u.avatar.url(:thumb_32),
+          :mail => u.email }
       end
     elsif params[:tag] # Usado em messages: somente amigos
       @users = current_user.friends.with_keyword(params[:tag])

@@ -13,16 +13,8 @@ jQuery(function(){
     });
 
 
-    // Mensagem "Carregando..."
-    $("#content").bind('start.pjax', function() {
-      $('#loading-message').show();
-    });
-    $("#content").bind('end.pjax', function() {
-      $('#loading-message').hide();
-    });
-
     // Dropdown de usuário
-    $("#nav-account").hover(function(){
+    $("#nav-account").live("hover", function(){
         $(this).find(".username").toggleClass("hover");
         $(this).find("ul").toggle();
     });
@@ -117,7 +109,7 @@ jQuery(function(){
 
         if (email_val != confirmation_val) {
           $("#user_email_confirmation-error").remove();
-          $(this).after("<p id=\"user_email_confirmation-error\" class=\"errorMessageField\">Os e-mails digitados não são iguais.</p>");
+          $(this).next(".errors_on_field").append("<p id=\"user_email_confirmation-error\" class=\"errorMessageField\">Os e-mails digitados não são iguais.</p>");
 
         } else {
           $("#user_email_confirmation-error").remove();

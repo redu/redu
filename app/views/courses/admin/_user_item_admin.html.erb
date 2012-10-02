@@ -13,12 +13,12 @@
       <span class="member-detail">Inscrito em <%= user_item_admin.created_at && l(user_item_admin.created_at, :format => :admin) %></span>
     </div>
   </td>
-  <% role =  Role[user_item_admin.user.get_association_with(@course).role] %>
+  <% role = Role[user_item_admin.role] %>
   <td class="cell role-info centered-cell"><span class="member-detail role icon-<%= role %>-gray_16_18-before"><%= Role.human_attribute_name(role) %></span></td>
   <td class="cell centered-cell">
     <span class="member-detail">
       <span class="icon-space-gray_16_18-before">
-        Matriculado em <%= user_item_admin.user.spaces.of_course(@course).count %> disciplina(s)
+        Matriculado em <%= pluralize spaces_count, 'disciplina' %>
       </span>
     </span>
   </td>

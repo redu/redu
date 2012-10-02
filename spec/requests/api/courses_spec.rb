@@ -16,7 +16,7 @@ describe Api::CoursesController do
     end
 
     it "should have the correct keys" do
-      %w(name description created_at links workload id path).each do |attr|
+      %w(name description created_at updated_at links workload id path).each do |attr|
         parse(response.body).should have_key attr
       end
     end

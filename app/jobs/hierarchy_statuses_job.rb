@@ -1,9 +1,9 @@
 class HierarchyStatusesJob
   attr_accessor :status_id, :course_id
 
-  def initialize(status_id, course_id)
-    @status_id = status_id
-    @course_id = course_id
+  def initialize(opts)
+    @status_id = opts[:status_id]
+    @course_id = opts[:course_id]
   end
 
   def perform

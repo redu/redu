@@ -1,11 +1,12 @@
-<% unless @user.completeness == 100 %>
+<% completeness = @user.completeness %>
+<% unless completeness == 100 %>
   <div class="incomplete-profile">
     <em>Seu perfil ainda não está completo</em>
     <div class="progress">
-      <span class="progress-value"><%= @user.completeness %>%</span>
+      <span class="progress-value"><%= completeness %>%</span>
       <div class="progress-completed">
-        <div class="completed" style="width: <%= @user.completeness %>%;">
-          <span> <%= @user.completeness %>%</span>
+        <div class="completed" style="width: <%= completeness %>%;">
+          <span> <%= completeness %>%</span>
         </div>
       </div>
     </div>

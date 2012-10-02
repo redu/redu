@@ -317,4 +317,16 @@ describe Environment do
       courses[1].users.should_not include(users[0..1])
     end
   end
+
+  context "with a course marked for destruction" do
+    it "should destroy associated course" do
+      subject.courses << \
+        Factory(:course, :owner => subject.owner, :environment => subject,
+                :destroy_soon => true)
+      subject.courses.reload
+      expect {
+        subject.destroy
+      }.to change(Course, :count).by(-1)
+    end
+  end
 end

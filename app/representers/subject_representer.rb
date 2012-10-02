@@ -6,6 +6,7 @@ module SubjectRepresenter
   property :name
   property :description
   property :created_at
+  property :updated_at
 
   link :self do
     api_subject_url(self)

@@ -52,6 +52,10 @@ class Invoice < ActiveRecord::Base
     }})
   end
 
+  def can_create_next_invoice?
+    self.plan.billable && self.period_end < Date.today
+  end
+
   def total_days
     (self.period_end - self.period_start + 1).to_i
   end

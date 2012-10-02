@@ -1,9 +1,9 @@
 class UserStatusesJob
   attr_accessor :user_id, :status_id
 
-  def initialize(user_id, status_id)
-    @user_id = user_id
-    @status_id = status_id
+  def initialize(opts)
+    @user_id = opts[:user_id]
+    @status_id = opts[:status_id]
   end
 
   def perform

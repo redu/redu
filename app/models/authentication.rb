@@ -3,12 +3,15 @@ class Authentication < ActiveRecord::Base
   validates :uid, :provider, :presence => true
   validates_uniqueness_of :uid, :scope => :provider
 
-  def self.build_user(omniauth)
+  def self.create_user(omniauth)
     user = User.new
     info = omniauth[:info]
     user.email = info[:email]
     user.reset_password
     user.tos = '1'
+    user.update_attributes(:activated_at => Time.now)
+    user.authentications.build(:provider => omniauth[:provider],
+                               :uid => omniauth[:uid])
 
     # Cria novo usuário a partir de hash do Omniauth.
     case omniauth[:provider]
@@ -23,6 +26,7 @@ class Authentication < ActiveRecord::Base
         end
       end
     end
+    user.save
     user.create_settings!
 
     user

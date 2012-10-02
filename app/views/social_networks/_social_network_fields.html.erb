@@ -10,7 +10,7 @@
     :class => "concave-small social-url" %>
 
   <% if !f.object.id.nil? %>
-    <%= link_to (t :remove), user_social_network_path(f.object.user.login, f.object.id),
+    <%= link_to (t :remove), user_social_network_path(user.login, f.object.id),
       :remote => true, :method => :delete,
       :class => "remove-network icon-delete-gray_8_10-before replacement",
       :confirm => "Você tem certeza que deseja excluir esta rede social?" %>

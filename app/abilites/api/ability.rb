@@ -8,6 +8,8 @@ module Api
     include Api::UserAbility
     include Api::LectureAbility
     include Api::SubjectAbility
+    include Api::ChatAbility
+    include Api::ChatMessageAbility
 
     include Api::ActivityAbility
     include Api::LogAbility

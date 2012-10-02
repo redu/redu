@@ -11,7 +11,7 @@ describe "Environments API" do
       get "/api/environments/#{subject.id}", :oauth_token => @token,
         :format => 'json'
 
-      %w(name description created_at links path initials id).each do |attr|
+      %w(name description created_at updated_at links path initials id).each do |attr|
         parse(response.body).should have_key attr
       end
     end

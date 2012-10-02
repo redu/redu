@@ -75,7 +75,7 @@ class LicensedInvoice < Invoice
   #   ou se apenas o reenvio do email deve ser feito
   def self.refresh_states!
     LicensedInvoice.open.each do |i|
-      i.pend! if i.period_end < Date.today
+      i.pend! if i.can_create_next_invoice?
     end
 
     LicensedInvoice.pending.each do |i|

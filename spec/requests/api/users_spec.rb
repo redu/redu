@@ -23,7 +23,7 @@ describe "User" do
        " birthday, friends_count, mobile, localization, birth_localization" do
       get "/api/users/#{@user.id}", :oauth_token => @token, :format => 'json'
 
-      %w(login id links email first_name last_name birthday friends_count mobile localization birth_localization social_networks thumbnails).each do |attr|
+      %w(login id links email first_name last_name birthday friends_count created_at updated_at mobile localization birth_localization social_networks thumbnails).each do |attr|
         parse(response.body).should have_key attr
       end
     end
@@ -50,7 +50,7 @@ describe "User" do
       thumb['href'].should == @current_user.avatar.url(:thumb_32)
     end
 
-    %w(self enrollments statuses timeline contacts).each do |rel|
+    %w(self enrollments statuses timeline contacts chats).each do |rel|
       it "should link to #{rel}" do
         get "/api/users/#{@user.id}", :oauth_token => @token, :format => 'json'
         link = href_to(rel, parse(response.body))

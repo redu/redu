@@ -58,66 +58,17 @@
     <%= render :partial => "shared/analytics" %>
   </head>
    <body>
-    <%= render :partial => 'shared/outdated_browser' %>
-    <div id="header" class="container_16">
-      <%= render :partial => 'shared/loading_message' %>
-      <h1 id="logotipo" class="grid_3 replacement">
-        <a href="<%= application_url %>" title="Página Inicial">Redu: potencializando o talento das pessoas.</a>
-      </h1>
-      <ul class="nav grid_10">
-          <% if current_user %>
-        <li>
-            <%= link_to 'Início', home_user_path(current_user) %>
-        </li>
-        <% else %>
-        <li>
-            <%= link_to 'Início', application_path %>
-        </li>
-        <% end %>
-        <li>
-          <%= link_to "Ensine", teach_index_path %>
-        </li>
-        <li>
-          <%= link_to "Cursos", courses_index_path %>
-        </li>
-      </ul>
+     <div id="pjax-container">
+       <%= render :partial => 'shared/outdated_browser' %>
+       <%= render :partial => 'shared/header' %>
+       <%= render :partial => 'shared/flash_message' %>
 
-      <%= render :partial => 'shared/nav_account' %>
+       <div id="content" class="container_16 clearfix">
+         <%= yield :layout %>
+       </div><!-- end #content -->
 
-      <div id="search-box" class="grid_3">
-      </div><!-- end #search -->
-    </div><!-- end #header -->
-
-    <%= render :partial => 'shared/flash_message' %>
-
-    <div id="content" class="container_16 clearfix">
-      <%= yield :layout %>
-    </div><!-- end #content -->
-
-    <div id="footer" class="container_16 clearfix">
-      <h1 id="logotipo-footer" class="replacement">
-        <%= link_to 'Redu: potencializando o talento das pessoas.',
-          :title => 'Página Inicial' %>
-      </h1>
-      <div class="copyright">Copyright 2010 - redu.com.br. Todos os direitos reservados.</div>
-
-      <div id="nav-footer">
-        <ul>
-          <li>
-            <a href="#">Sobre o Redu</a>
-          </li>
-          <li>
-            <%= link_to "Privacidade", :controller => "base", :action => "privacy" %>
-          </li>
-          <li>
-            <%= link_to "Termos de uso", :controller => "base", :action => "tos" %>
-          </li>
-          <li>
-            <%= link_to "Contato", :controller => "base", :action => "contact" %>
-          </li>
-        </ul>
-      </div><!-- end #nav-footer -->
-    </div><!-- end #footer -->
-    <%= yield :footer_scripts_and_styles %>
+       <%= render :partial => "shared/footer" %>
+       <%= yield :footer_scripts_and_styles %>
+     </div>
   </body>
 </html>

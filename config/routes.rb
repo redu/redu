@@ -3,21 +3,20 @@ Redu::Application.routes.draw do
   resources :oauth_clients
 
   match '/oauth/token',         :to => 'oauth#token',         :as => :token
-
   match '/oauth/access_token',  :to => 'oauth#access_token',  :as => :access_token
-
   match '/oauth/request_token', :to => 'oauth#request_token', :as => :request_token
-
   match '/oauth/authorize',     :to => 'oauth#authorize',     :as => :authorize
-
   match '/oauth',               :to => 'oauth#index',         :as => :oauth
   match '/oauth/revoke', :to => 'oauth#revoke'
-
   match '/oauth/revoke',        :to => 'oauth#revoke',        :as => :oauth_revoke
-
   match '/oauth/invalidate',    :to => 'oauth#invalidate',    :as => :oauth_invalidate
-
   match '/oauth/capabilities',  :to => 'oauth#capabilities',  :as => :oauth_capabilities
+
+  match '/analytics/dashboard', :to => 'analytics_dashboard#dashboard'
+  match '/analytics/signup_by_date', :to => 'analytics_dashboard#signup_by_date'
+  match '/analytics/environment_by_date', :to => 'analytics_dashboard#environment_by_date'
+  match '/analytics/course_by_date', :to => 'analytics_dashboard#course_by_date'
+  match '/analytics/post_by_date', :to => 'analytics_dashboard#post_by_date'
 
   post "presence/auth"
   post "presence/multiauth"
@@ -80,6 +79,7 @@ Redu::Application.routes.draw do
       get :subject_participation_report
       get :lecture_participation_report
       get :students_participation_report
+      get :students_participation_report_show
     end
 
     resources :folders, :only => [:update, :create, :index] do
@@ -318,6 +318,7 @@ Redu::Application.routes.draw do
       end
       resources :users, :only => :index, :path => :contacts,
         :as => :contacts
+      resources :chats, :only => :index
     end
 
     match 'me' => 'users#show'
@@ -326,15 +327,21 @@ Redu::Application.routes.draw do
       resources :answers, :only => [:index, :create]
     end
 
+    resources :chats, :only => :show do
+      resources :chat_messages, :only => :index, :as => :messages
+    end
+
+    resources :chat_messages, :only => :show
+
     match "vis/spaces/:space_id/lecture_participation",
       :to => 'vis#lecture_participation',
       :as => :vis_lecture_participation
-    match "vis/subjects/:subject_id/subject_activities",
+    match "vis/spaces/:space_id/subject_activities",
       :to => 'vis#subject_activities',
       :as => :vis_subject_activities
-    match "vis/subjects/:subject_id/subject_activities_d3",
-      :to => 'vis#subject_activities_d3',
-      :as => :vis_subject_activities_d3
+    match "vis/spaces/:space_id/students_participation",
+      :to => 'vis#students_participation',
+      :as => :vis_students_participation
 
     # Hack para capturar exceções ActionController::RoutingError
     match '*', :to => 'api#routing_error'

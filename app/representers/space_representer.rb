@@ -6,6 +6,7 @@ module SpaceRepresenter
   property :name
   property :description
   property :created_at
+  property :updated_at
 
   link :self do
     api_space_url(self)

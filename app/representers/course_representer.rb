@@ -6,6 +6,7 @@ module CourseRepresenter
   property :name
   property :description
   property :created_at
+  property :updated_at
   property :workload
   property :path
 
