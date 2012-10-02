@@ -1091,24 +1091,6 @@ $(function() {
           e.stopPropagation()
         })
       })
-    },
-
-    // Alterna o estado de ativado dos filtros.
-    toggleState: function(options) {
-      var settings = $.extend({
-          filterActiveClass: 'filter-active'
-        }, options)
-
-      return this.each(function() {
-        var filter = $(this)
-          , otherFilters = filter.siblings()
-
-        filter.on('click', function(e) {
-          // Desativa os outros filtros.
-          otherFilters.removeClass(settings.filterActiveClass)
-          filter.toggleClass(settings.filterActiveClass)
-        })
-      })
     }
   }
 
@@ -1125,8 +1107,6 @@ $(function() {
 }) (window.jQuery)
 
 $(function() {
-  // Alterna o estado de ativado nos filtros sem dropdown.
-  $('.filter:not(.dropdown-toggle)').reduFilter('toggleState')
   // Adiciona os eventos dos filtros da visão geral.
   $('.filters-general-view').reduFilter()
 })
@@ -1242,8 +1222,8 @@ $(function() {
       })
     },
 
-    // Adiciona/remove uma classe ao label do controle que está em foco/fora de foco.
-    focusLabel: function(options) {
+    // Adiciona/remove a classe indicativa de controle em foco.
+    toggleFocusLabel: function(options) {
       var settings = $.extend({
         // Classe adicionada quando o controle está me foco.
         controlFocusedClass: 'control-focused'
@@ -1251,15 +1231,7 @@ $(function() {
       , controlGroupClass: 'control-group'
       }, options)
 
-      return this.each(function() {
-        var control = $(this)
-          , controlGroup = control.parents('.' + settings.controlGroupClass)
-
-        control.on({
-          focus: function() { controlGroup.addClass(settings.controlFocusedClass) }
-        , blur: function() { controlGroup.removeClass(settings.controlFocusedClass) }
-        })
-      })
+      $(this).parents('.' + settings.controlGroupClass).toggleClass(settings.controlFocusedClass)
     },
 
     // Adiciona/remove uma classe ao rótulo do checkbox/radio quando está selecionado/desmarcado.
@@ -1414,7 +1386,9 @@ $(function() {
 $(function() {
   $('input[type="text"][maxlength], input[type="password"][maxlength], textarea[maxlength]').reduForm('countChars');
 
-  $('input[type="text"], input[type="password"], input[type="file"], textarea, select').reduForm('focusLabel')
+  $(document).on('focus blur', 'input[type="text"], input[type="password"], input[type="file"], textarea, select', function(e) {
+    $(this).reduForm('toggleFocusLabel')
+  })
 
   $('input[type="radio"], input[type="checkbox"]').reduForm('darkLabel')
 
@@ -1796,6 +1770,7 @@ $(function() {
     // Usado para conseguir o tamanho de um elemento com display none.
     displayHidden: function($element) {
       var wasVisible = true
+
       if ($element.css('display') === 'none') {
         $element.css({
           'visibility': 'hidden'
@@ -1941,7 +1916,7 @@ $(function() {
   , spinnerHorizontalBlue: 'spinner-horizontal-blue'
   , spinnerCircularGray: 'spinner-circular-gray'
   , spinnerCircularBlue: 'spinner-circular-blue'
-  , imgPath: 'img/'
+  , imgPath: 'images/'
   , spinnerCircularBlueGif: 'spinner-blue.gif'
   , spinnerCircularGrayGif: 'spinner-grey.gif'
   , spinnerCSS: {
@@ -1974,8 +1949,10 @@ $(function() {
           spinnerClass = settings.spinnerCircularBlue
         }
 
-        $submit.addClass(spinnerClass)
-        $submit.prop('disabled', true)
+        $submit
+          .addClass(spinnerClass)
+          .addClass(settings.buttonDisabled)
+          .data('spinnerClass', spinnerClass)
       }
 
       // Se for um botão.
@@ -2040,8 +2017,9 @@ $(function() {
       if ($this.is('form')) {
         var $submit = $this.find('input:submit')
 
-        $submit.removeClass($submit.data('spinnerClass'))
-        $submit.prop('disabled', false)
+        $submit
+          .removeClass($submit.data('spinnerClass'))
+          .removeClass(settings.buttonDisabled)
       }
 
       // Se for um botão.

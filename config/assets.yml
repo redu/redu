@@ -103,7 +103,7 @@ javascripts:
 
 stylesheets:
   landing:
-    - public/stylesheets/bootstrap-redu.min.css
+    - public/stylesheets/bootstrap-redu.css
     - public/stylesheets/landing-new.css
     - public/stylesheets/outdated-browser.css
     - public/stylesheets/icons.redu.css

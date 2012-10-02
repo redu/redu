@@ -15,30 +15,36 @@
   text-shadow: 0 1px 0 #b2b2b2;
 }
 
-/* line 23, scss/_landing-shared.scss */
-.landing-facebook-sign-in {
-  text-align: center;
-}
-/* line 27, scss/_landing-shared.scss */
-.landing-facebook-sign-in a {
-  margin: 0;
+/* line 22, scss/_landing-shared.scss */
+.landing-navigation-subtitle {
+  font-size: 36px;
+  letter-spacing: -2px;
+  line-height: 36px;
+  font-weight: 500;
 }
 
-/* line 32, scss/_landing-shared.scss */
+/* line 31, scss/_landing-shared.scss */
 .modal-landing p + p {
   margin-top: 20px;
 }
-/* line 34, scss/_landing-shared.scss */
+/* line 33, scss/_landing-shared.scss */
 .modal-landing .modal-header .sprite-before:before {
   vertical-align: middle;
 }
-/* line 36, scss/_landing-shared.scss */
+/* line 35, scss/_landing-shared.scss */
 .modal-landing .modal-body {
   padding: 20px 40px 20px 60px;
 }
-/* line 38, scss/_landing-shared.scss */
-.modal-landing th.plan-column {
-  width: 60px;
+/* line 37, scss/_landing-shared.scss */
+.modal-landing th.plan-column, .modal-landing th.marker {
+  width: 76px;
+}
+
+/* line 42, scss/_landing-shared.scss */
+.errors_on_field {
+  color: #ff6d6d;
+  font-size: 11px;
+  list-style: none;
 }
 
 /* line 6, scss/_landing-layout.scss */
@@ -68,342 +74,349 @@ body {
   margin-left: 10px;
 }
 
-/* line 442, landing/sprite/*.png */
-.sprite, .sprite-advantage-developer, .sprite-advantage-manager, .sprite-advantage-student, .sprite-advantage-teacher, .sprite-background-chat, .sprite-background-management, .sprite-background-treemap, .sprite-background-wall, .sprite-icon-chat, .sprite-icon-close, .sprite-icon-correct, .sprite-icon-developer, .sprite-icon-exercise, .sprite-icon-management, .sprite-icon-plus, .sprite-icon-report, .sprite-keko-playing, .sprite-light-logo, .sprite-light-talk-to-us, .sprite-logo-oer, .sprite-logo-redu-tech, .sprite-medal-gold, .sprite-medal-gold-after:after, .sprite-medal-silver, .sprite-medal-silver-after:after, .sprite-multimedia-document, .sprite-multimedia-exercise, .sprite-multimedia-presentation, .sprite-multimedia-video, .sprite-partner-ade, .sprite-partner-etr, .sprite-partner-facig, .sprite-partner-fafire, .sprite-partner-ufpe, .sprite-partner-univasf, .sprite-plan-consultancy-hr, .sprite-plan-consultancy-hr-before:before, .sprite-plan-independent, .sprite-plan-independent-before:before, .sprite-plan-institution, .sprite-plan-institution-before:before, .sprite-segment-consultancy-hr, .sprite-segment-independent, .sprite-segment-institution, .sprite-sign-up-green_32_34, .sprite-sign-up-green_32_34-before:before, .sprite-social-facebook, .sprite-social-twitter, .sprite-talk-to-us, .landing-logo-wrapper:hover, .landing-footer-logo-link:hover, .landing-footer-contact:hover, .landing-footer-contact:hover .landing-footer-talk-to-us-balloons {
-  background: url('/images/landing/sprite-s3fba85c316.png') no-repeat;
+/* line 450, landing/sprite/*.png */
+.sprite, .sprite-advantage-developer, .sprite-advantage-manager, .sprite-advantage-student, .sprite-advantage-teacher, .sprite-background-chat, .sprite-background-management, .sprite-background-treemap, .sprite-background-wall, .sprite-icon-chat, .sprite-icon-close, .sprite-icon-correct, .sprite-icon-developer, .sprite-icon-exercise, .sprite-icon-management, .sprite-icon-plus, .sprite-icon-report, .sprite-keko-playing, .sprite-light-logo, .sprite-light-talk-to-us, .sprite-logo-oer, .sprite-logo-redu-tech, .sprite-logo, .sprite-medal-gold, .sprite-medal-gold-after:after, .sprite-medal-silver, .sprite-medal-silver-after:after, .sprite-multimedia-document, .sprite-multimedia-exercise, .sprite-multimedia-presentation, .sprite-multimedia-video, .sprite-partner-ade, .sprite-partner-etr, .sprite-partner-facig, .sprite-partner-fafire, .sprite-partner-ufpe, .sprite-partner-univasf, .sprite-plan-consultancy-hr, .sprite-plan-consultancy-hr-before:before, .sprite-plan-independent, .sprite-plan-independent-before:before, .sprite-plan-institution, .sprite-plan-institution-before:before, .sprite-segment-consultancy-hr, .sprite-segment-independent, .sprite-segment-institution, .sprite-sign-up-green_32_34, .sprite-sign-up-green_32_34-before:before, .sprite-social-facebook, .sprite-social-twitter, .sprite-talk-to-us, .landing-logo-wrapper:hover, .landing-footer-logo-link:hover, .landing-footer-contact:hover, .landing-footer-contact:hover .landing-footer-talk-to-us-balloons {
+  background: url('/images/landing/sprite-s29be41c6bb.png') no-repeat;
 }
 
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-advantage-developer {
-  background-position: -200px -1462px;
+  background-position: 0 -2469px;
   height: 200px;
   width: 200px;
 }
 
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-advantage-manager {
-  background-position: -133px -1122px;
+  background-position: 0 -1576px;
   height: 200px;
   width: 200px;
 }
 
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-advantage-student {
-  background-position: 0 -1662px;
+  background-position: 0 -1376px;
   height: 200px;
   width: 200px;
 }
 
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-advantage-teacher {
-  background-position: 0 -1462px;
+  background-position: -200px -1376px;
   height: 200px;
   width: 200px;
 }
 
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-background-chat {
-  background-position: -228px -242px;
+  background-position: -112px -574px;
   height: 118px;
   width: 217px;
 }
 
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-background-management {
-  background-position: 0 -1902px;
+  background-position: 0 -1816px;
   height: 210px;
   width: 395px;
 }
 
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-background-treemap {
-  background-position: 0 -2112px;
+  background-position: 0 -2026px;
   height: 213px;
   width: 470px;
 }
 
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-background-wall {
-  background-position: 0 -2325px;
+  background-position: 0 -2239px;
   height: 230px;
   width: 469px;
 }
 
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-icon-chat {
-  background-position: 0 -723px;
+  background-position: -288px -202px;
   height: 130px;
   width: 128px;
 }
 
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-icon-close {
   background-position: 0 -112px;
   height: 18px;
   width: 16px;
 }
 
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-icon-correct {
-  background-position: -16px -242px;
-  height: 18px;
-  width: 16px;
-}
-
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
-.sprite-icon-developer {
-  background-position: -160px -112px;
-  height: 130px;
-  width: 128px;
-}
-
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
-.sprite-icon-exercise {
-  background-position: -288px -112px;
-  height: 130px;
-  width: 128px;
-}
-
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
-.sprite-icon-management {
-  background-position: -338px -360px;
-  height: 130px;
-  width: 129px;
-}
-
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
-.sprite-icon-plus {
-  background-position: -32px -242px;
-  height: 20px;
-  width: 20px;
-}
-
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
-.sprite-icon-report {
-  background-position: 0 -590px;
-  height: 130px;
-  width: 128px;
-}
-
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
-.sprite-keko-playing {
-  background-position: -200px -1662px;
-  height: 240px;
-  width: 240px;
-}
-/* line 43, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
-.sprite-keko-playing:hover, .sprite-keko-playing.keko-playing_hover, .sprite-keko-playing.keko-playing-hover {
-  background-position: 0 -2555px;
-}
-
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
-.sprite-light-logo {
-  background-position: -160px -490px;
-  height: 70px;
-  width: 300px;
-}
-
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
-.sprite-light-talk-to-us {
-  background-position: 0 -490px;
-  height: 100px;
-  width: 160px;
-}
-
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
-.sprite-logo-oer {
-  background-position: 0 -1322px;
-  height: 140px;
-  width: 279px;
-}
-
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
-.sprite-logo-redu-tech {
-  background-position: -178px -360px;
-  height: 90px;
-  width: 160px;
-}
-
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
-.sprite-medal-gold, .sprite-medal-gold-after:after {
   background-position: -16px -112px;
   height: 18px;
   width: 16px;
 }
 
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
-.sprite-medal-silver, .sprite-medal-silver-after:after {
-  background-position: 0 -242px;
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-icon-developer {
+  background-position: 0 -1236px;
+  height: 130px;
+  width: 128px;
+}
+
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-icon-exercise {
+  background-position: -160px -202px;
+  height: 130px;
+  width: 128px;
+}
+
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-icon-management {
+  background-position: 0 -444px;
+  height: 130px;
+  width: 129px;
+}
+
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-icon-plus {
+  background-position: -64px -112px;
+  height: 20px;
+  width: 20px;
+}
+
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-icon-report {
+  background-position: -329px -574px;
+  height: 130px;
+  width: 128px;
+}
+
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-keko-playing {
+  background-position: -200px -1576px;
+  height: 240px;
+  width: 240px;
+}
+/* line 43, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-keko-playing:hover, .sprite-keko-playing.keko-playing_hover, .sprite-keko-playing.keko-playing-hover {
+  background-position: -200px -2469px;
+}
+
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-light-logo {
+  background-position: -129px -444px;
+  height: 70px;
+  width: 300px;
+}
+
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-light-talk-to-us {
+  background-position: 0 -202px;
+  height: 100px;
+  width: 160px;
+}
+
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-logo-oer {
+  background-position: -128px -1236px;
+  height: 140px;
+  width: 279px;
+}
+
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-logo-redu-tech {
+  background-position: -244px -112px;
+  height: 90px;
+  width: 160px;
+}
+
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-logo {
+  background-position: -80px -332px;
+  height: 55px;
+  width: 193px;
+}
+
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-medal-gold, .sprite-medal-gold-after:after {
+  background-position: -48px -112px;
   height: 18px;
   width: 16px;
 }
 
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
-.sprite-multimedia-document {
-  background-position: -96px 0;
-  height: 65px;
-  width: 65px;
-}
-
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
-.sprite-multimedia-exercise {
-  background-position: -48px -360px;
-  height: 65px;
-  width: 65px;
-}
-
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
-.sprite-multimedia-presentation {
-  background-position: -161px 0;
-  height: 65px;
-  width: 65px;
-}
-
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
-.sprite-multimedia-video {
-  background-position: -113px -360px;
-  height: 65px;
-  width: 65px;
-}
-
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
-.sprite-partner-ade {
-  background-position: -133px -856px;
-  height: 133px;
-  width: 133px;
-}
-/* line 43, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
-.sprite-partner-ade:hover, .sprite-partner-ade.partner-ade_hover, .sprite-partner-ade.partner-ade-hover {
-  background-position: -128px -590px;
-}
-
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
-.sprite-partner-etr {
-  background-position: -261px -590px;
-  height: 133px;
-  width: 133px;
-}
-/* line 43, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
-.sprite-partner-etr:hover, .sprite-partner-etr.partner-etr_hover, .sprite-partner-etr.partner-etr-hover {
-  background-position: -128px -723px;
-}
-
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
-.sprite-partner-facig {
-  background-position: -261px -723px;
-  height: 133px;
-  width: 133px;
-}
-/* line 43, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
-.sprite-partner-facig:hover, .sprite-partner-facig.partner-facig_hover, .sprite-partner-facig.partner-facig-hover {
-  background-position: 0 -989px;
-}
-
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
-.sprite-partner-fafire {
-  background-position: 0 -856px;
-  height: 133px;
-  width: 133px;
-}
-/* line 43, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
-.sprite-partner-fafire:hover, .sprite-partner-fafire.partner-fafire_hover, .sprite-partner-fafire.partner-fafire-hover {
-  background-position: 0 -1122px;
-}
-
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
-.sprite-partner-ufpe {
-  background-position: -266px -856px;
-  height: 133px;
-  width: 133px;
-}
-/* line 43, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
-.sprite-partner-ufpe:hover, .sprite-partner-ufpe.partner-ufpe_hover, .sprite-partner-ufpe.partner-ufpe-hover {
-  background-position: -133px -989px;
-}
-
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
-.sprite-partner-univasf {
-  background-position: -266px -989px;
-  height: 133px;
-  width: 133px;
-}
-/* line 43, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
-.sprite-partner-univasf:hover, .sprite-partner-univasf.partner-univasf_hover, .sprite-partner-univasf.partner-univasf-hover {
-  background-position: -279px -1322px;
-}
-
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
-.sprite-plan-consultancy-hr, .sprite-plan-consultancy-hr-before:before {
-  background-position: 0 -360px;
-  height: 50px;
-  width: 48px;
-}
-
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
-.sprite-plan-independent, .sprite-plan-independent-before:before {
-  background-position: -64px -112px;
-  height: 50px;
-  width: 48px;
-}
-
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
-.sprite-plan-institution, .sprite-plan-institution-before:before {
-  background-position: -112px -112px;
-  height: 50px;
-  width: 48px;
-}
-
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
-.sprite-segment-consultancy-hr {
-  background-position: -116px -242px;
-  height: 112px;
-  width: 112px;
-}
-
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
-.sprite-segment-independent {
-  background-position: -226px 0;
-  height: 112px;
-  width: 112px;
-}
-
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
-.sprite-segment-institution {
-  background-position: -338px 0;
-  height: 112px;
-  width: 112px;
-}
-
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
-.sprite-sign-up-green_32_34, .sprite-sign-up-green_32_34-before:before {
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-medal-silver, .sprite-medal-silver-after:after {
   background-position: -32px -112px;
+  height: 18px;
+  width: 16px;
+}
+
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-multimedia-document {
+  background-position: -65px 0;
+  height: 65px;
+  width: 65px;
+}
+
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-multimedia-exercise {
+  background-position: 0 0;
+  height: 65px;
+  width: 65px;
+}
+
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-multimedia-presentation {
+  background-position: -226px 0;
+  height: 65px;
+  width: 65px;
+}
+
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-multimedia-video {
+  background-position: -291px 0;
+  height: 65px;
+  width: 65px;
+}
+
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-partner-ade {
+  background-position: 0 -1103px;
+  height: 133px;
+  width: 133px;
+}
+/* line 43, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-partner-ade:hover, .sprite-partner-ade.partner-ade_hover, .sprite-partner-ade.partner-ade-hover {
+  background-position: 0 -704px;
+}
+
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-partner-etr {
+  background-position: 0 -837px;
+  height: 133px;
+  width: 133px;
+}
+/* line 43, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-partner-etr:hover, .sprite-partner-etr.partner-etr_hover, .sprite-partner-etr.partner-etr-hover {
+  background-position: -133px -704px;
+}
+
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-partner-facig {
+  background-position: -266px -704px;
+  height: 133px;
+  width: 133px;
+}
+/* line 43, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-partner-facig:hover, .sprite-partner-facig.partner-facig_hover, .sprite-partner-facig.partner-facig-hover {
+  background-position: -133px -837px;
+}
+
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-partner-fafire {
+  background-position: -266px -837px;
+  height: 133px;
+  width: 133px;
+}
+/* line 43, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-partner-fafire:hover, .sprite-partner-fafire.partner-fafire_hover, .sprite-partner-fafire.partner-fafire-hover {
+  background-position: -266px -1103px;
+}
+
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-partner-ufpe {
+  background-position: 0 -970px;
+  height: 133px;
+  width: 133px;
+}
+/* line 43, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-partner-ufpe:hover, .sprite-partner-ufpe.partner-ufpe_hover, .sprite-partner-ufpe.partner-ufpe-hover {
+  background-position: -133px -970px;
+}
+
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-partner-univasf {
+  background-position: -266px -970px;
+  height: 133px;
+  width: 133px;
+}
+/* line 43, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-partner-univasf:hover, .sprite-partner-univasf.partner-univasf_hover, .sprite-partner-univasf.partner-univasf-hover {
+  background-position: -133px -1103px;
+}
+
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-plan-consultancy-hr, .sprite-plan-consultancy-hr-before:before {
+  background-position: -196px -112px;
+  height: 50px;
+  width: 48px;
+}
+
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-plan-independent, .sprite-plan-independent-before:before {
+  background-position: -32px -332px;
+  height: 50px;
+  width: 48px;
+}
+
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-plan-institution, .sprite-plan-institution-before:before {
+  background-position: -148px -112px;
+  height: 50px;
+  width: 48px;
+}
+
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-segment-consultancy-hr {
+  background-position: -356px 0;
+  height: 112px;
+  width: 112px;
+}
+
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-segment-independent {
+  background-position: 0 -574px;
+  height: 112px;
+  width: 112px;
+}
+
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-segment-institution {
+  background-position: -273px -332px;
+  height: 112px;
+  width: 112px;
+}
+
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.sprite-sign-up-green_32_34, .sprite-sign-up-green_32_34-before:before {
+  background-position: -116px -112px;
   height: 34px;
   width: 32px;
 }
 
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-social-facebook {
-  background-position: -52px -242px;
+  background-position: -84px -112px;
   height: 32px;
   width: 32px;
 }
 
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-social-twitter {
-  background-position: -84px -242px;
+  background-position: 0 -332px;
   height: 32px;
   width: 32px;
 }
 
-/* line 60, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-talk-to-us {
-  background-position: 0 0;
+  background-position: -130px 0;
   height: 96px;
   width: 48px;
 }
-/* line 43, ../../../../.rvm/gems/ruby-1.8.7-p370/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 43, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-talk-to-us:hover, .sprite-talk-to-us.talk-to-us_hover, .sprite-talk-to-us.talk-to-us-hover {
-  background-position: -48px 0;
+  background-position: -178px 0;
 }
 
 /* line 14, scss/_landing-sprites.scss */
@@ -423,7 +436,7 @@ body {
 }
 
 /* line 17, scss/_landing-sprites.scss */
-.sprite, .sprite-advantage-developer, .sprite-advantage-manager, .sprite-advantage-student, .sprite-advantage-teacher, .sprite-background-chat, .sprite-background-management, .sprite-background-treemap, .sprite-background-wall, .sprite-icon-chat, .sprite-icon-close, .sprite-icon-correct, .sprite-icon-developer, .sprite-icon-exercise, .sprite-icon-management, .sprite-icon-plus, .sprite-icon-report, .sprite-keko-playing, .sprite-light-logo, .sprite-light-talk-to-us, .sprite-logo-oer, .sprite-logo-redu-tech, .sprite-medal-gold, .sprite-medal-gold-after:after, .sprite-medal-silver, .sprite-medal-silver-after:after, .sprite-multimedia-document, .sprite-multimedia-exercise, .sprite-multimedia-presentation, .sprite-multimedia-video, .sprite-partner-ade, .sprite-partner-etr, .sprite-partner-facig, .sprite-partner-fafire, .sprite-partner-ufpe, .sprite-partner-univasf, .sprite-plan-consultancy-hr, .sprite-plan-consultancy-hr-before:before, .sprite-plan-independent, .sprite-plan-independent-before:before, .sprite-plan-institution, .sprite-plan-institution-before:before, .sprite-segment-consultancy-hr, .sprite-segment-independent, .sprite-segment-institution, .sprite-sign-up-green_32_34, .sprite-sign-up-green_32_34-before:before, .sprite-social-facebook, .sprite-social-twitter, .sprite-talk-to-us, .landing-logo-wrapper:hover, .landing-footer-logo-link:hover, .landing-footer-contact:hover, .landing-footer-contact:hover .landing-footer-talk-to-us-balloons {
+.sprite, .sprite-advantage-developer, .sprite-advantage-manager, .sprite-advantage-student, .sprite-advantage-teacher, .sprite-background-chat, .sprite-background-management, .sprite-background-treemap, .sprite-background-wall, .sprite-icon-chat, .sprite-icon-close, .sprite-icon-correct, .sprite-icon-developer, .sprite-icon-exercise, .sprite-icon-management, .sprite-icon-plus, .sprite-icon-report, .sprite-keko-playing, .sprite-light-logo, .sprite-light-talk-to-us, .sprite-logo-oer, .sprite-logo-redu-tech, .sprite-logo, .sprite-medal-gold, .sprite-medal-gold-after:after, .sprite-medal-silver, .sprite-medal-silver-after:after, .sprite-multimedia-document, .sprite-multimedia-exercise, .sprite-multimedia-presentation, .sprite-multimedia-video, .sprite-partner-ade, .sprite-partner-etr, .sprite-partner-facig, .sprite-partner-fafire, .sprite-partner-ufpe, .sprite-partner-univasf, .sprite-plan-consultancy-hr, .sprite-plan-consultancy-hr-before:before, .sprite-plan-independent, .sprite-plan-independent-before:before, .sprite-plan-institution, .sprite-plan-institution-before:before, .sprite-segment-consultancy-hr, .sprite-segment-independent, .sprite-segment-institution, .sprite-sign-up-green_32_34, .sprite-sign-up-green_32_34-before:before, .sprite-social-facebook, .sprite-social-twitter, .sprite-talk-to-us, .landing-logo-wrapper:hover, .landing-footer-logo-link:hover, .landing-footer-contact:hover, .landing-footer-contact:hover .landing-footer-talk-to-us-balloons {
   display: inline-block;
 }
 
@@ -434,16 +447,16 @@ body {
 }
 /* line 10, scss/_landing-header.scss */
 .boxshadow .landing-header {
-  -webkit-box-shadow: 0 -1px 0 white inset, 0 1px 0 #b2b2b2;
-  -moz-box-shadow: 0 -1px 0 white inset, 0 1px 0 #b2b2b2;
-  box-shadow: 0 -1px 0 white inset, 0 1px 0 #b2b2b2;
+  -webkit-box-shadow: 0 -1px 0 white inset, 0 1px 0 white inset, 0 1px 0 #b2b2b2;
+  -moz-box-shadow: 0 -1px 0 white inset, 0 1px 0 white inset, 0 1px 0 #b2b2b2;
+  box-shadow: 0 -1px 0 white inset, 0 1px 0 white inset, 0 1px 0 #b2b2b2;
 }
-/* line 17, scss/_landing-header.scss */
+/* line 18, scss/_landing-header.scss */
 .ie8 .landing-header {
   border-bottom: 1px solid #b2b2b2;
 }
 
-/* line 21, scss/_landing-header.scss */
+/* line 22, scss/_landing-header.scss */
 .landing-logo-wrapper {
   width: 300px;
   height: 70px;
@@ -451,38 +464,38 @@ body {
   position: relative;
   margin-left: -112px;
 }
-/* line 27, scss/_landing-header.scss */
+/* line 28, scss/_landing-header.scss */
 .landing-logo-wrapper:hover {
-  background-position: -160px -490px;
+  background-position: -129px -444px;
   height: 70px;
   width: 300px;
 }
 
-/* line 31, scss/_landing-header.scss */
+/* line 32, scss/_landing-header.scss */
 .landing-logo {
   position: absolute;
   right: -3px;
   bottom: 0;
 }
 
-/* line 38, scss/_landing-header.scss */
+/* line 39, scss/_landing-header.scss */
 .landing-header-buttons {
   float: right;
   margin-top: 20px;
 }
 
-/* line 44, scss/_landing-header.scss */
+/* line 45, scss/_landing-header.scss */
 .landing-button-sign-up +
 .landing-button-sign-in {
   margin-left: 40px;
 }
 
-/* line 47, scss/_landing-header.scss */
+/* line 48, scss/_landing-header.scss */
 .landing-button-sign-up,
 .landing-button-sign-in {
   display: inline-block;
 }
-/* line 50, scss/_landing-header.scss */
+/* line 51, scss/_landing-header.scss */
 .landing-button-sign-up [class*="icon-"],
 .landing-button-sign-in [class*="icon-"] {
   margin: 5px 10px 0 0;
@@ -506,75 +519,75 @@ body {
   margin-bottom: 25px;
 }
 /* line 18, scss/_landing-sign-up.scss */
-.modal-sign-up .errors_on_field li {
-  color: #ff6d6d;
-  font-size: 11px;
-  list-style: none;
-}
-/* line 24, scss/_landing-sign-up.scss */
 .modal-sign-up .tos .control-error label {
   color: #6d6e6f;
 }
+/* line 22, scss/_landing-sign-up.scss */
+.modal-sign-up .modal-footer .button-default +
+.button-success {
+  margin-left: 10px;
+}
 
-/* line 28, scss/_landing-sign-up.scss */
+/* line 27, scss/_landing-sign-up.scss */
 .modal-sign-up-title {
   color: #61a080;
   line-height: 22px;
 }
-/* line 33, scss/_landing-sign-up.scss */
+/* line 32, scss/_landing-sign-up.scss */
 .modal-sign-up-title.sprite-before:before {
   position: relative;
   top: 5px;
   float: left;
 }
 
-/* line 40, scss/_landing-sign-up.scss */
+/* line 39, scss/_landing-sign-up.scss */
 .modal-sign-up-section {
   padding: 20px 20px 10px;
 }
-/* line 44, scss/_landing-sign-up.scss */
+/* line 43, scss/_landing-sign-up.scss */
 .modal-sign-up-section p +
-.landing-facebook-sign-in {
-  margin-top: 50px;
+.facebook-sign-up {
+  margin-top: 20px;
+}
+/* line 46, scss/_landing-sign-up.scss */
+.modal-sign-up-section .facebook-sign-up-button +
+.legend {
+  margin-top: 5px;
+  display: block;
 }
 
-/* line 48, scss/_landing-sign-up.scss */
+/* line 53, scss/_landing-sign-up.scss */
 .list-separator +
 .modal-sign-up-section {
   padding: 10px 20px 20px;
 }
 
-/* line 51, scss/_landing-sign-up.scss */
+/* line 56, scss/_landing-sign-up.scss */
 .modal-sign-up-tos {
   float: left;
   text-align: left;
 }
 
-/* line 57, scss/_landing-sign-up.scss */
+/* line 62, scss/_landing-sign-up.scss */
 .modal-sign-up-buttons {
   float: right;
 }
-/* line 61, scss/_landing-sign-up.scss */
-.modal-sign-up-buttons input[type="submit"].button-big {
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
 
-/* line 68, scss/_landing-sign-up.scss */
+/* line 65, scss/_landing-sign-up.scss */
 .modal-sign-up-login-explaination {
   margin-top: 20px;
 }
-/* line 71, scss/_landing-sign-up.scss */
+/* line 68, scss/_landing-sign-up.scss */
 .modal-sign-up-login-explaination .legend {
   color: #6d6e6f;
 }
 
-/* line 75, scss/_landing-sign-up.scss */
+/* line 72, scss/_landing-sign-up.scss */
 .modal-sign-up-success .modal-body {
   padding: 0 20px 20px;
   color: black;
 }
-/* line 80, scss/_landing-sign-up.scss */
+/* line 77, scss/_landing-sign-up.scss */
 .modal-sign-up-success .modal-body p +
 p {
   margin-top: 20px;
@@ -586,33 +599,37 @@ p {
   display: inline-block;
 }
 /* line 11, scss/_landing-dropdown-sign-in.scss */
-.landing-button-sign-in .landing-facebook-sign-in {
-  padding: 20px 17px;
+.landing-button-sign-in .facebook-sign-in {
+  margin: 20px 17px;
   font-size: 11px;
 }
+/* line 16, scss/_landing-dropdown-sign-in.scss */
+.landing-button-sign-in .dropdown-menu {
+  width: 240px;
+}
 
-/* line 17, scss/_landing-dropdown-sign-in.scss */
+/* line 19, scss/_landing-dropdown-sign-in.scss */
 .landing-sign-in-recover {
   padding: 10px 10px 8px;
   text-align: center;
 }
 
-/* line 22, scss/_landing-dropdown-sign-in.scss */
+/* line 24, scss/_landing-dropdown-sign-in.scss */
 .landing-sign-in-form {
   padding: 20px 10px;
 }
-/* line 26, scss/_landing-dropdown-sign-in.scss */
+/* line 28, scss/_landing-dropdown-sign-in.scss */
 .landing-sign-in-form .control-group +
 .control-group {
   margin-top: 2px;
 }
 
-/* line 29, scss/_landing-dropdown-sign-in.scss */
+/* line 31, scss/_landing-dropdown-sign-in.scss */
 .landing-sign-in-form-submit {
   margin-top: 10px;
   overflow: hidden;
 }
-/* line 33, scss/_landing-dropdown-sign-in.scss */
+/* line 35, scss/_landing-dropdown-sign-in.scss */
 .landing-sign-in-form-submit .legend {
   color: #6d6e6f;
 }
@@ -650,8 +667,11 @@ p {
   font: 700 21px/28px museo-sans-rounded, museo-sans, "Helvetica Neue", Arial, sans-serif;
   letter-spacing: -1px;
   max-width: 280px;
+  background-image: url("../images/landing/light-welcome.png");
+  background-repeat: no-repeat;
+  background-position: center center;
 }
-/* line 32, scss/_landing-welcome.scss */
+/* line 35, scss/_landing-welcome.scss */
 .textshadow .landing-welcome-message {
   text-shadow: 1px 1px 0 white;
 }
@@ -709,7 +729,7 @@ p {
 /* line 5, scss/_landing-filters.scss */
 .landing-filters {
   text-align: center;
-  padding: 20px 0 19px;
+  padding: 20px 0 10px;
 }
 /* line 9, scss/_landing-filters.scss */
 .landing-filters .filters {
@@ -722,34 +742,23 @@ p {
 }
 
 /* line 17, scss/_landing-filters.scss */
-.page-nav-fixed.landing-filters {
+.landing-filters-fixed {
   position: fixed;
   top: 0;
   z-index: 999;
-  text-align: center;
-  padding: 20px 0 19px;
-  width: 940px;
+  width: 939px;
 }
-/* line 25, scss/_landing-filters.scss */
-.cssgradients .page-nav-fixed.landing-filters {
+/* line 23, scss/_landing-filters.scss */
+.cssgradients .landing-filters-fixed {
   background-image: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgba(255, 255, 255, 0)), color-stop(20%, #ffffff));
   background-image: -webkit-linear-gradient(bottom, rgba(255, 255, 255, 0), #ffffff 20%);
   background-image: -moz-linear-gradient(bottom, rgba(255, 255, 255, 0), #ffffff 20%);
   background-image: -o-linear-gradient(bottom, rgba(255, 255, 255, 0), #ffffff 20%);
   background-image: linear-gradient(bottom, rgba(255, 255, 255, 0), #ffffff 20%);
 }
-/* line 27, scss/_landing-filters.scss */
-.no-cssgradients.gt-ie8 .page-nav-fixed.landing-filters {
+/* line 25, scss/_landing-filters.scss */
+.no-cssgradients.gt-ie8 .landing-filters-fixed {
   background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjcwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9Ijk5JSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIwIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiIHN0b3Atb3BhY2l0eT0iMCIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
-}
-/* line 32, scss/_landing-filters.scss */
-.page-nav-fixed.landing-filters .filters {
-  display: inline-block;
-}
-/* line 34, scss/_landing-filters.scss */
-.page-nav-fixed.landing-filters .filter {
-  font-size: 16px;
-  line-height: 28px;
 }
 
 /* line 15, scss/_landing-segments.scss */
@@ -944,7 +953,7 @@ p {
 }
 /* line 37, scss/_landing-footer.scss */
 .landing-footer-logo-link:hover {
-  background-position: -160px -490px;
+  background-position: -129px -444px;
   height: 70px;
   width: 300px;
 }
@@ -1020,26 +1029,32 @@ p {
   text-align: right;
 }
 /* line 102, scss/_landing-footer.scss */
+.landing-footer-contact .landing-footer-talk-to-us-balloons {
+  display: block;
+}
+/* line 104, scss/_landing-footer.scss */
 .landing-footer-contact h3 + .legend {
   margin-top: 10px;
 }
-/* line 104, scss/_landing-footer.scss */
+/* line 106, scss/_landing-footer.scss */
 .landing-footer-contact:hover {
-  background-position: 0 -490px;
+  background-position: 0 -202px;
   height: 100px;
   width: 160px;
+  display: block;
 }
-/* line 107, scss/_landing-footer.scss */
+/* line 110, scss/_landing-footer.scss */
 .landing-footer-contact:hover .legend {
   color: #6d6e6f;
 }
-/* line 109, scss/_landing-footer.scss */
+/* line 112, scss/_landing-footer.scss */
 .landing-footer-contact:hover a {
   color: #158ac4;
 }
-/* line 111, scss/_landing-footer.scss */
+/* line 114, scss/_landing-footer.scss */
 .landing-footer-contact:hover .landing-footer-talk-to-us-balloons {
-  background-position: -48px 0;
+  display: block;
+  background-position: -178px 0;
   height: 96px;
   width: 48px;
 }
@@ -1061,7 +1076,7 @@ p {
 }
 /* line 15, scss/_landing-advantages.scss */
 .landing-advantages .type-user .call + .call {
-  margin-top: 20px;
+  margin: 20px 0;
 }
 /* line 17, scss/_landing-advantages.scss */
 .landing-advantages .type-user .call {
@@ -1080,15 +1095,15 @@ p {
   color: #ff7c35;
 }
 /* line 30, scss/_landing-advantages.scss */
-.landing-advantages .type-user.teacher .button-user h5 {
+.landing-advantages .type-user.teacher .button-user h3 {
   margin-left: 65px;
 }
 /* line 32, scss/_landing-advantages.scss */
-.landing-advantages .type-user.teacher .button-user h6 {
+.landing-advantages .type-user.teacher .button-user legend {
   margin-left: 79px;
 }
 /* line 35, scss/_landing-advantages.scss */
-.textshadow .landing-advantages .type-user.teacher .button-user h6 {
+.textshadow .landing-advantages .type-user.teacher .button-user legend {
   text-shadow: 0 -1px 0 #f24a00;
 }
 /* line 40, scss/_landing-advantages.scss */
@@ -1100,7 +1115,7 @@ p {
   color: #158ac4;
 }
 /* line 45, scss/_landing-advantages.scss */
-.landing-advantages .type-user.gestor .button-user h5 {
+.landing-advantages .type-user.gestor .button-user h3 {
   margin-left: 48px;
 }
 /* line 48, scss/_landing-advantages.scss */
@@ -1112,15 +1127,15 @@ p {
   color: #ff6d6d;
 }
 /* line 54, scss/_landing-advantages.scss */
-.landing-advantages .type-user.developer .button-user h5 {
+.landing-advantages .type-user.developer .button-user h3 {
   margin-left: 70px;
 }
 /* line 56, scss/_landing-advantages.scss */
-.landing-advantages .type-user.developer .button-user h6 {
+.landing-advantages .type-user.developer .button-user legend {
   margin-left: 68px;
 }
 /* line 59, scss/_landing-advantages.scss */
-.textshadow .landing-advantages .type-user.developer .button-user h6 {
+.textshadow .landing-advantages .type-user.developer .button-user legend {
   text-shadow: 0 -1px 0 #c0272d;
 }
 /* line 64, scss/_landing-advantages.scss */
@@ -1133,7 +1148,7 @@ p {
   color: #61a080;
 }
 /* line 72, scss/_landing-advantages.scss */
-.landing-advantages .type-user .button-user h5 {
+.landing-advantages .type-user .button-user h3 {
   color: white;
   position: absolute;
   margin-top: -85px;
@@ -1141,11 +1156,11 @@ p {
   font-size: 36px;
 }
 /* line 79, scss/_landing-advantages.scss */
-.textshadow .landing-advantages .type-user .button-user h5 {
+.textshadow .landing-advantages .type-user .button-user h3 {
   text-shadow: 0 1px 3px black;
 }
 /* line 82, scss/_landing-advantages.scss */
-.landing-advantages .type-user .button-user h6 {
+.landing-advantages .type-user .button-user legend {
   font-size: 10px;
   font-family: arial, sans-serif;
   position: absolute;
@@ -1157,12 +1172,13 @@ p {
 /* line 4, scss/_landing-plans.scss */
 .landing-plans {
   margin: 0 0 0 8px;
+  padding: 20px 0;
 }
-/* line 7, scss/_landing-plans.scss */
+/* line 8, scss/_landing-plans.scss */
 .landing-plans .landing-navigation-title {
   margin-bottom: 30px;
 }
-/* line 11, scss/_landing-plans.scss */
+/* line 12, scss/_landing-plans.scss */
 .landing-plans .type-plan {
   margin: 0 9px;
   width: 208px;
@@ -1170,58 +1186,65 @@ p {
   border: 1px solid #73c3e6;
   background-color: #f7f7f7;
 }
-/* line 18, scss/_landing-plans.scss */
+/* line 19, scss/_landing-plans.scss */
 .borderradius .landing-plans .type-plan {
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;
 }
-/* line 20, scss/_landing-plans.scss */
+/* line 21, scss/_landing-plans.scss */
 .landing-plans .type-plan .type-plan-icon {
   padding: 10px 10px 0 10px;
   height: 100px;
 }
-/* line 24, scss/_landing-plans.scss */
-.landing-plans .type-plan .type-plan-icon h4 {
+/* line 25, scss/_landing-plans.scss */
+.landing-plans .type-plan .type-plan-icon h3 {
   margin-top: 10px;
+  font-size: 18px;
+  line-height: 21px;
+  letter-spacing: -1px;
   text-align: center;
+  color: black;
 }
-/* line 29, scss/_landing-plans.scss */
+/* line 34, scss/_landing-plans.scss */
 .landing-plans .type-plan .type-plan-icon img {
   display: block;
   margin: 0 auto;
 }
-/* line 35, scss/_landing-plans.scss */
+/* line 40, scss/_landing-plans.scss */
 .landing-plans .type-plan .free-plan {
   text-align: center;
   background-color: #e1f1e1;
 }
-/* line 39, scss/_landing-plans.scss */
-.landing-plans .type-plan .free-plan h5 {
+/* line 44, scss/_landing-plans.scss */
+.landing-plans .type-plan .free-plan h4 {
   font-size: 13px;
 }
-/* line 43, scss/_landing-plans.scss */
-.landing-plans .type-plan .free-plan h5, .landing-plans .type-plan .free-plan h2 {
+/* line 48, scss/_landing-plans.scss */
+.landing-plans .type-plan .free-plan h4 {
   color: #5fc080;
 }
-/* line 47, scss/_landing-plans.scss */
-.landing-plans .type-plan .free-plan h2 {
+/* line 52, scss/_landing-plans.scss */
+.landing-plans .type-plan .free-plan .limit-users-free {
+  font-size: 36px;
+  line-height: 36px;
+  letter-spacing: -2px;
   font-weight: 300;
 }
-/* line 52, scss/_landing-plans.scss */
+/* line 60, scss/_landing-plans.scss */
 .landing-plans .type-plan .learn-plan {
   display: block;
   padding: 0 10px 10px 10px;
   text-align: center;
 }
 
-/* line 60, scss/_landing-plans.scss */
+/* line 68, scss/_landing-plans.scss */
 .landing-plan-icon {
   display: block;
   margin: 0 auto;
 }
 
-/* line 65, scss/_landing-plans.scss */
+/* line 73, scss/_landing-plans.scss */
 .landing-plan-medal {
   vertical-align: top;
 }
@@ -1247,7 +1270,7 @@ p {
   color: #b2b2b2;
 }
 /* line 20, scss/_landing-functionalities.scss */
-.landing-functionalities h2 + h4,
+.landing-functionalities h3 + h4,
 .landing-functionalities h4 + p {
   margin-top: 20px;
 }
@@ -1493,7 +1516,7 @@ p {
   position: absolute;
 }
 /* line 40, scss/_landing-oer.scss */
-.landing-oer-title h2 {
+.landing-oer-title h3 {
   text-align: right;
   color: white;
 }
@@ -1603,28 +1626,35 @@ p {
   padding: 20px 20px 40px;
 }
 /* line 9, scss/_landing-partners.scss */
-.landing-partners-wrapper h4 {
+.landing-partners-wrapper h2 {
   color: #e6e6e6;
 }
 /* line 12, scss/_landing-partners.scss */
-.textshadow .landing-partners-wrapper h4 {
+.textshadow .landing-partners-wrapper h2 {
   text-shadow: 0 1px 0 #b3b3b3;
 }
 /* line 15, scss/_landing-partners.scss */
-.landing-partners-wrapper h4 + .landing-partners {
+.landing-partners-wrapper h2 + .landing-partners {
   margin-top: 20px;
 }
+/* line 17, scss/_landing-partners.scss */
+.landing-partners-wrapper .partners-title {
+  font-size: 18px !important;
+  line-height: 21px;
+  letter-spacing: -1px;
+  font-weight: 500;
+}
 
-/* line 18, scss/_landing-partners.scss */
+/* line 25, scss/_landing-partners.scss */
 .landing-partners {
   overflow: hidden;
 }
 
-/* line 21, scss/_landing-partners.scss */
+/* line 28, scss/_landing-partners.scss */
 .landing-partner {
   float: left;
 }
-/* line 24, scss/_landing-partners.scss */
+/* line 31, scss/_landing-partners.scss */
 .landing-partner + .landing-partner {
   margin-left: 20px;
 }
@@ -1657,7 +1687,7 @@ p {
   background-color: white;
 }
 /* line 11, scss/_landing-management-support.scss */
-.landing-management-support h2 {
+.landing-management-support h3 {
   margin-top: 20px;
 }
 
