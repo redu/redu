@@ -30,7 +30,10 @@ $(function() {
   });
 
   // Faz com que os títulos das navegações apareçam
-  $(".filter, .landing-footer-navigation a").click( function(event) {
+  $(".filter, .landing-footer-navigation a").filter(function(index) {
+    var anchorRegex = /^\/?#/
+    return (anchorRegex.test($(this).attr('href')))
+  }).click( function(event) {
     event.preventDefault();
     var offset = $($(this).attr('href').replace('/', '')).offset().top;
     var height = 120;
