@@ -145,7 +145,7 @@ module BaseHelper
 
   def page_title
     app_base = Redu::Application.config.name
-    tagline = " – #{Redu::Application.config.tagline}"
+    tagline = " — #{Redu::Application.config.tagline}"
 
     title = app_base
     case controller.controller_name
