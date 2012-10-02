@@ -1,21 +1,17 @@
-/* line 7, scss/_landing-shared.scss */
 .landing-navigation-title {
   color: #e6e6e6;
   display: block;
   font: 500 60px/56px museo-sans-rounded, museo-sans, "Helvetica Neue", Arial, sans-serif;
   letter-spacing: -3px;
 }
-/* line 14, scss/_landing-shared.scss */
 .landing-navigation-title:hover {
   text-decoration: none;
   color: #e6e6e6;
 }
-/* line 19, scss/_landing-shared.scss */
 .textshadow .landing-navigation-title {
   text-shadow: 0 1px 0 #b2b2b2;
 }
 
-/* line 22, scss/_landing-shared.scss */
 .landing-navigation-subtitle {
   font-size: 36px;
   letter-spacing: -2px;
@@ -23,403 +19,340 @@
   font-weight: 500;
 }
 
-/* line 31, scss/_landing-shared.scss */
 .modal-landing p + p {
   margin-top: 20px;
 }
-/* line 33, scss/_landing-shared.scss */
 .modal-landing .modal-header .sprite-before:before {
   vertical-align: middle;
 }
-/* line 35, scss/_landing-shared.scss */
 .modal-landing .modal-body {
   padding: 20px 40px 20px 60px;
 }
-/* line 37, scss/_landing-shared.scss */
-.modal-landing th.plan-column, .modal-landing th.marker {
+
+.landing-plan-column {
   width: 76px;
 }
 
-/* line 42, scss/_landing-shared.scss */
 .errors_on_field {
   color: #ff6d6d;
   font-size: 11px;
   list-style: none;
 }
 
-/* line 6, scss/_landing-layout.scss */
 html,
 body {
   height: 100%;
 }
 
-/* line 8, scss/_landing-layout.scss */
 body {
   background-image: url("../images/landing/background.png");
 }
 
-/* line 13, scss/_landing-layout.scss */
 .landing-wrapper {
   min-height: 100%;
   margin: 0 auto -140px;
 }
 
-/* line 18, scss/_landing-layout.scss */
 .landing-pusher {
   height: 140px;
 }
 
-/* line 21, scss/_landing-layout.scss */
 .alpha-half {
   margin-left: 10px;
 }
 
-/* line 450, landing/sprite/*.png */
 .sprite, .sprite-advantage-developer, .sprite-advantage-manager, .sprite-advantage-student, .sprite-advantage-teacher, .sprite-background-chat, .sprite-background-management, .sprite-background-treemap, .sprite-background-wall, .sprite-icon-chat, .sprite-icon-close, .sprite-icon-correct, .sprite-icon-developer, .sprite-icon-exercise, .sprite-icon-management, .sprite-icon-plus, .sprite-icon-report, .sprite-keko-playing, .sprite-light-logo, .sprite-light-talk-to-us, .sprite-logo-oer, .sprite-logo-redu-tech, .sprite-logo, .sprite-medal-gold, .sprite-medal-gold-after:after, .sprite-medal-silver, .sprite-medal-silver-after:after, .sprite-multimedia-document, .sprite-multimedia-exercise, .sprite-multimedia-presentation, .sprite-multimedia-video, .sprite-partner-ade, .sprite-partner-etr, .sprite-partner-facig, .sprite-partner-fafire, .sprite-partner-ufpe, .sprite-partner-univasf, .sprite-plan-consultancy-hr, .sprite-plan-consultancy-hr-before:before, .sprite-plan-independent, .sprite-plan-independent-before:before, .sprite-plan-institution, .sprite-plan-institution-before:before, .sprite-segment-consultancy-hr, .sprite-segment-independent, .sprite-segment-institution, .sprite-sign-up-green_32_34, .sprite-sign-up-green_32_34-before:before, .sprite-social-facebook, .sprite-social-twitter, .sprite-talk-to-us, .landing-logo-wrapper:hover, .landing-footer-logo-link:hover, .landing-footer-contact:hover, .landing-footer-contact:hover .landing-footer-talk-to-us-balloons {
   background: url('/images/landing/sprite-s29be41c6bb.png') no-repeat;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-advantage-developer {
   background-position: 0 -2469px;
   height: 200px;
   width: 200px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-advantage-manager {
   background-position: 0 -1576px;
   height: 200px;
   width: 200px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-advantage-student {
   background-position: 0 -1376px;
   height: 200px;
   width: 200px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-advantage-teacher {
   background-position: -200px -1376px;
   height: 200px;
   width: 200px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-background-chat {
   background-position: -112px -574px;
   height: 118px;
   width: 217px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-background-management {
   background-position: 0 -1816px;
   height: 210px;
   width: 395px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-background-treemap {
   background-position: 0 -2026px;
   height: 213px;
   width: 470px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-background-wall {
   background-position: 0 -2239px;
   height: 230px;
   width: 469px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-icon-chat {
   background-position: -288px -202px;
   height: 130px;
   width: 128px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-icon-close {
   background-position: 0 -112px;
   height: 18px;
   width: 16px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-icon-correct {
   background-position: -16px -112px;
   height: 18px;
   width: 16px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-icon-developer {
   background-position: 0 -1236px;
   height: 130px;
   width: 128px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-icon-exercise {
   background-position: -160px -202px;
   height: 130px;
   width: 128px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-icon-management {
   background-position: 0 -444px;
   height: 130px;
   width: 129px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-icon-plus {
   background-position: -64px -112px;
   height: 20px;
   width: 20px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-icon-report {
   background-position: -329px -574px;
   height: 130px;
   width: 128px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-keko-playing {
   background-position: -200px -1576px;
   height: 240px;
   width: 240px;
 }
-/* line 43, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-keko-playing:hover, .sprite-keko-playing.keko-playing_hover, .sprite-keko-playing.keko-playing-hover {
   background-position: -200px -2469px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-light-logo {
   background-position: -129px -444px;
   height: 70px;
   width: 300px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-light-talk-to-us {
   background-position: 0 -202px;
   height: 100px;
   width: 160px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-logo-oer {
   background-position: -128px -1236px;
   height: 140px;
   width: 279px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-logo-redu-tech {
   background-position: -244px -112px;
   height: 90px;
   width: 160px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-logo {
   background-position: -80px -332px;
   height: 55px;
   width: 193px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-medal-gold, .sprite-medal-gold-after:after {
   background-position: -48px -112px;
   height: 18px;
   width: 16px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-medal-silver, .sprite-medal-silver-after:after {
   background-position: -32px -112px;
   height: 18px;
   width: 16px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-multimedia-document {
   background-position: -65px 0;
   height: 65px;
   width: 65px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-multimedia-exercise {
   background-position: 0 0;
   height: 65px;
   width: 65px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-multimedia-presentation {
   background-position: -226px 0;
   height: 65px;
   width: 65px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-multimedia-video {
   background-position: -291px 0;
   height: 65px;
   width: 65px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-partner-ade {
   background-position: 0 -1103px;
   height: 133px;
   width: 133px;
 }
-/* line 43, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-partner-ade:hover, .sprite-partner-ade.partner-ade_hover, .sprite-partner-ade.partner-ade-hover {
   background-position: 0 -704px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-partner-etr {
   background-position: 0 -837px;
   height: 133px;
   width: 133px;
 }
-/* line 43, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-partner-etr:hover, .sprite-partner-etr.partner-etr_hover, .sprite-partner-etr.partner-etr-hover {
   background-position: -133px -704px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-partner-facig {
   background-position: -266px -704px;
   height: 133px;
   width: 133px;
 }
-/* line 43, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-partner-facig:hover, .sprite-partner-facig.partner-facig_hover, .sprite-partner-facig.partner-facig-hover {
   background-position: -133px -837px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-partner-fafire {
   background-position: -266px -837px;
   height: 133px;
   width: 133px;
 }
-/* line 43, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-partner-fafire:hover, .sprite-partner-fafire.partner-fafire_hover, .sprite-partner-fafire.partner-fafire-hover {
   background-position: -266px -1103px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-partner-ufpe {
   background-position: 0 -970px;
   height: 133px;
   width: 133px;
 }
-/* line 43, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-partner-ufpe:hover, .sprite-partner-ufpe.partner-ufpe_hover, .sprite-partner-ufpe.partner-ufpe-hover {
   background-position: -133px -970px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-partner-univasf {
   background-position: -266px -970px;
   height: 133px;
   width: 133px;
 }
-/* line 43, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-partner-univasf:hover, .sprite-partner-univasf.partner-univasf_hover, .sprite-partner-univasf.partner-univasf-hover {
   background-position: -133px -1103px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-plan-consultancy-hr, .sprite-plan-consultancy-hr-before:before {
   background-position: -196px -112px;
   height: 50px;
   width: 48px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-plan-independent, .sprite-plan-independent-before:before {
   background-position: -32px -332px;
   height: 50px;
   width: 48px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-plan-institution, .sprite-plan-institution-before:before {
   background-position: -148px -112px;
   height: 50px;
   width: 48px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-segment-consultancy-hr {
   background-position: -356px 0;
   height: 112px;
   width: 112px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-segment-independent {
   background-position: 0 -574px;
   height: 112px;
   width: 112px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-segment-institution {
   background-position: -273px -332px;
   height: 112px;
   width: 112px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-sign-up-green_32_34, .sprite-sign-up-green_32_34-before:before {
   background-position: -116px -112px;
   height: 34px;
   width: 32px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-social-facebook {
   background-position: -84px -112px;
   height: 32px;
   width: 32px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-social-twitter {
   background-position: 0 -332px;
   height: 32px;
   width: 32px;
 }
 
-/* line 60, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-talk-to-us {
   background-position: -130px 0;
   height: 96px;
   width: 48px;
 }
-/* line 43, ../../../../../../../../../Ruby187/lib/ruby/gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .sprite-talk-to-us:hover, .sprite-talk-to-us.talk-to-us_hover, .sprite-talk-to-us.talk-to-us-hover {
   background-position: -178px 0;
 }
 
-/* line 14, scss/_landing-sprites.scss */
 .sprite-before:before {
   content: "";
   display: inline-block;
@@ -427,7 +360,6 @@ body {
   margin-right: 5px;
 }
 
-/* line 15, scss/_landing-sprites.scss */
 .sprite-after:after {
   content: "";
   display: inline-block;
@@ -435,28 +367,23 @@ body {
   margin-left: 5px;
 }
 
-/* line 17, scss/_landing-sprites.scss */
 .sprite, .sprite-advantage-developer, .sprite-advantage-manager, .sprite-advantage-student, .sprite-advantage-teacher, .sprite-background-chat, .sprite-background-management, .sprite-background-treemap, .sprite-background-wall, .sprite-icon-chat, .sprite-icon-close, .sprite-icon-correct, .sprite-icon-developer, .sprite-icon-exercise, .sprite-icon-management, .sprite-icon-plus, .sprite-icon-report, .sprite-keko-playing, .sprite-light-logo, .sprite-light-talk-to-us, .sprite-logo-oer, .sprite-logo-redu-tech, .sprite-logo, .sprite-medal-gold, .sprite-medal-gold-after:after, .sprite-medal-silver, .sprite-medal-silver-after:after, .sprite-multimedia-document, .sprite-multimedia-exercise, .sprite-multimedia-presentation, .sprite-multimedia-video, .sprite-partner-ade, .sprite-partner-etr, .sprite-partner-facig, .sprite-partner-fafire, .sprite-partner-ufpe, .sprite-partner-univasf, .sprite-plan-consultancy-hr, .sprite-plan-consultancy-hr-before:before, .sprite-plan-independent, .sprite-plan-independent-before:before, .sprite-plan-institution, .sprite-plan-institution-before:before, .sprite-segment-consultancy-hr, .sprite-segment-independent, .sprite-segment-institution, .sprite-sign-up-green_32_34, .sprite-sign-up-green_32_34-before:before, .sprite-social-facebook, .sprite-social-twitter, .sprite-talk-to-us, .landing-logo-wrapper:hover, .landing-footer-logo-link:hover, .landing-footer-contact:hover, .landing-footer-contact:hover .landing-footer-talk-to-us-balloons {
   display: inline-block;
 }
 
-/* line 6, scss/_landing-header.scss */
 .landing-header {
   height: 85px;
   background-color: #e6e6e6;
 }
-/* line 10, scss/_landing-header.scss */
 .boxshadow .landing-header {
   -webkit-box-shadow: 0 -1px 0 white inset, 0 1px 0 white inset, 0 1px 0 #b2b2b2;
   -moz-box-shadow: 0 -1px 0 white inset, 0 1px 0 white inset, 0 1px 0 #b2b2b2;
   box-shadow: 0 -1px 0 white inset, 0 1px 0 white inset, 0 1px 0 #b2b2b2;
 }
-/* line 18, scss/_landing-header.scss */
 .ie8 .landing-header {
   border-bottom: 1px solid #b2b2b2;
 }
 
-/* line 22, scss/_landing-header.scss */
 .landing-logo-wrapper {
   width: 300px;
   height: 70px;
@@ -464,177 +391,145 @@ body {
   position: relative;
   margin-left: -112px;
 }
-/* line 28, scss/_landing-header.scss */
 .landing-logo-wrapper:hover {
   background-position: -129px -444px;
   height: 70px;
   width: 300px;
 }
 
-/* line 32, scss/_landing-header.scss */
 .landing-logo {
   position: absolute;
   right: -3px;
   bottom: 0;
 }
 
-/* line 39, scss/_landing-header.scss */
 .landing-header-buttons {
   float: right;
   margin-top: 20px;
 }
 
-/* line 45, scss/_landing-header.scss */
 .landing-button-sign-up +
 .landing-button-sign-in {
   margin-left: 40px;
 }
 
-/* line 48, scss/_landing-header.scss */
 .landing-button-sign-up,
 .landing-button-sign-in {
   display: inline-block;
 }
-/* line 51, scss/_landing-header.scss */
 .landing-button-sign-up [class*="icon-"],
 .landing-button-sign-in [class*="icon-"] {
   margin: 5px 10px 0 0;
   float: left;
 }
 
-/* line 8, scss/_landing-sign-up.scss */
 .modal-sign-up .modal-body {
   padding: 0;
   color: #6d6e6f;
 }
-/* line 13, scss/_landing-sign-up.scss */
 .modal-sign-up .line-gray3, .modal-sign-up .landing-functionalities hr, .landing-functionalities .modal-sign-up hr {
   margin: 20px 0;
 }
-/* line 16, scss/_landing-sign-up.scss */
 .modal-sign-up .line-gray3 +
 .row, .modal-sign-up .landing-functionalities hr +
 .row, .landing-functionalities .modal-sign-up hr +
 .row {
   margin-bottom: 25px;
 }
-/* line 18, scss/_landing-sign-up.scss */
 .modal-sign-up .tos .control-error label {
   color: #6d6e6f;
 }
-/* line 22, scss/_landing-sign-up.scss */
 .modal-sign-up .modal-footer .button-default +
 .button-success {
   margin-left: 10px;
 }
 
-/* line 27, scss/_landing-sign-up.scss */
 .modal-sign-up-title {
   color: #61a080;
   line-height: 22px;
 }
-/* line 32, scss/_landing-sign-up.scss */
 .modal-sign-up-title.sprite-before:before {
   position: relative;
   top: 5px;
   float: left;
 }
 
-/* line 39, scss/_landing-sign-up.scss */
 .modal-sign-up-section {
   padding: 20px 20px 10px;
 }
-/* line 43, scss/_landing-sign-up.scss */
 .modal-sign-up-section p +
 .facebook-sign-up {
   margin-top: 20px;
 }
-/* line 46, scss/_landing-sign-up.scss */
 .modal-sign-up-section .facebook-sign-up-button +
 .legend {
   margin-top: 5px;
   display: block;
 }
 
-/* line 53, scss/_landing-sign-up.scss */
 .list-separator +
 .modal-sign-up-section {
   padding: 10px 20px 20px;
 }
 
-/* line 56, scss/_landing-sign-up.scss */
 .modal-sign-up-tos {
   float: left;
   text-align: left;
 }
 
-/* line 62, scss/_landing-sign-up.scss */
 .modal-sign-up-buttons {
   float: right;
 }
 
-/* line 65, scss/_landing-sign-up.scss */
 .modal-sign-up-login-explaination {
   margin-top: 20px;
 }
-/* line 68, scss/_landing-sign-up.scss */
 .modal-sign-up-login-explaination .legend {
   color: #6d6e6f;
 }
 
-/* line 72, scss/_landing-sign-up.scss */
 .modal-sign-up-success .modal-body {
   padding: 0 20px 20px;
   color: black;
 }
-/* line 77, scss/_landing-sign-up.scss */
 .modal-sign-up-success .modal-body p +
 p {
   margin-top: 20px;
 }
 
-/* line 6, scss/_landing-dropdown-sign-in.scss */
 .landing-button-sign-in .button-group {
   position: relative;
   display: inline-block;
 }
-/* line 11, scss/_landing-dropdown-sign-in.scss */
 .landing-button-sign-in .facebook-sign-in {
   margin: 20px 17px;
   font-size: 11px;
 }
-/* line 16, scss/_landing-dropdown-sign-in.scss */
 .landing-button-sign-in .dropdown-menu {
   width: 240px;
 }
 
-/* line 19, scss/_landing-dropdown-sign-in.scss */
 .landing-sign-in-recover {
   padding: 10px 10px 8px;
   text-align: center;
 }
 
-/* line 24, scss/_landing-dropdown-sign-in.scss */
 .landing-sign-in-form {
   padding: 20px 10px;
 }
-/* line 28, scss/_landing-dropdown-sign-in.scss */
 .landing-sign-in-form .control-group +
 .control-group {
   margin-top: 2px;
 }
 
-/* line 31, scss/_landing-dropdown-sign-in.scss */
 .landing-sign-in-form-submit {
   margin-top: 10px;
   overflow: hidden;
 }
-/* line 35, scss/_landing-dropdown-sign-in.scss */
 .landing-sign-in-form-submit .legend {
   color: #6d6e6f;
 }
 
-/* line 6, scss/_landing-welcome.scss */
 .landing-welcome {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -644,25 +539,21 @@ p {
   background: transparent url("../images/landing/illustration.png") no-repeat center;
 }
 
-/* line 14, scss/_landing-welcome.scss */
 .landing-welcome-title {
   font: 500 60px/56px museo-sans-rounded, museo-sans, "Helvetica Neue", Arial, sans-serif;
   color: white;
   letter-spacing: -3px;
   margin-left: -3px;
 }
-/* line 20, scss/_landing-welcome.scss */
 .textshadow .landing-welcome-title {
   text-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5);
 }
 
-/* line 24, scss/_landing-welcome.scss */
 .landing-welcome-title +
 .landing-welcome-message {
   margin-top: 20px;
 }
 
-/* line 27, scss/_landing-welcome.scss */
 .landing-welcome-message {
   font: 700 21px/28px museo-sans-rounded, museo-sans, "Helvetica Neue", Arial, sans-serif;
   letter-spacing: -1px;
@@ -671,12 +562,10 @@ p {
   background-repeat: no-repeat;
   background-position: center center;
 }
-/* line 35, scss/_landing-welcome.scss */
 .textshadow .landing-welcome-message {
   text-shadow: 1px 1px 0 white;
 }
 
-/* line 5, scss/_landing-navigation.scss */
 .landing-navigation {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -686,69 +575,57 @@ p {
   border: 1px solid #f7f7f7;
   list-style: none;
 }
-/* line 12, scss/_landing-navigation.scss */
 .borderradius .landing-navigation {
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;
 }
-/* line 14, scss/_landing-navigation.scss */
 .boxshadow .landing-navigation {
   -webkit-box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.5);
   box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.5);
 }
-/* line 16, scss/_landing-navigation.scss */
 .landing-navigation h4 {
   color: #6d6e6f;
 }
 
-/* line 21, scss/_landing-navigation.scss */
 .boxshadow .landing-navigation-item:first-child {
   -webkit-box-shadow: 0 -1px 0 white inset;
   -moz-box-shadow: 0 -1px 0 white inset;
   box-shadow: 0 -1px 0 white inset;
 }
-/* line 23, scss/_landing-navigation.scss */
 .landing-navigation-item + .landing-navigation-item {
   border-top: 1px solid #e6e6e6;
 }
-/* line 29, scss/_landing-navigation.scss */
 .boxshadow .landing-navigation-item + .landing-navigation-item {
   -webkit-box-shadow: 0 1px 0 white inset, 0 -1px 0 white inset;
   -moz-box-shadow: 0 1px 0 white inset, 0 -1px 0 white inset;
   box-shadow: 0 1px 0 white inset, 0 -1px 0 white inset;
 }
-/* line 32, scss/_landing-navigation.scss */
 .boxshadow .landing-navigation-item:last-child {
   -webkit-box-shadow: 0 1px 0 white inset;
   -moz-box-shadow: 0 1px 0 white inset;
   box-shadow: 0 1px 0 white inset;
 }
 
-/* line 5, scss/_landing-filters.scss */
 .landing-filters {
   text-align: center;
   padding: 20px 0 10px;
 }
-/* line 9, scss/_landing-filters.scss */
 .landing-filters .filters {
   display: inline-block;
 }
-/* line 11, scss/_landing-filters.scss */
 .landing-filters .filter {
   font-size: 16px;
   line-height: 28px;
 }
 
-/* line 17, scss/_landing-filters.scss */
 .landing-filters-fixed {
   position: fixed;
   top: 0;
   z-index: 999;
   width: 939px;
 }
-/* line 23, scss/_landing-filters.scss */
 .cssgradients .landing-filters-fixed {
   background-image: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgba(255, 255, 255, 0)), color-stop(20%, #ffffff));
   background-image: -webkit-linear-gradient(bottom, rgba(255, 255, 255, 0), #ffffff 20%);
@@ -756,31 +633,25 @@ p {
   background-image: -o-linear-gradient(bottom, rgba(255, 255, 255, 0), #ffffff 20%);
   background-image: linear-gradient(bottom, rgba(255, 255, 255, 0), #ffffff 20%);
 }
-/* line 25, scss/_landing-filters.scss */
 .no-cssgradients.gt-ie8 .landing-filters-fixed {
   background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjcwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9Ijk5JSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIwIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiIHN0b3Atb3BhY2l0eT0iMCIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
 }
 
-/* line 15, scss/_landing-segments.scss */
 .landing-segment-outer-wrapper {
   padding: 20px 40px 20px 20px;
 }
-/* line 18, scss/_landing-segments.scss */
 .landing-segment-outer-wrapper h4 {
   margin: 0 0 5px 20px;
 }
 
-/* line 22, scss/_landing-segments.scss */
 .landing-segment-wrapper {
   position: relative;
   margin-left: 80px;
 }
-/* line 26, scss/_landing-segments.scss */
 .landing-segment-wrapper + .landing-segment-wrapper {
   margin-top: 20px;
 }
 
-/* line 30, scss/_landing-segments.scss */
 .landing-segment-button {
   position: absolute;
   left: -80px;
@@ -788,47 +659,39 @@ p {
   top: -moz-calc(50% - 56px);
   top: calc(50% - 56px);
 }
-/* line 38, scss/_landing-segments.scss */
 .landing-segment-button .ie8 {
   top: 20%;
 }
 
-/* line 42, scss/_landing-segments.scss */
 .landing-segments {
   margin: 0;
   list-style: none;
   border: 1px solid #73c3e6;
   background-color: #f0f0f0;
 }
-/* line 48, scss/_landing-segments.scss */
 .borderradius .landing-segments {
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;
 }
-/* line 50, scss/_landing-segments.scss */
 .boxshadow .landing-segments {
   -webkit-box-shadow: 1px 1px 0 white inset, -1px -1px 0 white inset;
   -moz-box-shadow: 1px 1px 0 white inset, -1px -1px 0 white inset;
   box-shadow: 1px 1px 0 white inset, -1px -1px 0 white inset;
 }
-/* line 57, scss/_landing-segments.scss */
 .landing-segments > .landing-segment + .landing-segment {
   border-top: 1px solid #73c3e6;
 }
-/* line 60, scss/_landing-segments.scss */
 .boxshadow .landing-segments > .landing-segment + .landing-segment {
   -webkit-box-shadow: 0 1px 0 white inset;
   -moz-box-shadow: 0 1px 0 white inset;
   box-shadow: 0 1px 0 white inset;
 }
 
-/* line 66, scss/_landing-segments.scss */
 .landing-segment {
   overflow: hidden;
 }
 
-/* line 69, scss/_landing-segments.scss */
 .landing-segment-type,
 .landing-segment-benefits {
   -webkit-box-sizing: border-box;
@@ -837,37 +700,31 @@ p {
   width: 50%;
 }
 
-/* line 74, scss/_landing-segments.scss */
 .landing-segment-type {
   display: table;
   float: left;
   padding: 0 20px 0 30px;
   height: 112px;
 }
-/* line 81, scss/_landing-segments.scss */
 .landing-segment-hr .landing-segment-type {
   height: 165px;
 }
-/* line 85, scss/_landing-segments.scss */
 .borderradius .landing-segment:first-child .landing-segment-type {
   -webkit-border-radius: 10px 0 0 0;
   -moz-border-radius: 10px 0 0 0;
   border-radius: 10px 0 0 0;
 }
-/* line 87, scss/_landing-segments.scss */
 .borderradius .landing-segment:last-child .landing-segment-type {
   -webkit-border-radius: 0 0 0 10px;
   -moz-border-radius: 0 0 0 10px;
   border-radius: 0 0 0 10px;
 }
-/* line 89, scss/_landing-segments.scss */
 .borderradius .landing-segment:first-child:last-child .landing-segment-type {
   -webkit-border-radius: 10px 0 0 10px;
   -moz-border-radius: 10px 0 0 10px;
   border-radius: 10px 0 0 10px;
 }
 
-/* line 93, scss/_landing-segments.scss */
 .landing-segment-title {
   display: table-cell;
   vertical-align: middle;
@@ -875,75 +732,62 @@ p {
   letter-spacing: -2px;
 }
 
-/* line 100, scss/_landing-segments.scss */
 .landing-segment-benefits {
   overflow: hidden;
   background-color: #f7f7f7;
   padding: 20px;
   border-left: 1px solid white;
 }
-/* line 107, scss/_landing-segments.scss */
 .borderradius .landing-segment:first-child .landing-segment-benefits {
   -webkit-border-radius: 0 10px 0 0;
   -moz-border-radius: 0 10px 0 0;
   border-radius: 0 10px 0 0;
 }
-/* line 111, scss/_landing-segments.scss */
 .borderradius .landing-segment:last-child .landing-segment-benefits {
   -webkit-border-radius: 0 0 10px 0;
   -moz-border-radius: 0 0 10px 0;
   border-radius: 0 0 10px 0;
 }
-/* line 115, scss/_landing-segments.scss */
 .borderradius .landing-segment:first-child:last-child .landing-segment-benefits {
   -webkit-border-radius: 0 10px 10px 0;
   -moz-border-radius: 0 10px 10px 0;
   border-radius: 0 10px 10px 0;
 }
-/* line 118, scss/_landing-segments.scss */
 .boxshadow .landing-segment-benefits {
   -webkit-box-shadow: 1px 0 0 #e6e6e6 inset;
   -moz-box-shadow: 1px 0 0 #e6e6e6 inset;
   box-shadow: 1px 0 0 #e6e6e6 inset;
 }
-/* line 120, scss/_landing-segments.scss */
 .landing-segment-benefits > ul {
   list-style: disc inside none;
 }
 
-/* line 123, scss/_landing-segments.scss */
 .landing-segment-sublist {
   list-style: none;
   margin: 0 0 5px 50px;
 }
-/* line 127, scss/_landing-segments.scss */
 .landing-segment-sublist li {
   margin-top: 5px;
 }
 
-/* line 6, scss/_landing-footer.scss */
 .landing-footer {
   height: 140px;
   background-color: #e6e6e6;
 }
-/* line 10, scss/_landing-footer.scss */
 .boxshadow .landing-footer {
   -webkit-box-shadow: 0 1px 0 white inset, 0 -1px 0 #b2b2b2;
   -moz-box-shadow: 0 1px 0 white inset, 0 -1px 0 #b2b2b2;
   box-shadow: 0 1px 0 white inset, 0 -1px 0 #b2b2b2;
 }
-/* line 17, scss/_landing-footer.scss */
 .ie8 .landing-footer {
   border-top: 1px solid #b2b2b2;
 }
 
-/* line 25, scss/_landing-footer.scss */
 .landing-footer-logo-wrapper {
   position: relative;
   height: 125px;
 }
 
-/* line 31, scss/_landing-footer.scss */
 .landing-footer-logo-link {
   width: 300px;
   height: 70px;
@@ -951,21 +795,18 @@ p {
   top: 0;
   left: -115px;
 }
-/* line 37, scss/_landing-footer.scss */
 .landing-footer-logo-link:hover {
   background-position: -129px -444px;
   height: 70px;
   width: 300px;
 }
 
-/* line 41, scss/_landing-footer.scss */
 .landing-footer-logo-img {
   position: absolute;
   left: 115px;
   top: 20px;
 }
 
-/* line 48, scss/_landing-footer.scss */
 .landing-footer-cnpj {
   font-size: 9px;
   color: #b2b2b2;
@@ -973,85 +814,69 @@ p {
   bottom: 0;
 }
 
-/* line 59, scss/_landing-footer.scss */
 .landing-footer-navigation {
   margin: 25px 0 0;
   list-style: none;
 }
 
-/* line 68, scss/_landing-footer.scss */
 .landing-footer-social-networks-legend {
   margin-top: 40px;
   height: 28px;
   text-align: center;
 }
-/* line 73, scss/_landing-footer.scss */
 .landing-footer-social-networks-legend .legend {
   display: inline-block;
   max-width: 55px;
 }
 
-/* line 80, scss/_landing-footer.scss */
 .landing-footer-social-networks-legend +
 .landing-footer-social-networks {
   margin-top: 5px;
 }
 
-/* line 82, scss/_landing-footer.scss */
 .landing-footer-social-networks {
   text-align: center;
 }
 
-/* line 84, scss/_landing-footer.scss */
 .landing-footer-social-network {
   vertical-align: top;
 }
-/* line 87, scss/_landing-footer.scss */
 .landing-footer-social-network + .landing-footer-social-network {
   margin-left: 10px;
 }
-/* line 89, scss/_landing-footer.scss */
 .borderradius .landing-footer-social-network {
   -webkit-border-radius: 16px;
   -moz-border-radius: 16px;
   border-radius: 16px;
 }
-/* line 91, scss/_landing-footer.scss */
 .boxshadow .landing-footer-social-network {
   -webkit-box-shadow: 0 1px 0 white;
   -moz-box-shadow: 0 1px 0 white;
   box-shadow: 0 1px 0 white;
 }
 
-/* line 98, scss/_landing-footer.scss */
 .landing-footer-contact {
   margin-top: 25px;
   text-align: right;
 }
-/* line 102, scss/_landing-footer.scss */
 .landing-footer-contact .landing-footer-talk-to-us-balloons {
   display: block;
 }
-/* line 104, scss/_landing-footer.scss */
 .landing-footer-contact h3 + .legend {
   margin-top: 10px;
 }
-/* line 106, scss/_landing-footer.scss */
 .landing-footer-contact:hover {
   background-position: 0 -202px;
   height: 100px;
   width: 160px;
   display: block;
 }
-/* line 110, scss/_landing-footer.scss */
 .landing-footer-contact:hover .legend {
   color: #6d6e6f;
 }
-/* line 112, scss/_landing-footer.scss */
 .landing-footer-contact:hover a {
   color: #158ac4;
 }
-/* line 114, scss/_landing-footer.scss */
 .landing-footer-contact:hover .landing-footer-talk-to-us-balloons {
   display: block;
   background-position: -178px 0;
@@ -1059,26 +884,21 @@ p {
   width: 48px;
 }
 
-/* line 4, scss/_landing-advantages.scss */
 .landing-advantages {
   width: 100%;
   display: inline-block;
 }
-/* line 8, scss/_landing-advantages.scss */
 .landing-advantages .landing-navigation-title {
   margin: 20px;
 }
-/* line 10, scss/_landing-advantages.scss */
 .landing-advantages .type-user {
   display: block;
   float: left;
   max-width: 200px;
 }
-/* line 15, scss/_landing-advantages.scss */
 .landing-advantages .type-user .call + .call {
   margin: 20px 0;
 }
-/* line 17, scss/_landing-advantages.scss */
 .landing-advantages .type-user .call {
   text-align: center;
   font-size: 13px;
@@ -1086,68 +906,52 @@ p {
   width: 200px;
   font-family: arial;
 }
-/* line 25, scss/_landing-advantages.scss */
 .landing-advantages .type-user.teacher {
   margin: 0 39px;
 }
-/* line 27, scss/_landing-advantages.scss */
 .landing-advantages .type-user.teacher .call {
   color: #ff7c35;
 }
-/* line 30, scss/_landing-advantages.scss */
 .landing-advantages .type-user.teacher .button-user h3 {
   margin-left: 65px;
 }
-/* line 32, scss/_landing-advantages.scss */
 .landing-advantages .type-user.teacher .button-user legend {
   margin-left: 79px;
 }
-/* line 35, scss/_landing-advantages.scss */
 .textshadow .landing-advantages .type-user.teacher .button-user legend {
   text-shadow: 0 -1px 0 #f24a00;
 }
-/* line 40, scss/_landing-advantages.scss */
 .landing-advantages .type-user.gestor {
   margin: 0 39px 0 0;
 }
-/* line 43, scss/_landing-advantages.scss */
 .landing-advantages .type-user.gestor .call {
   color: #158ac4;
 }
-/* line 45, scss/_landing-advantages.scss */
 .landing-advantages .type-user.gestor .button-user h3 {
   margin-left: 48px;
 }
-/* line 48, scss/_landing-advantages.scss */
 .landing-advantages .type-user.developer {
   margin-right: 10px;
 }
-/* line 51, scss/_landing-advantages.scss */
 .landing-advantages .type-user.developer .call {
   color: #ff6d6d;
 }
-/* line 54, scss/_landing-advantages.scss */
 .landing-advantages .type-user.developer .button-user h3 {
   margin-left: 70px;
 }
-/* line 56, scss/_landing-advantages.scss */
 .landing-advantages .type-user.developer .button-user legend {
   margin-left: 68px;
 }
-/* line 59, scss/_landing-advantages.scss */
 .textshadow .landing-advantages .type-user.developer .button-user legend {
   text-shadow: 0 -1px 0 #c0272d;
 }
-/* line 64, scss/_landing-advantages.scss */
 .landing-advantages .type-user.student {
   margin-left: 10px;
   float: left;
 }
-/* line 68, scss/_landing-advantages.scss */
 .landing-advantages .type-user.student .call {
   color: #61a080;
 }
-/* line 72, scss/_landing-advantages.scss */
 .landing-advantages .type-user .button-user h3 {
   color: white;
   position: absolute;
@@ -1155,11 +959,9 @@ p {
   margin-left: 56px;
   font-size: 36px;
 }
-/* line 79, scss/_landing-advantages.scss */
 .textshadow .landing-advantages .type-user .button-user h3 {
   text-shadow: 0 1px 3px black;
 }
-/* line 82, scss/_landing-advantages.scss */
 .landing-advantages .type-user .button-user legend {
   font-size: 10px;
   font-family: arial, sans-serif;
@@ -1169,16 +971,13 @@ p {
   letter-spacing: 0;
 }
 
-/* line 4, scss/_landing-plans.scss */
 .landing-plans {
   margin: 0 0 0 8px;
   padding: 20px 0;
 }
-/* line 8, scss/_landing-plans.scss */
 .landing-plans .landing-navigation-title {
   margin-bottom: 30px;
 }
-/* line 12, scss/_landing-plans.scss */
 .landing-plans .type-plan {
   margin: 0 9px;
   width: 208px;
@@ -1186,18 +985,15 @@ p {
   border: 1px solid #73c3e6;
   background-color: #f7f7f7;
 }
-/* line 19, scss/_landing-plans.scss */
 .borderradius .landing-plans .type-plan {
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;
 }
-/* line 21, scss/_landing-plans.scss */
 .landing-plans .type-plan .type-plan-icon {
   padding: 10px 10px 0 10px;
   height: 100px;
 }
-/* line 25, scss/_landing-plans.scss */
 .landing-plans .type-plan .type-plan-icon h3 {
   margin-top: 10px;
   font-size: 18px;
@@ -1206,50 +1002,41 @@ p {
   text-align: center;
   color: black;
 }
-/* line 34, scss/_landing-plans.scss */
 .landing-plans .type-plan .type-plan-icon img {
   display: block;
   margin: 0 auto;
 }
-/* line 40, scss/_landing-plans.scss */
 .landing-plans .type-plan .free-plan {
   text-align: center;
   background-color: #e1f1e1;
 }
-/* line 44, scss/_landing-plans.scss */
 .landing-plans .type-plan .free-plan h4 {
   font-size: 13px;
 }
-/* line 48, scss/_landing-plans.scss */
 .landing-plans .type-plan .free-plan h4 {
   color: #5fc080;
 }
-/* line 52, scss/_landing-plans.scss */
 .landing-plans .type-plan .free-plan .limit-users-free {
   font-size: 36px;
   line-height: 36px;
   letter-spacing: -2px;
   font-weight: 300;
 }
-/* line 60, scss/_landing-plans.scss */
 .landing-plans .type-plan .learn-plan {
   display: block;
   padding: 0 10px 10px 10px;
   text-align: center;
 }
 
-/* line 68, scss/_landing-plans.scss */
 .landing-plan-icon {
   display: block;
   margin: 0 auto;
 }
 
-/* line 73, scss/_landing-plans.scss */
 .landing-plan-medal {
   vertical-align: top;
 }
 
-/* line 5, scss/_landing-functionalities.scss */
 .line-gray3, .landing-functionalities hr {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -1261,65 +1048,53 @@ p {
   border-right-width: 0;
 }
 
-/* line 15, scss/_landing-functionalities.scss */
 .landing-functionalities .landing-navigation-title {
   margin: 20px;
 }
-/* line 17, scss/_landing-functionalities.scss */
 .landing-functionalities p {
   color: #b2b2b2;
 }
-/* line 20, scss/_landing-functionalities.scss */
 .landing-functionalities h3 + h4,
 .landing-functionalities h4 + p {
   margin-top: 20px;
 }
 
-/* line 25, scss/_landing-functionalities.scss */
 .landing-functionality:hover p {
   color: #6d6e6f;
 }
 
-/* line 5, scss/_landing-social-network-&-chat.scss */
 .landing-social-network-n-chat {
   margin-bottom: 20px;
 }
 
-/* line 10, scss/_landing-social-network-&-chat.scss */
 .landing-social-network-wrapper,
 .landing-chat-wrapper {
   position: relative;
 }
 
-/* line 12, scss/_landing-social-network-&-chat.scss */
 .landing-social-network-sprite {
   position: absolute;
   left: -155px;
   top: 15px;
 }
 
-/* line 18, scss/_landing-social-network-&-chat.scss */
 .landing-chat-sprite {
   position: absolute;
   left: 150px;
   top: -65px;
 }
 
-/* line 25, scss/_landing-social-network-&-chat.scss */
 .landing-social-network-wrapper {
   text-align: right;
 }
 
-/* line 28, scss/_landing-social-network-&-chat.scss */
 .landing-chat-wrapper {
   text-align: left;
 }
-/* line 31, scss/_landing-social-network-&-chat.scss */
 .landing-chat-wrapper h4 {
   width: 280px;
 }
 
-/* line 5, scss/_landing-discussion-wall.scss */
 .landing-discussion-wall {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -1329,17 +1104,14 @@ p {
   background-color: #f7f7f7;
   background: url("../images/landing/wall-background.png") no-repeat scroll right center #f7f7f7;
 }
-/* line 12, scss/_landing-discussion-wall.scss */
 .multiplebgs .landing-discussion-wall {
   background: url("../images/landing/icon-wall-gray_128_130.png") no-repeat scroll center center, url("../images/landing/wall-background.png") no-repeat scroll right center #f7f7f7;
 }
 
-/* line 19, scss/_landing-discussion-wall.scss */
 .landing-discussion-wall-content {
   width: 340px;
 }
 
-/* line 9, scss/_landing-multimedia-classes.scss */
 .landing-multimedia-type, .landing-multimedia-exercise {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -1347,33 +1119,27 @@ p {
   display: block;
   padding: 5px;
 }
-/* line 14, scss/_landing-multimedia-classes.scss */
 .landing-multimedia-type + .landing-multimedia-type, .landing-multimedia-exercise + .landing-multimedia-type, .landing-multimedia-type + .landing-multimedia-exercise, .landing-multimedia-exercise + .landing-multimedia-exercise {
   margin-top: 10px;
 }
 
-/* line 19, scss/_landing-multimedia-classes.scss */
 .landing-multimedia-outer-wrapper {
   padding: 20px;
 }
 
-/* line 22, scss/_landing-multimedia-classes.scss */
 .landing-multimedia-inner-wrapper {
   background: white url("../images/landing/icon-exercise-gray_128_130.png") no-repeat right center;
 }
 
-/* line 25, scss/_landing-multimedia-classes.scss */
 .landing-multimedia-description {
   width: 340px;
 }
 
-/* line 28, scss/_landing-multimedia-classes.scss */
 .landing-multimedia-description +
 .landing-multimedia-types {
   margin-left: 35px;
 }
 
-/* line 33, scss/_landing-multimedia-classes.scss */
 .landing-multimedia-description,
 .landing-multimedia-types,
 .landing-multimedia-types-left,
@@ -1381,19 +1147,16 @@ p {
   display: inline-block;
 }
 
-/* line 37, scss/_landing-multimedia-classes.scss */
 .landing-multimedia-types {
   width: 350px;
 }
 
-/* line 40, scss/_landing-multimedia-classes.scss */
 .landing-multimedia-exercise {
   position: absolute;
   top: -10px;
   left: -10px;
 }
 
-/* line 47, scss/_landing-multimedia-classes.scss */
 .landing-multimedia-type-circle {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -1408,28 +1171,23 @@ p {
   display: none;
   border: 1px solid white;
 }
-/* line 54, scss/_landing-multimedia-classes.scss */
 .borderradius .landing-multimedia-type-circle {
   -webkit-border-radius: 40px;
   -moz-border-radius: 40px;
   border-radius: 40px;
 }
-/* line 56, scss/_landing-multimedia-classes.scss */
 .landing-multimedia-outer-wrapper:hover .landing-multimedia-type-circle {
   display: block;
 }
-/* line 58, scss/_landing-multimedia-classes.scss */
 .landing-multimedia-type-circle:hover {
   border-width: 5px;
 }
 
-/* line 62, scss/_landing-multimedia-classes.scss */
 .landing-multimedia-types-left +
 .landing-multimedia-types-right {
   margin-left: 20px;
 }
 
-/* line 64, scss/_landing-multimedia-classes.scss */
 .landing-multimedia-types-right {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -1439,44 +1197,36 @@ p {
   vertical-align: top;
 }
 
-/* line 72, scss/_landing-multimedia-classes.scss */
 .landing-multimedia-exercise-box {
   padding: 10px;
   background-color: #e1f1e1;
   border: 1px solid #abe385;
   position: relative;
 }
-/* line 78, scss/_landing-multimedia-classes.scss */
 .borderradius .landing-multimedia-exercise-box {
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;
 }
-/* line 80, scss/_landing-multimedia-classes.scss */
 .boxshadow .landing-multimedia-exercise-box {
   -webkit-box-shadow: 1px 1px 1px white inset;
   -moz-box-shadow: 1px 1px 1px white inset;
   box-shadow: 1px 1px 1px white inset;
 }
-/* line 82, scss/_landing-multimedia-classes.scss */
 .landing-multimedia-exercise-box h4 {
   margin-left: 55px;
   color: black;
 }
-/* line 87, scss/_landing-multimedia-classes.scss */
 .landing-multimedia-exercise-box p {
   color: #6d6e6f;
 }
-/* line 89, scss/_landing-multimedia-classes.scss */
 .landing-multimedia-exercise-box p + p {
   margin-top: 10px;
 }
-/* line 91, scss/_landing-multimedia-classes.scss */
 .landing-multimedia-exercise-box h4 + p {
   margin-top: 13px;
 }
 
-/* line 13, scss/_landing-oer.scss */
 .landing-oer-outer-wrapper {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -1485,7 +1235,6 @@ p {
   padding: 20px 0;
   background-color: #1c75bb;
 }
-/* line 19, scss/_landing-oer.scss */
 .cssgradients .landing-oer-outer-wrapper {
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(0, 0, 0, 0.4)), color-stop(5%, #1c75bb), color-stop(95%, #1c75bb), color-stop(100%, rgba(0, 0, 0, 0.4)));
   background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.4), #1c75bb 5%, #1c75bb 95%, rgba(0, 0, 0, 0.4) 100%);
@@ -1493,69 +1242,55 @@ p {
   background-image: -o-linear-gradient(rgba(0, 0, 0, 0.4), #1c75bb 5%, #1c75bb 95%, rgba(0, 0, 0, 0.4) 100%);
   background-image: linear-gradient(rgba(0, 0, 0, 0.4), #1c75bb 5%, #1c75bb 95%, rgba(0, 0, 0, 0.4) 100%);
 }
-/* line 21, scss/_landing-oer.scss */
 .no-cssgradients.gt-ie8 .landing-oer-outer-wrapper {
   background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUlIiBzdG9wLWNvbG9yPSIjMWM3NWJiIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iOTUlIiBzdG9wLWNvbG9yPSIjMWM3NWJiIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
 }
 
-/* line 28, scss/_landing-oer.scss */
 .landing-oer-inner-wrapper {
   background: url("../images/landing/oer-logo.png") no-repeat right center;
 }
-/* line 31, scss/_landing-oer.scss */
 .textshadow .landing-oer-inner-wrapper {
   text-shadow: 0 1px 0 black;
 }
 
-/* line 35, scss/_landing-oer.scss */
 .landing-oer-title {
   position: relative;
 }
-/* line 38, scss/_landing-oer.scss */
 .landing-oer-title .label-doubts {
   position: absolute;
 }
-/* line 40, scss/_landing-oer.scss */
 .landing-oer-title h3 {
   text-align: right;
   color: white;
 }
 
-/* line 47, scss/_landing-oer.scss */
 .landing-oer-description {
   padding-top: 10px;
 }
-/* line 50, scss/_landing-oer.scss */
 .landing-oer-description h4 {
   color: #f0f0f0;
 }
-/* line 52, scss/_landing-oer.scss */
 .landing-oer-description p {
   color: white;
 }
-/* line 55, scss/_landing-oer.scss */
 .landing-functionality:hover .landing-oer-description p {
   color: white;
 }
 
-/* line 7, scss/_landing-api.scss */
 .landing-api {
   padding: 20px;
 }
 
-/* line 10, scss/_landing-api.scss */
 .landing-api-description {
   display: inline-block;
   width: 340px;
 }
 
-/* line 16, scss/_landing-api.scss */
 .landing-api-description +
 .landing-api-link {
   margin-left: 60px;
 }
 
-/* line 19, scss/_landing-api.scss */
 .landing-api-link {
   width: 225px;
   height: 225px;
@@ -1567,17 +1302,14 @@ p {
   background: transparent url("../images/landing/icon-api-gray_128_130.png") no-repeat 30px 20px;
   position: relative;
 }
-/* line 27, scss/_landing-api.scss */
 .landing-api-link:hover {
   border-color: #73c3e6;
 }
-/* line 29, scss/_landing-api.scss */
 .borderradius .landing-api-link {
   -webkit-border-radius: 130px;
   -moz-border-radius: 130px;
   border-radius: 130px;
 }
-/* line 31, scss/_landing-api.scss */
 .landing-api-link a {
   position: absolute;
   bottom: 0;
@@ -1586,58 +1318,47 @@ p {
   text-align: center;
 }
 
-/* line 41, scss/_landing-api.scss */
 .landing-api-link +
 .landing-api-illustration {
   float: right;
   margin-left: 30px;
 }
 
-/* line 6, scss/_landing-others.scss */
 .landing-others {
   padding: 50px 20px 20px;
   background: transparent url("../images/landing/plus.png") no-repeat center 10px;
   overflow: hidden;
 }
 
-/* line 12, scss/_landing-others.scss */
 .landing-other {
   width: 286px;
   float: left;
   position: relative;
 }
-/* line 17, scss/_landing-others.scss */
 .landing-other + .landing-other {
   margin-left: 20px;
 }
-/* line 19, scss/_landing-others.scss */
 .landing-other .label-doubts {
   position: absolute;
   top: 0;
   right: 0;
 }
-/* line 25, scss/_landing-others.scss */
 .landing-other [class*="icon-"][class*="-before"]:before {
   margin-right: 10px;
 }
 
-/* line 6, scss/_landing-partners.scss */
 .landing-partners-wrapper {
   padding: 20px 20px 40px;
 }
-/* line 9, scss/_landing-partners.scss */
 .landing-partners-wrapper h2 {
   color: #e6e6e6;
 }
-/* line 12, scss/_landing-partners.scss */
 .textshadow .landing-partners-wrapper h2 {
   text-shadow: 0 1px 0 #b3b3b3;
 }
-/* line 15, scss/_landing-partners.scss */
 .landing-partners-wrapper h2 + .landing-partners {
   margin-top: 20px;
 }
-/* line 17, scss/_landing-partners.scss */
 .landing-partners-wrapper .partners-title {
   font-size: 18px !important;
   line-height: 21px;
@@ -1645,21 +1366,17 @@ p {
   font-weight: 500;
 }
 
-/* line 25, scss/_landing-partners.scss */
 .landing-partners {
   overflow: hidden;
 }
 
-/* line 28, scss/_landing-partners.scss */
 .landing-partner {
   float: left;
 }
-/* line 31, scss/_landing-partners.scss */
 .landing-partner + .landing-partner {
   margin-left: 20px;
 }
 
-/* line 5, scss/_landing-basic-reports.scss */
 .landing-basic-reports {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -1669,35 +1386,29 @@ p {
   background-color: #f7f7f7;
   background: url("../images/landing/treemap.png") no-repeat scroll right center #f7f7f7;
 }
-/* line 12, scss/_landing-basic-reports.scss */
 .multiplebgs .landing-basic-reports {
   background: url("../images/landing/icon-128px-relatorios-basicos.png") no-repeat scroll center center, url("../images/landing/treemap.png") no-repeat scroll left center #f7f7f7;
 }
 
-/* line 19, scss/_landing-basic-reports.scss */
 .landing-basic-reports-content {
   float: right;
   width: 340px;
 }
 
-/* line 5, scss/_landing-management-support.scss */
 .landing-management-support {
   overflow: hidden;
   height: 210px;
   background-color: white;
 }
-/* line 11, scss/_landing-management-support.scss */
 .landing-management-support h3 {
   margin-top: 20px;
 }
 
-/* line 16, scss/_landing-management-support.scss */
 .icon-129px-configuracoes, .bkg-suporte {
   position: absolute;
   display: block;
 }
 
-/* line 21, scss/_landing-management-support.scss */
 .icon-129px-configuracoes {
   width: 128px;
   height: 130px;
@@ -1705,7 +1416,6 @@ p {
   margin-left: -160px;
 }
 
-/* line 27, scss/_landing-management-support.scss */
 .landing-support-content {
   width: 395px;
   height: 120px;

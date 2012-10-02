@@ -33,10 +33,10 @@
   .modal-header .sprite-before:before { vertical-align: middle; }
 
   .modal-body { padding: 20px 40px 20px 60px; }
-
-  th.plan-column, th.marker { width: 76px;}
-
 }
+
+// Coluna dos planos.
+.landing-plan-column { width: 76px;}
 
 // Erros dos formulários.
 .errors_on_field {
