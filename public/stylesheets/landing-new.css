@@ -166,7 +166,7 @@ body {
   height: 240px;
   width: 240px;
 }
-.sprite-keko-playing:hover, .sprite-keko-playing.keko-playing_hover, .sprite-keko-playing.keko-playing-hover {
+.sprite-keko-playing:hover, .sprite-keko-playing.keko-playing_hover, .landing-api:hover .landing-api-illustration, .sprite-keko-playing.keko-playing-hover {
   background-position: -200px -2469px;
 }
 
