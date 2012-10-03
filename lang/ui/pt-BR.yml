@@ -197,6 +197,7 @@ pt-BR:
         password: "Senha"
         password_confirmation: "Confirmação da senha"
         email_confirmation: "Confirmação de E-mail"
+        current_password: "Senha atual"
       partner:
         name: "Nome"
       partner_environment_association:
