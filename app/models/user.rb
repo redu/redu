@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   # CALLBACKS
   before_create :make_activation_code
   after_create  :update_last_login
+  before_validation :strip_whitespace
 
   # ASSOCIATIONS
   has_many :chat_messages
@@ -668,4 +669,11 @@ class User < ActiveRecord::Base
     return new_password
   end
 
+  #Metodo que remove os espaços em branco no incio e no fim desses campos
+  def strip_whitespace
+    self.login = self.login.strip if attribute_present?("login")
+    self.first_name = self.first_name.strip if attribute_present?("first_name")
+    self.last_name = self.last_name.strip if attribute_present?("last_name")
+    self.email = self.email.strip if attribute_present?("email")
+  end
 end
