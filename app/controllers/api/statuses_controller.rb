@@ -26,19 +26,6 @@ module Api
       end
     end
 
-    def filter_by_type(statuses, type)
-      return case type
-      when 'help'
-        statuses.where(:type => 'Help')
-      when 'log'
-        statuses.where(:type => 'Log')
-      when 'activity'
-        statuses.where(:type => 'Activity')
-      else
-        statuses.where(:type => ['Help', 'Activity', 'Log'])
-      end
-    end
-
     def index
       context = context(params)
       authorize! :read, context
@@ -61,7 +48,6 @@ module Api
     end
 
     def timeline
-
       statusable = context(params)
       authorize! :read, statusable
 
@@ -103,6 +89,19 @@ module Api
     def filter_and_includes(statuses)
       statuses = statuses.not_compound_log
       statuses = statuses.includes(:user => :social_networks)
+    end
+
+    def filter_by_type(statuses, type)
+      case type
+      when 'help'
+        statuses.where(:type => 'Help')
+      when 'log'
+        statuses.where(:type => 'Log')
+      when 'activity'
+        statuses.where(:type => 'Activity')
+      else
+        statuses.where(:type => ['Help', 'Activity', 'Log'])
+      end
     end
   end
 end

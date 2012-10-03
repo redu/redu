@@ -209,9 +209,6 @@ describe "Statuses" do
         parse(response.body).count.should == stats.length
       end
     end
-
-
-
   end
 
   context "when listing user statuses" do
@@ -847,7 +844,6 @@ describe "Statuses" do
                 :logeable => lecture)
       ]
       end
-
     end
 
     it "should return 200" do
@@ -884,7 +880,7 @@ describe "Statuses" do
     %w(Help help Activity activity Log log).each do |filter|
       it "should filter by #{filter}" do
         get "/api/users/#{@current_user.id}/statuses/timeline", :type => filter,
-        :oauth_token => @token, :format => 'json'
+          :oauth_token => @token, :format => 'json'
         parse(response.body).all? {|s| s["type"] == filter.classify}.should be
       end
 
@@ -965,5 +961,4 @@ describe "Statuses" do
       response.code.should == "401"
     end
   end
-
 end
