@@ -15,6 +15,10 @@
   }
 
   .ie8 & { border-top: 1px solid $gray-drop-shadow; }
+
+  a:visited { color: $blue3; }
+
+  a:visited:hover { color: $blue4; }
 }
 
 
@@ -118,6 +122,4 @@
   }
 
   a:hover { text-decoration: none; }
-
-  a:visited { color: $blue3; }
 }

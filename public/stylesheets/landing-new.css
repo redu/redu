@@ -782,6 +782,12 @@ p {
 .ie8 .landing-footer {
   border-top: 1px solid #b2b2b2;
 }
+.landing-footer a:visited {
+  color: #4dadd6;
+}
+.landing-footer a:visited:hover {
+  color: #158ac4;
+}
 
 .landing-footer-logo-wrapper {
   position: relative;
@@ -885,9 +891,6 @@ p {
 }
 .landing-footer-contact a:hover {
   text-decoration: none;
-}
-.landing-footer-contact a:visited {
-  color: #4dadd6;
 }
 
 .landing-advantages {
