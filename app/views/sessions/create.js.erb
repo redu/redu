@@ -1,5 +1,9 @@
-var $form = $("#form-sign-in")
+<% if @user_session %>
+  var $form = $("#form-sign-in");
 
-var $newForm = $("<%= escape_javascript render 'landing/form_sign_in',
-                 :user_session => @user_session %>");
-$form.replaceWith($newForm);
+  var $newForm = $("<%= escape_javascript render 'landing/form_sign_in',
+                   :user_session => @user_session %>");
+  $form.replaceWith($newForm);
+<% else %>
+  $("body").html("<%= escape_javascript render :file => 'sessions/expired_activation' %>");
+<% end %>

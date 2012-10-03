@@ -132,6 +132,26 @@ describe SessionsController do
         end
       end
     end
+    context "when registration had expired" do
+      before do
+        @user.deactivate
+        @user.created_at = "2011-03-04".to_date
+        @user.save
+        post_params = {:locale => 'pt-BR', :format => "js",
+                       :user_session => { :remember_me => "0",
+                                          :password => @user.password,
+                                          :login => @user.login}}
+        post :create, post_params
+      end
+
+      it "should assign user_email" do
+        assigns(:user_email).should == @user.email
+      end
+
+      it "should redirect to sessions/expired_activation" do
+        response.should be_success
+      end
+    end
   end
 
   context "GET destroy (logout)" do
