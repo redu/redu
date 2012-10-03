@@ -220,7 +220,7 @@ class UsersController < BaseController
         @user.save
       else
         @current_password = params[:current_password]
-        @user.errors.add(:base, "A senha atual está incorreta")
+        @user.errors.add(:current_password, "A senha atual está errada")
         @flag = true
       end
 
