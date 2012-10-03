@@ -26,12 +26,8 @@ module Api
       end
     end
 
-    def index
-      context = context(params)
-      authorize! :read, context
-      statuses = statuses(context)
-
-      statuses = case params.fetch(:type, "").downcase
+    def filter_by_type(statuses, type)
+      return case type
       when 'help'
         statuses.where(:type => 'Help')
       when 'log'
@@ -39,8 +35,16 @@ module Api
       when 'activity'
         statuses.where(:type => 'Activity')
       else
-        statuses.where(:type => ['Help', 'Activity'])
+        statuses.where(:type => ['Help', 'Activity', 'Log'])
       end
+    end
+
+    def index
+      context = context(params)
+      authorize! :read, context
+      statuses = statuses(context)
+
+      statuses = filter_by_type(statuses, params.fetch(:type, "").downcase)
 
       statuses = statuses.page(params[:page])
 
@@ -57,6 +61,7 @@ module Api
     end
 
     def timeline
+
       statusable = context(params)
       authorize! :read, statusable
 
@@ -67,6 +72,7 @@ module Api
       end
 
       statuses = filter_and_includes(statuses)
+      statuses = filter_by_type(statuses, params.fetch(:type, "").downcase)
       statuses = statuses.page(params[:page])
 
       respond_with(:api, statuses)
