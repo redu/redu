@@ -402,6 +402,21 @@ describe User do
     it "updates last login after create" do
       subject.last_login_at.should_not be_nil
     end
+
+    context "when trimming whitespace" do
+      before do
+        @my_user = Factory.build(:user,
+          :login => "  vader   ", :email => " coisa@gmail.com",
+          :first_name => " darth     ", :last_name => " vader da silva   ")
+      end
+
+      [:login, :email, :first_name, :last_name].each do |var|
+        it "should trim #{var.to_s}" do
+          @my_user.valid?
+          /^\S+.*?\S+$/.should match @my_user.send(var)
+        end
+      end
+    end
   end
 
   context "when recommending friends" do
