@@ -21,6 +21,20 @@ describe RolesController do
   end
 
   context "on Environment" do
+    context "with a moderated course" do
+      it "should aprove user into every course if he is admin" do
+        moderated_course = Factory(:course, :environment => @environment,
+          :owner => @owner)
+        moderated_course.subscription_type = 0
+        moderated_course.save
+
+        put :update, :environment_id => @environment.path, :user_id => @member.login,
+        :role => Role[:environment_admin].to_i, :locale => "pt-BR"
+        @member.get_association_with(moderated_course).should be_approved
+      end
+
+    end
+
     it "should turn the user into environment_admin" do
       put :update, :environment_id => @environment.path, :user_id => @member.login,
         :role => Role[:environment_admin].to_i, :locale => "pt-BR"
