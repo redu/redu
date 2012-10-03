@@ -883,6 +883,12 @@ p {
   height: 96px;
   width: 48px;
 }
+.landing-footer-contact a:hover {
+  text-decoration: none;
+}
+.landing-footer-contact a:visited {
+  color: #4dadd6;
+}
 
 .landing-advantages {
   width: 100%;

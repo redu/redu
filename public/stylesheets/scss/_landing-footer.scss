@@ -116,4 +116,8 @@
       @include sprite-sprite(talk-to-us_hover);
     }
   }
+
+  a:hover { text-decoration: none; }
+
+  a:visited { color: $blue3; }
 }
