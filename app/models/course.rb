@@ -144,6 +144,11 @@ class Course < ActiveRecord::Base
     end
   end
 
+  # Associa um usuário com um curso
+  # se o curso for aberto, ele é aprovado
+  # automaticamente. Caso contrário o usuário
+  # só é aceito se possuir um convite para este
+  # curso.
   def join(user, role = Role[:member])
     association = UserCourseAssociation.create(:user_id => user.id,
                                                :course_id => self.id,
@@ -158,7 +163,9 @@ class Course < ActiveRecord::Base
     end
   end
 
-
+  # Associa um usuário com um curso,
+  # nesse caso o usuário sempre será
+  # aceito/aprovado no curso
   def join!(user, role  = Role[:member])
     association = UserCourseAssociation.create(:user_id => user.id,
                                                :course_id => self.id,
