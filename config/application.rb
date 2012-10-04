@@ -5,7 +5,7 @@ require 'oauth/rack/oauth_filter'
 
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.
-Bundler.require(:default, Rails.env) if defined?(Bundler)
+Bundler.require(:default, :assets, Rails.env) if defined?(Bundler)
 
 module Redu
   class Application < Rails::Application
@@ -35,6 +35,10 @@ module Redu
 
     # JavaScript files you want as :defaults (application.js is always included).
     # config.action_view.javascript_expansions[:defaults] = %w(jquery rails)
+
+    config.action_view.field_error_proc = Proc.new { |html_tag, instance|
+      "<div class='control-error field_with_errors'>#{html_tag}</div>".html_safe
+    }
 
     config.generators do |g|
       g.orm :active_record
@@ -67,8 +71,8 @@ module Redu
 
     # Meta dados da aplicação
     config.name = "Redu"
-    config.tagline = "A Rede Social Educacional"
-    config.description = "A Rede Social Educacional"
+    config.tagline = "Rede Social Educacional"
+    config.description = "Rede Social Educacional"
     config.email = "contato@redu.com.br"
 
     # Will paginate

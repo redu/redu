@@ -1,4 +1,6 @@
 class SessionsController < BaseController
+  respond_to :html, :js
+
   layout 'clean'
   before_filter :less_than_30_days_of_registration_required, :only => :create
 
@@ -34,7 +36,7 @@ class SessionsController < BaseController
 
         flash[:notice] = t :thanks_youre_now_logged_in
 
-        redirect_to session[:return_to] || home_user_path(current_user)
+        render :js => "window.location = '#{ session[:return_to] || home_user_path(current_user) }'"
         session[:return_to] = nil
       else
         # Se tem um token de convite para o curso, atribui as variáveis
@@ -57,7 +59,7 @@ class SessionsController < BaseController
                        :teacher => uca.with_roles([:teacher]).count }
           render :template => 'invitations/show'
         else
-          render :template => 'base/site_index'
+          respond_with(@user_session)
         end
       end
     end

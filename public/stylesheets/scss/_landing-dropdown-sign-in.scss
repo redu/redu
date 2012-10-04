@@ -1,0 +1,36 @@
+// ==========================================================================
+// Dropdown de login.
+// ==========================================================================
+
+.landing-button-sign-in {
+  .button-group {
+    position: relative;
+    display: inline-block;
+  }
+
+  .facebook-sign-in {
+    margin: 20px 17px;
+    font-size: 11px;
+  }
+
+  .dropdown-menu { width: 240px; }
+}
+
+.landing-sign-in-recover {
+  padding: 10px 10px 8px;
+  text-align: center;
+}
+
+.landing-sign-in-form {
+  padding: 20px 10px;
+
+  .control-group +
+  .control-group { margin-top: 2px; }
+}
+
+.landing-sign-in-form-submit {
+  margin-top: 10px;
+  overflow: hidden;
+
+  .legend { color: $gray6; }
+}

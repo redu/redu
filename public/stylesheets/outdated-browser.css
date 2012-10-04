@@ -5,7 +5,7 @@
 
 #outdated-browser .title {
   width: 140px;
-  margin-top: 3px;
+  margin-top: 20px;
   text-align: right;
   float: left;
   margin-left: 30px;
@@ -37,9 +37,8 @@
 
 #outdated-browser .message {
   width: 340px;
-  height: 60px;
   float: left;
-  margin: 20px 140px 0 20px;
+  margin: 10px 140px 0 20px;
   color: white;
 }
 
@@ -52,14 +51,15 @@
   width: 16px;
   height: 18px;
   float: right;
-  margin-top: 40px;
+  margin-top: 30px;
   cursor: pointer;
 }
 
 #outdated-browser .suggestions {
   width: 240px;
   float: left;
-  margin-top: 20px;
+  margin-top: 10px;
+  list-style: none;
 }
 
 #outdated-browser .suggestions li {
