@@ -20,7 +20,7 @@ class AuthenticationsController < BaseController
                                      :uid => auth[:uid])
         flash[:notice] = t :facebook_connect_account_association
       else # Não existe conta do Redu associada ao e-mail do usuário no FB
-        user = Authentication.create_user(auth)
+        user = User.create_with_omniauth(auth)
         flash[:notice] = t :facebook_connect_new_user
       end
 
