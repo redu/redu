@@ -983,11 +983,6 @@ input[type="checkbox"]:focus {
   margin-top: -1px;
 }
 
-.controls > .control-radio:first-child,
-.controls > .control-checkbox:first-child {
-  padding-top: 9px;
-}
-
 .control-checked {
   color: black;
 }
@@ -1015,6 +1010,7 @@ input[type="checkbox"]:focus {
 .control-big select,
 .control-big .placeholder {
   font-size: 16px;
+  font-weight: lighter;
   height: 42px;
 }
 .control-big .placeholder {
@@ -2831,6 +2827,7 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
 
 .button-big {
   font-size: 16px;
+  font-weight: lighter;
   line-height: 20px;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -3138,9 +3135,9 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
   background-color: #5f78ab;
 }
 .boxshadow .facebook-sign-in-button {
-  -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 0 #627aad inset;
-  -moz-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 0 #627aad inset;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 0 #627aad inset;
+  -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 0 #8a9cc2 inset;
+  -moz-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 0 #8a9cc2 inset;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 0 #8a9cc2 inset;
 }
 
 .filters {
@@ -4394,10 +4391,6 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
   margin-left: -410px;
 }
 
-.modal-fill-height {
-  top: 20px;
-}
-
 .modal-header {
   padding: 20px 20px 10px;
 }
@@ -4883,12 +4876,15 @@ hr {
   box-shadow: none;
 }
 .statuses .status .create-response {
-  margin-top: 10px;
-  float: right;
-  margin-left: 42px;
+  float: none;
+  margin-top: 36px;
+  margin-left: 84px;
   clear: both;
   display: none;
   background-color: #f0f0f0;
+}
+.statuses .status .create-response form fieldset textarea {
+  min-width: 100%;
 }
 .borderradius .statuses .status .create-response {
   -webkit-border-radius: 5px;
@@ -5016,7 +5012,6 @@ hr {
   max-width: 1000px;
   overflow: hidden;
   height: 18px;
-  min-width: 716px;
 }
 .statuses .status .status-content form fieldset label, .statuses .status .create-response form fieldset label {
   width: 18px;
@@ -5025,9 +5020,6 @@ hr {
 }
 .statuses .status .status-content form fieldset .status-buttons, .statuses .status .create-response form fieldset .status-buttons {
   clear: both;
-  float: right;
-}
-.statuses .status .create-response textarea {
   float: right;
 }
 .statuses .status .create-response:before {

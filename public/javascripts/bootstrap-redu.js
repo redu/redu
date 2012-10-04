@@ -1790,13 +1790,12 @@ $(function() {
 
   , fitContent: function($modal, settings) {
     var $modalBody = $modal.find('.' + classes.modalBody)
-      , modalTop = parseInt($modal.css('top'), 10)
       , wasVisible
 
     wasVisible = methods.displayHidden($modal)
 
     // O novo tamanho do corpo é: tamanho atual + (altura visível do navegador - espaçamento inferior - topo do modal - altura do modal)
-    var newHeight = $modalBody.height() + $(window).height() - settings.bottomMargin - modalTop - $modal.height() + "px"
+    var newHeight = $modalBody.height() + $(window).height() - (settings.verticalMargin * 2) - $modal.height() + "px"
 
     var innerHeight = $modalBody[0].scrollHeight - (parseInt($modalBody.css('padding-top'), 10) + parseInt($modalBody.css('padding-bottom'), 10))
 
@@ -1816,7 +1815,7 @@ $(function() {
   , fillHeight: function(options) {
       var settings = $.extend({
           // Margem inferior.
-          bottomMargin: 20
+          verticalMargin: 20
         }, options)
 
       return this.each(function() {
@@ -1951,8 +1950,11 @@ $(function() {
 
         $submit
           .addClass(spinnerClass)
-          .addClass(settings.buttonDisabled)
+          .prop('disabled', true)
           .data('spinnerClass', spinnerClass)
+          .data('content', $submit.val())
+          .css({ 'width': $submit.outerWidth(), 'height': $submit.outerHeight() })
+          .val('')
       }
 
       // Se for um botão.
@@ -2019,7 +2021,8 @@ $(function() {
 
         $submit
           .removeClass($submit.data('spinnerClass'))
-          .removeClass(settings.buttonDisabled)
+          .prop('disabled', false)
+          .val($submit.data('content'))
       }
 
       // Se for um botão.
