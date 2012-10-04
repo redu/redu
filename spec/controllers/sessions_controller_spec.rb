@@ -148,7 +148,7 @@ describe SessionsController do
         assigns(:user_email).should == @user.email
       end
 
-      it "should redirect to sessions/expired_activation" do
+      it "should be success" do
         response.should be_success
       end
     end
