@@ -1791,6 +1791,7 @@ $(function() {
   , fitContent: function($modal, settings) {
     var $modalBody = $modal.find('.' + classes.modalBody)
       , wasVisible
+      , isMaxHeight = true
 
     wasVisible = methods.displayHidden($modal)
 
@@ -1801,10 +1802,15 @@ $(function() {
 
     if (innerHeight <= parseInt(newHeight, 10)) {
       newHeight = innerHeight
+      isMaxHeight = false
     }
 
     $modalBody.css('max-height', newHeight)
     $modalBody.css('height', newHeight)
+
+    if (isMaxHeight) {
+      $modal.css('top', settings.verticalMargin)
+    }
 
     if (!wasVisible) {
       methods.displayVisible($modal)
