@@ -771,13 +771,17 @@ p {
 }
 
 .landing-footer {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
   height: 140px;
   background-color: #e6e6e6;
+  border-top: 1px solid #b2b2b2;
 }
 .boxshadow .landing-footer {
-  -webkit-box-shadow: 0 1px 0 white inset, 0 -1px 0 #b2b2b2;
-  -moz-box-shadow: 0 1px 0 white inset, 0 -1px 0 #b2b2b2;
-  box-shadow: 0 1px 0 white inset, 0 -1px 0 #b2b2b2;
+  -webkit-box-shadow: 0 1px 0 white inset, 0 -1px 0 white inset;
+  -moz-box-shadow: 0 1px 0 white inset, 0 -1px 0 white inset;
+  box-shadow: 0 1px 0 white inset, 0 -1px 0 white inset;
 }
 .ie8 .landing-footer {
   border-top: 1px solid #b2b2b2;
