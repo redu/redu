@@ -1,9 +1,14 @@
-<% if @user_session %>
-  var $form = $("#form-sign-in");
+var $form = $("#form-sign-in");
 
+<% if @user_session %>
   var $newForm = $("<%= escape_javascript render 'landing/form_sign_in',
                    :user_session => @user_session %>");
   $form.replaceWith($newForm);
 <% else %>
-  $("body").html("<%= escape_javascript render :file => 'sessions/expired_activation' %>");
+  $form.append('<%= escape_javascript render "shared/system_message",
+               :message => "O prazo máximo de 30 para ativar sua conta expirou. Portanto,
+               <strong>você só poderá utilizar o Redu após ativar sua conta</strong>.
+               Reenvie o e-mail de ativação para: #{ @user_email }.
+               #{ link_to "Reenviar e-mail", resend_activation_url(:email => @user_email), :class => "button button-danger" } ",
+               :type => "warning" %>');
 <% end %>

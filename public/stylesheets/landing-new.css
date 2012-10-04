@@ -39,6 +39,10 @@
   list-style: none;
 }
 
+.reactivate-account .button-danger {
+  margin-top: 10px;
+}
+
 html,
 body {
   height: 100%;
