@@ -1,0 +1,55 @@
+// ==========================================================================
+// Cabeçalho.
+// ==========================================================================
+
+// Wrapper de tudo.
+.landing-header {
+  height: 85px;
+  background-color: $gray3;
+
+  .boxshadow & {
+    $box-shadow:
+      0 -1px 0 $white inset
+    , 0  1px 0 $white inset
+    , 0  1px 0 $gray-drop-shadow;
+    @include box-shadow($box-shadow);
+  }
+
+  .ie8 & { border-bottom: 1px solid $gray-drop-shadow; }
+}
+
+// Wrapper do logo.
+.landing-logo-wrapper {
+  @include size(300px, 70px);
+  float: left;
+  position: relative;
+  margin-left: -112px;
+
+  &:hover { @include sprite-sprite(light-logo); }
+}
+
+// Logo.
+.landing-logo {
+  position: absolute;
+  right: -3px;
+  bottom: 0;
+}
+
+// Wrapper dos botões.
+.landing-header-buttons {
+  float: right;
+  margin-top: 20px;
+}
+
+.landing-button-sign-up +
+.landing-button-sign-in { margin-left: 40px; }
+
+.landing-button-sign-up,
+.landing-button-sign-in {
+  display: inline-block;
+
+  [class*="icon-"] {
+    margin: 5px 10px 0 0;
+    float: left;
+  }
+}

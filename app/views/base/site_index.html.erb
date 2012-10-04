@@ -1,40 +1,15 @@
-<%= content_for :wrapper_class do %>overlay landing<% end %>
-<div id="landing" class="body container_16">
-  <div class="presentation">
-    <h1 class="top"><%= link_to "Redu: a rede social educacional", application_path %></h1>
-    <h2 class="learn-call">Aprender nunca foi tão fácil.</h2>
-    <h2 class="teach-call">Ensinar nunca foi tão conveniente.</h2>
-    <p class="welcome">Bem-vindo(a) ao Redu, uma plataforma de ensino que foi construída tendo como base as interações sociais. Aqui, a diversão é uma aliada da produtividade e a colaboração o núcleo do enriquecimento cultural.</p>
-  </div>
-  <div class="login-box">
-    <h3 class="new-version-call">Já possui uma conta? Acesse nossa versão <span class="beta-call" >beta</span>.</h3>
-    <%= form_for @user_session, :html => { :class => "concave-form" }, :url => sessions_path do |f| %>
-      <%= field_set_tag do %>
-        <%= f.text_field :login, :placeholder => "Digite seu login e, abaixo, sua senha" %>
-        <%= concave_errors_for @user_session, :login %>
-
-        <%= f.password_field :password %>
-        <%= concave_errors_for @user_session, :password %>
-        <button>Entrar</button>
-
-        <div class="short-options">
-          <%= f.check_box :remember_me, :class => "check-stay-connect" %>
-          <%= f.label :remember_me, "Matenha-me conectado", :class => "label-stay-connect" %>
-          <%= link_to "Recuperar login & senha", recover_username_password_path, :class => "recover-login" %>
-        </div>
-        <div class="fb-login">
-          <%= link_to "Entre com sua conta do Facebook", facebook_authentication_path,
-                      :class => "uibutton confirm large", :value => "login-facebook" %>
-        </div>
-        <p class="or-call">&minus; ou &minus;</p>
-      <% end %>
-    <% end %>
-    <%= link_to "Que tal se cadastrar?", signup_path, :class => "concave-important" %>
-  </div>
-  <div class="staging grid_11">
-    <h3 class="book-ad"><%= link_to "Professor, aprenda como educar com o Redu", "http://educarcom.redu.com.br" %></h3>
-    <div class="facebook-like">
-      <iframe src="http://www.facebook.com/plugins/like.php?app_id=221316171245047&amp;href=http%3A%2F%2Fwww.facebook.com%2Fredesocialeducacional&amp;send=false&amp;layout=standard&amp;width=280&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:280px; height:100px;" allowTransparency="true"></iframe>
-    </div>
+<div class="container">
+  <div class="landing-navigation">
+    <%= render :partial => "landing/filters" %>
+    <hr id="segmentos" class="list-separator"/>
+    <%= render :partial => "landing/segments" %>
+    <hr id="vantagens" class="list-separator"/>
+    <%= render :partial => "landing/advantages" %>
+    <hr id="funcionalidades" class="list-separator"/>
+    <%= render :partial => "landing/functionalities" %>
+    <hr id="planos"  class="list-separator"/>
+    <%= render :partial => "landing/plans" %>
+    <hr class="list-separator"/>
+    <%= render :partial => "landing/partners" %>
   </div>
 </div>

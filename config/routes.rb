@@ -1,4 +1,5 @@
 Redu::Application.routes.draw do
+
   resources :oauth_clients
 
   match '/oauth/token',         :to => 'oauth#token',         :as => :token
