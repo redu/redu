@@ -62,7 +62,7 @@ body {
 }
 
 .sprite, .sprite-advantage-developer, .sprite-advantage-manager, .sprite-advantage-student, .sprite-advantage-teacher, .sprite-background-chat, .sprite-background-management, .sprite-background-treemap, .sprite-background-wall, .sprite-icon-chat, .sprite-icon-close, .sprite-icon-correct, .sprite-icon-developer, .sprite-icon-exercise, .sprite-icon-management, .sprite-icon-plus, .sprite-icon-report, .sprite-keko-playing, .sprite-light-logo, .sprite-light-talk-to-us, .sprite-logo-oer, .sprite-logo-redu-tech, .sprite-logo, .sprite-medal-gold, .sprite-medal-gold-after:after, .sprite-medal-silver, .sprite-medal-silver-after:after, .sprite-multimedia-document, .sprite-multimedia-exercise, .sprite-multimedia-presentation, .sprite-multimedia-video, .sprite-partner-ade, .sprite-partner-etr, .sprite-partner-facig, .sprite-partner-fafire, .sprite-partner-ufpe, .sprite-partner-univasf, .sprite-plan-consultancy-hr, .sprite-plan-consultancy-hr-before:before, .sprite-plan-independent, .sprite-plan-independent-before:before, .sprite-plan-institution, .sprite-plan-institution-before:before, .sprite-segment-consultancy-hr, .sprite-segment-independent, .sprite-segment-institution, .sprite-sign-up-green_32_34, .sprite-sign-up-green_32_34-before:before, .sprite-social-facebook, .sprite-social-twitter, .sprite-talk-to-us, .landing-logo-wrapper:hover, .landing-footer-logo-link:hover, .landing-footer-contact:hover, .landing-footer-contact:hover .landing-footer-talk-to-us-balloons {
-  background: url('/images/landing/sprite-s3592b3639b.png') no-repeat;
+  background: url('/images/landing/sprite-s81fedd1ea0.png') no-repeat;
 }
 
 .sprite-advantage-developer {
@@ -346,7 +346,7 @@ body {
 
 .sprite-talk-to-us {
   background-position: -130px 0;
-  height: 96px;
+  height: 98px;
   width: 48px;
 }
 .sprite-talk-to-us:hover, .sprite-talk-to-us.talk-to-us_hover, .sprite-talk-to-us.talk-to-us-hover {
@@ -890,7 +890,7 @@ p {
 .landing-footer-contact:hover .landing-footer-talk-to-us-balloons {
   display: block;
   background-position: -178px 0;
-  height: 96px;
+  height: 98px;
   width: 48px;
 }
 .landing-footer-contact a:hover {
