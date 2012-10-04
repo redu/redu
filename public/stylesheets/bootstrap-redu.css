@@ -3111,6 +3111,11 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
   text-decoration: none;
   color: white;
 }
+.boxshadow .facebook-sign-up-button:active, .boxshadow .facebook-sign-in-button:active {
+  -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
 .textshadow .facebook-sign-up-button, .textshadow .facebook-sign-in-button {
   text-shadow: none;
 }
@@ -3129,6 +3134,10 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
   -moz-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 0 #98c082 inset;
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 0 #98c082 inset;
 }
+.facebook-sign-up-button:active {
+  background: #609946;
+  border-bottom-color: #3b6e22;
+}
 
 .facebook-sign-in-button {
   border-color: #29447e #29447e #1a356e;
@@ -3138,6 +3147,10 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
   -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 0 #8a9cc2 inset;
   -moz-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 0 #8a9cc2 inset;
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 0 #8a9cc2 inset;
+}
+.facebook-sign-in-button:active {
+  background: #4f6aa3;
+  border-bottom-color: #29447e;
 }
 
 .filters {
