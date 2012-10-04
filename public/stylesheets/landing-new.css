@@ -508,6 +508,10 @@ p {
 .landing-button-sign-in .dropdown-menu {
   width: 260px;
 }
+.landing-button-sign-in .line-gray3, .landing-button-sign-in .landing-functionalities hr, .landing-functionalities .landing-button-sign-in hr {
+  border-top-width: 0;
+  height: 2px;
+}
 
 .landing-sign-in-recover {
   padding: 10px 10px 8px;
@@ -617,6 +621,7 @@ p {
 }
 .landing-filters .filter {
   font-size: 16px;
+  font-weight: lighter;
   line-height: 28px;
 }
 
