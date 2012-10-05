@@ -3,7 +3,7 @@ s3_cache_control: 432000
 s3_access_key_id: AKIAIRKVQDTWT2NN4J4Q
 s3_secret_access_key: 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
 s3_permission: public_read
-s3_bucket: redu-assets
+s3_bucket: redu-assets-performance
 s3_upload_files:
   - public/images/new/**
   - public/javascripts/**
