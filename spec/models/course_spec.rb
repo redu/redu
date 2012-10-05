@@ -421,30 +421,25 @@ describe Course do
     before  do
       @user = Factory(:user)
       @moderated_course = Factory(:course,  :owner => @environment_owner,
-        :environment => @environment)
-      @moderated_course.subscription_type = 0
-      @moderated_course.save
-      subject.reload
+        :environment => @environment, :subscription_type => 0)
     end
 
-    it "should accept uninvited user" do
+    it "should join! uninvited user(subscription_type 0)" do
       @moderated_course.join!(@user)
       @user.get_association_with(@moderated_course).should be_approved
     end
 
-    it "should work on open courses" do
+    it "should join! on open courses(subscription_type 1)" do
       subject.join!(@user)
       @user.get_association_with(subject).should be_approved
     end
 
-    it "should work on invited user" do
+    it "should join! invited user (subscription_type 0)" do
       @moderated_course.join(@user)
       @user.get_association_with(@moderated_course).invite!
       @moderated_course.join!(@user)
       @user.get_association_with(@moderated_course).should be_approved
     end
-
-
   end
 
   context "removes a user (unjoin)" do
