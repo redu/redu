@@ -671,9 +671,8 @@ class User < ActiveRecord::Base
 
   #Metodo que remove os espaços em branco no incio e no fim desses campos
   def strip_whitespace
-    self.login = self.login.strip if attribute_present?("login")
-    self.first_name = self.first_name.strip if attribute_present?("first_name")
-    self.last_name = self.last_name.strip if attribute_present?("last_name")
-    self.email = self.email.strip if attribute_present?("email")
+    %w(login first_name last_name email).each do |var|
+      self.send("#{var}=", (self.send(var).strip if attribute_present? var))
+    end
   end
 end

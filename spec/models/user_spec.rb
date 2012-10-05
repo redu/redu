@@ -122,18 +122,6 @@ describe User do
       u.mobile = "81 2131-2123"
       u.should_not be_valid
     end
-
-    it "validates first name format" do
-      u = Factory.build(:user, :first_name => "Nome com espaço     ")
-      u.should_not be_valid
-      u.errors[:first_name].should_not be_empty
-    end
-
-    it "validates last name format" do
-      u = Factory.build(:user, :last_name => "Nome com espaço     ")
-      u.should_not be_valid
-      u.errors[:last_name].should_not be_empty
-    end
   end
 
   context "associations" do
@@ -403,7 +391,7 @@ describe User do
       subject.last_login_at.should_not be_nil
     end
 
-    context "when trimming whitespace" do
+    context "when creating an user with empty whitespaces" do
       before do
         @my_user = Factory.build(:user,
           :login => "  vader   ", :email => " coisa@gmail.com",
