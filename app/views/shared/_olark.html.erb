@@ -1,6 +1,4 @@
 <%= lazy_load(:olark, :jammit => true) do %>
-  olark.identify('4636-482-10-5595');
-
   <% if current_user %>
     olark('api.chat.updateVisitorNickname', {
     snippet: "<%= current_user.first_name %>"
