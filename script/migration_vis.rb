@@ -14,21 +14,7 @@ def insert_enrollments
   Enrollment.all.each do |enrollment|
     unless enrollment.subject.space.nil?
       unless enrollment.subject.space.course.nil?
-        params_enrol = {
-          :user_id => enrollment.user_id,
-          :type => "enrollment",
-          :lecture_id => nil,
-          :subject_id => enrollment.subject_id,
-          :space_id => enrollment.subject.space.id,
-          :course_id => enrollment.subject.space.course.id,
-          :status_id => nil,
-          :statusable_id => nil,
-          :statusable_type => nil,
-          :in_response_to_id => nil,
-          :in_response_to_type => nil,
-          :created_at => enrollment.created_at,
-          :updated_at => enrollment.updated_at
-        }
+        params_enrol = params_to_vis(enrollment, "enrollment")
 
         send_async_info(params_enrol,
                              Redu::Application.config.vis_client[:url])
@@ -39,24 +25,10 @@ end
 
 def insert_subject_finalized
   Enrollment.where(:grade => 100, :graduated => true).each do |profile|
-    params_finalized = {
-      :user_id => profile.user_id,
-      :type => "subject_finalized",
-      :lecture_id => nil,
-      :subject_id => profile.subject_id,
-      :space_id => profile.subject.space.id,
-      :course_id => profile.subject.space.course.id,
-      :status_id => nil,
-      :statusable_id => nil,
-      :statusable_type => nil,
-      :in_response_to_id => nil,
-      :in_response_to_type => nil,
-      :created_at => profile.created_at,
-      :updated_at => profile.updated_at
-    }
+    params_finalized = params_to_vis(profile, "subject_finalized")
 
     send_async_info(params_finalized,
-                         Redu::Application.config.vis_client[:url])
+                    Redu::Application.config.vis_client[:url])
   end
 end
 
@@ -114,42 +86,13 @@ end
 def remove_enrollments
   Enrollment.all.each do |enrollment|
     if (enrollment.user.get_association_with enrollment.subject.space).nil?
-      params_remove_enrollment = {
-        :user_id => enrollment.user_id,
-        :type => "remove_enrollment",
-        :lecture_id => nil,
-        :subject_id => enrollment.subject_id,
-        :space_id => enrollment.subject.space.id,
-        :course_id => enrollment.subject.space.course.id,
-        :status_id => nil,
-        :statusable_id => nil,
-        :statusable_type => nil,
-        :in_response_to_id => nil,
-        :in_response_to_type => nil,
-        :created_at => enrollment.created_at,
-        :updated_at => enrollment.updated_at
-      }
+      params_remove_enrollment = params_to_vis(enrollment, "remove_enrollment")
 
       send_async_info(params_remove_enrollment,
                       Redu::Application.config.vis_client[:url])
 
       if enrollment.grade == 100 and enrollment.graduated
-        params_finalized = {
-          :user_id => enrollment.user_id,
-          :type => "remove_subject_finalized",
-          :lecture_id => nil,
-          :subject_id => enrollment.subject_id,
-          :space_id => enrollment.subject.space.id,
-          :course_id => enrollment.subject.space.course.id,
-          :status_id => nil,
-          :statusable_id => nil,
-          :statusable_type => nil,
-          :in_response_to_id => nil,
-          :in_response_to_type => nil,
-          :created_at => enrollment.created_at,
-          :updated_at => enrollment.updated_at
-        }
-
+        params_finalized = params_to_vis(enrollment, "remove_subject_finalized")
         send_async_info(params_finalized,
                         Redu::Application.config.vis_client[:url])
       end
@@ -157,6 +100,24 @@ def remove_enrollments
       enrollment.try(:destroy)
     end
   end
+end
+
+def params_to_vis(enrollment, type)
+  params_enrollment = {
+    :user_id => enrollment.user_id,
+    :type => type,
+    :lecture_id => nil,
+    :subject_id => enrollment.subject_id,
+    :space_id => enrollment.subject.space.id,
+    :course_id => enrollment.subject.space.course.id,
+    :status_id => nil,
+    :statusable_id => nil,
+    :statusable_type => nil,
+    :in_response_to_id => nil,
+    :in_response_to_type => nil,
+    :created_at => enrollment.created_at,
+    :updated_at => enrollment.updated_at
+  }
 end
 
 def send_statuses(status)
