@@ -39,6 +39,10 @@
   list-style: none;
 }
 
+.reactivate-account .button-danger {
+  margin-top: 10px;
+}
+
 html,
 body {
   height: 100%;
@@ -1440,4 +1444,8 @@ p {
   background: url("../images/landing/bkg-suporte.png");
   height: 210px;
   float: right;
+}
+
+.textshadow .olrk-noquirks {
+  text-shadow: none;
 }

@@ -25,7 +25,7 @@ class RolesController < BaseController
       @course.change_role(@user, role) unless @user.environment_admin?(@course)
     else
       if role == Role[:environment_admin]
-        @environment.courses.each { |c| c.join(@user) }
+        @environment.courses.each  {|c| c.join!(@user) }
       end
       @environment.change_role @user, role
     end
