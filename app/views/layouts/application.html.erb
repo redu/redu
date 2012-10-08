@@ -48,14 +48,8 @@
   //]]>
   </script>
   <%= include_javascripts :ckeditor %>
-
-    <%= lazy_load("http://use.typekit.com/lpo4rgu.js", :jammit => false) do %>
-      try{
-        Typekit.load();
-      }catch(e){}
-    <% end %>
-
-    <%= render :partial => "shared/analytics" %>
+  <%= render :partial => "shared/typekit" %>
+  <%= render :partial => "shared/analytics" %>
   </head>
    <body>
      <div id="pjax-container">

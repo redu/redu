@@ -1427,3 +1427,7 @@ p {
   height: 210px;
   float: right;
 }
+
+.textshadow .olrk-noquirks {
+  text-shadow: none;
+}

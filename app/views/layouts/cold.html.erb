@@ -24,11 +24,7 @@
           }).css("background-color", "#e6e6e6");
       });
     </script>
-    <%= lazy_load("http://use.typekit.com/lpo4rgu.js", :jammit => false) do %>
-      try{
-      Typekit.load();
-      }catch(e){}
-    <% end %>
+    <%= render :partial => "shared/typekit" %>
     <%= yield :header_scripts_and_styles %>
   </head>
   <body>
@@ -51,5 +47,6 @@
       </div>
     </div>
     <%= yield :footer_scripts_and_styles %>
+    <%= render :partial => "shared/olark" %>
   </body>
 </html>
