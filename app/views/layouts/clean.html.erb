@@ -14,11 +14,7 @@
     <![endif]-->
     <%= include_javascripts :clean %>
 
-    <%= lazy_load("http://use.typekit.com/lpo4rgu.js", :jammit => false) do %>
-      try{
-      Typekit.load();
-      }catch(e){}
-    <% end %>
+    <%= render :partial => "shared/typekit" %>
     <%= render :partial => "shared/analytics" %>
     <%= yield :header_scripts_and_styles %>
   </head>
@@ -48,5 +44,6 @@
       </div>
     </div>
     <%= yield :footer_scripts_and_styles %>
+    <%= render :partial => "shared/olark" %>
   </body>
 </html>
