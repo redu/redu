@@ -10,9 +10,8 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <%= include_javascripts :landing %>
     <script>
-    LazyLoad.js(["http://use.typekit.com/lpo4rgu.js"]
-    , function(){
-          try { Typekit.load(); } catch(e) {}
+    LazyLoad.js(["http://use.typekit.com/lpo4rgu.js"], function() {
+      try { Typekit.load(); } catch(e) {}
     });
     </script>
     <%= render :partial => "shared/analytics" %>
