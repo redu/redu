@@ -1,6 +1,30 @@
 embed_assets: on
+s3_cache_control: 432000
+s3_access_key_id: AKIAIRKVQDTWT2NN4J4Q
+s3_secret_access_key: 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
+s3_permission: public_read
+s3_bucket: redu-assets-performance
+s3_upload_files:
+  - public/images/new/**
+  - public/javascripts/**
+  - public/javascripts/ckeditor/**/**/**/*
+  - public/stylesheets/**
 
 javascripts:
+  landing:
+    - public/javascripts/rails.js
+    - public/javascripts/vendor/modernizr.js
+    - public/javascripts/lazyload.js
+    - public/javascripts/asyncjs.jquery.js
+    - public/javascripts/jquery.autosize.min.js
+    - public/javascripts/vendor/placeholder-polyfill.min.js
+    - public/javascripts/bootstrap-redu.js
+    - public/javascripts/vendor/bootstrap-scrollspy.js
+    - public/javascripts/swfobject.js # Necessário ao browserdetection.js
+    - public/javascripts/browserdetection.js
+    - public/javascripts/jquery.cookie.js
+    - public/javascripts/outdated-browser.js
+    - public/javascripts/landing.js
   common:
     - public/javascripts/rails.js
     - public/javascripts/application.js
@@ -77,8 +101,15 @@ javascripts:
   canvas:
     - public/javascripts/easyXDM.js
     - public/javascripts/canvas.js
+  olark:
+    - public/javascripts/olark.js
 
 stylesheets:
+  landing:
+    - public/stylesheets/bootstrap-redu.css
+    - public/stylesheets/landing-new.css
+    - public/stylesheets/outdated-browser.css
+    - public/stylesheets/icons.redu.css
   common:
     - public/stylesheets/reset.css
     - public/stylesheets/960.css
@@ -138,3 +169,4 @@ stylesheets:
   page:
     - public/stylesheets/reset.css
     - public/stylesheets/new-fonts.css
+

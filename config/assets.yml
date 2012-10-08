@@ -101,6 +101,8 @@ javascripts:
   canvas:
     - public/javascripts/easyXDM.js
     - public/javascripts/canvas.js
+  olark:
+    - public/javascripts/olark.js
 
 stylesheets:
   landing:
