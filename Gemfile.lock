@@ -171,11 +171,18 @@ GEM
     cancan (1.6.7)
     childprocess (0.3.1)
     chronic (0.6.7)
+    chunky_png (1.2.6)
     ckeditor (3.4.2.pre)
       mime-types (>= 1.16)
     closure-compiler (1.1.1)
     cocaine (0.2.1)
     columnize (0.3.2)
+    compass (0.12.2)
+      chunky_png (~> 1.2)
+      fssm (>= 0.2.7)
+      sass (~> 3.1)
+    compass-rails (1.0.3)
+      compass (>= 0.12.2, < 0.14)
     config_parser (0.5.5)
     configurable (1.0.0)
       config_parser (~> 0.5.4)
@@ -222,6 +229,7 @@ GEM
       nokogiri (~> 1.5.0)
       ruby-hmac
     formatador (0.2.3)
+    fssm (0.2.9)
     hashie (1.2.0)
     htmlentities (4.3.0)
     http_parser.rb (0.5.3)
@@ -366,6 +374,7 @@ GEM
     rubyzip (0.9.6.1)
     s3 (0.3.8)
       proxies (~> 0.2.0)
+    sass (3.2.1)
     selenium-webdriver (2.20.0)
       childprocess (>= 0.2.5)
       ffi (~> 1.0)
@@ -423,6 +432,7 @@ DEPENDENCIES
   bundler (~> 1.2)
   cancan (~> 1.6.7)
   ckeditor (= 3.4.2.pre)
+  compass-rails
   daemons
   date_validator
   deep_cloneable
