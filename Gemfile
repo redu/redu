@@ -1,6 +1,9 @@
-source 'http://rubygems.org'
 source 'http://gems.github.com'
 source 'http://reduadmin:pomp64bozos@the-shire.herokuapp.com/'
+
+group :assets do
+  gem 'compass-rails'
+end
 
 gem 'aasm'
 gem 'actionmailer_inline_css',
@@ -63,6 +66,7 @@ gem 'vis_client', :git => 'git@github.com:redu/vis_client.git'
 gem 'whenever', :require => false
 gem 'will_paginate', '~> 3.0.pre2'
 gem 'zencoder'
+gem 'permit', :path => '/Users/guiocavalcanti/workspace/work/permit-client'
 
 # Gems específicos para a API
 gem 'oauth-plugin', '~> 0.4.0'
@@ -88,7 +92,6 @@ group :test do
 end
 
 group :development do
-  gem 'thin'
   # gem 'uniform_notifier'
 
   # Gems úteis p/ análise performance

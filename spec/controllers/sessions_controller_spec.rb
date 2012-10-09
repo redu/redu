@@ -20,6 +20,7 @@ describe SessionsController do
       context "when logging in successful" do
         before do
           @post_params = {:locale => 'pt-BR', :invitation_token => @invite.token,
+                          :format => "js",
                           :user_session => { :remember_me => "0", :password => @user.password,
                                              :login => @user.login}}
         end
@@ -34,6 +35,7 @@ describe SessionsController do
       context "when logging with failure" do
         before do
           @post_params = {:locale => 'pt-BR', :invitation_token => @invite.token,
+                          :format => "js",
                           :user_session => { :remember_me => "0", :password => "wrong-pass",
                                              :login => @user.login}}
           post :create, @post_params
@@ -42,9 +44,11 @@ describe SessionsController do
         it "assigns environment" do
           assigns[:environment].should == @invite.course.environment
         end
+
         it "assigns course" do
           assigns[:course].should == @invite.course
         end
+
         it "assigns user_course_invitation" do
           assigns[:user_course_invitation].should == @invite
         end
@@ -68,6 +72,7 @@ describe SessionsController do
         before do
           @post_params = {:locale => 'pt-BR',
                           :friendship_invitation_token => @invitation.token,
+                          :format => "js",
                           :user_session => { :remember_me => "0",
                                              :password => @user.password,
                                              :login => @user.login}}
@@ -79,20 +84,20 @@ describe SessionsController do
         end
 
         it "should redirect do home-user-path" do
-          response.should redirect_to home_user_path(@user)
+          response.body.should == "window.location = '#{ home_user_path(@user) }'"
         end
 
         it "friendship request should be created" do
           @host.friendships.requested.should_not be_empty
           @user.friendships.pending.should_not be_empty
         end
-
       end
 
       context "User login params validation fail" do
         before do
           @post_params = {:locale => 'pt-BR',
                           :friendship_invitation_token => @invitation.token,
+                          :format => "js",
                           :user_session => {
                             :remember_me => "0",
                             :password => "wrong-pass",
@@ -125,6 +130,26 @@ describe SessionsController do
         it "should render invitations#show template" do
           response.should render_template("invitations/show")
         end
+      end
+    end
+    context "when registration had expired" do
+      before do
+        @user.deactivate
+        @user.created_at = "2011-03-04".to_date
+        @user.save
+        post_params = {:locale => 'pt-BR', :format => "js",
+                       :user_session => { :remember_me => "0",
+                                          :password => @user.password,
+                                          :login => @user.login}}
+        post :create, post_params
+      end
+
+      it "should assign user_email" do
+        assigns(:user_email).should == @user.email
+      end
+
+      it "should be success" do
+        response.should be_success
       end
     end
   end

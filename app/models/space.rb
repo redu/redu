@@ -130,4 +130,9 @@ class Space < ActiveRecord::Base
   def students_id
     self.students.collect{ |student| student.id }
   end
+
+  def create_policy_for_usa(usas=nil)
+    usas ||= self.user_space_associations.all
+    UserSpaceAssociation.create_policy_for(usas)
+  end
 end

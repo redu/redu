@@ -1,0 +1,9 @@
+<%= render :partial => 'landing/form_sign_in' %>
+<hr class="line-gray3">
+<div class="facebook-sign-in">
+  <%= link_to "Entre com sua conta do Facebook", facebook_authentication_path, :value => "login-facebook", :class => "facebook-sign-in-button" %>
+</div>
+<hr class="line-gray3">
+<div class="landing-sign-in-recover">
+  <%= link_to "Esqueceu seu login ou senha? Clique aqui", recover_username_password_path, :class => "link-secondary" %>
+</div>

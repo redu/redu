@@ -4,14 +4,4 @@
       <a href="#" class="icon-response-gray_8_10-before reply-status">Responder</a>
     </li>
   <% end %>
-  <% if can? :manage, status %>
-    <li>
-      <%= link_to 'Excluir',
-        status_path(status),
-        :confirm => 'Deseja remover a postagem?',
-        :method => :delete,
-        :remote => true,
-        :class => "icon-delete-gray_8_10-before" %>
-    </li>
-  <% end %>
 </ul>

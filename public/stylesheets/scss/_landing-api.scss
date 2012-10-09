@@ -1,0 +1,44 @@
+// ==========================================================================
+// Área de serviços e aplicaçÕes integradas.
+// ==========================================================================
+
+
+// Encapsulador.
+.landing-api { padding: 20px; }
+
+// Descrição.
+.landing-api-description {
+  display: inline-block;
+  width: 340px;
+}
+
+.landing-api-description +
+.landing-api-link { margin-left: 60px; }
+
+// Link.
+.landing-api-link {
+  @include square(225px);
+  @include box-sizing(border-box);
+  display: inline-block;
+  border: 10px solid $blue1;
+  background: transparent url("../images/landing/icon-api-gray_128_130.png") no-repeat 30px 20px;
+  position: relative;
+
+  &:hover { border-color: $blue2; }
+
+  .borderradius & { @include border-radius(130px); }
+
+  a {
+    position: absolute;
+    bottom: 0;
+    left: 40px;
+    width: 128px;
+    text-align: center;
+  }
+}
+
+.landing-api-link +
+.landing-api-illustration {
+  float: right;
+  margin-left: 30px;
+}

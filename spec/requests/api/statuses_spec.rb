@@ -190,52 +190,24 @@ describe "Statuses" do
         :format => 'json'
 
       activity_or_help = @user_statuses.select do |s|
-        %w(Activity Help).include? s.type
+        %w(Activity Help Log).include? s.type
       end
       parse(response.body).count.should == activity_or_help.length
     end
 
-    it "should filter by status type (help)" do
-      get "/api/users/#{@current_user.id}/statuses", :type => "help",
+    %w(Help help Log log  Activity activity).each do |filter|
+      it "should filter by statatus type #{filter}" do
+        get "/api/users/#{@current_user.id}/statuses", :type => filter,
         :oauth_token => @token, :format => 'json'
+        parse(response.body).all? { |s| s["type"] == filter.classify }.should be
+      end
 
-      parse(response.body).all? { |s| s["type"] == "Help" }.should be
-    end
-
-    it "should return correct numbers of statuses (Help)" do
-      get "/api/users/#{@current_user.id}/statuses", :type => "help",
+      it "should return correct number of statuses #{filter}" do
+        get "/api/users/#{@current_user.id}/statuses", :type => filter,
         :oauth_token => @token, :format => 'json'
-
-      helps = @user_statuses.select {|i| i[:type] == "Help" }
-      parse(response.body).count.should == helps.length
-    end
-
-    it "should return correct numbers of statuses (Log)" do
-      get "/api/users/#{@current_user.id}/statuses", :type => "log",
-        :oauth_token => @token, :format => 'json'
-
-      parse(response.body).count.should == @user_statuses.
-        select {|i| i[:type] == "Log" }.length
-    end
-
-    it "should filter by status type (log)" do
-      get "/api/users/#{@current_user.id}/statuses", :type => "log",
-        :oauth_token => @token, :format => 'json'
-      parse(response.body).all? { |s| s["type"] == "Log" }.should be
-    end
-
-    it "should filter by status type (activity)" do
-      get "/api/users/#{@current_user.id}/statuses", :type => "activity",
-        :oauth_token => @token, :format => 'json'
-      parse(response.body).all? { |s| s["type"] == "Activity" }.should be
-    end
-
-    it "should return correct numbers of statuses (Activity)" do
-      get "/api/users/#{@current_user.id}/statuses", :type => 'activity',
-        :oauth_token => @token, :format => 'json'
-
-      parse(response.body).count.should == @user_statuses.
-        select {|i| i[:type] == "Activity" }.length
+        stats = @user_statuses.select {|i| i[:type] == filter.classify}
+        parse(response.body).count.should == stats.length
+      end
     end
   end
 
@@ -271,8 +243,6 @@ describe "Statuses" do
 
       # Um pouco de ruído
       Factory(:help, :statusable => lecture, :user => @current_user)
-      Factory(:log, :statusable => space, :logeable => lecture,
-              :user => @current_user)
       Factory(:activity, :statusable => lecture, :user => @current_user)
     end
 
@@ -285,9 +255,7 @@ describe "Statuses" do
     it "should return correct numbers statuses" do
       get "/api/spaces/#{space.id}/statuses", :oauth_token => @token,
         :format => 'json'
-        activities = @space_statuses.select { |i| i[:type] == "Activity" }
-
-        parse(response.body).count.should ==  activities.length
+        parse(response.body).count.should ==  @space_statuses.length
     end
 
     it "should filter by status type (help)" do
@@ -852,6 +820,15 @@ describe "Statuses" do
     let(:params) do
       { :oauth_token => @token, :format => 'json' }
     end
+    let(:space) do
+      environment = Factory(:complete_environment, :owner => @current_user)
+      environment.courses.first.spaces.first
+    end
+    let(:lecture) do
+      s = Factory(:subject, :owner => space.owner, :space => space)
+      Factory(:lecture, :owner => s.owner, :subject => s)
+    end
+
     before do
       # Associação do user com uma atividade
       ActiveRecord::Observer.with_observers(:status_observer) do
@@ -859,6 +836,13 @@ describe "Statuses" do
 
         post "/api/users/#{@current_user.id}/statuses", create_params
         @activity = parse(response.body)
+
+        @user_statuses = [
+        Factory(:help, :user => @current_user, :statusable => lecture),
+        Factory(:activity, :user => @current_user, :statusable => lecture),
+        Factory(:log, :user => @current_user, :statusable => space,
+                :logeable => lecture)
+      ]
       end
     end
 
@@ -869,7 +853,7 @@ describe "Statuses" do
 
     it "should return id of status" do
       get "/api/users/#{@current_user.id}/statuses/timeline", params
-      parse(response.body)[0]['id'].should == @activity['id']
+      parse(response.body).any? {|s| s['id'] == @activity['id']}.should be
     end
 
     it "should not return empty body" do
@@ -879,7 +863,6 @@ describe "Statuses" do
 
     it "should return the correct number of statuses" do
       get "/api/users/#{@current_user.id}/statuses/timeline", params
-
       parse(response.body).count.should == @current_user.overview.count
     end
 
@@ -892,6 +875,21 @@ describe "Statuses" do
       @lecture = Factory(:lecture)
       get "/api/users/212/statuses/timeline", params
       response.code.should == "404"
+    end
+
+    %w(Help help Activity activity Log log).each do |filter|
+      it "should filter by #{filter}" do
+        get "/api/users/#{@current_user.id}/statuses/timeline", :type => filter,
+          :oauth_token => @token, :format => 'json'
+        parse(response.body).all? {|s| s["type"] == filter.classify}.should be
+      end
+
+      it "should return correct number of statuses #{filter}" do
+        get "/api/users/#{@current_user.id}/statuses/timeline", :type => filter,
+        :oauth_token => @token, :format => 'json'
+        stats = @current_user.overview.where(:type => filter.classify)
+        parse(response.body).count.should == stats.count
+      end
     end
   end
 
@@ -963,5 +961,4 @@ describe "Statuses" do
       response.code.should == "401"
     end
   end
-
 end

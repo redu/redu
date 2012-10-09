@@ -87,8 +87,19 @@ GIT
     roar (0.10.1)
       representable (>= 1.1.7)
 
+PATH
+  remote: /Users/guiocavalcanti/workspace/work/permit-client
+  specs:
+    permit (0.0.3)
+      amqp (~> 0.9.1)
+      configurable
+      faraday (~> 0.8.4)
+      logger
+      patron (~> 0.4.18)
+      system_timer
+      yajl-ruby
+
 GEM
-  remote: http://rubygems.org/
   remote: http://gems.github.com/
   remote: http://reduadmin:pomp64bozos@the-shire.herokuapp.com/
   specs:
@@ -131,7 +142,15 @@ GEM
     activesupport (3.0.10)
     acts-as-taggable-on (2.0.6)
     acts_as_tree (0.1.1)
-    addressable (2.2.8)
+    addressable (2.3.2)
+    amq-client (0.9.4)
+      amq-protocol (>= 0.9.4)
+      eventmachine
+    amq-protocol (0.9.5)
+    amqp (0.9.7)
+      amq-client (~> 0.9.4)
+      amq-protocol (>= 0.9.4)
+      eventmachine
     ar_mailer_rails3 (2.1.12)
     arel (2.0.10)
     authlogic (3.0.2)
@@ -152,11 +171,22 @@ GEM
     cancan (1.6.7)
     childprocess (0.3.1)
     chronic (0.6.7)
+    chunky_png (1.2.6)
     ckeditor (3.4.2.pre)
       mime-types (>= 1.16)
     closure-compiler (1.1.1)
     cocaine (0.2.1)
     columnize (0.3.2)
+    compass (0.12.2)
+      chunky_png (~> 1.2)
+      fssm (>= 0.2.7)
+      sass (~> 3.1)
+    compass-rails (1.0.3)
+      compass (>= 0.12.2, < 0.14)
+    config_parser (0.5.5)
+    configurable (1.0.0)
+      config_parser (~> 0.5.4)
+      lazydoc (~> 1.0)
     crack (0.1.8)
     css_parser (1.2.5)
       addressable
@@ -175,7 +205,7 @@ GEM
     erubis (2.6.6)
       abstract (>= 1.0.0)
     escape_utils (0.2.4)
-    eventmachine (0.12.10)
+    eventmachine (1.0.0)
     exceptional (2.0.32)
       rack
     excon (0.9.6)
@@ -184,10 +214,8 @@ GEM
     factory_girl_rails (1.7.0)
       factory_girl (~> 2.6.0)
       railties (>= 3.0.0)
-    faraday (0.7.6)
-      addressable (~> 2.2)
+    faraday (0.8.4)
       multipart-post (~> 1.1)
-      rack (~> 1.1)
     ffi (1.0.11)
     fog (1.1.2)
       builder
@@ -200,6 +228,7 @@ GEM
       nokogiri (~> 1.5.0)
       ruby-hmac
     formatador (0.2.3)
+    fssm (0.2.9)
     hashie (1.2.0)
     htmlentities (4.3.0)
     httparty (0.8.1)
@@ -229,7 +258,9 @@ GEM
       railties (>= 3.0.0)
     lazy_high_charts (1.2.2)
       bundler (~> 1.0)
+    lazydoc (1.0)
     linecache (0.43)
+    logger (1.2.8)
     mail (2.2.19)
       activesupport (>= 2.3.6)
       i18n (>= 0.4.0)
@@ -270,6 +301,7 @@ GEM
       activesupport (>= 2.3.2)
       cocaine (>= 0.0.2)
       mime-types
+    patron (0.4.18)
     polyglot (0.3.3)
     premailer (1.7.3)
       css_parser (>= 1.1.9)
@@ -339,6 +371,7 @@ GEM
     rubyzip (0.9.6.1)
     s3 (0.3.8)
       proxies (~> 0.2.0)
+    sass (3.2.1)
     selenium-webdriver (2.20.0)
       childprocess (>= 0.2.5)
       ffi (~> 1.0)
@@ -350,12 +383,9 @@ GEM
       ruby-hmac
     simple-navigation (3.5.0)
       activesupport (>= 2.3.2)
+    system_timer (1.2.4)
     test_xml (0.1.2)
       nokogiri (>= 1.3.2)
-    thin (1.3.1)
-      daemons (>= 1.0.9)
-      eventmachine (>= 0.12.6)
-      rack (>= 1.0.0)
     thor (0.14.6)
     translate_routes (3.0.3)
     treetop (1.4.10)
@@ -372,6 +402,7 @@ GEM
       chronic (~> 0.6.3)
     will_paginate (3.0.pre2)
     xml-simple (1.0.15)
+    yajl-ruby (1.1.0)
     yui-compressor (0.9.6)
       POpen4 (>= 0.1.4)
     zencoder (2.3.1)
@@ -398,6 +429,7 @@ DEPENDENCIES
   bundler (~> 1.2)
   cancan (~> 1.6.7)
   ckeditor (= 3.4.2.pre)
+  compass-rails
   daemons
   date_validator
   deep_cloneable
@@ -423,6 +455,7 @@ DEPENDENCIES
   omniauth-facebook
   pagseguro (~> 0.1.10)
   paperclip (~> 2.7)
+  permit!
   pusher
   rack-cors
   rails (= 3.0.10)
@@ -440,7 +473,6 @@ DEPENDENCIES
   shoulda-matchers
   shuber-sortable
   simple-navigation
-  thin
   translate_routes
   useragent (~> 0.4.8)
   vis_client!

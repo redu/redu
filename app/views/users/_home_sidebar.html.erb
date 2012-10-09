@@ -14,7 +14,7 @@
   <% cache ['home_sidebar_connections', current_user.id] do %>
     <ul class="connections clearfix">
       <%= render :partial => 'users/item_short',
-        :collection => current_user.recently_active_friends %>
+        :collection => current_user.friends.limit(9) %>
     </ul><!-- end .connections -->
     <%= link_to 'Ver mais', user_friendships_path(current_user),
       :class => 'more' %>

@@ -28,7 +28,7 @@ class StudentProfile < ActiveRecord::Base
     self.grade = (( done.to_f * 100 ) / total)
     if total == done
       self.grade = 100
-      self.graduaded = true
+      self.graduated = true
 
       params = {
         :user_id => self.user_id,

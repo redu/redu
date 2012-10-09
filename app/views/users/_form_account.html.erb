@@ -1,6 +1,6 @@
 <%= form_for @user, :url => update_account_user_path,
   :html => {:multipart =>true, :class => "concave-form"}  do |f|  %>
-  <%= concave_error_messages_for(@user) %>
+  <%= concave_error_messages_for(f.object) %>
 
   <%= field_set_tag "Configurações", :class => 'inline' do %>
     <%= f.check_box :auto_status %>
@@ -45,6 +45,7 @@
     <% else %>
       <%=  password_field_tag :current_password %>
     <% end %>
+    <%= concave_errors_for(f.object, :current_password) %>
 
     <%= f.label :password,  (t :new_password) + ":" %>
     <%=  f.password_field :password %>

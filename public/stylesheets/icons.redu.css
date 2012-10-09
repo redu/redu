@@ -1748,3 +1748,14 @@
   height: 32px;
   background: url("../images/new/icons-small.png") -320px -3200px no-repeat;
 }
+
+.icon-close-gray_16_16 {
+  content: "";
+  width: 16px;
+  height: 16px;
+  background: url("../images/new/icon-close-gray_16_16.png") no-repeat;
+}
+
+.icon-close-gray_16_16:hover {
+  background: url("../images/new/icon-close-red_16_16.png") no-repeat;
+}

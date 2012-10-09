@@ -1,0 +1,36 @@
+<div class="landing-functionality landing-multimedia-outer-wrapper">
+  <div class="landing-multimedia-inner-wrapper">
+    <div class="landing-multimedia-description">
+      <h3 class="landing-navigation-subtitle">Aulas Multimídia</h3>
+      <h4>Assista aulas de vídeo, leia artigos, documentos e apresentações dos professores.</h4>
+      <p>Os meios podem ser diversos, mas os fins são os mesmos: a construção do conhecimento. Em qualquer formato, as aulas estarão disponíveis a todos os membros do curso.</p>
+    </div><!--
+ --><div class="landing-multimedia-types">
+      <div class="landing-multimedia-types-left">
+        <%= link_to "#modal-landing-multimedia-video", "data-toggle" => "modal", :class => "landing-multimedia-type sprite-multimedia-video" do %>
+          <span class="landing-multimedia-type-circle"></span>
+        <% end %>
+        <%= link_to "#modal-landing-multimedia-document", "data-toggle" => "modal", :class => "landing-multimedia-type sprite-multimedia-document" do %>
+          <span class="landing-multimedia-type-circle"></span>
+        <% end %>
+        <%= link_to "#modal-landing-multimedia-presentation", "data-toggle" => "modal", :class => "landing-multimedia-type sprite-multimedia-presentation" do %>
+          <span class="landing-multimedia-type-circle"></span>
+        <% end %>
+      </div><!--
+   --><div class="landing-multimedia-types-right">
+        <div class="landing-multimedia-exercise-box">
+          <%= link_to "#modal-landing-multimedia-exercise", "data-toggle" => "modal", :class => "landing-multimedia-exercise sprite-multimedia-exercise" do %>
+            <span class="landing-multimedia-type-circle"></span>
+          <% end %>
+          <h4>Exercícios de múltipla escolha</h4>
+          <p><strong>Avalie conhecimentos através de exercícios on-line.</strong></p>
+          <p>Teste conhecimentos em questões de múltipla escolha. É possível acompanhar o desempenho e evolução nesse tipo de avaliação.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%= render :partial => "landing/modal_multimedia", :locals => { :title => "Aula de Vídeo", :image => "landing/multimedia-video-screenshot.png", :type => "video"} %>
+<%= render :partial => "landing/modal_multimedia", :locals => { :title => "Aula de Texto", :image => "landing/multimedia-document-screenshot.png", :type => "document"} %>
+<%= render :partial => "landing/modal_multimedia", :locals => { :title => "Aula de Apresentação", :image => "landing/multimedia-presentation-screenshot.png", :type => "presentation"} %>
+<%= render :partial => "landing/modal_multimedia", :locals => { :title => "Exercícios", :image => "landing/multimedia-exercise-screenshot.png", :type => "exercise"} %>
