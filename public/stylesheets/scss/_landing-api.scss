@@ -4,7 +4,11 @@
 
 
 // Encapsulador.
-.landing-api { padding: 20px; }
+.landing-api {
+  padding: 20px;
+
+  &:hover .landing-api-illustration { @extend .sprite-keko-playing.keko-playing_hover; }
+}
 
 // Descrição.
 .landing-api-description {
