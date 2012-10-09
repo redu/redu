@@ -66,7 +66,7 @@ gem 'vis_client', :git => 'git@github.com:redu/vis_client.git'
 gem 'whenever', :require => false
 gem 'will_paginate', '~> 3.0.pre2'
 gem 'zencoder'
-gem 'permit', :path => '/Users/guiocavalcanti/workspace/work/permit-client'
+gem 'permit', :git => 'git://github.com/redu/permit-gem.git'
 
 # Gems específicos para a API
 gem 'oauth-plugin', '~> 0.4.0'
