@@ -1,12 +1,11 @@
 GIT
   remote: git://github.com/apotonick/roar-rails.git
-  revision: 943203a8b9f5376771ed4cc01a7bfb49c47e601d
+  revision: 4f0a0856a80043aa68adc2dfef0989bf00498771
   specs:
-    roar-rails (0.0.10)
+    roar-rails (0.0.5)
       actionpack (~> 3.0)
-      hooks
       railties (~> 3.0)
-      roar (~> 0.10)
+      roar (~> 0.10.0)
       test_xml
 
 GIT
@@ -79,21 +78,23 @@ GIT
   remote: git@github.com:redu/vis_client.git
   revision: be54ea9998109eac8029cbf8e3d14bbefcc73637
   specs:
-    vis_client (0.0.6)
+    vis_client (0.0.4)
 
 GIT
   remote: https://github.com/apotonick/roar.git
-  revision: a2f954e0d3cfa7ed99b33e3b416ac868358a4f7e
+  revision: 46fb88d1a79338188a9d05d353fc721d6a058e4e
   specs:
-    roar (0.11.3)
-      representable (>= 1.2.2)
+    roar (0.10.1)
+      representable (>= 1.1.7)
 
 PATH
   remote: /Users/guiocavalcanti/workspace/work/permit-client
   specs:
     permit (0.0.3)
       amqp (~> 0.9.1)
+      configurable
       faraday (~> 0.8.4)
+      logger
       patron (~> 0.4.18)
       system_timer
       yajl-ruby
@@ -145,7 +146,7 @@ GEM
     amq-client (0.9.4)
       amq-protocol (>= 0.9.4)
       eventmachine
-    amq-protocol (0.9.4)
+    amq-protocol (0.9.5)
     amqp (0.9.7)
       amq-client (~> 0.9.4)
       amq-protocol (>= 0.9.4)
@@ -170,20 +171,16 @@ GEM
     cancan (1.6.7)
     childprocess (0.3.1)
     chronic (0.6.7)
-    chunky_png (1.2.6)
     ckeditor (3.4.2.pre)
       mime-types (>= 1.16)
     closure-compiler (1.1.1)
     cocaine (0.2.1)
     columnize (0.3.2)
-    compass (0.12.2)
-      chunky_png (~> 1.2)
-      fssm (>= 0.2.7)
-      sass (~> 3.1)
-    compass-rails (1.0.3)
-      compass (>= 0.12.2, < 0.14)
-    cookiejar (0.3.0)
-    crack (0.3.1)
+    config_parser (0.5.5)
+    configurable (1.0.0)
+      config_parser (~> 0.5.4)
+      lazydoc (~> 1.0)
+    crack (0.1.8)
     css_parser (1.2.5)
       addressable
     daemons (1.1.8)
@@ -194,14 +191,10 @@ GEM
       activesupport (~> 3.0)
     diff-lcs (1.1.3)
     dynamic_form (1.1.4)
-    em-http-request (1.0.3)
-      addressable (>= 2.2.3)
-      cookiejar
-      em-socksify
-      eventmachine (>= 1.0.0.beta.4)
-      http_parser.rb (>= 0.5.3)
-    em-socksify (0.2.1)
-      eventmachine (>= 1.0.0.beta.4)
+    em-http-request (0.3.0)
+      addressable (>= 2.0.0)
+      escape_utils
+      eventmachine (>= 0.12.9)
     erubis (2.6.6)
       abstract (>= 1.0.0)
     escape_utils (0.2.4)
@@ -229,9 +222,7 @@ GEM
       nokogiri (~> 1.5.0)
       ruby-hmac
     formatador (0.2.3)
-    fssm (0.2.9)
     hashie (1.2.0)
-    hooks (0.2.1)
     htmlentities (4.3.0)
     http_parser.rb (0.5.3)
     http_parser.rb (0.5.3-x86-mingw32)
@@ -262,7 +253,9 @@ GEM
       railties (>= 3.0.0)
     lazy_high_charts (1.2.2)
       bundler (~> 1.0)
+    lazydoc (1.0)
     linecache (0.43)
+    logger (1.2.8)
     mail (2.2.19)
       activesupport (>= 2.3.6)
       i18n (>= 0.4.0)
@@ -270,7 +263,7 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.18)
     mimemagic (0.1.8)
-    multi_json (1.0.4)
+    multi_json (1.0.3)
     multi_xml (0.5.1)
     multipart-post (1.1.5)
     mysql2 (0.2.7)
@@ -279,7 +272,6 @@ GEM
     net-ssh (2.5.2)
     newrelic_rpm (3.0.1)
     nokogiri (1.5.2)
-    nokogiri (1.5.2-x86-mingw32)
     oauth (0.4.5)
     oauth-plugin (0.4.0)
       multi_json
@@ -310,8 +302,10 @@ GEM
       css_parser (>= 1.1.9)
       htmlentities (>= 4.0.0)
     proxies (0.2.1)
-    pusher (0.9.4)
+    pusher (0.8.1)
+      crack (~> 0.1.0)
       multi_json (~> 1.0)
+      ruby-hmac (~> 0.4.0)
       signature (~> 0.1.2)
     rack (1.2.5)
     rack-cors (0.2.6)
@@ -344,7 +338,7 @@ GEM
     redu_analytics (0.0.2)
       lazy_high_charts
     remotipart (1.0.2)
-    representable (1.2.5)
+    representable (1.1.7)
       json
       nokogiri
     rscribd (1.3.0)
@@ -369,11 +363,9 @@ GEM
       linecache (>= 0.3)
     ruby-hmac (0.4.0)
     ruby-prof (0.11.2)
-    ruby-prof (0.11.2-x86-mingw32)
     rubyzip (0.9.6.1)
     s3 (0.3.8)
       proxies (~> 0.2.0)
-    sass (3.2.1)
     selenium-webdriver (2.20.0)
       childprocess (>= 0.2.5)
       ffi (~> 1.0)
@@ -381,7 +373,8 @@ GEM
       rubyzip
     shoulda-matchers (1.0.0.beta2)
     shuber-sortable (1.0.6)
-    signature (0.1.4)
+    signature (0.1.2)
+      ruby-hmac
     simple-navigation (3.5.0)
       activesupport (>= 2.3.2)
     system_timer (1.2.4)
@@ -395,7 +388,7 @@ GEM
     tzinfo (0.3.33)
     useragent (0.4.8)
     uuidtools (2.1.2)
-    webmock (1.8.10)
+    webmock (1.8.6)
       addressable (>= 2.2.7)
       crack (>= 0.1.7)
     whenever (0.7.3)
@@ -412,7 +405,6 @@ GEM
 
 PLATFORMS
   ruby
-  x86-mingw32
 
 DEPENDENCIES
   aasm
@@ -431,7 +423,6 @@ DEPENDENCIES
   bundler (~> 1.2)
   cancan (~> 1.6.7)
   ckeditor (= 3.4.2.pre)
-  compass-rails
   daemons
   date_validator
   deep_cloneable
