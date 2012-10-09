@@ -69,7 +69,7 @@ GIT
 
 GIT
   remote: git://github.com/redu/permit-gem.git
-  revision: b5e8dc0ef47ca10c9270f8e41e8a2f3056e9230c
+  revision: 54bf66dd94e6d1221ddde96819084136f3bbdb90
   specs:
     permit (0.0.3)
       amqp (~> 0.9.1)
