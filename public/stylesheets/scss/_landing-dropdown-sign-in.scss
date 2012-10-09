@@ -13,7 +13,12 @@
     font-size: 11px;
   }
 
-  .dropdown-menu { width: 240px; }
+  .dropdown-menu { width: 260px; }
+
+  .line-gray3 {
+    border-top-width: 0;
+    height: 2px;
+  }
 }
 
 .landing-sign-in-recover {
