@@ -17,6 +17,7 @@ class HierarchyNotificationJob
   private
 
   def send_multi_request
+    @reactor_running = EM.reactor_running?
     EM.run do
       multi = EventMachine::MultiRequest.new
       url = Redu::Application.config.vis_client[:url]
@@ -37,7 +38,7 @@ class HierarchyNotificationJob
 
         end
 
-        EM.stop
+        EM.stop unless @reactor_running
       end
     end
   end
