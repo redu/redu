@@ -68,6 +68,19 @@ GIT
       rake
 
 GIT
+  remote: git://github.com/redu/permit-gem.git
+  revision: b5e8dc0ef47ca10c9270f8e41e8a2f3056e9230c
+  specs:
+    permit (0.0.3)
+      amqp (~> 0.9.1)
+      configurable
+      faraday (~> 0.8.4)
+      logger
+      patron (~> 0.4.18)
+      system_timer
+      yajl-ruby
+
+GIT
   remote: git@github.com:redu/invitable.git
   revision: 171dcdb33d0955357a0af7980d6882925958949c
   specs:
@@ -86,18 +99,6 @@ GIT
   specs:
     roar (0.10.1)
       representable (>= 1.1.7)
-
-PATH
-  remote: /Users/guiocavalcanti/workspace/work/permit-client
-  specs:
-    permit (0.0.3)
-      amqp (~> 0.9.1)
-      configurable
-      faraday (~> 0.8.4)
-      logger
-      patron (~> 0.4.18)
-      system_timer
-      yajl-ruby
 
 GEM
   remote: http://gems.github.com/
