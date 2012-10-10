@@ -4,7 +4,7 @@ class BasePolicyObserver < ActiveRecord::Observer
     producer = Permit::Producer.new
     policy = Permit::Policy.
       new(:resource_id => permit_id(model), :producer => producer)
-    policy.add(&block)
+    policy.commit(&block)
   end
 
   def async_policy_for(model, &block)
