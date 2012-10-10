@@ -77,4 +77,8 @@ Redu::Application.configure do
     :students_participation => "http://vis.redu.com.br/user_spaces/participation.json"
   }
 
+  # Configs do Wally
+  config.wally = {
+    :url => 'http://0.0.0.0:4567'
+  }
 end

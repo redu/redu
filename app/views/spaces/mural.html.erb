@@ -8,18 +8,7 @@
     <div class="header clearfix">
       <h4 class="title">Mural</h4>
     </div>
-
-    <div class="status-large" style="clear: both;">
-    <%= render :partial => 'statuses/create_status',
-      :locals => { :statusable => @space } %>
-    <div id="statuses" class="statuses">
-      <ol>
-        <%= render :partial => 'statuses/item', :collection => @statuses %>
-      </ol>
-
-      <%= will_paginate @statuses, :renderer => EndlessRenderer %>
-    </div>
-    </div><!-- end .statuses -->
+    <iframe src="<%= "#{Redu::Application.config.wally[:url]}/core:space_#{@space.id}" %>" width="750px" height="1400px"></iframe>
   </div><!-- end #environment-courses -->
 
 </div><!-- end .main -->

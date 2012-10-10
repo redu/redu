@@ -75,6 +75,11 @@ Redu::Application.configure do
     :students_participation => "http://localhost:4000/user_spaces/participation.json"
   }
 
+  # Configs do Wally
+  config.wally = {
+    :url => 'http://0.0.0.0:4567'
+  }
+
   Footnotes.run! if defined?(Footnotes)
 
   if defined?(Bullet)
