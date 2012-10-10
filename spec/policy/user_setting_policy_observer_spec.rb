@@ -1,25 +1,16 @@
 require 'spec_helper'
+require 'support/permit_mock'
 
 describe 'UserSettingPolicyObserver' do
-  let(:policy) { double('Permit::Policy') }
+  include Permit::TestCase
   before do
-    @@policy = policy # necessário para ser visível abaixo
-    class BasePolicyObserver < ActiveRecord::Observer
-      def sync_policy_for(model, &block)
-        block.call @@policy
-      end
-    end
-
-    class Permit::PolicyJob
-      def perform
-        @callback.call(@@policy)
-      end
-    end
+    policy.stub(:remove)
   end
 
   context "when creating UserSetting with view_mural public" do
     let(:setting) do
-      Factory(:user_setting).stub_chain(:user, :id).and_return(12)
+      u = Factory(:user, :settings => nil)
+      Factory(:user_setting, :user => u)
     end
 
     it "should add stalk permission to anyone" do
@@ -42,9 +33,8 @@ describe 'UserSettingPolicyObserver' do
 
   context "when updating UserSetting (friends to public)" do
     let(:setting) do
-      s = Factory(:user_setting, :view_mural => Privacy[:friends])
-      s.stub_chain(:user, :id).and_return(12)
-      s
+      u = Factory(:user, :settings => nil)
+      Factory(:user_setting, :user => u, :view_mural => Privacy[:friends])
     end
 
     it "should add stalk permission to anyone" do

@@ -1,24 +1,10 @@
 require 'spec_helper'
+require 'support/permit_mock'
 
 describe 'EnrollmentPolicyObserver' do
-  let(:policy) { double('Permit::Policy') }
+  include Permit::TestCase
   before do
-    @@policy = policy # necessário para ser visível abaixo
-    class BasePolicyObserver < ActiveRecord::Observer
-      def sync_policy_for(model, &block)
-        block.call @@policy
-      end
-
-      def async_policy_for(model, &block)
-        block.call @@policy
-      end
-    end
-
-    class Permit::PolicyJob
-      def perform
-        @callback.call(@@policy)
-      end
-    end
+    policy.stub(:remove)
   end
 
   context "when creating enrollment with callbacks enabled" do
@@ -123,26 +109,26 @@ describe 'EnrollmentPolicyObserver' do
         subject.destroy
       end
     end
-
-
-
   end
 
   context "when creating subject" do
-    let(:subj) do
+    let(:space) do
       space = Factory(:complete_environment).courses.first.spaces.first
-      s = Factory(:subject, :space => space, :owner => space.owner)
     end
 
     it "should not add policy for lecture when the subject is empty" do
-      policy.should_receive(:add).once # user_space_association
+      policy.stub(:add)
+      space
+      policy.should_not_receive(:add) # user_space_association
 
-      active_observer { subj }
+      active_observer do
+        Factory(:subject, :space => space, :owner => space.owner)
+      end
     end
   end
 
-  def active_observer(obs=:enrollment_policy_observer, &block)
-    ActiveRecord::Observer.with_observers(*obs) do
+  def active_observer(&block)
+    ActiveRecord::Observer.with_observers(:enrollment_policy_observer) do
       block.call
     end
   end
