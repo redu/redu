@@ -1,21 +1,12 @@
 require 'spec_helper'
+require 'support/permit_mock'
 
 describe 'UserSpaceAssociationPolicy' do
-  let(:policy) { double('Permit::Policy') }
+  include Permit::TestCase
+
   let(:user) { Factory(:user) }
   before do
-    @@policy = policy # necessário para ser visível abaixo
-    class BasePolicyObserver < ActiveRecord::Observer
-      def sync_policy_for(model, &block)
-        block.call @@policy
-      end
-    end
-
-    class Permit::PolicyJob
-      def perform
-        @callback.call(@@policy)
-      end
-    end
+    policy.stub(:remove)
   end
 
   %w(environment_admin teacher).each do |role|

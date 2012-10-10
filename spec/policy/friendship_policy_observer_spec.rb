@@ -1,20 +1,11 @@
 require 'spec_helper'
+require 'support/permit_mock'
 
 describe 'FriendshipPolicyObserver' do
-  let(:policy) { double('Permit::Policy') }
-  before do
-    @@policy = policy # necessário para ser visível abaixo
-    class BasePolicyObserver < ActiveRecord::Observer
-      def sync_policy_for(model, &block)
-        block.call @@policy
-      end
-    end
+  include Permit::TestCase
 
-    class Permit::PolicyJob
-      def perform
-        @callback.call(@@policy)
-      end
-    end
+  before do
+    policy.stub(:remove)
   end
 
   context "when accepting friendship (UserSetting#view_miral is friends)" do
