@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe EnrollmentVisNotification do
   context "in a Course" do
-    before(:each) do
+    before do
       @environment_owner = Factory(:user)
       @environment = Factory(:environment, :owner => @environment_owner)
     end
@@ -103,7 +103,6 @@ describe EnrollmentVisNotification do
 
     subject { Factory(:enrollment, :subject => @sub) }
 
-
     context "when updating" do
       let :lectures do
         3.times.collect do
@@ -171,6 +170,104 @@ describe EnrollmentVisNotification do
 
           webmock_request(params).should have_been_made
         end
+      end
+    end
+  end
+
+  context "when User is removed" do
+    before do
+      @user = Factory(:user)
+      @space = Factory(:space)
+
+      @space.course.join @user
+      @space.course.reload
+    end
+
+    context "whit enrollments" do
+      before do
+        sub1 = Factory(:subject, :space => @space, :finalized => true)
+        sub2 = Factory(:subject, :space => @space, :finalized => true)
+
+        Factory(:enrollment, :subject => sub1, :user => @user)
+        Factory(:enrollment, :subject => sub2, :user => @user)
+
+        @enrolls = @user.enrollments
+      end
+
+      it "should send vis notification 'remove_enrollment'" do
+        WebMock.disable_net_connect!
+        stubing_request
+
+        ActiveRecord::Observer.with_observers(:vis_user_observer) do
+          @user.destroy
+        end
+
+        @enrolls.each do |enroll|
+          params = fill_params(enroll, "remove_enrollment")
+
+          webmock_request(params).should have_been_made
+        end
+      end
+
+      it "should send any vis notification 'remove_subject_finalized'" do
+        WebMock.disable_net_connect!
+        stubing_request
+
+        ActiveRecord::Observer.with_observers(:vis_user_observer) do
+          @user.destroy
+        end
+
+        @enrolls.each do |enroll|
+          params = fill_params(enroll, "remove_subject_finalized")
+
+          webmock_request(params).should_not have_been_made
+        end
+      end
+
+      context "whit subjects finalized" do
+        before do
+          sub3 = Factory(:subject, :space => @space, :finalized => true)
+          Factory(:enrollment, :subject => sub3, :user => @user, :graduated => true)
+        end
+
+        it "should send vis notification 'remove_subject_finalized'" do
+          WebMock.disable_net_connect!
+          stubing_request
+
+          ActiveRecord::Observer.with_observers(:vis_user_observer) do
+            @user.destroy
+          end
+
+          @enrolls.each do |enroll|
+            if enroll.graduated
+              params = fill_params(enroll, "remove_subject_finalized")
+
+              webmock_request(params).should have_been_made
+            end
+          end
+        end
+      end
+    end
+
+    context "with any enrollment" do
+      before do
+        sub = Factory(:subject, :space => @space, :finalized => true)
+        @enroll = Factory(:enrollment, :subject => sub, :graduated => true)
+      end
+
+      it "should send any vis notification" do
+        WebMock.disable_net_connect!
+        stubing_request
+
+        ActiveRecord::Observer.with_observers(:vis_user_observer) do
+          @user.destroy
+        end
+
+        params = fill_params(@enroll, "remove_enrollment")
+        webmock_request(params).should_not have_been_made
+
+        params = fill_params(@enroll, "remove_subject_finalized")
+        webmock_request(params).should_not have_been_made
       end
     end
   end
