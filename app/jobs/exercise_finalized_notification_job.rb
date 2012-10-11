@@ -8,7 +8,6 @@ class ExerciseFinalizedNotificationJob
   end
 
   def perform
-    debugger
     lecture.lectureable.results.each do |result|
       if finalized? result
         send_to_vis(result, true)
