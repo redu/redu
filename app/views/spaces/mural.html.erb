@@ -8,7 +8,10 @@
     <div class="header clearfix">
       <h4 class="title">Mural</h4>
     </div>
-    <iframe src="<%= "#{Redu::Application.config.wally[:url]}/core:space_#{@space.id}" %>" width="750px" height="1400px"></iframe>
+    <iframe src="<%= "#{Redu::Application.config.wally[:url]}/core:space_#{@space.id}?#{wally_params(current_user, @space, [@environment, @course])}" %>" width="750px" height="1400px"></iframe>
   </div><!-- end #environment-courses -->
 
 </div><!-- end .main -->
+
+
+

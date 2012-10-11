@@ -302,10 +302,52 @@ module AsyncJSHelper
     end
   end
 
+  def wally_params(user, target, contexts=nil)
+    wally_params = {}
+    wally_params[:user] = {
+      :user_id => user.id,
+      :name => user.display_name,
+      :links => { :rel => 'public_self', :href => user_url(user) },
+      :thumbnails => { :href => "#{Redu::Application.config.url}#{user.avatar(:thumb_32)}", :size => '32x32' }
+    }
+
+    wally_params[:target] = {
+      :id => target.id,
+      :name => target.name,
+      :kind => target.class.to_s.downcase,
+      :links => { :rel => 'self_public', :href => entity_url(target) }
+    }
+
+    wally_params[:contexts] = []
+
+    contexts.each do |c|
+      context = { :id => c.id, :name => c.name,
+                  :links => { :rel => 'self_public', :href => entity_url(c) }}
+      wally_params[:contexts] << context
+    end
+
+    wally_params.to_param
+  end
+
   private
 
   def should_package?
     Jammit.package_assets && !(Jammit.allow_debugging && params[:debug_assets])
+  end
+
+  def entity_url(entity)
+    case entity.class.to_s
+    when 'Environment'
+      environment_url(entity)
+    when 'Course'
+      environment_course_url(entity.environment, entity)
+    when 'Space'
+      space_url(entity)
+    when 'Lecture'
+      space_subject_lecture_url(entity.subject.space, entity.subject, entity)
+    when 'User'
+      user_url(entity)
+    end
   end
 end
 
