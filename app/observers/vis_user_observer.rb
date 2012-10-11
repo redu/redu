@@ -9,7 +9,7 @@ class VisUserObserver < ActiveRecord::Observer
       finalized << enroll if enroll.try(:graduated)
     end
 
-    delay_hierarchy_notification(user.enrollments, "remove_enrollment")
-    delay_hierarchy_notification(finalized, "remove_subject_finalized")
+    delay_hierarchy_notification(user.enrollments.compact, "remove_enrollment")
+    delay_hierarchy_notification(finalized.compact, "remove_subject_finalized")
   end
 end

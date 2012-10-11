@@ -224,7 +224,7 @@ describe EnrollmentVisNotification do
         end
       end
 
-      context "whit subjects finalized" do
+      context "with subjects finalized" do
         before do
           sub3 = Factory(:subject, :space => @space, :finalized => true)
           Factory(:enrollment, :subject => sub3, :user => @user, :graduated => true)
@@ -246,28 +246,6 @@ describe EnrollmentVisNotification do
             end
           end
         end
-      end
-    end
-
-    context "with any enrollment" do
-      before do
-        sub = Factory(:subject, :space => @space, :finalized => true)
-        @enroll = Factory(:enrollment, :subject => sub, :graduated => true)
-      end
-
-      it "should send any vis notification" do
-        WebMock.disable_net_connect!
-        stubing_request
-
-        ActiveRecord::Observer.with_observers(:vis_user_observer) do
-          @user.destroy
-        end
-
-        params = fill_params(@enroll, "remove_enrollment")
-        webmock_request(params).should_not have_been_made
-
-        params = fill_params(@enroll, "remove_subject_finalized")
-        webmock_request(params).should_not have_been_made
       end
     end
   end
