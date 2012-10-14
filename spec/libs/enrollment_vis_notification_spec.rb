@@ -184,7 +184,7 @@ describe EnrollmentVisNotification do
 
   def webmock_request(params)
     a_request(:post, Redu::Application.config.vis_client[:url]).
-      with(:body => params.to_json,
+      with(:body => params,
            :headers => {'Authorization'=>['JOjLeRjcK', 'core-team'],
                         'Content-Type'=>'application/json'})
   end

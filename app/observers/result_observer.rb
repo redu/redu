@@ -1,7 +1,7 @@
 class ResultObserver < ActiveRecord::Observer
   include ExerciseVisNotification
 
-  def before_update(result)
+  def after_update(result)
     if finalized? result
       send_to_vis(result)
     end

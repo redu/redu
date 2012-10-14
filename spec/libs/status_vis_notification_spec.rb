@@ -19,7 +19,6 @@ describe StatusVisNotification do
       end
 
       context "and status is type of Activity" do
-
         before do
           WebMock.disable_net_connect!
           ActiveRecord::Observer.with_observers(:status_observer) do
@@ -32,10 +31,8 @@ describe StatusVisNotification do
 
         it "send information of core to visualization" do
           params = fill_params_by_lecture(@activity, "activity")
-
           checking_request(params)
-       end
-
+        end
       end
 
       context "and status is type of Help" do
@@ -51,7 +48,6 @@ describe StatusVisNotification do
 
         it "send information of core to visualization" do
           params = fill_params_by_lecture(@help, "help")
-
           checking_request(params)
         end
       end
@@ -350,7 +346,7 @@ describe StatusVisNotification do
 
   def checking_request(params)
     a_request(:post, Redu::Application.config.vis_client[:url]).
-      with(:body => params.to_json,
+      with(:body => params,
            :headers => {'Authorization' => ['JOjLeRjcK', 'core-team'],
                         'Content-Type'=> 'application/json'}).
                         should have_been_made

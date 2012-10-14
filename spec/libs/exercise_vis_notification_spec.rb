@@ -28,7 +28,7 @@ describe ExerciseVisNotification do
         params = fill_params(@exercise, result)
 
         a_request(:post, Redu::Application.config.vis_client[:url]).
-          with(:body => params.to_json,
+          with(:body => params,
                :headers => {'Authorization'=>['JOjLeRjcK', 'core-team'],
                             'Content-Type'=>'application/json'}).should have_been_made
       end
@@ -68,7 +68,7 @@ describe ExerciseVisNotification do
       :course_id => space.course.id,
       :user_id => result.user_id,
       :type => "exercise_finalized",
-      :grade => result.grade,
+      :grade => result.grade.to_s,
       :status_id => nil,
       :statusable_id => nil,
       :statusable_type => nil,
