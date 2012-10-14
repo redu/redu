@@ -8,7 +8,6 @@ module StatusVisNotification
     end
   end
 
-
   protected
 
   def build_hash_to_vis(status, destroy_status)

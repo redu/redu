@@ -210,6 +210,7 @@ module Redu
                                         :result_observer,
                                         :vis_status_observer,
                                         :vis_user_observer,
+                                        :vis_lecture_observer,
                                         :user_vis_application_observer,
                                         :user_environment_association_cache_observer,
                                         :environment_cache_observer,
