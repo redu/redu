@@ -87,7 +87,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'webmock', '~> 1.8.6'
+  gem 'webmock', :git => 'git://github.com/fltiago/webmock.git'
   gem 'ruby-prof'
 end
 
