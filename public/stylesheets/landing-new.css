@@ -127,12 +127,14 @@ body {
   background-position: 0 -112px;
   height: 18px;
   width: 16px;
+  vertical-align: middle;
 }
 
 .sprite-icon-correct {
   background-position: -16px -112px;
   height: 18px;
   width: 16px;
+  vertical-align: middle;
 }
 
 .sprite-icon-developer {
