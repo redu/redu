@@ -54,3 +54,6 @@
 @import "landing-basic-reports";
 //Estilos da área de gerenciamento e suporte.
 @import "landing-management-support";
+
+// Remover depois de resolver a issue ui-compnents#15.
+.textshadow .olrk-noquirks { text-shadow: none; }
