@@ -359,6 +359,8 @@ module AsyncJSHelper
       environment_course_url(entity.environment, entity)
     when 'Space'
       space_url(entity)
+    when 'Subject'
+      space_subject_url(entity.space, entity)
     when 'Lecture'
       space_subject_lecture_url(entity.subject.space, entity.subject, entity)
     when 'User'
