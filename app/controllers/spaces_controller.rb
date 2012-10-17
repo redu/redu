@@ -50,20 +50,9 @@ class SpacesController < BaseController
       redirect_to removed_page_path and return
     end
 
-    if @space
-      @statuses = Status.from_hierarchy(@space).
-      paginate(:page => params[:page], :per_page => Redu::Application.config.items_per_page)
-      @statusable = @space
-    end
-
     respond_to do |format|
       if @space
-        @status = Status.new
-
         format.html
-        format.js do
-          render_endless 'statuses/item', @statuses, '#statuses > ol'
-        end
         format.xml  { render :xml => @space }
       else
         format.html {
