@@ -14,21 +14,21 @@
     <%= tabs :courses_admin do %>
       <% if @course.teachers.empty? %>
         <div class="body">
-        <div class="flash-message notice">
-          <ul class="message icons-big-before icon-privacy-lightred_64_66-before">
-            <li>O conteúdo desta página não está disponível para o curso que não possui professores.</li>
-            <li>Você pode modificar os pápeis dos usuários <%= link_to "configurando o ambiente", admin_members_environment_path(@course.environment)%>.</li>
-          <ul>
-        </div>
+          <div class="flash-message notice">
+            <ul class="message icons-big-before icon-privacy-lightred_64_66-before">
+              <li>O conteúdo desta página não está disponível para o curso que não possui professores.</li>
+              <li>Você pode modificar os pápeis dos usuários <%= link_to "configurando o ambiente", admin_members_environment_path(@course.environment)%>.</li>
+            <ul>
+          </div>
         </div>
       <% elsif @course.spaces.empty? %>
         <div class="body">
-        <div class="flash-message notice">
-          <ul class="message icons-big-before icon-privacy-lightred_64_66-before">
-            <li>O conteúdo desta página só está disponível para o curso que possui Disciplinas.</li>
-            <li>Você pode <%= link_to "adicionar Disciplinas", new_space_path(:course_id => @course.id)%> nas configurações do Curso.</li>
-          <ul>
-        </div>
+          <div class="flash-message notice">
+            <ul class="message icons-big-before icon-privacy-lightred_64_66-before">
+              <li>O conteúdo desta página só está disponível para cursos que possuem Disciplinas.</li>
+              <li>Você pode <%= link_to "adicionar Disciplinas", new_space_path(:course_id => @course.id)%> nas configurações do Curso.</li>
+            <ul>
+          </div>
         </div>
       <% else %>
         <h3 class="form-header graph-header">Qual a participação do professor nas disciplinas?</h3>
