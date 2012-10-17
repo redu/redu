@@ -3,7 +3,13 @@ module Vis
 
     # Interação do usuário
     def teacher_participation_interaction
-      if params[:date_start].to_date < params[:date_end].to_date
+      if params[:teacher_id].nil?
+        self.generate_erro("Não existem professores neste curso")
+      elsif params[:spaces].nil?
+        self.generate_erro("Não existem disciplinas no curso")
+      elsif params[:date_start].to_date > params[:date_end].to_date
+        self.generate_erro("Intervalo de tempo inválido")
+      else
         # params [:course_id]
         @course = Course.find(params[:course_id])
         authorize! :teacher_participation_interaction, @course
@@ -22,8 +28,6 @@ module Vis
         @participation.spaces = @uca.course.spaces.find(@spaces)
 
         self.generate_json
-      else
-        self.generate_erro("Intervalo de tempo inválido")
       end
     end
 
