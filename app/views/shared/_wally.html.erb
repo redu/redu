@@ -1,0 +1,11 @@
+<div id="wally"></div>
+<script type="text/javascript">
+  (function() {
+    var wally = document.createElement('iframe');
+    wally.src = '<%= src.html_safe %>';
+    wally.width = '<%= width %>';
+    wally.height = '<%= height %>';
+    var d = document.getElementById('wally');
+    d.parentNode.replaceChild(wally, d);
+  })();
+</script>

@@ -302,7 +302,28 @@ module AsyncJSHelper
     end
   end
 
-  def wally_params(user, target, contexts=nil)
+  def render_wally(resource_id, parameters, html_options={})
+    wally_params = wally_params(parameters[:user], parameters[:target],
+                                parameters[:contexts])
+    iframe_options = {
+      :src => "#{Redu::Application.config.wally[:url]}/" \
+                "#{resource_id}?#{wally_params}",
+      :width => '580px',
+      :height => '1400px'
+    }
+
+    iframe_options.merge!(html_options)
+    render 'shared/wally', iframe_options
+  end
+
+
+  private
+
+  def should_package?
+    Jammit.package_assets && !(Jammit.allow_debugging && params[:debug_assets])
+  end
+
+  def wally_params(user, target, contexts=[])
     wally_params = {}
     wally_params[:user] = {
       :user_id => user.id,
@@ -311,28 +332,23 @@ module AsyncJSHelper
       :thumbnails => [{ :href => "#{Redu::Application.config.url}#{user.avatar(:thumb_32)}", :size => '32x32' }]
     }
 
+    target_name = target.is_a?(User) ? target.display_name : target.name
     wally_params[:target] = {
       :entity_id => target.id,
-      :name => target.name,
+      :name => target_name,
       :kind => target.class.to_s.downcase,
       :links => [{ :rel => 'self_public', :href => entity_url(target) }]
     }
 
     wally_params[:contexts] = []
 
-    contexts.each do |c|
+    contexts && contexts.each do |c|
       context = { :entity_id => c.id, :name => c.name,
                   :links => [{ :rel => 'self_public', :href => entity_url(c) }]}
       wally_params[:contexts] << context
     end
 
     wally_params.to_param
-  end
-
-  private
-
-  def should_package?
-    Jammit.package_assets && !(Jammit.allow_debugging && params[:debug_assets])
   end
 
   def entity_url(entity)

@@ -5,15 +5,6 @@
       <a href="#" class="replacement home icon-small icon-home-lightblue_16_18">Home</a>
     </li>
   </ol>
-  <%= render :partial => 'statuses/create_status',
-    :locals => { :statusable => current_user } %>
-   <div id="statuses" class="statuses">
-    <ol>
-      <%= render :partial => 'statuses/item', :collection => @statuses %>
-   </ol>
-
-   <%= will_paginate @statuses, :renderer => EndlessRenderer %>
-  </div><!-- end .statuses -->
-
-
+  <%= render_wally("core:user_#{@user.id}", { :user => current_user, :target => @user },
+                   { :width => '580px', :height => '1400px' }) %>
 </div><!-- end .main -->

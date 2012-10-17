@@ -458,39 +458,16 @@ describe UsersController do
       UserSession.create @user
     end
 
-    [:friends, :statuses, :status].each do |var|
-      it "assigns @#{var}" do
-        @params = { :locale => "pt-BR", :id => @user.login }
-        get :my_wall, @params
-        assigns[var].should_not be_nil
-      end
+    it "assigns @friends" do
+      @params = { :locale => "pt-BR", :id => @user.login }
+      get :my_wall, @params
+      assigns[:friends].should_not be_nil
     end
 
     it "when strange/contact access my_wall redirects to home" do
       @params = { :locale => "pt-BR", :id => @contact.login }
       get :my_wall, @params
       response.should redirect_to(home_path)
-    end
-
-    context "when exists compound logs" do
-      before do
-        @params = {:locale => "pt-BR", :id => @user.login }
-        @statuses = @user.statuses.where(:compound => false)
-
-        # Criando friendship (para gerar um status compondable)
-        ActiveRecord::Observer.with_observers(:log_observer,
-                                              :friendship_observer) do
-                                                friend = Factory(:user)
-                                                friend.be_friends_with(@user)
-                                                @user.be_friends_with(friend)
-                                              end
-
-        get :my_wall, @params
-      end
-
-      it "assigns correctly number of statuses." do
-        assigns[:statuses].should == @statuses
-      end
     end
   end
 
@@ -535,26 +512,6 @@ describe UsersController do
       get :show_mural, @params
       assigns[:subscribed_courses_count].should_not be_nil
       assigns[:subscribed_courses_count].should == @approved_courses.size
-    end
-
-    context "when exists compound logs" do
-      before do
-        @statuses = @user.statuses.where(:compound => false)
-
-        # Criando friendship (para gerar um status compondable)
-        ActiveRecord::Observer.with_observers(:log_observer,
-                                              :friendship_observer) do
-                                                friend = Factory(:user)
-                                                friend.be_friends_with(@user)
-                                                @user.be_friends_with(friend)
-                                              end
-
-        get :show_mural, @params
-      end
-
-      it "assigns correctly number of statuses." do
-        assigns[:statuses].should == @statuses
-      end
     end
   end
 

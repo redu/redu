@@ -2,17 +2,9 @@
 
 <div class="main grid_10 omega" style="width: 580px;">
   <% if (can? :manage, @user) or (can? :view_mural, @user) %>
-    <%= render :partial => 'statuses/create_status',
-      :locals => { :statusable => @user } %>
-    <div id="statuses" class="statuses">
-      <ol>
-        <%= render :partial => 'statuses/item', :collection => @statuses %>
-      </ol>
-
-      <%= will_paginate @statuses, :renderer => EndlessRenderer %>
-    </div><!-- end .statuses -->
+    <%= render_wally("core:user_#{@user.id}", { :user => current_user, :target => @user },
+                     { :width => '580px', :height => '1400px' }) %>
   <% end %>
-
 </div>
 
 <%= render 'users/secondary_sidebar',
