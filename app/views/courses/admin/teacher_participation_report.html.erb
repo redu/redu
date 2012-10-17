@@ -21,6 +21,15 @@
           <ul>
         </div>
         </div>
+      <% elsif @course.spaces.empty? %>
+        <div class="body">
+        <div class="flash-message notice">
+          <ul class="message icons-big-before icon-privacy-lightred_64_66-before">
+            <li>O conteúdo desta página só está disponível para o curso que possui Disciplinas.</li>
+            <li>Você pode <%= link_to "adicionar Disciplinas", new_space_path(:course_id => @course.id)%> nas configurações do Curso.</li>
+          <ul>
+        </div>
+        </div>
       <% else %>
         <h3 class="form-header graph-header">Qual a participação do professor nas disciplinas?</h3>
           <%= lazy_load(:chart, :jammit => true) do %>
