@@ -22,7 +22,10 @@
           <td><span class="free">Grátis</span></td>
           <td><strong>R$ 5</strong></td>
           <td>
-            <a href="/contato" class="link-target" title="Consulte-nos">Consulte-nos</a>
+            <%= link_to "Consulte-nos",
+              contact_path,
+              :title => "Consulte-nos"
+            %>
           </td>
         </tr>
         <tr>
@@ -140,8 +143,7 @@
           <td>
             <%= link_to "Consulte-nos",
               contact_path,
-              :title => "Consulte-nos",
-              :class => "link-target"
+              :title => "Consulte-nos"
             %>
           </td>
         </tr>
