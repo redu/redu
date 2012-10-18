@@ -22,15 +22,8 @@
       </ul>
     <% end %>
   <% end %>
-  <%= render :partial => 'statuses/create_status',
-    :locals => { :statusable => current_user } %>
-  <div id="statuses" class="statuses">
-    <ol>
-      <%= render :partial => 'statuses/item', :collection => @statuses %>
-    </ol>
-
-    <%= paginate @statuses, :theme => 'endless' %>
-  </div><!-- end .statuses -->
+  <%= render_wally("core:user_#{@user.id}_home", { :user => current_user, :target => @user },
+                   { :width => '580px', :height => '1400px' }) %>
 </div><!-- end .main -->
 
 <div class="secondary-sidebar home-sidebar">

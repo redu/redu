@@ -319,14 +319,10 @@ class UsersController < BaseController
     @friends_requisitions = @user.friendships.includes(:friend).pending
     @course_invitations = @user.course_invitations.
       includes(:course =>[:environment])
-    @statuses = @user.home_activity(params[:page])
-    @status = Status.new
     @contacts_recommendations = @user.recommended_contacts(5)
 
     respond_to do |format|
       format.html
-      format.js { render_endless('statuses/item', @statuses, '#statuses > ol',
-                                 :template => 'shared/endless_kaminari') }
     end
   end
 

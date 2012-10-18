@@ -329,7 +329,7 @@ module AsyncJSHelper
       :user_id => user.id,
       :name => user.display_name,
       :links => [{ :rel => 'public_self', :href => user_url(user) }],
-      :thumbnails => [{ :href => "#{Redu::Application.config.url}#{user.avatar(:thumb_32)}", :size => '32x32' }]
+      :thumbnails => [{ :href => "http://#{Redu::Application.config.url}/#{user.avatar.url(:thumb_32)}", :size => '32x32' }]
     }
 
     target_name = target.is_a?(User) ? target.display_name : target.name
@@ -340,13 +340,12 @@ module AsyncJSHelper
       :links => [{ :rel => 'self_public', :href => entity_url(target) }]
     }
 
-    wally_params[:contexts] = []
-
-    contexts && contexts.each do |c|
+    wally_contexts = contexts && contexts.collect do |c|
       context = { :entity_id => c.id, :name => c.name,
                   :links => [{ :rel => 'self_public', :href => entity_url(c) }]}
-      wally_params[:contexts] << context
+      context
     end
+    wally_params[:contexts] = wally_contexts if wally_contexts
 
     wally_params.to_param
   end

@@ -349,7 +349,7 @@ describe UsersController do
       get :home, @params
     end
 
-    [:friends_requisitions, :course_invitations, :statuses, :status,
+    [:friends_requisitions, :course_invitations,
       :contacts_recommendations].each do |var|
       it "assigns @#{var}" do
         assigns[var].should_not be_nil
