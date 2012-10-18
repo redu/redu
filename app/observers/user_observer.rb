@@ -8,6 +8,5 @@ class UserObserver < ActiveRecord::Observer
 
     environment = Environment.find_by_path('ava-redu')
     environment.courses.each { |c| c.join(user) } if environment
-
   end
 end
