@@ -6,18 +6,10 @@
 
 $sprite-layout: smart;
 $sprite-sprite-dimensions: true;
-$sprite-sprite-base-class: ".sprite" !default;
+$sprite-sprite-base-class: ".sprite-landing" !default;
 
 @import "landing/sprite/*.png";
 @include all-sprite-sprites;
-
-.sprite-before:before { @include pseudo-before(5px, false); }
-.sprite-after:after { @include pseudo-after(5px, false); }
-
-.sprite {
-  display: inline-block;
-  vertical-align: middle;
-}
 
 .sprite-plan-institution-before {
   &:before { @extend .sprite-plan-institution; }
