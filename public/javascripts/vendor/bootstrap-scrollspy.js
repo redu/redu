@@ -71,7 +71,7 @@
     , process: function () {
         var scrollTop = this.$scrollElement.scrollTop() + this.options.offset
             // O Scrollspy não funciona no FF devido ao html, body { height: 100%; } do sticky footer. Solução: https://github.com/P2000/bootstrap/commit/7e286a7f5cd7ddee7409ba15eacfb70e33ca6c2d
-          , scrollHeight = $(".landing-wrapper")[0].scrollHeight || this.$scrollElement[0].scrollHeight || this.$body[0].scrollHeight
+          , scrollHeight = $(".main-wrapper")[0].scrollHeight || this.$scrollElement[0].scrollHeight || this.$body[0].scrollHeight
           , maxScroll = scrollHeight - this.$scrollElement.height()
           , offsets = this.offsets
           , targets = this.targets
