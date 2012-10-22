@@ -1,5 +1,0 @@
-<p><%= error_messages_for 'folder' %></p>
-
-<label for="folder_name">Name:</label><br />
-<%= text_field 'folder', 'name'  %><br />
-<br />
