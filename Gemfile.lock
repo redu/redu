@@ -81,6 +81,16 @@ GIT
       yajl-ruby
 
 GIT
+  remote: git://github.com/redu/untied-publisher.git
+  revision: 0b07f62546e4dab859ad662212b590ce55378c92
+  specs:
+    untied-publisher (0.0.2)
+      activerecord
+      amqp
+      configurable
+      json
+
+GIT
   remote: git@github.com:redu/invitable.git
   revision: 171dcdb33d0955357a0af7980d6882925958949c
   specs:
@@ -482,6 +492,7 @@ DEPENDENCIES
   shuber-sortable
   simple-navigation
   translate_routes
+  untied-publisher!
   useragent (~> 0.4.8)
   vis_client!
   webmock (~> 1.8.6)
