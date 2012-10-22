@@ -189,6 +189,9 @@ module Redu
     # Observers que criam políticas de acesso
     config.autoload_paths << "#{config.root}/app/policy"
 
+    # Doorkeepers definem eventos que serão propagados no message bus
+    config.autoload_paths << "#{config.root}/app/doorkeepers"
+
     # Configurações do Pusher (redu app)
     config.pusher = {
       :app_id => '4577',
