@@ -233,7 +233,7 @@ module Redu
                                         :user_setting_policy_observer,
                                         :enrollment_policy_observer,
                                         :lecture_policy_observer,
-                                        :user_policy_observer,
+                                        :user_policy_observer
       ]
     end
 

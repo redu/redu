@@ -1,6 +1,9 @@
 class BasePolicyObserver < ActiveRecord::Observer
 
   def sync_policy_for(model, &block)
+    return unless model
+    return if model.new_record?
+
     producer = Permit::Producer.new
     policy = Permit::Policy.
       new(:resource_id => permit_id(model), :producer => producer)
@@ -8,6 +11,9 @@ class BasePolicyObserver < ActiveRecord::Observer
   end
 
   def async_policy_for(model, &block)
+    return unless model
+    return if model.new_record?
+
     job = Permit::PolicyJob.new(:resource_id => permit_id(model)) do |policy|
       block.call(policy)
     end
