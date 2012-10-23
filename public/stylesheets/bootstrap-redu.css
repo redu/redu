@@ -1410,7 +1410,7 @@ body {
   box-shadow: 0 1px 0 white inset, 0 -1px 0 white inset;
   height: 140px;
   background-color: #e6e6e6;
-  border-top: 1px #b2b2b2;
+  border-top: 1px solid #b2b2b2;
 }
 .footer a:visited {
   color: #4dadd6;
