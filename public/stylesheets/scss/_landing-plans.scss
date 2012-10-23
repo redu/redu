@@ -13,7 +13,7 @@
     margin: 0 9px;
     width: 208px;
     display: inline-block;
-    border: 1px solid rgb(115, 195, 230);
+    border: 1px solid $gray3;
     background-color: rgb(247, 247, 247);
 
     .borderradius & { @include border-radius(10px); }
