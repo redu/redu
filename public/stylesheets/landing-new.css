@@ -306,6 +306,11 @@ body {
   width: 32px;
 }
 
+.sprite-landing, .sprite-advantage-developer, .sprite-advantage-manager, .sprite-advantage-student, .sprite-advantage-teacher, .sprite-background-chat, .sprite-background-management, .sprite-background-treemap, .sprite-background-wall, .sprite-icon-chat, .sprite-icon-close, .sprite-icon-correct, .sprite-icon-developer, .sprite-icon-exercise, .sprite-icon-management, .sprite-icon-plus, .sprite-icon-report, .sprite-keko-playing, .sprite-light-logo, .sprite-logo-oer, .sprite-logo, .sprite-medal-gold, .sprite-medal-gold-after:after, .sprite-medal-silver, .sprite-medal-silver-after:after, .sprite-multimedia-document, .sprite-multimedia-exercise, .sprite-multimedia-presentation, .sprite-multimedia-video, .sprite-partner-ade, .sprite-partner-etr, .sprite-partner-facig, .sprite-partner-fafire, .sprite-partner-ufpe, .sprite-partner-univasf, .sprite-plan-consultancy-hr, .sprite-plan-consultancy-hr-before:before, .sprite-plan-independent, .sprite-plan-independent-before:before, .sprite-plan-institution, .sprite-plan-institution-before:before, .sprite-segment-consultancy-hr, .sprite-segment-independent, .sprite-segment-institution, .sprite-sign-up-green_32_34, .sprite-sign-up-green_32_34-before:before, .landing-logo-wrapper:hover {
+  display: inline-block;
+  vertical-align: middle;
+}
+
 .landing-header {
   height: 85px;
   background-color: #e6e6e6;
