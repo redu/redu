@@ -68,7 +68,7 @@ GIT
       rake
 
 GIT
-  remote: git://github.com/redu/permit-gem.git
+  remote: git://github.com/redu/permit-gem
   revision: 54bf66dd94e6d1221ddde96819084136f3bbdb90
   specs:
     permit (0.0.3)
@@ -79,16 +79,6 @@ GIT
       patron (~> 0.4.18)
       system_timer
       yajl-ruby
-
-GIT
-  remote: git://github.com/redu/untied-publisher.git
-  revision: 0b07f62546e4dab859ad662212b590ce55378c92
-  specs:
-    untied-publisher (0.0.2)
-      activerecord
-      amqp
-      configurable
-      json
 
 GIT
   remote: git@github.com:redu/invitable.git
@@ -111,6 +101,7 @@ GIT
       representable (>= 1.1.7)
 
 GEM
+  remote: http://rubygems.org/
   remote: http://gems.github.com/
   remote: http://reduadmin:pomp64bozos@the-shire.herokuapp.com/
   specs:
@@ -154,12 +145,12 @@ GEM
     acts-as-taggable-on (2.0.6)
     acts_as_tree (0.1.1)
     addressable (2.3.2)
-    amq-client (0.9.4)
+    amq-client (0.9.5)
       amq-protocol (>= 0.9.4)
       eventmachine
     amq-protocol (0.9.5)
-    amqp (0.9.7)
-      amq-client (~> 0.9.4)
+    amqp (0.9.8)
+      amq-client (~> 0.9.5)
       amq-protocol (>= 0.9.4)
       eventmachine
     ar_mailer_rails3 (2.1.12)
@@ -269,7 +260,7 @@ GEM
     jquery-rails (1.0.19)
       railties (~> 3.0)
       thor (~> 0.14)
-    json (1.6.6)
+    json (1.7.5)
     kaminari (0.13.0)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -410,6 +401,11 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.33)
+    untied-publisher (0.0.3)
+      activerecord
+      amqp
+      configurable
+      json
     useragent (0.4.8)
     uuidtools (2.1.2)
     webmock (1.8.10)
@@ -492,7 +488,7 @@ DEPENDENCIES
   shuber-sortable
   simple-navigation
   translate_routes
-  untied-publisher!
+  untied-publisher
   useragent (~> 0.4.8)
   vis_client!
   webmock (~> 1.8.6)

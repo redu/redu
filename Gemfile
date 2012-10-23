@@ -1,3 +1,4 @@
+source 'http://rubygems.org'
 source 'http://gems.github.com'
 source 'http://reduadmin:pomp64bozos@the-shire.herokuapp.com/'
 
@@ -66,8 +67,8 @@ gem 'vis_client', :git => 'git@github.com:redu/vis_client.git'
 gem 'whenever', :require => false
 gem 'will_paginate', '~> 3.0.pre2'
 gem 'zencoder'
-gem 'permit', :git => 'git://github.com/redu/permit-gem.git'
-gem 'untied-publisher', :git => 'git://github.com/redu/untied-publisher.git'
+gem 'permit', :git => 'git://github.com/redu/permit-gem'
+gem 'untied-publisher', :git => 'git://github.com/redu/untied-publisher'
 
 # Gems específicos para a API
 gem 'oauth-plugin', '~> 0.4.0'
