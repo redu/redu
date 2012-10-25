@@ -22,7 +22,7 @@
       </ul>
     <% end %>
   <% end %>
-  <%= render_wally("core:user_#{@user.id}_home", { :user => current_user, :target => @user },
+  <%= render_wally("core:space_1", { :user => current_user, :target => @user, :config => { :showContexts => true } },
                    { :width => '580px', :height => '1400px' }) %>
 </div><!-- end .main -->
 

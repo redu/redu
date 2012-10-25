@@ -304,7 +304,7 @@ module AsyncJSHelper
 
   def render_wally(resource_id, parameters, html_options={})
     wally_params = wally_params(parameters[:user], parameters[:target],
-                                parameters[:contexts])
+                                parameters[:contexts], parameters[:config])
     iframe_options = {
       :src => "#{Redu::Application.config.wally[:url]}/" \
                 "#{resource_id}?#{wally_params}",
@@ -323,7 +323,7 @@ module AsyncJSHelper
     Jammit.package_assets && !(Jammit.allow_debugging && params[:debug_assets])
   end
 
-  def wally_params(user, target, contexts=[])
+  def wally_params(user, target, contexts=[], config={})
     wally_params = {}
     wally_params[:user] = {
       :user_id => user.id,
@@ -346,6 +346,7 @@ module AsyncJSHelper
       context
     end
     wally_params[:contexts] = wally_contexts if wally_contexts
+    wally_params[:config] = config if config
 
     wally_params.to_param
   end

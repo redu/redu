@@ -77,7 +77,7 @@ Redu::Application.configure do
 
   # Configs do Wally
   config.wally = {
-    :url => 'http://0.0.0.0:4567'
+    :url => 'http://0.0.0.0:9000'
   }
 
   Footnotes.run! if defined?(Footnotes)
