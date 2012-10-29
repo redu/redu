@@ -41,6 +41,11 @@ describe LicensedInvoice do
           should be_pending
         end
 
+        it "should call remove_duplicated_licenses" do
+          subject.should_receive :remove_duplicated_licenses
+          subject.pend!
+        end
+
         it "should calculate the amount" do
           subject.amount.should_not be_nil
         end
@@ -531,6 +536,35 @@ describe LicensedInvoice do
 
     it "should not generate new invoice" do
       @plan.invoices.length.should == 1
+    end
+  end
+
+  context "when verifying protected methods" do
+    context "when removing duplicated licenses" do
+      before do
+        @course = Factory(:course)
+        @licenses = (1..3).collect do |i|
+          Factory(:license, :invoice => subject, :course => @course,
+                  :login => "same-user-#{i}")
+        end
+
+        @licenses_dup = @licenses.collect do |l|
+          license = l.clone
+          license.save
+        end
+
+        @licenses << (1..5).collect do
+          Factory(:license, :invoice => subject, :course => @course)
+        end
+        @licenses.flatten!
+
+        subject.send(:remove_duplicated_licenses)
+      end
+
+      it "only the first ones stays" do
+        License.all.to_set.should == @licenses.to_set
+        License.where(:id => @licenses_dup).should be_empty
+      end
     end
   end
 end
