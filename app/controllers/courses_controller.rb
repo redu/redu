@@ -304,7 +304,8 @@ class CoursesController < BaseController
         format.html { render "courses/admin/admin_members" }
         format.js do
           render_endless 'courses/admin/user_item_admin', @memberships,
-            '#user_list_table'
+            '#user_list_table', :partial_locals => { :spaces_count =>
+                                                     @spaces_count }
         end
       end
   end

@@ -4,14 +4,7 @@ jQuery(function(){
 
     $.refreshEmbeddedSharing();
 
-    // Flash message
-    $(".flash-message").parent().next().css("marginTop", "10px");
-    $(".flash-message .close-flash").click(function(e){
-      $(this).parent().slideToggle();
-      $("#content").css("marginTop","20px");
-      $("#home").css("marginTop","40px");
-    });
-
+    $.refreshDOMEffects();
 
     // Dropdown de usuário
     $("#nav-account").live("hover", function(){
@@ -19,27 +12,12 @@ jQuery(function(){
         $(this).find("ul").toggle();
     });
 
-    // Aumentar form de criação de Status
-    $("input[type=submit], .cancel, .char-limit", ".inform-my-status").hide();
+    // Efeitos do form de status
     $(".inform-my-status textarea").live("focus", function(e){
         $(this).parents("form").find("input[type=submit], .cancel, .char-limit").fadeIn();
     });
     $(".inform-my-status .status-buttons .cancel").live("click", function(){
         $(this).parents("form").find("input[type=submit], .cancel, .char-limit").fadeOut();
-    });
-
-    // Adicionar classe focus a um determinado label quando o seu campo
-    // correspondente detectar o evento focus
-    $("input[type=text], input[type=password], input[type=radio], input[type=checkbox]","form.highlightable").focus(function(){
-        var label_for = $(this).attr("id") || null;
-
-        if(label_for)
-          $("label[for=" + label_for + "]").addClass("focus");
-    }).blur(function(){
-        var label_for = $(this).attr("id") || null;
-
-        if(label_for)
-          $("label[for=" + label_for + "]").removeClass("focus");
     });
 
     // gerador do path do environmet e course
@@ -50,106 +28,16 @@ jQuery(function(){
       return slugcontent_hyphens.replace(/[^a-zA-Z0-9\-]/g,'').toLowerCase();
     };
 
-    // Padrão de tabelas
-    $("table.common tr:even:not(.invite):not(.message)").addClass("odd");
-
-    // Form com tabelas
-    $("#select_all").change(
-      function(e){
-        var pivot = $(this);
-
-        if(pivot.is(":checked"))
-          $("input[type=checkbox].autoCheck").attr('checked', true)
-        else
-          $("input[type=checkbox].autoCheck").attr('checked', false)
-
-        return true;
-      }
-    );
-
-    // Filtros da listagem de cursos
-    $("#global-courses .filters .filter").each(function(){
-        var checkbox = $(this).find("input");
-
-        if(checkbox.is(":checked"))
-          $(this).addClass("checked");
-
-    });
-
-    $("#global-courses .filters input[type=checkbox]").change(function(){
-        var $wrapper = $(this).parent();
-        $wrapper.toggleClass("checked");
-    });
-
-    $("#global-courses .filters .checked").each(function(){
-        $(this).find("input").attr("checked", true);
-    });
-
     // Itens da listagem de cursos
     $("#global-courses .courses .expand").live("click", function(){
         $(this).toggleClass("unexpand");
         $(this).parents(":first").next().slideToggle();
     });
 
-    // O elemento assume a altura do seu pai
-    $(".parent-height").height(function(i, height){
-        $(this).height($(this).parent().height());
-    });
-
     // Mostra campo de confirmação de e-mail
-    $("#user_email").click(function(){
+    $("#user_email").live("click", function(){
        $("#user_email_confirmation").slideDown();
        $("#user_email_confirmation").prev().slideDown();
-    });
-
-    // Verifica se os dois e-mails são iguais
-    $("#user_email_confirmation").blur(function(){
-        email_val = $("#user_email").val();
-        confirmation_val = $(this).val();
-
-        if (email_val != confirmation_val) {
-          $("#user_email_confirmation-error").remove();
-          $(this).next(".errors_on_field").append("<p id=\"user_email_confirmation-error\" class=\"errorMessageField\">Os e-mails digitados não são iguais.</p>");
-
-        } else {
-          $("#user_email_confirmation-error").remove();
-        }
-    });
-
-    // Tooltips
-    $(".tiptip").tipTip();
-    $(".tiptip-right").tipTip({defaultPosition: "right"});
-    $(".tiptip-left").tipTip({defaultPosition: "left"});
-    $(document).ajaxComplete(function(){
-      $(".tiptip").tipTip();
-      $(".tiptip-right").tipTip({defaultPosition: "right"});
-      $(".tiptip-left").tipTip({defaultPosition: "left"});
-    });
-
-    $(".form-common .tiptip").each(function(){
-        var label = $(this).next("label");
-        label.prepend($(this));
-    });
-
-    $(".tiptip-lite").each(function(){
-        // Criando holder e adicionando conteúdo
-        var $tip = $("<span class='tiptip question-blue_12_12'/>");
-        $tip.attr("title", $(this).attr("title"));
-        $tip.tipTip();
-
-        $(this).after($tip);
-        $tip.position({
-            my: 'left center',
-            at: 'right center',
-            of: $(this),
-            offset: "10px 0",
-        });
-    });
-
-    // Arquivos
-    $("#space-materials .new-folder .button").click(function(e){
-        $(this).next(".new-folder-inner").toggle();
-        e.preventDefault();
     });
 
     /* Spinner em links remotos */
@@ -242,6 +130,7 @@ jQuery(function(){
     $(document).ajaxComplete(function(){
         $.refreshSubtabs();
         $.refreshEmbeddedSharing();
+        $.refreshDOMEffects();
     });
 });
 
@@ -292,3 +181,114 @@ $.refreshEmbeddedSharing = function() {
   $('.create-status').enableEmbedding();
 }
 
+// Efeitos na DOM que ocorrem após o carregamento da página
+$.refreshDOMEffects = function(){
+  // Flash message
+  $(".flash-message").parent().next().css("marginTop", "10px");
+  $(".flash-message .close-flash").click(function(e){
+    $(this).parent().slideToggle();
+    $("#content").css("marginTop","20px");
+    $("#home").css("marginTop","40px");
+  });
+
+  // Aumentar form de criação de Status
+  $("input[type=submit], .cancel, .char-limit", ".inform-my-status").hide();
+
+  // Adicionar classe focus a um determinado label quando o seu campo
+  // correspondente detectar o evento focus
+  $("input[type=text], input[type=password], input[type=radio], input[type=checkbox]","form.highlightable").focus(function(){
+    var label_for = $(this).attr("id") || null;
+
+    if(label_for)
+      $("label[for=" + label_for + "]").addClass("focus");
+  }).blur(function(){
+    var label_for = $(this).attr("id") || null;
+
+    if(label_for)
+      $("label[for=" + label_for + "]").removeClass("focus");
+  });
+
+  // Padrão de tabelas
+  $("table.common tr:even:not(.invite):not(.message)").addClass("odd");
+
+  // Form com tabelas
+  $("#select_all").change(
+    function(e){
+      var pivot = $(this);
+
+      if(pivot.is(":checked"))
+        $("input[type=checkbox].autoCheck").attr('checked', true)
+      else
+        $("input[type=checkbox].autoCheck").attr('checked', false)
+
+      return true;
+    }
+  );
+
+  // Filtros da listagem de cursos
+  $("#global-courses .filters .filter").each(function(){
+    var checkbox = $(this).find("input");
+
+    if(checkbox.is(":checked"))
+      $(this).addClass("checked");
+
+  });
+
+  $("#global-courses .filters input[type=checkbox]").change(function(){
+    var $wrapper = $(this).parent();
+    $wrapper.toggleClass("checked");
+  });
+
+  $("#global-courses .filters .checked").each(function(){
+    $(this).find("input").attr("checked", true);
+  });
+
+  // O elemento assume a altura do seu pai
+  $(".parent-height").height(function(i, height){
+    $(this).height($(this).parent().height());
+  });
+
+  // Verifica se os dois e-mails são iguais
+  $("#user_email_confirmation").blur(function(){
+    email_val = $("#user_email").val();
+    confirmation_val = $(this).val();
+
+    if (email_val != confirmation_val) {
+      $("#user_email_confirmation-error").remove();
+      $(this).next(".errors_on_field").append("<p id=\"user_email_confirmation-error\" class=\"errorMessageField\">Os e-mails digitados não são iguais.</p>");
+
+    } else {
+      $("#user_email_confirmation-error").remove();
+    }
+  });
+
+  // Tooltips
+  $(".tiptip").tipTip();
+  $(".tiptip-right").tipTip({defaultPosition: "right"});
+  $(".tiptip-left").tipTip({defaultPosition: "left"});
+  $(document).ajaxComplete(function(){
+    $(".tiptip").tipTip();
+    $(".tiptip-right").tipTip({defaultPosition: "right"});
+    $(".tiptip-left").tipTip({defaultPosition: "left"});
+  });
+
+  $(".form-common .tiptip").each(function(){
+    var label = $(this).next("label");
+    label.prepend($(this));
+  });
+
+  $(".tiptip-lite").each(function(){
+    // Criando holder e adicionando conteúdo
+      var $tip = $("<span class='tiptip question-blue_12_12'/>");
+    $tip.attr("title", $(this).attr("title"));
+    $tip.tipTip();
+
+    $(this).after($tip);
+    $tip.position({
+      my: 'left center',
+      at: 'right center',
+      of: $(this),
+      offset: "10px 0",
+    });
+  });
+}

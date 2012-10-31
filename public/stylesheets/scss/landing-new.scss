@@ -28,8 +28,6 @@
 @import "landing-filters";
 // Estilos da área de segmentos.
 @import "landing-segments";
-// Estilos do rodapé.
-@import "landing-footer";
 // Estilos da área de vantagens.
 @import "landing-advantages";
 // Estilos da área de planos.
@@ -52,5 +50,8 @@
 @import "landing-partners";
 // Estilos da área de Relatórios Básicos.
 @import "landing-basic-reports";
-//Estilos da área de gerenciamento e suporte.
+// Estilos da área de gerenciamento e suporte.
 @import "landing-management-support";
+
+// Remover depois de resolver a issue ui-compnents#15.
+.textshadow .olrk-noquirks { text-shadow: none; }
