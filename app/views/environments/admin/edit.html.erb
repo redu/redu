@@ -47,14 +47,18 @@
         <%= concave_error_messages_for(@environment) %>
         <%= f.label :name, "Nome" %>
         <%= f.text_field :name  %>
+        <%= concave_errors_for(f.object, :name) %>
         <span class="tip">Nome do ambiente virtual de aprendizagem</span>
         <%= f.label :initials, "Abreviação" %>
         <%= f.text_field :initials  %>
+        <%= concave_errors_for(f.object, :initials) %>
         <span class="tip">Abreviação ou sigla</span>
         <%= f.label :path, t(:path) %>
         <%= f.text_field :path %>
+        <%= concave_errors_for(f.object, :path) %>
         <%= f.label :description, "Descrição", :class => "concave-label-high" %>
         <%= f.text_area :description, :size=>'102x4' %>
+        <%= concave_errors_for(f.object, :description) %>
         <%= f.label :tag_list,
           raw("Palavras-chave <span class='snippet'>(separadas por vírgula)</span>") %>
         <%= f.text_field :tag_list %>

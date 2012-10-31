@@ -269,18 +269,24 @@ module AsyncJSHelper
         result << <<-END
           $(document).ready(function(){
             $(document).removeLazyAssets({ paths : #{package.to_json}});
-          });
+            LazyLoad.#{opts[:type].to_s}(#{package.to_json}
+        END
+      else
+        result << <<-END
+            LazyLoad.#{opts[:type].to_s}(#{package.to_json}
         END
       end
-
-      result << <<-END
-        LazyLoad.#{opts[:type].to_s}(#{package.to_json}
-      END
 
       if block.nil?
         result << ");"
       else
         result << ", function(){ #{capture(&block)}});"
+      end
+
+      if opts[:clear]
+        result << <<-END
+            });
+        END
       end
 
       result.html_safe

@@ -50,7 +50,7 @@ Backup::Model.new(:production_backup, 'Backup of the production database') do
     s3.secret_access_key = s3_config['secret_access_key']
     s3.region            = "us-east-1"
     s3.bucket            = "redu-backup"
-    s3.path              = "/production-backups"
+    s3.path              = "/"
     s3.keep              = 20
   end
 

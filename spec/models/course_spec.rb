@@ -417,6 +417,31 @@ describe Course do
     end
   end
 
+  context "when force joining a user" do
+    before  do
+      @user = Factory(:user)
+      @moderated_course = Factory(:course,  :owner => @environment_owner,
+        :environment => @environment, :subscription_type => 0)
+    end
+
+    it "should join! uninvited user(subscription_type 0)" do
+      @moderated_course.join!(@user)
+      @user.get_association_with(@moderated_course).should be_approved
+    end
+
+    it "should join! on open courses(subscription_type 1)" do
+      subject.join!(@user)
+      @user.get_association_with(subject).should be_approved
+    end
+
+    it "should join! invited user (subscription_type 0)" do
+      @moderated_course.join(@user)
+      @user.get_association_with(@moderated_course).invite!
+      @moderated_course.join!(@user)
+      @user.get_association_with(@moderated_course).should be_approved
+    end
+  end
+
   context "removes a user (unjoin)" do
     before do
       @plan = Factory(:active_licensed_plan, :billable => @environment)

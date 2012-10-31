@@ -53,7 +53,7 @@
               $.updateWindowState({ id : opts.id, property : "state", value : "opened" });
             }
           }else{
-            $this.limitWindows({ limit : 5});
+            $this.limitWindows({ limit : 3});
 
             $window = opts.windowPartial.clone();
             $window.attr("id", getCSSWindowId(opts.id));

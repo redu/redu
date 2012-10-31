@@ -34,6 +34,7 @@
     <%= f.label :email_confirmation, "Confirmação:",
       :style => "display: none;" %>
     <%=  f.text_field :email_confirmation, :style => "display: none;" %>
+    <%= concave_errors_for(f.object, :current_password) %>
   <% end %>
 
   <hr/>
