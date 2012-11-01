@@ -31,10 +31,6 @@ $sprite-sprite-base-class: ".sprite-landing" !default;
   &:after { @extend .sprite-medal-gold; }
 }
 
-.sprite-sign-up-green_32_34-before {
-  &:before { @extend .sprite-sign-up-green_32_34; }
-}
-
 .sprite-landing {
   display: inline-block;
   vertical-align: middle;
