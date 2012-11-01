@@ -4,12 +4,12 @@ var $modal = $("#modal-sign-up");
 <% if @user.errors.empty? %>
   $modal.modal("hide");
 
-  var $modalSuccess = $("<%= escape_javascript render 'landing/modal_sign_up_success',
+  var $modalSuccess = $("<%= escape_javascript render 'shared/modal_sign_up_success',
                         :user => @user %>");
   $modalSuccess.insertAfter($modal).modal("show");
 
 <% else %>
-  var $newForm = $("<%= escape_javascript render 'landing/form_sign_up',
+  var $newForm = $("<%= escape_javascript render 'shared/form_sign_up',
                    :user => @user %>");
 
   <% unless @user.errors[:tos].empty? %>
