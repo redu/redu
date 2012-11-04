@@ -2,8 +2,7 @@
 
 <div class="main grid_10 omega" style="width: 580px;">
   <% if (can? :manage, @user) or (can? :view_mural, @user) %>
-    <%= render_wally("core:user_#{@user.id}", { :user => current_user, :target => @user },
-                     { :width => '580px', :height => '1400px' }) %>
+    <%= render_wally("core:user_#{@user.id}", { :user => current_user, :target => @user }, { :width => '580px' }) %>
   <% end %>
 </div>
 

@@ -1,11 +1,9 @@
-<div id="wally"></div>
-<script type="text/javascript">
+<div class="iframe-wally"></div>
+<%= lazy_load(:wally, :jammit => true, :clear => false) do %>
   (function() {
-    var wally = document.createElement('iframe');
-    wally.src = '<%= src.html_safe %>';
-    wally.width = '<%= width %>';
-    wally.height = '<%= height %>';
-    var d = document.getElementById('wally');
-    d.parentNode.replaceChild(wally, d);
+    var wally = new Redu.Wally({
+      remote: "<%= src.html_safe %>",
+      width: "<%= width %>",
+    })
   })();
-</script>
+<% end %>

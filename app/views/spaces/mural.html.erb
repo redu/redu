@@ -8,8 +8,7 @@
     <div class="header clearfix">
       <h4 class="title">Mural</h4>
     </div>
-    <%= render_wally("core:space_#{@space.id}", { :user => current_user, :target => @space, :contexts => [@environment, @course] },
-                   { :width => '750px', :height => '1400px' }) %>
+    <%= render_wally("core:space_#{@space.id}", { :user => current_user, :target => @space, :contexts => [@environment, @course] }, { :width => '750px' }) %>
   </div><!-- end #environment-courses -->
 
 </div><!-- end .main -->

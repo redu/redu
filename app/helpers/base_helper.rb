@@ -308,8 +308,7 @@ module AsyncJSHelper
     iframe_options = {
       :src => "#{Redu::Application.config.wally[:url]}/" \
                 "#{resource_id}?#{wally_params}",
-      :width => '580px',
-      :height => '1400px'
+      :width => '580px'
     }
 
     iframe_options.merge!(html_options)
