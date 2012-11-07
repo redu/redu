@@ -222,7 +222,6 @@ GEM
     erubis (2.6.6)
       abstract (>= 1.0.0)
     eventmachine (1.0.0)
-    eventmachine (1.0.0-x86-mingw32)
     exceptional (2.0.32)
       rack
     excon (0.9.6)
@@ -249,7 +248,6 @@ GEM
     hashie (1.2.0)
     htmlentities (4.3.0)
     http_parser.rb (0.5.3)
-    http_parser.rb (0.5.3-x86-mingw32)
     httparty (0.8.1)
       multi_json
       multi_xml

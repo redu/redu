@@ -7,5 +7,6 @@ class BaseDoorkeeper
       puts klass.classify.constantize
       watch klass.classify.constantize, :after_create, :after_update
     end
+    watch UserSpaceAssociation, :after_create, :after_destroy
   end
 end
