@@ -57,6 +57,19 @@ describe 'SpacesShowCache' do
         end
       end
 
+      it "expire when lecture change position" do
+        ActiveRecord::Observer.with_observers(:lecture_cache_observer) do
+          performing_cache(cache_identifier) do |cache|
+            @lecture.position = 2
+            @lecture.save
+            @lecture.subject.members.each do |member|
+              cache.should_not \
+                exist("views/space_lecture_item/#{@lecture.id}/#{member.id}")
+            end
+          end
+        end
+      end
+
       it 'expire when lecture destroyed' do
         ActiveRecord::Observer.with_observers(:lecture_cache_observer) do
           performing_cache(cache_identifier) do |cache|
