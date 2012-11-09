@@ -3,14 +3,12 @@ require "api_spec_helper"
 describe "Subjects API" do
   before do
     @application, @current_user, @token = generate_token
-
-    @environment = Factory(:complete_environment, :owner => @current_user)
+    @environment = Factory(:complete_environment,
+                           :owner => @current_user)
     @space = @environment.courses.first.spaces.first
-
     @subject = Subject.create(:name => "Test Subject 1",
                               :description => "Test Subject Description",
                               :space => @space)
-    # precisa atualizar manualmente para criar um módulo vazio
     @subject.update_attribute(:finalized, true)
 
     @params = {:oauth_token => @token, :format => "json"}
@@ -113,6 +111,32 @@ describe "Subjects API" do
       it "should return status 404" do
         response.status.should == 404
       end
+    end
+  end
+
+  context "post /spaces/:space_id/subjects" do
+    it "should return code 201 (created)" do
+      @params[:subject] = { :name => "My new subject"}
+      post "/api/spaces/#{@space.id}/subjects", @params
+      response.code.should == "201"
+    end
+
+    it "should return subject" do
+      @params[:subject] = { :name => "My new subject" }
+      post "/api/spaces/#{@space.id}/subjects", @params
+      parse(response.body).should have_key('name')
+    end
+
+    it "should return code 422 (unproccessable entity) when not valid" do
+      @params[:subject] = { :name => "" }
+      post "/api/spaces/#{@space.id}/subjects", @params
+      response.code.should == "422"
+    end
+
+    it "should return the error explanation" do
+      @params[:subject] = { :name => "" }
+      post "/api/spaces/#{@space.id}/subjects", @params
+      parse(response.body).should have_key 'name'
     end
   end
 

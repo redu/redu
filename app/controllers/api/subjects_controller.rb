@@ -1,6 +1,6 @@
 module Api
   class SubjectsController < Api::ApiController
-    
+
     # GET /api/spaces/:space_id/subjects
     def index
       @space = Space.find(params[:space_id])
@@ -20,6 +20,17 @@ module Api
       authorize! :destroy, @subject
       @subject.destroy
       respond_with(@subject)
+    end
+
+    def create
+      space = Space.find(params[:space_id])
+      @subject = Subject.new(params[:subject])
+      @subject.space = space
+      authorize! :create, @subject
+      @subject.finalized = true
+      @subject.save
+
+      respond_with :api, @subject
     end
 
   end
