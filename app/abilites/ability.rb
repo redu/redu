@@ -190,10 +190,10 @@ class Ability
 
       # Canvas
       can :read, Api::Canvas do |canvas|
-        can? :read, canvas.container
+        can? :read, canvas.lecture
       end
       cannot :read, Api::Canvas do |canvas|
-        cannot? :read, canvas.container
+        cannot? :read, canvas.lecture
       end
 
     end

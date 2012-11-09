@@ -5,6 +5,5 @@ FactoryGirl.define do
     association :user, :factory => :user
     association :client_application,
       :factory => :client_application
-    association :container, :factory => :space
   end
 end
