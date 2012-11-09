@@ -761,6 +761,8 @@ describe Ability do
 
         @lecture_page = Factory(:lecture, :subject => @subject,
                                 :lectureable => Factory(:page))
+        @lecture_canvas = Factory(:lecture, :subject => @subject,
+                                :lectureable => Factory(:canvas))
         @lecture_exercise = Factory(:lecture, :subject => @subject,
                                     :lectureable => Factory(:complete_exercise))
         @lecture_seminar = Factory(:lecture, :subject => @subject,
@@ -860,6 +862,9 @@ describe Ability do
           it "(document)" do
             @ability.should be_able_to(:manage, @lecture_document)
           end
+          it "(canvas)" do
+            @ability.should be_able_to(:manage, @lecture_canvas)
+          end
         end
 
         context "can update many kinds of lectures" do
@@ -869,6 +874,12 @@ describe Ability do
 
           it "(exercise)" do
             @ability.should be_able_to(:update, @lecture_exercise)
+          end
+        end
+
+        context "when lecture type canvas" do
+          it "cannot update" do
+            @ability.should_not be_able_to(:update, @lecture_canvas)
           end
         end
 
