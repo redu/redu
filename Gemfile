@@ -29,9 +29,10 @@ gem 'cancan', '~> 1.6.7'
 gem 'ckeditor', '3.4.2.pre'
 gem 'daemons'
 gem 'date_validator'
+gem 'mongoid', '~> 2.2.6', :require => 'mongoid/version'
 gem 'deep_cloneable'
-gem 'delayed_job_active_record',
-  :git => 'git://github.com/collectiveidea/delayed_job_active_record.git'
+gem 'delayed_job_mongoid'
+gem 'bson_ext'
 gem 'dynamic_form'
 gem 'em-http-request'
 gem 'eventmachine'
@@ -73,7 +74,7 @@ gem 'oauth-plugin', '~> 0.4.0'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'roar-rails', '~> 0.0.3',
   :git => 'git://github.com/apotonick/roar-rails.git'
-gem 'destroy_soon', :git => 'git://github.com/redu/destroy-soon.git'
+gem 'destroy_soon'
 gem 'redu_analytics'
 
 # Gems específicos de algum ambiente

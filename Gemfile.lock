@@ -10,14 +10,6 @@ GIT
       test_xml
 
 GIT
-  remote: git://github.com/collectiveidea/delayed_job_active_record.git
-  revision: bade04ddeb692d102f5e2c094a7b9935c48f82b8
-  specs:
-    delayed_job_active_record (0.3.2)
-      activerecord (>= 2.1.0, < 4)
-      delayed_job (~> 3.0)
-
-GIT
   remote: git://github.com/edgarjs/ajaxful-rating.git
   revision: 81b563ef4e4f7937b769ea64b589d990dc833b43
   branch: rails3
@@ -57,16 +49,6 @@ GIT
     no_peeping_toms (2.1.1)
       activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
-
-GIT
-  remote: git://github.com/redu/destroy-soon.git
-  revision: 6129601802a0a0ae0d7f3e60d0c31dcd01c94d6c
-  specs:
-    destroy_soon (0.0.3)
-      activerecord (~> 3.0.10)
-      activesupport (~> 3.0.10)
-      delayed_job_active_record (~> 0.3.2)
-      rake
 
 GIT
   remote: git@github.com:redu/invitable.git
@@ -149,6 +131,9 @@ GEM
       json (~> 1.4)
       nokogiri (>= 1.4.4)
       uuidtools (~> 2.1)
+    bson (1.7.0)
+    bson_ext (1.7.0)
+      bson (~> 1.7.0)
     builder (2.1.2)
     cancan (1.6.7)
     childprocess (0.3.1)
@@ -173,8 +158,16 @@ GEM
     date_validator (0.6.1)
       activemodel (~> 3.0.0)
     deep_cloneable (1.2.3)
-    delayed_job (3.0.3)
+    delayed_job (3.0.4)
       activesupport (~> 3.0)
+    delayed_job_mongoid (1.1.0)
+      delayed_job (~> 3.0)
+      mongo (~> 1.6)
+      mongoid (>= 2.0)
+    destroy_soon (0.0.2)
+      activerecord (~> 3.0.10)
+      activesupport (~> 3.0.10)
+      rake
     diff-lcs (1.1.3)
     dynamic_form (1.1.4)
     em-http-request (1.0.3)
@@ -254,6 +247,12 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.18)
     mimemagic (0.1.8)
+    mongo (1.7.0)
+      bson (~> 1.7.0)
+    mongoid (2.2.6)
+      activemodel (~> 3.0.0)
+      mongo (~> 1.3)
+      tzinfo (~> 0.3.22)
     multi_json (1.0.4)
     multi_xml (0.5.1)
     multipart-post (1.1.5)
@@ -378,7 +377,7 @@ GEM
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
-    tzinfo (0.3.33)
+    tzinfo (0.3.35)
     useragent (0.4.8)
     uuidtools (2.1.2)
     webmock (1.8.10)
@@ -413,6 +412,7 @@ DEPENDENCIES
   aws-s3
   aws-sdk
   backup!
+  bson_ext
   bundler
   cancan (~> 1.6.7)
   ckeditor (= 3.4.2.pre)
@@ -420,8 +420,8 @@ DEPENDENCIES
   daemons
   date_validator
   deep_cloneable
-  delayed_job_active_record!
-  destroy_soon!
+  delayed_job_mongoid
+  destroy_soon
   dynamic_form
   em-http-request
   eventmachine
@@ -434,6 +434,7 @@ DEPENDENCIES
   jquery-rails (>= 1.0.12)
   kaminari
   mime-types
+  mongoid (~> 2.2.6)
   mysql2 (~> 0.2.1)
   newrelic_rpm (= 3.0.1)
   no_peeping_toms!
