@@ -1,0 +1,6 @@
+development:
+  host: localhost
+  database: redu_development
+test:
+  host: localhost
+  database: redu_test
