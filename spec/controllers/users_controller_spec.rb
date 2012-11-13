@@ -346,13 +346,22 @@ describe UsersController do
       UserSession.create @user
 
       @params = { :locale => "pt-BR", :id => @user.login }
-      get :home, @params
     end
 
     [:friends_requisitions, :course_invitations, :statuses, :status,
       :contacts_recommendations].each do |var|
       it "assigns @#{var}" do
+        request.cookies["first_time"] = 1
+        get :home, @params
+
         assigns[var].should_not be_nil
+      end
+    end
+
+    context "first experience" do
+      it "be render first experience page" do
+        get :home, @params
+        response.should render_template("users/first-experience")
       end
     end
   end

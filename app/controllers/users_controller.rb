@@ -1,6 +1,8 @@
 class UsersController < BaseController
   respond_to :html, :js
 
+  before_filter :first_access?, :only => [:home]
+
   load_and_authorize_resource :except => [:recover_username_password,
     :recover_username, :recover_password, :resend_activation, :activate,
     :index],
@@ -422,6 +424,7 @@ class UsersController < BaseController
   end
 
   protected
+
   def deny_access(exception)
     session[:return_to] = request.fullpath
     if exception.action == :preview && exception.subject.class == Space
@@ -430,6 +433,13 @@ class UsersController < BaseController
                                                   @space.course)
     else
       super
+    end
+  end
+
+  def first_access?
+    if cookies[:first_time].nil?
+      cookies.permanent[:first_time] = 1
+      render 'users/first-experience'
     end
   end
 end
