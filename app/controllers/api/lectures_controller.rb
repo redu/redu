@@ -1,5 +1,5 @@
 module Api
-  class LecturesController < ApiController
+  class LecturesController < Api::ApiController
     def show
       lecture = Lecture.find(params[:id])
       authorize! :read, lecture
