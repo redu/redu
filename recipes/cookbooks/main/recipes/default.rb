@@ -4,6 +4,7 @@
 #  }
 #end
 
+require_recipe "emerge"
 require_recipe "mongo_solo"
 require_recipe "mongo_ssh_tunnel"
 require_recipe "s3cmd"
