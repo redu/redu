@@ -4,6 +4,6 @@ development:
 test:
   host: 127.0.0.1
   database: redu_test
-test:
+production:
   host: 127.0.0.1
   database: redu_production
