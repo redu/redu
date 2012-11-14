@@ -13,7 +13,7 @@ tunnel_name = 'mongo_ssh_tunnel'
 # fill in missing information below
 tunnel_vars = {
   # the host hostname (an IP will work) to ssh to
-  :ssh_hostname => '',
+  :ssh_hostname => 'ec2-23-22-105-152.compute-1.amazonaws.com',
   # only change this if using a non-default ssh port on the destination host,
   # such as when connecting through a gateway
   :ssh_port => 22,
@@ -45,7 +45,8 @@ tunnel_vars = {
   # key is written to here.  It's also even better to copy that key entry to
   # a file somewhere on an EBS volume and use that file's path here to ensure
   # that it won't be wiped after an instance restart (terminate and rebuild)
-  :ssh_known_hosts => ''
+  :ssh_known_hosts => '',
+  :tunnel_name => tunnel_name
 }
 
 # set this to match on the node[:instance_role] of the instance the tunnel
