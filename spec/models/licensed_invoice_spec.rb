@@ -41,11 +41,6 @@ describe LicensedInvoice do
           should be_pending
         end
 
-        it "should call remove_duplicated_licenses" do
-          subject.should_receive :remove_duplicated_licenses
-          subject.pend!
-        end
-
         it "should calculate the amount" do
           subject.amount.should_not be_nil
         end
@@ -327,11 +322,13 @@ describe LicensedInvoice do
     end
 
     context "when calculating amount" do
-      before do
+      it "should call remove_duplicated_licenses" do
+        @invoice.should_receive :remove_duplicated_licenses
         @invoice.send(:calculate_amount!)
       end
 
       it "updates to the correct amount" do
+        @invoice.send(:calculate_amount!)
         @invoice.amount.round(2).should == BigDecimal.new("26.5")
       end
     end

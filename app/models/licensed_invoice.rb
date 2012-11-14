@@ -16,8 +16,7 @@ class LicensedInvoice < Invoice
   aasm_initial_state :open
 
   aasm_state :open
-  aasm_state :pending, :after_enter => [:remove_duplicated_licenses,
-                                        :calculate_amount!, :create_next_invoice,
+  aasm_state :pending, :after_enter => [:calculate_amount!, :create_next_invoice,
                                         :mark_as_paid_if_necessary,
                                         :set_licenses_period_end,
                                         :send_pending_notice]
@@ -104,6 +103,8 @@ class LicensedInvoice < Invoice
   # invoice.calculate_amount!
   # => #<BigDecimal:104a9fbf0,'0.0',9(18)>
   def calculate_amount!
+    self.remove_duplicated_licenses
+
     days_of_month = 30
     # Preço diário
     factor = self.plan.price / days_of_month
