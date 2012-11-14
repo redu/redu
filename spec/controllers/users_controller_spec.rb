@@ -273,25 +273,39 @@ describe UsersController do
       activate_authlogic
       UserSession.create @user
 
-      @post_params = { :locale => "pt-BR", :current_password => @user.password,
-        :id => @user.login, :user => {
-        :email_confirmation => "new_email@example.com",
-        :password_confirmation => "new-pass", :auto_status => "1",
-        :notify_messages => "1", :notify_community_news => "1",
-        :notify_followships => "1", :password => "new-pass",
-        :settings_attributes => { :id  =>@user.settings.id,
-          :view_mural => "1" }, :email => "new_email@example.com" } }
+      @post_params =
+        { :locale => "pt-BR",
+          :current_password => @user.password,
+          :id => @user.login,
+          :user => {
+            :email => "new_email@example.com",
+            :email_confirmation => "new_email@example.com",
+            :auto_status => "1",
+            :notify_messages => "1",
+            :notify_community_news => "1",
+            :notify_followships => "1",
+            :password => "new-pass",
+            :password_confirmation => "new-pass",
+            :settings_attributes => {
+              :id => @user.settings.id,
+              :view_mural => "1"
+            }
+          }
+        }
     end
 
     context "when successful" do
       before do
         post :update_account, @post_params
+        @user.reload
       end
 
       it "updates the user account informations" do
-        authenticated = UserSession.new(:login => @user.login,:password => @post_params[:user][:password]).save
-        authenticated.should be_true
-        @user.reload.email.should == @post_params[:user][:email]
+        @user.email.should == @post_params[:user][:email]
+      end
+
+      it "should updates user password" do
+        @user.password == @post_params[:user][:password]
       end
 
       it "redirects to account_user_path" do
@@ -300,20 +314,24 @@ describe UsersController do
     end
 
     context "when failing" do
-      before do
-        @post_params[:current_password] = "wrong-pass"
-        post :update_account, @post_params
-      end
+      context "wrong password" do
+        before do
+          @post_params[:current_password] = "wrong-pass"
+          post :update_account, @post_params
+          @user.reload
+        end
 
-      it "does NOT update the user account informations" do
-        assigns[:user].errors.should_not be_empty
-        authenticated = UserSession.new(:login => @user.login,:password => @post_params[:user][:password]).save
-        authenticated.should_not be_true
-        @user.reload.email.should_not == @post_params[:user][:email]
-      end
+        it "does NOT update the user account informations" do
+          @user.email.should_not == @post_params[:user][:email]
+        end
 
-      it "re-renders users/account" do
-        response.should render_template("users/account")
+        it "should add some errors on user" do
+          assigns[:user].errors.should_not be_empty
+        end
+
+        it "re-renders users/account" do
+          response.should render_template("users/account")
+        end
       end
     end
   end

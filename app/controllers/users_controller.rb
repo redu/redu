@@ -209,33 +209,26 @@ class UsersController < BaseController
   end
 
   def update_account
-    # alteracao de senha na conta do usuario
-    if params.has_key? "current_password" and !params[:current_password].empty?
-      @flag = false
-      authenticated = UserSession.new(:login => @user.login,
-                                      :password => params[:current_password]).save
 
-      if authenticated
-        @user.attributes  = params[:user]
-        @user.save
-      else
-        @current_password = params[:current_password]
-        @user.errors.add(:current_password, "A senha atual está errada")
-        @flag = true
-      end
-
-      if params[:user].has_key? "password" and params[:user][:password].empty?
-        @user.errors.add(:base, "A nova senha não pode ser em branco")
+    if params[:current_password].blank?
+      if (!params[:user][:password].blank? ||
+          !params[:user][:password_confirmation].blank?)
+        @user.errors.add(:current_password, "A senha atual não pode ser deixada em branco.")
+        params[:user][:password] = ""
+        params[:user][:password_confirmation] = ""
       end
     else
-      params[:user][:password] = @user.password
-      @user.attributes  = params[:user]
-      @user.save
+      unless @user.valid_password? params[:current_password]
+        @user.errors.add(:current_password, "A senha atual está errada.")
+        params[:user][:password] = ""
+        params[:user][:password_confirmation] = ""
+      end
     end
 
-    if @user.errors.empty?
+    @user.attributes = params[:user]
+    if @user.errors.empty? && @user.changed? && @user.save
       flash[:notice] = t :your_changes_were_saved
-      redirect_to(account_user_path(@user))
+      redirect_to(account_user_path(@user)) and return
     else
       render 'users/account'
     end
@@ -432,4 +425,5 @@ class UsersController < BaseController
       super
     end
   end
+
 end
