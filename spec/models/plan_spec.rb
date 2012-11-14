@@ -458,7 +458,8 @@ describe Plan do
                                   :period_start => Date.today - 45.days,
                                   :period_end => Date.today - 16.days)
         subject.invoice.licenses << 10.times.collect do
-          Factory.build(:license, :period_start => Date.today - 45.days,
+          Factory.build(:license, :invoice => nil,
+                        :period_start => Date.today - 45.days,
                         :period_end => nil)
         end
 
@@ -468,7 +469,8 @@ describe Plan do
                                   :period_start => Date.today - 15.days,
                                   :period_end => Date.today + 15.days)
         subject.invoice.licenses << 5.times.collect do
-          Factory.build(:license, :period_start => Date.today - 15.days,
+          Factory.build(:license, :invoice => nil,
+                        :period_start => Date.today - 15.days,
                         :period_end => nil)
         end
 
