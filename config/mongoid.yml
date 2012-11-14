@@ -1,6 +1,9 @@
 development:
-  host: localhost
+  host: 127.0.0.1
   database: redu_development
 test:
-  host: localhost
+  host: 127.0.0.1
   database: redu_test
+test:
+  host: 127.0.0.1
+  database: redu_production
