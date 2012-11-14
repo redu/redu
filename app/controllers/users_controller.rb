@@ -226,9 +226,9 @@ class UsersController < BaseController
     end
 
     @user.attributes = params[:user]
-    if @user.errors.empty? && @user.changed? && @user.save
+    if @user.errors.empty? && @user.save
       flash[:notice] = t :your_changes_were_saved
-      redirect_to(account_user_path(@user)) and return
+      redirect_to(account_user_path(@user))
     else
       render 'users/account'
     end
