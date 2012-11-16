@@ -238,5 +238,9 @@ module Redu
       :password => "NyugAkSoP",
       :username => "api-team"
     }
+
+    config.apps = {
+      :url => "http://aplicativos.redu.com.br"
+    }
   end
 end
