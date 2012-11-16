@@ -8,7 +8,7 @@
 # different top level name (don't change any filenames in it) and change
 # this value to match before deploying.  Oh, and be sure to add a require_recipe
 # line with the new cookbook name to the main cookbook's default.rb recipe file
-tunnel_name = 'ssh_tunnel'
+tunnel_name = 'rabbitmq_ssh_tunnel'
 
 # fill in missing information below
 tunnel_vars = {
@@ -32,7 +32,7 @@ tunnel_vars = {
   :forward_port => '5672',
   # valid values: FWD, REV, DUAL. Determines what kind of tunnel(s) to create
   # DUAL means create both a forward and reverse tunnel
-  :tunnel_direction => 'DUAL',
+  :tunnel_direction => 'FWD',
   # the path to the ssh executable to use when making the ssh connection
   :ssh_cmd => '/usr/bin/ssh',
   # whether or not to use StrictHostKeyChecking when making the ssh connection
@@ -45,7 +45,8 @@ tunnel_vars = {
   # key is written to here.  It's also even better to copy that key entry to
   # a file somewhere on an EBS volume and use that file's path here to ensure
   # that it won't be wiped after an instance restart (terminate and rebuild)
-  :ssh_known_hosts => ''
+  :ssh_known_hosts => '',
+  :tunnel_name => tunnel_name
 }
 
 # set this to match on the node[:instance_role] of the instance the tunnel

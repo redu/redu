@@ -1,6 +1,6 @@
 #!/sbin/runscript
 
-PIDFILE=/var/run/${SVCNAME}.pid
+PIDFILE=/var/run/<%= @tunnel_name %>.pid
 
 # connection params
 SSH_HOST='<%= @ssh_hostname %>'
@@ -25,55 +25,81 @@ CMD="<%= @ssh_cmd %>"
 depend() {
     use net
 }
- 
+
 start() {
     ebegin "Starting ssh tunnel"
-    
+
     FORWARD_TYPE="-L"
     if [ "$DIRECTION" = "REV" ]
     then
       FORWARD_TYPE="-R"
     elif [ "$DIRECTION" = "DUAL" ]
 	then
-      FORWARD_TYPE="-R ${CONNECT_PORT}:${FORWARD_HOST}:${FORWARD_PORT} -L" 
+      FORWARD_TYPE="-R ${CONNECT_PORT}:${FORWARD_HOST}:${FORWARD_PORT} -L"
     fi
-    
+
     ARGS="-f -p ${SSH_PORT} -N $FORWARD_TYPE ${CONNECT_PORT}:${FORWARD_HOST}:${FORWARD_PORT} ${SSH_USER}@${SSH_HOST}"
-    
+
     if [ -n "$SSH_KEY" ]
     then
         ARGS="-i ${SSH_KEY} ${ARGS}"
     fi
-    
+
     if [ -n "$SSH_KNOWN_HOSTS" ]
     then
         ARGS="-o UserKnownHostsFile=${SSH_KNOWN_HOSTS} ${ARGS}"
     else
         ARGS="-o StrictHostKeyChecking=no ${ARGS}"
     fi
-    
+
     start-stop-daemon --start --pidfile ${PIDFILE} --exec ${CMD} -- ${ARGS}
     pid="$(ps aux | grep "[s]sh.*${ARGS}" | awk '{print $2}')";
     echo $pid > ${PIDFILE}
-    
+
     eend $? "Failed to start ssh tunnel"
-} 
+}
 
 stop() {
     ebegin "Stopping ssh tunnel"
-    
+
     start-stop-daemon --stop -o --pidfile ${PIDFILE}
     rm ${PIDFILE}
-    
+
     eend $? "Failed to stop ssh tunnel"
 }
 
 restart() {
     ebegin "Restarting ssh tunnel"
-    
+
     svc_stop
     svc_start
-    
+
     eend $? "Failed to restart ssh tunnel"
 }
 
+    fi
+
+    start-stop-daemon --start --pidfile ${PIDFILE} --exec ${CMD} -- ${ARGS}
+    pid="$(ps aux | grep "[s]sh.*${ARGS}" | awk '{print $2}')";
+    echo $pid > ${PIDFILE}
+
+    eend $? "Failed to start ssh tunnel"
+}
+
+stop() {
+    ebegin "Stopping ssh tunnel"
+
+    start-stop-daemon --stop -o --pidfile ${PIDFILE}
+    rm ${PIDFILE}
+
+    eend $? "Failed to stop ssh tunnel"
+}
+
+restart() {
+    ebegin "Restarting ssh tunnel"
+
+    svc_stop
+    svc_start
+
+    eend $? "Failed to restart ssh tunnel"
+}
