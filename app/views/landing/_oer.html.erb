@@ -1,18 +1,16 @@
 <div class="landing-functionality landing-oer-outer-wrapper">
-  <div class="landing-oer-inner-wrapper">
-    <div class="row">
-      <div class="offset1 span4">
-        <div class="landing-oer-title">
-          <span class="label-doubts">Em breve</span>
-          <h3 class="landing-navigation-subtitle">Recursos Educacionais Abertos</h3>
-        </div>
-      </div>
-      <div class="span6">
-        <div class="landing-oer-description">
-          <h4>Artefatos interativos de todo o mundo  que complementam o aprendizado. E o melhor: são gratuitos.</h4>
-          <p>São materiais de ensino e aprendizagem que estão sob domínio público, e podem ser utilizados em qualquer disciplina.</p>
-        </div>
+  <div class="row">
+    <div class="offset1 span4">
+      <div class="landing-oer-title">
+        <h3 class="landing-navigation-subtitle"><%= link_to 'Recursos Educacionais Abertos', Redu::Application.config.apps[:url] %></h3>
       </div>
     </div>
+    <div class="span6">
+      <div class="landing-oer-description">
+        <h4>Artefatos interativos de todo o mundo  que complementam o aprendizado. E o melhor: são gratuitos.</h4>
+        <p>São materiais de ensino e aprendizagem que estão sob domínio público, e podem ser utilizados em qualquer disciplina.</p>
+      </div>
+    </div>
+    <%= link_to 'Recursos Educacionais Abertos', Redu::Application.config.apps[:url], :class => 'sprite-logo-oer text-replacement' %>
   </div>
 </div>
