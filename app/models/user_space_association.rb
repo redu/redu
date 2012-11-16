@@ -15,4 +15,10 @@ class UserSpaceAssociation < ActiveRecord::Base
   }
 
   validates_uniqueness_of :user_id, :scope => :space_id
+
+  def self.create_policy_for(usas)
+    usas.each do |usa|
+      UserSpaceAssociationPolicyObserver.instance.after_create(usa)
+    end
+  end
 end

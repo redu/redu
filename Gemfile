@@ -24,7 +24,7 @@ gem 'aws-s3', :require => 'aws/s3'
 gem 'aws-sdk'
 gem 'backup',
   :git => 'git://github.com/meskyanichi/backup.git'
-gem 'bundler'
+gem 'bundler', '~> 1.2'
 gem 'cancan', '~> 1.6.7'
 gem 'ckeditor', '3.4.2.pre'
 gem 'daemons'
@@ -68,6 +68,8 @@ gem 'vis_client', :git => 'git@github.com:redu/vis_client.git'
 gem 'whenever', :require => false
 gem 'will_paginate', '~> 3.0.pre2'
 gem 'zencoder'
+gem 'permit', :git => 'git://github.com/redu/permit-gem'
+gem 'untied-publisher', :git => 'git://github.com/redu/untied-publisher'
 
 # Gems específicos para a API
 gem 'oauth-plugin', '~> 0.4.0'
@@ -93,7 +95,6 @@ group :test do
 end
 
 group :development do
-  gem 'thin'
   # gem 'uniform_notifier'
 
   # Gems úteis p/ análise performance
