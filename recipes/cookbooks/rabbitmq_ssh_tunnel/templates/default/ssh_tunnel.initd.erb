@@ -76,30 +76,3 @@ restart() {
 
     eend $? "Failed to restart ssh tunnel"
 }
-
-    fi
-
-    start-stop-daemon --start --pidfile ${PIDFILE} --exec ${CMD} -- ${ARGS}
-    pid="$(ps aux | grep "[s]sh.*${ARGS}" | awk '{print $2}')";
-    echo $pid > ${PIDFILE}
-
-    eend $? "Failed to start ssh tunnel"
-}
-
-stop() {
-    ebegin "Stopping ssh tunnel"
-
-    start-stop-daemon --stop -o --pidfile ${PIDFILE}
-    rm ${PIDFILE}
-
-    eend $? "Failed to stop ssh tunnel"
-}
-
-restart() {
-    ebegin "Restarting ssh tunnel"
-
-    svc_stop
-    svc_start
-
-    eend $? "Failed to restart ssh tunnel"
-}
