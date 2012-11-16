@@ -8,9 +8,13 @@ require_recipe "emerge"
 require_recipe "mongo_solo"
 require_recipe "mongo_ssh_tunnel"
 require_recipe "s3cmd"
+require_recipe "rabbitmq_ssh_tunnel"
 
 # uncomment to turn on thinking sphinx/ultra sphinx. Remember to edit cookbooks/sphinx/recipes/default.rb first!
 # require_recipe "sphinx"
+
+# uncomment to use the collectd recipe. See cookbooks/collectd/readme.md for documentation.
+# require_recipe "collectd"
 
 #uncomment to turn on memcached
 # require_recipe "memcached"

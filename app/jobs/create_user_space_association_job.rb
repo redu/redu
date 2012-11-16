@@ -8,7 +8,9 @@ class CreateUserSpaceAssociationJob
   end
 
   def perform
-    space = Space.find_by_id(@space_id)
-    space.create_space_association_for_users_course if space
+    if space = Space.find_by_id(@space_id)
+      space.create_space_association_for_users_course
+      space.create_policy_for_usa
+    end
   end
 end

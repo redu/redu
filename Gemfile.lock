@@ -1,12 +1,11 @@
 GIT
   remote: git://github.com/apotonick/roar-rails.git
-  revision: 943203a8b9f5376771ed4cc01a7bfb49c47e601d
+  revision: 4f0a0856a80043aa68adc2dfef0989bf00498771
   specs:
-    roar-rails (0.0.10)
+    roar-rails (0.0.5)
       actionpack (~> 3.0)
-      hooks
       railties (~> 3.0)
-      roar (~> 0.10)
+      roar (~> 0.10.0)
       test_xml
 
 GIT
@@ -51,6 +50,30 @@ GIT
       activesupport (>= 3.0.0)
 
 GIT
+  remote: git://github.com/redu/permit-gem
+  revision: 54bf66dd94e6d1221ddde96819084136f3bbdb90
+  specs:
+    permit (0.0.3)
+      amqp (~> 0.9.1)
+      configurable
+      faraday (~> 0.8.4)
+      logger
+      patron (~> 0.4.18)
+      system_timer
+      yajl-ruby
+
+GIT
+  remote: git://github.com/redu/untied-publisher
+  revision: 169e1950bcd8cfe3985f91e2cbf2c40353f6d86d
+  specs:
+    untied-publisher (0.0.4)
+      activerecord
+      amqp
+      configurable
+      json
+      representable
+
+GIT
   remote: git@github.com:redu/invitable.git
   revision: 171dcdb33d0955357a0af7980d6882925958949c
   specs:
@@ -65,10 +88,10 @@ GIT
 
 GIT
   remote: https://github.com/apotonick/roar.git
-  revision: a2f954e0d3cfa7ed99b33e3b416ac868358a4f7e
+  revision: 46fb88d1a79338188a9d05d353fc721d6a058e4e
   specs:
-    roar (0.11.3)
-      representable (>= 1.2.2)
+    roar (0.10.1)
+      representable (>= 1.1.7)
 
 GEM
   remote: http://rubygems.org/
@@ -115,6 +138,14 @@ GEM
     acts-as-taggable-on (2.0.6)
     acts_as_tree (0.1.1)
     addressable (2.3.2)
+    amq-client (0.9.6)
+      amq-protocol (>= 0.9.4)
+      eventmachine
+    amq-protocol (0.9.5)
+    amqp (0.9.8)
+      amq-client (~> 0.9.5)
+      amq-protocol (>= 0.9.4)
+      eventmachine
     ar_mailer_rails3 (2.1.12)
     arel (2.0.10)
     authlogic (3.0.2)
@@ -150,8 +181,12 @@ GEM
       sass (~> 3.1)
     compass-rails (1.0.3)
       compass (>= 0.12.2, < 0.14)
+    config_parser (0.5.5)
+    configurable (1.0.0)
+      config_parser (~> 0.5.4)
+      lazydoc (~> 1.0)
     cookiejar (0.3.0)
-    crack (0.3.1)
+    crack (0.1.8)
     css_parser (1.2.5)
       addressable
     daemons (1.1.8)
@@ -181,7 +216,6 @@ GEM
     erubis (2.6.6)
       abstract (>= 1.0.0)
     eventmachine (1.0.0)
-    eventmachine (1.0.0-x86-mingw32)
     exceptional (2.0.32)
       rack
     excon (0.9.6)
@@ -190,10 +224,8 @@ GEM
     factory_girl_rails (1.7.0)
       factory_girl (~> 2.6.0)
       railties (>= 3.0.0)
-    faraday (0.7.6)
-      addressable (~> 2.2)
+    faraday (0.8.4)
       multipart-post (~> 1.1)
-      rack (~> 1.1)
     ffi (1.0.11)
     fog (1.1.2)
       builder
@@ -208,10 +240,8 @@ GEM
     formatador (0.2.3)
     fssm (0.2.9)
     hashie (1.2.0)
-    hooks (0.2.1)
     htmlentities (4.3.0)
     http_parser.rb (0.5.3)
-    http_parser.rb (0.5.3-x86-mingw32)
     httparty (0.8.1)
       multi_json
       multi_xml
@@ -232,14 +262,16 @@ GEM
     jquery-rails (1.0.19)
       railties (~> 3.0)
       thor (~> 0.14)
-    json (1.6.6)
+    json (1.7.5)
     kaminari (0.13.0)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
       railties (>= 3.0.0)
     lazy_high_charts (1.2.2)
       bundler (~> 1.0)
+    lazydoc (1.0)
     linecache (0.43)
+    logger (1.2.8)
     mail (2.2.19)
       activesupport (>= 2.3.6)
       i18n (>= 0.4.0)
@@ -261,8 +293,7 @@ GEM
       net-ssh (>= 1.99.1)
     net-ssh (2.5.2)
     newrelic_rpm (3.0.1)
-    nokogiri (1.5.2)
-    nokogiri (1.5.2-x86-mingw32)
+    nokogiri (1.5.5)
     oauth (0.4.5)
     oauth-plugin (0.4.0)
       multi_json
@@ -287,13 +318,16 @@ GEM
       activesupport (>= 2.3.2)
       cocaine (>= 0.0.2)
       mime-types
+    patron (0.4.18)
     polyglot (0.3.3)
     premailer (1.7.3)
       css_parser (>= 1.1.9)
       htmlentities (>= 4.0.0)
     proxies (0.2.1)
-    pusher (0.9.4)
+    pusher (0.8.1)
+      crack (~> 0.1.0)
       multi_json (~> 1.0)
+      ruby-hmac (~> 0.4.0)
       signature (~> 0.1.2)
     rack (1.2.5)
     rack-cors (0.2.6)
@@ -326,7 +360,7 @@ GEM
     redu_analytics (0.0.2)
       lazy_high_charts
     remotipart (1.0.2)
-    representable (1.2.5)
+    representable (1.2.8)
       json
       nokogiri
     rscribd (1.3.0)
@@ -351,7 +385,6 @@ GEM
       linecache (>= 0.3)
     ruby-hmac (0.4.0)
     ruby-prof (0.11.2)
-    ruby-prof (0.11.2-x86-mingw32)
     rubyzip (0.9.6.1)
     s3 (0.3.8)
       proxies (~> 0.2.0)
@@ -363,15 +396,13 @@ GEM
       rubyzip
     shoulda-matchers (1.0.0.beta2)
     shuber-sortable (1.0.6)
-    signature (0.1.4)
+    signature (0.1.2)
+      ruby-hmac
     simple-navigation (3.5.0)
       activesupport (>= 2.3.2)
+    system_timer (1.2.4)
     test_xml (0.1.2)
       nokogiri (>= 1.3.2)
-    thin (1.3.1)
-      daemons (>= 1.0.9)
-      eventmachine (>= 0.12.6)
-      rack (>= 1.0.0)
     thor (0.14.6)
     translate_routes (3.0.3)
     treetop (1.4.10)
@@ -388,6 +419,7 @@ GEM
       chronic (~> 0.6.3)
     will_paginate (3.0.pre2)
     xml-simple (1.0.15)
+    yajl-ruby (1.1.0)
     yui-compressor (0.9.6)
       POpen4 (>= 0.1.4)
     zencoder (2.3.1)
@@ -396,7 +428,6 @@ GEM
 
 PLATFORMS
   ruby
-  x86-mingw32
 
 DEPENDENCIES
   aasm
@@ -413,7 +444,7 @@ DEPENDENCIES
   aws-sdk
   backup!
   bson_ext
-  bundler
+  bundler (~> 1.2)
   cancan (~> 1.6.7)
   ckeditor (= 3.4.2.pre)
   compass-rails
@@ -443,6 +474,7 @@ DEPENDENCIES
   omniauth-facebook
   pagseguro (~> 0.1.10)
   paperclip (~> 2.7)
+  permit!
   pusher
   rack-cors
   rails (= 3.0.10)
@@ -460,8 +492,8 @@ DEPENDENCIES
   shoulda-matchers
   shuber-sortable
   simple-navigation
-  thin
   translate_routes
+  untied-publisher!
   useragent (~> 0.4.8)
   vis_client!
   webmock (~> 1.8.6)

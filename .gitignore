@@ -23,4 +23,5 @@ backup/log/*
 backup/.tmp/*
 .vagrant
 .rvmrc
+.rspec
 chromedriver.log
