@@ -29,8 +29,12 @@ class AuthenticationsController < BaseController
       current_user = @user_session.record if @user_session.save
     end
 
-    redirect_to session[:return_to] || home_user_path(current_user)
-    session[:return_to] = nil
+    if state_url = valid_state_url(params[:state])
+      redirect_to state_url
+    else
+      redirect_to session[:return_to] || home_user_path(current_user)
+      session[:return_to] = nil
+    end
   end
 
   def fallback
@@ -38,4 +42,18 @@ class AuthenticationsController < BaseController
     redirect_to application_path
   end
 
+  private
+
+  # Retorna, caso exista, a url da aplicação que solicitou o login
+  # valid_state_url("apps")
+  # => "http://aplicativos.redu.com.br"
+  #
+  # valid_state_url("hack")
+  # => nil
+  #
+  # valid_state_url(nil)
+  # => nil
+  def valid_state_url(param)
+    Redu::Application.config.redu_services[param.try(:to_sym)].try(:[], :url)
+  end
 end

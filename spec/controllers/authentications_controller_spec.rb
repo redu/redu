@@ -130,6 +130,37 @@ describe AuthenticationsController do
         it { should redirect_to(home_user_path(@user))  }
       end
     end
+
+    context "when there is a state param" do
+      context "and this param is known by the app" do
+        before do
+          get :create, :locale => 'pt-BR', :state => "apps"
+          @user = User.find_by_email(request.env['omniauth.auth'][:info][:email])
+        end
+
+        it { should redirect_to(Redu::Application.config.
+                                redu_services[:apps][:url])  }
+      end
+
+      context "and this param is NOT known by the app" do
+        before do
+          get :create, :locale => 'pt-BR', :state => "hack"
+          @user = User.find_by_email(request.env['omniauth.auth'][:info][:email])
+        end
+
+        it { should redirect_to(home_user_path(@user))  }
+      end
+    end
+
+    context "when there is a return_to param" do
+      before do
+        session[:return_to] = "http://someplace.com"
+        get :create, :locale => 'pt-BR'
+        @user = User.find_by_email(request.env['omniauth.auth'][:info][:email])
+      end
+
+      it { should redirect_to("http://someplace.com")  }
+    end
   end
 
   describe "GET fallback" do
