@@ -20,7 +20,7 @@
       <%= link_to "Cursos", courses_index_path, :title => "Cursos" %>
     </li>
     <li>
-    <%= link_to "Aplicativos", Redu::Application.config.apps[:url], :title => "Aplicativos" %>
+    <%= link_to "Aplicativos", Redu::Application.config.redu_services[:apps][:url], :title => "Aplicativos" %>
     </li>
   </ul>
 

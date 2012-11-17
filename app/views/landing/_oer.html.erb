@@ -2,7 +2,7 @@
   <div class="row">
     <div class="offset1 span4">
       <div class="landing-oer-title">
-        <h3 class="landing-navigation-subtitle"><%= link_to 'Recursos Educacionais Abertos', Redu::Application.config.apps[:url] %></h3>
+        <h3 class="landing-navigation-subtitle"><%= link_to 'Recursos Educacionais Abertos', Redu::Application.config.redu_services[:apps][:url] %></h3>
       </div>
     </div>
     <div class="span6">
@@ -11,6 +11,6 @@
         <p>São materiais de ensino e aprendizagem que estão sob domínio público, e podem ser utilizados em qualquer disciplina.</p>
       </div>
     </div>
-    <%= link_to 'Recursos Educacionais Abertos', Redu::Application.config.apps[:url], :class => 'sprite-logo-oer text-replacement' %>
+    <%= link_to 'Recursos Educacionais Abertos', Redu::Application.config.redu_services[:apps][:url], :class => 'sprite-logo-oer text-replacement' %>
   </div>
 </div>

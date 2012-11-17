@@ -239,7 +239,8 @@ module Redu
       :username => "api-team"
     }
 
-    config.apps = {
+    config.redu_services = {}
+    config.redu_services[:apps] = {
       :url => "http://aplicativos.redu.com.br"
     }
   end
