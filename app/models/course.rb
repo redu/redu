@@ -242,7 +242,6 @@ class Course < ActiveRecord::Base
                                :role => role)
     end
     UserSpaceAssociation.import(usas, :validate => false)
-    UserSpaceAssociation.create_policy_for(usas)
 
     subjects = self.spaces.includes(:subjects).collect(&:subjects).flatten
     enrollments = Subject.enroll(user, subjects, role)

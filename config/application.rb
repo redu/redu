@@ -186,9 +186,6 @@ module Redu
     # Observers têm direito a um lar
     config.autoload_paths << "#{config.root}/app/observers"
 
-    # Observers que criam políticas de acesso
-    config.autoload_paths << "#{config.root}/app/policy"
-
     # Doorkeepers definem eventos que serão propagados no message bus
     config.autoload_paths << "#{config.root}/app/doorkeepers"
 
@@ -229,13 +226,7 @@ module Redu
                                         :message_cache_observer,
                                         :lecture_cache_observer,
                                         :asset_report_cache_observer,
-                                        :chat_message_observer,
-                                        :user_space_association_policy_observer,
-                                        :friendship_policy_observer,
-                                        :user_setting_policy_observer,
-                                        :enrollment_policy_observer,
-                                        :lecture_policy_observer,
-                                        :user_policy_observer
+                                        :chat_message_observer
       ]
     end
 

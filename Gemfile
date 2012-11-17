@@ -68,7 +68,6 @@ gem 'vis_client', :git => 'git@github.com:redu/vis_client.git'
 gem 'whenever', :require => false
 gem 'will_paginate', '~> 3.0.pre2'
 gem 'zencoder'
-gem 'permit', :git => 'git://github.com/redu/permit-gem'
 gem 'untied-publisher', :git => 'git://github.com/redu/untied-publisher'
 
 # Gems específicos para a API
