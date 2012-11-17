@@ -230,12 +230,6 @@ module Redu
                                         :lecture_cache_observer,
                                         :asset_report_cache_observer,
                                         :chat_message_observer,
-                                        :user_space_association_policy_observer,
-                                        :friendship_policy_observer,
-                                        :user_setting_policy_observer,
-                                        :enrollment_policy_observer,
-                                        :lecture_policy_observer,
-                                        :user_policy_observer
       ]
     end
 

@@ -64,7 +64,7 @@ GIT
 
 GIT
   remote: git://github.com/redu/untied-publisher
-  revision: 169e1950bcd8cfe3985f91e2cbf2c40353f6d86d
+  revision: d4307e815460c7a378890eccce31448e800ee777
   specs:
     untied-publisher (0.0.4)
       activerecord
@@ -138,7 +138,7 @@ GEM
     acts-as-taggable-on (2.0.6)
     acts_as_tree (0.1.1)
     addressable (2.3.2)
-    amq-client (0.9.6)
+    amq-client (0.9.8)
       amq-protocol (>= 0.9.4)
       eventmachine
     amq-protocol (0.9.5)
