@@ -133,18 +133,20 @@ describe AuthenticationsController do
 
     context "when there is a state param" do
       context "and this param is known by the app" do
-        before do
-          get :create, :locale => 'pt-BR', :state => "apps"
-          @user = User.find_by_email(request.env['omniauth.auth'][:info][:email])
-        end
+        context "with current url details" do
+          before do
+            @apps_portal_url = "#{Redu::Application.config.redu_services[:apps][:url]}/apps/73"
+            get :create, :locale => 'pt-BR', :state => @apps_portal_url
+            @user = User.find_by_email(request.env['omniauth.auth'][:info][:email])
+          end
 
-        it { should redirect_to(Redu::Application.config.
-                                redu_services[:apps][:url])  }
+          it { should redirect_to(@apps_portal_url)  }
+        end
       end
 
       context "and this param is NOT known by the app" do
         before do
-          get :create, :locale => 'pt-BR', :state => "hack"
+          get :create, :locale => 'pt-BR', :state => "http://hack.com"
           @user = User.find_by_email(request.env['omniauth.auth'][:info][:email])
         end
 
