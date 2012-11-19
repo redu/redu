@@ -22,7 +22,7 @@ describe EnrollmentVisNotification do
 
       it "should send a notification to vis" do
         WebMock.disable_net_connect!
-        stubing_request
+        vis_stub_request
 
         subj2 = Factory(:subject, :space => @space,
                         :owner => subject.owner,
@@ -36,7 +36,7 @@ describe EnrollmentVisNotification do
         enrollments.each do |enroll|
           params = fill_params(enroll, "enrollment")
 
-          webmock_request(params).should have_been_made
+          vis_a_request(params).should have_been_made
         end
       end
     end
@@ -61,7 +61,7 @@ describe EnrollmentVisNotification do
       it "should send a remove enrollment notification and a remove subject finalized notification to vis" do
         WebMock.reset!
         WebMock.disable_net_connect!
-        stubing_request
+        vis_stub_request
 
         enrollments = []
         subject.users.each do |user|
@@ -81,11 +81,11 @@ describe EnrollmentVisNotification do
 
           params = fill_params(enroll, "remove_enrollment")
 
-          webmock_request(params).should have_been_made
+          vis_a_request(params).should have_been_made
 
           if enroll.graduated
             params = fill_params(enroll, "remove_subject_finalized")
-            webmock_request(params).should have_been_made
+            vis_a_request(params).should have_been_made
           end
         end
       end
@@ -112,7 +112,7 @@ describe EnrollmentVisNotification do
 
       before do
         WebMock.disable_net_connect!
-        stubing_request
+        vis_stub_request
       end
 
       it "when grade is not full (< 100) and became full should send a 'subject_finalized' notification to vis" do
@@ -124,7 +124,7 @@ describe EnrollmentVisNotification do
 
         params = fill_params(subject, "subject_finalized")
 
-        webmock_request(params).should have_been_made
+        vis_a_request(params).should have_been_made
       end
 
       it "when grade is not full (<100) and continue not full (<100) should not send a notification to vis" do
@@ -136,7 +136,7 @@ describe EnrollmentVisNotification do
 
         params = fill_params(subject, "subject_finalized")
 
-        webmock_request(params).should_not have_been_made
+        vis_a_request(params).should_not have_been_made
       end
 
       context "and grade is filled" do
@@ -152,7 +152,7 @@ describe EnrollmentVisNotification do
 
           params = fill_params(subject, "subject_finalized")
 
-          webmock_request(params).should_not have_been_made
+          vis_a_request(params).should_not have_been_made
         end
 
         it "when grade is updated for less then 100 should send a 'removed_subject_finalized' notification to vis" do
@@ -168,7 +168,7 @@ describe EnrollmentVisNotification do
 
           params = fill_params(subject, "remove_subject_finalized")
 
-          webmock_request(params).should have_been_made
+          vis_a_request(params).should have_been_made
         end
       end
     end
@@ -196,7 +196,7 @@ describe EnrollmentVisNotification do
 
       it "should send vis notification 'remove_enrollment'" do
         WebMock.disable_net_connect!
-        stubing_request
+        vis_stub_request
 
         ActiveRecord::Observer.with_observers(:vis_user_observer) do
           @user.destroy
@@ -205,13 +205,13 @@ describe EnrollmentVisNotification do
         @enrolls.each do |enroll|
           params = fill_params(enroll, "remove_enrollment")
 
-          webmock_request(params).should have_been_made
+          vis_a_request(params).should have_been_made
         end
       end
 
       it "should send any vis notification 'remove_subject_finalized'" do
         WebMock.disable_net_connect!
-        stubing_request
+        vis_stub_request
 
         ActiveRecord::Observer.with_observers(:vis_user_observer) do
           @user.destroy
@@ -220,7 +220,7 @@ describe EnrollmentVisNotification do
         @enrolls.each do |enroll|
           params = fill_params(enroll, "remove_subject_finalized")
 
-          webmock_request(params).should_not have_been_made
+          vis_a_request(params).should_not have_been_made
         end
       end
 
@@ -232,7 +232,7 @@ describe EnrollmentVisNotification do
 
         it "should send vis notification 'remove_subject_finalized'" do
           WebMock.disable_net_connect!
-          stubing_request
+          vis_stub_request
 
           ActiveRecord::Observer.with_observers(:vis_user_observer) do
             @user.destroy
@@ -242,26 +242,12 @@ describe EnrollmentVisNotification do
             if enroll.graduated
               params = fill_params(enroll, "remove_subject_finalized")
 
-              webmock_request(params).should have_been_made
+              vis_a_request(params).should have_been_made
             end
           end
         end
       end
     end
-  end
-
-  def stubing_request
-    stub_request(:post, Redu::Application.config.vis_client[:url]).
-      with(:headers => {'Authorization'=>['JOjLeRjcK', 'core-team'],
-                        'Content-Type'=>'application/json'}).
-                        to_return(:status => 200, :body => "", :headers => {})
-  end
-
-  def webmock_request(params)
-    a_request(:post, Redu::Application.config.vis_client[:url]).
-      with(:body => params.to_json,
-           :headers => {'Authorization'=>['JOjLeRjcK', 'core-team'],
-                        'Content-Type'=>'application/json'})
   end
 
   def fill_params(enroll, type)

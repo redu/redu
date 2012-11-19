@@ -16,6 +16,14 @@ GIT
     ajaxful_rating (3.0.0.beta3)
 
 GIT
+  remote: git://github.com/fltiago/webmock
+  revision: 7e34b7b727ee3b0f8f224f516476011d2a022199
+  specs:
+    webmock (1.9.0)
+      addressable (>= 2.2.7)
+      crack (>= 0.1.7)
+
+GIT
   remote: git://github.com/guiocavalcanti/scribd_fu.git
   revision: 422926986f993bf4d72fcaa981dea221ecc86641
   branch: without-scape
@@ -395,9 +403,6 @@ GEM
     tzinfo (0.3.35)
     useragent (0.4.8)
     uuidtools (2.1.2)
-    webmock (1.8.10)
-      addressable (>= 2.2.7)
-      crack (>= 0.1.7)
     whenever (0.7.3)
       activesupport (>= 2.3.4)
       chronic (~> 0.6.3)
@@ -478,7 +483,7 @@ DEPENDENCIES
   untied-publisher!
   useragent (~> 0.4.8)
   vis_client!
-  webmock (~> 1.8.6)
+  webmock!
   whenever
   will_paginate (~> 3.0.pre2)
   zencoder
