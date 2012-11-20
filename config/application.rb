@@ -226,7 +226,7 @@ module Redu
                                         :message_cache_observer,
                                         :lecture_cache_observer,
                                         :asset_report_cache_observer,
-                                        :chat_message_observer
+                                        :chat_message_observer,
       ]
     end
 
@@ -241,5 +241,9 @@ module Redu
       :password => "NyugAkSoP",
       :username => "api-team"
     }
+
+    # Seta locale defaul para pt-br
+    config.i18n.default_locale = :"pt-BR"
+    I18n.locale = config.i18n.default_locale
   end
 end
