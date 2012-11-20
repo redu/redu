@@ -301,6 +301,11 @@
   overflow: hidden;
 }
 
+#resource .iframe-canvas {
+  padding: 20px 0;
+  overflow: hidden;
+}
+
 #resource .statuses-counter {
   font-size: .9em;
   clear: both;

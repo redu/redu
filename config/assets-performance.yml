@@ -129,7 +129,6 @@ stylesheets:
     - public/stylesheets/exercises.css
     - public/stylesheets/outdated-browser.css
     - public/stylesheets/chart.css
-    - public/stylesheets/canvas.css
   ie:
     - public/stylesheets/ie.css
   ie8:
