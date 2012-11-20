@@ -79,7 +79,18 @@ namespace :bootstrap do
 
     ClientApplication.create(:name => "ReduVis",
                              :url => "http://www.redu.com.br",
-                             :user => user_admin)
+                             :user => user_admin,
+                             :walledgarden => true)
+  end
+
+  desc "Create OAuth Client Application for Redu Apps"
+  task :reduapps_app => :environment do
+    user_admin = User.find_by_id(2)
+
+    ClientApplication.create(:name => "Portal de aplicativos",
+                             :url => "http://aplicativos.redu.com.br",
+                             :user => user_admin,
+                             :walledgarden => true)
   end
 
   desc "Run all bootstrapping tasks"
