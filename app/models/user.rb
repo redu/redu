@@ -1,5 +1,9 @@
 class User < ActiveRecord::Base
   include Invitable::Base
+  include Humanizer
+
+  # Valida a resposta ao captcha
+  require_human_on :create, :if => :enable_humanizer
 
   require 'community_engine_sha1_crypto_method'
   require 'paperclip'
@@ -701,6 +705,10 @@ class User < ActiveRecord::Base
   end
 
   protected
+
+  def enable_humanizer
+    Rails.env.production?
+  end
 
   def activate_before_save
     self.activated_at = Time.now.utc

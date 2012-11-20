@@ -240,6 +240,7 @@ GEM
     httparty (0.8.1)
       multi_json
       multi_xml
+    humanizer (2.4.4)
     i18n (0.5.0)
     jammit (0.6.0)
       closure-compiler (>= 0.1.0)
@@ -447,6 +448,7 @@ DEPENDENCIES
   exceptional
   factory_girl_rails (~> 1.7.0)
   fog (~> 1.1.0)
+  humanizer
   invitable!
   jammit-s3
   jasmine

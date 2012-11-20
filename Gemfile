@@ -77,6 +77,7 @@ gem 'roar-rails', '~> 0.0.3',
   :git => 'git://github.com/apotonick/roar-rails.git'
 gem 'destroy_soon'
 gem 'redu_analytics'
+gem 'humanizer'
 
 # Gems específicos de algum ambiente
 group :development, :test do

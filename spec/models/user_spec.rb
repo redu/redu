@@ -122,6 +122,13 @@ describe User do
       u.mobile = "81 2131-2123"
       u.should_not be_valid
     end
+
+    context "humanizer" do
+      it "should not be valid when enabling humanizer (User#enable_humanizer)" do
+        User.any_instance.stub(:enable_humanizer).and_return(true)
+        Factory.build(:user).should_not be_valid
+      end
+    end
   end
 
   context "associations" do

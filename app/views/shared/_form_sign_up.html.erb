@@ -95,6 +95,12 @@
               <%= f.password_field :password_confirmation, :placeholder => "Confirme sua senha" %>
               <%= concave_errors_for @user, :password_confirmation %>
             </div>
+            <div class="controls span4">
+              <%= f.label :humanizer_answer, @user.humanizer_question %>
+              <%= f.text_field :humanizer_answer %>
+              <%= f.hidden_field :humanizer_question_id %>
+              <%= concave_errors_for @user, :humanizer_answer %>
+            </div>
           </div>
         </div>
       </div>
