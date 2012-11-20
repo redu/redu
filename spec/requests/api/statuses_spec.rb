@@ -126,7 +126,9 @@ describe "Statuses" do
     end
     let(:lecture) do
       s = Factory(:subject, :owner => space.owner, :space => space)
-      Factory(:lecture, :owner => s.owner, :subject => s)
+      c = Factory(:canvas, :user => s.owner)
+      Factory(:lecture, :owner => s.owner, :subject => s,
+              :lectureable => c)
     end
     let(:help) do
       Factory(:help, :user => lecture.owner, :statusable => lecture)
@@ -512,7 +514,9 @@ describe "Statuses" do
     end
     let(:lecture) do
       s = Factory(:subject, :owner => space.owner, :space => space)
-      Factory(:lecture, :owner => s.owner, :subject => s)
+      c = Factory(:canvas, :user => s.owner)
+      Factory(:lecture, :owner => s.owner, :subject => s,
+              :lectureable => c)
     end
     let(:params) do
       { :status => { :text => "Lacture Ximbica" }, :oauth_token => @token,
@@ -532,7 +536,7 @@ describe "Statuses" do
       get href_to("statusable", parse(response.body)), :oauth_token => @token,
         :format => 'json'
 
-      parse(response.body)["lecture"]["name"].should == lecture.name
+      parse(response.body)["name"].should == lecture.name
     end
 
     it "should create an activity" do
@@ -548,7 +552,7 @@ describe "Statuses" do
 
       get href_to("statusable", parse(response.body)), :oauth_token => @token,
         :format => 'json'
-      parse(response.body)["lecture"]["name"].should == lecture.name
+      parse(response.body)["name"].should == lecture.name
     end
 
     it "should create an activity when there is not type" do
@@ -565,7 +569,9 @@ describe "Statuses" do
     end
     let(:lecture) do
       s = Factory(:subject, :owner => space.owner, :space => space)
-      Factory(:lecture, :owner => s.owner, :subject => s)
+      c = Factory(:canvas, :user => s.owner)
+      Factory(:lecture, :owner => s.owner, :subject => s,
+              :lectureable => c)
     end
     let(:params) do
       { :status => { :text => "Lacture Ximbica", :type => 'Help' },

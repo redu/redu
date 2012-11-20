@@ -761,6 +761,8 @@ describe Ability do
 
         @lecture_page = Factory(:lecture, :subject => @subject,
                                 :lectureable => Factory(:page))
+        @lecture_canvas = Factory(:lecture, :subject => @subject,
+                                :lectureable => Factory(:canvas))
         @lecture_exercise = Factory(:lecture, :subject => @subject,
                                     :lectureable => Factory(:complete_exercise))
         @lecture_seminar = Factory(:lecture, :subject => @subject,
@@ -860,6 +862,9 @@ describe Ability do
           it "(document)" do
             @ability.should be_able_to(:manage, @lecture_document)
           end
+          it "(canvas)" do
+            @ability.should be_able_to(:manage, @lecture_canvas)
+          end
         end
 
         context "can update many kinds of lectures" do
@@ -869,6 +874,12 @@ describe Ability do
 
           it "(exercise)" do
             @ability.should be_able_to(:update, @lecture_exercise)
+          end
+        end
+
+        context "when lecture type canvas" do
+          it "cannot update" do
+            @ability.should_not be_able_to(:update, @lecture_canvas)
           end
         end
 
@@ -1864,31 +1875,36 @@ describe Ability do
   end
 
   context "on Canvas" do
-    let(:course) do
-      environment = Factory(:complete_environment)
-      environment.courses.first
+    before do
+      env = Factory(:complete_environment)
+      @course = env.courses.first
+      space = @course.spaces.first
+      sub = Factory(:subject, :owner => space.owner,
+                    :space => space, :finalized => true,
+                    :visible => true)
+
+      @canvas = Factory(:canvas, :user => @course.owner)
+      Factory(:lecture, :subject => sub,
+              :owner => space.owner, :lectureable => @canvas)
     end
-    let(:canvas) do
-      Factory(:canvas, :container => course.spaces.first, :user => course.owner)
-    end
+
     let(:user) { Factory(:user) }
     let(:ability) { Ability.new(user) }
 
     context "when member" do
       before do
-        course.join(user)
+        @course.join(user)
       end
 
       it "should be able to read" do
-        ability.should be_able_to :read, canvas
+        ability.should be_able_to :read, @canvas
       end
     end
 
     context "when outsider" do
       it "should not be able to read" do
-        ability.should_not be_able_to :read, canvas
+        ability.should_not be_able_to :read, @canvas
       end
-
     end
   end
 

@@ -183,17 +183,17 @@ class Ability
       cannot :update, Lecture do |lecture|
         lec = lecture.lectureable
 
-        (lec.is_a?(Seminar) || lec.is_a?(Document) ||
-         (lec.is_a?(Exercise) && lec.has_results?)) &&
-         (can? :manage, lecture)
+        (lec.is_a?(Seminar) || lec.is_a?(Document) || lec.is_a?(Api::Canvas) \
+         || (lec.is_a?(Exercise) && lec.has_results?)) \
+         && (can? :manage, lecture)
       end
 
       # Canvas
       can :read, Api::Canvas do |canvas|
-        can? :read, canvas.container
+        can? :read, canvas.lecture
       end
       cannot :read, Api::Canvas do |canvas|
-        cannot? :read, canvas.container
+        cannot? :read, canvas.lecture
       end
 
     end
