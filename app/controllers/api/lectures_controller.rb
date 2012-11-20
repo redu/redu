@@ -11,7 +11,6 @@ module Api
       lecture = Lecture.new do |l|
         l.name = params[:lecture][:name]
         l.owner = current_user
-        l.position = (subject.lectures.length + 1)
         l.subject = subject
         l.lectureable = create_lectureable(params[:lecture][:lectureable],
                                            params[:lecture][:type])
