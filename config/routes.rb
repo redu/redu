@@ -61,7 +61,6 @@ Redu::Application.routes.draw do
 
   # site routes
   match '/about' => 'base#about', :as => :about
-  match '/faq' => 'base#faq', :as => :faq
   match 'contact' => 'base#contact', :as => :contact
 
   # Recovery Email
