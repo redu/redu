@@ -10,13 +10,13 @@ end
 class ConnectionError < StandardError
 end
 
-def insert_enrollments(date = '2011-01-01')
+def insert_enrollments(date)
   Enrollment.where("created_at >= '#{date}'").each do |enrollment|
     unless enrollment.subject.space.nil?
       unless enrollment.subject.space.course.nil?
         params_enroll = fill_enroll(enrollment, "enrollment")
         send_async_info(params_enrol,
-                             Redu::Application.config.vis_client[:migration])
+                             Redu::Application.config.vis_client[:url])
       end
     end
   end
@@ -26,7 +26,7 @@ def insert_subject_finalized(date)
   Enrollment.where("grade = 100 AND graduated = true AND created_at >= '#{date}'").each do |profile|
     params_finalized = fill_enroll(profile, "subject_finalized")
     send_async_info(params_finalized,
-                         Redu::Application.config.vis_client[:migration])
+                    Redu::Application.config.vis_client[:url])
   end
 end
 
@@ -35,7 +35,7 @@ def insert_exercise_finalized(date)
     exercise.results.finalized.each do |finalized|
       params = fill_exercise(finalized)
       send_async_info(params,
-                      Redu::Application.config.vis_client[:migration])
+                      Redu::Application.config.vis_client[:url])
     end
   end
 end
@@ -81,6 +81,25 @@ def insert_statuses(date)
   end
 end
 
+def remove_enrollments(date)
+  Enrollment.where("created_at >= '#{date}'").each do |enrollment|
+    if (enrollment.user.get_association_with enrollment.subject.space).nil?
+      params_remove_enrollment = fill_enroll(enrollment, "remove_enrollment")
+
+      send_async_info(params_remove_enrollment,
+                      Redu::Application.config.vis_client[:url])
+
+      if enrollment.grade == 100 and enrollment.graduated
+        params_finalized = fill_enroll(enrollment, "remove_subject_finalized")
+        send_async_info(params_finalized,
+                        Redu::Application.config.vis_client[:url])
+      end
+
+      enrollment.try(:destroy)
+    end
+  end
+end
+
 def send_statuses(status)
   params_status = {
     :user_id => status.user_id,
@@ -99,7 +118,7 @@ def send_statuses(status)
   }
 
   send_async_info(params_status,
-                       Redu::Application.config.vis_client[:migration])
+                       Redu::Application.config.vis_client[:url])
 end
 
 def get_type(status)
