@@ -354,7 +354,7 @@ body {
 }
 
 #content .sidebar .student-actions li > a {
-  width: 88px;
+  width: 90px;
   height: 71px;
   font-size: 1em;
   text-align: center;
@@ -7220,6 +7220,13 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   border: none;
   color: transparent;
 }
+
+.status a.close.link-loading,
+.status a.close.link-loading:hover {
+  background: url("../images/new/spinner-blue-horiz.gif") no-repeat center center;
+  color: transparent;
+}
+
 
 .textshadow .link-loading,
 .textshadow a.link-loading,  /* para sobrepor a precedência de input.important */

@@ -103,6 +103,8 @@ class LicensedInvoice < Invoice
   # invoice.calculate_amount!
   # => #<BigDecimal:104a9fbf0,'0.0',9(18)>
   def calculate_amount!
+    self.remove_duplicated_licenses
+
     days_of_month = 30
     # Preço diário
     factor = self.plan.price / days_of_month
@@ -144,5 +146,17 @@ class LicensedInvoice < Invoice
   def send_pending_notice
     UserNotifier.licensed_pending_notice(self.plan.user, self, self.threshold_date).
       deliver
+  end
+
+  def remove_duplicated_licenses
+    sql = <<-EOS
+      select * from (
+        select * from licenses l ORDER BY l.id DESC
+      ) l2
+      GROUP BY login, invoice_id, course_id, period_end, period_start
+      HAVING count(*) > 1
+    EOS
+    duplicated = License.find_by_sql(sql)
+    License.where(:id => duplicated.collect(&:id)).delete_all
   end
 end

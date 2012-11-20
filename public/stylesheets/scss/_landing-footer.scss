@@ -1,0 +1,127 @@
+// ==========================================================================
+// Rodapé.
+// ==========================================================================
+
+// Wrapper de tudo.
+.landing-footer {
+  @include box-sizing(border-box);
+  height: $landing-footer-height;
+  background-color: $gray3;
+  border-top: 1px solid $gray-drop-shadow;
+
+  .boxshadow & {
+    $box-shadow:
+      0 1px 0 $white inset
+    , 0 -1px 0 $white inset;
+    @include box-shadow($box-shadow);
+  }
+
+  .ie8 & { border-top: 1px solid $gray-drop-shadow; }
+
+  a:visited { color: $blue3; }
+
+  a:visited:hover { color: $blue4; }
+}
+
+
+// Logo do Redu Tech.
+// ==========================================================================
+
+// Wrapper para o logo.
+.landing-footer-logo-wrapper {
+  position: relative;
+  height: 125px;
+}
+
+// Link do logo.
+.landing-footer-logo-link {
+  @include size(300px, 70px);
+  position: absolute;
+  top: 0;
+  left: -115px;
+
+  &:hover { @include sprite-sprite(light-logo); }
+}
+
+// Imagem do logo.
+.landing-footer-logo-img {
+  position: absolute;
+  left: 115px;
+  top: 20px;
+}
+
+// CNPJ.
+.landing-footer-cnpj {
+  font-size: 9px;
+  color: $gray-drop-shadow;
+  position: absolute;
+  bottom: 0;
+}
+
+
+// Links de navegação.
+// ==========================================================================
+
+.landing-footer-navigation {
+  margin: 25px 0 0;
+  list-style: none;
+}
+
+
+// Redes sociais.
+// ==========================================================================
+
+.landing-footer-social-networks-legend {
+  margin-top: 40px;
+  height: 28px;
+  text-align: center;
+
+  .legend {
+    display: inline-block;
+    max-width: 55px;
+  }
+}
+
+.landing-footer-social-networks-legend +
+.landing-footer-social-networks { margin-top: 5px; }
+
+.landing-footer-social-networks { text-align: center; }
+
+.landing-footer-social-network {
+  vertical-align: top;
+
+  & + & { margin-left: 10px; }
+
+  .borderradius & { @include border-radius(16px); }
+
+  .boxshadow & { @include box-shadow(0 1px 0 $white); }
+}
+
+
+// Contato.
+// ==========================================================================
+
+.landing-footer-contact {
+  margin-top: 25px;
+  text-align: right;
+
+  .landing-footer-talk-to-us-balloons { display: block; }
+
+  h3 + .legend { margin-top: 10px; }
+
+  &:hover {
+    @include sprite-sprite(light-talk-to-us);
+    display: block;
+
+    .legend { color: $gray6; }
+
+    a { color: $blue4; }
+
+    .landing-footer-talk-to-us-balloons {
+      display: block;
+      @include sprite-sprite(talk-to-us_hover);
+    }
+  }
+
+  a:hover { text-decoration: none; }
+}

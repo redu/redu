@@ -1,6 +1,6 @@
 <%= form_for @user, :url => update_account_user_path,
   :html => {:multipart =>true, :class => "concave-form"}  do |f|  %>
-  <%= concave_error_messages_for(@user) %>
+  <%= concave_error_messages_for(f.object) %>
 
   <%= field_set_tag "Configurações", :class => 'inline' do %>
     <%= f.check_box :auto_status %>
@@ -29,11 +29,12 @@
 
   <%= field_set_tag "Redefinir E-mail" do %>
     <%= f.label :email, "E-mail:" %>
-    <%=  f.text_field :email %>
+    <%= f.text_field :email %>
 
     <%= f.label :email_confirmation, "Confirmação:",
       :style => "display: none;" %>
-    <%=  f.text_field :email_confirmation, :style => "display: none;" %>
+    <%= f.text_field :email_confirmation, :style => "display: none;" %>
+    <%= concave_errors_for(f.object, :email_confirmation) %>
   <% end %>
 
   <hr/>
@@ -41,15 +42,17 @@
   <%= field_set_tag "Redefinir Senha" do %>
     <%= label_tag :current_password, "Senha atual:" %>
     <% if @flag %>
-      <%=  password_field_tag :current_password, nil %>
+      <%= password_field_tag :current_password, nil %>
     <% else %>
-      <%=  password_field_tag :current_password %>
+      <%= password_field_tag :current_password %>
     <% end %>
+    <%= concave_errors_for(f.object, :current_password) %>
 
     <%= f.label :password,  (t :new_password) + ":" %>
-    <%=  f.password_field :password %>
+    <%= f.password_field :password %>
+    <%= concave_errors_for(f.object, :password) %>
     <%= f.label :password_confirmation, "Confirmação:" %>
-    <%=  f.password_field :password_confirmation %>
+    <%= f.password_field :password_confirmation %>
   <% end %>
 
   <hr/>

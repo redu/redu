@@ -31,16 +31,7 @@ module Api
       authorize! :read, context
       statuses = statuses(context)
 
-      statuses = case params.fetch(:type, "").downcase
-      when 'help'
-        statuses.where(:type => 'Help')
-      when 'log'
-        statuses.where(:type => 'Log')
-      when 'activity'
-        statuses.where(:type => 'Activity')
-      else
-        statuses.where(:type => ['Help', 'Activity'])
-      end
+      statuses = filter_by_type(statuses, params.fetch(:type, "").downcase)
 
       statuses = statuses.page(params[:page])
 
@@ -67,6 +58,7 @@ module Api
       end
 
       statuses = filter_and_includes(statuses)
+      statuses = filter_by_type(statuses, params.fetch(:type, "").downcase)
       statuses = statuses.page(params[:page])
 
       respond_with(:api, statuses)
@@ -97,6 +89,19 @@ module Api
     def filter_and_includes(statuses)
       statuses = statuses.not_compound_log
       statuses = statuses.includes(:user => :social_networks)
+    end
+
+    def filter_by_type(statuses, type)
+      case type
+      when 'help'
+        statuses.where(:type => 'Help')
+      when 'log'
+        statuses.where(:type => 'Log')
+      when 'activity'
+        statuses.where(:type => 'Activity')
+      else
+        statuses.where(:type => ['Help', 'Activity', 'Log'])
+      end
     end
   end
 end

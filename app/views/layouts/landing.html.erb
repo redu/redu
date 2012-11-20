@@ -1,0 +1,26 @@
+<!doctype html>
+<!--[if gt IE 8]><html class="gt-ie8" lang="pt-br"><![endif]-->
+<!--[if gt IE 8]><!--><html lang="pt-br"><!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <title><%= raw(page_title) %></title>
+    <%= csrf_meta_tag %>
+    <%= include_stylesheets :landing %>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <%= include_javascripts :landing %>
+    <%= render :partial => "shared/typekit" %>
+    <%= render :partial => "shared/analytics" %>
+  </head>
+  <body data-spy="scroll" data-target=".filters" data-offset="140">
+    <%= render :partial => 'shared/outdated_browser' %>
+    <div class="main-wrapper">
+      <%= render :partial => "shared/header_not_logged_in" %>
+      <%= render :partial => 'shared/system_flash_message' %>
+      <%= render :partial => "landing/welcome" %>
+      <%= yield %>
+      <div class="footer-pusher"></div>
+    </div>
+    <%= render :partial => "shared/footer" %>
+    <%= render :partial => "shared/olark" %>
+  </body>
+</html>

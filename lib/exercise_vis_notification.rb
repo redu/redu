@@ -1,14 +1,14 @@
 module ExerciseVisNotification
   include VisClient
 
-  def send_to_vis(result)
-    params = build_hash_to_vis(result)
+  def send_to_vis(result, destroy_exercise)
+    params = build_hash_to_vis(result, destroy_exercise)
     send_async_info(params, Redu::Application.config.vis_client[:url])
   end
 
   protected
 
-  def build_hash_to_vis(result)
+  def build_hash_to_vis(result, destroy_exercise)
     exercise = result.exercise
     space = exercise.lecture.subject.space
     params = {
@@ -17,7 +17,7 @@ module ExerciseVisNotification
       :space_id => space.id,
       :course_id => space.course.id,
       :user_id => result.user_id,
-      :type => "exercise_finalized",
+      :type => destroy_exercise ? "remove_exercise_finalized" : "exercise_finalized",
       :grade => result.grade,
       :status_id => nil,
       :statusable_id => nil,

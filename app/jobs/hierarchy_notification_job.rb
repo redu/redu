@@ -17,23 +17,41 @@ class HierarchyNotificationJob
   private
 
   def send_multi_request
-    EM.run do
+    @running = EM.reactor_running?
+    em do
       multi = EventMachine::MultiRequest.new
       url = Redu::Application.config.vis_client[:url]
-      enrollments.each  do |enroll|
-        multi.add EM::HttpRequest.new(url).post({
+      enrollments.each_with_index do |enroll, idx|
+        # Cada requisição deve ter um nome
+        multi.add idx, EM::HttpRequest.new(url).post({
           :body => enroll.to_json,
           :head => {'Authorization' => ["core-team", "JOjLeRjcK"],
                     'Content-Type' => 'application/json' }})
       end
 
       multi.callback do
-        EM.stop
+        multi.responses[:callback]
+        multi.responses[:errback].each do |err|
+          log = Logger.new("log/error.log")
+          log.error "Errback, Bad DNS or Timeout, with body: #{err[1].req.body}"
+          log.close
+        end
+
+        EM.stop unless @running
       end
     end
   end
 
-  # preenche os parametros para envio para visualização
+  def em(&block)
+    if EM.reactor_running?
+      yield
+    else
+      @block = block
+      EM.run { @block.call }
+    end
+  end
+
+  # Preenche os parametros para envio para visualização
   def fill_enroll_params(enrollment_id, type)
     enrollment = Enrollment.find(enrollment_id)
     course = enrollment.subject.space.course

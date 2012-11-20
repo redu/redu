@@ -3,7 +3,7 @@ class ResultObserver < ActiveRecord::Observer
 
   def before_update(result)
     if finalized? result
-      send_to_vis(result)
+      send_to_vis(result, false)
     end
   end
 

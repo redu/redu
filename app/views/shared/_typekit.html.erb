@@ -1,0 +1,6 @@
+<%= lazy_load("http://use.typekit.com/lpo4rgu.js", :jammit => false) do %>
+  try{
+    Typekit.load();
+    $(".typekit-badge").css("left", "0")
+  }catch(e){}
+<% end %>

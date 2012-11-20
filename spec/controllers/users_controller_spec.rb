@@ -19,7 +19,7 @@ describe UsersController do
 
     context "when creating an account" do
       before do
-        @post_params = { :locale => 'pt-BR',
+        @post_params = { :locale => 'pt-BR', :format => "js",
           :user => { "birthday(1i)" => "1986", :tos => "1",
             :email_confirmation=> "email@example.com", "birthday(2i)" => "4",
             :password_confirmation => "password", "birthday(3i)" => "6",
@@ -68,9 +68,6 @@ describe UsersController do
             assigns[:user_course_invitation].should == @invite
           end
 
-          it "re-renders Users#new" do
-            response.should render_template('users/new')
-          end
         end
 
         context "and the same email that was invited" do
@@ -130,6 +127,7 @@ describe UsersController do
             post :create, @post_params
             @created_user = User.find_by_email(@post_params[:user][:email])
           end
+
           it "invite should be accepted (Invitation should be destroyed)" do
             Invitation.all.should be_empty
           end
@@ -138,8 +136,8 @@ describe UsersController do
             @created_user.friendships.should_not be_empty
           end
 
-          it "should be redirected to signup completed" do
-            response.should redirect_to signup_completed_user_path(@created_user)
+          it "response should be success" do
+            response.should be_success
           end
         end
 
@@ -275,25 +273,39 @@ describe UsersController do
       activate_authlogic
       UserSession.create @user
 
-      @post_params = { :locale => "pt-BR", :current_password => @user.password,
-        :id => @user.login, :user => {
-        :email_confirmation => "new_email@example.com",
-        :password_confirmation => "new-pass", :auto_status => "1",
-        :notify_messages => "1", :notify_community_news => "1",
-        :notify_followships => "1", :password => "new-pass",
-        :settings_attributes => { :id  =>@user.settings.id,
-          :view_mural => "1" }, :email => "new_email@example.com" } }
+      @post_params =
+        { :locale => "pt-BR",
+          :current_password => @user.password,
+          :id => @user.login,
+          :user => {
+            :email => "new_email@example.com",
+            :email_confirmation => "new_email@example.com",
+            :auto_status => "1",
+            :notify_messages => "1",
+            :notify_community_news => "1",
+            :notify_followships => "1",
+            :password => "new-pass",
+            :password_confirmation => "new-pass",
+            :settings_attributes => {
+              :id => @user.settings.id,
+              :view_mural => "1"
+            }
+          }
+        }
     end
 
     context "when successful" do
       before do
         post :update_account, @post_params
+        @user.reload
       end
 
       it "updates the user account informations" do
-        authenticated = UserSession.new(:login => @user.login,:password => @post_params[:user][:password]).save
-        authenticated.should be_true
-        @user.reload.email.should == @post_params[:user][:email]
+        @user.email.should == @post_params[:user][:email]
+      end
+
+      it "should updates user password" do
+        @user.password == @post_params[:user][:password]
       end
 
       it "redirects to account_user_path" do
@@ -302,20 +314,24 @@ describe UsersController do
     end
 
     context "when failing" do
-      before do
-        @post_params[:current_password] = "wrong-pass"
-        post :update_account, @post_params
-      end
+      context "wrong password" do
+        before do
+          @post_params[:current_password] = "wrong-pass"
+          post :update_account, @post_params
+          @user.reload
+        end
 
-      it "does NOT update the user account informations" do
-        assigns[:user].errors.should_not be_empty
-        authenticated = UserSession.new(:login => @user.login,:password => @post_params[:user][:password]).save
-        authenticated.should_not be_true
-        @user.reload.email.should_not == @post_params[:user][:email]
-      end
+        it "does NOT update the user account informations" do
+          @user.email.should_not == @post_params[:user][:email]
+        end
 
-      it "re-renders users/account" do
-        response.should render_template("users/account")
+        it "should add some errors on user" do
+          assigns[:user].errors.should_not be_empty
+        end
+
+        it "re-renders users/account" do
+          response.should render_template("users/account")
+        end
       end
     end
   end

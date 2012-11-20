@@ -7,6 +7,7 @@
 
 <%= f.label :name, "Nome" %>
 <%= f.text_field :name %>
+<%= concave_errors_for(f.object, :name) %>
 <span class="tip">Nome do curso</span>
 <%= f.label :workload, "Carga Horária" %>
 <%= f.text_field :workload, :class => 'concave-nano' %>
@@ -14,9 +15,11 @@
 <span class="tip">Ex.: 60</span>
 <%= f.label :path, "URL" %>
 <%= f.text_field :path %>
+<%= concave_errors_for(f.object, :path) %>
 <span class="tip">Endereço eletrônico do curso</span>
 <%= f.label :description, "Descrição" %>
 <%= f.text_area :description, :size => '100x5' %>
+<%= concave_errors_for(f.object, :description) %>
 <span class="tip">Informações acerca do curso</span>
 <%= f.label :tag_list, raw("Palavras-chave <span class='snippet'>(separadas por vírgula)</span>") %>
 <%= f.text_field :tag_list %>

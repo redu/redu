@@ -2,6 +2,10 @@ source 'http://rubygems.org'
 source 'http://gems.github.com'
 source 'http://reduadmin:pomp64bozos@the-shire.herokuapp.com/'
 
+group :assets do
+  gem 'compass-rails'
+end
+
 gem 'aasm'
 gem 'actionmailer_inline_css',
   :git => 'git://github.com/ndbroadbent/actionmailer_inline_css.git',
@@ -20,14 +24,15 @@ gem 'aws-s3', :require => 'aws/s3'
 gem 'aws-sdk'
 gem 'backup',
   :git => 'git://github.com/meskyanichi/backup.git'
-gem 'bundler', '~> 1.0.15'
+gem 'bundler', '~> 1.2'
 gem 'cancan', '~> 1.6.7'
 gem 'ckeditor', '3.4.2.pre'
 gem 'daemons'
 gem 'date_validator'
+gem 'mongoid', '~> 2.2.6', :require => 'mongoid/version'
 gem 'deep_cloneable'
-gem 'delayed_job_active_record',
-  :git => 'git://github.com/collectiveidea/delayed_job_active_record.git'
+gem 'delayed_job_mongoid'
+gem 'bson_ext'
 gem 'dynamic_form'
 gem 'em-http-request'
 gem 'eventmachine'
@@ -63,13 +68,14 @@ gem 'vis_client', :git => 'git@github.com:redu/vis_client.git'
 gem 'whenever', :require => false
 gem 'will_paginate', '~> 3.0.pre2'
 gem 'zencoder'
+gem 'untied-publisher', :git => 'git://github.com/redu/untied-publisher'
 
 # Gems específicos para a API
 gem 'oauth-plugin', '~> 0.4.0'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'roar-rails', '~> 0.0.3',
   :git => 'git://github.com/apotonick/roar-rails.git'
-gem 'destroy_soon', :git => 'git://github.com/redu/destroy-soon.git'
+gem 'destroy_soon'
 gem 'redu_analytics'
 
 # Gems específicos de algum ambiente
@@ -83,12 +89,11 @@ group :development, :test do
 end
 
 group :test do
-  gem 'webmock', '~> 1.8.6'
+  gem 'webmock', :git => 'git://github.com/fltiago/webmock'
   gem 'ruby-prof'
 end
 
 group :development do
-  gem 'thin'
   # gem 'uniform_notifier'
 
   # Gems úteis p/ análise performance

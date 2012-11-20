@@ -5,7 +5,7 @@ describe OauthClientsController do
   include Authlogic::TestCase
 
   before do
-    @user = Factory(:partner_user)
+    @user = Factory(:user, :role => Role[:admin])
     activate_authlogic
     UserSession.create @user
 

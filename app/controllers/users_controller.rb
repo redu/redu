@@ -113,7 +113,7 @@ class UsersController < BaseController
         end
 
         flash[:notice] = t(:email_signup_thanks, :email => @user.email)
-        redirect_to signup_completed_user_path(@user)
+        respond_with(@user)
       else
         # Se tem um token de convite para o curso, atribui as variáveis
         # necessárias para mostrar o convite em Users#new
@@ -142,10 +142,10 @@ class UsersController < BaseController
             redirect_back_or_default user_path(current_user)
           else
             flash[:notice] = t :uh_oh_we_couldnt_log_you_in_with_the_username_and_password_you_entered_try_again
-            render :action => :new
+            respond_with(@user)
           end
         else
-          render :template => 'users/new', :layout => 'cold'
+          respond_with(@user)
         end
       end
     # FIXME Após migrar o Rails (> 3.0.10) ver se a solução clean funciona.
@@ -209,31 +209,24 @@ class UsersController < BaseController
   end
 
   def update_account
-    # alteracao de senha na conta do usuario
-    if params.has_key? "current_password" and !params[:current_password].empty?
-      @flag = false
-      authenticated = UserSession.new(:login => @user.login,
-                                      :password => params[:current_password]).save
 
-      if authenticated
-        @user.attributes  = params[:user]
-        @user.save
-      else
-        @current_password = params[:current_password]
-        @user.errors.add(:base, "A senha atual está incorreta")
-        @flag = true
-      end
-
-      if params[:user].has_key? "password" and params[:user][:password].empty?
-        @user.errors.add(:base, "A nova senha não pode ser em branco")
+    if params[:current_password].blank?
+      if (!params[:user][:password].blank? ||
+          !params[:user][:password_confirmation].blank?)
+        @user.errors.add(:current_password, "A senha atual não pode ser deixada em branco.")
+        params[:user][:password] = ""
+        params[:user][:password_confirmation] = ""
       end
     else
-      params[:user][:password] = @user.password
-      @user.attributes  = params[:user]
-      @user.save
+      unless @user.valid_password? params[:current_password]
+        @user.errors.add(:current_password, "A senha atual está errada.")
+        params[:user][:password] = ""
+        params[:user][:password_confirmation] = ""
+      end
     end
 
-    if @user.errors.empty?
+    @user.attributes = params[:user]
+    if @user.errors.empty? && @user.save
       flash[:notice] = t :your_changes_were_saved
       redirect_to(account_user_path(@user))
     else
@@ -432,4 +425,5 @@ class UsersController < BaseController
       super
     end
   end
+
 end
