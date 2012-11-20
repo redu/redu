@@ -15,7 +15,7 @@ def insert_enrollments(date)
     unless enrollment.subject.space.nil?
       unless enrollment.subject.space.course.nil?
         params_enroll = fill_enroll(enrollment, "enrollment")
-        send_async_info(params_enrol,
+        send_async_info(params_enroll,
                              Redu::Application.config.vis_client[:url])
       end
     end
