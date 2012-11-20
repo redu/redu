@@ -59,11 +59,11 @@ GIT
 
 GIT
   remote: git://github.com/redu/untied-publisher
-  revision: de0ec81a7401be1525cbc1809c2e45415ad01e25
+  revision: 4fb5a11fbf102df48cea722b71aef8a6793661b7
   specs:
     untied-publisher (0.0.4)
       activerecord
-      amqp (= 0.9.6)
+      amqp
       configurable
       json
       representable
@@ -137,9 +137,9 @@ GEM
       amq-protocol (>= 0.9.4)
       eventmachine
     amq-protocol (0.9.5)
-    amqp (0.9.6)
-      amq-client (~> 0.9.3)
-      amq-protocol (>= 0.9.1)
+    amqp (0.9.8)
+      amq-client (~> 0.9.5)
+      amq-protocol (>= 0.9.4)
       eventmachine
     ar_mailer_rails3 (2.1.12)
     arel (2.0.10)
