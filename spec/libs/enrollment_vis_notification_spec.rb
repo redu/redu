@@ -92,7 +92,7 @@ describe EnrollmentVisNotification do
     end
   end
 
-  context "in a Status Observer" do
+  context "in a Enrollment Observer" do
     before do
       subject_owner = Factory(:user)
       @space = Factory(:space)
