@@ -351,7 +351,8 @@ describe UsersController do
     [:friends_requisitions, :course_invitations, :statuses, :status,
       :contacts_recommendations].each do |var|
       it "assigns @#{var}" do
-        request.cookies["first_time"] = 1
+        @user.settings.first_access = false
+        @user.save
         get :home, @params
 
         assigns[var].should_not be_nil

@@ -437,8 +437,9 @@ class UsersController < BaseController
   end
 
   def first_access?
-    if cookies[:first_time].nil?
-      cookies.permanent[:first_time] = 1
+    if current_user.settings.first_access == true
+      current_user.settings.first_access = false
+      current_user.save
       render 'users/first-experience'
     end
   end
