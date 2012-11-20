@@ -24,8 +24,11 @@ module Api
 
     def create
       space = Space.find(params[:space_id])
-      subject = Subject.new(params[:subject])
-      subject.space = space
+      subject = Subject.new(params[:subject]) do |s|
+        s.owner = current_user
+        s.space = space
+      end
+
       authorize! :create, subject
       subject.finalized = true
       subject.save
