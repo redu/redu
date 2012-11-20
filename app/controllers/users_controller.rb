@@ -408,7 +408,6 @@ class UsersController < BaseController
       end
     end
 
-
     @users = @users.paginate(:page => params[:page], :order => 'first_name ASC',
                :per_page => 18)
 
@@ -421,6 +420,13 @@ class UsersController < BaseController
             :partial_locals => { :entity => entity }
       end
     end
+  end
+
+  def explore
+    @user.settings.update_attributes(params[:clicked_on] => false)
+    @user.save
+
+    redirect_to params[:url]
   end
 
   protected
