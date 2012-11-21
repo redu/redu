@@ -18,7 +18,7 @@ module Untied
     def walledgarden_client_applications
       oauth_tokens = self.tokens.joins(:client_application).
         includes(:client_application).
-        where(:client_applications => { :walledgarden => true }).limit(1)
+        where(:client_applications => { :walledgarden => true })
 
       oauth_tokens.collect do |t|
         {
