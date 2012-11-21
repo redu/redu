@@ -15,7 +15,7 @@ describe UserWalledgardenAppsObserver do
     it "toches the user" do
       with_observers do
         user = Factory.build(:user)
-        user.should_receive(:touch).once
+        user.should_receive(:update_attributes).once
         user.save
       end
     end
@@ -25,7 +25,7 @@ describe UserWalledgardenAppsObserver do
 
       with_observers do
         user = Factory.build(:user)
-        user.should_receive(:touch).once
+        user.should_receive(:update_attributes).once
         user.save
       end
     end
