@@ -7,7 +7,7 @@ class UserWalledgardenAppsObserver < ActiveRecord::Observer
     applications.each do |app|
       Oauth2Token.create(:client_application => app, :user => user)
     end
-    user.touch
+    user.update_attributes({ :updated_at => Time.zone.now })
   end
 
   protected
