@@ -85,13 +85,18 @@ namespace :bootstrap do
 
   desc "Create OAuth Client Application for Redu Apps"
   task :reduapps_app => :environment do
-    user_admin = User.find_by_id(2)
+    user_admin = User.find_by_login("administrator")
+    test_user = User.find_by_login("test_user")
 
     c = ClientApplication.create(:name => "Portal de aplicativos",
                              :url => "http://aplicativos.redu.com.br",
                              :user => user_admin,
                              :walledgarden => true)
     c.update_attribute(:secret, 'xxx')
+
+    [user_admin, test_user].each do |u|
+      Oauth2Token.create(:client_application => c, :user => u)
+    end
   end
 
   desc "Run all bootstrapping tasks"
