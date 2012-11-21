@@ -3,6 +3,8 @@ module Untied
     # Utilizado para serializar modelo de User enviado pelo Untied
     include Roar::Representer::JSON
 
+    self.representation_wrap = true
+
     property :id
     property :first_name
     property :last_name
