@@ -59,9 +59,9 @@ GIT
 
 GIT
   remote: git://github.com/redu/untied-publisher
-  revision: 4fb5a11fbf102df48cea722b71aef8a6793661b7
+  revision: 1daf8146ddc5dd2b3c4d5cfa990c67dc60ad171f
   specs:
-    untied-publisher (0.0.4)
+    untied-publisher (0.0.5)
       activerecord
       amqp
       configurable
