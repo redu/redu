@@ -87,10 +87,11 @@ namespace :bootstrap do
   task :reduapps_app => :environment do
     user_admin = User.find_by_id(2)
 
-    ClientApplication.create(:name => "Portal de aplicativos",
+    c = ClientApplication.create(:name => "Portal de aplicativos",
                              :url => "http://aplicativos.redu.com.br",
                              :user => user_admin,
                              :walledgarden => true)
+    c.update_attribute(:secret, 'xxx')
   end
 
   desc "Run all bootstrapping tasks"
