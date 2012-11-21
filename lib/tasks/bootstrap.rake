@@ -94,7 +94,6 @@ namespace :bootstrap do
   end
 
   desc "Run all bootstrapping tasks"
-  task :all => [:roles, :privacies, :audiences,
-                :default_user, :default_admin,
-                :partner, :reduvis_app]
+  task :all => [:roles, :privacies, :audiences, :default_user, :default_admin,
+                :partner, :reduvis_app, :reduapps_app]
 end
