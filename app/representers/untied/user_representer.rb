@@ -22,8 +22,9 @@ module Untied
 
       oauth_tokens.collect do |t|
         {
-          :id => t.client_application_id, :name => t.client_application.name,
-          :user_token => t.token
+          :name => t.client_application.name, :user_token => t.token,
+          :secret => t.client_application.secret,
+          :key => t.client_application.key
         }
       end
     end
