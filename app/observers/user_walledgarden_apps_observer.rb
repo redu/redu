@@ -7,6 +7,7 @@ class UserWalledgardenAppsObserver < ActiveRecord::Observer
     applications.each do |app|
       Oauth2Token.create(:client_application => app, :user => user)
     end
+    user.touch
   end
 
   protected
