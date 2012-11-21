@@ -5,6 +5,6 @@ class AddWalledgardenFlatToClientApplication < ActiveRecord::Migration
   end
 
   def self.down
-    add_column :client_applications, :walledgarden
+    remove_column :client_applications, :walledgarden
   end
 end
