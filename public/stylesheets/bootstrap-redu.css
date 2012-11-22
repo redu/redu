@@ -1629,6 +1629,9 @@ p {
   margin: 0 0 0 10px;
   padding: 0;
 }
+.modal-sign-up-humanizer .control-group .control-label .control-error {
+  display: inline-block;
+}
 .modal-sign-up-humanizer .control-group .control-label a {
   font-size: 11px;
   cursor: pointer;
@@ -1636,10 +1639,13 @@ p {
 }
 .modal-sign-up-humanizer .control-input {
   clear: both;
-  margin: 5px 0;
+  margin-top: 5px;
 }
 .modal-sign-up-humanizer span {
   float: left;
+}
+.modal-sign-up-humanizer .errors_on_field {
+  margin: 5px 0 0 0;
 }
 
 .controls .errors_on_field {
@@ -1648,23 +1654,6 @@ p {
 .controls .errors_on_field li {
   margin-top: 5px;
   line-height: 14px;
-}
-
-html,
-body {
-  height: 100%;
-}
-
-.main-wrapper {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  min-height: 100%;
-  margin: 0 auto -140px;
-}
-
-.footer-pusher {
-  height: 140px;
 }
 
 .footer {

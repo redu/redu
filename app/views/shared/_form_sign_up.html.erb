@@ -108,9 +108,9 @@
             </div>
             <div class="offset5 span4">
               <%= f.text_field :humanizer_answer, :class => "control-input", :placeholder => "Responda a pergunta acima" %>
+              <%= f.hidden_field :humanizer_question_id %>
+              <%= concave_errors_for @user, :humanizer_answer %>
             </div>
-            <%= f.hidden_field :humanizer_question_id %>
-            <%= concave_errors_for @user, :humanizer_answer %>
           </div>
         </div>
         <div class="modal-sign-up-tos">
