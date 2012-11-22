@@ -1,7 +1,7 @@
 pt-BR:
   humanizer:
     validation:
-      error: Você não é humano
+      error: Ops, a resposta não está correta.
     questions:
       - question: Dois mais dois?
         answers: ["4", "quatro"]
