@@ -1641,9 +1641,6 @@ p {
   clear: both;
   margin-top: 5px;
 }
-.modal-sign-up-humanizer span {
-  float: left;
-}
 .modal-sign-up-humanizer .errors_on_field {
   margin: 5px 0 0 0;
 }
