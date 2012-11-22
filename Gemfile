@@ -87,6 +87,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 2.8'
   gem 'ruby-debug'
   gem 'shoulda-matchers'
+  gem 'sunspot_solr'
 end
 
 group :test do
