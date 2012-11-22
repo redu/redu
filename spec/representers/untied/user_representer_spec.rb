@@ -11,7 +11,7 @@ describe Untied::UserRepresenter do
 
   context "properties" do
     %w(login first_name last_name id crypted_password password_salt email
-       persistence_token client_applications).each do |property|
+       persistence_token client_applications avatar_url).each do |property|
         it "should have property #{property}" do
           user_repr.should have_key(property)
         end
@@ -39,6 +39,17 @@ describe Untied::UserRepresenter do
     it "should not include API token for non walledgarden apps" do
       tokens = user_repr.fetch("client_applications", [])
       tokens.should be_empty
+    end
+  end
+
+  context "avatar" do
+    it "should include a fully-fladged URL" do
+      config = Redu::Application.config.paperclip_user.clone
+      config[:default_url] = 'http://foo.bar'
+      User.has_attached_file(:avatar, config)
+
+      user_repr.fetch('avatar_url', '').should == config[:default_url]
+      User.has_attached_file(:avatar, Redu::Application.config.paperclip_user)
     end
   end
 
