@@ -40,6 +40,28 @@ describe Untied::UserRepresenter do
       tokens = user_repr.fetch("client_applications", [])
       tokens.should be_empty
     end
+
+    context "when having more than one client_application per application" do
+      before do
+        @application.update_attribute(:walledgarden, true)
+        _, _, @new_token = generate_token(user, @application)
+
+        # Token autorizado após o primeiro
+        user.tokens.where(:token => @new_token).first.
+          update_attribute(:authorized_at, Date.tomorrow)
+      end
+
+      it "should include only the more recent application token" do
+        tokens = user_repr.fetch("client_applications", [])
+
+        tokens.should == [{
+          "name" => @application.name,
+          "user_token" => @new_token,
+          "secret" => @application.secret,
+          "key" => @application.key
+        }]
+      end
+    end
   end
 
   context "avatar" do

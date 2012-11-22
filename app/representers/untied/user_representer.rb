@@ -19,9 +19,12 @@ module Untied
     def walledgarden_client_applications
       oauth_tokens = self.tokens.joins(:client_application).
         includes(:client_application).
-        where(:client_applications => { :walledgarden => true })
+        where(:client_applications => { :walledgarden => true }).
+        order("authorized_at DESC")
 
-      oauth_tokens.collect do |t|
+      oauth_tokens.group_by(&:client_application_id).collect do |app, tokens|
+        t = tokens[0] # Token mais recente da app
+
         {
           :name => t.client_application.name, :user_token => t.token,
           :secret => t.client_application.secret,
