@@ -62,6 +62,7 @@ gem 'scribd_fu', :git => 'git://github.com/guiocavalcanti/scribd_fu.git',
   :branch => 'without-scape'
 gem 'shuber-sortable'
 gem 'simple-navigation'
+gem 'sunspot_rails'
 gem 'translate_routes'
 gem 'useragent', '~> 0.4.8'
 gem 'vis_client', :git => 'git@github.com:redu/vis_client.git'

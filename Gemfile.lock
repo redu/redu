@@ -313,6 +313,7 @@ GEM
       cocaine (>= 0.0.2)
       mime-types
     polyglot (0.3.3)
+    pr_geohash (1.0.0)
     premailer (1.7.3)
       css_parser (>= 1.1.9)
       htmlentities (>= 4.0.0)
@@ -358,6 +359,8 @@ GEM
       nokogiri
     rscribd (1.3.0)
       mime-types
+    rsolr (1.0.8)
+      builder (>= 2.1.2)
     rspec (2.9.0)
       rspec-core (~> 2.9.0)
       rspec-expectations (~> 2.9.0)
@@ -393,6 +396,12 @@ GEM
       ruby-hmac
     simple-navigation (3.5.0)
       activesupport (>= 2.3.2)
+    sunspot (1.3.3)
+      pr_geohash (~> 1.0)
+      rsolr (~> 1.0.7)
+    sunspot_rails (1.3.3)
+      nokogiri
+      sunspot (= 1.3.3)
     test_xml (0.1.2)
       nokogiri (>= 1.3.2)
     thor (0.14.6)
@@ -479,6 +488,7 @@ DEPENDENCIES
   shoulda-matchers
   shuber-sortable
   simple-navigation
+  sunspot_rails
   translate_routes
   untied-publisher!
   useragent (~> 0.4.8)
