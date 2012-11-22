@@ -20,6 +20,10 @@ module LectureRepresenter
     api_lecture_url(self)
   end
 
+  link :self_link do
+    space_subject_lecture_url(self.subject.space, self.subject, self)
+  end
+
   link :subject do
     api_subject_url(self.subject)
   end
