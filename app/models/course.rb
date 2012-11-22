@@ -5,6 +5,8 @@ class Course < ActiveRecord::Base
 
   # Apenas deve ser chamado na criação do segundo curso em diante
   after_create :create_user_course_association, :unless => "self.environment.nil?"
+  after_create :index_search
+  after_update :index_search
 
   belongs_to :environment
   has_many :spaces, :dependent => :destroy,
@@ -95,6 +97,9 @@ class Course < ActiveRecord::Base
   attr_protected :owner, :published, :environment
 
   acts_as_taggable
+  searchable do
+
+  end
 
   validates_presence_of :name, :path
   validates_uniqueness_of :name, :path, :scope => :environment_id
@@ -366,5 +371,10 @@ class Course < ActiveRecord::Base
         license.try(:update_attributes, {:period_end => DateTime.now})
       end
     end
+  end
+
+  # Indexa o objeto na busca
+  def index_search
+    self.index
   end
 end

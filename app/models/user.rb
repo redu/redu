@@ -10,7 +10,8 @@ class User < ActiveRecord::Base
 
   # CALLBACKS
   before_create :make_activation_code
-  after_create  :update_last_login
+  after_create  :update_last_login, :index_search
+  after_update :index_search
   before_validation :strip_whitespace
 
   # ASSOCIATIONS
@@ -150,6 +151,10 @@ class User < ActiveRecord::Base
   acts_as_taggable
   has_private_messages
 
+  searchable do
+
+  end
+
   # VALIDATIONS
   validates_presence_of     :first_name, :last_name, :login, :email,
                             :email_confirmation
@@ -205,7 +210,7 @@ class User < ActiveRecord::Base
       if auth[:info][:image]
         # Atualiza o avatar do usuário de acordo com seu avatar no Facebook
         # a menos que a imagem do avatar seja a default
-        unless auth[:info][:image] == 
+        unless auth[:info][:image] ==
           "http://graph.facebook.com/100002476817463/picture?type=square"
           user.avatar = open(auth[:info][:image])
         end
@@ -226,7 +231,7 @@ class User < ActiveRecord::Base
     end
 
     # Modo safe para descobrir o tamanho máximo válido para login de usuário
-    max_length = (User.validators_on(:login).select { |v| v.class == 
+    max_length = (User.validators_on(:login).select { |v| v.class ==
       ActiveModel::Validations::LengthValidator }).first.options[:maximum]
     unless login.length <= max_length
       login = login.first(max_length)
@@ -734,5 +739,10 @@ class User < ActiveRecord::Base
     %w(login first_name last_name email).each do |var|
       self.send("#{var}=", (self.send(var).strip if attribute_present? var))
     end
+  end
+
+  # Indexa o objeto na busca
+  def index_search
+    self.index
   end
 end
