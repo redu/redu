@@ -1927,4 +1927,67 @@ describe Ability do
     end
   end
 
+  context "a user with a blocked association" do
+    before do
+      @user = Factory(:user)
+      @ability = Ability.new(@user)
+    end
+
+    context 'in an environment' do
+      before do
+        @environment = Factory(:environment, :blocked => true)
+        Factory(:user_environment_association, :environment => @environment,
+                :user => @user)
+      end
+
+      it 'can not read the environment' do
+        @ability.should_not be_able_to(:read, @environment)
+      end
+    end
+
+    context 'in a course' do
+      before do
+        @course = Factory(:course, :blocked => true)
+        Factory(:user_course_association, :course => @course, :user => @user).
+          approve!
+      end
+
+      it 'can not read the course' do
+        @ability.should_not be_able_to(:read, @course)
+      end
+    end
+
+    context 'in a space' do
+      before do
+        @space = Factory(:space, :blocked => true)
+        Factory(:user_space_association, :space => @space, :user => @user)
+      end
+
+      it 'can not read the space' do
+        @ability.should_not be_able_to(:read, @space)
+      end
+    end
+
+    context 'in a subject' do
+      before do
+        @subject = Factory(:subject, :blocked => true)
+        Factory(:enrollment, :subject => @subject, :user => @user)
+      end
+
+      it 'can not read the subject' do
+        @ability.should_not be_able_to(:read, @subject)
+      end
+    end
+
+    context 'in a lecture' do
+      before do
+        @lecture = Factory(:lecture, :blocked => true)
+        Factory(:enrollment, :subject => @lecture.subject, :user => @user)
+      end
+
+      it 'can not read the lecture' do
+        @ability.should_not be_able_to(:read, @lecture)
+      end
+    end
+  end
 end

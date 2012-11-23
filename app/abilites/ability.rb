@@ -60,10 +60,6 @@ class Ability
     # Reports
     alias_action :teacher_participation_interaction, :to => :manage
 
-    # Todos podem ver o preview
-    can :preview, [Course, Environment]
-    can :preview, Subject, :visible => true
-
     # Todos podem criar usuários
     can :create, User
 
@@ -91,6 +87,9 @@ class Ability
       can :read, :all do |object|
         user.can_read? object
       end
+
+      cannot [:manage, :read], [Environment, Course, Space, Subject, Lecture],
+        :blocked => true
 
       can :create, Environment
 
@@ -197,5 +196,9 @@ class Ability
       end
 
     end
+
+    # Todos podem ver o preview
+    can :preview, [Course, Environment]
+    can :preview, Subject, :visible => true
   end
 end

@@ -12,7 +12,7 @@ FactoryGirl.define do
     workload 40
 
     after_create do |c|
-      c.spaces << Factory(:space, :owner => c.owner, :course => c)
+      c.spaces << Factory(:complete_space, :owner => c.owner, :course => c)
     end
   end
 
