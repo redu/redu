@@ -109,3 +109,20 @@ body {
 .learning-environments h3, .learning-environments h4 {
   font-weight: lighter;
 }
+.environment ul,
+.environment ol,
+.environment li {
+  list-style: none;
+}
+
+.environment-title {
+  padding: 10px 20px;
+  overflow: hidden;
+}
+.environment-title .portal-title-link {
+  width: auto;
+}
+
+.list-environment-course-space-item {
+  margin: 20px;
+}

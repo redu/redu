@@ -1,0 +1,16 @@
+.environment {
+  ul,
+  ol,
+  li { list-style: none; }
+}
+
+.environment-title {
+  padding: 10px 20px;
+  overflow: hidden;
+
+  .portal-title-link { width: auto; }
+}
+
+.list-environment-course-space-item {
+  margin: 20px;
+}
