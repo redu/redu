@@ -4,7 +4,7 @@ module Api
 
     module InstanceMethods
       def subject_abilities(user)
-        alias_action :destroy, :to => :manage
+        alias_action :destroy, :create, :to => :manage
 
         if user
           can :read, Subject do |s|

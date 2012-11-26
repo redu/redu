@@ -186,6 +186,9 @@ module Redu
     # Observers têm direito a um lar
     config.autoload_paths << "#{config.root}/app/observers"
 
+    # Doorkeepers definem eventos que serão propagados no message bus
+    config.autoload_paths << "#{config.root}/app/doorkeepers"
+
     # Configurações do Pusher (redu app)
     config.pusher = {
       :app_id => '4577',
@@ -211,7 +214,7 @@ module Redu
                                         :vis_status_observer,
                                         :vis_user_observer,
                                         :vis_lecture_observer,
-                                        :user_vis_application_observer,
+                                        :user_walledgarden_apps_observer,
                                         :user_environment_association_cache_observer,
                                         :environment_cache_observer,
                                         :friendship_cache_observer,
@@ -243,5 +246,9 @@ module Redu
     config.redu_services[:apps] = {
       :url => "http://aplicativos.redu.com.br"
     }
+
+    # Seta locale defaul para pt-br
+    config.i18n.default_locale = :"pt-BR"
+    I18n.locale = config.i18n.default_locale
   end
 end

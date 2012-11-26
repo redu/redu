@@ -68,6 +68,13 @@
         <%= f.password_field :password_confirmation, :class => 'small' %>
         <%= concave_errors_for @user, :password_confirmation %>
       <% end %>
+      <%= field_set_tag @user.humanizer_question, :class => 'sparator' do %>
+        <%= f.label :humanizer_answer, "Resposta:" %>
+        <%= f.text_field :humanizer_answer, :class => 'small'  %>
+        <span class="tip" style="width: 370px">Na Internet, é comum que certos computadores façam cadastros automáticos para espalhar propagandas indesejadas conhecidas como 'spam'. Essa pergunta serve para diferenciar as pessoas reais desses robôs e garantir uma boa e segura experiência de uso para você.</span>
+        <%= f.hidden_field :humanizer_question_id %>
+        <%= concave_errors_for @user, :humanizer_answer %>
+      <% end %>
       <%= field_set_tag "Termos", :class => 'tos' do %>
         <div class="inline">
           <%= check_box "user", "tos" %>

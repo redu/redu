@@ -15,13 +15,13 @@ describe ExerciseVisNotification do
         result = nil
         WebMock.disable_net_connect!
         ActiveRecord::Observer.with_observers(:result_observer) do
-          stubing_request
+          vis_stub_request
 
           result = @exercise.finalize_for(@user)
         end
         params = fill_params(@exercise, result, false)
 
-        webmock_request(params).should have_been_made
+        vis_a_request(params).should have_been_made
       end
     end
 
@@ -31,12 +31,12 @@ describe ExerciseVisNotification do
         lecture2 = Factory(:lecture, :lectureable => exercise2)
         WebMock.disable_net_connect!
         ActiveRecord::Observer.with_observers(:result_observer) do
-          stubing_request
+          vis_stub_request
 
           exercise2.start_for(@user)
         end
 
-        webmock_request.should_not have_been_made
+        vis_a_request.should_not have_been_made
       end
     end
   end
@@ -48,39 +48,25 @@ describe ExerciseVisNotification do
 
       WebMock.disable_net_connect!
       ActiveRecord::Observer.with_observers(:vis_lecture_observer) do
-        stubing_request
+        vis_stub_request
 
         @lecture.destroy
       end
 
-      webmock_request(params).should have_been_made
+      vis_a_request(params).should have_been_made
     end
 
     it "when isn't an Exercise should not send a 'remove_exercise_finalized' notification" do
       lecture2 = Factory(:lecture)
       WebMock.disable_net_connect!
       ActiveRecord::Observer.with_observers(:vis_lecture_observer) do
-        stubing_request
+        vis_stub_request
 
         lecture2.destroy
       end
 
-      webmock_request.should_not have_been_made
+      vis_a_request.should_not have_been_made
     end
-  end
-
-  def stubing_request
-    stub_request(:post, Redu::Application.config.vis_client[:url]).
-      with(:headers => {'Authorization'=>['JOjLeRjcK', 'core-team'],
-                        'Content-Type'=>'application/json'}).
-                        to_return(:status => 200, :body => "", :headers => {})
-  end
-
-  def webmock_request(params = "")
-    a_request(:post, Redu::Application.config.vis_client[:url]).
-      with(:body => params.to_json,
-           :headers => {'Authorization'=>['JOjLeRjcK', 'core-team'],
-                        'Content-Type'=>'application/json'})
   end
 
   def fill_params(exercise, result, destroy_exercise)
@@ -92,7 +78,7 @@ describe ExerciseVisNotification do
       :course_id => space.course.id,
       :user_id => result.user_id,
       :type => destroy_exercise ? "remove_exercise_finalized" : "exercise_finalized",
-      :grade => result.grade,
+      :grade => result.grade.to_f.to_s,
       :status_id => nil,
       :statusable_id => nil,
       :statusable_type => nil,

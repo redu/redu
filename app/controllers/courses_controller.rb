@@ -13,7 +13,13 @@ class CoursesController < BaseController
 
   rescue_from CanCan::AccessDenied do |exception|
     session[:return_to] = request.fullpath
-    flash[:notice] = "Você não tem acesso a essa página"
+
+    if @course.blocked?
+      flash[:notice] = "Entre em contato com o administrador deste curso."
+    else
+      flash[:notice] = "Essa área só pode ser vista após você acessar o Redu com seu nome e senha."
+    end
+
     redirect_to preview_environment_course_path(@environment, @course)
   end
 

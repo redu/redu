@@ -1,5 +1,10 @@
 class User < ActiveRecord::Base
   include Invitable::Base
+  include Humanizer
+
+  # Valida a resposta ao captcha
+  attr_writer :enable_humanizer
+  require_human_on :create, :if => :enable_humanizer
 
   require 'community_engine_sha1_crypto_method'
   require 'paperclip'
@@ -193,6 +198,7 @@ class User < ActiveRecord::Base
   # Cria um usuário com a hash retornada pelo provedor de autenticação omniauth
   def self.create_with_omniauth(auth)
     create! do |user|
+      user.enable_humanizer = false
       user.login = User.get_login_from_provider_username(auth[:info])
       user.email = auth[:info][:email]
       user.reset_password
@@ -701,6 +707,11 @@ class User < ActiveRecord::Base
   end
 
   protected
+
+  def enable_humanizer
+    return @enable_humanizer if @enable_humanizer
+    Rails.env.production?
+  end
 
   def activate_before_save
     self.activated_at = Time.now.utc

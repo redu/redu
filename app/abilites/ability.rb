@@ -60,10 +60,6 @@ class Ability
     # Reports
     alias_action :teacher_participation_interaction, :to => :manage
 
-    # Todos podem ver o preview
-    can :preview, [Course, Environment]
-    can :preview, Subject, :visible => true
-
     # Todos podem criar usuários
     can :create, User
 
@@ -91,6 +87,9 @@ class Ability
       can :read, :all do |object|
         user.can_read? object
       end
+
+      cannot [:manage, :read], [Environment, Course, Space, Subject, Lecture],
+        :blocked => true
 
       can :create, Environment
 
@@ -183,19 +182,23 @@ class Ability
       cannot :update, Lecture do |lecture|
         lec = lecture.lectureable
 
-        (lec.is_a?(Seminar) || lec.is_a?(Document) ||
-         (lec.is_a?(Exercise) && lec.has_results?)) &&
-         (can? :manage, lecture)
+        (lec.is_a?(Seminar) || lec.is_a?(Document) || lec.is_a?(Api::Canvas) \
+         || (lec.is_a?(Exercise) && lec.has_results?)) \
+         && (can? :manage, lecture)
       end
 
       # Canvas
       can :read, Api::Canvas do |canvas|
-        can? :read, canvas.container
+        can? :read, canvas.lecture
       end
       cannot :read, Api::Canvas do |canvas|
-        cannot? :read, canvas.container
+        cannot? :read, canvas.lecture
       end
 
     end
+
+    # Todos podem ver o preview
+    can :preview, [Course, Environment]
+    can :preview, Subject, :visible => true
   end
 end

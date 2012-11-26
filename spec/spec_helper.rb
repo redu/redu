@@ -39,6 +39,10 @@ RSpec.configure do |config|
   # em determinados contextos
   config.include CacheSpecHelper
 
+  # Inclui o helper para o uso de requisição de vis,
+  # funciona juntamente com o webmock
+  config.include VisSpecHelper
+
   # Adiciona os papéis ao BD, pois estes são necessários nos testes.
   create_roles
   create_privacies
