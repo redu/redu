@@ -1,0 +1,63 @@
+body {
+  background: #f6f6f6;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+.main-wrapper {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  min-height: 100%;
+  margin: 0 auto -140px;
+}
+
+.footer-pusher {
+  height: 140px;
+}
+
+.home-left-sidebar {
+  padding-top: 17px;
+}
+
+.home-hello-user +
+.home-profile-area {
+  margin-top: 14px;
+}
+
+.home-profile-area {
+  overflow: hidden;
+}
+
+.home-profile-area-links {
+  float: left;
+}
+.home-profile-area-links .link-secondary {
+  display: block;
+}
+.home-profile-area-links .link-secondary +
+.link-secondary {
+  margin-top: 5px;
+}
+
+.home-profile-area-photo {
+  float: right;
+}
+.borderradius .home-profile-area-photo {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+.home-profile-area +
+.nav-local {
+  margin-top: 20px;
+}
+
+.breadcrumb-mini + .content-body,
+.content-body + .breadcrumb-mini {
+  margin-top: 10px;
+}

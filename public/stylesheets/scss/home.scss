@@ -1,0 +1,20 @@
+// ==========================================================================
+// Estilos para a home
+// ==========================================================================
+
+// UI-components.
+@import "ui-components/variables";
+@import "ui-components/mixins";
+
+
+// Variáveis
+@import "home/variables";
+
+// Layout
+@import "home/layout";
+
+// Barra lateral esquerda
+@import "home/left-sidebar";
+
+// Conteúdo central da home
+@import "home/content";

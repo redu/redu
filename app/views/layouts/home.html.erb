@@ -1,0 +1,41 @@
+<!doctype html>
+<!--[if gt IE 8]><html class="gt-ie8" lang="pt-br"><![endif]-->
+<!--[if gt IE 8]><!--><html lang="pt-br"><!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <title><%= raw(page_title) %></title>
+    <%= csrf_meta_tag %>
+    <%= include_stylesheets :home %>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <%= include_javascripts :home %>
+    <%= render :partial => "shared/typekit" %>
+    <%= render :partial => "shared/analytics" %>
+  </head>
+  <body>
+    <div class="main-wrapper">
+      <div class="container">
+        <%= render :partial => "shared/nav_global" %>
+        <div class="row">
+          <div class="span3">
+            <%= render :partial => "home/left_sidebar" %>
+          </div>
+          <div class="span10">
+            <div class="content-area">
+              <%= render :partial => "home/breadcrumb" %>
+              <div class="content-body">
+                <%= yield %>
+              </div>
+              <%= render :partial => "home/breadcrumb" %>
+            </div>
+          </div>
+          <div class="span3">
+            <%= render :partial => "home/right_sidebar" %>
+          </div>
+        </div>
+      </div>
+      <div class="footer-pusher"></div>
+    </div>
+    <%= render :partial => "shared/footer" %>
+    <%= render :partial => "shared/olark" %>
+  </body>
+</html>

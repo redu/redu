@@ -60,6 +60,8 @@ Redu::Application.routes.draw do
   resources :sessions
 
   # site routes
+  match '/home' => 'base#home'
+  match '/home_environments' => 'base#environments'
   match '/about' => 'base#about', :as => :about
   match '/faq' => 'base#faq', :as => :faq
   match 'contact' => 'base#contact', :as => :contact

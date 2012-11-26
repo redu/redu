@@ -4,6 +4,14 @@ class BaseController < ApplicationController
 
   rescue_from CanCan::AccessDenied, :with => :deny_access
 
+  def home
+    render :layout => 'home'
+  end
+
+  def environments
+    render :layout => 'home'
+  end
+
   def tos
     render :layout => 'clean'
   end
