@@ -84,8 +84,7 @@
           <p class="or-call">&minus; ou &minus;</p>
         <% end %>
       <% end %>
-      <%= link_to "Que tal se cadastrar?", signup_path(:invitation_token => @user_course_invitation.token), :class => "concave-important" %>
+      <%= link_to "Que tal se cadastrar?", application_path(:anchor => "modal-sign-up", :invitation_token => @user_course_invitation.token), :class => "concave-important" %>
     </div>
-
   </div>
 </div>

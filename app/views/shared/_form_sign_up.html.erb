@@ -1,4 +1,13 @@
   <%= form_for @user, :remote => true, :html => { :class => "form-horizontal", :id => "form-sign-up" } do |f| %>
+
+    <% if params[:invitation_token] %>
+      <%= hidden_field_tag :invitation_token, params[:invitation_token] %>
+    <% end %>
+
+    <% if params[:friendship_invitation_token] %>
+      <%= hidden_field_tag :friendship_invitation_token, params[:friendship_invitation_token] %>
+    <% end %>
+
     <div class="modal-header modal-header-gray">
       <h3 class="modal-sign-up-title icon-add-friend-green_32_34-before">Cadastre-se no Redu.<br>É gratuito, rápido e fácil.</h3>
     </div>

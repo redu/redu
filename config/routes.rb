@@ -124,7 +124,8 @@ Redu::Application.routes.draw do
   end
 
   # Users
-  resources :users, :except => [:index] do
+  match '/users/new' => redirect("#modal-sign-up")
+  resources :users, :except => [:index, :new] do
     member do
       get :edit_account
       put :update_account
@@ -268,7 +269,6 @@ Redu::Application.routes.draw do
 
   root :to => 'base#site_index', :as => :home
   root :to => "base#site_index", :as => :application
-
 end
 
 ActionDispatch::Routing::Translator.translate_from_file('lang/i18n-routes.yml')
