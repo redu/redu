@@ -61,3 +61,51 @@ body {
 .content-body + .breadcrumb-mini {
   margin-top: 10px;
 }
+
+.breadcrumb-mini {
+  margin-top: 15px;
+}
+
+.home-container {
+  padding: 10px 20px;
+}
+.home-container h3 {
+  line-height: 26px;
+  padding-bottom: 5px;
+}
+.home-container p {
+  line-height: 18px;
+}
+.home-container li {
+  list-style: none;
+}
+.home-container a {
+  display: block;
+  margin-bottom: 5px;
+}
+.home-container a:hover {
+  text-decoration: none;
+  color: #158ac4;
+}
+.home-container .message-block-actions {
+  text-align: center;
+}
+
+.learning-environments {
+  color: #6d6e6f;
+}
+.learning-environments .legend {
+  line-height: 14px;
+}
+.learning-environments .big {
+  width: 404px;
+}
+.learning-environments .small {
+  width: 284px;
+}
+.learning-environments .small.right {
+  text-align: right;
+}
+.learning-environments h3, .learning-environments h4 {
+  font-weight: lighter;
+}

@@ -1,2 +1,51 @@
+
+
 .breadcrumb-mini + .content-body,
 .content-body + .breadcrumb-mini { margin-top: 10px; }
+
+.breadcrumb-mini {
+  margin-top: 15px;
+}
+
+.home-container {
+  padding: 10px 20px;
+
+  h3 {
+    line-height: 26px;
+    padding-bottom: 5px;
+  }
+
+  p { line-height: 18px; }
+
+  li { list-style: none; }
+
+  a {
+    display: block;
+    margin-bottom: 5px;
+
+    &:hover {
+      text-decoration: none;
+      color: $blue4;
+    }
+  }
+
+  .message-block-actions { text-align: center; }
+}
+
+.learning-environments {
+  color: $gray6;
+
+  .legend {
+    line-height: 14px;
+  }
+
+  .big { width: 404px; }
+
+  .small {
+    width: 284px;
+
+    &.right { text-align: right; }
+  }
+
+  h3, h4 { font-weight: lighter; }
+}
