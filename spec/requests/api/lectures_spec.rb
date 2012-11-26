@@ -18,45 +18,64 @@ describe "Lectures API" do
         @params = { :oauth_token => @token, :format => 'json' }
       end
 
-      let(:correct_params) do
-        @params[:lecture] = {
-          :name => "My Goku Lecture",
-          :type => "Canvas",
-          :lectureable => {
+      context "when the params is correct" do
+        let(:correct_params) do
+          @params[:lecture] = {
+            :name => "My Goku Lecture",
+            :type => "Canvas",
+            :lectureable => {
             :client_application_id => @client_app.id
+            }
           }
-        }
+        end
+
+        it "should return code 201(created)" do
+          correct_params
+          post "api/subjects/#{@subject.id}/lectures", @params
+          response.code.should == '201'
+        end
+
+        it "should return the entity" do
+          correct_params
+          post "api/subjects/#{@subject.id}/lectures", @params
+          parse(response.body).should have_key('name')
+        end
       end
 
-      it "should return code 201(created)" do
-        correct_params
-        post "api/subjects/#{@subject.id}/lectures", @params
-        response.code.should == '201'
-      end
+      context "when the params isn't correct" do
+        let(:inc_params) do
+          @params[:lecture] = {
+            :name => ""
+          }
+        end
 
-      it "should return the entity" do
-        correct_params
-        post "api/subjects/#{@subject.id}/lectures", @params
-        parse(response.body).should have_key('name')
-      end
+        it "should return code 422 when not valid" do
+          inc_params
+          post "api/subjects/#{@subject.id}/lectures", @params
+          response.code.should == '422'
+        end
 
-      let(:inc_params) do
-        @params[:lecture] = {
-          :name => ""
-        }
-      end
+        it "should return the error explanation" do
+          inc_params
+          post "api/subjects/#{@subject.id}/lectures", @params
+          %w(name lectureable).each do |attr|
+            parse(response.body).should have_key attr
+          end
+        end
 
-      it "should return code 422 when not valid" do
-        inc_params
-        post "api/subjects/#{@subject.id}/lectures", @params
-        response.code.should == '422'
-      end
-
-      it "should return the error explanation" do
-        inc_params
-        post "api/subjects/#{@subject.id}/lectures", @params
-        %w(name lectureable).each do |attr|
-          parse(response.body).should have_key attr
+        it "should return code 422 when not valid" do
+          inc_params
+          @params[:lecture] = {
+            :name => "My Goku Lecture",
+            :type => "Canvas",
+            :lectureable => {
+            :client_application_id => ""
+            }
+          }
+          post "api/subjects/#{@subject.id}/lectures", @params
+          %w(lectureable lectureable.client_application).each do |attr|
+            parse(response.body).should have_key attr
+          end
         end
       end
     end
