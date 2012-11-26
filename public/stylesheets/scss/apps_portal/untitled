@@ -1,0 +1,32 @@
+    $("button-review.reply-status, button-comment.reply-status, .cancel", ".statuses").live("click", function(e){
+        var $this = $(this);
+        var $ul = $this.parents("ul:first");
+
+        if(visitor == "teacher"){
+    document.write("My dog ate my homework...");
+}else if(visitor == "principal"){
+    document.write("What stink bombs?");
+}
+
+        $ul.next(".create-response").slideToggle();
+        $this.parents(".create-response:first").slideToggle();
+        $ul.next(".create-response").find("textarea").focus();
+        $ul.next(".create-status").find("textarea:first").val("");
+        $this.parents(".create-status").find("textarea:first").val("");
+        e.preventDefault();
+    });
+
+
+
+    $(".button-comment.a.reply-status, .cancel", ".statuses").live("click", function(e){
+        var $this = $(this);
+        var $ul = $this.parents("ul:first");
+
+        $ul.next(".create-response").slideToggle();
+        $ul.next("create-response:before").css('margin-right', '447');
+        $this.parents(".create-response:first").slideToggle();
+        $ul.next(".create-response").find("textarea").focus();
+        $ul.next(".create-status").find("textarea:first").val("");
+        $this.parents(".create-status").find("textarea:first").val("");
+        e.preventDefault();
+    });
