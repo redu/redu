@@ -33,8 +33,12 @@ class AuthenticationsController < BaseController
       current_user = @user_session.record if @user_session.save
     end
 
-    redirect_to session[:return_to] || home_user_path(current_user)
-    session[:return_to] = nil
+    if valid_url?(params[:state])
+      redirect_to params[:state]
+    else
+      redirect_to session[:return_to] || home_user_path(current_user)
+      session[:return_to] = nil
+    end
   end
 
   def fallback
@@ -42,4 +46,18 @@ class AuthenticationsController < BaseController
     redirect_to application_path
   end
 
+  private
+
+  # Verifica se a url pertence ao domínio de algum serviço do Redu
+  #
+  # valid_url?("http://aplicativos.redu.com.br/apps/86")
+  # => true
+  #
+  # valid_url?("http://hack.com")
+  # => false
+  def valid_url?(url)
+    Redu::Application.config.redu_services.values.collect do |service|
+      url.try(:include?, service[:url])
+    end.inject(:^)
+  end
 end
