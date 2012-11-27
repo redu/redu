@@ -126,3 +126,13 @@ body {
 .list-environment-course-space-item {
   margin: 20px;
 }
+
+.nav-local-general-stats-title {
+  text-align: center;
+  color: #b3b3b3;
+}
+
+.nav-local-general-course {
+  list-style: none;
+  margin: 10px 0;
+}
