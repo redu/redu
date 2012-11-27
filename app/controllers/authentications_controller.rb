@@ -20,7 +20,11 @@ class AuthenticationsController < BaseController
                                      :uid => auth[:uid])
         flash[:notice] = t :facebook_connect_account_association
       else # Não existe conta do Redu associada ao e-mail do usuário no FB
-        user = User.create_with_omniauth(auth)
+        begin
+          user = User.create_with_omniauth(auth)
+        rescue ActiveRecord::RecordNotUnique
+          user = User.find_by_email(auth[:info][:email])
+        end
         flash[:notice] = t :facebook_connect_new_user
       end
 
@@ -29,8 +33,12 @@ class AuthenticationsController < BaseController
       current_user = @user_session.record if @user_session.save
     end
 
-    redirect_to session[:return_to] || home_user_path(current_user)
-    session[:return_to] = nil
+    if valid_url?(params[:state])
+      redirect_to params[:state]
+    else
+      redirect_to session[:return_to] || home_user_path(current_user)
+      session[:return_to] = nil
+    end
   end
 
   def fallback
@@ -38,4 +46,18 @@ class AuthenticationsController < BaseController
     redirect_to application_path
   end
 
+  private
+
+  # Verifica se a url pertence ao domínio de algum serviço do Redu
+  #
+  # valid_url?("http://aplicativos.redu.com.br/apps/86")
+  # => true
+  #
+  # valid_url?("http://hack.com")
+  # => false
+  def valid_url?(url)
+    Redu::Application.config.redu_services.values.collect do |service|
+      url.try(:include?, service[:url])
+    end.inject(:^)
+  end
 end

@@ -84,7 +84,7 @@ module AuthenticatedSystem
       respond_to do |accepts|
         accepts.html do
 
-          flash[:notice] = "Você não tem permissão para acessar esse conteúdo"
+          flash[:notice] = "Essa área só pode ser vista após você acessar o Redu com seu nome e senha."
           if params[:controller] == 'spaces' and params[:id] and current_user
             redirect_to space_path(:id => params[:id])
           else

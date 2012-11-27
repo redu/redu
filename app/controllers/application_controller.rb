@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   rescue_from CanCan::AccessDenied do |exception|
     session[:return_to] ||= request.fullpath
 
-    flash[:notice] = "Você não tem acesso a essa página"
+    flash[:notice] = "Essa área só pode ser vista após você acessar o Redu com seu nome e senha."
     redirect_to home_path
   end
 

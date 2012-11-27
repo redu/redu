@@ -16,7 +16,6 @@ describe Space do
 
   it { should have_many :logs }
   it { should have_many :statuses }
-  it { should have_many :canvas }
 
   it { should validate_presence_of :name}
   it { should_not validate_presence_of :description }

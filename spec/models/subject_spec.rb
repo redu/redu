@@ -261,10 +261,7 @@ describe Subject do
           :updated_at => enroll.updated_at
         }
 
-        a_request(:post, Redu::Application.config.vis_client[:url]).
-          with(:body => params.to_json,
-               :headers => {'Authorization'=>['JOjLeRjcK', 'core-team'],
-                            'Content-Type'=>'application/json'}).should have_been_made
+        vis_a_request(params).should have_been_made
       end
     end
   end

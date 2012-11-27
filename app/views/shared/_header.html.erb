@@ -6,18 +6,21 @@
   <ul class="nav grid_10">
       <% if current_user %>
     <li>
-        <%= link_to 'Início', home_user_path(current_user) %>
+        <%= link_to 'Início', home_user_path(current_user), :title => "Início" %>
     </li>
     <% else %>
     <li>
-        <%= link_to 'Início', application_path %>
+        <%= link_to 'Início', application_path, :title => "Início" %>
     </li>
     <% end %>
     <li>
-      <%= link_to "Ensine", teach_index_path %>
+      <%= link_to "Ensine", teach_index_path , :title => "Ensine"%>
     </li>
     <li>
-      <%= link_to "Cursos", courses_index_path %>
+      <%= link_to "Cursos", courses_index_path, :title => "Cursos" %>
+    </li>
+    <li>
+    <%= link_to "Aplicativos", Redu::Application.config.redu_services[:apps][:url], :title => "Aplicativos" %>
     </li>
   </ul>
 

@@ -17,7 +17,8 @@ class HierarchyNotificationJob
   private
 
   def send_multi_request
-    EM.run do
+    @running = EM.reactor_running?
+    em do
       multi = EventMachine::MultiRequest.new
       url = Redu::Application.config.vis_client[:url]
       enrollments.each_with_index do |enroll, idx|
@@ -34,11 +35,19 @@ class HierarchyNotificationJob
           log = Logger.new("log/error.log")
           log.error "Errback, Bad DNS or Timeout, with body: #{err[1].req.body}"
           log.close
-
         end
 
-        EM.stop
+        EM.stop unless @running
       end
+    end
+  end
+
+  def em(&block)
+    if EM.reactor_running?
+      yield
+    else
+      @block = block
+      EM.run { @block.call }
     end
   end
 

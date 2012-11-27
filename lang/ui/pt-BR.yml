@@ -330,6 +330,7 @@ pt-BR:
   Document: "Documento e apresentação"
   Page: "Página simples"
   Exercise: "Exercício"
+  Api::Canvas: "Aplicativo"
 
     #simple categories
   arts_design_animation: Artes / Design / Animação

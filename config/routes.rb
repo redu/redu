@@ -63,7 +63,6 @@ Redu::Application.routes.draw do
   match '/home' => 'base#home'
   match '/home_environments' => 'base#environments'
   match '/about' => 'base#about', :as => :about
-  match '/faq' => 'base#faq', :as => :faq
   match 'contact' => 'base#contact', :as => :contact
 
   # Recovery Email
@@ -107,7 +106,6 @@ Redu::Application.routes.draw do
     end
 
     resources :users, :only => [:index]
-    resources :canvas, :only => [:show]
  end
 
   resources :exercises, :only => :show do
@@ -128,7 +126,8 @@ Redu::Application.routes.draw do
   end
 
   # Users
-  resources :users, :except => [:index] do
+  match '/users/new' => redirect("#modal-sign-up")
+  resources :users, :except => [:index, :new] do
     member do
       get :edit_account
       put :update_account
@@ -273,7 +272,6 @@ Redu::Application.routes.draw do
 
   root :to => 'base#site_index', :as => :home
   root :to => "base#site_index", :as => :application
-
 end
 
 ActionDispatch::Routing::Translator.translate_from_file('lang/i18n-routes.yml')

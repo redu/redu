@@ -42,8 +42,9 @@ describe SpacesController do
       activate_authlogic
       UserSession.create user
 
-      application = ClientApplication.create(:name => "ReduViz",
-                                             :url => "http://www.redu.com.br")
+      application = ClientApplication.create(:name => "ReduVis",
+                                             :url => "http://www.redu.com.br",
+                                             :walledgarden => true)
       create_token_for(user)
     end
 

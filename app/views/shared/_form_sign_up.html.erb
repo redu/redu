@@ -1,4 +1,13 @@
   <%= form_for @user, :remote => true, :html => { :class => "form-horizontal", :id => "form-sign-up" } do |f| %>
+
+    <% if params[:invitation_token] %>
+      <%= hidden_field_tag :invitation_token, params[:invitation_token] %>
+    <% end %>
+
+    <% if params[:friendship_invitation_token] %>
+      <%= hidden_field_tag :friendship_invitation_token, params[:friendship_invitation_token] %>
+    <% end %>
+
     <div class="modal-header modal-header-gray">
       <h3 class="modal-sign-up-title icon-add-friend-green_32_34-before">Cadastre-se no Redu.<br>É gratuito, rápido e fácil.</h3>
     </div>
@@ -98,18 +107,34 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="modal-footer clearfix">
-      <div class="modal-sign-up-tos">
-        <div class="control-group">
-          <div class="controls">
-            <div class="control-checkbox tos">
-              <%= check_box "user", "tos" %>
-              <%= f.label "tos", raw("Aceito os #{link_to "Termos de Uso", home_path(:anchor => "modal-tos"), "data-toggle" => "modal"} da plataforma Redu.") %>
+      <hr class="header-separator">
+      <div class="row">
+        <div class="modal-sign-up-humanizer">
+          <div class="control-group control-big">
+            <div class="control-label">
+              <%= f.label :humanizer_answer, @user.humanizer_question %>
+              <a rel="tooltip" data-title="Na Internet, é comum que certos computadores façam cadastros automáticos para espalhar propagandas indesejadas conhecidas como 'spam'. Essa pergunta serve para diferenciar as pessoas reais desses robôs e garantir uma boa e segura experiência de uso para você." data-placement="right">Por que esta pergunta?</a>
+            </div>
+            <div class="offset5 span4">
+              <%= f.text_field :humanizer_answer, :class => "control-input", :placeholder => "Responda a pergunta acima" %>
+              <%= f.hidden_field :humanizer_question_id %>
+              <%= concave_errors_for @user, :humanizer_answer %>
+            </div>
+          </div>
+        </div>
+        <div class="modal-sign-up-tos">
+          <div class="control-group">
+            <div class="controls">
+              <div class="control-checkbox tos span14">
+                <%= check_box "user", "tos" %>
+                <%= f.label "tos", raw("Aceito os #{link_to "Termos de Uso", home_path(:anchor => "modal-tos"), "data-toggle" => "modal"} da plataforma Redu.") %>
+              </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+    <div class="modal-footer clearfix">
       <div class="modal-sign-up-buttons">
         <%= hidden_field_tag :inviter_id, params[:inviter_id] %>
         <%= hidden_field_tag :inviter_code, params[:inviter_code] %>

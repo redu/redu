@@ -1,7 +1,8 @@
 <div class="secondary-sidebar profile-sidebar">
   <div class="actions">
     <% friendship = current_user.friendship_for @user %>
-    <% if current_user.friends?(@user) %>
+    <% is_friend = current_user.friends?(@user) %>
+    <% if is_friend %>
       <%= link_to 'Remover contato',
         user_friendship_path(current_user, friendship.id),
         :remote => true,
@@ -13,7 +14,7 @@
     <% end %>
 
     <% friendship = @user.friendship_for current_user %>
-    <% if !current_user.friends?(@user) and current_user != @user %>
+    <% if !is_friend and current_user != @user %>
       <% if friendship %>
         <% if friendship.status == 'pending' %>
           <a class="waiting">Aguardando aceitação</a>
@@ -31,13 +32,13 @@
       <% end %>
     <% end %>
 
-    <% unless current_user == @user %>
+    <% if is_friend and !(current_user == @user) %>
       <%= link_to (new_user_message_path(current_user, :message_to => @user.id),
                    :class => 'send-message cancel ') do %>
         <span class="write-message icon-add_message-lightblue_16_18-before">Escrever Mensagem</span>
       <% end %>
     <% end %>
-  </div>
+</div>
 
   <div class="environments">
     <div class="call">
