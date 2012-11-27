@@ -194,6 +194,9 @@ body {
 .home-right-sidebar ol {
   list-style: none;
 }
+.home-right-sidebar [class*="-before"]::before {
+  vertical-align: middle;
+}
 
 .right-sidebar-area-title {
   color: #b3b3b3;
@@ -209,9 +212,9 @@ body {
   display: block;
   line-height: 14px;
 }
-.right-sidebar-area .actions-to-do [class*="-before"]::before {
-  vertical-align: middle;
-}
 .right-sidebar-area .actions-to-do li {
   margin-top: 5px;
+}
+.right-sidebar-area .invite-friends {
+  margin-top: 15px;
 }

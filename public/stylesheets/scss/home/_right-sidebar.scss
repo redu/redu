@@ -6,6 +6,8 @@
   li,
   ul,
   ol { list-style: none; }
+
+  [class*="-before"]::before { vertical-align: middle; }
 }
 
 .right-sidebar-area-title { color: $gray5; }
@@ -20,9 +22,7 @@
     line-height: 14px;
   }
 
-  .actions-to-do {
-    [class*="-before"]::before { vertical-align: middle; }
+  .actions-to-do { li { margin-top: 5px; } }
 
-    li { margin-top: 5px; }
-  }
+  .invite-friends { margin-top: 15px; }
 }
