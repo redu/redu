@@ -30,6 +30,7 @@ module Api
       end
 
       authorize! :create, subject
+      subject.save
       subject.finalized = true
       subject.save
 

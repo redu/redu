@@ -6,11 +6,10 @@ describe "Subjects API" do
     @environment = Factory(:complete_environment,
                            :owner => @current_user)
     @space = @environment.courses.first.spaces.first
-    @subject = Subject.create(:name => "Test Subject 1",
-                              :description => "Test Subject Description",
-                              :space => @space)
-    @subject.update_attribute(:finalized, true)
+    @subject = @space.subjects.first
 
+    other_user = Factory.create(:user)
+    @environment.courses.first.join(other_user, :member)
     @params = {:oauth_token => @token, :format => "json"}
   end
 
@@ -115,16 +114,29 @@ describe "Subjects API" do
   end
 
   context "post /spaces/:space_id/subjects" do
+    let(:correct_params) do
+      @params[:subject] = { :name => "My new subject" }
+    end
+
     it "should return code 201 (created)" do
-      @params[:subject] = { :name => "My new subject"}
+      correct_params
       post "/api/spaces/#{@space.id}/subjects", @params
       response.code.should == "201"
     end
 
     it "should return subject" do
-      @params[:subject] = { :name => "My new subject" }
+      correct_params
       post "/api/spaces/#{@space.id}/subjects", @params
       parse(response.body).should have_key('name')
+    end
+
+    it "should create enrollments" do
+      correct_params
+      ActiveRecord::Observer.with_observers(:subject_observer) do
+        post "/api/spaces/#{@space.id}/subjects", @params
+      end
+      subject = Subject.last
+      subject.enrollments.count.should == @space.users.count
     end
 
     it "should return code 422 (unproccessable entity) when not valid" do
@@ -139,5 +151,4 @@ describe "Subjects API" do
       parse(response.body).should have_key 'name'
     end
   end
-
 end
