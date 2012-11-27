@@ -72,3 +72,33 @@
     padding-bottom: 5px;
   }
 }
+
+.tour {
+  width: 338px;
+  margin: 0 0 0 -169px;
+
+  .modal-header {
+    border-bottom: 1px $gray2 solid;
+    padding: 10px;
+  }
+
+  .modal-body {
+    padding: 10px;
+    line-height: 18px;
+  }
+
+  .modal-footer {
+    background-color: white;
+    padding: 10px;
+
+    p {
+      float: left;
+      padding-top: 10px;
+    }
+  }
+}
+
+.modal-backdrop {
+  opacity: 0.4;
+  background-color: black;
+}

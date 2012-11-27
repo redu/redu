@@ -129,6 +129,32 @@ body {
   padding-bottom: 5px;
 }
 
+.tour {
+  width: 338px;
+  margin: 0 0 0 -169px;
+}
+.tour .modal-header {
+  border-bottom: 1px #f0f0f0 solid;
+  padding: 10px;
+}
+.tour .modal-body {
+  padding: 10px;
+  line-height: 18px;
+}
+.tour .modal-footer {
+  background-color: white;
+  padding: 10px;
+}
+.tour .modal-footer p {
+  float: left;
+  padding-top: 10px;
+}
+
+.modal-backdrop {
+  opacity: 0.4;
+  background-color: black;
+}
+
 .environment ul,
 .environment ol,
 .environment li {
