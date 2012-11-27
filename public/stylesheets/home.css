@@ -95,21 +95,38 @@ body {
 
 .learning-environments {
   color: #6d6e6f;
+  background-image: url("../images/home/graphic-environments-hierarchy.png");
+  background-repeat: no-repeat;
+  padding-bottom: 10px;
+  overflow: hidden;
 }
 .learning-environments .legend {
   line-height: 14px;
 }
 .learning-environments .big {
   width: 404px;
+  padding-top: 1px;
+  padding-left: 108px;
+  padding-bottom: 61px;
 }
 .learning-environments .small {
   width: 284px;
+  float: right;
+}
+.learning-environments .small.institution {
+  padding-right: 146px;
+  padding-bottom: 23px;
+}
+.learning-environments .small.space {
+  padding-top: 127px;
+  padding-right: 168px;
 }
 .learning-environments .small.right {
   text-align: right;
 }
 .learning-environments h3, .learning-environments h4 {
   font-weight: lighter;
+  padding-bottom: 5px;
 }
 
 .environment ul,

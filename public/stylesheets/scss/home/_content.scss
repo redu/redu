@@ -36,16 +36,39 @@
 
 .learning-environments {
   color: $gray6;
+  background-image: url('../images/home/graphic-environments-hierarchy.png');
+  background-repeat: no-repeat;
+  padding-bottom: 10px;
+  overflow: hidden;
 
   .legend { line-height: 14px; }
 
-  .big { width: 404px; }
+  .big {
+    width: 404px;
+    padding-top: 1px;
+    padding-left: 108px;
+    padding-bottom: 61px;
+  }
 
   .small {
     width: 284px;
+    float: right;
+
+    &.institution {
+      padding-right: 146px;
+      padding-bottom: 23px;
+    }
+
+    &.space {
+      padding-top: 127px;
+      padding-right: 168px;
+    }
 
     &.right { text-align: right; }
   }
 
-  h3, h4 { font-weight: lighter; }
+  h3, h4 {
+    font-weight: lighter;
+    padding-bottom: 5px;
+  }
 }
