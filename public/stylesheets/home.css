@@ -139,3 +139,22 @@ body {
   list-style: none;
   margin: 10px 0;
 }
+
+.home-right-sidebar {
+  padding-top: 40px;
+}
+
+.user-profile-status-title {
+  color: #b3b3b3;
+}
+
+.user-profile-status .nav-local-separator {
+  margin: 0;
+}
+.user-profile-status .progress-bar-medium {
+  margin: 10px 0;
+}
+.user-profile-status .legend {
+  display: block;
+  line-height: 14px;
+}

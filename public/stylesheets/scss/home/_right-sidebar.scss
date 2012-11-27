@@ -1,0 +1,14 @@
+.home-right-sidebar { padding-top: 40px; }
+
+.user-profile-status-title { color: $gray5; }
+
+.user-profile-status {
+  .nav-local-separator { margin: 0; }
+
+  .progress-bar-medium { margin: 10px 0; }
+
+  .legend {
+    display: block;
+    line-height: 14px;
+  }
+}
