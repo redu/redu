@@ -17,7 +17,7 @@ module Api
       end
 
       authorize! :manage, lecture
-
+      lecture.published = true
       lecture.save
       respond_with :api, lecture
     end
