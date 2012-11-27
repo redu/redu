@@ -1907,7 +1907,7 @@ $(function() {
   $('.modal-scroll').reduModal('scrollArrow')
 
   // Abre uma modal caso seu id esteja na URL.
-  var $modal = $(/#[a-zA-Z\-_\d]*/.exec(document.URL))
+  var $modal = $(/#[a-zA-Z\-_\d]*/.exec(document.URL)[0])
   $modal.length !== 0 && $modal.modal("show")
 })
 
