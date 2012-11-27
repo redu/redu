@@ -1,14 +1,28 @@
-.home-right-sidebar { padding-top: 40px; }
+.home-right-sidebar {
+  padding-top: 40px;
 
-.user-profile-status-title { color: $gray5; }
-
-.user-profile-status {
   .nav-local-separator { margin: 0; }
+
+  li,
+  ul,
+  ol { list-style: none; }
+}
+
+.right-sidebar-area-title { color: $gray5; }
+
+.right-sidebar-area {
+  margin-bottom: 20px;
 
   .progress-bar-medium { margin: 10px 0; }
 
   .legend {
     display: block;
     line-height: 14px;
+  }
+
+  .actions-to-do {
+    [class*="-before"]::before { vertical-align: middle; }
+
+    li { margin-top: 5px; }
   }
 }

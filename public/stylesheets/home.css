@@ -186,18 +186,32 @@ body {
 .home-right-sidebar {
   padding-top: 40px;
 }
+.home-right-sidebar .nav-local-separator {
+  margin: 0;
+}
+.home-right-sidebar li,
+.home-right-sidebar ul,
+.home-right-sidebar ol {
+  list-style: none;
+}
 
-.user-profile-status-title {
+.right-sidebar-area-title {
   color: #b3b3b3;
 }
 
-.user-profile-status .nav-local-separator {
-  margin: 0;
+.right-sidebar-area {
+  margin-bottom: 20px;
 }
-.user-profile-status .progress-bar-medium {
+.right-sidebar-area .progress-bar-medium {
   margin: 10px 0;
 }
-.user-profile-status .legend {
+.right-sidebar-area .legend {
   display: block;
   line-height: 14px;
+}
+.right-sidebar-area .actions-to-do [class*="-before"]::before {
+  vertical-align: middle;
+}
+.right-sidebar-area .actions-to-do li {
+  margin-top: 5px;
 }
