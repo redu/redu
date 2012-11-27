@@ -1,5 +1,3 @@
-
-
 .breadcrumb-mini + .content-body,
 .content-body + .breadcrumb-mini { margin-top: 10px; }
 
@@ -17,15 +15,19 @@
 
   p { line-height: 18px; }
 
-  li { list-style: none; }
+  ul {
+    overflow: hidden;
+    list-style: none;
 
-  a {
-    display: block;
-    margin-bottom: 5px;
+    a {
+      float: left;
+      margin-bottom: 5px;
+      clear: both;
 
-    &:hover {
-      text-decoration: none;
-      color: $blue4;
+      &:hover {
+        text-decoration: none;
+        color: $blue4;
+      }
     }
   }
 
@@ -35,9 +37,7 @@
 .learning-environments {
   color: $gray6;
 
-  .legend {
-    line-height: 14px;
-  }
+  .legend { line-height: 14px; }
 
   .big { width: 404px; }
 

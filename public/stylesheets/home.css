@@ -76,14 +76,16 @@ body {
 .home-container p {
   line-height: 18px;
 }
-.home-container li {
+.home-container ul {
+  overflow: hidden;
   list-style: none;
 }
-.home-container a {
-  display: block;
+.home-container ul a {
+  float: left;
   margin-bottom: 5px;
+  clear: both;
 }
-.home-container a:hover {
+.home-container ul a:hover {
   text-decoration: none;
   color: #158ac4;
 }
@@ -109,6 +111,7 @@ body {
 .learning-environments h3, .learning-environments h4 {
   font-weight: lighter;
 }
+
 .environment ul,
 .environment ol,
 .environment li {
