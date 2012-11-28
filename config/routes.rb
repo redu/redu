@@ -18,6 +18,9 @@ Redu::Application.routes.draw do
   match '/analytics/course_by_date', :to => 'analytics_dashboard#course_by_date'
   match '/analytics/post_by_date', :to => 'analytics_dashboard#post_by_date'
 
+  match '/search', :to => 'search#index', :as => :search
+  match '/search/environments', :to => 'search#environments', :as => :search_environments
+
   post "presence/auth"
   post "presence/multiauth"
   post "presence/send_chat_message"

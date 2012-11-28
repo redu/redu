@@ -8,6 +8,7 @@ class Environment < ActiveRecord::Base
   after_create :create_environment_association, :index_search
   after_create :create_course_association, :unless => "self.courses.empty?"
   after_update :index_search
+  after_create :index_search
 
   has_many :courses, :dependent => :destroy,
     :conditions => ["courses.destroy_soon = ?", false]
@@ -41,9 +42,6 @@ class Environment < ActiveRecord::Base
 
   acts_as_taggable
   has_attached_file :avatar, Redu::Application.config.paperclip_environment
-  searchable do
-
-  end
 
   validates_presence_of :name, :path, :initials
   validates_uniqueness_of :name, :path,
@@ -100,6 +98,17 @@ class Environment < ActiveRecord::Base
     end
   end
 
+  # Busca de ambientes
+  searchable do
+    text :name, :boost => 5.0
+    text :administrators, :boost => 4.0 do
+      administrators.map { |a| a.display_name }
+    end
+    text :description, :boost => 3.0
+    text :tag_list, :boost => 2.0
+    text :initials
+  end
+
   protected
 
   def create_environment_association
@@ -118,6 +127,6 @@ class Environment < ActiveRecord::Base
 
   # Indexa o objeto na busca
   def index_search
-    self.index
+    self.index!
   end
 end

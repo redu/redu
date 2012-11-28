@@ -11,6 +11,8 @@ class Space < ActiveRecord::Base
   # CALLBACKS
   after_create :create_root_folder
   after_create :delay_create_space_association_for_users_course
+  after_create :index_search
+  after_update :index_search
 
   # ASSOCIATIONS
   belongs_to :course
@@ -129,5 +131,24 @@ class Space < ActiveRecord::Base
 
   def students_id
     self.students.collect{ |student| student.id }
+  end
+
+  searchable do
+    text :name, :boost => 5.0
+    text :owner, :boost => 4.0 do
+      owner.display_name
+    end
+    text :teachers, :boost => 3.0 do
+      teachers.map { |t| t.display_name }
+    end
+    text :description, :boost => 2.0
+    text :tag_list
+  end
+
+  protected
+
+  # Indexa o objeto na busca
+  def index_search
+    self.index!
   end
 end

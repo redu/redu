@@ -1,0 +1,10 @@
+<h1><%= space.name %></h1>
+<%#TODO Se o usuário participa da disciplina, exibir status de completude %>
+Ambiente: <%= link_to space.course.environment.name, environment_path(space.course.environment) %> |
+ Curso: <%= link_to space.course.name,
+                    environment_course_path(space.course.environment, space.course) %><br />
+Autor: <%= space.owner.display_name %><br />
+Professores: <%= space.teachers.collect { |t| t.display_name }.join(", ") %><br />
+Descrição: <%= space.description %><br />
+Tags: <%= space.tag_list %><br />
+Aulas: <%= space.lectures_count %> | Membros: <%= space.users.length %><br />

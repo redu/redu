@@ -1,0 +1,9 @@
+<h1><%= environment.name %></h1>
+<% if environment.users.include?(current_user) %>
+  Você faz parte deste ambiente #TODO sinalização gráfica<br />
+<% end %>
+Administrador(es): <%= environment.administrators.collect { |a| a.display_name }.join(", ") %><br />
+Descrição: <%= environment.description %><br />
+Tags: <%= environment.tag_list %><br />
+Abreviação: <%= environment.initials %><br />
+Cursos: <%= environment.courses.length %> | Membros: <%= environment.users.length %><br />

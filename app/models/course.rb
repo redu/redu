@@ -97,9 +97,6 @@ class Course < ActiveRecord::Base
   attr_protected :owner, :published, :environment
 
   acts_as_taggable
-  searchable do
-
-  end
 
   validates_presence_of :name, :path
   validates_uniqueness_of :name, :path, :scope => :environment_id
@@ -347,6 +344,21 @@ class Course < ActiveRecord::Base
     end
   end
 
+  searchable do
+    text :name, :boost => 6.0
+    text :owner, :boost => 5.0 do
+      owner.display_name
+    end
+    text :teachers, :boost => 4.0 do
+      teachers.map { |t| t.display_name }
+    end
+    text :audiences, :boost => 3.0 do
+      audiences.map { |a| a.name }
+    end
+    text :description, :boost => 2.0
+    text :tag_list
+  end
+
   protected
 
   # Cria licença passando com parâmetro o usuário que acaba de se matricular e o
@@ -375,6 +387,6 @@ class Course < ActiveRecord::Base
 
   # Indexa o objeto na busca
   def index_search
-    self.index
+    self.index!
   end
 end
