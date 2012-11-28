@@ -215,3 +215,18 @@ body {
 .right-sidebar-area .actions-to-do li {
   margin-top: 5px;
 }
+.right-sidebar-area .members-to-add li {
+  overflow: hidden;
+  margin-top: 10px;
+}
+.right-sidebar-area .members-to-add li img {
+  float: left;
+}
+.right-sidebar-area .members-to-add li .member-info {
+  margin-left: 5px;
+  float: left;
+  width: 123px;
+}
+.right-sidebar-area .members-to-add li .member-info .legend {
+  line-height: 11px;
+}
