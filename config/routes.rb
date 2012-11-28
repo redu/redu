@@ -124,7 +124,6 @@ Redu::Application.routes.draw do
   end
 
   # Users
-  match '/users/new' => redirect("#modal-sign-up")
   resources :users, :except => [:index, :new] do
     member do
       get :edit_account
@@ -181,6 +180,7 @@ Redu::Application.routes.draw do
   match 'contact' => "base#contact", :as => :contact
   match '/teach' => 'base#teach_index', :as => :teach_index
   match '/courses' => 'courses#index', :as => :courses_index, :via => :get
+  match '/users/new' => redirect("#modal-sign-up")
 
   resources :plans, :only => [] do
     member do
