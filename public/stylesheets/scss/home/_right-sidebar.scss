@@ -1,7 +1,7 @@
 .home-right-sidebar {
   padding-top: 40px;
 
-  .nav-local-separator { margin: 0; }
+  .nav-local-separator { margin: 0 0 10px 0; }
 
   li,
   ul,
@@ -23,6 +23,4 @@
   }
 
   .actions-to-do { li { margin-top: 5px; } }
-
-  .invite-friends { margin-top: 15px; }
 }

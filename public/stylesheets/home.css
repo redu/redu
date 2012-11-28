@@ -187,7 +187,7 @@ body {
   padding-top: 40px;
 }
 .home-right-sidebar .nav-local-separator {
-  margin: 0;
+  margin: 0 0 10px 0;
 }
 .home-right-sidebar li,
 .home-right-sidebar ul,
@@ -214,7 +214,4 @@ body {
 }
 .right-sidebar-area .actions-to-do li {
   margin-top: 5px;
-}
-.right-sidebar-area .invite-friends {
-  margin-top: 15px;
 }
