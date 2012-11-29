@@ -155,15 +155,14 @@ body {
   background-color: black;
 }
 
-.environment ul,
-.environment ol,
-.environment li {
+li {
   list-style: none;
 }
 
 .environment-title {
   padding: 10px 20px;
   overflow: hidden;
+  width: 100%;
 }
 .environment-title .portal-title-link {
   width: auto;

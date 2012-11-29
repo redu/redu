@@ -1,12 +1,9 @@
-.environment {
-  ul,
-  ol,
-  li { list-style: none; }
-}
+li { list-style: none; }
 
 .environment-title {
   padding: 10px 20px;
   overflow: hidden;
+  width: 100%;
 
   .portal-title-link { width: auto; }
 }
