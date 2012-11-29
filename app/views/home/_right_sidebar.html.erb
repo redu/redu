@@ -1,15 +1,6 @@
 <div class="home-right-sidebar">
-  <div class="right-sidebar-area">
-    <h6 class="right-sidebar-area-title">Status do Perfil</h6>
-    <div class="nav-local-separator"></div>
-    <div class="progress-bar-legend progress-bar-medium">
-      <span class="legend">20%</span>
-      <span class="progress-bar-total progress-bar-thin">
-        <span class="progress-bar-completed text-replacement" style="width: 20%;">20%</span>
-      </span>
-    </div>
-    <span class="legend">Preencha e personalize seu Perfil; leva no máximo 10 minutos. <a href="#" class="link-secondary">Que tal começar?</a></span>
-  </div>
+  <%= render :partial => "home/sidebar/profile_status",
+             :locals => { :progress_percentage => "50%" } %>
   <div class="right-sidebar-area">
     <h6 class="right-sidebar-area-title">Explore o Redu</h6>
     <div class="nav-local-separator"></div>
