@@ -62,6 +62,10 @@ body {
   margin-top: 10px;
 }
 
+.content-body + .breadcrumb-mini {
+  margin-bottom: 20px;
+}
+
 .breadcrumb-mini {
   margin-top: 15px;
 }
@@ -155,15 +159,14 @@ body {
   background-color: black;
 }
 
-.environment ul,
-.environment ol,
-.environment li {
+li {
   list-style: none;
 }
 
 .environment-title {
   padding: 10px 20px;
   overflow: hidden;
+  width: 100%;
 }
 .environment-title .portal-title-link {
   width: auto;
@@ -186,18 +189,45 @@ body {
 .home-right-sidebar {
   padding-top: 40px;
 }
+.home-right-sidebar .nav-local-separator {
+  margin: 0 0 10px 0;
+}
+.home-right-sidebar li {
+  list-style: none;
+}
+.home-right-sidebar [class*="-before"]::before {
+  vertical-align: middle;
+}
 
-.user-profile-status-title {
+.right-sidebar-area-title {
   color: #b3b3b3;
 }
 
-.user-profile-status .nav-local-separator {
-  margin: 0;
+.right-sidebar-area {
+  margin-bottom: 20px;
 }
-.user-profile-status .progress-bar-medium {
+.right-sidebar-area .progress-bar-medium {
   margin: 10px 0;
 }
-.user-profile-status .legend {
+.right-sidebar-area .legend {
   display: block;
   line-height: 14px;
+}
+.right-sidebar-area .actions-to-do li {
+  margin-top: 5px;
+}
+.right-sidebar-area .members-to-add li {
+  overflow: hidden;
+  margin-top: 10px;
+}
+.right-sidebar-area .members-to-add li a {
+  float: left;
+}
+.right-sidebar-area .members-to-add li .member-info {
+  margin-left: 5px;
+  float: left;
+  width: 123px;
+}
+.right-sidebar-area .members-to-add li .member-info .legend {
+  line-height: 11px;
 }

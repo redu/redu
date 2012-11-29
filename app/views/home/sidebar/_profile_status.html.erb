@@ -1,0 +1,18 @@
+<%#
+  Status do perfil.
+
+  Variáveis:
+    progress_percentage: a porcentagem do status.
+%>
+<div class="right-sidebar-area">
+  <h6 class="right-sidebar-area-title">Status do Perfil</h6>
+  <div class="nav-local-separator"></div>
+  <div class="progress-bar-legend progress-bar-medium">
+    <span class="legend"><%= progress_percentage %></span>
+    <span class="progress-bar-total progress-bar-thin">
+      <span class="progress-bar-completed text-replacement" style="width: <%= progress_percentage %>;"><%= progress_percentage %></span>
+    </span>
+  </div>
+  <%# TODO: Ajeitar link para editar perfil quando for integrar. %>
+  <p class="legend">Preencha e personalize seu Perfil; leva no máximo 10 minutos. <%= link_to "Que tal começar?", "edit_user_path(current_user)", :class => "link-secondary" %></p>
+</div>

@@ -7,6 +7,17 @@ class BaseController < ApplicationController
   rescue_from CanCan::AccessDenied, :with => :deny_access
 
   def home
+    # Cria recomendações fakes para teste.
+    member_to_connect = {
+      :display_name => "Filipe Wanderley Lima",
+      :profile_url => "#",
+      :avatar_url => "http://redu-assets.s3.amazonaws.com/images/new/missing_users_thumb_32.png",
+      :friends_in_common => 22,
+      :courses_in_common => 2,
+      :add_to_contact_url => "#"
+    }
+    @members_to_connect = [ member_to_connect, member_to_connect, member_to_connect ]
+
     render :layout => 'home'
   end
 

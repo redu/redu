@@ -1,14 +1,41 @@
-.home-right-sidebar { padding-top: 40px; }
+.home-right-sidebar {
+  padding-top: 40px;
 
-.user-profile-status-title { color: $gray5; }
+  .nav-local-separator { margin: 0 0 10px 0; }
 
-.user-profile-status {
-  .nav-local-separator { margin: 0; }
+  li { list-style: none; }
+
+  [class*="-before"]::before { vertical-align: middle; }
+}
+
+.right-sidebar-area-title { color: $gray5; }
+
+.right-sidebar-area {
+  margin-bottom: 20px;
 
   .progress-bar-medium { margin: 10px 0; }
 
   .legend {
     display: block;
     line-height: 14px;
+  }
+
+  .actions-to-do { li { margin-top: 5px; } }
+
+  .members-to-add {
+    li {
+      overflow: hidden;
+      margin-top: 10px;
+
+      a { float: left; }
+
+      .member-info {
+        margin-left: 5px;
+        float: left;
+        width: 123px;
+
+        .legend { line-height: 11px; }
+      }
+    }
   }
 }
