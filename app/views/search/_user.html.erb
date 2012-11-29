@@ -1,6 +1,8 @@
 <li>
   <span><%= user.first_name %></span>
   <span><%= user.last_name %></span>
+  <span><%= user.localization %></span>
+  <span><%= user.birth_localization %></span>
   <% user.experiences.actual_jobs.each do |job| %>
     <span><%= job.title %></span>
     <span><%= job.company %></span>

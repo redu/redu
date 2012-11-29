@@ -152,14 +152,18 @@ class User < ActiveRecord::Base
   has_private_messages
 
   searchable do
-    text :first_name
-    text :last_name
-
-    text :job do |user|
-      user.experiences.actual_jobs.map(&:title).to_s
+    text :name, :boost => 8.0 do
+      display_name
     end
 
-    text :education do
+    text :birth_localization, :boost => 6.0
+    text :localization, :boost => 5.0
+
+    text :job, :boost => 4.0 do
+      experiences.map(&:title).to_s
+    end
+
+    text :education_place, :boost => 3.0 do
       educations.map{ |education|
         if education.educationable_type == "EventEducation"
           education.educationable.name
@@ -169,8 +173,8 @@ class User < ActiveRecord::Base
       }.to_s
     end
 
-    text :workplace do |user|
-      user.experiences.actual_jobs.map(&:company).to_s
+    text :workplace, :boost => 2.0 do
+      experiences.map(&:company).to_s
     end
 
     text :tags do
