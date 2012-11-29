@@ -20,6 +20,7 @@ Redu::Application.routes.draw do
 
   match '/search', :to => 'search#index', :as => :search
   match '/search/environments', :to => 'search#environments', :as => :search_environments
+  match 'search/profiles', :to => 'search#profiles', :as => :search_profiles
 
   post "presence/auth"
   post "presence/multiauth"
@@ -144,6 +145,7 @@ Redu::Application.routes.draw do
       get :show_mural
       get :curriculum
     end
+
     collection do
       get :auto_complete
     end

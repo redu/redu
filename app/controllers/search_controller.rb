@@ -2,13 +2,14 @@ class SearchController < BaseController
 
   # Busca por Perfis + Ambientes
   def index
-
     respond_to do |format|
       format.html # search/index.html.erb
     end
   end
 
-  #TODO action para busca por perfis
+  def profiles
+    @search = search(User, params[:q])
+  end
 
   # Busca por Ambientes
   def environments

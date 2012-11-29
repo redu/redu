@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   # CALLBACKS
   before_create :make_activation_code
   after_create  :update_last_login, :index_search
-  after_update :index_search
+  after_save :index_search
   before_validation :strip_whitespace
 
   # ASSOCIATIONS
@@ -152,7 +152,30 @@ class User < ActiveRecord::Base
   has_private_messages
 
   searchable do
+    text :first_name
+    text :last_name
 
+    text :job do |user|
+      user.experiences.actual_jobs.map(&:title).to_s
+    end
+
+    text :education do
+      educations.map{ |education|
+        if education.educationable_type == "EventEducation"
+          education.educationable.name
+        else
+          education.educationable.institution
+        end
+      }.to_s
+    end
+
+    text :workplace do |user|
+      user.experiences.actual_jobs.map(&:company).to_s
+    end
+
+    text :tags do
+      tags.map(&:name).to_s
+    end
   end
 
   # VALIDATIONS
@@ -743,6 +766,6 @@ class User < ActiveRecord::Base
 
   # Indexa o objeto na busca
   def index_search
-    self.index
+    self.index!
   end
 end
