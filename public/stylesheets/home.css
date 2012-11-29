@@ -166,6 +166,10 @@ body {
   z-index: 1000 !important;
 }
 
+.typekit-badge {
+  z-index: auto !important;
+}
+
 li {
   list-style: none;
 }
