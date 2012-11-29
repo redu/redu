@@ -1,7 +1,5 @@
-<div class="home-container">
-  <h3>Nome Sobrenome, seja bem vindo(a) ao Redu.</h3>
-  <p>O Redu é uma plataforma para ensino com tecnologia que permite criar, compartilhar e discutir conteúdos das mais diversas formas. Assim, estimulam-se a aprendizagem, colaboração e diversão. Preencha seu Perfil, crie (ou participe de) um Ambiente de Aprendizagem, se comunique e aprenda com amigos, alunos e professores.</p>
-</div>
+<%= render :partial => "home/first-experience/welcome_greeting",
+           :locals => { :user_display_name => "Filipe Wanderley Lima" } %>
 <hr class="list-separator">
 <div class="home-container">
   <div class="message-block message-info">
