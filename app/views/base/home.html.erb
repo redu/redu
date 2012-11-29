@@ -104,10 +104,10 @@
         <div id="tour-4" class="modal hide tour">
           <div class="modal-header">
             <a data-dismiss="modal" class="message-close">×</a>
-            <h4>Ambientes de Aprendizagem</h4>
+            <h4>Ensine</h4>
           </div>
           <div class="modal-body">
-            <p>Crie Ambientes e Cursos para você ou sua Instituição; você também pode buscar e participar de Cursos através desta seção.</p>
+            <p>Crie Ambientes de Aprendizagem e Cursos para você ou sua Instituição.</p>
           </div>
           <div class="modal-footer">
             <p class="legend">4 de 14</p>
@@ -119,10 +119,10 @@
         <div id="tour-5" class="modal hide tour">
           <div class="modal-header">
             <a data-dismiss="modal" class="message-close">×</a>
-            <h4>Aplicativos Educacionais</h4>
+            <h4>Cursos</h4>
           </div>
           <div class="modal-body">
-            <p>Professor, insira Aplicativos em suas Aulas e os use para incentivar a aprendizagem de uma maneira interativa. Aluno, adicione Aplicativos aos seus Favoritos e experimente uma nova forma de estudar.</p>
+            <p>Busque e conheça os Cursos do Redu.</p>
           </div>
           <div class="modal-footer">
             <p class="legend">5 de 14</p>
@@ -134,10 +134,10 @@
         <div id="tour-6" class="modal hide tour">
           <div class="modal-header">
             <a data-dismiss="modal" class="message-close">×</a>
-            <h4>Avise-me</h4>
+            <h4>Aplicativos Educacionais</h4>
           </div>
           <div class="modal-body">
-            <p>Notifica sobre as atividades recentes, respostas aos seus comentários, novas Mensagens e Convites.</p>
+            <p>Professor, insira Aplicativos em suas Aulas e os use para incentivar a aprendizagem de uma maneira interativa. Aluno, adicione Aplicativos aos seus Favoritos e experimente uma nova forma de estudar.</p>
           </div>
           <div class="modal-footer">
             <p class="legend">6 de 14</p>
@@ -341,6 +341,25 @@
 
         $('#tour-5').on('hide', function () {
           $('.nav-global-button[title="Cursos"]').css('z-index', 1020);
+          $('.nav-global').css('position', 'fixed');
+          $('.nav-global').css('margin-bottom', '18px');
+          $('.main-wrapper').css('padding-top', '42px');
+          $('.nav-global-button').css('background-color', 'transparent');
+        });
+
+        $('#tour-6').on('show', function () {
+          $('.nav-global').css('position', 'static');
+          $('.nav-global').css('margin-bottom', '0');
+          $('.main-wrapper').css('padding-top', '0');
+          $('.nav-global-button[title="Aplicativos"]').css('position', 'relative');
+          $('.nav-global-button[title="Aplicativos"]').css('z-index', 1060);
+          $('.nav-global-button').css('background-color', '#F7F7F7');
+          $('.nav-global-button').css('border-radius', '5px');
+          $('.nav-global-button').css('-moz-border-radius', '5px');
+        });
+
+        $('#tour-6').on('hide', function () {
+          $('.nav-global-button[title="Aplicativos"]').css('z-index', 1020);
           $('.nav-global').css('position', 'fixed');
           $('.nav-global').css('margin-bottom', '18px');
           $('.main-wrapper').css('padding-top', '42px');
