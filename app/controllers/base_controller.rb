@@ -6,7 +6,9 @@ class BaseController < ApplicationController
 
   rescue_from CanCan::AccessDenied, :with => :deny_access
 
+  # Rotas de telas em processo de integração
   def home
+    @user = current_user
     # Cria recomendações fakes para teste.
     member_to_connect = {
       :display_name => "Filipe Wanderley Lima",
@@ -18,12 +20,14 @@ class BaseController < ApplicationController
     }
     @members_to_connect = [ member_to_connect, member_to_connect, member_to_connect ]
 
-    render :layout => 'home'
+    render :layout => 'new_application'
   end
 
   def environments
-    render :layout => 'home'
+    @user = current_user
+    render :layout => 'new_application'
   end
+  # Rotas de telas em processo de integração
 
   def tos
     render :layout => 'clean'

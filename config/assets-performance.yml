@@ -11,6 +11,19 @@ s3_upload_files:
   - public/stylesheets/**
 
 javascripts:
+  new_application:
+    - public/javascripts/rails.js
+    - public/javascripts/vendor/modernizr.js
+    - public/javascripts/lazyload.js
+    - public/javascripts/asyncjs.jquery.js
+    - public/javascripts/jquery.autosize.min.js
+    - public/javascripts/vendor/placeholder-polyfill.min.js
+    - public/javascripts/bootstrap-redu.js
+    - public/javascripts/swfobject.js # Necessário ao browserdetection.js
+    - public/javascripts/browserdetection.js
+    - public/javascripts/jquery.cookie.js
+    - public/javascripts/outdated-browser.js
+    - public/javascripts/home.js
   landing:
     - public/javascripts/rails.js
     - public/javascripts/vendor/modernizr.js
@@ -106,6 +119,9 @@ javascripts:
     - public/javascripts/olark.js
 
 stylesheets:
+  new_application:
+    - public/stylesheets/bootstrap-redu.css
+    - public/stylesheets/home.css
   landing:
     - public/stylesheets/bootstrap-redu.css
     - public/stylesheets/landing-new.css

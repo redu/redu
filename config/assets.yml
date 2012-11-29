@@ -11,7 +11,7 @@ s3_upload_files:
   - public/stylesheets/**
 
 javascripts:
-  home:
+  new_application:
     - public/javascripts/rails.js
     - public/javascripts/vendor/modernizr.js
     - public/javascripts/lazyload.js
@@ -119,7 +119,7 @@ javascripts:
     - public/javascripts/olark.js
 
 stylesheets:
-  home:
+  new_application:
     - public/stylesheets/bootstrap-redu.css
     - public/stylesheets/home.css
   landing:
