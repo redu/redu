@@ -1,22 +1,4 @@
 <ul class="search_results">
-  <% @profiles.each do |user| %>
-    <li>
-      <span><%= user.first_name %></span>
-      <span><%= user.last_name %></span>
-      <% user.experiences.actual_jobs.each do |job| %>
-        <span><%= job.title %></span>
-        <span><%= job.company %></span>
-      <% end %>
-      <% user.educations.each do |education| %>
-        <% if education.educationable_type == "EventEducation" %>
-          <span><%= education.educationable.name %></span>
-        <% else %>
-          <span><%= education.educationable.institution %></span>
-        <% end %>
-      <% end %>
-      <% user.tags.each do |tag| %>
-        <span><%= tag.name %></span>
-      <% end %>
-    </li>
-  <% end %>
+  <%= render :partial => "user", :collection => @profiles %>
 </ul>
+<%= paginate @profiles %>

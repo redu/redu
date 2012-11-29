@@ -18,9 +18,24 @@ Redu::Application.routes.draw do
   match '/analytics/course_by_date', :to => 'analytics_dashboard#course_by_date'
   match '/analytics/post_by_date', :to => 'analytics_dashboard#post_by_date'
 
-  match '/search', :to => 'search#index', :as => :search
-  match '/search/environments', :to => 'search#environments', :as => :search_environments
-  match 'search/profiles', :to => 'search#profiles', :as => :search_profiles
+  match '/search' => 'search#index', :as => :search
+  match '/search/environments' => 'search#environments',
+    :as => :search_environments, :constraints => Proc.new { |request|
+      request.query_parameters["f"].nil?
+    }
+  match '/search/environments' => 'search#environments_only', :via => :get,
+    :as => :search_environments_only, :constraints => Proc.new { |request|
+      request.query_parameters["f"].include? "ambientes"
+    }
+  match '/search/environments' => 'search#courses_only', :via => :get,
+    :as => :search_courses_only, :constraints => Proc.new { |request|
+      request.query_parameters["f"].include? "cursos"
+    }
+  match '/search/environments' => 'search#spaces_only', :via => :get,
+    :as => :search_spaces_only, :constraints => Proc.new { |request|
+      request.query_parameters["f"].include? "disciplinas"
+    }
+  match '/search/profiles' => 'search#profiles', :as => :search_profiles
 
   post "presence/auth"
   post "presence/multiauth"

@@ -245,5 +245,8 @@ module Redu
     # Seta locale defaul para pt-br
     config.i18n.default_locale = :"pt-BR"
     I18n.locale = config.i18n.default_locale
+
+    # Quantidade de resultados da busca exibidos por páginas
+    config.search_results_per_page = 10
   end
 end

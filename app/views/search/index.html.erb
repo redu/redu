@@ -1,1 +1,15 @@
 <h1>Busca por Ambientes + Perfis</h1>
+<h2>### Resultados ###</h2>
+<br />
+
+<h3>Perfis</h3>
+<ul class="search_results">
+  <%= render :partial => "user", :collection => @profiles %>
+</ul>
+<% unless @profiles.last_page? %>
+  <%= link_to 'Ver Mais', search_profiles_path(:q => @query) %>
+<% end %>
+<br /><br />
+<%= render :partial => "environments", :locals => { :environments => @environments,
+                                                    :courses => @courses,
+                                                    :spaces => @spaces } %>
