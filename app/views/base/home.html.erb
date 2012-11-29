@@ -427,12 +427,11 @@
         });
 
         $('#tour-12').on('show', function () {
-          $('.footer-contact').css('position', 'relative');
-          $('.footer-contact').css('z-index', 1060);
+          $('#habla_window_div').css('cssText', 'margin: 0px 20px; bottom: 0px; right: 0px; display: none; position: fixed; z-index: 1600 !important;');
         });
 
         $('#tour-12').on('hide', function () {
-          $('.footer-contact').css('z-index', 1000);
+          $('#habla_window_div').css('cssText', 'margin: 0px 20px; bottom: 0px; right: 0px; display: none; position: fixed;');
         });
       });
 
