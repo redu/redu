@@ -1,5 +1,4 @@
 class SearchController < BaseController
-
   # Busca por Perfis + Ambientes
   def index
     respond_to do |format|
@@ -7,8 +6,9 @@ class SearchController < BaseController
     end
   end
 
+  # Busca por Perfis
   def profiles
-    @search = search(User, params[:q])
+    @profiles = results_for(search(User, params[:q]))
   end
 
   # Busca por Ambientes
