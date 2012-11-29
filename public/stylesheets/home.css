@@ -77,9 +77,6 @@ body {
   line-height: 26px;
   padding-bottom: 5px;
 }
-.home-container p {
-  line-height: 18px;
-}
 .home-container ul {
   overflow: hidden;
   list-style: none;
@@ -143,7 +140,6 @@ body {
 }
 .tour .modal-body {
   padding: 10px;
-  line-height: 18px;
 }
 .tour .modal-footer {
   background-color: white;
