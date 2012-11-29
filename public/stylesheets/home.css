@@ -217,7 +217,7 @@ body {
   overflow: hidden;
   margin-top: 10px;
 }
-.right-sidebar-area .members-to-add li img {
+.right-sidebar-area .members-to-add li a {
   float: left;
 }
 .right-sidebar-area .members-to-add li .member-info {
