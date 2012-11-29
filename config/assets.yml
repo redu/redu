@@ -72,6 +72,7 @@ javascripts:
     - public/javascripts/embedly.redu.jquery.js
     - public/javascripts/jquery.timeago.js
     - public/javascripts/timeago.js
+    - public/javascripts/bootstrap-redu-dropdown.js
   chat:
     - public/javascripts/jquery.pjax.js
     - public/javascripts/pusher.js
@@ -145,6 +146,7 @@ stylesheets:
     - public/stylesheets/exercises.css
     - public/stylesheets/outdated-browser.css
     - public/stylesheets/chart.css
+    - public/stylesheets/bootstrap-redu-nav-global.css
   ie:
     - public/stylesheets/ie.css
   ie8:

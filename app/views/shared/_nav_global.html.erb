@@ -1,18 +1,14 @@
 <div class="nav-global nav-global-fixed-top">
   <style>
-    .main-wrapper { padding-top: 42px; }
+    #content { padding-top: 42px; }
   </style>
   <div class="nav-global-inner">
     <div class="nav-global-container">
       <h1>
-        <a href="http://www.redu.com.br/" class="nav-global-brand logo-redu-gray_140_40 text-replacement" title="Redu">Redu</a>
+        <%= link_to "Redu", application_path, :class => "nav-global-brand logo-redu-gray_140_40 text-replacement", :title => "Redu" %>
       </h1>
-      <div class="nav-global-buttons">
-        <a href="http://www.redu.com.br/" class="nav-global-button nav-global-button-active" title="Início">Início</a>
-        <a href="http://www.redu.com.br/ensine" class="nav-global-button" title="Ensine">Ensine</a>
-        <a href="http://www.redu.com.br/cursos" class="nav-global-button" title="Cursos">Cursos</a>
-        <a href="http://aplicativos.redu.com.br/cursos" class="nav-global-button" title="Aplicativos">Aplicativos</a>
-      </div>
+
+      <%= global_nav(yield :nav_global_context) %>
       <div class="nav-global-buttons-dropdown button-toolbar">
         <div class="button-group">
           <button class="button-default nav-global-button-dropdown dropdown-toggle icon-profile-2-lightblue_16_18-before" data-toggle="dropdown">
@@ -21,21 +17,21 @@
           <div class="dropdown-menu nav-global-profile-dropdown">
             <div class="arrow"></div>
             <div class="nav-global-profile-header">
-              Filipe Lima
+              <%= current_user.display_name %>
             </div>
             <ul class="nav-global-profile-items">
               <li class="nav-global-profile-item link-container">
-                <a href="http://www.redu.com.br/pessoas/filipewl/" class="link-target icon-profile-lightblue_16_18-before" title="Meu Perfil">Meu Perfil</a>
-                <a href="http://www.redu.com.br/pessoas/filipewl/editar" class="nav-global-profile-edit link-secondary" title="Editar perfil">editar</a>
+                <%= link_to "Meu Perfil", user_path(current_user), :class => "link-target icon-profile-lightblue_16_18-before", :title => "Meu Perfil" %>
+                <%= link_to "editar", edit_user_path(current_user), :class => "nav-global-profile-edit link-secondary", :title => "Editar perfil" %>
               </li>
               <li class="nav-global-profile-item link-container">
-                <a href="http://www.redu.com.br/pessoas/filipewl/messages" class="link-target icon-message-lightblue_16_18-before" title="Mensagens">Mensagens</a>
+                <%= link_to "Mensagens", user_messages_path(current_user), :class => "link-target icon-message-lightblue_16_18-before", :title => "Mensagens" %>
               </li>
               <li class="nav-global-profile-item link-container">
-                <a href="http://www.redu.com.br/pessoas/filipewl/editar" class="link-target icon-manage-lightblue_16_18-before" title="Configurações">Configurações</a>
+                <%= link_to "Configurações", edit_user_path(current_user), :class => "link-target icon-manage-lightblue_16_18-before", :title => "Configurações" %>
               </li>
               <li class="nav-global-profile-item link-container">
-                <a href="/sair" class="link-target" data-method="delete" data-remote="true" rel="nofollow" title="Sair">Sair</a>
+                <%= link_to "Sair", logout_path, :method => :delete, :class => "link-target", :title => "Sair" %>
               </li>
             </ul>
           </div>

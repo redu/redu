@@ -3,16 +3,24 @@ require 'md5'
 # Methods added to this helper will be available to all templates in the application.
 module BaseHelper
 
+  # Cria markup da navegação global a partir da navegação do contexto passado
+  # Context default: :users
+  def global_nav(context)
+    nav_context = context.blank? ? :users : context
+    render_navigation(:context => nav_context, :level => 1,
+                      :renderer => :links)
+  end
+
   # Cria markup da navegação local a partir da navegação do contexto passado
   def local_nav(context)
-    render_navigation(:context => context, :level => 1,
+    render_navigation(:context => context, :level => 2,
                       :renderer => ListSidebar)
   end
 
   # Cria markup das big abas
   def big_tabs(context, opts={}, &block)
     locals = {
-      :navigation => render_navigation(:context => context, :level => 2,
+      :navigation => render_navigation(:context => context, :level => 3,
                                        :renderer => ListDetailed),
       :options => opts,
       :body => capture(&block)
@@ -25,7 +33,7 @@ module BaseHelper
   # do contexto passado
   def tabs(context, opts={}, &block)
     locals = {
-      :navigation => render_navigation(:context => context, :level => 2,
+      :navigation => render_navigation(:context => context, :level => 3,
                                        :renderer => ListDetailed),
       :options => opts,
       :body => capture(&block)
@@ -38,7 +46,7 @@ module BaseHelper
   # do contexto passado
   def subtabs(context, opts={}, &block)
     locals = {
-      :navigation => render_navigation(:context => context, :level => 3),
+      :navigation => render_navigation(:context => context, :level => 4),
       :options => opts,
       :body => capture(&block)
     }

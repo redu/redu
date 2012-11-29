@@ -15,8 +15,10 @@ SimpleNavigation::Configuration.run do |navigation|
 
   # Define the primary navigation
   navigation.items do |primary|
-    primary.dom_class = 'local-nav auxiliary-local-nav'
-    primary.item :contacts, 'Contatos', user_friendships_path(current_user),
-      :link => { :class => 'icon-contacts_16_18-before' }
+    primary.item :start, 'Sidebar', home_user_path(current_user) do |sidebar|
+      sidebar.dom_class = 'local-nav auxiliary-local-nav'
+      sidebar.item :contacts, 'Contatos', user_friendships_path(current_user),
+        :link => { :class => 'icon-contacts_16_18-before' }
+    end
   end
 end

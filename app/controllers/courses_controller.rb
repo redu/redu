@@ -1,5 +1,9 @@
 class CoursesController < BaseController
   respond_to :html, :js
+  before_filter :set_nav_global_context, :only=> [:show, :preview,
+                                                  :admin_invitations]
+  before_filter :set_nav_global_context_admin, :except => [:show, :preview, :index,
+                                                           :admin_invitations]
 
   before_filter Proc.new {
     @environment = Environment.find_by_path(params[:environment_id])
@@ -101,6 +105,7 @@ class CoursesController < BaseController
   end
 
   def index
+    content_for :nav_global_context, "courses_index"
 
     paginating_params = {
       :page => params[:page],
@@ -471,5 +476,15 @@ class CoursesController < BaseController
     respond_to do |format|
       format.html { render 'courses/admin/teacher_participation_report'}
     end
+  end
+
+  protected
+
+  def set_nav_global_context_admin
+    content_for :nav_global_context, "courses_admin"
+  end
+
+  def set_nav_global_context
+    content_for :nav_global_context, "courses"
   end
 end

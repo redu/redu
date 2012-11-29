@@ -1,6 +1,7 @@
 class UsersController < BaseController
   respond_to :html, :js
 
+  before_filter :set_nav_global_context, :except => [:index]
   before_filter :first_access?, :only => [:home]
 
   load_and_authorize_resource :except => [:recover_username_password,
@@ -421,6 +422,10 @@ class UsersController < BaseController
     else
       super
     end
+  end
+
+  def set_nav_global_context
+    content_for :nav_global_context, "users"
   end
 
   def first_access?
