@@ -12,31 +12,6 @@
   </div>
   <%= render :partial => "home/sidebar/invite_friends" %>
   <%= render :partial => "home/sidebar/help_center" %>
-  <div class="right-sidebar-area">
-    <h6 class="right-sidebar-area-title">Conecte-se</h6>
-    <div class="nav-local-separator"></div>
-    <ul class="members-to-add">
-      <li>
-        <img src="http://redu-assets.s3.amazonaws.com/images/new/missing_users_thumb_32.png">
-        <div class="member-info">
-          <a href="#">Nome Sobrenome</a>
-          <span class="common legend"> 22 amigos e 2 cursos em comum <a href="#" class="link-secondary">+ Adicionar a Contatos</a></span>
-        </div>
-      </li>
-      <li>
-        <img src="http://redu-assets.s3.amazonaws.com/images/new/missing_users_thumb_32.png">
-        <div class="member-info">
-          <a href="#">Nome Sobrenome</a>
-          <span class="common legend"> 22 amigos e 2 cursos em comum <a href="#" class="link-secondary">+ Adicionar a Contatos</a></span>
-        </div>
-      </li>
-      <li>
-        <img src="http://redu-assets.s3.amazonaws.com/images/new/missing_users_thumb_32.png">
-        <div class="member-info">
-          <a href="#">Nome Sobrenome</a>
-          <span class="common legend"> 22 amigos e 2 cursos em comum <a href="#" class="link-secondary">+ Adicionar a Contatos</a></span>
-        </div>
-      </li>
-    </ul>
-  </div>
+  <%= render :partial => "home/sidebar/connect",
+             :locals => { :members => @members_to_connect } %>
 </div>
