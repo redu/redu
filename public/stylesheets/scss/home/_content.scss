@@ -108,3 +108,7 @@
   opacity: 0.4;
   background-color: black;
 }
+
+#habla_window_div.habla_window_div_base {
+  z-index: 1000 !important;
+}
