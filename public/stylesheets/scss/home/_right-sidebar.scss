@@ -3,9 +3,7 @@
 
   .nav-local-separator { margin: 0 0 10px 0; }
 
-  li,
-  ul,
-  ol { list-style: none; }
+  li { list-style: none; }
 
   [class*="-before"]::before { vertical-align: middle; }
 }

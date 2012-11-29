@@ -189,9 +189,7 @@ body {
 .home-right-sidebar .nav-local-separator {
   margin: 0 0 10px 0;
 }
-.home-right-sidebar li,
-.home-right-sidebar ul,
-.home-right-sidebar ol {
+.home-right-sidebar li {
   list-style: none;
 }
 .home-right-sidebar [class*="-before"]::before {
