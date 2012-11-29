@@ -141,6 +141,13 @@ body {
 .tour .modal-body {
   padding: 10px;
 }
+.tour .modal-body p {
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
+.tour .modal-body p:last-child {
+  margin-bottom: 0;
+}
 .tour .modal-footer {
   background-color: white;
   padding: 10px;

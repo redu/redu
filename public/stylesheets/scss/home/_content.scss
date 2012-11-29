@@ -84,6 +84,13 @@
 
   .modal-body {
     padding: 10px;
+
+    p {
+      margin-top: 0px;
+      margin-bottom: 10px;
+    }
+
+    p:last-child { margin-bottom: 0; }
   }
 
   .modal-footer {
