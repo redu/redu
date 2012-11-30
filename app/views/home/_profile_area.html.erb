@@ -1,9 +1,13 @@
-<span class="home-hello-user legend">Olá, Nome</span>
+<span class="home-hello-user legend">Olá, <%= current_user.display_name %></span>
 
 <div class="home-profile-area">
   <div class="home-profile-area-links">
-    <a href="#" class="link-secondary" title="ver perfil">ver perfil</a>
-    <a href="#" class="link-secondary" title="mudar foto">mudar foto</a>
+    <%= link_to "ver perfil", user_path(current_user), :title => "Ver Perfil",
+                :class => "link-secondary" %>
+    <%= link_to "mudar foto", edit_user_path(current_user),
+                :title => "Mudar foto", :class => "link-secondary" %>
   </div>
-  <img class="home-profile-area-photo" src="/images/new/missing_users_thumb_90.png" alt="Nome" title="Nome">
+  <%= image_tag current_user.avatar.url(:thumb_90),
+    :alt => current_user.display_name, :title => current_user.display_name,
+    :size => "90x90", :class => "home-profile-area-photo" %>
 </div>
