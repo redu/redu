@@ -1,4 +1,3 @@
-li { list-style: none; }
 
 .environment-title {
   padding: 10px 20px;
@@ -8,6 +7,6 @@ li { list-style: none; }
   .portal-title-link { width: auto; }
 }
 
-.list-environment-course-space-item {
-  margin: 20px;
-}
+.list-environment-course-space { padding: 0; }
+
+.list-environment-course-space-item { padding: 20px; }

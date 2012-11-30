@@ -25,6 +25,24 @@ class BaseController < ApplicationController
 
   def environments
     @user = current_user
+    # Cria ambientes-cursos-disciplinas fakes para teste.
+    space = {
+      :name => "Lorem ipsum dolor sit amet orci aliquam",
+      :url => "#"
+    }
+    course = {
+      :name => "Lorem ipsum dolor sit amet orci aliquam",
+      :url => "#",
+      :spaces => [space, space]
+    }
+    environment = {
+      :name => "Universidade Voluptat Metus",
+      :url => "#",
+      :thumbnail => "new/missing_environments_thumb_32.png",
+      :courses => [course, course, course]
+    }
+    @environments = [environment, environment, environment, environment]
+
     render :layout => 'new_application'
   end
   # Rotas de telas em processo de integração

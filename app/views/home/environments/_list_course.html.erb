@@ -1,0 +1,29 @@
+<%#
+  Renderiza um item da lista de curso da lista de ambientes-cursos-disciplinas.
+
+  Variáveis:
+    course: o curso (nome, URL e disciplinas).
+%>
+<li class="list-mix-item icon-course-lightgray_32_34-before">
+  <div class="list-mix-inner">
+    <button class="button-default button-dropdown<%= " button-disabled" if course[:spaces].empty? %>">
+      <span class="icon-arrow-down-lightblue_8_10 show text-replacement">Expandir</span>
+    </button>
+    <div class="list-mix-content">
+      <div class="list-mix-header">
+        <h5>
+          <%= link_to course[:name], course[:url],
+                      :title => course[:name], :class => "list-mix-title" %>
+        </h5>
+        <span class="legend"><%= course[:spaces].length %> disciplinas</span>
+      </div>
+      <% unless course[:spaces].empty? %>
+        <ul class="list-mix-body list-space-mini">
+          <%= render :partial => "home/environments/list_space",
+                     :collection => course[:spaces],
+                     :as => :space %>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+</li>

@@ -1,0 +1,12 @@
+<%#
+  Renderiza um item da lista de disciplina da lista de
+  ambientes-cursos-disciplinas.
+
+  Variáveis:
+    space: a disciplina (nome e URL).
+%>
+<li class="list-space-mini-item">
+  <%= link_to space[:name], space[:url],
+              :title => space[:name],
+              :class => "icon-space-lightblue_16_18-before" %>
+</li>

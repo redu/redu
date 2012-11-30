@@ -170,10 +170,6 @@ body {
   z-index: auto !important;
 }
 
-li {
-  list-style: none;
-}
-
 .environment-title {
   padding: 10px 20px;
   overflow: hidden;
@@ -183,8 +179,12 @@ li {
   width: auto;
 }
 
+.list-environment-course-space {
+  padding: 0;
+}
+
 .list-environment-course-space-item {
-  margin: 20px;
+  padding: 20px;
 }
 
 .nav-local-general-stats-title {
