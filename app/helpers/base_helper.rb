@@ -66,6 +66,11 @@ module BaseHelper
     render(:partial => 'shared/subtabs', :locals => locals)
   end
 
+  # Cria markup das sub abas a partir da navegação do contexto passado
+  def new_subtabs(context)
+    render_navigation(:context => context, :level => 4, :renderer => :links)
+  end
+
   def error_for(object, method = nil, options={})
     if method
       err = instance_variable_get("@#{object}").errors[method].to_sentence rescue instance_variable_get("@#{object}").errors[method]
