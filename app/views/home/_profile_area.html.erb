@@ -1,13 +1,13 @@
-<span class="home-hello-user legend">Olá, <%= current_user.display_name %></span>
+<span class="home-hello-user legend">Olá, <%= @user.display_name %></span>
 
 <div class="home-profile-area">
   <div class="home-profile-area-links">
-    <%= link_to "ver perfil", user_path(current_user), :title => "Ver Perfil",
+    <%= link_to "ver perfil", user_path(@user), :title => "Ver Perfil",
                 :class => "link-secondary" %>
-    <%= link_to "mudar foto", edit_user_path(current_user),
+    <%= link_to "mudar foto", edit_user_path(@user),
                 :title => "Mudar foto", :class => "link-secondary" %>
   </div>
-  <%= image_tag current_user.avatar.url(:thumb_90),
-    :alt => current_user.display_name, :title => current_user.display_name,
+  <%= image_tag @user.avatar.url(:thumb_90),
+    :alt => @user.display_name, :title => @user.display_name,
     :size => "90x90", :class => "home-profile-area-photo" %>
 </div>

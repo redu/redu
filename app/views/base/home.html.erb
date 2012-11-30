@@ -6,7 +6,7 @@
     <%= render :partial => "users/breadcrumb_home" %>
     <div class="content-body">
       <%= render :partial => "users/welcome_greeting",
-                 :locals => { :user_display_name => current_user.display_name } %>
+                 :locals => { :user_display_name => @user.display_name } %>
       <hr class="list-separator">
       <%= render :partial => "users/explore_redu" %>
       <hr class="list-separator">
