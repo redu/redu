@@ -1,6 +1,6 @@
 <div class="home-right-sidebar">
   <%= render :partial => "home/sidebar/profile_status",
-             :locals => { :progress_percentage => "50%" } %>
+             :locals => { :progress_percentage => current_user.completeness } %>
   <div class="right-sidebar-area">
     <h6 class="right-sidebar-area-title">Explore o Redu</h6>
     <div class="nav-local-separator"></div>
