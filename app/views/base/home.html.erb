@@ -433,6 +433,14 @@
         $('#tour-12').on('hide', function () {
           $('#habla_window_div').css('cssText', 'margin: 0px 20px; bottom: 0px; right: 0px; display: none; position: fixed;');
         });
+
+        $('#tour-13').on('show', function () {
+          $('#chat').css('z-index', 1060);
+        });
+
+        $('#tour-13').on('hide', function () {
+          $('#chat').css('z-index', 1000);
+        });
       });
 
       </script>
