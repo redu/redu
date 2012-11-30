@@ -1,11 +1,11 @@
 <div class="span3">
-  <%= render :partial => "home/left_sidebar" %>
+  <%= render :partial => "users/left_sidebar" %>
 </div>
 <div class="span10">
   <div class="content-area">
-    <%= render :partial => "home/breadcrumb" %>
+    <%= render :partial => "users/breadcrumb_home" %>
     <div class="content-body">
-      <%= render :partial => "home/first-experience/welcome_greeting",
+      <%= render :partial => "users/welcome_greeting",
                  :locals => { :user_display_name => "Filipe Wanderley Lima" } %>
       <hr class="list-separator">
       <div class="home-container">
@@ -437,9 +437,9 @@
 
       </script>
     </div>
-    <%= render :partial => "home/breadcrumb" %>
+    <%= render :partial => "users/breadcrumb_home" %>
   </div>
 </div>
 <div class="span3">
-  <%= render :partial => "home/right_sidebar" %>
+  <%= render :partial => "users/right_sidebar" %>
 </div>
