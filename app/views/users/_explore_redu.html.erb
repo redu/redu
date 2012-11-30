@@ -1,0 +1,43 @@
+<div class="home-container">
+  <div class="message-block message-info">
+    <a data-dismiss="alert" class="message-close">×</a>
+    <div class="message-block-content">
+      <strong>Explore o Redu e descubra o que você ainda pode fazer:</strong>
+      <ul>
+        <li>
+          <%= link_to "Diga ao mundo quem você é: preencha seu Perfil!",
+                      edit_user_path(@user),
+                      :class => "icon-profile-lightblue_16_18-before" %>
+        </li>
+        <li>
+          <%= link_to "Convide seus amigos para fazer parte de sua rede de Conexões.",
+                      new_user_friendship_path(@user),
+                      :class => "icon-invite-lightblue_16_18-before" %>
+        </li>
+        <li>
+          <%= link_to "Envie uma Mensagem para alguém.",
+                      new_user_message_path(@user),
+                      :class => "icon-message-lightblue_16_18-before" %>
+        </li>
+        <li>
+          <%= link_to "Procure por um Curso.",
+                      courses_index_path,
+                      :class => "icon-course-lightblue_16_18-before" %>
+        </li>
+        <li>
+          <%= link_to "Crie seu Ambiente de Aprendizagem e um Curso grátis.",
+                      teach_index_path,
+                      :class => "icon-environment-circle-lightblue_16_18-before" %>
+        </li>
+        <li>
+          <%= link_to "Visite o Guia Básico da Central de Ajuda.",
+                      Redu::Application.config.redu_services[:help_center][:url],
+                      :class => "icon-help-central-lightblue_16_18-before" %>
+        </li>
+      </ul>
+    </div>
+    <div class="message-block-actions">
+      <a class="button-primary icon-tour-white_16_18-before" data-toggle="modal" href="#tour-1">Tour do Início: conheça a interface e as principais seções</a>
+    </div>
+  </div>
+</div>

@@ -8,25 +8,7 @@
       <%= render :partial => "users/welcome_greeting",
                  :locals => { :user_display_name => current_user.display_name } %>
       <hr class="list-separator">
-      <div class="home-container">
-        <div class="message-block message-info">
-          <a data-dismiss="alert" class="message-close">×</a>
-          <div class="message-block-content">
-            <b>Explore o Redu e descubra o que você ainda pode fazer:</b>
-            <ul>
-              <li><a class="icon-profile-lightblue_16_18-before" href="#">Diga ao mundo quem você é: preencha seu Perfil!</a></li>
-              <li><a class="icon-invite-lightblue_16_18-before" href="#">Convide seus amigos para fazer parte de sua rede de Conexões.</a></li>
-              <li><a class="icon-message-lightblue_16_18-before" href="#">Envie uma Mensagem para alguém.</a></li>
-              <li><a class="icon-course-lightblue_16_18-before" href="#">Procure por um Curso.</a></li>
-              <li><a class="icon-environment-circle-lightblue_16_18-before" href="#">Crie seu Ambiente de Aprendizagem e um Curso grátis.</a></li>
-              <li><a class="icon-help-central-lightblue_16_18-before" href="#">Visite o Guia Básico da Central de Ajuda.</a></li>
-            </ul>
-          </div>
-          <div class="message-block-actions">
-            <a class="button-primary icon-tour-white_16_18-before" data-toggle="modal" href="#tour-1">Tour do Início: conheça a interface e as principais seções</a>
-          </div>
-        </div>
-      </div>
+      <%= render :partial => "users/explore_redu" %>
       <hr class="list-separator">
       <div class="home-container">
         <div class="learning-environments">
