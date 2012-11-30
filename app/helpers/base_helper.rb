@@ -17,6 +17,12 @@ module BaseHelper
                       :renderer => ListSidebar)
   end
 
+  # Cria markup da navegação local a partir da navegação do contexto passado
+  def new_local_nav(context)
+    render_navigation(:context => context, :level => 2,
+                      :renderer => NewListSidebar)
+  end
+
   # Cria markup das big abas
   def big_tabs(context, opts={}, &block)
     locals = {
