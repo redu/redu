@@ -19,7 +19,36 @@ SimpleNavigation::Configuration.run do |navigation|
 
       sidebar.item :overview, 'Visão Geral', home_user_path(@user), :class => 'icon-home_16_18-before nav-local-item', :link => { :class => 'nav-local-link link-target', :title => 'Visão Geral' }
       sidebar.item :my_wall, 'Meu Mural', my_wall_user_path(@user), :class => 'icon-wall_16_18-before nav-local-item', :link => { :class => 'nav-local-link link-target', :title => 'Meu Mural' }
-      sidebar.item :messages, 'Mensagens', user_messages_path(@user), :class => 'icon-message_16_18-before nav-local-item', :link => { :class => 'nav-local-link link-target', :title => 'Mensagens' }
+      sidebar.item :messages, 'Mensagens', user_messages_path(@user), :class => 'icon-message_16_18-before nav-local-item', :link => { :class => 'nav-local-link link-target', :title => 'Mensagens' } do |messages_tab|
+        messages_tab.dom_class = 'tabs'
+        messages_tab.selected_class = 'tab-active'
+
+        messages_tab.item :received, 'Recebidas', user_messages_path(@user),
+          :highlights_on => Proc.new {
+            action_matcher({'messages' => ['index', 'show']}).call &&
+            (action_matcher({'messages' => ['show']}).call ?
+             @message.sender != @user : true)
+          },
+          :class => 'tab',
+          :link => { :class => 'tab-title icon-message_16_18-before',
+                     :title => 'Recebidas' },
+          :details => { :text => 'visualização', :class => 'tab-sub-title legend',
+                        :if => Proc.new { action_matcher({'messages' => ['show']}).
+                                          call && @message.sender != @user } }
+
+        messages_tab.item :sent, 'Enviadas', index_sent_user_messages_path(@user),
+          :highlights_on => Proc.new {
+            action_matcher({'messages' => ['index_sent', 'show']}).call &&
+            (action_matcher({'messages' => ['show']}).call ?
+             @message.sender == @user : true)
+          },
+          :class => 'tab',
+          :link => { :class => 'tab-title icon-message-sent_16_18-before',
+                     :title => 'Enviadas' },
+          :details => { :text => 'visualização', :class => 'tab-sub-title legend',
+                        :if => Proc.new { action_matcher({'messages' => ['show']}).
+                                          call && @message.sender == @user } }
+      end
       sidebar.item :environments, 'Ambientes', application_path, :class => 'icon-environment_16_18-before nav-local-item', :link => { :class => 'nav-local-link link-target', :title => 'Ambientes' }
       sidebar.item :settings, 'Configurações', edit_user_path(@user), :class => 'icon-manage_16_18-before nav-local-item', :link => { :class => 'nav-local-link link-target', :title => 'Configurações' }
       sidebar.item :my_contacts, 'Meus Contatos', user_friendships_path(@user), :class => 'icon-contacts_16_18-before nav-local-item', :link => { :class => 'nav-local-link link-target', :title => 'Meus Contatos' }

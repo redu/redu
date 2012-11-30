@@ -1,0 +1,16 @@
+<div class="span3">
+  <%= render :partial => "users/left_sidebar" %>
+</div>
+<div class="span10">
+  <div class="content-area">
+    <%= render :partial => "users/breadcrumb_home" %>
+    <div class="content-body">
+      <%= new_tabs(:new_users) do %>
+      <% end %>
+    </div>
+    <%= render :partial => "users/breadcrumb_home" %>
+  </div>
+</div>
+<div class="span3">
+  <%= render :partial => "users/right_sidebar" %>
+</div>

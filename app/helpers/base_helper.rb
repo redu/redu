@@ -48,6 +48,12 @@ module BaseHelper
     render(:partial => 'shared/tabs', :locals => locals)
   end
 
+  # Cria markup das abas a partir da navegação do contexto passado
+  def new_tabs(context)
+    render_navigation(:context => context, :level => 3,
+                      :renderer => ListDetailed)
+  end
+
   # Cria markup das sub abas (compatível com jQuery UI) a partir da navegação
   # do contexto passado
   def subtabs(context, opts={}, &block)
