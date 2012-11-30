@@ -1,11 +1,11 @@
 <div class="span3">
-  <%= render :partial => "home/left_sidebar" %>
+  <%= render :partial => "users/left_sidebar" %>
 </div>
 <div class="span10">
   <div class="content-area">
-    <%= render :partial => "home/breadcrumb" %>
+    <%= render :partial => "users/breadcrumb_home" %>
     <div class="content-body">
-      <%= render :partial => "home/first-experience/welcome_greeting",
+      <%= render :partial => "users/welcome_greeting",
                  :locals => { :user_display_name => "Filipe Wanderley Lima" } %>
       <hr class="list-separator">
       <div class="home-container">
@@ -433,13 +433,21 @@
         $('#tour-12').on('hide', function () {
           $('#habla_window_div').css('cssText', 'margin: 0px 20px; bottom: 0px; right: 0px; display: none; position: fixed;');
         });
+
+        $('#tour-13').on('show', function () {
+          $('#chat').css('z-index', 1060);
+        });
+
+        $('#tour-13').on('hide', function () {
+          $('#chat').css('z-index', 1000);
+        });
       });
 
       </script>
     </div>
-    <%= render :partial => "home/breadcrumb" %>
+    <%= render :partial => "users/breadcrumb_home" %>
   </div>
 </div>
 <div class="span3">
-  <%= render :partial => "home/right_sidebar" %>
+  <%= render :partial => "users/right_sidebar" %>
 </div>
