@@ -8177,6 +8177,10 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   margin-left: 15px;
 }
 
+.invite-button:visited {
+  color: white;
+}
+
 .invite-button .invite-contact_32_50-before {
   float: left;
 }
@@ -8231,7 +8235,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   margin-bottom: 18px;
   display: inline;
   position: fixed;
-  top: 20px;
+  top: 57px;
   right: 52%;
   width: 150px;
   z-index: 9999;
