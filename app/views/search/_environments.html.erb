@@ -1,17 +1,20 @@
 <h3>Ambientes</h3>
 <%= render :partial => 'environment', :collection => environments %>
 <% unless environments.last_page? %>
-  <%= link_to 'Ver Mais', search_environments_only_path(:q => @query) %>
+  <%= link_to 'Ver Mais',
+              search_environments_only_path(:q => @query, :f => ["ambientes"]) %>
 <% end %>
 <br /><br />
 <h3>Cursos</h3>
 <%= render :partial => 'course', :collection => courses %>
 <% unless courses.last_page? %>
-  <%= link_to 'Ver Mais', search_courses_only_path(:q => @query) %>
+  <%= link_to 'Ver Mais',
+              search_courses_only_path(:q => @query, :f => ["cursos"]) %>
 <% end %>
 <br /><br />
 <h3>Disciplinas</h3>
 <%= render :partial => 'space', :collection => spaces %>
 <% unless spaces.last_page? %>
-  <%= link_to 'Ver Mais', search_spaces_only_path(:q => @query) %>
+  <%= link_to 'Ver Mais',
+              search_spaces_only_path(:q => @query, :f => ["disciplinas"]) %>
 <% end %>

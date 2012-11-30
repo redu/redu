@@ -136,7 +136,7 @@ class Space < ActiveRecord::Base
   searchable do
     text :name, :boost => 5.0
     text :owner, :boost => 4.0 do
-      owner.display_name
+      owner.display_name if owner
     end
     text :teachers, :boost => 3.0 do
       teachers.map { |t| t.display_name }
