@@ -2,8 +2,6 @@ require 'spec_helper'
 require 'authlogic/test_case'
 
 describe StatusesController do
-  include Authlogic::TestCase
-
   subject { Factory(:activity) }
 
   describe "POST create" do
@@ -14,9 +12,7 @@ describe StatusesController do
         @statusable.be_friends_with(@author)
         @author.be_friends_with(@statusable)
 
-        # Logando
-        activate_authlogic
-        UserSession.create @author
+        login_as @author
 
         @params = {
           :status => {:statusable_type => "User",
@@ -87,17 +83,14 @@ describe StatusesController do
 
     context "when creating new help request" do
       before do
-        User.maintain_sessions = false
         @space = Factory(:space)
         @author = Factory(:user)
-        activate_authlogic
         @subject = Factory(:subject, :owner => @author,
                            :space => @space, :finalized => true, :visible => true)
         @statusable = Factory(:lecture, :owner => @author, :subject => @subject)
         @space.course.join(@author, Role[:teacher])
 
-        # Logando
-        UserSession.create @author
+        login_as @author
 
         @params = {"status" => {"statusable_type"=>"Lecture", "text"=>"Lorem ipsum dolor sit amet, consectetur magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation", "statusable_id"=> @statusable.id, "type" => "Help" }, "locale" => "pt-BR"}
       end
@@ -120,9 +113,7 @@ describe StatusesController do
         @statusable.be_friends_with(@author)
         @author.be_friends_with(@statusable)
 
-        # Logando
-        activate_authlogic
-        UserSession.create(@author)
+        login_as @author
 
         @params = {:id => subject.id, "status" => { "in_response_to_type"=>"Activity", "text"=>"Lorem ipsum dolor sit amet, consectetur magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation", "in_response_to_id"=> subject.id, "type"=>"Answer" }, "locale" => "pt-BR"}
       end
@@ -138,19 +129,15 @@ describe StatusesController do
 
     context "when responding a help request" do
       before do
-        User.maintain_sessions = false
         @space = Factory(:space)
         @author = Factory(:user)
-        activate_authlogic
         @subject = Factory(:subject, :owner => @author,
                            :space => @space, :finalized => true, :visible => true)
         @lecture = Factory(:lecture, :owner => @author, :subject => @subject)
         @help = Factory(:help, :statusable => @lecture)
         @space.course.join(@author, Role[:teacher])
 
-        # Logando
-        activate_authlogic
-        UserSession.create @author
+        login_as @author
 
         @params = {:id => @help.id,
                    "status" => { "in_response_to_type"=>"Status",
@@ -172,9 +159,7 @@ describe StatusesController do
   describe "DELETE destroy" do
     context "when destroying a status" do
       before do
-        # Logando
-        activate_authlogic
-        UserSession.create subject.user
+        login_as subject.user
 
         @params = {:id => subject.id, :format => "js", :locale => "pt-BR"}
       end

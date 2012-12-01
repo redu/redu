@@ -2,13 +2,10 @@ require 'spec_helper'
 require 'authlogic/test_case'
 
 describe ResultsController do
-  include Authlogic::TestCase
   before do
-    User.maintain_sessions = false
     @space = Factory(:space)
     @course = @space.course
     @owner = @space.owner
-    activate_authlogic
 
     @subject = Factory(:subject, :owner => @space.owner,
                        :space => @space, :finalized => true,
@@ -19,7 +16,7 @@ describe ResultsController do
 
     @user = Factory(:user)
     @space.course.join(@user)
-    UserSession.create @user
+    login_as @user
   end
 
   context "POST create" do

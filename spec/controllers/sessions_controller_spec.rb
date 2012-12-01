@@ -2,8 +2,6 @@ require 'spec_helper'
 require 'authlogic/test_case'
 
 describe SessionsController do
-  include Authlogic::TestCase
-
   before do
     @user = Factory(:user)
   end
@@ -158,8 +156,7 @@ describe SessionsController do
     context "when current_user is NOT nil" do
       before do
         @user = Factory(:user)
-        activate_authlogic
-        UserSession.create @user
+        login_as @user
         get :destroy, { :locale => "pt-BR" }
       end
 

@@ -2,12 +2,9 @@ require 'spec_helper'
 require 'authlogic/test_case'
 
 describe AuthenticationsController do
-  include Authlogic::TestCase
-
   describe "GET create" do
 
     before do
-      activate_authlogic
       request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:facebook]
     end
 

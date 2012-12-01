@@ -3,8 +3,6 @@ require 'authlogic/test_case'
 require 'vis_application_additions'
 
 describe SpacesController do
-  include Authlogic::TestCase
-
   context "GET students_endless" do
     before do
       environment = Factory(:environment, :published => true)
@@ -13,8 +11,7 @@ describe SpacesController do
       user = Factory(:user)
       space.course.join user
 
-      activate_authlogic
-      UserSession.create user
+      login_as user
 
       get :students_endless, :id => space.id, :locale => "pt-BR",
         :format => "js"
@@ -39,8 +36,7 @@ describe SpacesController do
       user = Factory(:user)
       @space.course.join user, Role[:environment_admin]
 
-      activate_authlogic
-      UserSession.create user
+      login_as user
 
       application = ClientApplication.create(:name => "ReduVis",
                                              :url => "http://www.redu.com.br",

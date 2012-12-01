@@ -2,12 +2,9 @@ require 'spec_helper'
 require 'authlogic/test_case'
 
 describe EducationsController do
-  include Authlogic::TestCase
-
   before do
     @user = Factory(:user)
-    activate_authlogic
-    UserSession.create @user
+    login_as @user
   end
 
   describe "POST 'create'" do
