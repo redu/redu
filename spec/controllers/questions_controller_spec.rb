@@ -2,11 +2,8 @@ require 'spec_helper'
 require 'authlogic/test_case'
 
 describe QuestionsController do
-  include Authlogic::TestCase
   before do
-    User.maintain_sessions = false
     @space = Factory(:space)
-    activate_authlogic
 
     @subject = Factory(:subject, :owner => @space.owner,
                        :space => @space, :finalized => true,
@@ -18,7 +15,7 @@ describe QuestionsController do
 
     @user = Factory(:user)
     @space.course.join(@user)
-    UserSession.create @user
+    login_as @user
   end
 
   context "when GET show" do

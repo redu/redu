@@ -2,13 +2,9 @@ require 'spec_helper'
 require 'authlogic/test_case'
 
 describe PartnersController do
-  include Authlogic::TestCase
-
   before do
-    User.maintain_sessions = false
     @user = Factory(:user)
-    activate_authlogic
-    UserSession.create @user
+    login_as @user
   end
 
   context "when viewing a partner" do
@@ -98,7 +94,7 @@ describe PartnersController do
   context "when viewing all partners" do
     before do
       @user.role = Role[:admin]
-      UserSession.create @user
+      login_as @user
       get :index, :locale => 'pt-BR'
     end
 

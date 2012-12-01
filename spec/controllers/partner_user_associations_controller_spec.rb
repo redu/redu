@@ -2,13 +2,10 @@ require 'spec_helper'
 require 'authlogic/test_case'
 
 describe PartnerUserAssociationsController do
-  include Authlogic::TestCase
-
   context "when listing collaborators from a partner" do
     before do
       @user = Factory(:user)
-      activate_authlogic
-      UserSession.create @user
+      login_as @user
 
       @partner = Factory(:partner)
       environment = Factory(:environment)

@@ -2,14 +2,11 @@ require 'spec_helper'
 require 'authlogic/test_case'
 
 describe MessagesController do
-  include Authlogic::TestCase
-
   context "POST delete_selected" do
     before do
       @user = Factory(:user)
       @messages = 5.times.collect { Factory(:message, :recipient => @user) }
-      activate_authlogic
-      UserSession.create @user
+      login_as @user
 
       @messages_to_delete = @messages[0..2]
       @params = { :mailbox => "inbox",

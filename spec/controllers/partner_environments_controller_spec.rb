@@ -2,13 +2,9 @@ require 'spec_helper'
 require 'authlogic/test_case'
 
 describe PartnerEnvironmentAssociationsController do
-  include Authlogic::TestCase
-
   before do
-    User.maintain_sessions = false
     @user = Factory(:user)
-    activate_authlogic
-    UserSession.create @user
+    login_as @user
   end
 
   describe "when creating partner environment" do

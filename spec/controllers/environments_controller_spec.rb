@@ -2,14 +2,11 @@ require 'spec_helper'
 require 'authlogic/test_case'
 
 describe EnvironmentsController do
-  include Authlogic::TestCase
-
   context "when creating a paid Environment" do
     before do
       User.maintain_sessions = false
       @user = Factory(:user)
-      activate_authlogic
-      UserSession.create @user
+      login_as @user
 
       @params = {:step => "1",
         :environment => {:name => "Faculdade mauricio de nassau",
@@ -227,8 +224,7 @@ describe EnvironmentsController do
       @courses = (1..3).collect { Factory(:course, :environment => @environment) }
       @user = Factory(:user)
       @courses.each {|c| c.join @user, :environment_admin }
-      activate_authlogic
-      UserSession.create @user
+      login_as @user
     end
 
     context "GET edit" do
