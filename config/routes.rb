@@ -176,6 +176,7 @@ Redu::Application.routes.draw do
     resources :plans, :only => [:index]
     resources :experiences
     resources :educations, :except => [:new, :edit]
+    resources :environments, :only => [:index]
   end
 
   match 'users/activate/:id' => 'users#activate', :as => :activate

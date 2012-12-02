@@ -49,7 +49,7 @@ SimpleNavigation::Configuration.run do |navigation|
                         :if => Proc.new { action_matcher({'messages' => ['show']}).
                                           call && @message.sender == @user } }
       end
-      sidebar.item :environments, 'Ambientes', application_path, :class => 'icon-environment_16_18-before nav-local-item', :link => { :class => 'nav-local-link link-target', :title => 'Ambientes' }
+      sidebar.item :environments, 'Ambientes', user_environments_path(@user), :class => 'icon-environment_16_18-before nav-local-item', :link => { :class => 'nav-local-link link-target', :title => 'Ambientes' }
       sidebar.item :settings, 'Configurações', edit_user_path(@user), :class => 'icon-manage_16_18-before nav-local-item', :link => { :class => 'nav-local-link link-target', :title => 'Configurações' } do |settings_tab|
         settings_tab.dom_class = 'tabs'
         settings_tab.selected_class = 'tab-active'

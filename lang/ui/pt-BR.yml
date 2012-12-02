@@ -373,7 +373,7 @@ pt-BR:
   views:
     pagination:
       sidebar_endless: "Ver mais"
-      endless: "Mostrar mais resultados"
+      endless: "Mostrar mais..."
 
   #redu categories
   all: Todas

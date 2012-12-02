@@ -9,22 +9,22 @@
   <hr class="list-separator">
   <div class="list-environment-course-space-item">
     <div class="list-environment-course-space-header">
-      <%= link_to environment[:url],
+      <%= link_to environment_path(environment),
                   :class => "list-environment-course-space-image-link" do %>
-        <%= image_tag environment[:thumbnail], :size => "32x32",
-                      :title => environment[:name], :alt => environment[:name] %>
+        <%= image_tag environment.avatar(:thumb_32), :size => "32x32",
+                      :title => environment.name, :alt => environment.name %>
       <% end %>
       <h4 class="list-environment-course-space-title">
-        <%= link_to environment[:name], environment[:url],
+        <%= link_to environment.name, environment_path(environment),
                     :class => "list-environment-course-space-link",
-                    :title =>  environment[:name] %>
+                    :title =>  environment.name %>
       </h4>
     </div>
-    <% unless environment[:courses].empty? %>
+    <% unless environment.courses.empty? %>
       <ul class="list-mix">
-        <%= render :partial => "home/environments/list_course",
-                   :collection => environment[:courses],
-                   :as => :course %>
+        <%= render :partial => "users/environments/course",
+          :collection => environment.courses,
+          :locals => { :environment => environment } %>
       </ul>
     <% end %>
   </div>

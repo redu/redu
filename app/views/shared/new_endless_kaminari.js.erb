@@ -1,0 +1,9 @@
+items = '<%= escape_javascript render(:partial => partial, :collection => collection, :locals => partial_locals) %>'
+$('<%= raw selector %>').append(items);
+
+endless = '<%= escape_javascript paginate(collection, paginate_opts.merge(:theme => 'new_endless')) %>'
+<% if paginate_opts.has_key? :id %>
+  $('#<%= paginate_opts[:id] %>').replaceWith(endless);
+<% else %>
+  $('.pagination').replaceWith(endless);
+<% end %>

@@ -6,7 +6,7 @@
     space: a disciplina (nome e URL).
 %>
 <li class="list-space-mini-item">
-  <%= link_to space[:name], space[:url],
-              :title => space[:name],
+  <%= link_to space.name, space_path(space),
+              :title => space.name,
               :class => "icon-space-lightblue_16_18-before" %>
 </li>

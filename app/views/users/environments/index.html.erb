@@ -1,0 +1,28 @@
+<div class="span3">
+  <%= render :partial => "users/left_sidebar" %>
+</div>
+<div class="span10">
+  <div class="content-area">
+    <%= render :partial => "users/breadcrumb_home" %>
+    <div class="content-body">
+      <div class="environment-title">
+        <h2 class="portal-title icon-apps-portal-gray_48_50-before link-container pull-left">
+          <%= link_to "Ambientes que Participo", user_environments_path(@user), :class => "portal-title-link link-target", :title =>  "Ambientes que Participo" %>
+        </h2>
+      </div>
+      <% if @environments.empty? %>
+        <%# TODO: O que fazer quando não há nenhum ambiente? %>
+      <% else %>
+        <ul id="my-environments" class="list-environment-course-space">
+          <%= render :partial => "users/environments/environment",
+            :collection => @environments %>
+        </ul>
+      <% end %>
+      <%= paginate @environments, :theme => 'new_endless' %>
+    </div>
+    <%= render :partial => "users/breadcrumb_home" %>
+  </div>
+</div>
+<div class="span3">
+  <%= render :partial => "users/right_sidebar" %>
+</div>
