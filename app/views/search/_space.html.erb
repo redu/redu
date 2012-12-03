@@ -6,5 +6,5 @@ Ambiente: <%= link_to space.course.environment.name, environment_path(space.cour
 Autor: <%= space.owner.display_name %><br />
 Professores: <%= space.teachers.collect { |t| t.display_name }.join(", ") %><br />
 Descrição: <%= space.description %><br />
-Tags: <%= space.tag_list %><br />
+Tags: <%= space.tags.join(", ") %><br />
 Aulas: <%= space.lectures_count %> | Membros: <%= space.users.length %><br />

@@ -52,7 +52,6 @@ gem 'pagseguro', '~> 0.1.10'
 gem 'paperclip', '~> 2.7'
 gem 'rails', '3.0.10'
 gem 'rake', '0.8.7'
-gem 'rd_searchlogic', :require => 'searchlogic'
 gem 'remotipart', '~> 1.0'
 gem 'roar',
   :git => 'https://github.com/apotonick/roar.git'

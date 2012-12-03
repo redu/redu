@@ -347,8 +347,6 @@ GEM
       rdoc (~> 3.4)
       thor (~> 0.14.4)
     rake (0.8.7)
-    rd_searchlogic (3.0.1)
-      activerecord (>= 3.0.0)
     rdoc (3.12)
       json (~> 1.4)
     redu_analytics (0.0.2)
@@ -477,7 +475,6 @@ DEPENDENCIES
   rails (= 3.0.10)
   rails3-generators
   rake (= 0.8.7)
-  rd_searchlogic
   redu_analytics
   remotipart (~> 1.0)
   roar!

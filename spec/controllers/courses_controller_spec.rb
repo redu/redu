@@ -354,6 +354,7 @@ describe CoursesController do
         end
       end
 
+      # Busca com Searchlogic (a ser removido)
       context "with specified keyword" do
         before  do
           @c1 = Factory(:course, :name => 'keyword')
@@ -362,12 +363,13 @@ describe CoursesController do
           post :index, :locale => 'pt-BR', :search => 'key'
         end
 
-        it "should assign all courses with name LIKE the keyword" do
+        xit "should assign all courses with name LIKE the keyword" do
           assigns[:courses].should_not be_nil
           assigns[:courses].to_set.should == [@c1, @c2, @c3].to_set
         end
       end
 
+      # Busca com Searchlogic (a ser removido)
       context "with specified audiences AND with specified keyword" do
         before  do
           @c1 = Factory(:course, :name => 'keyword')
@@ -382,7 +384,7 @@ describe CoursesController do
             :audiences_ids => [@a1.id, @a2.id]
         end
 
-        it "should assign all courses with one of specified audience AND name LIKE the keyword" do
+        xit "should assign all courses with one of specified audience AND name LIKE the keyword" do
           assigns[:courses].should_not be_nil
           assigns[:courses].to_set.should == [@c1, @c2].to_set
         end

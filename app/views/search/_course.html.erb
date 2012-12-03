@@ -4,6 +4,6 @@ Ambiente: <%= link_to course.environment.name, environment_path(course.environme
 Criador: <%= course.owner.display_name %><br />
 Professores: <%= course.teachers.collect { |t| t.display_name }.join(", ") %><br />
 Descrição: <%= course.description %><br />
-Tags: <%= course.tag_list %><br />
+Tags: <%= course.tags.join(", ") %><br />
 Disciplinas: <%= course.spaces.length %> | Membros: <%= course.users.length %> |
  Amigos neste curso: <%= (current_user.friends & course.users).length %><br />

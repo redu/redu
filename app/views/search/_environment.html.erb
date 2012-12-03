@@ -4,6 +4,6 @@
 <% end %>
 Administrador(es): <%= environment.administrators.collect { |a| a.display_name }.join(", ") %><br />
 Descrição: <%= environment.description %><br />
-Tags: <%= environment.tag_list %><br />
+Tags: <%= environment.tags.join(", ") %><br />
 Abreviação: <%= environment.initials %><br />
 Cursos: <%= environment.courses.length %> | Membros: <%= environment.users.length %><br />
