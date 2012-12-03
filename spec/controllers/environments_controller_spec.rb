@@ -322,6 +322,7 @@ describe EnvironmentsController do
       @user_environments = (1..3).collect { Factory(:environment) }
       @user_environments.each { |e| user.environments << e }
 
+      login_as user
       get :index, :user_id => user.to_param, :locale => 'pt-BR'
     end
 
