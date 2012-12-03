@@ -2,16 +2,11 @@ class Experience < ActiveRecord::Base
   # Representa uma experiência profissional vivida por um usuário, deste modo
   # faz parte do currículo do mesmo.
 
-  after_save :index_search
-  after_destroy :index_search
-
   belongs_to :user
   has_many :logs, :as => :logeable, :order => "created_at DESC",
     :dependent => :destroy
 
   attr_protected :user
-
-  searchable do end
 
   validates :title, :company, :start_date, :user, :presence => true
   validate :start_before_end_date,
@@ -35,9 +30,5 @@ class Experience < ActiveRecord::Base
     unless self.end_date.nil?
       self.errors.add(:end_date, "não deve existir, já que é uma experiência atual")
     end
-  end
-
-  def index_search
-    user.index!
   end
 end

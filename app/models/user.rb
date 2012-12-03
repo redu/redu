@@ -10,8 +10,7 @@ class User < ActiveRecord::Base
 
   # CALLBACKS
   before_create :make_activation_code
-  after_create  :update_last_login, :index_search
-  after_save :index_search
+  after_create  :update_last_login
   before_validation :strip_whitespace
 
   # ASSOCIATIONS
@@ -763,10 +762,5 @@ class User < ActiveRecord::Base
     %w(login first_name last_name email).each do |var|
       self.send("#{var}=", (self.send(var).strip if attribute_present? var))
     end
-  end
-
-  # Indexa o objeto na busca
-  def index_search
-    self.index!
   end
 end
