@@ -7,8 +7,20 @@
 # Para mais informações visite http://github.com/redu/untied
 Untied::Publisher.configure do |config|
   config.deliver_messages = !(Rails.env.test? || Rails.env.development?)
-  # config.deliver_messages = true
   config.logger = Rails.logger
   config.service_name = "core"
   config.doorkeeper = ::BaseDoorkeeper
+end
+
+# Inicializa novamente o EM numa thread separada apenas no contexto do DelayedJob.
+# Isso é necessário pois o reactor não sobrevive a forks de processo.
+Delayed::Worker.lifecycle.before(:invoke_job) do
+  if !defined?(@@em_thread) && Delayed::Worker.delay_jobs
+    Delayed::Worker.logger.info "Initializing EM and AMQP"
+    EM.stop if EM.reactor_running?
+    @@em_thread = Thread.new do
+      EventMachine.run { AMQP.start }
+    end
+    sleep(0.25)
+  end
 end
