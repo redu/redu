@@ -158,6 +158,7 @@ a:hover {
   background-color: white;
   position: relative;
   padding-bottom: 10px;
+  min-height: 500px;
 }
 .content-body:before {
   -webkit-border-radius: 10px 10px 0 0;
