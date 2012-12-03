@@ -56,8 +56,6 @@ gem 'rd_searchlogic', :require => 'searchlogic'
 gem 'remotipart', '~> 1.0'
 gem 'roar',
   :git => 'https://github.com/apotonick/roar.git'
-gem 'roar-rails', '~> 0.0.3',
-  :git => 'git://github.com/apotonick/roar-rails.git'
 gem 'scribd_fu', :git => 'git://github.com/guiocavalcanti/scribd_fu.git',
   :branch => 'without-scape'
 gem 'shuber-sortable'
