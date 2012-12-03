@@ -5,12 +5,17 @@ class Education < ActiveRecord::Base
   # HigherEducation (Ensino Superior), ComplementaryCourse (Curso
   # Complementar) e EventEducation (Evento).
 
+  after_save :index_search
+  after_destroy :index_search
+
   belongs_to :educationable, :polymorphic => true, :dependent => :destroy
   belongs_to :user
   has_many :logs, :as => :logeable, :order => "created_at DESC",
     :dependent => :destroy
 
   attr_protected :user
+
+  searchable do end
 
   validates_presence_of :educationable, :user
   validates_associated :educationable
@@ -19,4 +24,10 @@ class Education < ActiveRecord::Base
   scope :higher_educations, where("educationable_type LIKE 'HigherEducation'")
   scope :complementary_courses, where("educationable_type LIKE 'ComplementaryCourse'")
   scope :event_educations, where("educationable_type LIKE 'EventEducation'")
+
+  private
+
+  def index_search
+    user.index!
+  end
 end
