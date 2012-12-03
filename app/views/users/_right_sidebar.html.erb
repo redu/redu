@@ -1,9 +1,9 @@
 <div class="home-right-sidebar">
-  <%= render :partial => "home/sidebar/profile_status",
-             :locals => { :progress_percentage => current_user.completeness } %>
-  <%= render :partial => "home/sidebar/explore_redu" %>
-  <%= render :partial => "home/sidebar/invite_friends" %>
-  <%= render :partial => "home/sidebar/help_center" %>
-  <%= render :partial => "home/sidebar/connect",
+  <%= render :partial => "users/profile_status",
+             :locals => { :progress_percentage => @user.completeness } %>
+  <%= render :partial => "users/explore_redu_sidebar" %>
+  <%= render :partial => "users/invite_friends" %>
+  <%= render :partial => "users/help_center" %>
+  <%= render :partial => "users/recommendation",
              :locals => { :members => @members_to_connect } %>
 </div>

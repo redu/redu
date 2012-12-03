@@ -1,9 +1,0 @@
-<li>
-  <%= link_to member[:avatar_url], :rel => "nofollow" do %>
-    <%= image_tag member[:avatar_url], :size => "32x32", :title => member[:display_name], :alt => member[:display_name] %>
-  <% end %>
-  <div class="member-info">
-    <%= link_to member[:display_name], member[:profile_url] %>
-    <p class="legend"><%= member[:friends_in_common] %> amigos e <%= member[:courses_in_common] %> cursos em comum <%= link_to "+ Adicionar a Contatos", member[:add_to_contact_url], :class => "link-secondary" %></p>
-  </div>
-</li>
