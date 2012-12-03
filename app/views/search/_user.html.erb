@@ -3,17 +3,17 @@
   <span><%= user.last_name %></span>
   <span><%= user.localization %></span>
   <span><%= user.birth_localization %></span>
+
   <% user.experiences.actual_jobs.each do |job| %>
     <span><%= job.title %></span>
     <span><%= job.company %></span>
   <% end %>
-  <% user.educations.each do |education| %>
-    <% if education.educationable_type == "EventEducation" %>
-      <span><%= education.educationable.name %></span>
-    <% else %>
-      <span><%= education.educationable.institution %></span>
-    <% end %>
+
+  <% education = user.most_important_education.first %>
+  <% unless education.nil? %>
+    <span><%= education.educationable.institution %></span>
   <% end %>
+
   <% user.tags.each do |tag| %>
     <span><%= tag.name %></span>
   <% end %>

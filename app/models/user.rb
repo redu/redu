@@ -164,13 +164,10 @@ class User < ActiveRecord::Base
     end
 
     text :education_place, :boost => 3.0, :stored => true do
-      educations.map{ |education|
-        if education.educationable_type == "EventEducation"
-          education.educationable.name + "  "
-        else
-          education.educationable.institution + "  "
-        end
-      }
+      education = most_important_education.first
+      unless education.nil?
+        education.educationable.institution + "  "
+      end
     end
 
     text :workplace, :boost => 2.0, :stored => true do
