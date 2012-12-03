@@ -160,7 +160,7 @@ class User < ActiveRecord::Base
     text :localization, :boost => 5.0
 
     text :job, :boost => 4.0, :stored => true do
-      experiences.map{ |exp| exp.title + "  " }
+      experiences.actual_jobs.map{ |exp| exp.title + "  " }
     end
 
     text :education_place, :boost => 3.0, :stored => true do
@@ -174,7 +174,7 @@ class User < ActiveRecord::Base
     end
 
     text :workplace, :boost => 2.0, :stored => true do
-      experiences.map{ |exp| exp.company + "  " }
+      experiences.actual_jobs.map{ |exp| exp.company + "  " }
     end
 
     text :tags, :stored => true do
