@@ -67,6 +67,7 @@ gem 'whenever', :require => false
 gem 'will_paginate', '~> 3.0.pre2'
 gem 'zencoder'
 gem 'untied-publisher', :git => 'git://github.com/redu/untied-publisher'
+gem 'system_timer'
 
 # Gems específicos para a API
 gem 'oauth-plugin', '~> 0.4.0'
