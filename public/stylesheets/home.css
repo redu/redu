@@ -185,6 +185,14 @@ body {
   z-index: auto !important;
 }
 
+#chat {
+  z-index: 900;
+}
+
+.footer-logo-img {
+  z-index: 800;
+}
+
 .home-tour #tour-3 {
   top: 13px;
   left: 42px;
