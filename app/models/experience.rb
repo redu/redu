@@ -17,6 +17,10 @@ class Experience < ActiveRecord::Base
 
   scope :actual_jobs, where(:end_date => nil)
 
+  def self.current_jobs(experiences)
+    experiences.select { |e| e.end_date == nil }
+  end
+
   private
 
   # Verifica se o start_date ocorre antes do end_date

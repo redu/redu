@@ -85,8 +85,7 @@ class SearchController < BaseController
   def search_for_environments(query, page)
     results_for(search(Environment, { :query => query, :page => page,
                                       :include => [:users, :courses, :tags,
-                                                   :administrators, :teachers,
-                                                   :tutors] }))
+                                                   :administrators] }))
   end
 
   def search_for_courses(query, page)
@@ -97,7 +96,7 @@ class SearchController < BaseController
 
   def search_for_spaces(query, page)
     results_for(search(Space, { :query => query, :page => page,
-                                :include => [:users, { :subjects => :lectures },
+                                :include => [:users, :subjects,
                                              :teachers, :owner, :tags,
                                              { :course => :environment }] }))
   end

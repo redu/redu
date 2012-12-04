@@ -4,7 +4,7 @@
   <span><%= user.localization %></span>
   <span><%= user.birth_localization %></span>
 
-  <% user.experiences.actual_jobs.each do |job| %>
+  <% Experience.current_jobs(user.experiences).each do |job| %>
     <span><%= job.title %></span>
     <span><%= job.company %></span>
   <% end %>
