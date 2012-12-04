@@ -138,6 +138,12 @@ body {
   width: 338px;
   margin: 0 0 0 -169px;
 }
+.tour.modal:after {
+  content: ' ';
+  height: 0;
+  width: 0;
+  position: absolute;
+}
 .tour .modal-header {
   border-bottom: 1px #f0f0f0 solid;
   padding: 10px;
@@ -175,40 +181,102 @@ body {
 }
 
 .home-tour #tour-3 {
-  top: 3px;
+  top: 13px;
   left: 42px;
 }
+.home-tour #tour-3:after {
+  border: 9px solid transparent;
+  border-bottom-color: white;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -9px;
+}
 .home-tour #tour-4 {
-  top: 3px;
+  top: 13px;
   left: 102px;
 }
+.home-tour #tour-4:after {
+  border: 9px solid transparent;
+  border-bottom-color: white;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -9px;
+}
 .home-tour #tour-5 {
-  top: 3px;
+  top: 13px;
   left: 171px;
 }
+.home-tour #tour-5:after {
+  border: 9px solid transparent;
+  border-bottom-color: white;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -9px;
+}
 .home-tour #tour-6 {
-  top: 3px;
+  top: 13px;
   left: 260px;
 }
+.home-tour #tour-6:after {
+  border: 9px solid transparent;
+  border-bottom-color: white;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -9px;
+}
 .home-tour #tour-7 {
-  top: 3px;
+  top: 13px;
   left: 600px;
+}
+.home-tour #tour-7:after {
+  border: 9px solid transparent;
+  border-bottom-color: white;
+  bottom: 100%;
+  left: 93%;
+  margin-left: -9px;
 }
 .home-tour #tour-8 {
   top: 45px;
-  left: 190px;
+  left: 175px;
+}
+.home-tour #tour-8:after {
+  border: 9px solid transparent;
+  border-right-color: white;
+  right: 100%;
+  top: 15px;
 }
 .home-tour #tour-9 {
-  top: 176px;
-  left: 190px;
+  top: 160px;
+  left: 196px;
+}
+.home-tour #tour-9:after {
+  border: 9px solid transparent;
+  border-right-color: white;
+  right: 100%;
+  top: 50%;
+  margin-top: -9px;
 }
 .home-tour #tour-10 {
   top: 76px;
-  left: 200px;
+  left: 205px;
+}
+.home-tour #tour-10:after {
+  border: 9px solid transparent;
+  border-right-color: white;
+  right: 100%;
+  top: 50%;
+  margin-top: -9px;
 }
 .home-tour #tour-11 {
   top: 230px;
   left: 420px;
+}
+.home-tour #tour-11:after {
+  border: 9px solid transparent;
+  border-left-color: white;
+  left: 100%;
+  top: 50%;
+  margin-top: -9px;
 }
 .home-tour #tour-12 {
   left: auto;
@@ -217,12 +285,24 @@ body {
   bottom: 50px;
   position: fixed;
 }
+.home-tour #tour-12:after {
+  border: 9px solid transparent;
+  border-top-color: white;
+  top: 100%;
+  right: 20px;
+}
 .home-tour #tour-13 {
   bottom: 60px;
   left: 50%;
   top: auto;
   margin-left: -465px;
   position: fixed;
+}
+.home-tour #tour-13:after {
+  border: 9px solid transparent;
+  border-top-color: white;
+  top: 100%;
+  left: 20px;
 }
 .home-tour .absolute {
   margin: 0;

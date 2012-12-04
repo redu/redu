@@ -81,6 +81,13 @@
   width: 338px;
   margin: 0 0 0 -169px;
 
+  &.modal:after {
+    content: ' ';
+    height: 0;
+    width: 0;
+    position: absolute;
+  }
+
   .modal-header {
     border-bottom: 1px $gray2 solid;
     padding: 10px;
@@ -124,48 +131,128 @@
 .home-tour {
 
   #tour-3 {
-    top: 3px;
+    top: 13px;
     left: 42px;
+
+    &:after {
+      border: 9px solid transparent;
+      border-bottom-color: white;
+
+      bottom: 100%;
+      left: 50%;
+      margin-left: -9px;
+    }
   }
 
   #tour-4 {
-    top: 3px;
+    top: 13px;
     left: 102px;
+
+    &:after {
+      border: 9px solid transparent;
+      border-bottom-color: white;
+
+      bottom: 100%;
+      left: 50%;
+      margin-left: -9px;
+    }
   }
 
   #tour-5 {
-    top: 3px;
+    top: 13px;
     left: 171px;
+
+    &:after {
+      border: 9px solid transparent;
+      border-bottom-color: white;
+
+      bottom: 100%;
+      left: 50%;
+      margin-left: -9px;
+    }
   }
 
   #tour-6 {
-    top: 3px;
+    top: 13px;
     left: 260px;
+
+    &:after {
+      border: 9px solid transparent;
+      border-bottom-color: white;
+
+      bottom: 100%;
+      left: 50%;
+      margin-left: -9px;
+    }
   }
 
   #tour-7 {
-    top: 3px;
+    top: 13px;
     left: 600px;
+
+    &:after {
+      border: 9px solid transparent;
+      border-bottom-color: white;
+
+      bottom: 100%;
+      left: 93%;
+      margin-left: -9px;
+    }
   }
 
   #tour-8 {
     top: 45px;
-    left: 190px;
+    left: 175px;
+
+    &:after {
+      border: 9px solid transparent;
+      border-right-color: white;
+
+      right: 100%;
+      top: 15px;
+    }
   }
 
   #tour-9 {
-    top: 176px;
-    left: 190px;
+    top: 160px;
+    left: 196px;
+
+    &:after {
+      border: 9px solid transparent;
+      border-right-color: white;
+
+      right: 100%;
+      top: 50%;
+      margin-top: -9px;
+    }
   }
 
   #tour-10 {
     top: 76px;
-    left: 200px;
+    left: 205px;
+
+    &:after {
+      border: 9px solid transparent;
+      border-right-color: white;
+
+      right: 100%;
+      top: 50%;
+      margin-top: -9px;
+    }
   }
 
   #tour-11 {
     top: 230px;
     left: 420px;
+
+    &:after {
+      border: 9px solid transparent;
+      border-left-color: white;
+
+      left: 100%;
+      top: 50%;
+      margin-top: -9px;
+    }
   }
 
   #tour-12 {
@@ -174,6 +261,14 @@
     right: 20px;
     bottom: 50px;
     position: fixed;
+
+    &:after {
+      border: 9px solid transparent;
+      border-top-color: white;
+
+      top: 100%;
+      right: 20px;
+    }
   }
 
   #tour-13 {
@@ -182,6 +277,14 @@
     top: auto;
     margin-left: -465px;
     position: fixed;
+
+    &:after {
+      border: 9px solid transparent;
+      border-top-color: white;
+
+      top: 100%;
+      left: 20px;
+    }
   }
 
   .absolute {
