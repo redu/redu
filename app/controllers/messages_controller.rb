@@ -8,7 +8,10 @@ class MessagesController < BaseController
                                                    :order =>  'created_at DESC',
                                                    :per_page => Redu::Application.config.items_per_page )
       respond_to do |format|
-        format.html
+        format.html do
+          render 'base/messages', :layout => 'new_application',
+            :locals => { :mailbox => :inbox }
+        end
         format.js do
           render_endless 'messages/item', @messages, '#messages > tbody',
             :partial_locals => { :mailbox => :inbox }
@@ -22,7 +25,10 @@ class MessagesController < BaseController
                                              :order =>  'created_at DESC',
                                              :per_page => Redu::Application.config.items_per_page)
     respond_to do |format|
-        format.html
+        format.html do
+          render 'base/messages', :layout => 'new_application',
+            :locals => { :mailbox => :outbox }
+        end
         format.js do
           render_endless 'messages/item', @messages, '#messages > tbody',
             :partial_locals => { :mailbox => :outbox }
