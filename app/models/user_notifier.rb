@@ -292,7 +292,7 @@ class UserNotifier < ActionMailer::Base
 
     mail(:to => user.email,
          :subject => subject || "Novidades do Redu") do |format|
-      format.html
+      format.html { render :layout => false }
     end
   end
 end
