@@ -5,11 +5,13 @@
   <div class="content-area">
     <%= render :partial => "users/breadcrumb_home" %>
     <div class="content-body">
-      <div class="environment-title">
-        <h2 class="portal-title icon-apps-portal-gray_48_50-before link-container pull-left">
-          <%= link_to "Ambientes que Participo", user_environments_path(@user), :class => "portal-title-link link-target", :title =>  "Ambientes que Participo" %>
-        </h2>
-      </div>
+      <ul class="environment-title header-breadcrumb">
+        <li class="header-breadcrumb-item">
+          <%= link_to "Ambientes que Participo", user_environments_path(@user),
+                      :class => "header-bradcrumb-link icon-environment-round-gray_32_34-before",
+                      :title => "Ambientes que Participo" %>
+        </li>
+      </ul>
       <% if @environments.empty? %>
         <hr class="list-separator">
         <div class="empty-environment">

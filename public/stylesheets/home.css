@@ -231,11 +231,6 @@ body {
 
 .environment-title {
   padding: 10px 20px;
-  overflow: hidden;
-  width: 100%;
-}
-.environment-title .portal-title-link {
-  width: auto;
 }
 
 .list-separator +
