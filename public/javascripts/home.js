@@ -8,6 +8,10 @@ $(document).ready(function(){
     $('body').css('overflow', 'auto');
   });
 
+  $('#tour-1').on('show', function () {
+    $("html, body").animate({ scrollTop: 0 }, "slow");
+  });
+
   $('#tour-2').on('show', function () {
     $('.nav-global').css('z-index', 1060);
   });
