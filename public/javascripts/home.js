@@ -1,5 +1,13 @@
 $(document).ready(function(){
 
+  $('.home-tour .modal').on('show', function () {
+    $('body').css('overflow', 'hidden');
+  });
+
+  $('.home-tour .modal').on('hide', function () {
+    $('body').css('overflow', 'auto');
+  });
+
   $('#tour-2').on('show', function () {
     $('.nav-global').css('z-index', 1060);
   });
