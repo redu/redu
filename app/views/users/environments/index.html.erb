@@ -11,7 +11,11 @@
         </h2>
       </div>
       <% if @environments.empty? %>
-        <%# TODO: O que fazer quando não há nenhum ambiente? %>
+        <hr class="list-separator">
+        <div class="empty-environment">
+          <span class="empty-environment-icon icon-environment-empty_128_130 text-replacement" title="Nenhum ambiente">Nenhum ambiente</span>
+          <p class="empty-environment-content">Você ainda não participa de um Ambiente de Aprendizagem.</p>
+        </div>
       <% else %>
         <ul id="my-environments" class="list-environment-course-space">
           <%= render :partial => "users/environments/environment",
