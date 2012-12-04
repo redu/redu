@@ -1,5 +1,6 @@
 <div class="home-left-sidebar">
-  <%= render :partial => "users/profile_area" %>
+  <%= render :partial => "users/profile_area",
+     :locals => { :user => user } %>
   <%= new_local_nav(:new_users) %>
   <div class="nav-local-general-stats">
     <span class="icon-arrow-up-curly-gray show text-replacement">Chaves</span>

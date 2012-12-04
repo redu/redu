@@ -1,12 +1,13 @@
 <div class="span3">
-  <%= render :partial => "users/left_sidebar" %>
+  <%= render :partial => "users/left_sidebar",
+     :locals => { :user => @user } %>
 </div>
 <div class="span10">
   <div class="content-area">
     <%= render :partial => "users/breadcrumb_home" %>
     <div class="content-body">
       <%= render :partial => "users/welcome_greeting",
-                 :locals => { :user_display_name => @user.display_name } %>
+         :locals => { :user_display_name => @user.display_name } %>
       <hr class="list-separator">
       <%= render :partial => "users/explore_redu" %>
       <hr class="list-separator">
@@ -40,6 +41,7 @@
   </div>
 </div>
 <div class="span3">
-  <%= render :partial => "users/right_sidebar" %>
+  <%= render :partial => "users/right_sidebar",
+     :locals => { :user => @user } %>
 </div>
 <%= render :partial => "users/tour" %>
