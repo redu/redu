@@ -2,6 +2,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   helper_method :current_user_session, :current_user
 
+  before_filter :check_tour_exploration
+
   unless Rails.application.config.consider_all_requests_local
     rescue_from Exception,                            :with => :render_error
     rescue_from ActiveRecord::RecordNotFound,         :with => :render_not_found
@@ -61,4 +63,8 @@ class ApplicationController < ActionController::Base
     false
   end
 
+  def check_tour_exploration
+    return if current_user.nil? || !params.has_key?(:exploring_tour)
+    current_user.settings.visit!(request.path)
+  end
 end
