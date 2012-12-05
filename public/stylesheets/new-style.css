@@ -3138,8 +3138,6 @@ body {
   display: block;
   float: left;
   width: 100px;
-  height: 25px;
-  overflow: hidden;
 }
 
 #folder-admin .new-file .browse {
