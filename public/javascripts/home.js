@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
   $('.home-tour .modal').on('show', function () {
     $('body').css('overflow', 'hidden');
   });
@@ -167,4 +166,34 @@ $(document).ready(function(){
   $('#tour-13').on('hide', function () {
     $('#chat').css('z-index', 1000);
   });
+
+  /* Envia requisição para identificar itens como explorados
+   *
+   * Caso o elemento possua um href com url para outro domínio,
+   * o usuário só será redirecionado após o final da requisição.
+   *
+   * O identificador do elemento do tour será o do attributo data-tour;
+   * caso este não tenha sido especificado, será o href do elemento após
+   * a retirada do #.
+   */
+  $.fn.exploreTour = function(url){
+    return this.each(function(){
+      var $this = $(this);
+      $this.click(function(){
+        var dataTour = $this.attr('data-tour');
+        var href =  $this.attr('href');
+
+        if (href && href.indexOf('http://') != -1) {
+          $.post(url, { id : dataTour } , function(){
+            window.location = href;
+          });
+
+          return false;
+        } else {
+          var identifier = dataTour || href.split("#")[1];
+          $.post(url, { id : identifier });
+        }
+      });
+    });
+  };
 });

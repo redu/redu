@@ -1,12 +1,20 @@
 <%#
-  Explore o Redu.
-%>
-<div class="right-sidebar-area">
-  <h6 class="right-sidebar-area-title">Explore o Redu</h6>
-  <div class="nav-local-separator"></div>
-  <ul class="actions-to-do">
-    <li><a href="#" class="icon-ask-lightblue_16_18-before link-secondary">O que falta fazer?</a></li>
-    <li><a href="#tour-1" data-toggle="modal" class="icon-tour-lightblue_16_18-before link-secondary">Faça o Tour do Início</a></li>
-    <li><a href="#" class="icon-environment-lightblue_16_18-before link-secondary">Entenda os Ambientes</a></li>
-  </ul>
-</div>
+    Explore o Redu.
+  %>
+<% if user.settings.visited_at_least_one?("what-is-missing", "tour-1", "learn-environments") %>
+  <div class="right-sidebar-area">
+    <h6 class="right-sidebar-area-title">Explore o Redu</h6>
+    <div class="nav-local-separator"></div>
+    <ul class="actions-to-do">
+      <% if user.settings.visited?("what-is-missing") && !explored_all_tips?(user) %>
+        <li><a href="#" class="icon-ask-lightblue_16_18-before link-secondary">O que falta fazer?</a></li>
+      <% end %>
+      <% if user.settings.visited?("tour-1") %>
+        <li><a href="#tour-1" data-toggle="modal" class="icon-tour-lightblue_16_18-before link-secondary">Faça o Tour do Início</a></li>
+      <% end %>
+      <% if user.settings.visited?("learn-environments") %>
+        <li><a href="#" class="icon-environment-lightblue_16_18-before link-secondary">Entenda os Ambientes</a></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

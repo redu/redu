@@ -177,6 +177,7 @@ Redu::Application.routes.draw do
     resources :experiences
     resources :educations, :except => [:new, :edit]
     resources :environments, :only => [:index]
+    resource :explore_tour, :only => :create
   end
 
   match 'users/activate/:id' => 'users#activate', :as => :activate
@@ -271,7 +272,6 @@ Redu::Application.routes.draw do
     end
     resources :plans, :only => [:create]
   end
-
 
   match '/users/new' => redirect("#modal-sign-up")
   root :to => 'base#site_index', :as => :home

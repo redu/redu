@@ -23,7 +23,22 @@ class UserSetting < ActiveRecord::Base
   # => true
   # visited?("#learn-environments")
   # => false
-  def visited?(url)
-    self.explored.try(:include?, url)
+  # visited?("/ensine", "#basic-guide")
+  # => true
+  def visited?(*urls)
+    return false unless self.explored
+
+    urls.collect { |url| self.explored.include?(url) }.inject(:&)
+  end
+
+
+  # Indicates if at least one passed url or identifier was visited
+  #
+  # visited_at_least_one?("/ensine", "#basic-guide")
+  # => true
+  def visited_at_least_one?(*urls)
+    return false unless self.explored
+
+    urls.collect { |url| self.explored.include?(url) }.inject(:|)
   end
 end

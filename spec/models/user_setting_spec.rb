@@ -50,6 +50,34 @@ describe UserSetting do
       it 'responds with false to not visited ids' do
         subject.visited?("#what-to-do").should be_false
       end
+
+      context 'multiples links at once' do
+        before do
+          subject.visit!("/ensine")
+          subject.visit!("#what-to-do")
+        end
+
+        it 'responds with true if all links/ids were visited' do
+          subject.visited?("/ensine", "#what-to-do").should be_true
+        end
+
+        it 'responds with false if some link/id were not visited' do
+          subject.visited?("/ensine", "#what-to-do", "/iwasnothere").should \
+            be_false
+        end
+
+        context 'visited_at_least_one?' do
+          it 'responds with true if at least one link/id were visited' do
+            subject.visited_at_least_one?("/ensine", "/iwasnothere").should \
+              be_true
+          end
+
+          it 'responds with false if none link/id were visited' do
+            subject.visited_at_least_one?("/iwasnothere", "/neitherhere").should \
+              be_false
+          end
+        end
+      end
     end
   end
 end

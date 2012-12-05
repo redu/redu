@@ -1,3 +1,9 @@
+<%#
+  Modais do tour
+
+  Parâmetros:
+    user: o usuário.
+%>
 <div class="home-tour">
   <div id="tour-1" class="modal hide tour" data-backdrop="static">
     <div class="modal-header">
@@ -210,3 +216,9 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('[data-tour], .tour-part').exploreTour('<%= user_explore_tour_path(user) %>');
+  });
+</script>

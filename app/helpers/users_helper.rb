@@ -16,4 +16,10 @@ module UsersHelper
       "http://" + url
     end
   end
+
+  def explored_all_tips?(user)
+    user.settings.visited?(edit_user_path(user),new_user_friendship_path(user),
+                  new_user_message_path(user), courses_index_path,
+                  teach_index_path, "basic-guide", "tour-1")
+  end
 end
