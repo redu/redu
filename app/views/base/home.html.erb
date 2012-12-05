@@ -4,7 +4,8 @@
 </div>
 <div class="span10">
   <div class="content-area">
-    <%= render :partial => "users/breadcrumb_home" %>
+    <%= render :partial => "users/breadcrumb_home",
+       :locals => { :user => @user } %>
     <div class="content-body">
       <%= render :partial => "users/welcome_greeting",
          :locals => { :user_display_name => @user.display_name } %>
@@ -37,7 +38,8 @@
         </div>
       </div>
     </div>
-    <%= render :partial => "users/breadcrumb_home" %>
+    <%= render :partial => "users/breadcrumb_home",
+       :locals => { :user => @user } %>
   </div>
 </div>
 <div class="span3">
