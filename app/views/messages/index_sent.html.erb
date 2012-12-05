@@ -4,7 +4,8 @@
 </div>
 <div class="span10">
   <div class="content-area">
-    <%= render :partial => "users/breadcrumb_home" %>
+    <%= render :partial => "messages/breadcrumb",
+       :locals => { :user => @user } %>
     <div class="content-body">
       <ul class="environment-title header-breadcrumb">
         <li class="header-breadcrumb-item">
@@ -23,7 +24,8 @@
       <%= new_tabs(:new_users) do %>
       <% end %>
     </div>
-    <%= render :partial => "users/breadcrumb_home" %>
+    <%= render :partial => "messages/breadcrumb",
+       :locals => { :user => @user } %>
   </div>
 </div>
 <div class="span3">
