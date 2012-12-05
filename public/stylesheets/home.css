@@ -88,17 +88,22 @@ body {
 .home-container ul {
   overflow: hidden;
   list-style: none;
+  margin-top: 10px;
+  margin-bottom: 0;
 }
-.home-container ul a {
+.home-container ul li {
   float: left;
   margin-bottom: 5px;
   clear: both;
 }
-.home-container ul a:hover {
+.home-container ul li:last-child {
+  margin-bottom: 0;
+}
+.home-container ul li a:hover {
   text-decoration: none;
-  color: #158ac4;
 }
 .home-container .message-block-actions {
+  margin-top: 10px;
   text-align: center;
 }
 
