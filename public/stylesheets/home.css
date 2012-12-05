@@ -322,10 +322,6 @@ body {
   position: absolute;
 }
 
-.environment-title {
-  padding: 10px 20px;
-}
-
 .list-separator +
 .empty-environment {
   margin-top: 100px;
