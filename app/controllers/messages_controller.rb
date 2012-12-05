@@ -4,22 +4,24 @@ class MessagesController < BaseController
 
   def index
     authorize! :manage, @user
-      @messages = @user.received_messages.paginate(:page => params[:page],
-                                                   :order =>  'created_at DESC',
-                                                   :per_page => Redu::Application.config.items_per_page )
-      respond_to do |format|
-        format.html do
-          render :layout => 'new_application'
-        end
-        format.js do
-          render_endless 'messages/item', @messages, '#messages > tbody',
-            :partial_locals => { :mailbox => :inbox }
-        end
+    @total_messages = @user.received_messages.length
+    @messages = @user.received_messages.paginate(:page => params[:page],
+                                                 :order =>  'created_at DESC',
+                                                 :per_page => Redu::Application.config.items_per_page )
+    respond_to do |format|
+      format.html do
+        render :layout => 'new_application'
       end
+      format.js do
+        render_endless 'messages/item', @messages, '#messages > tbody',
+          :partial_locals => { :mailbox => :inbox }
+      end
+    end
   end
 
   def index_sent
     authorize! :manage, @user
+    @total_messages = @user.sent_messages.length
     @messages = @user.sent_messages.paginate(:page => params[:page],
                                              :order =>  'created_at DESC',
                                              :per_page => Redu::Application.config.items_per_page)

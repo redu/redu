@@ -18,7 +18,7 @@
             <%= link_to index_sent_user_messages_path(@user),
                :class => "header-bradcrumb-link",
                :title => "Enviadas" do %>
-               Enviadas <%= content_tag(:span, parentize(@messages.count), :class => "header-breadcrumb-item-light") %>
+               Enviadas <%= content_tag(:span, parentize(@total_messages), :class => "header-breadcrumb-item-light") %>
               <% end %>
           </li>
         </ul>

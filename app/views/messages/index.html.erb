@@ -18,7 +18,7 @@
             <%= link_to user_messages_path(@user),
                :class => "header-bradcrumb-link",
                :title => "Recebidas" do %>
-               Recebidas <%= content_tag(:span, parentize(@messages.count),
+               Recebidas <%= content_tag(:span, parentize(@total_messages),
                            :class => "header-breadcrumb-item-light") %>
               <% end %>
           </li>
