@@ -2,7 +2,6 @@ class UsersController < BaseController
   respond_to :html, :js
 
   before_filter :set_nav_global_context, :except => [:index]
-  before_filter :first_access?, :only => [:home]
 
   load_and_authorize_resource :except => [:recover_username_password,
     :recover_username, :recover_password, :resend_activation, :activate,
@@ -404,13 +403,6 @@ class UsersController < BaseController
     end
   end
 
-  def explore
-    @user.settings.update_attributes(params[:clicked_on] => false)
-    @user.save
-
-    redirect_to params[:url]
-  end
-
   protected
 
   def deny_access(exception)
@@ -426,13 +418,5 @@ class UsersController < BaseController
 
   def set_nav_global_context
     content_for :nav_global_context, "users"
-  end
-
-  def first_access?
-    if current_user.settings.first_access == true
-      current_user.settings.first_access = false
-      current_user.save
-      render 'users/first-experience'
-    end
   end
 end

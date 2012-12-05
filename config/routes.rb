@@ -145,7 +145,6 @@ Redu::Application.routes.draw do
       get :environments_endless
       get :show_mural
       get :curriculum
-      get :explore
     end
     collection do
       get :auto_complete

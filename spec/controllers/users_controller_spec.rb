@@ -363,19 +363,9 @@ describe UsersController do
     [:friends_requisitions, :course_invitations, :statuses, :status,
       :contacts_recommendations].each do |var|
       it "assigns @#{var}" do
-        @user.settings.first_access = false
-        @user.save
-
         get :home, @params
 
         assigns[var].should_not be_nil
-      end
-    end
-
-    context "first experience" do
-      it "be render first experience page" do
-        get :home, @params
-        response.should render_template("users/first-experience")
       end
     end
   end
@@ -687,28 +677,6 @@ describe UsersController do
           assigns[:recover_password].errors.should_not be_empty
         end
       end
-    end
-  end
-
-  context "GET explore" do
-    before do
-      @user = Factory(:user)
-      activate_authlogic
-      UserSession.create @user
-
-      params = { :clicked_on => :message, :locale => "pt-BR",
-                 :url => user_messages_path(@user), :id => @user.login }
-
-      get :explore, params
-    end
-
-    it "should save params on user settings" do
-      @user.reload
-      @user.settings.message.should be_false
-    end
-
-    it "should redirect to url params" do
-      response.should redirect_to(user_messages_path(@user))
     end
   end
 end
