@@ -281,10 +281,6 @@ body {
   top: 50%;
   margin-top: -9px;
 }
-.home-tour #tour-11 {
-  top: 230px;
-  left: 420px;
-}
 .home-tour #tour-11:after {
   border: 9px solid transparent;
   border-left-color: white;

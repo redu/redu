@@ -7,25 +7,29 @@
     <%= render :partial => "messages/breadcrumb",
        :locals => { :user => @user } %>
     <div class="content-body">
-      <ul class="content-section header-breadcrumb">
-        <li class="header-breadcrumb-item">
-          <%= link_to "Mensagens", user_messages_path(@user),
-             :class => "header-bradcrumb-link icon-sent-message-gray_32_34-before",
-             :title => "Mensagens" %>
-        </li>
-        <li class="header-breadcrumb-item">
-          <%= link_to index_sent_user_messages_path(@user),
-             :class => "header-bradcrumb-link",
-             :title => "Enviadas" do %>
-             Enviadas <%= content_tag(:span, parentize(@messages.count), :class => "header-breadcrumb-item-light") %>
-            <% end %>
-        </li>
-      </ul>
+      <div class="content-section">
+        <ul class="header-breadcrumb">
+          <li class="header-breadcrumb-item">
+            <%= link_to "Mensagens", user_messages_path(@user),
+               :class => "header-bradcrumb-link icon-sent-message-gray_32_34-before",
+               :title => "Mensagens" %>
+          </li>
+          <li class="header-breadcrumb-item">
+            <%= link_to index_sent_user_messages_path(@user),
+               :class => "header-bradcrumb-link",
+               :title => "Enviadas" do %>
+               Enviadas <%= content_tag(:span, parentize(@messages.count), :class => "header-breadcrumb-item-light") %>
+              <% end %>
+          </li>
+        </ul>
+      </div>
       <%= new_tabs(:new_users) do %>
       <% end %>
-      <%= render :partial => 'messages/index',
-         :locals => { :mailbox => :outbox, :messages => @messages,
-         :user => @user } %>
+      <div class="content-section">
+        <%= render :partial => 'messages/index',
+           :locals => { :mailbox => :outbox, :messages => @messages,
+           :user => @user } %>
+      </div>
     </div>
     <%= render :partial => "messages/breadcrumb",
        :locals => { :user => @user } %>
