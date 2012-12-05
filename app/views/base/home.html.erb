@@ -10,11 +10,11 @@
       <%= render :partial => "users/welcome_greeting",
          :locals => { :user => @user } %>
       <%= render :partial => "users/explore_redu", :locals => { :user => @user} %>
-      <% unless @user.settings.visited?("learn-environments") %>
+      <div id="learn-environments-box" style="display: <%= learn_environments_display(@user) %>;">
         <hr class="list-separator">
         <div class="home-container">
           <div class="learning-environments">
-            <span id="learn-environments" data-tour="learn-environments" data-dismiss="alert" class="message-close">×</span>
+            <span data-tour="learn-environments" data-dismiss="alert" data-target="#learn-environments-box" class="message-close">×</span>
             <div class="big">
               <h3>O que são Ambientes de Aprendizagem?</h3>
               <p>Os Ambientes de Aprendizagem são locais de criação, interação e discussão de conteúdos (textos, imagens, vídeos, apresentações, aplicativos, etc). Entenda sua hierarquia no gráfico abaixo:</p>
@@ -36,7 +36,7 @@
               <p class="legend">Aqui é disponibilizado o conteúdo propriamente dito: as Aulas Multimídia. O Módulo serve para organizar as Aulas e permitir aos Membros o controle sobre seu aprendizado. <b>Exemplo: Módulo I: Ortografia; Aula I: Regras Básicas de Acentuação Gráfica</b></p>
             </div>
           </div>
-        <% end %>
+        </div>
       </div>
     </div>
     <%= render :partial => "users/breadcrumb_home",
@@ -45,6 +45,6 @@
 </div>
 <div class="span3">
   <%= render :partial => "users/right_sidebar",
-     :locals => { :user => @user } %>
+    :locals => { :user => @user } %>
 </div>
 <%= render :partial => "users/tour", :locals => { :user => @user } %>

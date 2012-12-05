@@ -216,4 +216,35 @@ $(document).ready(function(){
       });
     });
   };
+
+
+  // Liga os links aos respectivos boxes da primeira experiência
+  $.slideToggleFirstExperienceBoxes = function(selectorBegin) {
+    var linkSelector = '#' + selectorBegin + '-link';
+    var boxSelector = '#' + selectorBegin + '-box';
+
+    // Ao clicar no link, o box é aberto e o link escondido
+    $(linkSelector).on('click', function(){
+      $(boxSelector).slideDown(150, 'swing');
+      $(this).hide();
+      if ($('#explore-redu-sidebar li a:visible').length < 1) {
+        $('#explore-redu-sidebar').hide();
+      }
+    });
+
+    // Ao clicar no x, o box é escondido e o link é mostrado
+    $(boxSelector + ' [data-dismiss=alert]').on('click', function(){
+      $(linkSelector).slideDown(150, 'swing');
+      $('#explore-redu-sidebar').slideDown(150, 'swing');
+    });
+
+    // Ao clicar no close, apenas esconde (não remove da DOM)
+    $(boxSelector).on('close', function(){
+      $(this).hide();
+      return false;
+    });
+  };
+
+  $.slideToggleFirstExperienceBoxes('what-is-missing')
+  $.slideToggleFirstExperienceBoxes('learn-environments')
 });

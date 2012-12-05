@@ -1,7 +1,7 @@
-<div class="home-container">
-  <% if !user.settings.visited?("what-is-missing") && !explored_all_tips?(user) %>
+<div id="what-is-missing-box" style="display: <%= what_is_missing_box_display(user) %>;">
+  <div class="home-container">
     <div class="message-block message-info">
-      <span data-tour="what-is-missing" data-dismiss="alert" class="message-close">×</span>
+      <span data-tour="what-is-missing" data-dismiss="alert" data-target="#what-is-missing-box" class="message-close">×</span>
       <div class="message-block-content">
         <strong>Explore o Redu e descubra o que você ainda pode fazer:</strong>
         <ul>
@@ -54,5 +54,5 @@
         </div>
       <% end %>
     </div>
-  <% end %>
+  </div>
 </div>
