@@ -1,11 +1,32 @@
-<%= render :partial => 'users/home_sidebar' %>
-<div class="main grid_10" style="width: 580px;">
-  <%= render :partial => 'messages/breadcrumb' %>
-  <div id="messages">
-    <%= tabs :users do %>
-      <%= render :partial => 'messages/index',
-        :locals => { :mailbox => :outbox, :messages => @messages } %>
-    <% end %>
-  </div><!-- end .messages -->
-</div><!-- end .main -->
-
+<div class="span3">
+  <%= render :partial => "users/left_sidebar",
+     :locals => { :user => @user } %>
+</div>
+<div class="span10">
+  <div class="content-area">
+    <%= render :partial => "users/breadcrumb_home" %>
+    <div class="content-body">
+      <ul class="environment-title header-breadcrumb">
+        <li class="header-breadcrumb-item">
+          <%= link_to "Mensagens", user_messages_path(@user),
+             :class => "header-bradcrumb-link icon-sent-message-gray_32_34-before",
+             :title => "Mensagens" %>
+        </li>
+        <li class="header-breadcrumb-item">
+          <%= link_to index_sent_user_messages_path(@user),
+             :class => "header-bradcrumb-link",
+             :title => "Enviadas" do %>
+             Enviadas <%= content_tag(:span, parentize(@messages.count), :class => "header-breadcrumb-item-light") %>
+            <% end %>
+        </li>
+      </ul>
+      <%= new_tabs(:new_users) do %>
+      <% end %>
+    </div>
+    <%= render :partial => "users/breadcrumb_home" %>
+  </div>
+</div>
+<div class="span3">
+  <%= render :partial => "users/right_sidebar",
+     :locals => { :user => @user } %>
+</div>

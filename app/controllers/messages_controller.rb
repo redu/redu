@@ -9,8 +9,7 @@ class MessagesController < BaseController
                                                    :per_page => Redu::Application.config.items_per_page )
       respond_to do |format|
         format.html do
-          render 'base/messages', :layout => 'new_application',
-            :locals => { :mailbox => :inbox }
+          render :layout => 'new_application'
         end
         format.js do
           render_endless 'messages/item', @messages, '#messages > tbody',
@@ -26,8 +25,7 @@ class MessagesController < BaseController
                                              :per_page => Redu::Application.config.items_per_page)
     respond_to do |format|
         format.html do
-          render 'base/messages', :layout => 'new_application',
-            :locals => { :mailbox => :outbox }
+          render :layout => 'new_application'
         end
         format.js do
           render_endless 'messages/item', @messages, '#messages > tbody',
