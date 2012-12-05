@@ -139,6 +139,9 @@ $(document).ready(function(){
   });
 
   $('#tour-11').on('show', function () {
+    var position = $('#home-invite-friends').position();
+    $(this).css('top', position.top - 50);
+    $(this).css('left', position.left - 360);
     $('#home-invite-friends').css('position', 'relative');
     $('#home-invite-friends').css('z-index', 1060);
     $('#home-invite-friends').css('background-color', '#F7F7F7');
