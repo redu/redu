@@ -1,9 +1,0 @@
-<li>
-  <%= link_to recommendation_member[:avatar_url], :rel => "nofollow" do %>
-    <%= image_tag recommendation_member[:avatar_url], :size => "32x32", :title => recommendation_member[:display_name], :alt => recommendation_member[:display_name] %>
-  <% end %>
-  <div class="member-info">
-    <%= link_to recommendation_member[:display_name], recommendation_member[:profile_url] %>
-    <p class="legend"><%= recommendation_member[:friends_in_common] %> amigos e <%= recommendation_member[:courses_in_common] %> cursos em comum <%= link_to "+ Adicionar a Contatos", recommendation_member[:add_to_contact_url], :class => "link-secondary" %></p>
-  </div>
-</li>

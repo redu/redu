@@ -1,10 +1,14 @@
 <li id="recommendation-<%= recommendation_item.id %>" class="clearfix">
-  <%= image_tag recommendation_item.avatar.url(:thumb_32), :width => 32,
-    :height => 32, :class => 'avatar' %>
-  <%= link_to recommendation_item.display_name, user_path(recommendation_item),
-    :class => 'name' %>
-  <%= link_to "+ Adicionar",
-    user_friendships_path(current_user, :friend_id => recommendation_item.login,
-                          :recommendation => true), :method => :post,
-    :remote => true %>
+  <% link_to user_path(recommendation_item) do %>
+	  <%= image_tag recommendation_item.avatar.url(:thumb_32), :width => 32,
+	    :height => 32, :class => 'avatar', :title => recommendation_item.display_name, :alt => recommendation_item.display_name %>
+  <% end %>
+  <div class="member-info">
+		<%= link_to recommendation_item.display_name, user_path(recommendation_item),
+		    :class => 'name' %>
+	  <%= link_to "+ Adicionar a Contatos",
+	    user_friendships_path(current_user, :friend_id => recommendation_item.login,
+	                          :recommendation => true), :method => :post,
+	    :remote => true, :class => "link-secondary" %>
+	</div>
 </li>
