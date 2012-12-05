@@ -1,16 +1,21 @@
 $(document).ready(function(){
+
+  // Desabilita scroll ao iniciar o Tour
   $('.home-tour .modal').on('show', function () {
     $('body').css('overflow', 'hidden');
   });
 
+  // Ativa novamente o scroll ao fechar o Tour
   $('.home-tour .modal').on('hide', function () {
     $('body').css('overflow', 'auto');
   });
 
+  // Tour do Início
   $('#tour-1').on('show', function () {
     $("html, body").animate({ scrollTop: 0 }, "slow");
   });
 
+  // Menu de Navegação Global
   $('#tour-2').on('show', function () {
     $('.nav-global').css('z-index', 1060);
   });
@@ -19,6 +24,7 @@ $(document).ready(function(){
     $('.nav-global').css('z-index', 1020);
   });
 
+  // Início
   $('#tour-3').on('show', function () {
     $('.nav-global').css('position', 'static');
     $('.nav-global').css('margin-bottom', '0');
@@ -34,6 +40,7 @@ $(document).ready(function(){
     $('.main-wrapper').css('padding-top', '42px');
   });
 
+  // Ensine
   $('#tour-4').on('show', function () {
     $('.nav-global').css('position', 'static');
     $('.nav-global').css('margin-bottom', '0');
@@ -53,6 +60,7 @@ $(document).ready(function(){
     $('.nav-global-button').css('background-color', 'transparent');
   });
 
+  // Cursos
   $('#tour-5').on('show', function () {
     $('.nav-global').css('position', 'static');
     $('.nav-global').css('margin-bottom', '0');
@@ -72,6 +80,8 @@ $(document).ready(function(){
     $('.nav-global-button').css('background-color', 'transparent');
   });
 
+
+  // Aplicativos Educacionais
   $('#tour-6').on('show', function () {
     $('.nav-global').css('position', 'static');
     $('.nav-global').css('margin-bottom', '0');
@@ -91,6 +101,7 @@ $(document).ready(function(){
     $('.nav-global-button').css('background-color', 'transparent');
   });
 
+  // Suas Configurações
   $('#tour-7').on('show', function () {
     $('.nav-global').css('position', 'static');
     $('.nav-global').css('margin-bottom', '0');
@@ -106,6 +117,7 @@ $(document).ready(function(){
     $('.main-wrapper').css('padding-top', '42px');
   });
 
+  // Seu Perfil
   $('#tour-8').on('show', function () {
     $('.home-profile-area-photo').css('position', 'relative');
     $('.home-profile-area-photo').css('z-index', 1060);
@@ -115,6 +127,7 @@ $(document).ready(function(){
     $('.home-profile-area-photo').css('z-index', 1000);
   });
 
+  // Menu de Navegação do Início
   $('#tour-9').on('show', function () {
     $('.nav-local').css('position', 'relative');
     $('.nav-local').css('z-index', 1060);
@@ -128,6 +141,7 @@ $(document).ready(function(){
     $('.nav-local').css('background-color', 'transparent');
   });
 
+  // Seção ativa do Início
   $('#tour-10').on('show', function () {
     $('.nav-local').css('z-index', 'auto');
     $('.nav-local-item-active').css('position', 'relative');
@@ -138,6 +152,7 @@ $(document).ready(function(){
     $('.nav-local-item-active').css('z-index', 1000);
   });
 
+  // Convide seus amigos
   $('#tour-11').on('show', function () {
     var position = $('#home-invite-friends').position();
     $(this).css('top', position.top - 50);
@@ -154,6 +169,7 @@ $(document).ready(function(){
     $('#home-invite-friends').css('background-color', 'none');
   });
 
+  // Oráculo
   $('#tour-12').on('show', function () {
     $('#habla_window_div').css('cssText', 'margin: 0px 20px; bottom: 0px; right: 0px; display: none; position: fixed; z-index: 1600 !important;');
   });
@@ -162,6 +178,7 @@ $(document).ready(function(){
     $('#habla_window_div').css('cssText', 'margin: 0px 20px; bottom: 0px; right: 0px; display: none; position: fixed;');
   });
 
+  // Chat
   $('#tour-13').on('show', function () {
     $('#chat').css('z-index', 1060);
   });
