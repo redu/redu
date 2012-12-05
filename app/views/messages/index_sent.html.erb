@@ -7,7 +7,7 @@
     <%= render :partial => "messages/breadcrumb",
        :locals => { :user => @user } %>
     <div class="content-body">
-      <ul class="environment-title header-breadcrumb">
+      <ul class="content-section header-breadcrumb">
         <li class="header-breadcrumb-item">
           <%= link_to "Mensagens", user_messages_path(@user),
              :class => "header-bradcrumb-link icon-sent-message-gray_32_34-before",
@@ -23,6 +23,9 @@
       </ul>
       <%= new_tabs(:new_users) do %>
       <% end %>
+      <%= render :partial => 'messages/index',
+         :locals => { :mailbox => :outbox, :messages => @messages,
+         :user => @user } %>
     </div>
     <%= render :partial => "messages/breadcrumb",
        :locals => { :user => @user } %>

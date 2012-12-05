@@ -1,36 +1,40 @@
-<%# Listagem de mensagens. Parâmetros: mailbox (:inbox ou :outbox)
-  e mensagens a serem mostradas.  %>
-<%= form_tag delete_selected_user_messages_path(@user)  do %>
+<%#
+  Renderiza a tabela de mensagens.
+
+  Variáveis:
+    mailbox: :inbox ou :outbox.
+    messages: as mensagens.
+    user: o usuário.
+%>
+<%= form_tag delete_selected_user_messages_path(@user),
+  :class => "form-checklist messages-list" do %>
   <%= hidden_field_tag :mailbox, mailbox.to_s %>
-  <table id="messages" class="common">
+  <table class="table-with-borderradius table-with-link">
     <thead>
       <tr>
-        <th width="5%">
-        </th>
-        <th width="60%">Título:</th>
+        <th width="60%">Assunto</th>
         <% if mailbox == :inbox %>
-          <th width="35%">Autor e Data:</th>
+          <th width="35%">Enviada de</th>
         <% else %>
-          <th width="35%">Enviada para:</th>
+          <th width="35%">Para</th>
         <% end %>
+        <th width="5%"></th>
       </tr>
     </thead>
     <tbody>
       <% if messages.empty? %>
         <tr>
-          <td colspan='5'>
-            <div class="box_notice"><%= t :no_messages %></div>
-          </td>
+          <td colspan="3"><%= t :no_messages %></td>
         </tr>
       <% else %>
-      <%= render :partial => 'messages/item',
-        :collection => messages, :locals => { :mailbox => mailbox } %>
+        <%= render :partial => "messages/item",
+          :collection => messages,
+          :locals => { :mailbox => mailbox, :user => user } %>
       <% end %>
     </tbody>
   </table>
-  <div class="actions">
-    <%= submit_tag t(:delete_selected), :class =>'remove' %>
-    <%= image_tag 'spinner.gif', :style => 'display: none' %>
+  <div class="button-toolbar">
+    <%= submit_tag t(:delete_selected), :class =>"button-danger" %>
   </div>
 <% end %>
 

@@ -1,18 +1,27 @@
-<tr class="message">
+<%#
+  Renderiza uma linha de mensagem na tabela.
+
+  Variáveis:
+    mailbox: :inbox ou :outbox.
+    user: o usuário.
+%>
+<tr class="link-container">
+  <td>
+    <% css_class = "inbox-message-read" %>
+    <% css_class = "inbox-message-unread" if (mailbox == :inbox && !item.read?) %>
+    <%= link_to item.subject, user_message_path(user, item),
+      :class => "link-target #{css_class}", :title => item.subject %>
+  </td>
+  <td>
+    <% other_user = (mailbox == :inbox ? item.sender : item.recipient) %>
+    <%= image_tag other_user.avatar.url(:thumb_32), :size => "32x32",
+      :title => other_user.display_name, :alt => other_user.display_name,
+      :class => "message-list-thumbnail" %>
+    <%= link_to other_user.display_name, user_path(other_user),
+      :class => "pull-left link-name", :title => other_user.display_name %>
+    <span class="date pull-left"><%= item.created_at.strftime("%b %e, %Y, %l:%M %p") %></span>
+  </td>
   <td>
     <%= check_box_tag "delete[]", item.id %>
-  </td>
-  <td>
-    <% css_class = 'unread' if (mailbox == :inbox && !item.read?) %>
-    <%= link_to item.subject, user_message_path(@user, item),
-      :class => "title #{css_class}"%>
-  </td>
-  <% css_class_sender = 'sender' if mailbox == :outbox  %>
-  <td class="<%= css_class_sender %>">
-    <% other_user = (mailbox == :inbox ? item.sender : item.recipient) %>
-    <%= image_tag other_user.avatar.url(:thumb_32), :class => 'avatar' %>
-    <%= link_to other_user.display_name, user_path(other_user),
-      :class => 'user' %>
-    <span class="date"><%= item.created_at.strftime('%b %e, %Y, %l:%M %p') %></span>
   </td>
 </tr>
