@@ -444,13 +444,10 @@ p + p {
 
 h1,
 h2,
-.header-breadcrumb-big-item,
 h3,
-.header-breadcrumb-item,
 h4,
 h5,
 h6,
-.list-subject-item .list-button,
 h7 {
   margin: 0;
   text-rendering: optimizelegibility;
@@ -461,12 +458,12 @@ h1 {
   letter-spacing: -3px;
 }
 
-h2, .header-breadcrumb-big-item {
+h2 {
   font: 500 36px/36px museo-sans, "Helvetica Neue", Arial, sans-serif;
   letter-spacing: -2px;
 }
 
-h3, .header-breadcrumb-item {
+h3 {
   font: 500 21px/26px museo-sans, "Helvetica Neue", Arial, sans-serif;
   letter-spacing: -1px;
 }
@@ -481,7 +478,7 @@ h5 {
   letter-spacing: 0;
 }
 
-h6, .list-subject-item .list-button {
+h6 {
   font: 300 16px/18px museo-sans, "Helvetica Neue", Arial, sans-serif;
   letter-spacing: 0;
 }
@@ -495,14 +492,14 @@ h7 {
   display: block;
 }
 
-h3 strong, .header-breadcrumb-item strong,
+h3 strong,
 h4 strong,
 h5 strong {
   margin-bottom: 9px;
   display: inline-block;
 }
 
-h3 strong, .header-breadcrumb-item strong {
+h3 strong {
   margin-top: 28px;
 }
 
@@ -1742,7 +1739,7 @@ p {
   margin-top: 25px;
   text-align: right;
 }
-.footer-contact h3 + .legend, .footer-contact .header-breadcrumb-item + .legend {
+.footer-contact h3 + .legend {
   margin-top: 10px;
 }
 .footer-contact:hover {
@@ -5641,6 +5638,7 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
 .header-breadcrumb {
   list-style: none;
   margin: 0;
+  display: inline-block;
 }
 .header-breadcrumb:before, .header-breadcrumb:after {
   display: table;
@@ -5651,14 +5649,16 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
 }
 
 .header-breadcrumb-item {
+  font: 500 21px/21px museo-sans, "Helvetica Neue", Arial, sans-serif;
+  letter-spacing: -1px;
   float: left;
   margin-top: 7px;
 }
 .header-breadcrumb-item + .header-breadcrumb-item:before {
-  margin-right: 7px !important;
+  float: left;
+  margin: 0 7px;
   font-weight: 300;
   color: #e6e6e6;
-  margin-left: 6px;
   content: "\002F";
 }
 
@@ -5701,6 +5701,8 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
 }
 
 .header-breadcrumb-big-item {
+  font: 500 36px/36px museo-sans, "Helvetica Neue", Arial, sans-serif;
+  letter-spacing: -2px;
   font-weight: 100;
   float: left;
 }
@@ -6220,7 +6222,7 @@ hr {
 .courses-lists .course-item .stats .stat + .stat {
   margin-left: 50px;
 }
-.courses-lists .course-item .stats h6 :before, .courses-lists .course-item .stats .list-subject-item .list-button :before, .list-subject-item .courses-lists .course-item .stats .list-button :before {
+.courses-lists .course-item .stats h6 :before {
   content: "";
   display: inline-block;
   vertical-align: bottom;
@@ -6453,6 +6455,8 @@ hr {
   color: #6d6e6f;
 }
 .list-subject-item .list-button {
+  font: 300 16px/18px museo-sans, "Helvetica Neue", Arial, sans-serif;
+  letter-spacing: 0;
   list-style: decimal inside none;
   overflow: hidden;
 }
