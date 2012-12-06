@@ -24,6 +24,9 @@ javascripts:
     - public/javascripts/jquery.cookie.js
     - public/javascripts/outdated-browser.js
     - public/javascripts/home.js
+    - public/javascripts/statuses.js
+    - public/javascripts/jquery.timeago.js
+    - public/javascripts/timeago.js
   landing:
     - public/javascripts/rails.js
     - public/javascripts/vendor/modernizr.js
@@ -122,6 +125,7 @@ stylesheets:
   new_application:
     - public/stylesheets/bootstrap-redu.css
     - public/stylesheets/home.css
+    - public/stylesheets/wall.css
   landing:
     - public/stylesheets/bootstrap-redu.css
     - public/stylesheets/landing-new.css
@@ -147,6 +151,7 @@ stylesheets:
     - public/stylesheets/outdated-browser.css
     - public/stylesheets/chart.css
     - public/stylesheets/bootstrap-redu-nav-global.css
+    - public/stylesheets/wall.css
   ie:
     - public/stylesheets/ie.css
   ie8:

@@ -38,6 +38,17 @@
           </div>
         </div>
       </div>
+
+      <div class="home-container">
+        <%# Mural com layout antigo %>
+        <div id="statuses" class="statuses">
+          <ol>
+            <%= render :partial => 'statuses/item', :collection => @statuses %>
+          </ol>
+
+          <%= paginate @statuses, :theme => 'endless' %>
+        </div><!-- end .statuses -->
+      </div><!-- end .home-container -->
     </div>
     <%= render :partial => "users/breadcrumb_home",
        :locals => { :user => @user } %>
