@@ -4,7 +4,7 @@ class MessagesController < BaseController
 
   def index
     authorize! :manage, @user
-    @total_messages = @user.received_messages.length
+    @total_messages = @user.received_messages.count
     @messages = @user.received_messages.paginate(:page => params[:page],
                                                  :order =>  'created_at DESC',
                                                  :per_page => Redu::Application.config.items_per_page )
@@ -21,7 +21,7 @@ class MessagesController < BaseController
 
   def index_sent
     authorize! :manage, @user
-    @total_messages = @user.sent_messages.length
+    @total_messages = @user.sent_messages.count
     @messages = @user.sent_messages.paginate(:page => params[:page],
                                              :order =>  'created_at DESC',
                                              :per_page => Redu::Application.config.items_per_page)
