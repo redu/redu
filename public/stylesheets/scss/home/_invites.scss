@@ -29,6 +29,9 @@ ul.requisitions {
   .actions {
     margin: 0;
     padding: 0;
+    overflow: hidden;
+    clear: both;
+    float: right;
 
     form {
       overflow: hidden;

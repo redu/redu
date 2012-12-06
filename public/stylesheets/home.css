@@ -419,6 +419,7 @@ body {
 .message-list-subject {
   width: 310px;
 }
+
 ul.requisitions {
   margin: 0;
 }
@@ -447,6 +448,9 @@ ul.requisitions .list-mix-inner span {
 ul.requisitions .actions {
   margin: 0;
   padding: 0;
+  overflow: hidden;
+  clear: both;
+  float: right;
 }
 ul.requisitions .actions form {
   overflow: hidden;
