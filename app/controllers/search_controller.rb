@@ -1,9 +1,12 @@
 class SearchController < BaseController
 
+  rescue_from CanCan::AccessDenied, :with => :deny_access
+
   PER_PAGE = Rails.application.config.search_results_per_page
 
   # Busca por Perfis + Ambientes (AVA's, Cursos e Disciplinas)
   def index
+    authorize! :index, :search
     @profiles = search_for_profiles(params[:q], params[:page])
     @environments = search_for_environments(params[:q], params[:page])
     @courses = search_for_courses(params[:q], params[:page])
@@ -17,6 +20,7 @@ class SearchController < BaseController
 
   # Busca por Perfis
   def profiles
+    authorize! :profiles, :search
     @profiles = search_for_profiles(params[:q], params[:page])
 
     respond_to do |format|
@@ -26,6 +30,7 @@ class SearchController < BaseController
 
   # Busca por Ambientes (AVA's, Cursos e Disciplinas)
   def environments
+    authorize! :environments, :search
     @environments = search_for_environments(params[:q], params[:page])
     @courses = search_for_courses(params[:q], params[:page])
     @spaces = search_for_spaces(params[:q], params[:page])
@@ -38,6 +43,7 @@ class SearchController < BaseController
 
   # Busca por Ambientes (Somente AVA's)
   def environments_only
+    authorize! :environments_only, :search
     @environments = search_for_environments(params[:q], params[:page])
 
     respond_to do |format|
@@ -47,6 +53,7 @@ class SearchController < BaseController
 
   # Busca por Cursos
   def courses_only
+    authorize! :courses_only, :search
     @courses = search_for_courses(params[:q], params[:page])
 
     respond_to do |format|
@@ -56,6 +63,7 @@ class SearchController < BaseController
 
   # Busca por Disciplinas
   def spaces_only
+    authorize! :spaces_only, :search
     @spaces = search_for_spaces(params[:q], params[:page])
 
     respond_to do |format|
@@ -99,5 +107,18 @@ class SearchController < BaseController
                                 :include => [:users, :subjects,
                                              :teachers, :owner, :tags,
                                              { :course => :environment }] }))
+  end
+
+  protected
+
+  def deny_access(exception)
+    session[:return_to] = request.fullpath
+    if exception.action == :preview && exception.subject.class == Space
+      flash[:notice] = "Essa área só pode ser vista após você acessar o Redu com seu nome e senha."
+      redirect_to preview_environment_course_path(@space.course.environment,
+                                                  @space.course)
+    else
+      super
+    end
   end
 end

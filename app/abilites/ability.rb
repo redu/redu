@@ -196,6 +196,13 @@ class Ability
         cannot? :read, canvas.lecture
       end
 
+      # Busca
+      can :index, :search
+      can :profiles, :search
+      can :environments, :search
+      can :environments_only, :search
+      can :courses_only, :search
+      can :spaces_only, :search
     end
   end
 end
