@@ -414,3 +414,11 @@ body {
   float: left;
   margin-right: 10px;
 }
+
+.message-list-user-display-name {
+  width: 115px;
+}
+
+.message-list-subject {
+  width: 310px;
+}

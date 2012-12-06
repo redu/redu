@@ -10,16 +10,21 @@
     <% css_class = "inbox-message-read" %>
     <% css_class = "inbox-message-unread" if (mailbox == :inbox && !item.read?) %>
     <%= link_to item.subject, user_message_path(user, item),
-      :class => "link-target #{css_class}", :title => item.subject %>
+      :class => "link-target #{css_class} text-truncate message-list-subject", :title => item.subject %>
   </td>
   <td>
     <% other_user = (mailbox == :inbox ? item.sender : item.recipient) %>
-    <%= image_tag other_user.avatar.url(:thumb_32), :size => "32x32",
-      :title => other_user.display_name, :alt => other_user.display_name,
-      :class => "message-list-thumbnail" %>
-    <%= link_to other_user.display_name, user_path(other_user),
-      :class => "pull-left link-name", :title => other_user.display_name %>
-    <span class="date pull-left"><%= item.created_at.strftime("%b %e, %Y, %l:%M %p") %></span>
+    <div class="two-columns-wrapper">
+      <%= link_to user_path(other_user), :class => "two-columns-column" do %>
+        <%= image_tag other_user.avatar.url(:thumb_32), :size => "32x32",
+          :title => other_user.display_name, :alt => other_user.display_name %>
+      <% end %>
+      <div class="two-columns-column">
+        <%= link_to other_user.display_name, user_path(other_user),
+          :class => "show text-truncate message-list-user-display-name", :title => other_user.display_name %>
+        <span class="show legend"><%= item.created_at.strftime("%b %e, %Y, %l:%M %p") %></span>
+      </div>
+    </div>
   </td>
   <td>
     <%= check_box_tag "delete[]", item.id %>

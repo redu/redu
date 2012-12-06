@@ -368,6 +368,22 @@ a:hover {
   clear: both;
 }
 
+.two-columns-wrapper:before, .two-columns-wrapper:after {
+  display: table;
+  content: "";
+}
+.two-columns-wrapper:after {
+  clear: both;
+}
+
+.two-columns-column:first-child {
+  float: left;
+  margin-right: 10px;
+}
+.two-columns-column:last-child {
+  overflow: hidden;
+}
+
 .sprite, .sprite-light-logo, .sprite-light-talk-to-us, .sprite-logo-redu-tech-footer, .sprite-logo, .sprite-social-facebook, .sprite-social-twitter, .sprite-talk-to-us, .header-logo-wrapper:hover, .footer-logo-link:hover, .footer-contact:hover, .footer-contact:hover .footer-talk-to-us-balloons {
   background: url('../images/sprite-sfd2bf123f9.png') no-repeat;
 }
@@ -6747,4 +6763,11 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
 
 .link-container {
   cursor: pointer;
+}
+
+.text-truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 }
