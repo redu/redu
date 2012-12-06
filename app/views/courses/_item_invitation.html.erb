@@ -1,34 +1,32 @@
-<li id="requisition-<%= item_invitation.id %>" class="clearfix">
-  <span>Você foi convidado para o curso:</span>
-  <div class="grid_5 course">
-    <%= image_tag 'new/missing_courses_thumb_32.png', :class => 'avatar' %>
-    <div class="grid_4 course-details">
-      <%= link_to item_invitation.course.name,
-        preview_environment_course_path(item_invitation.course.environment,
-                                        item_invitation.course),
-        :class => 'name' %>
-      <span class="counter">
-        <%= pluralize item_invitation.course.approved_users.count,
-          'membro'  %>
-      </span>
+<li id="requisition-<%= item_invitation.id %>" class="list-mix-item clearfix">
+  <div class="list-mix-inner">
+    <div class="grid_5 course">
+      <%= image_tag 'new/missing_environments_thumb_32.png', :class => 'avatar' %>
+      <div class="grid_4 course details">
+        <span>Você foi convidado a participar do Curso</span>
+        <%= link_to item_invitation.course.name,
+          preview_environment_course_path(item_invitation.course.environment,
+                                          item_invitation.course),
+          :class => 'name' %>
+      </div>
     </div>
-  </div>
-  <div class="actions">
-    <%= form_tag deny_environment_course_path(
-                                 item_invitation.course.environment,
-                                 item_invitation.course),
-                                 :remote => true, :class => 'form-loader' do %>
-      <%= submit_tag "Recusar", :class => 'concave-clean' %>
-    <% end %>
-    <% if can? :add_entry, item_invitation.course %>
-      <%= form_tag accept_environment_course_path(
-        item_invitation.course.environment,
-        item_invitation.course),
-        :remote => true, :class => "form-loader" do %>
-        <%= submit_tag "Aceitar", :class => 'concave-important' %>
+    <div class="actions">
+      <%= form_tag deny_environment_course_path(
+                                   item_invitation.course.environment,
+                                   item_invitation.course),
+                                   :remote => true, :class => 'form-loader' do %>
+        <%= submit_tag "Recusar", :class => 'concave-clean button-default' %>
       <% end %>
-    <% else %>
-      <span class="waiting">Limite de vagas atingido</span>
-    <% end %>
+      <% if can? :add_entry, item_invitation.course %>
+        <%= form_tag accept_environment_course_path(
+          item_invitation.course.environment,
+          item_invitation.course),
+          :remote => true, :class => "form-loader" do %>
+          <%= submit_tag "Aceitar", :class => 'concave-important button-success' %>
+        <% end %>
+      <% else %>
+        <span class="waiting">Limite de vagas atingido</span>
+      <% end %>
+    </div>
   </div>
 </li>

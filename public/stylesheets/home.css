@@ -419,3 +419,39 @@ body {
 .message-list-subject {
   width: 310px;
 }
+ul.requisitions {
+  margin: 0;
+}
+ul.requisitions li {
+  list-style: none;
+  width: 100%;
+  padding-bottom: 5px;
+}
+ul.requisitions li:before {
+  margin: 0;
+}
+ul.requisitions .list-mix-inner {
+  padding: 10px;
+  margin-right: 0;
+}
+ul.requisitions .list-mix-inner .details {
+  padding: 6px 0 0 10px;
+  float: left;
+}
+ul.requisitions .list-mix-inner .avatar {
+  float: left;
+}
+ul.requisitions .list-mix-inner span {
+  color: #6d6e6f;
+}
+ul.requisitions .actions {
+  margin: 0;
+  padding: 0;
+}
+ul.requisitions .actions form {
+  overflow: hidden;
+  float: left;
+}
+ul.requisitions .actions input:last-child {
+  margin-left: 5px;
+}
