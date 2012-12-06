@@ -5,16 +5,17 @@ class MessagesController < BaseController
   def index
     authorize! :manage, @user
     @total_messages = @user.received_messages.count
-    @messages = @user.received_messages.paginate(:page => params[:page],
-                                                 :order =>  'created_at DESC',
-                                                 :per_page => Redu::Application.config.items_per_page )
+    @messages = @user.received_messages.page(params[:page]).
+      per(Redu::Application.config.items_per_page)
+
     respond_to do |format|
       format.html do
         render :layout => 'new_application'
       end
       format.js do
         render_endless 'messages/item', @messages, '#messages > tbody',
-          :partial_locals => { :mailbox => :inbox }
+          :partial_locals => { :mailbox => :inbox, :user => @user },
+          :template => 'shared/new_endless_kaminari'
       end
     end
   end
@@ -22,16 +23,17 @@ class MessagesController < BaseController
   def index_sent
     authorize! :manage, @user
     @total_messages = @user.sent_messages.count
-    @messages = @user.sent_messages.paginate(:page => params[:page],
-                                             :order =>  'created_at DESC',
-                                             :per_page => Redu::Application.config.items_per_page)
+    @messages = @user.sent_messages.page(params[:page]).
+      per(Redu::Application.config.items_per_page)
+
     respond_to do |format|
         format.html do
           render :layout => 'new_application'
         end
         format.js do
           render_endless 'messages/item', @messages, '#messages > tbody',
-            :partial_locals => { :mailbox => :outbox }
+            :partial_locals => { :mailbox => :outbox, :user => @user },
+            :template => 'shared/new_endless_kaminari'
         end
     end
   end
