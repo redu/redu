@@ -23,6 +23,8 @@ SimpleNavigation::Configuration.run do |navigation|
 
       sidebar.item :overview, 'Visão Geral', home_user_path(current_user),
         :link => { :class => 'icon-home_16_18-before' }
+      sidebar.item :wall, 'Meu Mural', my_wall_user_path(current_user),
+        :link => { :class => 'icon-wall_16_18-before' }
 
       sidebar.item :messages, 'Mensagens', user_messages_path(current_user),
         :link => { :class => 'icon-message_16_18-before'} do |messages_env|
@@ -55,8 +57,8 @@ SimpleNavigation::Configuration.run do |navigation|
           :link => { :class => 'icon-add_message_16_18-before' }
         end
 
-      sidebar.item :wall, 'Meu Mural', my_wall_user_path(current_user),
-        :link => { :class => 'icon-wall_16_18-before' }
+      sidebar.item :environments, 'Ambientes', user_environments_path(@user),
+        :link => { :class => 'icon-environment_16_18-before' }
 
       sidebar.item :configurations, 'Configurações',
         edit_user_path(current_user),
@@ -87,6 +89,8 @@ SimpleNavigation::Configuration.run do |navigation|
           :details => { :text => 'detalhes', :class => "details",
             :if => action_matcher({'invoices' => ['index']}) }
       end
+      sidebar.item :contacts, 'Meus Contatos', user_friendships_path(current_user),
+        :link => { :class => 'icon-contacts_16_18-before' }
     end
     primary.item :teach, 'Ensine', teach_index_path, :title => 'Ensine', :class => 'nav-global-button'
     primary.item :courses, 'Cursos', courses_index_path, :title => 'Cursos', :class => 'nav-global-button'

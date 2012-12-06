@@ -6,18 +6,10 @@
 # de estarem em uma lista)
 #
 # Para expirar a cache do fragmento do sidebar da home (lista de Environments):
-# expire_sidebar_environments_for(user1)
-# expire_sidebar_environments_for(user1, user2)
-# expire_sidebar_environments_for([user1, user2])
+# expire_friends_requisitions_for(user1)
+# expire_friends_requisitions_for(user1, user2)
+# expire_friends_requisitions_for([user1, user2])
 module ViewCaches
-  def expire_sidebar_environments_for(users)
-    expire_fragments('home_sidebar_environments', users)
-  end
-
-  def expire_sidebar_connections_for(users)
-    expire_fragments('home_sidebar_connections', users)
-  end
-
   def expire_friends_requisitions_for(users)
     expire_fragments('home_friends_requisitions', users)
   end

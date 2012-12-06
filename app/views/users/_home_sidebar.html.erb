@@ -5,19 +5,5 @@
       :alt => 'profile', :size => "110x110" %>
   </div>
   <%= local_nav :users %>
-  <% cache ['home_sidebar_environments', current_user.id] do %>
-    <ul class="local-nav auxiliary-local-nav">
-      <%= render :partial => 'users/sidebar_environments_item', :collection => current_user.environments %>
-    </ul>
-  <% end %>
-  <%= local_nav :user_contacts %>
-  <% cache ['home_sidebar_connections', current_user.id] do %>
-    <ul class="connections clearfix">
-      <%= render :partial => 'users/item_short',
-        :collection => current_user.friends.limit(9) %>
-    </ul><!-- end .connections -->
-    <%= link_to 'Ver mais', user_friendships_path(current_user),
-      :class => 'more' %>
-  <% end %>
 </div>
 
