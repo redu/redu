@@ -1,4 +1,10 @@
 class Search
+  #
+  # A classe Search abstrai a lógica de execução de buscas do Sunspot, possibilitando
+  # que suas herdeiras (UserSearch e EnvironmentSearch, por exemplo) concretizem
+  # a implementação da busca de acordo com o(s) modelo(s) associado(s) a ela.
+  #
+
   attr_reader :klass, :config
 
   def initialize(model, opts={})

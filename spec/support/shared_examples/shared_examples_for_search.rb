@@ -1,11 +1,11 @@
-shared_examples_for "a Sunspot::Search performer" do |klass|
+shared_examples_for "a Sunspot::Search performer" do
 
   it { should be_a_kind_of(Search) }
-  it { should respond_to(:perform).with(2).arguments }
-  its(:klass) { should eq(klass) }
+  it { should respond_to(:perform) }
+  its(:klass) { should eq(subject) }
 
   describe :perform do
-    let(:performer) { "#{klass}Search".constantize.new }
+    let(:performer) { subject.class.new }
     let(:query) { 'Query' }
     let(:page) { 1 }
 
