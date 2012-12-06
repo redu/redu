@@ -6363,19 +6363,18 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
 }
 
 .list-separator {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
+  border: none;
   height: 2px;
-  background-color: white;
-  border-top: 1px solid #e6e6e6;
+  margin: 0;
+  padding: 9px 0;
 }
 .list-separator:before {
   content: "";
   display: block;
   height: 9px;
   position: relative;
-  top: -10px;
+  top: -8px;
+  border-bottom: 1px solid #e6e6e6;
 }
 .cssgradients .list-separator:before {
   background-image: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #f7f7f7), color-stop(100%, #ffffff));
@@ -6393,6 +6392,7 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
   height: 9px;
   position: relative;
   bottom: 8px;
+  border-top: 1px solid white;
 }
 .cssgradients .list-separator:after {
   background-image: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #ffffff), color-stop(100%, #f7f7f7));
