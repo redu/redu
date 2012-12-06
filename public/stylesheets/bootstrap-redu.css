@@ -4026,6 +4026,7 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
   border-color: #e6e6e6;
   background-color: #f0f0f0;
   background-image: none;
+  cursor: not-allowed;
 }
 
 .button-primary {
@@ -4085,6 +4086,7 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
   border-color: #73c3e6;
   background-color: #73c3e6;
   background-image: none;
+  cursor: not-allowed;
 }
 
 .button-success {
@@ -4144,6 +4146,7 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
   border-color: #61a080;
   background-color: #5fc080;
   background-image: none;
+  cursor: not-allowed;
 }
 
 .button-danger {
@@ -4203,6 +4206,7 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
   border-color: #e83b3b;
   background-color: #ff6d6d;
   background-image: none;
+  cursor: not-allowed;
 }
 
 .facebook-sign-up-button, .facebook-sign-in-button {
