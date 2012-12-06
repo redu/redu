@@ -258,6 +258,7 @@ class EnvironmentsController < BaseController
     @user = User.find(params[:user_id])
     authorize! :manage, @user
 
+    @total_environments = @user.environments.count
     @environments = @user.environments.
       includes(:courses => :spaces).page(params[:page]).
       per(Redu::Application.config.items_per_page)
