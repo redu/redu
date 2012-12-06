@@ -16,9 +16,10 @@ SimpleNavigation::Configuration.run do |navigation|
     # A navegação global não é necessária, bloco apenas para
     # manter o padrão.
     primary.item :global_nav, 'Global Nav', home_user_path(current_user) do |sidebar|
-      # A navegação de Partner não possui sidebar, bloco apenas para
-      # manter o padrão
-      sidebar.item :sidebar, 'Sidebar', home_user_path(current_user) do |tabs|
+      sidebar.dom_class = 'local-nav'
+      sidebar.selected_class = 'ui-state-active'
+
+      sidebar.item :sidebar, 'Parceiros', @partner ? partner_path(@partner) : partners_path do |tabs|
         # A navegação de Partner não possui tabs, bloco apenas para manter
         # o padrão
         tabs.item :tabs, 'Primary', home_user_path(current_user) do |subtabs|

@@ -1,4 +1,11 @@
-<%= render :partial => 'users/home_sidebar' %>
+<div class="sidebar alpha grid_3">
+  <div class="home-image-frame">
+    <%= image_tag current_user.avatar.url(:thumb_110),
+      :alt => 'profile', :size => "110x110" %>
+  </div>
+  <%= local_nav :partners %>
+</div>
+
 <div class="main grid_10" id="partner" style="width: 580px;">
   <%= render :partial => 'partners/breadcrumbs', :locals => { :partner => @partner} %>
   <%= render :partial => 'partners/header', :locals => { :partner => @partner } %>
