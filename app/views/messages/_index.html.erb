@@ -6,36 +6,38 @@
     messages: as mensagens.
     user: o usuário.
 %>
-<%= form_tag delete_selected_user_messages_path(@user),
-  :class => "form-checklist messages-list" do %>
-  <%= hidden_field_tag :mailbox, mailbox.to_s %>
-  <table class="table-with-borderradius table-with-link">
-    <thead>
-      <tr>
-        <th width="60%">Assunto</th>
-        <% if mailbox == :inbox %>
-          <th width="35%">Enviada de</th>
-        <% else %>
-          <th width="35%">Para</th>
-        <% end %>
-        <th width="5%"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% if messages.empty? %>
+<div class="content-section">
+  <%= form_tag delete_selected_user_messages_path(@user),
+    :class => "form-checklist messages-list" do %>
+    <%= hidden_field_tag :mailbox, mailbox.to_s %>
+    <table id="messages" class="table-with-borderradius table-with-link">
+      <thead>
         <tr>
-          <td colspan="3"><%= t :no_messages %></td>
+          <th width="60%">Assunto</th>
+          <% if mailbox == :inbox %>
+            <th width="35%">Enviada de</th>
+          <% else %>
+            <th width="35%">Para</th>
+          <% end %>
+          <th width="5%"></th>
         </tr>
-      <% else %>
-        <%= render :partial => "messages/item",
-          :collection => messages,
-          :locals => { :mailbox => mailbox, :user => user } %>
-      <% end %>
-    </tbody>
-  </table>
-  <div class="button-toolbar">
-    <%= submit_tag t(:delete_selected), :class =>"button-danger" %>
-  </div>
-<% end %>
+      </thead>
+      <tbody>
+        <% if messages.empty? %>
+          <tr>
+            <td colspan="3"><%= t :no_messages %></td>
+          </tr>
+        <% else %>
+          <%= render :partial => "messages/item",
+            :collection => messages,
+            :locals => { :mailbox => mailbox, :user => user } %>
+        <% end %>
+      </tbody>
+    </table>
+    <div class="button-toolbar">
+      <%= submit_tag t(:delete_selected), :class =>"button-danger" %>
+    </div>
+  <% end %>
+</div>
 
 <%= will_paginate messages, :renderer => EndlessRenderer %>

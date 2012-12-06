@@ -25,11 +25,9 @@
       </div>
       <%= new_tabs(:new_users) do %>
       <% end %>
-      <div class="content-section">
-        <%= render :partial => 'messages/index',
-           :locals => { :mailbox => :outbox, :messages => @messages,
-           :user => @user } %>
-      </div>
+      <%= render :partial => 'messages/index',
+         :locals => { :mailbox => :outbox, :messages => @messages,
+         :user => @user } %>
     </div>
     <%= render :partial => "messages/breadcrumb",
        :locals => { :user => @user } %>
