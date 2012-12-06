@@ -3,7 +3,7 @@ class CoursesController < BaseController
   before_filter :set_nav_global_context, :only=> [:show, :preview,
                                                   :admin_invitations]
   before_filter :set_nav_global_context_admin,
-    :except => [:show, :preview, :index, :admin_invitations, :new]
+    :except => [:show, :preview, :index, :admin_invitations, :new, :create]
 
   before_filter Proc.new {
     @environment = Environment.find_by_path(params[:environment_id])
@@ -78,12 +78,15 @@ class CoursesController < BaseController
 
   def new
     content_for :nav_global_context, "environments_admin"
+
     respond_to do |format|
       format.html { render 'courses/admin/new' }
     end
   end
 
   def create
+    content_for :nav_global_context, "environments_admin"
+
     authorize! :manage, @environment #Talvez seja necessario pois o @environment não está sendo autorizado.
 
     @course.owner = current_user
