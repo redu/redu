@@ -24,8 +24,6 @@
 
 // Foto do perfil
 .home-profile-area-photo {
-  float: right;
-
   .borderradius & { @include border-radius(3px); }
 }
 

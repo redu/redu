@@ -43,9 +43,6 @@ body {
   margin-top: 5px;
 }
 
-.home-profile-area-photo {
-  float: right;
-}
 .borderradius .home-profile-area-photo {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;

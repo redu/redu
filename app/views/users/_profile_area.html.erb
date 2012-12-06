@@ -4,18 +4,19 @@
   Variáveis:
     user: o usuário (display_name e avatar.url)
 %>
-<span class="home-hello-user legend">Olá, <%= user.display_name %></span>
+<span class="home-hello-user legend"><%= "Olá, #{user.display_name}" %></span>
 
 <div class="home-profile-area">
   <div class="home-profile-area-links">
     <%= link_to "ver perfil", user_path(user), :title => "Ver Perfil",
-       :class => "link-secondary" %>
+      :class => "link-secondary" %>
     <%= link_to "mudar foto", edit_user_path(user),
-       :title => "Mudar foto", :class => "link-secondary" %>
+      :title => "Mudar foto", :class => "link-secondary" %>
   </div>
-  <%= link_to user_path(user), :class => "home-profile-area-photo" do %>
+  <%= link_to user_path(user), :class => "pull-right" do %>
     <%= image_tag user.avatar.url(:thumb_90),
-       :alt => user.display_name, :title => user.display_name,
-       :size => "90x90" %>
+      :alt => user.display_name, :title => user.display_name,
+      :size => "90x90",
+      :class => "home-profile-area-photo" %>
   <% end %>
 </div>
