@@ -360,8 +360,7 @@ describe UsersController do
       @params = { :locale => "pt-BR", :id => @user.login }
     end
 
-    [:friends_requisitions, :course_invitations, :statuses,
-     :status].each do |var|
+    [:friends_requisitions, :course_invitations, :statuses].each do |var|
       it "assigns @#{var}" do
         get :home, @params
 

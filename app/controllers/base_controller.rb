@@ -6,47 +6,6 @@ class BaseController < ApplicationController
 
   rescue_from CanCan::AccessDenied, :with => :deny_access
 
-  # Rotas de telas em processo de integração
-  def home
-    @user = current_user
-    # Cria recomendações fakes para teste.
-    member_to_connect = {
-      :display_name => "Filipe Wanderley Lima",
-      :profile_url => "#",
-      :avatar_url => "http://redu-assets.s3.amazonaws.com/images/new/missing_users_thumb_32.png",
-      :friends_in_common => 22,
-      :courses_in_common => 2,
-      :add_to_contact_url => "#"
-    }
-    @members_to_connect = [ member_to_connect, member_to_connect, member_to_connect ]
-
-    render :layout => 'new_application'
-  end
-
-  def environments
-    @user = current_user
-    # Cria ambientes-cursos-disciplinas fakes para teste.
-    space = {
-      :name => "Lorem ipsum dolor sit amet orci aliquam",
-      :url => "#"
-    }
-    course = {
-      :name => "Lorem ipsum dolor sit amet orci aliquam",
-      :url => "#",
-      :spaces => [space, space]
-    }
-    environment = {
-      :name => "Universidade Voluptat Metus",
-      :url => "#",
-      :thumbnail => "new/missing_environments_thumb_32.png",
-      :courses => [course, course, course]
-    }
-    @environments = [environment, environment, environment, environment]
-
-    render :layout => 'new_application'
-  end
-  # Rotas de telas em processo de integração
-
   def tos
     render :layout => 'clean'
   end

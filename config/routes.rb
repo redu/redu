@@ -59,11 +59,6 @@ Redu::Application.routes.draw do
   match '/account/edit' => 'users#edit_account', :as => :edit_account_from_email
   resources :sessions
 
-  # Rotas de telas em processo de integração
-  match '/home' => 'base#home'
-  match '/home_environments' => 'base#environments'
-  # Rotas de telas em processo de integração
-
   # site routes
   match '/about' => 'base#about', :as => :about
   match 'contact' => 'base#contact', :as => :contact
