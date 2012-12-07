@@ -22,7 +22,7 @@
       <div class="two-columns-column">
         <%= link_to other_user.display_name, user_path(other_user),
           :class => "show text-truncate message-list-user-display-name", :title => other_user.display_name %>
-        <span class="show legend"><%= item.created_at.strftime("%e %b, %Y, %lh%M") %></span>
+        <span class="show legend"><%= l item.created_at, :format => :elegant %></span>
       </div>
     </div>
   </td>
