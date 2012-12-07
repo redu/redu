@@ -250,6 +250,7 @@
 .create-status .concave-form .concave-button {
   padding: 5px 0 6px 0;
   width: 68px;
+  float: right;
 }
 
 .boxshadow .create-status .concave-form .concave-button  {
@@ -672,12 +673,6 @@
 .create-status .concave-form .cancel,
 .create-status .concave-form .concave-button {
   margin: 0 0 0 5px;
-}
-
-.create-status .concave-form .concave-button {
-  float: right;
-  width: 68px;
-  padding: 0;
 }
 
 .create-status .concave-form .char-limit,
