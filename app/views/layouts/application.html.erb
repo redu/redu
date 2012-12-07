@@ -32,18 +32,20 @@
   <%= render :partial => "shared/analytics" %>
   </head>
    <body>
-     <div id="pjax-container" class="main-wrapper-old">
-       <%= render :partial => 'shared/outdated_browser' %>
-       <%= render :partial => 'shared/header' %>
-       <%= render :partial => 'shared/flash_message' %>
+      <div id="pjax-container">
+        <div class="main-wrapper-old">
+          <%= render :partial => 'shared/outdated_browser' %>
+          <%= render :partial => 'shared/header' %>
+          <%= render :partial => 'shared/flash_message' %>
 
-       <div id="content" class="container_16 clearfix">
-         <%= yield :layout %>
-       </div><!-- end #content -->
+          <div id="content" class="container_16 clearfix">
+           <%= yield :layout %>
+          </div><!-- end #content -->
 
-       <%= render :partial => "shared/footer_old" %>
-       <%= yield :footer_scripts_and_styles %>
-       <%= render :partial => "shared/olark" %>
-     </div>
+          <%= render :partial => "shared/footer_old" %>
+          <%= yield :footer_scripts_and_styles %>
+          <%= render :partial => "shared/olark" %>
+        </div>
+      </div>
   </body>
 </html>
