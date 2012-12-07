@@ -1,7 +1,7 @@
 class RolesController < BaseController
-  load_and_authorize_resource :environment, :find_by => :path
-  load_and_authorize_resource :course, :through => :environment, :find_by => :path
-  load_and_authorize_resource :user, :through => :environment, :find_by => :login
+  load_resource :environment, :find_by => :path
+  load_resource :course, :through => :environment, :find_by => :path
+  load_resource :user, :through => :environment, :find_by => :login
 
   def index
     authorize! :manage, @environment
@@ -19,6 +19,9 @@ class RolesController < BaseController
   end
 
   def update
+    authorize! :manage, @environment
+    authorize! :manage, @course if @course
+
     role = Role.find(params[:role]).id
 
     if @course && @environment # mudando papel num curso especifico

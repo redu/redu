@@ -285,4 +285,14 @@ class UserNotifier < ActionMailer::Base
     end
 
   end
+
+  def newsletter(image_name, user, subject=nil)
+    @image_name = image_name
+    @user = user
+
+    mail(:to => user.email,
+         :subject => subject || "Novidades do Redu") do |format|
+      format.html { render :layout => false }
+    end
+  end
 end

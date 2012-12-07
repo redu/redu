@@ -35,6 +35,10 @@ describe Ability do
         it "cannot destroy a strange environment" do
           @ability.should_not be_able_to(:destroy, @environment)
         end
+
+        it "cannot manage an environment" do
+          @ability.should_not be_able_to(:manage, @environment)
+        end
       end
 
       context "envinronment_admin" do
@@ -54,6 +58,10 @@ describe Ability do
           @ability.should_not be_able_to(:destroy,
                                          Factory.build(:environment,
                                                        :owner => @redu_admin))
+        end
+
+        it "can manage his own environment" do
+          @ability.should be_able_to(:manage, @environment)
         end
 
         it "can preview a environment" do
@@ -83,6 +91,10 @@ describe Ability do
         it "cannot destroy a strange environment" do
           @ability.should_not be_able_to(:destroy, @environment)
         end
+
+        it "cannot manage a strange environment" do
+          @ability.should_not be_able_to(:manage, @environment)
+        end
       end
 
       context "tutor" do
@@ -105,6 +117,9 @@ describe Ability do
           @ability.should_not be_able_to(:destroy, @environment)
         end
 
+        it "cannot manage a strange environment" do
+          @ability.should_not be_able_to(:manage, @environment)
+        end
       end
 
       context "redu admin" do
@@ -124,7 +139,11 @@ describe Ability do
         it "can destroy a strange environment" do
           @ability.should be_able_to(:destroy, @environment)
         end
-      end
+
+        it "can manage a strange environment" do
+          @ability.should be_able_to(:manage, @environment)
+        end
+       end
 
       context "strange" do
         before do
@@ -134,6 +153,10 @@ describe Ability do
 
         it "can preview a environment" do
           @ability.should be_able_to(:preview, @environment)
+        end
+
+        it "cannot manage a environment" do
+          @ability.should_not be_able_to(:manage, @environment)
         end
       end
     end

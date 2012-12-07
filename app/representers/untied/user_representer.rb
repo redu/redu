@@ -2,6 +2,7 @@ module Untied
   module UserRepresenter
     # Utilizado para serializar modelo de User enviado pelo Untied
     include Roar::Representer::JSON
+    include Untied::HasAttachmentRepresenter
 
     self.representation_wrap = true
 
@@ -13,7 +14,6 @@ module Untied
     property :password_salt
     property :email
     property :crypted_password
-    property :fully_fladged_avatar_url, :from => :avatar_url
     collection :walledgarden_client_applications, :from => :client_applications
 
     def walledgarden_client_applications
@@ -31,10 +31,6 @@ module Untied
           :key => t.client_application.key
         }
       end
-    end
-
-    def fully_fladged_avatar_url
-      self.avatar.url(:original)
     end
   end
 end
