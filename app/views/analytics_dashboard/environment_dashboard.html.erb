@@ -1,0 +1,15 @@
+
+<%= form_tag '/analytics/environment_dashboard', :method => :get do %>
+  <%= select_tag 'environment_id', options_from_collection_for_select(@environments, 'id', 'name') %>
+  <%= submit_tag 'Go Horse!' %>
+<% end %>
+
+<%= render :partial => "menu" %>
+
+<% if @graphs %>
+  <% @graphs.each_with_index do |graph, index| %>
+    <%= javascript_include_tag 'highcharts' %>
+    <%= high_stock("#{index}_opa", graph) %>
+    <div id="<%= "#{index}_opa" %>"></div>
+  <% end %>
+<% end %>

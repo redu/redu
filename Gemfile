@@ -75,7 +75,7 @@ gem 'rack-cors', :require => 'rack/cors'
 gem 'roar-rails', '~> 0.0.3',
   :git => 'git://github.com/apotonick/roar-rails.git'
 gem 'destroy_soon'
-gem 'redu_analytics'
+gem 'redu_analytics', :path => "/Users/guiocavalcanti/workspace/work/analytics"
 gem 'humanizer'
 
 # Gems específicos de algum ambiente
