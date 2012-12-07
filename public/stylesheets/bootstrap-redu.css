@@ -134,17 +134,24 @@ body {
   text-shadow: 0 1px 0 white;
 }
 
-a {
+a,
+.link-fake {
   display: inline-block;
   color: #4dadd6;
   text-decoration: none;
 }
-a:visited {
+a:visited,
+.link-fake:visited {
   color: #73c3e6;
 }
-a:hover {
+a:hover,
+.link-fake:hover {
   color: #158ac4;
   text-decoration: underline;
+}
+
+.link-fake {
+  cursor: pointer;
 }
 
 .content-body {
