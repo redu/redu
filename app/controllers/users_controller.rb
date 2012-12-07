@@ -304,7 +304,6 @@ class UsersController < BaseController
       includes(:course =>[:environment])
     @statuses = @user.home_activity(params[:page])
     @status = Status.new
-    @contacts_recommendations = @user.recommended_contacts(5)
 
     respond_to do |format|
       format.html

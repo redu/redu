@@ -7,5 +7,5 @@
     :locals => { :user => user } %>
   <%= render :partial => "users/help_center" %>
   <%= render :partial => "users/recommendation",
-             :locals => { :members => @contacts_recommendations } %>
+             :locals => { :members => user.recommended_contacts(5) } %>
 </div>
