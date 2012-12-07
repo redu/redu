@@ -31,6 +31,16 @@
               <li class="nav-global-profile-item link-container">
                 <%= link_to "Configurações", edit_user_path(current_user), :class => "link-target icon-manage-lightblue_16_18-before", :title => "Configurações" %>
               </li>
+              <% current_user.partners.each do |partner| %>
+                <li class="nav-global-profile-item link-container">
+                  <%= link_to partner.name, partner_path(partner), :class => "link-target icon-partner-lightblue_16_18-before", :title => partner.name %>
+                </li>
+              <% end %>
+              <% if can? :index, Partner %>
+                <li class="nav-global-profile-item link-container">
+                  <%= link_to "Parceiros", partners_path, :class => "link-target icon-partner-lightblue_16_18-before", :title => "Parceiros" %>
+                </li>
+              <% end %>
               <li class="nav-global-profile-item link-container">
                 <%= link_to "Sair", logout_path, :method => :delete, :class => "link-target", :title => "Sair" %>
               </li>
