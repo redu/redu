@@ -207,7 +207,7 @@
       <h4>Ainda restam dúvidas?</h4>
     </div>
     <div class="modal-body">
-      <p>Estamos dispostos a atendê-lo sempre que precisar. Caso este Tour não tenha contemplado suas dúvidas, acesse a <a href="#">Central de Ajuda</a> e busque por um tópico de sua preferência.</p>
+      <p>Estamos dispostos a atendê-lo sempre que precisar. Caso este Tour não tenha contemplado suas dúvidas, acesse a <%= link_to "Central de Ajuda", Redu::Application.config.redu_services[:help_center][:url], :title => "Central de Ajuda" %> e busque por um tópico de sua preferência.</p>
     </div>
     <div class="modal-footer">
       <p class="legend">14 de 14</p>
