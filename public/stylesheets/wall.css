@@ -466,6 +466,10 @@
   background-color: rgb(240, 240, 240);
 }
 
+#statuses .status .responses li {
+  list-style: none;
+}
+
 #statuses .status .responses .re-status {
   padding-left: 10px;
   padding-right: 10px;

@@ -124,10 +124,12 @@ javascripts:
 
 stylesheets:
   new_application:
+    - public/stylesheets/icons.redu.css
+    - public/stylesheets/utils.css
     - public/stylesheets/bootstrap-redu.css
     - public/stylesheets/home.css
     - public/stylesheets/wall.css
-    - public/stylesheets/fb_style.css 
+    - public/stylesheets/fb_style.css
   landing:
     - public/stylesheets/bootstrap-redu.css
     - public/stylesheets/landing-new.css
