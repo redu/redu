@@ -215,6 +215,14 @@
     color: white;
   }
 
+  .concave-remove:visited,
+  .concave-button:visited,
+  .concave-important:visited,
+  .concave-important-font:visited,
+  .concave-cancel:visited {
+    color: white;
+  }
+
   .concave-important,
   .concave-important-font {
     border: 1px solid rgb(75,192,128);
