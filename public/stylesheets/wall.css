@@ -299,10 +299,28 @@
 }
 
 .create-status .post-resource .post-text,
-#statuses .status .post-resource .post-text {
+#statuses .status .post-resource .post-text h3 {
   overflow: hidden;
   color: rgb( 109, 110, 111);
+  padding-bottom: 0;
+}
+
+.create-status .post-resource .post-text,
+#statuses .status .post-resource .post-text h3,
+.create-status .post-resource .source-site,
+#statuses .status .post-resource .source-site {
+  font-size: 13px;
   line-height: 18px;
+  letter-spacing: 0; 
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#statuses .status .post-resource .post-text h3 {
+  font-weight: bold;  
+}
+
+.status .post-resource .post-text .post-description {
+  color: rgb(109, 110, 111);
 }
 
 .textshadow .statuses .status .date,
