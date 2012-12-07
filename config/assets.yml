@@ -27,6 +27,7 @@ javascripts:
     - public/javascripts/statuses.js
     - public/javascripts/jquery.timeago.js
     - public/javascripts/timeago.js
+    - public/javascripts/jquery.fcbkcomplete.min.js # Auto complete do facebook
   landing:
     - public/javascripts/rails.js
     - public/javascripts/vendor/modernizr.js
@@ -126,6 +127,7 @@ stylesheets:
     - public/stylesheets/bootstrap-redu.css
     - public/stylesheets/home.css
     - public/stylesheets/wall.css
+    - public/stylesheets/fb_style.css 
   landing:
     - public/stylesheets/bootstrap-redu.css
     - public/stylesheets/landing-new.css

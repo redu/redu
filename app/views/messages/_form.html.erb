@@ -15,19 +15,33 @@
     });
 </script>
 
-<%= form_for [@user, @message], :html => { :class => 'form-common' } do |f| %>
+<%= form_for [user, message] do |f| %>
   <%= f.error_messages %>
-
-  <%= label_tag :message_to, t( :to ) + ":" %>
-
-  <div style="width: 412px; float: left;"><!-- necessario para manter o input e o sugestion alinhados -->
-    <select id="message_to" name="message_to">
-    </select>
-  </div>
-
-  <%= label_tag :message_subject, t( :subject_of_message ) + ":" %>
-  <%= f.text_field :subject %>
-  <%= label_tag :message_body, t( :message ) + ":" %>
-  <%= f.text_area :body, :size => "73x10" %>
-  <%= submit_tag t( :send ) %>
+    <div class="control-group">
+      <div class="control-label">
+        <%= f.label :message_to, "Para" %>
+      </div>
+      <div style= "width: 100%;">
+        <select id="message_to" name="message_to">
+        </select>
+      </div>
+    </div>
+    <div class="control-group">
+      <div class="control-label">
+        <%= f.label :message_subject, "Assunto" %>
+      </div>
+      <div class="controls">
+        <%= f.text_field :subject, :placeholder =>"Digite o assunto desta mensagem" %>
+        <%= concave_errors_for f.object, :message_subject %>
+      </div>
+    </div>
+    <div class="control-group">
+      <div class="control-label">
+        <%= f.label :message_body, "Mensagem" %>
+      </div>
+      <div class="controls">
+        <%= f.text_area :body, :size => "73x6", :placeholder =>"Escreva a mensagem" %>
+        <%= concave_errors_for f.object, :message_body %>
+      </div>
+    </div>
 <% end %>

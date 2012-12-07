@@ -420,6 +420,10 @@ body {
   width: 310px;
 }
 
+.button-new-message {
+  float: right;
+}
+
 ul.requisitions {
   margin: 0;
 }
