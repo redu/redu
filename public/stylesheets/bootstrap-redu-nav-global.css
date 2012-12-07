@@ -194,6 +194,8 @@ a:hover {
 .nav-global {
   overflow: visible;
   margin-bottom: 18px;
+  line-height: 18px;
+  font-family: "Helvetica Neue", Arial, sans-serif;
 }
 
 .nav-global-fixed-top {
@@ -339,6 +341,7 @@ a:hover {
 }
 
 .nav-global-button-dropdown {
+  margin: 0;
   padding: 5px 5px 5px 10px;
 }
 
