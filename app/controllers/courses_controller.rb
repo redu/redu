@@ -11,6 +11,9 @@ class CoursesController < BaseController
                                         :conditions => { :path => params[:id] },
                                         :include => [:audiences])
   }, :only => :edit
+
+  after_filter :update_last_access, :only => [:show]
+
   load_resource :environment, :find_by => :path
   load_and_authorize_resource :course, :through => :environment,
     :except => [:index], :find_by => :path
@@ -490,5 +493,10 @@ class CoursesController < BaseController
 
   def set_nav_global_context
     content_for :nav_global_context, "courses"
+  end
+
+  def update_last_access
+    uca = current_user.get_association_with(@course)
+    uca.touch(:last_accessed_at) if uca
   end
 end

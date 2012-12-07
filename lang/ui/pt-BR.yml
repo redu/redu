@@ -63,6 +63,7 @@ pt-BR:
       short_literal_date: "%d %b %Y"
       time_ago: "%e %b %Y às %H:%M"
       admin: "%d %b, %Y, %H:%M"
+      elegant: "%-d %b, %Y, %Hh%M"
     pm: pm
     am: am
   number:

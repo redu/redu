@@ -266,6 +266,11 @@ module BaseHelper
     render :partial => "plans/plans", :locals => { :plans => plans }
   end
 
+  # Sidebar esquerdo de user
+  def last_accessed_courses(user)
+    user.user_course_associations.includes(:course => :environment).
+      last_accessed(3)
+  end
 end
 
 module AsyncJSHelper
