@@ -3,6 +3,12 @@
  *
  * Baseado no Bootstrap v2.1.1 do Twitter.
  */
+
+ .link-secondary {
+  font-size: 11px;
+  line-height: 11px;
+}
+
 a {
   display: inline-block;
   color: #4dadd6;
@@ -468,4 +474,21 @@ a:hover {
 
 .link-container {
   cursor: pointer;
+}
+
+.logo-redu-color_140_40, .logo-redu-gray_140_40:hover,
+.logo-redu-gray_140_40 {
+  background: url("../images/logos.png") no-repeat;
+}
+
+.logo-redu-color_140_40, .logo-redu-gray_140_40:hover {
+  background-position: 0 0;
+  height: 40px;
+  width: 140px;
+}
+
+.logo-redu-gray_140_40 {
+  background-position: 0 -40px;
+  height: 40px;
+  width: 140px;
 }

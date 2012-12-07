@@ -151,6 +151,7 @@ stylesheets:
     - public/stylesheets/outdated-browser.css
     - public/stylesheets/chart.css
     - public/stylesheets/bootstrap-redu-nav-global.css
+    - public/stylesheets/nav-global-icons.css
     - public/stylesheets/wall.css
   ie:
     - public/stylesheets/ie.css
