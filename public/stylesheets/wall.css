@@ -709,4 +709,45 @@
   margin: 10px 0px 10px 0px;
 }
 
+/* Endless */
+.endless,
+.endless_pending {
+  clear: both;
+  text-align: center;
+  padding: 26px 10px 6px 10px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  background: url("../images/new/dots.png") repeat-x top;
+}
 
+.endless a,
+.endless_pending a {
+  background-color: white;
+  border: 1px solid #CCCBCB;
+  font-weight: bold;
+  padding: 5px 10px;
+
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#E6E6E5'); /* IE */
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#E6E6E5)); /* webkit browsers */
+  background: -moz-linear-gradient(top,  #fff,  #E6E6E5); /* Firefox 3.6+ */
+}
+
+.home-container .statuses .endless a.spinner-circular-gray {
+  background-repeat: no-repeat;
+  background-position: 59px 7px;
+}
+
+.endless a:after,
+.endless_pending a:after {
+  content: "▼";
+  padding-left: 5px;
+}
+
+.endless a:hover,
+.endless_pending a:hover {
+  text-decoration: none;
+}
