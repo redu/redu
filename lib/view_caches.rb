@@ -18,8 +18,8 @@ module ViewCaches
     expire_fragments('home_courses_requisitions', users)
   end
 
-  def expire_nav_account_for(users)
-    expire_fragments('nav_account', users)
+  def expire_nav_global_dropdown_menu_for(users)
+    expire_fragments('nav_global_dropdown_menu', users)
   end
 
   def expire_course_members_count_for(course)

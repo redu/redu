@@ -11,15 +11,9 @@
       <a href="<%= application_url %>" title="Página Inicial">Redu: potencializando o talento das pessoas.</a>
     </h1>
     <ul class="nav grid_10">
-      <% if current_user %>
-        <li>
-          <%= link_to 'Início', home_user_path(current_user), :title => "Início" %>
-        </li>
-      <% else %>
-        <li>
-          <%= link_to 'Início', application_path, :title => "Início" %>
-        </li>
-      <% end %>
+      <li>
+        <%= link_to 'Início', application_path, :title => "Início" %>
+      </li>
       <li>
         <%= link_to "Ensine", teach_index_path , :title => "Ensine"%>
       </li>
@@ -30,9 +24,6 @@
         <%= link_to "Aplicativos", Redu::Application.config.redu_services[:apps][:url], :title => "Aplicativos" %>
       </li>
     </ul>
-
-    <%= render :partial => 'shared/nav_account' %>
-
     <div id="search-box" class="grid_3">
     </div><!-- end #search -->
   </div><!-- end #header -->
