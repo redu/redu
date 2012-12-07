@@ -1,7 +1,9 @@
 <li id="requisition-<%= friendship.friend.id %>" class="list-mix-item clearfix">
   <div class="list-mix-inner">
     <div class="grid_5 friend">
-      <%= image_tag friendship.friend.avatar.url(:thumb_32), :class => 'avatar' %>
+      <%= link_to user_path(friendship.friend), :class => 'avatar' do %>
+        <%= image_tag friendship.friend.avatar.url(:thumb_32) %>
+      <% end %>
       <div class="grid_4 friend details">
         <%= link_to friendship.friend.display_name, user_path(friendship.friend), :class => 'name' %>
         <span>quer se conectar a você.</span>
