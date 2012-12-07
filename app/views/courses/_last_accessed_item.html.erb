@@ -4,6 +4,6 @@
     UserCourseAssociation
 %>
 <li class="nav-local-general-course">
-    <%= link_to truncate(last_accessed_item.course.name, :length => 18), environment_course_path(last_accessed_item.course.environment, last_accessed_item.course), :class => "icon-course-gray_16_18-before"  %>
-    <span class="date">Em: <%= l last_accessed_item.last_accessed_at, :format => :elegant %></span>
+    <%= link_to truncate(last_accessed_item.course.name, :length => 18), environment_course_path(last_accessed_item.course.environment, last_accessed_item.course), :class => "icon-course-gray_16_18-before", :title => last_accessed_item.course.name %>
+    <span class="legend show">Em: <%= l last_accessed_item.last_accessed_at, :format => :elegant %></span>
 </li>
