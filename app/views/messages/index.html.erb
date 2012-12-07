@@ -23,10 +23,10 @@
               <% end %>
           </li>
         </ul>
-        <%= link_to "Nova Mensagem", "#modal-new-message", :class => "button-primary button-new-message", "data-toggle" => "modal" %>
+        <%= link_to "Nova Mensagem", "#modal-new-message", :class => "button-primary icon-message-new-white_blue_16_18-before button-new-message", "data-toggle" => "modal" %>
         <div id="modal-new-message" class="modal hide">
           <div class="modal-header">
-            <h3 class="modal-title icon-message-new-white_blue_16_18-before">Nova Mensagem</h3>
+            <h3 class="modal-title">Nova Mensagem</h3>
           </div>
           <div class="modal-body">  
             <%= render :partial => 'messages/form',
