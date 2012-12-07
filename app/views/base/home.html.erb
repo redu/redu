@@ -9,25 +9,28 @@
     <div class="content-body">
       <%= render :partial => "users/welcome_greeting",
          :locals => { :user => @user } %>
-      <div class="home-container">
         <% cache ['home_friends_requisitions', @user.id] do %>
-          <% unless @friends_requisitions.all.empty? %>
-            <ul class="friends requisitions">
-              <%= render :partial => 'friendships/friend_requisition',
-                :collection => @friends_requisitions, :as => :friendship %>
-            </ul>
+          <% unless @friends_requisitions.length == 0 %>
+            <div class="home-container">
+              <ul class="friends requisitions">
+                <%= render :partial => 'friendships/friend_requisition',
+                  :collection => @friends_requisitions, :as => :friendship %>
+              </ul>
+            </div>
+            <hr class="list-separator">
           <% end %>
         <% end %>
         <% cache ['home_courses_requisitions', @user.id] do %>
-          <% unless @course_invitations.all.empty? %>
-            <ul class="courses requisitions">
-              <%= render :partial => 'courses/item_invitation',
-                :collection => @course_invitations %>
-            </ul>
+          <% unless @course_invitations.length == 0 %>
+            <div class="home-container">
+              <ul class="courses requisitions">
+                <%= render :partial => 'courses/item_invitation',
+                  :collection => @course_invitations %>
+              </ul>
+            </div>
+            <hr class="list-separator">
           <% end %>
         <% end %>
-      </div>
-      <hr class="list-separator">
       <%= render :partial => "users/explore_redu", :locals => { :user => @user} %>
       <div id="learn-environments-box" style="display: <%= learn_environments_display(@user) %>;">
         <hr class="list-separator">
