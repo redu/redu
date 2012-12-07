@@ -6,11 +6,11 @@
     <h6 class="right-sidebar-area-title">Explore o Redu</h6>
     <div class="nav-local-separator"></div>
     <ul class="actions-to-do">
-      <li><a href="#" class="icon-ask-lightblue_16_18-before link-secondary" id="what-is-missing-link" style="display: <%= what_is_missing_link_display(user) %>;">O que falta fazer?</a></li>
+      <li><span class="icon-ask-lightblue_16_18-before link-secondary link-fake" id="what-is-missing-link" style="display: <%= what_is_missing_link_display(user) %>;">O que falta fazer?</span></li>
       <% if user.settings.visited?("tour-1") %>
         <li><a href="#tour-1" data-toggle="modal" class="icon-tour-lightblue_16_18-before link-secondary">Faça o Tour do Início</a></li>
       <% end %>
-      <li><a href="#" class="icon-environment-lightblue_16_18-before link-secondary" id="learn-environments-link" style="display: <%= user.settings.visited?("learn-environments") ? 'block' : 'none' %>;">Entenda os Ambientes</a></li>
+      <li><span class="icon-environment-lightblue_16_18-before link-secondary link-fake" id="learn-environments-link" style="display: <%= user.settings.visited?("learn-environments") ? 'block' : 'none' %>;">Entenda os Ambientes</span></li>
     </ul>
   </div>
 </div>
