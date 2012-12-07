@@ -107,6 +107,8 @@
   line-height: 130%;
 }
 
+.textshadow .status-message { text-shadow: none; }
+
 .statuses .re-status .status-message {
   margin-top: 0;
   margin-left: 40px;
@@ -308,7 +310,7 @@
 .create-status .post-resource .post-text,
 #statuses .status .post-resource .post-text h3,
 .create-status .post-resource .source-site,
-#statuses .status .post-resource .source-site {
+#statuses .status .post-resource .source-site { 
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0; 
