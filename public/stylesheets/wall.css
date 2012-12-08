@@ -2,8 +2,12 @@
   font-size: .98em;
 }
 
-.statuses > ol > li {
+ .create-status + .statuses {
   background: url("../images/new/dots.png") repeat-x top;
+}
+
+.statuses > ol > li {
+  background: url("../images/new/dots.png") repeat-x bottom;
   padding: 20px 0;
   overflow: hidden;
   list-style: none;
@@ -770,4 +774,8 @@
 .endless a:hover,
 .endless_pending a:hover {
   text-decoration: none;
+}
+
+.home-container .statuses > ol {
+  margin: 0px;
 }

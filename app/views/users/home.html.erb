@@ -33,7 +33,6 @@
         <% end %>
       <%= render :partial => "users/explore_redu", :locals => { :user => @user} %>
       <div id="learn-environments-box" style="display: <%= learn_environments_display(@user) %>;">
-        <hr class="list-separator">
         <div class="home-container">
           <div class="learning-environments">
             <span data-tour="learn-environments" data-dismiss="alert" data-target="#learn-environments-box" class="message-close">×</span>
@@ -59,6 +58,7 @@
             </div>
           </div>
         </div>
+        <hr class="list-separator">
       </div>
 
       <div class="home-container">
