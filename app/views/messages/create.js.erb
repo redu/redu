@@ -1,0 +1,16 @@
+var $modal = $("#modal-new-message");
+
+<% if @message.errors.empty? %>
+  var $successNotice = $("<%= escape_javascript render 'messages/notice_message_created', :message => @message, :user => @user %>");
+  $successNotice.appendTo("body").show();
+
+  // Fecha a modal de criação de mensagem quando o aviso de sucesso
+  // é fechado.
+  $("#notice-message-created").on("closed", function(e) {
+    $modal.modal("hide");
+  });
+<% else %>
+  var $newModal = $("<%= escape_javascript render 'messages/modal_new', :message => @message, :user => @user %>");
+  $modal.modal("hide").replaceWith($newModal);
+  $newModal.modal("show");
+<% end %>

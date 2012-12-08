@@ -1,0 +1,5 @@
+// Remover, caso já exista alguma
+$("#modal-new-message").remove();
+
+var $modalNewMessage = $("<%= escape_javascript render 'messages/modal_new', :message => @message, :user => @user %>");
+$modalNewMessage.appendTo("body").modal("show");

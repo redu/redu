@@ -54,12 +54,12 @@ class MessagesController < BaseController
       in_reply_to = Message.find_by_id(params[:reply_to])
     end
     @message = Message.new_reply(@user, in_reply_to, params)
-    if params[:message_to] and params[:message_to].length > 0
-      @recipients = @user.friends.message_recipients(params[:message_to])
+    if params[:recipient] and params[:recipient].length > 0
+      @recipients = @user.friends.message_recipients(params[:recipient])
     end
 
     respond_to do |format|
-      format.html
+      format.js
     end
   end
 
@@ -67,38 +67,40 @@ class MessagesController < BaseController
     authorize! :manage, @user
     messages = []
 
+    params_recipient = params[:message].delete(:recipient)
+
     if params[:message][:reply_to] # resposta
       @message = Message.new(params[:message])
       @message.save!
       flash[:notice] = "Mensagem enviada!"
       respond_to do |format|
-        format.html do
-          redirect_to index_sent_user_messages_path(@user) and return
+        format.js do
+          return
         end
       end
     end
 
-    if not params[:message_to] or  params[:message_to].empty?
+    if not params_recipient or  params_recipient.empty?
       @message = Message.new(params[:message])
       @message.valid?
       respond_to do |format|
-        format.html do
-          render :template => 'messages/new' and return
+        format.js do
+          return
         end
       end
     end
 
 
     # If 'to' field isn't empty then make sure each recipient is valid
-    params[:message_to].each do |to|
+    params_recipient.each do |to|
       @message = Message.new(params[:message])
       @message.recipient_id = to# User.find(to)
       @message.sender = @user
       unless @message.valid?
-        @recipients = @user.friends.message_recipients(params[:message_to])
+        @recipients = @user.friends.message_recipients(params_recipient)
         respond_to do |format|
-          format.html do
-            render :template => 'messages/new' and return
+          format.js do
+            return
           end
         end
         return
@@ -111,8 +113,8 @@ class MessagesController < BaseController
     messages.each {|msg| msg.save!}
     flash[:notice] = t :message_sent
     respond_to do |format|
-      format.html do
-        redirect_to index_sent_user_messages_path(@user) and return
+      format.js do
+        return
       end
     end
   end

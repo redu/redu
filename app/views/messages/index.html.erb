@@ -23,20 +23,7 @@
               <% end %>
           </li>
         </ul>
-        <%= link_to "Nova Mensagem", "#modal-new-message", :class => "button-primary icon-message-new-white_blue_16_18-before button-new-message", "data-toggle" => "modal" %>
-        <div id="modal-new-message" class="modal hide">
-          <div class="modal-header">
-            <h3 class="modal-title">Nova Mensagem</h3>
-          </div>
-          <div class="modal-body">  
-            <%= render :partial => 'messages/form',
-              :locals => { :message => @message, :user => @user } %>
-          </div>
-          <div class="modal-footer">
-            <button data-dismiss="modal" class="button-default">Cancelar</button>
-            <button data-dismiss="modal" class="button-primary">Enviar</button>
-          </div>
-        </div>
+        <%= link_to "Nova Mensagem", new_user_message_path(@user), :remote => true, :class => "button-primary icon-message-new-white_blue_16_18-before button-new-message" %>
       </div>
       <%= new_tabs(:new_users) do %>
       <% end %>

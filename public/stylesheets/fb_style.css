@@ -41,7 +41,7 @@ ul.holder li.bit-box-focus a.closebutton, ul.holder li.bit-box-focus a.closebutt
 
 .borderradius .holder {
 	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;	 
+	-moz-border-radius: 5px;
 }
 
 .holder {
@@ -66,12 +66,38 @@ ul.holder li.bit-box-focus a.closebutton, ul.holder li.bit-box-focus a.closebutt
 }
 
 .select-active {
-  -webkit-box-shadow: inset 0 0 0 transparent, 0 0 6px 1px #73C3E6;
-  -moz-box-shadow: inset 0 0 0 rgba(0, 0, 0, 0), 0 0 6px 1px #73c3e6;
-  box-shadow: inset 0 0 0 transparent, 0 0 6px 1px #73C3E6;
   color: black;
   background-color: white !important;
   background-image: none !important;
   border-color: #73C3E6;
   outline: 0;
+}
+
+.boxshadow .select-active {
+  -webkit-box-shadow: inset 0 0 0 transparent, 0 0 6px 1px #73C3E6;
+  -moz-box-shadow: inset 0 0 0 rgba(0, 0, 0, 0), 0 0 6px 1px #73c3e6;
+  box-shadow: inset 0 0 0 transparent, 0 0 6px 1px #73C3E6;
+}
+
+.holder:hover {
+  border-color: #73c3e6;
+}
+
+.control-error .holder {
+  border-color: #FF6D6D;
+}
+
+.control-error .holder:hover {
+  border-color: #E1272D;
+}
+
+.control-error .holder:focus {
+  border-color: #ff6d6d;
+}
+
+.boxshadow .control-error .holder:focus,
+.boxshadow .control-error .holder.select-active {
+  -webkit-box-shadow: inset 0 0 0 rgba(0, 0, 0, 0), 0 0 6px 1px #ff6d6d;
+  -moz-box-shadow: inset 0 0 0 rgba(0, 0, 0, 0), 0 0 6px 1px #ff6d6d;
+  box-shadow: inset 0 0 0 rgba(0, 0, 0, 0), 0 0 6px 1px #ff6d6d;
 }

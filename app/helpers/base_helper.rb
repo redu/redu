@@ -88,7 +88,7 @@ module BaseHelper
       content_tag(:li, msg)
     end.join.html_safe
 
-    content_tag(:ul, errors, :class => 'errors_on_field')
+    content_tag(:ul, errors, :class => 'errors_on_field control-errors')
   end
 
   def type_class(resource)
