@@ -227,7 +227,7 @@ $(document).ready(function(){
     $(linkSelector).on('click', function(){
       $(boxSelector).slideDown(150, 'swing');
       $(this).hide();
-      if ($('#explore-redu-sidebar li a:visible').length < 1) {
+      if ($('#explore-redu-sidebar li span:visible').length < 1) {
         $('#explore-redu-sidebar').hide();
       }
     });
