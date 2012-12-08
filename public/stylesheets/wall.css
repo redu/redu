@@ -586,6 +586,7 @@
 .statuses .status .grouped-photos .item .user-avatar {
   margin-top: 8px;
   margin-right: 8px;
+  height: 34px;
 }
 
 .statuses .status .box {

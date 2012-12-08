@@ -87,7 +87,6 @@ body {
 .home-container ul li {
   float: left;
   margin-bottom: 5px;
-  clear: both;
 }
 .home-container ul li:last-child {
   margin-bottom: 0;
