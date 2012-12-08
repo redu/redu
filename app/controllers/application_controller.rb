@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   helper_method :current_user_session, :current_user
 
-  before_filter :check_tour_exploration
+  after_filter :check_tour_exploration
 
   unless Rails.application.config.consider_all_requests_local
     rescue_from Exception,                            :with => :render_error
