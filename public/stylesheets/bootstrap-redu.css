@@ -5454,9 +5454,13 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
 }
 
 .modal-body {
-  padding: 0 20px 20px;
+  padding: 20px;
   overflow-y: auto;
   max-height: 340px;
+}
+
+.modal-header + .modal-body {
+  padding-top: 0;
 }
 
 .modal-scroll-arrow {
