@@ -146,6 +146,9 @@ body {
   width: 338px;
   margin: 0 0 0 -169px;
 }
+.tour.modal {
+  background-color: #f7f7f7;
+}
 .tour.modal:after {
   content: ' ';
   height: 0;
@@ -167,7 +170,7 @@ body {
   margin-bottom: 0;
 }
 .tour .modal-footer {
-  background-color: white;
+  background-color: inherit;
   padding: 10px;
 }
 .tour .modal-footer p {
@@ -203,7 +206,7 @@ body {
 }
 .home-tour #tour-3:after {
   border: 9px solid transparent;
-  border-bottom-color: white;
+  border-bottom-color: #f7f7f7;
   bottom: 100%;
   left: 50%;
   margin-left: -9px;
@@ -214,7 +217,7 @@ body {
 }
 .home-tour #tour-4:after {
   border: 9px solid transparent;
-  border-bottom-color: white;
+  border-bottom-color: #f7f7f7;
   bottom: 100%;
   left: 50%;
   margin-left: -9px;
@@ -225,7 +228,7 @@ body {
 }
 .home-tour #tour-5:after {
   border: 9px solid transparent;
-  border-bottom-color: white;
+  border-bottom-color: #f7f7f7;
   bottom: 100%;
   left: 50%;
   margin-left: -9px;
@@ -236,7 +239,7 @@ body {
 }
 .home-tour #tour-6:after {
   border: 9px solid transparent;
-  border-bottom-color: white;
+  border-bottom-color: #f7f7f7;
   bottom: 100%;
   left: 50%;
   margin-left: -9px;
@@ -247,7 +250,7 @@ body {
 }
 .home-tour #tour-7:after {
   border: 9px solid transparent;
-  border-bottom-color: white;
+  border-bottom-color: #f7f7f7;
   bottom: 100%;
   left: 93%;
   margin-left: -9px;
@@ -258,7 +261,7 @@ body {
 }
 .home-tour #tour-8:after {
   border: 9px solid transparent;
-  border-right-color: white;
+  border-right-color: #f7f7f7;
   right: 100%;
   top: 15px;
 }
@@ -268,7 +271,7 @@ body {
 }
 .home-tour #tour-9:after {
   border: 9px solid transparent;
-  border-right-color: white;
+  border-right-color: #f7f7f7;
   right: 100%;
   top: 50%;
   margin-top: -9px;
@@ -279,14 +282,14 @@ body {
 }
 .home-tour #tour-10:after {
   border: 9px solid transparent;
-  border-right-color: white;
+  border-right-color: #f7f7f7;
   right: 100%;
   top: 50%;
   margin-top: -9px;
 }
 .home-tour #tour-11:after {
   border: 9px solid transparent;
-  border-left-color: white;
+  border-left-color: #f7f7f7;
   left: 100%;
   top: 50%;
   margin-top: -9px;
@@ -300,7 +303,7 @@ body {
 }
 .home-tour #tour-12:after {
   border: 9px solid transparent;
-  border-top-color: white;
+  border-top-color: #f7f7f7;
   top: 100%;
   right: 20px;
 }
@@ -313,7 +316,7 @@ body {
 }
 .home-tour #tour-13:after {
   border: 9px solid transparent;
-  border-top-color: white;
+  border-top-color: #f7f7f7;
   top: 100%;
   left: 20px;
 }

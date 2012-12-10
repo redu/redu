@@ -87,6 +87,10 @@
   width: 338px;
   margin: 0 0 0 -169px;
 
+  &.modal {
+    background-color: $gray1;
+  }
+
   &.modal:after {
     content: ' ';
     height: 0;
@@ -111,7 +115,7 @@
   }
 
   .modal-footer {
-    background-color: white;
+    background-color: inherit;
     padding: 10px;
 
     p {
@@ -151,7 +155,7 @@
 
     &:after {
       border: 9px solid transparent;
-      border-bottom-color: white;
+      border-bottom-color: $gray1;
 
       bottom: 100%;
       left: 50%;
@@ -165,7 +169,7 @@
 
     &:after {
       border: 9px solid transparent;
-      border-bottom-color: white;
+      border-bottom-color: $gray1;
 
       bottom: 100%;
       left: 50%;
@@ -179,7 +183,7 @@
 
     &:after {
       border: 9px solid transparent;
-      border-bottom-color: white;
+      border-bottom-color: $gray1;
 
       bottom: 100%;
       left: 50%;
@@ -193,7 +197,7 @@
 
     &:after {
       border: 9px solid transparent;
-      border-bottom-color: white;
+      border-bottom-color: $gray1;
 
       bottom: 100%;
       left: 50%;
@@ -207,7 +211,7 @@
 
     &:after {
       border: 9px solid transparent;
-      border-bottom-color: white;
+      border-bottom-color: $gray1;
 
       bottom: 100%;
       left: 93%;
@@ -221,7 +225,7 @@
 
     &:after {
       border: 9px solid transparent;
-      border-right-color: white;
+      border-right-color: $gray1;
 
       right: 100%;
       top: 15px;
@@ -234,7 +238,7 @@
 
     &:after {
       border: 9px solid transparent;
-      border-right-color: white;
+      border-right-color: $gray1;
 
       right: 100%;
       top: 50%;
@@ -248,7 +252,7 @@
 
     &:after {
       border: 9px solid transparent;
-      border-right-color: white;
+      border-right-color: $gray1;
 
       right: 100%;
       top: 50%;
@@ -259,7 +263,7 @@
   #tour-11 {
     &:after {
       border: 9px solid transparent;
-      border-left-color: white;
+      border-left-color: $gray1;
 
       left: 100%;
       top: 50%;
@@ -276,7 +280,7 @@
 
     &:after {
       border: 9px solid transparent;
-      border-top-color: white;
+      border-top-color: $gray1;
 
       top: 100%;
       right: 20px;
@@ -292,7 +296,7 @@
 
     &:after {
       border: 9px solid transparent;
-      border-top-color: white;
+      border-top-color: $gray1;
 
       top: 100%;
       left: 20px;
