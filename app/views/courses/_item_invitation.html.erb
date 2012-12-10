@@ -1,7 +1,9 @@
 <li id="requisition-<%= item_invitation.id %>" class="list-mix-item clearfix">
   <div class="list-mix-inner">
     <div class="grid_5 course">
-      <%= image_tag 'new/missing_environments_thumb_32.png', :class => 'avatar' %>
+      <%= link_to environment_course_path(item_invitation.course.environment, item_invitation.course), :class => 'avatar' do %>
+        <%= image_tag 'new/missing_environments_thumb_32.png', :class => 'avatar' %>
+      <% end %>
       <div class="grid_4 course details">
         <span>Você foi convidado a participar do Curso</span>
         <%= link_to item_invitation.course.name,
