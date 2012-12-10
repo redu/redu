@@ -5,8 +5,6 @@ class Course < ActiveRecord::Base
 
   # Apenas deve ser chamado na criação do segundo curso em diante
   after_create :create_user_course_association, :unless => "self.environment.nil?"
-  after_create :index_search
-  after_update :index_search
 
   belongs_to :environment
   has_many :spaces, :dependent => :destroy,
@@ -383,10 +381,5 @@ class Course < ActiveRecord::Base
         license.try(:update_attributes, {:period_end => DateTime.now})
       end
     end
-  end
-
-  # Indexa o objeto na busca
-  def index_search
-    self.index!
   end
 end
