@@ -18,5 +18,5 @@
     <span><%= tag.name %></span>
   <% end %>
 
-  <%= user.mutual_friends(current_user).count %>
+  <%= user.friends_in_common_with(current_user).count %>
 </li>
