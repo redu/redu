@@ -12,6 +12,7 @@ class LecturesController < BaseController
 
   rescue_from CanCan::AccessDenied do |exception|
     session[:return_to] = request.fullpath
+
     respond_to do |format|
       format.html do
        space = Space.find(params[:space_id])
