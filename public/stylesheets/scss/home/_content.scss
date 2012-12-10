@@ -100,6 +100,9 @@
 
   .modal-header {
     border-bottom: 1px $gray3 solid;
+    box-shadow: 0 1px 0 white;
+    -moz-box-shadow: 0 1px 0 white;
+    -webkit-box-shadow: 0 1px 0 white;
     padding: 10px;
   }
 
