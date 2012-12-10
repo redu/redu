@@ -39,6 +39,7 @@ gem 'eventmachine'
 gem 'exceptional'
 gem 'factory_girl_rails', '~> 1.7.0'
 gem 'fog', '~> 1.1.0' # Necessário ao backup
+gem 'has_friends', :git => 'git@github.com:jessicabarbalho/has_friends.git'
 gem 'invitable', :git => 'git@github.com:redu/invitable.git'
 gem 'jammit-s3'
 gem 'jquery-rails', '>= 1.0.12'
