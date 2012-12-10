@@ -5227,7 +5227,7 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
   border-bottom: 1px solid #cccccc;
   list-style: none;
   margin: 0 0 10px;
-  padding-left: 40px;
+  padding-left: 20px;
 }
 .tabs:before, .tabs:after {
   display: table;
