@@ -111,6 +111,7 @@ body {
 }
 
 .learning-environments {
+  width: 538px;
   color: #6d6e6f;
   background-image: url("../images/home/graphic-environments-hierarchy.png");
   background-repeat: no-repeat;
