@@ -1,14 +1,25 @@
-<li id="recommendation-<%= recommendation_item.id %>" class="clearfix">
-  <%= link_to user_path(recommendation_item) do %>
-	  <%= image_tag recommendation_item.avatar.url(:thumb_32), :width => 32,
-	    :height => 32, :class => 'avatar', :title => recommendation_item.display_name, :alt => recommendation_item.display_name %>
+<%#
+  Item da lista de recomendação de contato.
+
+  Variáveis:
+    recommendation_item: informações sobre o membro sugerido.
+%>
+<li id="recommendation-<%= recommendation_item.id %>" class="two-columns-wrapper">
+  <%= link_to user_path(recommendation_item), :class => "two-columns-column",
+    :title => recommendation_item.display_name do %>
+	  <%= image_tag recommendation_item.avatar.url(:thumb_32), :size => "32x32",
+      :title => recommendation_item.display_name,
+      :alt => recommendation_item.display_name %>
   <% end %>
-  <div class="member-info">
-		<%= link_to recommendation_item.display_name, user_path(recommendation_item),
-		    :class => 'name' %>
+  <div class="two-columns-column">
+		<%= link_to recommendation_item.display_name,
+      user_path(recommendation_item),
+		  :title => recommendation_item.display_name,
+      :class => "members-to-add-user text-truncate" %>
 	  <%= link_to "+ adicionar",
 	    user_friendships_path(current_user, :friend_id => recommendation_item.login,
-	                          :recommendation => true), :method => :post,
-	    :remote => true, :class => "link-secondary" %>
+	    :recommendation => true), :method => :post,
+	    :remote => true, :class => "members-to-add-link link-secondary",
+      :title => "Adicionar #{recommendation_item.display_name} como contato" %>
 	</div>
 </li>

@@ -87,6 +87,7 @@ body {
 .home-container ul li {
   float: left;
   margin-bottom: 5px;
+  clear: both;
 }
 .home-container ul li:last-child {
   margin-bottom: 0;
@@ -386,20 +387,29 @@ body {
 .right-sidebar-area .actions-to-do li {
   margin-top: 5px;
 }
-.right-sidebar-area .members-to-add li {
-  overflow: hidden;
+
+.members-to-add {
+  margin: 0;
+}
+.members-to-add .two-columns-wrapper +
+.two-columns-wrapper {
   margin-top: 10px;
 }
-.right-sidebar-area .members-to-add li a {
-  float: left;
+.members-to-add .two-columns-column:first-child {
+  margin-right: 5px;
 }
-.right-sidebar-area .members-to-add li .member-info {
-  margin-left: 5px;
-  float: left;
-  width: 123px;
+
+.members-to-add-user {
+  display: block;
 }
-.right-sidebar-area .members-to-add li .member-info .legend {
-  line-height: 11px;
+
+.members-to-add-user +
+.members-to-add-link {
+  margin-top: 5px;
+}
+
+.members-to-add-link {
+  display: inline-block;
 }
 
 .messages-list td {

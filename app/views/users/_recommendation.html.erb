@@ -2,13 +2,13 @@
   Conecte-se.
 
   Variáveis:
-    members: informações dos membros sugeridos.
+    recommendations: informações dos membros sugeridos.
 %>
 <div class="right-sidebar-area">
   <h6 class="right-sidebar-area-title">Conecte-se</h6>
   <div class="nav-local-separator"></div>
   <ul class="members-to-add">
     <%= render :partial => "users/recommendation_item",
-               :collection => members %>
+      :collection => recommendations %>
   </ul>
 </div>

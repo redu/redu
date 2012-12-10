@@ -1,3 +1,8 @@
+// ==========================================================================
+// Barra lateral direita
+// ==========================================================================
+
+
 .home-right-sidebar {
   padding-top: 40px;
 
@@ -21,21 +26,23 @@
   }
 
   .actions-to-do { li { margin-top: 5px; } }
-
-  .members-to-add {
-    li {
-      overflow: hidden;
-      margin-top: 10px;
-
-      a { float: left; }
-
-      .member-info {
-        margin-left: 5px;
-        float: left;
-        width: 123px;
-
-        .legend { line-height: 11px; }
-      }
-    }
-  }
 }
+
+// Conecte-se
+// ==========================================================================
+
+.members-to-add {
+  margin: 0;
+
+  .two-columns-wrapper +
+  .two-columns-wrapper { margin-top: 10px; }
+
+  .two-columns-column:first-child { margin-right: 5px; }
+}
+
+.members-to-add-user { display: block; }
+
+.members-to-add-user +
+.members-to-add-link { margin-top: 5px; }
+
+.members-to-add-link { display: inline-block; }
