@@ -6,7 +6,7 @@
   <div class="member-info">
 		<%= link_to recommendation_item.display_name, user_path(recommendation_item),
 		    :class => 'name' %>
-	  <%= link_to "+ Adicionar a Contatos",
+	  <%= link_to "+ adicionar",
 	    user_friendships_path(current_user, :friend_id => recommendation_item.login,
 	                          :recommendation => true), :method => :post,
 	    :remote => true, :class => "link-secondary" %>
