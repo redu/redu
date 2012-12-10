@@ -13,6 +13,7 @@ $(document).ready(function(){
   // Tour do Início
   $('#tour-1').on('show', function () {
     $("html, body").animate({ scrollTop: 0 }, "slow");
+    $('#modal-what-is-missing').modal('hide');
   });
 
   // Menu de Navegação Global
@@ -143,6 +144,8 @@ $(document).ready(function(){
 
   // Seção ativa do Início
   $('#tour-10').on('show', function () {
+    var position = $('.nav-local-item-active').position();
+    $(this).css('top', position.top + 77);
     $('.nav-local').css('z-index', 'auto');
     $('.nav-local-item-active').css('position', 'relative');
     $('.nav-local-item-active').css('z-index', 1060);

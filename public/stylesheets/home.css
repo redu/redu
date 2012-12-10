@@ -84,27 +84,34 @@ body {
 .home-container {
   padding: 10px 20px;
 }
+
 .home-container h3 {
   line-height: 26px;
   padding-bottom: 5px;
 }
+
 .home-container ul {
   overflow: hidden;
   list-style: none;
   margin-top: 10px;
   margin-bottom: 0;
 }
+
 .home-container ul li {
   float: left;
   margin-bottom: 5px;
   clear: both;
 }
+
 .home-container ul li:last-child {
   margin-bottom: 0;
 }
+
 .home-container ul li a:hover {
   text-decoration: none;
 }
+
+#modal-what-is-missing .message-block-actions,
 .home-container .message-block-actions {
   margin-top: 10px;
   text-align: center;
@@ -275,7 +282,7 @@ body {
 }
 .home-tour #tour-9 {
   top: 160px;
-  left: 196px;
+  left: 210px;
 }
 .home-tour #tour-9:after {
   border: 9px solid transparent;
@@ -284,10 +291,11 @@ body {
   top: 50%;
   margin-top: -9px;
 }
+
 .home-tour #tour-10 {
-  top: 76px;
-  left: 205px;
+  left: 210px;
 }
+
 .home-tour #tour-10:after {
   border: 9px solid transparent;
   border-right-color: #f7f7f7;
