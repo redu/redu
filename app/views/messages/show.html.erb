@@ -1,59 +1,74 @@
-<%= render :partial => 'users/home_sidebar' %>
-<div class="main grid_10" style="width: 580px;">
-  <%= render :partial => 'messages/breadcrumb' %>
-  <div id="messages">
-    <%= tabs :users do %>
-      <div class="actions">
-        <% if @message.sender == @user %>
-          <%= link_to "< voltar", index_sent_user_messages_path(@user),
-            :class => 'back' %>
-        <% else %>
-          <%= link_to "< voltar", user_messages_path(@user),
-            :class => 'back' %>
-        <% end %>
-      </div>
-      <ul class="messages clearfix">
-        <li>
-          <div class="title"> <%= @message.subject %> </div>
-          <div class="content">
-            <div class="pretty-text">
-              <p><%= raw auto_link simple_format(@message.body) %></p>
-            </div>
-          </div>
-          <% showed_user = @message.sender == @user ?
-            @message.recipient : @message.sender %>
-          <div class="recipient">
-            <%= image_tag showed_user.avatar.url(:thumb_32),
-              :class => 'avatar' %>
-            <%= link_to showed_user.display_name,
-              user_path(showed_user), :class => 'user' %>
-            <span class="date">
-              <%= @message.created_at.strftime('%b %e, %Y, %l:%M %p') %>
-            </span>
-          </div>
-        </li>
-      </ul>
-      <% if @message.recipient == @user %>
-        <div class="respond">
-          <%= form_tag nil, :id => 'dummy_reply', :class => 'MainForm form-common'  do %>
-            <%= label_tag "Resposta:" %>
-            <%= text_area_tag nil, nil, { :onclick => "$('div.new-folder-inner').slideToggle(); $('#dummy_reply').hide(); return false;" } %>
-
+<div class="span3">
+  <%= render :partial => "users/left_sidebar",
+    :locals => { :user => @user } %>
+</div>
+<div class="span10">
+  <div class="content-area">
+    <%= render :partial => "messages/breadcrumb", :locals => { :user => @user } %>
+    <div class="content-body">
+      <div class="content-section">
+        <ul class="header-breadcrumb">
+          <li class="header-breadcrumb-item">
+            <%= link_to "Mensagens", user_messages_path(@user),
+              :class => "header-bradcrumb-link icon-message-gray_32_34-before",
+              :title => "Mensagens" %>
+          </li>
+          <li class="header-breadcrumb-item">
+            <% if defined? @total_received_messages %>
+            <%= link_to user_messages_path(@user),
+              :class => "header-bradcrumb-link",
+              :title => "Recebidas" do %>
+              Recebidas <%= content_tag(:span, parentize(@total_received_messages), :class => "header-breadcrumb-item-light") %>
+            <% end %>
+          <% else %>
+            <%= link_to index_sent_user_messages_path(@user),
+              :class => "header-bradcrumb-link",
+              :title => "Recebidas" do %>
+              Enviadas <%= content_tag(:span, parentize(@total_sent_messages), :class => "header-breadcrumb-item-light") %>
+            <% end %>
           <% end %>
-          <div class="new-folder-inner" style="display:none;">
+          </li>
+        </ul>
+        <%= link_to "Nova Mensagem", new_user_message_path(@user), :remote => true, :class => "button-primary icon-message-new-white_blue_16_18-before button-new-message" %>
+      </div>
+      <%= new_tabs(:new_users) %>
+      <div class="content-section">
+        <h3> <%= @message.subject %> </h3>
+        <div class="statuses">
+          <ol>
+            <li>
+              <div class="status">
+                <% showed_user = @message.sender == @user ?
+                  @message.recipient : @message.sender %>
+                <div class="status-text">
+                  <%= image_tag showed_user.avatar.url(:thumb_32),
+                    :class => 'avatar' %>
+                  <%= link_to showed_user.display_name,
+                    user_path(showed_user), :class => 'username' %>
+                  <span class="date">
+                    <%= l @message.created_at, :format => :elegant %>
+                  </span>
+                </div>
+                <div class="status-contents">
+                  <div class="distance-top"></div>
+                  <p class="status-message"><%= raw auto_link simple_format(@message.body) %></p>
+                </div>
+              </div>
+            </li>
+          </ol>
+        </div>
+        <% if @message.recipient == @user %>
+          <div class="create-status inform-my-status message">
             <%= render :partial => 'messages/form_reply' %>
           </div>
-        </div>
-      <% end %>
-      <div class="actions">
-        <% if @message.sender == @user %>
-          <%= link_to "< voltar para mensagens enviadas",
-            index_sent_user_messages_path(@user), :class => 'back' %>
-        <% else %>
-          <%= link_to "< voltar para mensagens recebidas",
-            user_messages_path(@user), :class => 'back' %>
         <% end %>
       </div>
-    <% end %>
-  </div><!-- end .messages -->
-</div><!-- end .main -->
+    </div>
+    <%= render :partial => "messages/breadcrumb",
+       :locals => { :user => @user } %>
+  </div>
+</div>
+<div class="span3">
+  <%= render :partial => "users/right_sidebar",
+    :locals => { :user => @user } %>
+</div>

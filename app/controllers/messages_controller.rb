@@ -43,8 +43,14 @@ class MessagesController < BaseController
     @message = Message.read(params[:id], current_user)
     @reply = Message.new_reply(@user, @message, params)
 
+    if @message.sender == @user
+      @total_sent_messages = @user.sent_messages.count
+    else
+      @total_received_messages = @user.received_messages.count
+    end
+
     respond_to do |format|
-      format.html
+      format.html { render :layout => 'new_application' }
     end
   end
 
@@ -70,9 +76,13 @@ class MessagesController < BaseController
     params_recipient = params[:message].delete(:recipient)
 
     if params[:message][:reply_to] # resposta
-      @message = Message.new(params[:message])
-      @message.save!
-      flash[:notice] = "Mensagem enviada!"
+      @reply = Message.new(params[:message])
+      @reply.save
+      if @reply.valid?
+        @new_reply = @reply.clone
+        @new_reply.body = ""
+      end
+
       respond_to do |format|
         format.js do
           return

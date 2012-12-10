@@ -1,7 +1,6 @@
 <div id="notice-message-created" class="system-message message-success">
   <a data-dismiss="alert" class="message-close">×</a>
   <p>
-    <strong>Muito bem</strong>! Sua mensagem foi enviada. Para visualizá-la, clique no botão abaixo. Ou feche esta mensagem para voltar à página anterior.
+    <strong>Muito bem</strong>! Sua mensagem foi enviada. Para visualizá-la, <%= link_to "clique aqui", user_message_path(user, message), :title => "clique aqui" %>.
   </p>
-  <%= link_to "Visualizar a Mensagem", user_message_path(user, message), :class => "button-success", :title => "Visualizar a Mensagem" %>
 </div>

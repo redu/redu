@@ -776,6 +776,38 @@
   text-decoration: none;
 }
 
+/* Home de usuário */
 .home-container .statuses > ol {
   margin: 0px;
 }
+/* Home de usuário */
+
+/* Mensagens */
+.create-status.message {
+  margin: 0;
+  margin-left: 37px;
+  padding-bottom: 5px;
+}
+
+.create-status.message form {
+  overflow: hidden;
+}
+.create-status.message hr {
+  border: transparent
+}
+
+.create-status.message .status-buttons {
+  width: auto;
+}
+
+.content-section .statuses > ol {
+  background: none;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.content-section .statuses > ol > li {
+  background: none;
+  padding: 10px 0;
+}
+/* Mensagens */

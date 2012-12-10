@@ -32,7 +32,7 @@ SimpleNavigation::Configuration.run do |navigation|
           :class => 'tab',
           :link => { :class => 'tab-title icon-message_16_18-before',
                      :title => 'Recebidas' },
-          :details => { :text => 'visualização', :class => 'tab-sub-title legend',
+          :details => { :text => 'Visualização', :class => 'tab-sub-title legend',
                         :if => Proc.new { action_matcher({'messages' => ['show']}).
                                           call && @message.sender != @user } }
 
@@ -45,7 +45,7 @@ SimpleNavigation::Configuration.run do |navigation|
           :class => 'tab',
           :link => { :class => 'tab-title icon-message-sent_16_18-before',
                      :title => 'Enviadas' },
-          :details => { :text => 'visualização', :class => 'tab-sub-title legend',
+          :details => { :text => 'Visualização', :class => 'tab-sub-title legend',
                         :if => Proc.new { action_matcher({'messages' => ['show']}).
                                           call && @message.sender == @user } }
       end
