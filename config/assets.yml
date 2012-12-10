@@ -16,9 +16,9 @@ javascripts:
     - public/javascripts/vendor/modernizr.js
     - public/javascripts/lazyload.js
     - public/javascripts/asyncjs.jquery.js
+    - public/javascripts/form.redu.jquery.js
     - public/javascripts/jquery.autosize.min.js
     - public/javascripts/vendor/placeholder-polyfill.min.js
-    - public/javascripts/bootstrap-redu.js
     - public/javascripts/swfobject.js # Necessário ao browserdetection.js
     - public/javascripts/browserdetection.js
     - public/javascripts/jquery.cookie.js
@@ -141,6 +141,7 @@ stylesheets:
     - public/stylesheets/new-fonts.css
     - public/stylesheets/token-input.css
     - public/stylesheets/utils.css
+    - public/stylesheets/wall.css
     - public/stylesheets/new-style.css
     - public/stylesheets/tipTip.css
     - public/stylesheets/ajaxful_rating.css
@@ -156,7 +157,6 @@ stylesheets:
     - public/stylesheets/chart.css
     - public/stylesheets/bootstrap-redu-nav-global.css
     - public/stylesheets/nav-global-icons.css
-    - public/stylesheets/wall.css
   ie:
     - public/stylesheets/ie.css
   ie8:

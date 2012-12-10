@@ -7579,3 +7579,27 @@ input[disabled=disabled],
 button[disabled=disabled] {
   cursor: default;
 }
+
+.create-status .concave-form .char-limit,
+.create-status .concave-form .errorMessageField { margin-left: 20px; }
+
+.status .create-response textarea { 
+  width: 458px;
+  padding: 7px 10px;
+}
+
+.status-log .create-status textarea,
+.status-log .create-response textarea { width: 420px; }
+
+.create-status  [class*="icon-"] { 
+  float: left;
+  margin-top: 7px;
+}
+
+.create-response .status-buttons { margin-top: 0; }
+
+.button-default { padding: 6px 10px; }
+
+.create-status.inform-my-status textarea { width: 515px; }
+
+.status-large .concave-form .concave-input { margin-top: 0; }

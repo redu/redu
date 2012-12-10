@@ -243,8 +243,7 @@
 }
 
 .create-status .concave-form .concave-clean {
-  padding: 5px 0 6px 0;
-  width: 73px;
+  padding: 6px 10px;
 }
 
 .boxshadow .create-status .concave-form .concave-clean  {
@@ -253,9 +252,8 @@
   box-shadow: 0 1px 0 0 white inset;
 }
 
-.create-status .concave-form .concave-button {
-  padding: 5px 0 6px 0;
-  width: 68px;
+.create-status .concave-form .concave-button {  
+  padding: 6px 10px;
   float: right;
 }
 
@@ -660,23 +658,17 @@
 
 .create-status .status-buttons {
   float: right;
-  width: 155px;
-}
-
-.create-status .concave-form .concave-input {
-  margin: 0;
-  height: 16px;
-  width: 515px;
+  margin-top: 10px;
 }
 
 .create-status.create-response .concave-form .concave-input {
   margin: 0;
-  height: 16px;
-  width: 478px;
+  height: 100%;
+  padding: 6px 10px;
 }
 
 .status-log .create-response .concave-form .concave-input {
-  width: 440px;
+  width: 420px;
 }
 
 .status-medium .create-status .concave-form .concave-input {
@@ -780,7 +772,6 @@
 .home-container .statuses > ol {
   margin: 0px;
 }
-/* Home de usuário */
 
 /* Mensagens */
 .create-status.message {
@@ -796,10 +787,6 @@
   border: transparent
 }
 
-.create-status.message .status-buttons {
-  width: auto;
-}
-
 .content-section .statuses > ol {
   background: none;
   margin-top: 0;
@@ -810,4 +797,24 @@
   background: none;
   padding: 10px 0;
 }
-/* Mensagens */
+
+.create-status .concave-form .char-limit,
+.create-status .concave-form .errorMessageField { margin-left: 20px; }
+
+.status .create-status textarea,
+.status .create-response textarea { 
+  width: 458px;
+  padding: 6px 10px;
+}
+
+.status-log .create-status textarea,
+.status-log .create-response textarea { width: 420px; }
+
+.create-status  [class*="icon-"] { 
+  float: left;
+  margin-top: 7px;
+}
+
+.status-buttons a { float: left; }
+
+.button-default { padding: 6px 10px; }
