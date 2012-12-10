@@ -5,6 +5,7 @@ class UserSearch < Search
 
   def perform(query, page)
     search({ :query => query, :page => page,
-             :include => [:experiences, :tags, { :educations  => :educationable }] })
+             :include => [:experiences, :tags, :friends,
+                          { :educations  => :educationable }] })
   end
 end
