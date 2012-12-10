@@ -10,9 +10,12 @@
         <span data-target="#modal-what-is-missing" data-toggle="modal" class="icon-ask-lightblue_16_18-before link-secondary link-fake" id="what-is-missing-link" style="display: <%= what_is_missing_link_display(user) %>;">O que falta fazer?</span>
         <%= render 'users/modal_what_is_missing', :user => user %>
       </li>
-      <% if user.settings.visited?("tour-1") %>
-        <li><a href="#tour-1" data-toggle="modal" class="icon-tour-lightblue_16_18-before link-secondary">Faça o Tour do Início</a></li>
-      <% end %>
+      <li>
+        <%= render :partial => "users/tour", :locals => { :user => @user } %>
+        <% if user.settings.visited?("tour-1") %>
+          <a href="#tour-1" data-toggle="modal" class="icon-tour-lightblue_16_18-before link-secondary">Faça o Tour do Início</a>
+        <% end %>
+      </li>
       <li>
         <span data-target="#modal-learn-environments" data-toggle="modal" class="icon-environment-lightblue_16_18-before link-secondary link-fake" id="learn-environments-link" style="display: <%= user.settings.visited?("learn-environments") ? 'block' : 'none' %>;">Entenda os Ambientes</span>
         <%= render 'users/modal_learn_environments' %>
