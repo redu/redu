@@ -1,59 +1,54 @@
-<div id="what-is-missing-box" style="display: <%= what_is_missing_box_display(user) %>;">
-  <div class="home-container">
-    <div class="message-block message-info">
-      <span data-tour="what-is-missing" data-dismiss="alert" data-target="#what-is-missing-box" class="message-close">×</span>
-      <div class="message-block-content">
-        <strong>Explore o Redu e descubra o que você ainda pode fazer:</strong>
-        <ul>
-          <% unless user.settings.visited?(edit_user_path(user)) %>
-            <li>
-              <%= link_to "Diga ao mundo quem você é: preencha seu Perfil!",
-                edit_user_path(user, :exploring_tour => true),
-                :class => "icon-profile-lightblue_16_18-before" %>
-            </li>
-          <% end %>
-          <% unless user.settings.visited?(new_user_friendship_path(user)) %>
-            <li>
-              <%= link_to "Convide seus amigos para fazer parte de sua rede de Conexões.",
-                new_user_friendship_path(user, :exploring_tour => true),
-                :class => "icon-invite-lightblue_16_18-before" %>
-            </li>
-          <% end %>
-          <% unless user.settings.visited?(new_user_message_path(user)) %>
-            <li>
-              <%= link_to "Envie uma Mensagem para alguém.",
-                new_user_message_path(user, :exploring_tour => true),
-                :class => "icon-message-lightblue_16_18-before" %>
-            </li>
-          <% end %>
-          <% unless user.settings.visited?(courses_index_path) %>
-            <li>
-              <%= link_to "Procure por um Curso.",
-                courses_index_path(:exploring_tour => true),
-                :class => "icon-course-lightblue_16_18-before" %>
-            </li>
-          <% end %>
-          <% unless user.settings.visited?(teach_index_path) %>
-            <li>
-              <%= link_to "Crie seu Ambiente de Aprendizagem e um Curso grátis.",
-                teach_index_path(:exploring_tour => true),
-                :class => "icon-environment-circle-lightblue_16_18-before" %>
-            </li>
-          <% end %>
-          <% unless user.settings.visited?("basic-guide") %>
-            <li>
-              <%= link_to "Visite o Guia Básico da Central de Ajuda.",
-                Redu::Application.config.redu_services[:help_center][:url] + "guia-basico" , :class => "icon-help-central-lightblue_16_18-before", "data-tour" => "basic-guide" %>
-            </li>
-          <% end %>
-        </ul>
-      </div>
-      <% unless user.settings.visited?("tour-1") %>
-        <div class="message-block-actions">
-          <button id="start-tour" class="button-primary icon-tour-white_16_18-before tour-part" data-toggle="modal" href="#tour-1">Tour do Início: conheça a interface e as principais seções</button>
-        </div>
+<div class="message-block message-info">
+  <span data-tour="what-is-missing" data-dismiss="alert" data-target="#what-is-missing-box" class="message-close">×</span>
+  <div class="message-block-content">
+    <strong>Explore o Redu e descubra o que você ainda pode fazer:</strong>
+    <ul>
+      <% unless user.settings.visited?(edit_user_path(user)) %>
+        <li>
+          <%= link_to "Diga ao mundo quem você é: preencha seu Perfil!",
+            edit_user_path(user, :exploring_tour => true),
+            :class => "icon-profile-lightblue_16_18-before" %>
+        </li>
       <% end %>
-    </div>
+      <% unless user.settings.visited?(new_user_friendship_path(user)) %>
+        <li>
+          <%= link_to "Convide seus amigos para fazer parte de sua rede de Conexões.",
+            new_user_friendship_path(user, :exploring_tour => true),
+            :class => "icon-invite-lightblue_16_18-before" %>
+        </li>
+      <% end %>
+      <% unless user.settings.visited?(new_user_message_path(user)) %>
+        <li>
+          <%= link_to "Envie uma Mensagem para alguém.",
+            new_user_message_path(user, :exploring_tour => true),
+            :class => "icon-message-lightblue_16_18-before" %>
+        </li>
+      <% end %>
+      <% unless user.settings.visited?(courses_index_path) %>
+        <li>
+          <%= link_to "Procure por um Curso.",
+            courses_index_path(:exploring_tour => true),
+            :class => "icon-course-lightblue_16_18-before" %>
+        </li>
+      <% end %>
+      <% unless user.settings.visited?(teach_index_path) %>
+        <li>
+          <%= link_to "Crie seu Ambiente de Aprendizagem e um Curso grátis.",
+            teach_index_path(:exploring_tour => true),
+            :class => "icon-environment-circle-lightblue_16_18-before" %>
+        </li>
+      <% end %>
+      <% unless user.settings.visited?("basic-guide") %>
+        <li>
+          <%= link_to "Visite o Guia Básico da Central de Ajuda.",
+            Redu::Application.config.redu_services[:help_center][:url] + "guia-basico" , :class => "icon-help-central-lightblue_16_18-before", "data-tour" => "basic-guide" %>
+        </li>
+      <% end %>
+    </ul>
   </div>
-  <hr class="list-separator">
+  <% unless user.settings.visited?("tour-1") %>
+    <div class="message-block-actions">
+      <button id="start-tour" class="button-primary icon-tour-white_16_18-before tour-part" data-toggle="modal" href="#tour-1">Tour do Início: conheça a interface e as principais seções</button>
+    </div>
+  <% end %>
 </div>

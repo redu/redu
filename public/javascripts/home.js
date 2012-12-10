@@ -222,11 +222,12 @@ $(document).ready(function(){
   $.slideToggleFirstExperienceBoxes = function(selectorBegin) {
     var linkSelector = '#' + selectorBegin + '-link';
     var boxSelector = '#' + selectorBegin + '-box';
+    var modalSelector = '#' + 'modal-' +  selectorBegin;
 
     // Ao clicar no link, o box é aberto e o link escondido
     $(linkSelector).on('click', function(){
       $(boxSelector).slideDown(150, 'swing');
-      $(this).hide();
+      $(this).slideUp(150, 'swing');
       if ($('#explore-redu-sidebar li span:visible').length < 1) {
         $('#explore-redu-sidebar').hide();
       }
@@ -243,6 +244,26 @@ $(document).ready(function(){
       $(this).hide();
       return false;
     });
+
+    // Ao clicar no x dentro da modal, esconde a modal, ao invés
+    // de tentar remover/esconder o data-target.
+    $(modalSelector + ' [data-dismiss=alert]').on('click', function(){
+      $(this).closest('.modal').modal('hide');
+      return false;
+    });
+
+    // Evita que a modal apareça, caso o box esteja presente
+    $(modalSelector).on('show', function(){
+      if ($(boxSelector).length == 1) {
+        return false;
+      }
+    })
+
+    // Ao esconder a modal, mostra o link do sidebar direito
+    $(modalSelector).on('hidden', function(){
+      $(linkSelector).slideDown(150, 'swing');
+      $('#explore-redu-sidebar').slideDown(150, 'swing');
+    })
   };
 
   $.slideToggleFirstExperienceBoxes('what-is-missing')
