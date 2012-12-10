@@ -10,8 +10,22 @@ class SearchController < BaseController
     @spaces = search_for_spaces(params[:q], params[:page])
     @query = params[:q]
 
+    if request.xhr?
+      @all = []
+      if must_include(User, params)
+        @all << @profiles.first(5).map do |e|
+          { :id => e.id, :name => e.display_name }
+        end
+      end
+      @all << crop(@environments) if must_include(Environment, params)
+      @all << crop(@courses) if must_include(Course, params)
+      @all << crop(@spaces) if must_include(Space, params)
+      @all = @all.flatten
+    end
+
     respond_to do |format|
       format.html # search/index.html.erb
+      format.js { render :json => @all }
     end
   end
 
@@ -99,5 +113,15 @@ class SearchController < BaseController
                                 :include => [:users, :subjects,
                                              :teachers, :owner, :tags,
                                              { :course => :environment }] }))
+  end
+
+  def crop(collection)
+    collection.first(5).map do |e|
+      { :id => e.id, :name => e.name }
+    end
+  end
+
+  def must_include(klass, params)
+    !params[:f] || params[:f].include?(klass.to_s)
   end
 end
