@@ -78,8 +78,8 @@ class SearchController < BaseController
 
   def search_for_profiles(query, page)
     results_for(search(User, { :query => query, :page => page,
-                               :include => [:experiences, :tags,
-                                            { :educations  => :educationable }] }))
+                               :include => [:experiences, :tags, :friends,
+                                            { :educations => :educationable }] }))
   end
 
   def search_for_environments(query, page)

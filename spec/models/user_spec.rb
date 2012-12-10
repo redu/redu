@@ -756,7 +756,7 @@ describe User do
 
       context "but there's already an user with given nickname" do
         before { Factory.create(:user, :login => 'SomeUserville') }
-        
+
         it "should return a valid user" do
           User.create_with_omniauth(@auth).should be_valid
         end
@@ -771,7 +771,7 @@ describe User do
       end
 
       it 'should create a new user' do
-        expect { 
+        expect {
           User.create_with_omniauth(@auth)
         }.to change(User, :count).by(1)
       end

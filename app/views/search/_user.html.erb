@@ -17,4 +17,6 @@
   <% user.tags.each do |tag| %>
     <span><%= tag.name %></span>
   <% end %>
+
+  <%= user.friends_in_common_with(current_user).count %>
 </li>
