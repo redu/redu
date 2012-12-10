@@ -22,6 +22,12 @@ body {
 .home-left-sidebar {
   padding-top: 17px;
 }
+.home-left-sidebar a:visited {
+  color: #4dadd6;
+}
+.home-left-sidebar a:hover {
+  color: #158ac4;
+}
 
 .home-hello-user +
 .home-profile-area {
@@ -359,6 +365,12 @@ body {
 
 .home-right-sidebar {
   padding-top: 40px;
+}
+.home-right-sidebar a:visited {
+  color: #4dadd6;
+}
+.home-right-sidebar a:hover {
+  color: #158ac4;
 }
 .home-right-sidebar .nav-local-separator {
   margin: 0 0 10px 0;
