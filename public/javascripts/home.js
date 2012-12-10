@@ -241,7 +241,7 @@ $(document).ready(function(){
 
     // Ao clicar no close, apenas esconde (não remove da DOM)
     $(boxSelector).on('close', function(){
-      $(this).hide();
+      $(this).slideUp(150, 'swing');
       return false;
     });
 

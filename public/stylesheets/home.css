@@ -377,18 +377,23 @@ body {
 .home-right-sidebar {
   padding-top: 40px;
 }
+
 .home-right-sidebar a:visited {
   color: #4dadd6;
 }
+
 .home-right-sidebar a:hover {
   color: #158ac4;
 }
+
 .home-right-sidebar .nav-local-separator {
   margin: 0 0 10px 0;
 }
+
 .home-right-sidebar li {
   list-style: none;
 }
+
 .home-right-sidebar [class*="-before"]::before {
   vertical-align: middle;
 }
@@ -400,12 +405,18 @@ body {
 .right-sidebar-area {
   margin-bottom: 20px;
 }
+
 .right-sidebar-area .progress-bar-medium {
   margin: 10px 0;
 }
+
 .right-sidebar-area .legend {
   display: block;
   line-height: 14px;
+}
+
+.right-sidebar-area .actions-to-do {
+  margin: 0;
 }
 .right-sidebar-area .actions-to-do li {
   margin-top: 5px;
