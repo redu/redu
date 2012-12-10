@@ -17,4 +17,8 @@
   <% user.tags.each do |tag| %>
     <span><%= tag.name %></span>
   <% end %>
+
+  <span><%= (user.courses & current_user.courses).count %></span>
+
+
 </li>
