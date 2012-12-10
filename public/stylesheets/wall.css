@@ -252,7 +252,7 @@
   box-shadow: 0 1px 0 0 white inset;
 }
 
-.create-status .concave-form .concave-button {  
+.create-status .concave-form .concave-button {
   padding: 6px 10px;
   float: right;
 }
@@ -312,15 +312,15 @@
 .create-status .post-resource .post-text,
 #statuses .status .post-resource .post-text h3,
 .create-status .post-resource .source-site,
-#statuses .status .post-resource .source-site { 
+#statuses .status .post-resource .source-site {
   font-size: 13px;
   line-height: 18px;
-  letter-spacing: 0; 
+  letter-spacing: 0;
   font-family: Arial, Helvetica, sans-serif;
 }
 
 #statuses .status .post-resource .post-text h3 {
-  font-weight: bold;  
+  font-weight: bold;
 }
 
 .status .post-resource .post-text .post-description {
@@ -772,6 +772,7 @@
 .home-container .statuses > ol {
   margin: 0px;
 }
+/* Home de usuário */
 
 /* Mensagens */
 .create-status.message {
@@ -797,12 +798,13 @@
   background: none;
   padding: 10px 0;
 }
+/* Mensagens */
 
 .create-status .concave-form .char-limit,
 .create-status .concave-form .errorMessageField { margin-left: 20px; }
 
 .status .create-status textarea,
-.status .create-response textarea { 
+.status .create-response textarea {
   width: 458px;
   padding: 6px 10px;
 }
@@ -810,7 +812,7 @@
 .status-log .create-status textarea,
 .status-log .create-response textarea { width: 420px; }
 
-.create-status  [class*="icon-"] { 
+.create-status  [class*="icon-"] {
   float: left;
   margin-top: 7px;
 }

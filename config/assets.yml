@@ -19,6 +19,7 @@ javascripts:
     - public/javascripts/form.redu.jquery.js
     - public/javascripts/jquery.autosize.min.js
     - public/javascripts/vendor/placeholder-polyfill.min.js
+    - public/javascripts/bootstrap-redu.js
     - public/javascripts/swfobject.js # Necessário ao browserdetection.js
     - public/javascripts/browserdetection.js
     - public/javascripts/jquery.cookie.js
