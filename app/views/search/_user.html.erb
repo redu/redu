@@ -20,5 +20,23 @@
 
   <span><%= (user.courses & current_user.courses).count %></span>
 
-
+  <% is_friend = current_user.friends?(user) %>
+  <% friendship = user.friendship_for current_user %>
+  <% if !is_friend and current_user != user %>
+    <% if friendship %>
+      <% if friendship.status == 'pending' %>
+        <span>Aguardando aceitação</span>
+      <% elsif current_user != user %>
+        <%= link_to 'Aceitar pedido de conexão',
+            user_friendships_path(current_user,
+                                  :friend_id => user.id),
+                                  :method => :post %>
+      <% end %>
+    <% else %>
+      <%= link_to 'Adicionar contato',
+          user_friendships_path(current_user,
+                                :friend_id => user.id),
+                                :method => :post %>
+    <% end %>
+  <% end %>
 </li>
