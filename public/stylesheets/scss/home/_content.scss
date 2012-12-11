@@ -37,14 +37,18 @@
       a:hover { text-decoration: none; }
     }
   }
+}
 
-  .message-block-actions {
+.message-block-actions {
+  #modal-what-is-missing &,
+  .home-container & {
     margin-top: 10px;
     text-align: center;
   }
 }
 
 .learning-environments {
+  width: 538px;
   color: $gray6;
   background-image: url('../images/home/graphic-environments-hierarchy.png');
   background-repeat: no-repeat;
@@ -89,6 +93,7 @@
 
   &.modal {
     background-color: $gray1;
+    color: $black;
   }
 
   &.modal:after {
@@ -237,7 +242,7 @@
 
   #tour-9 {
     top: 160px;
-    left: 196px;
+    left: 210px;
 
     &:after {
       border: 9px solid transparent;
@@ -250,8 +255,7 @@
   }
 
   #tour-10 {
-    top: 76px;
-    left: 205px;
+    left: 210px;
 
     &:after {
       border: 9px solid transparent;
