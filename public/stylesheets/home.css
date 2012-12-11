@@ -471,7 +471,7 @@ body {
   width: 310px;
 }
 
-.button-new-message {
+#button-new-message {
   float: right;
 }
 
