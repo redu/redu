@@ -1,6 +1,6 @@
 class EnvironmentSearch < Search
-  def initialize
-    super(Environment, :per_page => 10)
+  def initialize(per_page)
+    super(Environment, :per_page => per_page)
   end
 
   def perform(query, page)

@@ -1,6 +1,6 @@
 class SpaceSearch < Search
-  def initialize
-    super(Space, :per_page => 10)
+  def initialize(per_page)
+    super(Space, :per_page => per_page)
   end
 
   def perform(query, page)

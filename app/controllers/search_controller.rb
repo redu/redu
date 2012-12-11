@@ -2,28 +2,23 @@ class SearchController < BaseController
 
   # Busca por Perfis + Ambientes (AVA's, Cursos e Disciplinas)
   def index
-    @profiles = UserSearch.new.perform(params[:q], params[:page]).results
-    @environments = EnvironmentSearch.new.perform(params[:q], params[:page]).results
-    @courses = CourseSearch.new.perform(params[:q], params[:page]).results
-    @spaces = SpaceSearch.new.perform(params[:q], params[:page]).results
+    @profiles = UserSearch.new(params[:per_page]).perform(params[:q], params[:page]).results
+    @environments = EnvironmentSearch.new(params[:per_page]).perform(params[:q], params[:page]).results
+    @courses = CourseSearch.new(params[:per_page]).perform(params[:q], params[:page]).results
+    @spaces = SpaceSearch.new(params[:per_page]).perform(params[:q], params[:page]).results
     @query = params[:q]
-
-    if request.xhr?
-      @all = []
-      if must_include(User, params)
-        @all << @profiles.first(5).map do |e|
-          { :id => e.id, :name => e.display_name }
-        end
-      end
-      @all << crop(@environments) if must_include(Environment, params)
-      @all << crop(@courses) if must_include(Course, params)
-      @all << crop(@spaces) if must_include(Space, params)
-      @all = @all.flatten
-    end
 
     respond_to do |format|
       format.html # search/index.html.erb
-      format.js { render :json => @all }
+      format.js do
+        @all = Array.new
+        @all << JSON.parse(@profiles.extend(InstantSearch::CollectionRepresenter).to_json)
+        @all << JSON.parse(@environments.extend(InstantSearch::CollectionRepresenter).to_json)
+        @all << JSON.parse(@courses.extend(InstantSearch::CollectionRepresenter).to_json)
+        @all << JSON.parse(@spaces.extend(InstantSearch::CollectionRepresenter).to_json)
+        @all = @all.flatten
+        render :json => @all
+      end
     end
   end
 
@@ -33,6 +28,7 @@ class SearchController < BaseController
 
     respond_to do |format|
       format.html # search/profiles.html.erb
+      format.js { render :json => @profiles.to_json }
     end
   end
 
@@ -45,6 +41,14 @@ class SearchController < BaseController
 
     respond_to do |format|
       format.html # search/environments.html.erb
+      format.js do
+        @all = []
+        @all << @environments.to_json
+        @all << @courses.to_json
+        @all << @spaces.to_json
+        @all = @all.flatten
+        render :json => @all
+      end
     end
   end
 
@@ -54,6 +58,7 @@ class SearchController < BaseController
 
     respond_to do |format|
       format.html # search/environments_only.html.erb
+      format.js { render :json => @environments.to_json }
     end
   end
 
@@ -63,6 +68,7 @@ class SearchController < BaseController
 
     respond_to do |format|
       format.html # search/courses_only.html.erb
+      format.js { render :json => @courses.to_json }
     end
   end
 
@@ -72,18 +78,7 @@ class SearchController < BaseController
 
     respond_to do |format|
       format.html # search/spaces_only.html.erb
+      format.js { render :json => @spaces.to_json }
     end
-  end
-
-  private
-
-  def crop(collection)
-    collection.first(5).map do |e|
-      { :id => e.id, :name => e.name }
-    end
-  end
-
-  def must_include(klass, params)
-    !params[:f] || params[:f].include?(klass.to_s)
   end
 end

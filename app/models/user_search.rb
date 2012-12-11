@@ -1,6 +1,6 @@
 class UserSearch < Search
-  def initialize
-    super(User, :per_page => 10)
+  def initialize(per_page = 10)
+    super(User, :per_page => per_page)
   end
 
   def perform(query, page)

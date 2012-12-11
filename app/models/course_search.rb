@@ -1,6 +1,6 @@
 class CourseSearch < Search
-  def initialize
-    super(Course, :per_page => 10)
+  def initialize(per_page)
+    super(Course, :per_page => per_page)
   end
 
   def perform(query, page)
