@@ -1540,12 +1540,12 @@ $(function() {
 $(function() {
   $(".list-mix").reduList("listMix")
 })
-$(function() { 
+$(function() {
   //Desabilita href dos links com estilo de botão, quando no estado desabilidado.
   $(".button-disabled").live("click", function(e) {
     e.preventDefault()
-  });  
-}); 
+  });
+});
 
 !(function($) {
 
@@ -2003,35 +2003,31 @@ $(function() {
           spinnerImg += settings.spinnerCircularGrayGif
         }
 
-        // Retorna as outras classes, que não a do botão.
-        var otherClasses = function(classes) {
-          var otherClasses = []
+        // Encontra possíveis classes de ícones.
+        var findIconClasses = function(classes) {
+          var iconClasses = []
 
           classes = classes.split(' ')
           $.each(classes, function(index, value) {
-            if (value !== settings.buttonDefault
-                && value !== settings.buttonPrimary
-                && value !== settings.buttonDanger
-                && value !== settings.buttonSuccess
-                && value !== '') {
-              otherClasses.push(value)
+            if (value.indexOf('icon-') !== -1) {
+              iconClasses.push(value)
             }
           })
 
-          return otherClasses.join(' ')
+          return iconClasses.join(' ')
         }
 
         var content = $this.html()
           , width = $this.width()
           , height = $this.height()
-          , classes = otherClasses($this.attr('class'))
+          , iconClasses = findIconClasses($this.attr('class'))
           , $spinner = $(document.createElement('img')).attr('src', spinnerImg).css(settings.spinnerCSS)
 
         $this
           .addClass(settings.buttonDisabled)
-          .removeClass(classes)
+          .removeClass(iconClasses)
           .data('content', content)
-          .data('class', classes)
+          .data('class', iconClasses)
           .html($spinner)
           .css({'width': width, 'height': height})
       } else if ($this.is('a')) {
