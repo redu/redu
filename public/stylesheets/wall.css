@@ -635,7 +635,7 @@
 
 .create-status .concave-form .concave-label {
   margin: 8px 5px 0 0;
-  height: 24px;
+  height: 16px;
   width: 18px;
   text-align: left;
 }
@@ -658,13 +658,14 @@
 
 .create-status .status-buttons {
   float: right;
-  margin-top: 10px;
+  padding-top: 10px;
 }
 
 .create-status.create-response .concave-form .concave-input {
   margin: 0;
   height: 100%;
   padding: 6px 10px;
+  width: 478px;
 }
 
 .status-log .create-response .concave-form .concave-input {
@@ -768,10 +769,6 @@
 .home-container .statuses > ol {
   margin: 0px;
 }
-
-.home-container .statuses > ol > li:last-child {
-  background: none;
-}
 /* Home de usuário */
 
 /* Mensagens */
@@ -800,8 +797,12 @@
 }
 /* Mensagens */
 
-.create-status .concave-form .char-limit,
-.create-status .concave-form .errorMessageField { margin-left: 20px; }
+.create-status.inform-my-status .concave-form .char-limit,
+.create-status.inform-my-status .concave-form .errorMessageField,
+.create-status.create-response .concave-form .char-limit,
+.create-status.create-response .concave-form .errorMessageField {
+  margin-left: 24px;
+}
 
 .status .create-status textarea,
 .status .create-response textarea {
@@ -820,3 +821,12 @@
 .status-buttons a { float: left; }
 
 .button-default { padding: 6px 10px; }
+
+.create-status textarea.concave-input {
+  margin-top: 0;
+  line-height: 16px;
+}
+
+.statuses > ol > li:last-child {
+  background: none;
+}
