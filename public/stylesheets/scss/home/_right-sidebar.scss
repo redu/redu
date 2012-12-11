@@ -30,7 +30,11 @@
     line-height: 14px;
   }
 
-  .actions-to-do { li { margin-top: 5px; } }
+  .actions-to-do {
+    margin: 0;
+
+    li { margin-top: 5px; }
+  }
 }
 
 // Conecte-se

@@ -84,35 +84,29 @@ body {
 .home-container {
   padding: 10px 20px;
 }
-
 .home-container h3 {
   line-height: 26px;
   padding-bottom: 5px;
 }
-
 .home-container ul {
   overflow: hidden;
   list-style: none;
   margin-top: 10px;
   margin-bottom: 0;
 }
-
 .home-container ul li {
   float: left;
   margin-bottom: 5px;
   clear: both;
 }
-
 .home-container ul li:last-child {
   margin-bottom: 0;
 }
-
 .home-container ul li a:hover {
   text-decoration: none;
 }
 
-#modal-what-is-missing .message-block-actions,
-.home-container .message-block-actions {
+#modal-what-is-missing .message-block-actions, .home-container .message-block-actions {
   margin-top: 10px;
   text-align: center;
 }
@@ -292,11 +286,9 @@ body {
   top: 50%;
   margin-top: -9px;
 }
-
 .home-tour #tour-10 {
   left: 210px;
 }
-
 .home-tour #tour-10:after {
   border: 9px solid transparent;
   border-right-color: #f7f7f7;
@@ -386,23 +378,18 @@ body {
 .home-right-sidebar {
   padding-top: 40px;
 }
-
 .home-right-sidebar a:visited {
   color: #4dadd6;
 }
-
 .home-right-sidebar a:hover {
   color: #158ac4;
 }
-
 .home-right-sidebar .nav-local-separator {
   margin: 0 0 10px 0;
 }
-
 .home-right-sidebar li {
   list-style: none;
 }
-
 .home-right-sidebar [class*="-before"]::before {
   vertical-align: middle;
 }
@@ -414,16 +401,13 @@ body {
 .right-sidebar-area {
   margin-bottom: 20px;
 }
-
 .right-sidebar-area .progress-bar-medium {
   margin: 10px 0;
 }
-
 .right-sidebar-area .legend {
   display: block;
   line-height: 14px;
 }
-
 .right-sidebar-area .actions-to-do {
   margin: 0;
 }
@@ -470,10 +454,6 @@ body {
 
 .message-list-subject {
   width: 310px;
-}
-
-#button-new-message {
-  float: right;
 }
 
 ul.requisitions {
