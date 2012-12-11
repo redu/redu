@@ -90,7 +90,9 @@ SimpleNavigation::Configuration.run do |navigation|
             :if => action_matcher({'invoices' => ['index']}) }
       end
       sidebar.item :contacts, 'Meus Contatos', user_friendships_path(current_user),
-        :link => { :class => 'icon-contacts_16_18-before' }
+        :link => { :class => 'icon-contacts_16_18-before' } do |tab|
+        tab.item :invite_friends, 'Convide seus amigos', new_user_friendship_path(@user)
+      end
     end
     primary.item :teach, 'Ensine', teach_index_path, :title => 'Ensine', :class => 'nav-global-button'
     primary.item :courses, 'Cursos', courses_index_path, :title => 'Cursos', :class => 'nav-global-button'
