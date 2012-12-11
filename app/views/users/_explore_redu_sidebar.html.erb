@@ -23,3 +23,7 @@
     </ul>
   </div>
 </div>
+
+<% unless user.settings.visited?("tour-1") %>
+  <%= render :partial => "users/tour", :locals => { :user => @user } %>
+<% end %>
