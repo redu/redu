@@ -16,7 +16,7 @@ end
 # Isso é necessário pois o reactor não sobrevive a forks de processo.
 Delayed::Worker.lifecycle.before(:invoke_job) do
   if !defined?(@@em_thread) && Delayed::Worker.delay_jobs
-    Delayed::Worker.logger.info "Initializing EM and AMQP"
+    # Delayed::Worker.logger.info "Initializing EM and AMQP"
     EM.stop if EM.reactor_running?
     @@em_thread = Thread.new do
       EventMachine.run { AMQP.start }
