@@ -1,19 +1,19 @@
 <% if flash[:info] %>
-  <div class="reactivate-account system-message message-info fade in">
+  <div class="system-message message-info fade in">
     <a data-dismiss="alert" class="message-close">×</a>
     <p><strong>Aviso.</strong> <%= h(flash[:info]) %></p>
   </div>
 <% end %>
 
 <% if flash[:notice] %>
-  <div class="reactivate-account system-message message-success fade in">
+  <div class="system-message message-success fade in">
     <a data-dismiss="alert" class="message-close">×</a>
     <p><strong>Muito bem!</strong> <%= h(flash[:notice]) %></p>
   </div>
 <% end %>
 
 <% if flash[:error] %>
-  <div class="reactivate-account system-message message-warning fade in">
+  <div class="system-message message-warning fade in">
     <a data-dismiss="alert" class="message-close">×</a>
     <p><strong>Opa!</strong> <%= h(flash[:error]) %></p>
   </div>

@@ -10,13 +10,14 @@ class EnvironmentsController < BaseController
 
     if @environment
       if @environment.blocked?
-        flash[:notice] = "Entre em contato com o administrador deste ambiente."
+        flash[:error] = "Entre em contato com o administrador deste ambiente."
       else
-        flash[:notice] = "Essa área só pode ser vista após você acessar o Redu com seu nome e senha."
+        flash[:error] = "Essa área só pode ser vista após você acessar o Redu com seu nome e senha."
       end
 
       redirect_to preview_environment_path(@environment)
     else
+      flash[:error] = "Essa área só pode ser vista após você acessar o Redu com seu nome e senha."
       redirect_to application_path
     end
   end

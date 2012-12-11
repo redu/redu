@@ -131,7 +131,7 @@ class UsersController < BaseController
             flash[:notice] = t :thanks_youre_now_logged_in
             redirect_back_or_default user_path(current_user)
           else
-            flash[:notice] = t :uh_oh_we_couldnt_log_you_in_with_the_username_and_password_you_entered_try_again
+            flash[:error] = t :uh_oh_we_couldnt_log_you_in_with_the_username_and_password_you_entered_try_again
             respond_with(@user)
           end
         else
@@ -294,7 +294,7 @@ class UsersController < BaseController
       UserNotifier.user_signedup(@user).deliver
       redirect_to application_path and return
     else
-      flash[:notice] = t :activation_email_not_sent_message
+      flash[:error] = t :activation_email_not_sent_message
     end
   end
 
@@ -406,7 +406,7 @@ class UsersController < BaseController
   def deny_access(exception)
     session[:return_to] = request.fullpath
     if exception.action == :preview && exception.subject.class == Space
-      flash[:notice] = "Essa área só pode ser vista após você acessar o Redu com seu nome e senha."
+      flash[:error] = "Essa área só pode ser vista após você acessar o Redu com seu nome e senha."
       redirect_to preview_environment_course_path(@space.course.environment,
                                                   @space.course)
     else

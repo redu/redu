@@ -85,7 +85,7 @@ class FoldersController < BaseController
 
         send_file @myfile.attachment.path, :type=> @myfile.attachment.content_type
     else
-        flash[:notice] = "Você não tem permissão para baixar o arquivo."
+        flash[:error] = "Você não tem permissão para baixar o arquivo."
         redirect_to user_path(current_user)
     end
   end

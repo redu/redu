@@ -22,9 +22,9 @@ class CoursesController < BaseController
     session[:return_to] = request.fullpath
 
     if @course.blocked?
-      flash[:notice] = "Entre em contato com o administrador deste curso."
+      flash[:error] = "Entre em contato com o administrador deste curso."
     else
-      flash[:notice] = "Essa área só pode ser vista após você acessar o Redu com seu nome e senha."
+      flash[:error] = "Essa área só pode ser vista após você acessar o Redu com seu nome e senha."
     end
 
     redirect_to preview_environment_course_path(@environment, @course)
@@ -217,7 +217,7 @@ class CoursesController < BaseController
   # Modera os usuários.
   def moderate_members_requests
     if params[:member].nil?
-      flash[:notice] = "Escolha, pelo menos, algum usuário."
+      flash[:error] = "Escolha, pelo menos, algum usuário."
     else
       approved = params[:member].reject{|k,v| v == 'reject'}
       rejected = params[:member].reject{|k,v| v == 'approve'}
@@ -243,7 +243,7 @@ class CoursesController < BaseController
           (total_members - members_limit).times do
             approved.shift
           end
-          flash[:notice] = "O limite máximo de usuários foi atigindo, apenas alguns membros foram moderados."
+          flash[:error] = "O limite máximo de usuários foi atigindo, apenas alguns membros foram moderados."
         else
           flash[:notice] = 'Membros moderados!'
         end
@@ -257,9 +257,9 @@ class CoursesController < BaseController
         end
       else
         if rejected.to_hash.empty?
-          flash[:notice] = "O limite máximo de usuários foi atingido. Não é possível adicionar mais usuários."
+          flash[:error] = "O limite máximo de usuários foi atingido. Não é possível adicionar mais usuários."
         else
-          flash[:notice] = "O limite máximo de usuários foi atingido. Só os usuários rejeitados foram moderados."
+          flash[:error] = "O limite máximo de usuários foi atingido. Só os usuários rejeitados foram moderados."
         end
       end
 
@@ -469,7 +469,7 @@ class CoursesController < BaseController
     end
 
     if email_invitations.empty? && user_invitations.empty?
-      flash[:notice] = "Nenhum convite foi marcado para ser removido."
+      flash[:error] = "Nenhum convite foi marcado para ser removido."
     else
       flash[:notice] = "Os convites foram removidos do curso #{@course.name}."
     end
