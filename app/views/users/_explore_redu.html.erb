@@ -41,7 +41,7 @@
       <% unless user.settings.visited?("basic-guide") %>
         <li>
           <%= link_to "Visite o Guia Básico da Central de Ajuda.",
-            Redu::Application.config.redu_services[:help_center][:url] + "guia-basico" , :class => "icon-help-central-lightblue_16_18-before", "data-tour" => "basic-guide" %>
+            Redu::Application.config.redu_services[:help_center][:url] + "guia-basico" , :class => "icon-help-central-lightblue_16_18-before", "data-tour" => "basic-guide", :target => "_blank" %>
         </li>
       <% end %>
     </ul>
