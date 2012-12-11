@@ -17,10 +17,10 @@
             :class => "icon-invite-lightblue_16_18-before" %>
         </li>
       <% end %>
-      <% unless user.settings.visited?(new_user_message_path(user)) %>
+      <% unless user.settings.visited?(user_messages_path(user)) %>
         <li>
           <%= link_to "Envie uma Mensagem para alguém.",
-            new_user_message_path(user, :exploring_tour => true),
+            user_messages_path(user, :exploring_tour => true),
             :class => "icon-message-lightblue_16_18-before" %>
         </li>
       <% end %>
