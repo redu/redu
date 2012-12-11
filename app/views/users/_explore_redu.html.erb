@@ -50,5 +50,6 @@
     <div class="message-block-actions">
       <button id="start-tour" class="button-primary icon-tour-white_16_18-before tour-part" data-toggle="modal" href="#tour-1">Tour do Início: conheça a interface e as principais seções</button>
     </div>
+    <%= render :partial => "users/tour", :locals => { :user => @user } %>
   <% end %>
 </div>

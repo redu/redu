@@ -160,6 +160,7 @@ body {
 }
 .tour.modal {
   background-color: #f7f7f7;
+  color: black;
 }
 .tour.modal:after {
   content: ' ';
