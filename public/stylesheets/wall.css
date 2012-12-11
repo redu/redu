@@ -562,7 +562,8 @@
 .statuses .status .grouped-photos .item {
   display: inline;
   float: left;
-  clear: both;
+  clear: none;
+  margin-bottom: 0;
 }
 
 .statuses .status .show-more {
