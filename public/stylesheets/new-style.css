@@ -6523,9 +6523,15 @@ div.token-input-dropdown {
 }
 
 .home-sidebar .contact-recommendations ul li {
-  padding: 1px 5px 5px 5px;
-  font-size: .87em;
+  padding: 5px;
+  overflow: hidden;
 }
+
+.home-sidebar .contact-recommendations ul li .two-columns-column:first-child {
+  float: left;
+  margin-right: 5px;
+}
+
 
 .home-sidebar .contact-recommendations ul li:hover {
   background-color: #dbeff7;
