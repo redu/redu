@@ -1,0 +1,30 @@
+<!doctype html>
+<!--[if gt IE 8]><html class="gt-ie8" lang="pt-br"><![endif]-->
+<!--[if gt IE 8]><!--><html lang="pt-br"><!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <title><%= raw(page_title) %></title>
+    <%= csrf_meta_tag %>
+    <%= include_stylesheets :new_application %>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <%= include_javascripts :new_application %>
+
+    <%= render :partial => "shared/chat" %>
+    <%= render :partial => "shared/typekit" %>
+    <%= render :partial => "shared/analytics" %>
+  </head>
+  <body>
+    <%= render :partial => "shared/nav_global" %>
+    <div class="main-wrapper">
+      <%= render :partial => 'shared/system_flash_message' %>
+      <div class="container">
+        <div class="row">
+          <%= yield %>
+        </div>
+      </div>
+      <div class="footer-pusher"></div>
+    </div>
+    <%= render :partial => "shared/footer" %>
+    <%= render :partial => "shared/olark" %>
+  </body>
+</html>

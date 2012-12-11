@@ -59,7 +59,7 @@ gem 'roar',
 gem 'scribd_fu', :git => 'git://github.com/guiocavalcanti/scribd_fu.git',
   :branch => 'without-scape'
 gem 'shuber-sortable'
-gem 'simple-navigation'
+gem 'simple-navigation', :git => 'git://github.com/andi/simple-navigation.git'
 gem 'translate_routes'
 gem 'useragent', '~> 0.4.8'
 gem 'vis_client', :git => 'git@github.com:redu/vis_client.git'
@@ -67,6 +67,8 @@ gem 'whenever', :require => false
 gem 'will_paginate', '~> 3.0.pre2'
 gem 'zencoder'
 gem 'untied-publisher', :git => 'git://github.com/redu/untied-publisher'
+gem 'content_for_in_controllers',
+  :git => 'git://github.com/julianalucena/content_for_in_controllers.git'
 gem 'system_timer'
 
 # Gems específicos para a API

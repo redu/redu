@@ -1,0 +1,43 @@
+ul.requisitions {
+
+  margin: 0;
+
+  li {
+    list-style: none;
+    width: 100%;
+    padding-bottom: 5px;
+
+    &:before {
+      margin: 0;
+    }
+  }
+
+  .list-mix-inner {
+    padding: 10px;
+    margin-right: 0;
+
+    .details {
+      padding: 6px 0 0 10px;
+      float: left;
+    }
+
+    .avatar { float: left; }
+
+    span { color: $gray6; }
+  }
+
+  .actions {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    clear: both;
+    float: right;
+
+    form {
+      overflow: hidden;
+      float: left;
+    }
+
+    input:last-child { margin-left: 5px; }
+  }
+}

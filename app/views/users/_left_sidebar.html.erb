@@ -1,0 +1,15 @@
+<div class="home-left-sidebar">
+  <%= render :partial => "users/profile_area",
+     :locals => { :user => user } %>
+  <%= new_local_nav(:new_users) %>
+
+  <% unless last_accessed_courses(user).length == 0 %>
+    <div class="nav-local-general-stats">
+      <span class="icon-arrow-up-curly-gray show text-replacement">Chaves</span>
+      <h6 class="nav-local-general-stats-title">Cursos acessados recentemente</h6>
+      <ol class="nav-local-general-courses">
+        <%= render :partial => 'courses/last_accessed_item', :collection => last_accessed_courses(user) %>
+      </ol>
+    </div>
+  <% end %>
+</div>

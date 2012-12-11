@@ -1,0 +1,516 @@
+body {
+  background: #f6f6f6;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+.main-wrapper {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  min-height: 100%;
+  margin: 0 auto -140px;
+}
+
+.footer-pusher {
+  height: 140px;
+}
+
+.home-left-sidebar {
+  padding-top: 17px;
+}
+.home-left-sidebar a:visited {
+  color: #4dadd6;
+}
+.home-left-sidebar a:hover {
+  color: #158ac4;
+}
+
+.home-hello-user +
+.home-profile-area {
+  margin-top: 10px;
+}
+
+.home-profile-area {
+  overflow: hidden;
+}
+
+.home-profile-area-links {
+  float: left;
+}
+.home-profile-area-links .link-secondary {
+  display: block;
+}
+.home-profile-area-links .link-secondary +
+.link-secondary {
+  margin-top: 5px;
+}
+
+.borderradius .home-profile-area-photo {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+.home-profile-area +
+.nav-local {
+  margin-top: 20px;
+}
+
+.nav-local-general-course span {
+  padding-left: 21px;
+}
+
+.breadcrumb-mini + .content-body,
+.content-body + .breadcrumb-mini {
+  margin-top: 10px;
+}
+
+.content-body + .breadcrumb-mini {
+  margin-bottom: 20px;
+}
+
+.breadcrumb-mini {
+  margin-top: 15px;
+}
+
+.container {
+  position: relative;
+}
+
+.home-container {
+  padding: 10px 20px;
+}
+
+.home-container h3 {
+  line-height: 26px;
+  padding-bottom: 5px;
+}
+
+.home-container ul {
+  overflow: hidden;
+  list-style: none;
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+.home-container ul li {
+  float: left;
+  margin-bottom: 5px;
+  clear: both;
+}
+
+.home-container ul li:last-child {
+  margin-bottom: 0;
+}
+
+.home-container ul li a:hover {
+  text-decoration: none;
+}
+
+#modal-what-is-missing .message-block-actions,
+.home-container .message-block-actions {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.learning-environments {
+  width: 538px;
+  color: #6d6e6f;
+  background-image: url("../images/home/graphic-environments-hierarchy.png");
+  background-repeat: no-repeat;
+  padding-bottom: 10px;
+  overflow: hidden;
+}
+.learning-environments .legend {
+  line-height: 14px;
+}
+.learning-environments .big {
+  width: 404px;
+  padding-top: 1px;
+  padding-left: 108px;
+  padding-bottom: 61px;
+}
+.learning-environments .small {
+  width: 284px;
+  float: right;
+}
+.learning-environments .small.institution {
+  padding-right: 146px;
+  padding-bottom: 23px;
+}
+.learning-environments .small.space {
+  padding-top: 127px;
+  padding-right: 168px;
+}
+.learning-environments .small.right {
+  text-align: right;
+}
+.learning-environments h3, .learning-environments h4 {
+  font-weight: lighter;
+  padding-bottom: 5px;
+}
+
+.tour {
+  width: 338px;
+  margin: 0 0 0 -169px;
+}
+.tour.modal {
+  background-color: #f7f7f7;
+}
+.tour.modal:after {
+  content: ' ';
+  height: 0;
+  width: 0;
+  position: absolute;
+}
+.tour .modal-header {
+  border-bottom: 1px #e6e6e6 solid;
+  box-shadow: 0 1px 0 white;
+  -moz-box-shadow: 0 1px 0 white;
+  -webkit-box-shadow: 0 1px 0 white;
+  padding: 10px;
+}
+.tour .modal-body {
+  padding: 10px;
+}
+.tour .modal-body p {
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
+.tour .modal-body p:last-child {
+  margin-bottom: 0;
+}
+.tour .modal-footer {
+  background-color: inherit;
+  padding: 10px;
+}
+.tour .modal-footer p {
+  float: left;
+  padding-top: 10px;
+}
+
+.modal-backdrop {
+  opacity: 0.4;
+  background-color: black;
+}
+
+#habla_window_div.habla_window_div_base {
+  z-index: 1000 !important;
+  text-shadow: none;
+}
+
+.typekit-badge {
+  z-index: auto !important;
+}
+
+#chat {
+  z-index: 900;
+}
+
+.footer-logo-img {
+  z-index: 800;
+}
+
+.home-tour #tour-3 {
+  top: 13px;
+  left: 42px;
+}
+.home-tour #tour-3:after {
+  border: 9px solid transparent;
+  border-bottom-color: #f7f7f7;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -9px;
+}
+.home-tour #tour-4 {
+  top: 13px;
+  left: 102px;
+}
+.home-tour #tour-4:after {
+  border: 9px solid transparent;
+  border-bottom-color: #f7f7f7;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -9px;
+}
+.home-tour #tour-5 {
+  top: 13px;
+  left: 171px;
+}
+.home-tour #tour-5:after {
+  border: 9px solid transparent;
+  border-bottom-color: #f7f7f7;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -9px;
+}
+.home-tour #tour-6 {
+  top: 13px;
+  left: 260px;
+}
+.home-tour #tour-6:after {
+  border: 9px solid transparent;
+  border-bottom-color: #f7f7f7;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -9px;
+}
+.home-tour #tour-7 {
+  top: 13px;
+  left: 600px;
+}
+.home-tour #tour-7:after {
+  border: 9px solid transparent;
+  border-bottom-color: #f7f7f7;
+  bottom: 100%;
+  left: 93%;
+  margin-left: -9px;
+}
+.home-tour #tour-8 {
+  top: 45px;
+  left: 175px;
+}
+.home-tour #tour-8:after {
+  border: 9px solid transparent;
+  border-right-color: #f7f7f7;
+  right: 100%;
+  top: 15px;
+}
+.home-tour #tour-9 {
+  top: 160px;
+  left: 210px;
+}
+.home-tour #tour-9:after {
+  border: 9px solid transparent;
+  border-right-color: #f7f7f7;
+  right: 100%;
+  top: 50%;
+  margin-top: -9px;
+}
+
+.home-tour #tour-10 {
+  left: 210px;
+}
+
+.home-tour #tour-10:after {
+  border: 9px solid transparent;
+  border-right-color: #f7f7f7;
+  right: 100%;
+  top: 50%;
+  margin-top: -9px;
+}
+.home-tour #tour-11:after {
+  border: 9px solid transparent;
+  border-left-color: #f7f7f7;
+  left: 100%;
+  top: 50%;
+  margin-top: -9px;
+}
+.home-tour #tour-12 {
+  left: auto;
+  top: auto;
+  right: 20px;
+  bottom: 50px;
+  position: fixed;
+}
+.home-tour #tour-12:after {
+  border: 9px solid transparent;
+  border-top-color: #f7f7f7;
+  top: 100%;
+  right: 20px;
+}
+.home-tour #tour-13 {
+  bottom: 60px;
+  left: 50%;
+  top: auto;
+  margin-left: -465px;
+  position: fixed;
+}
+.home-tour #tour-13:after {
+  border: 9px solid transparent;
+  border-top-color: #f7f7f7;
+  top: 100%;
+  left: 20px;
+}
+.home-tour .absolute {
+  margin: 0;
+  position: absolute;
+}
+
+.list-separator +
+.empty-environment {
+  margin-top: 100px;
+}
+
+.empty-environment {
+  text-align: center;
+}
+
+.empty-environment-icon {
+  display: block;
+  margin: 0 auto;
+}
+
+.empty-environment-icon +
+.empty-environment-content {
+  margin-top: 10px;
+}
+
+.empty-environment-content {
+  color: #b3b3b3;
+}
+
+.list-environment-course-space {
+  padding: 0;
+}
+
+.list-environment-course-space-item {
+  padding: 20px;
+}
+
+.nav-local-general-stats-title {
+  text-align: center;
+  color: #b3b3b3;
+}
+
+.nav-local-general-course {
+  list-style: none;
+  margin: 10px 0;
+}
+
+.home-right-sidebar {
+  padding-top: 40px;
+}
+
+.home-right-sidebar a:visited {
+  color: #4dadd6;
+}
+
+.home-right-sidebar a:hover {
+  color: #158ac4;
+}
+
+.home-right-sidebar .nav-local-separator {
+  margin: 0 0 10px 0;
+}
+
+.home-right-sidebar li {
+  list-style: none;
+}
+
+.home-right-sidebar [class*="-before"]::before {
+  vertical-align: middle;
+}
+
+.right-sidebar-area-title {
+  color: #b3b3b3;
+}
+
+.right-sidebar-area {
+  margin-bottom: 20px;
+}
+
+.right-sidebar-area .progress-bar-medium {
+  margin: 10px 0;
+}
+
+.right-sidebar-area .legend {
+  display: block;
+  line-height: 14px;
+}
+
+.right-sidebar-area .actions-to-do {
+  margin: 0;
+}
+.right-sidebar-area .actions-to-do li {
+  margin-top: 5px;
+}
+
+.members-to-add {
+  margin: 0;
+}
+.members-to-add .two-columns-wrapper +
+.two-columns-wrapper {
+  margin-top: 10px;
+}
+.members-to-add .two-columns-column:first-child {
+  margin-right: 5px;
+}
+
+.members-to-add-user {
+  display: block;
+}
+
+.members-to-add-user +
+.members-to-add-link {
+  margin-top: 5px;
+}
+
+.members-to-add-link {
+  display: inline-block;
+}
+
+.messages-list td {
+  padding: 2px 10px;
+}
+
+.message-list-thumbnail {
+  float: left;
+  margin-right: 10px;
+}
+
+.message-list-user-display-name {
+  width: 115px;
+}
+
+.message-list-subject {
+  width: 310px;
+}
+
+#button-new-message {
+  float: right;
+}
+
+ul.requisitions {
+  margin: 0;
+}
+ul.requisitions li {
+  list-style: none;
+  width: 100%;
+  padding-bottom: 5px;
+}
+ul.requisitions li:before {
+  margin: 0;
+}
+ul.requisitions .list-mix-inner {
+  padding: 10px;
+  margin-right: 0;
+}
+ul.requisitions .list-mix-inner .details {
+  padding: 6px 0 0 10px;
+  float: left;
+}
+ul.requisitions .list-mix-inner .avatar {
+  float: left;
+}
+ul.requisitions .list-mix-inner span {
+  color: #6d6e6f;
+}
+ul.requisitions .actions {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  clear: both;
+  float: right;
+}
+ul.requisitions .actions form {
+  overflow: hidden;
+  float: left;
+}
+ul.requisitions .actions input:last-child {
+  margin-left: 5px;
+}

@@ -1,0 +1,31 @@
+<%#
+  Renderiza um item da lista de ambiente da lista de
+  ambientes-cursos-disciplinas.
+
+  Variáveis:
+    environment: o ambiente (nome, URL, thumbnail e cursos).
+%>
+<li>
+  <hr class="list-separator">
+  <div class="list-environment-course-space-item">
+    <div class="list-environment-course-space-header">
+      <%= link_to environment_path(environment),
+                  :class => "list-environment-course-space-image-link" do %>
+        <%= image_tag environment.avatar(:thumb_32), :size => "32x32",
+                      :title => environment.name, :alt => environment.name %>
+      <% end %>
+      <h4 class="list-environment-course-space-title">
+        <%= link_to environment.name, environment_path(environment),
+                    :class => "list-environment-course-space-link",
+                    :title =>  environment.name %>
+      </h4>
+    </div>
+    <% unless environment.courses.empty? %>
+      <ul class="list-mix">
+        <%= render :partial => "users/environments/course",
+          :collection => environment.courses,
+          :locals => { :environment => environment } %>
+      </ul>
+    <% end %>
+  </div>
+</li>

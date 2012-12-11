@@ -1,0 +1,30 @@
+// ==========================================================================
+// Ambientes (Ambientes que Participo)
+// ==========================================================================
+
+
+// Lista vazia.
+// ==========================================================================
+
+.list-separator +
+.empty-environment { margin-top: 100px; }
+
+.empty-environment { text-align: center; }
+
+.empty-environment-icon {
+  display: block;
+  margin: 0 auto;
+}
+
+.empty-environment-icon +
+.empty-environment-content { margin-top: 10px; }
+
+.empty-environment-content { color: $gray5; }
+
+
+// Lista de ambientes-cursos-disciplinas.
+// ==========================================================================
+
+.list-environment-course-space { padding: 0; }
+
+.list-environment-course-space-item { padding: 20px; }

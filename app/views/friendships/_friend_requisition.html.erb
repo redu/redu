@@ -1,22 +1,26 @@
-<li id="requisition-<%= friendship.friend.id %>" class="clearfix">
-  <span>Você tem uma nova requisição de contato:</span>
-  <div class="grid_5 friend">
-    <%= image_tag friendship.friend.avatar.url(:thumb_32), :class => 'avatar' %>
-    <div class="grid_4 friend-details">
-      <%= link_to friendship.friend.display_name, user_path(friendship.friend), :class => 'name' %>
+<li id="requisition-<%= friendship.friend.id %>" class="list-mix-item clearfix">
+  <div class="list-mix-inner">
+    <div class="grid_5 friend">
+      <%= link_to user_path(friendship.friend), :class => 'avatar' do %>
+        <%= image_tag friendship.friend.avatar.url(:thumb_32) %>
+      <% end %>
+      <div class="grid_4 friend details">
+        <%= link_to friendship.friend.display_name, user_path(friendship.friend), :class => 'name' %>
+        <span>quer se conectar a você.</span>
+      </div>
     </div>
-  </div>
-  <div class="actions">
-    <%= form_for [current_user, friendship],
-      :html => {:method => :delete, :class => "form-loader"}, :remote => true do %>
-      <%= hidden_field_tag "goto_home", true %>
-      <%= submit_tag "Recusar", :class => 'concave-clean' %>
-    <% end %>
-    <%= form_for [current_user, Friendship.new],
-      :remote => true, :html => { :method => :post, :class => "form-loader" } do %>
-      <%= hidden_field_tag "goto_home", true %>
-      <%= hidden_field_tag "friend_id", friendship.friend.id %>
-      <%= submit_tag "Aceitar", :class => 'concave-important' %>
-    <% end %>
+    <div class="actions">
+      <%= form_for [current_user, friendship],
+        :html => {:method => :delete, :class => "form-loader"}, :remote => true do %>
+        <%= hidden_field_tag "goto_home", true %>
+        <%= submit_tag "Recusar", :class => 'concave-clean button-default' %>
+      <% end %>
+      <%= form_for [current_user, Friendship.new],
+        :remote => true, :html => { :method => :post, :class => "form-loader" } do %>
+        <%= hidden_field_tag "goto_home", true %>
+        <%= hidden_field_tag "friend_id", friendship.friend.id %>
+        <%= submit_tag "Aceitar", :class => 'concave-important button-success' %>
+      <% end %>
+    </div>
   </div>
 </li>

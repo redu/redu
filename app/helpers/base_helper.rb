@@ -3,16 +3,30 @@ require 'md5'
 # Methods added to this helper will be available to all templates in the application.
 module BaseHelper
 
+  # Cria markup da navegação global a partir da navegação do contexto passado
+  # Context default: :users
+  def global_nav(context)
+    nav_context = context.blank? ? :users : context
+    render_navigation(:context => nav_context, :level => 1,
+                      :renderer => :links)
+  end
+
   # Cria markup da navegação local a partir da navegação do contexto passado
   def local_nav(context)
-    render_navigation(:context => context, :level => 1,
+    render_navigation(:context => context, :level => 2,
                       :renderer => ListSidebar)
+  end
+
+  # Cria markup da navegação local a partir da navegação do contexto passado
+  def new_local_nav(context)
+    render_navigation(:context => context, :level => 2,
+                      :renderer => NewListSidebar)
   end
 
   # Cria markup das big abas
   def big_tabs(context, opts={}, &block)
     locals = {
-      :navigation => render_navigation(:context => context, :level => 2,
+      :navigation => render_navigation(:context => context, :level => 3,
                                        :renderer => ListDetailed),
       :options => opts,
       :body => capture(&block)
@@ -25,7 +39,7 @@ module BaseHelper
   # do contexto passado
   def tabs(context, opts={}, &block)
     locals = {
-      :navigation => render_navigation(:context => context, :level => 2,
+      :navigation => render_navigation(:context => context, :level => 3,
                                        :renderer => ListDetailed),
       :options => opts,
       :body => capture(&block)
@@ -34,16 +48,27 @@ module BaseHelper
     render(:partial => 'shared/tabs', :locals => locals)
   end
 
+  # Cria markup das abas a partir da navegação do contexto passado
+  def new_tabs(context)
+    render_navigation(:context => context, :level => 3,
+                      :renderer => ListDetailed)
+  end
+
   # Cria markup das sub abas (compatível com jQuery UI) a partir da navegação
   # do contexto passado
   def subtabs(context, opts={}, &block)
     locals = {
-      :navigation => render_navigation(:context => context, :level => 3),
+      :navigation => render_navigation(:context => context, :level => 4),
       :options => opts,
       :body => capture(&block)
     }
 
     render(:partial => 'shared/subtabs', :locals => locals)
+  end
+
+  # Cria markup das sub abas a partir da navegação do contexto passado
+  def new_subtabs(context)
+    render_navigation(:context => context, :level => 4, :renderer => :links)
   end
 
   def error_for(object, method = nil, options={})
@@ -63,7 +88,7 @@ module BaseHelper
       content_tag(:li, msg)
     end.join.html_safe
 
-    content_tag(:ul, errors, :class => 'errors_on_field')
+    content_tag(:ul, errors, :class => 'errors_on_field control-errors')
   end
 
   def type_class(resource)
@@ -241,6 +266,11 @@ module BaseHelper
     render :partial => "plans/plans", :locals => { :plans => plans }
   end
 
+  # Sidebar esquerdo de user
+  def last_accessed_courses(user)
+    user.user_course_associations.includes(:course => :environment).
+      last_accessed(3)
+  end
 end
 
 module AsyncJSHelper
@@ -306,6 +336,14 @@ module AsyncJSHelper
 
   def should_package?
     Jammit.package_assets && !(Jammit.allow_debugging && params[:debug_assets])
+  end
+
+  # Retorna um número dentro de parênteses caso ele seja maior que zero.
+  def parentize(number)
+    result = ""
+    if number > 0
+      result = "(#{number.to_s})"
+    end
   end
 end
 

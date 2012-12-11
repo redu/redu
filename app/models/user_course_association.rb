@@ -26,6 +26,11 @@ class UserCourseAssociation < CourseEnrollment
   scope :invited, where(:state => 'invited')
   scope :waiting, where(:state => 'waiting')
 
+  scope :last_accessed, lambda { |limit|
+    where("last_accessed_at IS NOT NULL"). order("last_accessed_at DESC").
+      limit(limit)
+  }
+
   # Máquina de estados para moderação das dos usuários nos courses.
   aasm_column :state
 

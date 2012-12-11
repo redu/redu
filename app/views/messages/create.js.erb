@@ -1,0 +1,23 @@
+<% if @message %>
+  var $modal = $("#modal-new-message");
+
+  <% if @message.errors.empty? %>
+    $modal.modal("hide");
+
+    var $successNotice = $("<%= escape_javascript render 'messages/notice_message_created', :message => @message, :user => @user %>");
+    $successNotice.appendTo("body").show();
+  <% else %>
+    var $newModal = $("<%= escape_javascript render 'messages/modal_new', :message => @message, :user => @user %>");
+    $modal.modal("hide").replaceWith($newModal);
+    $newModal.modal("show");
+  <% end %>
+<% else %>
+  var $newForm = $("<%= escape_javascript render 'messages/form_reply' %>")
+  $("#new_message").replaceWith($newForm);
+
+  <% if @reply.errors.empty? %>
+    var $successNotice = $("<%= escape_javascript render 'messages/notice_message_created', :message => @reply, :user => @user %>");
+    $successNotice.appendTo("body").show();
+  <% else %>
+  <% end %>
+<% end %>

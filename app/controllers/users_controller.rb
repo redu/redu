@@ -1,6 +1,8 @@
 class UsersController < BaseController
   respond_to :html, :js
 
+  before_filter :set_nav_global_context, :except => [:index]
+
   load_and_authorize_resource :except => [:recover_username_password,
     :recover_username, :recover_password, :resend_activation, :activate,
     :index],
@@ -301,11 +303,9 @@ class UsersController < BaseController
     @course_invitations = @user.course_invitations.
       includes(:course =>[:environment])
     @statuses = @user.home_activity(params[:page])
-    @status = Status.new
-    @contacts_recommendations = @user.recommended_contacts(5)
 
     respond_to do |format|
-      format.html
+      format.html { render :layout => 'new_application' }
       format.js { render_endless('statuses/item', @statuses, '#statuses > ol',
                                  :template => 'shared/endless_kaminari') }
     end
@@ -387,7 +387,6 @@ class UsersController < BaseController
       end
     end
 
-
     @users = @users.paginate(:page => params[:page], :order => 'first_name ASC',
                :per_page => 18)
 
@@ -403,6 +402,7 @@ class UsersController < BaseController
   end
 
   protected
+
   def deny_access(exception)
     session[:return_to] = request.fullpath
     if exception.action == :preview && exception.subject.class == Space
@@ -414,4 +414,7 @@ class UsersController < BaseController
     end
   end
 
+  def set_nav_global_context
+    content_for :nav_global_context, "users"
+  end
 end

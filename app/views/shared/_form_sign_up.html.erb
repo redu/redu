@@ -1,4 +1,4 @@
-  <%= form_for @user, :remote => true, :html => { :class => "form-horizontal", :id => "form-sign-up" } do |f| %>
+  <%= form_for @user || User.new, :remote => true, :html => { :class => "form-horizontal", :id => "form-sign-up" } do |f| %>
 
     <% if params[:invitation_token] %>
       <%= hidden_field_tag :invitation_token, params[:invitation_token] %>
@@ -31,7 +31,7 @@
             </div>
             <div class="controls span4">
               <%= f.text_field :first_name, :placeholder =>"Seu primeiro nome" %>
-              <%= concave_errors_for @user, :first_name %>
+              <%= concave_errors_for f.object, :first_name %>
             </div>
           </div>
           <div class="control-group control-big">
@@ -40,7 +40,7 @@
             </div>
             <div class="controls span4">
               <%= f.text_field :last_name, :placeholder => "Seu último nome" %>
-              <%= concave_errors_for @user, :last_name %>
+              <%= concave_errors_for f.object, :last_name %>
             </div>
           </div>
         </div>
@@ -51,7 +51,7 @@
             </div>
             <div class="controls span4">
               <%= f.text_field :email, :placeholder => "Seu e-mail de contato" %>
-              <%= concave_errors_for @user, :email %>
+              <%= concave_errors_for f.object, :email %>
             </div>
           </div>
           <div class="control-group control-big">
@@ -60,7 +60,7 @@
             </div>
             <div class="controls span4">
               <%= f.text_field :email_confirmation, :placeholder => "Digite novamente o e-mail" %>
-              <%= concave_errors_for @user, :email_confirmation %>
+              <%= concave_errors_for f.object, :email_confirmation %>
             </div>
           </div>
         </div>
@@ -74,7 +74,7 @@
             </div>
             <div class="controls span4">
               <%= f.text_field :login, :placeholder => "Como será o seu apelido?" %>
-              <%= concave_errors_for @user, :login %>
+              <%= concave_errors_for f.object, :login %>
             </div>
           </div>
           <div class="row">
@@ -93,7 +93,7 @@
             </div>
             <div class="controls span4">
               <%= f.password_field :password, :placeholder => "Digite sua senha"%>
-              <%= concave_errors_for @user, :password %>
+              <%= concave_errors_for f.object, :password %>
             </div>
           </div>
           <div class="control-group control-big">
@@ -102,7 +102,7 @@
             </div>
             <div class="controls span4">
               <%= f.password_field :password_confirmation, :placeholder => "Confirme sua senha" %>
-              <%= concave_errors_for @user, :password_confirmation %>
+              <%= concave_errors_for f.object, :password_confirmation %>
             </div>
           </div>
         </div>
@@ -112,13 +112,13 @@
         <div class="modal-sign-up-humanizer">
           <div class="control-group control-big">
             <div class="control-label">
-              <%= f.label :humanizer_answer, @user.humanizer_question %>
+              <%= f.label :humanizer_answer, f.object.humanizer_question %>
               <a rel="tooltip" data-title="Na Internet, é comum que certos computadores façam cadastros automáticos para espalhar propagandas indesejadas conhecidas como 'spam'. Essa pergunta serve para diferenciar as pessoas reais desses robôs e garantir uma boa e segura experiência de uso para você." data-placement="right">Por que esta pergunta?</a>
             </div>
             <div class="offset5 span4">
               <%= f.text_field :humanizer_answer, :class => "control-input", :placeholder => "Responda a pergunta acima" %>
               <%= f.hidden_field :humanizer_question_id %>
-              <%= concave_errors_for @user, :humanizer_answer %>
+              <%= concave_errors_for f.object, :humanizer_answer %>
             </div>
           </div>
         </div>

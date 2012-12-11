@@ -358,12 +358,12 @@ describe UsersController do
       login_as @user
 
       @params = { :locale => "pt-BR", :id => @user.login }
-      get :home, @params
     end
 
-    [:friends_requisitions, :course_invitations, :statuses, :status,
-      :contacts_recommendations].each do |var|
+    [:friends_requisitions, :course_invitations, :statuses].each do |var|
       it "assigns @#{var}" do
+        get :home, @params
+
         assigns[var].should_not be_nil
       end
     end

@@ -1047,4 +1047,24 @@ describe CoursesController do
       end
     end
   end
+
+  context "when visiting a course" do
+    let(:course) { Factory(:course) }
+    let(:user) { Factory(:user) }
+
+    context "as a course's member" do
+      before do
+        login_as user
+        course.join! user
+      end
+
+      it "updates uca's last_accessed_at" do
+        expect {
+          get :show, @params = { :locale => 'pt-BR',
+                                 :environment_id => course.environment.to_param,
+                                 :id => course.to_param }
+        }.should change { user.user_course_associations.last.last_accessed_at }
+      end
+    end
+  end
 end

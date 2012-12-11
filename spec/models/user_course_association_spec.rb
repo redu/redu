@@ -189,6 +189,28 @@ describe UserCourseAssociation do
       UserCourseAssociation.invited.should == @associations[3..4]
     end
 
+    context "when retrieving last accessed" do
+      let(:user) { Factory(:user) }
+      let(:assocs) do
+        (1..5).collect { Factory(:user_course_association, :user => user) }
+      end
+
+      it "retrieves 3 last accessed" do
+        last_accessed = [0, 2, 4].collect do |i|
+          assocs[i].touch(:last_accessed_at)
+          assocs[i]
+        end
+
+        UserCourseAssociation.last_accessed(3).to_set.should ==
+          last_accessed.to_set
+      end
+
+      it "retrieves empty if no courses where accessed" do
+        assocs
+        UserCourseAssociation.last_accessed(3).to_set.should ==
+          Set.new
+      end
+    end
   end
 
   context "when notifying pending moderation" do
