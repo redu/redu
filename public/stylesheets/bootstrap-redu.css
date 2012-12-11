@@ -6411,6 +6411,18 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
   margin-top: 10px;
 }
 
+hr {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  clear: both;
+  margin: 10px 0;
+  border-left: none;
+  border-right: none;
+  border-top: 1px solid #e6e6e6;
+  border-bottom: 1px solid white;
+}
+
 .list-separator {
   border: none;
   height: 2px;
