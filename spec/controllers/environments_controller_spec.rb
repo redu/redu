@@ -314,6 +314,29 @@ describe EnvironmentsController do
     end
   end
 
+  context 'GET index' do
+    let(:user) { Factory(:user) }
+
+    before do
+      (1..3).collect { Factory(:environment) }
+      @user_environments = (1..3).collect { Factory(:environment) }
+      @user_environments.each { |e| user.environments << e }
+
+      login_as user
+      get :index, :user_id => user.to_param, :locale => 'pt-BR'
+    end
+
+    it 'assigns @user' do
+      assigns[:user].should_not be_nil
+      assigns[:user].should == user
+    end
+
+    it 'assigns all user environments to @environments' do
+      assigns[:environments].should_not be_nil
+      assigns[:environments].to_set.should == @user_environments.to_set
+    end
+  end
+
   def post_destroy_members(environment, users)
     post :destroy_members, :locale => 'pt-BR',
       :id => environment.to_param,

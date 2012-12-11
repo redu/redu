@@ -1,0 +1,41 @@
+<div class="span3">
+  <%= render :partial => "users/left_sidebar",
+     :locals => { :user => @user } %>
+</div>
+<div class="span10">
+  <div class="content-area">
+    <%= render :partial => "users/environments/breadcrumb",
+       :locals => { :user => @user } %>
+    <div class="content-body">
+      <ul class="content-section header-breadcrumb">
+        <li class="header-breadcrumb-item">
+          <%= link_to user_environments_path(@user),
+            :class => "header-bradcrumb-link icon-environment-round-gray_32_34-before",
+            :title => "Ambientes que Participo" do %>
+            Ambientes que Participo <%= content_tag(:span, parentize(@total_environments),
+              :class => "header-breadcrumb-item-light") %>
+          <% end %>
+        </li>
+      </ul>
+      <% if @environments.empty? %>
+        <hr class="list-separator">
+        <div class="empty-environment">
+          <span class="empty-environment-icon icon-environment-empty_128_130 text-replacement" title="Nenhum ambiente">Nenhum ambiente</span>
+          <p class="empty-environment-content">Você ainda não participa de um Ambiente de Aprendizagem.</p>
+        </div>
+      <% else %>
+        <ul id="my-environments" class="list-environment-course-space">
+          <%= render :partial => "users/environments/environment",
+            :collection => @environments %>
+        </ul>
+      <% end %>
+      <%= paginate @environments, :theme => 'new_endless' %>
+    </div>
+    <%= render :partial => "users/environments/breadcrumb",
+       :locals => { :user => @user } %>
+  </div>
+</div>
+<div class="span3">
+  <%= render :partial => "users/right_sidebar",
+     :locals => { :user => @user } %>
+</div>

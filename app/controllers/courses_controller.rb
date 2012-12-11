@@ -1,5 +1,9 @@
 class CoursesController < BaseController
   respond_to :html, :js
+  before_filter :set_nav_global_context, :only=> [:show, :preview,
+                                                  :admin_invitations]
+  before_filter :set_nav_global_context_admin,
+    :except => [:show, :preview, :index, :admin_invitations, :new, :create]
 
   before_filter Proc.new {
     @environment = Environment.find_by_path(params[:environment_id])
@@ -7,6 +11,9 @@ class CoursesController < BaseController
                                         :conditions => { :path => params[:id] },
                                         :include => [:audiences])
   }, :only => :edit
+
+  after_filter :update_last_access, :only => [:show]
+
   load_resource :environment, :find_by => :path
   load_and_authorize_resource :course, :through => :environment,
     :except => [:index], :find_by => :path
@@ -73,12 +80,16 @@ class CoursesController < BaseController
   end
 
   def new
+    content_for :nav_global_context, "environments_admin"
+
     respond_to do |format|
       format.html { render 'courses/admin/new' }
     end
   end
 
   def create
+    content_for :nav_global_context, "environments_admin"
+
     authorize! :manage, @environment #Talvez seja necessario pois o @environment não está sendo autorizado.
 
     @course.owner = current_user
@@ -101,6 +112,7 @@ class CoursesController < BaseController
   end
 
   def index
+    content_for :nav_global_context, "courses_index"
 
     paginating_params = {
       :page => params[:page],
@@ -471,5 +483,20 @@ class CoursesController < BaseController
     respond_to do |format|
       format.html { render 'courses/admin/teacher_participation_report'}
     end
+  end
+
+  protected
+
+  def set_nav_global_context_admin
+    content_for :nav_global_context, "courses_admin"
+  end
+
+  def set_nav_global_context
+    content_for :nav_global_context, "courses"
+  end
+
+  def update_last_access
+    uca = current_user.get_association_with(@course)
+    uca.touch(:last_accessed_at) if uca
   end
 end

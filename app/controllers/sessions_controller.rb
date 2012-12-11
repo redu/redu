@@ -17,7 +17,6 @@ class SessionsController < BaseController
     @user_session = UserSession.new(params[:user_session])
 
     @user_session.save do |result|
-
       if result
         current_user = @user_session.record
         # Se tem um token de convite para o curso, aprova o convite para o

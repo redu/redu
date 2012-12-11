@@ -1,0 +1,6 @@
+// Remover, caso já exista alguma
+$("#modal-new-message").remove();
+
+var $modalNewMessage = $("<%= escape_javascript render 'messages/modal_new', :message => @message, :user => @user %>");
+<%# filter() necessário porque a tag script está dentro do partial %>
+$modalNewMessage.appendTo("body").filter(".modal").modal("show");

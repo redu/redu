@@ -1,0 +1,53 @@
+// ==========================================================================
+// Barra lateral direita
+// ==========================================================================
+
+
+.home-right-sidebar {
+  padding-top: 40px;
+
+  a {
+    &:visited { color: $blue3; }
+    &:hover { color: $blue4; }
+  }
+
+  .nav-local-separator { margin: 0 0 10px 0; }
+
+  li { list-style: none; }
+
+  [class*="-before"]::before { vertical-align: middle; }
+}
+
+.right-sidebar-area-title { color: $gray5; }
+
+.right-sidebar-area {
+  margin-bottom: 20px;
+
+  .progress-bar-medium { margin: 10px 0; }
+
+  .legend {
+    display: block;
+    line-height: 14px;
+  }
+
+  .actions-to-do { li { margin-top: 5px; } }
+}
+
+// Conecte-se
+// ==========================================================================
+
+.members-to-add {
+  margin: 0;
+
+  .two-columns-wrapper +
+  .two-columns-wrapper { margin-top: 10px; }
+
+  .two-columns-column:first-child { margin-right: 5px; }
+}
+
+.members-to-add-user { display: block; }
+
+.members-to-add-user +
+.members-to-add-link { margin-top: 5px; }
+
+.members-to-add-link { display: inline-block; }

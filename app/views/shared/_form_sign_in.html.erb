@@ -1,11 +1,11 @@
-<%= form_for @user_session, :remote => true, :url => sessions_path, :html => { :class => "user-dates header-sign-in-form", :id => "form-sign-in" } do |f| %>
+<%= form_for @user_session || UserSession.new, :remote => true, :url => sessions_path, :html => { :class => "user-dates header-sign-in-form", :id => "form-sign-in" } do |f| %>
   <div class="control-group">
     <div class="control-label">
       <%= f.label :login, "Login" %>
     </div>
     <div class="controls">
       <%= f.text_field :login, :placeholder => "Seu login ou e-mail cadastrado" %>
-      <%= concave_errors_for @user_session, :login %>
+      <%= concave_errors_for f.object, :login %>
     </div>
   </div>
   <div class="control-group">
@@ -14,7 +14,7 @@
     </div>
     <div class="controls">
       <%= f.password_field :password, :placeholder =>"Sua senha" %>
-      <%= concave_errors_for @user_session, :password %>
+      <%= concave_errors_for f.object, :password %>
     </div>
   </div>
   <div class="header-sign-in-form-submit">

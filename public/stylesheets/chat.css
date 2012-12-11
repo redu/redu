@@ -1,5 +1,6 @@
 #chat * {
   font-family: "Tahoma", "Arial", "Helvetica", sans-serif;
+  line-height: 13px;
 }
 
 #chat {
@@ -9,6 +10,11 @@
   width: 960px;
   margin-left: -480px;
   pointer-events:none;
+}
+
+#chat ul {
+  list-style: none;
+  margin: 0;
 }
 
 #chat,
@@ -125,6 +131,7 @@
   color: #4cacd5;
   overflow: hidden;
   text-overflow: ellipsis;
+  line-height: 11px;
 }
 
 #chat-contacts .role {
@@ -282,6 +289,8 @@
   -moz-box-shadow: 0px 1px 6px #b1b1b1;
   -webkit-box-shadow: 0px 1px 6px #b1b1b1;
   box-shadow: 0px 1px 6px #b1b1b1;
+
+  overflow: hidden;
 }
 
 #chat-windows-list .chat-window .name {
@@ -348,8 +357,14 @@
   width: 271px;
 }
 
-#chat-windows-list .chat-window .user-input input {
+#chat-windows-list .chat-window .user-input input,
+#chat-windows-list .chat-window .user-input input:focus {
   width: 260px;
   border: none;
-  background: #f1f0f0;
+  background: #f1f0f0 !important;
+
+  padding: 1px;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
 }

@@ -1,18 +1,32 @@
-<tr class="message">
+<%#
+  Renderiza uma linha de mensagem na tabela.
+
+  Variáveis:
+    mailbox: :inbox ou :outbox.
+    user: o usuário.
+%>
+<tr class="link-container">
+  <td>
+    <% css_class = "inbox-message-read" %>
+    <% css_class = "inbox-message-unread" if (mailbox == :inbox && !item.read?) %>
+    <%= link_to item.subject, user_message_path(user, item),
+      :class => "link-target #{css_class} text-truncate message-list-subject", :title => item.subject %>
+  </td>
+  <td>
+    <% other_user = (mailbox == :inbox ? item.sender : item.recipient) %>
+    <div class="two-columns-wrapper">
+      <%= link_to user_path(other_user), :class => "two-columns-column" do %>
+        <%= image_tag other_user.avatar.url(:thumb_32), :size => "32x32",
+          :title => other_user.display_name, :alt => other_user.display_name %>
+      <% end %>
+      <div class="two-columns-column">
+        <%= link_to other_user.display_name, user_path(other_user),
+          :class => "show text-truncate message-list-user-display-name", :title => other_user.display_name %>
+        <span class="show legend"><%= l item.created_at, :format => :elegant %></span>
+      </div>
+    </div>
+  </td>
   <td>
     <%= check_box_tag "delete[]", item.id %>
-  </td>
-  <td>
-    <% css_class = 'unread' if (mailbox == :inbox && !item.read?) %>
-    <%= link_to item.subject, user_message_path(@user, item),
-      :class => "title #{css_class}"%>
-  </td>
-  <% css_class_sender = 'sender' if mailbox == :outbox  %>
-  <td class="<%= css_class_sender %>">
-    <% other_user = (mailbox == :inbox ? item.sender : item.recipient) %>
-    <%= image_tag other_user.avatar.url(:thumb_32), :class => 'avatar' %>
-    <%= link_to other_user.display_name, user_path(other_user),
-      :class => 'user' %>
-    <span class="date"><%= item.created_at.strftime('%b %e, %Y, %l:%M %p') %></span>
   </td>
 </tr>

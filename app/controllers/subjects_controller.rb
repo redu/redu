@@ -1,4 +1,7 @@
 class SubjectsController < BaseController
+  before_filter :set_nav_global_context, :only=> [:show]
+  before_filter :set_nav_global_context_admin, :except => [:show]
+
   respond_to :html, :js
 
   load_and_authorize_resource :space
@@ -110,5 +113,14 @@ class SubjectsController < BaseController
     end
     @course = @space.course
     @environment = @course.environment
+  end
+
+
+  def set_nav_global_context_admin
+    content_for :nav_global_context, "spaces_admin"
+  end
+
+  def set_nav_global_context
+    content_for :nav_global_context, "spaces"
   end
 end

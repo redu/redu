@@ -1,6 +1,10 @@
 class SpacesController < BaseController
   include VisApplicationAdditions::Controller
 
+  before_filter :set_nav_global_context, :only=> [:show, :mural]
+  before_filter :set_nav_global_context_admin,
+    :except => [:show, :mural, :new, :create]
+
   respond_to :html, :js
 
   # Necessário pois Space não é nested route de course
@@ -97,6 +101,8 @@ class SpacesController < BaseController
   # GET /spaces/new
   # GET /spaces/new.xml
   def new
+    content_for :nav_global_context, "courses_admin"
+
     @space = Space.new(params[:space])
     @course = Course.find(params[:course_id])
     @environment = @course.environment
@@ -119,6 +125,8 @@ class SpacesController < BaseController
   # POST /spaces
   # POST /spaces.xml
   def create
+    content_for :nav_global_context, "courses_admin"
+
     @space = Space.new(params[:space])
     @space.course = @course
     @environment = @course.environment
@@ -244,5 +252,13 @@ class SpacesController < BaseController
     else
       return false
     end
+  end
+
+  def set_nav_global_context_admin
+    content_for :nav_global_context, "spaces_admin"
+  end
+
+  def set_nav_global_context
+    content_for :nav_global_context, "spaces"
   end
 end

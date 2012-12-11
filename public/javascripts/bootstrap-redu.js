@@ -1120,7 +1120,7 @@ $(function() {
     // Adiciona um contador de caracteres.
     countChars: function(options) {
       var settings = $.extend({
-        characterCounterTemplate: $('<span class="character-counter"></span>')
+        characterCounterTemplate: $('<span class="character-counter legend"></span>')
       }, options);
 
       return this.each(function() {
@@ -1447,7 +1447,7 @@ $(function() {
 
           container.on('click', function(e) {
             if (!$(e.target).is('input[type="checkbox"]')) {
-              window.location = link.attr('href')
+              link.click()
             }
           })
         })
@@ -1470,6 +1470,7 @@ $(function() {
 $(function() {
   $('.link-container').reduLinks()
 })
+
 !(function($) {
 
   "use strict";
@@ -1539,19 +1540,13 @@ $(function() {
 $(function() {
   $(".list-mix").reduList("listMix")
 })
-$(function() {
+$(function() { 
   //Desabilita href dos links com estilo de botão, quando no estado desabilidado.
   $(".button-disabled").live("click", function(e) {
     e.preventDefault()
-  });
-});
+  });  
+}); 
 
- // Responder status
-$("a.reply-status, .cancel", ".statuses").live("click", function(e){
-    e.preventDefault();
-    $(this).parents("ul:first").next(".create-response").slideToggle(150, "swing");
-    $(this).parents("ul:first").next(".create-response").find("textarea").focus();
-});
 !(function($) {
 
   'use strict';
@@ -1604,7 +1599,7 @@ $(function() {
   , triggerInviteByMail: 'inviteByMail.reduAutocomplete'
   , dropdown: 'control-autocomplete-dropdown'
   , name: 'control-autocomplete-name'
-  , mail: 'control-autocomplete-mail'
+  , mail: 'control-autocomplete-mail legend'
   , suggestion: 'control-autocomplete-suggestion'
   , inviteClickText: 'Clique aqui para convidar este endereço de e-mail'
   , buttonStyle: 'button-primary'
@@ -1833,6 +1828,33 @@ $(function() {
       })
     }
 
+    // Ajusta a largura do modal para se adequar a largura do conteúdo interno.
+    // Caso a largura do conteúdo interno seja maior que a largura visível do navegador, extende o modal horizontalmente para acomodar a máxima largura visível.
+  , fillHorizontal: function(options) {
+    var settings = $.extend({
+        // Margens laterais.
+        horizontalMargin: 20
+      }, options)
+
+    return this.each(function() {
+      var $modal = $(this)
+        , maxWidth = $(window).width() - 2 * settings.horizontalMargin
+
+      $modal.css('left', 0)
+
+      var modalWidth = $modal.outerWidth()
+
+      if (modalWidth <= maxWidth) {
+        maxWidth = modalWidth
+      }
+
+      $modal.css('marginLeft', (-1) * (maxWidth / 2))
+      $modal.css('width', maxWidth)
+
+      $modal.css('left', '50%')
+    })
+  }
+
     // Verifica se um elemento apresenta a barra de scroll vertical.
   , hasScrollBar: function($element) {
       var element = $element.get(0)
@@ -1905,6 +1927,7 @@ $(function() {
 $(function() {
   $('.modal').reduModal('fillHeight')
   $('.modal-scroll').reduModal('scrollArrow')
+  $('.modal-fill-horizontal').reduModal('fillHorizontal')
 
   // Abre uma modal caso seu id esteja na URL.
   var modalId = /#[a-zA-Z\-_\d]*/.exec(document.URL)
@@ -1928,7 +1951,7 @@ $(function() {
   , spinnerHorizontalBlue: 'spinner-horizontal-blue'
   , spinnerCircularGray: 'spinner-circular-gray'
   , spinnerCircularBlue: 'spinner-circular-blue'
-  , imgPath: 'images/'
+  , imgPath: '/images/'
   , spinnerCircularBlueGif: 'spinner-blue.gif'
   , spinnerCircularGrayGif: 'spinner-grey.gif'
   , spinnerCSS: {
@@ -1999,8 +2022,8 @@ $(function() {
         }
 
         var content = $this.html()
-          , width = $this.outerWidth()
-          , height = $this.outerHeight()
+          , width = $this.width()
+          , height = $this.height()
           , classes = otherClasses($this.attr('class'))
           , $spinner = $(document.createElement('img')).attr('src', spinnerImg).css(settings.spinnerCSS)
 
@@ -2071,3 +2094,65 @@ $(function() {
       $(this).reduSpinners('ajaxComplete')
     })
 })
+
+!function ($) {
+
+  "use strict"; // jshint ;_;
+
+
+ /* DEFINIÇÃO DE CLASSE DO CAMPO DE BUSCA.
+  * ============================== */
+
+  var SearchField = function (element, options) {
+    this.$element = $(element)
+    this.options = $.extend({}, $.fn.searchField.defaults, options)
+  }
+
+  SearchField.prototype.expand = function () {
+    var $target = $(this.$element.data('toggle'))
+    this.$element.parent().animate({ width: '+=' + this.options.increment }, 'fast');
+    $target.hide()
+  }
+
+  SearchField.prototype.collapse = function () {
+    var $target = $(this.$element.data('toggle'))
+    this.$element.parent().animate({ width: '-=' + this.options.increment }, 'fast');
+    $target.show()
+  }
+
+
+ /* DEFINIÇÃO DO PLUGIN DO CAMPO DE BUSCA.
+  * ======================== */
+
+  $.fn.searchField = function (option) {
+    return this.each(function () {
+      var $this = $(this)
+        , data = $this.data('searchField')
+        , options = typeof option == 'object' && option
+      if (!data) $this.data('searchField', (data = new SearchField(this, options)))
+      if (option == 'expand') data.expand()
+      else if (option == 'collapse') data.collapse()
+    })
+  }
+
+  $.fn.searchField.defaults = {
+    increment: 120
+  }
+
+  $.fn.searchField.Constructor = SearchField
+
+
+ /* DATA-API DO CAMPO DE BUSCA.
+  * =============== */
+
+  $(function () {
+    $('body').on('focus', '.form-search input[data-toggle]', function ( e ) {
+      var $searchField = $(e.target)
+      $searchField.searchField('expand')
+    }).on('blur', '.form-search input[data-toggle]', function ( e ) {
+      var $searchField = $(e.target)
+      $searchField.searchField('collapse')
+    })
+  })
+
+}(window.jQuery);
