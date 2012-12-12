@@ -23,7 +23,13 @@ class SpacesController < BaseController
 
   rescue_from CanCan::AccessDenied do |exception|
     session[:return_to] = request.fullpath
-    flash[:error] = "Essa área só pode ser vista após você acessar o Redu com seu nome e senha."
+
+    if current_user.nil?
+      flash[:notice] = "Essa área só pode ser vista após você acessar o Redu com seu nome e senha."
+    else
+      flash[:notice] = "Você não tem acesso a essa página"
+    end
+
     redirect_to preview_environment_course_path(@environment, @course)
   end
 
