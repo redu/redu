@@ -1,24 +1,22 @@
 <div class="secondary-sidebar profile-sidebar">
   <div class="actions">
-    <% friendship = current_user.friendship_for @user %>
-    <% is_friend = current_user.friends?(@user) %>
-    <% if is_friend %>
+    <% if is_friend?(@user) %>
       <%= link_to 'Remover contato',
-        user_friendship_path(current_user, friendship.id),
+        user_friendship_path(current_user, current_friendship(@user).id),
         :remote => true,
         :method => :delete,
         :class => "disconnect icon-delete-gray_8_10-before"%>
     <% end %>
+
     <% if can? :manage, @user %>
       <%= render :partial => 'users/completeness_bar' %>
     <% end %>
 
-    <% friendship = @user.friendship_for current_user %>
-    <% if !is_friend and current_user != @user %>
-      <% if friendship %>
-        <% if friendship.status == 'pending' %>
+    <% if !is_friend?(@user) %>
+      <% if current_friendship(@user) %>
+        <% if current_friendship(@user).status == 'pending' %>
           <a class="waiting">Aguardando aceitação</a>
-        <% elsif current_user != @user %>
+        <% else %>
           <%= link_to 'Aceitar pedido de conexão',
             user_friendships_path(current_user,
                                   :friend_id => @user.id),
@@ -32,8 +30,8 @@
       <% end %>
     <% end %>
 
-    <% if is_friend and !(current_user == @user) %>
-      <%= link_to (new_user_message_path(current_user, :message_to => @user.id),
+    <% if is_friend?(@user) %>
+      <%= link_to(new_user_message_path(current_user, :message_to => @user.id),
                    :class => 'send-message cancel ') do %>
         <span class="write-message icon-add_message-lightblue_16_18-before">Escrever Mensagem</span>
       <% end %>
