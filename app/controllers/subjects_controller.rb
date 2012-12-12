@@ -1,4 +1,7 @@
 class SubjectsController < BaseController
+  before_filter :set_nav_global_context, :only=> [:show]
+  before_filter :set_nav_global_context_admin, :except => [:show]
+
   respond_to :html, :js
 
   load_and_authorize_resource :space
@@ -8,7 +11,7 @@ class SubjectsController < BaseController
   before_filter :load_course_and_environment
 
   rescue_from CanCan::AccessDenied do |exception|
-    flash[:notice] = "Você não tem acesso a essa página"
+    flash[:notice] = "Essa área só pode ser vista após você acessar o Redu com seu nome e senha."
 
     redirect_to preview_environment_course_path(@space.course.environment,
                                                 @space.course)
@@ -110,5 +113,14 @@ class SubjectsController < BaseController
     end
     @course = @space.course
     @environment = @course.environment
+  end
+
+
+  def set_nav_global_context_admin
+    content_for :nav_global_context, "spaces_admin"
+  end
+
+  def set_nav_global_context
+    content_for :nav_global_context, "spaces"
   end
 end

@@ -1,0 +1,6 @@
+check process <%= @worker_name %>
+  with pidfile /data/<%= @app_name %>/shared/pids/<%= @pid_name %>
+  start program = "/usr/bin/env RAILS_ENV=<%= @framework_env %> /data/<%= @app_name %>/current/script/delayed_job start --queue=<%= @queue %> -i <%= @count %>" as uid <%= @user %>
+  stop program = "/usr/bin/env RAILS_ENV=<%= @framework_env %> /data/<%= @app_name %>/current/script/delayed_job stop --queue=<%= @queue %> -i <%= @count %>" as uid <%= @user %>
+  if totalmem is greater than 300 MB then restart # eating up memory?
+  group <%= @app_name %>_jobs

@@ -2,8 +2,6 @@ require "spec_helper"
 require 'authlogic/test_case'
 
 describe Vis::DashboardController do
-  include Authlogic::TestCase
-
   before do
     @environment = Factory(:environment)
     @course = Factory(:course, :environment => @environment,
@@ -45,8 +43,7 @@ describe Vis::DashboardController do
     end
 
     it "should return 200 (Ok) HTTP code" do
-      activate_authlogic
-      UserSession.create @user
+      login_as @user
 
       @course.join(@user, Role[:environment_admin])
       get :teacher_participation_interaction, @params
@@ -61,8 +58,7 @@ describe Vis::DashboardController do
                          :course => @environment.courses.first)
         @course.spaces.reload
 
-        activate_authlogic
-        UserSession.create @user
+        login_as @user
 
         @course.join(@user, Role[:environment_admin])
       end

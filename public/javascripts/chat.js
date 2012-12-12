@@ -1,6 +1,7 @@
 // Utilizando pjax
 var $pjaxLinks = $("a:not([data-remote]):not([href^='#']):not([rel='nofollow']):not([href^='javascript\:']):not([onClick])");;
-$pjaxLinks.pjax("#pjax-container", { timeout: null });
+// Desabilitado enquanto existem dois layouts
+//$pjaxLinks.pjax("#pjax-container", { timeout: null });
 
 var buildChat = (function(){
 // Constrói um novo objeto Chat

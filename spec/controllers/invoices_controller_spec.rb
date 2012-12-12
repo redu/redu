@@ -2,8 +2,6 @@ require 'spec_helper'
 require 'authlogic/test_case'
 
 describe InvoicesController do
-  include Authlogic::TestCase
-
   subject { Factory(:package_invoice) }
 
   context "when PackageInvoice" do
@@ -24,8 +22,7 @@ describe InvoicesController do
         result << invoice
       end
 
-      activate_authlogic
-      UserSession.create @plan.user
+      login_as @plan.user
     end
 
     context "when GET index" do
@@ -68,8 +65,7 @@ describe InvoicesController do
           invoice
         end
 
-        activate_authlogic
-        UserSession.create @plan.billable.owner
+        login_as @plan.billable.owner
         get :show, :plan_id => @plan.id, :id => @invoices.first.id,
           :locale => "pt-BR"
       end
@@ -85,10 +81,8 @@ describe InvoicesController do
 
     context "when involving partner" do
       before do
-        User.maintain_sessions = false
         @user = Factory(:user)
-        activate_authlogic
-        UserSession.create @user
+        login_as @user
 
         @partner = Factory(:partner)
         @environments = 3.times.collect do
@@ -223,8 +217,7 @@ describe InvoicesController do
 
       context "when paying an invoice" do
         before do
-          activate_authlogic
-          UserSession.create Factory(:user, :role => Role[:admin])
+          login_as Factory(:user, :role => Role[:admin])
 
           @invoice = @environments[0].plan.create_invoice
           @invoice.update_attribute(:state, "pending")

@@ -2,18 +2,14 @@ require 'spec_helper'
 require 'authlogic/test_case'
 
 describe SubjectsController do
-  include Authlogic::TestCase
-
   before do
-    User.maintain_sessions = false
     @user = Factory(:user)
     environment = Factory(:environment, :owner => @user)
     @course = Factory(:course, :environment => environment)
     @space = Factory(:space, :owner => @user, :course => @course)
     @subject_owner = Factory(:user)
     @course.join(@subject_owner)
-    activate_authlogic
-    UserSession.create @user
+    login_as @user
   end
 
   context "GET 'new'" do

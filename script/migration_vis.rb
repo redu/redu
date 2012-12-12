@@ -10,68 +10,38 @@ end
 class ConnectionError < StandardError
 end
 
-def insert_enrollments
-  Enrollment.all.each do |enrollment|
+def insert_enrollments(date)
+  Enrollment.where("created_at >= '#{date}'").each do |enrollment|
     unless enrollment.subject.space.nil?
       unless enrollment.subject.space.course.nil?
-        params_enrol = {
-          :user_id => enrollment.user_id,
-          :type => "enrollment",
-          :lecture_id => nil,
-          :subject_id => enrollment.subject_id,
-          :space_id => enrollment.subject.space.id,
-          :course_id => enrollment.subject.space.course.id,
-          :status_id => nil,
-          :statusable_id => nil,
-          :statusable_type => nil,
-          :in_response_to_id => nil,
-          :in_response_to_type => nil,
-          :created_at => enrollment.created_at,
-          :updated_at => enrollment.updated_at
-        }
-
-        send_async_info(params_enrol,
-                             Redu::Application.config.vis_client[:migration])
+        params_enroll = fill_enroll(enrollment, "enrollment")
+        send_async_info(params_enroll,
+                             Redu::Application.config.vis_client[:url])
       end
     end
   end
 end
 
-def insert_subject_finalized
-  Enrollment.where(:grade => 100, :graduated => true).each do |profile|
-    params_finalized = {
-      :user_id => profile.user_id,
-      :type => "subject_finalized",
-      :lecture_id => nil,
-      :subject_id => profile.subject_id,
-      :space_id => profile.subject.space.id,
-      :course_id => profile.subject.space.course.id,
-      :status_id => nil,
-      :statusable_id => nil,
-      :statusable_type => nil,
-      :in_response_to_id => nil,
-      :in_response_to_type => nil,
-      :created_at => profile.created_at,
-      :updated_at => profile.updated_at
-    }
-
+def insert_subject_finalized(date)
+  Enrollment.where("grade = 100 AND graduated = true AND created_at >= '#{date}'").each do |profile|
+    params_finalized = fill_enroll(profile, "subject_finalized")
     send_async_info(params_finalized,
-                         Redu::Application.config.vis_client[:migration])
+                    Redu::Application.config.vis_client[:url])
   end
 end
 
-def insert_exercise_finalized
-  Exercise.all.each do |exercise|
+def insert_exercise_finalized(date)
+  Exercise.where("created_at > '#{date}'").each do |exercise|
     exercise.results.finalized.each do |finalized|
-      params = build_hash_to_vis(finalized)
+      params = fill_exercise(finalized)
       send_async_info(params,
-                      Redu::Application.config.vis_client[:migration])
+                      Redu::Application.config.vis_client[:url])
     end
   end
 end
 
-def insert_statuses
-  Status.where(:type => ["Activity", "Help", "Answer"]).each do |status|
+def insert_statuses(date)
+  Status.where("type IN ('Activity', 'Help', 'Answer') AND created_at >= '#{date}'").each do |status|
 
     # Filling params according type of the Status
     case status.statusable.class.to_s
@@ -111,6 +81,25 @@ def insert_statuses
   end
 end
 
+def remove_enrollments(date)
+  Enrollment.where("created_at >= '#{date}'").each do |enrollment|
+    if (enrollment.user.get_association_with enrollment.subject.space).nil?
+      params_remove_enrollment = fill_enroll(enrollment, "remove_enrollment")
+
+      send_async_info(params_remove_enrollment,
+                      Redu::Application.config.vis_client[:url])
+
+      if enrollment.grade == 100 and enrollment.graduated
+        params_finalized = fill_enroll(enrollment, "remove_subject_finalized")
+        send_async_info(params_finalized,
+                        Redu::Application.config.vis_client[:url])
+      end
+
+      enrollment.try(:destroy)
+    end
+  end
+end
+
 def send_statuses(status)
   params_status = {
     :user_id => status.user_id,
@@ -129,7 +118,7 @@ def send_statuses(status)
   }
 
   send_async_info(params_status,
-                       Redu::Application.config.vis_client[:migration])
+                       Redu::Application.config.vis_client[:url])
 end
 
 def get_type(status)
@@ -146,7 +135,25 @@ def get_type(status)
   end
 end
 
-def build_hash_to_vis(result)
+def fill_enroll(enrollment, type)
+  params_enrol = {
+    :user_id => enrollment.user_id,
+    :type => type,
+    :lecture_id => nil,
+    :subject_id => enrollment.subject_id,
+    :space_id => enrollment.subject.space.id,
+    :course_id => enrollment.subject.space.course.id,
+    :status_id => nil,
+    :statusable_id => nil,
+    :statusable_type => nil,
+    :in_response_to_id => nil,
+    :in_response_to_type => nil,
+    :created_at => enrollment.created_at,
+    :updated_at => enrollment.updated_at
+  }
+end
+
+def fill_exercise(result)
   exercise = result.exercise
   space = exercise.lecture.subject.space
   params = {

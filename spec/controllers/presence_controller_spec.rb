@@ -2,7 +2,6 @@ require 'spec_helper'
 require 'authlogic/test_case'
 
 describe PresenceController do
-  include Authlogic::TestCase
   render_views
 
   before do
@@ -40,8 +39,7 @@ describe PresenceController do
     @friend2.be_friends_with(@current_user)
     @current_user.be_friends_with(@friend3)
     @friend3.be_friends_with(@current_user)
-    activate_authlogic
-    UserSession.create @current_user
+    login_as @current_user
 
     @presence = Presence.new(@current_user)
   end
@@ -199,8 +197,7 @@ describe PresenceController do
       @contact = Factory(:user)
       @user.be_friends_with(@contact)
       @contact.be_friends_with(@user)
-      activate_authlogic
-      UserSession.create @user
+      login_as @user
 
       @post_params = { :locale => "pt-BR",
         :contact_id => @contact.id, :text => "Hello, buddy!" }
@@ -250,8 +247,7 @@ describe PresenceController do
       @contact1.be_friends_with(@user)
       @user.be_friends_with(@contact2)
       @contact2.be_friends_with(@user)
-      activate_authlogic
-      UserSession.create @user
+      login_as @user
 
       @message1 = Factory(:chat_message, :user => @user, :contact => @contact1, :created_at => 2.days.ago)
       @message2 = Factory(:chat_message, :user => @user, :contact => @contact1)

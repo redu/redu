@@ -2,6 +2,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   helper_method :current_user_session, :current_user
 
+  after_filter :check_tour_exploration
+
   unless Rails.application.config.consider_all_requests_local
     rescue_from Exception,                            :with => :render_error
     rescue_from ActiveRecord::RecordNotFound,         :with => :render_not_found
@@ -13,7 +15,7 @@ class ApplicationController < ActionController::Base
   rescue_from CanCan::AccessDenied do |exception|
     session[:return_to] ||= request.fullpath
 
-    flash[:notice] = "Você não tem acesso a essa página"
+    flash[:error] = "Essa área só pode ser vista após você acessar o Redu com seu nome e senha."
     redirect_to home_path
   end
 
@@ -61,4 +63,8 @@ class ApplicationController < ActionController::Base
     false
   end
 
+  def check_tour_exploration
+    return if current_user.nil? || !params.has_key?(:exploring_tour)
+    current_user.settings.visit!(request.path)
+  end
 end

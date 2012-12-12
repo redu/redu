@@ -1,10 +1,25 @@
 class EnvironmentsController < BaseController
+  before_filter :set_nav_global_context, :only=> [:show, :preview]
+  before_filter :set_nav_global_context_admin, :except => [:show, :preview,
+                                                           :index]
+
   load_and_authorize_resource :except => :index, :find_by => :path
 
   rescue_from CanCan::AccessDenied do |exception|
     session[:return_to] = request.fullpath
-    flash[:notice] = "Você não tem acesso a essa página"
-    redirect_to preview_environment_path(@environment)
+
+    if @environment
+      if @environment.blocked?
+        flash[:error] = "Entre em contato com o administrador deste ambiente."
+      else
+        flash[:error] = "Essa área só pode ser vista após você acessar o Redu com seu nome e senha."
+      end
+
+      redirect_to preview_environment_path(@environment)
+    else
+      flash[:error] = "Essa área só pode ser vista após você acessar o Redu com seu nome e senha."
+      redirect_to application_path
+    end
   end
 
   # GET /environments/1
@@ -238,5 +253,36 @@ class EnvironmentsController < BaseController
     respond_to do |format|
       format.js { render "environments/admin/search_users_admin" }
     end
+  end
+
+  def index
+    @user = User.find(params[:user_id])
+    authorize! :manage, @user
+
+    @total_environments = @user.environments.count
+    @environments = @user.environments.
+      includes(:courses => :spaces).page(params[:page]).
+      per(Redu::Application.config.items_per_page)
+
+    respond_to do |format|
+      format.html do
+        render 'users/environments/index', :layout => 'new_application'
+      end
+      format.js do
+        render_endless('users/environments/environment', @environments,
+                       '#my-environments',
+                       :template => 'shared/new_endless_kaminari')
+      end
+    end
+  end
+
+  protected
+
+  def set_nav_global_context_admin
+    content_for :nav_global_context, "environments_admin"
+  end
+
+  def set_nav_global_context
+    content_for :nav_global_context, "environments"
   end
 end

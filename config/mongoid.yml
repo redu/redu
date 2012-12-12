@@ -1,0 +1,6 @@
+development:
+  database: redu_development
+test:
+  database: redu_test
+production:
+  database: redu_production

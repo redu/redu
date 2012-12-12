@@ -2,12 +2,9 @@ require 'spec_helper'
 require 'authlogic/test_case'
 
 describe OauthClientsController do
-  include Authlogic::TestCase
-
   before do
     @user = Factory(:user, :role => Role[:admin])
-    activate_authlogic
-    UserSession.create @user
+    login_as @user
 
     @params = {
       :client_application => {

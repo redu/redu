@@ -1,0 +1,317 @@
+.breadcrumb-mini + .content-body,
+.content-body + .breadcrumb-mini { margin-top: 10px; }
+
+.content-body + .breadcrumb-mini { margin-bottom: 20px; }
+
+.breadcrumb-mini {
+  margin-top: 15px;
+}
+
+.container {
+  position: relative;
+}
+
+.home-container {
+  padding: 10px 20px;
+
+  h3 {
+    line-height: 26px;
+    padding-bottom: 5px;
+  }
+
+  ul {
+    overflow: hidden;
+    list-style: none;
+    margin-top: 10px;
+    margin-bottom: 0;
+
+    li {
+      float: left;
+      margin-bottom: 5px;
+      clear: both;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      a:hover { text-decoration: none; }
+    }
+  }
+}
+
+.message-block-actions {
+  #modal-what-is-missing &,
+  .home-container & {
+    margin-top: 10px;
+    text-align: center;
+  }
+}
+
+.learning-environments {
+  width: 538px;
+  color: $gray6;
+  background-image: url('../images/home/graphic-environments-hierarchy.png');
+  background-repeat: no-repeat;
+  padding-bottom: 10px;
+  overflow: hidden;
+
+  .legend { line-height: 14px; }
+
+  .big {
+    width: 404px;
+    padding-top: 1px;
+    padding-left: 108px;
+    padding-bottom: 61px;
+  }
+
+  .small {
+    width: 284px;
+    float: right;
+
+    &.institution {
+      padding-right: 146px;
+      padding-bottom: 23px;
+    }
+
+    &.space {
+      padding-top: 127px;
+      padding-right: 168px;
+    }
+
+    &.right { text-align: right; }
+  }
+
+  h3, h4 {
+    font-weight: lighter;
+    padding-bottom: 5px;
+  }
+}
+
+.tour {
+  width: 338px;
+  margin: 0 0 0 -169px;
+
+  &.modal {
+    background-color: $gray1;
+    color: $black;
+  }
+
+  &.modal:after {
+    content: ' ';
+    height: 0;
+    width: 0;
+    position: absolute;
+  }
+
+  .modal-header {
+    border-bottom: 1px $gray3 solid;
+    box-shadow: 0 1px 0 white;
+    -moz-box-shadow: 0 1px 0 white;
+    -webkit-box-shadow: 0 1px 0 white;
+    padding: 10px;
+  }
+
+  .modal-body {
+    padding: 10px;
+
+    p {
+      margin-top: 0px;
+      margin-bottom: 10px;
+    }
+
+    p:last-child { margin-bottom: 0; }
+  }
+
+  .modal-footer {
+    background-color: inherit;
+    padding: 10px;
+
+    p {
+      float: left;
+      padding-top: 10px;
+    }
+  }
+}
+
+.modal-backdrop {
+  opacity: 0.4;
+  background-color: black;
+}
+
+#habla_window_div.habla_window_div_base {
+  z-index: 1000 !important;
+  text-shadow: none;
+}
+
+.typekit-badge {
+  z-index: auto !important;
+}
+
+#chat {
+  z-index: 900;
+}
+
+.footer-logo-img {
+  z-index: 800;
+}
+
+.home-tour {
+
+  #tour-3 {
+    top: 13px;
+    left: 42px;
+
+    &:after {
+      border: 9px solid transparent;
+      border-bottom-color: $gray1;
+
+      bottom: 100%;
+      left: 50%;
+      margin-left: -9px;
+    }
+  }
+
+  #tour-4 {
+    top: 13px;
+    left: 102px;
+
+    &:after {
+      border: 9px solid transparent;
+      border-bottom-color: $gray1;
+
+      bottom: 100%;
+      left: 50%;
+      margin-left: -9px;
+    }
+  }
+
+  #tour-5 {
+    top: 13px;
+    left: 171px;
+
+    &:after {
+      border: 9px solid transparent;
+      border-bottom-color: $gray1;
+
+      bottom: 100%;
+      left: 50%;
+      margin-left: -9px;
+    }
+  }
+
+  #tour-6 {
+    top: 13px;
+    left: 260px;
+
+    &:after {
+      border: 9px solid transparent;
+      border-bottom-color: $gray1;
+
+      bottom: 100%;
+      left: 50%;
+      margin-left: -9px;
+    }
+  }
+
+  #tour-7 {
+    top: 13px;
+    left: 600px;
+
+    &:after {
+      border: 9px solid transparent;
+      border-bottom-color: $gray1;
+
+      bottom: 100%;
+      left: 93%;
+      margin-left: -9px;
+    }
+  }
+
+  #tour-8 {
+    top: 45px;
+    left: 175px;
+
+    &:after {
+      border: 9px solid transparent;
+      border-right-color: $gray1;
+
+      right: 100%;
+      top: 15px;
+    }
+  }
+
+  #tour-9 {
+    top: 160px;
+    left: 210px;
+
+    &:after {
+      border: 9px solid transparent;
+      border-right-color: $gray1;
+
+      right: 100%;
+      top: 50%;
+      margin-top: -9px;
+    }
+  }
+
+  #tour-10 {
+    left: 210px;
+
+    &:after {
+      border: 9px solid transparent;
+      border-right-color: $gray1;
+
+      right: 100%;
+      top: 50%;
+      margin-top: -9px;
+    }
+  }
+
+  #tour-11 {
+    &:after {
+      border: 9px solid transparent;
+      border-left-color: $gray1;
+
+      left: 100%;
+      top: 50%;
+      margin-top: -9px;
+    }
+  }
+
+  #tour-12 {
+    left: auto;
+    top: auto;
+    right: 20px;
+    bottom: 50px;
+    position: fixed;
+
+    &:after {
+      border: 9px solid transparent;
+      border-top-color: $gray1;
+
+      top: 100%;
+      right: 20px;
+    }
+  }
+
+  #tour-13 {
+    bottom: 60px;
+    left: 50%;
+    top: auto;
+    margin-left: -465px;
+    position: fixed;
+
+    &:after {
+      border: 9px solid transparent;
+      border-top-color: $gray1;
+
+      top: 100%;
+      left: 20px;
+    }
+  }
+
+  .absolute {
+    margin: 0;
+    position: absolute;
+  }
+}

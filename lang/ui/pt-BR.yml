@@ -63,6 +63,7 @@ pt-BR:
       short_literal_date: "%d %b %Y"
       time_ago: "%e %b %Y às %H:%M"
       admin: "%d %b, %Y, %H:%M"
+      elegant: "%-d %b, %Y, %Hh%M"
     pm: pm
     am: am
   number:
@@ -330,6 +331,7 @@ pt-BR:
   Document: "Documento e apresentação"
   Page: "Página simples"
   Exercise: "Exercício"
+  Api::Canvas: "Aplicativo"
 
     #simple categories
   arts_design_animation: Artes / Design / Animação
@@ -372,7 +374,7 @@ pt-BR:
   views:
     pagination:
       sidebar_endless: "Ver mais"
-      endless: "Mostrar mais resultados"
+      endless: "Mostrar mais..."
 
   #redu categories
   all: Todas

@@ -2,8 +2,6 @@ require 'spec_helper'
 require 'authlogic/test_case'
 
 describe UsersController do
-  include Authlogic::TestCase
-
   before do
     users = (1..4).collect { Factory(:user) }
     users[0].be_friends_with(users[1])
@@ -202,8 +200,7 @@ describe UsersController do
   context "POST update" do
     before do
       @user = Factory(:user)
-      activate_authlogic
-      UserSession.create @user
+      login_as @user
 
       @post_params = { :locale => "pt-BR", :id => @user.login, :user => {
         "birthday(1i)"=>"1991", "birthday(2i)"=>"6", "birthday(3i)"=>"8",
@@ -270,28 +267,41 @@ describe UsersController do
   context "POST update_account" do
     before do
       @user = Factory(:user)
-      activate_authlogic
-      UserSession.create @user
+      login_as @user
 
-      @post_params = { :locale => "pt-BR", :current_password => @user.password,
-        :id => @user.login, :user => {
-        :email_confirmation => "new_email@example.com",
-        :password_confirmation => "new-pass", :auto_status => "1",
-        :notify_messages => "1", :notify_community_news => "1",
-        :notify_followships => "1", :password => "new-pass",
-        :settings_attributes => { :id  =>@user.settings.id,
-          :view_mural => "1" }, :email => "new_email@example.com" } }
+      @post_params =
+        { :locale => "pt-BR",
+          :current_password => @user.password,
+          :id => @user.login,
+          :user => {
+            :email => "new_email@example.com",
+            :email_confirmation => "new_email@example.com",
+            :auto_status => "1",
+            :notify_messages => "1",
+            :notify_community_news => "1",
+            :notify_followships => "1",
+            :password => "new-pass",
+            :password_confirmation => "new-pass",
+            :settings_attributes => {
+              :id => @user.settings.id,
+              :view_mural => "1"
+            }
+          }
+        }
     end
 
     context "when successful" do
       before do
         post :update_account, @post_params
+        @user.reload
       end
 
       it "updates the user account informations" do
-        authenticated = UserSession.new(:login => @user.login,:password => @post_params[:user][:password]).save
-        authenticated.should be_true
-        @user.reload.email.should == @post_params[:user][:email]
+        @user.email.should == @post_params[:user][:email]
+      end
+
+      it "should updates user password" do
+        @user.password == @post_params[:user][:password]
       end
 
       it "redirects to account_user_path" do
@@ -300,20 +310,24 @@ describe UsersController do
     end
 
     context "when failing" do
-      before do
-        @post_params[:current_password] = "wrong-pass"
-        post :update_account, @post_params
-      end
+      context "wrong password" do
+        before do
+          @post_params[:current_password] = "wrong-pass"
+          post :update_account, @post_params
+          @user.reload
+        end
 
-      it "does NOT update the user account informations" do
-        assigns[:user].errors.should_not be_empty
-        authenticated = UserSession.new(:login => @user.login,:password => @post_params[:user][:password]).save
-        authenticated.should_not be_true
-        @user.reload.email.should_not == @post_params[:user][:email]
-      end
+        it "does NOT update the user account informations" do
+          @user.email.should_not == @post_params[:user][:email]
+        end
 
-      it "re-renders users/account" do
-        response.should render_template("users/account")
+        it "should add some errors on user" do
+          assigns[:user].errors.should_not be_empty
+        end
+
+        it "re-renders users/account" do
+          response.should render_template("users/account")
+        end
       end
     end
   end
@@ -321,8 +335,7 @@ describe UsersController do
   context "POST destroy" do
     before do
       @user = Factory(:user)
-      activate_authlogic
-      UserSession.create @user
+      login_as @user
 
       @post_params = { :locale => "pt-BR", :id => @user.login }
     end
@@ -342,16 +355,15 @@ describe UsersController do
   context "GET home" do
     before do
       @user = Factory(:user)
-      activate_authlogic
-      UserSession.create @user
+      login_as @user
 
       @params = { :locale => "pt-BR", :id => @user.login }
-      get :home, @params
     end
 
-    [:friends_requisitions, :course_invitations,
-      :contacts_recommendations].each do |var|
+    [:friends_requisitions, :course_invitations].each do |var|
       it "assigns @#{var}" do
+        get :home, @params
+
         assigns[var].should_not be_nil
       end
     end
@@ -360,8 +372,7 @@ describe UsersController do
   context "GET curriculum" do
     before do
       @user = Factory(:user)
-      activate_authlogic
-      UserSession.create @user
+      login_as @user
       get :curriculum, { :locale => "pt-BR", :id => @user.login }
     end
 
@@ -433,9 +444,8 @@ describe UsersController do
           @course = Factory(:course, :environment => @environment)
           space = Factory(:space, :course => @course)
           user = Factory(:user)
-          activate_authlogic
           @course.join user
-          UserSession.create user
+          login_as user
           get :index, { :locale => "pt-BR", :space_id => space.id }
         end
 
@@ -454,8 +464,7 @@ describe UsersController do
     before do
       @contact = Factory(:user)
       @user = Factory(:user)
-      activate_authlogic
-      UserSession.create @user
+      login_as @user
     end
 
     it "assigns @friends" do
@@ -480,8 +489,7 @@ describe UsersController do
       @approved_courses = @courses[0..2].each { |c| c.join(@user) }
       @moderated_courses[0..2].each { |c| c.join(@user) }
 
-      activate_authlogic
-      UserSession.create @user
+      login_as @user
 
       get :show, :locale => "pt-BR", :id => @user.login
     end
@@ -504,8 +512,7 @@ describe UsersController do
 
       @params = {:locale => "pt-BR", :id => @user.login }
 
-      activate_authlogic
-      UserSession.create @user
+      login_as @user
     end
 
     it "assigns subscribed_courses_count" do

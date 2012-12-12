@@ -1,21 +1,19 @@
 GIT
-  remote: git://github.com/apotonick/roar-rails.git
-  revision: 943203a8b9f5376771ed4cc01a7bfb49c47e601d
+  remote: git://github.com/andi/simple-navigation.git
+  revision: 79ea081ac772744362e925b8a0034bc6adf10c51
   specs:
-    roar-rails (0.0.10)
-      actionpack (~> 3.0)
-      hooks
-      railties (~> 3.0)
-      roar (~> 0.10)
-      test_xml
+    simple-navigation (3.9.0)
+      activesupport (>= 2.3.2)
 
 GIT
-  remote: git://github.com/collectiveidea/delayed_job_active_record.git
-  revision: bade04ddeb692d102f5e2c094a7b9935c48f82b8
+  remote: git://github.com/apotonick/roar-rails.git
+  revision: 4f0a0856a80043aa68adc2dfef0989bf00498771
   specs:
-    delayed_job_active_record (0.3.2)
-      activerecord (>= 2.1.0, < 4)
-      delayed_job (~> 3.0)
+    roar-rails (0.0.5)
+      actionpack (~> 3.0)
+      railties (~> 3.0)
+      roar (~> 0.10.0)
+      test_xml
 
 GIT
   remote: git://github.com/edgarjs/ajaxful-rating.git
@@ -25,12 +23,26 @@ GIT
     ajaxful_rating (3.0.0.beta3)
 
 GIT
+  remote: git://github.com/fltiago/webmock
+  revision: 7e34b7b727ee3b0f8f224f516476011d2a022199
+  specs:
+    webmock (1.9.0)
+      addressable (>= 2.2.7)
+      crack (>= 0.1.7)
+
+GIT
   remote: git://github.com/guiocavalcanti/scribd_fu.git
   revision: 422926986f993bf4d72fcaa981dea221ecc86641
   branch: without-scape
   specs:
     scribd_fu (2.0.11)
       rscribd
+
+GIT
+  remote: git://github.com/julianalucena/content_for_in_controllers.git
+  revision: d06b5e500e38011d3a3a85b0165a6203d135d67e
+  specs:
+    content_for_in_controllers (0.0.2)
 
 GIT
   remote: git://github.com/meskyanichi/backup.git
@@ -59,14 +71,15 @@ GIT
       activesupport (>= 3.0.0)
 
 GIT
-  remote: git://github.com/redu/destroy-soon.git
-  revision: 6129601802a0a0ae0d7f3e60d0c31dcd01c94d6c
+  remote: git://github.com/redu/untied-publisher
+  revision: 1daf8146ddc5dd2b3c4d5cfa990c67dc60ad171f
   specs:
-    destroy_soon (0.0.3)
-      activerecord (~> 3.0.10)
-      activesupport (~> 3.0.10)
-      delayed_job_active_record (~> 0.3.2)
-      rake
+    untied-publisher (0.0.5)
+      activerecord
+      amqp
+      configurable
+      json
+      representable
 
 GIT
   remote: git@github.com:redu/invitable.git
@@ -83,10 +96,10 @@ GIT
 
 GIT
   remote: https://github.com/apotonick/roar.git
-  revision: a2f954e0d3cfa7ed99b33e3b416ac868358a4f7e
+  revision: 46fb88d1a79338188a9d05d353fc721d6a058e4e
   specs:
-    roar (0.11.3)
-      representable (>= 1.2.2)
+    roar (0.10.1)
+      representable (>= 1.1.7)
 
 GEM
   remote: http://rubygems.org/
@@ -133,6 +146,14 @@ GEM
     acts-as-taggable-on (2.0.6)
     acts_as_tree (0.1.1)
     addressable (2.3.2)
+    amq-client (0.9.8)
+      amq-protocol (>= 0.9.4)
+      eventmachine
+    amq-protocol (0.9.5)
+    amqp (0.9.8)
+      amq-client (~> 0.9.5)
+      amq-protocol (>= 0.9.4)
+      eventmachine
     ar_mailer_rails3 (2.1.12)
     arel (2.0.10)
     authlogic (3.0.2)
@@ -149,6 +170,9 @@ GEM
       json (~> 1.4)
       nokogiri (>= 1.4.4)
       uuidtools (~> 2.1)
+    bson (1.7.0)
+    bson_ext (1.7.0)
+      bson (~> 1.7.0)
     builder (2.1.2)
     cancan (1.6.7)
     childprocess (0.3.1)
@@ -165,16 +189,28 @@ GEM
       sass (~> 3.1)
     compass-rails (1.0.3)
       compass (>= 0.12.2, < 0.14)
+    config_parser (0.5.5)
+    configurable (1.0.0)
+      config_parser (~> 0.5.4)
+      lazydoc (~> 1.0)
     cookiejar (0.3.0)
-    crack (0.3.1)
+    crack (0.1.8)
     css_parser (1.2.5)
       addressable
     daemons (1.1.8)
     date_validator (0.6.1)
       activemodel (~> 3.0.0)
     deep_cloneable (1.2.3)
-    delayed_job (3.0.3)
+    delayed_job (3.0.4)
       activesupport (~> 3.0)
+    delayed_job_mongoid (1.1.0)
+      delayed_job (~> 3.0)
+      mongo (~> 1.6)
+      mongoid (>= 2.0)
+    destroy_soon (0.0.2)
+      activerecord (~> 3.0.10)
+      activesupport (~> 3.0.10)
+      rake
     diff-lcs (1.1.3)
     dynamic_form (1.1.4)
     em-http-request (1.0.3)
@@ -188,7 +224,6 @@ GEM
     erubis (2.6.6)
       abstract (>= 1.0.0)
     eventmachine (1.0.0)
-    eventmachine (1.0.0-x86-mingw32)
     exceptional (2.0.32)
       rack
     excon (0.9.6)
@@ -197,10 +232,8 @@ GEM
     factory_girl_rails (1.7.0)
       factory_girl (~> 2.6.0)
       railties (>= 3.0.0)
-    faraday (0.7.6)
-      addressable (~> 2.2)
+    faraday (0.8.4)
       multipart-post (~> 1.1)
-      rack (~> 1.1)
     ffi (1.0.11)
     fog (1.1.2)
       builder
@@ -215,13 +248,12 @@ GEM
     formatador (0.2.3)
     fssm (0.2.9)
     hashie (1.2.0)
-    hooks (0.2.1)
     htmlentities (4.3.0)
     http_parser.rb (0.5.3)
-    http_parser.rb (0.5.3-x86-mingw32)
     httparty (0.8.1)
       multi_json
       multi_xml
+    humanizer (2.4.4)
     i18n (0.5.0)
     jammit (0.6.0)
       closure-compiler (>= 0.1.0)
@@ -239,13 +271,14 @@ GEM
     jquery-rails (1.0.19)
       railties (~> 3.0)
       thor (~> 0.14)
-    json (1.6.6)
+    json (1.7.5)
     kaminari (0.13.0)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
       railties (>= 3.0.0)
     lazy_high_charts (1.2.2)
       bundler (~> 1.0)
+    lazydoc (1.0)
     linecache (0.43)
     mail (2.2.19)
       activesupport (>= 2.3.6)
@@ -254,6 +287,12 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.18)
     mimemagic (0.1.8)
+    mongo (1.7.0)
+      bson (~> 1.7.0)
+    mongoid (2.2.6)
+      activemodel (~> 3.0.0)
+      mongo (~> 1.3)
+      tzinfo (~> 0.3.22)
     multi_json (1.0.4)
     multi_xml (0.5.1)
     multipart-post (1.1.5)
@@ -262,8 +301,7 @@ GEM
       net-ssh (>= 1.99.1)
     net-ssh (2.5.2)
     newrelic_rpm (3.0.1)
-    nokogiri (1.5.2)
-    nokogiri (1.5.2-x86-mingw32)
+    nokogiri (1.5.5)
     oauth (0.4.5)
     oauth-plugin (0.4.0)
       multi_json
@@ -293,8 +331,10 @@ GEM
       css_parser (>= 1.1.9)
       htmlentities (>= 4.0.0)
     proxies (0.2.1)
-    pusher (0.9.4)
+    pusher (0.8.1)
+      crack (~> 0.1.0)
       multi_json (~> 1.0)
+      ruby-hmac (~> 0.4.0)
       signature (~> 0.1.2)
     rack (1.2.5)
     rack-cors (0.2.6)
@@ -327,7 +367,7 @@ GEM
     redu_analytics (0.0.2)
       lazy_high_charts
     remotipart (1.0.2)
-    representable (1.2.5)
+    representable (1.2.8)
       json
       nokogiri
     rscribd (1.3.0)
@@ -352,7 +392,6 @@ GEM
       linecache (>= 0.3)
     ruby-hmac (0.4.0)
     ruby-prof (0.11.2)
-    ruby-prof (0.11.2-x86-mingw32)
     rubyzip (0.9.6.1)
     s3 (0.3.8)
       proxies (~> 0.2.0)
@@ -364,26 +403,19 @@ GEM
       rubyzip
     shoulda-matchers (1.0.0.beta2)
     shuber-sortable (1.0.6)
-    signature (0.1.4)
-    simple-navigation (3.5.0)
-      activesupport (>= 2.3.2)
+    signature (0.1.2)
+      ruby-hmac
+    system_timer (1.2.4)
     test_xml (0.1.2)
       nokogiri (>= 1.3.2)
-    thin (1.3.1)
-      daemons (>= 1.0.9)
-      eventmachine (>= 0.12.6)
-      rack (>= 1.0.0)
     thor (0.14.6)
     translate_routes (3.0.3)
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
-    tzinfo (0.3.33)
+    tzinfo (0.3.35)
     useragent (0.4.8)
     uuidtools (2.1.2)
-    webmock (1.8.10)
-      addressable (>= 2.2.7)
-      crack (>= 0.1.7)
     whenever (0.7.3)
       activesupport (>= 2.3.4)
       chronic (~> 0.6.3)
@@ -397,7 +429,6 @@ GEM
 
 PLATFORMS
   ruby
-  x86-mingw32
 
 DEPENDENCIES
   aasm
@@ -413,27 +444,31 @@ DEPENDENCIES
   aws-s3
   aws-sdk
   backup!
-  bundler
+  bson_ext
+  bundler (~> 1.2)
   cancan (~> 1.6.7)
   ckeditor (= 3.4.2.pre)
   compass-rails
+  content_for_in_controllers!
   daemons
   date_validator
   deep_cloneable
-  delayed_job_active_record!
-  destroy_soon!
+  delayed_job_mongoid
+  destroy_soon
   dynamic_form
   em-http-request
   eventmachine
   exceptional
   factory_girl_rails (~> 1.7.0)
   fog (~> 1.1.0)
+  humanizer
   invitable!
   jammit-s3
   jasmine
   jquery-rails (>= 1.0.12)
   kaminari
   mime-types
+  mongoid (~> 2.2.6)
   mysql2 (~> 0.2.1)
   newrelic_rpm (= 3.0.1)
   no_peeping_toms!
@@ -458,12 +493,13 @@ DEPENDENCIES
   scribd_fu!
   shoulda-matchers
   shuber-sortable
-  simple-navigation
-  thin
+  simple-navigation!
+  system_timer
   translate_routes
+  untied-publisher!
   useragent (~> 0.4.8)
   vis_client!
-  webmock (~> 1.8.6)
+  webmock!
   whenever
   will_paginate (~> 3.0.pre2)
   zencoder

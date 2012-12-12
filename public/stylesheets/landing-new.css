@@ -47,90 +47,90 @@ body {
   background-image: url("../images/landing/background.png");
 }
 
-.sprite-landing, .sprite-advantage-developer, .sprite-advantage-manager, .sprite-advantage-student, .sprite-advantage-teacher, .sprite-background-chat, .sprite-background-management, .sprite-background-treemap, .sprite-background-wall, .sprite-icon-chat, .sprite-icon-close, .sprite-icon-correct, .sprite-icon-developer, .sprite-icon-exercise, .sprite-icon-management, .sprite-icon-plus, .sprite-icon-report, .sprite-keko-playing, .sprite-light-logo, .sprite-logo-oer, .sprite-logo, .sprite-medal-gold, .sprite-medal-gold-after:after, .sprite-medal-silver, .sprite-medal-silver-after:after, .sprite-multimedia-document, .sprite-multimedia-exercise, .sprite-multimedia-presentation, .sprite-multimedia-video, .sprite-partner-ade, .sprite-partner-etr, .sprite-partner-facig, .sprite-partner-fafire, .sprite-partner-ufpe, .sprite-partner-univasf, .sprite-plan-consultancy-hr, .sprite-plan-consultancy-hr-before:before, .sprite-plan-independent, .sprite-plan-independent-before:before, .sprite-plan-institution, .sprite-plan-institution-before:before, .sprite-segment-consultancy-hr, .sprite-segment-independent, .sprite-segment-institution, .sprite-sign-up-green_32_34, .sprite-sign-up-green_32_34-before:before, .landing-logo-wrapper:hover {
-  background: url('/images/landing/sprite-s2e0e73ccc7.png') no-repeat;
+.sprite-landing, .sprite-advantage-developer, .sprite-advantage-manager, .sprite-advantage-student, .sprite-advantage-teacher, .sprite-background-chat, .sprite-background-management, .sprite-background-treemap, .sprite-background-wall, .sprite-icon-chat, .sprite-icon-close, .sprite-icon-correct, .sprite-icon-developer, .sprite-icon-exercise, .sprite-icon-management, .sprite-icon-plus, .sprite-icon-report, .sprite-keko-playing, .sprite-light-logo, .sprite-logo-oer, .sprite-medal-gold, .sprite-medal-gold-after:after, .sprite-medal-silver, .sprite-medal-silver-after:after, .sprite-multimedia-document, .sprite-multimedia-exercise, .sprite-multimedia-presentation, .sprite-multimedia-video, .sprite-partner-ade, .sprite-partner-etr, .sprite-partner-facig, .sprite-partner-fafire, .sprite-partner-ufpe, .sprite-partner-univasf, .sprite-plan-consultancy-hr, .sprite-plan-consultancy-hr-before:before, .sprite-plan-independent, .sprite-plan-independent-before:before, .sprite-plan-institution, .sprite-plan-institution-before:before, .sprite-segment-consultancy-hr, .sprite-segment-independent, .sprite-segment-institution {
+  background: url('/images/landing/sprite-se7e88701e5.png') no-repeat;
 }
 
 .sprite-advantage-developer {
-  background-position: 0 -1429px;
+  background-position: -240px -2537px;
   height: 200px;
   width: 200px;
 }
 
 .sprite-advantage-manager {
-  background-position: -200px -1229px;
+  background-position: -217px -1444px;
   height: 200px;
   width: 200px;
 }
 
 .sprite-advantage-student {
-  background-position: 0 -2322px;
+  background-position: -265px -112px;
   height: 200px;
   width: 200px;
 }
 
 .sprite-advantage-teacher {
-  background-position: 0 -1229px;
+  background-position: -133px -1104px;
   height: 200px;
   width: 200px;
 }
 
 .sprite-background-chat {
-  background-position: -112px -427px;
+  background-position: 0 -1444px;
   height: 118px;
   width: 217px;
 }
 
 .sprite-background-management {
-  background-position: 0 -1669px;
+  background-position: 0 -1884px;
   height: 210px;
   width: 395px;
 }
 
 .sprite-background-treemap {
-  background-position: 0 -1879px;
+  background-position: 0 -2094px;
   height: 213px;
   width: 470px;
 }
 
 .sprite-background-wall {
-  background-position: 0 -2092px;
+  background-position: 0 -2307px;
   height: 230px;
   width: 469px;
 }
 
 .sprite-icon-chat {
-  background-position: -240px -167px;
+  background-position: 0 -705px;
   height: 130px;
   width: 128px;
 }
 
 .sprite-icon-close {
-  background-position: -16px -112px;
+  background-position: 0 -112px;
   height: 18px;
   width: 16px;
 }
 
 .sprite-icon-correct {
-  background-position: -32px -112px;
+  background-position: -48px -112px;
   height: 18px;
   width: 16px;
 }
 
 .sprite-icon-developer {
-  background-position: 0 -1089px;
+  background-position: 0 -442px;
   height: 130px;
   width: 128px;
 }
 
 .sprite-icon-exercise {
-  background-position: -112px -167px;
+  background-position: 0 -572px;
   height: 130px;
   width: 128px;
 }
 
 .sprite-icon-management {
-  background-position: 0 -297px;
+  background-position: -291px -312px;
   height: 130px;
   width: 129px;
 }
@@ -142,336 +142,161 @@ body {
 }
 
 .sprite-icon-report {
-  background-position: -329px -427px;
+  background-position: -128px -705px;
   height: 130px;
   width: 128px;
 }
 
 .sprite-keko-playing {
-  background-position: -200px -1429px;
+  background-position: 0 -2537px;
   height: 240px;
   width: 240px;
 }
 .sprite-keko-playing:hover, .sprite-keko-playing.keko-playing_hover, .landing-api:hover .landing-api-illustration, .sprite-keko-playing.keko-playing-hover {
-  background-position: -200px -2322px;
+  background-position: 0 -1644px;
 }
 
 .sprite-light-logo {
-  background-position: -129px -297px;
+  background-position: -128px -442px;
   height: 70px;
   width: 300px;
 }
 
 .sprite-logo-oer {
-  background-position: -128px -1089px;
+  background-position: 0 -1304px;
   height: 140px;
   width: 279px;
 }
 
-.sprite-logo {
-  background-position: -260px -112px;
-  height: 55px;
-  width: 193px;
-}
-
 .sprite-medal-gold, .sprite-medal-gold-after:after {
-  background-position: -48px -112px;
+  background-position: -16px -112px;
   height: 18px;
   width: 16px;
 }
 
 .sprite-medal-silver, .sprite-medal-silver-after:after {
-  background-position: 0 -112px;
+  background-position: -32px -112px;
   height: 18px;
   width: 16px;
 }
 
 .sprite-multimedia-document {
-  background-position: -195px 0;
-  height: 65px;
-  width: 65px;
-}
-
-.sprite-multimedia-exercise {
-  background-position: -130px 0;
-  height: 65px;
-  width: 65px;
-}
-
-.sprite-multimedia-presentation {
   background-position: 0 0;
   height: 65px;
   width: 65px;
 }
 
+.sprite-multimedia-exercise {
+  background-position: -161px -312px;
+  height: 65px;
+  width: 65px;
+}
+
+.sprite-multimedia-presentation {
+  background-position: -96px -312px;
+  height: 65px;
+  width: 65px;
+}
+
 .sprite-multimedia-video {
-  background-position: -65px 0;
+  background-position: -226px -312px;
   height: 65px;
   width: 65px;
 }
 
 .sprite-partner-ade {
-  background-position: -266px -557px;
+  background-position: -133px -971px;
   height: 133px;
   width: 133px;
 }
 .sprite-partner-ade:hover, .sprite-partner-ade.partner-ade_hover, .sprite-partner-ade.partner-ade-hover {
-  background-position: -133px -690px;
+  background-position: 0 -1104px;
 }
 
 .sprite-partner-etr {
-  background-position: -266px -690px;
+  background-position: -133px -838px;
   height: 133px;
   width: 133px;
 }
 .sprite-partner-etr:hover, .sprite-partner-etr.partner-etr_hover, .sprite-partner-etr.partner-etr-hover {
-  background-position: -266px -956px;
+  background-position: -266px -838px;
 }
 
 .sprite-partner-facig {
-  background-position: 0 -823px;
+  background-position: -261px -572px;
   height: 133px;
   width: 133px;
 }
 .sprite-partner-facig:hover, .sprite-partner-facig.partner-facig_hover, .sprite-partner-facig.partner-facig-hover {
-  background-position: -133px -823px;
+  background-position: -279px -1304px;
 }
 
 .sprite-partner-fafire {
-  background-position: -266px -823px;
+  background-position: -132px -112px;
   height: 133px;
   width: 133px;
 }
 .sprite-partner-fafire:hover, .sprite-partner-fafire.partner-fafire_hover, .sprite-partner-fafire.partner-fafire-hover {
-  background-position: -133px -956px;
+  background-position: 0 -838px;
 }
 
 .sprite-partner-ufpe {
-  background-position: 0 -956px;
+  background-position: 0 -971px;
   height: 133px;
   width: 133px;
 }
 .sprite-partner-ufpe:hover, .sprite-partner-ufpe.partner-ufpe_hover, .sprite-partner-ufpe.partner-ufpe-hover {
-  background-position: 0 -557px;
+  background-position: -128px -572px;
 }
 
 .sprite-partner-univasf {
-  background-position: 0 -690px;
+  background-position: -256px -705px;
   height: 133px;
   width: 133px;
 }
 .sprite-partner-univasf:hover, .sprite-partner-univasf.partner-univasf_hover, .sprite-partner-univasf.partner-univasf-hover {
-  background-position: -133px -557px;
+  background-position: -266px -971px;
 }
 
 .sprite-plan-consultancy-hr, .sprite-plan-consultancy-hr-before:before {
-  background-position: -212px -112px;
+  background-position: -84px -112px;
   height: 50px;
   width: 48px;
 }
 
 .sprite-plan-independent, .sprite-plan-independent-before:before {
-  background-position: -164px -112px;
+  background-position: -48px -312px;
   height: 50px;
   width: 48px;
 }
 
 .sprite-plan-institution, .sprite-plan-institution-before:before {
-  background-position: -116px -112px;
+  background-position: 0 -312px;
   height: 50px;
   width: 48px;
 }
 
 .sprite-segment-consultancy-hr {
-  background-position: 0 -167px;
+  background-position: -177px 0;
   height: 112px;
   width: 112px;
 }
 
 .sprite-segment-independent {
-  background-position: 0 -427px;
+  background-position: -65px 0;
   height: 112px;
   width: 112px;
 }
 
 .sprite-segment-institution {
-  background-position: -260px 0;
+  background-position: -289px 0;
   height: 112px;
   width: 112px;
 }
 
-.sprite-sign-up-green_32_34, .sprite-sign-up-green_32_34-before:before {
-  background-position: -84px -112px;
-  height: 34px;
-  width: 32px;
-}
-
-.sprite-landing, .sprite-advantage-developer, .sprite-advantage-manager, .sprite-advantage-student, .sprite-advantage-teacher, .sprite-background-chat, .sprite-background-management, .sprite-background-treemap, .sprite-background-wall, .sprite-icon-chat, .sprite-icon-close, .sprite-icon-correct, .sprite-icon-developer, .sprite-icon-exercise, .sprite-icon-management, .sprite-icon-plus, .sprite-icon-report, .sprite-keko-playing, .sprite-light-logo, .sprite-logo-oer, .sprite-logo, .sprite-medal-gold, .sprite-medal-gold-after:after, .sprite-medal-silver, .sprite-medal-silver-after:after, .sprite-multimedia-document, .sprite-multimedia-exercise, .sprite-multimedia-presentation, .sprite-multimedia-video, .sprite-partner-ade, .sprite-partner-etr, .sprite-partner-facig, .sprite-partner-fafire, .sprite-partner-ufpe, .sprite-partner-univasf, .sprite-plan-consultancy-hr, .sprite-plan-consultancy-hr-before:before, .sprite-plan-independent, .sprite-plan-independent-before:before, .sprite-plan-institution, .sprite-plan-institution-before:before, .sprite-segment-consultancy-hr, .sprite-segment-independent, .sprite-segment-institution, .sprite-sign-up-green_32_34, .sprite-sign-up-green_32_34-before:before, .landing-logo-wrapper:hover {
+.sprite-landing, .sprite-advantage-developer, .sprite-advantage-manager, .sprite-advantage-student, .sprite-advantage-teacher, .sprite-background-chat, .sprite-background-management, .sprite-background-treemap, .sprite-background-wall, .sprite-icon-chat, .sprite-icon-close, .sprite-icon-correct, .sprite-icon-developer, .sprite-icon-exercise, .sprite-icon-management, .sprite-icon-plus, .sprite-icon-report, .sprite-keko-playing, .sprite-light-logo, .sprite-logo-oer, .sprite-medal-gold, .sprite-medal-gold-after:after, .sprite-medal-silver, .sprite-medal-silver-after:after, .sprite-multimedia-document, .sprite-multimedia-exercise, .sprite-multimedia-presentation, .sprite-multimedia-video, .sprite-partner-ade, .sprite-partner-etr, .sprite-partner-facig, .sprite-partner-fafire, .sprite-partner-ufpe, .sprite-partner-univasf, .sprite-plan-consultancy-hr, .sprite-plan-consultancy-hr-before:before, .sprite-plan-independent, .sprite-plan-independent-before:before, .sprite-plan-institution, .sprite-plan-institution-before:before, .sprite-segment-consultancy-hr, .sprite-segment-independent, .sprite-segment-institution {
   display: inline-block;
   vertical-align: middle;
-}
-
-.landing-header {
-  height: 85px;
-  background-color: #e6e6e6;
-}
-.boxshadow .landing-header {
-  -webkit-box-shadow: 0 -1px 0 white inset, 0 1px 0 white inset, 0 1px 0 #b2b2b2;
-  -moz-box-shadow: 0 -1px 0 white inset, 0 1px 0 white inset, 0 1px 0 #b2b2b2;
-  box-shadow: 0 -1px 0 white inset, 0 1px 0 white inset, 0 1px 0 #b2b2b2;
-}
-.ie8 .landing-header {
-  border-bottom: 1px solid #b2b2b2;
-}
-
-.landing-logo-wrapper {
-  width: 300px;
-  height: 70px;
-  float: left;
-  position: relative;
-  margin-left: -112px;
-}
-.landing-logo-wrapper:hover {
-  background-position: -129px -297px;
-  height: 70px;
-  width: 300px;
-}
-
-.landing-logo {
-  position: absolute;
-  right: -3px;
-  bottom: 0;
-}
-
-.landing-header-buttons {
-  float: right;
-  margin-top: 20px;
-}
-
-.landing-button-sign-up +
-.landing-button-sign-in {
-  margin-left: 40px;
-}
-
-.landing-button-sign-up,
-.landing-button-sign-in {
-  display: inline-block;
-}
-.landing-button-sign-up [class*="icon-"],
-.landing-button-sign-in [class*="icon-"] {
-  margin: 5px 10px 0 0;
-  float: left;
-}
-
-.modal-sign-up .modal-body {
-  padding: 0;
-  color: #6d6e6f;
-}
-.modal-sign-up .line-gray3, .modal-sign-up .landing-functionalities hr, .landing-functionalities .modal-sign-up hr {
-  margin: 20px 0;
-}
-.modal-sign-up .line-gray3 +
-.row, .modal-sign-up .landing-functionalities hr +
-.row, .landing-functionalities .modal-sign-up hr +
-.row {
-  margin-bottom: 25px;
-}
-.modal-sign-up .tos .control-error label {
-  color: #6d6e6f;
-}
-.modal-sign-up .modal-footer .button-default +
-.button-success {
-  margin-left: 10px;
-}
-
-.modal-sign-up-title {
-  color: #61a080;
-  line-height: 22px;
-}
-.modal-sign-up-title.sprite-before:before {
-  position: relative;
-  top: 5px;
-  float: left;
-}
-
-.modal-sign-up-section {
-  padding: 20px 20px 10px;
-}
-.modal-sign-up-section p +
-.facebook-sign-up {
-  margin-top: 20px;
-}
-.modal-sign-up-section .facebook-sign-up-button +
-.legend {
-  margin-top: 5px;
-  display: block;
-}
-
-.list-separator +
-.modal-sign-up-section {
-  padding: 10px 20px 20px;
-}
-
-.modal-sign-up-tos {
-  float: left;
-  text-align: left;
-}
-
-.modal-sign-up-buttons {
-  float: right;
-}
-
-.modal-sign-up-login-explaination {
-  margin-top: 20px;
-}
-.modal-sign-up-login-explaination .legend {
-  color: #6d6e6f;
-}
-
-.modal-sign-up-success .modal-body {
-  padding: 0 20px 20px;
-  color: black;
-}
-.modal-sign-up-success .modal-body p +
-p {
-  margin-top: 20px;
-}
-
-.landing-button-sign-in .button-group {
-  position: relative;
-  display: inline-block;
-}
-.landing-button-sign-in .facebook-sign-in {
-  margin: 20px 17px;
-  font-size: 11px;
-}
-.landing-button-sign-in .dropdown-menu {
-  width: 260px;
-}
-.landing-button-sign-in .line-gray3, .landing-button-sign-in .landing-functionalities hr, .landing-functionalities .landing-button-sign-in hr {
-  border-top-width: 0;
-  height: 2px;
-}
-
-.landing-sign-in-recover {
-  padding: 10px 10px 8px;
-  text-align: center;
-}
-
-.landing-sign-in-form {
-  padding: 20px 10px;
-}
-.landing-sign-in-form .control-group +
-.control-group {
-  margin-top: 2px;
-}
-
-.landing-sign-in-form-submit {
-  margin-top: 10px;
-  overflow: hidden;
-}
-.landing-sign-in-form-submit .legend {
-  color: #6d6e6f;
 }
 
 .landing-welcome {
@@ -1066,6 +891,9 @@ p {
   padding: 20px 0;
   background-color: #1c75bb;
 }
+.textshadow .landing-oer-outer-wrapper {
+  text-shadow: 0 1px 0 black;
+}
 .cssgradients .landing-oer-outer-wrapper {
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(0, 0, 0, 0.4)), color-stop(5%, #1c75bb), color-stop(95%, #1c75bb), color-stop(100%, rgba(0, 0, 0, 0.4)));
   background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.4), #1c75bb 5%, #1c75bb 95%, rgba(0, 0, 0, 0.4) 100%);
@@ -1077,13 +905,6 @@ p {
   background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUlIiBzdG9wLWNvbG9yPSIjMWM3NWJiIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iOTUlIiBzdG9wLWNvbG9yPSIjMWM3NWJiIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
 }
 
-.landing-oer-inner-wrapper {
-  background: url("../images/landing/oer-logo.png") no-repeat right center;
-}
-.textshadow .landing-oer-inner-wrapper {
-  text-shadow: 0 1px 0 black;
-}
-
 .landing-oer-title {
   position: relative;
 }
@@ -1092,6 +913,9 @@ p {
 }
 .landing-oer-title h3 {
   text-align: right;
+  color: white;
+}
+.landing-oer-title h3 a {
   color: white;
 }
 

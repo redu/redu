@@ -1,5 +1,9 @@
 class CoursesController < BaseController
   respond_to :html, :js
+  before_filter :set_nav_global_context, :only=> [:show, :preview,
+                                                  :admin_invitations]
+  before_filter :set_nav_global_context_admin,
+    :except => [:show, :preview, :index, :admin_invitations, :new, :create]
 
   before_filter Proc.new {
     @environment = Environment.find_by_path(params[:environment_id])
@@ -7,13 +11,22 @@ class CoursesController < BaseController
                                         :conditions => { :path => params[:id] },
                                         :include => [:audiences])
   }, :only => :edit
+
+  after_filter :update_last_access, :only => [:show]
+
   load_resource :environment, :find_by => :path
   load_and_authorize_resource :course, :through => :environment,
     :except => [:index], :find_by => :path
 
   rescue_from CanCan::AccessDenied do |exception|
     session[:return_to] = request.fullpath
-    flash[:notice] = "Você não tem acesso a essa página"
+
+    if @course.blocked?
+      flash[:error] = "Entre em contato com o administrador deste curso."
+    else
+      flash[:error] = "Essa área só pode ser vista após você acessar o Redu com seu nome e senha."
+    end
+
     redirect_to preview_environment_course_path(@environment, @course)
   end
 
@@ -67,12 +80,16 @@ class CoursesController < BaseController
   end
 
   def new
+    content_for :nav_global_context, "environments_admin"
+
     respond_to do |format|
       format.html { render 'courses/admin/new' }
     end
   end
 
   def create
+    content_for :nav_global_context, "environments_admin"
+
     authorize! :manage, @environment #Talvez seja necessario pois o @environment não está sendo autorizado.
 
     @course.owner = current_user
@@ -95,6 +112,7 @@ class CoursesController < BaseController
   end
 
   def index
+    content_for :nav_global_context, "courses_index"
 
     paginating_params = {
       :page => params[:page],
@@ -199,7 +217,7 @@ class CoursesController < BaseController
   # Modera os usuários.
   def moderate_members_requests
     if params[:member].nil?
-      flash[:notice] = "Escolha, pelo menos, algum usuário."
+      flash[:error] = "Escolha, pelo menos, algum usuário."
     else
       approved = params[:member].reject{|k,v| v == 'reject'}
       rejected = params[:member].reject{|k,v| v == 'approve'}
@@ -225,7 +243,7 @@ class CoursesController < BaseController
           (total_members - members_limit).times do
             approved.shift
           end
-          flash[:notice] = "O limite máximo de usuários foi atigindo, apenas alguns membros foram moderados."
+          flash[:error] = "O limite máximo de usuários foi atigindo, apenas alguns membros foram moderados."
         else
           flash[:notice] = 'Membros moderados!'
         end
@@ -239,9 +257,9 @@ class CoursesController < BaseController
         end
       else
         if rejected.to_hash.empty?
-          flash[:notice] = "O limite máximo de usuários foi atingido. Não é possível adicionar mais usuários."
+          flash[:error] = "O limite máximo de usuários foi atingido. Não é possível adicionar mais usuários."
         else
-          flash[:notice] = "O limite máximo de usuários foi atingido. Só os usuários rejeitados foram moderados."
+          flash[:error] = "O limite máximo de usuários foi atingido. Só os usuários rejeitados foram moderados."
         end
       end
 
@@ -451,7 +469,7 @@ class CoursesController < BaseController
     end
 
     if email_invitations.empty? && user_invitations.empty?
-      flash[:notice] = "Nenhum convite foi marcado para ser removido."
+      flash[:error] = "Nenhum convite foi marcado para ser removido."
     else
       flash[:notice] = "Os convites foram removidos do curso #{@course.name}."
     end
@@ -465,5 +483,20 @@ class CoursesController < BaseController
     respond_to do |format|
       format.html { render 'courses/admin/teacher_participation_report'}
     end
+  end
+
+  protected
+
+  def set_nav_global_context_admin
+    content_for :nav_global_context, "courses_admin"
+  end
+
+  def set_nav_global_context
+    content_for :nav_global_context, "courses"
+  end
+
+  def update_last_access
+    uca = current_user.get_association_with(@course)
+    uca.touch(:last_accessed_at) if uca
   end
 end

@@ -238,8 +238,7 @@ class Course < ActiveRecord::Base
     self.create_license(user, role)
 
     usas = self.spaces.collect do |space|
-      UserSpaceAssociation.new(:user_id => user.id,
-                               :space_id => space.id,
+      UserSpaceAssociation.new(:user_id => user.id, :space_id => space.id,
                                :role => role)
     end
     UserSpaceAssociation.import(usas, :validate => false)

@@ -72,6 +72,10 @@ class LecturesController < BaseController
         format.html do
           render :show_document
         end
+      elsif @lecture.lectureable_type == 'Api::Canvas'
+        format.html do
+          render :show_canvas
+        end
       elsif @lecture.lectureable_type == 'Exercise'
         format.html do
           @result = @lecture.lectureable.result_for(current_user)

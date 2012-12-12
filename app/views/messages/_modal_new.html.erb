@@ -1,0 +1,62 @@
+<script type="text/javascript">
+  $(document).ready(function(){
+    var holder = $("#message_recipient").parent().find(".holder");
+    if (holder.length == 0) {
+      $("#message_recipient").fcbkcomplete({
+        json_url: "<%= auto_complete_users_path %>",
+        addontab: true,
+        complete_text: "Digite o nome de um contato...",
+        height: 6,
+      });
+    }
+
+    <% if @recipients %>
+      <% @recipients.each do |recipient| %>
+        if ($("#message_recipient option").length != "<%= @recipients.length %>") {
+          $("#message_recipient").trigger("addItem", [{"title":"<%= recipient.display_name.to_s %>", "value":"<%= recipient.id.to_s %>"}])
+        }
+      <% end %>
+    <% end %>
+  });
+</script>
+
+<div id="modal-new-message" class="modal hide">
+  <div class="modal-header">
+    <h3 class="modal-title">Nova Mensagem</h3>
+  </div>
+  <%= form_for [user, message], :remote => true do |f| %>
+    <div class="modal-body">
+        <div class="control-group">
+          <div class="control-label">
+            <%= f.label :recipient, "Para" %>
+          </div>
+          <div style= "width: 100%;">
+            <%= f.select :recipient, "" %>
+          </div>
+          <%= concave_errors_for f.object, :recipient %>
+        </div>
+        <div class="control-group">
+          <div class="control-label">
+            <%= f.label :subject, "Assunto" %>
+          </div>
+          <div class="controls">
+            <%= f.text_field :subject, :placeholder =>"Digite o assunto desta mensagem" %>
+            <%= concave_errors_for f.object, :subject %>
+          </div>
+        </div>
+        <div class="control-group">
+          <div class="control-label">
+            <%= f.label :body, "Mensagem" %>
+          </div>
+          <div class="controls">
+            <%= f.text_area :body, :size => "73x6", :placeholder =>"Escreva a mensagem" %>
+            <%= concave_errors_for f.object, :body %>
+          </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" data-dismiss="modal" class="button-default">Cancelar</button>
+      <%= f.submit "Enviar", :class => "button-primary" %>
+    </div>
+  <% end %>
+</div>

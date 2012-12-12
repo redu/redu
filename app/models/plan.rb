@@ -124,6 +124,29 @@ class Plan < ActiveRecord::Base
     self.migrate!
   end
 
+  # Bloqueia o acesso ao billable e todos os seus filhos na hierarquia
+  # Utilizado apenas diretamente no console
+  def block_all_access!
+    if self.billable.is_a? Environment
+      environment = self.billable
+      courses = self.billable.courses.includes(:spaces =>
+                                               [:subjects => :lectures])
+      spaces = courses.collect(&:spaces).flatten
+
+      Environment.update_all(["blocked = ?", true], ["id = ?", self.billable])
+    else
+      courses = [self.billable]
+      spaces = courses[0].spaces.includes(:subjects => :lectures)
+    end
+    subjects = spaces.collect(&:subjects).flatten
+    lectures = subjects.collect(&:lectures).flatten
+
+    Course.update_all(["blocked = ?", true], ["id IN (?)", courses])
+    Space.update_all(["blocked = ?", true], ["id IN (?)", spaces])
+    Subject.update_all(["blocked = ?", true], ["id IN (?)", subjects])
+    Lecture.update_all(["blocked = ?", true], ["id IN (?)", lectures])
+  end
+
   protected
 
   # Calcula quanto do plano atual está pendente e fecha tais faturas
