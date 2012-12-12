@@ -126,7 +126,6 @@ class LecturesController < BaseController
       @lecture.subject = Subject.find(params[:subject_id])
 
       if @lecture.valid? && @lecture.make_sense?
-        @lecture.published = 1
         lectureable = @lecture.lectureable
         if lectureable.is_a? Seminar
           authorize! :upload_multimedia, @lecture

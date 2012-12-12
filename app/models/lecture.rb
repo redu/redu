@@ -21,8 +21,6 @@ class Lecture < ActiveRecord::Base
   accepts_nested_attributes_for :lectureable
 
   # SCOPES
-  scope :unpublished, where(:published => false)
-  scope :published, where(:published => true)
   scope :seminars, where("lectureable_type LIKE 'Seminar'")
   scope :iclasses, where("lectureable_type LIKE 'InteractiveClass'")
   scope :pages, where("lectureable_type LIKE 'Page'")
@@ -33,7 +31,7 @@ class Lecture < ActiveRecord::Base
   scope :by_subjects, lambda { |subjects_id| where(:subject_id =>subjects_id) }
   scope :by_day, lambda { |day| where(:created_at =>(day..(day+1))) }
 
-  attr_protected :owner, :published, :view_count, :removed, :is_clone
+  attr_protected :owner, :view_count, :removed, :is_clone
 
   # PLUGINS
   acts_as_taggable

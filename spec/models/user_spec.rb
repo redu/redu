@@ -143,8 +143,6 @@ describe User do
                         :is_clone => false, :owner => subject)
       lecture2 = Factory(:lecture, :subject => @sub,
                          :is_clone => true, :owner => subject)
-      lecture.published = 1
-      lecture2.published = 1
       lecture.save
       lecture2.save
       subject.lectures.should == [lecture]
@@ -763,7 +761,7 @@ describe User do
 
       context "but there's already an user with given nickname" do
         before { Factory.create(:user, :login => 'SomeUserville') }
-        
+
         it "should return a valid user" do
           User.create_with_omniauth(@auth).should be_valid
         end
@@ -778,7 +776,7 @@ describe User do
       end
 
       it 'should create a new user' do
-        expect { 
+        expect {
           User.create_with_omniauth(@auth)
         }.to change(User, :count).by(1)
       end

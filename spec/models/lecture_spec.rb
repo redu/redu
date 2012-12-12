@@ -32,7 +32,6 @@ describe Lecture do
   it { should validate_presence_of :lectureable }
 
   it { should_not allow_mass_assignment_of :owner }
-  it { should_not allow_mass_assignment_of :published }
   it { should_not allow_mass_assignment_of :view_count }
   it { should_not allow_mass_assignment_of :removed }
   it { should_not allow_mass_assignment_of :is_clone }
@@ -79,29 +78,6 @@ describe Lecture do
   end
 
   context "finders" do
-    it "retrieves unpublished lectures" do
-      lectures = (1..3).collect { Factory(:lecture, :subject => @sub,
-                                          :published => false) }
-      subject.published = 1
-      lectures[2].published = 1
-      subject.save
-      lectures[2].save
-
-      Lecture.unpublished.should == [lectures[0], lectures[1]]
-    end
-
-    it "retrieves published lectures" do
-      lectures = (1..3).collect { Factory(:lecture,
-                                          :subject => @sub,
-                                          :published => false) }
-      subject.published = 1
-      lectures[2].published = 1
-      subject.save
-      lectures[2].save
-
-      Lecture.published.should == [lectures[2], subject]
-    end
-
     it "retrieves lectures that are seminars" do
       pending "Need seminar Factory" do
         seminars = (1..2).collect { Factory(:lecture,:subject => @sub,

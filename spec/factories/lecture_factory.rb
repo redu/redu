@@ -3,5 +3,4 @@ Factory.define :lecture do |l|
   l.association :lectureable, :factory => :page
   l.association :owner, :factory => :user
   l.association :subject
-  l.published 1
 end
