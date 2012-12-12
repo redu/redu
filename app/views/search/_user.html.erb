@@ -19,4 +19,26 @@
   <% end %>
 
   <%= mutual_friends(user).count %>
+
+  <span><%= (user.courses & current_user.courses).count %></span>
+
+  <% if !is_friend?(user) %>
+    <% if current_friendship(user) %>
+
+      <% if current_friendship(user).status == 'pending' %>
+        <span>Aguardando aceitação</span>
+      <% else %>
+        <%= link_to 'Aceitar pedido de conexão',
+            user_friendships_path(current_user,
+                                  :friend_id => user.id),
+                                  :method => :post %>
+      <% end %>
+
+    <% else %>
+      <%= link_to 'Adicionar contato',
+          user_friendships_path(current_user,
+                                :friend_id => user.id),
+                                :method => :post %>
+    <% end %>
+  <% end %>
 </li>
