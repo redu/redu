@@ -33,7 +33,6 @@ describe Lecture do
 
   it { should_not allow_mass_assignment_of :owner }
   it { should_not allow_mass_assignment_of :view_count }
-  it { should_not allow_mass_assignment_of :removed }
   it { should_not allow_mass_assignment_of :is_clone }
 
   it "responds to mark_as_done_for!" do

@@ -43,10 +43,6 @@ class LecturesController < BaseController
   def show
     update_view_count(@lecture)
 
-    if @lecture.removed
-      redirect_to removed_page_path and return
-    end
-
     @status = Status.new
     @statuses = Status.from_hierarchy(@lecture).
       paginate(:page => params[:page],:order => 'created_at DESC',

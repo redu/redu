@@ -31,7 +31,7 @@ class Lecture < ActiveRecord::Base
   scope :by_subjects, lambda { |subjects_id| where(:subject_id =>subjects_id) }
   scope :by_day, lambda { |day| where(:created_at =>(day..(day+1))) }
 
-  attr_protected :owner, :view_count, :removed, :is_clone
+  attr_protected :owner, :view_count, :is_clone
 
   # PLUGINS
   acts_as_taggable
