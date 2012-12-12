@@ -83,6 +83,7 @@ body {
 
 .home-container {
   padding: 10px 20px;
+  overflow: hidden;
 }
 .home-container h3 {
   line-height: 26px;
@@ -458,11 +459,12 @@ body {
 
 ul.requisitions {
   margin: 0;
+  overflow: visible;
 }
 ul.requisitions li {
   list-style: none;
   width: 100%;
-  padding-bottom: 5px;
+  margin-bottom: 0;
 }
 ul.requisitions li:before {
   margin: 0;
