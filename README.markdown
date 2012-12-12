@@ -3,16 +3,18 @@
 Este repositório contem o core do Redu. O redu-core é a parte central da plataforma social educacional Redu. Também existem alguns subsistemas/serviços que estão em servidores/projetos/repositórios diferentes. A saber:
 
 - [Portal de aplicativos](http://github.com/redu/apps): Marketplace de aplicativos educacionais.
-- [Visualizações semânticas](http://github.com/redu/vis). Armazenamento e construção de visualizações semânticas do Redu.
-- [Central de Ajuda](http://github.com/redu/help-center). Tutoriais de suporte no uso da plataforma.
-- [Página de desenvolvedores](http://github.com/redu/help-center). Documentação da API REST do Redu
-- [Redu Mobile](http://github.com/redu/mobile). Aplicativo Android oficial.
-- [Wally Server](http://github.com/redu/wally). Mural do Redu (server-side)
-- [Wally.js](http://github.com/redu/wally.js). Mural do Redu (client-side)
-- [Untied](http://github.com/redu/untied). Message Bus utilizado na comunicação entre serviços.
-- [Permit](http://github.com/redu/permit). Autorização e gerênciamento de políticas de acesso entre serviços.
-- [ReduPy](http://github.com/redu/redupy). Encapsulador Python para a API REST do Redu.
-- [JRedu](http://github.com/redu/jredu). Encapsulador Java para a API REST do Redu
+- [Visualizações semânticas](http://github.com/redu/vis): Armazenamento e construção de visualizações semânticas do Redu.
+- [Central de Ajuda](http://github.com/redu/help-center): [Tutoriais](http://ajuda.redu.com.br) de suporte no uso da plataforma.
+- [Página de desenvolvedores](http://github.com/redu/redu.github.com): Documentação da API REST do Redu
+- [Página da empresa](http://github.com/redu/tech.redu.com.br): Página do [Redu Educational Technologies](http://tech.redu.com.br)
+- [Página do livro](http://github.com/redu/livro): Pagina do livro [Educar com o Redu](http://educarcom.redu.com.br)
+- [Redu Mobile](http://github.com/redu/mobile): Aplicativo Android oficial.
+- [Wally Server](http://github.com/redu/wally): Mural do Redu (server-side)
+- [Wally.js](http://github.com/redu/wally.js): Mural do Redu (client-side)
+- [Untied](http://github.com/redu/untied): Message Bus utilizado na comunicação entre serviços.
+- [Permit](http://github.com/redu/permit): Autorização e gerênciamento de políticas de acesso entre serviços.
+- [ReduPy](http://github.com/redu/redupy): Encapsulador Python para a API REST do Redu.
+- [JRedu](http://github.com/redu/jredu): Encapsulador Java para a API REST do Redu
 
 ### Setup
 
@@ -36,13 +38,6 @@ $ redu > mysqld_safe
 $ redu > mongod --journal
 redu (master) > mongod --dbpath=$HOME/usr/data/   --journal
 Wed Dec 12 08:48:20 [initandlisten] MongoDB starting : pid=4144 port=27017 dbpath=/Users/guiocavalcanti/usr/data/ 32-bit host=scissorhands.local
-Wed Dec 12 08:48:20 [initandlisten] db version v2.0.6, pdfile version 4.5
-Wed Dec 12 08:48:20 [initandlisten] git version: e1c0cbc25863f6356aa4e31375add7bb49fb05bc
-Wed Dec 12 08:48:20 [initandlisten] build info: Darwin bs-mm0.local 9.8.0 Darwin Kernel Version 9.8.0: Wed Jul 15 16:55:01 PDT 2009; root:xnu-1228.15.4~1/RELEASE_I386 i386 BOOST_LIB_VERSION=1_40
-Wed Dec 12 08:48:20 [initandlisten] options: { dbpath: "/Users/guiocavalcanti/usr/data/", journal: true }
-Wed Dec 12 08:48:20 [initandlisten] journal dir=/Users/guiocavalcanti/usr/data/journal
-Wed Dec 12 08:48:20 [initandlisten] recover : no journal files present, no recovery needed
-Wed Dec 12 08:48:21 [websvr] admin web console waiting for connections on port 28017
 Wed Dec 12 08:48:21 [initandlisten] waiting for connections on port 27017
 ```
 
