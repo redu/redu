@@ -1,11 +1,11 @@
 class SpaceSearch < Search
-  def initialize(per_page)
-    super(Space, :per_page => per_page)
+  def initialize
+    super(Space)
   end
 
-  def perform(query, page)
-    search({ :query => query, :page => page,
-             :include => [:users, :subjects, :teachers, :owner, :tags,
-                          { :course => :environment }] })
+  def self.perform(query, page = nil, per_page = 10)
+    searcher = SpaceSearch.new
+    searcher.search({ :query => query, :page => page, :per_page => per_page,
+      :include => [:users, :subjects, :teachers, :owner, :tags, { :course => :environment }] })
   end
 end
