@@ -29,10 +29,6 @@ describe Lecture do
   it { should accept_nested_attributes_for :lectureable }
 
   it { should validate_presence_of :name }
-  # Descrição não está sendo utilizada
-  xit { should validate_presence_of :description }
-  #FIXME Problema de tradução
-  xit { should ensure_length_of(:description).is_at_least(30).is_at_most(200)}
   it { should validate_presence_of :lectureable }
 
   it { should_not allow_mass_assignment_of :owner }
