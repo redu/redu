@@ -17,4 +17,6 @@
   <% user.tags.each do |tag| %>
     <span><%= tag.name %></span>
   <% end %>
+
+  <%= mutual_friends(user).count %>
 </li>
