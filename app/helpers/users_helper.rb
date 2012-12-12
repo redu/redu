@@ -16,4 +16,12 @@ module UsersHelper
       "http://" + url
     end
   end
+
+  def is_friend?(user, someone = current_user)
+    user.friends?(someone) or user.is?(someone)
+  end
+
+  def current_friendship(user, someone = current_user)
+    user.friendship_for someone
+  end
 end
