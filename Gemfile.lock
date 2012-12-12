@@ -69,6 +69,12 @@ GIT
       representable
 
 GIT
+  remote: git@github.com:jessicabarbalho/has_friends.git
+  revision: 362ee97857f2861d761646a03ac7321fc5c028e0
+  specs:
+    has_friends (0.0.1)
+
+GIT
   remote: git@github.com:redu/invitable.git
   revision: 171dcdb33d0955357a0af7980d6882925958949c
   specs:
@@ -455,6 +461,7 @@ DEPENDENCIES
   exceptional
   factory_girl_rails (~> 1.7.0)
   fog (~> 1.1.0)
+  has_friends!
   invitable!
   jammit-s3
   jasmine
