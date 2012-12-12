@@ -21,8 +21,11 @@
       remote: opts.remote,
       container: this.container
     });
-    this.iframe = this.container.find('iframe');
   };
+
+  window.Redu.Wally.prototype.iframe = function(){
+    return this.container.find('iframe')
+  }
 
   window.Redu.Wally.prototype.initSocket = function(opts){
     var wallyApp = this;
@@ -62,8 +65,8 @@
     };
     $.extend(options, opts);
 
-    this.iframe.height(options.height);
-    this.iframe.width(options.width);
+    this.iframe().height(options.height);
+    this.iframe().width(options.width);
   };
 
   window.Redu.Wally.prototype.parseUri = function(str) {
