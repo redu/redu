@@ -18,6 +18,8 @@
     <span><%= tag.name %></span>
   <% end %>
 
+  <%= mutual_friends(user).count %>
+
   <span><%= (user.courses & current_user.courses).count %></span>
 
   <% if !is_friend?(user) %>

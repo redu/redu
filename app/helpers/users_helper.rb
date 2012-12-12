@@ -24,4 +24,8 @@ module UsersHelper
   def current_friendship(user, someone = current_user)
     user.friendship_for someone
   end
+
+  def mutual_friends(user, someone = current_user)
+    user.friends_in_common_with(someone)
+  end
 end
