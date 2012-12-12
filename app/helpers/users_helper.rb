@@ -16,4 +16,8 @@ module UsersHelper
       "http://" + url
     end
   end
+
+  def mutual_friends(user, someone = current_user)
+    user.friends_in_common_with(someone)
+  end
 end
