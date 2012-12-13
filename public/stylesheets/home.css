@@ -472,8 +472,9 @@ ul.requisitions .list-mix-inner {
   margin-right: 0;
 }
 ul.requisitions .list-mix-inner .details {
-  padding: 6px 0 0 10px;
+  margin-left: 10px;
   float: left;
+  width: 476px;
 }
 ul.requisitions .list-mix-inner .avatar {
   float: left;
