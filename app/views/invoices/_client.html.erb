@@ -19,6 +19,6 @@
   <% end %>
   <span class="emission info"><strong>Emissão:</strong> <%= l Date.today %></span>
   <% unless period.nil? %>
-    <span class="period"><strong>Período:</strong> <%= l period.begin %> a <%= l period.end %></span>
+    <span class="period"><strong>Competência:</strong> <%= l period.begin, :format => :month_year %> </span>
   <% end %>
 </div>
