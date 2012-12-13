@@ -13,7 +13,9 @@
         <div class="offset2 span3">
           <h3 class="landing-navigation-subtitle">Suporte</h3>
           <h4>Sinta-se apoiado!</h4>
-          <p>Conte com nosso atendimento sempre que precisar, através de nossa plataforma e e-mail.</p>
+          <p>Conte com nosso atendimento e use a <%= link_to "Central de Ajuda",
+              Redu::Application.config.redu_services[:help_center][:url],
+              :title => "Central de Ajuda", :target => "_blank" %> para tirar suas dúvidas.</p>
         </div>
       </div>
     </div>
