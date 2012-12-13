@@ -678,4 +678,11 @@ describe UsersController do
       end
     end
   end
+
+  context "context GET" do
+    it "redirects to application_path" do
+      get :new, :locale => 'pt-BR'
+      response.should redirect_to(application_path(:anchor => "modal-sign-up"))
+    end
+  end
 end

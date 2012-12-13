@@ -401,6 +401,10 @@ class UsersController < BaseController
     end
   end
 
+  def new
+    redirect_to application_path(:anchor => "modal-sign-up")
+  end
+
   protected
 
   def deny_access(exception)

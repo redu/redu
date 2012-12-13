@@ -124,7 +124,7 @@ Redu::Application.routes.draw do
   end
 
   # Users
-  resources :users, :except => [:index, :new] do
+  resources :users, :except => [:index] do
     member do
       get :edit_account
       put :update_account
@@ -267,7 +267,6 @@ Redu::Application.routes.draw do
     resources :plans, :only => [:create]
   end
 
-  match '/users/new' => redirect("#modal-sign-up")
   root :to => 'base#site_index', :as => :home
   root :to => "base#site_index", :as => :application
 end
