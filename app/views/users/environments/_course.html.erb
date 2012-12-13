@@ -15,7 +15,7 @@
         <h5>
           <%= link_to course.name, environment_course_path(environment, course), :title => course.name, :class => "list-mix-title" %>
         </h5>
-        <span class="legend"><%= course.spaces.length %> disciplinas</span>
+        <span class="legend"><%= pluralize(course.spaces.length, "disciplina") %></span>
       </div>
       <% unless course.spaces.empty? %>
         <ul class="list-mix-body list-space-mini">
