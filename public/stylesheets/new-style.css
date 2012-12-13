@@ -675,6 +675,7 @@ body {
   margin: 20px 45px 20px 0;
   width: 40px;
   float: right;
+  clear: both;
   display: block;
 }
 
