@@ -702,6 +702,10 @@ describe User do
     subject.most_important_education.should == [edu2, edu3, edu1]
   end
 
+  it "should not return nil elements in most important education array" do
+    subject.most_important_education.should == []
+  end
+
   context "when application validation fail" do
     it "should prevent duplicate logins" do
       @duplicate = Factory.build(:user, :login => subject.login)
