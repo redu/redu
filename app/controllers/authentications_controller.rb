@@ -33,6 +33,19 @@ class AuthenticationsController < BaseController
       current_user = @user_session.record if @user_session.save
     end
 
+    # Lida com tokens de convites
+    if params.has_key?(:state) && can_parse(params[:state])
+      state = JSON.parse(params[:state])
+      if state.has_key?("invitation_token") # Convite para curso
+        invite = UserCourseInvitation.find_by_token(state["invitation_token"])
+        invite.user = current_user
+        invite.accept!
+      elsif state.has_key?("friendship_invitation_token") # Solicitação de amizade
+        invite = Invitation.find_by_token(state["friendship_invitation_token"])
+        invite.accept!(current_user)
+      end
+    end
+
     if valid_url?(params[:state])
       redirect_to params[:state]
     else
@@ -59,5 +72,15 @@ class AuthenticationsController < BaseController
     Redu::Application.config.redu_services.values.collect do |service|
       url.try(:include?, service[:url])
     end.inject(:^)
+  end
+
+  def can_parse(string)
+    begin
+      JSON.parse(string)
+    rescue JSON::ParserError
+      return false
+    end
+
+    true
   end
 end
