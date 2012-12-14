@@ -252,6 +252,7 @@ describe Lecture do
             subject_a = subject.lectureable.questions.collect do |q|
               attrs_except(q.alternatives, ["id","question_id"])
             end
+
             new_lecture_a = @new_lecture.lectureable.questions.collect do |q|
               attrs_except(q.alternatives, ["id","question_id"])
             end
@@ -260,7 +261,6 @@ describe Lecture do
           end
         end
       end
-
     end
   end
 
