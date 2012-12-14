@@ -5,6 +5,6 @@ class EnvironmentSearch < Search
 
   def perform(query, page)
     search({ :query => query, :page => page,
-             :include => [:users, :courses, :tags, :administrators] })
+             :include => [:administrators, :courses, :tags] })
   end
 end

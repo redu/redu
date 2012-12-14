@@ -5,7 +5,7 @@ class SpaceSearch < Search
 
   def perform(query, page)
     search({ :query => query, :page => page,
-             :include => [:users, :subjects, :teachers, :owner, :tags,
+             :include => [:subjects, :teachers, :owner, :tags,
                           { :course => :environment }] })
   end
 end

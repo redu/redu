@@ -5,7 +5,7 @@ class CourseSearch < Search
 
   def perform(query, page)
     search({ :query => query, :page => page,
-             :include => [:users, :audiences, :spaces, :tags, :environment,
-                          :owner, :teachers] })
+             :include => [:audiences, :spaces, :tags, :environment, :owner,
+                          :teachers] })
   end
 end
