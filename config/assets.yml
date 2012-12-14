@@ -29,6 +29,7 @@ javascripts:
     - public/javascripts/jquery.timeago.js
     - public/javascripts/timeago.js
     - public/javascripts/jquery.fcbkcomplete.min.js # Auto complete do facebook
+    - public/javascripts/old-create-status.js
   landing:
     - public/javascripts/rails.js
     - public/javascripts/vendor/modernizr.js
