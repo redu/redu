@@ -57,7 +57,7 @@ Redu::Application.routes.draw do
   match '/resend_activation' => 'users#resend_activation',
     :as => :resend_activation
   match '/account/edit' => 'users#edit_account', :as => :edit_account_from_email
-  resources :sessions
+  resources :sessions, :only => [:create, :destroy]
 
   # site routes
   match '/about' => 'base#about', :as => :about
