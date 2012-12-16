@@ -5,10 +5,8 @@ class Environment < ActiveRecord::Base
   # Representa o ambiente onde o ensino a distância acontece. Pode ser visto
   # como um instituição o provedor de ensino dentro do sistema.
 
-  after_create :create_environment_association, :index_search
+  after_create :create_environment_association
   after_create :create_course_association, :unless => "self.courses.empty?"
-  after_update :index_search
-  after_create :index_search
 
   has_many :courses, :dependent => :destroy,
     :conditions => ["courses.destroy_soon = ?", false]
@@ -123,10 +121,5 @@ class Environment < ActiveRecord::Base
       :user => self.owner,
       :role => Role[:environment_admin])
       course_assoc.approve!
-  end
-
-  # Indexa o objeto na busca
-  def index_search
-    self.index!
   end
 end
