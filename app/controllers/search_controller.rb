@@ -1,5 +1,7 @@
 class SearchController < BaseController
 
+  before_filter :authorize
+
   # Busca por Perfis + Ambientes (AVA's, Cursos e Disciplinas)
   def index
     @profiles = UserSearch.new.perform(params[:q], params[:page]).results
@@ -59,5 +61,11 @@ class SearchController < BaseController
     respond_to do |format|
       format.html # search/spaces_only.html.erb
     end
+  end
+
+  private
+
+  def authorize
+    authorize! :search, :all
   end
 end

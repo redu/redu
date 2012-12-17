@@ -3,6 +3,10 @@ require 'spec_helper'
 describe SearchController do
   let(:params) { { :q => 'Alex', :locale => 'pt-BR' } }
 
+  before do
+    controller.stub(:current_user => Factory(:user))
+  end
+
   describe "GET index" do
 
     it "should instantiate UserSearch" do

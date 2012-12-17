@@ -196,6 +196,8 @@ class Ability
         cannot? :read, canvas.lecture
       end
 
+      # Busca
+      can :search, :all
     end
   end
 end
