@@ -781,10 +781,13 @@
 }
 
 .create-status.message form {
-  overflow: hidden;
+  overflow: visible;
 }
 .create-status.message hr {
   border: transparent
+}
+.create-status.message .status-buttons {
+  padding-top: 0;
 }
 
 .content-section .statuses > ol {
