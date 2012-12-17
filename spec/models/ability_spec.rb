@@ -1954,6 +1954,9 @@ describe Ability do
     before do
       @user = Factory(:user)
       @ability = Ability.new(@user)
+
+      @admin = Factory(:user, :role => :admin)
+      @ability_admin = Ability.new(@admin)
     end
 
     context 'in an environment' do
@@ -1965,6 +1968,14 @@ describe Ability do
 
       it 'can not read the environment' do
         @ability.should_not be_able_to(:read, @environment)
+      end
+
+      it "as redu admin can read end manage the environment" do
+        Factory(:user_environment_association, :environment => @environment,
+                :user => @admin)
+
+        @ability_admin.should be_able_to(:read, @environment)
+        @ability_admin.should be_able_to(:manage, @environment)
       end
     end
 
@@ -1978,6 +1989,14 @@ describe Ability do
       it 'can not read the course' do
         @ability.should_not be_able_to(:read, @course)
       end
+
+      it "as redu admin can read and manage the course" do
+        Factory(:user_course_association, :course => @course, :user => @admin).
+          approve!
+
+        @ability_admin.should be_able_to(:read, @course)
+        @ability_admin.should be_able_to(:manage, @course)
+      end
     end
 
     context 'in a space' do
@@ -1988,6 +2007,13 @@ describe Ability do
 
       it 'can not read the space' do
         @ability.should_not be_able_to(:read, @space)
+      end
+
+      it "as redu admin can read and manage the space" do
+        Factory(:user_space_association, :space => @space, :user => @admin)
+
+        @ability_admin.should be_able_to(:read, @space)
+        @ability_admin.should be_able_to(:manage, @space)
       end
     end
 
@@ -2000,6 +2026,13 @@ describe Ability do
       it 'can not read the subject' do
         @ability.should_not be_able_to(:read, @subject)
       end
+
+      it "as redu admin can read and manage the subject" do
+        Factory(:enrollment, :subject => @subject, :user => @admin)
+
+        @ability_admin.should be_able_to(:read, @subject)
+        @ability_admin.should be_able_to(:manage, @subject)
+      end
     end
 
     context 'in a lecture' do
@@ -2010,6 +2043,13 @@ describe Ability do
 
       it 'can not read the lecture' do
         @ability.should_not be_able_to(:read, @lecture)
+      end
+
+      it "as redu admin can read and manage the lecture" do
+        Factory(:enrollment, :subject => @lecture.subject, :user => @admin)
+
+        @ability_admin.should be_able_to(:read, @lecture)
+        @ability_admin.should be_able_to(:manage, @lecture)
       end
     end
   end
