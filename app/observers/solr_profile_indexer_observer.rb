@@ -1,5 +1,5 @@
-class SolrIndexerObserver < ActiveRecord::Observer
-  # Observer responsável pela indexação de User, Environment, Course e Space
+class SolrProfileIndexerObserver < ActiveRecord::Observer
+  # Observer responsável pela indexação de User
 
   observe :user, :experience, :education, :high_school,
     :higher_education, :complementary_course, :event_education

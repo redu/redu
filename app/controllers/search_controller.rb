@@ -2,14 +2,12 @@ class SearchController < BaseController
 
   before_filter :authorize
 
-  PER_PAGE = Rails.application.config.search_results_per_page
-
   # Busca por Perfis + Ambientes (AVA's, Cursos e Disciplinas)
   def index
-    @profiles = search_for_profiles(params[:q], params[:page])
-    @environments = search_for_environments(params[:q], params[:page])
-    @courses = search_for_courses(params[:q], params[:page])
-    @spaces = search_for_spaces(params[:q], params[:page])
+    @profiles = UserSearch.new.perform(params[:q], params[:page]).results
+    @environments = EnvironmentSearch.new.perform(params[:q], params[:page]).results
+    @courses = CourseSearch.new.perform(params[:q], params[:page]).results
+    @spaces = SpaceSearch.new.perform(params[:q], params[:page]).results
     @query = params[:q]
 
     respond_to do |format|
@@ -19,7 +17,7 @@ class SearchController < BaseController
 
   # Busca por Perfis
   def profiles
-    @profiles = search_for_profiles(params[:q], params[:page])
+    @profiles = UserSearch.new.perform(params[:q], params[:page]).results
 
     respond_to do |format|
       format.html # search/profiles.html.erb
@@ -28,9 +26,9 @@ class SearchController < BaseController
 
   # Busca por Ambientes (AVA's, Cursos e Disciplinas)
   def environments
-    @environments = search_for_environments(params[:q], params[:page])
-    @courses = search_for_courses(params[:q], params[:page])
-    @spaces = search_for_spaces(params[:q], params[:page])
+    @environments = EnvironmentSearch.new.perform(params[:q], params[:page]).results
+    @courses = CourseSearch.new.perform(params[:q], params[:page]).results
+    @spaces = SpaceSearch.new.perform(params[:q], params[:page]).results
     @query = params[:q]
 
     respond_to do |format|
@@ -40,7 +38,7 @@ class SearchController < BaseController
 
   # Busca por Ambientes (Somente AVA's)
   def environments_only
-    @environments = search_for_environments(params[:q], params[:page])
+    @environments = EnvironmentSearch.new.perform(params[:q], params[:page]).results
 
     respond_to do |format|
       format.html # search/environments_only.html.erb
@@ -49,7 +47,7 @@ class SearchController < BaseController
 
   # Busca por Cursos
   def courses_only
-    @courses = search_for_courses(params[:q], params[:page])
+    @courses = CourseSearch.new.perform(params[:q], params[:page]).results
 
     respond_to do |format|
       format.html # search/courses_only.html.erb
@@ -58,7 +56,7 @@ class SearchController < BaseController
 
   # Busca por Disciplinas
   def spaces_only
-    @spaces = search_for_spaces(params[:q], params[:page])
+    @spaces = SpaceSearch.new.perform(params[:q], params[:page]).results
 
     respond_to do |format|
       format.html # search/spaces_only.html.erb
@@ -66,42 +64,6 @@ class SearchController < BaseController
   end
 
   private
-
-  def search(model, opts)
-    model.send("search", { :include => opts[:include] }) do
-      fulltext opts[:query]
-      paginate :page => opts[:page], :per_page => PER_PAGE
-    end
-  end
-
-  def results_for(search)
-    search.results
-  end
-
-  def search_for_profiles(query, page)
-    results_for(search(User, { :query => query, :page => page,
-                               :include => [:experiences, :tags,
-                                            { :educations  => :educationable }] }))
-  end
-
-  def search_for_environments(query, page)
-    results_for(search(Environment, { :query => query, :page => page,
-                                      :include => [:users, :courses, :tags,
-                                                   :administrators] }))
-  end
-
-  def search_for_courses(query, page)
-    results_for(search(Course, { :query => query, :page => page,
-                                 :include => [:users, :audiences, :spaces, :tags,
-                                              :environment, :owner, :teachers] }))
-  end
-
-  def search_for_spaces(query, page)
-    results_for(search(Space, { :query => query, :page => page,
-                                :include => [:users, :subjects,
-                                             :teachers, :owner, :tags,
-                                             { :course => :environment }] }))
-  end
 
   def authorize
     authorize! :search, :all
