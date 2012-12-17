@@ -39,6 +39,10 @@
         noResultsText: "Sem resultados",
         searchingText: "Buscando...",
       });
+
+      $("#invite-members").on("submit", function(e) {
+        $(this).find(":submit").prop("disabled", "disabled");
+      });
     });
   </script>
 <%= render :partial => 'courses/sidebar',
