@@ -392,7 +392,7 @@ a:hover,
 }
 
 .sprite, .sprite-light-logo, .sprite-light-talk-to-us, .sprite-logo-redu-tech-footer, .sprite-logo, .sprite-social-facebook, .sprite-social-twitter, .sprite-talk-to-us, .header-logo-wrapper:hover, .footer-logo-link:hover, .footer-contact:hover, .footer-contact:hover .footer-talk-to-us-balloons {
-  background: url('..images/sprite-sfd2bf123f9.png') no-repeat;
+  background: url('../images/sprite-sfd2bf123f9.png') no-repeat;
 }
 
 .sprite-light-logo {
@@ -4455,7 +4455,7 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
   margin-right: -6px !important;
 }
 
-.message-base, .system-message, .message-block {
+.system-message, .message-block {
   -webkit-box-shadow: 0 2px 10px 1px rgba(0, 0, 0, 0.4);
   -moz-box-shadow: 0 2px 10px 1px rgba(0, 0, 0, 0.4);
   box-shadow: 0 2px 10px 1px rgba(0, 0, 0, 0.4);
@@ -4466,7 +4466,7 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
   border-width: 1px;
   border-style: solid;
 }
-.message-base a, .system-message a, .message-block a {
+.system-message a:not([class*="button-"]), .message-block a:not([class*="button-"]) {
   text-decoration: underline;
 }
 
@@ -4488,11 +4488,11 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
   border-color: #ff6d6d;
   color: #c1272d;
 }
-.message-warning a {
+.message-warning a:not([class*="button-"]) {
   color: #e83b3b;
 }
-.message-warning a:hover {
-  color: #e1272d;
+.message-warning a:not([class*="button-"]):hover {
+  color: #c1272d;
 }
 
 .message-success {
@@ -4500,10 +4500,10 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
   border-color: #5fc080;
   color: #61a080;
 }
-.message-success a {
+.message-success a:not([class*="button-"]) {
   color: #5fc080;
 }
-.message-success a:hover {
+.message-success a:not([class*="button-"]):hover {
   color: #61a080;
 }
 
@@ -4519,7 +4519,7 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
   color: black;
 }
 
-.system-message-base, .system-message {
+.system-message {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
