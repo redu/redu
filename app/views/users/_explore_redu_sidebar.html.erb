@@ -12,7 +12,7 @@
       </li>
       <li>
         <% if user.settings.visited?("tour-1") %>
-          <a href="#tour-1" data-toggle="modal" class="icon-tour-lightblue_16_18-before link-secondary">Faça o Tour do Início</a>
+          <span data-target="#tour-1" data-toggle="modal" class="icon-tour-lightblue_16_18-before link-secondary link-fake">Faça o Tour do Início</span>
           <%= render :partial => "users/tour", :locals => { :user => @user } %>
         <% end %>
       </li>
