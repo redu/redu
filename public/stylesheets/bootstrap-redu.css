@@ -392,7 +392,7 @@ a:hover,
 }
 
 .sprite, .sprite-light-logo, .sprite-light-talk-to-us, .sprite-logo-redu-tech-footer, .sprite-logo, .sprite-social-facebook, .sprite-social-twitter, .sprite-talk-to-us, .header-logo-wrapper:hover, .footer-logo-link:hover, .footer-contact:hover, .footer-contact:hover .footer-talk-to-us-balloons {
-  background: url('..images/sprite-sfd2bf123f9.png') no-repeat;
+  background: url('../images/sprite-sfd2bf123f9.png') no-repeat;
 }
 
 .sprite-light-logo {
@@ -787,6 +787,7 @@ tr:hover td {
 }
 .form-checklist .link-name {
   font-weight: normal;
+  color: #73c3e6;
 }
 
 .inbox-message-base, .inbox-message-unread, .inbox-message-read,
