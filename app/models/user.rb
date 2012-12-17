@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
 
   #COURSES
   has_many :lectures, :foreign_key => "user_id",
-    :conditions => {:is_clone => false, :published => true}
+    :conditions => {:is_clone => false}
   has_many :courses_owned, :class_name => "Course",
     :foreign_key => "user_id"
   has_many :favorites, :order => "created_at desc", :dependent => :destroy
