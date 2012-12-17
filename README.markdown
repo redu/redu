@@ -96,6 +96,17 @@ $ redu (issue-1300) > git push origin issue-1300
 
 Para mais informações sobre como fazer o pull request, consulte [este](https://help.github.com/articles/using-pull-requests) post.
 
+### DelayedJob
+
+O [DelayedJob](https://github.com/collectiveidea/delayed_job) é utilizado como infraestrutura para processamento de tarefas em background.
+
+Para reinicializar o DelayedJob, em produção, use ``monit restart``. Por exemplo:
+
+```sh
+$ > sudo monit restart delayed_job.0
+$ > sudo monit restart delayed_job.1
+```
+
 ### Deploy
 
 O Redu (http://www.redu.com.br) funciona na infraestrutura da [Amazon](http://aws.amazon.com/) através do [EngineYard](http://www.engineyard.com/). Assumindo que você possua as permissões necessárias, para realizar o deploy basta executar o seguinte comando:
@@ -134,13 +145,6 @@ Process 'memcache_11211'            running
 Process 'delayed_job.1'             running
 Process 'delayed_job.0'             running
 System 'domU-12-31-39-0C-D1-A1'     running
-```
-
-Para reinicializar algum dos processos utilize o comando ``monit restart``. Por exemplo, para reinicializar DelayedJob:
-
-```sh
-$ > sudo monit restart delayed_job.0
-$ > sudo monit restart delayed_job.1
 ```
 
 Para mais informações sobre como utilizar o monit, execute ``sudo monit -h``.
