@@ -505,6 +505,9 @@ body {
   padding: 0;
   border: none;
   background-color: rgb(247, 247, 247);
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 #content .big-col.space {
@@ -7590,7 +7593,7 @@ button[disabled=disabled] {
 .create-status .concave-form .char-limit,
 .create-status .concave-form .errorMessageField { margin-left: 20px; }
 
-.status .create-response textarea { 
+.status .create-response textarea {
   width: 458px;
   padding: 7px 10px;
 }
@@ -7598,7 +7601,7 @@ button[disabled=disabled] {
 .status-log .create-status textarea,
 .status-log .create-response textarea { width: 420px; }
 
-.create-status  [class*="icon-"] { 
+.create-status  [class*="icon-"] {
   float: left;
   margin-top: 7px;
 }
