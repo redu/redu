@@ -272,6 +272,10 @@
   cursor: pointer;
 }
 
+.icon-request-help-orange_64_66-after + .status-log .close {
+  clear: both;
+}
+
 .create-status .post-resource .source-site,
 #statuses .status .post-resource .source-site {
   color: rgb(204, 204, 204);
