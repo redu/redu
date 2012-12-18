@@ -1,11 +1,11 @@
 class CourseSearch < Search
   def initialize
-    super(Course, :per_page => 10)
+    super(Course)
   end
 
-  def perform(query, page)
-    search({ :query => query, :page => page,
-             :include => [:audiences, :spaces, :tags, :environment, :owner,
-                          :teachers] })
+  def self.perform(query, page = nil, per_page = 10)
+    searcher = CourseSearch.new
+    searcher.search({ :query => query, :page => page, :per_page => per_page,
+      :include => [:users, :audiences, :spaces, :tags, :environment, :owner, :teachers] })
   end
 end
