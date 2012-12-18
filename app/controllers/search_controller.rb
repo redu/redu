@@ -10,12 +10,12 @@ class SearchController < BaseController
 
     respond_to do |format|
       format.html # search/index.html.erb
-      format.js do
+      format.json do
         @all = Array.new
-        @all << parse(@profiles)
-        @all << parse(@environments)
-        @all << parse(@courses)
-        @all << parse(@spaces)
+        @all << JSON.parse(make_representable(@profiles).to_json) unless @profiles.empty?
+        @all << JSON.parse(make_representable(@environments).to_json) unless @environments.empty?
+        @all << JSON.parse(make_representable(@courses).to_json) unless @courses.empty?
+        @all << JSON.parse(make_representable(@spaces).to_json) unless @spaces.empty?
         @all = @all.flatten
         render :json => @all
       end
@@ -28,8 +28,8 @@ class SearchController < BaseController
 
     respond_to do |format|
       format.html # search/profiles.html.erb
-      format.js do
-        render :json => parse(@profiles)
+      format.json do
+        render :json => make_representable(@profiles)
       end
     end
   end
@@ -43,11 +43,11 @@ class SearchController < BaseController
 
     respond_to do |format|
       format.html # search/environments.html.erb
-      format.js do
+      format.json do
         @all = []
-        @all << parse(@environments)
-        @all << parse(@courses)
-        @all << parse(@spaces)
+        @all << JSON.parse(make_representable(@environments).to_json) unless @environments.empty?
+        @all << JSON.parse(make_representable(@courses).to_json) unless @courses.empty?
+        @all << JSON.parse(make_representable(@spaces).to_json) unless @spaces.empty?
         @all = @all.flatten
         render :json => @all
       end
@@ -61,7 +61,7 @@ class SearchController < BaseController
 
     respond_to do |format|
       format.html # search/environments_only.html.erb
-      format.js { render :json => parse(@environments) }
+      format.json { render :json => make_representable(@environments) }
     end
   end
 
@@ -72,7 +72,7 @@ class SearchController < BaseController
 
     respond_to do |format|
       format.html # search/courses_only.html.erb
-      format.js { render :json => parse(@courses) }
+      format.json { render :json => make_representable(@courses) }
     end
   end
 
@@ -83,13 +83,13 @@ class SearchController < BaseController
 
     respond_to do |format|
       format.html # search/spaces_only.html.erb
-      format.js { render :json => parse(@spaces) }
+      format.json { render :json => make_representable(@spaces) }
     end
   end
 
   private
 
-  def parse(collection)
-    JSON.parse(collection.extend(InstantSearch::CollectionRepresenter).to_json)
+  def make_representable(collection)
+    collection.extend(InstantSearch::CollectionRepresenter)
   end
 end
