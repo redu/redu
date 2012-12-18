@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
 
   #COURSES
   has_many :lectures, :foreign_key => "user_id",
-    :conditions => {:is_clone => false, :published => true}
+    :conditions => {:is_clone => false}
   has_many :courses_owned, :class_name => "Course",
     :foreign_key => "user_id"
   has_many :favorites, :order => "created_at desc", :dependent => :destroy
@@ -211,7 +211,7 @@ class User < ActiveRecord::Base
       if auth[:info][:image]
         # Atualiza o avatar do usuário de acordo com seu avatar no Facebook
         # a menos que a imagem do avatar seja a default
-        unless auth[:info][:image] == 
+        unless auth[:info][:image] ==
           "http://graph.facebook.com/100002476817463/picture?type=square"
           user.avatar = open(auth[:info][:image])
         end
@@ -232,7 +232,7 @@ class User < ActiveRecord::Base
     end
 
     # Modo safe para descobrir o tamanho máximo válido para login de usuário
-    max_length = (User.validators_on(:login).select { |v| v.class == 
+    max_length = (User.validators_on(:login).select { |v| v.class ==
       ActiveModel::Validations::LengthValidator }).first.options[:maximum]
     unless login.length <= max_length
       login = login.first(max_length)
@@ -398,7 +398,7 @@ class User < ActiveRecord::Base
        (object.is_a? Invoice) ||
        (object.is_a? PartnerEnvironmentAssociation) ||
        (object.is_a? Partner) || (object.is_a? Result) ||
-       (object.is_a? Question)
+       (object.is_a? Question) || (object.is_a? Lecture)
 
       self.has_access_to?(object)
     else
