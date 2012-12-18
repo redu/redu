@@ -34,8 +34,8 @@ class AuthenticationsController < BaseController
     end
 
     # Lida com tokens de convites
-    if params.has_key?(:state) && can_parse(params[:state])
-      state = JSON.parse(params[:state])
+    state = parse(params[:state]) if params[:state]
+    if state
       if state.has_key?("invitation_token") # Convite para curso
         invite = UserCourseInvitation.find_by_token(state["invitation_token"])
         invite.user = current_user
@@ -74,13 +74,12 @@ class AuthenticationsController < BaseController
     end.inject(:^)
   end
 
-  def can_parse(string)
+  # Transforma uma string em JSON ou retorna nil caso o parseamento seja impossível
+  def parse(string)
     begin
       JSON.parse(string)
     rescue JSON::ParserError
-      return false
+      nil
     end
-
-    true
   end
 end

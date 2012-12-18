@@ -84,8 +84,8 @@
           <%#TODO Estilo gráfico do botão não funciona %>
           <div class="facebook-sign-in">
             <%= link_to "Entre com sua conta do Facebook",
-                facebook_authentication_path(:state => { :invitation_token => @user_course_invitation.token }.to_json),
-                :value => "login-facebook", :class => "facebook-sign-in-button" %>
+              facebook_authentication_path(:state => { :invitation_token => @user_course_invitation.token }.to_json),
+              :value => "login-facebook", :class => "facebook-sign-in-button" %>
           </div>
           <p class="or-call">&minus; ou &minus;</p>
         <% end %>

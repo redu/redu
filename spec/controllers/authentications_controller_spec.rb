@@ -162,12 +162,15 @@ describe AuthenticationsController do
     end
 
     context "when user has an invitation to course" do
-      before do
-        course = Factory(:course)
-        @invite = Factory(:user_course_invitation, :course => course,
+      let(:course) { Factory(:course) }
+      let(:invite) do
+        Factory(:user_course_invitation, :course => course,
                           :email => request.env['omniauth.auth'][:info][:email])
-        @invite.invite!
-        @state = { :invitation_token => @invite.token }.to_json
+      end
+
+      before do
+        invite.invite!
+        @state = { :invitation_token => invite.token }.to_json
       end
 
       it "invites the loged user to the course identified by the token invitation" do
@@ -178,13 +181,14 @@ describe AuthenticationsController do
     end
 
     context "when user has a friendship request" do
+      let(:invitation) do
+        Invitation.invite(:user => @host, :hostable => @host,
+                          :email => 'email@example.com')
+      end
+
       before do
-        @email = 'mail@example.com'
         @host = Factory(:user)
-        @invitation = Invitation.invite(:user => @host,
-                                        :hostable => @host,
-                                        :email => 'email@example.com')
-        state = { :friendship_invitation_token => @invitation.token }.to_json
+        state = { :friendship_invitation_token => invitation.token }.to_json
         get :create, :locale => 'pt-BR', :state => state
         @user = User.find_by_email(request.env['omniauth.auth'][:info][:email])
       end

@@ -77,3 +77,64 @@
     -moz-box-shadow: none;
     box-shadow: none;
 }
+
+// Novo estilo do botão do Facebook.
+
+.facebook-sign-in {
+  margin: 20px 17px;
+  font-size: 11px;
+}
+
+.facebook-sign-up-button, .facebook-sign-in-button {
+  display: inline-block;
+  border-style: solid;
+  border-width: 1px;
+  padding: 6px 7px;
+  color: white;
+  font-family: 'lucida grande',tahoma,verdana,arial,sans-serif;
+  font-weight: bold;
+  line-height: 13px;
+  cursor: pointer;
+}
+.textshadow .facebook-sign-up-button, .textshadow .facebook-sign-in-button {
+  text-shadow: none;
+}
+.facebook-sign-up-button:hover, .facebook-sign-in-button:hover, .facebook-sign-up-button:visited, .facebook-sign-in-button:visited {
+  text-decoration: none;
+  color: white;
+}
+.facebook-sign-up-button:active, .facebook-sign-in-button:active {
+  -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.facebook-sign-up,
+.facebook-sign-in {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.facebook-sign-up-button {
+  -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 0 #98c082 inset;
+  -moz-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 0 #98c082 inset;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 0 #98c082 inset;
+  border-color: #3b6e22 #3b6e22 #2c5115;
+  background-color: #69a74e;
+}
+.facebook-sign-up-button:active {
+  background: #609946;
+  border-bottom-color: #3b6e22;
+}
+
+.facebook-sign-in-button {
+  -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 0 #8a9cc2 inset;
+  -moz-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 0 #8a9cc2 inset;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 0 #8a9cc2 inset;
+  border-color: #29447e #29447e #1a356e;
+  background-color: #5f78ab;
+}
+.facebook-sign-in-button:active {
+  background: #4f6aa3;
+  border-bottom-color: #29447e;
+}
