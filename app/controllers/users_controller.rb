@@ -149,7 +149,7 @@ class UsersController < BaseController
   def edit
     @user.social_networks.build
     respond_to do |format|
-      format.html
+      format.html { render :layout => 'new_application' }
     end
   end
 
@@ -324,7 +324,7 @@ class UsersController < BaseController
 
   def account
     respond_to do |format|
-      format.html
+      format.html { render :layout => 'new_application' }
     end
 
   end
