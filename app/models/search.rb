@@ -5,17 +5,16 @@ class Search
   # a implementação da busca de acordo com o(s) modelo(s) associado(s) a ela.
   #
 
-  attr_reader :klass, :config
+  attr_reader :klass
 
-  def initialize(model, opts={})
+  def initialize(model)
     @klass = model
-    @config = { :per_page => 10 }.merge(opts)
   end
 
   def search(opts)
     klass.send("search", { :include => opts[:include] }) do
       fulltext opts[:query]
-      paginate :page => opts[:page], :per_page => config[:per_page]
+      paginate :page => opts[:page], :per_page => opts[:per_page]
     end
   end
 end
