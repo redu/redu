@@ -281,7 +281,6 @@ class CoursesController < BaseController
       flash[:notice] = "Você agora faz parte do curso #{@course.name}"
       redirect_to environment_course_path(@course.environment, @course)
     else
-      current_user.get_association_with(@course).notify_pending_moderation
       flash[:notice] = "Seu pedido de participação foi feito. Aguarde a moderação."
       redirect_to preview_environment_course_path(@course.environment, @course)
     end
