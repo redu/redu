@@ -1,5 +1,7 @@
 class SearchController < BaseController
 
+  before_filter :authorize
+
   # Busca por Perfis + Ambientes (AVA's, Cursos e Disciplinas)
   def index
     @profiles = UserSearch.perform(params[:q], params[:page], params[:per_page]).results
@@ -91,5 +93,9 @@ class SearchController < BaseController
 
   def make_representable(collection)
     collection.extend(InstantSearch::CollectionRepresenter)
+  end
+
+  def authorize
+    authorize! :search, :all
   end
 end
