@@ -2,18 +2,26 @@
   Status do perfil.
 
   Variáveis:
-    progress_percentage: a porcentagem do status.
+    user: o usuário logado.
 %>
-<% unless progress_percentage == 100 %>
+<% unless user.completeness == 100 %>
   <div class="right-sidebar-area">
     <h6 class="right-sidebar-area-title">Status do Perfil</h6>
     <div class="nav-local-separator"></div>
     <div class="progress-bar-legend progress-bar-medium">
-      <span class="legend"><%= "#{progress_percentage}%" %></span>
-      <span class="progress-bar-total progress-bar-thin" rel="tooltip" title="<%= "#{progress_percentage}% completado" %>">
-        <span class="progress-bar-completed text-replacement" style="width: <%= "#{progress_percentage}%" %>;"><%= "#{progress_percentage}%" %></span>
+      <span class="legend"><%= "#{user.completeness}%" %></span>
+      <span class="progress-bar-total progress-bar-thin" rel="tooltip"
+        title="<%= "#{user.completeness}% completado" %>">
+        <span class="progress-bar-completed text-replacement" style="width:
+          <%= "#{user.completeness}%" %>;"><%= "#{user.completeness}%" %>
+        </span>
       </span>
     </div>
-    <p class="legend">Preencha e personalize seu Perfil; leva no máximo 10 minutos. <%= link_to "Que tal começar?", edit_user_path(@user), :class => "link-secondary" %></p>
+    <% if current_page?(home_user_path(user)) %>
+      <p class="legend">Preencha e personalize seu Perfil; leva no máximo 10
+        minutos. <%= link_to "Que tal começar?", edit_user_path(user),
+        :class => "link-secondary",
+        :title => "Preencha e personalize seu Perfil" %></p>
+    <% end %>
   </div>
 <% end %>
