@@ -17,14 +17,14 @@
                                    item_invitation.course.environment,
                                    item_invitation.course),
                                    :remote => true, :class => 'form-loader' do %>
-        <%= submit_tag "Recusar", :class => 'concave-clean button-default' %>
+        <%= submit_tag "Recusar", :class => 'button-default' %>
       <% end %>
       <% if can? :add_entry, item_invitation.course %>
         <%= form_tag accept_environment_course_path(
           item_invitation.course.environment,
           item_invitation.course),
           :remote => true, :class => "form-loader" do %>
-          <%= submit_tag "Aceitar", :class => 'concave-important button-success' %>
+          <%= submit_tag "Aceitar", :class => 'button-success' %>
         <% end %>
       <% else %>
         <span class="waiting">Limite de vagas atingido</span>
