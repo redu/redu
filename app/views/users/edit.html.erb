@@ -1,23 +1,47 @@
-<%= lazy_load(:user, :jammit => true, :clear => true) do %>
-    // Coloca a máscara de celular no campo correspondente
-    $.fn.refreshMobileMask = function(){
-      return this.each(function(){
-          var $this = $(this);
-          $this.mask("+99 (99) 9999-9999", { placeholder:" " });
-      });
-    };
-
-    $("#biography .mobile").refreshMobileMask();
-<% end %>
-<%= render :partial => 'users/home_sidebar' %>
-<div class="main grid_10" style="width: 580px;">
-  <%= render :partial => 'users/breadcrumbs' %>
-  <%= tabs :users do %>
-    <%= subtabs :users do %>
-      <div id="biography" class"clearfix">
-        <%= render :partial => 'users/form' %>
-      </div>
-    <% end %>
-<% end %>
+<div class="span3">
+  <%= render :partial => "users/left_sidebar",
+    :locals => { :user => @user } %>
 </div>
-<%= render :partial => 'users/sidebar_explanation' %>
+<div class="span10">
+  <div class="content-area">
+    <%= render :partial => "users/breadcrumb_configurations",
+      :locals => { :user => @user } %>
+    <div class="content-body">
+      <div class="content-section">
+        <%# Cabeçalho %>
+        <ul class="header-breadcrumb">
+          <li class="header-breadcrumb-item">
+            <%= link_to "Configurações", edit_user_path(@user),
+               :class => "header-bradcrumb-link icon-manage-gray_32_34-before",
+               :title => "Configurações" %>
+          </li>
+          <li class="header-breadcrumb-item">
+            <%= link_to "Perfil", edit_user_path(@user),
+               :class => "header-bradcrumb-link",
+               :title => "Perfil" %>
+          </li>
+        </ul>
+      </div>
+      <%# Abas e sub-abas %>
+      <%= new_tabs(:new_users) %>
+      <%# TODO: Remover quando estiver integrado ao simple-navigation %>
+      <div class="tab-buttons">
+        <%= link_to "Biografia", edit_user_path(@user),
+          :title => "Biografia",
+          :class => "tab-button tab-button-active icon-biography_16_18-before" %>
+        <%= link_to "Currículo", curriculum_user_path(@user),
+          :title => "Currículo",
+          :class => "tab-button icon-curriculum_16_18-before" %>
+      </div>
+      <hr class="list-separator">
+      <%= render :partial => "users/form",
+        :locals => { :user => @user } %>
+    </div>
+    <%= render :partial => "users/breadcrumb_configurations",
+      :locals => { :user => @user } %>
+  </div>
+</div>
+<div class="span3">
+  <%= render :partial => "users/sidebar_explanation",
+    :locals => { :user => @user } %>
+</div>

@@ -65,7 +65,7 @@ SimpleNavigation::Configuration.run do |navigation|
 
           profile_subtab.item :biography, "Biografia", edit_user_path(@user),
             :highlights_on => update_action_matcher('users'),
-            :class => 'tab-button icon-biography-_16_18-before',
+            :class => 'tab-button icon-biography_16_18-before',
             :title => 'Biografia'
           profile_subtab.item :curriculum, "Currículo", curriculum_user_path(@user),
             :class => 'tab-button icon-curriculum_16_18-before',
