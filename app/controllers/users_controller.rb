@@ -170,7 +170,7 @@ class UsersController < BaseController
   end
 
   def update
-    @user.attributes    = params[:user]
+    @user.attributes = params[:user]
 
     @user.tag_list = params[:tag_list] || ''
 
@@ -194,13 +194,15 @@ class UsersController < BaseController
       @user.social_networks.build
       render 'users/edit'
     end
-  rescue ActiveRecord::RecordInvalid
-      render 'users/edit'
+
+    rescue ActiveRecord::RecordInvalid
+    render 'users/edit'
   end
 
   def update_account
-
+    # Password atual não pode ficar em branco
     if params[:current_password].blank?
+      # Só adiciona este erro se o usuário estiver tentando alterar sua senha
       if (!params[:user][:password].blank? ||
           !params[:user][:password_confirmation].blank?)
         @user.errors.add(:current_password, "A senha atual não pode ser deixada em branco.")
@@ -208,6 +210,7 @@ class UsersController < BaseController
         params[:user][:password_confirmation] = ""
       end
     else
+      # Só altera a senha se o password atual estiver certo
       unless @user.valid_password? params[:current_password]
         @user.errors.add(:current_password, "A senha atual está errada.")
         params[:user][:password] = ""
