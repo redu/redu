@@ -84,6 +84,17 @@
       <%= f.label :mobile, "Celular" %>
     </div>
     <div class="controls span6">
+      <%= lazy_load(:user, :jammit => true, :clear => true) do %>
+          // Coloca a máscara de celular no campo correspondente
+          $.fn.refreshMobileMask = function() {
+            return this.each(function() {
+                var $this = $(this);
+                $this.mask("(999) 9999 – 9999", { placeholder: "" });
+            });
+          };
+
+          $(".form-config-mobile").refreshMobileMask();
+      <% end %>
       <%= f.text_field :mobile, :placeholder => "(DDD) XXXX – XXXX",
         :class => "form-config-mobile" %>
       <%= concave_errors_for(f.object, :mobile) %>
