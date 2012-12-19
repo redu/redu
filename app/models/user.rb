@@ -128,24 +128,21 @@ class User < ActiveRecord::Base
     c.crypto_provider = CommunityEngineSha1CryptoMethod
 
     # Valida password
+    c.ignore_blank_passwords # no caso de atualizar o profile
+
+    # verifica se o password e sua confirmação são iguais
+    c.require_password_confirmation
+
     c.validates_length_of_password_field_options = { :within => 6..20,
                                                      :if => :password_required? }
-    c.validates_length_of_password_confirmation_field_options = {
-                                                     :within => 6..20,
-                                                     :if => :password_required?,
-                                                     :allow_blank => true }
-    c.validates_confirmation_of_password_field_options = { :allow_blank => true }
 
     # Valida login
-    c.validates_length_of_login_field_options = { :within => 5..20,
-                                                  :allow_blank => true }
-    c.validates_format_of_login_field_options = { :with => /^[A-Za-z0-9_-]+$/,
-                                                  :allow_blank => true }
+    c.validate_login_field = { :within => 5..20, # lenght
+                               :with => /^[A-Za-z0-9_-]+$/ } # format
 
     # Valida e-mail
-    c.validates_length_of_email_field_options = { :within => 3..100, :allow_blank => true }
-    c.validates_format_of_email_field_options = { :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/,
-                                                  :allow_blank => true }
+    c.validate_email_field = { :within => 3..100, # lenght
+                               :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/ } # format
   end
 
   has_attached_file :avatar, Redu::Application.config.paperclip_user
@@ -156,14 +153,13 @@ class User < ActiveRecord::Base
   has_private_messages
 
   # VALIDATIONS
-  validates_presence_of     :first_name, :last_name, :login, :email,
-                            :email_confirmation
-  validates_uniqueness_of   :login, :email, :case_sensitive => false
-  validates_exclusion_of    :login, :in => Redu::Application.config.extras["reserved_logins"]
+  # login, password e email já tem presença confirmada pelo Authlogic
+  validates_presence_of :first_name, :last_name
+  validates_confirmation_of :email # verifica se o email é igual a sua confirmação
+  validates_exclusion_of :login, :in => Redu::Application.config.extras["reserved_logins"]
   validates :birthday, :allow_nil => true,
             :date => { :before => Proc.new { 13.years.ago } }
   validates_acceptance_of :tos
-  validates_confirmation_of :email, :allow_blank => true
   validates_format_of :mobile,
                       :with => /^\+\d{2}\s\(\d{2}\)\s\d{4}-\d{4}$/,
                       :allow_blank => true
