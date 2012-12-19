@@ -34,6 +34,17 @@
           :class => "tab-button icon-curriculum_16_18-before" %>
       </div>
       <hr class="list-separator">
+      <%= lazy_load(:user, :jammit => true, :clear => true) do %>
+          // Coloca a máscara de celular no campo correspondente
+          $.fn.refreshMobileMask = function() {
+            return this.each(function() {
+                var $this = $(this);
+                $this.mask("(999) 9999 – 9999", { placeholder: "" });
+            });
+          };
+
+          $(".form-config-mobile").refreshMobileMask();
+      <% end %>
       <%= render :partial => "users/form",
         :locals => { :user => @user } %>
     </div>

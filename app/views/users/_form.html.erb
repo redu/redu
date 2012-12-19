@@ -84,7 +84,8 @@
       <%= f.label :mobile, "Celular" %>
     </div>
     <div class="controls span6">
-      <%= f.text_field :mobile, :placeholder => "(DDD) XXXX – XXXX" %>
+      <%= f.text_field :mobile, :placeholder => "(DDD) XXXX – XXXX",
+        :class => "form-config-mobile" %>
       <%= concave_errors_for(f.object, :mobile) %>
     </div>
   </div>
