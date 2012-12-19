@@ -5,7 +5,7 @@
 <% close = true if close.nil? %>
 <div class="reactivate-account system-message <%= (type ||= false) ? 'message-' + type : '' %> fade in">
   <% if close %>
-    <a data-dismiss="alert" class="message-close">×</a>
+    <span data-dismiss="alert" class="message-close">×</span>
   <% end %>
   <%= content_tag(:p, raw(message)) %>
 </div>
