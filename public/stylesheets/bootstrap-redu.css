@@ -787,6 +787,7 @@ tr:hover td {
 }
 .form-checklist .link-name {
   font-weight: normal;
+  color: #73c3e6;
 }
 
 .inbox-message-base, .inbox-message-unread, .inbox-message-read,
