@@ -20,10 +20,10 @@
                     :title =>  environment.name %>
       </h4>
     </div>
-    <% unless environment.courses.empty? %>
+    <% unless user_environment_courses(environment).empty? %>
       <ul class="list-mix">
         <%= render :partial => "users/environments/course",
-          :collection => environment.courses,
+          :collection => user_environment_courses(environment),
           :locals => { :environment => environment } %>
       </ul>
     <% end %>
