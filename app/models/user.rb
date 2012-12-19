@@ -153,7 +153,7 @@ class User < ActiveRecord::Base
   has_private_messages
 
   # VALIDATIONS
-  # login, password e email já são confirmados pelo Authlogic
+  # login, password e email já tem presença confirmada pelo Authlogic
   validates_presence_of :first_name, :last_name
   validates_confirmation_of :email # verifica se o email é igual a sua confirmação
   validates_exclusion_of :login, :in => Redu::Application.config.extras["reserved_logins"]

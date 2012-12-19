@@ -195,7 +195,7 @@ class UsersController < BaseController
       render 'users/edit'
     end
 
-    rescue ActiveRecord::RecordInvalid
+  rescue ActiveRecord::RecordInvalid
     render 'users/edit'
   end
 
