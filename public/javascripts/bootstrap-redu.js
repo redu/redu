@@ -1304,8 +1304,8 @@ $(function() {
           , $controlParent = $input.parent()
 
         $wrapper.appendTo($controlParent)
-        // Ajusta a altura do pai.
-        $controlParent.height($wrapper.height())
+        // Ajusta a altura.
+        $input.height($wrapper.height())
 
         // No FF, se um arquivo for escolhido e der refresh, o input mantém o valor.
         if (inputVal !== '') {

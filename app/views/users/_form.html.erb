@@ -1,90 +1,131 @@
-<%= form_for @user,
-  :html => {:multipart =>true, :class => "concave-form" }  do |f|  %>
-  <%= concave_error_messages_for(@user) %>
+<%#
+  Formulário do perfil do usuário.
 
-  <%= field_set_tag do %>
-    <%= image_tag @user.avatar.url(:thumb_110), :size => "110x110",
-      :class => "actual-avatar" %>
-  <% end %>
-
-  <%= f.label :avatar,
-    raw("Foto de seu perfil: <span class='snippet'>(tamanho máximo: 100MB)</span>") %>
-  <%= f.file_field :avatar %>
-  <%= concave_errors_for(f.object, :avatar) %>
-  <span class="tip">Adicione uma imagem de proporção igual ou similar a um quadrado</span>
-
-  <%= f.label :first_name, "Nome:" %>
-  <%= f.text_field :first_name %>
-  <%= concave_errors_for(f.object, :first_name) %>
-  <span class="tip">11 caracteres</span>
-
-  <%= f.label :last_name, "Sobrenome:" %>
-  <%= f.text_field :last_name %>
-  <%= concave_errors_for(f.object, :last_name) %>
-  <span class="tip">14 caracteres</span>
-
-  <%= f.label :birthday, "Nascimento:" %>
-  <%= field_set_tag nil, :class => "inline" do %>
-    <%= f.date_select :birthday, {:start_year => 1926, :end_year => Time.now.year - 1}%>
-    <%= concave_errors_for(f.object, :birthday) %>
-  <% end %>
-
-  <%= field_set_tag "Sexo:", :class => "inline" do %>
-    <%= f.radio_button :gender, User::MALE %>
-    <%= f.label "gender_#{User::MALE}".downcase.to_sym, "Masculino" %>
-    <%= f.radio_button :gender, User::FEMALE %>
-    <%= f.label "gender_#{User::FEMALE}".downcase.to_sym, "Feminino" %>
-    <%= concave_errors_for(f.object, :gender) %>
-  <% end %>
-
-  <%= f.label :birth_localization, "Cidade onde nasceu:"%>
-  <%= f.text_field :birth_localization, :placeholder => "Cidade Natal" %>
-  <%= concave_errors_for(f.object, :birth_localization) %>
-  <span class="tip">Cidade natal</span>
-
-  <%= f.label :localization, "Cidade onde vive:" %>
-  <%= f.text_field :localization %>
-  <%= concave_errors_for(f.object, :localization) %>
-  <span class="tip">Cidade atual</span>
-
-  <%= f.label :languages, "Idiomas:" %>
-  <%= f.text_field :languages %>
-  <%= concave_errors_for(f.object, :languages) %>
-  <span class="tip">Idiomas bem compreendidos por você</span>
-
-  <hr/>
-
-  <% random_number = get_random_number%>
-  <%= f.label :description, "Sobre você:" %>
-  <%= f.text_area :description, :rows => "4", :cols => "50",
-    :class => "desc-#{random_number}"%>
-  <%= render :partial => 'shared/limit_char_field',
-    :locals => {:class_textarea => "desc-#{random_number}", :limit => 400} %>
-
-  <%= f.label :tag_list, raw("Áreas de seu interesse: <span class='snippet'>(separadas por vírgula)</span>") %>
-  <%= text_field_tag :tag_list, @user.tag_list.join(", ") %>
-  <span class="tip">Exemplo: redes sociais, compartilhamento, tecnologia, etc.</span>
-
-  <%= f.label :mobile, "Celular:" %>
-  <%= f.text_field :mobile, :class => "mobile" %>
-  <span class="tip">Exemplo: +55 (81) 4444-4444</span>
-
-  <%= field_set_tag "Perfil em outra rede social:", :class => "inline" do %>
-    <div class="concave-indent" id="select-networks">
-      <ul>
-        <%= f.fields_for :social_networks do |builder| %>
-          <%= render :partial => 'social_networks/social_network_fields',
-            :locals => { :f => builder, :user => @user } %>
-        <% end %>
-      </ul>
-      <span class="tip">Exemplo: www.facebook.com/login</span>
-      <div id="new-social-network">
-        <%= new_social_network f, :social_networks %>
-      </div>
+  Variáveis:
+    user: o usuário.
+%>
+<%= form_for user,
+  :html => { :multipart => true,
+    :class => "form-horizontal form-config" } do |f| %>
+  <%= concave_error_messages_for(user) %>
+  <%# Avatar %>
+  <div class="control-group row">
+    <div class="control-label span3">
+      <%= f.label :avatar, "Foto do seu perfil" %>
     </div>
-  <% end %>
-  <hr/>
-
-  <%= f.submit t(:save_changes) %>
-
+    <div class="controls span6">
+      <%= f.file_field :avatar %>
+      <%= concave_errors_for(f.object, :avatar) %>
+      <%= image_tag user.avatar.url(:thumb_110), :size => "140x140",
+        :class => "form-config-avatar",
+        :title => user.display_name %>
+    </div>
+  </div>
+  <%# Nome %>
+  <div class="control-group row">
+    <div class="control-label span3">
+      <%= f.label :first_name, "Nome" %>
+    </div>
+    <div class="controls span6">
+      <%= f.text_field :first_name,
+        :placeholder => "Seu primeiro nome",
+        :maxlength => 11 %>
+      <%= concave_errors_for(f.object, :first_name) %>
+    </div>
+  </div>
+  <%# Sobrenome %>
+  <div class="control-group row">
+    <div class="control-label span3">
+      <%= f.label :last_name, "Sobrenome" %>
+    </div>
+    <div class="controls span6">
+      <%= f.text_field :last_name,
+        :placeholder => "Seu último nome",
+        :maxlength => 14 %>
+      <%= concave_errors_for(f.object, :last_name) %>
+    </div>
+  </div>
+  <%# Data de nascimento %>
+  <div class="control-group control-select-date row">
+    <div class="control-label span3">
+      <%= f.label :birthday, "Data de nascimento" %>
+    </div>
+    <div class="controls span6">
+      <%= f.date_select :birthday,
+        { :start_year => 1926, :end_year => Time.now.year - 1 } %>
+      <%= concave_errors_for(f.object, :birthday) %>
+    </div>
+  </div>
+  <%# Cidade onde nasceu %>
+  <div class="control-group row">
+    <div class="control-label span3">
+      <%= f.label :birth_localization, "Cidade onde nasceu" %>
+    </div>
+    <div class="controls span6">
+      <%= f.text_field :birth_localization,
+        :placeholder => "Sua cidade natal" %>
+      <%= concave_errors_for(f.object, :birth_localization) %>
+    </div>
+  </div>
+  <%# Cidade onde vive %>
+  <div class="control-group row">
+    <div class="control-label span3">
+      <%= f.label :localization, "Cidade onde vive" %>
+    </div>
+    <div class="controls span6">
+      <%= f.text_field :localization,
+        :placeholder => "Sua cidade onde reside" %>
+      <%= concave_errors_for(f.object, :localization) %>
+    </div>
+  </div>
+  <%# Celular %>
+  <div class="control-group row">
+    <div class="control-label span3">
+      <%= f.label :mobile, "Celular" %>
+    </div>
+    <div class="controls span6">
+      <%= f.text_field :mobile, :placeholder => "(DDD) XXXX – XXXX" %>
+      <%= concave_errors_for(f.object, :mobile) %>
+    </div>
+  </div>
+  <%# Idiomas %>
+  <div class="control-group row">
+    <div class="control-label span3">
+      <%= f.label :languages, "Idiomas" %>
+    </div>
+    <div class="controls span6">
+      <%= f.text_field :languages,
+        :placeholder => "Idiomas bem compreendidos por você" %>
+      <%= concave_errors_for(f.object, :languages) %>
+    </div>
+  </div>
+  <%# Sobre você %>
+  <div class="control-group row">
+    <div class="control-label span3">
+      <%= f.label :description, "Sobre você" %>
+    </div>
+    <div class="controls span6">
+      <%= f.text_area :description,
+        :placeholder => "Sua personalidade e informações adicionais",
+        :rows => 6 %>
+      <%= concave_errors_for(f.object, :description) %>
+    </div>
+  </div>
+  <%# Áreas de seu interesse %>
+  <div class="control-group row">
+    <div class="control-label span3">
+      <%= f.label :tag_list, "Áreas de seu interesse" %>
+    </div>
+    <div class="controls span6">
+      <%= f.text_area :tag_list,
+        :placeholder => "Ramos do conhecimento que despertam seu
+          interesse. Exemplo: redes sociais, tecnologia, design",
+        :rows => 6 %>
+      <%= concave_errors_for(f.object, :tag_list) %>
+    </div>
+  </div>
+  <hr class="list-separator">
+  <div class="content-section clearfix">
+    <%= f.submit t(:save_changes), :class => "button-primary pull-right" %>
+  </div>
 <% end %>

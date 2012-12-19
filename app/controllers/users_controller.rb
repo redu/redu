@@ -165,7 +165,7 @@ class UsersController < BaseController
     @complementary_course = ComplementaryCourse.new
     @event_education = EventEducation.new
     respond_to do |format|
-      format.html
+      format.html { render :layout => 'new_application' }
     end
   end
 

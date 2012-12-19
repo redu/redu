@@ -456,6 +456,19 @@ body {
   width: 310px;
 }
 
+.list-separator +
+.form-config {
+  margin-top: 10px;
+}
+.form-config .control-group +
+.list-separator {
+  margin-top: 20px;
+}
+
+.form-config-avatar {
+  margin-top: 20px;
+}
+
 ul.requisitions {
   margin: 0;
 }
