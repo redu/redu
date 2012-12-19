@@ -4,6 +4,7 @@
 
   Variáveis:
     environment: o ambiente (nome, URL, thumbnail e cursos).
+    user: o usuário (cursos).
 %>
 <li>
   <hr class="list-separator">
@@ -20,10 +21,10 @@
                     :title =>  environment.name %>
       </h4>
     </div>
-    <% unless user_environment_courses(environment).empty? %>
+    <% unless user_environment_courses(environment, user).empty? %>
       <ul class="list-mix">
         <%= render :partial => "users/environments/course",
-          :collection => user_environment_courses(environment),
+          :collection => user_environment_courses(environment, user),
           :locals => { :environment => environment } %>
       </ul>
     <% end %>

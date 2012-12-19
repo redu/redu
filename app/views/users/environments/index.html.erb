@@ -28,7 +28,7 @@
       <% else %>
         <ul id="my-environments" class="list-environment-course-space">
           <%= render :partial => "users/environments/environment",
-            :collection => @environments %>
+            :collection => @environments, :locals => { :user => @user } %>
         </ul>
       <% end %>
       <%= paginate @environments, :theme => 'new_endless' %>
