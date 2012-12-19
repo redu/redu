@@ -205,7 +205,8 @@ describe UsersController do
       @post_params = { :locale => "pt-BR", :id => @user.login, :user => {
         "birthday(1i)"=>"1991", "birthday(2i)"=>"6", "birthday(3i)"=>"8",
         :mobile => "", :last_name => "Last", :localization => "",
-        :description => "", :first_name => "First" } }
+        :description => "", :first_name => "First",
+        :favorite_quotation => "My precious" } }
     end
 
     context "when successful" do
