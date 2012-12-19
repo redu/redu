@@ -45,6 +45,9 @@
       </div>
 
       <div class="home-container">
+        <%= render :partial => 'statuses/create_status',
+          :locals => { :statusable => @user } %>
+
         <%# Mural com layout antigo %>
         <div id="statuses" class="statuses">
           <ol>

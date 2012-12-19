@@ -303,6 +303,7 @@ class UsersController < BaseController
     @course_invitations = @user.course_invitations.
       includes(:course =>[:environment])
     @statuses = @user.home_activity(params[:page])
+    @status = Status.new
 
     respond_to do |format|
       format.html { render :layout => 'new_application' }

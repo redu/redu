@@ -496,3 +496,233 @@ ul.requisitions .actions form {
 ul.requisitions .actions input:last-child {
   margin-left: 5px;
 }
+
+.home-container {
+  /* labels inativos */
+  /* botoes */
+}
+.home-container .create-status.inform-my-status textarea {
+  width: 495px;
+}
+.home-container .concave-form .concave-label {
+  padding-top: 7px;
+}
+.home-container .concave-form .concave-label {
+  display: block;
+  color: #b3b2b3;
+  font-weight: bold;
+  float: left;
+  text-align: right;
+  width: 150px;
+  margin: 20px 10px 0 0;
+  clear: left;
+  height: 23px;
+  font-size: 12px;
+}
+.home-container .concave-remove,
+.home-container .concave-button,
+.home-container .concave-clean,
+.home-container .concave-important,
+.home-container .concave-important-font,
+.home-container .concave-cancel {
+  padding: 5px 20px 6px 20px;
+  color: white;
+  display: inline-block;
+  line-height: 18px;
+  font-weight: bold;
+  font-size: 13px;
+  text-align: center;
+  cursor: pointer;
+}
+.home-container .concave-remove:hover,
+.home-container .concave-button:hover,
+.home-container .concave-important:hover,
+.home-container .concave-important-font:hover,
+.home-container .concave-cancel:hover {
+  color: white;
+}
+.home-container .concave-remove:visited,
+.home-container .concave-button:visited,
+.home-container .concave-important:visited,
+.home-container .concave-important-font:visited,
+.home-container .concave-cancel:visited {
+  color: white;
+}
+.home-container .concave-important,
+.home-container .concave-important-font {
+  border: 1px solid #4bc080;
+  background-color: #abe385;
+}
+.home-container .concave-important-font {
+  font-family: museo-slab, "Helvetica Neue", Arial, sans-serif;
+}
+.home-container .concave-clean {
+  color: #4dadd6;
+  border: 1px solid #cccccc;
+  background: white;
+  /* Old browsers */
+}
+.home-container .concave-button,
+.home-container .concave-cancel {
+  border: 1px solid #4CACD5;
+  background-color: #73C3E6;
+}
+.home-container .concave-form .concave-button,
+.home-container .concave-form .concave-important,
+.home-container .concave-form .concave-important-font,
+.home-container .concave-form .concave-cancel {
+  margin: 20px 20px 0 0;
+}
+.home-container .concave-remove {
+  border: 1px solid #e83b3b;
+  color: white;
+  background-color: #ff6d6d;
+}
+.home-container .concave-form .concave-remove {
+  margin: 20px 0px 0px 20px;
+}
+.home-container .concave-form .concave-button,
+.home-container .concave-form .concave-important,
+.home-container .concave-form .concave-important-font,
+.home-container .concave-form .concave-cancel {
+  float: right;
+}
+.home-container .concave-form .concave-remove {
+  float: left;
+}
+.home-container .concave-cancel {
+  border: 1px solid #E83B3B;
+}
+.home-container .concave-clean:hover,
+.home-container .concave-remove:hover,
+.home-container .concave-button:hover,
+.home-container .concave-important:hover,
+.home-container .concave-important-font:hover,
+.home-container .concave-cancel:hover {
+  text-decoration: none;
+}
+.borderradius .home-container .concave-clean, .borderradius .home-container .concave-remove, .borderradius .home-container .concave-button, .borderradius .home-container .concave-important, .borderradius .home-container .concave-important-font, .borderradius .home-container .concave-cancel {
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+.cssgradients .home-container .concave-important, .cssgradients .home-container .concave-important-font {
+  background: -webkit-gradient(linear, left top, left bottom, from(#abe385), to(#5fc080));
+  background: -moz-linear-gradient(top, #5fc080, #abe385);
+}
+.cssgradients .home-container .concave-button {
+  background: -webkit-gradient(linear, left top, left bottom, from(#73c3e6), to(#4dadd6));
+  /* webkit browsers */
+  background: -moz-linear-gradient(top, #73c3e6, #4dacd6);
+  /* firefox 3.6+ */
+}
+.cssgradients .home-container .concave-cancel {
+  background: -webkit-gradient(linear, left top, left bottom, from(#ff6d6d), to(#e83b3b));
+  /* webkit browsers */
+  background: -moz-linear-gradient(top, #ff6d6d, #e83b3b);
+  /* firefox 3.6+ */
+}
+.cssgradients .home-container .concave-remove {
+  background: -webkit-gradient(linear, left top, left bottom, from(#ff6d6d), to(#e83b3b));
+  /* webkit browsers */
+  background: -moz-linear-gradient(top, #ff6d6d, #e83b3b);
+  /* Firefox 3.6+ */
+}
+.cssgradients .home-container .concave-clean {
+  background: -moz-linear-gradient(top, white 0%, #f0f0f0 97%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, white), color-stop(97%, #f0f0f0));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, white 0%, #f0f0f0 97%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, white 0%, #f0f0f0 97%);
+  /* Opera11.10+ */
+  background: -ms-linear-gradient(top, white 0%, #f0f0f0 97%);
+  /* IE10+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f0f0f0',GradientType=0 );
+  /* IE6-9 */
+  background: linear-gradient(top, #ffffff 0%, #f0f0f0 97%);
+  /* W3C */
+}
+.textshadow .home-container .concave-important-font, .textshadow .home-container .concave-important {
+  -moz-text-shadow: 0px -1px 0 #61a080;
+  -webkit-text-shadow: 0px -1px 0 #61a080;
+  text-shadow: 0px -1px 0 #61a080;
+}
+.textshadow .home-container .concave-button {
+  -moz-text-shadow: 0px -1px 0 #158ac4;
+  -webkit-text-shadow: 0px -1px 0 #158ac4;
+  text-shadow: 0px -1px 0 #158ac4;
+}
+.textshadow .home-container .concave-cancel {
+  -moz-text-shadow: 0px -1px 0 #e83b3b;
+  -webkit-text-shadow: 0px -1px 0 #e83b3b;
+  text-shadow: 0px -1px 0 #e83b3b;
+}
+.textshadow .home-container .concave-remove {
+  -moz-text-shadow: 0px -1px 0 #c1272d;
+  -webkit-text-shadow: 0px -1px 0 #c1272d;
+  text-shadow: 0px -1px 0px #c1272d;
+}
+.textshadow .home-container .concave-clean {
+  text-shadow: 0px 1px 0px #ffffff;
+}
+.home-container .concave-important-font:hover,
+.home-container .concave-important:hover {
+  border: 1px solid #61a080;
+}
+.home-container .concave-button:hover {
+  border: 1px solid #1789C3;
+  background: #1789C3;
+}
+.home-container .concave-cancel:hover {
+  border: 1px solid #C1272D;
+  background: #FF6D6D;
+}
+.home-container .concave-remove:hover {
+  background: #ff6d6d;
+}
+.home-container .concave-clean:hover {
+  color: #1789c3;
+  border: 1px solid #4cacd5;
+  background: white;
+  /* Old browsers */
+}
+.cssgradients .home-container .concave-important-font:hover, .cssgradients .home-container .concave-important:hover {
+  background: -webkit-gradient(linear, left top, left bottom, from(#abe385), to(#61a080));
+  background: -moz-linear-gradient(top, #abe385, #61a080);
+}
+.cssgradients .home-container .concave-cancel:hover {
+  background: -webkit-gradient(linear, left top, left bottom, from(#ff6d6d), to(#c1272d));
+  /* webkit browsers */
+  background: -moz-linear-gradient(top, #ff6d6d, #c1272d);
+  /* firefox 3.6+ */
+}
+.cssgradients .home-container .concave-button:hover {
+  background: -webkit-gradient(linear, left top, left bottom, from(#73c3e6), to(#158ac4));
+  /* webkit browsers */
+  background: -moz-linear-gradient(top, #73c3e6, #158ac4);
+  /* firefox 3.6+ */
+}
+.cssgradients .home-container .concave-remove:hover {
+  background: -webkit-gradient(linear, left top, left bottom, from(#ff6d6d), to(#c1272d));
+  /* webkit browsers */
+  background: -moz-linear-gradient(top, #ff6d6d, #c1272d);
+  /* Firefox 3.6+ */
+}
+.cssgradients .home-container .concave-clean:hover {
+  background: -moz-linear-gradient(top, white 0%, #dbeff7 97%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, white), color-stop(97%, #dbeff7));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, white 0%, #dbeff7 97%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, white 0%, #dbeff7 97%);
+  /* Opera11.10+ */
+  background: -ms-linear-gradient(top, white 0%, #dbeff7 97%);
+  /* IE10+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#dbeff7',GradientType=0 );
+  /* IE6-9 */
+  background: linear-gradient(top, #ffffff 0%, #dbeff7 97%);
+  /* W3C */
+}
