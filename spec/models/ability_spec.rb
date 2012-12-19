@@ -1970,12 +1970,19 @@ describe Ability do
         @ability.should_not be_able_to(:read, @environment)
       end
 
-      it "as redu admin can read end manage the environment" do
-        Factory(:user_environment_association, :environment => @environment,
-                :user => @admin)
+      context "as redu admin" do
+        before do
+          Factory(:user_environment_association, :environment => @environment,
+                  :user => @admin)
+        end
 
-        @ability_admin.should be_able_to(:read, @environment)
-        @ability_admin.should be_able_to(:manage, @environment)
+        it "can read the environment" do
+          @ability_admin.should be_able_to(:read, @environment)
+        end
+
+        it "can manage the environment" do
+          @ability_admin.should be_able_to(:manage, @environment)
+        end
       end
     end
 
@@ -1990,12 +1997,19 @@ describe Ability do
         @ability.should_not be_able_to(:read, @course)
       end
 
-      it "as redu admin can read and manage the course" do
-        Factory(:user_course_association, :course => @course, :user => @admin).
-          approve!
+      context "as redu admin" do
+        before do
+          Factory(:user_course_association, :course => @course, :user => @admin).
+            approve!
+        end
 
-        @ability_admin.should be_able_to(:read, @course)
-        @ability_admin.should be_able_to(:manage, @course)
+        it "can read the course" do
+          @ability_admin.should be_able_to(:read, @course)
+        end
+
+        it "can manage de course" do
+          @ability_admin.should be_able_to(:manage, @course)
+        end
       end
     end
 
@@ -2009,11 +2023,18 @@ describe Ability do
         @ability.should_not be_able_to(:read, @space)
       end
 
-      it "as redu admin can read and manage the space" do
-        Factory(:user_space_association, :space => @space, :user => @admin)
+      context "as redu admin" do
+        before do
+          Factory(:user_space_association, :space => @space, :user => @admin)
+        end
 
-        @ability_admin.should be_able_to(:read, @space)
-        @ability_admin.should be_able_to(:manage, @space)
+        it "can read the space" do
+          @ability_admin.should be_able_to(:read, @space)
+        end
+
+        it "can manage the space" do
+          @ability_admin.should be_able_to(:manage, @space)
+        end
       end
     end
 
@@ -2027,11 +2048,18 @@ describe Ability do
         @ability.should_not be_able_to(:read, @subject)
       end
 
-      it "as redu admin can read and manage the subject" do
-        Factory(:enrollment, :subject => @subject, :user => @admin)
+      context "as redu admin" do
+        before do
+          Factory(:enrollment, :subject => @subject, :user => @admin)
+        end
 
-        @ability_admin.should be_able_to(:read, @subject)
-        @ability_admin.should be_able_to(:manage, @subject)
+        it "can read the subject" do
+          @ability_admin.should be_able_to(:read, @subject)
+        end
+
+        it "can manage the subject" do
+          @ability_admin.should be_able_to(:manage, @subject)
+        end
       end
     end
 
@@ -2045,11 +2073,18 @@ describe Ability do
         @ability.should_not be_able_to(:read, @lecture)
       end
 
-      it "as redu admin can read and manage the lecture" do
-        Factory(:enrollment, :subject => @lecture.subject, :user => @admin)
+      context "as redu admin" do
+        before do
+          Factory(:enrollment, :subject => @lecture.subject, :user => @admin)
+        end
 
-        @ability_admin.should be_able_to(:read, @lecture)
-        @ability_admin.should be_able_to(:manage, @lecture)
+        it "can read the lecture" do
+          @ability_admin.should be_able_to(:read, @lecture)
+        end
+
+        it "can manage the lecture" do
+          @ability_admin.should be_able_to(:manage, @lecture)
+        end
       end
     end
   end
