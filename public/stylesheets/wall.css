@@ -257,6 +257,13 @@
   float: right;
 }
 
+.home-container .create-status .concave-form .concave-button.spinner-circular-gray {
+  /* Força spinner a ser azul */
+  background-image: url("../images/spinner-blue.gif") !important;
+  background-repeat: no-repeat;
+  background-position: 23px 7px;
+}
+
 .boxshadow .create-status .concave-form .concave-button  {
   -webkit-box-shadow: 0 1px 0 0 rgb(219, 239, 247) inset;
   -moz-box-shadow: 0 1px 0 0 rgb(219, 239, 247) inset;
