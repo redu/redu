@@ -286,13 +286,19 @@ class UserNotifier < ActionMailer::Base
 
   end
 
-  def newsletter(image_name, user, subject=nil)
-    @image_name = image_name
+  # Envia newsletter para usuário.
+  #
+  # :user, instância do usuário
+  # :template, template a ser usado
+  # :subject, assunto do e-mail
+  # :opts, informações disponíveis através de @vars na view
+  def newsletter(user, template, opts={})
+    subject = opts.delete(:subject) || "Novidades do Redu"
     @user = user
+    @vars = { :user => @user }.merge(opts)
 
-    mail(:to => user.email,
-         :subject => subject || "Novidades do Redu") do |format|
-      format.html { render :layout => false }
+    mail(:to => user.email, :subject => subject) do |format|
+      format.html { render :template => template, :layout => false }
     end
   end
 end

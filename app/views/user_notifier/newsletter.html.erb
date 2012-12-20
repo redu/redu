@@ -10,7 +10,7 @@
     <tr>
       <td>
         <div style="text-align: center; background-color: white;">
-          <%= link_to image_tag(@image_name), 'http://www.redu.com.br' %>
+          <%= link_to image_tag(@vars[:image_name]), 'http://www.redu.com.br' %>
         </div>
       </td>
     </tr>
@@ -22,7 +22,7 @@
         <% if @user %>
           <a href="mailto:<%= @user.email %>"><%= @user.email %></a>.
         <% else %>
-          <a href="mailto:<%= @email %>"><%= @email %></a>.
+          <a href="mailto:<%= @user.email %>"><%= @user.email %></a>.
         <% end %>
         Não é necessário responder a este e-mail.
       </div>
