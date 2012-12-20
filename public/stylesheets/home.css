@@ -456,12 +456,28 @@ body {
   width: 310px;
 }
 
+.form-config {
+  overflow: hidden;
+}
 .list-separator +
 .form-config {
   margin-top: 10px;
 }
 .form-config .control-group +
 .list-separator {
+  margin-top: 20px;
+}
+.form-config .content-section .button-primary {
+  float: right;
+}
+.form-config fieldset legend {
+  font-size: 18px;
+  color: #73c3e6;
+  font-weight: 300;
+  font-family: museo-sans, "Helvetica Neue", Arial, sans-serif;
+  margin-bottom: 20px;
+}
+.form-config fieldset + fieldset {
   margin-top: 20px;
 }
 

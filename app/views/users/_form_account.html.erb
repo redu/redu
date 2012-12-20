@@ -1,63 +1,134 @@
-<%= form_for @user, :url => update_account_user_path,
-  :html => {:multipart =>true, :class => "concave-form"}  do |f|  %>
-  <%= concave_error_messages_for(f.object) %>
+<%#
+  Formulário de conta do usuário.
 
-  <%= field_set_tag "Configurações", :class => 'inline' do %>
-    <%= f.check_box :auto_status %>
-    <%= f.label :auto_status, "Logar atividades automaticamente" %>
+  Variáveis:
+    user: o usuário.
+%>
+<%= form_for user, :url => update_account_user_path,
+  :html => {:multipart =>true,
+   :class => "form-horizontal form-config"}  do |f|  %>
+  <%= concave_error_messages_for(user) %>
+
+  <%= field_set_tag do %>
+    <div class="control-group">
+      <div class="control-label span3">
+        <%= f.label "Configurações" %>
+      </div>
+      <div class="controls">
+        <div class="control-checkbox">
+          <%= f.check_box :auto_status %>
+          <%= f.label :auto_status, "Logar atividades automaticamente" %>
+        </div>
+      </div>
+  </div>
   <% end %>
 
-  <%= field_set_tag "Notificações por e-mail", :class => "inline linebreak" do %>
-    <%= f.check_box :notify_community_news %>
-    <%= f.label :notify_community_news, "Novidades do Redu" %>
-    <%= f.check_box :notify_messages %>
-    <%= f.label :notify_messages, "Mensagens recebidas" %>
-    <%= f.check_box :notify_followships %>
-    <%= f.label :notify_followships, "Novos seguidores" %>
+  <%= field_set_tag do %>
+    <div class="control-group">
+      <div class="control-label span3">
+        <%= f.label "Notificações por e-mail" %>
+      </div>
+      <div class="controls">
+        <div class="control-checkbox">
+          <%= f.check_box :notify_community_news %>
+          <%= f.label :notify_community_news, "Novidades do Redu" %>
+        </div>
+        <div class="control-checkbox">
+          <%= f.check_box :notify_messages %>
+          <%= f.label :notify_messages, "Mensagens recebidas" %>
+        </div>
+        <div class="control-checkbox">
+          <%= f.check_box :notify_followships %>
+          <%= f.label :notify_followships, "Novos seguidores" %>
+        </div>
+      </div>
+    </div>
   <% end %>
 
   <%= f.fields_for :settings do |builder| %>
-    <%= field_set_tag "Quem pode ver o meu mural:", :class => "inline" do %>
-      <%= builder.radio_button :view_mural, Privacy[:public], { :checked => @user.settings.view_mural.eql?(Privacy[:public]) ?  true : false } %>
-      <%= builder.label "view_mural_#{Privacy[:public]}".to_sym, "Todos" %>
-      <%= builder.radio_button :view_mural, Privacy[:friends], { :checked => @user.settings.view_mural.eql?(Privacy[:friends]) ?  true : false } %>
-      <%= builder.label "view_mural_#{Privacy[:friends]}".to_sym, "Apenas amigos" %>
+    <%= field_set_tag  do %>
+      <div class="control-group">
+        <div class="control-label span3">
+          <%= f.label "Meu mural é visível a" %>
+        </div>
+        <div class="controls">
+          <div class="control-radio">
+            <%= builder.radio_button :view_mural, Privacy[:public], { :checked => @user.settings.view_mural.eql?(Privacy[:public]) ?  true : false } %>
+            <%= builder.label "view_mural_#{Privacy[:public]}".to_sym, "Todos"%>
+          </div> 
+          <div class="control-radio">
+            <%= builder.radio_button :view_mural, Privacy[:friends], { :checked => @user.settings.view_mural.eql?(Privacy[:friends]) ?  true : false }%>
+            <%= builder.label "view_mural_#{Privacy[:friends]}".to_sym, "Apenas amigos" %>
+          </div>
+        </div>
+      </div>
     <% end %>
   <% end %>
 
-  <hr/>
 
-  <%= field_set_tag "Redefinir E-mail" do %>
-    <%= f.label :email, "E-mail:" %>
-    <%= f.text_field :email %>
-
-    <%= f.label :email_confirmation, "Confirmação:",
-      :style => "display: none;" %>
-    <%= f.text_field :email_confirmation, :style => "display: none;" %>
-    <%= concave_errors_for(f.object, :email_confirmation) %>
-  <% end %>
-
-  <hr/>
-
-  <%= field_set_tag "Redefinir Senha" do %>
-    <%= label_tag :current_password, "Senha atual:" %>
-    <% if @flag %>
-      <%= password_field_tag :current_password, nil %>
-    <% else %>
-      <%= password_field_tag :current_password %>
+  <hr class="list-separator"/>
+  <div class="content-section">
+    <%= field_set_tag "Redefinir e-mail" do %>
+      <div class="control-group row">
+        <div class="control-label span3">
+          <%= f.label :email, "E-mail atual" %>
+        </div>
+        <div class="controls span6">
+          <%= f.text_field :email, :placeholder => "Endereço de e-mail cadastrado no Redu" %>
+        </div>
+      </div>
+      <div class="control-group row">
+        <div class="control-label span3">
+          <%= f.label :email_confirmation, "Novo e-mail" %>
+        </div>
+        <div class="controls span6">
+          <%= f.text_field :email_confirmation, :placeholder => "Endereço de e-mail desejado" %>
+          <%= concave_errors_for(f.object, :email_confirmation) %> 
+        </div>
+      </div>
     <% end %>
-    <%= concave_errors_for(f.object, :current_password) %>
+  </div>
 
-    <%= f.label :password,  (t :new_password) + ":" %>
-    <%= f.password_field :password %>
-    <%= concave_errors_for(f.object, :password) %>
-    <%= f.label :password_confirmation, "Confirmação:" %>
-    <%= f.password_field :password_confirmation %>
-  <% end %>
+  <hr class="list-separator"/>
 
-  <hr/>
+  <div class="content-section">
+    <%= field_set_tag "Redefinir senha" do %>
+      <div class="control-group row">
+        <div class="control-label span3">
+          <%= label_tag :current_password, "Senha atual:" %>
+        </div>
+        <div class="controls span6">
+          <% if @flag %>
+          <%= password_field_tag :current_password, nil %>
+          <% else %>
+            <%= password_field_tag :current_password %>
+          <% end %>
+          <%= concave_errors_for(f.object, :current_password) %>
+        </div>
+      </div>
+      <div class="control-group row">
+        <div class="control-label span3">
+          <%= f.label :password,  (t :new_password) + ":" %>      
+        </div>
+        <div class="controls span6">
+          <%= f.password_field :password, :placeholder => "Senha desejada" %>
+          <%= concave_errors_for(f.object, :password) %>
+        </div>
+      </div>
+       <div class="control-group row">
+        <div class="control-label span3">
+          <%= f.label :password_confirmation, "Confirmação:" %>
+        </div>
+        <div class="controls span6">
+          <%= f.password_field :password_confirmation, :placeholder => "Repita a senha desejada" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
 
-  <%= f.submit t( :save_changes ) %>
-  <%= link_to "Remover Conta", @user, :confirm => "Você tem certeza que remover a sua conta do Redu? Todo o seu material criado será removido de forma irreversível.",
-    :method => :delete, :class => 'concave-cancel' %>
+  <hr class="list-separator"/>
+
+  <div class="content-section">
+    <%= f.submit t( :save_changes ), :class => "button-primary" %>
+  </div>
 <% end %>

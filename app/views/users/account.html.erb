@@ -1,35 +1,38 @@
-<div class="span3">
-  <%= render :partial => "users/left_sidebar",
-    :locals => { :user => @user } %>
-</div>
-<div class="span10">
-  <div class="content-area">
-    <%= render :partial => "users/breadcrumb_configurations",
-      :locals => { :user => @user } %>
-    <div class="content-body">
-      <div class="content-section">
-        <%# Cabeçalho %>
-        <ul class="header-breadcrumb">
-          <li class="header-breadcrumb-item">
-            <%= link_to "Configurações", edit_user_path(@user),
-               :class => "header-bradcrumb-link icon-manage-gray_32_34-before",
-               :title => "Configurações" %>
-          </li>
-          <li class="header-breadcrumb-item">
-            <%= link_to "Conta", account_user_path(@user),
-               :class => "header-bradcrumb-link",
-               :title => "Conta" %>
-          </li>
-        </ul>
-      </div>
-      <%# Abas e sub-abas %>
-      <%= new_tabs(:new_users) %>
-    </div>
-    <%= render :partial => "users/breadcrumb_configurations",
+  <div class="span3">
+    <%= render :partial => "users/left_sidebar",
       :locals => { :user => @user } %>
   </div>
-</div>
-<div class="span3">
-  <%= render :partial => "users/sidebar_explanation",
-    :locals => { :user => @user } %>
-</div>
+  <div class="span10">
+    <div class="content-area">
+      <%= render :partial => "users/breadcrumb_configurations",
+        :locals => { :user => @user } %>
+      <div class="content-body">
+        <div class="content-section">
+          <%# Cabeçalho %>
+          <ul class="header-breadcrumb">
+            <li class="header-breadcrumb-item">
+              <%= link_to "Configurações", edit_user_path(@user),
+                 :class => "header-bradcrumb-link icon-manage-gray_32_34-before",
+                 :title => "Configurações" %>
+            </li>
+            <li class="header-breadcrumb-item">
+              <%= link_to "Conta", account_user_path(@user),
+                 :class => "header-bradcrumb-link",
+                 :title => "Conta" %>
+            </li>
+          </ul>
+        </div>
+        <%# Abas e sub-abas %>
+        <%= new_tabs(:new_users) %>
+        <%= render :partial => "users/form_account",
+        :locals => { :user => @user } %>
+
+      </div>
+      <%= render :partial => "users/breadcrumb_configurations",
+        :locals => { :user => @user } %>
+    </div>
+  </div>
+  <div class="span3">
+    <%= render :partial => "users/sidebar_explanation",
+      :locals => { :user => @user } %>
+  </div>

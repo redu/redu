@@ -4,11 +4,30 @@
 
 
 .form-config {
+  overflow: hidden;
+
   .list-separator +
   & { margin-top: 10px; }
 
   .control-group +
   .list-separator { margin-top: 20px; }
+
+  .content-section {
+  	.button-primary { float: right; }
+  }
+
+
+  fieldset {	
+  	legend { 
+  		font-size: 18px;
+  		color: $blue2;
+  		font-weight: 300;
+  		font-family: museo-sans, "Helvetica Neue", Arial, sans-serif;
+  		margin-bottom: 20px;
+  	}
+
+  	& + fieldset { margin-top: 20px; }
+  }
 }
 
 .form-config-avatar { margin-top: 20px; }
