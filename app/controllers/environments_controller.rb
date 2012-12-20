@@ -1,7 +1,7 @@
 class EnvironmentsController < BaseController
   before_filter :set_nav_global_context, :only=> [:show, :preview]
   before_filter :set_nav_global_context_admin, :except => [:show, :preview,
-                                                           :index]
+                                                           :index, :create]
 
   load_and_authorize_resource :except => :index, :find_by => :path
 
