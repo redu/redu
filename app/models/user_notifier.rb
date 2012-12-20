@@ -292,6 +292,18 @@ class UserNotifier < ActionMailer::Base
   # :template, template a ser usado
   # :subject, assunto do e-mail
   # :opts, informações disponíveis através de @vars na view
+  #
+  # Para enviar e-mail para todos usuários, é recomendado utilizar o
+  # find_in_batches para evitar estouro de memória:
+  #
+  #   User.find_in_batches(:batch_size => 100) do |users|
+  #     users.each do |u|
+  #       subject = "Professor e Aluno, precisamos de você!"
+  #       mail = UserNotifier.newsletter(u, "user_notifier/form_android.html.erb",
+  #                                      :subject => subject)
+  #       mail.deliver
+  #     end
+  #   end
   def newsletter(user, template, opts={})
     subject = opts.delete(:subject) || "Novidades do Redu"
     @user = user
