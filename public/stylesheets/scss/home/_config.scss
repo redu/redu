@@ -17,10 +17,9 @@
   		font-weight: 300;
   		font-family: $museo-sans;
   		margin-bottom: 20px;
-  	}
-
-  	& + fieldset { margin-top: 20px; }
+    }
   }
+  .button-danger { margin-right: 5px; }
 }
 
 .form-config-avatar { margin-top: 20px; }

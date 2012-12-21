@@ -471,8 +471,8 @@ body {
   font-family: museo-sans, "Helvetica Neue", Arial, sans-serif;
   margin-bottom: 20px;
 }
-.form-config fieldset + fieldset {
-  margin-top: 20px;
+.form-config .button-danger {
+  margin-right: 5px;
 }
 
 .form-config-avatar {

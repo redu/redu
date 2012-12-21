@@ -1,72 +1,64 @@
 <%#
-  Formulário de conta do usuário.
+Formulário de conta do usuário.
 
-  Variáveis:
-    user: o usuário.
+Variáveis:
+  user: o usuário.
 %>
 <%= form_for user, :url => update_account_user_path,
-  :html => {:multipart =>true,
-   :class => "form-horizontal form-config"}  do |f|  %>
-  <%= concave_error_messages_for(user) %>
+:html => {:multipart =>true,
+ :class => "form-horizontal form-config"}  do |f|  %>
+<%= concave_error_messages_for(user) %>
 
-  <%= field_set_tag do %>
-    <div class="control-group">
-      <div class="control-label span3">
-        <%= f.label "Configurações" %>
-      </div>
-      <div class="controls">
-        <div class="control-checkbox">
-          <%= f.check_box :auto_status %>
-          <%= f.label :auto_status, "Logar atividades automaticamente" %>
-        </div>
-      </div>
-  </div>
-  <% end %>
-
-  <%= field_set_tag do %>
-    <div class="control-group">
-      <div class="control-label span3">
-        <%= f.label "Notificações por e-mail" %>
-      </div>
-      <div class="controls">
-        <div class="control-checkbox">
-          <%= f.check_box :notify_community_news %>
-          <%= f.label :notify_community_news, "Novidades do Redu" %>
-        </div>
-        <div class="control-checkbox">
-          <%= f.check_box :notify_messages %>
-          <%= f.label :notify_messages, "Mensagens recebidas" %>
-        </div>
-        <div class="control-checkbox">
-          <%= f.check_box :notify_followships %>
-          <%= f.label :notify_followships, "Novos seguidores" %>
-        </div>
+  <div class="control-group">
+    <div class="control-label span3">
+      <%= f.label "Configurações" %>
+    </div>
+    <div class="controls">
+      <div class="control-checkbox">
+        <%= f.check_box :auto_status %>
+        <%= f.label :auto_status, "Logar atividades automaticamente" %>
       </div>
     </div>
-  <% end %>
+  </div>
 
-  <%= f.fields_for :settings do |builder| %>
-    <%= field_set_tag  do %>
-      <div class="control-group">
-        <div class="control-label span3">
-          <%= f.label "Meu mural é visível a" %>
-        </div>
-        <div class="controls">
-          <div class="control-radio">
-            <%= builder.radio_button :view_mural, Privacy[:public], { :checked => @user.settings.view_mural.eql?(Privacy[:public]) ?  true : false } %>
-            <%= builder.label "view_mural_#{Privacy[:public]}".to_sym, "Todos"%>
-          </div> 
-          <div class="control-radio">
-            <%= builder.radio_button :view_mural, Privacy[:friends], { :checked => @user.settings.view_mural.eql?(Privacy[:friends]) ?  true : false }%>
-            <%= builder.label "view_mural_#{Privacy[:friends]}".to_sym, "Apenas amigos" %>
-          </div>
-        </div>
+  <div class="control-group">
+    <div class="control-label span3">
+      <%= f.label "Notificações por e-mail" %>
+    </div>
+    <div class="controls">
+      <div class="control-checkbox">
+        <%= f.check_box :notify_community_news %>
+        <%= f.label :notify_community_news, "Novidades do Redu" %>
       </div>
-    <% end %>
-  <% end %>
+      <div class="control-checkbox">
+        <%= f.check_box :notify_messages %>
+        <%= f.label :notify_messages, "Mensagens recebidas" %>
+      </div>
+      <div class="control-checkbox">
+        <%= f.check_box :notify_followships %>
+        <%= f.label :notify_followships, "Novos seguidores" %>
+      </div>
+    </div>
+  </div>
 
+  <div class="control-group">
+    <div class="control-label span3">
+      <%= f.label "Meu mural é visível a" %>
+    </div>
+    <div class="controls">
+      <div class="control-radio">
+        <%= f.radio_button :view_mural, Privacy[:public], { :checked => @user.settings.view_mural.eql?(Privacy[:public]) ?  true : false } %>
+        <%= f.label "view_mural_#{Privacy[:public]}".to_sym, "Todos"%>
+      </div> 
+      <div class="control-radio">
+        <%= f.radio_button :view_mural, Privacy[:friends], { :checked => @user.settings.view_mural.eql?(Privacy[:friends]) ?  true : false }%>
+        <%= f.label "view_mural_#{Privacy[:friends]}".to_sym, "Apenas amigos" %>
+      </div>
+    </div>
+  </div>
 
   <hr class="list-separator"/>
+
   <div class="content-section">
     <%= field_set_tag "Redefinir e-mail" do %>
       <div class="control-group row">
@@ -130,5 +122,6 @@
 
   <div class="content-section clearfix">
     <%= f.submit t( :save_changes ), :class => "button-primary pull-right" %>
+    <%= link_to "Remover Conta", @user, :confirm => "Você tem certeza que remover a sua conta do Redu? Todo o seu material criado será removido de forma irreversível.", :method => :delete, :class => 'button-danger pull-right' %>
   </div>
 <% end %>
