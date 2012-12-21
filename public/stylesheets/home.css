@@ -456,9 +456,6 @@ body {
   width: 310px;
 }
 
-.form-config {
-  overflow: hidden;
-}
 .list-separator +
 .form-config {
   margin-top: 10px;
