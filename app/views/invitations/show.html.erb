@@ -62,7 +62,7 @@
             <div class="fb-login">
               <%= link_to "Entre com sua conta do Facebook",
                 facebook_authentication_path(:state => { :friendship_invitation_token => @invitation.token }.to_json),
-                :value => "login-facebook", :class => "uibutton confirm large" %>
+                :class => "uibutton confirm large" %>
             </div>
             <p class="or-call">&minus; ou &minus;</p>
           <% end %>
