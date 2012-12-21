@@ -467,9 +467,6 @@ body {
 .list-separator {
   margin-top: 20px;
 }
-.form-config .content-section .button-primary {
-  float: right;
-}
 .form-config fieldset legend {
   font-size: 18px;
   color: #73c3e6;
