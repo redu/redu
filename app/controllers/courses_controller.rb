@@ -1,7 +1,7 @@
 class CoursesController < BaseController
   respond_to :html, :js
-  before_filter :set_nav_global_context, :only=> [:show, :preview,
-                                                  :admin_invitations]
+  before_filter :set_nav_global_context, :only => [:show, :preview,
+                                                   :admin_invitations]
   before_filter :set_nav_global_context_admin,
     :except => [:show, :preview, :index, :admin_invitations, :new, :create]
 
@@ -234,7 +234,6 @@ class CoursesController < BaseController
 
       # verifica se o limite de usuário foi atingido
       if can?(:add_entry?, @course) and !approved.to_hash.empty?
-
         # calcula o total de usuarios que estão para ser aprovados
         # e só aprova aqueles que estiverem dentro do limite
         total_members = @course.approved_users.count + approved.count
@@ -257,6 +256,9 @@ class CoursesController < BaseController
           uca.approve!
           UserNotifier.approve_membership(uca.user, @course).deliver
         end
+      elsif can?(:add_entry?, @course) and !rejected.to_hash.empty?
+        # Avisa que os membros rejeitados foram moderados mesmo se não houver membros para serem aprovados
+        flash[:notice] = 'Membros moderados!'
       else
         if rejected.to_hash.empty?
           flash[:error] = "O limite máximo de usuários foi atingido. Não é possível adicionar mais usuários."
@@ -264,8 +266,6 @@ class CoursesController < BaseController
           flash[:error] = "O limite máximo de usuários foi atingido. Só os usuários rejeitados foram moderados."
         end
       end
-
-
     end
 
     redirect_to admin_members_requests_environment_course_path(@environment, @course)
@@ -281,7 +281,6 @@ class CoursesController < BaseController
       flash[:notice] = "Você agora faz parte do curso #{@course.name}"
       redirect_to environment_course_path(@course.environment, @course)
     else
-      current_user.get_association_with(@course).notify_pending_moderation
       flash[:notice] = "Seu pedido de participação foi feito. Aguarde a moderação."
       redirect_to preview_environment_course_path(@course.environment, @course)
     end

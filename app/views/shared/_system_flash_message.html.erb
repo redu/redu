@@ -1,20 +1,20 @@
 <% if flash[:info] %>
   <div class="system-message message-info fade in">
-    <a data-dismiss="alert" class="message-close">×</a>
+    <span data-dismiss="alert" class="message-close">×</span>
     <p><strong>Aviso.</strong> <%= h(flash[:info]) %></p>
   </div>
 <% end %>
 
 <% if flash[:notice] %>
   <div class="system-message message-success fade in">
-    <a data-dismiss="alert" class="message-close">×</a>
+    <span data-dismiss="alert" class="message-close">×</span>
     <p><strong>Muito bem!</strong> <%= h(flash[:notice]) %></p>
   </div>
 <% end %>
 
 <% if flash[:error] %>
   <div class="system-message message-warning fade in">
-    <a data-dismiss="alert" class="message-close">×</a>
+    <span data-dismiss="alert" class="message-close">×</span>
     <p><strong>Opa!</strong> <%= h(flash[:error]) %></p>
   </div>
 <% end %>

@@ -622,7 +622,7 @@ table {
 
 th {
   font-weight: bold;
-  color: #b3b3b3;
+  color: #cccccc;
   background-color: #f0f0f0;
   border-top: 1px solid #e6e6e6;
 }
@@ -657,6 +657,7 @@ tr:hover td {
   border-collapse: separate;
 }
 .table-with-borderradius th {
+  color: #b3b3b3;
   -webkit-box-shadow: inset 0 1px 0 white;
   -moz-box-shadow: inset 0 1px 0 white;
   box-shadow: inset 0 1px 0 white;
@@ -675,6 +676,9 @@ tr:hover td {
   -moz-border-radius: 0 7px 0 0;
   border-radius: 0 7px 0 0;
   border-right: 1px solid #e6e6e6;
+}
+.table-with-borderradius.table-with-link th {
+  color: #cccccc;
 }
 .table-with-borderradius td {
   border-left: 1px solid #e6e6e6;
@@ -773,6 +777,17 @@ tr:hover td {
 .form-checklist table + .button-toolbar {
   text-align: right;
   margin-top: 15px;
+}
+.form-checklist tr:hover a {
+  color: inherit;
+  text-decoration: none;
+}
+.form-checklist tr:hover .link-name {
+  color: #73c3e6;
+}
+.form-checklist .link-name {
+  font-weight: normal;
+  color: #73c3e6;
 }
 
 .inbox-message-base, .inbox-message-unread, .inbox-message-read,
@@ -4441,7 +4456,7 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
   margin-right: -6px !important;
 }
 
-.message-base, .system-message, .message-block {
+.system-message, .message-block {
   -webkit-box-shadow: 0 2px 10px 1px rgba(0, 0, 0, 0.4);
   -moz-box-shadow: 0 2px 10px 1px rgba(0, 0, 0, 0.4);
   box-shadow: 0 2px 10px 1px rgba(0, 0, 0, 0.4);
@@ -4452,8 +4467,8 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
   border-width: 1px;
   border-style: solid;
 }
-.message-base p, .system-message p, .message-block p {
-  margin-bottom: 0;
+.system-message a:not([class*="button-"]), .message-block a:not([class*="button-"]) {
+  text-decoration: underline;
 }
 
 .message-close {
@@ -4474,10 +4489,22 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
   border-color: #ff6d6d;
   color: #c1272d;
 }
+.message-warning a:not([class*="button-"]) {
+  color: #e83b3b;
+}
+.message-warning a:not([class*="button-"]):hover {
+  color: #c1272d;
+}
 
 .message-success {
   background-color: #e1f1e1;
   border-color: #5fc080;
+  color: #61a080;
+}
+.message-success a:not([class*="button-"]) {
+  color: #5fc080;
+}
+.message-success a:not([class*="button-"]):hover {
   color: #61a080;
 }
 
@@ -4493,14 +4520,14 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
   color: black;
 }
 
-.system-message-base, .system-message {
+.system-message {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   text-align: center;
   position: fixed;
   z-index: 1060;
-  top: 62px;
+  top: 57px;
   left: 50%;
   width: 580px;
   margin-left: -290px;

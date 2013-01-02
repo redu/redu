@@ -9,9 +9,7 @@
     <%= label_tag :body, t(:message), :style => 'display: none' %>
     <%= f.text_area :body, :size => "73x1" %>
     <%= concave_errors_for f.object, :body %>
-    <hr>
     <div class="status-buttons">
-      <button type="button" class="button-default"> Cancelar</button>
       <%= f.submit t(:send), :class => 'button-primary' %>
     </div>
   </fieldset>

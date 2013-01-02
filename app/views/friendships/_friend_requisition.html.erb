@@ -13,13 +13,13 @@
       <%= form_for [current_user, friendship],
         :html => {:method => :delete, :class => "form-loader"}, :remote => true do %>
         <%= hidden_field_tag "goto_home", true %>
-        <%= submit_tag "Recusar", :class => 'concave-clean button-default' %>
+        <%= submit_tag "Recusar", :class => 'button-default' %>
       <% end %>
       <%= form_for [current_user, Friendship.new],
         :remote => true, :html => { :method => :post, :class => "form-loader" } do %>
         <%= hidden_field_tag "goto_home", true %>
         <%= hidden_field_tag "friend_id", friendship.friend.id %>
-        <%= submit_tag "Aceitar", :class => 'concave-important button-success' %>
+        <%= submit_tag "Aceitar", :class => 'button-success' %>
       <% end %>
     </div>
   </div>

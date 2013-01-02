@@ -43,10 +43,6 @@ class LecturesController < BaseController
   def show
     update_view_count(@lecture)
 
-    if @lecture.removed
-      redirect_to removed_page_path and return
-    end
-
     @status = Status.new
     @statuses = Status.from_hierarchy(@lecture).
       paginate(:page => params[:page],:order => 'created_at DESC',
@@ -126,7 +122,6 @@ class LecturesController < BaseController
       @lecture.subject = Subject.find(params[:subject_id])
 
       if @lecture.valid? && @lecture.make_sense?
-        @lecture.published = 1
         lectureable = @lecture.lectureable
         if lectureable.is_a? Seminar
           authorize! :upload_multimedia, @lecture

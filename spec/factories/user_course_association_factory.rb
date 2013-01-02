@@ -3,6 +3,5 @@ FactoryGirl.define do
     association :course
     association :user
     role :member
-    state "waiting"
   end
 end

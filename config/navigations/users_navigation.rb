@@ -94,7 +94,7 @@ SimpleNavigation::Configuration.run do |navigation|
         tab.item :invite_friends, 'Convide seus amigos', new_user_friendship_path(@user)
       end
     end
-    primary.item :teach, 'Ensine', teach_index_path, :title => 'Ensine', :class => 'nav-global-button'
+    primary.item :teach, 'Ensine', teach_index_path, :title => 'Ensine', :class => 'nav-global-button', :highlights_on => action_matcher({'environments' => 'create'})
     primary.item :courses, 'Cursos', courses_index_path, :title => 'Cursos', :class => 'nav-global-button'
     primary.item :apps, 'Aplicativos', Redu::Application.config.redu_services[:apps][:url], :title => 'Aplicativos', :class => 'nav-global-button'
   end
