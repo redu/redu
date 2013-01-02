@@ -10,8 +10,8 @@
   .control-group +
   .list-separator { margin-top: 20px; }
 
-  fieldset {	
-  	legend { 
+  fieldset {
+  	legend {
   		font-size: 18px;
   		color: $blue2;
   		font-weight: 300;
@@ -23,3 +23,53 @@
 }
 
 .form-config-avatar { margin-top: 20px; }
+
+.config-title {
+  font-weight: 300;
+  color: $blue2;
+  margin-bottom: 20px;
+}
+
+.config-experience {
+  list-style: none;
+
+  &.list-mix-item:before {
+    margin-right: 0;
+  }
+
+  .list-mix-inner { padding: 10px; }
+
+  span {
+    display: block;
+
+    &.time { color: $gray5; }
+  }
+
+  p { color: $gray6; }
+
+  i {
+    color: $gray5;
+    font-style: normal;
+  }
+
+  .message-close {
+    float: right;
+  }
+
+  .legend {
+    float: right;
+    clear: right;
+    color: $blue2;
+    padding-top: 5px;
+
+    &:hover {
+      color: $blue3;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  }
+}
+
+.config-new-item {
+  margin-top: 20px;
+}
