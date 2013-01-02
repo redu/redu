@@ -524,6 +524,15 @@ body {
 
 .config-new-item {
   margin-top: 20px;
+  text-align: center;
+}
+
+.save-curriculum {
+  margin: 10px 20px;
+  overflow: hidden;
+}
+.save-curriculum a {
+  float: right;
 }
 
 ul.requisitions {
