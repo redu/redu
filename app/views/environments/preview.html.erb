@@ -12,13 +12,13 @@
       </div>
     <% end %>
 
-    <ul id="courses_list" class="hierarchy-listing">
-      <% big_tabs :environments do %>
+    <% big_tabs :environments do %>
+      <ul id="courses_list" class="hierarchy-listing">
         <%= render :partial => 'courses/item_preview',
           :collection => @courses %>
-      <% end %>
-    </ul>
-  <%= will_paginate @courses, :renderer => EndlessRenderer %>
+      </ul>
+      <%= will_paginate @courses, :renderer => EndlessRenderer %>
+    <% end %>
   </div><!-- end #environment-courses -->
 
 </div><!-- end .main -->
