@@ -7,36 +7,41 @@
     user: o usuário.
 %>
 <div class="content-section">
-  <%= form_tag delete_selected_user_messages_path(@user),
-    :class => "form-checklist messages-list" do %>
-    <%= hidden_field_tag :mailbox, mailbox.to_s %>
-    <table id="messages" class="table-with-borderradius table-with-link">
-      <thead>
-        <tr>
-          <th width="60%">Assunto</th>
-          <% if mailbox == :inbox %>
-            <th width="35%">Enviada de</th>
-          <% else %>
-            <th width="35%">Para</th>
-          <% end %>
-          <th width="5%"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% if messages.empty? %>
+  <% if messages.empty? %>
+    <div class="empty-message">
+      <span class="empty-message-icon icon-message-empty_128_130 text-replacement" title="Nenhuma mensagem">Nenhuma mensagem</span>
+      <% if mailbox == :inbox %>
+        <p class="empty-message-content">Você ainda não recebeu mensagens.</p>
+      <% else %>
+        <p class="empty-message-content">Você ainda não enviou mensagens.</p>
+      <% end %>
+    </div>
+  <% else %>
+    <%= form_tag delete_selected_user_messages_path(@user),
+      :class => "form-checklist messages-list" do %>
+      <%= hidden_field_tag :mailbox, mailbox.to_s %>
+      <table id="messages" class="table-with-borderradius table-with-link">
+        <thead>
           <tr>
-            <td colspan="3"><%= t :no_messages %></td>
+            <th width="60%">Assunto</th>
+            <% if mailbox == :inbox %>
+              <th width="35%">Enviada de</th>
+            <% else %>
+              <th width="35%">Para</th>
+            <% end %>
+            <th width="5%"></th>
           </tr>
-        <% else %>
+        </thead>
+        <tbody>
           <%= render :partial => "messages/item",
             :collection => messages,
             :locals => { :mailbox => mailbox, :user => user } %>
-        <% end %>
-      </tbody>
-    </table>
-    <div class="button-toolbar">
-      <%= submit_tag t(:delete_selected), :class =>"button-danger" %>
-    </div>
+        </tbody>
+      </table>
+      <div class="button-toolbar">
+        <%= submit_tag t(:delete_selected), :class =>"button-danger" %>
+      </div>
+    <% end %>
   <% end %>
 </div>
 
