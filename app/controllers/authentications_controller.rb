@@ -33,6 +33,9 @@ class AuthenticationsController < BaseController
       current_user = @user_session.record if @user_session.save
     end
 
+    # Lida com tokens de convites
+    Authentication.handle_invitation_token(params[:state], current_user) if params[:state]
+
     if valid_url?(params[:state])
       redirect_to params[:state]
     else
