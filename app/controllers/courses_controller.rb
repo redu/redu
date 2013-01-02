@@ -338,11 +338,16 @@ class CoursesController < BaseController
     users_ids = params[:users].collect{|u| u.to_i} if params[:users]
 
     unless users_ids.empty?
-      User.where(:id => users_ids).
-        includes(:user_course_associations,:user_space_associations).each do |user|
-          @course.unjoin user
+      User.select(:id).where(:id => users_ids).
+        find_in_batches(:batch_size => 100) do |users|
+
+        users.each do |u|
+          job = UnjoinUserJob.new(:user => u, :course => @course)
+          Delayed::Job.enqueue(job, :queue => 'general')
         end
-      flash[:notice] = "Os usuários foram removidos do curso #{@course.name}"
+      end
+
+      flash[:notice] = "Os usuários estão sendo removidos do curso. Esta operação poderá levar alguns minutos."
     end
 
     respond_to do |format|
