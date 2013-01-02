@@ -33,12 +33,6 @@
   width: 76px;
 }
 
-.errors_on_field {
-  color: #ff6d6d;
-  font-size: 11px;
-  list-style: none;
-}
-
 .reactivate-account .button-danger {
   margin-top: 10px;
 }
