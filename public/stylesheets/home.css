@@ -89,22 +89,15 @@ body {
   line-height: 26px;
   padding-bottom: 5px;
 }
-.home-container ul {
-  overflow: hidden;
+
+.what-is-missing-list {
   list-style: none;
-  margin-top: 10px;
-  margin-bottom: 0;
+  margin: 10px 0 0;
 }
-.home-container ul li {
-  float: left;
-  margin-bottom: 5px;
-  clear: both;
-}
-.home-container ul li:last-child {
-  margin-bottom: 0;
-}
-.home-container ul li a:hover {
-  text-decoration: none;
+
+.what-is-missing-item +
+.what-is-missing-item {
+  margin-top: 5px;
 }
 
 #modal-what-is-missing .message-block-actions, .home-container .message-block-actions {
