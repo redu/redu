@@ -59,6 +59,11 @@
               <%= f.label :remember_me, "Matenha-me conectado", :class => "label-stay-connect" %>
               <%= link_to "Recuperar login & senha", recover_username_password_path, :class => "recover-login" %>
             </div>
+            <div class="fb-login">
+              <%= link_to "Entre com sua conta do Facebook",
+                facebook_authentication_path(:state => { :friendship_invitation_token => @invitation.token }.to_json),
+                :class => "uibutton confirm large" %>
+            </div>
             <p class="or-call">&minus; ou &minus;</p>
           <% end %>
         <% end %>

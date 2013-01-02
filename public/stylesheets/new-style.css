@@ -6536,6 +6536,15 @@ div.token-input-dropdown {
   margin-right: 5px;
 }
 
+.home-sidebar .contact-recommendations ul li div.two-columns-column {
+  width: 113px;
+  float: right;
+}
+
+.home-sidebar .contact-recommendations ul li div.two-columns-column .members-to-add-link {  
+  display: block;
+  margin-top: 5px;
+}
 
 .home-sidebar .contact-recommendations ul li:hover {
   background-color: #dbeff7;

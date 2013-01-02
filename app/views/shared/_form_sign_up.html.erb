@@ -9,11 +9,15 @@
 
   <% if params[:invitation_token] %>
     <%= hidden_field_tag :invitation_token, params[:invitation_token] %>
+    <% fb_connect_invitation = {
+      :invitation_token => params[:invitation_token] } %>
   <% end %>
 
   <% if params[:friendship_invitation_token] %>
     <%= hidden_field_tag :friendship_invitation_token,
       params[:friendship_invitation_token] %>
+    <% fb_connect_invitation = {
+      :friendship_invitation_token => params[:friendship_invitation_token] } %>
   <% end %>
 
   <div class="modal-header modal-header-gray">
@@ -27,7 +31,8 @@
         preencher formulários ao associar sua conta ao Redu. Desta forma, o
         cadastro é feito de forma automática.</p>
       <div class="facebook-sign-up">
-        <%= link_to "Cadastre-se no Redu usando sua conta do Facebook", facebook_authentication_path, :value => "login-facebook",
+        <%= link_to "Cadastre-se no Redu usando sua conta do Facebook",
+          facebook_authentication_path(:state => fb_connect_invitation.to_json),
           :class => "facebook-sign-up-button" %>
         <span class="legend"><em>Opcional</em></span>
       </div>
