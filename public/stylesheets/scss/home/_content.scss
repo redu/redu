@@ -19,25 +19,19 @@
     line-height: 26px;
     padding-bottom: 5px;
   }
+}
 
-  ul {
-    overflow: hidden;
-    list-style: none;
-    margin-top: 10px;
-    margin-bottom: 0;
+// List de links da mensagem em bloco "O que falta fazer?"
+// ==========================================================================
 
-    li {
-      float: left;
-      margin-bottom: 5px;
-      clear: both;
+.what-is-missing-list {
+  list-style: none;
+  margin: 10px 0 0;
+}
 
-      &:last-child {
-        margin-bottom: 0;
-      }
-
-      a:hover { text-decoration: none; }
-    }
-  }
+.what-is-missing-item {
+  & +
+  & { margin-top: 5px; }
 }
 
 .message-block-actions {
