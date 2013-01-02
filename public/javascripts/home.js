@@ -232,7 +232,7 @@ $(document).ready(function(){
       $(boxSelector).slideDown(150, 'swing');
       $(this).slideUp(150, 'swing');
       if ($('#explore-redu-sidebar li span:visible').length <= 1) {
-        $('#explore-redu-sidebar').hide();
+        $('#explore-redu-sidebar').slideUp(150, 'swing');
       }
     });
 
