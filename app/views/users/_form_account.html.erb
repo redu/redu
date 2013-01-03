@@ -5,10 +5,9 @@ Variáveis:
   user: o usuário.
 %>
 <%= form_for user, :url => update_account_user_path,
-:html => {:multipart =>true,
- :class => "form-horizontal form-config"}  do |f|  %>
-<%= concave_error_messages_for(user) %>
-
+  :html => {:multipart => true,
+  :class => "form-horizontal form-config"} do |f| %>
+  <%= concave_error_messages_for(user) %>
   <div class="control-group">
     <div class="control-label span3">
       <%= f.label "Configurações" %>
@@ -42,19 +41,21 @@ Variáveis:
   </div>
 
   <div class="control-group">
-    <div class="control-label span3">
-      <%= f.label "Meu mural é visível a" %>
-    </div>
-    <div class="controls">
-      <div class="control-radio">
-        <%= f.radio_button :view_mural, Privacy[:public], { :checked => @user.settings.view_mural.eql?(Privacy[:public]) ?  true : false } %>
-        <%= f.label "view_mural_#{Privacy[:public]}".to_sym, "Todos"%>
-      </div> 
-      <div class="control-radio">
-        <%= f.radio_button :view_mural, Privacy[:friends], { :checked => @user.settings.view_mural.eql?(Privacy[:friends]) ?  true : false }%>
-        <%= f.label "view_mural_#{Privacy[:friends]}".to_sym, "Apenas amigos" %>
+    <%= f.fields_for :settings do |builder| %>
+      <div class="control-label span3">
+        <%= f.label "Meu mural é visível a" %>
       </div>
-    </div>
+      <div class="controls">
+        <div class="control-radio">
+          <%= builder.radio_button :view_mural, Privacy[:public], { :checked => user.settings.view_mural.eql?(Privacy[:public]) ?  true : false } %>
+          <%= builder.label "view_mural_#{Privacy[:public]}".to_sym, "Todos"%>
+        </div> 
+        <div class="control-radio">
+          <%= builder.radio_button :view_mural, Privacy[:friends], { :checked => user.settings.view_mural.eql?(Privacy[:friends]) ?  true : false } %>
+          <%= builder.label "view_mural_#{Privacy[:friends]}".to_sym, "Apenas amigos" %>
+        </div>
+      </div>
+    <% end %>
   </div>
 
   <hr class="list-separator"/>
@@ -122,6 +123,6 @@ Variáveis:
 
   <div class="content-section clearfix">
     <%= f.submit t( :save_changes ), :class => "button-primary pull-right" %>
-    <%= link_to "Remover Conta", @user, :confirm => "Você tem certeza que remover a sua conta do Redu? Todo o seu material criado será removido de forma irreversível.", :method => :delete, :class => 'button-danger pull-right' %>
+    <%= link_to "Remover Conta", user, :confirm => "Você tem certeza que remover a sua conta do Redu? Todo o seu material criado será removido de forma irreversível.", :method => :delete, :class => 'button-danger pull-right' %>
   </div>
 <% end %>
