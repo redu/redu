@@ -1,13 +1,14 @@
-<li id="experience-<%= item.id %>">
-  <div class="infos clearfix">
-    <a href="#" class="edit-experience icon-manage-gray_8_10-before"><%= t :edit %></a>
-    <%= link_to (t :remove), user_experience_path(item.user, item),
-      :remote => true, :method => :delete,
-      :class => "remove-experience icon-small icon-delete-gray_16_18 replacement",
-      :confirm => "Você tem certeza que deseja excluir esta experiência? Não será mais possível recuperá-la." %>
-    <%= render :partial => "experiences/item_detail", :locals => { :item => item } %>
+<li id="experience-<%= item.id %>" class="list-mix-item config-experience clearfix">
+  <div class="list-mix-inner">
+    <div class="grid_5">
+      <div class="grid_4">
+        <%= link_to "x", user_experience_path(item.user, item),
+          :remote => true, :method => :delete,
+          :class => "message-close",
+          :confirm => "Você tem certeza que deseja excluir esta experiência? Não será mais possível recuperá-la." %>
+        <a href="#" class="legend"><%= t :edit %></a>
+        <%= render :partial => "experiences/item_detail", :locals => { :item => item } %>
+      </div>
+    </div>
   </div>
-
-  <%= render :partial => 'experiences/form', :locals => { :user => item.user,
-    :experience => item } %>
 </li>

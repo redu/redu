@@ -494,11 +494,11 @@ body {
 .config-experience .list-mix-inner {
   padding: 10px;
 }
-.config-experience span {
-  display: block;
-}
 .config-experience span.time {
   color: #b3b3b3;
+}
+.config-experience span.title {
+  display: block;
 }
 .config-experience p {
   color: #6d6e6f;

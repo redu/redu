@@ -40,9 +40,8 @@
   .list-mix-inner { padding: 10px; }
 
   span {
-    display: block;
-
     &.time { color: $gray5; }
+    &.title { display: block; }
   }
 
   p { color: $gray6; }
