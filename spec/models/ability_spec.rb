@@ -728,6 +728,15 @@ describe Ability do
           @space = Factory(:space, :owner => @env_admin,
                           :course => @course)
         end
+
+        it "read a space" do
+          @ability.should be_able_to(:read, @space)
+        end
+
+        it "manage a space" do
+          @ability.should be_able_to(:manage, @space)
+        end
+
         it "creates a space" do
           space = Factory(:space, :owner => @redu_admin,
                           :course => @course)
