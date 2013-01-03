@@ -1,7 +1,3 @@
-<div class="details">
-  <span class='name'><%= item.educationable.name %></span>,  <span class="role"><%= (t item.educationable.role).downcase %></span>
-  <span class="period">
-    <%= item.educationable.year.strftime("%Y") %>
-  </span>
-</div>
+<span class="title"><%= item.educationable.name %>, <i><%= (t item.educationable.role).downcase %></i></span>
+<span class="time"><%= item.educationable.year.strftime("%Y") %></span>
 

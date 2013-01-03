@@ -1,10 +1,12 @@
-<div class="infos clearfix">
-  <a href="#" class="edit-education icon-manage-gray_8_10-before"><%= t :edit %></a>
-  <%= link_to (t :remove), user_education_path(item.user, item),
-    :remote => true, :method => :delete,
-    :class => "remove-education icon-small icon-delete-gray_16_18 replacement",
-    :confirm => "Você tem certeza que deseja excluir esta experiência? Não será mais possível recuperá-la." %>
-  <%= render :partial => "educations/high_school_detail", :locals => { :item => item } %>
+<div class="list-mix-inner">
+  <div class="grid_5">
+    <div class="grid_4">
+      <%= link_to "x", user_education_path(item.user, item),
+        :remote => true, :method => :delete,
+        :class => "message-close",
+        :confirm => "Você tem certeza que deseja excluir esta experiência? Não será mais possível recuperá-la." %>
+      <a href="#" class="legend"><%= t :edit %></a>
+      <%= render :partial => "educations/high_school_detail", :locals => { :item => item } %>
+    </div>
+  </div>
 </div>
-
-<%= render :partial => 'educations/form_edit', :locals => { :education => item } %>

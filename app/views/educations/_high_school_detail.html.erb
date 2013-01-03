@@ -1,8 +1,3 @@
-<div class="details">
-  <span class='type'><%= t :high_school %></span> em <span class="institution"><%= item.educationable.institution %></span>
-  <span class="period">
-    <%= t item.educationable.end_year.strftime("%Y") %>
-  </span>
-
-  <div class="description"><%= item.educationable.description %></div>
-</div>
+<span class="title"><b><%= t :high_school %></b> <i>em</i> <%= item.educationable.institution %></span>
+<span class="time"><%= t item.educationable.end_year.strftime("%Y") %></span>
+<p><%= item.educationable.description %></p>

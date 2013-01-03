@@ -66,6 +66,9 @@
       <div class="home-container">
         <h4 class="config-title">Experiência acadêmica</h4>
 
+        <%= render :partial => "educations/item",
+              :collection => @educations %>
+        <!--
         <li class="list-mix-item config-experience clearfix">
           <div class="list-mix-inner">
             <div class="grid_5">
@@ -93,6 +96,7 @@
             </div>
           </div>
         </li>
+      -->
 
         <div class="config-new-item">
           <a class="button-default icon-curriculum-blue_16_18-before">Adicionar novo item</a>

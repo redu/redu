@@ -1,4 +1,4 @@
-<li id="education-<%= item.id %>">
+<li id="education-<%= item.id %>" class="list-mix-item config-experience clearfix">
   <% if item.educationable.class == HighSchool %>
     <%= render :partial => 'educations/high_school_item',
       :locals => { :item => item } %>

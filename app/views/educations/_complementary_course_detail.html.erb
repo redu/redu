@@ -1,10 +1,6 @@
-<div class="details">
-  <span class='course'><%= item.educationable.course %></span> pela <span class="institution"><%= item.educationable.institution %></span>
-  <span class="period">
-    <%= t item.educationable.year.strftime("%Y") %>
-    (<%= pluralize item.educationable.workload, (t :hour).downcase %>)
-  </span>
-
-  <div class="description"><%= item.educationable.description %></div>
-</div>
-
+<span class="title"><%= item.educationable.course %> <i>pela</i> <%= item.educationable.institution %></span>
+<span class="time">
+  <%= t item.educationable.year.strftime("%Y") %>
+  (<%= pluralize item.educationable.workload, (t :hour).downcase %>)
+</span>
+<p><%= item.educationable.description %></p>
