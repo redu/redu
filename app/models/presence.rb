@@ -7,8 +7,10 @@ class Presence
     @user = user
     @contacts = list_of_contacts || []
     @contacts_by_pre = build_index(@contacts)
+    @course_users = User.find_by_sql(course_users_sql) || []
     @channels = list_of_channels || []
     @roles = fill_roles || {}
+    @roles_friends = fill_roles_friends || {}
   end
 
   def fill_roles
@@ -24,6 +26,21 @@ class Presence
       @user.user_course_associations.approved.group('role').count.each do |k,v|
         roles[Role[k]] = true
       end
+    end
+
+    roles
+  end
+
+  def fill_roles_friends
+    roles = nil
+
+    ActiveRecord::Base.transaction do
+      roles = Role.select('DISTINCT name').all.inject({}) do |acc, role|
+        acc[role.name] = false
+        acc
+      end
+
+      roles['admin'] = true if @user.admin?
     end
 
     roles
@@ -46,7 +63,7 @@ class Presence
         :thumbnail => @user.avatar.url(:thumb_24),
         :pre_channel => @user.presence_channel,
         :pri_channel => @user.private_channel_with(@contacts_by_pre[channel_name]),
-        :roles => @roles }
+        :roles => just_friends?(channel_name) ? @roles_friends : @roles }
 
       response_body = Pusher[channel_name].
         authenticate(socket_id,
@@ -87,6 +104,11 @@ class Presence
     end
   end
 
+  def just_friends?(channel)
+    user = @contacts_by_pre[channel]
+    !@course_users.include?(user)
+  end
+
   protected
 
   def list_of_channels
@@ -105,6 +127,28 @@ class Presence
   # a lista de contatos é carregada num número de consultas constante.
   def list_of_contacts
     ActiveRecord::Base.transaction do
+    # Condições para contatos (friendship)
+    sql = <<-eos
+     ((`friendships`.user_id = ?) AND ((friendships.status = 'accepted')))
+    eos
+    friends_cond = [sql, @user.id]
+    friends_cond = ActiveRecord::Base.send(:sanitize_sql_array, friends_cond)
+
+    # União de usuários amigos (friendship) e usuários do curso
+    sql = <<-eos
+     #{ self.course_users_sql }
+     UNION
+     SELECT `users`.* FROM `users` INNER JOIN
+      `friendships` ON `users`.id = `friendships`.friend_id
+      WHERE #{friends_cond}
+    eos
+
+    User.find_by_sql(sql)
+    end
+  end
+
+  # SQL para usuários do curso
+  def course_users_sql
     teacher_or_tutor = [ Role[:teacher], Role[:tutor] ]
     member = Role[:member]
 
@@ -134,27 +178,12 @@ class Presence
                    teacher_or_tutor]
     course_cond = ActiveRecord::Base.send(:sanitize_sql_array, course_cond)
 
-    # Condições para contatos (friendship)
-    sql = <<-eos
-     ((`friendships`.user_id = ?) AND ((friendships.status = 'accepted')))
-    eos
-    friends_cond = [sql, @user.id]
-    friends_cond = ActiveRecord::Base.send(:sanitize_sql_array, friends_cond)
-
-    # União de usuários amigos (friendship) e usuários do curso
-    sql = <<-eos
+    <<-eos
      SELECT `users`.* FROM `users` INNER JOIN
        `course_enrollments` ON
        `course_enrollments`.`user_id` = `users`.`id`
       WHERE #{course_cond}
-     UNION
-     SELECT `users`.* FROM `users` INNER JOIN
-      `friendships` ON `users`.id = `friendships`.friend_id
-      WHERE #{friends_cond}
     eos
-
-    User.find_by_sql(sql)
-    end
   end
 
   # Indexa contatos por nome de canal de presença
