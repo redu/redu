@@ -1,16 +1,5 @@
 $(function(){
 
-  $.fn.refreshExercises = function() {
-    // Deixa uma questão marcada quando o usuário a seleciona
-    this.each(function(){
-        $(".alternatives li input[type='radio']").live("click", function(){
-          $(".alternatives li").removeClass("selected");
-          $(this).parent().addClass("selected");
-          $(".exercise-nav li.actual").addClass("question-answered");
-        });
-    });
-  }
-
   // Aplica nestedFields às questões e alternativas de Exercício
   $.fn.refreshNestedFields = function(){
     var alternativeOptions = {
@@ -193,12 +182,10 @@ $(function(){
   };
 
   $(document).ready(function(){
-    $(document).refreshExercises();
     $(document).refreshNestedFieldsEdition();
     $("#resources-edition .exercise").refreshQuestionsAppearance();
 
     $(document).ajaxComplete(function(){
-      $(document).refreshExercises();
       $(document).refreshNestedFieldsEdition();
       $("#resources-edition .exercise").refreshQuestionsAppearance();
     });
