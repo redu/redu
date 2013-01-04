@@ -83,6 +83,7 @@ describe SessionsController do
         it "re-renders UserCourseInvitations#show" do
           response.should render_template('user_course_invitations/show')
         end
+
       end
     end
 
@@ -203,6 +204,22 @@ describe SessionsController do
 
       it "should be success" do
         response.should be_success
+      end
+    end
+
+    context "doesn't have any token" do
+      context "and format.html" do
+        before do
+          post_params = {:locale => 'pt-BR',
+                          :user_session => { :remember_me => "0",
+                                             :password => "wrong-pass",
+                                             :login => @user.login } }
+          post :create, post_params
+        end
+
+        it "should re-render site_index" do
+          response.should render_template("base/site_index")
+        end
       end
     end
   end
