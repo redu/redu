@@ -273,7 +273,8 @@ class EnvironmentsController < BaseController
       format.js do
         render_endless('users/environments/environment', @environments,
                        '#my-environments',
-                       :template => 'shared/new_endless_kaminari')
+                       { :template => 'shared/new_endless_kaminari',
+                         :partial_locals => { :user => @user } })
       end
     end
   end
