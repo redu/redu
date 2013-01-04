@@ -42,7 +42,7 @@ class HierarchyNotificationJob
       multi.callback do
         multi.responses[:callback]
         multi.responses[:errback].each do |err|
-          @logger.error "Errback, Bad DNS or Timeout, with body: #{err[1].req.body}"
+          logger.error "Errback, Bad DNS or Timeout, with body: #{err[1].req.body}"
         end
 
         EM.stop unless @running
