@@ -18,17 +18,31 @@
         :locals => { :lecture => @lecture} %>
       <div class="stage exercise">
         <% if @question %>
-          <%= form_for :choice, :url => exercise_question_choices_path(@exercise, @question), :method => :post do |f| %>
-            <%= render"questions/navigation",
-              :f => f, :exercise => @exercise, :current => @question, :first => @first_question, :last => @last_question, :review => @review %>
-            <%= render "questions/form", :f => f, :exercise => @exercise, :question => @question, :result => @result, :review => @review, :choice => @choice %>
+          <% # Forms para submissão do choice da questão %>
+          <%= form_for :choice, :url => exercise_question_choices_path(@exercise, @question),
+            :method => :post do |f| %>
+            <%= render "questions/navigation",
+              :exercise => @exercise, :current => @question,
+              :first => @first_question, :last => @last_question,
+              :review => @review %>
+            <%= render "questions/form", :f => f, :exercise => @exercise,
+              :question => @question, :result => @result, :review => @review,
+              :choice => @choice %>
+            <%= render "questions/submission", :question => @question,
+              :first => @first_question, :last => @last_question %>
           <% end %>
         <% else %>
-          <%= form_for :choice, :url => exercise_question_choices_path(@exercise, @last_question), :method => :post do |f| %>
+          <% # Depois de clicar em "finalizar" %>
+          <%= form_for :choice, :url => exercise_question_choices_path(@exercise, @last_question),
+            :method => :post do |f| %>
             <%= render"questions/navigation",
-              :f => f, :exercise => @exercise, :current => @last_question, :first => @first_question, :last => @last_question, :review => @review %>
+              :exercise => @exercise, :current => @last_question,
+              :first => @first_question, :last => @last_question, :review => @review %>
           <% end %>
-          <%= form_tag exercise_result_path(@exercise, @result), :method => :put, :class => "exercise-finalize-form" do %>
+
+          <% # Form para submissão do exercício %>
+          <%= form_tag exercise_result_path(@exercise, @result),
+            :method => :put, :class => "exercise-finalize-form" do %>
             <span class="exercise-call">Exercício finalizado.</span>
             <span class="exercise-call">Você pode revisar as questões ou submeter a aula. </span>
             <button type="submit" class="concave-button">
