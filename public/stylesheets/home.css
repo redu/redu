@@ -499,6 +499,7 @@ body {
 }
 .config-experience span.title {
   display: block;
+  width: 478px;
 }
 .config-experience p {
   color: #6d6e6f;

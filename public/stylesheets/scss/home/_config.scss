@@ -41,7 +41,10 @@
 
   span {
     &.time { color: $gray5; }
-    &.title { display: block; }
+    &.title {
+      display: block;
+      width: 478px;
+    }
   }
 
   p {
