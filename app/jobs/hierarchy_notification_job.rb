@@ -16,6 +16,14 @@ class HierarchyNotificationJob
     send_multi_request
   end
 
+  def before(job)
+    @logger = Logger.new Rails.root.join('log', 'error.log').to_s
+  end
+
+  def after(job)
+    @logger.close
+  end
+
   private
 
   def send_multi_request
@@ -34,7 +42,7 @@ class HierarchyNotificationJob
       multi.callback do
         multi.responses[:callback]
         multi.responses[:errback].each do |err|
-          logger.error "Errback, Bad DNS or Timeout, with body: #{err[1].req.body}"
+          @logger.error "Errback, Bad DNS or Timeout, with body: #{err[1].req.body}"
         end
 
         EM.stop unless @running
@@ -74,13 +82,5 @@ class HierarchyNotificationJob
     else
       nil
     end
-  end
-
-  def before
-    @logger = Logger.new Rails.root.join('log', 'error.log').to_s
-  end
-
-  def after
-    @logger.close
   end
 end
