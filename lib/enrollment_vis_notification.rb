@@ -21,30 +21,15 @@ module EnrollmentVisNotification
     }
   end
 
-  # Cria um delayed_job do tipo HierarchyNotification para enviar requisições
-  # para visualização. Os params variam de acordo com o tipo, já que quando é
-  # criação o enrolment pode ser descoberto na hora da execução do job, mas quando
-  # for remoção tem que enviar todos os parametros completos.
+  # Cria um delayed_job do tipo HierarchyNotification para enviar requisições para visualização
   def delay_hierarchy_notification(enrollments, type)
     unless enrollments.empty?
-      if type == "enrollment"
+     if type == "enrollment"
         params = enrollments.collect { |e| e.id }
       else
         params = enrollments.collect { |e| fill_enroll_params(e, type) }
       end
-
-      create_jobs(params, type)
-    end
-  end
-
-  # Cria diversos jobs para serem enfileirados e processados pelo dealyed_job.
-  # A cada 300 cria-se um novo job para ser processado
-  def create_jobs(params, type)
-    params_array = []
-    params_array = params.each_slice(300).to_a
-
-    params_array.each do |p|
-      job = HierarchyNotificationJob.new(p, type)
+      job = HierarchyNotificationJob.new(params, type)
       Delayed::Job.enqueue(job, :queue => 'general')
     end
   end
