@@ -1,7 +1,7 @@
 class HierarchyNotificationJob
   attr_accessor :enrollments, :type
   cattr_accessor :logger do
-    Logger.new("log/error.log")
+    Logger.new Rails.root.join('log', 'error.log').to_s
   end
 
   def initialize(enrollments, type)
