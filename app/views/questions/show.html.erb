@@ -29,7 +29,7 @@
               :question => @question, :result => @result, :review => @review,
               :choice => @choice %>
             <%= render "questions/submission", :question => @question,
-              :first => @first_question, :last => @last_question %>
+              :first => @first_question, :last => @last_question, :review => @review %>
           <% end %>
         <% else %>
           <% # Depois de clicar em "finalizar" %>
