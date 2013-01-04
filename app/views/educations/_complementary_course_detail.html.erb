@@ -3,4 +3,4 @@
   <%= t item.educationable.year.strftime("%Y") %>
   (<%= pluralize item.educationable.workload, (t :hour).downcase %>)
 </span>
-<p><%= item.educationable.description %></p>
+<p class="description"><%= item.educationable.description %></p>

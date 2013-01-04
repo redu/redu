@@ -44,7 +44,10 @@
     &.title { display: block; }
   }
 
-  p { color: $gray6; }
+  p {
+    color: $gray6;
+    &.description { width: 478px; }
+  }
 
   i {
     color: $gray5;

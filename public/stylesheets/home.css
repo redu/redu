@@ -503,6 +503,9 @@ body {
 .config-experience p {
   color: #6d6e6f;
 }
+.config-experience p.description {
+  width: 478px;
+}
 .config-experience i {
   color: #b3b3b3;
   font-style: normal;
