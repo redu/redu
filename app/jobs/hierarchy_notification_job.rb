@@ -1,8 +1,6 @@
 class HierarchyNotificationJob
   attr_accessor :enrollments, :type
-  cattr_accessor :logger do
-    Logger.new Rails.root.join('log', 'error.log').to_s
-  end
+  attr_reader :logger
 
   def initialize(enrollments, type)
     if type == 'enrollment'
@@ -76,5 +74,13 @@ class HierarchyNotificationJob
     else
       nil
     end
+  end
+
+  def before
+    @logger = Logger.new Rails.root.join('log', 'error.log').to_s
+  end
+
+  def after
+    @logger.close
   end
 end
