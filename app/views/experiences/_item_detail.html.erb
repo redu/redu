@@ -1,7 +1,7 @@
 <span class="title"><b><%= item.title %></b> <i>em</i> <%= item.company %></span>
 <span class="time">
   <% if item.current? %>
-    <%= t item.start_date.strftime("%B %Y") %> -  Atual
+    <%= t item.start_date.strftime("%B %Y") %> - presente
     (<%= distance_of_time_in_words item.start_date, Date.today %>)
   <% else %>
     <%= t item.start_date.strftime("%B %Y") %> - <%= t item.end_date.strftime("%B %Y") %>
