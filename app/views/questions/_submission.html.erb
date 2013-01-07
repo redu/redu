@@ -1,11 +1,11 @@
 <% if question != first %>
   <li class="lecture-buttons">
-    <%= submit_tag "Anterior", :class => "concave-clean" %>
+    <button type="button" class="concave-clean">Anterior</button>
   </li>
 <% end %>
 <% if question != last %>
   <li class="lecture-buttons">
-    <%= submit_tag "Próxima", :class => "concave-clean" %>
+    <button type="button" class="concave-clean">Próxima</button>
   </li>
 <% end %>
 <% unless review %>
