@@ -1,22 +1,24 @@
-<% if question != first %>
-  <li class="lecture-buttons">
-    <button type="button" class="concave-clean">Anterior</button>
-  </li>
-<% end %>
-<% if question != last %>
-  <li class="lecture-buttons">
-    <button type="button" class="concave-clean">Próxima</button>
-  </li>
-<% end %>
-<% unless review %>
-  <li class="lecture-buttons">
-    <%= submit_tag "Salvar resposta", :class => "concave-clean" %>
-  </li>
-  <% if question == last %>
-    <li class="lecture-button-finalize">
-      <button type="submit" class="concave-button">
-        <span class="end-exercise icon-exercise-white_16_18-before">Finalizar</span>
-      </button>
+<ol class="actions-buttons">
+  <% if question != first %>
+    <li class="lecture-buttons">
+      <button type="button" class="concave-clean">Anterior</button>
     </li>
   <% end %>
-<% end %>
+  <% if question != last %>
+    <li class="lecture-buttons">
+      <button type="button" class="concave-clean">Próxima</button>
+    </li>
+  <% end %>
+  <% unless review %>
+    <li class="lecture-buttons">
+      <%= submit_tag "Salvar resposta", :class => "concave-clean" %>
+    </li>
+    <% if question == last %>
+      <li class="lecture-button-finalize">
+        <button type="submit" class="concave-button">
+          <span class="end-exercise icon-exercise-white_16_18-before">Finalizar</span>
+        </button>
+      </li>
+    <% end %>
+  <% end %>
+</ol>

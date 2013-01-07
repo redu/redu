@@ -11,6 +11,16 @@
   border-radius: 3px;
 }
 
+#resource .exercise ol.actions-buttons {
+  margin-top: 10px;
+  float: right;
+}
+
+#resource .exercise ol.actions-buttons li.lecture-buttons,
+#resource .exercise ol.actions-buttons li.lecture-button-finalize {
+  display: inline-block;
+}
+
 #resource .exercise-nav ol {
   margin: 15px 10px 5px 10px;
   overflow: hidden;
@@ -28,30 +38,22 @@
   font-weight: bold;
 }
 
-#resource .exercise-nav ol li.lecture-buttons {
-  width: 79px;
-}
-
-#resource .exercise-nav ol li.lecture-buttons {
+#resource .exercise-nav ol liol.actions-buttons {
   display: block;
 }
 
-#resource .exercise-nav ol li.lecture-button-finalize {
-  margin-left: 135px;
-}
-
-#resource .exercise-nav .lecture-button-finalize .concave-button {
+#resource .exercise .lecture-button-finalize .concave-button {
   margin: 0;
   margin-top: 2px;
   padding: 6px 25px 7px 25px;
 }
 
-.exercise-nav .concave-button .end-exercise {
+.exercise .concave-button .end-exercise {
   display: block;
   width: 80px;
 }
 
-.exercise-nav .lecture-button-finalize .concave-button .end-exercise:before {
+.exercise- .lecture-button-finalize .concave-button .end-exercise:before {
   display: block;
   float: left;
   margin-right: 5px;
@@ -61,52 +63,52 @@
   color: rgb(77, 173, 214);
 }
 
-#resource .exercise-nav ol li.question-right a {
+#resource .exercise ol li.question-right a {
   color: rgb(95, 192, 128);
 }
 
-#resource .exercise-nav ol li.question-wrong a {
+#resource .exercise ol li.question-wrong a {
   color: rgb(232, 59, 59);
 }
 
-#resource .exercise-nav .concave-clean {
+#resource .exercise .concave-clean {
   padding: 5px 12px 6px 12px;
   color: rgb(77, 173, 214);
   border: 1px solid rgb(204, 204, 204);
   font-size: 1em;
 }
 
-#resource .exercise-nav .concave-clean:hover {
+#resource .exercise .concave-clean:hover {
   color: rgb(23, 137, 195);
   border: 1px solid rgb(76, 172, 213);
 }
 
-#resource .exercise-nav li a {
+#resource .exercise li a {
   color: rgb(179, 179, 179);
   font-size: 2.3em;
   font-weight: 100;
   font-family: museo-slab, "Helvetica Neue", Arial, sans-serif;
 }
 
-.textshadow #resource .exercise-nav li a {
+.textshadow #resource .exercise li a {
   text-shadow: 0px 2px 0px white;
 }
 
-#resource .exercise-nav li a.actual {
+#resource .exercise li a.actual {
   font-weight: 900;
 }
 
-#resource .exercise-nav .first-question,
-#resource .exercise-nav .last-question {
+#resource .exercise .first-question,
+#resource .exercise .last-question {
   font-size: .87em;
 }
 
-#resource .exercise-nav .first-question {
+#resource .exercise .first-question {
   float: left;
   margin-left: 10px;
 }
 
-#resource .exercise-nav .last-question {
+#resource .exercise .last-question {
   float: right;
   margin-right: 10px;
 
