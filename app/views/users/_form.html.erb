@@ -123,6 +123,18 @@
       <%= concave_errors_for(f.object, :description) %>
     </div>
   </div>
+  <%# Frase marcante %>
+  <div class="control-group row">
+    <div class="control-label span3">
+      <%= f.label :favorite_quotation, "Frase marcante" %>
+    </div>
+    <div class="controls span6">
+      <%= f.text_area :favorite_quotation,
+        :placeholder => "Escreva uma frase, sua ou de outra pessoa, que reflita sua maneira de pensar e agir",
+        :rows => 6 %>
+      <%= concave_errors_for(f.object, :favorite_quotation) %>
+    </div>
+  </div>
   <%# Áreas de seu interesse %>
   <div class="control-group row">
     <div class="control-label span3">
