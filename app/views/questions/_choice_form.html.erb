@@ -6,6 +6,6 @@
   <%= render "questions/form", :f => f, :exercise => exercise,
     :question => question, :result => result, :review => review,
     :choice => choice %>
-  <%= render "questions/submission", :question => question,
+  <%= render "questions/submission", :exercise => exercise, :question => question,
     :first => first, :last => last, :review => review %>
 <% end %>

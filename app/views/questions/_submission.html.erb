@@ -1,12 +1,16 @@
 <ol class="actions-buttons">
   <% if question != first %>
     <li class="lecture-buttons">
-      <button type="button" class="concave-clean">Anterior</button>
+      <button type="button" class="concave-clean">
+        <%= link_to "Anterior", exercise_question_path(exercise, question.previous_item) %>
+      </button>
     </li>
   <% end %>
   <% if question != last %>
     <li class="lecture-buttons">
-      <button type="button" class="concave-clean">Próxima</button>
+      <button type="button" class="concave-clean">
+        <%= link_to "Próxima", exercise_question_path(exercise, question.next_item) %>
+      </button>
     </li>
   <% end %>
   <% unless review %>
