@@ -188,6 +188,7 @@ $(function(){
     $(document).ajaxComplete(function(){
       $(document).refreshNestedFieldsEdition();
       $("#resources-edition .exercise").refreshQuestionsAppearance();
+      $(".exercise-nav .actual").addClass("question-answered");
     });
   });
 });
