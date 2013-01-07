@@ -57,11 +57,10 @@ Redu::Application.routes.draw do
   match '/resend_activation' => 'users#resend_activation',
     :as => :resend_activation
   match '/account/edit' => 'users#edit_account', :as => :edit_account_from_email
-  resources :sessions
+  resources :sessions, :only => [:create, :destroy]
 
   # site routes
   match '/about' => 'base#about', :as => :about
-  match '/faq' => 'base#faq', :as => :faq
   match 'contact' => 'base#contact', :as => :contact
 
   # Recovery Email
@@ -105,7 +104,6 @@ Redu::Application.routes.draw do
     end
 
     resources :users, :only => [:index]
-    resources :canvas, :only => [:show]
  end
 
   resources :exercises, :only => :show do
@@ -172,6 +170,8 @@ Redu::Application.routes.draw do
     resources :plans, :only => [:index]
     resources :experiences
     resources :educations, :except => [:new, :edit]
+    resources :environments, :only => [:index]
+    resource :explore_tour, :only => :create
   end
 
   match 'users/activate/:id' => 'users#activate', :as => :activate
@@ -267,10 +267,8 @@ Redu::Application.routes.draw do
     resources :plans, :only => [:create]
   end
 
-
   root :to => 'base#site_index', :as => :home
   root :to => "base#site_index", :as => :application
-
 end
 
 ActionDispatch::Routing::Translator.translate_from_file('lang/i18n-routes.yml')

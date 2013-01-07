@@ -12,6 +12,7 @@ class LecturesController < BaseController
 
   rescue_from CanCan::AccessDenied do |exception|
     session[:return_to] = request.fullpath
+
     respond_to do |format|
       format.html do
        space = Space.find(params[:space_id])
@@ -42,10 +43,6 @@ class LecturesController < BaseController
   def show
     update_view_count(@lecture)
 
-    if @lecture.removed
-      redirect_to removed_page_path and return
-    end
-
     @status = Status.new
     @statuses = Status.from_hierarchy(@lecture).
       paginate(:page => params[:page],:order => 'created_at DESC',
@@ -71,6 +68,10 @@ class LecturesController < BaseController
       elsif @lecture.lectureable_type == 'Document'
         format.html do
           render :show_document
+        end
+      elsif @lecture.lectureable_type == 'Api::Canvas'
+        format.html do
+          render :show_canvas
         end
       elsif @lecture.lectureable_type == 'Exercise'
         format.html do
@@ -121,7 +122,6 @@ class LecturesController < BaseController
       @lecture.subject = Subject.find(params[:subject_id])
 
       if @lecture.valid? && @lecture.make_sense?
-        @lecture.published = 1
         lectureable = @lecture.lectureable
         if lectureable.is_a? Seminar
           authorize! :upload_multimedia, @lecture

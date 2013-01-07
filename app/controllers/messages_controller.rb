@@ -4,28 +4,36 @@ class MessagesController < BaseController
 
   def index
     authorize! :manage, @user
-      @messages = @user.received_messages.paginate(:page => params[:page],
-                                                   :order =>  'created_at DESC',
-                                                   :per_page => Redu::Application.config.items_per_page )
-      respond_to do |format|
-        format.html
-        format.js do
-          render_endless 'messages/item', @messages, '#messages > tbody',
-            :partial_locals => { :mailbox => :inbox }
-        end
+    @total_messages = @user.received_messages.count
+    @messages = @user.received_messages.page(params[:page]).
+      per(Redu::Application.config.items_per_page)
+
+    respond_to do |format|
+      format.html do
+        render :layout => 'new_application'
       end
+      format.js do
+        render_endless 'messages/item', @messages, '#messages > tbody',
+          :partial_locals => { :mailbox => :inbox, :user => @user },
+          :template => 'shared/new_endless_kaminari'
+      end
+    end
   end
 
   def index_sent
     authorize! :manage, @user
-    @messages = @user.sent_messages.paginate(:page => params[:page],
-                                             :order =>  'created_at DESC',
-                                             :per_page => Redu::Application.config.items_per_page)
+    @total_messages = @user.sent_messages.count
+    @messages = @user.sent_messages.page(params[:page]).
+      per(Redu::Application.config.items_per_page)
+
     respond_to do |format|
-        format.html
+        format.html do
+          render :layout => 'new_application'
+        end
         format.js do
           render_endless 'messages/item', @messages, '#messages > tbody',
-            :partial_locals => { :mailbox => :outbox }
+            :partial_locals => { :mailbox => :outbox, :user => @user },
+            :template => 'shared/new_endless_kaminari'
         end
     end
   end
@@ -35,8 +43,14 @@ class MessagesController < BaseController
     @message = Message.read(params[:id], current_user)
     @reply = Message.new_reply(@user, @message, params)
 
+    if @message.sender == @user
+      @total_sent_messages = @user.sent_messages.count
+    else
+      @total_received_messages = @user.received_messages.count
+    end
+
     respond_to do |format|
-      format.html
+      format.html { render :layout => 'new_application' }
     end
   end
 
@@ -46,12 +60,12 @@ class MessagesController < BaseController
       in_reply_to = Message.find_by_id(params[:reply_to])
     end
     @message = Message.new_reply(@user, in_reply_to, params)
-    if params[:message_to] and params[:message_to].length > 0
-      @recipients = @user.friends.message_recipients(params[:message_to])
+    if params[:recipient] and params[:recipient].length > 0
+      @recipients = @user.friends.message_recipients(params[:recipient])
     end
 
     respond_to do |format|
-      format.html
+      format.js
     end
   end
 
@@ -59,38 +73,44 @@ class MessagesController < BaseController
     authorize! :manage, @user
     messages = []
 
+    params_recipient = params[:message].delete(:recipient)
+
     if params[:message][:reply_to] # resposta
-      @message = Message.new(params[:message])
-      @message.save!
-      flash[:notice] = "Mensagem enviada!"
+      @reply = Message.new(params[:message])
+      @reply.save
+      if @reply.valid?
+        @new_reply = @reply.clone
+        @new_reply.body = ""
+      end
+
       respond_to do |format|
-        format.html do
-          redirect_to index_sent_user_messages_path(@user) and return
+        format.js do
+          return
         end
       end
     end
 
-    if not params[:message_to] or  params[:message_to].empty?
+    if not params_recipient or  params_recipient.empty?
       @message = Message.new(params[:message])
       @message.valid?
       respond_to do |format|
-        format.html do
-          render :template => 'messages/new' and return
+        format.js do
+          return
         end
       end
     end
 
 
     # If 'to' field isn't empty then make sure each recipient is valid
-    params[:message_to].each do |to|
+    params_recipient.each do |to|
       @message = Message.new(params[:message])
       @message.recipient_id = to# User.find(to)
       @message.sender = @user
       unless @message.valid?
-        @recipients = @user.friends.message_recipients(params[:message_to])
+        @recipients = @user.friends.message_recipients(params_recipient)
         respond_to do |format|
-          format.html do
-            render :template => 'messages/new' and return
+          format.js do
+            return
           end
         end
         return
@@ -103,8 +123,8 @@ class MessagesController < BaseController
     messages.each {|msg| msg.save!}
     flash[:notice] = t :message_sent
     respond_to do |format|
-      format.html do
-        redirect_to index_sent_user_messages_path(@user) and return
+      format.js do
+        return
       end
     end
   end

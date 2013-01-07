@@ -5,7 +5,7 @@ module VisApplicationAdditions
     extend ActiveSupport::Concern
 
     def  application
-      ClientApplication.find(:first, :conditions => { :name => 'ReduViz' })
+      ClientApplication.find(:first, :conditions => { :name => 'ReduVis' })
     end
   end
 

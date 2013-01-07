@@ -10,7 +10,7 @@ $(document).ready(function(){
     this.thresholdWidth = 740;
     this.normalHeight = 1000;
     this.maxWidth = 920;
-    this.defaultWidth = 748;
+    this.defaultWidth = 710;
     this.defaultHeight = 1000;
 
     this.socket = this.initSocket({
@@ -99,10 +99,7 @@ $(document).ready(function(){
           message = JSON.parse(message);
 
         if(remote.authority === actual.authority) {
-          canvas.resize({
-            width: message.payload.width,
-            height: message.payload.height
-          });
+          // canvas.resize({ width: message.payload.width, height: message.payload.height });
         }
       }
     });

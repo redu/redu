@@ -79,11 +79,27 @@ namespace :bootstrap do
 
     ClientApplication.create(:name => "ReduVis",
                              :url => "http://www.redu.com.br",
-                             :user => user_admin)
+                             :user => user_admin,
+                             :walledgarden => true)
+  end
+
+  desc "Create OAuth Client Application for Redu Apps"
+  task :reduapps_app => :environment do
+    user_admin = User.find_by_login("administrator")
+    test_user = User.find_by_login("test_user")
+
+    c = ClientApplication.create(:name => "Portal de aplicativos",
+                             :url => "http://aplicativos.redu.com.br",
+                             :user => user_admin,
+                             :walledgarden => true)
+    c.update_attribute(:secret, 'xxx')
+
+    [user_admin, test_user].each do |u|
+      Oauth2Token.create(:client_application => c, :user => u)
+    end
   end
 
   desc "Run all bootstrapping tasks"
-  task :all => [:roles, :privacies, :audiences,
-                :default_user, :default_admin,
-                :partner, :reduvis_app]
+  task :all => [:roles, :privacies, :audiences, :default_user, :default_admin,
+                :partner, :reduvis_app, :reduapps_app]
 end

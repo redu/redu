@@ -1,4 +1,6 @@
 class BaseController < ApplicationController
+  include ContentForInControllers
+
   layout :choose_layout, :except => [:landing]
   # Work around (ver método self.login_required_base)
 
@@ -110,7 +112,7 @@ class BaseController < ApplicationController
   end
 
   def deny_access(exception)
-    flash[:notice] = "Essa área só pode ser vista após você acessar o Redu com seu nome e senha."
+    flash[:error] = "Essa área só pode ser vista após você acessar o Redu com seu nome e senha."
     redirect_to home_path
   end
 end

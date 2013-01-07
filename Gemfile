@@ -24,14 +24,15 @@ gem 'aws-s3', :require => 'aws/s3'
 gem 'aws-sdk'
 gem 'backup',
   :git => 'git://github.com/meskyanichi/backup.git'
-gem 'bundler'
+gem 'bundler', '~> 1.2'
 gem 'cancan', '~> 1.6.7'
 gem 'ckeditor', '3.4.2.pre'
 gem 'daemons'
 gem 'date_validator'
+gem 'mongoid', '~> 2.2.6', :require => 'mongoid/version'
 gem 'deep_cloneable'
-gem 'delayed_job_active_record',
-  :git => 'git://github.com/collectiveidea/delayed_job_active_record.git'
+gem 'delayed_job_mongoid'
+gem 'bson_ext'
 gem 'dynamic_form'
 gem 'em-http-request'
 gem 'eventmachine'
@@ -49,32 +50,35 @@ gem 'omniauth-facebook'
 gem 'pusher'
 gem 'pagseguro', '~> 0.1.10'
 gem 'paperclip', '~> 2.7'
-gem 'rails', '3.0.10'
+gem 'rails', '3.0.18'
 gem 'rake', '0.8.7'
 gem 'rd_searchlogic', :require => 'searchlogic'
 gem 'remotipart', '~> 1.0'
 gem 'roar',
   :git => 'https://github.com/apotonick/roar.git'
-gem 'roar-rails', '~> 0.0.3',
-  :git => 'git://github.com/apotonick/roar-rails.git'
 gem 'scribd_fu', :git => 'git://github.com/guiocavalcanti/scribd_fu.git',
   :branch => 'without-scape'
 gem 'shuber-sortable'
-gem 'simple-navigation'
+gem 'simple-navigation', :git => 'git://github.com/andi/simple-navigation.git'
 gem 'translate_routes'
 gem 'useragent', '~> 0.4.8'
 gem 'vis_client', :git => 'git@github.com:redu/vis_client.git'
 gem 'whenever', :require => false
 gem 'will_paginate', '~> 3.0.pre2'
 gem 'zencoder'
+gem 'untied-publisher', :git => 'git://github.com/redu/untied-publisher'
+gem 'content_for_in_controllers',
+  :git => 'git://github.com/julianalucena/content_for_in_controllers.git'
+gem 'system_timer'
 
 # Gems específicos para a API
 gem 'oauth-plugin', '~> 0.4.0'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'roar-rails', '~> 0.0.3',
   :git => 'git://github.com/apotonick/roar-rails.git'
-gem 'destroy_soon', :git => 'git://github.com/redu/destroy-soon.git'
+gem 'destroy_soon'
 gem 'redu_analytics'
+gem 'humanizer'
 
 # Gems específicos de algum ambiente
 group :development, :test do
@@ -87,12 +91,11 @@ group :development, :test do
 end
 
 group :test do
-  gem 'webmock', '~> 1.8.6'
+  gem 'webmock', :git => 'git://github.com/fltiago/webmock'
   gem 'ruby-prof'
 end
 
 group :development do
-  gem 'thin'
   # gem 'uniform_notifier'
 
   # Gems úteis p/ análise performance

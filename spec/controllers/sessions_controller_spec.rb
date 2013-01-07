@@ -2,8 +2,6 @@ require 'spec_helper'
 require 'authlogic/test_case'
 
 describe SessionsController do
-  include Authlogic::TestCase
-
   before do
     @user = Factory(:user)
   end
@@ -18,24 +16,53 @@ describe SessionsController do
       end
 
       context "when logging in successful" do
-        before do
-          @post_params = {:locale => 'pt-BR', :invitation_token => @invite.token,
-                          :format => "js",
-                          :user_session => { :remember_me => "0", :password => @user.password,
-                                             :login => @user.login}}
+        context "and the request is via AJAX/JS" do
+          before do
+            @post_params = {:locale => 'pt-BR', :invitation_token => @invite.token,
+                            :format => :js,
+                            :user_session => { :remember_me => "0", :password => @user.password,
+                                               :login => @user.login}}
+          end
+
+          it "invites the loged user to the course identified by the token invitation" do
+            expect {
+              post :create, @post_params
+            }.should change(UserCourseAssociation, :count).by(1)
+          end
+
+          it "should redirect to home_user_path" do
+            post :create, @post_params
+            response.body.should == "window.location = '#{ home_user_path(@user) }'"
+          end
         end
 
-        it "invites the loged user to the course identified by the token invitation" do
-          expect {
+        context "and the request is via HTML" do
+          before do
+            @post_params = {:locale => 'pt-BR',
+                            :invitation_token => @invite.token,
+                            :format => :html,
+                            :user_session => { :remember_me => "0",
+                                               :password => @user.password,
+                                               :login => @user.login}}
+          end
+
+          it "invites the loged user to the course identified by the token invitation" do
+            expect {
+              post :create, @post_params
+            }.should change(UserCourseAssociation, :count).by(1)
+          end
+
+          it "should redirect to home_user_path" do
             post :create, @post_params
-          }.should change(UserCourseAssociation, :count).by(1)
+            response.should redirect_to(home_user_path(@user))
+          end
         end
-      end
+     end
 
       context "when logging with failure" do
         before do
           @post_params = {:locale => 'pt-BR', :invitation_token => @invite.token,
-                          :format => "js",
+                          :format => :js,
                           :user_session => { :remember_me => "0", :password => "wrong-pass",
                                              :login => @user.login}}
           post :create, @post_params
@@ -56,10 +83,11 @@ describe SessionsController do
         it "re-renders UserCourseInvitations#show" do
           response.should render_template('user_course_invitations/show')
         end
+
       end
     end
 
-    context "Request with friendship_invitation_token" do
+    context "request with friendship_invitation_token" do
       before do
         @email = 'mail@example.com'
         @host = Factory(:user)
@@ -68,18 +96,19 @@ describe SessionsController do
                                         :email => 'email@example.com')
       end
 
-      context "Login successfully" do
+      context "login successfully via AJAX request" do
         before do
           @post_params = {:locale => 'pt-BR',
                           :friendship_invitation_token => @invitation.token,
-                          :format => "js",
+                          :format => :js,
                           :user_session => { :remember_me => "0",
                                              :password => @user.password,
                                              :login => @user.login}}
           post :create, @post_params
         end
 
-        it "invite should be accepted (Invitation should be destroyed)" do
+        it "invite should be accepted (invitation should be destroyed)" do
+
           Invitation.all.should be_empty
         end
 
@@ -93,11 +122,35 @@ describe SessionsController do
         end
       end
 
+      context "login successfully via HTML request" do
+        before do
+          @post_params = {:locale => 'pt-BR',
+                          :friendship_invitation_token => @invitation.token,
+                          :user_session => { :remember_me => "0",
+                                             :password => @user.password,
+                                             :login => @user.login}}
+          post :create, @post_params
+        end
+
+        it "invite should be accepted (invitation should be destroyed)" do
+          Invitation.all.should be_empty
+        end
+
+        it "should redirect do home-user-path" do
+          response.should redirect_to(home_user_path(@user))
+        end
+
+        it "friendship request should be created" do
+          @host.friendships.requested.should_not be_empty
+          @user.friendships.pending.should_not be_empty
+        end
+      end
+
       context "User login params validation fail" do
         before do
           @post_params = {:locale => 'pt-BR',
                           :friendship_invitation_token => @invitation.token,
-                          :format => "js",
+                          :format => :js,
                           :user_session => {
                             :remember_me => "0",
                             :password => "wrong-pass",
@@ -132,12 +185,13 @@ describe SessionsController do
         end
       end
     end
+
     context "when registration had expired" do
       before do
         @user.deactivate
         @user.created_at = "2011-03-04".to_date
         @user.save
-        post_params = {:locale => 'pt-BR', :format => "js",
+        post_params = {:locale => 'pt-BR', :format => :js,
                        :user_session => { :remember_me => "0",
                                           :password => @user.password,
                                           :login => @user.login}}
@@ -152,14 +206,29 @@ describe SessionsController do
         response.should be_success
       end
     end
+
+    context "doesn't have any token" do
+      context "and format.html" do
+        before do
+          post_params = {:locale => 'pt-BR',
+                          :user_session => { :remember_me => "0",
+                                             :password => "wrong-pass",
+                                             :login => @user.login } }
+          post :create, post_params
+        end
+
+        it "should re-render site_index" do
+          response.should render_template("base/site_index")
+        end
+      end
+    end
   end
 
-  context "GET destroy (logout)" do
+  context "GET destroy(logout)" do
     context "when current_user is NOT nil" do
       before do
         @user = Factory(:user)
-        activate_authlogic
-        UserSession.create @user
+        login_as @user
         get :destroy, { :locale => "pt-BR" }
       end
 

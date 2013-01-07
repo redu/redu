@@ -7,10 +7,10 @@ FactoryGirl.define do
     s.association :owner, :factory => :user
     s.association :course, :factory => :course
   end
-  # Disciplina completa, com módulos
+
   factory :complete_space, :parent => :space do
-    after_create do |space|
-      space.subjects << Factory(:complete_subject, :space => space)
+    after_create do |s|
+      s.subjects << Factory(:complete_subject, :owner => s.owner, :space => s)
     end
   end
 end

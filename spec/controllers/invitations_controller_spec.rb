@@ -2,11 +2,7 @@ require 'spec_helper'
 require 'authlogic/test_case'
 
 describe InvitationsController do
-  include Authlogic::TestCase
-
   before do
-    User.maintain_sessions = false
-    activate_authlogic
     @user = Factory(:user)
     @params = {:locale => "pt-BR"}
   end
@@ -24,7 +20,7 @@ describe InvitationsController do
 
     context "Show action" do
       before do
-        UserSession.create(@friend)
+        login_as @friend
       end
 
       it 'The Invitation must be accepted automatically, when user were logged' do
@@ -99,7 +95,7 @@ describe InvitationsController do
 
     context 'Destroy invitations in batch' do
       before do
-        UserSession.create(@user)
+        login_as @user
         Friendship.destroy_all
         Invitation.destroy_all
         @friends = (1..5).collect { Factory(:user) }
@@ -154,7 +150,7 @@ describe InvitationsController do
 
   context 'Resend email' do
     before do
-      UserSession.create(@user)
+      login_as @user
       @invitation = Invitation.invite(:user => @user,
                                       :hostable => @user,
                                       :email => 'email@example.com')
@@ -174,7 +170,7 @@ describe InvitationsController do
 
   context 'Destroy action' do
     before do
-      UserSession.create(@user)
+      login_as @user
       @invitation = Invitation.invite(:user => @user,
                                       :hostable => @user,
                                       :email => 'email@example.com')

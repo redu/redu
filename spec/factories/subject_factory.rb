@@ -1,18 +1,19 @@
 FactoryGirl.define do
-  # Módulo simples
-  factory :subject do |s|
-    s.sequence(:name){ |n| "Módulo #{n}" }
-    s.description "Lorem ipsum dolor sit amet, consectetur magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation"
-    s.association :owner, :factory => :user
-    s.space {|sub| Factory(:space, :owner => sub.owner,
-                           :course => Factory(:course, :owner => sub.owner))}
-  end
-  # Módulo completo, com aulas
-  factory :complete_subject, :parent => :subject do 
-    after_create do |subject|
-      subject.finalized = true
-      subject.lectures << Factory(:lecture)
-    end
+  factory :subject do
+    sequence(:name){ |n| "Módulo #{n}" }
+    description "Lorem ipsum dolor sit amet, consectetur magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation"
+    association :owner, :factory => :user
+    space {|sub| Factory(:space, :owner => sub.owner,
+                         :course => Factory(:course, :owner => sub.owner))}
   end
 
+  factory :complete_subject, :parent => :subject do
+    finalized true
+
+    after_create do |s|
+      (1..3).each do
+        s.lectures << Factory(:lecture, :owner => s.owner, :subject => s)
+      end
+    end
+  end
 end

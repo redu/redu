@@ -1,6 +1,8 @@
 class UsersController < BaseController
   respond_to :html, :js
 
+  before_filter :set_nav_global_context, :except => [:index]
+
   load_and_authorize_resource :except => [:recover_username_password,
     :recover_username, :recover_password, :resend_activation, :activate,
     :index],
@@ -76,18 +78,6 @@ class UsersController < BaseController
     end
   end
 
-  def new
-    @user         = User.new( {:birthday => Date.parse((Time.now - 25.years).to_s) }.merge(params[:user] || {}) )
-    @inviter_id   = params[:id]
-    @inviter_code = params[:code]
-
-    respond_to do |format|
-      format.html do
-        render :new, :layout => 'cold'
-      end
-    end
-  end
-
   def create
     @user = User.new(params[:user])
     begin
@@ -141,7 +131,7 @@ class UsersController < BaseController
             flash[:notice] = t :thanks_youre_now_logged_in
             redirect_back_or_default user_path(current_user)
           else
-            flash[:notice] = t :uh_oh_we_couldnt_log_you_in_with_the_username_and_password_you_entered_try_again
+            flash[:error] = t :uh_oh_we_couldnt_log_you_in_with_the_username_and_password_you_entered_try_again
             respond_with(@user)
           end
         else
@@ -180,7 +170,7 @@ class UsersController < BaseController
   end
 
   def update
-    @user.attributes    = params[:user]
+    @user.attributes = params[:user]
 
     @user.tag_list = params[:tag_list] || ''
 
@@ -204,36 +194,32 @@ class UsersController < BaseController
       @user.social_networks.build
       render 'users/edit'
     end
+
   rescue ActiveRecord::RecordInvalid
-      render 'users/edit'
+    render 'users/edit'
   end
 
   def update_account
-    # alteracao de senha na conta do usuario
-    if params.has_key? "current_password" and !params[:current_password].empty?
-      @flag = false
-      authenticated = UserSession.new(:login => @user.login,
-                                      :password => params[:current_password]).save
-
-      if authenticated
-        @user.attributes  = params[:user]
-        @user.save
-      else
-        @current_password = params[:current_password]
-        @user.errors.add(:current_password, "A senha atual está errada")
-        @flag = true
-      end
-
-      if params[:user].has_key? "password" and params[:user][:password].empty?
-        @user.errors.add(:base, "A nova senha não pode ser em branco")
+    # Password atual não pode ficar em branco
+    if params[:current_password].blank?
+      # Só adiciona este erro se o usuário estiver tentando alterar sua senha
+      if (!params[:user][:password].blank? ||
+          !params[:user][:password_confirmation].blank?)
+        @user.errors.add(:current_password, "A senha atual não pode ser deixada em branco.")
+        params[:user][:password] = ""
+        params[:user][:password_confirmation] = ""
       end
     else
-      params[:user][:password] = @user.password
-      @user.attributes  = params[:user]
-      @user.save
+      # Só altera a senha se o password atual estiver certo
+      unless @user.valid_password? params[:current_password]
+        @user.errors.add(:current_password, "A senha atual está errada.")
+        params[:user][:password] = ""
+        params[:user][:password_confirmation] = ""
+      end
     end
 
-    if @user.errors.empty?
+    @user.attributes = params[:user]
+    if @user.errors.empty? && @user.save
       flash[:notice] = t :your_changes_were_saved
       redirect_to(account_user_path(@user))
     else
@@ -311,7 +297,7 @@ class UsersController < BaseController
       UserNotifier.user_signedup(@user).deliver
       redirect_to application_path and return
     else
-      flash[:notice] = t :activation_email_not_sent_message
+      flash[:error] = t :activation_email_not_sent_message
     end
   end
 
@@ -321,10 +307,9 @@ class UsersController < BaseController
       includes(:course =>[:environment])
     @statuses = @user.home_activity(params[:page])
     @status = Status.new
-    @contacts_recommendations = @user.recommended_contacts(5)
 
     respond_to do |format|
-      format.html
+      format.html { render :layout => 'new_application' }
       format.js { render_endless('statuses/item', @statuses, '#statuses > ol',
                                  :template => 'shared/endless_kaminari') }
     end
@@ -406,7 +391,6 @@ class UsersController < BaseController
       end
     end
 
-
     @users = @users.paginate(:page => params[:page], :order => 'first_name ASC',
                :per_page => 18)
 
@@ -421,15 +405,29 @@ class UsersController < BaseController
     end
   end
 
+  def new
+    redirect_to application_path(:anchor => "modal-sign-up")
+  end
+
   protected
+
   def deny_access(exception)
     session[:return_to] = request.fullpath
     if exception.action == :preview && exception.subject.class == Space
-      flash[:notice] = "Você não tem acesso a essa página"
+      if current_user.nil?
+        flash[:notice] = "Essa área só pode ser vista após você acessar o Redu com seu nome e senha."
+      else
+        flash[:notice] = "Você não tem acesso a essa página"
+      end
+
       redirect_to preview_environment_course_path(@space.course.environment,
                                                   @space.course)
     else
       super
     end
+  end
+
+  def set_nav_global_context
+    content_for :nav_global_context, "users"
   end
 end

@@ -238,8 +238,7 @@ class Course < ActiveRecord::Base
     self.create_license(user, role)
 
     usas = self.spaces.collect do |space|
-      UserSpaceAssociation.new(:user_id => user.id,
-                               :space_id => space.id,
+      UserSpaceAssociation.new(:user_id => user.id, :space_id => space.id,
                                :role => role)
     end
     UserSpaceAssociation.import(usas, :validate => false)
@@ -285,7 +284,8 @@ class Course < ActiveRecord::Base
   #   novo e-mail será enviado.
   def invite(user)
     assoc = self.user_course_associations.create(:user => user,
-                                                 :role => Role[:member])
+                                                 :role => Role[:member],
+                                                 :state => "waiting")
     if assoc.new_record?
       assoc = user.get_association_with(self)
       # Se já foi convidado, apenas reenvia o e-mail

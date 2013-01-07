@@ -1,6 +1,10 @@
 class SpacesController < BaseController
   include VisApplicationAdditions::Controller
 
+  before_filter :set_nav_global_context, :only=> [:show, :mural]
+  before_filter :set_nav_global_context_admin,
+    :except => [:show, :mural, :new, :create]
+
   respond_to :html, :js
 
   # Necessário pois Space não é nested route de course
@@ -19,7 +23,13 @@ class SpacesController < BaseController
 
   rescue_from CanCan::AccessDenied do |exception|
     session[:return_to] = request.fullpath
-    flash[:notice] = "Você não tem acesso a essa página"
+
+    if current_user.nil?
+      flash[:notice] = "Essa área só pode ser vista após você acessar o Redu com seu nome e senha."
+    else
+      flash[:notice] = "Você não tem acesso a essa página"
+    end
+
     redirect_to preview_environment_course_path(@environment, @course)
   end
 
@@ -97,6 +107,8 @@ class SpacesController < BaseController
   # GET /spaces/new
   # GET /spaces/new.xml
   def new
+    content_for :nav_global_context, "courses_admin"
+
     @space = Space.new(params[:space])
     @course = Course.find(params[:course_id])
     @environment = @course.environment
@@ -119,6 +131,8 @@ class SpacesController < BaseController
   # POST /spaces
   # POST /spaces.xml
   def create
+    content_for :nav_global_context, "courses_admin"
+
     @space = Space.new(params[:space])
     @space.course = @course
     @environment = @course.environment
@@ -244,5 +258,13 @@ class SpacesController < BaseController
     else
       return false
     end
+  end
+
+  def set_nav_global_context_admin
+    content_for :nav_global_context, "spaces_admin"
+  end
+
+  def set_nav_global_context
+    content_for :nav_global_context, "spaces"
   end
 end

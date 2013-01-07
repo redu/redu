@@ -2,8 +2,6 @@ require "spec_helper"
 require 'authlogic/test_case'
 
 describe RolesController do
-  include Authlogic::TestCase
-
   before do
     @environment = Factory(:environment)
     @owner = @environment.owner
@@ -16,8 +14,7 @@ describe RolesController do
     @member = Factory(:user)
     @courses.each { |c| c.join(@member) }
 
-    activate_authlogic
-    UserSession.create @owner
+    login_as @owner
   end
 
   context "on Environment" do
@@ -91,7 +88,7 @@ describe RolesController do
 
   context 'when a commom member is logged in' do
     before do
-      UserSession.create @member
+      login_as @member
     end
 
     it 'Roles#index should not be accessible' do

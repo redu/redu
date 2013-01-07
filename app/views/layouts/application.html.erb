@@ -19,27 +19,7 @@
     <![endif]-->
     <%= yield :header_scripts_and_styles %>
 
-    <% if current_user %>
-      <script type="text/javascript" charset="utf-8">
-        //<![CDATA[
-        var chat;
-        //]]>
-      </script>
-      <%= lazy_load(:chat, :type => :css, :jammit => true, :clear => false) %>
-      <%= lazy_load(:chat, :jammit => true, :clear => false) do %>
-      chat = buildChat({ key : "<%= Redu::Application.config.pusher[:key] %>"
-      , channel : "<%= current_user.presence_channel %>"
-      , endPoint : "<%= presence_auth_path %>"
-      , owner_id : "<%= current_user.id %>"
-      , layout : "<%= escape_javascript(render :partial => "presence/chat_list") %>"
-      , windowPartial : "<%= escape_javascript(render :partial => "presence/chat_window") %>"
-      , presencePartial : "<%= escape_javascript(render :partial => "presence/chat_presence") %>"
-      , messagePartial : "<%= escape_javascript(render :partial => "presence/chat_message") %>" });
-
-      chat.init();
-      chat.subscribeMyChannel();
-    <% end %>
-  <% end %>
+    <%= render :partial => "shared/chat" %>
 
   <script type="text/javascript" language="javascript" charset="utf-8">
   //<![CDATA[
@@ -52,18 +32,20 @@
   <%= render :partial => "shared/analytics" %>
   </head>
    <body>
-     <div id="pjax-container">
-       <%= render :partial => 'shared/outdated_browser' %>
-       <%= render :partial => 'shared/header' %>
-       <%= render :partial => 'shared/flash_message' %>
+      <div id="pjax-container">
+        <div class="main-wrapper-old">
+          <%= render :partial => 'shared/outdated_browser' %>
+          <%= render :partial => 'shared/header' %>
+          <%= render :partial => 'shared/flash_message' %>
 
-       <div id="content" class="container_16 clearfix">
-         <%= yield :layout %>
-       </div><!-- end #content -->
+          <div id="content" class="container_16 clearfix">
+           <%= yield :layout %>
+          </div><!-- end #content -->
 
-       <%= render :partial => "shared/footer_old" %>
-       <%= yield :footer_scripts_and_styles %>
-       <%= render :partial => "shared/olark" %>
-     </div>
+          <%= render :partial => "shared/footer_old" %>
+          <%= yield :footer_scripts_and_styles %>
+          <%= render :partial => "shared/olark" %>
+        </div>
+      </div>
   </body>
 </html>

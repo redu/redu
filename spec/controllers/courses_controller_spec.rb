@@ -2,13 +2,10 @@ require 'spec_helper'
 require 'authlogic/test_case'
 
 describe CoursesController do
-  include Authlogic::TestCase
-
   context "when creating a course for an existing environment" do
     before do
       @user = Factory(:user)
-      activate_authlogic
-      UserSession.create @user
+      login_as @user
 
       @environment = Factory(:environment, :owner => @user)
 
@@ -107,8 +104,7 @@ describe CoursesController do
     context "POST update - updating a subscription_type to 1" do
       before do
         @user = Factory(:user)
-        activate_authlogic
-        UserSession.create @user
+        login_as @user
 
         @environment = Factory(:environment, :owner => @user)
 
@@ -121,7 +117,6 @@ describe CoursesController do
         @course.join(@users[3])
         @course.join(@users[4])
 
-        UserSession.create @user
         @params = {:course => { :subscription_type => "1" },
           :id => @course.path,:environment_id => @course.environment.path,
           :locale => "pt-BR"}
@@ -143,8 +138,7 @@ describe CoursesController do
   context "when moderating a course" do
     before do
       @user = Factory(:user)
-      activate_authlogic
-      UserSession.create @user
+      login_as @user
 
       @environment = Factory(:environment, :owner => @user)
 
@@ -164,7 +158,7 @@ describe CoursesController do
       @course.join(@users[3])
       @course.join(@users[4])
 
-      UserSession.create @user
+      login_as @user
     end
 
     context "POST - rejecting members" do
@@ -291,8 +285,7 @@ describe CoursesController do
       before  do
         User.maintain_sessions = false
         @user = Factory(:user)
-        activate_authlogic
-        UserSession.create @user
+        login_as @user
 
         @courses[0].join @user
         @courses[5].join @user
@@ -446,8 +439,7 @@ describe CoursesController do
 
       @user = Factory(:user)
       @subjects.each { |sub| sub.enroll @user }
-      activate_authlogic
-      UserSession.create @user
+      login_as @user
 
       @params = { :locale => 'pt-BR', :environment_id => @environment.path,
         :id => @course.path }
@@ -515,8 +507,7 @@ describe CoursesController do
       @course.create_quota
 
       @invited_user = Factory(:user)
-      activate_authlogic
-      UserSession.create @invited_user
+      login_as @invited_user
 
       @course.invite @invited_user
       @params = { :locale => 'pt-BR', :environment_id => @environment.path,
@@ -576,8 +567,7 @@ describe CoursesController do
       @users = 3.times.inject([]) { |acc,i| acc << Factory(:user) }
       @users.each { |u| @course.join u }
 
-      activate_authlogic
-      UserSession.create @owner
+      login_as @owner
 
       @params = { :locale => 'pt-BR', :environment_id => @environment.path,
                   :id => @course.path, "users" => @users.collect { |u| u.id } }
@@ -621,8 +611,7 @@ describe CoursesController do
       @course = Factory(:course, :environment => @environment,
                         :owner => @environment.owner)
 
-      activate_authlogic
-      UserSession.create @course.owner
+      login_as @course.owner
 
       @params = { :locale => 'pt-BR', :environment_id => @course.environment.path,
         :id => @course.path, :users => @users.collect { |u| u.id }.join(","),
@@ -652,8 +641,7 @@ describe CoursesController do
     context "when course is open" do
       before do
         @user = Factory(:user)
-        activate_authlogic
-        UserSession.create @user
+        login_as @user
 
         @environment = Factory(:environment, :owner => @user)
 
@@ -677,7 +665,7 @@ describe CoursesController do
                     :id => @course.path }
 
         @new_user = Factory(:user)
-        UserSession.create @new_user
+        login_as @new_user
       end
 
       it "should create all hieararchy" do
@@ -703,8 +691,7 @@ describe CoursesController do
   context "when the limit of members is full" do
     before do
       @user = Factory(:user)
-      activate_authlogic
-      UserSession.create @user
+      login_as @user
 
       @environment = Factory(:environment, :owner => @user)
 
@@ -732,7 +719,7 @@ describe CoursesController do
 
       it "should not authorize more 1 user" do
         @new_user = Factory(:user)
-        UserSession.create @new_user
+        login_as  @new_user
         expect {
           post :join, @params
         }.should_not change(UserCourseAssociation, :count).by(1)
@@ -752,10 +739,10 @@ describe CoursesController do
 
       context "POST accept" do
         it "should not authorize more 1 user" do
-          UserSession.create @user
+          login_as @user
           @course.invite(@new_user)
 
-          UserSession.create @new_user
+          login_as @new_user
           expect {
             post :accept, @params
           }.should_not change(@course.approved_users, :count).by(1)
@@ -764,7 +751,7 @@ describe CoursesController do
 
       context "POST moderate_members" do
         it "should not authorize more 1 user" do
-          UserSession.create @user
+          login_as @user
           @course.join(@new_user)
           @params = { :member => { @new_user.id.to_s => "approve"},
             :id => @course.path, :environment_id => @environment.path,
@@ -782,9 +769,7 @@ describe CoursesController do
       environment = Factory(:environment)
       course = Factory(:course, :environment => environment,
                        :owner => environment.owner)
-      User.maintain_sessions = false
-      activate_authlogic
-      UserSession.create course.owner
+      login_as course.owner
       user_invitations = (1..3).collect { course.invite Factory(:user) }
       email_invitations = (1..3).collect do |i|
         course.invite_by_email "email#{i}@example.com"
@@ -809,9 +794,7 @@ describe CoursesController do
       @environment = Factory(:environment)
       @course = Factory(:course, :environment => @environment,
                         :owner => @environment.owner)
-      User.maintain_sessions = false
-      activate_authlogic
-      UserSession.create @course.owner
+      login_as @course.owner
       @user_invitations = (1..4).collect { @course.invite Factory(:user) }
       @email_invitations = (1..4).collect do |i|
         @course.invite_by_email "email#{i}@example.com"
@@ -883,8 +866,7 @@ describe CoursesController do
       UserCourseAssociation.create(:course => @course,
                                    :user => @user,
                                    :role => Role[:environment_admin])
-      activate_authlogic
-      UserSession.create @user
+      login_as @user
     end
 
     context "GET new" do
@@ -1061,8 +1043,7 @@ describe CoursesController do
       before do
         @user = Factory(:user)
         @course.join @user
-        activate_authlogic
-        UserSession.create @user
+        login_as @user
 
         get :preview, :locale => "pt-BR",
           :environment_id => @course.environment.to_param,
@@ -1080,8 +1061,7 @@ describe CoursesController do
       before do
         @env_admin = Factory(:user)
         @course.join @env_admin, Role[:environment_admin]
-        activate_authlogic
-        UserSession.create @env_admin
+        login_as @env_admin
 
         get :preview, :locale => "pt-BR",
           :environment_id => @course.environment.to_param,
@@ -1103,6 +1083,26 @@ describe CoursesController do
 
       it "renders preview" do
         response.should  render_template("courses/preview")
+      end
+    end
+  end
+
+  context "when visiting a course" do
+    let(:course) { Factory(:course) }
+    let(:user) { Factory(:user) }
+
+    context "as a course's member" do
+      before do
+        login_as user
+        course.join! user
+      end
+
+      it "updates uca's last_accessed_at" do
+        expect {
+          get :show, @params = { :locale => 'pt-BR',
+                                 :environment_id => course.environment.to_param,
+                                 :id => course.to_param }
+        }.should change { user.user_course_associations.last.last_accessed_at }
       end
     end
   end

@@ -1,0 +1,525 @@
+// ==========================================================================
+// Mixins
+// ==========================================================================
+
+
+// Utilidade
+// ==========================================================================
+
+// Esconde o texto.
+@mixin text-replacement {
+  border: 0;
+  font: 0/0 a;
+  color: transparent;
+  background-color: transparent;
+
+  .textshadow & { text-shadow: none; }
+}
+
+// Clearfix para limpar floats (h5bp.com/q).
+@mixin clear-fix {
+  &:before,
+  &:after {
+    display: table;
+    content: "";
+  }
+  &:after { clear: both; }
+}
+
+// Define a largura e altura.
+//  $width: a largura.
+//  $height: a altura.
+@mixin size($width: 5px, $height: 5px) {
+  width: $width;
+  height: $height;
+}
+
+// Define o tamanho de um quadrado.
+//  $size: tamanho do lado.
+@mixin square($size: 5px) {
+  @include size($size, $size);
+}
+
+// Define estilos comuns a pseudo elementos :before.
+//  $marginRight: margem direita entre o elemento e o pseudo.
+//  $float: se o pseudo deve flutuar para esquerda.
+@mixin pseudo-before($marginRight: 5px, $float: true) {
+  content: "";
+  display: inline-block;
+  vertical-align: bottom;
+  margin-right: $marginRight;
+
+  @if ($float) { float: left; }
+}
+
+// Define estilos comuns a pseudo elementos :after.
+//  $marginLeft: margem esquerda entre o elemento e o pseudo.
+//  $float: se o pseudo deve flutuar para direita.
+@mixin pseudo-after($marginLeft: 5px, $float: true) {
+  content: "";
+  display: inline-block;
+  vertical-align: bottom;
+  margin-left: $marginLeft;
+
+  @if ($float) { float: right; }
+}
+
+// Define uma mesma cor para o estados normal e visitado.
+//  $color: a cor.
+@mixin link-visited($color) {
+  color: $color;
+
+  &:visited { color: $color; }
+}
+
+// Define uma mesma cor para os estados normal, hover e visitado.
+//  $cor: a cor.
+@mixin link-color($color) {
+  @include link-visited($color);
+
+  &:hover { color: $color; }
+}
+
+
+// Fontes
+// ==========================================================================
+
+// Define o tamanho, peso e altura da linha de uma fonte.
+//  $size: o tamanho.
+//  $weight: o peso.
+//  $line-height: a altura da linha.
+@mixin font-shorthand($size: $base-font-size, $weight: normal, $line-height: $base-line-height) {
+  font-size: $size;
+  font-weight: $weight;
+  line-height: $line-height;
+}
+
+// Define os estilos de uma fonte sem serif.
+//  $size: o tamanho.
+//  $weight: o peso.
+//  $line-height: a altura da linha.
+@mixin font-sans-serif($size: $base-font-size, $weight: normal, $line-height: $base-line-height) {
+  @include font-shorthand($size, $weight, $line-height);
+  font-family: $base-font-family;
+  letter-spacing: normal;
+}
+
+
+// CSS3
+// ==========================================================================
+
+// Border radius.
+//  $radius: o(s) raio(s) da(s) borda(s).
+@mixin border-radius($radius: 5px) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+          border-radius: $radius;
+}
+
+// Drop shadows.
+//  $shadow: a(s) sombra(s).
+@mixin box-shadow($shadow: 0 1px 0 $white inset) {
+  -webkit-box-shadow: $shadow;
+     -moz-box-shadow: $shadow;
+          box-shadow: $shadow;
+}
+
+// Transições.
+//  $transition: a(s) transição(ões).
+@mixin transition($transition) {
+  -webkit-transition: $transition;
+     -moz-transition: $transition;
+      -ms-transition: $transition;
+       -o-transition: $transition;
+          transition: $transition;
+}
+
+// Box sizing.
+//  $box-mode: o modelo.
+@mixin box-sizing($box-mode: border-box) {
+  -webkit-box-sizing: $box-mode;
+     -moz-box-sizing: $box-mode;
+          box-sizing: $box-mode;
+}
+
+// Opacidade.
+//  $opacity: o valor da opacidade (de 0 a 100).
+@mixin opacity($opacity: 100) {
+  opacity: $opacity / 100;
+}
+
+// Define um gradiente vertical com as regras do Redu.
+//  $color1: cor inferior.
+//  $color2: cor superior.
+//  $slider: valor do slider.
+@mixin redu-gradient($color1, $color2, $slider: 0.5) {
+  @if ($slider < 0.5) {
+    @include background-image(linear-gradient(bottom, $color1, $color2 ($slider * 2)));
+  }
+  @if ($slider == 0.5) {
+    @include background-image(linear-gradient(bottom, $color1, $color2));
+  }
+  @if ($slider > 0.5) {
+    @include background-image(linear-gradient(bottom, $color1 (($slider * 2) - 1), $color2));
+  }
+}
+
+// Text-shadow.
+//  $text-shadow: os valores para a sombra de texto.
+@mixin text-shadow($text-shadow: 0 1px 0 $white) {
+  .textshadow & { text-shadow: $text-shadow; }
+}
+
+// Gradiente já com classe prefixada do Modernizr.
+//  $color1: cor inferior.
+//  $color2: cor superior.
+//  $slider: valor do slider.
+@mixin gradient($color1, $color2, $slider: 0.5) {
+  .cssgradients & { @include redu-gradient($color1, $color2, $slider: 0.5); }
+}
+
+// Função calc().
+//  $property: a propriedade a ser usada.
+//  $expression: a expressão a ser calculada.
+//  $older-browser-value: o valor da propriedade para navegadores sem calc().
+@mixin calc($property, $expression, $older-browser-value) {
+  #{$property}: $older-browser-value;
+  #{$property}: -moz-calc(#{$expression});
+  #{$property}: -o-calc(#{$expression});
+  #{$property}: -webkit-calc(#{$expression});
+  #{$property}: calc(#{$expression});
+}
+
+// Mixins dos sistema de grids.
+// ==========================================================================
+
+// Container de largura fixa.
+@mixin container-fixed {
+  @include clear-fix;
+  width: $grid-row-width;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// Define a largura dos grids.
+//  $grid-gutter-width: a largura do espaçamento.
+//  $grid-column-width: a largura de uma coluna.
+//  $grid-row-width: a largura da linha.
+//  $columns: a quantidade de colunas.
+@mixin grid-system-columns ($grid-gutter-width, $grid-column-width, $grid-row-width, $columns) {
+  width: ($grid-column-width * $columns) + ($grid-gutter-width * ($columns - 1));
+}
+
+// Define a margem esquerda dos deslocamentos.
+//  $grid-column-width: a largura de uma coluna.
+//  $grid-gutter-width: a largura do espaçamento.
+//  $columns: a quantidade de colunas.
+@mixin grid-system-offset($grid-column-width, $grid-gutter-width, $columns) {
+  margin-left: ($grid-column-width * $columns) + ($grid-gutter-width * ($columns - 1)) + ($grid-gutter-width * 2);
+}
+
+// O estilo de uma coluna.
+//  $grid-gutter-width: a largura do espaçamento.
+@mixin grid-system-grid-column($grid-gutter-width) {
+  float: left;
+  margin-left: $grid-gutter-width;
+}
+
+// Gera o sistema de grids.
+//  $grid-columns: a quantidade de colunas.
+//  $grid-column-width: a largura de uma coluna.
+//  $grid-gutter-width: a largura do espaçamento.
+@mixin grid-system-generate($grid-columns, $grid-column-width, $grid-gutter-width) {
+  .row {
+    margin-left: $grid-gutter-width * -1;
+    @include clear-fix;
+  }
+
+  [class*="span"] { @include grid-system-grid-column($grid-gutter-width); }
+
+  // Colunas padrões.
+  .span1     { @include grid-system-columns($grid-gutter-width, $grid-column-width, $grid-row-width, 1); }
+  .span2     { @include grid-system-columns($grid-gutter-width, $grid-column-width, $grid-row-width, 2); }
+  .span3     { @include grid-system-columns($grid-gutter-width, $grid-column-width, $grid-row-width, 3); }
+  .span4     { @include grid-system-columns($grid-gutter-width, $grid-column-width, $grid-row-width, 4); }
+  .span5     { @include grid-system-columns($grid-gutter-width, $grid-column-width, $grid-row-width, 5); }
+  .span6     { @include grid-system-columns($grid-gutter-width, $grid-column-width, $grid-row-width, 6); }
+  .span7     { @include grid-system-columns($grid-gutter-width, $grid-column-width, $grid-row-width, 7); }
+  .span8     { @include grid-system-columns($grid-gutter-width, $grid-column-width, $grid-row-width, 8); }
+  .span9     { @include grid-system-columns($grid-gutter-width, $grid-column-width, $grid-row-width, 9); }
+  .span10    { @include grid-system-columns($grid-gutter-width, $grid-column-width, $grid-row-width, 10); }
+  .span11    { @include grid-system-columns($grid-gutter-width, $grid-column-width, $grid-row-width, 11); }
+  .span12    { @include grid-system-columns($grid-gutter-width, $grid-column-width, $grid-row-width, 12); }
+  .span13    { @include grid-system-columns($grid-gutter-width, $grid-column-width, $grid-row-width, 13); }
+  .span14    { @include grid-system-columns($grid-gutter-width, $grid-column-width, $grid-row-width, 14); }
+  .span15    { @include grid-system-columns($grid-gutter-width, $grid-column-width, $grid-row-width, 15); }
+  .span16,
+  .container { @include grid-system-columns($grid-gutter-width, $grid-column-width, $grid-row-width, 16); }
+
+  // Opções de colunas de deslocamento.
+  .offset1   { @include grid-system-offset($grid-column-width, $grid-gutter-width, 1); }
+  .offset2   { @include grid-system-offset($grid-column-width, $grid-gutter-width, 2); }
+  .offset3   { @include grid-system-offset($grid-column-width, $grid-gutter-width, 3); }
+  .offset4   { @include grid-system-offset($grid-column-width, $grid-gutter-width, 4); }
+  .offset5   { @include grid-system-offset($grid-column-width, $grid-gutter-width, 5); }
+  .offset6   { @include grid-system-offset($grid-column-width, $grid-gutter-width, 6); }
+  .offset7   { @include grid-system-offset($grid-column-width, $grid-gutter-width, 7); }
+  .offset8   { @include grid-system-offset($grid-column-width, $grid-gutter-width, 8); }
+  .offset9   { @include grid-system-offset($grid-column-width, $grid-gutter-width, 9); }
+  .offset10  { @include grid-system-offset($grid-column-width, $grid-gutter-width, 10); }
+  .offset11  { @include grid-system-offset($grid-column-width, $grid-gutter-width, 11); }
+  .offset12  { @include grid-system-offset($grid-column-width, $grid-gutter-width, 12); }
+  .offset13  { @include grid-system-offset($grid-column-width, $grid-gutter-width, 13); }
+  .offset14  { @include grid-system-offset($grid-column-width, $grid-gutter-width, 14); }
+  .offset15  { @include grid-system-offset($grid-column-width, $grid-gutter-width, 15); }
+}
+
+// Define a largura de grid de um campo input.
+//  $columns: a quantidade de colunas.
+//  $grid-column-width: a largura de uma coluna.
+//  $grid-gutter-width: a largura do espaçamento.
+@mixin input-span($columns, $grid-column-width, $grid-gutter-width) {
+  width: (($grid-column-width) * $columns) + ($grid-gutter-width * ($columns - 1)) - 10;
+}
+
+// Gera classes de grid para os campos de input.
+//  $grid-column-width: a largura de uma coluna.
+//  $grid-gutter-width: a largura do espaçamento.
+@mixin grid-input($grid-column-width, $grid-gutter-width) {
+  textarea,
+  input[type="text"],
+  input[type="password"] {
+    // Sobrescreve o margin-left do sistema de grid.
+    margin-left: 0;
+  }
+
+  // Gera os .spanX.
+  $i: $grid-columns;
+  @while $i > 0 {
+    input.span#{$i},
+    textarea.span#{$i} { @include input-span($i, $grid-column-width, $grid-gutter-width); }
+
+    $i: $i - 1;
+  }
+}
+
+// Retorna a largura de uma grid.
+//  $n: o número da grid.
+@function grid-width($n) {
+  @return $n * $grid-column-width + ($n - 1) * $grid-gutter-width;
+}
+
+
+// Mixins dos componentes
+// ==========================================================================
+
+// Define a seta do popover no topo.
+//  $width: a largura.
+//  $color: a cor.
+@mixin popover-arrow-top($width: 8px, $color: $gray6) {
+  bottom: 0;
+  left: 50%;
+  margin-left: -$width;
+  border-left: $width solid transparent;
+  border-right: $width solid transparent;
+  border-top: $width solid $color;
+}
+
+// Define a seta do popover na esquerda.
+//  $width: a largura.
+//  $color: a cor.
+//  $right: a posição direita.
+@mixin popover-arrow-left($width: 8px, $color: $gray6, $right: 0) {
+  top: 50%;
+  right: $right;
+  margin-top: -$width;
+  border-top: $width solid transparent;
+  border-bottom: $width solid transparent;
+  border-left: $width solid $color;
+}
+
+// Define a seta do popover em baixo.
+//  $width: a largura.
+//  $color: a cor.
+//  $top: a posição do topo.
+@mixin popover-arrow-bottom($width: 8px, $color: $gray6, $top: 0) {
+  top: $top;
+  left: 50%;
+  margin-left: -$width;
+  border-left: $width solid transparent;
+  border-right: $width solid transparent;
+  border-bottom: $width solid $color;
+}
+// Define a seta do popover na direita.
+//  $width: a largura.
+//  $color: a cor.
+//  $left: a posição da esquerda.
+@mixin popover-arrow-right($width: 8px, $color: $gray6, $left: 0) {
+  top: 50%;
+  left: $left;
+  margin-top: -$width;
+  border-top: $width solid transparent;
+  border-bottom: $width solid transparent;
+  border-right: $width solid $color;
+}
+
+// Estilo dos botões.
+//  $color: cor da fonte.
+//  $border-color: cor da borda.
+//  $box-shadow-color: cor da sombra interna.
+//  $hover-color: cor da fonta no estado hover.
+//  $hover-border-color: cor da borda no estado hover.
+//  $active-border-color: cor da borda no estado ativo.
+//  $active-background-color: cor do fundo no estado ativo.
+//  $hover-active-color: cor da fonte nos estados hover e ativo.
+//  $hover-active-border-color: cor da borda nos estados hover e ativo.
+//  $disabled-color: cor da fonte no estado desabilitado.
+//  $disabled-border-color: cor da borda no estado desabilitado.
+//  $disabled-background-color: cor do fundo no estado desabilitado.
+@mixin redu-button($color, $border-color, $box-shadow-color, $background-color, $hover-color, $hover-border-color, $hover-background-color, $active-border-color, $active-background-color, $hover-active-color, $hover-active-border-color, $disabled-color, $disabled-border-color, $disabled-background-color) {
+  @include box-shadow(inset 0 1px 0 $box-shadow-color);
+  color: $color;
+  border-color: $border-color;
+  background-color: $background-color;
+
+  &:visited { color: $color; }
+
+  &:hover {
+    color: $hover-color;
+    border-color: $hover-border-color;
+    background-color: $hover-background-color;
+  }
+
+  .open > &,
+  .no-cssgradients.gt-ie8 .open > &,
+  &:active {
+    border-color: $active-border-color;
+    background-color: $active-background-color;
+    background-image: none;
+  }
+
+  .open > &:hover,
+  &:hover:active {
+    color: $hover-active-color;
+    border-color: $hover-active-border-color;
+    background-color: $active-background-color;
+  }
+
+  &.button-disabled,
+  &.button-disabled:hover,
+  &[disabled],
+  &[disabled]:hover,
+  .no-cssgradients.gt-ie8 &.button-disabled,
+  .no-cssgradients.gt-ie8 &[disabled] {
+    @include box-shadow(none);
+    color: $disabled-color;
+    border-color: $disabled-border-color;
+    background-color: $disabled-background-color;
+    background-image: none;
+  }
+}
+
+// Dado uma lista, organiza seus itens em colunas de tamanhos iguais.
+//  $columns: a quantidade de colunas desejada.
+//  $gutter: o espaçamento esquerdo entre cada item.
+//  $list-item-class: o nome da classe ou elemento do item da lista.
+@mixin list-column($columns: 2, $gutter: 10px, $list-item-class: "li") {
+  overflow: hidden;
+  padding-bottom: 1px;
+  list-style: none;
+  margin: 0;
+
+  & > #{$list-item-class} {
+    @include box-sizing;
+    $old-browser-value: percentage(((100 / $columns) - 1) / 100) + 1;
+    // Calcula a porcentagem de largura de cada item, levando em consideração
+    // também os espaçamentos esquerdos.
+    $expression: "(100% - ((#{$columns} - 1) * #{$gutter})) / #{$columns}";
+    @include calc("width", $expression, $old-browser-value);
+    margin-left: $gutter;
+    float: left;
+    position: relative;
+
+    // Remove o espaçamento do primeiro e cada ($columns+1)-ésimo item.
+    &:first-child,
+    &:nth-child(#{$columns}n+1) { margin-left: 0; }
+  }
+}
+
+// Dado uma lista, adiciona uma linha separadora depois de cada $n-ésimo item.
+//  $n: a ordem do item em que o separador será incluído.
+//  $margin-bottom: o tamanho do espaçamento entre linhas.
+//  $color: a cor do separador.
+//  $list-item-class: o nome da classe ou elemento do item da lista.
+@mixin list-column-separator($n: 2, $margin-bottom: 10px, $color: $gray3, $list-item-class: "li") {
+  & > #{$list-item-class} {
+    &:nth-child(#{$n}n) {
+      margin-bottom: $margin-bottom;
+      position: relative;
+
+      &:after {
+        background-color: $color;
+        bottom: (- ($margin-bottom / 2));
+        content: "";
+        display: block;
+        height: 1px;
+        right: 0;
+        position: absolute;
+        width: (100% * $n) + 50;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+
+        &:after { content: none; }
+      }
+    }
+  }
+}
+
+// Modifica o espaçamento do separador de lista em colunas.
+//  $gutter: o espaçamento total do separador.
+//  $n: o número de colunas da lista.
+//  $list-item-class: o nome da classe ou elemento do item da lista.
+@mixin list-column-separator-gutter($gutter: 20px, $n: 2, $list-item-class: "li") {
+  .list-#{$n}-columns.list-columns-separator > #{$list-item-class}:nth-child(#{$n}n+1) {
+    margin-bottom: $gutter;
+
+    &:after { bottom: (- ($gutter / 2)); }
+
+    &:last-child { margin-bottom: 0; }
+  }
+}
+
+// Retorna os estilos de fonte de um heading $n.
+//  $n - o número do heading.
+@mixin heading($n: 3) {
+  @if $n == 1 {
+    font: 300 60px/56px $museo-sans-rounded;
+    letter-spacing: -3px;
+
+  } @else if $n == 2 {
+    font: 500 36px/36px $museo-sans;
+    letter-spacing: -2px;
+
+  } @else if $n == 3 {
+    font: 500 21px/26px $museo-sans;
+    letter-spacing: -1px;
+
+  } @else if $n == 4 {
+    font: 500 18px/21px $museo-sans;
+    letter-spacing: -1px;
+
+  } @else if $n == 5 {
+    font: 500 16px/18px $museo-sans;
+    letter-spacing: 0;
+
+  } @else if $n == 6 {
+    font: 300 16px/18px $museo-sans;
+    letter-spacing: 0;
+
+  } @else if $n == 7 {
+    font: 700 14px/18px $museo-sans;
+    letter-spacing: 0;
+  }
+}

@@ -41,4 +41,8 @@ $(function() {
 
     $('html, body').animate({scrollTop: (offset - height)}, 500);
   });
+
+  $('.facebook-sign-in-button, .header-sign-in-recover').click( function(e) {
+    e.stopPropagation();
+  });
 });

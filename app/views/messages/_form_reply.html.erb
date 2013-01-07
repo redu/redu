@@ -1,16 +1,16 @@
+<%= form_for [@user, @new_reply || @reply], :remote => true do |f| %>
+  <div class="distance-top"></div>
+  <fieldset class="concave-fieldset">
+    <%= f.hidden_field :recipient_id, :value => @reply.to || @reply.recipient_id %>
+    <%= f.hidden_field :sender_id, :value => @user.id %>
+    <%= f.hidden_field :reply_to, :value => @reply.reply_to %>
 
-<%= form_for [@user, @reply], :html => { :class => 'form-common' } do |f| %>
-  <div id="errors"></div>
-  <%= f.error_messages %>
-
-  <%= f.hidden_field :recipient_id, :value => @reply.to %>
-  <%= f.hidden_field :sender_id, :value => @user.id %>
-  <%= f.hidden_field :reply_to, :value => @reply.reply_to %>
-
-  <%= f.text_field :subject, :style => 'display: none;' %>
-  <%= label_tag :message_body, t( :message ) + ':' %>
-  <%= f.text_area :body, :size => "73x10" %>
-  <%= submit_tag t( :send ) %>
-  <%= link_to 'Cancelar', nil, { :onclick => "$('div.new-folder-inner').slideToggle(); $('#dummy_reply').show(); return false;", :class => 'cancel'} %>
+    <%= f.text_field :subject, :style => 'display: none;' %>
+    <%= label_tag :body, t(:message), :style => 'display: none' %>
+    <%= f.text_area :body, :size => "73x1" %>
+    <%= concave_errors_for f.object, :body %>
+    <div class="status-buttons">
+      <%= f.submit t(:send), :class => 'button-primary' %>
+    </div>
+  </fieldset>
 <% end %>
-

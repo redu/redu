@@ -19,6 +19,7 @@ module Api
       authorize! :read, context
 
       users = users_with_indiferent_access(context)
+      users = users.includes(:social_networks)
       users = filter_by_role(context, users, params[:role]) if params[:role]
 
       respond_with(:api, context, users)

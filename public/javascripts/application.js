@@ -14,10 +14,10 @@ jQuery(function(){
 
     // Efeitos do form de status
     $(".inform-my-status textarea").live("focus", function(e){
-        $(this).parents("form").find("input[type=submit], .cancel, .char-limit").fadeIn();
+        $(this).parents("form").find(".status-buttons, .char-limit").fadeIn();
     });
     $(".inform-my-status .status-buttons .cancel").live("click", function(){
-        $(this).parents("form").find("input[type=submit], .cancel, .char-limit").fadeOut();
+        $(this).parents("form").find(".status-buttons, .char-limit").fadeOut();
     });
 
     // gerador do path do environmet e course
@@ -192,7 +192,7 @@ $.refreshDOMEffects = function(){
   });
 
   // Aumentar form de criação de Status
-  $("input[type=submit], .cancel, .char-limit", ".inform-my-status").hide();
+  $(".status-buttons, .char-limit", ".inform-my-status").hide();
 
   // Adicionar classe focus a um determinado label quando o seu campo
   // correspondente detectar o evento focus

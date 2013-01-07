@@ -1,28 +1,30 @@
-<div id="header" class="container_16">
+<div class="container_16">
   <%= render :partial => 'shared/loading_message' %>
-  <h1 id="logotipo" class="grid_3 replacement">
-    <a href="<%= application_url %>" title="Página Inicial">Redu: potencializando o talento das pessoas.</a>
-  </h1>
-  <ul class="nav grid_10">
-      <% if current_user %>
-    <li>
-        <%= link_to 'Início', home_user_path(current_user) %>
-    </li>
-    <% else %>
-    <li>
-        <%= link_to 'Início', application_path %>
-    </li>
-    <% end %>
-    <li>
-      <%= link_to "Ensine", teach_index_path %>
-    </li>
-    <li>
-      <%= link_to "Cursos", courses_index_path %>
-    </li>
-  </ul>
+</div>
 
-  <%= render :partial => 'shared/nav_account' %>
-
-  <div id="search-box" class="grid_3">
-  </div><!-- end #search -->
-</div><!-- end #header -->
+<% if current_user %>
+  <%= render :partial => 'shared/nav_global' %>
+<% else %>
+  <%# Mantido enquanto existem dois layouts (com e sem bootstrap) %>
+  <div id="header" class="container_16">
+    <h1 id="logotipo" class="grid_3 replacement">
+      <a href="<%= application_url %>" title="Página Inicial">Redu: potencializando o talento das pessoas.</a>
+    </h1>
+    <ul class="nav grid_10">
+      <li>
+        <%= link_to 'Início', application_path, :title => "Início" %>
+      </li>
+      <li>
+        <%= link_to "Ensine", teach_index_path , :title => "Ensine"%>
+      </li>
+      <li>
+        <%= link_to "Cursos", courses_index_path, :title => "Cursos" %>
+      </li>
+      <li>
+        <%= link_to "Aplicativos", Redu::Application.config.redu_services[:apps][:url], :title => "Aplicativos" %>
+      </li>
+    </ul>
+    <div id="search-box" class="grid_3">
+    </div><!-- end #search -->
+  </div><!-- end #header -->
+<% end %>

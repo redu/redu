@@ -1,5 +1,9 @@
 class CoursesController < BaseController
   respond_to :html, :js
+  before_filter :set_nav_global_context, :only => [:show, :preview,
+                                                   :admin_invitations]
+  before_filter :set_nav_global_context_admin,
+    :except => [:show, :preview, :index, :admin_invitations, :new, :create]
 
   before_filter Proc.new {
     @environment = Environment.find_by_path(params[:environment_id])
@@ -7,13 +11,24 @@ class CoursesController < BaseController
                                         :conditions => { :path => params[:id] },
                                         :include => [:audiences])
   }, :only => :edit
+
+  after_filter :update_last_access, :only => [:show]
+
   load_resource :environment, :find_by => :path
   load_and_authorize_resource :course, :through => :environment,
     :except => [:index], :find_by => :path
 
   rescue_from CanCan::AccessDenied do |exception|
     session[:return_to] = request.fullpath
-    flash[:notice] = "Você não tem acesso a essa página"
+
+    if @course.blocked?
+      flash[:notice] = "Entre em contato com o administrador deste curso."
+    elsif current_user.nil?
+      flash[:notice] = "Essa área só pode ser vista após você acessar o Redu com seu nome e senha."
+    else
+      flash[:notice] = "Você não tem acesso a essa página"
+    end
+
     redirect_to preview_environment_course_path(@environment, @course)
   end
 
@@ -67,12 +82,16 @@ class CoursesController < BaseController
   end
 
   def new
+    content_for :nav_global_context, "environments_admin"
+
     respond_to do |format|
       format.html { render 'courses/admin/new' }
     end
   end
 
   def create
+    content_for :nav_global_context, "environments_admin"
+
     authorize! :manage, @environment #Talvez seja necessario pois o @environment não está sendo autorizado.
 
     @course.owner = current_user
@@ -103,6 +122,7 @@ class CoursesController < BaseController
   end
 
   def index
+    content_for :nav_global_context, "courses_index"
 
     paginating_params = {
       :page => params[:page],
@@ -207,7 +227,7 @@ class CoursesController < BaseController
   # Modera os usuários.
   def moderate_members_requests
     if params[:member].nil?
-      flash[:notice] = "Escolha, pelo menos, algum usuário."
+      flash[:error] = "Escolha, pelo menos, algum usuário."
     else
       approved = params[:member].reject{|k,v| v == 'reject'}
       rejected = params[:member].reject{|k,v| v == 'approve'}
@@ -222,7 +242,6 @@ class CoursesController < BaseController
 
       # verifica se o limite de usuário foi atingido
       if can?(:add_entry?, @course) and !approved.to_hash.empty?
-
         # calcula o total de usuarios que estão para ser aprovados
         # e só aprova aqueles que estiverem dentro do limite
         total_members = @course.approved_users.count + approved.count
@@ -233,7 +252,7 @@ class CoursesController < BaseController
           (total_members - members_limit).times do
             approved.shift
           end
-          flash[:notice] = "O limite máximo de usuários foi atigindo, apenas alguns membros foram moderados."
+          flash[:error] = "O limite máximo de usuários foi atigindo, apenas alguns membros foram moderados."
         else
           flash[:notice] = 'Membros moderados!'
         end
@@ -245,15 +264,16 @@ class CoursesController < BaseController
           uca.approve!
           UserNotifier.approve_membership(uca.user, @course).deliver
         end
+      elsif can?(:add_entry?, @course) and !rejected.to_hash.empty?
+        # Avisa que os membros rejeitados foram moderados mesmo se não houver membros para serem aprovados
+        flash[:notice] = 'Membros moderados!'
       else
         if rejected.to_hash.empty?
-          flash[:notice] = "O limite máximo de usuários foi atingido. Não é possível adicionar mais usuários."
+          flash[:error] = "O limite máximo de usuários foi atingido. Não é possível adicionar mais usuários."
         else
-          flash[:notice] = "O limite máximo de usuários foi atingido. Só os usuários rejeitados foram moderados."
+          flash[:error] = "O limite máximo de usuários foi atingido. Só os usuários rejeitados foram moderados."
         end
       end
-
-
     end
 
     redirect_to admin_members_requests_environment_course_path(@environment, @course)
@@ -269,7 +289,6 @@ class CoursesController < BaseController
       flash[:notice] = "Você agora faz parte do curso #{@course.name}"
       redirect_to environment_course_path(@course.environment, @course)
     else
-      current_user.get_association_with(@course).notify_pending_moderation
       flash[:notice] = "Seu pedido de participação foi feito. Aguarde a moderação."
       redirect_to preview_environment_course_path(@course.environment, @course)
     end
@@ -327,11 +346,16 @@ class CoursesController < BaseController
     users_ids = params[:users].collect{|u| u.to_i} if params[:users]
 
     unless users_ids.empty?
-      User.where(:id => users_ids).
-        includes(:user_course_associations,:user_space_associations).each do |user|
-          @course.unjoin user
+      User.select(:id).where(:id => users_ids).
+        find_in_batches(:batch_size => 100) do |users|
+
+        users.each do |u|
+          job = UnjoinUserJob.new(:user => u, :course => @course)
+          Delayed::Job.enqueue(job, :queue => 'general')
         end
-      flash[:notice] = "Os usuários foram removidos do curso #{@course.name}"
+      end
+
+      flash[:notice] = "Os usuários estão sendo removidos do curso. Esta operação poderá levar alguns minutos."
     end
 
     respond_to do |format|
@@ -459,7 +483,7 @@ class CoursesController < BaseController
     end
 
     if email_invitations.empty? && user_invitations.empty?
-      flash[:notice] = "Nenhum convite foi marcado para ser removido."
+      flash[:error] = "Nenhum convite foi marcado para ser removido."
     else
       flash[:notice] = "Os convites foram removidos do curso #{@course.name}."
     end
@@ -473,5 +497,20 @@ class CoursesController < BaseController
     respond_to do |format|
       format.html { render 'courses/admin/teacher_participation_report'}
     end
+  end
+
+  protected
+
+  def set_nav_global_context_admin
+    content_for :nav_global_context, "courses_admin"
+  end
+
+  def set_nav_global_context
+    content_for :nav_global_context, "courses"
+  end
+
+  def update_last_access
+    uca = current_user.get_association_with(@course)
+    uca.touch(:last_accessed_at) if uca
   end
 end

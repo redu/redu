@@ -23,7 +23,7 @@ describe StatusVisNotification do
         before do
           WebMock.disable_net_connect!
           ActiveRecord::Observer.with_observers(:status_observer) do
-            stubing_request
+            vis_stub_request
 
             @activity = Factory(:activity, :statusable => @lecture,
                                 :user => @poster)
@@ -33,7 +33,7 @@ describe StatusVisNotification do
         it "send information of core to visualization" do
           params = fill_params_by_lecture(@activity, "activity")
 
-          checking_request(params)
+          vis_a_request(params)
        end
 
       end
@@ -42,7 +42,7 @@ describe StatusVisNotification do
         before do
           WebMock.disable_net_connect!
           ActiveRecord::Observer.with_observers(:status_observer) do
-            stubing_request
+            vis_stub_request
 
             @help = Factory(:help, :statusable => @lecture,
                             :user => @poster)
@@ -52,7 +52,7 @@ describe StatusVisNotification do
         it "send information of core to visualization" do
           params = fill_params_by_lecture(@help, "help")
 
-          checking_request(params)
+          vis_a_request(params)
         end
       end
 
@@ -65,7 +65,7 @@ describe StatusVisNotification do
 
             WebMock.disable_net_connect!
             ActiveRecord::Observer.with_observers(:status_observer) do
-              stubing_request
+              vis_stub_request
 
               @answer = Factory(:answer, :statusable => @activity,
                                 :user => @poster)
@@ -75,7 +75,7 @@ describe StatusVisNotification do
           it "send information of core to visualization" do
             params = fill_params_by_lecture_type_answer(@activity, @answer, "answered_activity")
 
-            checking_request(params)
+            vis_a_request(params)
           end
         end
 
@@ -86,7 +86,7 @@ describe StatusVisNotification do
 
             WebMock.disable_net_connect!
             ActiveRecord::Observer.with_observers(:status_observer) do
-              stubing_request
+              vis_stub_request
 
               @answer = Factory(:answer, :statusable => @help,
                                 :user => @poster)
@@ -96,7 +96,7 @@ describe StatusVisNotification do
           it "send information of core to visualization" do
             params = fill_params_by_lecture_type_answer(@help, @answer, "answered_help")
 
-            checking_request(params)
+            vis_a_request(params)
           end
 
         end
@@ -115,7 +115,7 @@ describe StatusVisNotification do
 
         WebMock.disable_net_connect!
         ActiveRecord::Observer.with_observers(:status_observer) do
-          stubing_request
+          vis_stub_request
 
           @activity = Factory(:activity, :statusable => @space,
                               :user => @poster)
@@ -125,7 +125,7 @@ describe StatusVisNotification do
       it "send information of core do visualization" do
         params = fill_params_by_space(@activity, "activity")
 
-        checking_request(params)
+        vis_a_request(params)
       end
 
       context "and status is type of Answer" do
@@ -137,7 +137,7 @@ describe StatusVisNotification do
 
             WebMock.disable_net_connect!
             ActiveRecord::Observer.with_observers(:status_observer) do
-              stubing_request
+              vis_stub_request
 
               @answer = Factory(:answer, :statusable => @activity,
                                 :user => @poster)
@@ -147,7 +147,7 @@ describe StatusVisNotification do
           it "send information of core to visualization" do
             params = fill_params_by_space_type_answer(@activity, @answer, "answered_activity")
 
-            checking_request(params)
+            vis_a_request(params)
           end
         end
       end
@@ -176,25 +176,25 @@ describe StatusVisNotification do
 
       it "and status is Activity should send notification to visualization" do
         ActiveRecord::Observer.with_observers(:vis_status_observer) do
-          stubing_request
+          vis_stub_request
           activity_space.destroy
         end
 
         params = fill_params_by_space(activity_space, "remove_activity")
-        checking_request(params)
+        vis_a_request(params)
       end
 
       it "and status is Answer and statusable is Activity should send
         notification to visualization" do
         ActiveRecord::Observer.with_observers(:vis_status_observer) do
-          stubing_request
+          vis_stub_request
           answer_activity_space.destroy
         end
 
         params = fill_params_by_space_type_answer(activity_space,
                   answer_activity_space, "remove_answered_activity")
 
-        checking_request(params)
+        vis_a_request(params)
       end
     end
 
@@ -219,52 +219,52 @@ describe StatusVisNotification do
 
       it "and status is Activity should send notification to visualization" do
         ActiveRecord::Observer.with_observers(:vis_status_observer) do
-          stubing_request
+          vis_stub_request
           activity_lecture.destroy
         end
 
         params = fill_params_by_lecture(activity_lecture,
                                         "remove_activity")
 
-        checking_request(params)
+        vis_a_request(params)
 
       end
 
       it "and status is Help should send notification to visualization" do
         ActiveRecord::Observer.with_observers(:vis_status_observer) do
-          stubing_request
+          vis_stub_request
           help_lecture.destroy
         end
 
         params = fill_params_by_lecture(help_lecture, "remove_help")
 
-        checking_request(params)
+        vis_a_request(params)
       end
 
       context "and status is Answer" do
         it "and statusable is Activity should send notification
         to visualization" do
           ActiveRecord::Observer.with_observers(:vis_status_observer) do
-            stubing_request
+            vis_stub_request
             answer_activity_lecture.destroy
           end
 
           params = fill_params_by_lecture_type_answer(activity_lecture,
                       answer_activity_lecture, "remove_answered_activity")
 
-          checking_request(params)
+          vis_a_request(params)
         end
 
         it "and statusable is Help should send notification to visualization" do
           ActiveRecord::Observer.with_observers(:vis_status_observer) do
-            stubing_request
+            vis_stub_request
             answer_help_lecture.destroy
           end
 
           params = fill_params_by_lecture_type_answer(help_lecture,
                       answer_help_lecture, "remove_answered_help")
 
-          checking_request(params)
+          vis_a_request(params)
         end
       end
     end
@@ -340,20 +340,4 @@ describe StatusVisNotification do
       :updated_at => answer.updated_at
     }
   end
-
-  def stubing_request
-    stub_request(:post, Redu::Application.config.vis_client[:url]).
-      with(:headers => {'Authorization'=>['JOjLeRjcK', 'core-team'],
-                        'Content-Type'=>'application/json'}).
-                        to_return(:status => 200, :body => "", :headers => {})
-  end
-
-  def checking_request(params)
-    a_request(:post, Redu::Application.config.vis_client[:url]).
-      with(:body => params.to_json,
-           :headers => {'Authorization' => ['JOjLeRjcK', 'core-team'],
-                        'Content-Type'=> 'application/json'}).
-                        should have_been_made
-  end
-
 end

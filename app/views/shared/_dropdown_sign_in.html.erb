@@ -1,0 +1,10 @@
+<%= render :partial => 'shared/form_sign_in' %>
+<hr class="header-separator">
+<div class="facebook-sign-in">
+  <%= link_to "Entre com sua conta do Facebook", facebook_authentication_path,
+    :class => "facebook-sign-in-button" %>
+</div>
+<hr class="header-separator">
+<div class="header-sign-in-recover">
+  <%= link_to "Esqueceu seu login ou senha? Clique aqui", recover_username_password_path, :class => "link-secondary" %>
+</div>

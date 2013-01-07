@@ -3,12 +3,12 @@ require 'spec_helper'
 describe 'ApplicationLayoutCache' do
   let(:user) { Factory(:user) }
 
-  context 'nav_account' do
-    def nav_account_identifier(user)
-      "views/nav_account/#{user.id}"
+  context 'nav_global_dropdown_menu' do
+    def nav_global_dropdown_menu_identifier(user)
+      "views/nav_global_dropdown_menu/#{user.id}"
     end
 
-    let(:cache_identifier) { nav_account_identifier(user) }
+    let(:cache_identifier) { nav_global_dropdown_menu_identifier(user) }
     let(:environment) { Factory(:environment) }
 
     context 'writing' do
@@ -130,7 +130,7 @@ describe 'ApplicationLayoutCache' do
 
                 cache.should_not exist(cache_identifier)
                 admins.each do |admin|
-                  cache.should_not exist(nav_account_identifier(admin))
+                  cache.should_not exist(nav_global_dropdown_menu_identifier(admin))
                 end
               end
             end

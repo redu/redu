@@ -8,7 +8,7 @@ module Api
       space = Space.find(params[:space_id])
       authorize! :manage, space
 
-      param = { 'users_id[]' => params[:users_id],
+      param = { :users_id => params[:users_id],
                 :date_start => params[:date_start],
                 :date_end => params[:date_end],
                 :space_id => params[:space_id] }
@@ -23,7 +23,7 @@ module Api
       space = Space.find(params[:space_id])
       authorize! :manage, space
 
-      param = { 'lectures[]' => params[:lectures],
+      param = { :lectures => params[:lectures],
                 :date_start => params[:date_start],
                 :date_end => params[:date_end] }
       url = Redu::Application.config.vis[:lecture_participation]
@@ -37,7 +37,7 @@ module Api
       space = Space.find(params[:space_id])
       authorize! :manage, space
 
-      param = { 'subjects[]' => params[:subjects] }
+      param = { :subjects => params[:subjects] }
       url = Redu::Application.config.vis[:subject_activities]
 
       request_resp = request_vis(url, param)

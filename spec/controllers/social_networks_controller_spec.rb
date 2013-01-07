@@ -2,13 +2,10 @@ require 'spec_helper'
 require 'authlogic/test_case'
 
 describe SocialNetworksController do
-  include Authlogic::TestCase
-
   context "POST destroy" do
     before do
       @user = Factory(:user)
-      activate_authlogic
-      UserSession.create @user
+      login_as @user
       @social_network = Factory(:social_network, :user => @user)
     end
 
