@@ -172,6 +172,33 @@ $(function(){
     });
   };
 
+  // Verifica se questão atual está respondida
+  var questionAnswered = function(){
+    return $(".exercise-nav .actual").hasClass("question-answered");
+  };
+
+  // Previne o usuário de mudar de questão sem ter salvo a resposta antes
+  $.fn.questionChecked = function(){
+    return this.each(function(){
+      $(this).on("click", function(e){
+        // Para questões cuja resposta ainda não foi salva
+        if (!questionAnswered()) {
+          // Se a questão foi marcada e algum link de navegação foi clicado
+          // usuário será avisado de que a questão não foi salva
+          var checkedInput = $(".exercise").find("input[checked=checked]:radio");
+          if (checkedInput.length > 0) {
+            // Uma modal deve aparecer aqui!
+            alert("A resposta não foi salva!");
+          }
+        }
+      });
+    });
+  };
+
+  // Aplica função para todos os links de navegação dentro do form
+  // de choices, na visualização da questão
+  $(".exercise a").questionChecked();
+
   // Atualiza para apenas a última alternativa ter aparência disabled
   // e deixa apenas as questões com erro abertas
   $.fn.refreshQuestionsAppearance = function(){
