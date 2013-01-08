@@ -1299,7 +1299,7 @@ $(function() {
         var $input = $(this).css('opacity', 0)
           , inputVal = $input.val()
           , $button = $(document.createElement('a')).addClass(settings.buttonDefault).text(settings.buttonText)
-          , $filePath = $(document.createElement('span')).addClass(settings.filePath).text(settings.filePathText)
+          , $filePath = $(document.createElement('span')).addClass(settings.filePath).text($input.data('legend') || settings.filePathText)
           , $wrapper = $(document.createElement('div')).addClass(settings.wrapper).append($button).append($filePath)
           , $controlParent = $input.parent()
 

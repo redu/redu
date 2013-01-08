@@ -457,22 +457,12 @@ body {
 }
 
 .list-separator +
-.form-config {
+.form-config-profile {
   margin-top: 10px;
 }
-.form-config .control-group +
+.form-config-profile .control-group +
 .list-separator {
   margin-top: 20px;
-}
-.form-config fieldset legend {
-  font-size: 18px;
-  color: #73c3e6;
-  font-weight: 300;
-  font-family: museo-sans, "Helvetica Neue", Arial, sans-serif;
-  margin-bottom: 20px;
-}
-.form-config .button-danger {
-  margin-right: 5px;
 }
 
 .form-config-avatar {
@@ -541,6 +531,20 @@ body {
 }
 .save-curriculum a {
   float: right;
+}
+
+.form-config-account fieldset {
+  margin: 10px 0;
+}
+.form-config-account fieldset legend {
+  font-size: 18px;
+  color: #73c3e6;
+  font-weight: 300;
+  font-family: museo-sans, "Helvetica Neue", Arial, sans-serif;
+  padding: 0 0 20px 20px;
+}
+.form-config-account .button-danger {
+  margin-right: 10px;
 }
 
 ul.requisitions {

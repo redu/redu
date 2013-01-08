@@ -6,7 +6,7 @@
 %>
 <%= form_for user,
   :html => { :multipart => true,
-    :class => "form-horizontal form-config" } do |f| %>
+  :class => "form-horizontal form-config-profile" } do |f| %>
   <%= concave_error_messages_for(user) %>
   <%# Avatar %>
   <div class="control-group row">
@@ -18,7 +18,8 @@
       <%= concave_errors_for(f.object, :avatar) %>
       <%= image_tag user.avatar.url(:thumb_160), :size => "160x160",
         :class => "form-config-avatar",
-        :title => user.display_name %>
+        :title => user.display_name,
+        :alt => user.display_name %>
     </div>
   </div>
   <%# Nome %>

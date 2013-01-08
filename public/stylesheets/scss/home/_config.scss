@@ -3,26 +3,22 @@
 // ==========================================================================
 
 
-.form-config {
+// Perfil - Biografia
+// ==========================================================================
+
+.form-config-profile {
   .list-separator +
   & { margin-top: 10px; }
 
   .control-group +
   .list-separator { margin-top: 20px; }
-
-  fieldset {
-  	legend {
-  		font-size: 18px;
-  		color: $blue2;
-  		font-weight: 300;
-  		font-family: $museo-sans;
-  		margin-bottom: 20px;
-    }
-  }
-  .button-danger { margin-right: 5px; }
 }
 
 .form-config-avatar { margin-top: 20px; }
+
+
+// Perfil - Currículo
+// ==========================================================================
 
 .config-title {
   font-weight: 300;
@@ -87,4 +83,24 @@
   overflow: hidden;
 
   a { float: right; }
+}
+
+
+// Conta
+// ==========================================================================
+
+.form-config-account {
+  fieldset {
+    margin: 10px 0;
+
+    legend {
+      font-size: 18px;
+      color: $blue2;
+      font-weight: 300;
+      font-family: $museo-sans;
+      padding: 0 0 20px 20px;
+    }
+  }
+
+  .button-danger { margin-right: 10px; }
 }
