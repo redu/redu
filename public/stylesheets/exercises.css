@@ -22,24 +22,30 @@
 }
 
 #resource .exercise-nav ol {
-  margin: 15px 10px 5px 10px;
+  margin: 14px 10px 1px 10px;
   overflow: hidden;
 }
 
 #resource .exercise-nav ol li {
   float: left;
   width: 58px;
-  height: 35px;
+  height: 38px;
   text-align: center;
+}
+
+#resource .exercise-nav ol li.actual {
+  -webkit-box-shadow: 0 0 2px 1px #73c3e6, 0 0 0 1px white inset, inset 0 0 2px 1px #73c3e6;
+  -moz-box-shadow: 0 0 2px 1px #73c3e6, 0 0 0 1px white inset, inset 0 0 2px 1px #73c3e6;
+  box-shadow: 0 0 2px 1px #73c3e6, 0 0 0 1px white inset, inset 0 0 2px 1px #73c3e6;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  margin: 1px;
 }
 
 #resource .exercise-nav ol li.endless-lecture {
   width: 21px;
   font-weight: bold;
-}
-
-#resource .exercise-nav ol liol.actions-buttons {
-  display: block;
 }
 
 #resource .exercise .lecture-button-finalize .concave-button {
@@ -83,14 +89,14 @@
   border: 1px solid rgb(76, 172, 213);
 }
 
-#resource .exercise li a {
+#resource .exercise-nav li a {
   color: rgb(179, 179, 179);
   font-size: 2.3em;
   font-weight: 100;
   font-family: museo-slab, "Helvetica Neue", Arial, sans-serif;
 }
 
-.textshadow #resource .exercise li a {
+.textshadow #resource .exercise-nav li a {
   text-shadow: 0px 2px 0px white;
 }
 
