@@ -143,10 +143,26 @@
     </div>
     <div class="controls span6">
       <%= f.text_area :tag_list,
-        :placeholder => "Ramos do conhecimento que despertam seu
-          interesse. Exemplo: redes sociais, tecnologia, design",
+        :placeholder => "Ramos do conhecimento que despertam seu interesse. Exemplo: redes sociais, tecnologia, design",
         :rows => 6 %>
       <%= concave_errors_for(f.object, :tag_list) %>
+    </div>
+  </div>
+  <%# Perfils adicionais %>
+  <div class="control-group row" id="biography">
+    <div class="control-label span3">
+      <%= f.label :social_networks, "Perfils adicionais" %>
+    </div>
+    <div class="controls span6" id="select-networks">
+      <ul class="form-config-social-networks">
+        <%= f.fields_for :social_networks do |builder| %>
+          <%= render :partial => "social_networks/social_network_fields",
+            :locals => { :f => builder, :user => user } %>
+        <% end %>
+      </ul>
+      <div id="new-social-network">
+        <%= new_social_network f, :social_networks %>
+      </div>
     </div>
   </div>
   <hr class="list-separator">

@@ -469,6 +469,29 @@ body {
   margin-top: 20px;
 }
 
+.form-config-social-networks {
+  margin: 0;
+  list-style: none;
+}
+
+input[type="hidden"] +
+.form-config-social-network, .form-config-social-network +
+.form-config-social-network {
+  margin-top: 10px;
+}
+.form-config-social-network .message-close {
+  margin-top: 7px;
+}
+
+.form-config-social-network-select {
+  margin-left: 0;
+}
+
+.form-config-social-network-select +
+.form-config-social-network-url {
+  margin-left: 5px;
+}
+
 .config-title {
   font-weight: 300;
   color: #73c3e6;

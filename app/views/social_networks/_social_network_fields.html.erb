@@ -1,18 +1,25 @@
-<li id="social-network-<%= f.object.id %>">
+<%#
+  Campo de rede social do usuário.
+
+  Variáveis:
+    f: o formulário.
+    user: o usuário.
+%>
+<li id="social-network-<%= f.object.id %>" class="form-config-social-network clearfix">
   <%= f.select :name,
     options_for_select(
       SocialNetwork::Networks.to_select,
       :selected => f.object.name),
-      { :include_blank => "adicionar" },
-      { :class => "select-network" } %>
+      { :include_blank => "Adicionar" },
+      { :class => "select-network form-config-social-network-select span2" } %>
 
   <%= f.text_field :url,
-    :class => "concave-small social-url" %>
+    :class => "form-config-social-network-url span4" %>
 
   <% if !f.object.id.nil? %>
-    <%= link_to (t :remove), user_social_network_path(user.login, f.object.id),
+    <%= link_to "×", user_social_network_path(user.login, f.object.id),
       :remote => true, :method => :delete,
-      :class => "remove-network icon-delete-gray_8_10-before replacement",
+      :class => "message-close",
       :confirm => "Você tem certeza que deseja excluir esta rede social?" %>
   <% end %>
 </li>

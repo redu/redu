@@ -5,9 +5,9 @@ class SocialNetwork < ActiveRecord::Base
   validates_presence_of :url
 
   enumerate :networks do
-    value :id => 'facebook', :name => "facebook"
-    value :id => 'twitter', :name => "twitter"
-    value :id => 'orkut', :name => "orkut"
-    value :id => 'linkedin', :name => "linkedin"
+    value :id => 'facebook', :name => "Facebook"
+    value :id => 'twitter', :name => "Twitter"
+    value :id => 'orkut', :name => "Orkut"
+    value :id => 'linkedin', :name => "LinkedIn"
   end
 end
