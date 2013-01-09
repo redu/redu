@@ -16,6 +16,7 @@ javascripts:
     - public/javascripts/vendor/modernizr.js
     - public/javascripts/lazyload.js
     - public/javascripts/asyncjs.jquery.js
+    - public/javascripts/form.redu.jquery.js
     - public/javascripts/jquery.autosize.min.js
     - public/javascripts/vendor/placeholder-polyfill.min.js
     - public/javascripts/bootstrap-redu.js
@@ -28,6 +29,11 @@ javascripts:
     - public/javascripts/wall_spinner.js
     - public/javascripts/jquery.timeago.js
     - public/javascripts/timeago.js
+    - public/javascripts/jquery.fcbkcomplete.min.js # Auto complete do facebook
+    - public/javascripts/old-create-status.js
+    - public/javascripts/underscore.js
+    - public/javascripts/underscore-sharing-template.redu.jquery.js
+    - public/javascripts/embedly.redu.jquery.js
   landing:
     - public/javascripts/rails.js
     - public/javascripts/vendor/modernizr.js

@@ -31,6 +31,9 @@ javascripts:
     - public/javascripts/timeago.js
     - public/javascripts/jquery.fcbkcomplete.min.js # Auto complete do facebook
     - public/javascripts/old-create-status.js
+    - public/javascripts/underscore.js
+    - public/javascripts/underscore-sharing-template.redu.jquery.js
+    - public/javascripts/embedly.redu.jquery.js
   landing:
     - public/javascripts/rails.js
     - public/javascripts/vendor/modernizr.js
