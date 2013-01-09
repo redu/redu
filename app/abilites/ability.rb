@@ -88,8 +88,11 @@ class Ability
         user.can_read? object
       end
 
-      cannot [:manage, :read], [Environment, Course, Space, Subject, Lecture],
-        :blocked => true
+      unless is_admin
+        # Nenhum ambiente bloqueado pode ser visto, a não ser pelo redu_admin
+        cannot [:manage, :read], [Environment, Course, Space, Subject, Lecture],
+          :blocked => true
+      end
 
       can :create, Environment
 

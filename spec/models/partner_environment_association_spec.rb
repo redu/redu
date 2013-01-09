@@ -4,7 +4,7 @@ describe PartnerEnvironmentAssociation do
   subject { Factory(:partner_environment_association) }
 
   it { should belong_to :partner }
-  it { should belong_to :environment }
+  it { should belong_to(:environment).dependent(:destroy) }
   it { should validate_presence_of :cnpj }
   it { should validate_presence_of :address }
   it { should validate_presence_of :company_name }

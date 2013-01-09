@@ -56,7 +56,9 @@ class SessionsController < BaseController
                        :teacher => uca.with_roles([:teacher]).count }
           render :template => 'invitations/show'
         else
-          respond_with(@user_session)
+          respond_with(@user_session) do |format|
+            format.html { render "base/site_index" }
+          end
         end
       end
     end

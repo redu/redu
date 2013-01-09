@@ -80,14 +80,11 @@
 }
 
 .statuses .actions li {
-  float: left;
   padding: 0 10px;
   border-right: 1px solid #C6C6C6;
-}
-
-.statuses .actions li {
   float: right;
   border:none;
+  list-style: none;
 }
 
 .statuses .actions li:last-child {
@@ -257,6 +254,13 @@
   float: right;
 }
 
+.home-container .create-status .concave-form .concave-button.spinner-circular-gray {
+  /* Força spinner a ser azul */
+  background-image: url("../images/spinner-blue.gif") !important;
+  background-repeat: no-repeat;
+  background-position: 23px 7px;
+}
+
 .boxshadow .create-status .concave-form .concave-button  {
   -webkit-box-shadow: 0 1px 0 0 rgb(219, 239, 247) inset;
   -moz-box-shadow: 0 1px 0 0 rgb(219, 239, 247) inset;
@@ -291,11 +295,6 @@
   margin-right: 10px;
   float: left;
   overflow: hidden;
-}
-
-.status .statuses .actions li {
-  float: right;
-  border: none;
 }
 
 .statuses .status .actions {
@@ -675,19 +674,19 @@
 }
 
 .status-medium .create-status .concave-form .concave-input {
-  width: 583px;
+  width: 581px;
 }
 
 .status-medium .create-response .concave-form .concave-input {
-  width: 508px;
+  width: 506px;
 }
 
 .status-large .create-status .concave-form .concave-input {
-  width: 683px;
+  width: 681px;
 }
 
 .status-large .create-response .concave-form .concave-input {
-  width: 608px;
+  width: 606px;
 }
 
 .create-status .concave-form .cancel,

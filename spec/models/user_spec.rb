@@ -100,9 +100,9 @@ describe User do
       subject.errors[:birthday].should_not be_empty
     end
 
-    it "should validate password and password_confirmation equality" do
+    it "should validate email and email_confirmation equality" do
       u = Factory.build(:user, :email => "email@email.com",
-                  :email_confirmation => "different@email.com")
+                        :email_confirmation => "different@email.com")
       u.should_not be_valid
       u.errors[:email].should_not be_empty
     end

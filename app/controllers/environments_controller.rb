@@ -1,7 +1,7 @@
 class EnvironmentsController < BaseController
   before_filter :set_nav_global_context, :only=> [:show, :preview]
   before_filter :set_nav_global_context_admin, :except => [:show, :preview,
-                                                           :index]
+                                                           :index, :create]
 
   load_and_authorize_resource :except => :index, :find_by => :path
 
@@ -273,7 +273,8 @@ class EnvironmentsController < BaseController
       format.js do
         render_endless('users/environments/environment', @environments,
                        '#my-environments',
-                       :template => 'shared/new_endless_kaminari')
+                       { :template => 'shared/new_endless_kaminari',
+                         :partial_locals => { :user => @user } })
       end
     end
   end

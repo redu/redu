@@ -8,7 +8,6 @@
     <%= include_stylesheets :new_application %>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <%= include_javascripts :new_application %>
-
     <%= render :partial => "shared/chat" %>
     <%= render :partial => "shared/typekit" %>
     <%= render :partial => "shared/analytics" %>
@@ -16,7 +15,8 @@
   <body>
     <%= render :partial => "shared/nav_global" %>
     <div class="main-wrapper">
-      <%= render :partial => 'shared/system_flash_message' %>
+      <%= render :partial => "shared/outdated_browser_new" %>
+      <%= render :partial => "shared/system_flash_message" %>
       <div class="container">
         <div class="row">
           <%= yield %>
