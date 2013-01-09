@@ -1,10 +1,10 @@
 <span class="title"><b><%= item.title %></b> <i>em</i> <%= item.company %></span>
 <span class="time">
   <% if item.current? %>
-    <%= t item.start_date.strftime("%B %Y") %> - presente
+    <%= t l(item.start_date, :format => "%B de %Y") %> - presente
     (<%= distance_of_time_in_words item.start_date, Date.today %>)
   <% else %>
-    <%= t item.start_date.strftime("%B %Y") %> - <%= t item.end_date.strftime("%B %Y") %>
+    <%= t l(item.start_date, :format => "%B de %Y") %> - <%= t l(item.end_date, :format => "%B de %Y") %>
     (<%= distance_of_time_in_words item.start_date, item.end_date %>)
   <% end %>
 </span>
