@@ -80,14 +80,11 @@
 }
 
 .statuses .actions li {
-  float: left;
   padding: 0 10px;
   border-right: 1px solid #C6C6C6;
-}
-
-.statuses .actions li {
   float: right;
   border:none;
+  list-style: none;
 }
 
 .statuses .actions li:last-child {
@@ -298,11 +295,6 @@
   margin-right: 10px;
   float: left;
   overflow: hidden;
-}
-
-.status .statuses .actions li {
-  float: right;
-  border: none;
 }
 
 .statuses .status .actions {
