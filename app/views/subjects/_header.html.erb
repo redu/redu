@@ -11,7 +11,7 @@
   </span>
 
   <h3 class="call name lecture-name">
-    <%= link_to subject.name, space_path(subject.space) %>
+    <%= link_to subject.name, space_subject_path(subject.space, subject) %>
   </h3>
 
   <% unless subject.description.blank? %>
