@@ -7,7 +7,8 @@ Variáveis:
 <%= form_for user, :url => update_account_user_path,
   :html => { :multipart => true,
   :class => "form-horizontal form-config-account" } do |f| %>
-  <%= concave_error_messages_for(user) %>
+  <%= new_concave_error_messages_for(user, :id => nil,
+    :class => 'system-message message-warning fade in') %>
   <div class="control-group row">
     <div class="control-label span3">
       <%= f.label "Configurações" %>

@@ -7,7 +7,8 @@
 <%= form_for user,
   :html => { :multipart => true,
   :class => "form-horizontal form-config-profile" } do |f| %>
-  <%= concave_error_messages_for(user) %>
+  <%= new_concave_error_messages_for(user, :id => nil,
+    :class => 'system-message message-warning fade in') %>
   <%# Avatar %>
   <div class="control-group row">
     <div class="control-label span3">
@@ -120,7 +121,8 @@
     <div class="controls span6">
       <%= f.text_area :description,
         :placeholder => "Sua personalidade e informações adicionais",
-        :rows => 6 %>
+        :rows => 6,
+        :maxlength => 400 %>
       <%= concave_errors_for(f.object, :description) %>
     </div>
   </div>

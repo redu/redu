@@ -192,10 +192,10 @@ class UsersController < BaseController
       @complementary_course = ComplementaryCourse.new
       @event_education = EventEducation.new
       @user.social_networks.build
-      render 'users/edit'
+      render 'users/edit', :layout => 'new_application'
     end
   rescue ActiveRecord::RecordInvalid
-      render 'users/edit'
+      render 'users/edit', :layout => 'new_application'
   end
 
   def update_account
@@ -220,7 +220,7 @@ class UsersController < BaseController
       flash[:notice] = t :your_changes_were_saved
       redirect_to(account_user_path(@user))
     else
-      render 'users/account'
+      render 'users/account', :layout => 'new_application'
     end
   end
 
