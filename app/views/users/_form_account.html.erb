@@ -69,20 +69,20 @@ Variáveis:
   <%= field_set_tag "Redefinir e-mail" do %>
     <div class="control-group row">
       <div class="control-label span3">
-        <%= f.label :email, "E-mail atual" %>
+        <%= f.label :email, "E-mail" %>
       </div>
       <div class="controls span6">
         <%= f.text_field :email,
-          :placeholder => "Endereço de e-mail cadastrado no Redu" %>
+          :placeholder => "E-mail desejado" %>
       </div>
     </div>
     <div class="control-group row">
       <div class="control-label span3">
-        <%= f.label :email_confirmation, "Novo e-mail" %>
+        <%= f.label :email_confirmation, "Confirmação" %>
       </div>
       <div class="controls span6">
         <%= f.text_field :email_confirmation,
-          :placeholder => "Endereço de e-mail desejado" %>
+          :placeholder => "Repita o e-mail desejado" %>
         <%= concave_errors_for(f.object, :email_confirmation) %>
       </div>
     </div>
