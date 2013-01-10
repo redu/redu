@@ -33,74 +33,47 @@
           :title => "Currículo",
           :class => "tab-button tab-button-active icon-curriculum_16_18-before" %>
       </div>
+
       <hr class="list-separator">
-      <div class="home-container">
 
-        <h4 class="config-title icon-experience-lightblue_32_34">Experiência profissional</h4>
+      <div id="curriculum">
 
-        <%= render :partial => 'experiences/item',
+        <div class="home-container experience">
+          <h4 class="config-title icon-experience-lightblue_32_34">Experiência profissional</h4>
+
+          <ul class="experiences">
+            <%= render :partial => 'experiences/item',
               :collection => @experiences %>
-        <!--
-        <li class="list-mix-item config-experience clearfix">
-          <div class="list-mix-inner">
-            <div class="grid_5">
-              <div class="grid_4">
-                <a data-dismiss="alert" class="message-close">×</a>
-                <a class="legend">editar</a>
-                <span class="title"><b>Nome da profissão atual</b> <i>em</i> Empresa Lorem Ipsum</span>
-                <span class="time">Dezembro de 2010 – presente (13 meses)</span>
-                <p>Nunc facilisis feugiat tempor. Aliquam lacinia felis a nunc ultricies iaculis. Integer massa nulla, fermentum nec tincidunt sit amet, tristique vitae augue.</p>
-              </div>
-            </div>
-          </div>
-        </li>
-        -->
+          </ul>
 
-        <div class="config-new-item">
-          <a class="button-default icon-curriculum-lightblue_16_18-before">Adicionar novo item</a>
+          <%= render :partial => 'experiences/form', :locals => {
+            :user => @user, :experience => @experience } %>
+
+          <div class="config-new-item">
+            <a href="#" class="button-default new-experience-button icon-curriculum-lightblue_16_18-before">Adicionar novo item</a>
+          </div>
         </div>
 
-      </div>
-      <hr class="list-separator">
+        <hr class="list-separator">
 
-      <div class="home-container">
-        <h4 class="config-title">Experiência acadêmica</h4>
+        <div class="home-container education">
+          <h4 class="config-title">Experiência acadêmica</h4>
 
-        <%= render :partial => "educations/item",
-              :collection => @educations %>
-        <!--
-        <li class="list-mix-item config-experience clearfix">
-          <div class="list-mix-inner">
-            <div class="grid_5">
-              <div class="grid_4">
-                <a data-dismiss="alert" class="message-close">×</a>
-                <a class="legend">editar</a>
-                <span class="title"><b>Ensino fundamental</b> <i>em</i> Colégio Lorem Ipsum</span>
-                <span class="time">1994 – 2005</span>
-                <p>Nunc facilisis feugiat tempor. Aliquam lacinia felis a nunc ultricies iaculis. Integer massa nulla, fermentum nec tincidunt sit amet, tristique vitae augue.</p>
-              </div>
-            </div>
+          <ul class="educations">
+            <%= render :partial => "educations/item",
+                  :collection => @educations %>
+          </ul>
+
+          <%= render :partial => 'educations/form', :locals => {
+            :high_school => @high_school, :higher_education => @higher_education,
+            :complementary_course => @complementary_course,
+            :event_education => @event_education, :user => @user }%>
+
+          <div class="config-new-item">
+            <a href="#" class="button-default new-education-button icon-curriculum-lightblue_16_18-before">Adicionar novo item</a>
           </div>
-        </li>
-
-        <li class="list-mix-item config-experience clearfix">
-          <div class="list-mix-inner">
-            <div class="grid_5">
-              <div class="grid_4">
-                <a data-dismiss="alert" class="message-close">×</a>
-                <a class="legend">editar</a>
-                <span class="title">Bacharel <i>em</i> <b>Nome do curso</b> <i>pela</i> Universidade Federal de Pernambuco</span>
-                <span class="time">2006 - 2012</span>
-                <p>Nunc facilisis feugiat tempor. Aliquam lacinia felis a nunc ultricies iaculis. Integer massa nulla, fermentum nec tincidunt sit amet, tristique vitae augue.</p>
-              </div>
-            </div>
-          </div>
-        </li>
-      -->
-
-        <div class="config-new-item">
-          <a class="button-default icon-curriculum-lightblue_16_18-before">Adicionar novo item</a>
         </div>
+
       </div>
 
       <hr class="list-separator">
