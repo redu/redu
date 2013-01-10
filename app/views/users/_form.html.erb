@@ -144,7 +144,7 @@
       <%= f.label :tag_list, "Áreas de seu interesse" %>
     </div>
     <div class="controls span6">
-      <%= f.text_area :tag_list,
+      <%= text_area_tag :tag_list, @user.tag_list.join(", "),
         :placeholder => "Ramos do conhecimento que despertam seu interesse. Exemplo: redes sociais, tecnologia, design",
         :rows => 6 %>
       <%= concave_errors_for(f.object, :tag_list) %>
