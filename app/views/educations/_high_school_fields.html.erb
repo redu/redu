@@ -1,16 +1,34 @@
-<%= f.label :institution, "Instituição:" %>
-<%= f.text_field :institution %>
-<span class="tip">Nome da instituição responsável.</span>
-<%= concave_errors_for f.object, :institution %>
+<div class="control-group row">
+  <div class="control-label span3">
+    <%= f.label "Instituição" %>
+  </div>
+  <div class="controls span6">
+    <%= f.text_field :institution,
+        :placeholder => "Nome da instituição responsável" %>
+    <%= concave_errors_for f.object, :institution %>
+  </div>
+</div>
 
-<%= f.label :end_year, "Ano de término:" %>
-<%= f.date_select :end_year,
-  :start_year => (Date.today - 90.years).year,
-  :end_year => (Date.today + 10.years).year,
-  :discard_day => true, :discard_month => true %>
+<div class="control-group row">
+  <div class="control-label span3">
+    <%= f.label "Ano de término" %>
+  </div>
+  <div class="controls span6">
+    <%= f.date_select :end_year,
+      :start_year => (Date.today - 90.years).year,
+      :end_year => (Date.today + 10.years).year,
+      :discard_day => true, :discard_month => true %>
+  </div>
+</div>
 
-<%= f.label :description, "Descrição:" %>
-<%= f.text_area :description, :class => "description" %>
-<span class="tip">Detalhes do cursos e de suas realizações durante o período.</span>
+<div class="control-group row">
+  <div class="control-label span3">
+    <%= f.label "Descrição" %>
+  </div>
+  <div class="controls span6">
+    <%= f.text_area :description, :rows => '6',
+        :placeholder => "Detalhes do cursos e de suas realizações durante o período" %>
+  </div>
+</div>
 
-<%= f.submit %>
+<%= f.submit :class => "button-default icon-curriculum-lightblue_16_18-before pull-right" %>

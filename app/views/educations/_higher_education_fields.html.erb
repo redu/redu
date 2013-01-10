@@ -1,55 +1,94 @@
 <% if f.object.new_record? %>
-  <%= f.select :kind,
-    options_for_select([["Técnico", "technical"], ["Licenciatura", "degree"],
-                       ["Bacharelado", "bachelorship"],
-                       ["Pós \"Lato Sensu / MBA\"", "pos_lato_sensu"],
-                       ["Pós \"Stricto Sensu\"", "pos_stricto_sensu"],
-                       ["Doutorado", "doctorate"],
-                       ["PhD", "phd"]]) %>
+
+  <div class="control-group row">
+    <div class="controls offset3 span6">
+      <%= f.select :kind,
+        options_for_select([["Técnico", "technical"], ["Licenciatura", "degree"],
+                           ["Bacharelado", "bachelorship"],
+                           ["Pós \"Lato Sensu / MBA\"", "pos_lato_sensu"],
+                           ["Pós \"Stricto Sensu\"", "pos_stricto_sensu"],
+                           ["Doutorado", "doctorate"],
+                           ["PhD", "phd"]]) %>
+    </div>
+  </div>
+
 <% end %>
 
 <%# Mostra apenas se for dos tipos que possuem curso (momento da edição)  %>
 <% unless !f.object.new_record? and
   (f.object.course == "" and f.object.errors[:course].empty?) %>
-  <div class="course">
-    <%= f.label :course, "Curso:", :class => "course" %>
-    <%= f.text_field :course %>
-    <span class="tip">Exemplo: engenharia civil, direito, medicina etc.</span>
+
+  <div class="control-group row">
+    <div class="control-label span3">
+      <%= f.label "Curso" %>
+    </div>
+    <div class="controls span6">
+      <%= f.text_field :course,
+          :placeholder => "Exemplo: engenharia civil, direito, medicina etc." %>
+      <%= concave_errors_for f.object, :course %>
+    </div>
   </div>
-  <%= concave_errors_for f.object, :course %>
+
 <% end %>
 
 <%# Mostra apenas se for dos tipos que possuem area (momento da edição)  %>
 <% unless !f.object.new_record? and
   (f.object.research_area == "" and
    f.object.errors[:research_area].empty?) %>
-  <div class="area">
-    <%= f.label :research_area, "Área de pesquisa:" %>
-    <%= f.text_field :research_area %>
-    <span class="tip">Exemplo: inovação, direito tributário, cardiologia etc.</span>
+
+  <div class="control-group row">
+    <div class="control-label span3">
+      <%= f.label "Área de pesquisa" %>
+    </div>
+    <div class="controls span6">
+      <%= f.text_field :research_area,
+          :placeholder => "Exemplo: inovação, direito tributário, cardiologia etc." %>
+      <%= concave_errors_for f.object, :research_area %>
+    </div>
   </div>
-  <%= concave_errors_for f.object, :research_area %>
+
 <% end %>
 
-<%= f.label :institution, "Instituição:" %>
-<%= f.text_field :institution %>
-<span class="tip">Nome da instituição responsável.</span>
-<%= concave_errors_for f.object, :institution %>
+<div class="control-group row">
+  <div class="control-label span3">
+    <%= f.label "Instituição" %>
+  </div>
+  <div class="controls span6">
+    <%= f.text_field :institution,
+        :placeholder => "Nome da instituição responsável" %>
+    <%= concave_errors_for f.object, :institution %>
+  </div>
+</div>
 
-<%= label_tag :start_year, "Período:" %>
-<%= f.date_select :start_year,
-  :start_year => (Date.today - 90.years).year,
-  :end_year => (Date.today + 10.years).year,
-  :discard_day => true, :discard_month => true %>
+<div class="control-group row">
+  <div class="control-label span3">
+    <%= f.label "Período" %>
+  </div>
+  <div class="controls span6">
+    <div class="control-select-date">
+      <%= f.date_select :start_year,
+        :start_year => (Date.today - 90.years).year,
+        :end_year => (Date.today + 10.years).year,
+        :discard_day => true, :discard_month => true %>
+    </div>
+    <div class="control-select-date">
+      <%= f.date_select :end_year,
+        :start_year => (Date.today - 90.years).year,
+        :end_year => (Date.today + 10.years).year,
+        :discard_day => true, :discard_month => true %>
+    </div>
+  </div>
+</div>
 
-a:
-<%= f.date_select :end_year,
-  :start_year => (Date.today - 90.years).year,
-  :end_year => (Date.today + 10.years).year,
-  :discard_day => true, :discard_month => true %>
+<div class="control-group row">
+  <div class="control-label span3">
+    <%= f.label "Descrição" %>
+  </div>
+  <div class="controls span6">
+    <%= f.text_area :description, :rows => '6',
+        :placeholder => "Detalhes do curso e de suas realizações durante o período" %>
+    <%= concave_errors_for f.object, :description %>
+  </div>
+</div>
 
-<%= f.label :description, "Descrição:" %>
-<%= f.text_area :description, :class => "description" %>
-<span class="tip">Detalhes do cursos e de suas realizações durante o período.</span>
-
-<%= f.submit %>
+<%= f.submit :class => "button-default icon-curriculum-lightblue_16_18-before pull-right" %>

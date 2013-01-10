@@ -1,17 +1,35 @@
-<%= f.label :name, "Nome do evento:" %>
-<%= f.text_field :name %>
-<%= concave_errors_for f.object, :name %>
+<div class="control-group row">
+  <div class="control-label span3">
+    <%= f.label "Nome do evento" %>
+  </div>
+  <div class="controls span6">
+    <%= f.text_field :name %>
+    <%= concave_errors_for f.object, :name %>
+  </div>
+</div>
 
-<%= f.label :role, "Seu papel:" %>
-<%= f.select :role, (options_for_select [["Participante", "participant"],
-                     ["Palestrante", "speaker"], ["Organizador", "organizer"]],
-                     :selected => f.object.role),
-                     {}, { :class => "role" } %>
+<div class="control-group row">
+  <div class="control-label span3">
+    <%= f.label "Seu papel" %>
+  </div>
+  <div class="controls span6">
+    <%= f.select :role, (options_for_select [["Participante", "participant"],
+                         ["Palestrante", "speaker"], ["Organizador", "organizer"]],
+                         :selected => f.object.role),
+                         {}, { :class => "role" } %>
+  </div>
+</div>
 
-<%= f.label :year, "Ano:" %>
-<%= f.date_select :year,
-  :start_year => (Date.today - 90.years).year,
-  :end_year => (Date.today + 10.years).year,
-  :discard_day => true, :discard_month => true %>
+<div class="control-group row">
+  <div class="control-label span3">
+    <%= f.label "Ano" %>
+  </div>
+  <div class="controls span6">
+    <%= f.date_select :year,
+      :start_year => (Date.today - 90.years).year,
+      :end_year => (Date.today + 10.years).year,
+      :discard_day => true, :discard_month => true %>
+  </div>
+</div>
 
-<%= f.submit %>
+<%= f.submit :class => "button-default icon-curriculum-lightblue_16_18-before pull-right" %>
