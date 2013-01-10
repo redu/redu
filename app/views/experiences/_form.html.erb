@@ -1,40 +1,74 @@
 <%= form_for [user, experience], :remote => true,
-  :html => { :class => "edit-form clearfix concave-form",
-    :style => "display: none;" } do |f| %>
-  <%= f.label :title, "Título de sua função:" %>
-  <%= f.text_field :title %>
-  <span class="tip">Exemplo: professor, engenheiro, designer etc.</span>
-  <%= concave_errors_for experience, :title %>
+  :html => { :class => "form-horizontal form-config-account edit-form" } do |f| %>
 
-  <%= f.label :company, "Empresa:" %>
-  <%= f.text_field :company %>
-  <span class="tip">Nome da empresa responsável.</span>
-  <%= concave_errors_for experience, :company %>
+  <div class="control-group row">
+    <div class="control-label span3">
+      <%= f.label "Título de sua função" %>
+    </div>
+    <div class="controls span6">
+      <%= f.text_field :title,
+          :placeholder => "Exemplo: professor, engenheiro, analista..." %>
+      <%= concave_errors_for experience, :title %>
+    </div>
+  </div>
 
-  <%= f.label :start_date, "Período:" %>
-  <div class="start-date">
-    <%= f.date_select :start_date,
-      { :start_year => (Date.today - 90.years).year,
-        :end_year => Date.today.year,
-        :discard_day => true } %>
+  <div class="control-group row">
+    <div class="control-label span3">
+      <%= f.label "Empresa" %>
+    </div>
+    <div class="controls span6">
+      <%= f.text_field :company,
+          :placeholder => "Nome da empresa ou organização" %>
+      <%= concave_errors_for experience, :company %>
+    </div>
   </div>
-  <div class="end-date">
-    a:
-  <%= f.date_select :end_date,
-    { :start_year => (Date.today - 90.years).year,
-      :end_year => Date.today.year,
-      :discard_day => true } %>
+
+  <div class="control-group row">
+    <div class="control-label span3">
+      <%= f.label "Período" %>
+    </div>
+    <div class="controls span6">
+      <div class="control-select-date start-date clearfix">
+        <%= f.date_select :start_date,
+          { :start_year => (Date.today - 90.years).year,
+            :end_year => Date.today.year,
+            :discard_day => true } %>
+      </div>
+      <div class="control-select-date end-date">
+        <%= f.date_select :end_date,
+          { :start_year => (Date.today - 90.years).year,
+            :end_year => Date.today.year,
+            :discard_day => true } %>
+      </div>
+    </div>
   </div>
-  <span class="current-experience">
-    <%= f.check_box :current, :id => "experience_current-#{experience.id}", :class => "experience-current" %> <%= f.label :current, (t :i_currently_work_here), :for => "experience_current-#{experience.id}", :class => "work-here" %>
-  </span>
-  <%= f.label :description, "Descrição:" %>
-  <%= f.text_area :description, :class => 'description' %>
-  <span class="tip">Detalhes do encargo e de suas realizações durante o período</span>
+
+  <div class="control-group row">
+    <div class="controls offset3 span6 current-experience">
+      <div class="control-checkbox pull-left">
+        <%= f.check_box :current, :id => "experience_current-#{experience.id}", :class => "experience-current" %>
+      </div>
+      <div class="control-label">
+        <%= f.label :current, (t :i_currently_work_here), :for => "experience_current-#{experience.id}" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="control-group row">
+    <div class="control-label span3">
+      <%= f.label "Descrição" %>
+    </div>
+    <div class="controls span6">
+      <%= f.text_area :description, :rows => '6',
+          :placeholder => "Detalhes do encargo e suas realizações no período" %>
+      <%= concave_errors_for experience, :company %>
+    </div>
+  </div>
 
   <% if experience.new_record? %>
-    <%= f.submit "+ Adicionar item" %>
+    <%= f.submit "Adicionar item", :class => "button-default icon-curriculum-lightblue_16_18-before pull-right" %>
+    <%= f.submit "Cancelar", :class => "button-default pull-right" %>
   <% else %>
-    <%= f.submit "Salvar item" %>
+    <%= f.submit "Salvar item", :class => "button-default icon-curriculum-lightblue_16_18-before pull-right" %>
   <% end %>
 <% end %>
