@@ -192,10 +192,22 @@ class Ability
 
       # Canvas
       can :read, Api::Canvas do |canvas|
-        can? :read, canvas.lecture
+        if canvas.lecture
+          can?(:read, canvas.lecture)
+        elsif canvas.container
+          can?(:read, canvas.container)
+        else
+          false
+        end
       end
       cannot :read, Api::Canvas do |canvas|
-        cannot? :read, canvas.lecture
+        if canvas.lecture
+          cannot?(:read, canvas.lecture)
+        elsif canvas.container
+          cannot?(:read, canvas.container)
+        else
+          true
+        end
       end
 
     end

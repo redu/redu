@@ -11,7 +11,7 @@ $(document).ready(function(){
     this.normalHeight = 1000;
     this.maxWidth = 920;
     this.defaultWidth = 710;
-    this.defaultHeight = 1000;
+    this.defaultHeight = 3000;
 
     this.socket = this.initSocket({
       remote : options.remote,

@@ -162,6 +162,7 @@ stylesheets:
     - public/stylesheets/exercises.css
     - public/stylesheets/outdated-browser.css
     - public/stylesheets/chart.css
+    - public/stylesheets/canvas.css
     - public/stylesheets/bootstrap-redu-nav-global.css
     - public/stylesheets/nav-global-icons.css
   ie:
