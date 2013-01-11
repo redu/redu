@@ -90,11 +90,17 @@
   }
 }
 
-.config-experience + .config-experience { margin-top: 10px };
+.config-experience + .config-experience { margin-top: 10px }
 
 .config-new-item {
-  margin-top: 20px;
+  margin: 10px 0;
   text-align: center;
+
+  form {
+    .end-date { margin-top: 10px; }
+  }
+
+  .form-education { margin-top: 20px; }
 }
 
 .save-curriculum {
@@ -102,6 +108,17 @@
   overflow: hidden;
 
   a { float: right; }
+}
+
+#curriculum {
+  ul { margin: 0; }
+  .home-container { padding-bottom: 10px; }
+}
+
+.curriculum-buttons {
+  margin-top: 10px;
+  .add-item { margin-right: 20px; }
+  .cancel { margin-right: 5px; }
 }
 
 

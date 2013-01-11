@@ -45,14 +45,15 @@
             <%= render :partial => 'experiences/item',
               :collection => @experiences %>
           </ul>
+        </div>
+
+        <div class="config-new-item">
+          <a href="#" class="button-default new-experience-button icon-curriculum-lightblue_16_18-before">Adicionar novo item</a>
 
           <%= render :partial => 'experiences/form', :locals => {
             :user => @user, :experience => @experience } %>
-
-          <div class="config-new-item">
-            <a href="#" class="button-default new-experience-button icon-curriculum-lightblue_16_18-before">Adicionar novo item</a>
-          </div>
         </div>
+
 
         <hr class="list-separator">
 
@@ -64,14 +65,15 @@
                   :collection => @educations %>
           </ul>
 
-          <%= render :partial => 'educations/form', :locals => {
-            :high_school => @high_school, :higher_education => @higher_education,
-            :complementary_course => @complementary_course,
-            :event_education => @event_education, :user => @user }%>
+        </div>
 
-          <div class="config-new-item">
+        <div class="config-new-item">
             <a href="#" class="button-default new-education-button icon-curriculum-lightblue_16_18-before">Adicionar novo item</a>
-          </div>
+
+            <%= render :partial => 'educations/form', :locals => {
+              :high_school => @high_school, :higher_education => @higher_education,
+              :complementary_course => @complementary_course,
+              :event_education => @event_education, :user => @user }%>
         </div>
 
       </div>

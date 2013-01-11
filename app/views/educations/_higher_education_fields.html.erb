@@ -65,13 +65,13 @@
     <%= f.label "Período" %>
   </div>
   <div class="controls span6">
-    <div class="control-select-date">
+    <div class="control-select-date start-date clearfix">
       <%= f.date_select :start_year,
         :start_year => (Date.today - 90.years).year,
         :end_year => (Date.today + 10.years).year,
         :discard_day => true, :discard_month => true %>
     </div>
-    <div class="control-select-date">
+    <div class="control-select-date end-date">
       <%= f.date_select :end_year,
         :start_year => (Date.today - 90.years).year,
         :end_year => (Date.today + 10.years).year,
@@ -91,4 +91,6 @@
   </div>
 </div>
 
-<%= f.submit :class => "button-default icon-curriculum-lightblue_16_18-before pull-right" %>
+<div class="offset3 span6 curriculum-buttons">
+  <%= f.submit "Adicionar item", :class => "button-default add-item icon-curriculum-lightblue_16_18-before pull-right" %>
+</div>

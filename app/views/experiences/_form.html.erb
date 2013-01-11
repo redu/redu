@@ -1,5 +1,5 @@
 <%= form_for [user, experience], :remote => true,
-  :html => { :class => "form-horizontal form-config-account edit-form" } do |f| %>
+  :html => { :class => "form-horizontal clearfix form-config-account edit-form" } do |f| %>
 
   <div class="control-group row">
     <div class="control-label span3">
@@ -66,8 +66,10 @@
   </div>
 
   <% if experience.new_record? %>
-    <%= f.submit "Adicionar item", :class => "button-default icon-curriculum-lightblue_16_18-before pull-right" %>
-    <%= f.submit "Cancelar", :class => "button-default pull-right" %>
+    <div class="offset3 span6 curriculum-buttons">
+      <%= f.submit "Adicionar item", :class => "button-default add-item icon-curriculum-lightblue_16_18-before pull-right" %>
+      <%= f.submit "Cancelar", :class => "button-default cancel pull-right" %>
+    </div>
   <% else %>
     <%= f.submit "Salvar item", :class => "button-default icon-curriculum-lightblue_16_18-before pull-right" %>
   <% end %>

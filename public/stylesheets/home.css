@@ -538,8 +538,14 @@ input[type="hidden"] +
 }
 
 .config-new-item {
-  margin-top: 20px;
+  margin: 10px 0;
   text-align: center;
+}
+.config-new-item form .end-date {
+  margin-top: 10px;
+}
+.config-new-item .form-education {
+  margin-top: 20px;
 }
 
 .save-curriculum {
@@ -548,6 +554,23 @@ input[type="hidden"] +
 }
 .save-curriculum a {
   float: right;
+}
+
+#curriculum ul {
+  margin: 0;
+}
+#curriculum .home-container {
+  padding-bottom: 10px;
+}
+
+.curriculum-buttons {
+  margin-top: 10px;
+}
+.curriculum-buttons .add-item {
+  margin-right: 20px;
+}
+.curriculum-buttons .cancel {
+  margin-right: 5px;
 }
 
 .form-config-account fieldset {
