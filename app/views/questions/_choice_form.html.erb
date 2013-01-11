@@ -1,5 +1,5 @@
 <%= form_for :choice, :url => exercise_question_choices_path(exercise, question),
-  :method => :post, :remote => true do |f| %>
+  :method => :post, :remote => true, :html => { :id => "form-choice" } do |f| %>
   <%= render "questions/navigation",
     :exercise => exercise, :current => question,
     :first => first, :last => last, :review => review %>

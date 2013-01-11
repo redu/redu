@@ -10,12 +10,9 @@
     </li>
   <% end %>
   <% unless review %>
-    <li class="lecture-buttons">
-      <%= submit_tag "Salvar resposta", :class => "concave-clean" %>
-    </li>
     <% if question == last %>
       <li class="lecture-button-finalize">
-        <button type="submit" class="concave-button">
+        <button type="submit" class="concave-button" name="commit">
           <span class="end-exercise icon-exercise-white_16_18-before">Finalizar</span>
         </button>
       </li>

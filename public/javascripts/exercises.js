@@ -172,32 +172,29 @@ $(function(){
     });
   };
 
-  // Verifica se questão atual está respondida
-  var questionAnswered = function(){
-    return $(".exercise-nav .actual").hasClass("question-answered");
+  // Mostra mensagem de carregando enquanto a questão está sendo salva
+  var loadingQuestion = function (show) {
+    var loading = $("#loading-message");
+    if (show) {
+      loading.show();
+    }else{
+      loading.hide();
+    };
   };
 
-  // Previne o usuário de mudar de questão sem ter salvo a resposta antes
-  $.fn.questionChecked = function(){
+  // Ao clicar no radio button, submete o form de choice
+  $.fn.saveQuestion = function(){
     return this.each(function(){
       $(this).on("click", function(e){
-        // Para questões cuja resposta ainda não foi salva
-        if (!questionAnswered()) {
-          // Se a questão foi marcada e algum link de navegação foi clicado
-          // usuário será avisado de que a questão não foi salva
-          var checkedInput = $(".exercise").find("input[checked=checked]:radio");
-          if (checkedInput.length > 0) {
-            // Uma modal deve aparecer aqui!
-            alert("A resposta não foi salva!");
-          }
-        }
+        var loading = $("#loading-message");
+        loading.show();
+        $("#form-choice").submit();
       });
     });
   };
 
-  // Aplica função para todos os links de navegação dentro do form
-  // de choices, na visualização da questão
-  $(".exercise a").questionChecked();
+  // Radio buttons salvam automaticamente as questões, via AJAX
+  $(".exercise input:radio").saveQuestion();
 
   // Atualiza para apenas a última alternativa ter aparência disabled
   // e deixa apenas as questões com erro abertas
@@ -216,6 +213,7 @@ $(function(){
       $(document).refreshNestedFieldsEdition();
       $("#resources-edition .exercise").refreshQuestionsAppearance();
       $(".exercise-nav .actual").addClass("question-answered");
+      loadingQuestion(false);
     });
   });
 });

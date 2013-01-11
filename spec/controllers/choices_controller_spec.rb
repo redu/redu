@@ -26,8 +26,7 @@ describe ChoicesController do
       @params = { :locale => 'pt-BR', :format => :js }
       @params.merge!(:exercise_id => @exercise.id,
                      :question_id => @question.id,
-                     :choice => { :alternative_id => @alternative.id },
-                     :commit => "Salvar resposta")
+                     :choice => { :alternative_id => @alternative.id })
     end
 
     it "should load the exercise" do
@@ -63,7 +62,8 @@ describe ChoicesController do
       before do
         @last = @questions.last
         @params.merge!({:question_id => @last.id, :commit => nil,
-                        :choice => { :alternative_id => @last.alternatives.first}})
+                        :choice => { :alternative_id => @last.alternatives.first},
+                        :commit => "Finalizar"})
       end
 
       it "should redirect to results edit" do
