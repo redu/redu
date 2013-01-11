@@ -1,8 +1,8 @@
 /* Navegação de exercícios */
 #resource .exercise-nav {
-  height: 70px;
   background-color: rgb(247, 247, 247);
-  border: solid 1px rgb(230, 230, 230)
+  border: solid 1px rgb(230, 230, 230);
+  overflow: hidden;
 }
 
 .borderradius #resource .exercise-nav {
