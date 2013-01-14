@@ -1,6 +1,6 @@
 <div class="control-group row">
   <div class="control-label span3">
-    <%= f.label "Nome do evento" %>
+    <%= f.label :name, "Nome do evento" %>
   </div>
   <div class="controls span6">
     <%= f.text_field :name %>
@@ -10,7 +10,7 @@
 
 <div class="control-group row">
   <div class="control-label span3">
-    <%= f.label "Seu papel" %>
+    <%= f.label :role, "Seu papel" %>
   </div>
   <div class="controls span6">
     <%= f.select :role, (options_for_select [["Participante", "participant"],
@@ -22,7 +22,7 @@
 
 <div class="control-group row">
   <div class="control-label span3">
-    <%= f.label "Ano" %>
+    <%= f.label :year, "Ano" %>
   </div>
   <div class="controls span6">
     <%= f.date_select :year,

@@ -1,6 +1,6 @@
 <div class="control-group row">
   <div class="control-label span3">
-    <%= f.label "Curso" %>
+    <%= f.label :course, "Curso" %>
   </div>
   <div class="controls span6">
     <%= f.text_field :course %>
@@ -10,7 +10,7 @@
 
 <div class="control-group row">
   <div class="control-label span3">
-    <%= f.label "Instituição" %>
+    <%= f.label :institution, "Instituição" %>
   </div>
   <div class="controls span6">
     <%= f.text_field :institution,
@@ -21,7 +21,7 @@
 
 <div class="control-group row">
   <div class="control-label span3">
-    <%= f.label "Ano" %>
+    <%= f.label :year, "Ano" %>
   </div>
   <div class="controls span6">
     <div class="control-select-date">
@@ -35,7 +35,7 @@
 
 <div class="control-group row">
   <div class="control-label span3">
-    <%= f.label "Carga horária" %>
+    <%= f.label :workload, "Carga horária" %>
   </div>
   <div class="controls span6">
     <%= f.text_field :workload %>
@@ -45,7 +45,7 @@
 
 <div class="control-group row">
   <div class="control-label span3">
-    <%= f.label "Descrição" %>
+    <%= f.label :description, "Descrição" %>
   </div>
   <div class="controls span6">
     <%= f.text_area :description, :rows => "6",

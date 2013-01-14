@@ -20,7 +20,7 @@
 
   <div class="control-group row">
     <div class="control-label span3">
-      <%= f.label "Curso" %>
+      <%= f.label :course, "Curso" %>
     </div>
     <div class="controls span6">
       <%= f.text_field :course,
@@ -38,7 +38,7 @@
 
   <div class="control-group row">
     <div class="control-label span3">
-      <%= f.label "Área de pesquisa" %>
+      <%= f.label :research_area, "Área de pesquisa" %>
     </div>
     <div class="controls span6">
       <%= f.text_field :research_area,
@@ -51,7 +51,7 @@
 
 <div class="control-group row">
   <div class="control-label span3">
-    <%= f.label "Instituição" %>
+    <%= f.label :institution, "Instituição" %>
   </div>
   <div class="controls span6">
     <%= f.text_field :institution,
@@ -62,7 +62,7 @@
 
 <div class="control-group row">
   <div class="control-label span3">
-    <%= f.label "Período" %>
+    <%= f.label :start_year, "Período" %>
   </div>
   <div class="controls span6">
     <div class="control-select-date start-date clearfix">
@@ -82,12 +82,11 @@
 
 <div class="control-group row">
   <div class="control-label span3">
-    <%= f.label "Descrição" %>
+    <%= f.label :description, "Descrição" %>
   </div>
   <div class="controls span6">
     <%= f.text_area :description, :rows => '6',
         :placeholder => "Detalhes do curso e de suas realizações durante o período" %>
-    <%= concave_errors_for f.object, :description %>
   </div>
 </div>
 

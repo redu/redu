@@ -3,7 +3,7 @@
 
   <div class="control-group row">
     <div class="control-label span3">
-      <%= f.label "Título de sua função" %>
+      <%= f.label :title, 'Título de sua função' %>
     </div>
     <div class="controls span6">
       <%= f.text_field :title,
@@ -14,7 +14,7 @@
 
   <div class="control-group row">
     <div class="control-label span3">
-      <%= f.label "Empresa" %>
+      <%= f.label :company, 'Empresa' %>
     </div>
     <div class="controls span6">
       <%= f.text_field :company,
@@ -25,7 +25,7 @@
 
   <div class="control-group row">
     <div class="control-label span3">
-      <%= f.label "Período" %>
+      <%= f.label :start_date, 'Período' %>
     </div>
     <div class="controls span6">
       <div class="control-select-date start-date clearfix">
@@ -56,12 +56,11 @@
 
   <div class="control-group row">
     <div class="control-label span3">
-      <%= f.label "Descrição" %>
+      <%= f.label :description, "Descrição" %>
     </div>
     <div class="controls span6">
       <%= f.text_area :description, :rows => '6',
           :placeholder => "Detalhes do encargo e suas realizações no período" %>
-      <%= concave_errors_for experience, :company %>
     </div>
   </div>
 
