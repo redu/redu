@@ -25,6 +25,7 @@ javascripts:
     - public/javascripts/outdated-browser.js
     - public/javascripts/home.js
     - public/javascripts/statuses.js
+    - public/javascripts/wall_spinner.js
     - public/javascripts/jquery.timeago.js
     - public/javascripts/timeago.js
   landing:

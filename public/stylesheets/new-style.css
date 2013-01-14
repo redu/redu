@@ -2029,7 +2029,7 @@ body {
 
 #footer {
   background: url("../images/new/dots.png") repeat-x top;
-  padding: 10px 0;
+  padding: 10px 0 55px;
 }
 
 #logotipo-footer {
@@ -6536,6 +6536,15 @@ div.token-input-dropdown {
   margin-right: 5px;
 }
 
+.home-sidebar .contact-recommendations ul li div.two-columns-column {
+  width: 113px;
+  float: right;
+}
+
+.home-sidebar .contact-recommendations ul li div.two-columns-column .members-to-add-link {  
+  display: block;
+  margin-top: 5px;
+}
 
 .home-sidebar .contact-recommendations ul li:hover {
   background-color: #dbeff7;

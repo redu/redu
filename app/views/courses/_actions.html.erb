@@ -9,7 +9,8 @@
           <% if can? :add_entry, course %>
             <%= link_to 'Matricular-se',
               join_environment_course_path(course.environment, course),
-              :method => :post, :class => 'join concave-important'%>
+              :method => :post, :class => 'join concave-important',
+              :disable_with => 'Matricular-se' %>
           <% else %>
             <span class="join waiting">Limite de vagas atingido</span>
           <% end %>

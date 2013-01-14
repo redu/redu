@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
 
   #COURSES
   has_many :lectures, :foreign_key => "user_id",
-    :conditions => {:is_clone => false, :published => true}
+    :conditions => {:is_clone => false}
   has_many :courses_owned, :class_name => "Course",
     :foreign_key => "user_id"
   has_many :favorites, :order => "created_at desc", :dependent => :destroy
@@ -128,24 +128,21 @@ class User < ActiveRecord::Base
     c.crypto_provider = CommunityEngineSha1CryptoMethod
 
     # Valida password
+    c.ignore_blank_passwords # no caso de atualizar o profile
+
+    # verifica se o password e sua confirmação são iguais
+    c.require_password_confirmation
+
     c.validates_length_of_password_field_options = { :within => 6..20,
                                                      :if => :password_required? }
-    c.validates_length_of_password_confirmation_field_options = {
-                                                     :within => 6..20,
-                                                     :if => :password_required?,
-                                                     :allow_blank => true }
-    c.validates_confirmation_of_password_field_options = { :allow_blank => true }
 
     # Valida login
-    c.validates_length_of_login_field_options = { :within => 5..20,
-                                                  :allow_blank => true }
-    c.validates_format_of_login_field_options = { :with => /^[A-Za-z0-9_-]+$/,
-                                                  :allow_blank => true }
+    c.validate_login_field = { :within => 5..20, # lenght
+                               :with => /^[A-Za-z0-9_-]+$/ } # format
 
     # Valida e-mail
-    c.validates_length_of_email_field_options = { :within => 3..100, :allow_blank => true }
-    c.validates_format_of_email_field_options = { :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/,
-                                                  :allow_blank => true }
+    c.validate_email_field = { :within => 3..100, # lenght
+                               :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/ } # format
   end
 
   has_attached_file :avatar, Redu::Application.config.paperclip_user
@@ -156,14 +153,13 @@ class User < ActiveRecord::Base
   has_private_messages
 
   # VALIDATIONS
-  validates_presence_of     :first_name, :last_name, :login, :email,
-                            :email_confirmation
-  validates_uniqueness_of   :login, :email, :case_sensitive => false
-  validates_exclusion_of    :login, :in => Redu::Application.config.extras["reserved_logins"]
+  # login, password e email já tem presença confirmada pelo Authlogic
+  validates_presence_of :first_name, :last_name
+  validates_confirmation_of :email # verifica se o email é igual a sua confirmação
+  validates_exclusion_of :login, :in => Redu::Application.config.extras["reserved_logins"]
   validates :birthday, :allow_nil => true,
             :date => { :before => Proc.new { 13.years.ago } }
   validates_acceptance_of :tos
-  validates_confirmation_of :email, :allow_blank => true
   validates_format_of :mobile,
                       :with => /^\+\d{2}\s\(\d{2}\)\s\d{4}-\d{4}$/,
                       :allow_blank => true
@@ -211,7 +207,7 @@ class User < ActiveRecord::Base
       if auth[:info][:image]
         # Atualiza o avatar do usuário de acordo com seu avatar no Facebook
         # a menos que a imagem do avatar seja a default
-        unless auth[:info][:image] == 
+        unless auth[:info][:image] ==
           "http://graph.facebook.com/100002476817463/picture?type=square"
           user.avatar = open(auth[:info][:image])
         end
@@ -232,7 +228,7 @@ class User < ActiveRecord::Base
     end
 
     # Modo safe para descobrir o tamanho máximo válido para login de usuário
-    max_length = (User.validators_on(:login).select { |v| v.class == 
+    max_length = (User.validators_on(:login).select { |v| v.class ==
       ActiveModel::Validations::LengthValidator }).first.options[:maximum]
     unless login.length <= max_length
       login = login.first(max_length)
@@ -398,7 +394,7 @@ class User < ActiveRecord::Base
        (object.is_a? Invoice) ||
        (object.is_a? PartnerEnvironmentAssociation) ||
        (object.is_a? Partner) || (object.is_a? Result) ||
-       (object.is_a? Question)
+       (object.is_a? Question) || (object.is_a? Lecture)
 
       self.has_access_to?(object)
     else

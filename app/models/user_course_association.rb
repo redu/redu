@@ -36,7 +36,7 @@ class UserCourseAssociation < CourseEnrollment
 
   aasm_initial_state :waiting
 
-  aasm_state :waiting
+  aasm_state :waiting, :enter => :send_pending_moderation_notification
   aasm_state :invited, :enter => :send_course_invitation_notification
   aasm_state :approved, :enter => :create_hierarchy_associations
   aasm_state :rejected
@@ -70,6 +70,12 @@ class UserCourseAssociation < CourseEnrollment
 
   def send_course_invitation_notification
     UserNotifier.course_invitation(self.user, self.course).deliver
+  end
+
+  def send_pending_moderation_notification
+    if self.course.subscription_type.eql? 2
+      self.notify_pending_moderation
+    end
   end
 
   # Verifica se UserCourseAssociation é capaz de gerar log ou e-mail.

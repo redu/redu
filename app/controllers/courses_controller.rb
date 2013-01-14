@@ -281,7 +281,6 @@ class CoursesController < BaseController
       flash[:notice] = "Você agora faz parte do curso #{@course.name}"
       redirect_to environment_course_path(@course.environment, @course)
     else
-      current_user.get_association_with(@course).notify_pending_moderation
       flash[:notice] = "Seu pedido de participação foi feito. Aguarde a moderação."
       redirect_to preview_environment_course_path(@course.environment, @course)
     end
@@ -339,11 +338,16 @@ class CoursesController < BaseController
     users_ids = params[:users].collect{|u| u.to_i} if params[:users]
 
     unless users_ids.empty?
-      User.where(:id => users_ids).
-        includes(:user_course_associations,:user_space_associations).each do |user|
-          @course.unjoin user
+      User.select(:id).where(:id => users_ids).
+        find_in_batches(:batch_size => 100) do |users|
+
+        users.each do |u|
+          job = UnjoinUserJob.new(:user => u, :course => @course)
+          Delayed::Job.enqueue(job, :queue => 'general')
         end
-      flash[:notice] = "Os usuários foram removidos do curso #{@course.name}"
+      end
+
+      flash[:notice] = "Os usuários estão sendo removidos do curso. Esta operação poderá levar alguns minutos."
     end
 
     respond_to do |format|

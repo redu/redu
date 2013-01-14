@@ -1067,6 +1067,10 @@ input[type="checkbox"]:focus {
   margin-bottom: 0;
   vertical-align: middle;
 }
+.form-horizontal .control-radio:first-child, .form-horizontal
+.control-checkbox:first-child {
+  margin-top: 7px;
+}
 
 .control-inline .control-radio + .control-radio,
 .control-inline .control-checkbox + .control-checkbox {
@@ -5352,7 +5356,7 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
 
 .tab-buttons {
   text-align: center;
-  margin: 19px auto 20px;
+  padding: 10px 0;
 }
 
 .tab-button {

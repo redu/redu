@@ -21,6 +21,22 @@ describe UserCourseAssociation do
       subject.state.should == "waiting"
     end
 
+    context "when waiting and the course is closed" do
+      before do
+        UserNotifier.delivery_method = :test
+        UserNotifier.perform_deliveries = true
+        UserNotifier.deliveries = []
+      end
+
+      it "should send a pending moderation request" do
+        user = Factory(:user)
+        course = Factory(:course, :subscription_type => 2, :owner => user)
+        course.administrators.reload
+        uca = Factory(:user_course_association, :course => course)
+        UserNotifier.deliveries.last.subject.should == "Moderação pendente em #{course.name}"
+      end
+    end
+
     context "when invite" do
       before do
         UserNotifier.delivery_method = :test
