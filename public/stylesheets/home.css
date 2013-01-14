@@ -450,6 +450,25 @@ body {
   width: 310px;
 }
 
+.empty-message {
+  margin-top: 80px;
+  text-align: center;
+}
+
+.empty-message-icon {
+  display: block;
+  margin: 0 auto;
+}
+
+.empty-message-icon +
+.empty-message-content {
+  margin-top: 10px;
+}
+
+.empty-message-content {
+  color: #b3b3b3;
+}
+
 ul.requisitions {
   margin: 0;
   overflow: visible;
