@@ -23,7 +23,7 @@ describe ChoicesController do
       @exercise.start_for(@user)
       @alternative = @questions.first.alternatives.first
       @question = @questions.first
-      @params = { :locale => 'pt-BR', :format => :html }
+      @params = { :locale => 'pt-BR', :format => :js }
       @params.merge!(:exercise_id => @exercise.id,
                      :question_id => @question.id,
                      :choice => { :alternative_id => @alternative.id })
@@ -53,23 +53,23 @@ describe ChoicesController do
       }.should_not change(Choice, :count)
     end
 
-    it "should redirect to the next question" do
+    it "should render questions/choice_form" do
       post :create, @params
-      @next = @question.next_item
-      response.should redirect_to(exercise_question_path(@exercise, @next))
+      response.should render_template("questions/_choice_form")
     end
 
     context "when last question" do
       before do
         @last = @questions.last
-        @params.merge!({:question_id => @last.id,
-                        :choice => { :alternative_id => @last.alternatives.first}})
+        @params.merge!({:question_id => @last.id, :commit => nil,
+                        :choice => { :alternative_id => @last.alternatives.first},
+                        :commit => "Finalizar"})
       end
 
       it "should redirect to results edit" do
         result = @exercise.start_for(@user)
         post :create, @params
-        response.should redirect_to edit_exercise_result_path(@exercise, result)
+        response.body.should == "window.location = '#{ edit_exercise_result_path(@exercise, result) }'"
       end
     end
 
@@ -84,25 +84,9 @@ describe ChoicesController do
         }.should_not raise_error
       end
 
-      it "should redirect to the next question" do
+      it "should render question/choice_form" do
         post :create, @params
-        @next = @questions[1]
-        response.should redirect_to(exercise_question_path(@exercise, @next))
-      end
-    end
-
-    context "when submiting via 'Anterior' button" do
-      before do
-        @params.merge!(:commit => 'Anterior')
-        @params.merge!(:question_id => @questions[1])
-        @params.merge!(:choice => { :alternative_id =>
-                                    @questions[1].alternatives.first })
-      end
-
-      it "should redirect to the previous question" do
-        post :create, @params
-        @first = @questions[0]
-        response.should redirect_to(exercise_question_path(@exercise, @first))
+        response.should render_template("questions/_choice_form")
       end
     end
   end

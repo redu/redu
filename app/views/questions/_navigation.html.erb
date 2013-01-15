@@ -8,13 +8,6 @@
     <% limit, offset = pagination(current) %>
     <% questions_navigation = questions_array(exercise.questions.size, exercise.questions.limit(limit).offset(offset).order('position ASC'), current) %>
     <% questions_navigation.each do |question| %>
-      <% if question == current %>
-        <li class="lecture-buttons">
-          <% if question != first %>
-            <%= submit_tag "Anterior", :class => "concave-clean" %>
-          <% end %>
-        </li>
-      <% end %>
       <% choice = question.choice_for(current_user) if question %>
       <% if review %>
         <li class="<%= question == current ? "actual" : "" %> <%= right_or_wrong(choice) %>">
@@ -23,20 +16,6 @@
       <% else %>
         <li class="<%= question == current ? "actual" : "" %> <%= choice ? "question-answered" : "" %>">
           <%= link_to question.position, exercise_question_path(exercise, question) if question %>
-        </li>
-      <% end %>
-      <% if question == current %>
-        <% if question != last %>
-          <li class="lecture-buttons">
-            <%= submit_tag "Próxima", :class => "concave-clean" %>
-          </li>
-        <% end %>
-      <% end %>
-      <% if !@review && question == current && question == last %>
-        <li class="lecture-button-finalize">
-          <button type="submit" class="concave-button">
-            <span class="end-exercise icon-exercise-white_16_18-before">Finalizar</span>
-          </button>
         </li>
       <% end %>
     <% end %>
