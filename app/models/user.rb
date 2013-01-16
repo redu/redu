@@ -201,7 +201,7 @@ class User < ActiveRecord::Base
       user.tos = '1'
       user.first_name = auth[:info][:first_name]
       user.last_name = auth[:info][:last_name]
-      user.update_attributes(:activated_at => Time.now)
+      user.activated_at = Time.now
       user.authentications.build(:provider => auth[:provider],
                                  :uid => auth[:uid])
       if auth[:info][:image]
