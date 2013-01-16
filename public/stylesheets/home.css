@@ -544,6 +544,9 @@ input[type="hidden"] +
 .config-new-item form .end-date {
   margin-top: 10px;
 }
+.config-new-item form .errors_on_field {
+  text-align: left;
+}
 .config-new-item .form-education {
   margin-top: 20px;
 }
