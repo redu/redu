@@ -42,6 +42,7 @@ class Quota < ActiveRecord::Base
                                     " LEFT JOIN lectures l ON l.subject_id = su.id" \
                                     " LEFT JOIN seminars se ON l.lectureable_id = se.id" \
                                     " where l.lectureable_type = 'Seminar'" \
+                                    " AND su.finalized = 1 " \
                                     " AND s.course_id IN (?)", courses])
     seminars[0].original_file_size
   end
@@ -57,6 +58,7 @@ class Quota < ActiveRecord::Base
                                       " LEFT JOIN lectures l ON l.subject_id = su.id" \
                                       " LEFT JOIN documents d ON l.lectureable_id = d.id" \
                                       " WHERE l.lectureable_type LIKE 'Document'" \
+                                      " AND su.finalized = 1 " \
                                       " AND s.course_id IN (?)", courses])
     documents[0].attachment_file_size
   end
