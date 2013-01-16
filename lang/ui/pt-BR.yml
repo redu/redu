@@ -212,7 +212,7 @@ pt-BR:
           other: "Ops!" #"{{count}} erros ocorreram, veja como proceder abaixo."
         body: "Há problemas para o(s) seguinte(s) campo(s):"
       messages:
-        blank: "não pode ser deixado em branco."
+        blank: "Não pode ser deixado em branco."
         too_long: "Texto muito longo"
         accepted: "Você precisa aceitar os Termos de Uso"
         taken: "já existente."
