@@ -571,6 +571,7 @@ input[type="hidden"] +
 }
 .curriculum-buttons .cancel {
   margin-right: 5px;
+  height: 34px;
 }
 
 .form-config-account fieldset {

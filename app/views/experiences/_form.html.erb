@@ -64,12 +64,9 @@
     </div>
   </div>
 
-  <% if experience.new_record? %>
-    <div class="offset3 span6 curriculum-buttons">
-      <%= f.submit "Adicionar item", :class => "button-default add-item icon-curriculum-lightblue_16_18-before pull-right" %>
-      <%= f.submit "Cancelar", :class => "button-default cancel pull-right" %>
-    </div>
-  <% else %>
-    <%= f.submit "Salvar item", :class => "button-default icon-curriculum-lightblue_16_18-before pull-right" %>
-  <% end %>
+  <div class="offset3 span6 curriculum-buttons">
+    <button type="submit" class="button-default add-item icon-curriculum-lightblue_16_18-before pull-right"><% if experience.new_record? %>Adicionar item<% else %>Salvar item<% end %></button>
+    <button class="button-default cancel pull-right">Cancelar</button>
+  </div>
+
 <% end %>
