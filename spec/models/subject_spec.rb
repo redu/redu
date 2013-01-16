@@ -265,4 +265,16 @@ describe Subject do
       end
     end
   end
+
+  it "should remove subjects unfinalized that was created more then 1 days ago" do
+    3.times do
+      Factory(:subject, :owner => @user, :space => @space,
+              :visible => true, :created_at => 2.days.ago)
+    end
+    subject
+
+    expect {
+      Subject.destroy_subjects_unfinalized
+    }.should change(Subject, :count).by(-3)
+  end
 end
