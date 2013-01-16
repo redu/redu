@@ -551,14 +551,6 @@ input[type="hidden"] +
   margin-top: 20px;
 }
 
-.save-curriculum {
-  margin: 10px 20px;
-  overflow: hidden;
-}
-.save-curriculum a {
-  float: right;
-}
-
 #curriculum ul {
   margin: 0;
 }
