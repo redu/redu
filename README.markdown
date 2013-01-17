@@ -120,7 +120,7 @@ $ > ey deploy -a redu -r master --migrate
 Para realizar login na instância do Redu via SSH basta executar o seguinte comando:
 
 ```sh
-$ > ey ssh -e 
+$ > ey ssh -e production
 
 ```
 
