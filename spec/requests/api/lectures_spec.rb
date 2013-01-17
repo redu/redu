@@ -99,7 +99,7 @@ describe "Lectures API" do
   end
 
   context "when GET /lectures/:id" do
-    context "of any type" do
+    context "with a Document" do
       let(:lecture) do
         Factory(:lecture, :lectureable => Factory(:document),
                 :subject => @subject, :owner => @subject.owner)
@@ -110,36 +110,7 @@ describe "Lectures API" do
         get "/api/lectures/#{lecture.id}", base_params
       end
 
-      it "should return status 200" do
-        response.code.should == "200"
-      end
-
-      it "should have the correct properties" do
-        resource = parse(response.body)
-        %w(id name position rating view_count type lectureable created_at
-          updated_at).each do |property|
-            resource.should have_key property
-          end
-      end
-
-      it "should have the correct links" do
-        links = parse(response.body)['links'].collect { |l| l.fetch "rel" }
-        %w(self self_link subject space course environment).each do |link|
-          links.should include link
-        end
-      end
-    end
-
-    context "and is a Document" do
-      let(:lecture) do
-        Factory(:lecture, :lectureable => Factory(:document),
-                :subject => @subject, :owner => @subject.owner)
-      end
-
-      before do
-        mock_scribd_api
-        get "/api/lectures/#{lecture.id}", base_params
-      end
+      it_should_behave_like "lecture"
 
       it "lectureable should have the correct properties" do
         lectureable = parse(response.body)["lectureable"]
