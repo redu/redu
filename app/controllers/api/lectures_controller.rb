@@ -17,6 +17,11 @@ module Api
 
       authorize! :manage, lecture
       lecture.save
+
+      if enrollment = current_user.get_association_with(lecture)
+        lecture.create_asset_report(:enrollments => [enrollment])
+      end
+
       respond_with :api, lecture
     end
 
