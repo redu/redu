@@ -112,7 +112,7 @@ $ > sudo monit restart delayed_job.1
 O Redu (http://www.redu.com.br) funciona na infraestrutura da [Amazon](http://aws.amazon.com/) através do [EngineYard](http://www.engineyard.com/). Assumindo que você possua as permissões necessárias, para realizar o deploy basta executar o seguinte comando:
 
 ```
-$ > ey deploy -a redu -r production --migrate
+$ > ey deploy -a redu -r master --migrate
 ```
 
 #### SSH
@@ -120,7 +120,8 @@ $ > ey deploy -a redu -r production --migrate
 Para realizar login na instância do Redu via SSH basta executar o seguinte comando:
 
 ```sh
-$ > ey ssh -e production
+$ > ey ssh -e 
+
 ```
 
 Ou simplesmente faça login através do SSH:
