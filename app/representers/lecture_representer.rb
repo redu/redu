@@ -13,7 +13,8 @@ module LectureRepresenter
   property :updated_at
 
   def type
-    self.lectureable.class.to_s
+    self.lectureable_type.to_s
+    "Canvas" if self.lectureable_type == "Api::Canvas"
   end
 
   link :self do
