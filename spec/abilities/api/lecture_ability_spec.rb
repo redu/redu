@@ -29,6 +29,10 @@ describe "Lecture abilities" do
     it "should not be able to manage" do
       subject.should_not be_able_to :manage, lecture
     end
+
+    it "should be able to read" do
+      subject.should be_able_to :read, lecture
+    end
   end
 
   context "when teacher" do
@@ -36,8 +40,12 @@ describe "Lecture abilities" do
       @course.join(user, Role[:teacher])
     end
 
-    it "should be able to destroy" do
+    it "should be able to manage" do
       subject.should be_able_to :manage, lecture
+    end
+
+    it "should be able to read" do
+      subject.should be_able_to :read, lecture
     end
   end
 
@@ -46,8 +54,12 @@ describe "Lecture abilities" do
       @course.join(user, Role[:tutor])
     end
 
-    it "should not be able to destroy" do
+    it "should not be able to manage" do
       subject.should_not be_able_to :manage, lecture
+    end
+
+    it "should be able to read" do
+      subject.should be_able_to :read, lecture
     end
   end
 
@@ -58,6 +70,10 @@ describe "Lecture abilities" do
 
     it "should be able to destroy" do
       subject.should be_able_to :manage, lecture
+    end
+
+    it "should be able to read" do
+      subject.should be_able_to :read, lecture
     end
   end
 end
