@@ -3,8 +3,7 @@ shared_examples_for "lecture" do
     response.code.should == "200"
   end
 
-  %w(id name position rating view_count type lectureable created_at
-      updated_at).each do |property|
+  %w(id name position rating view_count type created_at updated_at).each do |property|
     it "should have the property #{property}" do
       resource = parse(response.body)
       resource.should have_key property

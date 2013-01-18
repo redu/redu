@@ -1,9 +1,13 @@
 module Api
   class LecturesController < Api::ApiController
+    include Api::RepresenterInflector
+
     def show
       lecture = Lecture.find(params[:id])
       authorize! :read, lecture
-      respond_with lecture
+
+      klass = representer_for_resource(lecture.lectureable) || LectureRepresenter
+      respond_with lecture, :with_representer => klass
     end
 
     def create
@@ -22,7 +26,14 @@ module Api
         lecture.create_asset_report(:enrollments => [enrollment])
       end
 
-      respond_with :api, lecture
+      opts = if lecture.valid?
+        klass = representer_for_resource(lecture.lectureable) || LectureRepresenter
+        { :with_representer => klass }
+      else
+        {}
+      end
+
+      respond_with :api, lecture, opts
     end
 
     protected

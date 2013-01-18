@@ -1,18 +1,19 @@
 module DocumentRepresenter
   include Roar::Representer::JSON
   include Roar::Representer::Feature::Hypermedia
+  include LectureRepresenter
 
   property :mimetype
 
   link :raw do
-    self.attachment.url
+    self.lectureable.attachment.url
   end
 
   link :scribd do
-    self.scribd_url
+    self.lectureable.scribd_url
   end
 
   def mimetype
-    self.attachment_content_type
+    self.lectureable.attachment_content_type
   end
 end

@@ -8,7 +8,6 @@ module LectureRepresenter
   property :view_count
   property :type
   property :rate_average, :from => :rating
-  property :lectureable, :extend => PolymorphicRepresenter
   property :created_at
   property :updated_at
 

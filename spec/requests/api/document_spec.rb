@@ -22,15 +22,13 @@ describe "Documents API" do
 
      it_should_behave_like "lecture"
 
-     it "lectureable should have property mimetype" do
-       lectureable = parse(response.body)["lectureable"]
-       lectureable.should have_key "mimetype"
+     it "should have property mimetype" do
+       parse(response.body).should have_key "mimetype"
      end
 
      %w(raw scribd).each do |link|
-       it "lectureable should have the link #{link}" do
-         lectureable = parse(response.body)["lectureable"]
-         href_to(link, lectureable).should_not be_blank
+       it "should have the link #{link}" do
+         href_to(link, parse(response.body)).should_not be_blank
        end
      end
    end

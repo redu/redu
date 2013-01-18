@@ -21,19 +21,17 @@ describe "Media API" do
 
     it_should_behave_like "lecture"
 
-    context "lectureable" do
-      it "should have video/x-youtube as mimetype" do
-        parse(response.body)["lectureable"]["mimetype"].should == "video/x-youtube"
-      end
-
-      it "should have a link to Youtube" do
-        href_to('raw', parse(response.body)["lectureable"]).
-          should_not be_blank
-      end
+    it "should have video/x-youtube as mimetype" do
+      parse(response.body)["mimetype"].should == "video/x-youtube"
     end
 
-    xit "should have the Media type" do
-       parse(response.body)["type"].should == "Media"
+    it "should have a link to Youtube" do
+      href_to('raw', parse(response.body)).
+        should_not be_blank
+    end
+
+    it "should have the Media type" do
+      parse(response.body)["type"].should == "Media"
     end
   end
 end
