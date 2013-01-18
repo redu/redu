@@ -1,5 +1,5 @@
 <%= lazy_load(javascript_path('jwplayer.js')) do %>
-  <%= render_player(:youtube_id => resource.external_resource) %>
+  <%= render_player(:youtube_url => resource.external_resource_url) %>
 <% end %>
 
 <div id="player" class="stage">
