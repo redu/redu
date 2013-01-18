@@ -112,16 +112,16 @@ describe "Lectures API" do
 
       it_should_behave_like "lecture"
 
-      it "lectureable should have the correct properties" do
+      it "lectureable should have property mimetype" do
         lectureable = parse(response.body)["lectureable"]
         lectureable.should have_key "mimetype"
       end
 
-      it "lectureable should have the correct links" do
-        lectureable = parse(response.body)["lectureable"]
-        links = lectureable['links'].collect { |l| l.fetch "rel" }
-        %w(raw scribd).each do |link|
-            links.should include link
+      %w(raw scribd).each do |link|
+        it "lectureable should have the link #{link}" do
+          lectureable = parse(response.body)["lectureable"]
+          links = lectureable['links'].collect { |l| l.fetch "rel" }
+          links.should include link
         end
       end
     end
