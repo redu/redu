@@ -13,8 +13,8 @@ shared_examples_for "lecture" do
 
   %w(self self_link subject space course environment).each do |link|
     it "should have the link #{link}" do
-      links = parse(response.body)['links'].collect { |l| l.fetch "rel" }
-      links.should include link
+      lecture = parse(response.body)
+      href_to(link, lecture).should_not be_blank
     end
   end
 end

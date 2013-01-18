@@ -36,8 +36,7 @@ describe "Documents API" do
      %w(raw scribd).each do |link|
        it "lectureable should have the link #{link}" do
          lectureable = parse(response.body)["lectureable"]
-         links = lectureable['links'].collect { |l| l.fetch "rel" }
-         links.should include link
+         href_to(link, lectureable).should_not be_blank
        end
      end
    end
