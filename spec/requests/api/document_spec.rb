@@ -1,29 +1,23 @@
 require 'api_spec_helper'
 
 describe "Documents API" do
-  before do
-    environment = Factory(:complete_environment)
-    course = environment.courses.first
-    space = course.spaces.first
-    @subject = Factory(:subject, :owner => course.owner,
-                       :space => space, :finalized => true)
-    Factory(:lecture, :subject => @subject, :owner => course.owner)
-
-    @application, @current_user, @token = generate_token(course.owner)
-  end
-  let(:base_params) do
-    { :oauth_token => @token, :format => 'json' }
-  end
+  let(:environment) { Factory(:complete_environment) }
+  let(:course) { environment.courses.first }
+  let(:space) { course.spaces.first }
+  let(:subj) { Factory(:subject, :owner => course.owner,
+                          :space => space, :finalized => true) }
+  let(:token) { _, _, token = generate_token(course.owner); token }
+  let(:params) { { :oauth_token => token, :format => 'json' } }
 
   context "when GET /lectures/:id" do
-     let(:lecture) do
+     subject do
+       mock_scribd_api
        Factory(:lecture, :lectureable => Factory(:document),
-               :subject => @subject, :owner => @subject.owner)
+               :subject => subj, :owner => subj.owner)
      end
 
      before do
-       mock_scribd_api
-       get "/api/lectures/#{lecture.id}", base_params
+       get "/api/lectures/#{subject.id}", params
      end
 
      it_should_behave_like "lecture"
