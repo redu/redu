@@ -97,33 +97,4 @@ describe "Lectures API" do
       end
     end
   end
-
-  context "when GET /lectures/:id" do
-    context "with a Document" do
-      let(:lecture) do
-        Factory(:lecture, :lectureable => Factory(:document),
-                :subject => @subject, :owner => @subject.owner)
-      end
-
-      before do
-        mock_scribd_api
-        get "/api/lectures/#{lecture.id}", base_params
-      end
-
-      it_should_behave_like "lecture"
-
-      it "lectureable should have property mimetype" do
-        lectureable = parse(response.body)["lectureable"]
-        lectureable.should have_key "mimetype"
-      end
-
-      %w(raw scribd).each do |link|
-        it "lectureable should have the link #{link}" do
-          lectureable = parse(response.body)["lectureable"]
-          links = lectureable['links'].collect { |l| l.fetch "rel" }
-          links.should include link
-        end
-      end
-    end
-  end
 end
