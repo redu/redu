@@ -1,6 +1,5 @@
 .space-canvas .iframe-canvas {
   height: 3000px;
-  overflow: scroll;
   clear: left;
 }
 
