@@ -21,7 +21,7 @@
       <%= lazy_load(:canvas, :jammit => true, :clear => false) do %>
         $(document).ready(function(){
           var canvas = new Canvas({
-          remote : "<%= "#{@lecture.lectureable.current_url}?space_id=#{@space.id}&subject_id=#{@subject.id}&lecture_id=#{@lecture_id}&container=lecture&user_id#{current_user.id}" %>"
+          remote : "<%= "#{@lecture.lectureable.current_url}?redu)space_id=#{@space.id}&redu_subject_id=#{@subject.id}&redu_lecture_id=#{@lecture_id}&redu_container=lecture&redu_user_id#{current_user.id}".html_safe %>"
           });
         });
       <% end %>
