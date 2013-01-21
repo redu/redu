@@ -13,7 +13,7 @@
   <div class="control-label span3">
     <%= f.label :end_year, "Ano de término" %>
   </div>
-  <div class="controls span6">
+  <div class="controls control-select-date span6">
     <%= f.date_select :end_year,
       :start_year => (Date.today - 90.years).year,
       :end_year => (Date.today + 10.years).year,
