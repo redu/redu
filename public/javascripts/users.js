@@ -2,7 +2,7 @@
     // Esconde a data final de uma experiência
     $.fn.refreshEndDateVisibility = function(){
       return this.each(function(){
-          $(this).parent().siblings(".end-date").hide();
+          $(this).parents(".edit-form").find(".end-date").hide();
       });
     };
 
@@ -93,6 +93,7 @@
         refreshDefaultFormsVisibility();
         $("#biography").refreshSocialNetwork();
         // Esconde os forms de edição
+        $("#curriculum .experiences form").hide();
         $("#curriculum .educations form").hide();
         $(".explanation-sidebar .incomplete-profile .edit").hide();
 
@@ -113,17 +114,17 @@
         });
 
         // Mostra o form de edição e esconde o item de Experiência
-        $("#curriculum .edit-experience").live("click", function(){
+        $("#curriculum .edit-experience").click( function(){
             $experiences = $("#curriculum .experiences > li");
+            $infos = $(this).parent('.config-experience');
             $experiences.find(".infos").show();
             $experiences.find("form").slideUp();
             $("#new_experience").hide();
             $("#curriculum .new-experience-button").hide();
 
-            var $infos = $(this).parent();
+            $infos = $(this).parents('.infos');
             $infos.slideUp();
             $infos.siblings("form").slideDown();
-            return false;
         });
 
         // Mostra o form de edição e esconde o item de Educação
@@ -156,6 +157,7 @@
             $(".experience-current:checked").refreshEndDateVisibility();
             $("#biography").refreshSocialNetwork();
             // Esconde os forms de edição
+            $("#curriculum .experiences form").hide();
             $("#curriculum .educations form").hide();
             // Esconde link para editar perfil na barra de completude
             $(".explanation-sidebar .incomplete-profile .edit").hide();

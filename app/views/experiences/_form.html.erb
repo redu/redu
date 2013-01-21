@@ -27,23 +27,20 @@
     <div class="control-label span3">
       <%= f.label :start_date, 'Período' %>
     </div>
-    <div class="controls span6">
+    <div class="controls span6 period-experience">
       <div class="control-select-date start-date clearfix">
         <%= f.date_select :start_date,
           { :start_year => (Date.today - 90.years).year,
             :end_year => Date.today.year,
             :discard_day => true } %>
       </div>
-      <div class="control-select-date end-date">
+      <div class="control-select-date end-date clearfix">
         <%= f.date_select :end_date,
           { :start_year => (Date.today - 90.years).year,
             :end_year => Date.today.year,
             :discard_day => true } %>
       </div>
     </div>
-  </div>
-
-  <div class="control-group row">
     <div class="controls offset3 span6 current-experience">
       <div class="control-checkbox pull-left">
         <%= f.check_box :current, :id => "experience_current-#{experience.id}", :class => "experience-current" %>
