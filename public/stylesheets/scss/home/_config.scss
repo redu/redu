@@ -96,12 +96,12 @@
   margin: 10px 0;
   text-align: center;
 
-  form {
-    .end-date { margin-top: 10px; }
-    .errors_on_field { text-align: left; }
-  }
-
   .form-education { margin-top: 20px; }
+}
+
+form {
+  .end-date { margin-top: 10px; }
+  .errors_on_field { text-align: left; }
 }
 
 #curriculum {

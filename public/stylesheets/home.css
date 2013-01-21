@@ -541,14 +541,15 @@ input[type="hidden"] +
   margin: 10px 0;
   text-align: center;
 }
-.config-new-item form .end-date {
-  margin-top: 10px;
-}
-.config-new-item form .errors_on_field {
-  text-align: left;
-}
 .config-new-item .form-education {
   margin-top: 20px;
+}
+
+form .end-date {
+  margin-top: 10px;
+}
+form .errors_on_field {
+  text-align: left;
 }
 
 #curriculum ul {
