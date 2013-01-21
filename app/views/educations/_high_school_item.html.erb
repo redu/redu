@@ -1,12 +1,14 @@
-<div class="list-mix-inner">
+<div class="list-mix-inner infos">
   <div class="grid_5">
     <div class="grid_4">
       <%= link_to "×", user_education_path(item.user, item),
         :remote => true, :method => :delete,
         :class => "message-close",
         :confirm => "Você tem certeza que deseja excluir esta experiência? Não será mais possível recuperá-la." %>
-      <a href="#" class="legend">editar</a>
+      <a href="#" class="edit-education legend">editar</a>
       <%= render :partial => "educations/high_school_detail", :locals => { :item => item } %>
     </div>
   </div>
 </div>
+
+<%= render :partial => 'educations/form_edit', :locals => { :education => item } %>
