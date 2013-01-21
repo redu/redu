@@ -1,6 +1,6 @@
 <%= form_for education.educationable,
   :url => user_education_path(education.user, education), :remote => true,
-  :html => { :class => "concave-form clearfix" } do |f| %>
+  :html => { :class => "form-horizontal clearfix" } do |f| %>
     <%= render :partial => "educations/#{education.educationable.class.to_s.underscore}_fields",
     :locals => { :f => f } %>
 <% end %>

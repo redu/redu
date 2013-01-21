@@ -125,17 +125,19 @@
             $infos = $(this).parents('.infos');
             $infos.slideUp();
             $infos.siblings("form").slideDown();
+            return false;
         });
 
         // Mostra o form de edição e esconde o item de Educação
-        $("#curriculum .edit-education").live("click", function(){
+        $("#curriculum .edit-education").click( function(){
             $educations = $("#curriculum .educations > li");
+            $infos = $(this).parent('.config-experience');
             $educations.find(".infos").show();
             $educations.find("form").slideUp();
             $("#new_education").hide();
             $("#curriculum .new-education-button").hide();
 
-            var $infos = $(this).parent();
+            $infos = $(this).parents('.infos');
             $infos.slideUp();
             $infos.siblings("form").slideDown();
             return false;
