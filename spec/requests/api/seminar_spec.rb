@@ -19,7 +19,7 @@ describe "Media API" do
       get "/api/lectures/#{subject.id}", params
     end
 
-    it_should_behave_like "lecture"
+    it_should_behave_like "a lecture"
 
     it "should have video/x-youtube as mimetype" do
       parse(response.body)["mimetype"].should == "video/x-youtube"

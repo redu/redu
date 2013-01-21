@@ -20,7 +20,7 @@ describe "Documents API" do
        get "/api/lectures/#{subject.id}", params
      end
 
-     it_should_behave_like "lecture"
+     it_should_behave_like "a lecture"
 
      it "should have property mimetype" do
        parse(response.body).should have_key "mimetype"

@@ -1,4 +1,4 @@
-shared_examples_for "lecture" do
+shared_examples_for "a lecture" do
   it "should return status 200" do
     response.code.should == "200"
   end
