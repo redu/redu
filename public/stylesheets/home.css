@@ -558,6 +558,12 @@ form .errors_on_field {
 #curriculum .home-container {
   padding-bottom: 10px;
 }
+#curriculum .curriculum-title {
+  color: #73c3e6;
+}
+#curriculum .curriculum-title.edit {
+  margin-top: 10px;
+}
 
 .curriculum-buttons {
   margin-top: 10px;

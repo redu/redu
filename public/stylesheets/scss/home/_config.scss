@@ -107,6 +107,10 @@ form {
 #curriculum {
   ul { margin: 0; }
   .home-container { padding-bottom: 10px; }
+  .curriculum-title {
+    color: $blue2;
+    &.edit { margin-top: 10px; }
+  }
 }
 
 .curriculum-buttons {

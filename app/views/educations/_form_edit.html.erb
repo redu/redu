@@ -1,6 +1,13 @@
 <%= form_for education.educationable,
   :url => user_education_path(education.user, education), :remote => true,
   :html => { :class => "form-horizontal clearfix" } do |f| %>
+
+    <div class="control-group row">
+      <div class="offset3 span6">
+        <h6 class="pull-left curriculum-title edit">Editando item</h6>
+      </div>
+    </div>
+
     <%= render :partial => "educations/#{education.educationable.class.to_s.underscore}_fields",
     :locals => { :f => f } %>
 <% end %>

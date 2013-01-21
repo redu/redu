@@ -2,6 +2,16 @@
   :html => { :class => "form-horizontal clearfix form-config-account edit-form" } do |f| %>
 
   <div class="control-group row">
+    <div class="offset3 span6">
+      <% if experience.new_record? %>
+        <h6 class="pull-left curriculum-title">Novo item</h6>
+      <% else %>
+        <h6 class="pull-left curriculum-title edit">Editando item</h6>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="control-group row">
     <div class="control-label span3">
       <%= f.label :title, 'Título de sua função' %>
     </div>
