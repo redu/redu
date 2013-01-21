@@ -143,6 +143,27 @@
             return false;
         });
 
+        $("#curriculum .cancel").click( function(){
+            $educations = $("#curriculum .educations > li");
+            $infos = $(this).parent('.config-experience');
+            $educations.find(".infos").show();
+            $educations.find("form").slideUp();
+            $("#new_education").slideUp();
+            $("#curriculum .new-education-button").show();
+
+            $experiences = $("#curriculum .experiences > li");
+            $infos = $(this).parent('.config-experience');
+            $experiences.find(".infos").show();
+            $experiences.find("form").slideUp();
+            $("#new_experience").slideUp();
+            $("#curriculum .new-experience-button").show();
+
+            $infos = $(this).parents('.infos');
+            $infos.slideUp();
+            $infos.siblings("form").slideUp();
+            return false;
+        });
+
         $("#education_type").refreshShowCorrectForm();
         $("#education_type").live("change", function() {
             $(this).refreshShowCorrectForm();
