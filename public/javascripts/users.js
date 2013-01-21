@@ -97,24 +97,24 @@
         $("#curriculum .educations form").hide();
         $(".explanation-sidebar .incomplete-profile .edit").hide();
 
-        $(".experience-current").live("change", function(){
+        $(document).on('change', '.experience-current', function(){
             $("#curriculum .end-date").slideToggle();
         });
 
-        $("#curriculum .new-experience-button").live("click", function(){
+        $(document).on('click', '#curriculum .new-experience-button', function(){
             $(this).hide();
             $("#new_experience").slideDown();
             return false;
         });
 
-        $("#curriculum .new-education-button").live("click", function(){
+        $(document).on('click', '#curriculum .new-education-button', function(){
             $(this).hide();
             $("#new_education").slideToggle();
             return false;
         });
 
         // Mostra o form de edição e esconde o item de Experiência
-        $("#curriculum .edit-experience").click( function(){
+        $(document).on('click', '#curriculum .edit-experience', function(){
             $experiences = $("#curriculum .experiences > li");
             $infos = $(this).parent('.config-experience');
             $experiences.find(".infos").show();
@@ -125,11 +125,10 @@
             $infos = $(this).parents('.infos');
             $infos.slideUp();
             $infos.siblings("form").slideDown();
-            return false;
         });
 
         // Mostra o form de edição e esconde o item de Educação
-        $("#curriculum .edit-education").click( function(){
+        $(document).on('click', '#curriculum .edit-education', function(){
             $educations = $("#curriculum .educations > li");
             $infos = $(this).parent('.config-experience');
             $educations.find(".infos").show();
@@ -143,7 +142,7 @@
             return false;
         });
 
-        $("#curriculum .cancel").click( function(){
+        $(document).on('click', '#curriculum .cancel', function(){
             $educations = $("#curriculum .educations > li");
             $infos = $(this).parent('.config-experience');
             $educations.find(".infos").show();
@@ -165,13 +164,13 @@
         });
 
         $("#education_type").refreshShowCorrectForm();
-        $("#education_type").live("change", function() {
-            $(this).refreshShowCorrectForm();
+        $(document).on('change', '#education_type', function() {
+          $(this).refreshShowCorrectForm();
         });
 
 
         $("#higher_education_kind").refreshShowCorrectFields();
-        $("#higher_education_kind").live("change", function() {
+        $(document).on('change', '#higher_education_kind', function() {
             $(this).refreshShowCorrectFields();
         });
 
