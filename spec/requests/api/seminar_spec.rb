@@ -34,4 +34,25 @@ describe "Media API" do
       parse(response.body)["type"].should == "Media"
     end
   end
+
+  context "when uploaded media" do
+    subject do
+      Factory(:lecture, :lectureable => Factory(:seminar_upload), :subject => sub)
+    end
+    before do
+      get "/api/lectures/#{subject.id}", params
+    end
+
+    it_should_behave_like "a lecture"
+
+    it "should have the correct mimetype" do
+      parse(response.body)["mimetype"].
+        should == subject.lectureable.original_content_type
+    end
+
+    it "should have a link to the raw file" do
+      href_to('raw', parse(response.body)).
+        should_not be_blank
+    end
+  end
 end

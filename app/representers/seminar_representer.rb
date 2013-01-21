@@ -11,11 +11,19 @@ module SeminarRepresenter
   end
 
   def mimetype
-    'video/x-youtube'
+    if self.lectureable.external?
+      'video/x-youtube'
+    else
+      self.lectureable.original_content_type
+    end
   end
 
   link :raw do
-    self.lectureable.external_resource_url
+    if self.lectureable.external?
+      self.lectureable.external_resource_url
+    else
+      self.lectureable.original.url
+    end
   end
 end
 
