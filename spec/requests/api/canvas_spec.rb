@@ -1,6 +1,6 @@
 require 'api_spec_helper'
 
-describe "Lectures API" do
+describe "Canvas API" do
   before do
     environment = Factory(:complete_environment)
     course = environment.courses.first
