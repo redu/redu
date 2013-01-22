@@ -107,6 +107,19 @@ $ > sudo monit restart delayed_job.0
 $ > sudo monit restart delayed_job.1
 ```
 
+### Serviço de entrega de e-mails
+
+Nossos e-mails são entregues pelo [Amazon SES](http://aws.amazon.com/ses/). Como a entrega de e-mails é uma tarefa excessivamente bloquente, isso é feito em background pelo [ar_mailer_rails3](https://github.com/yzhang/ar_mailer_rails3).
+
+Para reinicializar o deamon responsável pelo envio, utilziar os seguintes comandos
+
+```sh
+$ bundle exec ar_sendmail_rails3 --delay 15 --daemonize
+```
+
+
+Para mais informações de uso: ``bundle exec ar_sendmail_rails3 -h``
+
 ### Deploy
 
 O Redu (http://www.redu.com.br) funciona na infraestrutura da [Amazon](http://aws.amazon.com/) através do [EngineYard](http://www.engineyard.com/). Assumindo que você possua as permissões necessárias, para realizar o deploy basta executar o seguinte comando:
