@@ -11,7 +11,7 @@ describe Untied::UserRepresenter do
 
   context "properties" do
     %w(login first_name last_name id crypted_password password_salt email
-       persistence_token client_applications avatar_url).each do |property|
+       persistence_token client_applications avatar_url role).each do |property|
         it "should have property #{property}" do
           user_repr.should have_key(property)
         end
