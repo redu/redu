@@ -36,7 +36,10 @@ class Space < ActiveRecord::Base
   has_many :new_members, :through => :user_space_associations,
     :source => :user,
     :conditions => ["user_space_associations.updated_at >= ?", 1.week.ago]
-  has_many :folders, :dependent => :destroy
+  has_many :folders, :conditions => ["parent_id IS NULL"],
+    :dependent => :destroy
+  has_many :folders_and_subfolders, :class_name => "Folder",
+    :dependent => :destroy
   has_many :subjects, :dependent => :destroy,
     :conditions => { :finalized => true }
   has_one :root_folder, :class_name => 'Folder', :foreign_key => 'space_id'
@@ -95,7 +98,7 @@ class Space < ActiveRecord::Base
   end
 
   def myfiles
-    Myfile.where("folder_id IN (?)", self.folders)
+    Myfile.where("folder_id IN (?)", self.folders_and_subfolders)
   end
 
   # Verifica se space está pronto para ser enviado por notificações
