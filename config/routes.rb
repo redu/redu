@@ -334,9 +334,11 @@ Redu::Application.routes.draw do
     resources :chat_messages, :only => :show
 
     resources :folders, :only => [:show, :index] do
-      resources :files, :only => :index
+      resources :myfiles, :path => "files", :only => :index
       resources :folders, :only => :index
     end
+
+    resources :myfiles, :path => "files", :only => [:show]
 
     match "vis/spaces/:space_id/lecture_participation",
       :to => 'vis#lecture_participation',
