@@ -19,7 +19,7 @@
   <% unless  @myfiles.empty? %>
     <div id="file_list" >
       <span class="title">Arquivos</span>
-      <span class="quota">Usando <%= number_to_human_size(@space.course.quota.try(:files) || @space.course.environment.quota.try(:files), :precision => 0) %> de <%= number_to_human_size(@space.course.plan.try(:file_storage_limit) || @space.course.environment.plan.try(:file_storage_limit), :precision => 0) %> (<%= number_to_percentage(@space.course.plan ? @space.course.percentage_quota_file : @space.course.environment.percentage_quota_file, :precision => 0) %>)</span>
+      <span class="quota">Usando <%= number_to_human_size(@space.course.quota.try(:files) || @space.course.environment.quota.try(:files), :precision => 0) %></span>
       <table class="common files">
         <thead style="display: none;">
           <tr>
@@ -34,7 +34,7 @@
           :locals => { :space => @space, :folder => @folder,
             :can_delete => @can_delete } %>
       </table>
-      <span class="quota">Usando <%= number_to_human_size(@space.course.quota.try(:files) || @space.course.environment.quota.try(:files), :precision => 0) %> de <%= number_to_human_size(@space.course.plan.try(:file_storage_limit) || @space.course.environment.plan.try(:file_storage_limit), :precision => 0) %> (<%= number_to_percentage(@space.course.plan ? @space.course.percentage_quota_file : @space.course.environment.percentage_quota_file, :precision => 0) %>)</span>
+      <span class="quota">Usando <%= number_to_human_size(@space.course.quota.try(:files) || @space.course.environment.quota.try(:files), :precision => 0) %></span>
     </div>
 <% end %>
 
