@@ -14,12 +14,13 @@
       <%= render :partial => "folders/item", :collection => @folders,
         :locals => { :space => @space, :can_update => @can_update,
           :can_delete => @can_delete } %>
-      </div>
+    </ul>
+  </div>
 
-  <% unless  @myfiles.empty? %>
-    <div id="file_list" >
+  <div id="file_list" >
+    <span class="quota">Usando <%= number_to_human_size(@space.course.quota.try(:files) || @space.course.environment.quota.try(:files), :precision => 0) %></span>
+    <% unless  @myfiles.empty? %>
       <span class="title">Arquivos</span>
-      <span class="quota">Usando <%= number_to_human_size(@space.course.quota.try(:files) || @space.course.environment.quota.try(:files), :precision => 0) %></span>
       <table class="common files">
         <thead style="display: none;">
           <tr>
@@ -35,7 +36,6 @@
             :can_delete => @can_delete } %>
       </table>
       <span class="quota">Usando <%= number_to_human_size(@space.course.quota.try(:files) || @space.course.environment.quota.try(:files), :precision => 0) %></span>
-    </div>
-<% end %>
-
+    <% end %>
+  </div>
 </div>
