@@ -14,6 +14,7 @@ module Untied
     property :password_salt
     property :email
     property :crypted_password
+    property :role
     collection :walledgarden_client_applications, :from => :client_applications
 
     def walledgarden_client_applications
