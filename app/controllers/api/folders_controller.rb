@@ -1,10 +1,10 @@
 module Api
   class FoldersController < Api::ApiController
     def show
-      @folder = Folder.find(params[:id])
-      authorize! :read, @folder
+      folder = Folder.find(params[:id])
+      authorize! :read, folder
 
-      respond_with @folder
+      respond_with folder
     end
 
     # GET /api/folders/:folder_id/folders
@@ -13,9 +13,9 @@ module Api
       context = context(params)
       authorize! :read, context
 
-      @folders = context.folders
+      folders = context.folders
 
-      respond_with @folders
+      respond_with folders
     end
 
     protected
