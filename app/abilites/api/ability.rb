@@ -10,6 +10,7 @@ module Api
     include Api::SubjectAbility
     include Api::ChatAbility
     include Api::ChatMessageAbility
+    include Api::FolderAbility
 
     include Api::ActivityAbility
     include Api::LogAbility
