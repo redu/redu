@@ -12,18 +12,19 @@ describe "Page API" do
   end
 
   context "when GET /lectures/:id" do
-    let(:lecture) do
-      Factory(:lecture, :subject => subj, :owner => subj.owner)
+    subject do
+      Factory(:lecture, :lectureable => Factory(:page),
+              :subject => subj, :owner => subj.owner)
     end
 
     before do
-      get "/api/lectures/#{lecture.id}", base_params
+      get "/api/lectures/#{subject.id}", base_params
     end
 
     it_should_behave_like "a lecture"
 
     %w(content raw).each do |attr|
-      it "should have #{attr} property inside lectureable" do
+      it "should have #{attr} property" do
         parse(response.body).should have_key attr
       end
     end
