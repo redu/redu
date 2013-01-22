@@ -297,6 +297,7 @@ Redu::Application.routes.draw do
       resources :statuses, :only => [:index, :create] do
         get 'timeline', :on => :collection
       end
+      resources :folders, :only => :index
     end
 
     resources :subjects, :except => [:new, :edit, :index, :create] do
@@ -331,6 +332,11 @@ Redu::Application.routes.draw do
     end
 
     resources :chat_messages, :only => :show
+
+    resources :folders, :only => [:show, :index] do
+      resources :files, :only => :index
+      resources :folders, :only => :index
+    end
 
     match "vis/spaces/:space_id/lecture_participation",
       :to => 'vis#lecture_participation',

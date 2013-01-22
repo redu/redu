@@ -8,7 +8,9 @@ FactoryGirl.define do
   end
 
   factory :root_folder, :parent => :folder do |f|
+    f.user nil
     f.parent nil
+    f.date_modified nil
   end
 
   factory :complete_folder, :parent => :folder do
