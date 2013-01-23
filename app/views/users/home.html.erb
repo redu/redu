@@ -1,47 +1,68 @@
-<%= render :partial => 'users/home_sidebar' %>
-<div class="main grid_10 omega" style="width: 580px;">
-  <ol id="breadcrumbs" class="clearfix">
-    <li>
-      <%= link_to 'Home', home_user_path(@user),
-        :class => 'replacement home icon-small icon-home-lightblue_16_18' %>
-    </li>
-  </ol>
-  <% cache ['home_friends_requisitions', @user.id] do %>
-    <% unless @friends_requisitions.all.empty? %>
-      <ul class="friends-requisitions">
-        <%= render :partial => 'friendships/friend_requisition',
-          :collection => @friends_requisitions, :as => :friendship %>
-      </ul>
-    <% end %>
-  <% end %>
-  <% cache ['home_courses_requisitions', @user.id] do %>
-    <% unless @course_invitations.all.empty? %>
-      <ul class="courses-requisitions">
-        <%= render :partial => 'courses/item_invitation',
-          :collection => @course_invitations %>
-      </ul>
-    <% end %>
-  <% end %>
-  <%= render :partial => 'statuses/create_status',
-    :locals => { :statusable => current_user } %>
-  <div id="statuses" class="statuses">
-    <ol>
-      <%= render :partial => 'statuses/item', :collection => @statuses %>
-    </ol>
+<div class="span3">
+  <%= render :partial => "users/left_sidebar",
+     :locals => { :user => @user } %>
+</div>
+<div class="span10">
+  <div class="content-area">
+    <%= render :partial => "users/breadcrumb_home",
+       :locals => { :user => @user } %>
+    <div class="content-body">
+      <%= render :partial => "users/welcome_greeting",
+         :locals => { :user => @user } %>
+      <% cache ['home_friends_requisitions', @user.id] do %>
+        <% unless @friends_requisitions.length == 0 %>
+          <div class="home-container">
+            <ul class="friends requisitions">
+              <%= render :partial => 'friendships/friend_requisition',
+                :collection => @friends_requisitions, :as => :friendship %>
+            </ul>
+          </div>
+          <hr class="list-separator">
+        <% end %>
+      <% end %>
+      <% cache ['home_courses_requisitions', @user.id] do %>
+        <% unless @course_invitations.length == 0 %>
+          <div class="home-container">
+            <ul class="courses requisitions">
+              <%= render :partial => 'courses/item_invitation',
+                :collection => @course_invitations %>
+            </ul>
+          </div>
+          <hr class="list-separator">
+        <% end %>
+      <% end %>
+      <div id="what-is-missing-box" style="display: <%= what_is_missing_box_display(@user) %>;">
+        <div class="home-container">
+          <%= render :partial => "users/explore_redu", :locals => { :user => @user} %>
+        </div>
+        <hr class="list-separator">
+      </div>
+      <div id="learn-environments-box" style="display: <%= learn_environments_display(@user) %>;">
+        <div class="home-container">
+          <%= render :partial => 'users/learn_environments' %>
+        </div>
+        <hr class="list-separator">
+      </div>
 
-    <%= paginate @statuses, :theme => 'endless' %>
-  </div><!-- end .statuses -->
-</div><!-- end .main -->
+      <div class="home-container">
+        <%= render :partial => 'statuses/create_status',
+          :locals => { :statusable => @user } %>
 
-<div class="secondary-sidebar home-sidebar">
-  <%= render :partial => 'friendships/invite_button' %>
-  <div class="contact-recommendations">
-    <div class="call">
-      <span class="icon-contacts-white-green_16_18-before">Conecte-se</span>
+        <%# Mural com layout antigo %>
+        <div id="statuses" class="statuses">
+          <ol>
+            <%= render :partial => 'statuses/item', :collection => @statuses %>
+          </ol>
+
+          <%= paginate @statuses, :theme => 'endless' %>
+        </div><!-- end .statuses -->
+      </div><!-- end .home-container -->
     </div>
-    <ul>
-      <%= render :partial => 'users/recommendation_item',
-        :collection => @contacts_recommendations %>
-    </ul>
+    <%= render :partial => "users/breadcrumb_home",
+       :locals => { :user => @user } %>
   </div>
-</div><!-- end .offering -->
+</div>
+<div class="span3">
+  <%= render :partial => "users/right_sidebar",
+    :locals => { :user => @user } %>
+</div>

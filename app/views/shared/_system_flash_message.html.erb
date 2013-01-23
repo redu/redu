@@ -1,8 +1,20 @@
-<% ["info", "notice", "error"].each do |type| %>
-  <% if flash[type.to_sym] %>
-    <div class="reactivate-account system-message message-warning fade in">
-      <a data-dismiss="alert" class="message-close">×</a>
-      <p><strong>Opa!</strong> <%= h(flash[type.to_sym]) %></p>
-    </div>
-  <% end %>
+<% if flash[:info] %>
+  <div class="system-message message-info fade in">
+    <span data-dismiss="alert" class="message-close">×</span>
+    <p><strong>Aviso.</strong> <%= h(flash[:info]) %></p>
+  </div>
+<% end %>
+
+<% if flash[:notice] %>
+  <div class="system-message message-success fade in">
+    <span data-dismiss="alert" class="message-close">×</span>
+    <p><strong>Muito bem!</strong> <%= h(flash[:notice]) %></p>
+  </div>
+<% end %>
+
+<% if flash[:error] %>
+  <div class="system-message message-warning fade in">
+    <span data-dismiss="alert" class="message-close">×</span>
+    <p><strong>Opa!</strong> <%= h(flash[:error]) %></p>
+  </div>
 <% end %>

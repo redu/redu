@@ -2,8 +2,6 @@ require 'spec_helper'
 require 'authlogic/test_case'
 
 describe FriendshipsController do
-  include Authlogic::TestCase
-
   before do
     User.maintain_sessions = false
     users = (1..4).collect { Factory(:user) }
@@ -14,8 +12,7 @@ describe FriendshipsController do
     users[2].be_friends_with(users[0])
     @friends = [users[1], users[2]]
     @user = users[0]
-    activate_authlogic
-    UserSession.create @user
+    login_as @user
   end
 
   describe "GET 'index'" do
@@ -104,7 +101,7 @@ describe FriendshipsController do
       before do
         controller.process_invites({'emails' => 'example.mail.com, teste@mail.com', 'friend_id' => @friend.id}, @user)
         @params = {:locale => "pt-BR", :user_id => @user.login}
-        UserSession.create(@user)
+        login_as @user
         get :new, @params
       end
 

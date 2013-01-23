@@ -29,20 +29,20 @@ describe Quota do
           end
 
           seminars = spaces.collect do |s|
-            sub = Factory(:subject, :space => s)
+            sub = Factory(:subject, :space => s, :finalized => true)
 
             (1..3).collect do
-              seminar = Factory(:seminar_upload, :original_file_size => 3.megabytes)
+              seminar = Factory(:seminar_upload,
+                                :original_file_size => 3.megabytes)
               Factory(:lecture, :subject => sub, :lectureable => seminar)
               seminar
             end
           end
           seminars.flatten!
-
           mock_scribd_api
 
           documents = spaces.collect do |s|
-            sub = Factory(:subject, :space => s)
+            sub = Factory(:subject, :space => s, :finalized => true)
 
             (1..3).collect do
               doc = Factory(:document, :attachment_file_size => 1.megabytes)
@@ -51,6 +51,17 @@ describe Quota do
             end
           end
           documents.flatten!
+
+          spaces.collect do |s|
+            sub = Factory(:subject, :space => s)
+
+            seminar = Factory(:seminar_upload,
+                              :original_file_size => 3.megabytes)
+            doc = Factory(:document, :attachment_file_size => 1.megabytes)
+
+            Factory(:lecture, :subject => sub, :lectureable => seminar)
+            Factory(:lecture, :subject => sub, :lectureable => doc)
+          end
 
           { :files => files.collect(&:attachment_file_size).sum,
             :seminars => seminars.collect(&:original_file_size).sum,
@@ -144,6 +155,5 @@ describe Quota do
 
       end
     end
-
   end
 end

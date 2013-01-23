@@ -29,16 +29,10 @@ describe Lecture do
   it { should accept_nested_attributes_for :lectureable }
 
   it { should validate_presence_of :name }
-  # Descrição não está sendo utilizada
-  xit { should validate_presence_of :description }
-  #FIXME Problema de tradução
-  xit { should ensure_length_of(:description).is_at_least(30).is_at_most(200)}
   it { should validate_presence_of :lectureable }
 
   it { should_not allow_mass_assignment_of :owner }
-  it { should_not allow_mass_assignment_of :published }
   it { should_not allow_mass_assignment_of :view_count }
-  it { should_not allow_mass_assignment_of :removed }
   it { should_not allow_mass_assignment_of :is_clone }
 
   it "responds to mark_as_done_for!" do
@@ -82,30 +76,53 @@ describe Lecture do
     end
   end
 
+  context "#create_asset_report" do
+    let(:environment) { Factory.create(:complete_environment) }
+    let(:user) { environment.owner }
+    let(:course) { environment.courses.first }
+    let(:space) { course.spaces.first }
+    let(:sub) do
+      Factory(:subject, :owner => user, :space => space, :finalized => true)
+    end
+    let(:subject) do
+      Factory(:lecture, :subject => sub, :owner => user)
+    end
+
+    before do
+      sub.create_enrollment_associations
+      AssetReport.stub(:import)
+    end
+
+    context "with no arguments" do
+      it "should create AssetReports with Subject's enrollments and Lecture" do
+        args = { :subject => sub, :enrollment => sub.enrollments.first,
+                 :lecture => subject }
+        AssetReport.should_receive(:new).with(args)
+        subject.create_asset_report
+      end
+    end
+
+    context "passing a enrollment as argument" do
+      it "should create AssetReport with enrollment passed" do
+        enrollment = sub.enroll(Factory.create(:user))
+        args = { :subject => sub, :enrollment => enrollment, :lecture => subject }
+        AssetReport.should_receive(:new).with(args)
+        subject.create_asset_report(:enrollments => [enrollment])
+      end
+    end
+
+    it "should invoke Enrollment#update_grade!" do
+      sub.enrollments.map { |e| e.should_receive(:update_grade!) }
+      subject.create_asset_report
+    end
+
+    it "should batch insert AssetReports (AssetReport.import)" do
+      AssetReport.should_receive(:import)
+      subject.create_asset_report
+    end
+  end
+
   context "finders" do
-    it "retrieves unpublished lectures" do
-      lectures = (1..3).collect { Factory(:lecture, :subject => @sub,
-                                          :published => false) }
-      subject.published = 1
-      lectures[2].published = 1
-      subject.save
-      lectures[2].save
-
-      Lecture.unpublished.should == [lectures[0], lectures[1]]
-    end
-
-    it "retrieves published lectures" do
-      lectures = (1..3).collect { Factory(:lecture,
-                                          :subject => @sub,
-                                          :published => false) }
-      subject.published = 1
-      lectures[2].published = 1
-      subject.save
-      lectures[2].save
-
-      Lecture.published.should == [lectures[2], subject]
-    end
-
     it "retrieves lectures that are seminars" do
       pending "Need seminar Factory" do
         seminars = (1..2).collect { Factory(:lecture,:subject => @sub,
@@ -281,6 +298,7 @@ describe Lecture do
             subject_a = subject.lectureable.questions.collect do |q|
               attrs_except(q.alternatives, ["id","question_id"])
             end
+
             new_lecture_a = @new_lecture.lectureable.questions.collect do |q|
               attrs_except(q.alternatives, ["id","question_id"])
             end
@@ -289,7 +307,6 @@ describe Lecture do
           end
         end
       end
-
     end
   end
 

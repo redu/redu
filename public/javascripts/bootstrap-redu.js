@@ -291,11 +291,11 @@
 
   $(function () {
     $('html')
-      .on('click.dropdown.data-api touchstart.dropdown.data-api', clearMenus)
+      .on('click.dropdown.data-api', clearMenus)
     $('body')
-      .on('click.dropdown touchstart.dropdown.data-api', '.dropdown form', function (e) { e.stopPropagation() })
-      .on('click.dropdown.data-api touchstart.dropdown.data-api'  , toggle, Dropdown.prototype.toggle)
-      .on('keydown.dropdown.data-api touchstart.dropdown.data-api', toggle + ', [role=menu]' , Dropdown.prototype.keydown)
+      .on('click.dropdown', '.dropdown form', function (e) { e.stopPropagation() })
+      .on('click.dropdown.data-api'  , toggle, Dropdown.prototype.toggle)
+      .on('keydown.dropdown.data-api', toggle + ', [role=menu]' , Dropdown.prototype.keydown)
   })
 
 }(window.jQuery);
@@ -1120,7 +1120,7 @@ $(function() {
     // Adiciona um contador de caracteres.
     countChars: function(options) {
       var settings = $.extend({
-        characterCounterTemplate: $('<span class="character-counter"></span>')
+        characterCounterTemplate: $('<span class="character-counter legend"></span>')
       }, options);
 
       return this.each(function() {
@@ -1334,40 +1334,6 @@ $(function() {
       })
     },
 
-    // Abilita o submit quando pelo menos um checkbox esta marcado.
-    formChecklist: function(options) {
-      return this.each(function() {
-        var $form = $(this)
-          , $checkboxes = $form.find('input[type="checkbox"]')
-          , $submit = $form.find('input[type="submit"]')
-
-        // Desabilita o submit por padrão.
-        $submit.attr('disabled', 'disabled')
-
-        // Verifica inicialmente se existe algum checkbox marcardo.
-        // É o caso do refresh depois de marcar um checkbox.
-        if ($checkboxes.filter(':checked').length > 0) {
-          $submit.removeAttr('disabled')
-        }
-
-        $checkboxes.each(function() {
-          var $checkbox = $(this)
-
-          $checkbox.on('change', function() {
-            // Se o checkbox foi selecionado, abilita o submit.
-            if ($checkbox.is(':checked')) {
-              $submit.removeAttr('disabled')
-            } else {
-              // Se foi o último a ser desmarcado, desabilita o submit.
-              if ($checkboxes.filter(':checked').length === 0) {
-                $submit.attr('disabled', 'disabled')
-              }
-            }
-          })
-        })
-      })
-    },
-
     init: function() {}
   }
 
@@ -1399,8 +1365,6 @@ $(function() {
   $('textarea[rows]').reduForm('resizeByRows')
 
   $('input[type="file"]').reduForm('styleInputFile')
-
-  $('.form-checklist').reduForm('formChecklist')
 
   // Plugins.
 
@@ -1447,7 +1411,7 @@ $(function() {
 
           container.on('click', function(e) {
             if (!$(e.target).is('input[type="checkbox"]')) {
-              window.location = link.attr('href')
+              link.click()
             }
           })
         })
@@ -1470,63 +1434,48 @@ $(function() {
 $(function() {
   $('.link-container').reduLinks()
 })
+
 !(function($) {
 
   "use strict";
 
   var methods = {
 
-    toggleDropdown: function(listMixItem, openClass, listMixHeaderLegend, listMixInfoClass, listMixBody) {
-      if (listMixItem.hasClass(openClass)) {
-        listMixItem.removeClass(openClass)
-        listMixHeaderLegend.css("visibility", "visible")
-        listMixInfoClass.show()
+    // Expande/colapsa o dropdown.
+    // Esconde a legenda, notificações e mostra a lista de disciplinas.
+    toggleDropdown: function(options) {
+      var settings = $.extend({}, $.fn.reduList.defaults, options)
+
+      var $dropdown = $(this)
+        , $listMixItem = $dropdown.closest("." + settings.classes.listMixItem)
+        , $listMixHeaderLegend = $listMixItem.find("." +
+          settings.classes.listMixHeaderLegend)
+        , $listMixBody = $listMixItem.find("." + settings.classes.listMixBody)
+        , $listMixInfoClass = $listMixItem.find("." +
+          settings.classes.listMixInfo)
+
+      if ($listMixItem.hasClass(settings.classes.openState)) {
+        $listMixHeaderLegend.css("visibility", "visible")
       } else {
-        listMixItem.addClass(openClass)
-        listMixHeaderLegend.css("visibility", "hidden")
-        listMixInfoClass.hide()
+        $listMixHeaderLegend.css("visibility", "hidden")
       }
 
-      listMixBody.toggle(150, "swing");
-    },
+      $listMixInfoClass.toggle()
+      $listMixItem.toggleClass(settings.classes.openState)
+      $listMixBody.toggle(150, "swing")
 
-    listMix: function(options) {
-      var settings = $.extend({
-          "buttonDrownClass": "button-dropdown:not(.button-disabled)",
-          "openClass": "open",
-          "listMixBodyClass": "list-mix-body",
-          "listMixHeaderLegend": "list-mix-header .legend",
-          "listMixInfoClass": "list-mix-info"
-        }, options)
-
-      return this.each(function() {
-        var listMix = $(this),
-            listMixItems = listMix.children()
-
-        listMixItems.each(function() {
-          var listMixItem = $(this),
-              buttonDropdown = listMixItem.find("." + settings.buttonDrownClass),
-              listMixBody = listMixItem.find("." + settings.listMixBodyClass),
-              listMixHeaderLegend = listMixItem.find("." + settings.listMixHeaderLegend),
-              listMixInfoClass = listMixItem.find("." + settings.listMixInfoClass),
-              listMixHeader = listMixItem.find(".list-mix-header")
-
-          buttonDropdown.on("click", function() {
-            methods.toggleDropdown(listMixItem, settings.openClass, listMixHeaderLegend, listMixInfoClass, listMixBody)
-          })
-        })
-      })
+      return $dropdown
     },
 
     init: function(options) {
 
     }
-
   }
 
   $.fn.reduList = function(method) {
     if (methods[method]) {
-      return methods[method].apply(this, Array.prototype.slice.call(arguments, 1))
+      return methods[method].apply(this, Array.prototype.slice.call(arguments,
+        1))
     } else if (typeof method === "object" || !method) {
       return methods.init.apply(this, arguments)
     } else {
@@ -1534,11 +1483,24 @@ $(function() {
     }
   }
 
-}) (window.jQuery)
+  $.fn.reduList.defaults = {
+    classes: {
+      listMixItem: "list-mix-item"
+    , listMixHeaderLegend: "list-mix-header .legend"
+    , listMixBody: "list-mix-body"
+    , listMixInfo: "list-mix-info"
+    , openState: "open"
+    }
+  }
 
-$(function() {
-  $(".list-mix").reduList("listMix")
-})
+  $(function() {
+    $(document).on("click", ".list-mix .button-dropdown:not(.button-disabled)",
+      function(e) {
+      $(this).reduList("toggleDropdown")
+    })
+  })
+
+}) (window.jQuery)
 $(function() {
   //Desabilita href dos links com estilo de botão, quando no estado desabilidado.
   $(".button-disabled").live("click", function(e) {
@@ -1546,54 +1508,105 @@ $(function() {
   });
 });
 
- // Responder status
-$("a.reply-status, .cancel", ".statuses").live("click", function(e){
-    e.preventDefault();
-    $(this).parents("ul:first").next(".create-response").slideToggle(150, "swing");
-    $(this).parents("ul:first").next(".create-response").find("textarea").focus();
-});
 !(function($) {
 
-  'use strict';
+  "use strict";
 
   var methods = {
 
-    init: function(options) {
-      var settings = $.extend({
-          'checkboxSelectedClass': 'table-checkbox-selected'
-        }, options)
+    // Altera o estado de seleção da linha do checkbox.
+    toggleState: function(options) {
+      var settings = $.extend({}, $.fn.reduTables.defaults, options)
 
-      return this.each(function() {
-        var checkbox = $(this),
-            row = checkbox.parents('tr')
+      var $checkbox = $(this)
+        , $row = $checkbox.closest("tr")
+        , $form = $checkbox.closest(settings.selectors.form)
 
-        if (checkbox.is(':checked')) {
-          row.addClass(settings.checkboxSelectedClass)
+      $row.toggleClass(settings.classes.checkboxSelected)
+      $form.trigger("verifySubmit")
+
+      return $checkbox
+    }
+
+    // Verifica se o botão de submissão deve ser ativado ou não.
+  , verifySubmit: function(options) {
+    var settings = $.extend({}, $.fn.reduTables.defaults, options)
+
+    var $form = $(this)
+      , $submit = $form.find('input[type="submit"]')
+      , $checkboxes = $form.find('input[type="checkbox"]')
+
+    $checkboxes.each(function() {
+      var $checkbox = $(this)
+
+      // Se o checkbox foi selecionado, abilita o submit.
+      if ($checkbox.is(":checked")) {
+        $submit.removeAttr("disabled")
+        return false
+      } else {
+        // Se foi o último a ser desmarcado, desabilita o submit.
+        if ($checkboxes.filter(":checked").length === 0) {
+          $submit.attr("disabled", "disabled")
         }
+      }
+    })
 
-        checkbox.on('change', function() {
-          row.toggleClass(settings.checkboxSelectedClass)
-        })
-      })
+    return $form
+  }
+
+  , init: function(options) {
+
     }
   }
 
   $.fn.reduTables = function(method) {
     if (methods[method]) {
-      return methods[method].apply(this, Array.prototype.slice.call(arguments, 1))
-    } else if (typeof method === 'object' || !method) {
+      return methods[method].apply(this,
+        Array.prototype.slice.call(arguments, 1))
+    } else if (typeof method === "object" || !method) {
       return methods.init.apply(this, arguments)
     } else {
-      $.error('O método ' + method + ' não existe em jQuery.reduTables')
+      $.error("O método " + method + " não existe em jQuery.reduTables")
     }
   }
 
+  $.fn.reduTables.defaults = {
+    classes: {
+      checkboxSelected: "table-checkbox-selected"
+    }
+  , selectors: {
+      form: ".form-checklist"
+    }
+  }
+
+  $(function() {
+    var checkboxSelector = $.fn.reduTables.defaults.selectors.form +
+        ' td input[type="checkbox"]'
+      , $submit = $($.fn.reduTables.defaults.selectors.form +
+        ' input[type="submit"]').attr("disabled", "disabled")
+      , enableSubmit = false
+
+    $(document)
+      .on("change", checkboxSelector, function(e) {
+        $(this).reduTables("toggleState")
+      })
+      .on("verifySubmit", $.fn.reduTables.defaults.selectors.form,
+        function(e) {
+        $(this).reduTables("verifySubmit")
+      })
+
+    // FF caches os checkboxes selecionados após o page refresh.
+    $(checkboxSelector).filter(":checked").each(function() {
+      $(this).reduTables("toggleState")
+      enableSubmit = true
+    })
+
+    if (enableSubmit) {
+      $submit.removeAttr("disabled")
+    }
+  })
+
 }) (window.jQuery)
-
-$(function() {
-  $('.form-checklist td input[type="checkbox"]').reduTables()
-})
-
 !(function($) {
 
   'use strict';
@@ -1604,7 +1617,7 @@ $(function() {
   , triggerInviteByMail: 'inviteByMail.reduAutocomplete'
   , dropdown: 'control-autocomplete-dropdown'
   , name: 'control-autocomplete-name'
-  , mail: 'control-autocomplete-mail'
+  , mail: 'control-autocomplete-mail legend'
   , suggestion: 'control-autocomplete-suggestion'
   , inviteClickText: 'Clique aqui para convidar este endereço de e-mail'
   , buttonStyle: 'button-primary'
@@ -1833,6 +1846,33 @@ $(function() {
       })
     }
 
+    // Ajusta a largura do modal para se adequar a largura do conteúdo interno.
+    // Caso a largura do conteúdo interno seja maior que a largura visível do navegador, extende o modal horizontalmente para acomodar a máxima largura visível.
+  , fillHorizontal: function(options) {
+    var settings = $.extend({
+        // Margens laterais.
+        horizontalMargin: 20
+      }, options)
+
+    return this.each(function() {
+      var $modal = $(this)
+        , maxWidth = $(window).width() - 2 * settings.horizontalMargin
+
+      $modal.css('left', 0)
+
+      var modalWidth = $modal.outerWidth()
+
+      if (modalWidth <= maxWidth) {
+        maxWidth = modalWidth
+      }
+
+      $modal.css('marginLeft', (-1) * (maxWidth / 2))
+      $modal.css('width', maxWidth)
+
+      $modal.css('left', '50%')
+    })
+  }
+
     // Verifica se um elemento apresenta a barra de scroll vertical.
   , hasScrollBar: function($element) {
       var element = $element.get(0)
@@ -1905,6 +1945,14 @@ $(function() {
 $(function() {
   $('.modal').reduModal('fillHeight')
   $('.modal-scroll').reduModal('scrollArrow')
+  $('.modal-fill-horizontal').reduModal('fillHorizontal')
+
+  // Abre uma modal caso seu id esteja na URL.
+  var modalId = /#[a-zA-Z\-_\d]*/.exec(document.URL)
+  if (modalId !== null) {
+    var $modal = $(modalId[0])
+    $modal.length !== 0 && $modal.hasClass("modal") && $modal.modal("show")
+  }
 })
 
 !(function($) {
@@ -1921,7 +1969,7 @@ $(function() {
   , spinnerHorizontalBlue: 'spinner-horizontal-blue'
   , spinnerCircularGray: 'spinner-circular-gray'
   , spinnerCircularBlue: 'spinner-circular-blue'
-  , imgPath: 'images/'
+  , imgPath: '/images/'
   , spinnerCircularBlueGif: 'spinner-blue.gif'
   , spinnerCircularGrayGif: 'spinner-grey.gif'
   , spinnerCSS: {
@@ -1973,35 +2021,31 @@ $(function() {
           spinnerImg += settings.spinnerCircularGrayGif
         }
 
-        // Retorna as outras classes, que não a do botão.
-        var otherClasses = function(classes) {
-          var otherClasses = []
+        // Encontra possíveis classes de ícones.
+        var findIconClasses = function(classes) {
+          var iconClasses = []
 
           classes = classes.split(' ')
           $.each(classes, function(index, value) {
-            if (value !== settings.buttonDefault
-                && value !== settings.buttonPrimary
-                && value !== settings.buttonDanger
-                && value !== settings.buttonSuccess
-                && value !== '') {
-              otherClasses.push(value)
+            if (value.indexOf('icon-') !== -1) {
+              iconClasses.push(value)
             }
           })
 
-          return otherClasses.join(' ')
+          return iconClasses.join(' ')
         }
 
         var content = $this.html()
-          , width = $this.outerWidth()
-          , height = $this.outerHeight()
-          , classes = otherClasses($this.attr('class'))
+          , width = $this.width()
+          , height = $this.height()
+          , iconClasses = findIconClasses($this.attr('class'))
           , $spinner = $(document.createElement('img')).attr('src', spinnerImg).css(settings.spinnerCSS)
 
         $this
           .addClass(settings.buttonDisabled)
-          .removeClass(classes)
+          .removeClass(iconClasses)
           .data('content', content)
-          .data('class', classes)
+          .data('class', iconClasses)
           .html($spinner)
           .css({'width': width, 'height': height})
       } else if ($this.is('a')) {
@@ -2064,3 +2108,65 @@ $(function() {
       $(this).reduSpinners('ajaxComplete')
     })
 })
+
+!function ($) {
+
+  "use strict"; // jshint ;_;
+
+
+ /* DEFINIÇÃO DE CLASSE DO CAMPO DE BUSCA.
+  * ============================== */
+
+  var SearchField = function (element, options) {
+    this.$element = $(element)
+    this.options = $.extend({}, $.fn.searchField.defaults, options)
+  }
+
+  SearchField.prototype.expand = function () {
+    var $target = $(this.$element.data('toggle'))
+    this.$element.parent().animate({ width: '+=' + this.options.increment }, 'fast');
+    $target.hide()
+  }
+
+  SearchField.prototype.collapse = function () {
+    var $target = $(this.$element.data('toggle'))
+    this.$element.parent().animate({ width: '-=' + this.options.increment }, 'fast');
+    $target.show()
+  }
+
+
+ /* DEFINIÇÃO DO PLUGIN DO CAMPO DE BUSCA.
+  * ======================== */
+
+  $.fn.searchField = function (option) {
+    return this.each(function () {
+      var $this = $(this)
+        , data = $this.data('searchField')
+        , options = typeof option == 'object' && option
+      if (!data) $this.data('searchField', (data = new SearchField(this, options)))
+      if (option == 'expand') data.expand()
+      else if (option == 'collapse') data.collapse()
+    })
+  }
+
+  $.fn.searchField.defaults = {
+    increment: 120
+  }
+
+  $.fn.searchField.Constructor = SearchField
+
+
+ /* DATA-API DO CAMPO DE BUSCA.
+  * =============== */
+
+  $(function () {
+    $('body').on('focus', '.form-search input[data-toggle]', function ( e ) {
+      var $searchField = $(e.target)
+      $searchField.searchField('expand')
+    }).on('blur', '.form-search input[data-toggle]', function ( e ) {
+      var $searchField = $(e.target)
+      $searchField.searchField('collapse')
+    })
+  })
+
+}(window.jQuery);

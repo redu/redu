@@ -2,13 +2,6 @@ require 'spec_helper'
 require 'authlogic/test_case'
 
 describe UserCourseInvitationsController do
-  include Authlogic::TestCase
-
-  before do
-    User.maintain_sessions = false
-    activate_authlogic
-  end
-
   context "GET show" do
     before do
       @course = Factory(:course)
@@ -20,7 +13,7 @@ describe UserCourseInvitationsController do
     context "when the user is logged in" do
       before do
         @logged_user = Factory(:user)
-        UserSession.create @logged_user
+        login_as @logged_user
         get :show, @params
       end
 

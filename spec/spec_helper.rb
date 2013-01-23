@@ -43,6 +43,9 @@ RSpec.configure do |config|
   # funciona juntamente com o webmock
   config.include VisSpecHelper
 
+  # Inclui o helper para logar um usuário
+  config.include AuthlogicSpecHelper
+
   # Adiciona os papéis ao BD, pois estes são necessários nos testes.
   create_roles
   create_privacies

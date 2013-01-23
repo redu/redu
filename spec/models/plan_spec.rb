@@ -500,4 +500,90 @@ describe Plan do
       }.should change(UserNotifier.deliveries, :count).by(1)
     end
   end
+
+
+  context "when a plan blocks all billable access" do
+    context "when billable is a course" do
+      subject { Factory(:plan, :billable => Factory(:complete_course)) }
+
+      before do
+        @course = subject.billable
+        (1..3).each { @course.join! Factory(:user) }
+
+        subject.block_all_access!
+      end
+
+      it "should mark course as blocked" do
+        @course.reload.should be_blocked
+      end
+
+      it "should mark all spaces as blocked" do
+        @course.spaces.each do |space|
+          space.reload.should be_blocked
+        end
+      end
+
+      it "should mark all subjects as blocked" do
+        @course.spaces.collect(&:subjects).flatten.each do |subj|
+          subj.should be_blocked
+        end
+      end
+
+      it "should mark all lectures as blocked" do
+        subjects = @course.spaces.collect(&:subjects).flatten
+        subjects.collect(&:lectures).flatten.each do |subj|
+          subj.should be_blocked
+        end
+      end
+    end
+
+    context "when billable is a environment" do
+      subject { Factory(:plan, :billable => Factory(:complete_environment)) }
+
+      before do
+        @environment = subject.billable
+        @environment.courses << Factory(:complete_course,
+                                        :environment => @environment)
+        @course1, @course2 = @environment.courses
+        (1..3).each { @course1.join! Factory(:user) }
+        (1..2).each { @course2.join! Factory(:user) }
+
+        subject.block_all_access!
+      end
+
+      it "should mark environment as blocked" do
+        @environment.reload.should be_blocked
+      end
+
+      it "should mark all courses as blocked" do
+        @course1.reload.should be_blocked
+        @course2.reload.should be_blocked
+      end
+
+      it "should mark all spaces as blocked" do
+        spaces = (@course1.spaces + @course2.spaces).flatten
+        spaces.each do |space|
+          space.reload.should be_blocked
+        end
+      end
+
+      it "should mark all subjects as blocked" do
+        subjects = @course1.spaces.collect(&:subjects).flatten +
+          @course1.spaces.collect(&:subjects).flatten
+
+        subjects.flatten.each do |subj|
+          subj.should be_blocked
+        end
+      end
+
+      it "should mark all lectures as blocked" do
+        subjects = @course1.spaces.collect(&:subjects).flatten +
+          @course1.spaces.collect(&:subjects).flatten
+
+        subjects.collect(&:lectures).flatten.each do |lecture|
+          lecture.should be_blocked
+        end
+      end
+    end
+  end
 end

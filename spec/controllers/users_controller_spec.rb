@@ -2,8 +2,6 @@ require 'spec_helper'
 require 'authlogic/test_case'
 
 describe UsersController do
-  include Authlogic::TestCase
-
   before do
     users = (1..4).collect { Factory(:user) }
     users[0].be_friends_with(users[1])
@@ -202,8 +200,7 @@ describe UsersController do
   context "POST update" do
     before do
       @user = Factory(:user)
-      activate_authlogic
-      UserSession.create @user
+      login_as @user
 
       @post_params = { :locale => "pt-BR", :id => @user.login, :user => {
         "birthday(1i)"=>"1991", "birthday(2i)"=>"6", "birthday(3i)"=>"8",
@@ -270,8 +267,7 @@ describe UsersController do
   context "POST update_account" do
     before do
       @user = Factory(:user)
-      activate_authlogic
-      UserSession.create @user
+      login_as @user
 
       @post_params =
         { :locale => "pt-BR",
@@ -339,8 +335,7 @@ describe UsersController do
   context "POST destroy" do
     before do
       @user = Factory(:user)
-      activate_authlogic
-      UserSession.create @user
+      login_as @user
 
       @post_params = { :locale => "pt-BR", :id => @user.login }
     end
@@ -360,16 +355,15 @@ describe UsersController do
   context "GET home" do
     before do
       @user = Factory(:user)
-      activate_authlogic
-      UserSession.create @user
+      login_as @user
 
       @params = { :locale => "pt-BR", :id => @user.login }
-      get :home, @params
     end
 
-    [:friends_requisitions, :course_invitations, :statuses, :status,
-      :contacts_recommendations].each do |var|
+    [:friends_requisitions, :course_invitations, :statuses].each do |var|
       it "assigns @#{var}" do
+        get :home, @params
+
         assigns[var].should_not be_nil
       end
     end
@@ -378,8 +372,7 @@ describe UsersController do
   context "GET curriculum" do
     before do
       @user = Factory(:user)
-      activate_authlogic
-      UserSession.create @user
+      login_as @user
       get :curriculum, { :locale => "pt-BR", :id => @user.login }
     end
 
@@ -451,9 +444,8 @@ describe UsersController do
           @course = Factory(:course, :environment => @environment)
           space = Factory(:space, :course => @course)
           user = Factory(:user)
-          activate_authlogic
           @course.join user
-          UserSession.create user
+          login_as user
           get :index, { :locale => "pt-BR", :space_id => space.id }
         end
 
@@ -472,8 +464,7 @@ describe UsersController do
     before do
       @contact = Factory(:user)
       @user = Factory(:user)
-      activate_authlogic
-      UserSession.create @user
+      login_as @user
     end
 
     [:friends, :statuses, :status].each do |var|
@@ -521,8 +512,7 @@ describe UsersController do
       @approved_courses = @courses[0..2].each { |c| c.join(@user) }
       @moderated_courses[0..2].each { |c| c.join(@user) }
 
-      activate_authlogic
-      UserSession.create @user
+      login_as @user
 
       get :show, :locale => "pt-BR", :id => @user.login
     end
@@ -545,8 +535,7 @@ describe UsersController do
 
       @params = {:locale => "pt-BR", :id => @user.login }
 
-      activate_authlogic
-      UserSession.create @user
+      login_as @user
     end
 
     it "assigns subscribed_courses_count" do
@@ -687,6 +676,13 @@ describe UsersController do
           assigns[:recover_password].errors.should_not be_empty
         end
       end
+    end
+  end
+
+  context "context GET" do
+    it "redirects to application_path" do
+      get :new, :locale => 'pt-BR'
+      response.should redirect_to(application_path(:anchor => "modal-sign-up"))
     end
   end
 end

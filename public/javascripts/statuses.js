@@ -62,11 +62,19 @@ jQuery(function(){
         return false;
     });
 
+    // Permite ao usuário compartilhar recursos embutidos em suas postagens
+    $.refreshEmbeddedSharing = function() {
+        $('.create-status').enableEmbedding();
+    }
+
     $(document).ready(function(){
         $(document).refreshStatuses();
 
         $(document).ajaxComplete(function(){
             $(document).refreshStatuses();
+            $.refreshEmbeddedSharing();
         });
+
+        $.refreshEmbeddedSharing();
     });
 });

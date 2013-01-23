@@ -1,0 +1,29 @@
+<%#
+    Explore o Redu.
+  %>
+<div id="explore-redu-sidebar" style="display: <%= explore_sidebar_display(user) %>;">
+  <div class="right-sidebar-area">
+    <h6 class="right-sidebar-area-title">Explore o Redu</h6>
+    <div class="nav-local-separator"></div>
+    <ul class="actions-to-do">
+      <li>
+        <span data-target="#modal-what-is-missing" data-toggle="modal" class="icon-ask-lightblue_16_18-before link-secondary link-fake" id="what-is-missing-link" style="display: <%= what_is_missing_link_display(user) %>;">O que falta fazer?</span>
+        <%= render 'users/modal_what_is_missing', :user => user %>
+      </li>
+      <li>
+        <% if user.settings.visited?("tour-1") %>
+          <span data-target="#tour-1" data-toggle="modal" class="icon-tour-lightblue_16_18-before link-secondary link-fake">Faça o Tour do Início</span>
+          <%= render :partial => "users/tour", :locals => { :user => @user } %>
+        <% end %>
+      </li>
+      <li>
+        <span data-target="#modal-learn-environments" data-toggle="modal" class="icon-environment-lightblue_16_18-before link-secondary link-fake" id="learn-environments-link" style="display: <%= user.settings.visited?("learn-environments") ? 'block' : 'none' %>;">Entenda os Ambientes</span>
+        <%= render 'users/modal_learn_environments' %>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<% unless user.settings.visited?("tour-1") %>
+  <%= render :partial => "users/tour", :locals => { :user => @user } %>
+<% end %>

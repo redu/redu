@@ -106,4 +106,10 @@ class Subject < ActiveRecord::Base
       self.space.users.all.each { |u| UserNotifier.subject_added(u, self).deliver }
     end
   end
+
+  def self.destroy_subjects_unfinalized
+    Subject.where(['created_at < ? AND finalized = 0', 1.day.ago]).each do |s|
+      s.destroy
+    end
+  end
 end

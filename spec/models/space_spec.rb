@@ -13,6 +13,7 @@ describe Space do
   it { should belong_to :owner }
 
   it { should have_one :root_folder}
+  it { should have_many :canvas }
 
   it { should have_many :logs }
   it { should have_many :statuses }

@@ -28,4 +28,43 @@ module UsersHelper
   def mutual_friends(user, someone = current_user)
     user.friends_in_common_with(someone)
   end
+
+  def explored_all_tips?(user)
+    user.settings.visited?(edit_user_path(user),new_user_friendship_path(user),
+                  user_messages_path(user), courses_index_path,
+                  teach_index_path, "basic-guide", "tour-1")
+  end
+
+  def what_is_missing_box_display(user)
+    if !user.settings.visited?("what-is-missing") && !explored_all_tips?(user)
+      "block"
+    else
+      "none"
+    end
+  end
+
+  def learn_environments_display(user)
+    if user.settings.visited?("learn-environments")
+      "none"
+    else
+      "block"
+    end
+  end
+
+  def explore_sidebar_display(user)
+    if user.settings.visited_at_least_one?("what-is-missing", "tour-1",
+                                           "learn-environments")
+      "block"
+    else
+      "none"
+    end
+  end
+
+  def what_is_missing_link_display(user)
+    if !user.settings.visited?("what-is-missing") || explored_all_tips?(user)
+      "none"
+    else
+      "block"
+    end
+  end
 end

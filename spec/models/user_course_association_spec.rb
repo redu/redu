@@ -21,6 +21,22 @@ describe UserCourseAssociation do
       subject.state.should == "waiting"
     end
 
+    context "when waiting and the course is closed" do
+      before do
+        UserNotifier.delivery_method = :test
+        UserNotifier.perform_deliveries = true
+        UserNotifier.deliveries = []
+      end
+
+      it "should send a pending moderation request" do
+        user = Factory(:user)
+        course = Factory(:course, :subscription_type => 2, :owner => user)
+        course.administrators.reload
+        uca = Factory(:user_course_association, :course => course)
+        UserNotifier.deliveries.last.subject.should == "Moderação pendente em #{course.name}"
+      end
+    end
+
     context "when invite" do
       before do
         UserNotifier.delivery_method = :test
@@ -189,6 +205,28 @@ describe UserCourseAssociation do
       UserCourseAssociation.invited.should == @associations[3..4]
     end
 
+    context "when retrieving last accessed" do
+      let(:user) { Factory(:user) }
+      let(:assocs) do
+        (1..5).collect { Factory(:user_course_association, :user => user) }
+      end
+
+      it "retrieves 3 last accessed" do
+        last_accessed = [0, 2, 4].collect do |i|
+          assocs[i].touch(:last_accessed_at)
+          assocs[i]
+        end
+
+        UserCourseAssociation.last_accessed(3).to_set.should ==
+          last_accessed.to_set
+      end
+
+      it "retrieves empty if no courses where accessed" do
+        assocs
+        UserCourseAssociation.last_accessed(3).to_set.should ==
+          Set.new
+      end
+    end
   end
 
   context "when notifying pending moderation" do

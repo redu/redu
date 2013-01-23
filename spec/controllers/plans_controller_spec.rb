@@ -2,8 +2,6 @@ require 'spec_helper'
 require 'authlogic/test_case'
 
 describe PlansController do
-  include Authlogic::TestCase
-
   context "for User" do
     before do
       @user = Factory(:user)
@@ -12,8 +10,7 @@ describe PlansController do
       @plan_not_in_use = Factory(:plan, :user => @user, :billable => @course,
                                  :current => false)
 
-      activate_authlogic
-      UserSession.create @user
+      login_as @user
     end
 
     context "when GET index" do
@@ -38,8 +35,7 @@ describe PlansController do
       before do
         @plan = Factory(:plan)
 
-        activate_authlogic
-        UserSession.create @plan.user
+        login_as @plan.user
         get :options, :id => @plan.id, :locale => "pt-BR"
       end
 
@@ -65,8 +61,7 @@ describe PlansController do
         @partner_assoc.partner.add_collaborator @admin
         @plan = Factory(:plan, :billable => @partner_assoc.environment)
 
-        activate_authlogic
-        UserSession.create @admin
+        login_as @admin
         get :options, :locale => "pt-BR", :partner_id => @partner_assoc.partner.id,
           :client_id => @partner_assoc.id, :id => @plan.id
       end
@@ -96,8 +91,7 @@ describe PlansController do
         @course.plan = Factory.build(:active_package_plan)
         @plan = @course.plan
 
-        activate_authlogic
-        UserSession.create @plan.user
+        login_as @plan.user
 
         @params = {
           :environment_id => @environment.path,
@@ -144,8 +138,7 @@ describe PlansController do
         @environment.plan = Factory.build(:active_package_plan)
         @plan = @environment.plan
 
-        activate_authlogic
-        UserSession.create @plan.user
+        login_as @plan.user
 
         @params = {
           :environment_id => @environment.path,
@@ -193,8 +186,7 @@ describe PlansController do
         @partner_assoc.partner.add_collaborator @admin
         @plan = Factory(:plan, :billable => @partner_assoc.environment)
 
-        activate_authlogic
-        UserSession.create @admin
+        login_as @admin
 
         @params = {
           :partner_id => @partner_assoc.partner.id,

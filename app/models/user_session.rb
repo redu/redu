@@ -6,4 +6,8 @@ class UserSession < Authlogic::Session::Base
   remember_me_for 2.weeks
   remember_me false
 
+  skip_callback :persist, :persist_by_session
+  skip_callback :after_save, :update_session
+  skip_callback :after_destroy, :update_session
+  skip_callback :after_persisting, :update_session
 end

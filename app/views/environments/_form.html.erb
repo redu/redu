@@ -5,11 +5,11 @@
     <%= concave_errors_for @environment, :name %>
 
   </div>
-  <span class="tip">40 caracteres restantes</span>
+  <span class="tip">40 caracteres</span>
   <%= f.label :initials, "Abreviação" %>
   <%= f.text_field :initials %>
   <%= concave_errors_for @environment, :initials %>
-  <span class="tip">10 caracteres restantes</span>
+  <span class="tip">10 caracteres</span>
   <%= f.label :path, "Endereço eletrônico", :class => "big"%>
   <%= f.text_field :path %>
   <%= concave_errors_for @environment, :path %>
@@ -22,7 +22,7 @@
       <%= builder.text_field :name, :class => "big" %>
       <%= concave_errors_for @environment.courses.first, :name %>
     </div>
-    <span class="tip">60 caracteres restantes</span>
+    <span class="tip">60 caracteres</span>
     <%= builder.label :path, "Endereço eletrônico" %>
     <%= builder.text_field :path, :class => "big" %>
     <%= concave_errors_for @environment.courses.first, :path %>

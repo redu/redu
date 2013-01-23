@@ -21,8 +21,6 @@ class Lecture < ActiveRecord::Base
   accepts_nested_attributes_for :lectureable
 
   # SCOPES
-  scope :unpublished, where(:published => false)
-  scope :published, where(:published => true)
   scope :seminars, where("lectureable_type LIKE 'Seminar'")
   scope :iclasses, where("lectureable_type LIKE 'InteractiveClass'")
   scope :pages, where("lectureable_type LIKE 'Page'")
@@ -33,12 +31,11 @@ class Lecture < ActiveRecord::Base
   scope :by_subjects, lambda { |subjects_id| where(:subject_id =>subjects_id) }
   scope :by_day, lambda { |day| where(:created_at =>(day..(day+1))) }
 
-  attr_protected :owner, :published, :view_count, :removed, :is_clone
+  attr_protected :owner, :view_count, :is_clone
 
   # PLUGINS
   acts_as_taggable
   ajaxful_rateable :stars => 5
-  has_attached_file :avatar, Redu::Application.config.paperclip
   sortable :scope => :subject_id
 
   # VALIDATIONS
@@ -119,10 +116,16 @@ class Lecture < ActiveRecord::Base
     end
   end
 
-  # Cria asset_report entre esta aula e todos os usuários matriculados no
-  # subject.
-  def create_asset_report
-    enrollments = Enrollment.where(:subject_id => self.subject.id)
+  # Cria AssetReport entre self e todos Enrolments de self.subject.
+  #
+  # Caso uma lista de Enrollment seja passada como parâmetro, apenas o
+  # AssetReport para este Enrollment é criado:
+  #
+  #   lecture.create_asset_report(:enrollments => [list, of, enrollments])
+  #
+  # Retorna a lista de Enrollment para os quais AssetReports foram criados.
+  def create_asset_report(opts={})
+    enrollments = opts[:enrollments] || self.subject.enrollments
 
     reports = enrollments.collect do |enrollment|
       AssetReport.new(:subject => self.subject, :enrollment => enrollment,
@@ -131,8 +134,7 @@ class Lecture < ActiveRecord::Base
     AssetReport.import(reports, :validate => false,
                        :on_duplicate_key_update => [:done])
 
-    enrollments.includes(:asset_reports).where('grade > 0').
-      collect(&:update_grade!)
+    enrollments.map(&:update_grade!)
   end
 
   protected

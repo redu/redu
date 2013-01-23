@@ -2,14 +2,10 @@ require 'spec_helper'
 require 'authlogic/test_case'
 
 describe LecturesController do
-  include Authlogic::TestCase
-
   before do
-    User.maintain_sessions = false
     @space = Factory(:space)
     @subject_owner = Factory(:user)
     @space.course.join @subject_owner, Role[:teacher]
-    activate_authlogic
 
     @subject = Factory(:subject, :owner => @subject_owner,
                        :space => @space, :finalized => true,
@@ -19,7 +15,7 @@ describe LecturesController do
     @enrolled_user = Factory(:user)
     @space.course.join @enrolled_user
     @subject.enroll @enrolled_user
-    UserSession.create @enrolled_user
+    login_as @enrolled_user
   end
 
   context "when GET 'show'" do
@@ -136,7 +132,7 @@ describe LecturesController do
 
   context "admin panel" do
     before do
-      UserSession.create @subject_owner
+      login_as @subject_owner
     end
 
     context "GET new" do
@@ -189,12 +185,6 @@ describe LecturesController do
           @post_params[:lecture][:lectureable_attributes][:body]
 
         Lecture.last.lectureable.should == Page.last
-      end
-
-      it "should set published to true" do
-        post :create, @post_params
-        lecture = Lecture.last
-        lecture.published.should be_true
       end
     end
 
@@ -249,12 +239,6 @@ describe LecturesController do
         expect {
           post :create, @params
         }.should change(Lecture, :count).by(1)
-      end
-
-      it "creates the lecture with published true" do
-        post :create, @params
-        lecture = Lecture.last
-        lecture.published.should be_true
       end
 
       it "creates the Exercise" do

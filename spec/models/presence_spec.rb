@@ -8,7 +8,6 @@ describe Presence do
     @friend2 = Factory(:user)
     @friend3 = Factory(:user)
     @user2 = Factory(:user)
-    @user3 = Factory(:user)
     @tutor2 = Factory(:user)
     @tutor3 = Factory(:user)
     @tutor1_and_2 = Factory(:user)
@@ -230,5 +229,39 @@ describe Presence do
       "tutor" => true,
       "course_admin" => false,
       "admin" => true }
+  end
+
+  context "when users are just friends" do
+    before do
+      @just_friend = Factory(:user)
+
+      @current_user.be_friends_with(@just_friend)
+      @just_friend.be_friends_with(@current_user)
+    end
+
+    it "should retrieve the right roles" do
+      @presence = Presence.new(@current_user)
+
+      @presence.fill_roles_friends.should == {
+        "teacher" => false,
+        "member" => false,
+        "environment_admin" => false,
+        "tutor" => false,
+        "course_admin" => false,
+        "admin" => false }
+    end
+
+    it "should retrieve the right roles for admin" do
+      @current_user.role = Role[:admin]
+      @presence = Presence.new(@current_user)
+
+      @presence.fill_roles_friends.should == {
+        "teacher" => false,
+        "member" => false,
+        "environment_admin" => false,
+        "tutor" => false,
+        "course_admin" => false,
+        "admin" => true }
+    end
   end
 end

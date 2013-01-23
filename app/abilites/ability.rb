@@ -60,10 +60,6 @@ class Ability
     # Reports
     alias_action :teacher_participation_interaction, :to => :manage
 
-    # Todos podem ver o preview
-    can :preview, [Course, Environment]
-    can :preview, Subject, :visible => true
-
     # Todos podem criar usuários
     can :create, User
 
@@ -90,6 +86,12 @@ class Ability
       # Usuário normal
       can :read, :all do |object|
         user.can_read? object
+      end
+
+      unless is_admin
+        # Nenhum ambiente bloqueado pode ser visto, a não ser pelo redu_admin
+        cannot [:manage, :read], [Environment, Course, Space, Subject, Lecture],
+          :blocked => true
       end
 
       can :create, Environment
@@ -190,14 +192,30 @@ class Ability
 
       # Canvas
       can :read, Api::Canvas do |canvas|
-        can? :read, canvas.lecture
+        if canvas.lecture
+          can?(:read, canvas.lecture)
+        elsif canvas.container
+          can?(:read, canvas.container)
+        else
+          false
+        end
       end
       cannot :read, Api::Canvas do |canvas|
-        cannot? :read, canvas.lecture
+        if canvas.lecture
+          cannot?(:read, canvas.lecture)
+        elsif canvas.container
+          cannot?(:read, canvas.container)
+        else
+          true
+        end
       end
 
       # Busca
       can :search, :all
     end
+
+    # Todos podem ver o preview
+    can :preview, [Course, Environment]
+    can :preview, Subject, :visible => true
   end
 end

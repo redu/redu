@@ -51,17 +51,15 @@ gem 'omniauth-facebook'
 gem 'pusher'
 gem 'pagseguro', '~> 0.1.10'
 gem 'paperclip', '~> 2.7'
-gem 'rails', '3.0.10'
+gem 'rails', '3.0.19'
 gem 'rake', '0.8.7'
 gem 'remotipart', '~> 1.0'
 gem 'roar',
   :git => 'https://github.com/apotonick/roar.git'
-gem 'roar-rails', '~> 0.0.3',
-  :git => 'git://github.com/apotonick/roar-rails.git'
 gem 'scribd_fu', :git => 'git://github.com/guiocavalcanti/scribd_fu.git',
   :branch => 'without-scape'
 gem 'shuber-sortable'
-gem 'simple-navigation'
+gem 'simple-navigation', :git => 'git://github.com/andi/simple-navigation.git'
 gem 'sunspot_rails'
 gem 'translate_routes'
 gem 'useragent', '~> 0.4.8'
@@ -70,6 +68,9 @@ gem 'whenever', :require => false
 gem 'will_paginate', '~> 3.0.pre2'
 gem 'zencoder'
 gem 'untied-publisher', :git => 'git://github.com/redu/untied-publisher'
+gem 'content_for_in_controllers',
+  :git => 'git://github.com/julianalucena/content_for_in_controllers.git'
+gem 'system_timer'
 
 # Gems específicos para a API
 gem 'oauth-plugin', '~> 0.4.0'
@@ -78,6 +79,7 @@ gem 'roar-rails', '~> 0.0.3',
   :git => 'git://github.com/apotonick/roar-rails.git'
 gem 'destroy_soon'
 gem 'redu_analytics'
+gem 'humanizer'
 
 # Gems específicos de algum ambiente
 group :development, :test do

@@ -9,7 +9,7 @@ class UserCacheObserver < ActiveRecord::Observer
         collect(&:friend)
 
       expire_friends_requisitions_for(future_friends)
-      expire_nav_account_for(user)
+      expire_nav_global_dropdown_menu_for(user)
     end
   end
 end

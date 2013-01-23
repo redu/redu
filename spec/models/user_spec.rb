@@ -100,9 +100,9 @@ describe User do
       subject.errors[:birthday].should_not be_empty
     end
 
-    it "should validate password and password_confirmation equality" do
+    it "should validate email and email_confirmation equality" do
       u = Factory.build(:user, :email => "email@email.com",
-                  :email_confirmation => "different@email.com")
+                        :email_confirmation => "different@email.com")
       u.should_not be_valid
       u.errors[:email].should_not be_empty
     end
@@ -122,6 +122,13 @@ describe User do
       u.mobile = "81 2131-2123"
       u.should_not be_valid
     end
+
+    context "humanizer" do
+      it "should not be valid when enabling humanizer (User#enable_humanizer)" do
+        User.any_instance.stub(:enable_humanizer).and_return(true)
+        Factory.build(:user).should_not be_valid
+      end
+    end
   end
 
   context "associations" do
@@ -136,8 +143,6 @@ describe User do
                         :is_clone => false, :owner => subject)
       lecture2 = Factory(:lecture, :subject => @sub,
                          :is_clone => true, :owner => subject)
-      lecture.published = 1
-      lecture2.published = 1
       lecture.save
       lecture2.save
       subject.lectures.should == [lecture]

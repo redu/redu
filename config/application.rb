@@ -189,6 +189,9 @@ module Redu
     # Doorkeepers definem eventos que serão propagados no message bus
     config.autoload_paths << "#{config.root}/app/doorkeepers"
 
+    # Validators customizados
+    config.autoload_paths << "#{config.root}/app/validators"
+
     # Configurações do Pusher (redu app)
     config.pusher = {
       :app_id => '4577',
@@ -216,7 +219,6 @@ module Redu
                                         :vis_lecture_observer,
                                         :user_walledgarden_apps_observer,
                                         :user_environment_association_cache_observer,
-                                        :environment_cache_observer,
                                         :friendship_cache_observer,
                                         :user_cache_observer,
                                         :user_course_association_cache_observer,
@@ -243,6 +245,14 @@ module Redu
     config.vis_data_authentication = {
       :password => "NyugAkSoP",
       :username => "api-team"
+    }
+
+    config.redu_services = {}
+    config.redu_services[:apps] = {
+      :url => "http://aplicativos.redu.com.br"
+    }
+    config.redu_services[:help_center] = {
+      :url => "http://ajuda.redu.com.br/"
     }
 
     # Seta locale defaul para pt-br

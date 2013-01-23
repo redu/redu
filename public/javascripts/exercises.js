@@ -1,16 +1,5 @@
 $(function(){
 
-  $.fn.refreshExercises = function() {
-    // Deixa uma questão marcada quando o usuário a seleciona
-    this.each(function(){
-        $(".alternatives li input[type='radio']").live("click", function(){
-          $(".alternatives li").removeClass("selected");
-          $(this).parent().addClass("selected");
-          $(".exercise-nav li.actual").addClass("question-answered");
-        });
-    });
-  }
-
   // Aplica nestedFields às questões e alternativas de Exercício
   $.fn.refreshNestedFields = function(){
     var alternativeOptions = {
@@ -183,6 +172,30 @@ $(function(){
     });
   };
 
+  // Mostra mensagem de carregando enquanto a questão está sendo salva
+  var loadingQuestion = function (show) {
+    var loading = $("#loading-message");
+    if (show) {
+      loading.show();
+    }else{
+      loading.hide();
+    };
+  };
+
+  // Ao clicar no radio button, submete o form de choice
+  $.fn.saveQuestion = function(){
+    return this.each(function(){
+      $(this).on("click", function(e){
+        var loading = $("#loading-message");
+        loading.show();
+        $("#form-choice").submit();
+      });
+    });
+  };
+
+  // Radio buttons salvam automaticamente as questões, via AJAX
+  $(".exercise input:radio").saveQuestion();
+
   // Atualiza para apenas a última alternativa ter aparência disabled
   // e deixa apenas as questões com erro abertas
   $.fn.refreshQuestionsAppearance = function(){
@@ -193,14 +206,14 @@ $(function(){
   };
 
   $(document).ready(function(){
-    $(document).refreshExercises();
     $(document).refreshNestedFieldsEdition();
     $("#resources-edition .exercise").refreshQuestionsAppearance();
 
     $(document).ajaxComplete(function(){
-      $(document).refreshExercises();
       $(document).refreshNestedFieldsEdition();
       $("#resources-edition .exercise").refreshQuestionsAppearance();
+      $(".exercise-nav .actual").addClass("question-answered");
+      loadingQuestion(false);
     });
   });
 });

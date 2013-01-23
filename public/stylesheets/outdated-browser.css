@@ -1,11 +1,20 @@
 #outdated-browser {
+  margin-top: -14px;
+  display: none;
+}
+
+#outdated-browser .container_16 {
+  width: 940px;
+}
+
+#outdated-browser {
   height: 100px;
   background: url("../images/new/error-top-bkg-line.png") repeat-x;
 }
 
 #outdated-browser .title {
   width: 140px;
-  margin-top: 20px;
+  margin-top: 3px;
   text-align: right;
   float: left;
   margin-left: 30px;
@@ -37,8 +46,9 @@
 
 #outdated-browser .message {
   width: 340px;
+  height: 60px;
   float: left;
-  margin: 10px 140px 0 20px;
+  margin: 20px 140px 0 20px;
   color: white;
 }
 
@@ -51,15 +61,14 @@
   width: 16px;
   height: 18px;
   float: right;
-  margin-top: 30px;
+  margin-top: 40px;
   cursor: pointer;
 }
 
 #outdated-browser .suggestions {
   width: 240px;
   float: left;
-  margin-top: 10px;
-  list-style: none;
+  margin-top: 20px;
 }
 
 #outdated-browser .suggestions li {

@@ -11,6 +11,29 @@ s3_upload_files:
   - public/stylesheets/**
 
 javascripts:
+  new_application:
+    - public/javascripts/rails.js
+    - public/javascripts/vendor/modernizr.js
+    - public/javascripts/lazyload.js
+    - public/javascripts/asyncjs.jquery.js
+    - public/javascripts/form.redu.jquery.js
+    - public/javascripts/jquery.autosize.min.js
+    - public/javascripts/vendor/placeholder-polyfill.min.js
+    - public/javascripts/bootstrap-redu.js
+    - public/javascripts/swfobject.js # Necessário ao browserdetection.js
+    - public/javascripts/browserdetection.js
+    - public/javascripts/jquery.cookie.js
+    - public/javascripts/outdated-browser.js
+    - public/javascripts/home.js
+    - public/javascripts/statuses.js
+    - public/javascripts/wall_spinner.js
+    - public/javascripts/jquery.timeago.js
+    - public/javascripts/timeago.js
+    - public/javascripts/jquery.fcbkcomplete.min.js # Auto complete do facebook
+    - public/javascripts/old-create-status.js
+    - public/javascripts/underscore.js
+    - public/javascripts/underscore-sharing-template.redu.jquery.js
+    - public/javascripts/embedly.redu.jquery.js
   landing:
     - public/javascripts/rails.js
     - public/javascripts/vendor/modernizr.js
@@ -59,6 +82,7 @@ javascripts:
     - public/javascripts/embedly.redu.jquery.js
     - public/javascripts/jquery.timeago.js
     - public/javascripts/timeago.js
+    - public/javascripts/bootstrap-redu-dropdown.js
   chat:
     - public/javascripts/jquery.pjax.js
     - public/javascripts/pusher.js
@@ -105,10 +129,18 @@ javascripts:
     - public/javascripts/olark.js
 
 stylesheets:
+  new_application:
+    - public/stylesheets/icons.redu.css
+    - public/stylesheets/utils.css
+    - public/stylesheets/bootstrap-redu.css
+    - public/stylesheets/home.css
+    - public/stylesheets/wall.css
+    - public/stylesheets/fb_style.css
+    - public/stylesheets/outdated-browser-new.css
   landing:
     - public/stylesheets/bootstrap-redu.css
     - public/stylesheets/landing-new.css
-    - public/stylesheets/outdated-browser.css
+    - public/stylesheets/outdated-browser-new.css
     - public/stylesheets/icons.redu.css
   common:
     - public/stylesheets/reset.css
@@ -116,6 +148,7 @@ stylesheets:
     - public/stylesheets/new-fonts.css
     - public/stylesheets/token-input.css
     - public/stylesheets/utils.css
+    - public/stylesheets/wall.css
     - public/stylesheets/new-style.css
     - public/stylesheets/tipTip.css
     - public/stylesheets/ajaxful_rating.css
@@ -129,6 +162,9 @@ stylesheets:
     - public/stylesheets/exercises.css
     - public/stylesheets/outdated-browser.css
     - public/stylesheets/chart.css
+    - public/stylesheets/canvas.css
+    - public/stylesheets/bootstrap-redu-nav-global.css
+    - public/stylesheets/nav-global-icons.css
   ie:
     - public/stylesheets/ie.css
   ie8:

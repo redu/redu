@@ -31,8 +31,8 @@
     <% end %>
 
     <% if is_friend?(@user) %>
-      <%= link_to(new_user_message_path(current_user, :message_to => @user.id),
-                   :class => 'send-message cancel ') do %>
+      <%= link_to(user_messages_path(current_user),
+                  :class => 'send-message') do %>
         <span class="write-message icon-add_message-lightblue_16_18-before">Escrever Mensagem</span>
       <% end %>
     <% end %>
