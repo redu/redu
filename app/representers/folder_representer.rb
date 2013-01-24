@@ -14,7 +14,7 @@ module FolderRepresenter
   end
 
   link :files do
-    api_folder_files_path(self)
+    api_folder_myfiles_path(self)
   end
 
   link :folders do
