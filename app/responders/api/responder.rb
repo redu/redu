@@ -9,7 +9,7 @@ module Api
     end
 
     def display(resource, given_options={})
-      representer = options.delete(:with_representer)
+      representer = options.delete(:represent_with)
 
       if resource.respond_to?(:map!)
         resource.map! do |r|

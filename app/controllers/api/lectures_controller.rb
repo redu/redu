@@ -7,7 +7,7 @@ module Api
       authorize! :read, lecture
 
       klass = representer_for_resource(lecture.lectureable) || LectureRepresenter
-      respond_with lecture, :with_representer => klass
+      respond_with lecture, :represent_with => klass
     end
 
     def create
@@ -28,7 +28,7 @@ module Api
 
       opts = if lecture.valid?
         klass = representer_for_resource(lecture.lectureable) || LectureRepresenter
-        { :with_representer => klass }
+        { :represent_with => klass }
       else
         {}
       end

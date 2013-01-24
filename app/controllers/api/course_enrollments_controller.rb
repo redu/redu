@@ -8,7 +8,7 @@ module Api
 
       respond_with(:api, @course, decorated,
                    :location => api_enrollment_url(@course, @enrollment),
-                   :with_representer => CourseEnrollmentRepresenter)
+                   :represent_with => CourseEnrollmentRepresenter)
     end
 
     def show
@@ -16,7 +16,7 @@ module Api
       authorize! :read, @enrollment
       decorated = Api::CourseEnrollmentDecorator.new(@enrollment)
 
-      respond_with(decorated, :with_representer => CourseEnrollmentRepresenter)
+      respond_with(decorated, :represent_with => CourseEnrollmentRepresenter)
     end
 
     def index
@@ -25,7 +25,7 @@ module Api
         Api::CourseEnrollmentDecorator.new(e)
       end
 
-      respond_with(denrollments, :with_representer => CourseEnrollmentRepresenter)
+      respond_with(denrollments, :represent_with => CourseEnrollmentRepresenter)
     end
 
     def destroy
