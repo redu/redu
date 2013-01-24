@@ -37,6 +37,6 @@ module SpaceRepresenter
   end
 
   link :folders do
-    space_folders_url(self)
+    api_space_folders_url(self)
   end
 end
