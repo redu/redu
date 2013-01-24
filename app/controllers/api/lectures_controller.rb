@@ -36,6 +36,20 @@ module Api
       respond_with :api, lecture, opts
     end
 
+    def index
+      conds = { :id => params[:subject_id], :finalized => true }
+      subject = Subject.first(:conditions => conds)
+      authorize! :read, subject
+
+      lectures = subject.lectures.includes(:lectureable)
+
+      respond_with :api, lectures do |format|
+        format.json do
+          render :json => lectures.extend(LecturesRepresenter)
+        end
+      end
+    end
+
     protected
 
     def create_lectureable(lecture_attrs)
