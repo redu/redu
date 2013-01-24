@@ -19,7 +19,8 @@ SimpleNavigation::Configuration.run do |navigation|
       sidebar.dom_class = 'local-nav'
       sidebar.item :content, 'Conteúdo', space_path(@space),
         :highlights_on => action_matcher({ 'spaces' => 'show',
-                                           'subjects' => 'show' }),
+                                           'subjects' => 'show',
+                                           'lectures' => 'show'}),
         :link => { :class => 'icon-subject_16_18-before' }
       sidebar.item :wall, 'Mural', mural_space_path(@space),
         :link => { :class => 'icon-wall_16_18-before' }
