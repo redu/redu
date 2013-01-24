@@ -28,5 +28,9 @@ describe "Page API" do
         parse(response.body).should have_key attr
       end
     end
+
+    it "should have the right content" do
+      parse(response.body).fetch("content").should == subject.lectureable.body
+    end
   end
 end
