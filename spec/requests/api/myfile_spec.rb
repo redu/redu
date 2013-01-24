@@ -32,14 +32,16 @@ describe "File API" do
         href_to(link, parse(response.body)).should_not be_blank
       end
     end
+
+    it "should return a file with a right name" do
+      parse(response.body).fetch("name").should == subject.attachment_file_name
+    end
   end
 
   context "when GET /api/folders/:folder_id/files" do
+    let!(:files) { 3.times.map { Factory(:myfile, :folder => folder, :user => course.owner) } }
+
     before do
-      files = (1..3).collect do
-        Factory(:myfile, :folder => folder,
-                :user => course.owner)
-      end
       get "api/folders/#{folder.id}/files", params
     end
 
@@ -49,6 +51,10 @@ describe "File API" do
 
     it "should return all files of a folder" do
       parse(response.body).length.should == 3
+    end
+
+    it "should contain a file with a certain name" do
+      parse(response.body).first.fetch("name") == files.first.attachment_file_name
     end
   end
 end

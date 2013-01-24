@@ -1,7 +1,7 @@
 module MyfileRepresenter
-  MEGABYTE = 1024.0 * 1024.0
   include Roar::Representer::JSON
   include Roar::Representer::Feature::Hypermedia
+  include ActionView::Helpers::NumberHelper
 
   property :name
   property :mimetype
@@ -37,7 +37,7 @@ module MyfileRepresenter
   end
 
   def size
-    self.attachment_file_size / MEGABYTE
+    number_to_human_size(self.attachment_file_size)
   end
 
   def byte
