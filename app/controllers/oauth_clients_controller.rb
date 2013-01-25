@@ -1,7 +1,6 @@
 class OauthClientsController < BaseController
   layout 'new_application'
   before_filter :login_required
-  before_filter :get_client_application, :only => [:show, :edit, :update, :destroy]
 
   def index
     @client_applications = current_user.client_applications
@@ -9,12 +8,14 @@ class OauthClientsController < BaseController
   end
 
   def new
-    @user = current_user
+    @user = User.find(params[:user_id])
     @client_application = ClientApplication.new
   end
 
   def create
-    @client_application = current_user.client_applications.build(params[:client_application])
+    @user = User.find(params[:user_id])
+    @client_application = @user.client_applications.build(params[:client_application])
+
     if @client_application.save
       flash[:notice] = "Registered the information successfully"
       redirect_to :action => "show", :id => @client_application.id
@@ -24,6 +25,7 @@ class OauthClientsController < BaseController
   end
 
   def update
+    @client_application = ClientApplication.find(params[:id])
     if @client_application.update_attributes(params[:client_application])
       flash[:notice] = "Updated the client information successfully"
       redirect_to :action => "show", :id => @client_application.id
@@ -39,12 +41,6 @@ class OauthClientsController < BaseController
   end
 
   private
-  def get_client_application
-    unless @client_application = current_user.client_applications.find(params[:id])
-      flash.now[:error] = "Wrong application id"
-      raise ActiveRecord::RecordNotFound
-    end
-  end
 
   def login_required
     authorize! :manage, :client_applications
