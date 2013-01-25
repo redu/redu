@@ -49,20 +49,6 @@ SimpleNavigation::Configuration.run do |navigation|
                         :if => Proc.new { action_matcher({'messages' => ['show']}).
                                           call && @message.sender == @user } }
       end
-      sidebar.item :oauth_clients, 'Aplicativos', new_user_oauth_client_path(@user), :class => 'nav-local-item icon-app-lightblue_16_18-before ', :link => { :class => 'nav-local-link link-target', :title => 'Aplicativos' } do |apps_tab|
-        apps_tab.dom_class = 'tabs'
-        apps_tab.selected_class = 'tab-active'
-
-        apps_tab.item :new_app, 'Novo Aplicativo', new_user_oauth_client_path(@user), :class => 'tab',
-          :highlights_on => action_matcher({ 'oauth_clients' => ['new', 'create'] }),
-          :link => { :class => 'tab-title', :title => 'Novo Aplicativo' }
-        apps_tab.item :my_apps, 'Meus Aplicativos', user_oauth_clients_path(@user), :class => 'tab',
-          :highlights_on => action_matcher({ 'oauth_clients' => ['show', 'index', 'edit', 'update'] }),
-          :link => { :class => 'tab-title', :title => 'Meus Aplicativos' },
-          :details => { :text => 'Visualização', :class => 'tab-sub-title legend',
-                        :if => action_matcher({ 'oauth_clients' => ['show', 'edit',
-        'update'] }) }
-      end
       sidebar.item :environments, 'Ambientes', user_environments_path(@user), :class => 'icon-environment_16_18-before nav-local-item', :link => { :class => 'nav-local-link link-target', :title => 'Ambientes' }
       sidebar.item :settings, 'Configurações', edit_user_path(@user), :class => 'icon-manage_16_18-before nav-local-item', :link => { :class => 'nav-local-link link-target', :title => 'Configurações' } do |settings_tab|
         settings_tab.dom_class = 'tabs'
@@ -97,6 +83,20 @@ SimpleNavigation::Configuration.run do |navigation|
                      :title => 'Planos' },
           :details => { :text => 'detalhes', :class => 'tab-sub-title legend',
             :if => action_matcher({'invoices' => ['index']}) }
+      end
+      sidebar.item :oauth_clients, 'Aplicativos', new_user_oauth_client_path(@user), :class => 'nav-local-item icon-app-lightblue_16_18-before ', :link => { :class => 'nav-local-link link-target', :title => 'Aplicativos' } do |apps_tab|
+        apps_tab.dom_class = 'tabs'
+        apps_tab.selected_class = 'tab-active'
+
+        apps_tab.item :new_app, 'Novo Aplicativo', new_user_oauth_client_path(@user), :class => 'tab',
+          :highlights_on => action_matcher({ 'oauth_clients' => ['new', 'create'] }),
+          :link => { :class => 'tab-title', :title => 'Novo Aplicativo' }
+        apps_tab.item :my_apps, 'Meus Aplicativos', user_oauth_clients_path(@user), :class => 'tab',
+          :highlights_on => action_matcher({ 'oauth_clients' => ['show', 'index', 'edit', 'update'] }),
+          :link => { :class => 'tab-title', :title => 'Meus Aplicativos' },
+          :details => { :text => 'Visualização', :class => 'tab-sub-title legend',
+                        :if => action_matcher({ 'oauth_clients' => ['show', 'edit',
+        'update'] }) }
       end
       sidebar.item :my_contacts, 'Meus Contatos', user_friendships_path(@user), :class => 'icon-contacts_16_18-before nav-local-item', :link => { :class => 'nav-local-link link-target', :title => 'Meus Contatos' }
     end
