@@ -1,27 +1,62 @@
-<h1>Detalhes do Aplicativo OAuth <%=@client_application.name %></h1>
-<p>
-  <strong>Consumer Key:</strong>
-  <code><%=@client_application.key %></code>
-</p>
-<p>
-  <strong>Consumer Secret:</strong>
-  <code><%=@client_application.secret %></code>
-</p>
-<p>
-  <strong>Request Token URL</strong>
-  <code>http<%='s' if request.ssl? %>://<%= request.host_with_port %><%=@client_application.oauth_server.request_token_path %></code>
-</p>
-<p>
-  <strong>Access Token URL</strong>
-  <code>http<%='s' if request.ssl? %>://<%= request.host_with_port %><%=@client_application.oauth_server.access_token_path %></code>
-</p>
-<p>
-  <strong>Authorize URL</strong>
-  <code>http<%='s' if request.ssl? %>://<%= request.host_with_port %><%=@client_application.oauth_server.authorize_path %></code>
-</p>
+<div class="span3">
+  <%= render :partial => "users/left_sidebar",
+    :locals => { :user => @user } %>
+</div>
+<div class="span10">
+  <div class="content-area">
+    <%= render :partial => "oauth_clients/breadcrumb", :locals => { :user => @user } %>
+    <div class="content-body">
+      <div class="content-section">
+        <ul class="header-breadcrumb">
+          <li class="header-breadcrumb-item">
+            <%= link_to "Aplicativos", user_oauth_clients_path(@user),
+              :class => "header-bradcrumb-link icon-message-gray_32_34-before", :title => "Seus aplicativos" %>
+          </li>
+          <li class="header-breadcrumb-item">
+            <%= link_to "Meus Aplicativos", user_oauth_client_path(@user), :class => "header-bradcrumb-link", :title => "Meus Aplicativos" %>
+          </li>
+        </ul>
+      </div>
 
-<p>
-  Suportamos hmac-sha1 (recomendado) ou texto puro em modo ssl.
-</p>
-<%= link_to 'Editar', edit_user_oauth_client_path(@user, @client_application) %> |
-<%= link_to 'Voltar', user_oauth_clients_path(@user) %>
+      <%= new_tabs(:new_users) %>
+      <div class="content-section my-app">
+        <h3 class="my-app-name"><%=@client_application.name %></h3>
+
+        <ul class="my-app-infos">
+          <li>
+            <span>Consumer Key:</span>
+            <code><%=@client_application.key %></code>
+          </li>
+          <li>
+            <span>Consumer Secret:</span>
+            <code><%=@client_application.secret %></code>
+          </li>
+          <li>
+            <span>Request Token URL:</span>
+            <code>http<%='s' if request.ssl? %>://<%= request.host_with_port %><%=@client_application.oauth_server.request_token_path %></code>
+          </li>
+          <li>
+            <span>Access Token URL:</span>
+            <code>http<%='s' if request.ssl? %>://<%= request.host_with_port %><%=@client_application.oauth_server.access_token_path %></code>
+          </li>
+          <li>
+            <span>Authorize URL:</span>
+            <code>http<%='s' if request.ssl? %>://<%= request.host_with_port %><%=@client_application.oauth_server.authorize_path %></code>
+          </li>
+        </ul>
+        <p>
+          Suportamos hmac-sha1 (recomendado) ou texto puro em modo ssl.
+        </p>
+        <div class="my-app-actions">
+          <%= link_to 'Remover', user_oauth_client_path(@user, @client_application), :confirm => "Você tem certeza?", :method => :delete, :class => "button-danger" %>
+          <%= link_to 'Editar', edit_user_oauth_client_path(@user, @client_application), :class => 'button-primary' %>
+        </div>
+      </div>
+    </div>
+    <%= render :partial => "oauth_clients/breadcrumb", :locals => { :user => @user } %>
+  </div>
+</div>
+<div class="span3">
+  <%= render :partial => "users/right_sidebar",
+    :locals => { :user => @user } %>
+</div>

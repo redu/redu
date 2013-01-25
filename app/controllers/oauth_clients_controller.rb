@@ -2,6 +2,8 @@ class OauthClientsController < BaseController
   layout 'new_application'
   before_filter :login_required
 
+  before_filter :set_nav_global_context
+
   def index
     @user = User.find(params[:user_id])
     @client_applications = @user.client_applications
@@ -25,6 +27,7 @@ class OauthClientsController < BaseController
   end
 
   def update
+    @user = User.find(params[:user_id])
     @client_application = ClientApplication.find(params[:id])
     if @client_application.update_attributes(params[:client_application])
       flash[:notice] = "O aplicativo foi atualizado."
@@ -55,5 +58,9 @@ class OauthClientsController < BaseController
 
   def login_required
     #authorize! :manage, :client_applications
+  end
+
+  def set_nav_global_context
+    content_for :nav_global_context, "new_users"
   end
 end

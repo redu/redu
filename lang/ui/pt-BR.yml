@@ -288,6 +288,13 @@ pt-BR:
           attributes:
             original:
               empty: "Você não está esquecendo de algo? Acho que pode ser o vídeo :)"
+        client_application:
+          attributes:
+            name:
+              blank: "Por favor, digite o nome do aplicativo."
+            url:
+              blank: "Por favor, digite a URL do aplicativo."
+              invalid: "Por favor, digite uma URL válida."
 
   helpers:
     submit:

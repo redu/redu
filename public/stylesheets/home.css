@@ -741,11 +741,30 @@ ul.requisitions .actions input:last-child {
   /* W3C */
 }
 
-.my-apps-list {
-  margin-top: 20px;
-}
-
 .my-apps-list .close {
   float: right;
   margin-top: 4px;
+}
+
+.my-app .my-app-name {
+  margin-bottom: 20px;
+}
+
+.my-app .my-app-infos {
+  list-style: none;
+}
+
+.new-app .new-app-actions,
+.my-app .my-app-actions {
+  float: right;
+  margin-top: 20px;
+}
+
+.my-app .my-app-actions .button-primary {
+  margin-left: 2px;
+}
+
+.new-app .new-app-form,
+.my-app .my-app-edit-form {
+  overflow: hidden;
 }

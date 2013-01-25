@@ -53,10 +53,15 @@ SimpleNavigation::Configuration.run do |navigation|
         apps_tab.dom_class = 'tabs'
         apps_tab.selected_class = 'tab-active'
 
-        apps_tab.item :new_app, 'Novo aplicativo', new_user_oauth_client_path(@user), :class => 'tab',
-          :link => { :class => 'tab-title', :title => 'Novo aplicativo' }
-        apps_tab.item :new_app, 'Meus aplicativos', user_oauth_clients_path(@user), :class => 'tab',
-          :link => { :class => 'tab-title', :title => 'Meus aplicativos' }
+        apps_tab.item :new_app, 'Novo Aplicativo', new_user_oauth_client_path(@user), :class => 'tab',
+          :highlights_on => action_matcher({ 'oauth_clients' => ['new', 'create'] }),
+          :link => { :class => 'tab-title', :title => 'Novo Aplicativo' }
+        apps_tab.item :my_apps, 'Meus Aplicativos', user_oauth_clients_path(@user), :class => 'tab',
+          :highlights_on => action_matcher({ 'oauth_clients' => ['show', 'index', 'edit', 'update'] }),
+          :link => { :class => 'tab-title', :title => 'Meus Aplicativos' },
+          :details => { :text => 'Visualização', :class => 'tab-sub-title legend',
+                        :if => action_matcher({ 'oauth_clients' => ['show', 'edit',
+        'update'] }) }
       end
       sidebar.item :environments, 'Ambientes', user_environments_path(@user), :class => 'icon-environment_16_18-before nav-local-item', :link => { :class => 'nav-local-link link-target', :title => 'Ambientes' }
       sidebar.item :settings, 'Configurações', edit_user_path(@user), :class => 'icon-manage_16_18-before nav-local-item', :link => { :class => 'nav-local-link link-target', :title => 'Configurações' } do |settings_tab|

@@ -8,8 +8,8 @@
     <div class="content-body">
       <%= render :partial => 'oauth_clients/header_breadcrumb', :locals => { :user => @user } %>
 
+      <%= new_tabs(:new_users) %>
       <div class="content-section">
-        <%= new_tabs(:new_users) %>
         <% if @client_applications.empty? %>
         <% else %>
           <table class="table-with-borderradius table-with-link my-apps-list">

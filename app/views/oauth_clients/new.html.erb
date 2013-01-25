@@ -8,13 +8,12 @@
     <div class="content-body">
       <%= render :partial => 'oauth_clients/header_breadcrumb', :locals => { :user => @user } %>
 
-      <div class="content-section">
-        <%= new_tabs(:new_users) %>
-        <h3>Registre um novo aplicativo</h3>
-        <%= form_for user_oauth_clients_path(@user), :url => { :action => :create } do |f| %>
+      <%= new_tabs(:new_users) %>
+      <div class="content-section new-app">
+        <%= form_for @client_application, :url => user_oauth_clients_path(@user), :html => { :class => "new-app-form" } do |f| %>
           <%= render :partial => "form", :locals => { :f => f } %>
-          <div class="control-group">
-            <%= submit_tag "Registrar", :class => "button-primary" %>
+          <div class="new-app-actions">
+            <%= f.submit "Registrar", :class => "button-primary" %>
           </div>
         <% end %>
       </div>
