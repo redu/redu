@@ -35,13 +35,21 @@
     };
 
     removeTitle = function() {
-      var title = $('#new_experience').find('.title');
-      var cancel = $('#new_experience .cancel');
+      var experience_title = $('#new_experience').find('.title');
+      var education_title = $('#new_education').find('.title');
+      var experience_cancel = $('#new_experience .cancel');
+      var education_cancel = $('#new_education .cancel');
 
       if ($.trim($('#curriculum .experiences').html()).length == 0) {
         $('#new_experience').css('padding-top', 0);
-        cancel.hide();
-        title.remove();
+        experience_cancel.hide();
+        experience_title.remove();
+      }
+
+      if ($.trim($('#curriculum .educations').html()).length == 0) {
+        $('#new_education').css('padding-top', 0);
+        education_cancel.hide();
+        education_title.remove();
       }
     };
 
