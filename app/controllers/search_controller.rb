@@ -1,13 +1,16 @@
 class SearchController < BaseController
-
   before_filter :authorize
 
   # Busca por Perfis + Ambientes (AVA's, Cursos e Disciplinas)
   def index
-    @profiles = UserSearch.perform(params[:q], params[:page], params[:per_page]).results
-    @environments = EnvironmentSearch.perform(params[:q], params[:page], params[:per_page]).results
-    @courses = CourseSearch.perform(params[:q], params[:page], params[:per_page]).results
-    @spaces = SpaceSearch.perform(params[:q], params[:page], params[:per_page]).results
+    @profiles = UserSearch.perform(params[:q], params[:format],
+                                   params[:page], params[:per_page]).results
+    @environments = EnvironmentSearch.perform(params[:q], params[:format],
+                                              params[:page], params[:per_page]).results
+    @courses = CourseSearch.perform(params[:q], params[:format],
+                                    params[:page], params[:per_page]).results
+    @spaces = SpaceSearch.perform(params[:q], params[:format],
+                                  params[:page], params[:per_page]).results
     @query = params[:q]
 
     respond_to do |format|
