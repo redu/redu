@@ -3,7 +3,7 @@ class UserSearch < Search
     super(User)
   end
 
-  def self.perform(query, format, page = nil, per_page = 10)
+  def self.perform(query, format = nil, page = nil, per_page = 10)
     searcher = UserSearch.new
     # Instant search não necessita dos includes
     format == "json" ? includes = [] : includes = [:experiences, :tags, :friends,

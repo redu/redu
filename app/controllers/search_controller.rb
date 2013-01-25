@@ -21,7 +21,7 @@ class SearchController < BaseController
         @all << JSON.parse(make_representable(@environments).to_json) unless @environments.empty?
         @all << JSON.parse(make_representable(@courses).to_json) unless @courses.empty?
         @all << JSON.parse(make_representable(@spaces).to_json) unless @spaces.empty?
-        @all = @all.flatten
+        @all.flatten!
         render :json => @all
       end
     end
@@ -53,7 +53,7 @@ class SearchController < BaseController
         @all << JSON.parse(make_representable(@environments).to_json) unless @environments.empty?
         @all << JSON.parse(make_representable(@courses).to_json) unless @courses.empty?
         @all << JSON.parse(make_representable(@spaces).to_json) unless @spaces.empty?
-        @all = @all.flatten
+        @all.flatten!
         render :json => @all
       end
     end
