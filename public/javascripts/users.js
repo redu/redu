@@ -14,10 +14,10 @@
         if (experiences.length > 0
           && $("#new_experience .field_with_errors").length == 0) {
           $("#new_experience").hide();
-          $("#curriculum .new-experience-button").show();
+          $("#curriculum .experience .config-new-item").show();
         } else {
           $("#new_experience").show();
-          $("#curriculum .new-experience-button").hide();
+          $("#curriculum .experience .config-new-item").hide();
         }
       }
 
@@ -26,10 +26,10 @@
         if (educations.length > 0
           && $("#new_education .field_with_errors").length == 0) {
           $("#new_education").hide();
-          $("#curriculum .new-education-button").show();
+          $("#curriculum .education .config-new-item").show();
         } else {
           $("#new_education").show();
-          $("#curriculum .new-education-button").hide();
+          $("#curriculum .education .config-new-item").hide();
         }
       }
     };
@@ -102,13 +102,13 @@
         });
 
         $(document).on('click', '#curriculum .new-experience-button', function(){
-            $(this).hide();
+            $('#curriculum .experience .config-new-item').hide();
             $("#new_experience").slideDown();
             return false;
         });
 
         $(document).on('click', '#curriculum .new-education-button', function(){
-            $(this).hide();
+            $('#curriculum .education .config-new-item').hide();
             $("#new_education").slideToggle();
             return false;
         });
@@ -120,11 +120,12 @@
             $experiences.find(".infos").show();
             $experiences.find("form").slideUp();
             $("#new_experience").hide();
-            $("#curriculum .new-experience-button").hide();
+            $("#curriculum .experience .config-new-item").hide();
 
             $infos = $(this).parents('.infos');
             $infos.slideUp();
             $infos.siblings("form").slideDown();
+            return false;
         });
 
         // Mostra o form de edição e esconde o item de Educação
@@ -134,7 +135,7 @@
             $educations.find(".infos").show();
             $educations.find("form").slideUp();
             $("#new_education").hide();
-            $("#curriculum .new-education-button").hide();
+            $("#curriculum .education .config-new-item").hide();
 
             $infos = $(this).parents('.infos');
             $infos.slideUp();
@@ -142,20 +143,27 @@
             return false;
         });
 
-        $(document).on('click', '#curriculum .cancel', function(){
+        $(document).on('click', '#curriculum .education .cancel', function(){
             $educations = $("#curriculum .educations > li");
             $infos = $(this).parent('.config-experience');
             $educations.find(".infos").show();
             $educations.find("form").slideUp();
             $("#new_education").slideUp();
-            $("#curriculum .new-education-button").show();
+            $("#curriculum .education .config-new-item").show();
 
+            $infos = $(this).parents('.infos');
+            $infos.slideUp();
+            $infos.siblings("form").slideUp();
+            return false;
+        });
+
+        $(document).on('click', '#curriculum .experience .cancel', function(){
             $experiences = $("#curriculum .experiences > li");
             $infos = $(this).parent('.config-experience');
             $experiences.find(".infos").show();
             $experiences.find("form").slideUp();
             $("#new_experience").slideUp();
-            $("#curriculum .new-experience-button").show();
+            $("#curriculum .experience .config-new-item").show();
 
             $infos = $(this).parents('.infos');
             $infos.slideUp();

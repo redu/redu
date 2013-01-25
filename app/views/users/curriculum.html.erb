@@ -38,26 +38,25 @@
 
       <div id="curriculum">
 
-        <div class="home-container experience">
+        <div class="curriculum-container experience">
           <h4 class="config-title icon-curriculum-professional-lightblue_32_34-before">Experiência profissional</h4>
 
           <ul class="experiences">
             <%= render :partial => 'experiences/item',
               :collection => @experiences %>
           </ul>
-        </div>
-
-        <div class="config-new-item">
-          <a href="#" class="button-default new-experience-button icon-curriculum-lightblue_16_18-before">Adicionar novo item</a>
 
           <%= render :partial => 'experiences/form', :locals => {
-            :user => @user, :experience => @experience, :experiences_count => @experiences.length } %>
-        </div>
+              :user => @user, :experience => @experience, :experiences_count => @experiences.length } %>
 
+          <div class="config-new-item">
+            <a href="#" class="button-default new-experience-button icon-curriculum-lightblue_16_18-before">Adicionar novo item</a>
+          </div>
+        </div>
 
         <hr class="list-separator">
 
-        <div class="home-container education">
+        <div class="curriculum-container education">
           <h4 class="config-title icon-curriculum-academic-lightblue_32_34-before">Experiência acadêmica</h4>
 
           <ul class="educations">
@@ -65,15 +64,14 @@
                   :collection => @educations %>
           </ul>
 
-        </div>
-
-        <div class="config-new-item">
-            <a href="#" class="button-default new-education-button icon-curriculum-lightblue_16_18-before">Adicionar novo item</a>
-
-            <%= render :partial => 'educations/form', :locals => {
+          <%= render :partial => 'educations/form', :locals => {
               :high_school => @high_school, :higher_education => @higher_education,
               :complementary_course => @complementary_course,
               :event_education => @event_education, :user => @user }%>
+
+          <div class="config-new-item">
+              <a href="#" class="button-default new-education-button icon-curriculum-lightblue_16_18-before">Adicionar novo item</a>
+          </div>
         </div>
 
       </div>

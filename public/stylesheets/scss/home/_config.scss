@@ -39,6 +39,14 @@
 // Perfil - Currículo
 // ==========================================================================
 
+.curriculum-container {
+  margin: 10px 0;
+  .list-mix-item { padding: 0 20px; }
+  #new_education .form-education { margin-top: 20px; }
+  ul + .form-horizontal { padding-top: 20px; }
+  h4 { padding: 0 20px; }
+}
+
 .config-title {
   font-weight: 300;
   color: $blue2;
@@ -90,13 +98,14 @@
   }
 }
 
-.config-experience + .config-experience { margin-top: 10px }
+.config-experience + .config-experience {
+  margin-top: 10px;
+  .form-horizontal { padding-top: 10px; }
+}
 
 .config-new-item {
-  margin: 10px 0;
+  margin-top: 20px;
   text-align: center;
-
-  .form-education { margin-top: 20px; }
 }
 
 form {
@@ -109,7 +118,6 @@ form {
   .home-container { padding-bottom: 10px; }
   .curriculum-title {
     color: $blue2;
-    &.edit { margin-top: 10px; }
   }
 }
 

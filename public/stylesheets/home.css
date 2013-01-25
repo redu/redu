@@ -486,6 +486,22 @@ input[type="hidden"] +
   margin-left: 5px;
 }
 
+.curriculum-container {
+  margin: 10px 0;
+}
+.curriculum-container .list-mix-item {
+  padding: 0 20px;
+}
+.curriculum-container #new_education .form-education {
+  margin-top: 20px;
+}
+.curriculum-container ul + .form-horizontal {
+  padding-top: 20px;
+}
+.curriculum-container h4 {
+  padding: 0 20px;
+}
+
 .config-title {
   font-weight: 300;
   color: #73c3e6;
@@ -536,13 +552,13 @@ input[type="hidden"] +
 .config-experience + .config-experience {
   margin-top: 10px;
 }
+.config-experience + .config-experience .form-horizontal {
+  padding-top: 10px;
+}
 
 .config-new-item {
-  margin: 10px 0;
-  text-align: center;
-}
-.config-new-item .form-education {
   margin-top: 20px;
+  text-align: center;
 }
 
 form .end-date {
@@ -560,9 +576,6 @@ form .errors_on_field {
 }
 #curriculum .curriculum-title {
   color: #73c3e6;
-}
-#curriculum .curriculum-title.edit {
-  margin-top: 10px;
 }
 
 .curriculum-buttons {
