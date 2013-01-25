@@ -6,7 +6,7 @@
   $("#curriculum .new-experience-button").show();
 <% else %>
   var experience_form = "<%= escape_javascript render :partial => 'experiences/form',
-    :locals => { :user => @experience.user, :experience => @experience, :experiences_count => @experiences.length } %>"
+    :locals => { :user => @experience.user, :experience => @experience } %>"
   var $form = $("#edit_experience_<%= @experience.id %>");
   $form.replaceWith(experience_form);
   $("#edit_experience_<%= @experience.id %>").show();

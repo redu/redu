@@ -1,17 +1,15 @@
 <%= form_for [user, experience], :remote => true,
   :html => { :class => "form-horizontal clearfix form-config-account edit-form" } do |f| %>
 
-  <% if experiences_count != 0 %>
-    <div class="control-group row">
-      <div class="offset3 span6">
-        <% if experience.new_record? %>
-          <h6 class="pull-left curriculum-title">Novo item</h6>
-        <% else %>
-          <h6 class="pull-left curriculum-title edit">Editando item</h6>
-        <% end %>
-      </div>
+  <div class="control-group row title">
+    <div class="offset3 span6">
+      <% if experience.new_record? %>
+        <h6 class="pull-left curriculum-title">Novo item</h6>
+      <% else %>
+        <h6 class="pull-left curriculum-title edit">Editando item</h6>
+      <% end %>
     </div>
-  <% end %>
+  </div>
 
   <div class="control-group row">
     <div class="control-label span3">
@@ -75,10 +73,7 @@
 
   <div class="offset3 span6 curriculum-buttons">
     <button type="submit" class="button-default add-item icon-curriculum-lightblue_16_18-before pull-right"><% if experience.new_record? %>Adicionar item<% else %>Salvar item<% end %></button>
-
-    <% if experiences_count != 0 %>
-      <button class="button-default cancel pull-right">Cancelar</button>
-    <% end %>
+    <button class="button-default cancel pull-right">Cancelar</button>
   </div>
 
 <% end %>

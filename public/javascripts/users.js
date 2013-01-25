@@ -34,6 +34,17 @@
       }
     };
 
+    removeTitle = function() {
+      var title = $('#new_experience').find('.title');
+      var cancel = $('#new_experience .cancel');
+
+      if ($.trim($('#curriculum .experiences').html()).length == 0) {
+        $('#new_experience').css('padding-top', 0);
+        cancel.hide();
+        title.remove();
+      }
+    };
+
     // Adiciona um novo campo de rede social
     $.fn.refreshSocialNetwork = function(){
       return this.each(function (){
@@ -91,6 +102,7 @@
     jQuery(function(){
         $(".experience-current:checked").refreshEndDateVisibility();
         refreshDefaultFormsVisibility();
+        removeTitle();
         $("#biography").refreshSocialNetwork();
         // Esconde os forms de edição
         $("#curriculum .experiences form").hide();
@@ -184,6 +196,7 @@
 
         $(document).ajaxComplete(function(){
             refreshDefaultFormsVisibility();
+            removeTitle();
             $(".experience-current:checked").refreshEndDateVisibility();
             $("#biography").refreshSocialNetwork();
             // Esconde os forms de edição
