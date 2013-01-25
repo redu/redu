@@ -1,9 +1,6 @@
 <h1><%= course.name %></h1>
 Ambiente: <%= link_to course.environment.name, environment_path(course.environment) %> |
- Audiência: <%= course.audiences.collect{ |a| a.name }.join(", ") %><br />
 Criador: <%= course.owner.display_name unless course.owner.nil? %><br />
-Professores: <%= course.teachers.collect { |t| t.display_name }.join(", ") %><br />
-Descrição: <%= course.description %><br />
-Tags: <%= course.tags.join(", ") %><br />
-Disciplinas: <%= course.spaces.length %> | Membros: <%= course.users.length %> |
- Amigos neste curso: <%= (current_user.friends & course.users).length %><br />
+Membros: <%= course.users.length %> |
+Professores: <%= course.teachers.count %><br />
+Disciplinas: <%= course.spaces.length %>

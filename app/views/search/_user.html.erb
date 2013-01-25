@@ -1,8 +1,6 @@
 <li>
   <span><%= user.first_name %></span>
   <span><%= user.last_name %></span>
-  <span><%= user.localization %></span>
-  <span><%= user.birth_localization %></span>
 
   <% Experience.current_jobs(user.experiences).each do |job| %>
     <span><%= job.title %></span>
@@ -14,31 +12,32 @@
     <span><%= education.educationable.institution %></span>
   <% end %>
 
-  <% user.tags.each do |tag| %>
-    <span><%= tag.name %></span>
-  <% end %>
+  <span><%= user.localization %></span>
 
-  <%= mutual_friends(user).count %>
+  Amigos: <%= user.friends.length %> | Cursos: <%= user.courses.length %>
 
-  <span><%= (user.courses & current_user.courses).count %></span>
-
+  <% # Só mostra o link se usuário não for amigo %>
   <% if !is_friend?(user) %>
+    <% # Se existir pedido de amizade %>
     <% if current_friendship(user) %>
-
+      <% # Se eu fiz o pedido %>
       <% if current_friendship(user).status == 'pending' %>
         <span>Aguardando aceitação</span>
+      <% # Se eu tenho que aceitar algum pedido %>
       <% else %>
         <%= link_to 'Aceitar pedido de conexão',
             user_friendships_path(current_user,
                                   :friend_id => user.id),
                                   :method => :post %>
       <% end %>
-
+    <% # Se não houver pedido de amizade ainda %>
     <% else %>
       <%= link_to 'Adicionar contato',
           user_friendships_path(current_user,
                                 :friend_id => user.id),
                                 :method => :post %>
     <% end %>
+  <% else %>
+    | Amigos em comum: <%= mutual_friends(user).count %>
   <% end %>
 </li>
