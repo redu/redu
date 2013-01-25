@@ -49,6 +49,15 @@ SimpleNavigation::Configuration.run do |navigation|
                         :if => Proc.new { action_matcher({'messages' => ['show']}).
                                           call && @message.sender == @user } }
       end
+      sidebar.item :oauth_clients, 'Aplicativos', new_user_oauth_client_path(@user), :class => 'nav-local-item', :link => { :class => 'nav-local-link link-target', :title => 'Aplicativos' } do |apps_tab|
+        apps_tab.dom_class = 'tabs'
+        apps_tab.selected_class = 'tab-active'
+
+        apps_tab.item :new_app, 'Novo aplicativo', new_user_oauth_client_path(@user), :class => 'tab',
+          :link => { :class => 'tab-title', :title => 'Novo aplicativo' }
+        apps_tab.item :new_app, 'Meus aplicativos', user_oauth_clients_path(@user), :class => 'tab',
+          :link => { :class => 'tab-title', :title => 'Meus aplicativos' }
+      end
       sidebar.item :environments, 'Ambientes', user_environments_path(@user), :class => 'icon-environment_16_18-before nav-local-item', :link => { :class => 'nav-local-link link-target', :title => 'Ambientes' }
       sidebar.item :settings, 'Configurações', edit_user_path(@user), :class => 'icon-manage_16_18-before nav-local-item', :link => { :class => 'nav-local-link link-target', :title => 'Configurações' } do |settings_tab|
         settings_tab.dom_class = 'tabs'

@@ -1,4 +1,5 @@
 class OauthClientsController < BaseController
+  layout 'new_application'
   before_filter :login_required
   before_filter :get_client_application, :only => [:show, :edit, :update, :destroy]
 
@@ -8,6 +9,7 @@ class OauthClientsController < BaseController
   end
 
   def new
+    @user = current_user
     @client_application = ClientApplication.new
   end
 

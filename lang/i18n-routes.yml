@@ -64,3 +64,4 @@ pt-BR:
     students_participation_report_show: "relatorio_participacao_alunos_imprimir"
     exercises: "exercicios"
     explore_tour: "explorar_tour"
+    oauth_clients: "apps"

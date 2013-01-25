@@ -1,5 +1,25 @@
-<h1>Registre um novo aplicativo</h1>
-<%= form_for :client_application, :url => { :action => :create } do |f| %>
-   <%= render :partial => "form", :locals => { :f => f } %>
-   <%= submit_tag "Registrar" %>
-<% end %>
+<div class="span3">
+  <%= render :partial => "users/left_sidebar",
+    :locals => { :user => @user } %>
+</div>
+<div class="span10">
+  <div class="content-area">
+    <div class="content-body">
+
+      <%= new_tabs(:new_users) %>
+      <div class="content-section">
+        <h3>Registre um novo aplicativo</h3>
+        <%= form_for user_oauth_clients_path(@user), :url => { :action => :create } do |f| %>
+          <%= render :partial => "form", :locals => { :f => f } %>
+          <div class="control-group">
+            <%= submit_tag "Registrar", :class => "button-success" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="span3">
+  <%= render :partial => "users/right_sidebar",
+    :locals => { :user => @user } %>
+</div>
