@@ -2,46 +2,42 @@ require 'spec_helper'
 require 'authlogic/test_case'
 
 describe OauthClientsController do
+  let(:user) { Factory(:user, :role => Role[:admin]) }
+  let(:client_application) do
+    user.client_applications.create({ :name => "ReduClient",
+                                      :url => "http://www,redu.com.br" })
+  end
+  let(:params) { { :locale => "pt-BR", :user_id => user.to_param } }
+
   before do
-    @user = Factory(:user, :role => Role[:admin])
-    login_as @user
-
-    @params = {
-      :client_application => {
-        :name => "ReduClient",
-        :url => "http://www.redu.com.br"
-      }
-    }
-
-    @locale = { :locale => "pt-BR" }
+    login_as user
   end
 
   describe "GET index" do
     it "assigns all client applications as @client_applications" do
-      client_application = @user.client_applications.create @params[:client_application]
-      get :index, @locale
+      client_application
+      get :index, params
       assigns(:client_applications).should eq([client_application])
     end
 
     it "renders the index template" do
-      get :index, @locale
+      get :index, params
       response.should render_template("index")
     end
 
     it "has a 200 status code" do
-      get :index, @locale
+      get :index, params
       response.code.should eq("200")
     end
   end
 
   describe "GET show" do
     before do
-      @client_application = @user.client_applications.create @params[:client_application]
-      get :show, {:id => @client_application.to_param}.merge!(@locale)
+      get :show, {:id => client_application.to_param}.merge!(params)
     end
 
     it "assigns the requested client application as @client_application" do
-      assigns(:client_application).should eq(@client_application)
+      assigns(:client_application).should eq(client_application)
     end
 
     it "renders the show template" do
@@ -55,29 +51,28 @@ describe OauthClientsController do
 
   describe "GET new" do
     it "assigns a new client_application as @client_application" do
-      get :new, @locale
+      get :new, params
       assigns(:client_application).should be_a_new(ClientApplication)
     end
 
     it "renders the new template" do
-      get :new, @locale
+      get :new, params
       response.should render_template("new")
     end
 
     it "has a 200 status code" do
-      get :new, @locale
+      get :new, params
       response.code.should eq("200")
     end
   end
 
   describe "GET edit" do
     before do
-      @client_application = @user.client_applications.create @params[:client_application]
-      get :edit, {:id => @client_application.to_param}.merge!(@locale)
+      get :edit, {:id => client_application.to_param}.merge!(params)
     end
 
     it "assigns the requested client_application as @client_application" do
-      assigns(:client_application).should eq(@client_application)
+      assigns(:client_application).should eq(client_application)
     end
 
     it "renders the edit template" do
@@ -90,16 +85,24 @@ describe OauthClientsController do
   end
 
   describe "POST create" do
+    let(:entity_params) do
+      {
+        :client_application => {
+          :name => "ReduClient",
+          :url => "http://www.redu.com.br"
+        }
+      }
+    end
 
     it "creates a new client_application" do
       expect {
-        post :create, @params.merge!(@locale)
+        post :create, entity_params.merge!(params)
       }.to change(ClientApplication, :count).by(1)
     end
 
     context "with valid params" do
       before do
-        post :create, @params.merge!(@locale)
+        post :create, entity_params.merge!(params)
       end
 
       it "assigns a newly created client_application as @client_application" do
@@ -108,7 +111,7 @@ describe OauthClientsController do
       end
 
       it "redirects to the created client_application" do
-        response.should redirect_to(oauth_client_path(ClientApplication.last))
+        response.should redirect_to(user_oauth_client_path(user, ClientApplication.last))
       end
 
       it "has a 302 (redirect) status code" do
@@ -120,14 +123,14 @@ describe OauthClientsController do
       it "assigns a newly created but unsaved client_application as @client_application" do
         # Trigger the behavior that occurs when invalid params are submitted
         ClientApplication.any_instance.stub(:save).and_return(false)
-        post :create, {:client_application => {}, :locale => "pt-BR"}
+        post :create, {:client_application => {} }.merge!(params)
         assigns(:client_application).should be_a_new(ClientApplication)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         ClientApplication.any_instance.stub(:save).and_return(false)
-        post :create, {:client_application => {}, :locale => "pt-BR"}
+        post :create, {:client_application => {} }.merge!(params)
         response.should render_template("new")
       end
     end
@@ -135,22 +138,26 @@ describe OauthClientsController do
 
   describe "PUT update" do
     before do
-      @client_application = @user.client_applications.create! @params[:client_application]
-      put :update, {:id => @client_application.to_param, :client_application => {'name' => 'UpdatedClient'} }.merge!(@locale)
+      put :update, {:id => client_application.to_param,
+                    :client_application => {'name' => 'UpdatedClient'} }.
+                    merge!(params)
     end
 
     context "with valid params" do
       it "updates the requested client application" do
         ClientApplication.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, {:id => @client_application.to_param, :client_application => {'these' => 'params'} }.merge!(@locale)
+        put :update, {:id => client_application.to_param,
+                      :client_application => {'these' => 'params'} }.
+                      merge!(params)
       end
 
       it "assigns the requested client_application as @client_application" do
-        assigns(:client_application).should eq(@client_application)
+        assigns(:client_application).should eq(client_application)
       end
 
       it "redirects to the client_application" do
-        response.should redirect_to(oauth_client_path(@client_application))
+        response.should redirect_to(user_oauth_client_path(user,
+                                                           client_application))
       end
 
       it "has a 302 (redirect) status code" do
@@ -160,11 +167,13 @@ describe OauthClientsController do
 
     context "with invalid params" do
       before do
-        put :update, {:id => @client_application.to_param, :client_application => {'url' => 'url invalida'} }.merge!(@locale)
+        put :update, {:id => client_application.to_param,
+                      :client_application => {'url' => 'url invalida'} }.
+                      merge!(params)
       end
 
       it "reassigns the client_application as @client_application" do
-        assigns(:client_application).should eq(@client_application)
+        assigns(:client_application).should eq(client_application)
       end
 
       it "re-renders the edit template" do
@@ -174,20 +183,16 @@ describe OauthClientsController do
   end
 
   describe "DELETE destroy" do
-    before  do
-      @client_application = @user.client_applications.create! @params[:client_application]
-    end
-
     it "destroys the requested client_application" do
+      client_application
       expect {
-        delete :destroy, {:id => @client_application.to_param}.merge!(@locale)
+        delete :destroy, {:id => client_application.to_param}.merge!(params)
       }.to change(ClientApplication, :count).by(-1)
     end
 
     it "redirects to the client_applications list" do
-      delete :destroy, {:id => @client_application.to_param}.merge!(@locale)
-      response.should redirect_to(oauth_clients_url)
+      delete :destroy, {:id => client_application.to_param}.merge!(params)
+      response.should redirect_to(user_oauth_clients_url(user))
     end
   end
-
 end

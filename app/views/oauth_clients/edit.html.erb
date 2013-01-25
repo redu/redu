@@ -1,7 +1,7 @@
 <h1>Editar</h1>
-<%= form_for :client_application, @client_application, :url => oauth_client_path(@client_application), :html => {:method => :put}  do |f| %>
+<%= form_for @client_application, :url => user_oauth_client_path(@user, @client_application), :html => {:method => :put}  do |f| %>
        <%= render :partial => "form", :locals => { :f => f } %>
        <%= submit_tag "Editar" %>
 <% end %>
-<%= link_to 'Ver', oauth_client_path(@client_application) %> |
-<%= link_to 'Voltar', oauth_clients_path %>
+<%= link_to 'Ver', user_oauth_client_path(@user, @client_application) %> |
+<%= link_to 'Voltar', user_oauth_clients_path(@user) %>

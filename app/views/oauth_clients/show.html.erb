@@ -23,5 +23,5 @@
 <p>
   Suportamos hmac-sha1 (recomendado) ou texto puro em modo ssl.
 </p>
-<%= link_to 'Editar', edit_oauth_client_path(@client_application) %> |
-<%= link_to 'Voltar', oauth_clients_path %>
+<%= link_to 'Editar', edit_user_oauth_client_path(@user, @client_application) %> |
+<%= link_to 'Voltar', user_oauth_clients_path(@user) %>
