@@ -14,7 +14,7 @@
         <%= form_for user_oauth_clients_path(@user), :url => { :action => :create } do |f| %>
           <%= render :partial => "form", :locals => { :f => f } %>
           <div class="control-group">
-            <%= submit_tag "Registrar", :class => "button-success" %>
+            <%= submit_tag "Registrar", :class => "button-primary" %>
           </div>
         <% end %>
       </div>
