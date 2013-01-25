@@ -51,7 +51,7 @@
           <a href="#" class="button-default new-experience-button icon-curriculum-lightblue_16_18-before">Adicionar novo item</a>
 
           <%= render :partial => 'experiences/form', :locals => {
-            :user => @user, :experience => @experience } %>
+            :user => @user, :experience => @experience, :experiences_count => @experiences.length } %>
         </div>
 
 

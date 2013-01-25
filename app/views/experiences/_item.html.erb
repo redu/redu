@@ -15,5 +15,5 @@
   </div>
 
   <%= render :partial => 'experiences/form', :locals => { :user => item.user,
-  :experience => item } %>
+  :experience => item, :experiences_count => @experiences.length } %>
 </li>

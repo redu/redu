@@ -2,6 +2,6 @@ $("#new_experience").hide();
 $("#curriculum .new-experience-button").hide();
 
 var experience_form = "<%= escape_javascript render :partial => 'experiences/form',
-  :locals => { :user => @user, :experience => @experience } %>"
+  :locals => { :user => @user, :experience => @experience, :experiences_count => @experiences.length } %>"
 $("#experience-<%= @experience.id %>").after(experience_form).remove();
 $("#edit_experience_<%= @experience.id %>").slideToggle();

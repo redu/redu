@@ -7,12 +7,12 @@ var $form = $("#new_experience");
 
   <%# Coloca novo form %>
   var experience_form = "<%= escape_javascript render :partial => 'experiences/form',
-    :locals => { :user => @user, :experience => Experience.new } %>"
+    :locals => { :user => @user, :experience => Experience.new, :experiences_count => @experiences.length } %>"
   $("#curriculum .experiences").after(experience_form);
   $("#curriculum .new-experience-button").show();
 <% else %>
   var experience_form = "<%= escape_javascript render :partial => 'experiences/form',
-    :locals => { :user => @experience.user, :experience => @experience } %>"
+    :locals => { :user => @experience.user, :experience => @experience, :experiences_count => @experiences.length } %>"
   $("#new_experience").replaceWith(experience_form);
   $("#new_experience").show();
 <% end %>
