@@ -740,3 +740,12 @@ ul.requisitions .actions input:last-child {
   background: linear-gradient(top, #ffffff 0%, #dbeff7 97%);
   /* W3C */
 }
+
+.my-apps-list {
+  margin-top: 20px;
+}
+
+.my-apps-list .close {
+  float: right;
+  margin-top: 4px;
+}
