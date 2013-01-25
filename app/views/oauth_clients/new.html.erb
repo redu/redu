@@ -6,9 +6,10 @@
   <div class="content-area">
     <%= render :partial => "oauth_clients/breadcrumb", :locals => { :user => @user } %>
     <div class="content-body">
+      <%= render :partial => 'oauth_clients/header_breadcrumb', :locals => { :user => @user } %>
 
-      <%= new_tabs(:new_users) %>
       <div class="content-section">
+        <%= new_tabs(:new_users) %>
         <h3>Registre um novo aplicativo</h3>
         <%= form_for user_oauth_clients_path(@user), :url => { :action => :create } do |f| %>
           <%= render :partial => "form", :locals => { :f => f } %>
