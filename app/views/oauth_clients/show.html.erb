@@ -21,32 +21,26 @@
       <%= new_tabs(:new_users) %>
       <div class="content-section my-app">
         <h3 class="my-app-name"><%=@client_application.name %></h3>
+        <p>Para realizar a autenticação utilizamos o protocolo <%= link_to "OAuth 2.0", "http://oauth.net/2/" %>. Para mais informações visite nosso <%= link_to "guia de desenvolvedores", "http://developers.redu.com.br" %>.</p>
 
         <ul class="my-app-infos">
           <li>
-            <span>Consumer Key:</span>
+            <span>Chave do <em>consumer</em>:</span>
             <code><%=@client_application.key %></code>
           </li>
           <li>
-            <span>Consumer Secret:</span>
+            <span>Segredo do <em>consumer</em>:</span>
             <code><%=@client_application.secret %></code>
           </li>
           <li>
-            <span>Request Token URL:</span>
-            <code>http<%='s' if request.ssl? %>://<%= request.host_with_port %><%=@client_application.oauth_server.request_token_path %></code>
-          </li>
-          <li>
-            <span>Access Token URL:</span>
-            <code>http<%='s' if request.ssl? %>://<%= request.host_with_port %><%=@client_application.oauth_server.access_token_path %></code>
-          </li>
-          <li>
-            <span>Authorize URL:</span>
+            <span>URL de autorização:</span>
             <code>http<%='s' if request.ssl? %>://<%= request.host_with_port %><%=@client_application.oauth_server.authorize_path %></code>
           </li>
+          <li>
+            <span>URL do token:</span>
+            <code><%= token_url %></code>
+          </li>
         </ul>
-        <p>
-          Suportamos hmac-sha1 (recomendado) ou texto puro em modo ssl.
-        </p>
         <div class="my-app-actions">
           <%= link_to 'Remover', user_oauth_client_path(@user, @client_application), :confirm => "Você tem certeza?", :method => :delete, :class => "button-danger" %>
           <%= link_to 'Editar', edit_user_oauth_client_path(@user, @client_application), :class => 'button-primary' %>
