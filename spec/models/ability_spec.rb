@@ -1946,15 +1946,24 @@ describe Ability do
     let(:ability) { Ability.new(user) }
     let(:redu_admin) {Factory(:user, :role => :admin)}
     let(:admin_abilty) {Ability.new(redu_admin)}
-    context "user" do
-      it "should not be able to manage" do
-        ability.should_not be_able_to :manage, client_application
+
+    context "when application owner" do
+      before do
+        client_application.user = user
+      end
+
+      it "should be able to manage own application" do
+        ability.should be_able_to(:manage, client_application)
       end
     end
 
-    context "admin" do
-      it "should be able to manage" do
-        admin_abilty.should be_able_to :manage, client_application
+    context "when not owner" do
+      before do
+        client_application.user = redu_admin
+      end
+
+      it "should no be able to manage others application" do
+        ability.should_not be_able_to(:manage, client_application)
       end
     end
   end

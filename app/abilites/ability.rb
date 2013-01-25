@@ -73,10 +73,8 @@ class Ability
       # Autorizar apps OAuth
       can :authorize_oauth, :base
 
-      # Somente usuários parceiros e  admin gerenciam apps OAuth
-      can :manage, :client_applications do
-        is_admin
-      end
+      # Somente donos do aplicativo podem gerencia-lo
+      can :manage, ClientApplication, :user_id => user.id
 
       # Gerencial
       can :manage, :all do |object|

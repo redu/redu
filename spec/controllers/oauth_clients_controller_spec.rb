@@ -2,10 +2,10 @@ require 'spec_helper'
 require 'authlogic/test_case'
 
 describe OauthClientsController do
-  let(:user) { Factory(:user, :role => Role[:admin]) }
+  let(:user) { Factory(:user) }
   let(:client_application) do
     user.client_applications.create({ :name => "ReduClient",
-                                      :url => "http://www,redu.com.br" })
+                                      :url => "http://www.redu.com.br" })
   end
   let(:params) { { :locale => "pt-BR", :user_id => user.to_param } }
 
