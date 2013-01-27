@@ -39,7 +39,7 @@ describe Api::CourseEnrollmentsController do
     end
 
 
-    %w(state id email token links created_at updated_at).each do |key|
+    %w(state id email token links created_at updated_at role).each do |key|
       it "should have #{key} key" do
         @entity.should have_key(key)
       end
