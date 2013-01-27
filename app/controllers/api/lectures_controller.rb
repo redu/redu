@@ -14,6 +14,7 @@ module Api
       subject = Subject.find(params[:subject_id])
       lecture = Lecture.new do |l|
         l.name = params[:lecture][:name]
+        l.position = params[:lecture][:position]
         l.owner = current_user
         l.subject = subject
         l.lectureable = create_lectureable(params[:lecture])

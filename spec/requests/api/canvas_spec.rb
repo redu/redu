@@ -24,6 +24,7 @@ describe "Canvas API" do
           base_params.merge({:lecture => {
             :name => "My Goku Lecture",
             :type => "Canvas",
+            :position => 0,
             :lectureable => { :client_application_id => client_app.id }
           }})
         end
