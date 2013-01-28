@@ -1,8 +1,8 @@
 GIT
   remote: git://github.com/andi/simple-navigation.git
-  revision: 79ea081ac772744362e925b8a0034bc6adf10c51
+  revision: 48683d735cdbc9b78263da426c92b54f22db7f4e
   specs:
-    simple-navigation (3.9.0)
+    simple-navigation (3.10.0)
       activesupport (>= 2.3.2)
 
 GIT
@@ -412,8 +412,6 @@ GEM
     shuber-sortable (1.0.6)
     signature (0.1.2)
       ruby-hmac
-    simple-navigation (3.5.0)
-      activesupport (>= 2.3.2)
     sunspot (1.3.3)
       pr_geohash (~> 1.0)
       rsolr (~> 1.0.7)
