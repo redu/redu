@@ -3,7 +3,8 @@
     <%= f.label :name, "Nome do evento" %>
   </div>
   <div class="controls span6">
-    <%= f.text_field :name %>
+    <%= f.text_field :name,
+        :placeholder => "Título do evento que você participou" %>
     <%= concave_errors_for f.object, :name %>
   </div>
 </div>

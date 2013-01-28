@@ -3,7 +3,8 @@
     <%= f.label :course, "Curso" %>
   </div>
   <div class="controls span6">
-    <%= f.text_field :course %>
+    <%= f.text_field :course,
+        :placeholder => "Título do evento que você participou" %>
     <%= concave_errors_for f.object, :course %>
   </div>
 </div>
@@ -38,7 +39,8 @@
     <%= f.label :workload, "Carga horária" %>
   </div>
   <div class="controls span6">
-    <%= f.text_field :workload %>
+    <%= f.text_field :workload,
+        :placeholder => "Tempo total do curso" %>
     <%= concave_errors_for f.object, :workload %>
   </div>
 </div>
