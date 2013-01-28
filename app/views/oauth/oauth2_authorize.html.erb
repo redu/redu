@@ -1,4 +1,5 @@
 <% content_for(:container_class) { "container-fluid" } %>
+<% content_for(:nav_global, "&nbsp;".html_safe) %>
 <div class="content-area authorize-app">
   <%= render :partial => "oauth_clients/breadcrumb", :locals => { :user => @user } %>
   <div class="content-body">
