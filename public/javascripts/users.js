@@ -118,18 +118,18 @@
         $(".explanation-sidebar .incomplete-profile .edit").hide();
 
         $(document).on('change', '.experience-current', function(){
-            $("#curriculum .end-date").slideToggle();
+            $("#curriculum .end-date").slideToggle(150, 'swing');
         });
 
         $(document).on('click', '#curriculum .new-experience-button', function(){
             $('#curriculum .experience .config-new-item').hide();
-            $("#new_experience").slideDown();
+            $("#new_experience").slideDown(150, 'swing');
             return false;
         });
 
         $(document).on('click', '#curriculum .new-education-button', function(){
             $('#curriculum .education .config-new-item').hide();
-            $("#new_education").slideToggle();
+            $("#new_education").slideToggle(150, 'swing');
             return false;
         });
 
@@ -143,8 +143,8 @@
             $("#curriculum .experience .config-new-item").hide();
 
             $infos = $(this).parents('.infos');
-            $infos.slideUp();
-            $infos.siblings("form").slideDown();
+            $infos.slideUp(150, 'swing');
+            $infos.siblings("form").slideDown(150, 'swing');
             return false;
         });
 
@@ -158,8 +158,8 @@
             $("#curriculum .education .config-new-item").hide();
 
             $infos = $(this).parents('.infos');
-            $infos.slideUp();
-            $infos.siblings("form").slideDown();
+            $infos.slideUp(150, 'swing');
+            $infos.siblings("form").slideDown(150, 'swing');
             return false;
         });
 
@@ -167,13 +167,13 @@
             $educations = $("#curriculum .educations > li");
             $infos = $(this).parent('.config-experience');
             $educations.find(".infos").show();
-            $educations.find("form").slideUp();
-            $("#new_education").slideUp();
+            $educations.find("form").slideUp(150, 'swing');
+            $("#new_education").slideUp(150, 'swing');
             $("#curriculum .education .config-new-item").show();
 
             $infos = $(this).parents('.infos');
-            $infos.slideUp();
-            $infos.siblings("form").slideUp();
+            $infos.slideUp(150, 'swing');
+            $infos.siblings("form").slideUp(150, 'swing');
             return false;
         });
 
@@ -181,13 +181,13 @@
             $experiences = $("#curriculum .experiences > li");
             $infos = $(this).parent('.config-experience');
             $experiences.find(".infos").show();
-            $experiences.find("form").slideUp();
-            $("#new_experience").slideUp();
+            $experiences.find("form").slideUp(150, 'swing');
+            $("#new_experience").slideUp(150, 'swing');
             $("#curriculum .experience .config-new-item").show();
 
             $infos = $(this).parents('.infos');
-            $infos.slideUp();
-            $infos.siblings("form").slideUp();
+            $infos.slideUp(150, 'swing');
+            $infos.siblings("form").slideUp(150, 'swing');
             return false;
         });
 
