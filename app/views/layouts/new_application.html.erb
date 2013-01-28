@@ -36,6 +36,11 @@
       <div class="footer-pusher"></div>
     </div>
     <%= render :partial => "shared/footer" %>
-    <%= render :partial => "shared/olark" %>
+    <%# É possível sobrescrever a inicialização do olark %>
+    <% if content_for?(:olark_script) %>
+      <%= content_for(:olar_script) %>
+    <% else %>
+      <%= render :partial => "shared/olark" %>
+    <% end %>
   </body>
 </html>
