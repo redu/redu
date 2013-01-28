@@ -2,6 +2,6 @@
 <% if environment.users.include?(current_user) %>
   Você faz parte deste ambiente #TODO sinalização gráfica<br />
 <% end %>
-Administrador(es): <%= environment.administrators.collect { |a| a.display_name }.join(", ") %><br />
+Administrador(es): <%= environment.owner.display_name %><br />
 Abreviação: <%= environment.initials %><br />
 Cursos: <%= environment.courses.length %> | Membros: <%= environment.users.length %><br />
