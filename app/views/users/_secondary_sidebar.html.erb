@@ -1,5 +1,7 @@
 <div class="secondary-sidebar profile-sidebar">
   <div class="actions">
+    <% # Usuários = current_user e o perfil visitado %>
+    <% # Se os usuários forem amigos, existe a opção de acabar com a amizade %>
     <% if is_friend?(@user) %>
       <%= link_to 'Remover contato',
         user_friendship_path(current_user, current_friendship(@user).id),
@@ -8,14 +10,19 @@
         :class => "disconnect icon-delete-gray_8_10-before"%>
     <% end %>
 
+    <% # Se o perfil for o do current user %>
     <% if can? :manage, @user %>
       <%= render :partial => 'users/completeness_bar' %>
     <% end %>
 
+    <% # Se os usuários não forem amigos ainda %>
     <% if !is_friend?(@user) %>
+      <% # Se existe requisição pendente %>
       <% if current_friendship(@user) %>
+        <% # Se current_user já enviou requisição de amizade %>
         <% if current_friendship(@user).status == 'pending' %>
           <a class="waiting">Aguardando aceitação</a>
+        <% # Se o usuario do perfil enviou requisiçnao de amizade %>
         <% else %>
           <%= link_to 'Aceitar pedido de conexão',
             user_friendships_path(current_user,
@@ -24,12 +31,14 @@
                                   :class => "waiting",
                                   :id => "follow_link" %>
         <% end %>
-      <% else %>
+      <% # Se não houver requisição de amizade eles não podem ser a mesma pessoa %>
+      <% elsif !@user.is?(current_user) %>
         <%= render :partial => 'friendships/form', :locals => {
           :user => current_user, :friend => @user } %>
       <% end %>
     <% end %>
 
+    <% # Se os usuário forem amigos, opção para escrever mensagem %>
     <% if is_friend?(@user) %>
       <%= link_to(user_messages_path(current_user),
                   :class => 'send-message') do %>

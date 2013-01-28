@@ -17,14 +17,18 @@ module UsersHelper
     end
   end
 
+  # Dois usuários são amigos quando eles tem um 'friendship'
+  # aceito e eles não são a mesma pessoa
   def is_friend?(user, someone = current_user)
-    user.friends?(someone) or user.is?(someone)
+    user.friends?(someone) and !user.is?(someone)
   end
 
+  # Atual 'friendship' para dois usuários
   def current_friendship(user, someone = current_user)
     user.friendship_for someone
   end
 
+  # Amigos em comum para dois usuários
   def mutual_friends(user, someone = current_user)
     user.friends_in_common_with(someone)
   end
