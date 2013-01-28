@@ -541,7 +541,7 @@ input[type="hidden"] +
   float: right;
   clear: right;
   color: #73c3e6;
-  padding-top: 5px;
+  padding-top: 10px;
 }
 .config-experience .legend:hover {
   color: #4dadd6;
