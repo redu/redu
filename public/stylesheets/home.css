@@ -768,3 +768,18 @@ ul.requisitions .actions input:last-child {
 .my-app .my-app-edit-form {
   overflow: hidden;
 }
+
+.container-fluid {
+  width: 90%;
+  max-width: 360px;
+}
+.container-fluid .authorize-app .authorization-disclaimer {
+  padding-top: 20px;
+}
+.container-fluid .authorize-app .authorization-question {
+  padding: 10px 0;
+}
+.container-fluid .authorize-app .positive-authorization-form {
+  float: left;
+  margin-right: 10px;
+}

@@ -29,3 +29,18 @@
 .my-app .my-app-edit-form {
   overflow: hidden;
 }
+
+.container-fluid {
+  width: 90%;
+  max-width: 360px;
+
+  .authorize-app {
+    .authorization-disclaimer { padding-top: 20px; }
+    .authorization-question { padding: 10px 0; }
+    .positive-authorization-form {
+      float: left;
+      margin-right: 10px;
+    }
+
+  }
+}

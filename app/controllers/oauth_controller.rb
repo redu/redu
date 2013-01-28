@@ -3,12 +3,14 @@ require 'oauth/provider/authorizer'
 
 class OauthController < ApplicationController
   include OAuth::Controllers::ProviderController
+  layout 'new_application'
 
   def login_required
     authorize! :authorize_oauth, :base
   end
 
   def authorize
+    @user = current_user
     if params[:oauth_token]
       @token = ::RequestToken.find_by_token! params[:oauth_token]
       oauth1_authorize
