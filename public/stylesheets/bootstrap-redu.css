@@ -443,14 +443,14 @@ a:hover,
 .sprite-before:before {
   content: "";
   display: inline-block;
-  vertical-align: bottom;
+  vertical-align: middle;
   margin-right: 5px;
 }
 
 .sprite-after:after {
   content: "";
   display: inline-block;
-  vertical-align: bottom;
+  vertical-align: middle;
   margin-left: 5px;
 }
 
@@ -3841,14 +3841,14 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
 [class*="icon-"][class*="-before"]:before {
   content: "";
   display: inline-block;
-  vertical-align: bottom;
+  vertical-align: middle;
   margin-right: 5px;
 }
 
 [class*="icon-"][class*="-after"]:after {
   content: "";
   display: inline-block;
-  vertical-align: bottom;
+  vertical-align: middle;
   margin-left: 5px;
 }
 
@@ -5984,7 +5984,7 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
 .courses-lists .course-item .stats h6 :before {
   content: "";
   display: inline-block;
-  vertical-align: bottom;
+  vertical-align: middle;
   margin-right: 5px;
   float: left;
   float: none;
@@ -6071,6 +6071,9 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
   color: #6d6e6f;
 }
 
+.list-course-space-link {
+  color: black;
+}
 .list-course-space-link:hover {
   text-decoration: none;
 }
@@ -6080,7 +6083,6 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
 }
 
 .list-course-space-header {
-  overflow: hidden;
   margin-bottom: 20px;
 }
 
@@ -6128,8 +6130,9 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
   left: 20px;
 }
 
-.list-space-stat + .list-space-stat {
-  margin-left: 40px;
+.list-space-stat +
+.list-space-stat {
+  margin-left: 20px;
 }
 
 .list-space-stats-row + .list-space-stats-row {
@@ -6228,7 +6231,6 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
 }
 
 .list-subject-header {
-  overflow: hidden;
   margin-bottom: 5px;
 }
 
@@ -6258,9 +6260,20 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
   border: 1px solid #f0f0f0;
   padding: 11px 20px 10px;
 }
-
-.list-subject-description {
-  margin-bottom: 20px;
+.list-subject-body .list-subject-description +
+.list-button {
+  margin-top: 20px;
+}
+.list-subject-body .list-button {
+  list-style: none;
+  counter-reset: item;
+}
+.list-subject-body .list-button-item:before {
+  content: counter(item);
+  counter-increment: item;
+}
+.list-subject-body .list-button-link {
+  margin-left: 10px;
 }
 
 .list-lecture-info {
@@ -6285,6 +6298,7 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
 }
 .list-lecture-info > span {
   vertical-align: middle;
+  display: inline-block;
 }
 .list-lecture-info > span + span {
   margin-left: 10px;
