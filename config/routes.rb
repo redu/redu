@@ -173,6 +173,8 @@ Redu::Application.routes.draw do
     resources :oauth_clients
   end
 
+  resources :oauth_clients, :only => :new
+
   match 'users/activate/:id' => 'users#activate', :as => :activate
 
   # Indexes
