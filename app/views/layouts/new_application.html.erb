@@ -8,7 +8,12 @@
     <%= include_stylesheets :new_application %>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <%= include_javascripts :new_application %>
-    <%= render :partial => "shared/chat" %>
+    <%# É possível sobrescrever a inicialização do chat %>
+    <% if content_for?(:chat_script) %>
+      <%= content_for(:chat_script) %>
+    <% else %>
+      <%= render :partial => "shared/chat" %>
+    <% end %>
     <%= render :partial => "shared/typekit" %>
     <%= render :partial => "shared/analytics" %>
   </head>
