@@ -1,17 +1,36 @@
-<%= error_messages_for :client_application %>
-<div class="field">
-  <label for="client_application_name">Nome *</label><br/>
-  <%= f.text_field :name %>
+<div class="control-group">
+  <div class="control-label">
+    <%= f.label :name, "Nome" %>
+  </div>
+  <div class="control">
+    <%= f.text_field :name %>
+    <%= concave_errors_for(f.object, :name) %>
+  </div>
 </div>
-<div class="field">
-  <label for="client_application_url">URL Principal*</label><br/>
-  <%= f.text_field :url %>
+<div class="control-group">
+  <div class="control-label">
+    <%= f.label :url, "URL Principal" %>
+  </div>
+  <div clas="control">
+    <%= f.text_field :url %>
+    <%= concave_errors_for(f.object, :url) %>
+  </div>
 </div>
-<div class="field">
-  <label for="client_application_callback_url">URL de Retorno (deixe em branco para desktop)</label><br/>
-  <%= f.text_field :callback_url %>
+<div class="control-group">
+  <div class="control-label">
+    <%= f.label :callback_url, "URL de Retorno (deixe em branco para desktop)" %>
+  </div>
+  <div class="control">
+    <%= f.text_field :callback_url %>
+    <%= concave_errors_for(f.object, :callback_url) %>
+  </div>
 </div>
-<div class="field">
-  <label for="client_application_support_url">URL de Suporte</label><br/>
-  <%= f.text_field :support_url %>
+<div class="control-group">
+  <div class="control-label">
+    <%= f.label :support_url, "URL de Suporte" %>
+  </div>
+  <div class="control">
+    <%= f.text_field :support_url %>
+    <%= concave_errors_for(f.object, :support_url) %>
+  </div>
 </div>

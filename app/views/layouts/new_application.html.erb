@@ -8,16 +8,27 @@
     <%= include_stylesheets :new_application %>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <%= include_javascripts :new_application %>
-    <%= render :partial => "shared/chat" %>
+    <%# É possível sobrescrever a inicialização do chat %>
+    <% if content_for?(:chat_script) %>
+      <%= content_for(:chat_script) %>
+    <% else %>
+      <%= render :partial => "shared/chat" %>
+    <% end %>
     <%= render :partial => "shared/typekit" %>
     <%= render :partial => "shared/analytics" %>
   </head>
   <body>
-    <%= render :partial => "shared/nav_global" %>
+    <%# Torna possível sobrescrever a navegação global nas views que utilizam este layout  %>
+    <% if content_for?(:nav_global) %>
+      <%= content_for(:nav_global) %>
+    <% else %>
+      <%= render(:partial => "shared/nav_global") %>
+    <% end %>
+
     <div class="main-wrapper">
       <%= render :partial => "shared/outdated_browser_new" %>
       <%= render :partial => "shared/system_flash_message" %>
-      <div class="container">
+      <div class="container <%= content_for(:container_class) %>">
         <div class="row">
           <%= yield %>
         </div>
@@ -25,6 +36,11 @@
       <div class="footer-pusher"></div>
     </div>
     <%= render :partial => "shared/footer" %>
-    <%= render :partial => "shared/olark" %>
+    <%# É possível sobrescrever a inicialização do olark %>
+    <% if content_for?(:olark_script) %>
+      <%= content_for(:olar_script) %>
+    <% else %>
+      <%= render :partial => "shared/olark" %>
+    <% end %>
   </body>
 </html>
