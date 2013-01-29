@@ -24,9 +24,9 @@
               <% @client_applications.each do |client|%>
                 <tr class="link-container">
                   <td>
-                    <%= link_to client.name, user_oauth_client_path(@user, client) %>
+                    <%= link_to truncate(client.name, :length => 27), user_oauth_client_path(@user, client) %>
                   </td>
-                  <td><%= client.url %></td>
+                  <td><%= truncate client.url, :length => 37 %></td>
                   <td><span><%= link_to 'Editar', edit_user_oauth_client_path(@user, client) %></span> <span><%= link_to 'Excluir', user_oauth_client_path(@user, client), :confirm => "Você tem certeza?", :method => :delete, :class => "icon-close-gray_8_10 replacement close" %></span></td>
                 </tr>
               <% end %>
