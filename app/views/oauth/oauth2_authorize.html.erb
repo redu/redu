@@ -28,7 +28,7 @@
         <%= hidden_field_tag "redirect_uri", params[:redirect_uri]%>
         <%= hidden_field_tag "state", params[:state]%>
         <%= hidden_field_tag "scope", params[:scope]%>
-        <%= hidden_field_tag 'authorize', true %>
+        <%= hidden_field_tag 'authorize', 1 %>
         <%= submit_tag "Sim, autorizo o acesso.", :class => "button-primary" %>
       <% end %>
 
@@ -38,7 +38,7 @@
         <%= hidden_field_tag "redirect_uri", params[:redirect_uri]%>
         <%= hidden_field_tag "state", params[:state]%>
         <%= hidden_field_tag "scope", params[:scope]%>
-        <%= hidden_field_tag 'authorize', false %>
+        <%= hidden_field_tag 'authorize', 0 %>
         <%= submit_tag "Não autorizo o acesso.", :class => "button-danger" %>
       <% end %>
     </div>
