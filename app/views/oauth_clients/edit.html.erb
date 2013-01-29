@@ -19,6 +19,9 @@
       </div>
 
       <%= new_tabs(:new_users) %>
+      <div class="my-app-tab-buttons">
+        <%= new_subtabs(:new_users) %>
+      </div>
       <div class="content-section my-app">
         <%= form_for @client_application, :url => user_oauth_client_path(@user, @client_application), :html => { :method => :put, :class => 'my-app-edit-form' }  do |f| %>
           <%= render :partial => "form", :locals => { :f => f } %>
