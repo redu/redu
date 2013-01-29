@@ -13,13 +13,13 @@
             :class => "header-bradcrumb-link icon-app-gray_32_34-before", :title => "Seus aplicativos" %>
         </li>
         <li class="header-breadcrumb-item">
-          <%= link_to "Autorização", @client_application.url, :class => "header-bradcrumb-link", :title => "Meus Aplicativos" %>
+          <%= link_to "Autorização", "#", :class => "header-bradcrumb-link", :title => "Meus Aplicativos" %>
         </li>
       </ul>
     </div>
     <div class="content-section">
-      <h3 class="app-name">Autorizar acesso à sua conta</h3>
-      <p class="authorization-disclaimer">O aplicativo <%= link_to @client_application.name,@client_application.url, :target => "_BLANK" %> deseja acessar seus dados no Redu. Entretanto, sua senha nunca poderá ser consultada por este serviço.
+      <h3>Autorizar acesso à sua conta</h3>
+      <p class="authorization-disclaimer">O aplicativo <%= link_to @client_application.name,@client_application.url, :target => "_BLANK", :class => "app-name" %> deseja acessar seus dados no Redu. Entretanto, sua senha nunca poderá ser consultada por este serviço.
       </p>
       <p class="authorization-question"> Você autoriza o acesso aos seus dados?  </p>
       <%= form_tag authorize_url, :class => "positive-authorization-form" do %>
@@ -29,7 +29,7 @@
         <%= hidden_field_tag "state", params[:state]%>
         <%= hidden_field_tag "scope", params[:scope]%>
         <%= hidden_field_tag 'authorize', 1 %>
-        <%= submit_tag "Sim, autorizo o acesso.", :class => "button-primary" %>
+        <%= submit_tag "Sim, autorizo o acesso", :class => "button-primary" %>
       <% end %>
 
       <%= form_tag authorize_url, :class => "negative-authorization-form" do %>
@@ -39,7 +39,7 @@
         <%= hidden_field_tag "state", params[:state]%>
         <%= hidden_field_tag "scope", params[:scope]%>
         <%= hidden_field_tag 'authorize', 0 %>
-        <%= submit_tag "Não autorizo o acesso.", :class => "button-danger" %>
+        <%= submit_tag "Não autorizo o acesso", :class => "button-danger" %>
       <% end %>
     </div>
   </div>

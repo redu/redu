@@ -41,6 +41,12 @@
       float: left;
       margin-right: 10px;
     }
-
+    .app-name { display: inline; }
+    .pin-code {
+      display: block;
+      text-align: center;
+      font-size: 20px;
+      margin-top: 10px;
+    }
   }
 }

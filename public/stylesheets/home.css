@@ -783,3 +783,12 @@ ul.requisitions .actions input:last-child {
   float: left;
   margin-right: 10px;
 }
+.container-fluid .authorize-app .app-name {
+  display: inline;
+}
+.container-fluid .authorize-app .pin-code {
+  display: block;
+  text-align: center;
+  font-size: 20px;
+  margin-top: 10px;
+}
