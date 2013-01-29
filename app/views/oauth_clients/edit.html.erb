@@ -6,20 +6,10 @@
   <div class="content-area">
     <%= render :partial => "oauth_clients/breadcrumb", :locals => { :user => @user } %>
     <div class="content-body">
-      <div class="content-section">
-        <ul class="header-breadcrumb">
-          <li class="header-breadcrumb-item">
-            <%= link_to "Aplicativos", user_oauth_clients_path(@user),
-              :class => "header-bradcrumb-link icon-message-gray_32_34-before", :title => "Seus aplicativos" %>
-          </li>
-          <li class="header-breadcrumb-item">
-            <%= link_to "Meus Aplicativos", user_oauth_client_path(@user), :class => "header-bradcrumb-link", :title => "Meus Aplicativos" %>
-          </li>
-        </ul>
-      </div>
+      <%= render :partial => 'oauth_clients/header_breadcrumb_index', :locals => { :user => @user } %>
 
-      <%= new_tabs(:new_users) %>
-      <div class="my-app-tab-buttons">
+      <div class="my-app-tabs">
+        <%= new_tabs(:new_users) %>
         <%= new_subtabs(:new_users) %>
       </div>
       <div class="content-section my-app">

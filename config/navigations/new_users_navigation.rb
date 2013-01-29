@@ -90,10 +90,10 @@ SimpleNavigation::Configuration.run do |navigation|
 
         apps_tab.item :new_app, 'Novo Aplicativo', new_user_oauth_client_path(@user), :class => 'tab',
           :highlights_on => create_action_matcher('oauth_clients'),
-          :link => { :class => 'tab-title', :title => 'Novo Aplicativo' }
+          :link => { :class => 'tab-title tab-title-without-icon', :title => 'Novo Aplicativo' }
         apps_tab.item :my_apps, 'Meus Aplicativos', user_oauth_clients_path(@user), :class => 'tab',
           :highlights_on => action_matcher({ 'oauth_clients' => ['show', 'index', 'edit', 'update'] }),
-          :link => { :class => 'tab-title', :title => 'Meus Aplicativos' } do |apps_subtab|
+          :link => { :class => 'tab-title tab-title-without-icon', :title => 'Meus Aplicativos' } do |apps_subtab|
           # Sub abas
 
           apps_subtab.dom_class = 'tab-buttons'

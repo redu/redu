@@ -7,7 +7,12 @@
   margin-top: 4px;
 }
 
- .my-app-tab-buttons {
+ .my-app-tabs {
+   .tabs .tab .tab-title.tab-title-without-icon {
+     min-width: auto;
+     padding-left: 10px;
+     padding-right: 10px;
+   }
    .tab-buttons .tab-button.tab-button-without-icon { padding-right: 9px; }
  }
 

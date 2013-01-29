@@ -6,9 +6,11 @@
   <div class="content-area">
     <%= render :partial => "oauth_clients/breadcrumb", :locals => { :user => @user } %>
     <div class="content-body">
-      <%= render :partial => 'oauth_clients/header_breadcrumb', :locals => { :user => @user } %>
+      <%= render :partial => 'oauth_clients/header_breadcrumb_new', :locals => { :user => @user } %>
 
-      <%= new_tabs(:new_users) %>
+      <div class="my-app-tabs">
+        <%= new_tabs(:new_users) %>
+      </div>
       <div class="content-section new-app">
         <%= form_for @client_application, :url => user_oauth_clients_path(@user), :html => { :class => "new-app-form" } do |f| %>
           <%= render :partial => "form", :locals => { :f => f } %>
