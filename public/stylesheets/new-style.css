@@ -315,6 +315,10 @@ body {
 #content .concave-sidebar .connections li {
   float: left;
   margin: 5px 5px 0 0;
+}
+
+#content .sidebar .connections .connection,
+#content .concave-sidebar .connections .connection {
   width: 130px;
 }
 
@@ -6547,7 +6551,7 @@ div.token-input-dropdown {
   float: right;
 }
 
-.home-sidebar .contact-recommendations ul li div.two-columns-column .members-to-add-link {  
+.home-sidebar .contact-recommendations ul li div.two-columns-column .members-to-add-link {
   display: block;
   margin-top: 5px;
 }
