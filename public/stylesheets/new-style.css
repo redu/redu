@@ -315,6 +315,7 @@ body {
 #content .concave-sidebar .connections li {
   float: left;
   margin: 5px 5px 0 0;
+  width: 130px;
 }
 
 #content .sidebar.space .connections li {
@@ -334,6 +335,7 @@ body {
 #content .sidebar.space .connections li .name {
   font-weight: bold;
   font-size: .87em;
+  width: 97px;
 }
 
 #content .sidebar .more {
