@@ -3,9 +3,12 @@ class SpaceSearch < Search
     super(Space)
   end
 
-  def self.perform(query, page = nil, per_page = 10)
+  def self.perform(query, format = nil, page = nil, per_page = 10)
     searcher = SpaceSearch.new
-    searcher.search({ :query => query, :page => page, :per_page => per_page,
-      :include => [:subjects, :teachers, :owner, :tags, { :course => :environment }] })
+    # Instant search não necessita dos includes
+    includes = format == "json" ? [] : [{ :course => [:environment, :owner] }]
+
+    searcher.search({ :query => query, :page => page,
+                      :per_page => per_page, :include => includes })
   end
 end
