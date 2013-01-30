@@ -10,7 +10,7 @@ class OauthClientsController < BaseController
   end
 
   def new
-    @user = User.find_by_id(params[:user_id]) || current_user
+    @user = User.find_by_login(params[:user_id]) || current_user
     authorize! :manage, @user
     @client_application = ClientApplication.new
   end
