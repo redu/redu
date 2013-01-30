@@ -4,7 +4,7 @@ var education_form = "<%= escape_javascript render :partial => 'educations/form'
     :complementary_course => @complementary_course,
     :event_education => @event_education } %>"
 <% if @education.valid? %>
-  $("#new_education").slideToggle(150, 'swing').remove();
+  $("#new_education").slideToggle(150, 'swing');
   var education_item = "<%= escape_javascript render :partial => 'educations/item',
   :locals => { :item => @education } %>"
   $("#curriculum .educations").append(education_item);

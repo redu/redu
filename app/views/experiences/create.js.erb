@@ -1,6 +1,6 @@
 var $form = $("#new_experience");
 <% if @experience.valid? %>
-  $form.slideToggle(150, 'swing').remove();
+  $form.slideUp(150, 'swing');
   var experience_item = "<%= escape_javascript render :partial => 'experiences/item',
   :locals => { :item => @experience } %>"
   $("#curriculum .experiences").append(experience_item);
