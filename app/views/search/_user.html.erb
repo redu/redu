@@ -14,7 +14,7 @@
 
   <span><%= user.localization %></span>
 
-  Amigos: <%= user.friends.length %> | Cursos: <%= user.courses.length %>
+  Amigos: <%= user.friends.count %> | Cursos: <%= user.courses.count %>
 
   <% # Só mostra o link se usuário não for amigo %>
   <% if !is_friend?(user) %>
