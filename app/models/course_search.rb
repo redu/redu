@@ -3,9 +3,13 @@ class CourseSearch < Search
     super(Course)
   end
 
-  def self.perform(query, page = nil, per_page = 10)
+  def self.perform(query, format = nil, page = nil, per_page = 10)
     searcher = CourseSearch.new
-    searcher.search({ :query => query, :page => page, :per_page => per_page,
-      :include => [:audiences, :spaces, :tags, :environment, :owner, :teachers] })
+    # Instant search não necessita dos includes
+    includes = format == "json" ? [] : [:environment, :spaces,
+                                        :users, :owner]
+
+    searcher.search({ :query => query, :page => page,
+                      :per_page => per_page, :include => includes })
   end
 end
