@@ -4,7 +4,7 @@
     <%= l(item.start_date, :format => :month_year) %> - presente
     (<%= distance_of_time_in_words item.start_date, Date.today %>)
   <% else %>
-    <%= l(item.start_date, :format => :month_year) %> - <%= t l(item.end_date, :format => :month_year) %>
+    <%= l(item.start_date, :format => :month_year) %> - <%= l(item.end_date, :format => :month_year) %>
     (<%= distance_of_time_in_words item.start_date, item.end_date %>)
   <% end %>
 </span>
