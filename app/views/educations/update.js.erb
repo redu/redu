@@ -1,10 +1,9 @@
 <% if @education.valid? %>
   var newItem = "<%= escape_javascript render :partial => 'educations/item',
     :locals => { :item => @education } %>"
-  var oldItem = $("#education-<%= @education.id %>");
-  oldItem.replaceWith(newItem);
-  $("#curriculum .new-education-button").show();
-  $("#education-<%= @education.id %> form").hide();
+  $("#education-<%= @education.id %>").slideUp(150, 'swing');
+  $("#education-<%= @education.id %>").attr('id', 'education-<%= @education.id %>-old');
+  $("#curriculum .educations").prepend(newItem);
 <% else %>
   <% if @education.educationable.class == HighSchool %>
     var $form = $("#edit_high_school_<%= @education.educationable.id %>");

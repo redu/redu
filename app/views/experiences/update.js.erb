@@ -1,9 +1,9 @@
 <% if @experience.valid? %>
   var newItem = "<%= escape_javascript render :partial => 'experiences/item',
     :locals => { :item => @experience } %>"
-  var oldItem = $("#experience-<%= @experience.id %>");
-  oldItem.replaceWith(newItem);
-  $("#curriculum .new-experience-button").show();
+  $("#experience-<%= @experience.id %>").slideUp(150, 'swing');
+  $("#experience-<%= @experience.id %>").attr('id', 'experience-<%= @experience.id %>-old');
+  $("#curriculum .experiences").prepend(newItem);
 <% else %>
   var experience_form = "<%= escape_javascript render :partial => 'experiences/form',
     :locals => { :user => @experience.user, :experience => @experience } %>"
