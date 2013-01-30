@@ -14,7 +14,11 @@
 
   <span><%= user.localization %></span>
 
-  Amigos: <%= user.friends.count %> | Cursos: <%= user.courses.count %>
+  Amigos: <%= user.friends.length %>
+
+  <% cache ["user_courses_count", user.id] do %>
+    | Cursos: <%= user.courses.count %>
+  <% end %>
 
   <% # Só mostra o link se usuário não for amigo %>
   <% if !is_friend?(user) %>
@@ -38,6 +42,6 @@
                                 :method => :post %>
     <% end %>
   <% else %>
-    | Amigos em comum: <%= mutual_friends(user).count %>
+    | Amigos em comum: <%= mutual_friends(user).length%>
   <% end %>
 </li>

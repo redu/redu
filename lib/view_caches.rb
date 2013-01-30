@@ -30,6 +30,10 @@ module ViewCaches
     expire_fragments('environment_sidebar_connections_with_count', environment)
   end
 
+  def expire_user_courses_count_for(users)
+    expire_fragments('user_courses_count', users)
+  end
+
   def expire_space_lectures_item_for(lecture, users)
     expire_nested_fragments('space_lecture_item', lecture, users)
   end

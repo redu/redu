@@ -4,6 +4,7 @@ class UserCourseAssociationCacheObserver < ActiveRecord::Observer
 
   def after_create(uca)
     expire_courses_requisitions_for(uca.user)
+    expire_user_courses_count_for(uca.user)
   end
 
   def after_update(uca)
@@ -21,6 +22,7 @@ class UserCourseAssociationCacheObserver < ActiveRecord::Observer
       expire_all_course_requisitions(uca)
     end
     expire_course_members_count_for(uca.course)
+    expire_user_courses_count_for(uca.user)
   end
 
   protected
