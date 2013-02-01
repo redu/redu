@@ -1,6 +1,8 @@
 <h1><%= environment.name %></h1>
 Papel: <%= user_environment_role(environment, current_user) %>
-Administrador(es): <%= environment.owner.display_name %><br />
+<% cache ["environment_administrators", environment.id] do %>
+  Administrador(es): <%= environment.administrators.collect { |admin| admin.display_name } %><br />
+<% end %>
 Abreviação: <%= environment.initials %><br />
 Cursos: <%= environment.courses.length %>
 | Membros: <%= environment.user_environment_associations.length %><br />
