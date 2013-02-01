@@ -1,6 +1,7 @@
 <h1><%= course.name %></h1>
+Papel: <%= user_course_role(course, current_user) %> |
 Ambiente: <%= link_to course.environment.name, environment_path(course.environment) %> |
 Criador: <%= course.owner.try(:display_name) %><br />
-Membros: <%= course.users.count %> |
+Membros: <%= course.user_course_associations.length %> |
 Professores: <%= course.teachers.count %><br />
 Disciplinas: <%= course.spaces.length %>
