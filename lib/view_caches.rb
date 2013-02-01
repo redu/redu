@@ -34,6 +34,10 @@ module ViewCaches
     expire_fragments('user_courses_count', users)
   end
 
+  def expire_course_teachers_count_for(courses)
+    expire_fragments('course_teachers_count', courses)
+  end
+
   def expire_space_lectures_item_for(lecture, users)
     expire_nested_fragments('space_lecture_item', lecture, users)
   end
