@@ -16,7 +16,7 @@
           <span class="status-subject icon-small icon-course-lightblue_32_34">
           </span>
           <%= link_to item.statusable.subject.space.name, space_path(item.statusable.subject.space), :class => "status-main" %>
-          <%= link_to item.statusable.subject.name, space_path(item.statusable.subject.space), :class => "status-secondary icon-expand-gray_8_10-before" %>
+          <%= link_to item.statusable.subject.name, space_subject_path(item.statusable.subject.space, item.statusable.subject), :class => "status-secondary icon-expand-gray_8_10-before" %>
         </div>
         <div class="status-log">
           <%= render "statuses/user_image", :item => item %>
@@ -49,7 +49,7 @@
           <span class="status-subject icon-small icon-subject-lightblue_32_34">
           </span>
           <%= link_to item.statusable.subject.space.name, space_path(item.statusable.subject.space), :class => "status-main" %>
-          <%= link_to item.statusable.subject.name, space_path(item.statusable.subject.space), :class => "status-secondary icon-expand-gray_8_10-before" %>
+          <%= link_to item.statusable.subject.name, space_subject_path(item.statusable.subject.space, item.statusable.subject), :class => "status-secondary icon-expand-gray_8_10-before" %>
         </div>
         <div class="status-log">
           <%= render "statuses/user_image", :item => item %>
