@@ -1,8 +1,6 @@
 <h1><%= environment.name %></h1>
-<% if environment.users.include?(current_user) %>
-  Você faz parte deste ambiente #TODO sinalização gráfica<br />
-<% end %>
+Papel: <%= user_environment_role(environment, current_user) %>
 Administrador(es): <%= environment.owner.display_name %><br />
 Abreviação: <%= environment.initials %><br />
 Cursos: <%= environment.courses.length %>
-| Membros: <%= environment.users.length %><br />
+| Membros: <%= environment.user_environment_associations.length %><br />
