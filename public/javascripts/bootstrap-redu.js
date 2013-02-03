@@ -1993,10 +1993,27 @@ $(function() {
 
       var $this = $(this)
 
+      // Encontra possíveis classes de ícones.
+      var findIconClasses = function(classes) {
+        var iconClasses = []
+
+        classes = classes.split(' ')
+        $.each(classes, function(index, value) {
+          if (value.indexOf('icon-') !== -1) {
+            iconClasses.push(value)
+          }
+        })
+
+        return iconClasses.join(' ')
+      }
+
       // Se for um formulário.
       if ($this.is('form')) {
-        var $submit = $this.find('input:submit')
+        var $submit = $this.find('input:submit, button[type="submit"]')
           , spinnerClass = settings.spinnerCircularGray
+          , submitIconClasses = findIconClasses($submit.attr('class'))
+          , submitWidth = $submit.outerWidth()
+          , submitHeight = $submit.outerHeight()
 
         if ($submit.hasClass(settings.buttonDefault)) {
           spinnerClass = settings.spinnerCircularBlue
@@ -2007,7 +2024,9 @@ $(function() {
           .prop('disabled', true)
           .data('spinnerClass', spinnerClass)
           .data('content', $submit.val())
-          .css({ 'width': $submit.outerWidth(), 'height': $submit.outerHeight() })
+          .data('class', submitIconClasses)
+          .removeClass(submitIconClasses)
+          .css({ 'width': submitWidth, 'height': submitHeight })
           .val('')
       }
 
@@ -2019,20 +2038,6 @@ $(function() {
           spinnerImg += settings.spinnerCircularBlueGif
         } else {
           spinnerImg += settings.spinnerCircularGrayGif
-        }
-
-        // Encontra possíveis classes de ícones.
-        var findIconClasses = function(classes) {
-          var iconClasses = []
-
-          classes = classes.split(' ')
-          $.each(classes, function(index, value) {
-            if (value.indexOf('icon-') !== -1) {
-              iconClasses.push(value)
-            }
-          })
-
-          return iconClasses.join(' ')
         }
 
         var content = $this.html()
@@ -2067,10 +2072,11 @@ $(function() {
       var $this = $(this)
 
       if ($this.is('form')) {
-        var $submit = $this.find('input:submit')
+        var $submit = $this.find('input:submit, button[type="text"]')
 
         $submit
           .removeClass($submit.data('spinnerClass'))
+          .addClass($submit.data('class'))
           .prop('disabled', false)
           .val($submit.data('content'))
       }
@@ -2108,7 +2114,6 @@ $(function() {
       $(this).reduSpinners('ajaxComplete')
     })
 })
-
 !function ($) {
 
   "use strict"; // jshint ;_;
