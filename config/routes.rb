@@ -1,7 +1,4 @@
 Redu::Application.routes.draw do
-
-  resources :oauth_clients
-
   match '/oauth/token',         :to => 'oauth#token',         :as => :token
   match '/oauth/access_token',  :to => 'oauth#access_token',  :as => :access_token
   match '/oauth/request_token', :to => 'oauth#request_token', :as => :request_token
@@ -104,6 +101,7 @@ Redu::Application.routes.draw do
     end
 
     resources :users, :only => [:index]
+    resources :canvas, :only => [:show]
  end
 
   resources :exercises, :only => :show do
@@ -172,7 +170,10 @@ Redu::Application.routes.draw do
     resources :educations, :except => [:new, :edit]
     resources :environments, :only => [:index]
     resource :explore_tour, :only => :create
+    resources :oauth_clients
   end
+
+  resources :oauth_clients, :only => :new
 
   match 'users/activate/:id' => 'users#activate', :as => :activate
 
@@ -296,6 +297,7 @@ Redu::Application.routes.draw do
       resources :statuses, :only => [:index, :create] do
         get 'timeline', :on => :collection
       end
+      resources :folders, :only => :index
     end
 
     resources :subjects, :except => [:new, :edit, :index, :create] do
@@ -330,6 +332,13 @@ Redu::Application.routes.draw do
     end
 
     resources :chat_messages, :only => :show
+
+    resources :folders, :only => [:show, :index] do
+      resources :myfiles, :path => "files", :only => :index
+      resources :folders, :only => :index
+    end
+
+    resources :myfiles, :path => "files", :only => [:show]
 
     match "vis/spaces/:space_id/lecture_participation",
       :to => 'vis#lecture_participation',

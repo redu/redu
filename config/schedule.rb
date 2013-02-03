@@ -38,6 +38,10 @@ else
     runner "LicensedInvoice.refresh_states!"
   end
 
+  every :day, :at => '10pm' do
+    runner "Subject.destroy_subjects_unfinalized"
+  end
+
   # 2pm e 2am horário local
   every '0 10,22 * * *' do
     command "cd #{@path} && #{bin_folder}/backup perform -t production_backup" \

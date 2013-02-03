@@ -8,6 +8,11 @@ module CourseEnrollmentRepresenter
   property :created_at
   property :updated_at
   property :token
+  property :computed_role, :from => :role, :render_nil => true
+
+  def computed_role
+    Role[self.role]
+  end
 
   link :self do
     api_enrollment_url(self)

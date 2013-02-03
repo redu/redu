@@ -7,5 +7,11 @@ module Api
     has_one :lecture, :as => :lectureable
 
     validates_presence_of :client_application
+    validates :url, :url => true, :allow_nil => true
+
+    def current_url
+      return self.url if self.url
+      self.client_application.try(:url)
+    end
   end
 end

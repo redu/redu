@@ -98,6 +98,13 @@ class Seminar < ActiveRecord::Base
     self.external_resource_type == "youtube"
   end
 
+  # Retorna URL completa do Youtube
+  def external_resource_url
+    if yid = self.external_resource
+      "http://www.youtube.com/watch?v=#{yid}"
+    end
+  end
+
   def type
     if video?
       self.original_content_type

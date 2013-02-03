@@ -5,7 +5,8 @@ describe Space do
   subject { Factory(:space) }
 
   [:user_space_associations, :users, :teachers, :students,
-    :logs, :folders, :statuses, :subjects ].each do |attr|
+    :logs, :folders, :folders_and_subfolders, :statuses,
+    :subjects ].each do |attr|
       it { should have_many(attr) }
   end
 
@@ -13,6 +14,7 @@ describe Space do
   it { should belong_to :owner }
 
   it { should have_one :root_folder}
+  it { should have_many :canvas }
 
   it { should have_many :logs }
   it { should have_many :statuses }
@@ -23,6 +25,20 @@ describe Space do
 
   [:owner, :removed, :members_count, :course_id, :published].each do |attr|
     it { should_not allow_mass_assignment_of attr }
+  end
+
+  context "relationships" do
+    context "when have many folders" do
+      let!(:folders) { (1..3).collect { Factory(:folder, :space => subject) }}
+      it "returns only root folders" do
+        subject.folders.reload.to_set.should == [subject.root_folder].to_set
+      end
+
+      it "returns folders and subfolders" do
+        subject.folders_and_subfolders.reload.to_set.should ==
+          (folders << subject.root_folder).to_set
+      end
+    end
   end
 
   context "callbacks" do

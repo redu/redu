@@ -28,6 +28,8 @@ class AuthenticationsController < BaseController
         flash[:notice] = t :facebook_connect_new_user
       end
 
+      logger.info user.errors if !user.valid?
+
       # Usuário criado / atualizado com sucesso
       @user_session = UserSession.new(user)
       current_user = @user_session.record if @user_session.save

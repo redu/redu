@@ -190,6 +190,9 @@ module Redu
     # Doorkeepers definem eventos que serão propagados no message bus
     config.autoload_paths << "#{config.root}/app/doorkeepers"
 
+    # Validators customizados
+    config.autoload_paths << "#{config.root}/app/validators"
+
     # Configurações do Pusher (redu app)
     config.pusher = {
       :app_id => '4577',

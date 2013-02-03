@@ -73,10 +73,8 @@ class Ability
       # Autorizar apps OAuth
       can :authorize_oauth, :base
 
-      # Somente usuários parceiros e  admin gerenciam apps OAuth
-      can :manage, :client_applications do
-        is_admin
-      end
+      # Somente donos do aplicativo podem gerencia-lo
+      can :manage, ClientApplication, :user_id => user.id
 
       # Gerencial
       can :manage, :all do |object|
@@ -192,10 +190,22 @@ class Ability
 
       # Canvas
       can :read, Api::Canvas do |canvas|
-        can? :read, canvas.lecture
+        if canvas.lecture
+          can?(:read, canvas.lecture)
+        elsif canvas.container
+          can?(:read, canvas.container)
+        else
+          false
+        end
       end
       cannot :read, Api::Canvas do |canvas|
-        cannot? :read, canvas.lecture
+        if canvas.lecture
+          cannot?(:read, canvas.lecture)
+        elsif canvas.container
+          cannot?(:read, canvas.container)
+        else
+          true
+        end
       end
 
     end

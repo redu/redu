@@ -1,3 +1,6 @@
 $("#status-<%= @status.id %>").slideUp(function(){
+  if ($(this).siblings("li").length == 0) {
+    $(this).parents(".responses").hide();
+  };
   $(this).remove();
 });

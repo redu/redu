@@ -201,7 +201,7 @@ class User < ActiveRecord::Base
       user.tos = '1'
       user.first_name = auth[:info][:first_name]
       user.last_name = auth[:info][:last_name]
-      user.update_attributes(:activated_at => Time.now)
+      user.activated_at = Time.now
       user.authentications.build(:provider => auth[:provider],
                                  :uid => auth[:uid])
       if auth[:info][:image]
@@ -704,8 +704,17 @@ class User < ActiveRecord::Base
 
   protected
 
+  # Retorna true ou false baseado se o humanizer está ou não habilitado.
+  # Por padrão do ambiente de desenvolvimento, ele é desabilitado. E em produção
+  # habilitado.
+  #
+  # É possível desabilitar para uma determinada instância da seguinte forma:
+  #   user = User.new
+  #   user.enable_humanizer = false
+  #
+  # Esta configuração é restrita a uma única instância e independente de ambiente.
   def enable_humanizer
-    return @enable_humanizer if @enable_humanizer
+    return @enable_humanizer if defined? @enable_humanizer
     Rails.env.production?
   end
 

@@ -2,8 +2,8 @@ class FoldersController < BaseController
   before_filter :set_nav_global_context
 
   load_and_authorize_resource :space
-  load_and_authorize_resource :folder,
-    :through => :space
+  load_and_authorize_resource :folder, :through => :space,
+    :through_association => :folders_and_subfolders
 
   before_filter :load_course_and_environment
 

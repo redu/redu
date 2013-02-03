@@ -75,3 +75,14 @@ h4 { font-size: 14px;  }
   border-bottom: 1px solid black;
 }
 
+.nav-global, #outdated-browser {
+  display: none;
+}
+
+.header {
+  text-align: center;
+}
+
+.main-wrapper-old { 
+  padding-top: 0;
+}

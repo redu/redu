@@ -35,4 +35,8 @@ module SpaceRepresenter
   link :timeline do
     timeline_api_space_statuses_url(self)
   end
+
+  link :folders do
+    api_space_folders_url(self)
+  end
 end

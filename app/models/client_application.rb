@@ -1,10 +1,10 @@
 require 'oauth'
 class ClientApplication < ActiveRecord::Base
   belongs_to :user
-  has_many :tokens, :class_name => "OauthToken"
-  has_many :access_tokens
-  has_many :oauth2_verifiers
-  has_many :oauth_tokens
+  has_many :tokens, :class_name => "OauthToken", :dependent => :destroy
+  has_many :access_tokens, :dependent => :destroy
+  has_many :oauth2_verifiers, :dependent => :destroy
+  has_many :oauth_tokens, :dependent => :destroy
   validates_presence_of :name, :url, :key, :secret
   validates_uniqueness_of :key, :name
   before_validation :generate_keys, :on => :create

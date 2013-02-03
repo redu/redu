@@ -20,16 +20,10 @@ describe "Spaces API" do
       end
     end
 
-    it "should hold a relationship to self, course, environment and users"  do
-      links = parse(response.body)['links']
-      links.collect! { |l| l.fetch('rel') }
-
-      links.should include 'self'
-      links.should include 'course'
-      links.should include 'environment'
-      links.should include 'users'
-      links.should include 'statuses'
-      links.should include 'timeline'
+    %w(self course environment users statuses timeline folders).each do |link|
+      it "should hold a relationship to #{link}"  do
+        href_to(link, parse(response.body)).should_not be_blank
+      end
     end
   end
 

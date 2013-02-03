@@ -31,4 +31,7 @@ class Document < ActiveRecord::Base
     super if persisted?
   end
 
+  def scribd_url
+    self.display_ipaper.slice(/src=\"\S+\"/).slice(/http\S+/).split(/\"/)[0]
+  end
 end

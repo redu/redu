@@ -1,0 +1,21 @@
+<ol class="actions-buttons">
+  <% if question != first %>
+    <li class="lecture-buttons">
+      <%= link_to "Anterior", exercise_question_path(exercise, question.previous_item), :class => "concave-clean" %>
+    </li>
+  <% end %>
+  <% if question != last %>
+    <li class="lecture-buttons">
+      <%= link_to "Próxima", exercise_question_path(exercise, question.next_item), :class => "concave-clean" %>
+    </li>
+  <% end %>
+  <% unless review %>
+    <% if question == last %>
+      <li class="lecture-button-finalize">
+        <button type="submit" class="concave-button" name="commit">
+          <span class="end-exercise icon-exercise-white_16_18-before">Finalizar</span>
+        </button>
+      </li>
+    <% end %>
+  <% end %>
+</ol>

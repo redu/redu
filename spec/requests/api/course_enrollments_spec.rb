@@ -1,27 +1,27 @@
 require "api_spec_helper"
 
 describe Api::CourseEnrollmentsController do
-  before do
-    @environment = Factory(:complete_environment)
-    @application, @current_user, @token = generate_token(@environment.owner)
-    @course = @environment.courses.first
+  let(:environment) { Factory(:complete_environment) }
+  let(:course) { environment.courses.first }
+  let(:user) { environment.owner }
+  let(:token) { _, _, token = generate_token(environment.owner); token }
+  let(:params) do
+    { :oauth_token => token, :format => 'json' }
   end
 
   context "the document returned" do
     before do
-      @enrollment = Factory(:user_course_invitation, :course => @course)
+      @enrollment = Factory(:user_course_invitation, :course => course)
       @enrollment.invite!
     end
 
     it "should return code 200 (ok)" do
-      get "/api/enrollments/#{@enrollment.id}", :oauth_token => @token,
-        :format => 'json'
+      get "/api/enrollments/#{@enrollment.id}", params
       response.code.should == "200"
     end
 
     it "should have state redu_invited" do
-      get "/api/enrollments/#{@enrollment.id}", :oauth_token => @token,
-         :format => 'json'
+      get "/api/enrollments/#{@enrollment.id}", params
       parse(response.body).fetch('state', '').should == 'redu_invited'
     end
   end
@@ -29,8 +29,8 @@ describe Api::CourseEnrollmentsController do
   context "when enrolling the user which isnt registered yet" do
     before do
       @enrollment = { :email => 'abc@def.gh' }
-      post "/api/courses/#{@course.id}/enrollments", :enrollment => @enrollment,
-        :oauth_token => @token, :format => 'json'
+      post "/api/courses/#{course.id}/enrollments",
+        params.merge({ :enrollment => @enrollment })
       @entity = parse(response.body)
     end
 
@@ -38,8 +38,9 @@ describe Api::CourseEnrollmentsController do
       response.code.should == "201"
     end
 
-    it "should have state, id, email, token, created_at and links keys" do
-      %w(state id email token links created_at updated_at).each do |key|
+
+    %w(state id email token links created_at updated_at role).each do |key|
+      it "should have #{key} key" do
         @entity.should have_key(key)
       end
     end
@@ -56,7 +57,7 @@ describe Api::CourseEnrollmentsController do
     it "should link correctly to itself" do
       link = @entity["links"].detect { |link| link['rel'] == 'self' } # self
 
-      get link['href'], :oauth_token => @token, :format => 'json'
+      get link['href'], params
       response.code.should == '200'
     end
 
@@ -69,8 +70,8 @@ describe Api::CourseEnrollmentsController do
     before do
       @user = Factory(:user)
       @enrollment = { :email => @user.email }
-      post "/api/courses/#{@course.id}/enrollments", :enrollment => @enrollment,
-        :oauth_token => @token, :format => 'json'
+      post "/api/courses/#{course.id}/enrollments",
+        params.merge({:enrollment => @enrollment})
       @entity = parse(response.body)
     end
 
@@ -103,22 +104,18 @@ describe Api::CourseEnrollmentsController do
       @enrollment1 = { :email => 'abc@def.gh' }
       @user = Factory(:user)
       @enrollment2 = { :email => @user.email }
-      post "/api/courses/#{@course.id}/enrollments", :enrollment => @enrollment1,
-        :oauth_token => @token, :format => 'json'
-      post "/api/courses/#{@course.id}/enrollments", :enrollment => @enrollment2,
-        :oauth_token => @token, :format => 'json'
+      post "/api/courses/#{course.id}/enrollments", params.merge({:enrollment => @enrollment1})
+      post "/api/courses/#{course.id}/enrollments", params.merge({:enrollment => @enrollment2})
     end
 
     it "should return code 200 (ok)" do
-      get "/api/courses/#{@course.id}/enrollments",:oauth_token => @token,
-        :format => 'json'
+      get "/api/courses/#{course.id}/enrollments", params
 
       response.code.should == '200'
     end
 
     it "should list any type of enrollment" do
-      get "/api/courses/#{@course.id}/enrollments",:oauth_token => @token,
-        :format => 'json'
+      get "/api/courses/#{course.id}/enrollments", params
 
       parse(response.body).length.should == 3
     end
@@ -128,9 +125,8 @@ describe Api::CourseEnrollmentsController do
     before do
       # Associando @current_user a um novo curso
       @environment2 = Factory(:complete_environment)
-      @course.join(@current_user)
-      get "/api/users/#{@current_user.id}/enrollments", :oauth_token => @token,
-        :format => 'json'
+      course.join(user)
+      get "/api/users/#{user.id}/enrollments", params
     end
 
     it "should return status 200 (ok)" do
@@ -138,7 +134,7 @@ describe Api::CourseEnrollmentsController do
     end
 
     it "should return the correct enrollments" do
-      get "/api/users/#{@current_user.id}/enrollments", :format => 'json'
+      get "/api/users/#{user.id}/enrollments", :format => 'json'
       parse(response.body).count.should == 2
     end
   end
@@ -146,34 +142,33 @@ describe Api::CourseEnrollmentsController do
   context "when DELETE enrollment" do
     before do
       @external_user = Factory(:user)
-      @course.join(@external_user)
+      course.join(@external_user)
 
-      get "/api/enrollments/#{@external_user.get_association_with(@course).id}",
-        :format => 'json', :oauth_token => @token
+      get "/api/enrollments/#{@external_user.get_association_with(course).id}",
+        params
       @href = parse(response.body)['links'].detect { |link| link['rel'] == 'self' }
       @href = @href.fetch('href','')
     end
 
     it "should return status 200 (ok)" do
-      delete @href, :format => 'json', :oauth_token => @token
+      delete @href, params
       response.code.should == '200'
     end
 
     it "should remove the enrollment" do
-      delete @href, :format => 'json', :oauth_token => @token
-      get @href, :format => 'json', :oauth_token => @token
+      delete @href, params
+      get @href, params
       response.code.should == '404'
     end
 
     context "when the user isnt registered" do
       it "should remove the enrollment" do
-        post "/api/courses/#{@course.id}/enrollments",
-          :enrollment => { :email => 'abc@def.gh' }, :oauth_token => @token,
-          :format => 'json'
+        post "/api/courses/#{course.id}/enrollments",
+          params.merge({:enrollment => { :email => 'abc@def.gh' }})
 
         id = parse(response.body)['id']
-        delete "/api/enrollments/#{id}", :oauth_token => @token, :format => 'json'
-        get "/api/enrollments/#{id}", :oauth_token => @token, :format => 'json'
+        delete "/api/enrollments/#{id}", params
+        get "/api/enrollments/#{id}", params
         response.code.should == '404'
       end
     end

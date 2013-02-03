@@ -2,6 +2,7 @@ class LecturesController < BaseController
   require 'viewable'
   respond_to :html, :js
 
+  before_filter :set_nav_global_context
   before_filter :find_subject_space_course_environment
 
   include Viewable # atualiza o view_count
@@ -241,5 +242,9 @@ class LecturesController < BaseController
     @space = @subject.space
     @course = @space.course
     @environment = @course.environment
+  end
+
+  def set_nav_global_context
+    content_for :nav_global_context, "spaces"
   end
 end
