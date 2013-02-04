@@ -1,7 +1,8 @@
 <h1><%= environment.name %></h1>
-<% if environment.users.include?(current_user) %>
-  Você faz parte deste ambiente #TODO sinalização gráfica<br />
+Papel: <%= user_environment_role(environment, current_user) %>
+<% cache ["search_environment_administrators", environment.id] do %>
+  Administrador(es): <%= environment.administrators.collect { |admin| admin.display_name } %><br />
 <% end %>
-Administrador(es): <%= environment.owner.display_name %><br />
 Abreviação: <%= environment.initials %><br />
-Cursos: <%= environment.courses.count %> | Membros: <%= environment.users.count %><br />
+Cursos: <%= environment.courses.length %>
+| Membros: <%= environment.user_environment_associations.length %><br />
