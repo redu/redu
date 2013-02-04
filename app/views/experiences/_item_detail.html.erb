@@ -1,4 +1,4 @@
-<span class="title"><b><%= item.title %></b> <i>em</i> <%= item.company %></span>
+<span class="title"><b><%= item.title %></b> <span class="in-between">em</span> <%= item.company %></span>
 <span class="time">
   <% if item.current? %>
     <%= l(item.start_date, :format => :month_year) %> - presente
@@ -9,5 +9,3 @@
   <% end %>
 </span>
 <p class="description"><%= item.description %></p>
-
-

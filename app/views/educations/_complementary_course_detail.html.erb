@@ -1,4 +1,4 @@
-<span class="title"><%= item.educationable.course %> <i>pela</i> <%= item.educationable.institution %></span>
+<span class="title"><%= item.educationable.course %> <span class="in-between">pela</span> <%= item.educationable.institution %></span>
 <span class="time">
   <%= t item.educationable.year.strftime("%Y") %>
   (<%= pluralize item.educationable.workload, (t :hour).downcase %>)

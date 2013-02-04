@@ -41,44 +41,41 @@
 
 .curriculum-container {
   margin: 10px 0;
+
+  .experiences,
+  .educations { margin: 0; }
+
+  form {
+    .end-date { margin-top: 10px; }
+    .errors_on_field { text-align: left; }
+  }
+
   .list-mix-item { padding: 0 20px; }
   #new_education .form-education { margin-top: 20px; }
   ul + .form-horizontal { padding-top: 20px; }
-  h4 { padding: 0 20px; }
 }
 
 .config-title {
   font-weight: 300;
   color: $blue2;
   margin-bottom: 20px;
+  padding: 0 20px;
 }
 
 .config-experience {
   list-style: none;
 
-  &.list-mix-item:before {
-    margin-right: 0;
-  }
-
   .list-mix-inner { padding: 10px; }
 
-  span {
-    &.time { color: $gray5; }
-    &.title {
-      display: block;
-      width: 478px;
-    }
-  }
+  .time,
+  .in-between { color: $gray5; }
 
-  p {
-    color: $gray6;
-    &.description { width: 478px; }
-  }
+  .title { display: block; }
 
-  i {
-    color: $gray5;
-    font-style: normal;
-  }
+  .description { color: $gray6; }
+
+  .title,
+  .description { padding-right: 40px; }
 
   .edit-experience,
   .edit-education {
@@ -86,11 +83,13 @@
     clear: right;
     padding-top: 5px;
   }
-}
 
-.config-experience + .config-experience {
-  margin-top: 10px;
-  .form-horizontal { padding-top: 10px; }
+  & +
+  & {
+    margin-top: 10px;
+
+    .form-horizontal { padding-top: 10px; }
+  }
 }
 
 .config-new-item {
@@ -98,18 +97,7 @@
   text-align: center;
 }
 
-form {
-  .end-date { margin-top: 10px; }
-  .errors_on_field { text-align: left; }
-}
-
-#curriculum {
-  ul { margin: 0; }
-  .home-container { padding-bottom: 10px; }
-  .curriculum-title {
-    color: $blue2;
-  }
-}
+.curriculum-title { color: $blue2; }
 
 .curriculum-buttons {
   margin-top: 10px;

@@ -508,6 +508,16 @@ input[type="hidden"] +
 .curriculum-container {
   margin: 10px 0;
 }
+.curriculum-container .experiences,
+.curriculum-container .educations {
+  margin: 0;
+}
+.curriculum-container form .end-date {
+  margin-top: 10px;
+}
+.curriculum-container form .errors_on_field {
+  text-align: left;
+}
 .curriculum-container .list-mix-item {
   padding: 0 20px;
 }
@@ -517,41 +527,33 @@ input[type="hidden"] +
 .curriculum-container ul + .form-horizontal {
   padding-top: 20px;
 }
-.curriculum-container h4 {
-  padding: 0 20px;
-}
 
 .config-title {
   font-weight: 300;
   color: #73c3e6;
   margin-bottom: 20px;
+  padding: 0 20px;
 }
 
 .config-experience {
   list-style: none;
 }
-.config-experience.list-mix-item:before {
-  margin-right: 0;
-}
 .config-experience .list-mix-inner {
   padding: 10px;
 }
-.config-experience span.time {
+.config-experience .time,
+.config-experience .in-between {
   color: #b3b3b3;
 }
-.config-experience span.title {
+.config-experience .title {
   display: block;
-  width: 478px;
 }
-.config-experience p {
+.config-experience .description {
   color: #6d6e6f;
 }
-.config-experience p.description {
-  width: 478px;
-}
-.config-experience i {
-  color: #b3b3b3;
-  font-style: normal;
+.config-experience .title,
+.config-experience .description {
+  padding-right: 40px;
 }
 .config-experience .edit-experience,
 .config-experience .edit-education {
@@ -559,11 +561,12 @@ input[type="hidden"] +
   clear: right;
   padding-top: 5px;
 }
-
-.config-experience + .config-experience {
+.config-experience +
+.config-experience {
   margin-top: 10px;
 }
-.config-experience + .config-experience .form-horizontal {
+.config-experience +
+.config-experience .form-horizontal {
   padding-top: 10px;
 }
 
@@ -572,20 +575,7 @@ input[type="hidden"] +
   text-align: center;
 }
 
-form .end-date {
-  margin-top: 10px;
-}
-form .errors_on_field {
-  text-align: left;
-}
-
-#curriculum ul {
-  margin: 0;
-}
-#curriculum .home-container {
-  padding-bottom: 10px;
-}
-#curriculum .curriculum-title {
+.curriculum-title {
   color: #73c3e6;
 }
 

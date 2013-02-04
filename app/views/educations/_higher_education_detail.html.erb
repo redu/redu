@@ -1,3 +1,3 @@
-<span class="title"><%= t item.educationable.kind %> <i>em</i> <b><%= item.educationable.course == "" ? item.educationable.research_area : item.educationable.course %></b> <i>pela</i> <%= item.educationable.institution %></span>
+<span class="title"><%= t item.educationable.kind %> <span class="in-between">em</span> <b><%= item.educationable.course == "" ? item.educationable.research_area : item.educationable.course %></b> <span class="in-between">pela</span> <%= item.educationable.institution %></span>
 <span class="time"><%= t item.educationable.start_year.strftime("%Y") %> - <%= t item.educationable.end_year.strftime("%Y") %></span>
 <p class="description"><%= item.educationable.description %></p>
