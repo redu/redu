@@ -84,17 +84,11 @@
     float: right;
   }
 
-  .legend {
+  .edit-experience,
+  .edit-education {
     float: right;
     clear: right;
-    color: $blue2;
-    padding-top: 10px;
-
-    &:hover {
-      color: $blue3;
-      text-decoration: none;
-      cursor: pointer;
-    }
+    padding-top: 5px;
   }
 }
 

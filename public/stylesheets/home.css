@@ -556,16 +556,11 @@ input[type="hidden"] +
 .config-experience .message-close {
   float: right;
 }
-.config-experience .legend {
+.config-experience .edit-experience,
+.config-experience .edit-education {
   float: right;
   clear: right;
-  color: #73c3e6;
-  padding-top: 10px;
-}
-.config-experience .legend:hover {
-  color: #4dadd6;
-  text-decoration: none;
-  cursor: pointer;
+  padding-top: 5px;
 }
 
 .config-experience + .config-experience {

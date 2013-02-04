@@ -6,7 +6,7 @@
           :remote => true, :method => :delete,
           :class => "message-close",
           :confirm => "Você tem certeza que deseja excluir esta experiência? Não será mais possível recuperá-la." %>
-        <a href="#" class="edit-education legend">editar</a>
+        <span class="edit-education legend link-fake">editar</span>
         <%= render :partial => "educations/event_education_detail", :locals => { :item => item } %>
       </div>
     </div>
