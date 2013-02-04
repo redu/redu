@@ -553,9 +553,6 @@ input[type="hidden"] +
   color: #b3b3b3;
   font-style: normal;
 }
-.config-experience .message-close {
-  float: right;
-}
 .config-experience .edit-experience,
 .config-experience .edit-education {
   float: right;
