@@ -191,6 +191,10 @@
             return false;
         });
 
+        $(document).on('click', '.curriculum-buttons .add-item', function() {
+          $('.curriculum-buttons .cancel').hide();
+        });
+
         $("#education_type").refreshShowCorrectForm();
         $(document).on('change', '#education_type', function() {
           $(this).refreshShowCorrectForm();
@@ -210,6 +214,7 @@
             // Esconde os forms de edição
             $("#curriculum .experiences form").hide();
             $("#curriculum .educations form").hide();
+            $('.curriculum-buttons .cancel').show();
             // Esconde link para editar perfil na barra de completude
             $(".explanation-sidebar .incomplete-profile .edit").hide();
             $("#education_type").refreshShowCorrectForm();
