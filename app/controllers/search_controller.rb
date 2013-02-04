@@ -42,9 +42,9 @@ class SearchController < BaseController
 
   # Busca por Ambientes (AVA's, Cursos e Disciplinas)
   def environments
-    @environments = perform_results(EnvironmentSearch)
-    @courses = perform_results(CourseSearch)
-    @spaces = perform_results(SpaceSearch)
+    @environments = has_filter?("ambientes") ? perform_results(EnvironmentSearch) : []
+    @courses = has_filter?("cursos") ? perform_results(CourseSearch) : []
+    @spaces = has_filter?("disciplinas") ? perform_results(SpaceSearch) : []
 
     @total_results = [@environments.length, @courses.length, @spaces.length].sum
 
@@ -112,5 +112,11 @@ class SearchController < BaseController
   def perform_results(klass)
     klass.perform(params[:q], params[:format],
                   params[:page], params[:per_page]).results
+  end
+
+  def has_filter?(entity)
+    # Se o params[:f] não existir, significa executar
+    # a busca em todos os ambientes
+    params[:f] ? params[:f].include?(entity) : true
   end
 end

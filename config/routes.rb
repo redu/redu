@@ -19,9 +19,10 @@ Redu::Application.routes.draw do
   match '/analytics/post_by_date', :to => 'analytics_dashboard#post_by_date'
 
   match '/search' => 'search#index', :as => :search
+  # Rota para todos os ambientes em geral e quando houver mais de um filtro selecionado
   match '/search/environments' => 'search#environments',
     :as => :search_environments, :constraints => Proc.new { |request|
-      request.query_parameters["f"].nil?
+      request.query_parameters["f"].nil? || (request.query_parameters["f"].size > 1)
     }
   match '/search/environments' => 'search#environments_only', :via => :get,
     :as => :search_environments_only, :constraints => Proc.new { |request|
