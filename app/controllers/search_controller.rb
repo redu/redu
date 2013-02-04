@@ -7,6 +7,10 @@ class SearchController < BaseController
     @environments = perform_results(EnvironmentSearch)
     @courses = perform_results(CourseSearch)
     @spaces = perform_results(SpaceSearch)
+
+    @total_results = [@profiles.length, @environments.length,
+                      @courses.length, @spaces.length].sum
+
     @query = params[:q]
 
     respond_to do |format|
@@ -26,6 +30,7 @@ class SearchController < BaseController
   # Busca por Perfis
   def profiles
     @profiles = perform_results(UserSearch)
+    @total_results = @profiles.length
 
     respond_to do |format|
       format.html # search/profiles.html.erb
@@ -40,6 +45,9 @@ class SearchController < BaseController
     @environments = perform_results(EnvironmentSearch)
     @courses = perform_results(CourseSearch)
     @spaces = perform_results(SpaceSearch)
+
+    @total_results = [@environments.length, @courses.length, @spaces.length].sum
+
     @query = params[:q]
 
     respond_to do |format|
@@ -59,6 +67,7 @@ class SearchController < BaseController
   # Busca por Ambientes (Somente AVA's)
   def environments_only
     @environments = perform_results(EnvironmentSearch)
+    @total_results = params[:total_results]
 
     respond_to do |format|
       format.html # search/environments_only.html.erb
@@ -70,6 +79,7 @@ class SearchController < BaseController
   # Busca por Cursos
   def courses_only
     @courses = perform_results(CourseSearch)
+    @total_results = params[:total_results]
 
     respond_to do |format|
       format.html # search/courses_only.html.erb
@@ -81,6 +91,7 @@ class SearchController < BaseController
   # Busca por Disciplinas
   def spaces_only
     @spaces = perform_results(SpaceSearch)
+    @total_results = params[:total_results]
 
     respond_to do |format|
       format.html # search/spaces_only.html.erb
