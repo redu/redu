@@ -3,8 +3,8 @@ class UserEnvironmentAssociationCacheObserver < ActiveRecord::Observer
   observe UserEnvironmentAssociation
 
   def after_create(uea)
-    if uea.role == 3
-      expire_environment_administrators_for(uea.environment)
+    if uea.role == Role[:environment_admin]
+      expire_search_environment_administrators_for(uea.environment)
     end
 
     expire_environment_sidebar_connections_with_count_for(uea.environment)
@@ -12,13 +12,13 @@ class UserEnvironmentAssociationCacheObserver < ActiveRecord::Observer
 
   def after_update(uea)
     if uea.role_changed?
-      expire_environment_administrators_for(uea.environment)
+      expire_search_environment_administrators_for(uea.environment)
     end
   end
 
   def after_destroy(uea)
-    if uea.role == 3
-      expire_environment_administrators_for(uea.environment)
+    if uea.role == Role[:environment_admin]
+      expire_search_environment_administrators_for(uea.environment)
     end
 
     expire_environment_sidebar_connections_with_count_for(uea.environment)

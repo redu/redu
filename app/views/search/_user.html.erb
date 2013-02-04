@@ -16,7 +16,7 @@
 
   Amigos: <%= user.friends.length %>
 
-  <% cache ["user_courses_count", user.id] do %>
+  <% cache ["search_user_courses_count", user.id] do %>
     | Cursos: <%= user.courses.count %>
   <% end %>
 

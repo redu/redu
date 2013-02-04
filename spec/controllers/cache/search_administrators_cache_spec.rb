@@ -4,8 +4,8 @@ describe 'SearchAdministratorsCache' do
   let(:user) { Factory(:user) }
   let(:environment) { Factory(:environment) }
 
-  context "environment_administrators" do
-    let(:cache_identifier) { "views/environment_administrators/#{environment.id}" }
+  context "search_environment_administrators" do
+    let(:cache_identifier) { "views/search_environment_administrators/#{environment.id}" }
 
     context "writing" do
       let(:environments) { [environment] }

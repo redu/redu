@@ -4,8 +4,8 @@ describe 'SearchTeacherCache' do
   let(:user) { Factory(:user) }
   let(:course) { Factory(:course) }
 
-  context 'course_teachers_count' do
-    let(:cache_identifier) { "views/course_teachers_count/#{course.id}" }
+  context 'search_course_teachers_count' do
+    let(:cache_identifier) { "views/search_course_teachers_count/#{course.id}" }
 
     context "writing" do
       let(:courses) { [course] }

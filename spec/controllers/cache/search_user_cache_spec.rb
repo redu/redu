@@ -4,9 +4,9 @@ describe 'SearchUserCache' do
   let(:user) { Factory(:user) } # current_user
   let(:other_user) { Factory(:user) }
 
-  context 'user_courses_count' do
+  context 'search_user_courses_count' do
     # A cache é feita pelo usuário que será mostrado
-    let(:cache_identifier) { "views/user_courses_count/#{other_user.id}" }
+    let(:cache_identifier) { "views/search_user_courses_count/#{other_user.id}" }
 
     context 'writing' do
       let(:users) { [other_user] }

@@ -30,16 +30,16 @@ module ViewCaches
     expire_fragments('environment_sidebar_connections_with_count', environment)
   end
 
-  def expire_user_courses_count_for(users)
-    expire_fragments('user_courses_count', users)
+  def expire_search_user_courses_count_for(users)
+    expire_fragments('search_user_courses_count', users)
   end
 
-  def expire_course_teachers_count_for(courses)
-    expire_fragments('course_teachers_count', courses)
+  def expire_search_course_teachers_count_for(courses)
+    expire_fragments('search_course_teachers_count', courses)
   end
 
-  def expire_environment_administrators_for(environments)
-    expire_fragments('environment_administrators', environments)
+  def expire_search_environment_administrators_for(environments)
+    expire_fragments('search_environment_administrators', environments)
   end
 
   def expire_space_lectures_item_for(lecture, users)
