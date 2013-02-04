@@ -5377,6 +5377,7 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
   border-radius: 11px;
   border: 1px solid #e6e6e6;
   padding: 2px 15px 2px 9px;
+  background-color: #f7f7f7;
 }
 .tab-button + .tab-button {
   margin-left: 5px;
