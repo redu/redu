@@ -3,14 +3,10 @@ class SearchController < BaseController
 
   # Busca por Perfis + Ambientes (AVA's, Cursos e Disciplinas)
   def index
-    @profiles = UserSearch.perform(params[:q], params[:format],
-                                   params[:page], params[:per_page]).results
-    @environments = EnvironmentSearch.perform(params[:q], params[:format],
-                                              params[:page], params[:per_page]).results
-    @courses = CourseSearch.perform(params[:q], params[:format],
-                                    params[:page], params[:per_page]).results
-    @spaces = SpaceSearch.perform(params[:q], params[:format],
-                                  params[:page], params[:per_page]).results
+    @profiles = perform_results(UserSearch)
+    @environments = perform_results(EnvironmentSearch)
+    @courses = perform_results(CourseSearch)
+    @spaces = perform_results(SpaceSearch)
     @query = params[:q]
 
     respond_to do |format|
@@ -29,8 +25,7 @@ class SearchController < BaseController
 
   # Busca por Perfis
   def profiles
-    @profiles = UserSearch.perform(params[:q], params[:format],
-                                   params[:page], params[:per_page]).results
+    @profiles = perform_results(UserSearch)
 
     respond_to do |format|
       format.html # search/profiles.html.erb
@@ -42,12 +37,9 @@ class SearchController < BaseController
 
   # Busca por Ambientes (AVA's, Cursos e Disciplinas)
   def environments
-    @environments = EnvironmentSearch.perform(params[:q], params[:format],
-                                              params[:page], params[:per_page]).results
-    @courses = CourseSearch.perform(params[:q], params[:format],
-                                    params[:page], params[:per_page]).results
-    @spaces = SpaceSearch.perform(params[:q], params[:format],
-                                  params[:page], params[:per_page]).results
+    @environments = perform_results(EnvironmentSearch)
+    @courses = perform_results(CourseSearch)
+    @spaces = perform_results(SpaceSearch)
     @query = params[:q]
 
     respond_to do |format|
@@ -66,8 +58,7 @@ class SearchController < BaseController
   # GET /busca/ambientes?f[]=ambientes
   # Busca por Ambientes (Somente AVA's)
   def environments_only
-    @environments = EnvironmentSearch.perform(params[:q], params[:format],
-                                              params[:page], params[:per_page]).results
+    @environments = perform_results(EnvironmentSearch)
 
     respond_to do |format|
       format.html # search/environments_only.html.erb
@@ -78,8 +69,7 @@ class SearchController < BaseController
   # GET /busca/ambientes?f[]=cursos
   # Busca por Cursos
   def courses_only
-    @courses = CourseSearch.perform(params[:q], params[:format],
-                                    params[:page], params[:per_page]).results
+    @courses = perform_results(CourseSearch)
 
     respond_to do |format|
       format.html # search/courses_only.html.erb
@@ -90,8 +80,7 @@ class SearchController < BaseController
   # GET /busca/ambientes?f[]=disciplinas
   # Busca por Disciplinas
   def spaces_only
-    @spaces = SpaceSearch.perform(params[:q], params[:format],
-                                  params[:page], params[:per_page]).results
+    @spaces = perform_results(SpaceSearch)
 
     respond_to do |format|
       format.html # search/spaces_only.html.erb
@@ -107,5 +96,10 @@ class SearchController < BaseController
 
   def authorize
     authorize! :search, :all
+  end
+
+  def perform_results(klass)
+    klass.perform(params[:q], params[:format],
+                  params[:page], params[:per_page]).results
   end
 end
