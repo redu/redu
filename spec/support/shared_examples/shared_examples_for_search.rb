@@ -8,6 +8,7 @@ shared_examples_for "a Sunspot::Search performer" do
     let(:performer) { subject.class } # não é uma instância, mas sim a classe!
     let(:query) { 'Query' }
     let(:page) { 1 }
+    let(:per_page) { 4 }
 
     it "should instantiate the search performer" do
       instantiation_method = performer.method(:new)
@@ -15,11 +16,11 @@ shared_examples_for "a Sunspot::Search performer" do
         instantiation_method.call
       end
 
-      performer.perform(query)
+      performer.perform(query, per_page)
     end
 
     it "should perform search and return a Sunspot::Rails::StubSessionProxy::Search" do
-      ret = performer.perform(query)
+      ret = performer.perform(query, per_page)
       ret.should be_instance_of(Sunspot::Rails::StubSessionProxy::Search)
     end
   end

@@ -3,10 +3,10 @@ class SearchController < BaseController
 
   # Busca por Perfis + Ambientes (AVA's, Cursos e Disciplinas)
   def index
-    @profiles = perform_results(UserSearch)
-    @environments = perform_results(EnvironmentSearch)
-    @courses = perform_results(CourseSearch)
-    @spaces = perform_results(SpaceSearch)
+    @profiles = perform_results(UserSearch, true)
+    @environments = perform_results(EnvironmentSearch, true)
+    @courses = perform_results(CourseSearch, true)
+    @spaces = perform_results(SpaceSearch, true)
 
     @total_results = [@profiles.length, @environments.length,
                       @courses.length, @spaces.length].sum
@@ -42,9 +42,9 @@ class SearchController < BaseController
 
   # Busca por Ambientes (AVA's, Cursos e Disciplinas)
   def environments
-    @environments = has_filter?("ambientes") ? perform_results(EnvironmentSearch) : []
-    @courses = has_filter?("cursos") ? perform_results(CourseSearch) : []
-    @spaces = has_filter?("disciplinas") ? perform_results(SpaceSearch) : []
+    @environments = has_filter?("ambientes") ? perform_results(EnvironmentSearch, true) : []
+    @courses = has_filter?("cursos") ? perform_results(CourseSearch, true) : []
+    @spaces = has_filter?("disciplinas") ? perform_results(SpaceSearch, true) : []
 
     @total_results = [@environments.length, @courses.length, @spaces.length].sum
 
@@ -109,9 +109,16 @@ class SearchController < BaseController
     authorize! :search, :all
   end
 
-  def perform_results(klass)
-    klass.perform(params[:q], params[:format],
-                  params[:page], params[:per_page]).results
+  # Realiza a busca com os params já setados
+  def perform_results(klass, preview = false)
+    if preview
+      per_page = Redu::Application.config.search_preview_results_per_page
+    else
+      per_page = Redu::Application.config.search_results_per_page
+    end
+
+    klass.perform(params[:q], per_page, params[:format],
+                  params[:page]).results
   end
 
   def has_filter?(entity)

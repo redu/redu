@@ -3,7 +3,7 @@ class EnvironmentSearch < Search
     super(Environment)
   end
 
-  def self.perform(query, format = nil, page = nil, per_page = 10)
+  def self.perform(query, per_page, format = nil, page = nil)
     searcher = EnvironmentSearch.new
     # Instant search não necessita dos includes
     includes = format == "json" ? [] : [:user_environment_associations, :courses]
