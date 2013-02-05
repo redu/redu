@@ -61,22 +61,24 @@ GIT
       activesupport (>= 3.0.0)
 
 GIT
-  remote: git://github.com/redu/untied-publisher
-  revision: 1daf8146ddc5dd2b3c4d5cfa990c67dc60ad171f
-  specs:
-    untied-publisher (0.0.5)
-      activerecord
-      amqp
-      configurable
-      json
-      representable
-
-GIT
   remote: git@github.com:redu/invitable.git
   revision: 171dcdb33d0955357a0af7980d6882925958949c
   specs:
     invitable (0.0.5)
       rails (~> 3.0.10)
+
+GIT
+  remote: git@github.com:redu/untied-publisher.git
+  revision: 9dec1d45c008f4b2d9f21b6f8bbc5e56dce01fc1
+  branch: sync-producer
+  specs:
+    untied-publisher (0.0.5)
+      activerecord
+      amqp
+      bunny (= 0.9.0.pre6)
+      configurable
+      json
+      representable
 
 GIT
   remote: git@github.com:redu/vis_client.git
@@ -129,10 +131,10 @@ GEM
     acts-as-taggable-on (2.0.6)
     acts_as_tree (0.1.1)
     addressable (2.3.2)
-    amq-client (0.9.8)
-      amq-protocol (>= 0.9.4)
+    amq-client (0.9.11)
+      amq-protocol (>= 1.0.1)
       eventmachine
-    amq-protocol (0.9.5)
+    amq-protocol (1.1.0)
     amqp (0.9.8)
       amq-client (~> 0.9.5)
       amq-protocol (>= 0.9.4)
@@ -153,10 +155,12 @@ GEM
       json (~> 1.4)
       nokogiri (>= 1.4.4)
       uuidtools (~> 2.1)
-    bson (1.7.0)
+    bson (1.7.1)
     bson_ext (1.7.0)
       bson (~> 1.7.0)
     builder (2.1.2)
+    bunny (0.9.0.pre6)
+      amq-protocol (>= 1.0.1)
     cancan (1.6.7)
     childprocess (0.3.1)
     chronic (0.6.7)
@@ -180,11 +184,11 @@ GEM
     crack (0.1.8)
     css_parser (1.2.5)
       addressable
-    daemons (1.1.8)
+    daemons (1.0.10)
     date_validator (0.6.1)
       activemodel (~> 3.0.0)
     deep_cloneable (1.2.3)
-    delayed_job (3.0.4)
+    delayed_job (3.0.5)
       activesupport (~> 3.0)
     delayed_job_mongoid (1.1.0)
       delayed_job (~> 3.0)
@@ -269,10 +273,10 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    mime-types (1.19)
+    mime-types (1.20.1)
     mimemagic (0.1.8)
-    mongo (1.7.0)
-      bson (~> 1.7.0)
+    mongo (1.7.1)
+      bson (~> 1.7.1)
     mongoid (2.2.6)
       activemodel (~> 3.0.0)
       mongo (~> 1.3)
@@ -351,7 +355,7 @@ GEM
     redu_analytics (0.0.2)
       lazy_high_charts
     remotipart (1.0.2)
-    representable (1.3.0)
+    representable (1.3.1)
       json
       nokogiri
     roar (0.11.7)
@@ -442,7 +446,7 @@ DEPENDENCIES
   ckeditor (= 3.4.2.pre)
   compass-rails
   content_for_in_controllers!
-  daemons
+  daemons (= 1.0.10)
   date_validator
   deep_cloneable
   delayed_job_mongoid

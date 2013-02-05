@@ -27,7 +27,7 @@ gem 'backup',
 gem 'bundler', '~> 1.2'
 gem 'cancan', '~> 1.6.7'
 gem 'ckeditor', '3.4.2.pre'
-gem 'daemons'
+gem 'daemons', '1.0.10'
 gem 'date_validator'
 gem 'mongoid', '~> 2.2.6', :require => 'mongoid/version'
 gem 'deep_cloneable'
@@ -64,7 +64,8 @@ gem 'vis_client', :git => 'git@github.com:redu/vis_client.git'
 gem 'whenever', :require => false
 gem 'will_paginate', '~> 3.0.pre2'
 gem 'zencoder'
-gem 'untied-publisher', :git => 'git://github.com/redu/untied-publisher'
+gem 'untied-publisher', :git => 'git@github.com:redu/untied-publisher.git',
+  :branch => 'sync-producer'
 gem 'content_for_in_controllers',
   :git => 'git://github.com/julianalucena/content_for_in_controllers.git'
 gem 'system_timer'

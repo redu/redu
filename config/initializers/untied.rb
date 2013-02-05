@@ -6,21 +6,13 @@
 #
 # Para mais informações visite http://github.com/redu/untied
 Untied::Publisher.configure do |config|
-  config.deliver_messages = !(Rails.env.test? || Rails.env.development?)
+  config.deliver_messages = true
   config.logger = Rails.logger
   config.service_name = "core"
   config.doorkeeper = ::BaseDoorkeeper
 end
 
-# Inicializa novamente o EM numa thread separada apenas no contexto do DelayedJob.
-# Isso é necessário pois o reactor não sobrevive a forks de processo.
+# Verifica e reabre conexões com o MySQL caso elas tenham sido perdidas.
 Delayed::Worker.lifecycle.before(:invoke_job) do
-  if !defined?(@@em_thread) && Delayed::Worker.delay_jobs
-    ActiveRecord::Base.verify_active_connections!
-    EM.stop if EM.reactor_running?
-    @@em_thread = Thread.new do
-      EventMachine.run { }
-    end
-    sleep(0.25)
-  end
+  ActiveRecord::Base.verify_active_connections!
 end
