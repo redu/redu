@@ -1,1 +1,10 @@
-$("#experience-<%= @experience.id %>").slideUp(150, 'swing');
+$("#experience-<%= @experience.id %>").slideUp(150, 'swing', function() {
+  $(this).remove();
+  if ( !$.trim( $('#curriculum .experiences').html() ).length ) {
+    $('#new_experience').css('padding-top', 0);
+    $('#new_experience .cancel').hide();
+    $('#new_experience').find('.title').remove();
+    $('#curriculum .experience .config-new-item').hide();
+    $("#new_experience").slideDown(150, 'swing');
+  }
+});

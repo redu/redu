@@ -1,1 +1,10 @@
-$("#education-<%= @education.id %>").slideUp(150, 'swing');
+$("#education-<%= @education.id %>").slideUp(150, 'swing', function() {
+  $(this).remove();
+  if ( !$.trim( $('#curriculum .educations').html() ).length ) {
+    $('#new_education').css('padding-top', 0);
+    $('#new_education .cancel').hide();
+    $('#new_education').find('.title').remove();
+    $('#curriculum .education .config-new-item').hide();
+    $("#new_education").slideDown(150, 'swing');
+  }
+});

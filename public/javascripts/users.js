@@ -123,12 +123,14 @@
 
         $(document).on('click', '#curriculum .new-experience-button', function(){
             $('#curriculum .experience .config-new-item').hide();
+            $('#curriculum .experience .curriculum-buttons .cancel').show();
             $("#new_experience").slideDown(150, 'swing');
             return false;
         });
 
         $(document).on('click', '#curriculum .new-education-button', function(){
             $('#curriculum .education .config-new-item').hide();
+            $('#curriculum .education .curriculum-buttons .cancel').show();
             $("#new_education").slideToggle(150, 'swing');
             return false;
         });
@@ -144,6 +146,7 @@
 
             $infos = $(this).parents('.infos');
             $infos.slideUp(150, 'swing');
+            $('#curriculum .experience .curriculum-buttons .cancel').show();
             $infos.siblings("form").slideDown(150, 'swing');
             return false;
         });
@@ -159,6 +162,7 @@
 
             $infos = $(this).parents('.infos');
             $infos.slideUp(150, 'swing');
+            $('#curriculum .education .curriculum-buttons .cancel').show();
             $infos.siblings("form").slideDown(150, 'swing');
             return false;
         });
@@ -214,7 +218,7 @@
             // Esconde os forms de edição
             $("#curriculum .experiences form").hide();
             $("#curriculum .educations form").hide();
-            $('.curriculum-buttons .cancel').show();
+            //$('.curriculum-buttons .cancel').show();
             // Esconde link para editar perfil na barra de completude
             $(".explanation-sidebar .incomplete-profile .edit").hide();
             $("#education_type").refreshShowCorrectForm();
