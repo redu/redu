@@ -1,36 +1,628 @@
-<script type="text/javascript">
-  $(document).ready(function () {
-    $("#search").tokenInput("<%= search_path(:format => :json) %>", {
-    crossDomain: false,
-    hintText: "Busque por usuários, ambientes, cursos e disciplinas",
-    noResultsText: "Sem resultados",
-    searchingText: "Buscando...",
-    });
-  });
-</script>
-
-<!-- FORM -->
-<div class="control-autocomplete">
-  <div class="control-label">
-    <label for="token-input-search">Busca</label>
+<div class="span16">
+  <div class="search-title-header">
+      <h2 class="search-title icon-apps-portal-gray_48_50-before link-container pull-left">
+        <a href="/" class="search-title-link link-target" title="Busca por Ambientes e Perfis">Busca por Ambientes e Perfis</a>
+      </h2>
+    <div id="search-breadcrumb" class="breadcrumb-mini-wrapper">
+      <ul class="breadcrumb-mini" id="search-breadcrumb">
+        <li class="breadcrumb-mini-item icon-arrow-right-separator-gray_16_18-after">
+          <a class="breadcrumb-mini-link icon-magnifier-lightblue_16_18-before selected simple-navigation-active-leaf" href="/">Busca</a>
+        </li>
+      </ul>
+    </div>
+    <span class="legend">Busque pelos Ambientes de Aprendizagem e seus Cursos e Disciplinas. Você também pode buscar pelos Perfis que fazem parte do Redu.
+    </span>
   </div>
-  <div class="controls">
-    <input class="control-autocomplete-input" type="text" id="search">
+  <div class="content-body search-content">
+    <ul class="tabs tabs-big">
+      <li class="tab tab-active">
+        <a href="#" class="tab-title icon-basic-guide-lightblue_16_18-before" title="Geral">Geral (10)</a>
+      </li>
+      <li class="tab">
+        <a href="#" class="tab-title icon-environment-lightblue_16_18-before" title="Ambientes">Ambientes (8)</a>
+      </li>
+      <li class="tab">
+        <a href="#" class="tab-title icon-profile-lightblue_16_18-before" title="Perfil">Perfil (6)</a>
+      </li>
+    </ul>
+
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $("#search").tokenInput("<%= search_path(:format => :json) %>", {
+        crossDomain: false,
+        hintText: "Busque por usuários, ambientes, cursos e disciplinas",
+        noResultsText: "Sem resultados",
+        searchingText: "Buscando...",
+        });
+      });
+    </script>
+
+    <!-- FORM -->
+    <div class="control-autocomplete">
+      <div class="control-label">
+        <label for="token-input-search">Busca</label>
+      </div>
+      <div class="controls">
+        <input class="control-autocomplete-input" type="text" id="search">
+      </div>
+    </div>
+
+    <h1>Busca por Ambientes + Perfis</h1>
+    <h2>### Resultados ###</h2>
+    <br />
+
+    <h3>Perfis</h3>
+    <ul class="search_results">
+      <%= render :partial => "user", :collection => @profiles %>
+    </ul>
+    <% unless @profiles.last_page? %>
+      <%= link_to 'Ver Mais', search_profiles_path(:q => @query) %>
+    <% end %>
+    <br /><br />
+    <%= render :partial => "environments", :locals => { :environments => @environments,
+                                                        :courses => @courses,
+                                                        :spaces => @spaces } %>
+
+    <div class="search-results">
+      <div class="result-quantity">
+        <p>Você buscou por <b>“Metus”</b>. Achamos 15 resultados.</br>Clique numa aba para maiores detalhes.</p>
+      </div>
+      <div class="search-filter">
+        <div class="filters">
+          <button class="filter icon-environment-lightblue_16_18-before">Ambientes (3)</button>
+          <button class="filter icon-course-lightblue_16_18-before">Cursos (2)</button>
+          <button class="filter filter-active icon-space-lightblue_16_18-before">Disciplinas (2)</button>
+        </div>
+      </div>
+      <ul class="results-group results-by-profile">
+        <li class="title-result">
+          <span class="title-result-name icon-profile-darkgray_32_34-before">Perfis:<span class="quantity"> 10</span> pessoas</span>
+          <a class="false-link" href="#">Veja todos os resultados</a><!--virar falso link -->
+        </li>
+        <li>
+          <ul class="result-found">
+            <li class="result-separator"><hr></li>
+              <li class="general-list-item">
+                <div class="general-list-item-body">
+                  <div class="general-list-item-column">
+                    <a href="/aplicativos/1" title="Trapézio">
+                      <img alt="Trapézio" height="90" src="../img/thumbnail-missing-profile-90.png" title="Trapézio" width="90">
+                    </a>
+                </div>
+                <div class="general-list-item-column">
+                  <h4 class="general-list-item-title pull-left">
+                    <a href="#" class="general-list-item-title-link" title="Trapézio">Nome Sobrenome Metus</a>
+                  </h4>
+                  <span class="icon-contacts-green_16_18 show text-replacement pull-right">Já é seu amigo</span>
+                  <span class="legend icon-curriculum-professional-gray_8_10-before">Designer na Redu Educational Technologies</span>
+                  <span class="legend icon-curriculum-academic-gray_8_10-before">Bacharel em Design pela UFPE</span>
+                  <span class="legend icon-biography-gray_8_10-before">Mora em Recife</span>
+                  <ul class="general-list-item-counters">
+                    <li class="general-list-item-counter icon-contacts-gray_16_18-before">
+                      342 Amigos (<span class="in-common">22</span>)
+                    </li>
+                    <li class="general-list-item-counter icon-course-gray_16_18-before">
+                      10 Cursos
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+            <li class="general-list-item">
+              <div class="general-list-item-body">
+                <div class="general-list-item-column">
+                  <a href="/aplicativos/1" title="Trapézio">
+                    <img alt="Trapézio" height="90" src="../img/thumbnail-missing-profile-90.png" title="Trapézio" width="90">
+                  </a>
+              </div>
+                <div class="general-list-item-column">
+                  <h4 class="general-list-item-title pull-left">
+                    <a href="/aplicativos/1" class="general-list-item-title-link" title="Trapézio">Nome Sobrenome Metus</a>
+                  </h4>
+                  <span class="icon-contacts-green_16_18 show text-replacement pull-right">Já é seu amigo</span>
+                  <span class="legend icon-curriculum-professional-gray_8_10-before">Designer na Redu Educational Technologies</span>
+                  <span class="legend icon-curriculum-academic-gray_8_10-before">Bacharel em Design pela UFPE</span>
+                  <span class="legend icon-biography-gray_8_10-before">Mora em Recife</span>
+                  <ul class="general-list-item-counters">
+                    <li class="general-list-item-counter icon-contacts-gray_16_18-before">
+                      342 Amigos (<span class="in-common">22</span>)
+                    </li>
+                    <li class="general-list-item-counter icon-course-gray_16_18-before">
+                      10 Cursos
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+            <li class="result-separator"><hr></li>
+              <li class="general-list-item">
+                <div class="general-list-item-body">
+                  <div class="general-list-item-column">
+                    <a href="/aplicativos/1" title="Trapézio">
+                      <img alt="Trapézio" height="90" src="../img/thumbnail-missing-profile-90.png" title="Trapézio" width="90">
+                    </a>
+                </div>
+                  <div class="general-list-item-column">
+                    <h4 class="general-list-item-title pull-left">
+                      <a href="/aplicativos/1" class="general-list-item-title-link" title="Trapézio">Nome Sobrenome Metus</a>
+                    </h4>
+                    <span class="icon-contacts-green_16_18 show text-replacement pull-right">Já é seu amigo</span>
+                    <span class="legend icon-curriculum-professional-gray_8_10-before">Designer na Redu Educational Technologies</span>
+                    <span class="legend icon-curriculum-academic-gray_8_10-before">Bacharel em Design pela UFPE</span>
+                    <span class="legend icon-biography-gray_8_10-before">Mora em Recife</span>
+                    <ul class="general-list-item-counters">
+                      <li class="general-list-item-counter icon-contacts-gray_16_18-before">
+                        342 Amigos (<span class="in-common">22</span>)
+                      </li>
+                      <li class="general-list-item-counter icon-course-gray_16_18-before">
+                        10 Cursos
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+              <li class="general-list-item">
+                <div class="general-list-item-body">
+                  <div class="general-list-item-column">
+                    <a href="/aplicativos/1" title="Trapézio">
+                      <img alt="Trapézio" height="90" src="../img/thumbnail-missing-profile-90.png" title="Trapézio" width="90">
+                    </a>
+                </div>
+                <div class="general-list-item-column">
+                  <h4 class="general-list-item-title pull-left">
+                    <a href="/aplicativos/1" class="general-list-item-title-link" title="Trapézio">Nome Sobrenome Metus</a>
+                  </h4>
+                  <span class="legend icon-curriculum-professional-gray_8_10-before">Designer na Redu Educational Technologies</span>
+                  <span class="legend icon-curriculum-academic-gray_8_10-before">Bacharel em Design pela UFPE</span>
+                  <span class="legend icon-biography-gray_8_10-before">Mora em Recife</span>
+                  <ul class="general-list-item-counters">
+                    <li class="general-list-item-counter icon-contacts-gray_16_18-before">
+                      342 Amigos (<span class="in-common">22</span>)
+                    </li>
+                    <li class="general-list-item-counter icon-course-gray_16_18-before">
+                      10 Cursos
+                    </li>
+                    <li class="add-as-friend icon-invite-lightblue_16_18-before button-default"></li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </li>
+        <li><hr class="list-separator"></li>
+      </ul>
+      <ul class="results-group results-by-environment">
+        <li class="title-result">
+          <span class="title-result-name icon-environment-gray_32_34-before">Ambientes:<span class="quantity"> 3
+        </li>
+        <li>
+          <ul class="result-found">
+            <li class="result-separator"><hr></li>
+            <li class="general-list-item">
+              <div class="general-list-item-body">
+                <div class="general-list-item-column">
+                  <a href="/aplicativos/1" title="Trapézio">
+                    <img alt="Trapézio" height="90" src="../img/thumbnail-missing-environment-90.png" title="Trapézio" width="90">
+                  </a>
+                </div>
+                <div class="general-list-item-column">
+                  <h4 class="general-list-item-title pull-left">
+                    <a href="/aplicativos/1" class="general-list-item-title-link" title="Trapézio">Universidade Voluptat Metus</a>
+                  </h4>
+                  <span class="icon-manager-lightblue_16_18 show text-replacement pull-right">É administrador</span>
+                  <span class="legend">Administrado por <a href="http://#" class="link-name">Nome Sobrenome</a></span>
+                  <span class="legend">SIGLA</span>
+                  <ul class="general-list-item-counters">
+                    <li class="general-list-item-counter icon-members-gray_16_18-before">
+                      342 Amigos (<span class="in-common">22</span>)
+                    </li>
+                    <li class="general-list-item-counter icon-course-gray_16_18-before">
+                      10 Cursos
+                    </li>
+                    <li class="dropdown">
+                      <a id="courses-1" class="dropdown-toggle button-default button-dropdown" role="button" data-toggle="dropdown" data-target="#">
+                        <span class="icon-arrow-down-lightblue_8_10 show text-replacement">Expandir</span>
+                      </a>
+                      <ul class="dropdown-menu" role="menu" aria-labelledby="courses-1">
+                        <li><span>Lista de Cursos (5)</span></li>
+                        <li><a tabindex="-1" href="#" class="icon-course-lightblue_16_18-before">Curso Lorem Ipsum Bla Bla</a></li>
+                        <li><a tabindex="-1" href="#" class="icon-course-lightblue_16_18-before">Curso Lorem Ipsum Bla Bla</a></li>
+                        <li><a tabindex="-1" href="#" class="icon-course-lightblue_16_18-before">Curso Lorem Ipsum Bla Bla</a></li>
+                        <li><a tabindex="-1" href="#" class="icon-course-lightblue_16_18-before">Curso Lorem Ipsum Bla Bla</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+            <li class="general-list-item">
+              <div class="general-list-item-body">
+                <div class="general-list-item-column">
+                  <a href="/aplicativos/1" title="Trapézio">
+                    <img alt="Trapézio" height="90" src="../img/thumbnail-missing-environment-90.png" title="Trapézio" width="90">
+                  </a>
+                </div>
+                <div class="general-list-item-column">
+                  <h4 class="general-list-item-title pull-left">
+                    <a href="/aplicativos/1" class="general-list-item-title-link" title="Trapézio">Universidade Voluptat Metus</a>
+                  </h4>
+                  <span class="icon-manager-lightblue_16_18 show text-replacement pull-right">É administrador</span>
+                  <span class="legend">Administrado por <a href="http://#" class="link-name">Nome Sobrenome</a></span>
+                  <span class="legend">SIGLA</span>
+                  <ul class="general-list-item-counters">
+                    <li class="general-list-item-counter icon-members-gray_16_18-before">
+                      342 Amigos (<span class="in-common">22</span>)
+                    </li>
+                    <li class="general-list-item-counter icon-course-gray_16_18-before">
+                      10 Cursos
+                    </li>
+                    <li class="dropdown">
+                      <a id="courses-2" class="dropdown-toggle button-default button-dropdown" role="button" data-toggle="dropdown" data-target="#">
+                        <span class="icon-arrow-down-lightblue_8_10 show text-replacement">Expandir</span>
+                      </a>
+                      <ul class="dropdown-menu" role="menu" aria-labelledby="courses-2">
+                        <li><span>Lista de Cursos (5)</span></li>
+                        <li><a tabindex="-1" href="#" class="icon-course-lightblue_16_18-before">Curso Lorem Ipsum Bla Bla</a></li>
+                        <li><a tabindex="-1" href="#" class="icon-course-lightblue_16_18-before">Curso Lorem Ipsum Bla Bla</a></li>
+                        <li><a tabindex="-1" href="#" class="icon-course-lightblue_16_18-before">Curso Lorem Ipsum Bla Bla</a></li>
+                        <li><a tabindex="-1" href="#" class="icon-course-lightblue_16_18-before">Curso Lorem Ipsum Bla Bla</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+            <li class="result-separator"><hr></li>
+            <li class="general-list-item">
+              <div class="general-list-item-body">
+                <div class="general-list-item-column">
+                  <a href="/aplicativos/1" title="Trapézio">
+                    <img alt="Trapézio" height="90" src="../img/thumbnail-missing-environment-90.png" title="Trapézio" width="90">
+                  </a>
+                </div>
+                <div class="general-list-item-column">
+                  <h4 class="general-list-item-title pull-left">
+                    <a href="/aplicativos/1" class="general-list-item-title-link" title="Trapézio">Universidade Voluptat Metus</a>
+                  </h4>
+                  <span class="icon-manager-lightblue_16_18 show text-replacement pull-right">É administrador</span>
+                  <span class="legend">Administrado por <a href="http://#" class="link-name">Nome Sobrenome</a></span>
+                  <span class="legend">SIGLA</span>
+                  <ul class="general-list-item-counters">
+                    <li class="general-list-item-counter icon-members-gray_16_18-before">
+                      342 Amigos (<span class="in-common">22</span>)
+                    </li>
+                    <li class="general-list-item-counter icon-course-gray_16_18-before">
+                      10 Cursos
+                    </li>
+                    <li class="dropdown">
+                      <a id="courses-3" class="dropdown-toggle button-default button-dropdown" role="button" data-toggle="dropdown" data-target="#">
+                        <span class="icon-arrow-down-lightblue_8_10 show text-replacement">Expandir</span>
+                      </a>
+                      <ul class="dropdown-menu" role="menu" aria-labelledby="courses-3">
+                        <li><span>Lista de Cursos (5)</span></li>
+                        <li><a tabindex="-1" href="#" class="icon-course-lightblue_16_18-before">Curso Lorem Ipsum Bla Bla</a></li>
+                        <li><a tabindex="-1" href="#" class="icon-course-lightblue_16_18-before">Curso Lorem Ipsum Bla Bla</a></li>
+                        <li><a tabindex="-1" href="#" class="icon-course-lightblue_16_18-before">Curso Lorem Ipsum Bla Bla</a></li>
+                        <li><a tabindex="-1" href="#" class="icon-course-lightblue_16_18-before">Curso Lorem Ipsum Bla Bla</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+            <li class="general-list-item">
+              <div class="general-list-item-body">
+                <div class="general-list-item-column">
+                  <a href="/aplicativos/1" title="Trapézio">
+                    <img alt="Trapézio" height="90" src="../img/thumbnail-missing-environment-90.png" title="Trapézio" width="90">
+                  </a>
+                </div>
+                <div class="general-list-item-column">
+                  <h4 class="general-list-item-title pull-left">
+                    <a href="/aplicativos/1" class="general-list-item-title-link" title="Trapézio">Universidade Voluptat Metus</a>
+                  </h4>
+                  <span class="icon-manager-lightblue_16_18 show text-replacement pull-right">É administrador</span>
+                  <span class="legend">Administrado por <a href="http://#" class="link-name">Nome Sobrenome</a></span>
+                  <span class="legend">SIGLA</span>
+                  <ul class="general-list-item-counters">
+                    <li class="general-list-item-counter icon-members-gray_16_18-before">
+                      342 Amigos (<span class="in-common">22</span>)
+                    </li>
+                    <li class="general-list-item-counter icon-course-gray_16_18-before">
+                      10 Cursos
+                    </li>
+                    <li class="dropdown">
+                      <a id="courses-4" class="dropdown-toggle button-default button-dropdown" role="button" data-toggle="dropdown" data-target="#">
+                        <span class="icon-arrow-down-lightblue_8_10 show text-replacement">Expandir</span>
+                      </a>
+                      <ul class="dropdown-menu" role="menu" aria-labelledby="courses-4">
+                        <li><span>Lista de Cursos (5)</span></li>
+                        <li><a tabindex="-1" href="#" class="icon-course-lightblue_16_18-before">Curso Lorem Ipsum Bla Bla</a></li>
+                        <li><a tabindex="-1" href="#" class="icon-course-lightblue_16_18-before">Curso Lorem Ipsum Bla Bla</a></li>
+                        <li><a tabindex="-1" href="#" class="icon-course-lightblue_16_18-before">Curso Lorem Ipsum Bla Bla</a></li>
+                        <li><a tabindex="-1" href="#" class="icon-course-lightblue_16_18-before">Curso Lorem Ipsum Bla Bla</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </li>
+        <li><hr class="list-separator"></li>
+      </ul>
+      <ul class="results-group results-by-course">
+        <li class="title-result">
+          <span class="title-result-name icon-course-gray_32_34-before">Cursos:<span class="quantity"> 10</span></span>
+        </li>
+        <li>
+          <ul class="result-found">
+            <li class="result-separator"><hr></li>
+            <li class="general-list-item">
+              <div class="general-list-item-body">
+                <div class="general-list-item-column">
+                  <a href="/aplicativos/1" title="Trapézio">
+                    <img src="../img/thumbnail-missing-environment-32.png">
+                  </a>
+                </div>
+                <div class="general-list-item-column">
+                  <span class="legend">Universidade Voluptat Metus —</span>
+                  <h5 class="general-list-item-title">
+                    <a href="/aplicativos/1" class="general-list-item-title-link" title="Trapézio">Universidade Voluptat Metus</a>
+                  </h5>
+                  <span class="legend">Criado por <a href="http://#" class="link-name">Nome Sobrenome</a></span>
+                  <ul class="general-list-item-counters">
+                    <li class="general-list-item-counter icon-members-gray_16_18-before">
+                      342 Amigos (<span class="in-common">22</span>)
+                    </li>
+                    <li class="general-list-item-counter icon-teacher-gray_16_18-before">
+                      5
+                    </li>
+                     <li class="general-list-item-counter icon-space-gray_16_18-before">
+                      5
+                    </li>
+                    <li class="dropdown">
+                      <a id="spaces-1" class="dropdown-toggle button-default button-dropdown" role="button" data-toggle="dropdown" data-target="#">
+                        <span class="icon-arrow-down-lightblue_8_10 show text-replacement">Expandir</span>
+                      </a>
+                      <ul class="dropdown-menu" role="menu" aria-labelledby="spaces-1">
+                        <li><span>Lista de Disciplinas (5)</span></li>
+                        <li><a tabindex="-1" href="#" class="icon-space-lightblue_16_18-before">Disciplina Lorem Ipsum Bla Bla</a></li>
+                        <li><a tabindex="-1" href="#" class="icon-space-lightblue_16_18-before">Disciplina Lorem Ipsum Bla Bla</a></li>
+                        <li><a tabindex="-1" href="#" class="icon-space-lightblue_16_18-before">Disciplina Lorem Ipsum Bla Bla</a></li>
+                        <li><a tabindex="-1" href="#" class="icon-space-lightblue_16_18-before">Disciplina Lorem Ipsum Bla Bla</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+             <li class="general-list-item">
+              <div class="general-list-item-body">
+                <div class="general-list-item-column">
+                  <a href="/aplicativos/1" title="Trapézio">
+                    <img src="../img/thumbnail-missing-environment-32.png">
+                  </a>
+                </div>
+                <div class="general-list-item-column">
+                  <span class="legend">Universidade Voluptat Metus —</span>
+                  <h5 class="general-list-item-title">
+                    <a href="/aplicativos/1" class="general-list-item-title-link" title="Trapézio">Universidade Voluptat Metus</a>
+                  </h5>
+                  <span class="legend">Criado por <a href="http://#" class="link-name">Nome Sobrenome</a></span>
+                  <ul class="general-list-item-counters">
+                    <li class="general-list-item-counter icon-members-gray_16_18-before">
+                      342 Amigos (<span class="in-common">22</span>)
+                    </li>
+                    <li class="general-list-item-counter icon-teacher-gray_16_18-before">
+                      5
+                    </li>
+                     <li class="general-list-item-counter icon-space-gray_16_18-before">
+                      5
+                    </li>
+                    <li class="dropdown">
+                      <a id="spaces-2" class="dropdown-toggle button-default button-dropdown" role="button" data-toggle="dropdown" data-target="#">
+                        <span class="icon-arrow-down-lightblue_8_10 show text-replacement">Expandir</span>
+                      </a>
+                      <ul class="dropdown-menu" role="menu" aria-labelledby="spaces-2">
+                        <li><span>Lista de Disciplinas (5)</span></li>
+                        <li><a tabindex="-1" href="#" class="icon-space-lightblue_16_18-before">Disciplina Lorem Ipsum Bla Bla</a></li>
+                        <li><a tabindex="-1" href="#" class="icon-space-lightblue_16_18-before">Disciplina Lorem Ipsum Bla Bla</a></li>
+                        <li><a tabindex="-1" href="#" class="icon-space-lightblue_16_18-before">Disciplina Lorem Ipsum Bla Bla</a></li>
+                        <li><a tabindex="-1" href="#" class="icon-space-lightblue_16_18-before">Disciplina Lorem Ipsum Bla Bla</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+            <li class="result-separator"><hr></li>
+             <li class="general-list-item">
+              <div class="general-list-item-body">
+                <div class="general-list-item-column">
+                  <a href="/aplicativos/1" title="Trapézio">
+                    <img src="../img/thumbnail-missing-environment-32.png">
+                  </a>
+                </div>
+                <div class="general-list-item-column">
+                  <span class="legend">Universidade Voluptat Metus —</span>
+                  <h5 class="general-list-item-title">
+                    <a href="/aplicativos/1" class="general-list-item-title-link" title="Trapézio">Universidade Voluptat Metus</a>
+                  </h5>
+                  <span class="legend">Criado por <a href="http://#" class="link-name">Nome Sobrenome</a></span>
+                  <ul class="general-list-item-counters">
+                    <li class="general-list-item-counter icon-members-gray_16_18-before">
+                      342 Amigos (<span class="in-common">22</span>)
+                    </li>
+                    <li class="general-list-item-counter icon-teacher-gray_16_18-before">
+                      5
+                    </li>
+                     <li class="general-list-item-counter icon-space-gray_16_18-before">
+                      5
+                    </li>
+                    <li class="dropdown">
+                      <a id="spaces-3" class="dropdown-toggle button-default button-dropdown" role="button" data-toggle="dropdown" data-target="#">
+                        <span class="icon-arrow-down-lightblue_8_10 show text-replacement">Expandir</span>
+                      </a>
+                      <ul class="dropdown-menu" role="menu" aria-labelledby="spaces-3">
+                        <li><span>Lista de Disciplinas (5)</span></li>
+                        <li><a tabindex="-1" href="#" class="icon-space-lightblue_16_18-before">Disciplina Lorem Ipsum Bla Bla</a></li>
+                        <li><a tabindex="-1" href="#" class="icon-space-lightblue_16_18-before">Disciplina Lorem Ipsum Bla Bla</a></li>
+                        <li><a tabindex="-1" href="#" class="icon-space-lightblue_16_18-before">Disciplina Lorem Ipsum Bla Bla</a></li>
+                        <li><a tabindex="-1" href="#" class="icon-space-lightblue_16_18-before">Disciplina Lorem Ipsum Bla Bla</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+            <li class="general-list-item">
+              <div class="general-list-item-body">
+                <div class="general-list-item-column">
+                  <a href="/aplicativos/1" title="Trapézio">
+                    <img src="../img/thumbnail-missing-environment-32.png">
+                  </a>
+                </div>
+                <div class="general-list-item-column">
+                  <span class="legend">Universidade Voluptat Metus —</span>
+                  <h5 class="general-list-item-title">
+                    <a href="/aplicativos/1" class="general-list-item-title-link" title="Trapézio">Universidade Voluptat Metus</a>
+                  </h5>
+                  <span class="legend">Criado por <a href="http://#" class="link-name">Nome Sobrenome</a></span>
+                  <ul class="general-list-item-counters">
+                    <li class="general-list-item-counter icon-members-gray_16_18-before">
+                      342 Amigos (<span class="in-common">22</span>)
+                    </li>
+                    <li class="general-list-item-counter icon-teacher-gray_16_18-before">
+                      5
+                    </li>
+                     <li class="general-list-item-counter icon-space-gray_16_18-before">
+                      5
+                    </li>
+                    <li class="dropdown">
+                      <a id="spaces-4" class="dropdown-toggle button-default button-dropdown" role="button" data-toggle="dropdown" data-target="#">
+                        <span class="icon-arrow-down-lightblue_8_10 show text-replacement">Expandir</span>
+                      </a>
+                      <ul class="dropdown-menu" role="menu" aria-labelledby="spaces-4">
+                        <li><span>Lista de Disciplinas (5)</span></li>
+                        <li><a tabindex="-1" href="#" class="icon-space-lightblue_16_18-before">Disciplina Lorem Ipsum Bla Bla</a></li>
+                        <li><a tabindex="-1" href="#" class="icon-space-lightblue_16_18-before">Disciplina Lorem Ipsum Bla Bla</a></li>
+                        <li><a tabindex="-1" href="#" class="icon-space-lightblue_16_18-before">Disciplina Lorem Ipsum Bla Bla</a></li>
+                        <li><a tabindex="-1" href="#" class="icon-space-lightblue_16_18-before">Disciplina Lorem Ipsum Bla Bla</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </li>
+        <li><hr class="list-separator"></li>
+      </ul>
+      <ul class="results-group results-by-space">
+        <li class="title-result">
+          <span class="title-result-name icon-space-gray_32_34-before">Disciplinas:<span class="quantity"> 10</span></span>
+        </li>
+        <li>
+          <ul class="result-found">
+            <li class="result-separator"><hr></li>
+            <li class="general-list-item">
+              <div class="general-list-item-body">
+                <div class="general-list-item-column">
+                  <a href="/aplicativos/1" title="Trapézio">
+                    <img src="../img/thumbnail-missing-environment-32.png">
+                  </a>
+                </div>
+                <div class="general-list-item-column">
+                  <span class="legend">Universidade Voluptat Metus —</span>
+                  <h5 class="general-list-item-title">
+                    <a href="/aplicativos/1" class="general-list-item-title-link" title="Trapézio">Universidade Voluptat Metus</a>
+                  </h5>
+                  <span class="legend">Criado por <a href="http://#" class="link-name">Nome Sobrenome</a></span>
+                </div>
+              </div>
+              <ul class="space-information">
+                <li><hr></li>
+                <li><a href="http://#" class="icon-space-lightblue_16_18-before space-name">Disciplina Vestibulum Scelerisque Metus</a></li>
+                <li class="progress-bar-short progress-bar-thin progress-bar-total">
+                  <span class="progress-bar-completed text-replacement" style="width: 100%;">100%</span>
+                </li>
+              </ul>
+            </li>
+            <li class="general-list-item">
+              <div class="general-list-item-body">
+                <div class="general-list-item-column">
+                  <a href="/aplicativos/1" title="Trapézio">
+                    <img src="../img/thumbnail-missing-environment-32.png">
+                  </a>
+                </div>
+                <div class="general-list-item-column">
+                  <span class="legend">Universidade Voluptat Metus —</span>
+                  <h5 class="general-list-item-title">
+                    <a href="/aplicativos/1" class="general-list-item-title-link" title="Trapézio">Universidade Voluptat Metus</a>
+                  </h5>
+                  <span class="legend">Criado por <a href="http://#" class="link-name">Nome Sobrenome</a></span>
+                </div>
+              </div>
+              <ul class="space-information">
+                <li><hr></li>
+                <li><a href="http://#" class="icon-space-lightblue_16_18-before space-name">Disciplina Vestibulum Scelerisque Metus</a></li>
+                <li class="progress-bar-short progress-bar-thin progress-bar-total">
+                  <span class="progress-bar-completed text-replacement" style="width: 100%;">100%</span>
+                </li>
+              </ul>
+            </li>
+            <li class="result-separator"><hr></li>
+            <li class="general-list-item">
+              <div class="general-list-item-body">
+                <div class="general-list-item-column">
+                  <a href="/aplicativos/1" title="Trapézio">
+                    <img src="../img/thumbnail-missing-environment-32.png">
+                  </a>
+                </div>
+                <div class="general-list-item-column">
+                  <span class="legend">Universidade Voluptat Metus —</span>
+                  <h5 class="general-list-item-title">
+                    <a href="/aplicativos/1" class="general-list-item-title-link" title="Trapézio">Universidade Voluptat Metus</a>
+                  </h5>
+                  <span class="legend">Criado por <a href="http://#" class="link-name">Nome Sobrenome</a></span>
+                </div>
+              </div>
+              <ul class="space-information">
+                <li><hr></li>
+                <li><a href="http://#" class="icon-space-lightblue_16_18-before space-name">Disciplina Vestibulum Scelerisque Metus</a></li>
+                <li class="progress-bar-short progress-bar-thin progress-bar-total">
+                  <span class="progress-bar-completed text-replacement" style="width: 100%;">100%</span>
+                </li>
+              </ul>
+            </li>
+            <li class="general-list-item">
+              <div class="general-list-item-body">
+                <div class="general-list-item-column">
+                  <a href="/aplicativos/1" title="Trapézio">
+                    <img src="../img/thumbnail-missing-environment-32.png">
+                  </a>
+                </div>
+                <div class="general-list-item-column">
+                  <span class="legend">Universidade Voluptat Metus —</span>
+                  <h5 class="general-list-item-title">
+                    <a href="/aplicativos/1" class="general-list-item-title-link" title="Trapézio">Universidade Voluptat Metus</a>
+                  </h5>
+                  <span class="legend">Criado por <a href="http://#" class="link-name">Nome Sobrenome</a></span>
+                </div>
+              </div>
+              <ul class="space-information">
+                <li><hr></li>
+                <li><a href="http://#" class="icon-space-lightblue_16_18-before space-name">Disciplina Vestibulum Scelerisque Metus</a></li>
+                <li class="progress-bar-short progress-bar-thin progress-bar-total">
+                  <span class="progress-bar-completed text-replacement" style="width: 100%;">100%</span>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><hr class="list-separator"></li>
+      </ul>
+    </div>
   </div>
 </div>
-
-<h1>Busca por Ambientes + Perfis</h1>
-<h2>### Resultados ###</h2>
-<br />
-
-<h3>Perfis</h3>
-<ul class="search_results">
-  <%= render :partial => "user", :collection => @profiles %>
-</ul>
-<% unless @profiles.last_page? %>
-  <%= link_to 'Ver Mais', search_profiles_path(:q => @query) %>
-<% end %>
-<br /><br />
-<%= render :partial => "environments", :locals => { :environments => @environments,
-                                                    :courses => @courses,
-                                                    :spaces => @spaces } %>

@@ -1,4 +1,6 @@
 class SearchController < BaseController
+  layout "new_application"
+
   before_filter :authorize
 
   # Busca por Perfis + Ambientes (AVA's, Cursos e Disciplinas)
