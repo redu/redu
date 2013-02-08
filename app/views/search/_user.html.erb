@@ -1,47 +1,65 @@
-<li>
-  <span><%= user.first_name %></span>
-  <span><%= user.last_name %></span>
-
-  <% Experience.current_jobs(user.experiences).each do |job| %>
-    <span><%= job.title %></span>
-    <span><%= job.company %></span>
-  <% end %>
-
-  <% education = user.most_important_education.first %>
-  <% unless education.nil? %>
-    <span><%= education.educationable.institution %></span>
-  <% end %>
-
-  <span><%= user.localization %></span>
-
-  Amigos: <%= user.friends.length %>
-
-  <% cache ["search_user_courses_count", user.id] do %>
-    | Cursos: <%= user.courses.count %>
-  <% end %>
-
-  <% # Só mostra o link se usuário não for amigo %>
-  <% if !is_friend?(user) %>
-    <% # Se existir pedido de amizade %>
-    <% if current_friendship(user) %>
-      <% # Se eu fiz o pedido %>
-      <% if current_friendship(user).status == 'pending' %>
-        <span>Aguardando aceitação</span>
-      <% # Se eu tenho que aceitar algum pedido %>
-      <% else %>
-        <%= link_to 'Aceitar pedido de conexão',
-            user_friendships_path(current_user,
-                                  :friend_id => user.id),
-                                  :method => :post %>
+<% if user_counter.even? %>
+  <li class="result-separator"><hr></li>
+<% end %>
+<li class="general-list-item">
+  <div class="general-list-item-body">
+    <div class="general-list-item-column">
+      <%= link_to user_path(user), :title => user.display_name do %>
+        <%= image_tag user.avatar.url(:thumb_90),
+          :alt => user.display_name, :title => user.display_name,
+          :size => "90x90" %>
       <% end %>
-    <% # Se não houver pedido de amizade ainda %>
-    <% else %>
-      <%= link_to 'Adicionar contato',
-          user_friendships_path(current_user,
-                                :friend_id => user.id),
-                                :method => :post %>
-    <% end %>
-  <% else %>
-    | Amigos em comum: <%= mutual_friends(user).length%>
-  <% end %>
+    </div>
+    <div class="general-list-item-column">
+      <h4 class="general-list-item-title pull-left">
+        <%= link_to user.display_name, user_path(user),
+          :title => user.display_name,
+          :class => "general-list-item-title-link" %>
+      </h4>
+      <% if is_friend?(user) %>
+        <span class="icon-contacts-green_16_18 show text-replacement pull-right">Já é seu amigo</span>
+      <% end %>
+      <% Experience.current_jobs(user.experiences).each do |job| %>
+        <span class="legend icon-curriculum-professional-gray_8_10-before"><%= job.title %> na <%= job.company %></span>
+      <% end %>
+      <% education = user.most_important_education.first %>
+      <% unless education.nil? %>
+        <span class="legend icon-curriculum-academic-gray_8_10-before"><%= education.educationable.institution %></span>
+      <% end %>
+      <span class="legend icon-biography-gray_8_10-before">Mora em <%= user.localization %></span>
+      <ul class="general-list-item-counters">
+        <li class="general-list-item-counter icon-contacts-gray_16_18-before">
+          <%= pluralize(user.friends.length, "Amigo", "Amigos") %> (<span class="in-common"><%= mutual_friends(user).length %></span>)
+        </li>
+        <li class="general-list-item-counter icon-course-gray_16_18-before">
+          <% cache ["search_user_courses_count", user.id] do %>
+            <%= pluralize(user.courses.count, "Curso") %>
+          <% end %>
+        </li>
+        <% if !is_friend?(user) %>
+          <% # Se existir pedido de amizade %>
+          <% if current_friendship(user) %>
+            <% # Se eu fiz o pedido %>
+            <% if current_friendship(user).status == 'pending' %>
+              <span>Aguardando aceitação</span>
+            <% # Se eu tenho que aceitar algum pedido %>
+            <% else %>
+              <%= link_to 'Aceitar pedido de conexão',
+                  user_friendships_path(current_user,
+                                        :friend_id => user.id),
+                                        :method => :post %>
+            <% end %>
+          <% # Se não houver pedido de amizade ainda %>
+          <% else %>
+            <%= link_to '',
+                user_friendships_path(current_user,
+                                      :friend_id => user.id),
+                                      :method => :post,
+                                      :remote => true,
+                                      :class => "add-as-friend icon-invite-lightblue_16_18-before button-default" %>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+  </div>
 </li>
