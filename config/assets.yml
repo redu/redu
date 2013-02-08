@@ -19,6 +19,7 @@ javascripts:
     - public/javascripts/form.redu.jquery.js
     - public/javascripts/jquery.autosize.min.js
     - public/javascripts/vendor/placeholder-polyfill.min.js
+    - public/javascripts/jquery.tokeninput.js
     - public/javascripts/bootstrap-redu.js
     - public/javascripts/swfobject.js # Necessário ao browserdetection.js
     - public/javascripts/browserdetection.js
@@ -137,6 +138,7 @@ stylesheets:
     - public/stylesheets/wall.css
     - public/stylesheets/fb_style.css
     - public/stylesheets/outdated-browser-new.css
+    - public/stylesheets/token-input.css
   landing:
     - public/stylesheets/bootstrap-redu.css
     - public/stylesheets/landing-new.css
