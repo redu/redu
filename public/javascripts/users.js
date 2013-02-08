@@ -40,13 +40,13 @@
       var experience_cancel = $('#new_experience .cancel');
       var education_cancel = $('#new_education .cancel');
 
-      if ($.trim($('#curriculum .experiences').html()).length == 0) {
+      if (!$('#curriculum .experiences li').length) {
         $('#new_experience').css('padding-top', 0);
         experience_cancel.hide();
         experience_title.remove();
       }
 
-      if ($.trim($('#curriculum .educations').html()).length == 0) {
+      if (!$('#curriculum .educations li').length) {
         $('#new_education').css('padding-top', 0);
         education_cancel.hide();
         education_title.remove();

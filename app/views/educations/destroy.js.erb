@@ -1,6 +1,6 @@
 $("#education-<%= @education.id %>").slideUp(150, 'swing', function() {
   $(this).remove();
-  if ( !$.trim( $('#curriculum .educations').html() ).length ) {
+  if (!$('#curriculum .educations li').length) {
     $('#new_education').css('padding-top', 0);
     $('#new_education .cancel').hide();
     $('#new_education').find('.title').remove();
