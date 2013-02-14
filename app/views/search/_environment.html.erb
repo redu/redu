@@ -1,8 +1,51 @@
-<h1><%= environment.name %></h1>
-Papel: <%= user_environment_role(environment, current_user) %>
-<% cache ["search_environment_administrators", environment.id] do %>
-  Administrador(es): <%= environment.administrators.collect { |admin| admin.display_name } %><br />
+<%#
+  Elemento da coleção de ambientes.
+
+  Variáveis:
+    environment: o ambiente da coleção.
+%>
+<% if environment_counter.even? %>
+  <li class="result-separator"><hr></li>
 <% end %>
-Abreviação: <%= environment.initials %><br />
-Cursos: <%= environment.courses.length %>
-| Membros: <%= environment.user_environment_associations.length %><br />
+<li class="general-list-item">
+  <div class="general-list-item-body">
+    <div class="general-list-item-column">
+      <%= link_to environment_path(environment), :title => environment.name do %>
+        <%= image_tag environment.avatar.url(:thumb_90),
+          :alt => environment.name, :title => environment.name,
+          :size => "90x90" %>
+      <% end %>
+    </div>
+    <div class="general-list-item-column">
+      <h4 class="general-list-item-title pull-left">
+        <%= link_to environment.name, environment_path(environment),
+          :title => environment.name,
+          :class => "general-list-item-title-link" %>
+      </h4>
+      <span class="icon-manager-lightblue_16_18 show text-replacement pull-right">É administrador</span>
+      <% cache ["search_environment_administrators", environment.id] do %>
+        <span class="legend">Administrado por <%= environment.administrators.collect { |admin| admin.display_name } %></span>
+      <% end %>
+      <span class="legend"><%= environment.initials.upcase %></span>
+      <ul class="general-list-item-counters">
+        <li class="general-list-item-counter icon-members-gray_16_18-before">
+          <%= pluralize(environment.user_environment_associations.length, "Membro") %>
+        </li>
+        <li class="general-list-item-counter icon-course-gray_16_18-before">
+          <%= pluralize(environment.courses.length, "Curso") %>
+        </li>
+        <li class="dropdown">
+          <a id="courses-1" class="dropdown-toggle button-default button-dropdown" role="button" data-toggle="dropdown" data-target="#">
+            <span class="icon-arrow-down-lightblue_8_10 show text-replacement">Expandir</span>
+          </a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="courses-1">
+            <li><span>Lista de Cursos (<%= environment.courses.count %>)</span></li>
+            <% environment.courses.each do |course| %>
+              <li><%= link_to course.name, environment_course_path(environment, course), :class => "icon-course-lightblue_16_18-before" %></li>
+            <% end %>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</li>
