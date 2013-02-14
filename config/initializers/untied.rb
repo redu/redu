@@ -12,15 +12,7 @@ Untied::Publisher.configure do |config|
   config.doorkeeper = ::BaseDoorkeeper
 end
 
-# Inicializa novamente o EM numa thread separada apenas no contexto do DelayedJob.
-# Isso é necessário pois o reactor não sobrevive a forks de processo.
+# Verifica e reabre conexões com o MySQL caso elas tenham sido perdidas.
 Delayed::Worker.lifecycle.before(:invoke_job) do
-  if !defined?(@@em_thread) && Delayed::Worker.delay_jobs
-    # Delayed::Worker.logger.info "Initializing EM and AMQP"
-    EM.stop if EM.reactor_running?
-    @@em_thread = Thread.new do
-      EventMachine.run { AMQP.start }
-    end
-    sleep(0.25)
-  end
+  ActiveRecord::Base.verify_active_connections!
 end

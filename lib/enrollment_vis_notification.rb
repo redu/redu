@@ -26,15 +26,15 @@ module EnrollmentVisNotification
   # criação o enrolment pode ser descoberto na hora da execução do job, mas quando
   # for remoção tem que enviar todos os parametros completos.
   def delay_hierarchy_notification(enrollments, type)
-    unless enrollments.empty?
-      if type == "enrollment"
-        params = enrollments.collect { |e| e.id }
-      else
-        params = enrollments.collect { |e| fill_enroll_params(e, type) }
-      end
+    #unless enrollments.empty?
+    #  if type == "enrollment"
+    #    params = enrollments.collect { |e| e.id }
+    #  else
+    #    params = enrollments.collect { |e| fill_enroll_params(e, type) }
+    #  end
 
-      create_jobs(params, type)
-    end
+    #  create_jobs(params, type)
+    #end
   end
 
   # Cria diversos jobs para serem enfileirados e processados pelo dealyed_job.

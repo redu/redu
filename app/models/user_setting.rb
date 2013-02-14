@@ -2,6 +2,7 @@ class UserSetting < ActiveRecord::Base
   belongs_to :user
   enumerate :view_mural, :with => Privacy
   serialize :explored
+  attr_protected :explored
 
   # Keeps track of the visited urls or identifiers
   #

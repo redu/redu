@@ -14,7 +14,7 @@ class UserEnvironmentAssociation < ActiveRecord::Base
       if not keyword.empty? and keyword.size > 4
         where("users.first_name LIKE :keyword " + \
             "OR users.last_name LIKE :keyword " + \
-            "OR users.login LIKE :keyword", {:keyword => "%#{keyword}%"}).
+            "OR users.login LIKE :keyword", {:keyword => "%#{keyword.to_s}%"}).
         includes(:user => [{:user_course_associations => :course}])
       end
     }
