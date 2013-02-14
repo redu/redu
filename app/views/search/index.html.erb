@@ -25,38 +25,9 @@
         <a href="#" class="tab-title icon-profile-lightblue_16_18-before" title="Perfil">Perfil (6)</a>
       </li>
     </ul>
-
-    <script type="text/javascript">
-      $(document).ready(function () {
-        $("#search").tokenInput("<%= search_path(:format => :json) %>", {
-        crossDomain: false,
-        hintText: "Busque por usuários, ambientes, cursos e disciplinas",
-        noResultsText: "Sem resultados",
-        searchingText: "Buscando...",
-        });
-      });
-    </script>
-
-    <h1>Busca por Ambientes + Perfis</h1>
-    <h2>### Resultados ###</h2>
-    <br />
-
-    <h3>Perfis</h3>
-    <ul class="search_results">
-      <%= render :partial => "user", :collection => @profiles %>
-    </ul>
-    <% unless @profiles.last_page? %>
-      <%= link_to 'Ver Mais', search_profiles_path(:q => @query) %>
-    <% end %>
-    <br /><br />
-    <%= render :partial => "environments", :locals => { :environments => @environments,
-                                                        :courses => @courses,
-                                                        :spaces => @spaces } %>
-
     <div class="search-results">
-      <div class="result-quantity">
-        <p>Você buscou por <b>“Metus”</b>. Achamos 15 resultados.</br>Clique numa aba para maiores detalhes.</p>
-      </div>
+      <%= render :partial => "result_quantity",
+        :locals => { :query => @query, :total_results => @total_results } %>
       <div class="search-filter">
         <div class="filters">
           <button class="filter icon-environment-lightblue_16_18-before">Ambientes (3)</button>
