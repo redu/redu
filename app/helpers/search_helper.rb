@@ -14,4 +14,9 @@ module SearchHelper
 
     uca.try(:role)
   end
+
+  # Define se o link "Veja todos os resultados" deve ser mostrado.
+  def show_see_all_results_link?(total_found)
+    total_found > Redu::Application.config.search_preview_results_per_page
+  end
 end
