@@ -11,7 +11,7 @@ class UserSpaceAssociation < ActiveRecord::Base
     lambda { |name| includes(:user).
       where("users.first_name LIKE :keyword OR
              users.last_name LIKE :keyword OR
-             users.login LIKE :keyword", {:keyword => "%#{name}%"})
+             users.login LIKE :keyword", {:keyword => "%#{name.to_s}%"})
   }
 
   validates_uniqueness_of :user_id, :scope => :space_id

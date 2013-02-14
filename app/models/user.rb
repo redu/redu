@@ -88,7 +88,7 @@ class User < ActiveRecord::Base
       "LOWER(first_name) LIKE :keyword OR " + \
       "LOWER(last_name) LIKE :keyword OR " +\
       "CONCAT(TRIM(LOWER(first_name)), ' ', TRIM(LOWER(last_name))) LIKE :keyword OR " +\
-      "LOWER(email) LIKE :keyword", { :keyword => "%#{keyword.downcase}%" }).
+      "LOWER(email) LIKE :keyword", { :keyword => "%#{keyword.to_s.downcase}%" }).
       limit(10).select("users.id, users.first_name, users.last_name, users.login, users.email, users.avatar_file_name")
   }
   scope :popular, lambda { |quantity|
@@ -100,7 +100,7 @@ class User < ActiveRecord::Base
       where("course_enrollments.role" => Role[:teacher]).popular(quantity)
   }
   scope :with_email_domain_like, lambda { |email|
-    where("email LIKE ?", "%#{email.split("@")[1]}%")
+    where("email LIKE ?", "%#{email.to_s.split("@")[1]}%")
   }
   scope :contacts_and_pending_contacts_ids , select("users.id").
     joins("LEFT OUTER JOIN `friendships`" \
@@ -545,13 +545,13 @@ class User < ActiveRecord::Base
   end
 
   def add_favorite(favoritable_type, favoritable_id)
-    Favorite.create(:favoritable_type => favoritable_type,
+    Favorite.create(:favoritable_type => favoritable_type.to_s,
                     :favoritable_id => favoritable_id,
                     :user_id => self.id)
   end
 
   def rm_favorite(favoritable_type, favoritable_id)
-    fav = Favorite.where(:favoritable_type => favoritable_type,
+    fav = Favorite.where(:favoritable_type => favoritable_type.to_s,
                            :favoritable_id => favoritable_id,
                            :user_id => self.id).first
     fav.destroy
