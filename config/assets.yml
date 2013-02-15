@@ -35,6 +35,7 @@ javascripts:
     - public/javascripts/underscore.js
     - public/javascripts/underscore-sharing-template.redu.jquery.js
     - public/javascripts/embedly.redu.jquery.js
+    - public/javascripts/search.js
   landing:
     - public/javascripts/rails.js
     - public/javascripts/vendor/modernizr.js
