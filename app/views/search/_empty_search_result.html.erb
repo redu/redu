@@ -1,0 +1,13 @@
+<%#
+  Mensagem de aviso que nenhum resultado foi encontrado.
+
+  Variáveis:
+    query: o termo pesquisado.
+%>
+<div class="search-results empty">
+  <%# TODO: Ajeitar a imagem. %>
+  <%= image_tag "", :size => "128x130",
+    :title => "Nenhum resultado encontrado",
+    :alt => "Nenhum resultado encontrado" %>
+  <p>Sentimos muito, mas não achamos resultado para "<strong><%= query %></strong>". Tente outro termo.</p>
+</div>
