@@ -33,6 +33,7 @@ class SearchController < BaseController
   def profiles
     @profiles = perform_results(UserSearch)
     @total_results = @profiles.length
+    @query = params[:q]
 
     respond_to do |format|
       format.html # search/profiles.html.erb

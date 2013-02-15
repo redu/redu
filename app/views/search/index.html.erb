@@ -29,7 +29,8 @@
     <% if @total_results > 0 %>
       <div class="search-results">
         <%= render :partial => "result_quantity",
-          :locals => { :query => @query, :total_results => @total_results } %>
+          :locals => { :query => @query, :total_results => @total_results,
+            :general_search => true } %>
         <div class="search-filter">
           <div class="filters">
             <button class="filter icon-environment-lightblue_16_18-before">Ambientes (3)</button>
@@ -37,21 +38,8 @@
             <button class="filter filter-active icon-space-lightblue_16_18-before">Disciplinas (2)</button>
           </div>
         </div>
-        <ul class="results-group results-by-profile">
-          <li class="title-result">
-            <span class="title-result-name icon-profile-darkgray_32_34-before">Perfis: <%= pluralize(@profiles.total_entries, "pessoa") %></span>
-            <% if show_see_all_results_link?(@profiles.total_entries) %>
-              <%= link_to "Veja todos os resultados", search_profiles_path(:q => @query),
-                :title => "Veja todos os resultados de perfis" %>
-            <% end %>
-          </li>
-          <li>
-            <ul class="result-found">
-              <%= render :partial => "user", :collection => @profiles %>
-            </ul>
-          </li>
-          <li><hr class="list-separator"></li>
-        </ul>
+        <%= render :partial => "user_list",
+          :locals => { :profiles => @profiles, :show_see_all => true } %>
         <ul class="results-group results-by-environment">
           <li class="title-result">
             <span class="title-result-name icon-environment-gray_32_34-before">Ambientes: <%= @environments.total_entries %></span>

@@ -4,8 +4,11 @@
   Variáveis:
     query: o termo pesquisado.
     total_results: a quantidade total de resultados encontrados.
+    general_search: booleano que indica se um parágrafo extra deve ser exibido.
 %>
 <div class="result-quantity">
   <p>Você buscou por <strong>"<%= query %>"</strong>. Achamos <strong><%= total_results %></strong> resultados.</p>
-  <p>Clique numa aba para maiores detalhes.</p>
+  <% if local_assigns.has_key? :general_search %>
+    <p>Clique numa aba para maiores detalhes.</p>
+  <% end %>
 </div>
