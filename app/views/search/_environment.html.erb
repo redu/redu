@@ -24,7 +24,7 @@
       </h4>
       <span class="icon-manager-lightblue_16_18 show text-replacement pull-right">É administrador</span>
       <% cache ["search_environment_administrators", environment.id] do %>
-        <span class="legend">Administrado por <%= environment.administrators.collect { |admin| admin.display_name } %></span>
+        <span class="legend">Administrado por <%= show_administrators_list(environment.administrators) %></span>
       <% end %>
       <span class="legend"><%= environment.initials.upcase %></span>
       <ul class="general-list-item-counters">

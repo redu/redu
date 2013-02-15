@@ -19,4 +19,9 @@ module SearchHelper
   def show_see_all_results_link?(total_found)
     total_found > Redu::Application.config.search_preview_results_per_page
   end
+
+  # Define a formatação da lista de administradores
+  def show_administrators_list(collection)
+    collection.collect { |admin| admin.display_name }.join(', ')
+  end
 end
