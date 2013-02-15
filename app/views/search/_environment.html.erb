@@ -22,7 +22,7 @@
           :title => environment.name,
           :class => "general-list-item-title-link" %>
       </h4>
-      <span class="icon-manager-lightblue_16_18 show text-replacement pull-right">É administrador</span>
+      <span class="icon-<%= user_environment_role(environment, current_user) %>-lightblue_16_18 show text-replacement pull-right">Papel</span>
       <% cache ["search_environment_administrators", environment.id] do %>
         <span class="legend">Administrado por <%= show_administrators_list(environment.administrators) %></span>
       <% end %>

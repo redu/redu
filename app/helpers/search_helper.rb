@@ -4,7 +4,7 @@ module SearchHelper
     uea = environment.user_environment_associations.select{ |assoc|
       assoc.user_id == user.id }.first
 
-    uea.try(:role)
+    role_icon(uea.try(:role))
   end
 
   # Define o papel do usuário no Curso
@@ -12,7 +12,19 @@ module SearchHelper
     uca = course.user_course_associations.select{
       |assoc| assoc.user_id == user.id }.first
 
-    uca.try(:role)
+    role_icon(uca.try(:role))
+  end
+
+  def role_icon(role)
+    if [0, 3, 4].include? role
+      "manager"
+    elsif role == 6
+      "tutor"
+    elsif role == 5
+      "teacher"
+    else
+      "member"
+    end
   end
 
   # Define se o link "Veja todos os resultados" deve ser mostrado.
