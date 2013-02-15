@@ -1,9 +1,55 @@
-<h1><%= course.name %></h1>
-Papel: <%= user_course_role(course, current_user) %> |
-Ambiente: <%= link_to course.environment.name, environment_path(course.environment) %> |
-Criador: <%= course.owner.try(:display_name) %><br />
-Membros: <%= course.user_course_associations.length %> |
-<% cache ["search_course_teachers_count", course.id] do %>
-  Professores: <%= course.teachers.count %><br />
+<%#
+  Elemento da coleção de cursos.
+
+  Variáveis:
+    course: o curso da coleção.
+%>
+<% if course_counter.even? %>
+  <li class="result-separator"><hr></li>
 <% end %>
-Disciplinas: <%= course.spaces.length %>
+<li class="general-list-item">
+  <div class="general-list-item-body">
+    <div class="general-list-item-column">
+      <%= link_to environment_path(course.environment),
+        :title => course.environment.name do %>
+        <%= image_tag course.environment.avatar.url(:thumb_90),
+          :alt => course.environment.name, :title => course.environment.name,
+          :size => "90x90" %>
+      <% end %>
+    </div>
+    <div class="general-list-item-column">
+      <span class="legend"><%= course.environment.name %> —</span>
+      <h5 class="general-list-item-title">
+        <%= link_to course.environment.name,
+          environment_path(course.environment),
+          :class => "general-list-item-title-link",
+          :title => course.environment.name %>
+      </h5>
+      <span class="legend">Criado por <%= link_to course.owner.try(:display_name), user_path(course.owner) %></span>
+      <ul class="general-list-item-counters">
+        <li class="general-list-item-counter icon-members-gray_16_18-before">
+          <%= pluralize(course.user_course_associations.length, "Membro") %>
+        </li>
+        <li class="general-list-item-counter icon-teacher-gray_16_18-before">
+          <% cache ["search_course_teachers_count", course.id] do %>
+            <%= course.teachers.count %>
+          <% end %>
+        </li>
+         <li class="general-list-item-counter icon-space-gray_16_18-before">
+          <%= course.spaces.length %>
+        </li>
+        <li class="dropdown">
+          <a id="spaces-1" class="dropdown-toggle button-default button-dropdown" role="button" data-toggle="dropdown" data-target="#">
+            <span class="icon-arrow-down-lightblue_8_10 show text-replacement">Expandir</span>
+          </a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="spaces-1">
+            <li><span>Lista de Disciplinas (<%= course.spaces.length %>)</span></li>
+            <% course.spaces.each do |space| %>
+              <li><%= link_to space.name, space_path(space), :class => "icon-space-lightblue_16_18-before" %></li>
+            <% end %>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</li>
