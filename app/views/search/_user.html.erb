@@ -32,7 +32,7 @@
       <% unless education.nil? %>
         <span class="legend icon-curriculum-academic-gray_8_10-before"><%= education.educationable.institution %></span>
       <% end %>
-      <% unless user.localization.nil? %>
+      <% unless user.localization.to_s.empty? %>
         <span class="legend icon-biography-gray_8_10-before">Mora em <%= user.localization %></span>
       <% end %>
       <ul class="general-list-item-counters">
