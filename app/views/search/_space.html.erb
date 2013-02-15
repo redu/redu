@@ -1,6 +1,46 @@
-<h1><%= space.name %></h1>
-<%#TODO Se o usuário participa da disciplina, exibir status de completude %>
-Papel: <%= user_course_role(space.course, current_user) %> |
-Ambiente: <%= link_to space.course.environment.name, environment_path(space.course.environment) %> |
-Curso: <%= link_to space.course.name, environment_course_path(space.course.environment, space.course) %><br />
-Autor: <%= space.course.owner.try(:display_name) %><br />
+<%#
+  Elemento da coleção de disciplinas.
+
+  Variáveis:
+    space: a disciplina da coleção.
+%>
+<% if space_counter.even? %>
+  <li class="result-separator"><hr></li>
+<% end %>
+<li class="general-list-item">
+  <div class="general-list-item-body">
+    <div class="general-list-item-column">
+      <%= link_to environment_path(space.course.environment),
+        :title => space.course.environment.name do %>
+        <%= image_tag space.course.environment.avatar.url(:thumb_90),
+          :alt => space.course.environment.name,
+          :title => space.course.environment.name,
+          :size => "90x90" %>
+      <% end %>
+    </div>
+    <div class="general-list-item-column">
+      <span class="legend"><%= space.course.environment.name %> —</span>
+      <h5 class="general-list-item-title">
+        <%= link_to space.course.environment.name,
+          environment_path(space.course.environment),
+          :class => "general-list-item-title-link",
+          :title => space.course.environment.name %>
+      </h5>
+      <span class="legend">Criado por <%= link_to space.course.owner.try(:display_name), user_path(space.course.owner) %></span>
+    </div>
+  </div>
+  <ul class="space-information">
+    <li><hr></li>
+    <li>
+      <%= link_to space.name, space_path(space),
+        :title => space.name,
+        :class => "icon-space-lightblue_16_18-before space-name" %>
+    </li>
+    <%# TODO: Progresso do usuário na disciplina. %>
+    <%#
+    <li class="progress-bar-short progress-bar-thin progress-bar-total">
+      <span class="progress-bar-completed text-replacement" style="width: 100%;">100%</span>
+    </li>
+    %>
+  </ul>
+</li>
