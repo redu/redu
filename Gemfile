@@ -70,6 +70,7 @@ gem 'untied-publisher', :git => 'git@github.com:redu/untied-publisher.git',
 gem 'content_for_in_controllers',
   :git => 'git://github.com/julianalucena/content_for_in_controllers.git'
 gem 'system_timer'
+gem 'json', '>= 1.7.7'
 
 # Gems específicos para a API
 gem 'oauth-plugin', '~> 0.4.0'
