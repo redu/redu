@@ -46,7 +46,7 @@ class StudentProfile < ActiveRecord::Base
         :updated_at => self.updated_at
       }
 
-      self.send_async_info(params, Redu::Application.config.vis_client[:url])
+      #self.send_async_info(params, Redu::Application.config.vis_client[:url])
     end
     self.save
 

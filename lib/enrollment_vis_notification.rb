@@ -52,6 +52,6 @@ module EnrollmentVisNotification
   # Notifica através do em-http-request a criação do enrollment
   def notify_vis(enrollment, type)
     params = fill_enroll_params(enrollment, type)
-    self.send_async_info(params, Redu::Application.config.vis_client[:url])
+    #self.send_async_info(params, Redu::Application.config.vis_client[:url])
   end
 end

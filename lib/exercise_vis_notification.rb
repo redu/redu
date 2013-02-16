@@ -3,7 +3,7 @@ module ExerciseVisNotification
 
   def send_to_vis(result, destroy_exercise)
     params = build_hash_to_vis(result, destroy_exercise)
-    send_async_info(params, Redu::Application.config.vis_client[:url])
+    #send_async_info(params, Redu::Application.config.vis_client[:url])
   end
 
   protected
