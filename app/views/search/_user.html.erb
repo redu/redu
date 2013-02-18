@@ -26,10 +26,11 @@
             :title => user.display_name,
             :class => "general-list-item-title-link text-truncate" %>
         </h4>
-        <%# TODO (design): Vou ter problemas sérios com o layout se for possível mostrar mais de uma experiência profissional. O problema é ter que manter os contadores de amigos e cursos sempre lá em baixo nos casos em que o usuário não preencheu estas informações E manter o espaçamento correto quando as informações totalizarem mais de 3 (caso de mostrar mais de uma experiência profissional). %>
-        <% Experience.current_jobs(user.experiences).each do |job| %>
+        <% job = Experience.current_jobs(user.experiences).first %>
+        <% unless job.nil? %>
           <span class="legend icon-curriculum-professional-gray_8_10-before text-truncate" title="<%= "#{job.title} na #{job.company}" %>"><%= job.title %> na <%= job.company %></span>
         <% end %>
+
         <% education = user.most_important_education.first %>
         <% unless education.nil? %>
           <span class="legend icon-curriculum-academic-gray_8_10-before text-truncate" title="<%= education.educationable.institution %>"><%= education.educationable.institution %></span>
