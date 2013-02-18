@@ -36,4 +36,11 @@ module SearchHelper
   def show_administrators_list(collection)
     collection.collect { |admin| admin.display_name }.join(', ')
   end
+
+  # Exibe o contador de amigos em comum entre parênteses somente quando há algum.
+  def show_mutual_friends_counter(user)
+    mutual_friends_counter = mutual_friends(user).length
+    content_tag(:span, "(#{mutual_friends_counter})", :rel => "tooltip",
+      :title => "Amigos em comum") if mutual_friends_counter > 0
+  end
 end

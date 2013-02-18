@@ -5,69 +5,79 @@
     user: o usuário da coleção.
 %>
 <% if user_counter.even? %>
-  <li class="result-separator"><hr></li>
+  <hr>
 <% end %>
-<li class="general-list-item">
-  <div class="general-list-item-body">
-    <div class="general-list-item-column">
-      <%= link_to user_path(user), :title => user.display_name do %>
-        <%= image_tag user.avatar.url(:thumb_90),
-          :alt => user.display_name, :title => user.display_name,
-          :size => "90x90" %>
-      <% end %>
-    </div>
-    <div class="general-list-item-column">
-      <h4 class="general-list-item-title pull-left">
-        <%= link_to user.display_name, user_path(user),
-          :title => user.display_name,
-          :class => "general-list-item-title-link" %>
-      </h4>
-      <% if is_friend?(user) %>
-        <span class="icon-contacts-green_16_18 show text-replacement pull-right">Já é seu amigo</span>
-      <% end %>
-      <% Experience.current_jobs(user.experiences).each do |job| %>
-        <span class="legend icon-curriculum-professional-gray_8_10-before"><%= job.title %> na <%= job.company %></span>
-      <% end %>
-      <% education = user.most_important_education.first %>
-      <% unless education.nil? %>
-        <span class="legend icon-curriculum-academic-gray_8_10-before"><%= education.educationable.institution %></span>
-      <% end %>
-      <% unless user.localization.to_s.empty? %>
-        <span class="legend icon-biography-gray_8_10-before">Mora em <%= user.localization %></span>
-      <% end %>
-      <ul class="general-list-item-counters">
-        <li class="general-list-item-counter icon-contacts-gray_16_18-before">
-          <%= pluralize(user.friends.length, "Amigo", "Amigos") %> (<span class="in-common"><%= mutual_friends(user).length %></span>)
-        </li>
-        <li class="general-list-item-counter icon-course-gray_16_18-before">
-          <% cache ["search_user_courses_count", user.id] do %>
-            <%= pluralize(user.courses.count, "Curso") %>
-          <% end %>
-        </li>
+<div class="search-results-list-item">
+  <div class="general-list-item user-n-environment-search-list-item">
+    <div class="general-list-item-body">
+      <div class="general-list-item-column">
+        <%= link_to user_path(user), :title => user.display_name do %>
+          <%= image_tag user.avatar.url(:thumb_90),
+            :alt => user.display_name, :title => user.display_name,
+            :size => "90x90" %>
+        <% end %>
+      </div>
+      <div class="general-list-item-column">
+        <% if is_friend?(user) %>
+          <span class="icon-contacts-green_16_18 show text-replacement pull-right" rel="tooltip" title="Já é seu contato">Já é seu contato</span>
+        <% end %>
+        <h4 class="general-list-item-title">
+          <%= link_to user.display_name, user_path(user),
+            :title => user.display_name,
+            :class => "general-list-item-title-link text-truncate" %>
+        </h4>
+        <%# TODO (design): Vou ter problemas sérios com o layout se for possível mostrar mais de uma experiência profissional. O problema é ter que manter os contadores de amigos e cursos sempre lá em baixo nos casos em que o usuário não preencheu estas informações E manter o espaçamento correto quando as informações totalizarem mais de 3 (caso de mostrar mais de uma experiência profissional). %>
+        <% Experience.current_jobs(user.experiences).each do |job| %>
+          <span class="legend icon-curriculum-professional-gray_8_10-before text-truncate" title="<%= "#{job.title} na #{job.company}" %>"><%= job.title %> na <%= job.company %></span>
+        <% end %>
+        <% education = user.most_important_education.first %>
+        <% unless education.nil? %>
+          <span class="legend icon-curriculum-academic-gray_8_10-before text-truncate" title="<%= education.educationable.institution %>"><%= education.educationable.institution %></span>
+        <% end %>
+        <% unless user.localization.to_s.empty? %>
+          <span class="legend icon-biography-gray_8_10-before text-truncate" title="<%= "Mora em #{user.localization}" %>">Mora em <%= user.localization %></span>
+        <% end %>
+        <ul class="general-list-item-counters">
+          <%#: TODO (ui-components): remover o hover azul destes dois ícones abaixo. %>
+          <li class="general-list-item-counter icon-contacts-gray_16_18-before">
+            <%= pluralize(user.friends.length, "Amigo", "Amigos") %> <%= show_mutual_friends_counter(user) %>
+          </li>
+          <li class="general-list-item-counter icon-course-gray_16_18-before">
+            <% cache ["search_user_courses_count", user.id] do %>
+              <%= pluralize(user.courses.count, "Curso") %>
+            <% end %>
+          </li>
+        </ul>
+        <%# TODO (back-end): comportamento das respostas de enviar e aceitar pedido de conexão. Com AJAX ou sem? Se com AJAX, dar feedback ao usuário. %>
         <% if !is_friend?(user) %>
           <% # Se existir pedido de amizade %>
           <% if current_friendship(user) %>
             <% # Se eu fiz o pedido %>
             <% if current_friendship(user).status == 'requested' %>
-              <span>Aguardando aceitação</span>
+              <button class="button-default" disabled="disabled">
+                <%# TODO (design): Confirmar com Sérgio se a versão cinza do ícone será usado com o botão no estado desabilitado neste caso. Caso sim, recortar o ícone. %>
+                <span class="icon-curriculum-gray_16_18 show text-replacement" rel="tooltip" title="Aguardando pedido de conexão">Aguardando pedido de conexão</span>
+              </button>
             <% # Se eu tenho que aceitar algum pedido %>
             <% else %>
-              <%= link_to 'Aceitar pedido de conexão',
-                  user_friendships_path(current_user,
-                                        :friend_id => user.id),
-                                        :method => :post %>
+              <%= link_to user_friendships_path(current_user,
+                :friend_id => user.id), :method => :post,
+                :class => "button-primary" do %>
+                <%# TODO (design): Falar com Sérgio sobre como este botão e cor do ícone deverá ser representado neste estado. %>
+                <span class="icon-manager-white_16_18 show text-replacement" rel="tooltip" title="Aceitar pedido de conexão">Aceitar pedido de conexão</span>
+              <% end %>
             <% end %>
           <% # Se não houver pedido de amizade ainda %>
           <% else %>
-            <%= link_to '',
-                user_friendships_path(current_user,
-                                      :friend_id => user.id),
-                                      :method => :post,
-                                      :remote => true,
-                                      :class => "add-as-friend icon-invite-lightblue_16_18-before button-default" %>
+            <%= link_to user_friendships_path(current_user,
+              :friend_id => user.id), :method => :post, :remote => true,
+              :class => "button-default" do %>
+              <%# TODO (ui-components): Adicionar a versão azul escura no hover deste ícone. %>
+              <span class="icon-invite-lightblue_16_18 show text-replacement" rel="tooltip" title="Enviar pedido de conexão">Enviar pedido de conexão</span>
+            <% end %>
           <% end %>
         <% end %>
-      </ul>
+      </div>
     </div>
   </div>
-</li>
+</div>
