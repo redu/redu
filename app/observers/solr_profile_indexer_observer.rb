@@ -1,8 +1,7 @@
 class SolrProfileIndexerObserver < ActiveRecord::Observer
   # Observer responsável pela indexação de User
 
-  observe :user, :experience, :education, :high_school,
-    :higher_education, :complementary_course, :event_education
+  observe :user, :experience, :education
 
   def after_save(object)
     user_for(object).index!
@@ -20,9 +19,6 @@ class SolrProfileIndexerObserver < ActiveRecord::Observer
       record
     elsif klass == "Education" || klass == "Experience"
       record.user
-    elsif klass == "HighSchool" || klass == "HigherEducation" ||
-                   klass == "ComplementaryCourse" || klass == "EventEducation"
-      record.education.user
     end
   end
 end

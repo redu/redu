@@ -230,6 +230,7 @@ module Redu
                                         :asset_report_cache_observer,
                                         :chat_message_observer,
                                         :solr_profile_indexer_observer,
+                                        :solr_education_indexer_observer,
                                         :solr_hierarchy_indexer_observer,
                                         :solr_audience_indexer_observer,
       ]
