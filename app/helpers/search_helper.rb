@@ -34,7 +34,10 @@ module SearchHelper
 
   # Define a formatação da lista de administradores
   def show_administrators_list(collection)
-    collection.collect { |admin| admin.display_name }.join(', ')
+    collection.collect { |admin|
+      link_to(admin.display_name, user_path(admin),
+              :title => admin.display_name)
+    }.join(', ').html_safe
   end
 
   # Exibe o contador de amigos em comum entre parênteses somente quando há algum.
