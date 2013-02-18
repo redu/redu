@@ -136,6 +136,7 @@ stylesheets:
     - public/stylesheets/utils.css
     - public/stylesheets/bootstrap-redu.css
     - public/stylesheets/home.css
+    - public/stylesheets/search.css
     - public/stylesheets/wall.css
     - public/stylesheets/fb_style.css
     - public/stylesheets/outdated-browser-new.css

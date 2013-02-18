@@ -39,7 +39,8 @@
           </div>
         </div>
         <%= render :partial => "user_list",
-          :locals => { :profiles => @profiles, :show_see_all => true } %>
+          :locals => { :profiles => @profiles, :show_see_all => true,
+            :query => @query } %>
         <ul class="results-group results-by-environment">
           <li class="title-result">
             <span class="title-result-name icon-environment-gray_32_34-before">Ambientes: <%= @environments.total_entries %></span>

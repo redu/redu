@@ -31,7 +31,7 @@
         <%= render :partial => "result_quantity",
           :locals => { :query => @query, :total_results => @profiles.count } %>
         <%= render :partial => "user_list",
-          :locals => { :profiles => @profiles, :show_see_all => false } %>
+          :locals => { :profiles => @profiles, :show_see_all => false, :query => @query } %>
       </div>
       <%= paginate @profiles %>
 
