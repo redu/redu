@@ -10,8 +10,8 @@ class SearchController < BaseController
     @courses = perform_results(CourseSearch, true)
     @spaces = perform_results(SpaceSearch, true)
 
-    @total_results = [@profiles.length, @environments.length,
-                      @courses.length, @spaces.length].sum
+    @total_results = [@profiles.total_entries, @environments.total_entries,
+                      @courses.total_entries, @spaces.total_entries].sum
 
     @query = params[:q]
 
@@ -32,7 +32,7 @@ class SearchController < BaseController
   # Busca por Perfis
   def profiles
     @profiles = perform_results(UserSearch)
-    @total_results = @profiles.length
+    @total_results = @profiles.total_entries
     @query = params[:q]
 
     respond_to do |format|
@@ -49,7 +49,8 @@ class SearchController < BaseController
     @courses = has_filter?("cursos") ? perform_results(CourseSearch, true) : []
     @spaces = has_filter?("disciplinas") ? perform_results(SpaceSearch, true) : []
 
-    @total_results = [@environments.length, @courses.length, @spaces.length].sum
+    @total_results = [@environments.total_entries, @courses.total_entries,
+                      @spaces.total_entries].sum
 
     @query = params[:q]
 

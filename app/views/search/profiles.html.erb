@@ -29,7 +29,7 @@
     <% if @profiles.count > 0 %>
       <div class="search-results">
         <%= render :partial => "result_quantity",
-          :locals => { :query => @query, :total_results => @profiles.count } %>
+          :locals => { :query => @query, :total_results => @total_results } %>
         <%= render :partial => "user_list",
           :locals => { :profiles => @profiles, :show_see_all => false, :query => @query } %>
       </div>
