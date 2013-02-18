@@ -50,6 +50,8 @@
           </li>
         </ul>
         <%# TODO (back-end): comportamento das respostas de enviar e aceitar pedido de conexão. Com AJAX ou sem? Se com AJAX, dar feedback ao usuário. %>
+        <% # Só não é amigo se existe friendship não aceito entre eles
+           # ou se são a mesma pessoa %>
         <% if !is_friend?(user) %>
           <% # Se existir pedido de amizade %>
           <% if current_friendship(user) %>
@@ -68,8 +70,9 @@
                 <span class="icon-manager-white_16_18 show text-replacement" rel="tooltip" title="Aceitar pedido de conexão">Aceitar pedido de conexão</span>
               <% end %>
             <% end %>
-          <% # Se não houver pedido de amizade ainda %>
-          <% else %>
+          <% # Se não houver pedido de amizade ainda
+           # e se não são a mesma pessoa %>
+          <% elsif !user.is?(current_user) %>
             <%= link_to user_friendships_path(current_user,
               :friend_id => user.id), :method => :post, :remote => true,
               :class => "button-default" do %>
