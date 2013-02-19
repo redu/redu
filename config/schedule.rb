@@ -39,7 +39,7 @@ else
   end
 
   # 4am horário local
-  every :day, :at => '12pm' do
+  every :day, :at => '0am' do
     runner "Subject.destroy_subjects_unfinalized"
   end
 
