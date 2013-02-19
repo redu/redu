@@ -38,18 +38,19 @@ else
     runner "LicensedInvoice.refresh_states!"
   end
 
-  every :day, :at => '10pm' do
+  # 4am horário local
+  every :day, :at => '12pm' do
     runner "Subject.destroy_subjects_unfinalized"
   end
 
-  # 2pm e 2am horário local
-  every '0 10,22 * * *' do
+  # 2am horário local
+  every :day, :at => '10pm' do
     command "cd #{@path} && #{bin_folder}/backup perform -t production_backup" \
       " -r backup"
   end
 
-  # 3pm e 3am horário local
-  every '0 11,23 * * *' do
+  # 3am horário local
+  every :day, :at => '11pm' do
     command "s3cmd sync --delete-removed --exclude=thumb_*/*" \
       " --include=ckeditor/*" \
       " s3://redu_uploads s3://redu-backup-static-files/redu_uploads/"
