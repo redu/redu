@@ -1,0 +1,17 @@
+<%#
+  Área de cabeçalho das páginas de busca.
+%>
+<div class="search-title-header">
+    <%# TODO (ui-components): Corrigir ícone. %>
+    <h2 class="search-title icon-apps-portal-gray_48_50-before link-container pull-left">
+      <%= link_to "Busca por Ambientes e Perfis", search_path,
+        :class => "search-title-link link-target",
+        :title => "Busca por Ambientes e Perfis" %>
+    </h2>
+  <div id="search-breadcrumb" class="breadcrumb-mini-wrapper">
+    <%# TODO: A ser substituído pelo simple_navigation depois. %>
+    <%= render :partial => "breadcrumb_mini" %>
+  </div>
+  <span class="legend">Busque pelos Ambientes de Aprendizagem e seus Cursos e Disciplinas. Você também pode buscar pelos Perfis que fazem parte do Redu.
+  </span>
+</div>
