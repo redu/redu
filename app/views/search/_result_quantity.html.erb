@@ -11,4 +11,7 @@
   <% if local_assigns.has_key? :general_search %>
     <p>Clique numa aba para maiores detalhes.</p>
   <% end %>
+  <% if current_page?(search_environments_path) %>
+    <p>Use os filtros abaixo para facilitar a busca.</p>
+  <% end %>
 </div>

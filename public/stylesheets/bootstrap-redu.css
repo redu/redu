@@ -7032,6 +7032,16 @@ hr {
 .user-n-environment-search-list-item .button-dropdown {
   padding: 6px 10px;
 }
+.user-n-environment-search-list-item .nav-global-profile-item, .user-n-environment-search-list-item .nav-global-profile-item:last-child {
+  padding: 0;
+}
+.user-n-environment-search-list-item .nav-global-profile-item a {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 6px 10px 6px 17px;
+}
 
 .user-n-environment-search-list-item-button {
   position: absolute;

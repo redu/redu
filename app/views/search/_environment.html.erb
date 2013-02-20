@@ -5,47 +5,55 @@
     environment: o ambiente da coleção.
 %>
 <% if environment_counter.even? %>
-  <li class="result-separator"><hr></li>
+  <hr>
 <% end %>
-<li class="general-list-item">
-  <div class="general-list-item-body">
-    <div class="general-list-item-column">
-      <%= link_to environment_path(environment), :title => environment.name do %>
+<div class="search-results-list-item">
+  <div class="general-list-item user-n-environment-search-list-item">
+    <div class="general-list-item-body">
+      <%= link_to environment_path(environment), :title => environment.name, :class => "general-list-item-column" do %>
         <%= image_tag environment.avatar.url(:thumb_90),
           :alt => environment.name, :title => environment.name,
           :size => "90x90" %>
       <% end %>
-    </div>
-    <div class="general-list-item-column">
-      <h4 class="general-list-item-title pull-left">
-        <%= link_to environment.name, environment_path(environment),
-          :title => environment.name,
-          :class => "general-list-item-title-link" %>
-      </h4>
-      <span class="icon-<%= user_environment_role(environment, current_user) %>-lightblue_16_18 show text-replacement pull-right">Papel</span>
-      <% cache ["search_environment_administrators", environment.id] do %>
-        <span class="legend">Administrado por <%= show_administrators_list(environment.administrators) %></span>
-      <% end %>
-      <span class="legend"><%= environment.initials.upcase %></span>
-      <ul class="general-list-item-counters">
-        <li class="general-list-item-counter icon-members-gray_16_18-before">
-          <%= pluralize(environment.user_environment_associations.length, "Membro") %>
-        </li>
-        <li class="general-list-item-counter icon-course-gray_16_18-before">
-          <%= pluralize(environment.courses.length, "Curso") %>
-        </li>
-        <li class="dropdown">
-          <a id="courses-1" class="dropdown-toggle button-default button-dropdown" role="button" data-toggle="dropdown" data-target="#">
+      <div class="general-list-item-column">
+        <span class="icon-<%= user_environment_role(environment, current_user) %>-lightblue_16_18 show text-replacement pull-right" rel="tooltip" title="Seu papel">Seu papel</span>
+        <h4 class="general-list-item-title">
+          <%= link_to environment.name, environment_path(environment),
+            :title => environment.name,
+            :class => "general-list-item-title-link text-truncate" %>
+        </h4>
+        <% cache ["search_environment_administrators", environment.id] do %>
+          <span class="legend text-truncate" title="Administrado por <%= show_administrators_list(environment.administrators) %>">Administrado por <%= show_administrators_list(environment.administrators) %></span>
+        <% end %>
+        <span class="legend text-truncate" title="<%= environment.initials.upcase %>"><%= environment.initials.upcase %></span>
+        <ul class="general-list-item-counters">
+          <li class="general-list-item-counter icon-members-gray_16_18-before">
+            <%= pluralize(environment.user_environment_associations.length, "Membro") %>
+          </li>
+          <li class="general-list-item-counter icon-course-gray_16_18-before">
+            <%= pluralize(environment.courses.length, "Curso") %>
+          </li>
+        </ul>
+        <div class="dropdown user-n-environment-search-list-item-button">
+          <button class="dropdown-toggle button-default button-dropdown" data-toggle="dropdown" role="button">
             <span class="icon-arrow-down-lightblue_8_10 show text-replacement">Expandir</span>
-          </a>
-          <ul class="dropdown-menu" role="menu" aria-labelledby="courses-1">
-            <li><span>Lista de Cursos (<%= environment.courses.count %>)</span></li>
-            <% environment.courses.each do |course| %>
-              <li><%= link_to course.name, environment_course_path(environment, course), :class => "icon-course-lightblue_16_18-before" %></li>
-            <% end %>
-          </ul>
-        </li>
-      </ul>
+          </button>
+          <span class="dropdown-arrow icon-arrow-up-dropdown-lightblue_20_8 text-replacement">Seta</span>
+          <div class="dropdown-menu nav-global-profile-dropdown">
+            <div class="nav-global-profile-header">Lista de Cursos (<%= environment.courses.count %>)</div>
+            <ul class="nav-global-profile-items">
+              <% environment.courses.each do |course| %>
+                <li class="nav-global-profile-item">
+                  <%= link_to course.name,
+                    environment_course_path(environment, course),
+                    :class => "icon-course-lightblue_16_18-before text-truncate",
+                    :title => course.name %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</li>
+</div>

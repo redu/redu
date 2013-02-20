@@ -31,31 +31,12 @@
         <%= render :partial => "result_quantity",
           :locals => { :query => @query, :total_results => @total_results,
             :general_search => true } %>
-        <div class="search-filter">
-          <div class="filters">
-            <button class="filter icon-environment-lightblue_16_18-before">Ambientes (3)</button>
-            <button class="filter icon-course-lightblue_16_18-before">Cursos (2)</button>
-            <button class="filter filter-active icon-space-lightblue_16_18-before">Disciplinas (2)</button>
-          </div>
-        </div>
         <%= render :partial => "user_list",
           :locals => { :profiles => @profiles, :show_see_all => true,
             :query => @query } %>
-        <ul class="results-group results-by-environment">
-          <li class="title-result">
-            <span class="title-result-name icon-environment-gray_32_34-before">Ambientes: <%= @environments.total_entries %></span>
-            <% if show_see_all_results_link?(@environments.total_entries) %>
-              <%= link_to "Veja todos os resultados", search_environments_only_path(:q => @query, :f => ["ambientes"]),
-                :title => "Veja todos os resultados de ambientes" %>
-            <% end %>
-          </li>
-          <li>
-            <ul class="result-found">
-              <%= render :partial => "environment", :collection => @environments %>
-            </ul>
-          </li>
-          <li><hr class="list-separator"></li>
-        </ul>
+        <%= render :partial => "environment_list",
+          :locals => { :environments => @environments, :show_see_all => true,
+            :query => @query } %>
         <ul class="results-group results-by-course">
           <li class="title-result">
             <span class="title-result-name icon-course-gray_32_34-before">Cursos: <%= @courses.total_entries %></span>
