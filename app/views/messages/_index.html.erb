@@ -39,7 +39,7 @@
         </tbody>
       </table>
       <div class="button-toolbar">
-        <%= submit_tag t(:delete_selected), :class =>"button-danger" %>
+        <%= submit_tag t(:delete_selected), :class =>"button-danger", :confirm => "Você tem certeza que deseja remover esta(s) mensagem(ns)? Não será possível recuperá-la(s)." %>
       </div>
     <% end %>
   <% end %>
