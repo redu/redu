@@ -14,6 +14,14 @@
   padding: 15px;
 }
 
+.flash-message .message {
+  overflow: hidden;
+}
+
+.flash-message .message.icons-big-before:before { 
+  float: left;
+}
+
 .borderradius .flash-message {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
