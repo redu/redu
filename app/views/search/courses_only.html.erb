@@ -1,3 +1,34 @@
-<h3>Cursos</h3>
-<%= render :partial => 'course', :collection => @courses %>
-<%= paginate @courses %>
+<div class="span16">
+  <%= render :partial => "header" %>
+  <div class="content-body search-content">
+    <%# TODO: A ser substituído pelo simple_navigation depois. %>
+    <%= render :partial => "tabs" %>
+
+    <%# Se foi encontrado algum perfil. %>
+    <% if @total_results > 0 %>
+      <div class="search-results">
+        <%= render :partial => "result_quantity",
+          :locals => { :query => @query,
+            :total_results => @total_results } %>
+
+        <%# TODO: A ser substituído pelo simple_navigation depois. %>
+        <%= render :partial => "filters" %>
+
+        <%= render :partial => "course_list",
+          :locals => { :courses => @courses,
+            :query => @query } %>
+      </div>
+      <%= paginate @courses, :theme => "numbers" %>
+
+    <%# Nenhum resultado encontrado. %>
+    <% else %>
+      <%= render :partial => "empty_search_result",
+        :locals => { :query => @query } %>
+
+    <% end %>
+  </div>
+  <div class="breadcrumb-mini-wrapper">
+    <%# TODO: A ser substituído pelo simple_navigation depois. %>
+    <%= render :partial => "breadcrumb_mini" %>
+  </div>
+</div>

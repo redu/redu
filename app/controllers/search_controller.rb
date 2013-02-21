@@ -71,7 +71,7 @@ class SearchController < BaseController
   # Busca por Ambientes (Somente AVA's)
   def environments_only
     @environments = perform_results(EnvironmentSearch)
-    @total_results = params[:total_results]
+    @total_results = params[:total_results].to_i
     @query = params[:q]
 
     respond_to do |format|
@@ -84,7 +84,7 @@ class SearchController < BaseController
   # Busca por Cursos
   def courses_only
     @courses = perform_results(CourseSearch)
-    @total_results = params[:total_results]
+    @total_results = params[:total_results].to_i
     @query = params[:q]
 
     respond_to do |format|
@@ -97,7 +97,7 @@ class SearchController < BaseController
   # Busca por Disciplinas
   def spaces_only
     @spaces = perform_results(SpaceSearch)
-    @total_results = params[:total_results]
+    @total_results = params[:total_results].to_i
     @query = params[:q]
 
     respond_to do |format|
