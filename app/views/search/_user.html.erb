@@ -7,7 +7,7 @@
 <% if user_counter.even? %>
   <hr>
 <% end %>
-<div class="search-results-list-item">
+<div id="search-results-user-<%= user.id %>" class="search-results-list-item">
   <div class="general-list-item user-n-environment-search-list-item">
     <div class="general-list-item-body">
       <%= link_to user_path(user), :title => user.display_name,
@@ -18,7 +18,7 @@
       <% end %>
       <div class="general-list-item-column">
         <% if is_friend?(user) %>
-          <span class="icon-contacts-green_16_18 show text-replacement pull-right" rel="tooltip" title="Já é seu contato">Já é seu contato</span>
+          <%= render "icon_is_friend" %>
         <% end %>
         <h4 class="general-list-item-title">
           <%= link_to user.display_name, user_path(user),
@@ -55,15 +55,14 @@
           <% # Se existir pedido de amizade %>
           <% if current_friendship(user) %>
             <% # Se eu fiz o pedido %>
-            <% if current_friendship(user).status == 'requested' %>
-              <button class="button-default user-n-environment-search-list-item-button" disabled="disabled">
-                <%# TODO (ui-components): Adicionar ícone cinza. %>
-                <span class="icon-curriculum-gray_16_18 show text-replacement" rel="tooltip" title="Aguardando pedido de conexão">Aguardando pedido de conexão</span>
-              </button>
+            <% if current_friendship(user).status == "requested" %>
+              <%= render "button_invite_disabled" %>
             <% # Se eu tenho que aceitar algum pedido %>
             <% else %>
               <%= link_to user_friendships_path(current_user,
-                :friend_id => user.id), :method => :post,
+                  :friend_id => user.id,
+                  :in_search => true, :in_search_accept => true),
+                :method => :post, :remote => true,
                 :class => "button-success user-n-environment-search-list-item-button" do %>
                 <%# TODO (ui-components): Adicionar ícone branco. %>
                 <span class="icon-teacher-white_16_18-before" rel="tooltip" title="Aceitar pedido de conexão">Aceitar</span>
@@ -73,7 +72,9 @@
            # e se não são a mesma pessoa %>
           <% elsif !user.is?(current_user) %>
             <%= link_to user_friendships_path(current_user,
-              :friend_id => user.id), :method => :post, :remote => true,
+                :friend_id => user.id,
+                :in_search => true, :in_search_send => true),
+              :method => :post, :remote => true,
               :class => "button-default user-n-environment-search-list-item-button" do %>
               <%# TODO (ui-components): Adicionar a versão azul escura no hover deste ícone. %>
               <span class="icon-invite-lightblue_16_18 show text-replacement" rel="tooltip" title="Enviar pedido de conexão">Enviar pedido de conexão</span>
