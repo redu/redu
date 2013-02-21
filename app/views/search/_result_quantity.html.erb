@@ -4,14 +4,17 @@
   Variáveis:
     query: o termo pesquisado.
     total_results: a quantidade total de resultados encontrados.
-    general_search: booleano que indica se um parágrafo extra deve ser exibido.
 %>
 <div class="result-quantity">
   <p>Você buscou por <strong>"<%= query %>"</strong>. Achamos <strong><%= total_results %></strong> resultados.</p>
-  <% if local_assigns.has_key? :general_search %>
+
+  <%# Mensagem só exibida na busca geral. %>
+  <% if current_page?(search_path) %>
     <p>Clique numa aba para maiores detalhes.</p>
   <% end %>
-  <% if current_page?(search_environments_path) %>
+
+  <%# Mensagem só exibida nas busca por ambientes, cursos e disciplinas. %>
+  <% if current_page?(search_environments_path) or current_page?(search_environments_only_path) or current_page?(search_courses_only_path) or current_page?(search_spaces_only_path) %>
     <p>Use os filtros abaixo para facilitar a busca.</p>
   <% end %>
 </div>
