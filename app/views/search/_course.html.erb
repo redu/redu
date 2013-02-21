@@ -18,12 +18,16 @@
       <% end %>
     </div>
     <div class="general-list-item-column">
+      <% role_icon = user_course_role(course, current_user) %>
+      <% unless role_icon.nil? %>
+        <span class="icon-<%= role_icon %>-lightblue_16_18 show text-replacement pull-right" rel="tooltip" title="<%= role_icon_to_text(role_icon)%>"><%= role_icon_to_text(role_icon)%></span>
+      <% end %>
       <span class="legend"><%= course.environment.name %> —</span>
       <h5 class="general-list-item-title">
-        <%= link_to course.environment.name,
-          environment_path(course.environment),
+        <%= link_to course.name,
+          environment_course_path(course.environment, course),
           :class => "general-list-item-title-link",
-          :title => course.environment.name %>
+          :title => course.name %>
       </h5>
       <span class="legend">Criado por <%= link_to course.owner.try(:display_name), user_path(course.owner) %></span>
       <ul class="general-list-item-counters">

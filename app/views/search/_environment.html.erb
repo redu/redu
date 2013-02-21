@@ -16,7 +16,10 @@
           :size => "90x90" %>
       <% end %>
       <div class="general-list-item-column">
-        <span class="icon-<%= user_environment_role(environment, current_user) %>-lightblue_16_18 show text-replacement pull-right" rel="tooltip" title="Seu papel">Seu papel</span>
+        <% role_icon = user_environment_role(environment, current_user) %>
+        <% unless role_icon.nil? %>
+          <span class="icon-<%= role_icon %>-lightblue_16_18 show text-replacement pull-right" rel="tooltip" title="<%= role_icon_to_text(role_icon)%>"><%= role_icon_to_text(role_icon)%></span>
+        <% end %>
         <h4 class="general-list-item-title">
           <%= link_to environment.name, environment_path(environment),
             :title => environment.name,

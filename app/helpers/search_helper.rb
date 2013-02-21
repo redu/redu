@@ -15,15 +15,23 @@ module SearchHelper
     role_icon(uca.try(:role))
   end
 
+  # Define o ícone a ser usado dependendo do papel.
   def role_icon(role)
-    if [0, 3, 4].include? role
-      "manager"
-    elsif role == 6
-      "tutor"
-    elsif role == 5
-      "teacher"
-    else
-      "member"
+    case role
+    when (Role[:environment_admin] or Role[:course_admin]) then "manager"
+    when Role[:teacher] then "teacher"
+    when Role[:tutor] then "tutor"
+    when Role[:member] then "member"
+    end
+  end
+
+  # Defino o nome do papel de acordo com o ícone usado.
+  def role_icon_to_text(role_icon)
+    case role_icon
+    when "manager" then raw(t 'activerecord.attributes.role.environment_admin')
+    when "teacher" then raw(t 'activerecord.attributes.role.teacher')
+    when "tutor" then raw(t 'activerecord.attributes.role.tutor')
+    when "member" then raw(t 'activerecord.attributes.role.member')
     end
   end
 
