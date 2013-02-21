@@ -165,6 +165,8 @@ class User < ActiveRecord::Base
                       :allow_blank => true
   validates_format_of :first_name, :with => /^\S(\S|\s)*\S$/
   validates_format_of :last_name, :with => /^\S(\S|\s)*\S$/
+  validates_length_of :first_name, :maximum => 25
+  validates_length_of :last_name, :maximum => 25
 
   # override activerecord's find to allow us to find by name or id transparently
   def self.find(*args)

@@ -86,6 +86,8 @@ describe User do
     end
   end
   it { should validate_acceptance_of :tos }
+  it { should ensure_length_of(:first_name).is_at_most 25 }
+  it { should ensure_length_of(:last_name).is_at_most 25 }
 
   context "validations" do
     it "validates login exclusion of reserved_logins" do
