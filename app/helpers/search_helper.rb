@@ -27,11 +27,6 @@ module SearchHelper
     end
   end
 
-  # Define se o link "Veja todos os resultados" deve ser mostrado.
-  def show_see_all_results_link?(total_found)
-    total_found > Redu::Application.config.search_preview_results_per_page
-  end
-
   # Define a formatação da lista de administradores
   def show_administrators_list(collection)
     collection.collect { |admin|
@@ -45,5 +40,26 @@ module SearchHelper
     mutual_friends_counter = mutual_friends(user).length
     content_tag(:span, "(#{mutual_friends_counter})", :rel => "tooltip",
       :title => "Amigos em comum") if mutual_friends_counter > 0
+  end
+
+  # Verifica se a página atual é uma página individual de busca.
+  def invidual_search_page?
+    current_page?(search_environments_only_path) or current_page?(search_courses_only_path) or current_page?(search_spaces_only_path) or current_page?(search_profiles_path)
+  end
+
+  # Define se o link "Veja todos os resultados" deve ser mostrado.
+  def show_see_all_results_link?(total_found)
+    !invidual_search_page? and total_found > Redu::Application.config.search_preview_results_per_page
+  end
+
+  # Retorna a quantidade correta de itens buscados dependendo da página.
+  def search_results_counter(items)
+    # Nas páginas individuais, o contador mostrado é a quantidade de itens visíveis na tela.
+    if invidual_search_page?
+      items.count
+    # Nas páginas restantes (busca geral e ambientes geral), o contador mostrado é o número total de itens encontrados.
+    else
+      items.total_entries
+    end
   end
 end
