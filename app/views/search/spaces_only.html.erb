@@ -1,3 +1,34 @@
-<h3>Disciplinas</h3>
-<%= render :partial => 'space', :collection => @spaces %>
-<%= paginate @spaces %>
+<div class="span16">
+  <%= render :partial => "header" %>
+  <div class="content-body search-content">
+    <%# TODO: A ser substituído pelo simple_navigation depois. %>
+    <%= render :partial => "tabs" %>
+
+    <%# Se foi encontrado algum resultado. %>
+    <% if @total_results > 0 %>
+      <div class="search-results">
+        <%= render :partial => "result_quantity",
+          :locals => { :query => @query,
+            :total_results => @total_results } %>
+
+        <%# TODO: A ser substituído pelo simple_navigation depois. %>
+        <%= render :partial => "filters" %>
+
+        <%= render :partial => "space_list",
+          :locals => { :spaces => @spaces,
+            :query => @query } %>
+      </div>
+      <%= paginate @spaces, :theme => "numbers" %>
+
+    <%# Nenhum resultado encontrado. %>
+    <% else %>
+      <%= render :partial => "empty_search_result",
+        :locals => { :query => @query } %>
+
+    <% end %>
+  </div>
+  <div class="breadcrumb-mini-wrapper">
+    <%# TODO: A ser substituído pelo simple_navigation depois. %>
+    <%= render :partial => "breadcrumb_mini" %>
+  </div>
+</div>
