@@ -8,12 +8,13 @@
     <% if @profiles.count > 0 %>
       <div class="search-results">
         <%= render :partial => "result_quantity",
-          :locals => { :query => @query, :total_results => @total_results } %>
+          :locals => { :query => @query,
+            :total_results => @total_results } %>
         <%= render :partial => "user_list",
           :locals => { :profiles => @profiles,
             :query => @query } %>
       </div>
-      <%= paginate @profiles %>
+      <%= paginate @profiles, :theme => "numbers" %>
 
     <%# Nenhum resultado encontrado. %>
     <% else %>

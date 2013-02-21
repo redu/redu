@@ -375,6 +375,7 @@ pt-BR:
     pagination:
       sidebar_endless: "Ver mais"
       endless: "Mostrar mais..."
+      truncate: "..."
 
   #redu categories
   all: Todas

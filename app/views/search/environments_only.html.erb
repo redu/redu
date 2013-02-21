@@ -18,7 +18,7 @@
           :locals => { :environments => @environments,
             :query => @query } %>
       </div>
-      <%= paginate @environments %>
+      <%= paginate @environments, :theme => "numbers" %>
 
     <%# Nenhum resultado encontrado. %>
     <% else %>
