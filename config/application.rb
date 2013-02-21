@@ -186,6 +186,7 @@ module Redu
 
     # Observers têm direito a um lar
     config.autoload_paths << "#{config.root}/app/observers"
+    config.autoload_paths << "#{config.root}/app/observers/vis"
 
     # Doorkeepers definem eventos que serão propagados no message bus
     config.autoload_paths << "#{config.root}/app/doorkeepers"
