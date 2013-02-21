@@ -72,6 +72,7 @@ class SearchController < BaseController
   def environments_only
     @environments = perform_results(EnvironmentSearch)
     @total_results = params[:total_results]
+    @query = params[:q]
 
     respond_to do |format|
       format.html # search/environments_only.html.erb
@@ -84,6 +85,7 @@ class SearchController < BaseController
   def courses_only
     @courses = perform_results(CourseSearch)
     @total_results = params[:total_results]
+    @query = params[:q]
 
     respond_to do |format|
       format.html # search/courses_only.html.erb
@@ -96,6 +98,7 @@ class SearchController < BaseController
   def spaces_only
     @spaces = perform_results(SpaceSearch)
     @total_results = params[:total_results]
+    @query = params[:q]
 
     respond_to do |format|
       format.html # search/spaces_only.html.erb
