@@ -1,37 +1,17 @@
 <div class="span16">
-  <div class="search-title-header">
-      <h2 class="search-title icon-apps-portal-gray_48_50-before link-container pull-left">
-        <a href="/" class="search-title-link link-target" title="Busca por Ambientes e Perfis">Busca por Ambientes e Perfis</a>
-      </h2>
-    <div id="search-breadcrumb" class="breadcrumb-mini-wrapper">
-      <ul class="breadcrumb-mini" id="search-breadcrumb">
-        <li class="breadcrumb-mini-item icon-arrow-right-separator-gray_16_18-after">
-          <a class="breadcrumb-mini-link icon-magnifier-lightblue_16_18-before selected simple-navigation-active-leaf" href="/">Busca</a>
-        </li>
-      </ul>
-    </div>
-    <span class="legend">Busque pelos Ambientes de Aprendizagem e seus Cursos e Disciplinas. Você também pode buscar pelos Perfis que fazem parte do Redu.
-    </span>
-  </div>
+  <%= render :partial => "header" %>
   <div class="content-body search-content">
-    <ul class="tabs tabs-big">
-      <li class="tab tab-active">
-        <a href="#" class="tab-title icon-basic-guide-lightblue_16_18-before" title="Geral">Geral (10)</a>
-      </li>
-      <li class="tab">
-        <a href="#" class="tab-title icon-environment-lightblue_16_18-before" title="Ambientes">Ambientes (8)</a>
-      </li>
-      <li class="tab">
-        <a href="#" class="tab-title icon-profile-lightblue_16_18-before" title="Perfil">Perfil (6)</a>
-      </li>
-    </ul>
+    <%# TODO: A ser substituído pelo simple_navigation depois. %>
+    <%= render :partial => "tabs" %>
+
     <%# Se foi encontrado algum perfil. %>
     <% if @profiles.count > 0 %>
       <div class="search-results">
         <%= render :partial => "result_quantity",
           :locals => { :query => @query, :total_results => @total_results } %>
         <%= render :partial => "user_list",
-          :locals => { :profiles => @profiles, :show_see_all => false, :query => @query } %>
+          :locals => { :profiles => @profiles,
+            :query => @query } %>
       </div>
       <%= paginate @profiles %>
 
@@ -41,5 +21,9 @@
         :locals => { :query => @query } %>
 
     <% end %>
+  </div>
+  <div class="breadcrumb-mini-wrapper">
+    <%# TODO: A ser substituído pelo simple_navigation depois. %>
+    <%= render :partial => "breadcrumb_mini" %>
   </div>
 </div>

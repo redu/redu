@@ -1,59 +1,27 @@
 <div class="span16">
   <%= render :partial => "header" %>
   <div class="content-body search-content">
-    <ul class="tabs tabs-big">
-      <li class="tab tab-active">
-        <a href="#" class="tab-title icon-basic-guide-lightblue_16_18-before" title="Geral">Geral (10)</a>
-      </li>
-      <li class="tab">
-        <a href="#" class="tab-title icon-environment-lightblue_16_18-before" title="Ambientes">Ambientes (8)</a>
-      </li>
-      <li class="tab">
-        <a href="#" class="tab-title icon-profile-lightblue_16_18-before" title="Perfil">Perfil (6)</a>
-      </li>
-    </ul>
+    <%# TODO: A ser substituído pelo simple_navigation depois. %>
+    <%= render :partial => "tabs" %>
+
     <%# Se foi encontrado algum resultado. %>
     <% if @total_results > 0 %>
       <div class="search-results">
         <%= render :partial => "result_quantity",
-          :locals => { :query => @query, :total_results => @total_results,
-            :general_search => true } %>
+          :locals => { :total_results => @total_results,
+            :query => @query } %>
         <%= render :partial => "user_list",
-          :locals => { :profiles => @profiles, :show_see_all => true,
+          :locals => { :profiles => @profiles,
             :query => @query } %>
         <%= render :partial => "environment_list",
-          :locals => { :environments => @environments, :show_see_all => true,
+          :locals => { :environments => @environments,
             :query => @query } %>
-        <ul class="results-group results-by-course">
-          <li class="title-result">
-            <span class="title-result-name icon-course-gray_32_34-before">Cursos: <%= @courses.total_entries %></span>
-            <% if show_see_all_results_link?(@courses.total_entries) %>
-              <%= link_to "Veja todos os resultados", search_courses_only_path(:q => @query, :f => ["cursos"]),
-                :title => "Veja todos os resultados de cursos" %>
-            <% end %>
-          </li>
-          <li>
-            <ul class="result-found">
-              <%= render :partial => "course", :collection => @courses %>
-            </ul>
-          </li>
-          <li><hr class="list-separator"></li>
-        </ul>
-        <ul class="results-group results-by-space">
-          <li class="title-result">
-            <span class="title-result-name icon-space-gray_32_34-before">Disciplinas: <%= @spaces.total_entries %></span>
-            <% if show_see_all_results_link?(@spaces.total_entries) %>
-              <%= link_to "Veja todos os resultados", search_spaces_only_path(:q => @query, :f => ["disciplinas"]),
-                :title => "Veja todos os resultados de disciplinas" %>
-            <% end %>
-          </li>
-          <li>
-            <ul class="result-found">
-              <%= render :partial => "space", :collection => @spaces %>
-            </ul>
-          </li>
-          <li><hr class="list-separator"></li>
-        </ul>
+        <%= render :partial => "course_list",
+          :locals => { :courses => @courses,
+            :query => @query } %>
+        <%= render :partial => "space_list",
+          :locals => { :spaces => @spaces,
+            :query => @query } %>
       </div>
 
     <%# Nenhum resultado encontrado. %>

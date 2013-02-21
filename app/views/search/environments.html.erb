@@ -1,42 +1,26 @@
 <div class="span16">
   <%= render :partial => "header" %>
   <div class="content-body search-content">
-    <ul class="tabs tabs-big">
-      <li class="tab tab-active">
-        <a href="#" class="tab-title icon-basic-guide-lightblue_16_18-before" title="Geral">Geral (10)</a>
-      </li>
-      <li class="tab">
-        <a href="#" class="tab-title icon-environment-lightblue_16_18-before" title="Ambientes">Ambientes (8)</a>
-      </li>
-      <li class="tab">
-        <a href="#" class="tab-title icon-profile-lightblue_16_18-before" title="Perfil">Perfil (6)</a>
-      </li>
-    </ul>
-    <%# Se foi encontrado algum perfil. %>
-    <% if @environments.count > 0 %>
-      <div class="search-results">
-        <%= render :partial => "result_quantity",
-          :locals => { :query => @query,
-            :total_results => @environments.count } %>
-        <div class="search-filter">
-          <div class="filters">
-            <button class="filter icon-environment-lightblue_16_18-before">Ambientes (3)</button>
-            <button class="filter icon-course-lightblue_16_18-before">Cursos (2)</button>
-            <button class="filter filter-active icon-space-lightblue_16_18-before">Disciplinas (2)</button>
-          </div>
-        </div>
-        <%= render :partial => "environment_list",
-          :locals => { :environments => @environments, :show_see_all => false,
-            :query => @query } %>
-      </div>
-      <%= paginate @environments %>
+    <%# TODO: A ser substituído pelo simple_navigation depois. %>
+    <%= render :partial => "tabs" %>
+    <div class="search-results">
+      <%= render :partial => "result_quantity",
+        :locals => { :query => @query,
+          :total_results => @total_results } %>
 
-    <%# Nenhum resultado encontrado. %>
-    <% else %>
-      <%= render :partial => "empty_search_result",
-        :locals => { :query => @query } %>
+      <%# TODO: A ser substituído pelo simple_navigation depois. %>
+      <%= render :partial => "filters" %>
 
-    <% end %>
+      <%= render :partial => "environment_list",
+        :locals => { :environments => @environments,
+          :query => @query } %>
+      <%= render :partial => "course_list",
+        :locals => { :courses => @courses,
+          :query => @query } %>
+      <%= render :partial => "space_list",
+        :locals => { :spaces => @spaces,
+          :query => @query } %>
+    </div>
   </div>
   <div class="breadcrumb-mini-wrapper">
     <%# TODO: A ser substituído pelo simple_navigation depois. %>

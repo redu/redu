@@ -3,21 +3,22 @@
 
   Variáveis:
     enviroments: os ambientes encontrados.
-    show_see_all: se deve ser exibido o link de ver todos os resultados.
     query: o termo pesquisado.
 %>
-<ul class="results-group results-by-environment">
-  <li class="title-result">
-    <span class="title-result-name icon-environment-gray_32_34-before">Ambientes: <%= environments.total_entries %></span>
-    <% if show_see_all and show_see_all_results_link?(environments.total_entries) %>
-      <%= link_to "Veja todos os resultados", search_environments_only_path(:q => query, :f => ["ambientes"]),
-        :title => "Veja todos os resultados de ambientes" %>
-    <% end %>
-  </li>
-  <li>
-    <div class="search-results-list clearfix">
-      <%= render :partial => "environment", :collection => environments %>
-    </div>
-  </li>
-  <li><hr class="list-separator"></li>
-</ul>
+<% if environments.count > 0 %>
+  <ul class="results-group results-by-environment">
+    <li class="title-result">
+      <span class="title-result-name icon-environment-gray_32_34-before">Ambientes: <%= search_results_counter(environments) %></span>
+      <% if show_see_all_results_link?(environments.total_entries) %>
+        <%= link_to "Veja todos os resultados", search_environments_only_path(:q => query, :f => ["ambientes"], :total_results => environments.total_entries),
+          :title => "Veja todos os resultados de ambientes" %>
+      <% end %>
+    </li>
+    <li>
+      <div class="search-results-list clearfix">
+        <%= render :partial => "environment", :collection => environments %>
+      </div>
+    </li>
+    <li><hr class="list-separator"></li>
+  </ul>
+<% end %>
