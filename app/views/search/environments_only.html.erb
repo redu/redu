@@ -5,7 +5,7 @@
     <%= render :partial => "tabs" %>
 
     <%# Se foi encontrado algum perfil. %>
-    <% if @environments.count > 0 %>
+    <% if @total_results > 0 %>
       <div class="search-results">
         <%= render :partial => "result_quantity",
           :locals => { :query => @query,
