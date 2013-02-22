@@ -5,13 +5,14 @@ class SearchController < BaseController
 
   # Busca por Perfis + Ambientes (AVA's, Cursos e Disciplinas)
   def index
-    @profiles = perform_results(UserSearch, true)
-    @environments = perform_results(EnvironmentSearch, true)
-    @courses = perform_results(CourseSearch, true)
-    @spaces = perform_results(SpaceSearch, true)
+    @profiles = perform_results(UserSearch, :preview => true)
+    @environments = perform_results(EnvironmentSearch, :preview => true)
+    @courses = perform_results(CourseSearch, :preview => true)
+    @spaces = perform_results(SpaceSearch, :preview => true,
+                              :space_search => true)
 
     @total_results = [@profiles.total_entries, @environments.total_entries,
-                      @courses.total_entries, @spaces.total_entries].sum
+                      @courses.total_entries, @spaces.total_count].sum
 
     @query = params[:q]
 
@@ -45,12 +46,25 @@ class SearchController < BaseController
 
   # Busca por Ambientes (AVA's, Cursos e Disciplinas)
   def environments
-    @environments = has_filter?("ambientes") ? perform_results(EnvironmentSearch, true) : []
-    @courses = has_filter?("cursos") ? perform_results(CourseSearch, true) : []
-    @spaces = has_filter?("disciplinas") ? perform_results(SpaceSearch, true) : []
+    @environments = []
+    @courses = []
+    @spaces = []
 
+    if has_filter?("ambientes")
+      @environments = perform_results(EnvironmentSearch, :preview => true)
+    end
+    if has_filter?("cursos")
+      @courses = perform_results(CourseSearch, :preview => true)
+    end
+    if has_filter?("disciplinas")
+      @spaces = perform_results(SpaceSearch, :preview => true,
+                                :space_search => true)
+    end
+
+    # Por conta da paginação a quantidade total de resultados de spaces
+    # é dado pelo método 'total_count'
     @total_results = [@environments.total_entries, @courses.total_entries,
-                      @spaces.total_entries].sum
+                      @spaces.total_count].sum
 
     @query = params[:q]
 
@@ -96,7 +110,7 @@ class SearchController < BaseController
   # GET /busca/ambientes?f[]=disciplinas
   # Busca por Disciplinas
   def spaces_only
-    @spaces = perform_results(SpaceSearch)
+    @spaces = perform_results(SpaceSearch, :space_search => true)
     @total_results = params[:total_results].to_i
     @query = params[:q]
 
@@ -117,15 +131,25 @@ class SearchController < BaseController
   end
 
   # Realiza a busca com os params já setados
-  def perform_results(klass, preview = false)
-    if preview
+  def perform_results(klass, opts = { :preview => false,
+                                      :space_search => false })
+    if opts[:preview]
       per_page = Redu::Application.config.search_preview_results_per_page
     else
       per_page = Redu::Application.config.search_results_per_page
     end
 
-    klass.perform(params[:q], per_page, params[:format],
-                  params[:page]).results
+    results = klass.perform(params[:q], per_page, params[:format],
+                            params[:page]).results
+
+    if opts[:space_search]
+      page = params[:page].nil? ? 1 : params[:page]
+      options =  { :page => page, :per_page => per_page }
+      results = SpaceSearch.
+        filter_and_paginate_my_spaces(results, current_user, options)
+    end
+
+    results
   end
 
   def has_filter?(entity)
