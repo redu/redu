@@ -21,7 +21,7 @@ describe "File API" do
       response.status.should == 200
     end
 
-    %w(name mimetype size byte).each do |attr|
+    %w(name mimetype size byte id).each do |attr|
       it "should have property #{attr}" do
         parse(response.body).should have_key attr
       end
