@@ -18,7 +18,7 @@ module SearchHelper
   # Define o ícone a ser usado dependendo do papel.
   def role_icon(role)
     case role
-    when (Role[:environment_admin] or Role[:course_admin]) then "manager"
+    when (Role[:environment_admin] or Role[:course_admin] or Role[:admin]) then "manager"
     when Role[:teacher] then "teacher"
     when Role[:tutor] then "tutor"
     when Role[:member] then "member"
@@ -69,5 +69,10 @@ module SearchHelper
     else
       items.total_count
     end
+  end
+
+  # Filtra disciplinas pelo usuário
+  def filter_spaces(collection)
+    SpaceSearch.filter_my_spaces(collection, current_user)
   end
 end

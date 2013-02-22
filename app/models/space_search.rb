@@ -18,9 +18,14 @@ class SpaceSearch < Search
   # Filtra somente os spaces que o usuário tem acesso
   # pagina de acordo com os parâmetros recebidos
   def self.filter_and_paginate_my_spaces(collection, user, params)
-    my_spaces = collection.select{ |space| user.has_access_to?(space) }
+    my_spaces = self.filter_my_spaces(collection, user)
 
     Kaminari.paginate_array(my_spaces).page(params[:page]).
       per(params[:per_page])
+  end
+
+  # Filtra os espaços que o usuário tem acesso
+  def self.filter_my_spaces(collection, user)
+    collection.select{ |space| user.has_access_to?(space) }
   end
 end

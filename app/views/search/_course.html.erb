@@ -42,14 +42,15 @@
          <li class="general-list-item-counter icon-space-gray_16_18-before">
           <%= course.spaces.length %>
         </li>
-        <% if course.spaces.length > 0 %>
+        <% spaces_filtered = filter_spaces(course.spaces) %>
+        <% if spaces_filtered.length > 0 %>
           <li class="dropdown">
             <a id="spaces-1" class="dropdown-toggle button-default button-dropdown" role="button" data-toggle="dropdown" data-target="#">
               <span class="icon-arrow-down-lightblue_8_10 show text-replacement">Expandir</span>
             </a>
             <ul class="dropdown-menu" role="menu" aria-labelledby="spaces-1">
-              <li><span>Lista de Disciplinas (<%= course.spaces.length %>)</span></li>
-              <% course.spaces.each do |space| %>
+              <li><span>Lista de Disciplinas (<%= spaces_filtered.length %>)</span></li>
+              <% spaces_filtered.each do |space| %>
                 <li><%= link_to space.name, space_path(space), :class => "icon-space-lightblue_16_18-before" %></li>
               <% end %>
             </ul>
