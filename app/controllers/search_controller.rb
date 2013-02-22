@@ -11,8 +11,8 @@ class SearchController < BaseController
     @spaces = perform_results(SpaceSearch, :preview => true,
                               :space_search => true)
 
-    @total_results = [@profiles.total_entries, @environments.total_entries,
-                      @courses.total_entries, @spaces.total_count].sum
+    @total_results = [@profiles.total_count, @environments.total_count,
+                      @courses.total_count, @spaces.total_count].sum
 
     @query = params[:q]
 
@@ -33,7 +33,7 @@ class SearchController < BaseController
   # Busca por Perfis
   def profiles
     @profiles = perform_results(UserSearch)
-    @total_results = @profiles.total_entries
+    @total_results = @profiles.total_count
     @query = params[:q]
 
     respond_to do |format|
@@ -63,7 +63,7 @@ class SearchController < BaseController
 
     # Por conta da paginação a quantidade total de resultados de spaces
     # é dado pelo método 'total_count'
-    @total_results = [@environments.total_entries, @courses.total_entries,
+    @total_results = [@environments.total_count, @courses.total_count,
                       @spaces.total_count].sum
 
     @query = params[:q]

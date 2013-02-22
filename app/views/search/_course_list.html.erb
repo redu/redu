@@ -9,8 +9,8 @@
   <ul class="results-group results-by-course">
     <li class="title-result">
       <span class="title-result-name icon-course-gray_32_34-before">Cursos: <%= search_results_counter(courses) %></span>
-      <% if show_see_all_results_link?(courses.total_entries) %>
-        <%= link_to "Veja todos os resultados", search_courses_only_path(:q => query, :f => ["cursos"], :total_results => courses.total_entries),
+      <% if show_see_all_results_link?(courses.total_count) %>
+        <%= link_to "Veja todos os resultados", search_courses_only_path(:q => query, :f => ["cursos"], :total_results => courses.total_count),
           :title => "Veja todos os resultados de cursos" %>
       <% end %>
     </li>

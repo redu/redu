@@ -67,7 +67,7 @@ module SearchHelper
       items.count
     # Nas páginas restantes (busca geral e ambientes geral), o contador mostrado é o número total de itens encontrados.
     else
-      items.total_entries
+      items.total_count
     end
   end
 end
