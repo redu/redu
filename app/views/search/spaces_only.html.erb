@@ -20,7 +20,8 @@
           :locals => { :spaces => @spaces,
             :query => @query } %>
       </div>
-      <%= paginate @spaces, :theme => "numbers" %>
+      <%= paginate @spaces, :theme => "numbers",
+        :outer_window => 1, :inner_window => 4 %>
 
     <%# Nenhum resultado encontrado. %>
     <% else %>

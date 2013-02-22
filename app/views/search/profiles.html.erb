@@ -16,7 +16,8 @@
           :locals => { :profiles => @profiles,
             :query => @query } %>
       </div>
-      <%= paginate @profiles, :theme => "numbers" %>
+      <%= paginate @profiles, :theme => "numbers",
+        :outer_window => 1, :inner_window => 4 %>
 
     <%# Nenhum resultado encontrado. %>
     <% else %>

@@ -18,7 +18,8 @@
           :locals => { :courses => @courses,
             :query => @query } %>
       </div>
-      <%= paginate @courses, :theme => "numbers" %>
+      <%= paginate @courses, :theme => "numbers",
+        :outer_window => 1, :inner_window => 4 %>
 
     <%# Nenhum resultado encontrado. %>
     <% else %>

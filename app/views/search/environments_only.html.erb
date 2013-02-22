@@ -20,7 +20,8 @@
           :locals => { :environments => @environments,
             :query => @query } %>
       </div>
-      <%= paginate @environments, :theme => "numbers" %>
+      <%= paginate @environments, :theme => "numbers",
+        :outer_window => 1, :inner_window => 4  %>
 
     <%# Nenhum resultado encontrado. %>
     <% else %>
