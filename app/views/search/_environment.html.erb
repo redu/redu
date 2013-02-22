@@ -26,7 +26,7 @@
             :class => "general-list-item-title-link text-truncate" %>
         </h4>
         <% cache ["search_environment_administrators", environment.id] do %>
-          <span class="legend text-truncate" title="Administrado por <%= strip_links(show_administrators_list(environment.administrators)) %>">Administrado por <%= show_administrators_list(environment.administrators) %></span>
+          <%= truncate_html(content_tag(:span, raw("Administrado por #{show_administrators_list(environment.administrators)}"), :class => "legend", :title => "Administrado por #{strip_links(show_administrators_list(environment.administrators))}"), :length => 110) %>
         <% end %>
         <span class="legend text-truncate" title="<%= environment.initials.upcase %>"><%= environment.initials.upcase %></span>
         <ul class="general-list-item-counters">

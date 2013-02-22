@@ -71,6 +71,8 @@ gem 'untied-publisher', :git => 'git://github.com/redu/untied-publisher'
 gem 'content_for_in_controllers',
   :git => 'git://github.com/julianalucena/content_for_in_controllers.git'
 gem 'system_timer'
+gem 'truncate_html', :git => 'https://github.com/hgmnz/truncate_html.git',
+  :ref => 'f3e08'
 
 # Gems específicos para a API
 gem 'oauth-plugin', '~> 0.4.0'
