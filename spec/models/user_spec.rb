@@ -90,29 +90,75 @@ describe User do
   it { should ensure_length_of(:last_name).is_at_most 25 }
 
   context "validations" do
-    it "validates login exclusion of reserved_logins" do
-      subject.login = 'admin'
-      subject.should_not be_valid
-      subject.errors[:login].should_not be_empty
-    end
-
     it "validates birthday to be before of 13 years ago" do
       subject.birthday = 10.years.ago
       subject.should_not be_valid
       subject.errors[:birthday].should_not be_empty
     end
 
-    it "should validate email and email_confirmation equality" do
-      u = Factory.build(:user, :email => "email@email.com",
-                        :email_confirmation => "different@email.com")
-      u.should_not be_valid
-      u.errors[:email].should_not be_empty
-    end
+    context "email" do
+      context "presence" do
+        it "should not be valid if email is absent" do
+          u = Factory.build(:user, :email => "")
+          u.should_not be_valid
+          u.errors[:email].should_not be_empty
+        end
+      end
 
-    it "validates e-mail format" do
-      u = Factory.build(:user, :email => "invalid@inv")
-      u.should_not be_valid
-      u.errors[:email].should_not be_empty
+      context "uniqueness" do
+        let!(:already_registered) { Factory(:user, :email => "first@mail.com") }
+
+        it "should not be valid if already there is a user with same email" do
+          u = Factory.build(:user, :email => "first@mail.com")
+          u.should_not be_valid
+          u.errors[:email].should_not be_empty
+        end
+
+        it "should not be valid if already there is a user with same email " \
+          "case insensitive" do
+          u = Factory.build(:user, :email => "FIRST@MAIL.COM")
+          u.should_not be_valid
+          u.errors[:email].should_not be_empty
+        end
+      end
+
+      context "format" do
+        it "should not be valid when e-mail does not have @" do
+          u = Factory.build(:user, :email => "invalid.inv")
+          u.should_not be_valid
+          u.errors[:email].should_not be_empty
+        end
+
+        it "should not be valid when e-mail does not have dots" do
+          u = Factory.build(:user, :email => "invalid@inv")
+          u.should_not be_valid
+          u.errors[:email].should_not be_empty
+        end
+      end
+
+      context "length" do
+        it "should not be valid when email has less than 3 caracters" do
+          u = Factory.build(:user, :email => "i@")
+          u.should_not be_valid
+          u.errors[:email].should_not be_empty
+        end
+
+        it "should not be valid when email has more than 100 caracters" do
+          u = Factory.build(:user, :email => "#{SecureRandom.hex(92)}@mail.com")
+          u.should_not be_valid
+          u.errors[:email].should_not be_empty
+        end
+      end
+
+      context "confirmation" do
+        it "should not be valid when email and email_confirmation are " \
+          "different" do
+          u = Factory.build(:user, :email => "email@email.com",
+                            :email_confirmation => "different@email.com")
+          u.should_not be_valid
+          u.errors[:email].should_not be_empty
+        end
+      end
     end
 
     it "validates mobile phone format" do
@@ -123,6 +169,114 @@ describe User do
       u.should be_valid
       u.mobile = "81 2131-2123"
       u.should_not be_valid
+    end
+
+    context "login" do
+      context "presence" do
+        it "should not be valid if login is absent" do
+          u = Factory.build(:user, :login => "")
+          u.should_not be_valid
+          u.errors[:login].should_not be_empty
+        end
+      end
+
+      context "uniqueness" do
+        let!(:already_registered) { Factory(:user, :login => "first_here") }
+
+        it "should not be valid if already there is a user with same login" do
+          u = Factory.build(:user, :login => "first_here")
+          u.should_not be_valid
+          u.errors[:login].should_not be_empty
+        end
+
+        it "should not be valid if already there is a user with same login " \
+          "case insensitive" do
+          u = Factory.build(:user, :login => "FIRST_HERE")
+          u.should_not be_valid
+          u.errors[:login].should_not be_empty
+        end
+      end
+
+      context "exclusion" do
+        it "should not be valid when login is a reserved login" do
+          login = Redu::Application.config.extras["reserved_logins"][1]
+          u = Factory.build(:user, :login => login)
+          u.should_not be_valid
+          u.errors[:login].should_not be_empty
+        end
+      end
+
+      context "length" do
+        it "should not be valid when login has less than 6 letters" do
+          u = Factory.build(:user, :login => "mylog")
+          u.should_not be_valid
+          u.errors[:login].should_not be_empty
+        end
+
+        it "should not be valid when login has more than 20 letters" do
+          u = Factory.build(:user, :login => "my_super_giant_login_")
+          u.should_not be_valid
+          u.errors[:login].should_not be_empty
+        end
+      end
+
+      context "format" do
+        it "should not be valid when login has dots" do
+          u = Factory.build(:user, :login => "my.login")
+          u.should_not be_valid
+          u.errors[:login].should_not be_empty
+        end
+
+        it "should not be valid when login has spaces" do
+          u = Factory.build(:user, :login => "my login")
+          u.should_not be_valid
+          u.errors[:login].should_not be_empty
+        end
+      end
+    end
+
+    context "password" do
+      context "if password_required?" do
+        before do
+          User.any_instance.stub(:password_required?) { true }
+        end
+
+        context "length" do
+          it "should not be valid when password has less than 6 letters" do
+            u = Factory.build(:user, :password => "passw",
+                              :password_confirmation => "passw")
+            u.should_not be_valid
+            u.errors[:password].should_not be_empty
+          end
+
+          it "should not be valid when password has more than 20 letters" do
+            u = Factory.build(:user, :password => "super_giant_password_",
+                              :password_confirmation => "super_giant_password_")
+            u.should_not be_valid
+            u.errors[:password].should_not be_empty
+          end
+        end
+      end
+
+      context "if !password_required?" do
+        before do
+          User.any_instance.stub(:password_required?) { false }
+        end
+
+        context "length" do
+          it "should be valid when password has less than 6 letters" do
+            u = Factory.build(:user, :password => "passw",
+                              :password_confirmation => "passw")
+            u.should be_valid
+          end
+
+          it "should be valid when password has more than 20 letters" do
+            u = Factory.build(:user, :password => "super_giant_password_",
+                              :password_confirmation => "super_giant_password_")
+            u.should be_valid
+          end
+        end
+      end
     end
 
     context "humanizer" do
@@ -346,7 +500,7 @@ describe User do
       luke = Factory(:user, :login => "luke_skywalker")
       leia = Factory(:user, :login => "princess_leia")
       han_solo = Factory(:user, :login => "han_solo")
-      yoda = Factory(:user, :login => "yodaa")
+      yoda = Factory(:user, :login => "yodaaa")
 
       create_friendship vader, luke
       create_friendship vader, leia
@@ -359,7 +513,7 @@ describe User do
     end
 
     it "should retrieves all recipients passing a set of reccipients ids " do
-      vader = Factory(:user, :login => "vader")
+      vader = Factory(:user, :login => "vaderr")
       luke = Factory(:user, :login => "luke_skywalker")
       leia = Factory(:user, :login => "princess_leia")
       han_solo = Factory(:user, :login => "han_solo")
@@ -823,6 +977,17 @@ describe User do
       end
     end # context "when facebook authenticated user with valid fields"
   end # describe 'create_with_omniauth'
+
+  context "Authlogic" do
+    context "when passwords are blank" do
+      let(:user) { Factory(:user) }
+
+      it "#password= should not update it to blank (ignore_blank_passwords)" do
+        user.password = ""
+        user.password.should_not be_blank
+      end
+    end
+  end
 
   private
   def create_friendship(user1, user2)
