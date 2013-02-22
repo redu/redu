@@ -29,12 +29,6 @@ GIT
       rscribd
 
 GIT
-  remote: git://github.com/julianalucena/content_for_in_controllers.git
-  revision: d06b5e500e38011d3a3a85b0165a6203d135d67e
-  specs:
-    content_for_in_controllers (0.0.2)
-
-GIT
   remote: git://github.com/meskyanichi/backup.git
   revision: bca9ab8b05cfaf65e78f069264ca78f5b4231799
   specs:
@@ -440,7 +434,6 @@ DEPENDENCIES
   cancan (~> 1.6.7)
   ckeditor (= 3.4.2.pre)
   compass-rails
-  content_for_in_controllers!
   daemons (= 1.0.10)
   date_validator
   deep_cloneable

@@ -1,8 +1,6 @@
 class OauthClientsController < BaseController
   layout 'new_application'
 
-  before_filter :set_nav_global_context
-
   def index
     @user = User.find(params[:user_id])
     authorize! :manage, @user
@@ -61,9 +59,5 @@ class OauthClientsController < BaseController
     @user = User.find(params[:user_id])
     @client_application = @user.client_applications.find(params[:id])
     authorize! :manage, @client_application
-  end
-
-  def set_nav_global_context
-    content_for :nav_global_context, "new_users"
   end
 end
