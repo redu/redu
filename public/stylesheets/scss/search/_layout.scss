@@ -2,5 +2,28 @@
 // Layout.
 // ==========================================================================
 
-.title-result-name +
-a { margin-left: 20px; }
+
+.search-portal {
+  // Espaçamento entre o contador e o link "Veja todos os resultados".
+  .title-result-name +
+  a { margin-left: 20px; }
+
+
+  // Posicionamento dos breadcrumbs.
+
+  .breadcrumb-mini {
+    margin-top: 0;
+    display: inline-block;
+  }
+
+  .breadcrumb-mini-wrapper {
+    height: 18px;
+    text-align: center;
+  }
+
+  .content-body +
+  .breadcrumb-mini-wrapper { margin-top: 15px; }
+
+  // Imagem de fundo do cabeçalho.
+  .container { background: url("/images/search/search-background_160.png") no-repeat 391px -49px; }
+}

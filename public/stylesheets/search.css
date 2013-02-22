@@ -1,4 +1,19 @@
-.title-result-name +
+.search-portal .title-result-name +
 a {
   margin-left: 20px;
+}
+.search-portal .breadcrumb-mini {
+  margin-top: 0;
+  display: inline-block;
+}
+.search-portal .breadcrumb-mini-wrapper {
+  height: 18px;
+  text-align: center;
+}
+.search-portal .content-body +
+.breadcrumb-mini-wrapper {
+  margin-top: 15px;
+}
+.search-portal .container {
+  background: url("/images/search/search-background_160.png") no-repeat 391px -49px;
 }
