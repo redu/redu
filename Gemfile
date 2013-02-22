@@ -65,8 +65,7 @@ gem 'vis_client', :git => 'git@github.com:redu/vis_client.git'
 gem 'whenever', :require => false
 gem 'will_paginate', '~> 3.0.pre2'
 gem 'zencoder'
-gem 'untied-publisher', :git => 'git@github.com:redu/untied-publisher.git',
-  :branch => 'sync-producer'
+gem 'untied-publisher', '~> 0.0.6'
 gem 'content_for_in_controllers',
   :git => 'git://github.com/julianalucena/content_for_in_controllers.git'
 gem 'system_timer'

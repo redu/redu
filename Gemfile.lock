@@ -114,19 +114,6 @@ GIT
       rails (~> 3.0.10)
 
 GIT
-  remote: git@github.com:redu/untied-publisher.git
-  revision: 9dec1d45c008f4b2d9f21b6f8bbc5e56dce01fc1
-  branch: sync-producer
-  specs:
-    untied-publisher (0.0.5)
-      activerecord
-      amqp
-      bunny (= 0.9.0.pre6)
-      configurable
-      json
-      representable
-
-GIT
   remote: git@github.com:redu/vis_client.git
   revision: be54ea9998109eac8029cbf8e3d14bbefcc73637
   specs:
@@ -151,13 +138,13 @@ GEM
     acts-as-taggable-on (2.0.6)
     acts_as_tree (0.1.1)
     addressable (2.3.2)
-    amq-client (0.9.11)
-      amq-protocol (>= 1.0.1)
+    amq-client (0.9.12)
+      amq-protocol (>= 1.2.0)
       eventmachine
-    amq-protocol (1.1.0)
-    amqp (0.9.8)
-      amq-client (~> 0.9.5)
-      amq-protocol (>= 0.9.4)
+    amq-protocol (1.2.0)
+    amqp (0.9.9)
+      amq-client (~> 0.9.12)
+      amq-protocol (~> 1.2.0)
       eventmachine
     ar_mailer_rails3 (2.1.12)
     arel (2.0.10)
@@ -356,7 +343,7 @@ GEM
     redu_analytics (0.0.2)
       lazy_high_charts
     remotipart (1.0.2)
-    representable (1.3.1)
+    representable (1.3.3)
       json
       nokogiri
     roar (0.11.7)
@@ -411,6 +398,13 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.35)
+    untied-publisher (0.0.6)
+      activerecord
+      amqp
+      bunny (= 0.9.0.pre6)
+      configurable
+      json
+      representable
     useragent (0.4.8)
     uuidtools (2.1.3)
     whenever (0.7.3)
@@ -494,7 +488,7 @@ DEPENDENCIES
   simple-navigation!
   system_timer
   translate_routes
-  untied-publisher!
+  untied-publisher (~> 0.0.6)
   useragent (~> 0.4.8)
   vis_client!
   webmock!
