@@ -29,7 +29,9 @@
           :class => "general-list-item-title-link",
           :title => course.name %>
       </h5>
-      <span class="legend">Criado por <%= link_to course.owner.try(:display_name), user_path(course.owner) %></span>
+      <% unless course.owner.nil? %>
+        <span class="legend">Criado por <%= link_to course.owner.try(:display_name), user_path(course.owner) %></span>
+      <% end %>
       <ul class="general-list-item-counters">
         <li class="general-list-item-counter icon-members-gray_16_18-before">
           <%= pluralize(course.user_course_associations.length, "Membro") %>
