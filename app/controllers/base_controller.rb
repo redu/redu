@@ -1,6 +1,4 @@
 class BaseController < ApplicationController
-  include ContentForInControllers
-
   layout :choose_layout, :except => [:landing]
   # Work around (ver método self.login_required_base)
 

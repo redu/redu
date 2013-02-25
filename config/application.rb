@@ -179,6 +179,7 @@ module Redu
 
     # Usado pelo simple-navigation (renderer customizado)
     config.autoload_paths << "#{config.root}/app/navigation_renderers"
+    config.autoload_paths << "#{config.root}/app/navigations" # arquivos de navegação dinâmica
 
     # Autoloads code in lib
     config.autoload_paths << "#{config.root}/lib"

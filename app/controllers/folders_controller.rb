@@ -1,6 +1,4 @@
 class FoldersController < BaseController
-  before_filter :set_nav_global_context
-
   load_and_authorize_resource :space
   load_and_authorize_resource :folder, :through => :space,
     :through_association => :folders_and_subfolders
@@ -213,9 +211,5 @@ class FoldersController < BaseController
   def load_course_and_environment
     @course = @space.course
     @environment = @course.environment
-  end
-
-  def set_nav_global_context
-    content_for :nav_global_context, "spaces"
   end
 end
