@@ -1,12 +1,33 @@
 $(function(){
+  $.fn.searchTokenInput = function(url) {
+    $(this).tokenInput(
+      url + "?format=json", {
+        crossDomain: false,
+        hintText: "Faça sua busca",
+        noResultsText: "Sem resultados",
+        searchingText: "Buscando...",
+    });
+  }
+
+  var updateTokenInput = function(url) {
+    $(".token-input-list").remove();
+    $("#q").searchTokenInput(url);
+  }
+
+  updateTokenInput($(".form-search").attr("action"));
+
   $(".form-search-filters-dropdown :radio").change(function() {
     $this = $(this)[0];
+
     if($this.value === "geral"){
-      $(".form-search").attr("action", "/busca")
+      url = "/busca"
     }else if($this.value === "ambientes") {
-      $(".form-search").attr("action", "/busca/ambientes")
+      url = "/busca/ambientes"
     }else if($this.value === "perfil") {
-      $(".form-search").attr("action", "/busca/perfis")
+      url = "/busca/perfis"
     }
+
+    $(".form-search").attr("action", url);
+    updateTokenInput(url);
   });
 });
