@@ -23,7 +23,7 @@ module LecturesHelper
     result = <<-END
         jwplayer('#{options[:id]}').setup({
           'flashplayer': '/flash/player.swf',
-          'file': 'http://www.youtube.com/watch?v=#{options[:youtube_id]}',
+          'file': '#{options[:youtube_url]}',
           'skin': '#{options[:skin]}',
           'controlbar': 'bottom',
           'width': '#{options[:width]}',

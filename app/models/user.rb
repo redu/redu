@@ -88,7 +88,7 @@ class User < ActiveRecord::Base
       "LOWER(first_name) LIKE :keyword OR " + \
       "LOWER(last_name) LIKE :keyword OR " +\
       "CONCAT(TRIM(LOWER(first_name)), ' ', TRIM(LOWER(last_name))) LIKE :keyword OR " +\
-      "LOWER(email) LIKE :keyword", { :keyword => "%#{keyword.downcase}%" }).
+      "LOWER(email) LIKE :keyword", { :keyword => "%#{keyword.to_s.downcase}%" }).
       limit(10).select("users.id, users.first_name, users.last_name, users.login, users.email, users.avatar_file_name")
   }
   scope :popular, lambda { |quantity|
@@ -100,7 +100,7 @@ class User < ActiveRecord::Base
       where("course_enrollments.role" => Role[:teacher]).popular(quantity)
   }
   scope :with_email_domain_like, lambda { |email|
-    where("email LIKE ?", "%#{email.split("@")[1]}%")
+    where("email LIKE ?", "%#{email.to_s.split("@")[1]}%")
   }
   scope :contacts_and_pending_contacts_ids , select("users.id").
     joins("LEFT OUTER JOIN `friendships`" \
@@ -127,22 +127,9 @@ class User < ActiveRecord::Base
   acts_as_authentic do |c|
     c.crypto_provider = CommunityEngineSha1CryptoMethod
 
-    # Valida password
-    c.ignore_blank_passwords # no caso de atualizar o profile
-
-    # verifica se o password e sua confirmação são iguais
-    c.require_password_confirmation
-
-    c.validates_length_of_password_field_options = { :within => 6..20,
-                                                     :if => :password_required? }
-
-    # Valida login
-    c.validate_login_field = { :within => 5..20, # lenght
-                               :with => /^[A-Za-z0-9_-]+$/ } # format
-
-    # Valida e-mail
-    c.validate_email_field = { :within => 3..100, # lenght
-                               :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/ } # format
+    c.validate_login_field = false
+    c.validate_password_field = false
+    c.validate_email_field = false
   end
 
   has_attached_file :avatar, Redu::Application.config.paperclip_user
@@ -181,10 +168,7 @@ class User < ActiveRecord::Base
   end
 
   # VALIDATIONS
-  # login, password e email já tem presença confirmada pelo Authlogic
   validates_presence_of :first_name, :last_name
-  validates_confirmation_of :email # verifica se o email é igual a sua confirmação
-  validates_exclusion_of :login, :in => Redu::Application.config.extras["reserved_logins"]
   validates :birthday, :allow_nil => true,
             :date => { :before => Proc.new { 13.years.ago } }
   validates_acceptance_of :tos
@@ -193,6 +177,22 @@ class User < ActiveRecord::Base
                       :allow_blank => true
   validates_format_of :first_name, :with => /^\S(\S|\s)*\S$/
   validates_format_of :last_name, :with => /^\S(\S|\s)*\S$/
+  validates_length_of :first_name, :maximum => 25
+  validates_length_of :last_name, :maximum => 25
+  validates :password,
+    :length => { :minimum => 6, :maximum => 20 },
+    :confirmation => true,
+    :if => :password_required?
+  validates :login,
+    :exclusion => { :in => Redu::Application.config.extras["reserved_logins"] },
+    :format => { :with => /^[A-Za-z0-9_-]*[A-Za-z]+[A-Za-z0-9_-]*$/ },
+    :length => { :minimum => 6, :maximum => 20 }
+  validates_uniqueness_of :login, :case_sensitive => false
+  validates :email,
+    :format => { :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/ },
+    :length => { :minimum => 3, :maximum => 100 },
+    :confirmation => true
+  validates_uniqueness_of :email, :case_sensitive => false
 
   # override activerecord's find to allow us to find by name or id transparently
   def self.find(*args)
@@ -573,13 +573,13 @@ class User < ActiveRecord::Base
   end
 
   def add_favorite(favoritable_type, favoritable_id)
-    Favorite.create(:favoritable_type => favoritable_type,
+    Favorite.create(:favoritable_type => favoritable_type.to_s,
                     :favoritable_id => favoritable_id,
                     :user_id => self.id)
   end
 
   def rm_favorite(favoritable_type, favoritable_id)
-    fav = Favorite.where(:favoritable_type => favoritable_type,
+    fav = Favorite.where(:favoritable_type => favoritable_type.to_s,
                            :favoritable_id => favoritable_id,
                            :user_id => self.id).first
     fav.destroy

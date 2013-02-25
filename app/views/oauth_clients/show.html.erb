@@ -1,27 +1,48 @@
-<h1>Detalhes do Aplicativo OAuth <%=@client_application.name %></h1>
-<p>
-  <strong>Consumer Key:</strong>
-  <code><%=@client_application.key %></code>
-</p>
-<p>
-  <strong>Consumer Secret:</strong>
-  <code><%=@client_application.secret %></code>
-</p>
-<p>
-  <strong>Request Token URL</strong>
-  <code>http<%='s' if request.ssl? %>://<%= request.host_with_port %><%=@client_application.oauth_server.request_token_path %></code>
-</p>
-<p>
-  <strong>Access Token URL</strong>
-  <code>http<%='s' if request.ssl? %>://<%= request.host_with_port %><%=@client_application.oauth_server.access_token_path %></code>
-</p>
-<p>
-  <strong>Authorize URL</strong>
-  <code>http<%='s' if request.ssl? %>://<%= request.host_with_port %><%=@client_application.oauth_server.authorize_path %></code>
-</p>
+<div class="span3">
+  <%= render :partial => "users/left_sidebar",
+    :locals => { :user => @user } %>
+</div>
+<div class="span10">
+  <div class="content-area">
+    <%= render :partial => "oauth_clients/breadcrumb", :locals => { :user => @user } %>
+    <div class="content-body">
+      <%= render :partial => 'oauth_clients/header_breadcrumb_index', :locals => { :user => @user } %>
 
-<p>
-  Suportamos hmac-sha1 (recomendado) ou texto puro em modo ssl.
-</p>
-<%= link_to 'Editar', edit_oauth_client_path(@client_application) %> |
-<%= link_to 'Voltar', oauth_clients_path %>
+      <div class="my-app-tabs">
+        <%= new_tabs(:new_users) %>
+        <%= new_subtabs(:new_users) %>
+      </div>
+      <div class="content-section my-app">
+        <h3 class="my-app-name"><%=@client_application.name %></h3>
+        <p>Para realizar a autenticação utilizamos o protocolo <%= link_to "OAuth 2.0", "http://oauth.net/2/" %>. Para mais informações visite nosso <%= link_to "guia de desenvolvedores", "http://developers.redu.com.br" %>.</p>
+
+        <ul class="my-app-infos">
+          <li>
+            <span>Chave do <em>consumer</em>:</span>
+            <code><%=@client_application.key %></code>
+          </li>
+          <li>
+            <span>Segredo do <em>consumer</em>:</span>
+            <code><%=@client_application.secret %></code>
+          </li>
+          <li>
+            <span>URL de autorização:</span>
+            <code>http<%='s' if request.ssl? %>://<%= request.host_with_port %><%=@client_application.oauth_server.authorize_path %></code>
+          </li>
+          <li>
+            <span>URL do token:</span>
+            <code><%= token_url %></code>
+          </li>
+        </ul>
+        <div class="my-app-actions">
+          <%= link_to 'Remover', user_oauth_client_path(@user, @client_application), :confirm => "Você tem certeza?", :method => :delete, :class => "button-danger" %>
+        </div>
+      </div>
+    </div>
+    <%= render :partial => "oauth_clients/breadcrumb", :locals => { :user => @user } %>
+  </div>
+</div>
+<div class="span3">
+  <%= render :partial => "users/right_sidebar",
+    :locals => { :user => @user } %>
+</div>

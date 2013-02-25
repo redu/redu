@@ -1,15 +1,20 @@
 module Api
   class LecturesController < Api::ApiController
+    include Api::RepresenterInflector
+
     def show
       lecture = Lecture.find(params[:id])
       authorize! :read, lecture
-      respond_with lecture
+
+      klass = representer_for_resource(lecture.lectureable) || LectureRepresenter
+      respond_with lecture, :represent_with => klass
     end
 
     def create
       subject = Subject.find(params[:subject_id])
       lecture = Lecture.new do |l|
         l.name = params[:lecture][:name]
+        l.position = params[:lecture][:position]
         l.owner = current_user
         l.subject = subject
         l.lectureable = create_lectureable(params[:lecture])
@@ -22,7 +27,28 @@ module Api
         lecture.create_asset_report(:enrollments => [enrollment])
       end
 
-      respond_with :api, lecture
+      opts = if lecture.valid?
+        klass = representer_for_resource(lecture.lectureable) || LectureRepresenter
+        { :represent_with => klass }
+      else
+        {}
+      end
+
+      respond_with :api, lecture, opts
+    end
+
+    def index
+      conds = { :id => params[:subject_id], :finalized => true }
+      subject = Subject.first(:conditions => conds)
+      authorize! :read, subject
+
+      lectures = subject.lectures.includes(:lectureable)
+
+      respond_with :api, lectures do |format|
+        format.json do
+          render :json => lectures.extend(LecturesRepresenter)
+        end
+      end
     end
 
     protected

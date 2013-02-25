@@ -75,6 +75,8 @@ O estilo e padrões de código utilizados estão disponíveis [neste](https://gi
 
 ### Contribuições
 
+#### Pull requests
+
 Os passos para contribuir com a evolução do código, seja para resolução de issue ou criação de features são os seguintes:
 
 1. Criar um branch novo
@@ -95,6 +97,17 @@ $ redu (issue-1300) > git push origin issue-1300
 ```
 
 Para mais informações sobre como fazer o pull request, consulte [este](https://help.github.com/articles/using-pull-requests) post.
+
+#### Reportando issues da API
+
+O primeiro passo é decidir em qual repositório criar o issue:
+
+- Para bugs na API HTTP propriamente dita: https://github.com/redu/redu/issues
+- Para bugs na documentação: https://github.com/redu/redu.github.com/issues
+- Para bugs no encapsulador Java: https://github.com/redu/jredu/issues
+- Para bugs no encapsulador Python: https://github.com/redu/redupy/issues
+
+Para problemas na API REST, É importante expressar os problemas em termos de HTTP e não da linguagem utilizada. Por exemplo, ao invés de dizer que o método ``getUsers()`` está lançando null pointer, tentem explicar que uma requisição do tipo GET para ``/api/spaces/1/users`` está retornando o código 500. Fica mais fácil de investigar dessa forma.
 
 ### DelayedJob
 

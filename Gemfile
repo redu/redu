@@ -27,7 +27,7 @@ gem 'backup',
 gem 'bundler', '~> 1.2'
 gem 'cancan', '~> 1.6.7'
 gem 'ckeditor', '3.4.2.pre'
-gem 'daemons'
+gem 'daemons', '1.0.10'
 gem 'date_validator'
 gem 'mongoid', '~> 2.2.6', :require => 'mongoid/version'
 gem 'deep_cloneable'
@@ -51,11 +51,10 @@ gem 'omniauth-facebook'
 gem 'pusher'
 gem 'pagseguro', '~> 0.1.10'
 gem 'paperclip', '~> 2.7'
-gem 'rails', '3.0.19'
+gem 'rails', :git => 'git://github.com/rails/rails.git',
+  :branch => '3-0-stable'
 gem 'rake', '0.8.7'
 gem 'remotipart', '~> 1.0'
-gem 'roar',
-  :git => 'https://github.com/apotonick/roar.git'
 gem 'scribd_fu', :git => 'git://github.com/guiocavalcanti/scribd_fu.git',
   :branch => 'without-scape'
 gem 'shuber-sortable'
@@ -67,18 +66,17 @@ gem 'vis_client', :git => 'git@github.com:redu/vis_client.git'
 gem 'whenever', :require => false
 gem 'will_paginate', '~> 3.0.pre2'
 gem 'zencoder'
-gem 'untied-publisher', :git => 'git://github.com/redu/untied-publisher'
-gem 'content_for_in_controllers',
-  :git => 'git://github.com/julianalucena/content_for_in_controllers.git'
+gem 'untied-publisher', '~> 0.0.6'
 gem 'system_timer'
 gem 'truncate_html', :git => 'https://github.com/hgmnz/truncate_html.git',
   :ref => 'f3e08'
+gem 'json', '>= 1.7.7'
 
 # Gems específicos para a API
 gem 'oauth-plugin', '~> 0.4.0'
 gem 'rack-cors', :require => 'rack/cors'
-gem 'roar-rails', '~> 0.0.3',
-  :git => 'git://github.com/apotonick/roar-rails.git'
+gem 'roar-rails'
+gem 'roar'
 gem 'destroy_soon'
 gem 'redu_analytics'
 gem 'humanizer'

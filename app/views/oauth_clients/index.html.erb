@@ -1,44 +1,46 @@
-<div class="flash"><%= flash[:notice] %></div>
-<h1>Seus Aplicativos</h1>
-<% unless @tokens.empty? %>
-<p>Esses são os aplicativos que podem acessar sua conta.</p>
-<table>
-  <tr><th>Aplicativo</th><th>Registro</th><th>&nbsp;</th></tr>
-  <% @tokens.each do |token|%>
-    <% content_tag_for :tr, token do %>
-      <td><%= link_to token.client_application.name, token.client_application.url %></td>
-      <td><%= token.authorized_at %></td>
-      <td>
-        <% form_tag :controller => 'oauth', :action => 'revoke' do %>
-        <%= hidden_field_tag 'token', token.token %>
-        <%= submit_tag "Revogar Acesso" %>
-        <% end %>
-      </td>
-    <% end %>
-  <% end %>
+<div class="span3">
+  <%= render :partial => "users/left_sidebar",
+    :locals => { :user => @user } %>
+</div>
+<div class="span10">
+  <div class="content-area">
+    <%= render :partial => "oauth_clients/breadcrumb", :locals => { :user => @user } %>
+    <div class="content-body">
+      <%= render :partial => 'oauth_clients/header_breadcrumb_index', :locals => { :user => @user } %>
 
-</table>
-<% end %>
-<hr/>
-<h3>Área do Desenvolvedor</h3>
-<% if @client_applications.empty? %>
-  <p>
-    Você tem um aplicativo que gostaria de registar utilizando o padrão <a href="http://oauth.net">OAuth</a>?
-  </p>
-  <p>
-    Você precisa registrar seu aplicativo antes de poder fazer requisições autorizadas para o Redu.
-  </p>
-<% else %>
-  <p>
-    Você tem os seguintes aplicativos registrados:
-  </p>
-  <% @client_applications.each do |client|%>
-    <%= div_for client do %>
-      <%= link_to client.name, oauth_client_path(client) %>-
-        <%= link_to 'Editar', edit_oauth_client_path(client) %>
-        <%= link_to 'Excluir', oauth_client_path(client), :confirm => "Você tem certeza?", :method => :delete %>
-    <% end %>
-  <% end %>
-<% end %>
-<br />
-<h3><%= link_to "Registre seu Aplicativo!", :action => :new %></h3>
+      <div class="my-app-tabs">
+        <%= new_tabs(:new_users) %>
+      </div>
+      <div class="content-section">
+        <% if @client_applications.empty? %>
+        <% else %>
+          <table class="table-with-borderradius table-with-link my-apps-list">
+            <thead>
+              <tr>
+                <th width="45%">Nome</th>
+                <th width="45%">URL Principal</th>
+                <th width="30%">Gerenciamento</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @client_applications.each do |client|%>
+                <tr class="link-container">
+                  <td>
+                    <%= link_to truncate(client.name, :length => 27), user_oauth_client_path(@user, client) %>
+                  </td>
+                  <td><%= truncate client.url, :length => 37 %></td>
+                  <td><span><%= link_to 'Editar', edit_user_oauth_client_path(@user, client) %></span> <span><%= link_to 'Excluir', user_oauth_client_path(@user, client), :confirm => "Você tem certeza?", :method => :delete, :class => "icon-close-gray_8_10 replacement close" %></span></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
+      </div>
+    </div>
+    <%= render :partial => "oauth_clients/breadcrumb", :locals => { :user => @user } %>
+  </div>
+</div>
+<div class="span3">
+  <%= render :partial => "users/right_sidebar",
+    :locals => { :user => @user } %>
+</div>

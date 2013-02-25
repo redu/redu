@@ -12,6 +12,7 @@ describe Plan do
   it { should belong_to :user }
   it { should have_many :invoices }
   it { should_not allow_mass_assignment_of :state }
+  it { should_not allow_mass_assignment_of :billable_audit }
   it { should validate_presence_of :price }
   it { should validate_presence_of :user }
 

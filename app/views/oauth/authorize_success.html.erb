@@ -1,4 +1,26 @@
-<h1>Você autorizou essa aplicação com sucesso.</h1>
-<br/><br/>
-<h2>Insira o código de verificação (PIN) abaixo na sua aplicação:</h2>
-<span style="font-size:48px"><%= @token.verifier || @token.token %></span>
+<% content_for(:container_class) { "container-fluid" } %>
+<% content_for(:nav_global, "&nbsp;".html_safe) %>
+<% content_for(:chat_script, "&nbsp;".html_safe) %>
+<% content_for(:olark_script, "&nbsp;".html_safe) %>
+
+<div class="content-area authorize-app">
+  <%= render :partial => "oauth_clients/breadcrumb", :locals => { :user => @user } %>
+  <div class="content-body">
+    <div class="content-section">
+      <ul class="header-breadcrumb">
+        <li class="header-breadcrumb-item">
+          <%= link_to "Aplicativos", user_oauth_clients_path(@user),
+            :class => "header-bradcrumb-link icon-app-gray_32_34-before", :title => "Seus aplicativos" %>
+        </li>
+        <li class="header-breadcrumb-item">
+          <%= link_to "Autorização", "#", :class => "header-bradcrumb-link", :title => "Meus Aplicativos" %>
+        </li>
+      </ul>
+    </div>
+    <div class="content-section">
+      <h3>Você autorizou essa aplicação com sucesso.</h3>
+      <p class="authorization-disclaimer">Insira este código de verificação (PIN) na sua aplicação: <code class="pin-code"><%= @token.verifier || @token.token %></code></p>
+    </div>
+  </div>
+  <%= render :partial => "oauth_clients/breadcrumb", :locals => { :user => @user } %>
+</div>

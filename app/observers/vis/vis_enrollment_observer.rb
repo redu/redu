@@ -1,5 +1,6 @@
-class EnrollmentObserver < ActiveRecord::Observer
+class VisEnrollmentObserver < ActiveRecord::Observer
   include EnrollmentVisNotification
+  observe :enrollment
 
   def before_update(enrollment)
     if enrollment.graduated? and enrollment.grade_changed?

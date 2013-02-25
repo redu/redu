@@ -740,3 +740,62 @@ ul.requisitions .actions input:last-child {
   background: linear-gradient(top, #ffffff 0%, #dbeff7 97%);
   /* W3C */
 }
+
+.my-apps-list .close {
+  float: right;
+  margin-top: 4px;
+}
+
+.my-app-tabs .tabs .tab .tab-title.tab-title-without-icon {
+  min-width: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.my-app-tabs .tab-buttons .tab-button.tab-button-without-icon {
+  padding-right: 9px;
+}
+
+.my-app .my-app-name {
+  margin-bottom: 20px;
+}
+.my-app .my-app-infos {
+  list-style: none;
+}
+.my-app .my-app-actions .button-primary {
+  margin-left: 2px;
+}
+
+.new-app .new-app-actions,
+.my-app .my-app-actions {
+  float: right;
+  margin-top: 20px;
+}
+
+.new-app .new-app-form,
+.my-app .my-app-edit-form {
+  overflow: hidden;
+}
+
+.container-fluid {
+  width: 90%;
+  max-width: 360px;
+}
+.container-fluid .authorize-app .authorization-disclaimer {
+  padding-top: 20px;
+}
+.container-fluid .authorize-app .authorization-question {
+  padding: 10px 0;
+}
+.container-fluid .authorize-app .positive-authorization-form {
+  float: left;
+  margin-right: 10px;
+}
+.container-fluid .authorize-app .app-name {
+  display: inline;
+}
+.container-fluid .authorize-app .pin-code {
+  display: block;
+  text-align: center;
+  font-size: 20px;
+  margin-top: 10px;
+}

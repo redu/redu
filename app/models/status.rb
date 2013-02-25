@@ -19,7 +19,7 @@ class Status < ActiveRecord::Base
   scope :activity_by_user, lambda { |u|
     where("type = ? AND user_id = ?", "Activity", u) }
   scope :helps_and_activities, where("type = ? OR type = ?", "Help", "Activity")
-  scope :by_statusable, lambda { |kind, id| where("statusable_id IN (?) AND statusable_type = ?", id, kind) }
+  scope :by_statusable, lambda { |kind, id| where("statusable_id IN (?) AND statusable_type = ?", id, kind.to_s) }
   scope :by_day, lambda { |day| where(:created_at =>(day..(day+1))) }
   scope :by_id, lambda { |id| where(:id =>id) }
   scope :not_compound_log, where("statuses.type NOT LIKE ?", "CompoundLog")

@@ -8,12 +8,10 @@ module LectureRepresenter
   property :view_count
   property :type
   property :rate_average, :from => :rating
-  property :lectureable, :extend => CanvasRepresenter
   property :created_at
   property :updated_at
 
   def type
-    return "Canvas" if self.lectureable_type == "Api::Canvas"
     self.lectureable_type.to_s
   end
 

@@ -1,20 +1,26 @@
 class OauthClientsController < BaseController
-  before_filter :login_required
-  before_filter :get_client_application, :only => [:show, :edit, :update, :destroy]
+  layout 'new_application'
 
   def index
-    @client_applications = current_user.client_applications
-    @tokens = current_user.tokens.find :all, :conditions => 'oauth_tokens.invalidated_at is null and oauth_tokens.authorized_at is not null'
+    @user = User.find(params[:user_id])
+    authorize! :manage, @user
+    @client_applications = @user.client_applications
   end
 
   def new
+    @user = User.find_by_login(params[:user_id]) || current_user
+    authorize! :manage, @user
     @client_application = ClientApplication.new
   end
 
   def create
-    @client_application = current_user.client_applications.build(params[:client_application])
+    @user = User.find(params[:user_id])
+    @client_application = \
+      @user.client_applications.build(params[:client_application])
+    authorize! :manage, @client_application
+
     if @client_application.save
-      flash[:notice] = "Registered the information successfully"
+      flash[:notice] = "O aplicativo foi criado."
       redirect_to :action => "show", :id => @client_application.id
     else
       render :action => "new"
@@ -22,8 +28,12 @@ class OauthClientsController < BaseController
   end
 
   def update
+    @user = User.find(params[:user_id])
+    @client_application = ClientApplication.find(params[:id])
+    authorize! :manage, @client_application
+
     if @client_application.update_attributes(params[:client_application])
-      flash[:notice] = "Updated the client information successfully"
+      flash[:notice] = "O aplicativo foi atualizado."
       redirect_to :action => "show", :id => @client_application.id
     else
       render :action => "edit"
@@ -31,20 +41,23 @@ class OauthClientsController < BaseController
   end
 
   def destroy
+    @client_application = ClientApplication.find(params[:id])
+    authorize! :manage, @client_application
+
     @client_application.destroy
-    flash[:notice] = "Destroyed the client application registration"
+    flash[:notice] = "O aplicativo foi removido."
     redirect_to :action => "index"
   end
 
-  private
-  def get_client_application
-    unless @client_application = current_user.client_applications.find(params[:id])
-      flash.now[:error] = "Wrong application id"
-      raise ActiveRecord::RecordNotFound
-    end
+  def show
+    @user = User.find(params[:user_id])
+    @client_application = @user.client_applications.find(params[:id])
+    authorize! :manage, @client_application
   end
 
-  def login_required
-    authorize! :manage, :client_applications
+  def edit
+    @user = User.find(params[:user_id])
+    @client_application = @user.client_applications.find(params[:id])
+    authorize! :manage, @client_application
   end
 end

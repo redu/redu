@@ -18,7 +18,8 @@ describe Document do
       @file = mock("attached_file",
                    :url => "http://test.com/path/to/somewhere",
                    :path => "/path/to/somewhere", :options => {})
-      @document = Document.new
+      @document = Document.new(:ipaper_id => 123456,
+                               :ipaper_access_key => "abcdef")
       @document.stub(:attachment) { @file }
       @document.stub('scribdable?') { true }
 
@@ -29,6 +30,11 @@ describe Document do
       values = {:ipaper_id => 'doc_id', :ipaper_access_key => 'access_key'}
       @document.should_receive(:update_attributes).with(values)
       @document.save
+    end
+
+    it "returns the document's url on scribd" do
+      @document.scribd_url.should == "http://www.scribd.com/embeds/123456/" \
+        "content?start_page=1&view_mode=list&access_key=abcdef"
     end
   end
 

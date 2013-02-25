@@ -16,7 +16,7 @@ class UserCourseAssociation < CourseEnrollment
     if not keyword.empty? and keyword.size > 3
       where("users.first_name LIKE :keyword " + \
         "OR users.last_name LIKE :keyword " + \
-        "OR users.login LIKE :keyword", {:keyword => "%#{keyword}%"}).
+        "OR users.login LIKE :keyword", {:keyword => "%#{keyword.to_s}%"}).
         includes(:user => [{:user_space_associations => :space}])
     end
   }

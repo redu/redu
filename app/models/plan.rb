@@ -14,7 +14,7 @@ class Plan < ActiveRecord::Base
 
   validates_presence_of :price, :user
 
-  attr_protected :state
+  attr_protected :state, :billable_audit
 
   aasm_column :state
   aasm_initial_state :active

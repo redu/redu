@@ -179,12 +179,15 @@ module Redu
 
     # Usado pelo simple-navigation (renderer customizado)
     config.autoload_paths << "#{config.root}/app/navigation_renderers"
+    config.autoload_paths << "#{config.root}/app/navigations" # arquivos de navegação dinâmica
 
     # Autoloads code in lib
     config.autoload_paths << "#{config.root}/lib"
+    config.autoload_paths << "#{config.root}/lib/vis"
 
     # Observers têm direito a um lar
     config.autoload_paths << "#{config.root}/app/observers"
+    config.autoload_paths << "#{config.root}/app/observers/vis"
 
     # Doorkeepers definem eventos que serão propagados no message bus
     config.autoload_paths << "#{config.root}/app/doorkeepers"
@@ -210,13 +213,9 @@ module Redu
                                         :status_observer,
                                         :education_observer,
                                         :experience_observer,
-                                        :enrollment_observer,
                                         :log_observer,
                                         :user_course_association_observer,
                                         :result_observer,
-                                        :vis_status_observer,
-                                        :vis_user_observer,
-                                        :vis_lecture_observer,
                                         :user_walledgarden_apps_observer,
                                         :user_environment_association_cache_observer,
                                         :friendship_cache_observer,
@@ -233,6 +232,10 @@ module Redu
                                         :solr_education_indexer_observer,
                                         :solr_hierarchy_indexer_observer,
                                         :solr_audience_indexer_observer,
+                                        :vis_enrollment_observer,
+                                        :vis_status_observer,
+                                        :vis_user_observer,
+                                        :vis_lecture_observer,
       ]
     end
 

@@ -54,6 +54,7 @@
   padding: 0;
   width: 70px;
   margin: 10px 0 0 0;
+  clear: both;
 }
 
 .user-data-recovery .concave-form .ui-placeholder {

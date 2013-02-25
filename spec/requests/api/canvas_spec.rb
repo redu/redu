@@ -1,6 +1,6 @@
 require 'api_spec_helper'
 
-describe "Lectures API" do
+describe "Canvas API" do
   before do
     environment = Factory(:complete_environment)
     course = environment.courses.first
@@ -24,6 +24,7 @@ describe "Lectures API" do
           base_params.merge({:lecture => {
             :name => "My Goku Lecture",
             :type => "Canvas",
+            :position => 0,
             :lectureable => { :client_application_id => client_app.id }
           }})
         end
@@ -91,8 +92,7 @@ describe "Lectures API" do
 
         it "should return the entity" do
           post "api/subjects/#{@subject.id}/lectures", params
-          parse(response.body)["lectureable"]["current_url"].
-            should == "http://google.com.br"
+          parse(response.body)["current_url"].should == "http://google.com.br"
         end
       end
     end

@@ -1,5 +1,29 @@
-<h1>Registre um novo aplicativo</h1>
-<%= form_for :client_application, :url => { :action => :create } do |f| %>
-   <%= render :partial => "form", :locals => { :f => f } %>
-   <%= submit_tag "Registrar" %>
-<% end %>
+<div class="span3">
+  <%= render :partial => "users/left_sidebar",
+    :locals => { :user => @user } %>
+</div>
+<div class="span10">
+  <div class="content-area">
+    <%= render :partial => "oauth_clients/breadcrumb", :locals => { :user => @user } %>
+    <div class="content-body">
+      <%= render :partial => 'oauth_clients/header_breadcrumb_new', :locals => { :user => @user } %>
+
+      <div class="my-app-tabs">
+        <%= new_tabs(:new_users) %>
+      </div>
+      <div class="content-section new-app">
+        <%= form_for @client_application, :url => user_oauth_clients_path(@user), :html => { :class => "new-app-form" } do |f| %>
+          <%= render :partial => "form", :locals => { :f => f } %>
+          <div class="new-app-actions">
+            <%= f.submit "Registrar", :class => "button-primary" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <%= render :partial => "oauth_clients/breadcrumb", :locals => { :user => @user } %>
+  </div>
+</div>
+<div class="span3">
+  <%= render :partial => "users/right_sidebar",
+    :locals => { :user => @user } %>
+</div>

@@ -11,7 +11,7 @@ describe ExerciseVisNotification do
   context "-Result- after update" do
 
     context "when 'finalized' is set" do
-      it "should send a 'exercise_finalized' notification" do
+      xit "should send a 'exercise_finalized' notification" do
         result = nil
         WebMock.disable_net_connect!
         ActiveRecord::Observer.with_observers(:result_observer) do
@@ -42,7 +42,7 @@ describe ExerciseVisNotification do
   end
 
   context "-Lecture- after destroy" do
-    it "when is an Exercise should send a 'remove_exercise_finalized' notification" do
+    xit "when is an Exercise should send a 'remove_exercise_finalized' notification" do
       result = @exercise.finalize_for(@user)
       params = fill_params(@exercise, result, true)
 

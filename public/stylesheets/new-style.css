@@ -317,6 +317,11 @@ body {
   margin: 5px 5px 0 0;
 }
 
+#content .sidebar .connections .connection,
+#content .concave-sidebar .connections .connection {
+  width: 130px;
+}
+
 #content .sidebar.space .connections li {
   margin-left: 15px;
 }
@@ -334,6 +339,7 @@ body {
 #content .sidebar.space .connections li .name {
   font-weight: bold;
   font-size: .87em;
+  width: 97px;
 }
 
 #content .sidebar .more {
@@ -1783,7 +1789,7 @@ body {
 
 #space-subjects .hierarchy-listing .child .lectures > li .new {
   background: none;
-  margin-right: 13px;
+  margin-right: 12px;
   margin-top: 7px;
 }
 
@@ -6545,7 +6551,7 @@ div.token-input-dropdown {
   float: right;
 }
 
-.home-sidebar .contact-recommendations ul li div.two-columns-column .members-to-add-link {  
+.home-sidebar .contact-recommendations ul li div.two-columns-column .members-to-add-link {
   display: block;
   margin-top: 5px;
 }

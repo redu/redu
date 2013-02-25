@@ -4,7 +4,7 @@ module StatusVisNotification
   def send_to_vis(status, destroy_status = false)
     unless status.type == "Log"
       params = build_hash_to_vis(status, destroy_status)
-      send_async_info(params, Redu::Application.config.vis_client[:url])
+      #send_async_info(params, Redu::Application.config.vis_client[:url])
     end
   end
 
