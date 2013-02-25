@@ -1,11 +1,16 @@
 $(function(){
   $.fn.searchTokenInput = function(url) {
+    $this = $(this)
+
     $(this).tokenInput(
       url + "?format=json", {
         crossDomain: false,
         hintText: "Faça sua busca",
         noResultsText: "Sem resultados",
         searchingText: "Buscando...",
+        onAdd: function (item) {
+        // TODO FUnção quando o usuário selecionar opção do tokenInput
+        }
     });
   }
 
