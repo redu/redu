@@ -1182,29 +1182,6 @@ $(function() {
       $(this).parents('.' + settings.controlGroupClass).toggleClass(settings.controlFocusedClass)
     },
 
-    // Adiciona/remove uma classe ao rótulo do checkbox/radio quando está selecionado/desmarcado.
-    darkLabel: function(options) {
-      var settings = $.extend({
-        // Classe adicionada quando o controle está marcado.
-        controlCheckedClass: 'control-checked'
-        // Classe que identifica um radio button.
-      , radioClass: 'radio'
-      , darkenLabel: function(label) {
-          label.toggleClass(settings.controlCheckedClass)
-          label.siblings('.' + settings.radioClass).removeClass(settings.controlCheckedClass)
-        }
-      }, options)
-
-      return this.each(function() {
-        var control = $(this)
-          , label = control.parent()
-
-        if (control.prop('checked')) { label.addClass(settings.controlCheckedClass) }
-
-        control.on('change', function() { settings.darkenLabel(label) })
-      })
-    },
-
     // Ajusta a altura do textarea de acordo com seu atributo rows.
     resizeByRows: function(options) {
       return this.each(function() {
@@ -1282,6 +1259,24 @@ $(function() {
       })
     },
 
+    // Encontra o label correspondente de um checkbox/radio.
+    findLabel: function($control) {
+      // Primeiro tenta o label que encapsula o controle.
+      var $label = $control.closest('label')
+        , controlId = $control.attr('id')
+
+      // Depois tenta achar o label se ele estiver ligado por controle[id] e label[for].
+      if (typeof controlId !== 'undefined') {
+        var $possibleLabel = $('label[for="' + controlId + '"]')
+
+        if ($possibleLabel.length === 1) {
+          $label = $possibleLabel
+        }
+      }
+
+      return $label
+    },
+
     init: function() {}
   }
 
@@ -1304,7 +1299,50 @@ $(function() {
     $(this).reduForm('toggleFocusLabel')
   })
 
-  $('input[type="radio"], input[type="checkbox"]').reduForm('darkLabel')
+
+  // Comportamento de escurer texto do checkbox/radio selecionado.
+
+  var reduFormRadioCheckboxSettings = {
+    // Classe adicionada quando o controle está marcado.
+    controlCheckedClass: 'control-checked'
+  }
+
+  $(document).on('change', 'input:radio, input:checkbox', function(e) {
+    var $control = $(this)
+      , $label = $.fn.reduForm('findLabel', $control)
+
+    if ($label.length > 0) {
+      $label.toggleClass(reduFormRadioCheckboxSettings.controlCheckedClass)
+
+      // Se for um radio.
+      if ($control.is('input:radio')) {
+        // Procura o label dos outros radios para remover a classe.
+        var $form = $control.closest('form')
+          , controlName = $control.attr('name')
+          , $otherControls = $form.find('[name="' + controlName + '"]:radio').filter(function(index) {
+              return this !== $control[0]
+            })
+
+        $otherControls.each(function() {
+          var $control = $(this)
+            , $label = $.fn.reduForm('findLabel', $control)
+
+          $label.removeClass(reduFormRadioCheckboxSettings.controlCheckedClass)
+        })
+      }
+    }
+  })
+
+  // Caso de refresh da página o checkbox/radio marcado.
+  $('input:radio, input:checkbox').each(function() {
+    var $control = $(this)
+      , $label = $.fn.reduForm('findLabel', $control)
+
+    if ($control.prop('checked')) {
+      $label.addClass(reduFormRadioCheckboxSettings.controlCheckedClass)
+    }
+  })
+
 
   // No elemento de opção com texto e formulários de busca, quando o campo ou
   // área de texto estiverem selecionados, mudar a cor da borda e os ícones dos
@@ -2099,6 +2137,7 @@ $(function() {
       $(this).reduSpinners('ajaxComplete')
     })
 })
+
 !function ($) {
 
   "use strict"; // jshint ;_;
