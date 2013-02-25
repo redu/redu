@@ -12,7 +12,8 @@ class SpaceSearch < Search
     # Busca por Spaces não terá paginação automatica pois o resultado
     # será filtrado posteriormente
     search_object = searcher.search({ :query => query, :page => nil,
-                                      :per_page => nil, :include => includes })
+                                      :per_page => nil, :include => includes,
+                                      :order => :desc })
   end
 
   # Filtra somente os spaces que o usuário tem acesso

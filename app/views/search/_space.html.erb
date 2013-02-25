@@ -30,7 +30,9 @@
           :class => "general-list-item-title-link",
           :title => space.course.name %>
       </h5>
-      <span class="legend">Criado por <%= link_to space.course.owner.try(:display_name), user_path(space.course.owner) %></span>
+      <% unless space.course.owner.nil? %>
+        <span class="legend">Criado por <%= link_to space.course.owner.try(:display_name), user_path(space.course.owner) %></span>
+      <% end %>
     </div>
   </div>
   <ul class="space-information">

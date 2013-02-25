@@ -11,9 +11,10 @@ class Search
     @klass = model
   end
 
-  def search(opts)
+  def search(opts = { :order => :asc })
     klass.send("search", { :include => opts[:include] }) do
       fulltext opts[:query]
+      order_by :score, opts[:order]
       paginate :page => opts[:page], :per_page => opts[:per_page]
     end
   end
