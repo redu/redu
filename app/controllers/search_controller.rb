@@ -19,12 +19,7 @@ class SearchController < BaseController
     respond_to do |format|
       format.html # search/index.html.erb
       format.json do
-        @all = Array.new
-        @all << JSON.parse(make_representable(@profiles).to_json) unless @profiles.empty?
-        @all << JSON.parse(make_representable(@environments).to_json) unless @environments.empty?
-        @all << JSON.parse(make_representable(@courses).to_json) unless @courses.empty?
-        @all << JSON.parse(make_representable(@spaces).to_json) unless @spaces.empty?
-        @all.flatten!
+        @all = make_representable([@profiles, @environments, @courses, @spaces])
         render :json => @all
       end
     end
@@ -39,7 +34,7 @@ class SearchController < BaseController
     respond_to do |format|
       format.html # search/profiles.html.erb
       format.json do
-        render :json => make_representable(@profiles)
+        render :json => make_representable([@profiles])
       end
     end
   end
@@ -71,11 +66,7 @@ class SearchController < BaseController
     respond_to do |format|
       format.html # search/environments.html.erb
       format.json do
-        @all = []
-        @all << JSON.parse(make_representable(@environments).to_json) unless @environments.empty?
-        @all << JSON.parse(make_representable(@courses).to_json) unless @courses.empty?
-        @all << JSON.parse(make_representable(@spaces).to_json) unless @spaces.empty?
-        @all.flatten!
+        @all = make_representable([@environments, @courses, @spaces])
         render :json => @all
       end
     end
@@ -90,7 +81,7 @@ class SearchController < BaseController
 
     respond_to do |format|
       format.html # search/environments_only.html.erb
-      format.json { render :json => make_representable(@environments) }
+      format.json { render :json => make_representable([@environments]) }
     end
   end
 
@@ -103,7 +94,7 @@ class SearchController < BaseController
 
     respond_to do |format|
       format.html # search/courses_only.html.erb
-      format.json { render :json => make_representable(@courses) }
+      format.json { render :json => make_representable([@courses]) }
     end
   end
 
@@ -116,14 +107,29 @@ class SearchController < BaseController
 
     respond_to do |format|
       format.html # search/spaces_only.html.erb
-      format.json { render :json => make_representable(@spaces) }
+      format.json { render :json => make_representable([@spaces]) }
     end
   end
 
   private
 
-  def make_representable(collection)
-    collection.extend(InstantSearch::CollectionRepresenter)
+  # Faz a representação da busca em formato JSON
+  # Recebe uma coleção de tipos de resultados
+  def make_representable(collections)
+    all = Array.new
+
+    # Para cada tipo de resultado aplica o representer, transforma em JSON
+    # e devolve apenas os values do Hash segundo o formato que o tokeninput recebe na view
+    collections.each do |collection|
+      unless collection.empty?
+        representer = collection.extend(InstantSearch::CollectionRepresenter)
+        itens = JSON.parse(representer.to_json)
+
+        all << itens.values
+      end
+    end
+
+    all.flatten!
   end
 
   def authorize
