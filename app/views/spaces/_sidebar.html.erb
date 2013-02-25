@@ -6,7 +6,7 @@
     <% end %>
     <span class="space icons-big icon-space-white_64_64 replacement"><%=  space.name %></span>
   </div>
-  <%= local_nav %>
+  <%= local_nav :spaces %>
   <% teachers_count = space.teachers.count %>
   <% unless teachers_count == 0 %>
     <span class="call icon-teacher-gray_16_18-before">Professores: <%= link_to teachers_count, space_users_path(space, :role => :teachers), :class => "count" %></span>
