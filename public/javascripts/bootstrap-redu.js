@@ -1382,6 +1382,15 @@ $(function() {
           .addClass(iconClasses.replace('lightblue', 'gray'))
       })
     })
+    .on('change', '.form-search-filters input:radio', function(e) {
+      var $radio = $(this)
+        , $legendIcon = $radio.siblings('.legend')
+        , newIconClass = findIconClasses($legendIcon.attr('class'))
+        , $buttonIcon = $radio.closest('.form-search-filters').find('.form-search-filters-button .control-search-icon')
+        , currentIconClass = findIconClasses($buttonIcon.attr('class'))
+
+      $buttonIcon.removeClass(currentIconClass).addClass(newIconClass.replace('-before', ''))
+    })
 
   $('textarea[rows]').reduForm('resizeByRows')
 
