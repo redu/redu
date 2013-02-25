@@ -232,6 +232,48 @@ describe User do
           u.should_not be_valid
           u.errors[:login].should_not be_empty
         end
+
+        it "should not be valid when login has only numbers" do
+          u = Factory.build(:user, :login => "123456")
+          u.should_not be_valid
+          u.errors[:login].should_not be_empty
+        end
+
+        it "should not be valid when login has only underlines or hyphen" do
+          u = Factory.build(:user, :login => "_-_-_-_-")
+          u.should_not be_valid
+          u.errors[:login].should_not be_empty
+        end
+
+        it "should be valid when login has numbers in the begin" do
+          u = Factory.build(:user, :login => "123mylogin")
+          u.should be_valid
+        end
+
+        it "should be valid when login has numbers in the end" do
+          u = Factory.build(:user, :login => "mylogin123")
+          u.should be_valid
+        end
+
+        it "should be valid when login has numbers in the middle" do
+          u = Factory.build(:user, :login => "my123login")
+          u.should be_valid
+        end
+
+        it "should be valid when login has only letters" do
+          u = Factory.build(:user, :login => "mylogin")
+          u.should be_valid
+        end
+
+        it "should be valid when login has underline mixed with letters" do
+          u = Factory.build(:user, :login => "my_login")
+          u.should be_valid
+        end
+
+        it "should be valid when login has hyphen mixed with letters" do
+          u = Factory.build(:user, :login => "my-login")
+          u.should be_valid
+        end
       end
     end
 

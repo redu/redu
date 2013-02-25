@@ -157,7 +157,7 @@ class User < ActiveRecord::Base
     :if => :password_required?
   validates :login,
     :exclusion => { :in => Redu::Application.config.extras["reserved_logins"] },
-    :format => { :with => /^[A-Za-z0-9_-]+$/ },
+    :format => { :with => /^[A-Za-z0-9_-]*[A-Za-z]+[A-Za-z0-9_-]*$/ },
     :length => { :minimum => 6, :maximum => 20 }
   validates_uniqueness_of :login, :case_sensitive => false
   validates :email,
