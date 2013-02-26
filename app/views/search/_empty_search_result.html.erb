@@ -4,10 +4,7 @@
   Variáveis:
     query: o termo pesquisado.
 %>
-<div class="search-results empty">
-  <%# TODO: Ajeitar a imagem. %>
-  <%= image_tag "", :size => "128x130",
-    :title => "Nenhum resultado encontrado",
-    :alt => "Nenhum resultado encontrado" %>
-  <p>Sentimos muito, mas não achamos resultado para "<strong><%= query %></strong>". Tente outro termo.</p>
+<div class="search-empty-result">
+  <span class="search-empty-result-icon icon-search-empty_128_130 text-replacement" title="Nenhum resultado encontrado">Nenhum resultado encontrado</span>
+  <p class="search-empty-result-message">Sentimos muito, mas não achamos resultado para "<strong><%= query %></strong>". Tente outro termo.</p>
 </div>

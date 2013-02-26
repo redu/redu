@@ -2,12 +2,11 @@
   Área de cabeçalho das páginas de busca.
 %>
 <div class="search-title-header">
-    <%# TODO (ui-components): Corrigir ícone. %>
-    <h2 class="search-title icon-apps-portal-gray_48_50-before link-container pull-left">
-      <%= link_to "Busca por Ambientes e Perfis", search_path,
-        :class => "search-title-link link-target",
-        :title => "Busca por Ambientes e Perfis" %>
-    </h2>
+  <h2 class="portal-title icon-search-gray_48_50-before pull-left">
+    <%= link_to "Busca por Ambientes e Perfis", search_path,
+      :class => "portal-title-link",
+      :title => "Busca por Ambientes e Perfis" %>
+  </h2>
   <div id="search-breadcrumb" class="breadcrumb-mini-wrapper">
     <%# TODO: A ser substituído pelo simple_navigation depois. %>
     <%= render :partial => "breadcrumb_mini" %>
