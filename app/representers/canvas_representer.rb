@@ -1,21 +1,25 @@
 module CanvasRepresenter
   include Roar::Representer::JSON
+  include Roar::Representer::Feature::Hypermedia
   include LectureRepresenter
 
-  property :lectureable_client_application, :from => :client_application,
-    :extend => ClientApplicationRepresenter
-  property :lecturable_current_url, :from => :current_url
   property :type
+  property :mimetype
+  property :current_url
 
   def type
     'Canvas'
   end
 
-  def lecturable_current_url
+  def mimetype
+    "application/x-canvas"
+  end
+
+  def current_url
     self.lectureable.current_url
   end
 
-  def lectureable_client_application
-    self.lectureable.client_application
+  link :raw do
+    self.lectureable.current_url
   end
 end
