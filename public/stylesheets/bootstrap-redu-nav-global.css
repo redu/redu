@@ -96,7 +96,7 @@ a:hover {
 
 .button-dropdown-arrow {
   float: right;
-  margin-top: 5px;
+  margin-top: 4px;
 }
 
 .button-group .dropdown-toggle:active,
@@ -336,13 +336,16 @@ a:hover {
 }
 
 .nav-global-buttons-dropdown {
-  margin: 5px 0 0;
+  margin: 4px 0 0;
   float: right;
 }
 
 .nav-global-button-dropdown {
+  padding: 6px 5px 6px 7px;
   margin: 0;
-  padding: 5px 5px 5px 10px;
+}
+.nav-global-button-dropdown:before {
+  float: left;
 }
 
 .nav-global-notify-dropdown {
