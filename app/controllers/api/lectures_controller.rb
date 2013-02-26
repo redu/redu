@@ -56,12 +56,11 @@ module Api
     def create_lectureable(lecture_attrs)
       case lecture_attrs[:type].try(:downcase)
       when "canvas"
-        c_app_id = lecture_attrs[:lectureable][:client_application_id]
         attrs = {
           :user_id => current_user.id,
-          :client_application_id => c_app_id,
+          :client_application_id => current_access_token.client_application_id,
         }
-        if url = lecture_attrs[:lectureable][:current_url]
+        if url = lecture_attrs[:current_url]
           attrs.merge!({:url => url})
         end
 
