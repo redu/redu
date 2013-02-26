@@ -1,8 +1,4 @@
 class EnvironmentsController < BaseController
-  before_filter :set_nav_global_context, :only=> [:show, :preview]
-  before_filter :set_nav_global_context_admin, :except => [:show, :preview,
-                                                           :index, :create]
-
   load_and_authorize_resource :except => :index, :find_by => :path
 
   rescue_from CanCan::AccessDenied do |exception|
@@ -277,15 +273,5 @@ class EnvironmentsController < BaseController
                          :partial_locals => { :user => @user } })
       end
     end
-  end
-
-  protected
-
-  def set_nav_global_context_admin
-    content_for :nav_global_context, "environments_admin"
-  end
-
-  def set_nav_global_context
-    content_for :nav_global_context, "environments"
   end
 end

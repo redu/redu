@@ -3,6 +3,7 @@ module MyfileRepresenter
   include Roar::Representer::Feature::Hypermedia
   include ActionView::Helpers::NumberHelper
 
+  property :id
   property :name
   property :mimetype
   property :size

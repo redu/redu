@@ -4,30 +4,29 @@ require 'md5'
 module BaseHelper
 
   # Cria markup da navegação global a partir da navegação do contexto passado
-  # Context default: :users
-  def global_nav(context)
-    nav_context = context.blank? ? :users : context
-    render_navigation(:context => nav_context, :level => 1,
-                      :renderer => :links)
+  # Context default: :global (Só renderiza a navegação global)
+  def global_nav(context=:global)
+    render_dynamic_navigation(:context => context, :level => 1,
+                              :renderer => :links)
   end
 
   # Cria markup da navegação local a partir da navegação do contexto passado
   def local_nav(context)
-    render_navigation(:context => context, :level => 2,
-                      :renderer => ListSidebar)
+    render_dynamic_navigation(:context => context, :level => 2,
+                              :renderer => ListSidebar)
   end
 
   # Cria markup da navegação local a partir da navegação do contexto passado
   def new_local_nav(context)
-    render_navigation(:context => context, :level => 2,
-                      :renderer => NewListSidebar)
+    render_dynamic_navigation(:context => context, :level => 2,
+                              :renderer => NewListSidebar)
   end
 
   # Cria markup das big abas
   def big_tabs(context, opts={}, &block)
     locals = {
-      :navigation => render_navigation(:context => context, :level => 3,
-                                       :renderer => ListDetailed),
+      :navigation => render_dynamic_navigation(:context => context, :level => 3,
+                                               :renderer => ListDetailed),
       :options => opts,
       :body => capture(&block)
     }
@@ -39,8 +38,8 @@ module BaseHelper
   # do contexto passado
   def tabs(context, opts={}, &block)
     locals = {
-      :navigation => render_navigation(:context => context, :level => 3,
-                                       :renderer => ListDetailed),
+      :navigation => render_dynamic_navigation(:context => context, :level => 3,
+                                               :renderer => ListDetailed),
       :options => opts,
       :body => capture(&block)
     }
@@ -50,15 +49,15 @@ module BaseHelper
 
   # Cria markup das abas a partir da navegação do contexto passado
   def new_tabs(context)
-    render_navigation(:context => context, :level => 3,
-                      :renderer => ListDetailed)
+    render_dynamic_navigation(:context => context, :level => 3,
+                              :renderer => ListDetailed)
   end
 
   # Cria markup das sub abas (compatível com jQuery UI) a partir da navegação
   # do contexto passado
   def subtabs(context, opts={}, &block)
     locals = {
-      :navigation => render_navigation(:context => context, :level => 4),
+      :navigation => render_dynamic_navigation(:context => context, :level => 4),
       :options => opts,
       :body => capture(&block)
     }
@@ -68,7 +67,7 @@ module BaseHelper
 
   # Cria markup das sub abas a partir da navegação do contexto passado
   def new_subtabs(context)
-    render_navigation(:context => context, :level => 4, :renderer => :links)
+    render_dynamic_navigation(:context => context, :level => 4, :renderer => :links)
   end
 
   def error_for(object, method = nil, options={})

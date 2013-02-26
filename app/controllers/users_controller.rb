@@ -1,8 +1,6 @@
 class UsersController < BaseController
   respond_to :html, :js
 
-  before_filter :set_nav_global_context, :except => [:index]
-
   load_and_authorize_resource :except => [:recover_username_password,
     :recover_username, :recover_password, :resend_activation, :activate,
     :index],
@@ -425,9 +423,5 @@ class UsersController < BaseController
     else
       super
     end
-  end
-
-  def set_nav_global_context
-    content_for :nav_global_context, "users"
   end
 end

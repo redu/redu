@@ -39,7 +39,7 @@ describe "Folders API" do
         response.code.should == "200"
       end
 
-      %w(name date_modified).each do |property|
+      %w(name date_modified id).each do |property|
         it "should have property #{property}" do
           parse(response.body).should have_key property
         end
