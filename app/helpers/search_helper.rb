@@ -52,7 +52,7 @@ module SearchHelper
 
   # Verifica se a página atual é uma página individual de busca.
   def individual_search_page?
-    current_page?(search_profiles_path) or (!params[:f].nil? and (params[:f].include? "ambientes" or params[:f].include? "cursos" or params[:f].include? "disciplinas"))
+    current_page?(search_profiles_path) or (params[:f].size == 1 if params[:f])
   end
 
   # Define se o link "Veja todos os resultados" deve ser mostrado.

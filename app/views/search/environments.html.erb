@@ -11,16 +11,20 @@
             :locals => { :query => @query,
                          :total_results => @total_results } %>
             <%= subtabs :search, { :renderer => :links } do %>
-            <%= render :partial => "environment_list",
-              :locals => { :environments => @environments,
-                           :query => @query } %>
-            <%= render :partial => "course_list",
-              :locals => { :courses => @courses,
-                           :query => @query } %>
-            <%= render :partial => "space_list",
-              :locals => { :spaces => @spaces,
-                           :query => @query } %>
+              <%= render :partial => "environment_list",
+                :locals => { :environments => @environments,
+                             :query => @query } %>
+              <%= render :partial => "course_list",
+                :locals => { :courses => @courses,
+                             :query => @query } %>
+              <%= render :partial => "space_list",
+                :locals => { :spaces => @spaces,
+                             :query => @query } %>
           </div>
+          <% if individual_search_page? %>
+            <%= paginate @entity_paginate, :theme => "numbers",
+              :outer_window => 1, :inner_window => 4  %>
+          <% end %>
         <% end %>
       <%# Nenhum resultado encontrado. %>
       <% else %>

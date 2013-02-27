@@ -17,22 +17,7 @@ Redu::Application.routes.draw do
 
   match '/search' => 'search#index', :as => :search
   # Rota para todos os ambientes em geral e quando houver mais de um filtro selecionado
-  match '/search/environments' => 'search#environments',
-    :as => :search_environments, :constraints => Proc.new { |request|
-      request.query_parameters["f"].nil? || (request.query_parameters["f"].size > 1)
-    }
-  match '/search/environments' => 'search#environments_only', :via => :get,
-    :as => :search_environments_only, :constraints => Proc.new { |request|
-      request.query_parameters["f"].include? "ambientes"
-    }
-  match '/search/environments' => 'search#courses_only', :via => :get,
-    :as => :search_courses_only, :constraints => Proc.new { |request|
-      request.query_parameters["f"].include? "cursos"
-    }
-  match '/search/environments' => 'search#spaces_only', :via => :get,
-    :as => :search_spaces_only, :constraints => Proc.new { |request|
-      request.query_parameters["f"].include? "disciplinas"
-    }
+  match '/search/environments' => 'search#environments', :as => :search_environments
   match '/search/profiles' => 'search#profiles', :as => :search_profiles
 
   post "presence/auth"

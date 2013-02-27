@@ -10,7 +10,8 @@
     <li class="title-result">
       <span class="title-result-name icon-environment-gray_32_34-before">Ambientes: <%= search_results_counter(environments) %></span>
       <% if show_see_all_results_link?(environments.total_count) %>
-        <%= link_to "Veja todos os resultados", search_environments_only_path(:q => query, :f => ["ambientes"], :total_results => environments.total_count),
+        <%= link_to "Veja todos os resultados",
+          search_environments_path(:q => query, :f => ["ambientes"]),
           :title => "Veja todos os resultados de ambientes" %>
       <% end %>
     </li>

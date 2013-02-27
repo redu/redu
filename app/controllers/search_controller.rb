@@ -40,74 +40,59 @@ class SearchController < BaseController
   end
 
   # Busca por Ambientes (AVA's, Cursos e Disciplinas)
+  # Esta action recebe filtros para mostrar resultados desejados
+  #
+  # Se a action receber apenas um filtro o resultado é mostrado em
+  # uma página individual, com paginação e a quantidade por página diferentes
   def environments
-    @environments = []
-    @courses = []
-    @spaces = []
+    # Cria arrays com o Kaminari
+    @environments = Kaminari.paginate_array([])
+    @courses = Kaminari.paginate_array([])
+    @spaces = Kaminari.paginate_array([])
 
+    # Atributos defaults para páginnas que não são individuais
+    # Define filters a partir do params[:f], preview setado para true,
+    # e página indiviual é false
+    filters = params[:f] ? params[:f] : {}
+    preview = true
+    @individual_page = false
+
+    # Se existe apenas um filtro, a página é individual
+    if filters.size == 1
+      preview = false
+      @individual_page = true
+    end
+
+    # Verifica quais filtros estão ativos e realia a busca dos modelos correspondentes
     if has_filter?("ambientes")
-      @environments = perform_results(EnvironmentSearch, :preview => true)
+      @environments = perform_results(EnvironmentSearch, :preview => preview)
     end
     if has_filter?("cursos")
-      @courses = perform_results(CourseSearch, :preview => true)
+      @courses = perform_results(CourseSearch, :preview => preview)
     end
     if has_filter?("disciplinas")
-      @spaces = perform_results(SpaceSearch, :preview => true,
+      @spaces = perform_results(SpaceSearch, :preview => preview,
                                 :space_search => true)
     end
 
-    # Por conta da paginação a quantidade total de resultados de spaces
-    # é dado pelo método 'total_count'
-    @total_results = [@environments.total_count, @courses.total_count,
-                      @spaces.total_count].sum
+    # Array com os resultados
+    results = [@environments, @courses, @spaces]
 
+    # Se página é individual é definida a entidade que será paginada
+    # Este método não é feito antes pois precisa que a busca já tenha sido avaliada.
+    if !preview
+      @entity_paginate = results.select{ |entity| entity.size > 1 }.first
+    end
+
+    @total_results = results.map{ |entity| entity.total_count }.sum
     @query = params[:q]
 
     respond_to do |format|
       format.html # search/environments.html.erb
       format.json do
-        @all = make_representable([@environments, @courses, @spaces])
+        @all = make_representable(results)
         render :json => @all
       end
-    end
-  end
-
-  # GET /busca/ambientes?f[]=ambientes
-  # Busca por Ambientes (Somente AVA's)
-  def environments_only
-    @environments = perform_results(EnvironmentSearch)
-    @total_results = params[:total_results].to_i
-    @query = params[:q]
-
-    respond_to do |format|
-      format.html # search/environments_only.html.erb
-      format.json { render :json => make_representable([@environments]) }
-    end
-  end
-
-  # GET /busca/ambientes?f[]=cursos
-  # Busca por Cursos
-  def courses_only
-    @courses = perform_results(CourseSearch)
-    @total_results = params[:total_results].to_i
-    @query = params[:q]
-
-    respond_to do |format|
-      format.html # search/courses_only.html.erb
-      format.json { render :json => make_representable([@courses]) }
-    end
-  end
-
-  # GET /busca/ambientes?f[]=disciplinas
-  # Busca por Disciplinas
-  def spaces_only
-    @spaces = perform_results(SpaceSearch, :space_search => true)
-    @total_results = params[:total_results].to_i
-    @query = params[:q]
-
-    respond_to do |format|
-      format.html # search/spaces_only.html.erb
-      format.json { render :json => make_representable([@spaces]) }
     end
   end
 

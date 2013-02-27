@@ -15,11 +15,11 @@ module SearchNavigation
           subtabs.dom_class = 'search-filter'
           subtabs.selected_class = 'filter-active'
 
-          subtabs.item :environments, 'Ambientes', search_environments_only_path,
+          subtabs.item :environments, 'Ambientes', search_path,
             :class => 'filter icon-environment-lightblue_16_18-before'
-          subtabs.item :environments, 'Cursos', search_courses_only_path,
+          subtabs.item :environments, 'Cursos', search_path,
             :class => 'filter icon-course-lightblue_16_18-before'
-          subtabs.item :environments, 'Disciplinas', search_spaces_only_path,
+          subtabs.item :environments, 'Disciplinas', search_path,
             :class => 'filter icon-space-lightblue_16_18-before'
         end
       tabs.item :profiles, 'Perfil', search_profiles_path(:q => @query),
