@@ -11,8 +11,3 @@ Untied::Publisher.configure do |config|
   config.service_name = "core"
   config.doorkeeper = ::BaseDoorkeeper
 end
-
-# Verifica e reabre conexões com o MySQL caso elas tenham sido perdidas.
-Delayed::Worker.lifecycle.before(:invoke_job) do
-  ActiveRecord::Base.verify_active_connections!
-end
