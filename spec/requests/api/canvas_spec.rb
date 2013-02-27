@@ -52,4 +52,17 @@ describe 'Canvas API' do
       end
     end
   end
+
+  context "GET /api/spaces/:space_id/canvas" do
+    it "should return the correct canvas representations" do
+      canvas = 3.times.collect do
+        Factory(:canvas, :container => space, :user => space.owner)
+      end
+
+      get "api/spaces/#{space.id}/canvas", params
+
+      parse(response.body).collect { |r| r["id"] }.
+        to_set.should == canvas.collect(&:id).to_set
+    end
+  end
 end

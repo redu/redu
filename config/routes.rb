@@ -298,7 +298,7 @@ Redu::Application.routes.draw do
         get 'timeline', :on => :collection
       end
       resources :folders, :only => :index
-      resources :canvas, :only => :create
+      resources :canvas, :only => [:create, :index]
     end
 
     resources :subjects, :except => [:new, :edit, :index, :create] do
