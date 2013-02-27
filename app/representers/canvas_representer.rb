@@ -5,6 +5,11 @@ module CanvasRepresenter
 
   property :mimetype
   property :current_url
+  property :lectureable_container_type, :from => :container_type
+
+  def lectureable_container_type
+    self.lectureable.container_type
+  end
 
   def type
     'Canvas'
@@ -20,5 +25,9 @@ module CanvasRepresenter
 
   link :raw do
     self.lectureable.current_url
+  end
+
+  link :container do
+    api_subject_url(self.subject)
   end
 end

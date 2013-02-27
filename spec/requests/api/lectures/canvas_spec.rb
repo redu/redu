@@ -92,7 +92,7 @@ describe "Canvas API" do
 
   context "when GET /lectures/:id" do
     subject do
-      Factory(:lecture, :lectureable => Factory(:canvas),
+      Factory(:lecture, :lectureable => Factory(:canvas, :container => space),
               :subject => subj, :owner => subj.owner)
     end
 
