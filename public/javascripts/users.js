@@ -216,7 +216,6 @@
             $(".experience-current:checked").refreshEndDateVisibility();
             $("#biography").refreshSocialNetwork();
             // Esconde os forms de edição
-            $("#curriculum .experiences form").hide();
             $("#curriculum .educations form").hide();
             //$('.curriculum-buttons .cancel').show();
             // Esconde link para editar perfil na barra de completude

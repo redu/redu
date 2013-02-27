@@ -1,19 +1,14 @@
+<%# Formulário para adicionar/editar um item de experiência. %>
 <%= form_for [user, experience], :remote => true,
-  :html => { :class => "form-horizontal clearfix form-config-account edit-form" } do |f| %>
+  :html => { :class => "form-horizontal edit-form" } do |f| %>
 
   <div class="control-group row title">
-    <div class="offset3 span6">
-      <% if experience.new_record? %>
-        <h6 class="pull-left curriculum-title">Novo item</h6>
-      <% else %>
-        <h6 class="pull-left curriculum-title edit">Editando item</h6>
-      <% end %>
-    </div>
+    <h6 class="offset3 curriculum-title"><%= form_curriculum_title(experience) %></h6>
   </div>
 
   <div class="control-group row">
     <div class="control-label span3">
-      <%= f.label :title, 'Título de sua função' %>
+      <%= f.label :title, "Título de sua função" %>
     </div>
     <div class="controls span6">
       <%= f.text_field :title,
@@ -24,7 +19,7 @@
 
   <div class="control-group row">
     <div class="control-label span3">
-      <%= f.label :company, 'Empresa' %>
+      <%= f.label :company, "Empresa" %>
     </div>
     <div class="controls span6">
       <%= f.text_field :company,
@@ -35,7 +30,7 @@
 
   <div class="control-group row">
     <div class="control-label span3">
-      <%= f.label :start_date, 'Período' %>
+      <%= f.label :start_date, "Período" %>
     </div>
     <div class="controls span6 period-experience">
       <div class="control-select-date start-date clearfix">
@@ -51,12 +46,12 @@
             :discard_day => true } %>
       </div>
     </div>
-    <div class="controls offset3 span6 current-experience">
-      <div class="control-checkbox pull-left">
-        <%= f.check_box :current, :id => "experience_current-#{experience.id}", :class => "experience-current" %>
-      </div>
-      <div class="control-label">
-        <%= f.label :current, (t :i_currently_work_here), :for => "experience_current-#{experience.id}" %>
+    <div class="controls offset3 span6">
+      <div class="control-checkbox">
+        <%= f.check_box :current, :id => "experience_current-#{experience.id}",
+          :class => "experience-current" %>
+        <%= f.label :current, (t :i_currently_work_here),
+          :for => "experience_current-#{experience.id}" %>
       </div>
     </div>
   </div>
@@ -66,13 +61,13 @@
       <%= f.label :description, "Descrição" %>
     </div>
     <div class="controls span6">
-      <%= f.text_area :description, :rows => '6',
+      <%= f.text_area :description, :rows => 6,
           :placeholder => "Detalhes do encargo e suas realizações no período" %>
     </div>
   </div>
 
   <div class="offset3 span6 curriculum-buttons">
-    <button type="submit" class="button-default add-item icon-curriculum-lightblue_16_18-before pull-right"><% if experience.new_record? %>Adicionar item<% else %>Salvar item<% end %></button>
+    <button type="submit" class="button-default add-item icon-curriculum-lightblue_16_18-before pull-right"><%= form_curriculum_submit_text(experience) %></button>
     <button class="button-default cancel pull-right">Cancelar</button>
   </div>
 

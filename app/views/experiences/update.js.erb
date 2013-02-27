@@ -1,13 +1,20 @@
 <% if @experience.valid? %>
-  var newItem = "<%= escape_javascript render :partial => 'experiences/item',
-    :locals => { :item => @experience } %>"
-  $("#experience-<%= @experience.id %>").slideUp(150, 'swing');
-  $("#experience-<%= @experience.id %>").attr('id', 'experience-<%= @experience.id %>-old');
-  $("#curriculum .experiences").prepend(newItem);
+  <%# Remove o item da lista e o re-adiciona atualizado. %>
+  $("#experience-<%= @experience.id %>").remove();
+  var $newItem = $("<%= escape_javascript render :partial => 'experiences/item',
+      :locals => { :item => @experience } %>");
+  $("#curriculum .experiences").prepend($newItem);
+
+  <%# Esconde o formulário de edição. %>
+  $newItem.find(".edit-form").hide();
+
 <% else %>
-  var experience_form = "<%= escape_javascript render :partial => 'experiences/form',
-    :locals => { :user => @experience.user, :experience => @experience } %>"
+  <%# Substitui o formulário de criação com os erros de validação. %>
+  var experienceForm = "<%= escape_javascript render :partial => 'experiences/form',
+    :locals => { :user => @experience.user, :experience => @experience } %>";
   var $form = $("#edit_experience_<%= @experience.id %>");
-  $form.replaceWith(experience_form);
-  $("#edit_experience_<%= @experience.id %>").show();
+
+  $form
+    .replaceWith(experienceForm)
+    .show();
 <% end %>

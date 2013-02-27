@@ -1,14 +1,17 @@
-$("#experience-<%= @experience.id %>").slideUp(150, 'swing', function() {
+$("#experience-<%= @experience.id %>").slideUp(150, "swing", function() {
+  // Remove o item;
   $(this).remove();
-  if (!$('#curriculum .experiences li').length) {
-    $('#curriculum .experience .config-new-item').hide();
-    $('#new_experience').css('padding-top', 0)
-      .find('.title')
+
+  // Se for o último item removido, mostra o formulário de criação.
+  if ($("#curriculum .experiences").children().length === 0) {
+    $("#curriculum .experience .config-new-item").hide();
+    $("#new_experience").css("padding-top", 0)
+      .find(".title")
         .remove()
       .end()
-      .find('.cancel')
+      .find(".cancel")
         .hide()
       .end()
-      .slideDown(150, 'swing');
+      .slideDown(150, "swing");
   }
 });
