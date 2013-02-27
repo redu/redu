@@ -38,4 +38,17 @@ describe Api::Canvas do
       }.to_not raise_error(NoMethodError)
     end
   end
+
+  context "#current_name" do
+    it "should return client application name if there is no self.name" do
+      subject = Factory(:canvas, :name => nil)
+      subject.current_name.should == subject.client_application.name
+    end
+
+    it "should return #name by default" do
+      subject = Factory(:canvas, :name => "Guila's canvas")
+      subject.current_name.should == subject.name
+
+    end
+  end
 end
