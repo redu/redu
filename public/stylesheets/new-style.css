@@ -4434,8 +4434,13 @@ table.spaced tr td {
 
 #environment-manage .make-admin {
   width: 360px;
-  float: left;
+  float: right;
+  margin-right: 20px;
   text-align: right;
+}
+
+#environment-manage .make-admin .member-list {
+  margin-bottom: 20px;
 }
 
 #environment-manage .make-admin:after {
