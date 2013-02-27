@@ -280,7 +280,7 @@ GEM
       tzinfo (~> 0.3.22)
     multi_json (1.0.4)
     multipart-post (1.1.5)
-    mysql2 (0.2.7)
+    mysql2 (0.2.19b6)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
     net-ssh (2.5.2)
@@ -454,7 +454,7 @@ DEPENDENCIES
   kaminari
   mime-types
   mongoid (~> 2.2.6)
-  mysql2 (~> 0.2.1)
+  mysql2 (~> 0.2.19b6)
   newrelic_rpm (= 3.0.1)
   no_peeping_toms!
   oauth-plugin (~> 0.4.0)
