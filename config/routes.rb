@@ -298,6 +298,7 @@ Redu::Application.routes.draw do
         get 'timeline', :on => :collection
       end
       resources :folders, :only => :index
+      resources :canvas, :only => :create
     end
 
     resources :subjects, :except => [:new, :edit, :index, :create] do
@@ -339,6 +340,7 @@ Redu::Application.routes.draw do
     end
 
     resources :myfiles, :path => "files", :only => [:show]
+    resources :canvas, :only => [:show, :update, :destroy]
 
     match "vis/spaces/:space_id/lecture_participation",
       :to => 'vis#lecture_participation',
