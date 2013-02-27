@@ -55,9 +55,10 @@ module BaseHelper
 
   # Cria markup das sub abas (compatível com jQuery UI) a partir da navegação
   # do contexto passado
-  def subtabs(context, opts={}, &block)
+  def subtabs(context, opts={:renderer => :list}, &block)
     locals = {
-      :navigation => render_dynamic_navigation(:context => context, :level => 4),
+      :navigation => render_dynamic_navigation(:context => context, :level => 4,
+                                               :renderer => opts[:renderer]),
       :options => opts,
       :body => capture(&block)
     }

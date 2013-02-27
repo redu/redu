@@ -10,19 +10,18 @@
           <%= render :partial => "result_quantity",
             :locals => { :query => @query,
                          :total_results => @total_results } %>
-          <%# TODO: A ser substituído pelo simple_navigation depois. %>
-          <%= render :partial => "filters" %>
-
-          <%= render :partial => "environment_list",
-            :locals => { :environments => @environments,
-                         :query => @query } %>
-          <%= render :partial => "course_list",
-            :locals => { :courses => @courses,
-                         :query => @query } %>
-          <%= render :partial => "space_list",
-            :locals => { :spaces => @spaces,
-                         :query => @query } %>
-        </div>
+            <%= subtabs :search, { :renderer => :links } do %>
+            <%= render :partial => "environment_list",
+              :locals => { :environments => @environments,
+                           :query => @query } %>
+            <%= render :partial => "course_list",
+              :locals => { :courses => @courses,
+                           :query => @query } %>
+            <%= render :partial => "space_list",
+              :locals => { :spaces => @spaces,
+                           :query => @query } %>
+          </div>
+        <% end %>
       <%# Nenhum resultado encontrado. %>
       <% else %>
         <%= render :partial => "empty_search_result",
