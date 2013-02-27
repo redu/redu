@@ -469,6 +469,20 @@ body {
   color: #b3b3b3;
 }
 
+.form-config-fieldset {
+  margin: 10px 0;
+}
+
+.form-config-legend {
+  font: 300 18px/18px museo-sans, "Helvetica Neue", Arial, sans-serif;
+  letter-spacing: -1px;
+  color: #73c3e6;
+  margin: 0 0 20px 20px;
+}
+.form-config-legend[class*="icon-"][class*="-before"]:before {
+  margin-right: 10px;
+}
+
 .list-separator +
 .form-config-profile {
   margin-top: 10px;
@@ -505,9 +519,6 @@ input[type="hidden"] +
   margin-left: 5px;
 }
 
-.curriculum-container {
-  margin: 10px 0;
-}
 .curriculum-container .experiences,
 .curriculum-container .educations {
   margin: 0;
@@ -521,18 +532,12 @@ input[type="hidden"] +
 .curriculum-container .list-mix-item {
   padding: 0 20px;
 }
-.curriculum-container #new_education .form-education {
+.curriculum-container .form-education {
   margin-top: 20px;
 }
-.curriculum-container ul + .form-horizontal {
+.curriculum-container ul +
+.form-horizontal {
   padding-top: 20px;
-}
-
-.config-title {
-  font-weight: 300;
-  color: #73c3e6;
-  margin-bottom: 20px;
-  padding: 0 20px;
 }
 
 .config-experience {
@@ -590,16 +595,6 @@ input[type="hidden"] +
   height: 35px;
 }
 
-.form-config-account fieldset {
-  margin: 10px 0;
-}
-.form-config-account legend {
-  font-size: 18px;
-  color: #73c3e6;
-  font-weight: 300;
-  font-family: museo-sans, "Helvetica Neue", Arial, sans-serif;
-  padding: 0 0 20px 20px;
-}
 .form-config-account .control-group:last-child .controls {
   margin-bottom: 3px;
 }

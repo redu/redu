@@ -38,44 +38,39 @@
 
       <div id="curriculum">
 
-        <div class="curriculum-container experience">
-          <h4 class="config-title icon-curriculum-professional-lightblue_32_34-before">Experiência profissional</h4>
-
+        <fieldset class="form-config-fieldset curriculum-container experience">
+          <legend class="form-config-legend icon-curriculum-professional-lightblue_32_34-before">Experiência profissional</legend>
           <ul class="experiences">
             <%= render :partial => 'experiences/item',
               :collection => @experiences %>
           </ul>
-
           <%= render :partial => 'experiences/form', :locals => {
-              :user => @user, :experience => @experience, :experiences_count => @experiences.length } %>
-
+              :user => @user, :experience => @experience,
+              :experiences_count => @experiences.length } %>
           <div class="config-new-item">
             <button class="button-default new-experience-button icon-curriculum-lightblue_16_18-before">Adicionar novo item</button>
           </div>
-        </div>
+        </fieldset>
 
         <hr class="list-separator">
 
-        <div class="curriculum-container education">
-          <h4 class="config-title icon-curriculum-academic-lightblue_32_34-before">Experiência acadêmica</h4>
-
+        <fieldset class="form-config-fieldset curriculum-container education">
+          <legend class="form-config-legend icon-curriculum-academic-lightblue_32_34-before">Experiência acadêmica</legend>
           <ul class="educations">
             <%= render :partial => "educations/item",
                   :collection => @educations %>
           </ul>
-
           <%= render :partial => 'educations/form', :locals => {
-              :high_school => @high_school, :higher_education => @higher_education,
+              :high_school => @high_school,
+              :higher_education => @higher_education,
               :complementary_course => @complementary_course,
-              :event_education => @event_education, :user => @user }%>
-
+              :event_education => @event_education, :user => @user } %>
           <div class="config-new-item">
             <buttton class="button-default new-education-button icon-curriculum-lightblue_16_18-before">Adicionar novo item</buttton>
           </div>
-        </div>
+        </fieldset>
 
       </div>
-
     </div>
     <%= render :partial => "users/breadcrumb_configurations",
       :locals => { :user => @user } %>

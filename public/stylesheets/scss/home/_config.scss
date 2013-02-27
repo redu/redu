@@ -3,6 +3,21 @@
 // ==========================================================================
 
 
+// Comum
+// ==========================================================================
+
+.form-config-fieldset { margin: 10px 0; }
+
+.form-config-legend {
+  font: 300 18px/18px $museo-sans;
+  letter-spacing: -1px;
+  color: $blue2;
+  margin: 0 0 20px 20px;
+
+  &[class*="icon-"][class*="-before"]:before { margin-right: 10px; }
+}
+
+
 // Perfil - Biografia
 // ==========================================================================
 
@@ -40,8 +55,6 @@
 // ==========================================================================
 
 .curriculum-container {
-  margin: 10px 0;
-
   .experiences,
   .educations { margin: 0; }
 
@@ -51,15 +64,11 @@
   }
 
   .list-mix-item { padding: 0 20px; }
-  #new_education .form-education { margin-top: 20px; }
-  ul + .form-horizontal { padding-top: 20px; }
-}
 
-.config-title {
-  font-weight: 300;
-  color: $blue2;
-  margin-bottom: 20px;
-  padding: 0 20px;
+  .form-education { margin-top: 20px; }
+
+  ul +
+  .form-horizontal { padding-top: 20px; }
 }
 
 .config-experience {
@@ -113,16 +122,6 @@
 // ==========================================================================
 
 .form-config-account {
-  fieldset { margin: 10px 0; }
-
-  legend {
-    font-size: 18px;
-    color: $blue2;
-    font-weight: 300;
-    font-family: $museo-sans;
-    padding: 0 0 20px 20px;
-  }
-
   // Um pouco de espaço para o contador de caracteres do controle perto do separador.
   .control-group:last-child .controls { margin-bottom: 3px; }
 

@@ -66,7 +66,8 @@ Variáveis:
 
   <hr class="list-separator"/>
 
-  <%= field_set_tag "Redefinir e-mail" do %>
+  <fieldset class="form-config-fieldset">
+    <legend class="form-config-legend">Redefinir e-mail</legend>
     <div class="control-group row">
       <div class="control-label span3">
         <%= f.label :email, "E-mail" %>
@@ -86,11 +87,12 @@ Variáveis:
         <%= concave_errors_for(f.object, :email_confirmation) %>
       </div>
     </div>
-  <% end %>
+  </fieldset>
 
   <hr class="list-separator"/>
 
-  <%= field_set_tag "Redefinir senha" do %>
+  <fieldset class="form-config-fieldset">
+    <legend class="form-config-legend">Redefinir senha</legend>
     <div class="control-group row">
       <div class="control-label span3">
         <%= label_tag :current_password, "Senha atual" %>
@@ -127,7 +129,8 @@ Variáveis:
           :placeholder => "Repita a senha desejada", :maxlength => 20 %>
       </div>
     </div>
-  <% end %>
+  </fieldset>
+
 
   <hr class="list-separator"/>
 
