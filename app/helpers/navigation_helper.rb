@@ -61,7 +61,8 @@ module NavigationHelper
     # Não aciona a navegacão global se estiver na área relacionada a partners
     # ou ao profile de outro usuário
     elsif !request.fullpath.match(%r(\A#{ partners_path })).nil? ||
-          !request.fullpath.match(%r(\A#{ users_path }/)).nil?
+          !request.fullpath.match(%r(\A#{ users_path })).nil? ||
+          !request.fullpath.match(%r(\A#{ search_path })).nil?
       :global
     else
       :courses
