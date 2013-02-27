@@ -195,6 +195,9 @@ module Redu
     # Validators customizados
     config.autoload_paths << "#{config.root}/app/validators"
 
+    # Service objects
+    config.autoload_paths << "#{config.root}/app/services"
+
     # Configurações do Pusher (redu app)
     config.pusher = {
       :app_id => '4577',
