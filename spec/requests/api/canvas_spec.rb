@@ -101,15 +101,10 @@ describe "Canvas API" do
     end
 
     it_should_behave_like "a lecture"
+    it_should_behave_like "a canvas"
 
-    %w(mimetype current_url).each do |attr|
-      it "should have property #{attr}" do
-        parse(response.body).should have_key attr
-      end
+    it "should have property mimetype" do
+      parse(response.body).should have_key 'mimetype'
     end
-
-     it "should have the link raw" do
-       href_to("raw", parse(response.body)).should_not be_blank
-     end
   end
 end
