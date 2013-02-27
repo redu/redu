@@ -3,27 +3,24 @@
 <div class="span16">
   <%= render :partial => "header" %>
   <div class="content-body search-content">
-    <%# TODO: A ser substituído pelo simple_navigation depois. %>
-    <%= render :partial => "tabs" %>
-
-    <%# Se foi encontrado algum resultado. %>
-    <% if @total_results > 0 %>
-      <div class="search-results">
-        <%= render :partial => "result_quantity",
-          :locals => { :query => @query,
-            :total_results => @total_results } %>
-        <%= render :partial => "user_list",
-          :locals => { :profiles => @profiles,
-            :query => @query } %>
-      </div>
-      <%= paginate @profiles, :theme => "numbers",
-        :outer_window => 1, :inner_window => 4 %>
-
-    <%# Nenhum resultado encontrado. %>
-    <% else %>
-      <%= render :partial => "empty_search_result",
-        :locals => { :query => @query } %>
-
+    <%= tabs :search do %>
+      <%# Se foi encontrado algum resultado. %>
+      <% if @total_results > 0 %>
+        <div class="search-results">
+          <%= render :partial => "result_quantity",
+            :locals => { :query => @query,
+                         :total_results => @total_results } %>
+          <%= render :partial => "user_list",
+            :locals => { :profiles => @profiles,
+                         :query => @query } %>
+        </div>
+        <%= paginate @profiles, :theme => "numbers",
+          :outer_window => 1, :inner_window => 4 %>
+      <%# Nenhum resultado encontrado. %>
+      <% else %>
+        <%= render :partial => "empty_search_result",
+          :locals => { :query => @query } %>
+      <% end %>
     <% end %>
   </div>
   <div class="breadcrumb-mini-wrapper">
