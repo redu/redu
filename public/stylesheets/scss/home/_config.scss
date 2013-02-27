@@ -113,17 +113,19 @@
 // ==========================================================================
 
 .form-config-account {
-  fieldset {
-    margin: 10px 0;
+  fieldset { margin: 10px 0; }
 
-    legend {
-      font-size: 18px;
-      color: $blue2;
-      font-weight: 300;
-      font-family: $museo-sans;
-      padding: 0 0 20px 20px;
-    }
+  legend {
+    font-size: 18px;
+    color: $blue2;
+    font-weight: 300;
+    font-family: $museo-sans;
+    padding: 0 0 20px 20px;
   }
 
+  // Um pouco de espaço para o contador de caracteres do controle perto do separador.
+  .control-group:last-child .controls { margin-bottom: 3px; }
+
+  .button-primary +
   .button-danger { margin-right: 10px; }
 }

@@ -593,14 +593,18 @@ input[type="hidden"] +
 .form-config-account fieldset {
   margin: 10px 0;
 }
-.form-config-account fieldset legend {
+.form-config-account legend {
   font-size: 18px;
   color: #73c3e6;
   font-weight: 300;
   font-family: museo-sans, "Helvetica Neue", Arial, sans-serif;
   padding: 0 0 20px 20px;
 }
-.form-config-account .button-danger {
+.form-config-account .control-group:last-child .controls {
+  margin-bottom: 3px;
+}
+.form-config-account .button-primary +
+.button-danger {
   margin-right: 10px;
 }
 

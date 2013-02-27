@@ -73,7 +73,7 @@ Variáveis:
       </div>
       <div class="controls span6">
         <%= f.text_field :email,
-          :placeholder => "E-mail desejado" %>
+          :placeholder => "E-mail desejado", :maxlength => 100 %>
       </div>
     </div>
     <div class="control-group row">
@@ -82,7 +82,7 @@ Variáveis:
       </div>
       <div class="controls span6">
         <%= f.text_field :email_confirmation,
-          :placeholder => "Repita o e-mail desejado" %>
+          :placeholder => "Repita o e-mail desejado", :maxlength => 100 %>
         <%= concave_errors_for(f.object, :email_confirmation) %>
       </div>
     </div>
@@ -98,9 +98,12 @@ Variáveis:
       <div class="controls span6">
         <% if @flag %>
           <%= password_field_tag :current_password, nil,
-            :placeholder => "Senha da conta cadastrada no Redu" %>
+            :placeholder => "Senha da conta cadastrada no Redu",
+            :maxlength => 20 %>
         <% else %>
-          <%= password_field_tag :current_password %>
+          <%= password_field_tag :current_password, nil,
+            :placeholder => "Senha da conta cadastrada no Redu",
+            :maxlength => 20 %>
         <% end %>
         <%= concave_errors_for(f.object, :current_password) %>
       </div>
@@ -110,7 +113,8 @@ Variáveis:
         <%= f.label :password,  (t :new_password) + "" %>
       </div>
       <div class="controls span6">
-        <%= f.password_field :password, :placeholder => "Senha desejada" %>
+        <%= f.password_field :password, :placeholder => "Senha desejada",
+          :maxlength => 20 %>
         <%= concave_errors_for(f.object, :password) %>
       </div>
     </div>
@@ -120,7 +124,7 @@ Variáveis:
       </div>
       <div class="controls span6">
         <%= f.password_field :password_confirmation,
-          :placeholder => "Repita a senha desejada" %>
+          :placeholder => "Repita a senha desejada", :maxlength => 20 %>
       </div>
     </div>
   <% end %>
