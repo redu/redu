@@ -3,7 +3,6 @@ module CanvasRepresenter
   include Roar::Representer::Feature::Hypermedia
   include LectureRepresenter
 
-  property :type
   property :mimetype
   property :current_url
 
