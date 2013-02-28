@@ -58,6 +58,21 @@
       <%= concave_errors_for(f.object, :birthday) %>
     </div>
   </div>
+  <%# Sexo %>
+  <div class="control-group control-inline row">
+    <div class="control-label span3">
+      <%= f.label :gender, "Sexo" %>
+    </div>
+    <div class="controls span6">
+      <label class="control-radio">
+        <%= f.radio_button :gender, User::MALE %>Masculino
+      </label>
+      <label class="control-radio">
+        <%= f.radio_button :gender, User::FEMALE %>Feminino
+      </label>
+      <%= concave_errors_for(f.object, :gender) %>
+    </div>
+  </div>
   <%# Cidade onde nasceu %>
   <div class="control-group row">
     <div class="control-label span3">
