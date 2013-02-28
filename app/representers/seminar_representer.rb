@@ -4,7 +4,6 @@ module SeminarRepresenter
   include LectureRepresenter
 
   property :mimetype
-  property :type
 
   def type
     'Media'

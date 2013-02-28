@@ -11,7 +11,7 @@ module SpacesNavigation
     sidebar.item :files, 'Arquivos de Apoio', space_folders_path(@space),
       :link => { :class => 'icon-file_16_18-before' }
     @space.canvas.each do |canvas|
-      sidebar.item :canvas, canvas.client_application.name,
+      sidebar.item :canvas, canvas.current_name,
         space_canvas_path(@space, canvas),
         :link => { :class => 'icon-file_16_18-before' }
     end

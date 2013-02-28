@@ -39,4 +39,8 @@ module SpaceRepresenter
   link :folders do
     api_space_folders_url(self)
   end
+
+  link :canvas do
+    api_space_canvas_index_url(self)
+  end
 end

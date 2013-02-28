@@ -13,5 +13,9 @@ module Api
       return self.url if self.url
       self.client_application.try(:url)
     end
+
+    def current_name
+      self.name || self.client_application.try(:name)
+    end
   end
 end
