@@ -1,13 +1,12 @@
+<%# Formulário para editar um item de educação. %>
 <%= form_for education.educationable,
   :url => user_education_path(education.user, education), :remote => true,
-  :html => { :class => "form-horizontal form-education clearfix" } do |f| %>
+  :html => { :class => "form-horizontal form-education" } do |f| %>
 
-    <div class="control-group row">
-      <div class="offset3 span6">
-        <h6 class="pull-left curriculum-title edit">Editando item</h6>
-      </div>
-    </div>
+  <div class="control-group row">
+    <h6 class="offset3 curriculum-title">Editando item</h6>
+  </div>
 
-    <%= render :partial => "educations/#{education.educationable.class.to_s.underscore}_fields",
+  <%= render :partial => "educations/#{education.educationable.class.to_s.underscore}_fields",
     :locals => { :f => f } %>
 <% end %>

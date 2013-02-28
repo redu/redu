@@ -210,18 +210,15 @@
             $(this).refreshShowCorrectFields();
         });
 
-        $(document).ajaxComplete(function(){
-            refreshDefaultFormsVisibility();
-            removeTitle();
-            $(".experience-current:checked").refreshEndDateVisibility();
-            $("#biography").refreshSocialNetwork();
-            // Esconde os forms de edição
-            $("#curriculum .educations form").hide();
-            //$('.curriculum-buttons .cancel').show();
-            // Esconde link para editar perfil na barra de completude
-            $(".explanation-sidebar .incomplete-profile .edit").hide();
-            $("#education_type").refreshShowCorrectForm();
-            $("#higher_education_kind").refreshShowCorrectFields();
+        $(document).ajaxComplete(function() {
+          refreshDefaultFormsVisibility();
+          removeTitle();
+          $(".experience-current:checked").refreshEndDateVisibility();
+          $("#biography").refreshSocialNetwork();
+          // Esconde link para editar perfil na barra de completude
+          $(".explanation-sidebar .incomplete-profile .edit").hide();
+          $("#education_type").refreshShowCorrectForm();
+          $("#higher_education_kind").refreshShowCorrectFields();
         });
     });
 })($);

@@ -11,7 +11,8 @@ var $newExperience = $("#new_experience");
   <%# Cria o item adicionado e esconde seu formulário de edição. %>
   var $experienceItem = $("<%= escape_javascript render :partial => 'experiences/item',
     :locals => { :item => @experience } %>");
-  $experienceItem.find(".edit-form").hide();
+  $experienceItem.find("form").hide();
+
   <%# Adiciona o item a lista. %>
   var $curriculum = $("#curriculum");
   $curriculum.find(".experiences").append($experienceItem);

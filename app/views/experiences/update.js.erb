@@ -1,12 +1,18 @@
 <% if @experience.valid? %>
   <%# Remove o item da lista e o re-adiciona atualizado. %>
-  $("#experience-<%= @experience.id %>").remove();
-  var $newItem = $("<%= escape_javascript render :partial => 'experiences/item',
-      :locals => { :item => @experience } %>");
-  $("#curriculum .experiences").prepend($newItem);
+  $("#experience-<%= @experience.id %>").slideUp(150, "swing", function() {
+    $(this).remove();
 
-  <%# Esconde o formulário de edição. %>
-  $newItem.find(".edit-form").hide();
+    var $newItem = $("<%= escape_javascript render :partial => 'experiences/item',
+        :locals => { :item => @experience } %>");
+    $("#curriculum .experiences").prepend($newItem);
+
+    <%# Esconde o formulário de edição. %>
+    $newItem.find("form").hide();
+
+    <%# Mostra o botão de adicionar novo item. %>
+    $("#curriculum .experience .config-new-item").show();
+  })
 
 <% else %>
   <%# Substitui o formulário de criação com os erros de validação. %>

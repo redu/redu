@@ -1,20 +1,33 @@
 <% if @education.valid? %>
-  var newItem = "<%= escape_javascript render :partial => 'educations/item',
-    :locals => { :item => @education } %>"
-  $("#education-<%= @education.id %>").slideUp(150, 'swing');
-  $("#education-<%= @education.id %>").attr('id', 'education-<%= @education.id %>-old');
-  $("#curriculum .educations").prepend(newItem);
-<% else %>
-  <% if @education.educationable.class == HighSchool %>
-    var $form = $("#edit_high_school_<%= @education.educationable.id %>");
-  <% elsif @education.educationable.class == HigherEducation %>
-    var $form = $("#edit_higher_education_<%= @education.educationable.id %>");
-  <% elsif @education.educationable.class == ComplementaryCourse %>
-    var $form = $("#edit_complementary_course_<%= @education.educationable.id %>");
-  <% elsif @education.educationable.class == EventEducation %>
-    var $form = $("#edit_event_education_<%= @education.educationable.id %>");
-  <% end %>
+  <%# Remove o item da lista e o re-adiciona atualizado. %>
+  $("#education-<%= @education.id %>").slideUp(150, "swing", function() {
+    $(this).remove();
 
-  var educationable_form = "<%= escape_javascript render :partial => 'educations/form_edit', :locals => { :education => @education } %>"
-  $form.replaceWith(educationable_form);
+    var $newItem = $("<%= escape_javascript render :partial => 'educations/item',
+        :locals => { :item => @education } %>");
+    $("#curriculum .educations").prepend($newItem);
+
+    <%# Esconde o formulário de edição. %>
+    $newItem.find("form").hide();
+
+    <%# Mostra o botão de adicionar novo item. %>
+    $("#curriculum .education .config-new-item").show();
+  });
+
+<% else %>
+  <%# Substitui o formulário de criação com os erros de validação. %>
+  var educationIdSelector = "";
+  <% if @education.educationable.class == HighSchool %>
+    educationIdSelector = "edit_high_school";
+  <% elsif @education.educationable.class == HigherEducation %>
+    educationIdSelector = "edit_higher_education";
+  <% elsif @education.educationable.class == ComplementaryCourse %>
+    educationIdSelector = "edit_complementary_course";
+  <% elsif @education.educationable.class == EventEducation %>
+    educationIdSelector = "edit_event_education";
+  <% end %>
+  var $form = $("#" + educationIdSelector + "_<%= @education.educationable.id %>");
+
+  var educationableForm = "<%= escape_javascript render :partial => 'educations/form_edit', :locals => { :education => @education } %>"
+  $form.replaceWith(educationableForm);
 <% end %>
