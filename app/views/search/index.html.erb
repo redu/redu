@@ -1,37 +1,35 @@
 <%= content_for :wrapper_class do %>search-portal<% end %>
 
 <div class="span16">
-  <%= render :partial => "header" %>
+  <%= render :partial => "header", :locals => { :query => @query } %>
   <div class="content-body search-content">
-    <%= tabs :search do %>
-      <%# Se foi encontrado algum resultado. %>
-      <% if @total_results > 0 %>
-        <div class="search-results">
-          <%= render :partial => "result_quantity",
-            :locals => { :total_results => @total_results,
-                         :query => @query } %>
-          <%= render :partial => "user_list",
-            :locals => { :profiles => @profiles,
-                         :query => @query } %>
-          <%= render :partial => "environment_list",
-            :locals => { :environments => @environments,
-                         :query => @query } %>
-          <%= render :partial => "course_list",
-            :locals => { :courses => @courses,
-                         :query => @query } %>
-          <%= render :partial => "space_list",
-            :locals => { :spaces => @spaces,
-                         :query => @query } %>
-        </div>
-      <%# Nenhum resultado encontrado. %>
-      <% else %>
-        <%= render :partial => "empty_search_result",
-          :locals => { :query => @query } %>
-      <% end %>
+    <%= new_tabs :search %>
+    <%# Se foi encontrado algum resultado. %>
+    <% if @total_results > 0 %>
+      <div class="search-results">
+        <%= render :partial => "result_quantity",
+          :locals => { :total_results => @total_results,
+                       :query => @query } %>
+        <%= render :partial => "user_list",
+          :locals => { :profiles => @profiles,
+                       :query => @query } %>
+        <%= render :partial => "environment_list",
+          :locals => { :environments => @environments,
+                       :query => @query } %>
+        <%= render :partial => "course_list",
+          :locals => { :courses => @courses,
+                       :query => @query } %>
+        <%= render :partial => "space_list",
+          :locals => { :spaces => @spaces,
+                       :query => @query } %>
+      </div>
+    <%# Nenhum resultado encontrado. %>
+    <% else %>
+      <%= render :partial => "empty_search_result",
+        :locals => { :query => @query } %>
     <% end %>
   </div>
   <div class="breadcrumb-mini-wrapper">
-    <%# TODO: A ser substituído pelo simple_navigation depois. %>
-    <%= render :partial => "breadcrumb_mini" %>
+    <%= render :partial => "breadcrumb_mini", :locals => { :query => @query } %>
   </div>
 </div>
