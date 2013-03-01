@@ -1,6 +1,38 @@
-<%# TODO: A ser substituído pelo simple_navigation depois. %>
-<ul class="breadcrumb-mini" id="search-breadcrumb">
-  <li class="breadcrumb-mini-item icon-arrow-right-separator-gray_16_18-after">
-    <a class="breadcrumb-mini-link icon-magnifier-lightblue_16_18-before selected simple-navigation-active-leaf" href="/">Busca</a>
-  </li>
+<%#
+  Breadcrumb das páginas de busca.
+
+  Variáveis:
+    query: o termo pesquisado.
+%>
+<ul class="breadcrumb-mini">
+  <%# Busca geral. %>
+  <% if current_page?(search_path) %>
+    <li class="breadcrumb-mini-item">
+      <%= link_to "Busca", search_path(:q => query), :title => "Busca",
+        :class => "breadcrumb-mini-link icon-magnifier-lightblue_16_18-before" %>
+    </li>
+
+  <%# Busca por ambiente. %>
+  <% elsif current_page?(search_environments_path) %>
+    <li class="breadcrumb-mini-item icon-arrow-right-separator-gray_16_18-after">
+      <%= link_to "Busca", search_path(:q => query), :title => "Busca",
+        :class => "breadcrumb-mini-link icon-magnifier-lightblue_16_18-before text-replacement" %>
+    </li>
+    <li class="breadcrumb-mini-item">
+      <%= link_to "Ambientes de Aprendizagem", search_environments_path(:q => query, :f => params[:f]),
+        :title => "Ambientes de Aprendizagem",
+        :class => "breadcrumb-mini-link icon-environment-lightblue_16_18-before" %>
+    </li>
+
+  <%# Busca por perfil. %>
+  <% elsif current_page?(search_profiles_path) %>
+    <li class="breadcrumb-mini-item icon-arrow-right-separator-gray_16_18-after">
+      <%= link_to "Busca", search_path(:q => query), :title => "Busca",
+        :class => "breadcrumb-mini-link icon-magnifier-lightblue_16_18-before text-replacement" %>
+    </li>
+    <li class="breadcrumb-mini-item">
+      <%= link_to "Perfil", search_profiles_path(:q => query), :title => "Perfil",
+        :class => "breadcrumb-mini-link icon-profile-lightblue_16_18-before" %>
+    </li>
+  <% end %>
 </ul>
