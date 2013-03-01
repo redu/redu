@@ -17,11 +17,11 @@ module EnvironmentsAdminNavigation
                       :if => action_matcher({'courses' => ['new', 'create']})}
       tabs.item :members, 'Membros', admin_members_environment_path(@header_environment || @environment),
         :highlights_on => action_matcher({'environments' => ['admin_members'],
-                                          'roles' => ['show']}),
+                                          'roles' => ['index']}),
         :class => 'ui-state-default',
         :link => { :class => "icon-members_16_18-before" },
         :details => { :text => 'papéis', :class => 'details',
-                      :if => action_matcher({'roles' => ['show']})}
+                      :if => action_matcher({'roles' => ['index']})}
     end
   end
 end
