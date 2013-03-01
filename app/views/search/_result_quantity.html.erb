@@ -14,7 +14,7 @@
   <% end %>
 
   <%# Mensagem só exibida nas busca por ambientes, cursos e disciplinas. %>
-  <% if current_page?(search_environments_path) or current_page?(search_environments_only_path) or current_page?(search_courses_only_path) or current_page?(search_spaces_only_path) %>
+  <% if current_page?(search_environments_path) %>
     <p>Use os filtros abaixo para facilitar a busca.</p>
   <% end %>
 </div>

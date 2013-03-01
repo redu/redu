@@ -9,7 +9,8 @@ module SearchNavigation
         :link => { :class => 'tab-title icon-basic-guide-lightblue_16_18-before',
                    :title => 'Geral'}
       tabs.item :environments, 'Ambientes', search_environments_path(:q => @query),
-        :highlights_on => %r(\A#{ search_environments_path }), :class => 'tab',
+        :highlights_on => action_matcher({ 'search' => ['environments'] }),
+        :class => 'tab',
         :link => { :class => 'tab-title icon-environment-lightblue_16_18-before',
                    :title => 'Ambientes'} do |subtabs|
           subtabs.dom_class = 'search-filter'
@@ -26,7 +27,7 @@ module SearchNavigation
             :highlights_on => lambda{ search_environments_highlights?("disciplinas") }
         end
       tabs.item :profiles, 'Perfil', search_profiles_path(:q => @query),
-        :highlights_on => %r(\A#{ search_profiles_path }), :class => 'tab',
+        :highlights_on => action_matcher({ 'search' => ['profiles'] }), :class => 'tab',
         :link => { :class => 'tab-title icon-profile-lightblue_16_18-before',
                    :title => 'Perfil'}
     end
