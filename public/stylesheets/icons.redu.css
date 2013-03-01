@@ -975,8 +975,8 @@
   background: url("../images/new/icons-small.png") -240px -400px no-repeat;
 }
 
-.icon-member-blue_16_18,
-.icon-member-lightblue_16_18:hover { background-position: -160px -1040px !important; }
+.icon-member-blue_16_18 { background-position: -160px -1040px !important; }
+/*.icon-member-lightblue_16_18:hover { background-position: -160px -1040px !important; }*/
 .icon-member-blue_16_18-after:after,
 .icon-member-lightblue_16_18-after:hover:after,
 .subtabs .ui-state-default .icon-member_16_18-after:hover:after,
@@ -999,7 +999,7 @@
   background: url("../images/new/icons-small.png") 0 -1040px no-repeat;
 }
 
-.icon-member-lightblue_16_18 { background-position: -80px -1040px !important; }
+/*.icon-member-lightblue_16_18 { background-position: -80px -1040px !important; }*/
 .icon-member-lightblue_16_18-before:before,
 .icon-member-lightblue_16_18-after:after,
 .tabs .ui-state-active .icon-member_16_18-before:before,
@@ -1248,7 +1248,7 @@
   background: url("../images/new/icons-small.png") -160px -2320px no-repeat;
 }
 
-.icon-profile-gray_16_18 { background-position: 0px  -2320px !important; }
+/*.icon-profile-gray_16_18 { background-position: 0px  -2320px !important; }*/
 .icon-profile-gray_16_18-before:before,
 .tabs .ui-state-default .icon-profile_16_18-before:before {
   content: "";
@@ -1505,8 +1505,8 @@
   background: url("../images/new/icons-small.png") -320px -1360px no-repeat;
 }
 
-.icon-teacher-blue_16_18,
-.icon-teacher-lightblue_16_18:hover { background-position: -160px -880px }
+.icon-teacher-blue_16_18 { background-position: -160px -880px; }
+/*.icon-teacher-lightblue_16_18:hover { background-position: -160px -880px }*/
 .icon-teacher-blue_16_18-before:before,
 .icon-teacher-lightblue_16_18-before:hover:before,
 .tabs .ui-state-default .icon-teacher_16_18-before:hover:before,
@@ -1555,8 +1555,8 @@
   background: url("../images/new/icons-small.png") -240px -880px no-repeat;
 }
 
-.icon-tutor-blue_16_18,
-.icon-tutor-lightblue_16_18:hover { background-position: -160px -960px !important; }
+.icon-tutor-blue_16_18 { background-position: -160px -960px !important; }
+/*.icon-tutor-lightblue_16_18:hover { background-position: -160px -960px !important; }*/
 .icon-tutor-blue_16_18-before:before,
 .icon-tutor-lightblue_16_18-before:hover:before,
 .tabs .ui-state-default .icon-tutor_16_18-before:hover:before,
@@ -1576,7 +1576,7 @@
   background: url("../images/new/icons-small.png") 0 -960px no-repeat;
 }
 
-.icon-tutor-lightblue_16_18 { background-position: -80px -960px !important; }
+/*.icon-tutor-lightblue_16_18 { background-position: -80px -960px !important; }*/
 .icon-tutor-lightblue_16_18-before:before,
 .tabs .ui-state-active .icon-tutor_16_18-before:before,
 .subtabs .ui-state-default .icon-tutor_16_18-before:before {
