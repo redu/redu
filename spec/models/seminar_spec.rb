@@ -20,6 +20,13 @@ describe Seminar do
         "http://www.youtube.com/watch?v=#{subject.external_resource}"
     end
 
+    it "should accept Youtube URL in any order" do
+      url = "http://www.youtube.com/watch?feature=player_embedded&v=3ZNdzDglRms"
+      Factory(:seminar_youtube, :external_resource => url).external_resource.
+        should == "3ZNdzDglRms"
+
+    end
+
     context do
       subject { Factory(:seminar_upload) }
       it "should return nil when there isn't a external_resource" do
