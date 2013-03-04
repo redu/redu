@@ -104,21 +104,3 @@
 .portal-search {
   background: url("/images/search/search-background_160.png") no-repeat 391px -49px;
 }
-
-.search-empty-result {
-  padding-top: 80px;
-  text-align: center;
-}
-
-.search-empty-result-icon {
-  display: inline-block;
-}
-
-.search-empty-result-icon +
-.search-empty-result-message {
-  margin-top: 20px;
-}
-
-.search-empty-result-message {
-  color: #cccccc;
-}
