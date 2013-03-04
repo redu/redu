@@ -7,7 +7,7 @@
     paginator:     the paginator that renders the pagination tags inside
 -%>
 <%= paginator.render do -%>
-  <div class="pagination">
+  <div class="pagination content-section">
     <% each_page do |page| -%>
       <% if page.left_outer? || page.right_outer? || page.inside_window? -%>
         <%= page_tag page %>
