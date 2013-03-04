@@ -13,7 +13,7 @@ module SearchNavigation
         :class => 'tab',
         :link => { :class => 'tab-title icon-environment-lightblue_16_18-before',
                    :title => 'Ambientes'} do |subtabs|
-          subtabs.dom_class = 'search-filter'
+          subtabs.dom_class = 'filters'
           subtabs.selected_class = 'filter-active'
 
           subtabs.item :environments, 'Ambientes', search_environments_with_params("ambientes"),
