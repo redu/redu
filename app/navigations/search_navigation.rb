@@ -6,6 +6,7 @@ module SearchNavigation
       tabs.selected_class = 'tab-active'
 
       tabs.item :general, 'Geral', search_path(:q => @query), :class => 'tab',
+        :highlights_on => action_matcher({ 'search' => ['index'] }),
         :link => { :class => 'tab-title icon-basic-guide-lightblue_16_18-before',
                    :title => 'Geral'}
       tabs.item :environments, 'Ambientes', search_environments_path(:q => @query),
