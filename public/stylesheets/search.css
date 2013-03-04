@@ -1,20 +1,107 @@
-.search-portal .title-result-name +
-a {
-  margin-left: 20px;
+.portal-header {
+  padding-top: 19px;
+  position: relative;
 }
-.search-portal .breadcrumb-mini {
-  margin-top: 0;
-  display: inline-block;
+.portal-header .breadcrumb-mini-wrapper {
+  position: absolute;
+  bottom: -5px;
+  width: 100%;
 }
-.search-portal .breadcrumb-mini-wrapper {
+.portal-header +
+.content-body {
+  margin-top: 15px;
+}
+
+.breadcrumb-mini-wrapper {
   height: 18px;
   text-align: center;
 }
-.search-portal .content-body +
+.breadcrumb-mini-wrapper .breadcrumb-mini {
+  display: inline-block;
+}
+.content-body +
 .breadcrumb-mini-wrapper {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.portal-body .tabs {
+  padding-top: 14px;
+}
+.portal-body .tabs +
+.portal-search-result-message,
+.portal-body .tabs +
+.filters-wrapper {
+  margin-top: 10px;
+}
+.portal-body .portal-search-result-message +
+.filters-wrapper {
   margin-top: 15px;
 }
-.search-portal .container {
+
+.filters-wrapper {
+  text-align: center;
+  height: 34px;
+}
+.filters-wrapper .filters {
+  display: inline-block;
+}
+
+.portal-search-result-message {
+  text-align: center;
+}
+
+.portal-search-result-empty {
+  padding-top: 80px;
+  text-align: center;
+}
+
+.portal-search-result-empty-icon {
+  display: inline-block;
+}
+
+.portal-search-result-empty-icon +
+.portal-search-result-empty-message {
+  margin-top: 20px;
+}
+
+.portal-search-result-empty-message {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.portal-header-message {
+  margin-top: 4px;
+  width: 240px;
+  float: right;
+  text-align: right;
+  line-height: 14px;
+}
+
+.portal-search-category-title {
+  font: 300 16px/18px museo-sans, "Helvetica Neue", Arial, sans-serif;
+  letter-spacing: -1px;
+  color: #b2b2b2;
+}
+
+.portal-search-category {
+  padding: 10px 20px 15px 20px;
+}
+
+.portal-search-category-title +
+.portal-search-category-link {
+  margin-left: 20px;
+}
+
+.portal-search-item:nth-child(odd) {
+  padding-left: 20px;
+}
+.portal-search-item:nth-child(even) {
+  padding-right: 20px;
+}
+
+.portal-search {
   background: url("/images/search/search-background_160.png") no-repeat 391px -49px;
 }
 

@@ -4,49 +4,49 @@
   Variáveis:
     space: a disciplina da coleção.
 %>
-<% if space_counter.even? %>
-  <li class="result-separator"><hr></li>
-<% end %>
-<li class="general-list-item">
-  <div class="general-list-item-body">
-    <div class="general-list-item-column">
-      <%= link_to environment_path(space.course.environment),
-        :title => space.course.environment.name do %>
-        <%= image_tag space.course.environment.avatar.url(:thumb_90),
-          :alt => space.course.environment.name,
+<li class="portal-search-item">
+  <div class="general-list-item clearfix">
+    <div class="general-list-item-body">
+      <div class="general-list-item-column">
+        <%= link_to environment_path(space.course.environment),
           :title => space.course.environment.name,
-          :size => "90x90" %>
-      <% end %>
+          :class => "list-environment-course-space-image-link" do %>
+          <%= image_tag space.course.environment.avatar.url(:thumb_32),
+            :alt => space.course.environment.name,
+            :title => space.course.environment.name,
+            :size => "32x32" %>
+        <% end %>
+      </div>
+      <div class="general-list-item-column">
+        <% role_icon = user_course_role(space.course, current_user) %>
+        <% unless role_icon.nil? %>
+          <span class="icon-<%= role_icon %>-lightblue_16_18 show text-replacement pull-right" rel="tooltip" title="<%= role_icon_to_text(role_icon)%>"><%= role_icon_to_text(role_icon)%></span>
+        <% end %>
+        <span class="legend"><%= space.course.environment.name %> —</span>
+        <h5 class="general-list-item-title">
+          <%= link_to space.course.name,
+            environment_course_path(space.course.environment, space.course),
+            :class => "general-list-item-title-link",
+            :title => space.course.name %>
+        </h5>
+        <% unless space.course.owner.nil? %>
+          <span class="legend">Criado por <%= link_to space.course.owner.try(:display_name), user_path(space.course.owner) %></span>
+        <% end %>
+      </div>
     </div>
-    <div class="general-list-item-column">
-      <% role_icon = user_course_role(space.course, current_user) %>
-      <% unless role_icon.nil? %>
-        <span class="icon-<%= role_icon %>-lightblue_16_18 show text-replacement pull-right" rel="tooltip" title="<%= role_icon_to_text(role_icon)%>"><%= role_icon_to_text(role_icon)%></span>
-      <% end %>
-      <span class="legend"><%= space.course.environment.name %> —</span>
-      <h5 class="general-list-item-title">
-        <%= link_to space.course.name,
-          environment_course_path(space.course.environment, space.course),
-          :class => "general-list-item-title-link",
-          :title => space.course.name %>
-      </h5>
-      <% unless space.course.owner.nil? %>
-        <span class="legend">Criado por <%= link_to space.course.owner.try(:display_name), user_path(space.course.owner) %></span>
-      <% end %>
-    </div>
+    <ul class="space-information">
+      <li><hr></li>
+      <li>
+        <%= link_to space.name, space_path(space),
+          :title => space.name,
+          :class => "icon-space-lightblue_16_18-before space-name" %>
+      </li>
+      <%# TODO: Progresso do usuário na disciplina. %>
+      <%#
+      <li class="progress-bar-short progress-bar-thin progress-bar-total">
+        <span class="progress-bar-completed text-replacement" style="width: 100%;">100%</span>
+      </li>
+      %>
+    </ul>
   </div>
-  <ul class="space-information">
-    <li><hr></li>
-    <li>
-      <%= link_to space.name, space_path(space),
-        :title => space.name,
-        :class => "icon-space-lightblue_16_18-before space-name" %>
-    </li>
-    <%# TODO: Progresso do usuário na disciplina. %>
-    <%#
-    <li class="progress-bar-short progress-bar-thin progress-bar-total">
-      <span class="progress-bar-completed text-replacement" style="width: 100%;">100%</span>
-    </li>
-    %>
-  </ul>
 </li>

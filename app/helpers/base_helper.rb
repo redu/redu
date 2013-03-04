@@ -66,6 +66,10 @@ module BaseHelper
     render(:partial => 'shared/subtabs', :locals => locals)
   end
 
+  def filters(context)
+    render_dynamic_navigation(:context => context, :level => 4, :renderer => :links)
+  end
+
   # Cria markup das sub abas a partir da navegação do contexto passado
   def new_subtabs(context)
     render_dynamic_navigation(:context => context, :level => 4, :renderer => :links)

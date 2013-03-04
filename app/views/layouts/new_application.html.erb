@@ -20,7 +20,7 @@
   </head>
   <body>
     <%= render :partial => "shared/nav_global" %>
-    <div class="main-wrapper <%= yield :wrapper_class %>">
+    <div class="main-wrapper">
       <%= render :partial => "shared/outdated_browser_new" %>
       <%= render :partial => "shared/system_flash_message" %>
       <div class="container <%= content_for(:container_class) %>">

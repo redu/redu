@@ -4,59 +4,58 @@
   Variáveis:
     environment: o ambiente da coleção.
 %>
-<% if environment_counter.even? %>
-  <hr>
-<% end %>
-<div class="search-results-list-item">
-  <div class="general-list-item user-n-environment-search-list-item">
-    <div class="general-list-item-body">
-      <%= link_to environment_path(environment), :title => environment.name, :class => "general-list-item-column" do %>
-        <%= image_tag environment.avatar.url(:thumb_90),
-          :alt => environment.name, :title => environment.name,
-          :size => "90x90" %>
-      <% end %>
-      <div class="general-list-item-column">
-        <% role_icon = user_environment_role(environment, current_user) %>
-        <% unless role_icon.nil? %>
-          <span class="icon-<%= role_icon %>-lightblue_16_18 show text-replacement pull-right" rel="tooltip" title="<%= role_icon_to_text(role_icon)%>"><%= role_icon_to_text(role_icon)%></span>
+<li class="portal-search-item">
+  <div class="search-results-list-item">
+    <div class="general-list-item user-n-environment-search-list-item">
+      <div class="general-list-item-body">
+        <%= link_to environment_path(environment), :title => environment.name, :class => "general-list-item-column" do %>
+          <%= image_tag environment.avatar.url(:thumb_90),
+            :alt => environment.name, :title => environment.name,
+            :size => "90x90" %>
         <% end %>
-        <h4 class="general-list-item-title">
-          <%= link_to environment.name, environment_path(environment),
-            :title => environment.name,
-            :class => "general-list-item-title-link text-truncate" %>
-        </h4>
-        <% cache ["search_environment_administrators", environment.id] do %>
-          <%= truncate_html(content_tag(:span, raw("Administrado por #{show_administrators_list(environment.administrators)}"), :class => "legend", :title => "Administrado por #{strip_links(show_administrators_list(environment.administrators))}"), :length => 110) %>
-        <% end %>
-        <span class="legend text-truncate" title="<%= environment.initials.upcase %>"><%= environment.initials.upcase %></span>
-        <ul class="general-list-item-counters">
-          <li class="general-list-item-counter icon-members-gray_16_18-before">
-            <%= pluralize(environment.user_environment_associations.length, "Membro") %>
-          </li>
-          <li class="general-list-item-counter icon-course-gray_16_18-before">
-            <%= pluralize(environment.courses.length, "Curso") %>
-          </li>
-        </ul>
-        <div class="dropdown user-n-environment-search-list-item-button">
-          <button class="dropdown-toggle button-default button-dropdown" data-toggle="dropdown" role="button">
-            <span class="icon-arrow-down-lightblue_8_10 show text-replacement">Expandir</span>
-          </button>
-          <span class="dropdown-arrow icon-arrow-up-dropdown-lightblue_20_8 text-replacement">Seta</span>
-          <div class="dropdown-menu nav-global-profile-dropdown">
-            <div class="nav-global-profile-header">Lista de Cursos (<%= environment.courses.count %>)</div>
-            <ul class="nav-global-profile-items">
-              <% environment.courses.each do |course| %>
-                <li class="nav-global-profile-item">
-                  <%= link_to course.name,
-                    environment_course_path(environment, course),
-                    :class => "icon-course-lightblue_16_18-before text-truncate",
-                    :title => course.name %>
-                </li>
-              <% end %>
-            </ul>
+        <div class="general-list-item-column">
+          <% role_icon = user_environment_role(environment, current_user) %>
+          <% unless role_icon.nil? %>
+            <span class="icon-<%= role_icon %>-lightblue_16_18 show text-replacement pull-right" rel="tooltip" title="<%= role_icon_to_text(role_icon)%>"><%= role_icon_to_text(role_icon)%></span>
+          <% end %>
+          <h4 class="general-list-item-title">
+            <%= link_to environment.name, environment_path(environment),
+              :title => environment.name,
+              :class => "general-list-item-title-link text-truncate" %>
+          </h4>
+          <% cache ["search_environment_administrators", environment.id] do %>
+            <%= truncate_html(content_tag(:span, raw("Administrado por #{show_administrators_list(environment.administrators)}"), :class => "legend", :title => "Administrado por #{strip_links(show_administrators_list(environment.administrators))}"), :length => 110) %>
+          <% end %>
+          <span class="legend text-truncate" title="<%= environment.initials.upcase %>"><%= environment.initials.upcase %></span>
+          <ul class="general-list-item-counters">
+            <li class="general-list-item-counter icon-members-gray_16_18-before">
+              <%= pluralize(environment.user_environment_associations.length, "Membro") %>
+            </li>
+            <li class="general-list-item-counter icon-course-gray_16_18-before">
+              <%= pluralize(environment.courses.length, "Curso") %>
+            </li>
+          </ul>
+          <div class="dropdown user-n-environment-search-list-item-button">
+            <button class="dropdown-toggle button-default button-dropdown" data-toggle="dropdown" role="button">
+              <span class="icon-arrow-down-lightblue_8_10 show text-replacement">Expandir</span>
+            </button>
+            <span class="dropdown-arrow icon-arrow-up-dropdown-lightblue_20_8 text-replacement">Seta</span>
+            <div class="dropdown-menu nav-global-profile-dropdown">
+              <div class="nav-global-profile-header">Lista de Cursos (<%= environment.courses.count %>)</div>
+              <ul class="nav-global-profile-items">
+                <% environment.courses.each do |course| %>
+                  <li class="nav-global-profile-item">
+                    <%= link_to course.name,
+                      environment_course_path(environment, course),
+                      :class => "icon-course-lightblue_16_18-before text-truncate",
+                      :title => course.name %>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</li>

@@ -3,42 +3,98 @@
 // ==========================================================================
 
 
-.search-portal {
-  // Espaçamento entre o contador e o link "Veja todos os resultados".
-  .title-result-name +
-  a { margin-left: 20px; }
+// Comum a todos os portais.
 
-
-  // Posicionamento dos breadcrumbs.
-
-  .breadcrumb-mini {
-    margin-top: 0;
-    display: inline-block;
-  }
+.portal-header/*.clearfix*/ {
+  padding-top: 19px;
+  position: relative;
 
   .breadcrumb-mini-wrapper {
-    height: 18px;
-    text-align: center;
+    position: absolute;
+    bottom: -5px;
+    width: 100%;
   }
 
-  .content-body +
-  .breadcrumb-mini-wrapper { margin-top: 15px; }
-
-  // Imagem de fundo do cabeçalho.
-  .container { background: url("/images/search/search-background_160.png") no-repeat 391px -49px; }
+  & +
+  .content-body { margin-top: 15px; }
 }
 
+.breadcrumb-mini-wrapper {
+  height: 18px;
+  text-align: center;
 
-// Nenhum resultado encontrado.
+  .breadcrumb-mini { display: inline-block; }
 
-.search-empty-result {
+  .content-body +
+  & {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+}
+
+.portal-body {
+  .tabs { padding-top: 14px; }
+
+  .tabs +
+  .portal-search-result-message,
+  .tabs +
+  .filters-wrapper { margin-top: 10px; }
+
+  .portal-search-result-message +
+  .filters-wrapper { margin-top: 15px; }
+}
+
+.filters-wrapper {
+  text-align: center;
+  height: 34px;
+
+  .filters { display: inline-block; }
+}
+
+.portal-search-result-message { text-align: center; }
+
+.portal-search-result-empty {
   padding-top: 80px;
   text-align: center;
 }
 
-.search-empty-result-icon { display: inline-block; }
+.portal-search-result-empty-icon { display: inline-block; }
 
-.search-empty-result-icon +
-.search-empty-result-message { margin-top: 20px; }
+.portal-search-result-empty-icon +
+.portal-search-result-empty-message { margin-top: 20px; }
 
-.search-empty-result-message { color: $gray4; }
+.portal-search-result-empty-message {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// Portal de busca.
+.portal-header-message/*.legend*/ {
+  margin-top: 4px;
+  width: 240px;
+  float: right;
+  text-align: right;
+  line-height: 14px;
+}
+
+.portal-search-category-title {
+  font: 300 16px/18px $museo-sans;
+  letter-spacing: -1px;
+  color: rgb(178, 178, 178);
+}
+
+.portal-search-category { padding: 10px 20px 15px 20px; }
+
+.portal-search-category-title +
+.portal-search-category-link { margin-left: 20px; }
+
+.portal-search-item {
+  &:nth-child(odd) { padding-left: 20px; }
+  &:nth-child(even) { padding-right: 20px; }
+}
+
+.portal-search {
+  // Imagem de fundo do cabeçalho.
+  background: url("/images/search/search-background_160.png") no-repeat 391px -49px;
+}

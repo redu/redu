@@ -4,10 +4,7 @@
   Variáveis:
     user: o usuário da coleção.
 %>
-<% if user_counter.even? %>
-  <hr>
-<% end %>
-<div id="search-results-user-<%= user.id %>" class="search-results-list-item">
+<li id="search-results-user-<%= user.id %>" class="portal-search-item">
   <div class="general-list-item user-n-environment-search-list-item">
     <div class="general-list-item-body">
       <%= link_to user_path(user), :title => user.display_name,
@@ -81,4 +78,4 @@
       </div>
     </div>
   </div>
-</div>
+</li>
