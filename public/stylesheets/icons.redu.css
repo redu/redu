@@ -555,7 +555,7 @@
 
 .icon-environment-lightblue_32_34 { background-position: -400px 0px !important;}
 
-.icon-environment-lightblue_16_18 { background-position: -80px 0 }
+/*.icon-environment-lightblue_16_18 { background-position: -80px 0 }*/
 .icon-environment-lightblue_16_18-before:before,
 .subtabs .ui-state-default .icon-environment_16_18-before:before,
 .local-nav .icon-environment_16_18-before:before {
@@ -1257,7 +1257,7 @@
   background: url("../images/new/icons-small.png") 0px -2320px no-repeat;
 }
 
-.icon-profile-lightblue_16_18 { background-position: -80px  -2320px !important; }
+/*.icon-profile-lightblue_16_18 { background-position: -80px  -2320px !important; }*/
 .icon-profile-lightblue_16_18-before:before,
 .tabs .ui-state-active .icon-profile_16_18-before:before,
 .local-nav .icon-profile_16_18-before:before {

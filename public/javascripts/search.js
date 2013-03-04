@@ -19,7 +19,8 @@ $(function(){
     $("#q").searchTokenInput(url);
   }
 
-  updateTokenInput($(".form-search").attr("action"));
+  // TODO: Re-ativar quando estiver trabalhando na busca instantânea.
+  // updateTokenInput($(".form-search").attr("action"));
 
   $(".form-search-filters-dropdown :radio").change(function() {
     $this = $(this)[0];
@@ -33,6 +34,7 @@ $(function(){
     }
 
     $(".form-search").attr("action", url);
-    updateTokenInput(url);
+    // TODO: Re-ativar quando estiver trabalhando na busca instantânea.
+    // updateTokenInput(url);
   });
 });

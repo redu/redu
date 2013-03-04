@@ -1,5 +1,5 @@
-<%# Formulário de busca com filtros %>
-<%= form_tag(search_path, :method => "GET", :class => "form-search form-search-filters form-search-expandable pull-right area-fix control-autocomplete") do %>
+<%# Formulário de busca com filtros. %>
+<%= form_tag(search_path, :method => "GET", :class => "form-search form-search-filters form-search-expandable pull-left area-fix") do %>
   <div class="button-group area-prefix">
     <button class="form-search-filters-button button-default clearfix dropdown-toggle" data-toggle="dropdown">
       <span class="control-search-icon icon-basic-guide-gray_16_18 text-replacement pull-left">Filtrar</span>
@@ -24,7 +24,7 @@
       </li>
     </ul>
   </div>
-  <%= text_field_tag(:q, nil, :placeholder => "Pesquise...", :class => "control-area area-infix control-autocomplete-input") %>
+  <%= text_field_tag(:q, nil, :placeholder => "Pesquise...", :class => "control-area area-infix") %>
   <button class="button-default area-suffix" type="submit">
     <span class="control-search-icon icon-magnifier-gray_16_18 text-replacement ">Buscar</span>
   </button>

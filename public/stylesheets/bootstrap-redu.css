@@ -5186,9 +5186,13 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
   background: #158ac4 !important;
 }
 
-.nav-global-buttons-dropdown {
-  margin: 4px 0 0;
+.nav-global-right-area {
   float: right;
+  padding-top: 4px;
+}
+.nav-global-right-area .form-search +
+.button-toolbar {
+  margin-left: 10px;
 }
 
 .nav-global-button-dropdown {
