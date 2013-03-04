@@ -4,14 +4,18 @@
   Variáveis:
     query: o termo pesquisado.
 %>
-<div class="search-title-header">
+<%# TODO: remover .search-title-header. %>
+<div class="search-title-header portal-header clearfix">
+
   <h2 class="portal-title icon-search-gray_48_50-before pull-left">
     <%= link_to "Busca por Ambientes e Perfis", search_path(:q => query),
       :class => "portal-title-link",
       :title => "Busca por Ambientes e Perfis" %>
   </h2>
-  <div id="search-breadcrumb" class="breadcrumb-mini-wrapper">
+
+  <div class="breadcrumb-mini-wrapper">
     <%= render :partial => "breadcrumb_mini", :locals => { :query => query } %>
   </div>
-  <span class="legend">Busque pelos Ambientes de Aprendizagem e seus Cursos e Disciplinas. Você também pode buscar pelos Perfis que fazem parte do Redu.</span>
+
+  <p class="portal-header-message legend">Busque pelos Ambientes de Aprendizagem e seus Cursos e Disciplinas. Você também pode buscar pelos Perfis que fazem parte do Redu.</p>
 </div>
