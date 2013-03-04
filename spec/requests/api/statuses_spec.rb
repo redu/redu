@@ -100,7 +100,7 @@ describe "Statuses" do
     end
 
     it "should have type, created_at and text" do
-      %w(type created_at text).each do |attr|
+      %w(type created_at text logeable_type).each do |attr|
         @entity.should have_key attr
       end
     end
