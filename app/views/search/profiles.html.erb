@@ -2,7 +2,7 @@
 
 <div class="span16">
   <%= render :partial => "header", :locals => { :query => @query } %>
-  <div class="content-body search-content">
+  <div class="portal-body content-body search-content">
     <%= new_tabs :search %>
     <%# Se foi encontrado algum resultado. %>
     <% if @total_results > 0 %>
