@@ -13,12 +13,12 @@
       <div class="nav-global-buttons-dropdown button-toolbar">
         <%= render "shared/search_form" %>
         <div class="button-group">
-          <button class="button-default nav-global-button-dropdown dropdown-toggle icon-profile-2-lightblue_16_18-before" data-toggle="dropdown">
-            <span class="button-dropdown-arrow icon-arrow-down-lightblue_8_10"></span>
+          <button class="button-default nav-global-button-dropdown dropdown-toggle icon-profile-lightblue_16_18-before" data-toggle="dropdown">
+            <span class="button-dropdown-arrow icon-arrow-down-gray_8_10"></span>
           </button>
+          <span class="dropdown-arrow icon-arrow-up-dropdown-lightblue_20_8 text-replacement">Seta</span>
           <% cache ['nav_global_dropdown_menu', current_user.id] do %>
             <div class="dropdown-menu nav-global-profile-dropdown">
-              <div class="arrow"></div>
               <div class="nav-global-profile-header">
                 <%= current_user.display_name %>
               </div>

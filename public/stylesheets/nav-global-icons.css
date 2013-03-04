@@ -1,33 +1,45 @@
-.icon-sprite, .icon-arrow-down-blue_8_10, .button-default:hover .icon-arrow-down-lightblue_8_10, .icon-arrow-down-lightblue_8_10, .icon-arrow-up-blue_8_10, .open .button-default:hover .icon-arrow-down-lightblue_8_10, .icon-arrow-up-lightblue_8_10, .open .icon-arrow-down-lightblue_8_10, .icon-manage-blue_16_18, .icon-manage-lightblue_16_18-before:hover:before, .icon-manage-lightblue_16_18, .icon-manage-lightblue_16_18-before:before, .icon-message-blue_16_18, .icon-message-lightblue_16_18-before:hover:before, .icon-message-lightblue_16_18, .icon-message-lightblue_16_18-before:before, .icon-partner-blue_16_18, .icon-partner-lightblue_16_18-before:hover:before, .icon-partner-lightblue_16_18, .icon-partner-lightblue_16_18-before:before, .icon-profile-2-blue_16_18, .icon-profile-2-lightblue_16_18-before:hover:before, .icon-profile-2-lightblue_16_18, .icon-profile-2-lightblue_16_18-before:before, .icon-profile-blue_16_18, .icon-profile-lightblue_16_18-before:hover:before, .icon-profile-lightblue_16_18, .icon-profile-lightblue_16_18-before:before {
-  background: url('/images/nav-global/icon-sd3d97c8ef2.png') no-repeat;
+.icon-sprite, .icon-arrow-down-blue_8_10, .button-default:hover .icon-arrow-down-lightblue_8_10, .icon-arrow-down-gray_8_10, .icon-arrow-down-lightblue_8_10, .icon-arrow-up-blue_8_10, .open .button-default:hover .icon-arrow-down-lightblue_8_10, .icon-arrow-up-dropdown-lightblue_20_8, .icon-arrow-up-lightblue_8_10, .open .icon-arrow-down-lightblue_8_10, .icon-manage-blue_16_18, .icon-manage-lightblue_16_18-before:hover:before, .icon-manage-lightblue_16_18, .icon-manage-lightblue_16_18-before:before, .icon-message-blue_16_18, .icon-message-lightblue_16_18-before:hover:before, .icon-message-lightblue_16_18, .icon-message-lightblue_16_18-before:before, .icon-partner-blue_16_18, .icon-partner-lightblue_16_18-before:hover:before, .icon-partner-lightblue_16_18, .icon-partner-lightblue_16_18-before:before, .icon-profile-blue_16_18, .icon-profile-lightblue_16_18-before:hover:before, .icon-profile-lightblue_16_18, .icon-profile-lightblue_16_18-before:before {
+  background: url('/images/nav-global/icon-sf6ed7caff5.png') no-repeat;
 }
 
 .icon-arrow-down-blue_8_10, .button-default:hover .icon-arrow-down-lightblue_8_10 {
-  background-position: 0 0;
+  background-position: -8px -8px;
+  height: 10px;
+  width: 8px;
+}
+
+.icon-arrow-down-gray_8_10 {
+  background-position: 0 -8px;
   height: 10px;
   width: 8px;
 }
 
 .icon-arrow-down-lightblue_8_10 {
-  background-position: -8px 0;
+  background-position: 0 -18px;
   height: 10px;
   width: 8px;
 }
 
 .icon-arrow-up-blue_8_10, .open .button-default:hover .icon-arrow-down-lightblue_8_10 {
-  background-position: 0 -10px;
+  background-position: 0 -28px;
   height: 10px;
   width: 8px;
 }
 
+.icon-arrow-up-dropdown-lightblue_20_8 {
+  background-position: 0 0;
+  height: 8px;
+  width: 20px;
+}
+
 .icon-arrow-up-lightblue_8_10, .open .icon-arrow-down-lightblue_8_10 {
-  background-position: -8px -10px;
+  background-position: -8px -18px;
   height: 10px;
   width: 8px;
 }
 
 .icon-manage-blue_16_18, .icon-manage-lightblue_16_18-before:hover:before {
-  background-position: 0 -74px;
+  background-position: 0 -56px;
   height: 18px;
   width: 16px;
 }
@@ -39,49 +51,37 @@
 }
 
 .icon-message-blue_16_18, .icon-message-lightblue_16_18-before:hover:before {
-  background-position: 0 -56px;
+  background-position: 0 -74px;
   height: 18px;
   width: 16px;
 }
 
 .icon-message-lightblue_16_18, .icon-message-lightblue_16_18-before:before {
-  background-position: 0 -20px;
-  height: 18px;
-  width: 16px;
-}
-
-.icon-partner-blue_16_18, .icon-partner-lightblue_16_18-before:hover:before {
   background-position: 0 -92px;
   height: 18px;
   width: 16px;
 }
 
-.icon-partner-lightblue_16_18, .icon-partner-lightblue_16_18-before:before {
+.icon-partner-blue_16_18, .icon-partner-lightblue_16_18-before:hover:before {
   background-position: 0 -110px;
   height: 18px;
   width: 16px;
 }
 
-.icon-profile-2-blue_16_18, .icon-profile-2-lightblue_16_18-before:hover:before {
+.icon-partner-lightblue_16_18, .icon-partner-lightblue_16_18-before:before {
   background-position: 0 -128px;
   height: 18px;
   width: 16px;
 }
 
-.icon-profile-2-lightblue_16_18, .icon-profile-2-lightblue_16_18-before:before {
+.icon-profile-blue_16_18, .icon-profile-lightblue_16_18-before:hover:before {
   background-position: 0 -146px;
   height: 18px;
   width: 16px;
 }
 
-.icon-profile-blue_16_18, .icon-profile-lightblue_16_18-before:hover:before {
-  background-position: 0 -164px;
-  height: 18px;
-  width: 16px;
-}
-
 .icon-profile-lightblue_16_18, .icon-profile-lightblue_16_18-before:before {
-  background-position: 0 -182px;
+  background-position: 0 -164px;
   height: 18px;
   width: 16px;
 }

@@ -12,12 +12,14 @@ module Api
 
     def create
       subject = Subject.find(params[:subject_id])
+      canvas_builder = CanvasService.new(:access_token => current_access_token)
+
       lecture = Lecture.new do |l|
         l.name = params[:lecture][:name]
         l.position = params[:lecture][:position]
         l.owner = current_user
         l.subject = subject
-        l.lectureable = create_lectureable(params[:lecture])
+        l.lectureable = canvas_builder.create(params[:lecture])
       end
 
       authorize! :manage, lecture
@@ -48,24 +50,6 @@ module Api
         format.json do
           render :json => lectures.extend(LecturesRepresenter)
         end
-      end
-    end
-
-    protected
-
-    def create_lectureable(lecture_attrs)
-      case lecture_attrs[:type].try(:downcase)
-      when "canvas"
-        c_app_id = lecture_attrs[:lectureable][:client_application_id]
-        attrs = {
-          :user_id => current_user.id,
-          :client_application_id => c_app_id,
-        }
-        if url = lecture_attrs[:lectureable][:current_url]
-          attrs.merge!({:url => url})
-        end
-
-        canvas = Api::Canvas.create(attrs)
       end
     end
   end

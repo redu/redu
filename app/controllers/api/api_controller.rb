@@ -44,9 +44,11 @@ module Api
     protected
 
     def current_user
-      token = env["oauth.token"]
-      token.try(:user)
+      current_access_token.try(:user)
     end
 
+    def current_access_token
+      env["oauth.token"]
+    end
   end
 end

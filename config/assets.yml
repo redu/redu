@@ -134,7 +134,6 @@ stylesheets:
   new_application:
     - public/stylesheets/icons.redu.css
     - public/stylesheets/utils.css
-    - public/stylesheets/bootstrap-redu.css
     - public/stylesheets/home.css
     - public/stylesheets/search.css
     - public/stylesheets/wall.css
@@ -142,7 +141,6 @@ stylesheets:
     - public/stylesheets/outdated-browser-new.css
     - public/stylesheets/token-input.css
   landing:
-    - public/stylesheets/bootstrap-redu.css
     - public/stylesheets/landing-new.css
     - public/stylesheets/outdated-browser-new.css
     - public/stylesheets/icons.redu.css

@@ -13,12 +13,6 @@ $icon-sprite-dimensions: true;
 
 [class*="icon-"][class*="-before"]:before { @include pseudo-before(5px, false); }
 
-// Perfil 2.
-.icon-profile-2-lightblue_16_18-before {
-  &:before { @extend .icon-profile-2-lightblue_16_18; }
-  &:hover:before { @extend .icon-profile-2-blue_16_18; }
-}
-
 // Perfil.
 .icon-profile-lightblue_16_18-before {
   &:before { @extend .icon-profile-lightblue_16_18; }

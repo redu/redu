@@ -20,10 +20,11 @@ describe "Spaces API" do
       end
     end
 
-    %w(self course environment users statuses timeline folders).each do |link|
-      it "should hold a relationship to #{link}"  do
-        href_to(link, parse(response.body)).should_not be_blank
-      end
+    %w(self course environment users statuses timeline folders canvas).
+      each do |link|
+        it "should hold a relationship to #{link}"  do
+          href_to(link, parse(response.body)).should_not be_blank
+        end
     end
   end
 
