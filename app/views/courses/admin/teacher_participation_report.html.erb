@@ -13,7 +13,7 @@
     <%= render :partial => 'courses/admin/clean_header' %>
     <%= tabs :courses_admin do %>
       <% if @course.teachers.empty? %>
-        <div class="body">
+        <div class="body preview">
           <div class="flash-message notice">
             <ul class="message icons-big-before icon-privacy-lightred_64_66-before">
               <li>O conteúdo desta página não está disponível para o curso que não possui professores.</li>
