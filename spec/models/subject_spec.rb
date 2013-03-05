@@ -240,7 +240,8 @@ describe Subject do
 
 
       @subject = Factory(:subject, :owner => @user, :space => @space)
-      @enrollments = @subject.create_enrollment_associations
+      @subject.create_enrollment_associations
+      @enrollments = @subject.enrollments
     end
 
     it "should send a notification to visualization" do
