@@ -335,14 +335,17 @@ a:hover {
   background: #158ac4 !important;
 }
 
-.nav-global-buttons-dropdown {
-  margin: 4px 0 0;
+.nav-global-right-area {
   float: right;
+  padding-top: 4px;
+}
+.nav-global-right-area .form-search +
+.button-toolbar {
+  margin-left: 10px;
 }
 
 .nav-global-button-dropdown {
   padding: 6px 5px 6px 7px;
-  margin: 0;
 }
 .nav-global-button-dropdown:before {
   float: left;
@@ -497,4 +500,246 @@ a:hover {
   background-position: 0 -40px;
   height: 40px;
   width: 140px;
+}
+
+.pull-right {
+  float: right;
+}
+
+.pull-left {
+  float: left;
+}
+
+.area-fix {
+  position: relative;
+}
+
+.area-prefix,
+.area-suffix {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+
+.area-prefix {
+  left: 0;
+}
+
+.area-suffix {
+  right: 0;
+}
+
+.form-search .area-suffix {
+  width: 42px;
+}
+.form-search .area-infix {
+  padding-right: 52px;
+}
+.form-search .area-suffix {
+  padding: 6px 12px;
+}
+.form-search.control-big .area-suffix {
+  width: 52px;
+}
+.form-search.control-big .area-infix {
+  padding-right: 62px;
+}
+.form-search.control-big .area-suffix {
+  padding: 11px 17px;
+}
+
+.form-search-expandable {
+  width: 200px;
+}
+
+.form-search-filters .area-prefix {
+  width: 43px;
+}
+.form-search-filters .area-infix {
+  padding-left: 53px;
+}
+.form-search-filters .form-search-filters-button {
+  padding: 6px;
+}
+.form-search-filters .control-search-icon +
+.button-dropdown-arrow {
+  margin-left: 5px;
+}
+.form-search-filters.control-big .area-prefix {
+  width: 52px;
+}
+.form-search-filters.control-big .area-infix {
+  padding-left: 62px;
+}
+.form-search-filters.control-big .form-search-filters-button {
+  padding: 11px 10px;
+}
+.form-search-filters .form-search-filters-button {
+  -webkit-border-top-right-radius: 0;
+  -moz-border-radius-topright: 0;
+  border-top-right-radius: 0;
+  -webkit-border-bottom-right-radius: 0;
+  -moz-border-radius-bottomright: 0;
+  border-bottom-right-radius: 0;
+}
+
+.form-search-filters-dropdown {
+  width: 145px;
+  padding: 7px 0;
+}
+.form-search-filters-dropdown .nav-global-profile-item {
+  padding: 2px 9px;
+}
+.form-search-filters-dropdown .nav-global-profile-item:last-child {
+  padding-left: 9px;
+}
+.form-search-filters-dropdown.dropdown-menu {
+  right: -50px;
+}
+.form-search-filters-dropdown .control-checked .legend {
+  color: #6d6e6f;
+  font-weight: bold;
+}
+.form-search-filters-dropdown input[type="radio"] {
+  margin-right: 0;
+}
+
+.control-search-icon {
+  display: block;
+}
+
+.cssgradients .open .control-option-list .form-search-filters-button,
+.control-option-list .form-search-filters-button .no-cssgradients.gt-ie8 .open, .cssgradients .open
+.control-option-list .area-suffix,
+.control-option-list .area-suffix .no-cssgradients.gt-ie8 .open, .cssgradients .open
+.form-search .form-search-filters-button,
+.form-search .form-search-filters-button .no-cssgradients.gt-ie8 .open, .cssgradients .open
+.form-search .area-suffix,
+.form-search .area-suffix .no-cssgradients.gt-ie8 .open {
+  background-image: none;
+}
+.control-option-list .area-suffix,
+.form-search .area-suffix {
+  -webkit-border-top-left-radius: 0;
+  -moz-border-radius-topleft: 0;
+  border-top-left-radius: 0;
+  -webkit-border-bottom-left-radius: 0;
+  -moz-border-radius-bottomleft: 0;
+  border-bottom-left-radius: 0;
+}
+
+input[type="text"]:focus {
+  color: #000;
+  background-color: #fff !important;
+  background-image: none !important;
+  border-color: #73c3e6;
+  outline: 0;
+  -webkit-box-shadow: inset 0 0 0 rgba(0,0,0,0),0 0 6px 1px #73c3e6;
+  -moz-box-shadow: inset 0 0 0 rgba(0,0,0,0),0 0 6px 1px #73c3e6;
+  box-shadow: inset 0 0 0 rgba(0,0,0,0),0 0 6px 1px #73c3e6;
+}
+
+.cssgradients input[type="text"] {
+  background-image: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(60.0%, #ffffff), color-stop(100%, #e6e6e6));
+  background-image: -webkit-linear-gradient(bottom, #ffffff 60.0%,#e6e6e6);
+  background-image: -moz-linear-gradient(bottom, #ffffff 60.0%,#e6e6e6);
+  background-image: -o-linear-gradient(bottom, #ffffff 60.0%,#e6e6e6);
+  background-image: linear-gradient(bottom, #ffffff 60.0%,#e6e6e6);
+}
+
+.csstransitions input[type="text"] {
+  -webkit-transition: border linear 0.2s,box-shadow linear 0.2s;
+  -moz-transition: border linear 0.2s,box-shadow linear 0.2s;
+  -ms-transition: border linear 0.2s,box-shadow linear 0.2s;
+  -o-transition: border linear 0.2s,box-shadow linear 0.2s;
+  transition: border linear 0.2s,box-shadow linear 0.2s;
+}
+
+input[type="text"] {
+  margin-left: 0;
+}
+
+input[type="text"] {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-box-shadow: inset 0 1px 0 #fff;
+  -moz-box-shadow: inset 0 1px 0 #fff;
+  box-shadow: inset 0 1px 0 #fff;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  padding: 6px 10px;
+  width: 100%;
+  color: #6d6e6f;
+  font-size: 13px;
+  line-height: 18px;
+  height: 32px;
+}
+
+label, input[type="text"] {
+  font-size: 13px;
+  font-weight: normal;
+  line-height: 18px;
+  font-family: "Helvetica Neue",Arial,sans-serif;
+  font-weight: 300;
+}
+
+input[type="text"] {
+  line-height: normal;
+}
+
+input[type="text"] {
+  margin: 0;
+  font-size: 100%;
+  vertical-align: middle;
+}
+
+.nav-global .button-default { margin: 0; }
+
+.control-checked {
+  color: #000;
+}
+
+.control-radio, .control-checkbox {
+  display: block;
+  min-height: 18px;
+  padding-left: 19px;
+  overflow: hidden;
+  color: #6d6e6f;
+}
+
+.control-radio input[type="radio"], .control-checkbox input[type="checkbox"] {
+  float: left;
+  margin-left: -18px;
+  margin-right: 10px;
+}
+
+input[type="radio"], input[type="checkbox"] {
+  width: auto;
+}
+
+input[type="radio"], input[type="checkbox"] {
+  margin: 3px 0;
+  line-height: normal;
+  cursor: pointer;
+}
+
+.form-search-filters-dropdown .control-checked .legend {
+  color: #6d6e6f;
+  font-weight: bold;
+}
+
+.legend {
+  font-size: 11px;
+  line-height: 11px;
+}
+
+.legend {
+  color: #b3b3b3;
 }

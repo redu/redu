@@ -84,7 +84,8 @@ javascripts:
     - public/javascripts/embedly.redu.jquery.js
     - public/javascripts/jquery.timeago.js
     - public/javascripts/timeago.js
-    - public/javascripts/bootstrap-redu-dropdown.js
+    - public/javascripts/bootstrap-redu-dropdown.js # Somente para a nav global.
+    - public/javascripts/bootstrap-nav-global.js # Somente para a nav global.
   chat:
     - public/javascripts/jquery.pjax.js
     - public/javascripts/pusher.js
