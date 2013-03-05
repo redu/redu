@@ -124,6 +124,10 @@
   width: 16px;
 }
 
+.statuses .remove-help-request {
+  position: relative;
+}
+
 .statuses .status-message {
   line-height: 18px;
   overflow: hidden;
