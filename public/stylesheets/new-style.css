@@ -1959,6 +1959,10 @@ body {
   padding: 2px 0 2px 25px;
 }
 
+#content .incomplete-profile + .new-friendship {
+  margin-top: 10px;
+}
+
 #content .actions {
   margin-left: 10px;
 }
