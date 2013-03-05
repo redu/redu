@@ -314,7 +314,6 @@ var findIconClasses = function(classes) {
   })
 
 }(window.jQuery);
-
 /* =========================================================
  * bootstrap-modal.js v2.0.4
  * http://twitter.github.com/bootstrap/javascript.html#modals
@@ -534,7 +533,6 @@ var findIconClasses = function(classes) {
   })
 
 }(window.jQuery);
-
 /* ===========================================================
  * bootstrap-tooltip.js v2.0.4
  * http://twitter.github.com/bootstrap/javascript.html#tooltips
@@ -1125,7 +1123,6 @@ $(function() {
   // Adiciona os eventos dos filtros da visão geral.
   $('.filters-general-view').reduFilter()
 })
-
 !(function($) {
 
   "use strict";
@@ -1423,7 +1420,6 @@ $(function() {
   , autoInit : true
   }
 })
-
 !(function($) {
 
   'use strict';
@@ -1464,7 +1460,6 @@ $(function() {
 $(function() {
   $('.link-container').reduLinks()
 })
-
 !(function($) {
 
   "use strict";
@@ -1537,7 +1532,6 @@ $(function() {
     e.preventDefault()
   });
 });
-
 !(function($) {
 
   "use strict";
@@ -1746,7 +1740,6 @@ $(function() {
 $(function() {
   $('.control-invite-by-mail').reduAutocomplete('inviteByMail')
 })
-
 !(function($) {
 
   "use strict";
@@ -1984,7 +1977,6 @@ $(function() {
     $modal.length !== 0 && $modal.hasClass("modal") && $modal.modal("show")
   }
 })
-
 /*global findIconClasses */
 
 !(function($) {
@@ -2221,6 +2213,13 @@ $(function() {
 
         if ($searchField.hasClass('control-area')) {
           $searchField.searchField('collapse')
+        }
+      })
+      .on("keypress", ".form-search-filters .control-area", function(e) {
+        // Submete o formulário quando o Enter é pressionado ao invés de abrir o dropdown.
+        if (e.which == 13) {
+          $(this).closest('.form-search-filters').submit();
+          return false;
         }
       })
   })
