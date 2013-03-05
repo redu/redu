@@ -7,6 +7,7 @@
                              :role => Role[:member]),
       :remote => true, :method => :post, :class => "option" %>
   <% else %>
+   <%= link_to "< voltar para a lista de membros", admin_members_environment_path(@environment), :class => "member-list link-secondary" %>
   <span class="current-role">O membro não possui nível de administrador</span>
     <%= link_to "Tornar administrador",
       environment_user_roles_path(@environment, membership.user,
