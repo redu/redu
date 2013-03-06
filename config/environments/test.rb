@@ -71,8 +71,8 @@ Redu::Application.configure do
   OmniAuth.config.test_mode = true
 
   # Configura o mockup do OmniAuth
-  OmniAuth.config.mock_auth[:facebook] = {
-    :provider => 'facebook',
+  OmniAuth.config.mock_auth[:some_provider] = {
+    :provider => 'some-provider',
     :uid => '123545',
     :info => {:email => 'user@example.com',
       :first_name => 'Some',
