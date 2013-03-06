@@ -37,4 +37,11 @@ $(function(){
     // TODO: Re-ativar quando estiver trabalhando na busca instantânea.
     // updateTokenInput(url);
   });
+
+  $(".form-search").live("submit", function(){
+    var val = $(this).children('input').val();
+    if ($.trim(val) === "") {
+      return false;
+    }
+  })
 });
