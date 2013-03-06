@@ -71,8 +71,9 @@ module SearchHelper
     end
   end
 
-  # Filtra disciplinas pelo usuário
-  def filter_spaces(collection)
-    SpaceSearch.filter_my_spaces(collection, current_user)
+  # Só permite mostrar as disciplinas do curso se o usuário tem acesso ao mesmo
+  # e se existe pelo menos uma disciplina para mostrar
+  def show_course_spaces(course)
+    course.spaces.length > 0 && current_user.has_access_to?(course)
   end
 end
