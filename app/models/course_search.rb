@@ -10,7 +10,6 @@ class CourseSearch < Search
                                         :spaces, :owner]
 
     searcher.search({ :query => query, :page => page,
-                      :per_page => per_page, :include => includes,
-                      :order => :desc })
+                      :per_page => per_page, :include => includes })
   end
 end
