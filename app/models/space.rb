@@ -117,7 +117,7 @@ class Space < ActiveRecord::Base
   # ver app/jobs/notify_space_added_job.rb
   def delay_notify_space_added
     job = NotifySpaceAddedJob.new(:space_id => self.id)
-    Delayed::Job.enqueue(job, :queue => 'general')
+    Delayed::Job.enqueue(job, :queue => 'email')
   end
 
   def lectures_count
