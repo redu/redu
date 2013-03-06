@@ -235,7 +235,7 @@ module Redu
                                         :vis_status_observer,
                                         :vis_user_observer,
                                         :vis_lecture_observer,
-
+                                        :seminar_observer,
       ]
     end
 
