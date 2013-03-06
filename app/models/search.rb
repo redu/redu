@@ -11,7 +11,7 @@ class Search
     @klass = model
   end
 
-  def search(opts = { :order => :asc })
+  def search(opts)
     klass.send("search", { :include => opts[:include] }) do
       fulltext opts[:query]
       order_by :score, opts[:order]

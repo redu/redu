@@ -76,7 +76,7 @@ class SearchController < BaseController
     # Este método não é feito antes pois precisa que a busca
     # já tenha sido avaliada.
     if @individual_page
-      @entity_paginate = results.select{ |entity| entity.size > 1 }.first || []
+      @entity_paginate = results.select{ |entity| entity.size > 0 }.first || []
     end
 
     respond_to do |format|
