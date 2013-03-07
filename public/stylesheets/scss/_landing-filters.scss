@@ -21,7 +21,7 @@
   z-index: 999;
   width: 939px;
 
-  .cssgradients & { @include reduGradient(rgba(255, 255, 255, 0), $white, 0.1); }
+  .cssgradients & { @include redu-gradient(rgba(255, 255, 255, 0), $white, 0.1); }
 
   .no-cssgradients.gt-ie8 & {
     //http://www.colorzilla.com/gradient-editor/#ffffff+0,ffffff+100&1+70,0+99;Custom
