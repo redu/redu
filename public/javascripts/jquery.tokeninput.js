@@ -237,10 +237,11 @@ $.TokenList = function (input, url_or_data, settings) {
     var input_val;
 
     // Create a new text input an attach keyup events
-    var input_box = $("<input type=\"text\"  autocomplete=\"off\" autocapitalize=\"off\">")
+    var input_box = $("<input class=\"content-area area-infix\" type=\"text\"  autocomplete=\"off\" autocapitalize=\"off\">")
         .css({
             outline: "none"
         })
+        .attr("placeholder", $(input).attr("placeholder"))
         .attr("id", $(input).data("settings").idPrefix + input.id)
         .focus(function () {
             if ($(input).data("settings").disabled) {
@@ -551,8 +552,8 @@ $.TokenList = function (input, url_or_data, settings) {
         // Enter new content into resizer and resize input accordingly
         input_resizer.html(_escapeHTML(input_val));
         // Get maximum width, minimum the size of input and maximum the widget's width
-        input_box.width(Math.min(token_list.width(),
-                                 Math.max(width_left, input_resizer.width() + 30)));
+        // input_box.width(Math.min(token_list.width(),
+        //                          Math.max(width_left, input_resizer.width() + 30)));
     }
 
     function is_printable_character(keycode) {
