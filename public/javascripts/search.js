@@ -50,15 +50,16 @@ $(function() {
     updateTokenInput(url);
   });
 
-  $(".form-search").live("submit", function(){
-    var val = $(this).children('input').val();
+  // Evita que o formulário seja submetido vazio.
+  $(document).on("submit", ".form-search", function(e) {
+    var val = $(this).find('#token-input-q').val();
     if ($.trim(val) === "") {
       return false;
     }
-  })
+  });
 
   // BUGFIX: remove o .token-input-list-redu adicionado quando um filtro é escolhido.
   $(document).on("change", "input:radio", function() {
     $(".token-input-list-redu").last().remove();
-  })
+  });
 });

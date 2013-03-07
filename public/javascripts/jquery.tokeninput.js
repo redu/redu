@@ -241,6 +241,8 @@ $.TokenList = function (input, url_or_data, settings) {
         .css({
             outline: "none"
         })
+        // Adiciona o valor do atributo name original.
+        .attr("name", $(input).attr("name"))
         .attr("placeholder", $(input).attr("placeholder"))
         .attr("id", $(input).data("settings").idPrefix + input.id)
         .focus(function () {
@@ -259,7 +261,8 @@ $.TokenList = function (input, url_or_data, settings) {
               add_freetagging_tokens();
             }
 
-            $(this).val("");
+            // Evita que o valor do campo seja apagado quando submeter o form.
+            // $(this).val("");
             token_list.removeClass($(input).data("settings").classes.focused);
         })
         .bind("keyup keydown blur update", resize_input)
@@ -363,6 +366,8 @@ $.TokenList = function (input, url_or_data, settings) {
                     break;
             }
         });
+    // Altera o atributo name do input original para não conflitar.
+    $(input).attr("name", $(input).attr("name") + "-old");
 
     // Keep reference for placeholder
     if (settings.placeholder)
