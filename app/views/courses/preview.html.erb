@@ -1,7 +1,14 @@
+<%= stylesheet_link_tag "preview-course-old.css" %>
+<% unless current_user %>
+  <% content_for(:nav_global) do %>
+    <%= render :partial => 'shared/header_not_logged_in' %>
+  <% end %>
+<% end %>
+
 <%= render :partial => 'courses/sidebar',
   :locals => { :course => @course }  %>
 
-<div class="main grid_12 omega big-col">
+<div id="course-preview" class="main grid_12 omega big-col">
   <%= render :partial => "courses/breadcrumbs",
     :locals => { :course => @course } %>
   <%= render :partial => 'courses/header',
@@ -18,7 +25,21 @@
           <li>Para visualizar as disciplinas do curso, matricule-se e aguarde a confirmação.</li>
 
           <li>Você também pode ver os atuais <%= link_to "membros do curso", environment_course_users_path(@course.environment, @course)%>.</li>
-          <ul>
+          <li>
+        </ul>
+        <% unless @course.users.include?(current_user) %>
+          <% if current_user %>
+            <% if can? :add_entry, @course %>
+              <%= link_to 'Matricular-se',
+                join_environment_course_path(@course.environment, @course),
+                :method => :post, :class => 'button-success button-big join-button' %>
+            <% else %>
+              <button class="button-success button-big button-disabled join-button" rel="popover" data-original-title="Limite de vagas atingido." data-content="O limite de vagas foi atingido, portanto, você não poderá se matricular agora. Fale com o administrador ou professor do curso para que ele libere mais vagas.">Matricular-se</button>
+            <% end %>
+          <% else %>
+            <button class="button-success button-big button-disabled join-button" rel="popover" data-original-title="Deseja participar deste curso?" data-content="Para se matricular neste curso, você precisa se cadastrar no Redu. Caso já tenha cadastro, basta acessar sua conta e este botão ficará disponível para a solicitação da matrícula. </br> </br> Cadastre-se ou acesse a sua conta através do menu superior &#8593;.">Matricular-se</button>
+          <% end %>
+        <% end %>
       </div>
     <% end %>
   </div>

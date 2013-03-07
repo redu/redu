@@ -18,11 +18,11 @@ class CoursesController < BaseController
     session[:return_to] = request.fullpath
 
     if @course.blocked?
-      flash[:notice] = "Entre em contato com o administrador deste curso."
+      flash[:info] = "Entre em contato com o administrador deste curso."
     elsif current_user.nil?
-      flash[:notice] = "Essa área só pode ser vista após você acessar o Redu com seu nome e senha."
+      flash[:info] = "Essa área só pode ser vista após você acessar o Redu com seu nome e senha."
     else
-      flash[:notice] = "Você não tem acesso a essa página"
+      flash[:info] = "Você não tem acesso a essa página"
     end
 
     redirect_to preview_environment_course_path(@environment, @course)
@@ -162,11 +162,16 @@ class CoursesController < BaseController
       redirect_to environment_course_path(@environment, @course) and return
     end
 
+    # Ao retornar, usário é direcionado a página de preview, pois se voltar
+    # para o show poderá receber mensagens de acesso negado que irão
+    # confundí-lo
+    session[:return_to] = request.fullpath
+
     @spaces = @course.spaces.paginate(:page => params[:page],
                                       :order => 'name ASC',
                                       :per_page => Redu::Application.config.items_per_page)
     respond_to do |format|
-      format.html
+      format.html { render :layout => 'new_application' }
       format.js do
         render_endless 'spaces/item_short', @spaces, '#course-preview > ul'
       end
