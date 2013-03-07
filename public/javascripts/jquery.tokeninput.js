@@ -32,7 +32,7 @@ var DEFAULT_SETTINGS = {
     animateDropdown: true,
     placeholder: null,
     theme: null,
-    zindex: 999,
+    zindex: 9999,
     resultsLimit: null,
 
     enableHTML: false,
@@ -424,6 +424,7 @@ $.TokenList = function (input, url_or_data, settings) {
     // The list to store the dropdown items in
     var dropdown = $("<div>")
         .addClass($(input).data("settings").classes.dropdown)
+        .addClass("dropdown-menu")
         .appendTo("body")
         .hide();
 
@@ -783,8 +784,8 @@ $.TokenList = function (input, url_or_data, settings) {
     function show_dropdown() {
         dropdown
             .css({
-                position: "absolute",
-                top: $(token_list).offset().top + $(token_list).height(),
+                position: "fixed",
+                top: $(token_list).offset().top + $(token_list).height() + 10,
                 left: $(token_list).offset().left,
                 width: $(token_list).width(),
                 'z-index': $(input).data("settings").zindex
@@ -890,6 +891,7 @@ $.TokenList = function (input, url_or_data, settings) {
             }
 
             item.addClass($(input).data("settings").classes.selectedDropdownItem);
+            item.addClass("control-autocomplete-suggestion-selected");
             selected_dropdown_item = item.get(0);
         }
     }
@@ -897,6 +899,7 @@ $.TokenList = function (input, url_or_data, settings) {
     // Remove highlighting from an item in the results dropdown
     function deselect_dropdown_item (item) {
         item.removeClass($(input).data("settings").classes.selectedDropdownItem);
+        item.removeClass("control-autocomplete-suggestion-selected");
         selected_dropdown_item = null;
     }
 
