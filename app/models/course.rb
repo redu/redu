@@ -192,7 +192,7 @@ class Course < ActiveRecord::Base
     enrollments = []
     enrollments_finalized = []
     course_association = user.get_association_with(self)
-    course_association.destroy
+    course_association.try(:destroy)
 
     # Atualizando license atual para setar o period_end
     set_period_end(user)
