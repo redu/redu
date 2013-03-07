@@ -22,7 +22,7 @@ class RolesController < BaseController
     authorize! :manage, @environment
     authorize! :manage, @course if @course
 
-    role = Role.find(params[:role]).id
+    role = Role.find(params[:role])
 
     if @course && @environment # mudando papel num curso especifico
       @course.change_role(@user, role) unless @user.environment_admin?(@course)

@@ -11,9 +11,9 @@
       <%= link_to course.name,
         environment_course_path(item_medium, course),
         :class => 'course' %>
-      <% role = Role[@user.get_association_with(course).role] %>
+      <% role = @user.get_association_with(course).role %>
         <span class="role icon-<%= role %>-gray_16_18-before">
-        <%= Role.human_attribute_name(role) %>
+        <%= role.text %>
       </span>
     </li>
     <% end %>

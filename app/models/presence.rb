@@ -17,14 +17,14 @@ class Presence
     roles = nil
 
     ActiveRecord::Base.transaction do
-      roles = Role.select('DISTINCT name').all.inject({}) do |acc, role|
-        acc[role.name] = false
+      roles = Role.all.inject({}) do |acc, role|
+        acc[role.to_s] = false
         acc
       end
 
       roles['admin'] = true if @user.admin?
       @user.user_course_associations.approved.group('role').count.each do |k,v|
-        roles[Role[k]] = true
+        roles[Role[k].to_s] = true
       end
     end
 
@@ -35,8 +35,8 @@ class Presence
     roles = nil
 
     ActiveRecord::Base.transaction do
-      roles = Role.select('DISTINCT name').all.inject({}) do |acc, role|
-        acc[role.name] = false
+      roles = Role.all.inject({}) do |acc, role|
+        acc[role.to_s] = false
         acc
       end
 
@@ -149,8 +149,8 @@ class Presence
 
   # SQL para usuários do curso
   def course_users_sql
-    teacher_or_tutor = [ Role[:teacher], Role[:tutor] ]
-    member = Role[:member]
+    teacher_or_tutor = [ Role[:teacher].to_s, Role[:tutor].to_s ]
+    member = Role[:member].to_s
 
     # Cursos nos quais ele é professor ou tutor
     teaching_courses = Course.select("courses.id").

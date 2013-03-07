@@ -1,6 +1,6 @@
 class UserCourseAssociation < CourseEnrollment
   belongs_to :user
-  enumerate :role
+  classy_enum_attr :role, :default => 'member'
   has_many :logs, :as => :logeable, :order => "created_at DESC",
     :dependent => :destroy
 
