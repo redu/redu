@@ -8,5 +8,20 @@ module InstantSearch
     link :self_public do
       url_for(self)
     end
+    property :thumbnail
+    property :type
+    property :legend
+
+    def thumbnail
+      self.avatar.url(:thumb_32)
+    end
+
+    def type
+      "environment"
+    end
+
+    def legend
+      "Ambiente de Aprendizagem"
+    end
   end
 end

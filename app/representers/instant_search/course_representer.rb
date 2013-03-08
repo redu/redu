@@ -8,5 +8,20 @@ module InstantSearch
     link :self_public do
       environment_course_url(self.environment, self)
     end
+    property :thumbnail
+    property :type
+    property :legend
+
+    def thumbnail
+      self.environment.avatar.url(:thumb_32)
+    end
+
+    def type
+      "environment"
+    end
+
+    def legend
+      "Curso — #{self.environment.name}"
+    end
   end
 end
