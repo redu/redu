@@ -237,12 +237,12 @@ $.TokenList = function (input, url_or_data, settings) {
     var input_val;
 
     // Create a new text input an attach keyup events
-    var input_box = $("<input class=\"content-area area-infix\" type=\"text\"  autocomplete=\"off\" autocapitalize=\"off\">")
+    var input_box = $("<input class=\"control-area area-infix\" type=\"text\"  autocomplete=\"off\" autocapitalize=\"off\">")
         .css({
             outline: "none"
         })
         // Adiciona o valor do atributo name original.
-        .attr("name", $(input).attr("name"))
+        .attr("name", $(input).attr("name").replace("-old", ""))
         .attr("placeholder", $(input).attr("placeholder"))
         .attr("id", $(input).data("settings").idPrefix + input.id)
         .focus(function () {
@@ -880,6 +880,7 @@ $.TokenList = function (input, url_or_data, settings) {
             } else {
                 dropdown_ul.show();
             }
+            dropdown.trigger("organizeResults");
         } else {
             if($(input).data("settings").noResultsText) {
                 dropdown.html("<p>" + escapeHTML($(input).data("settings").noResultsText) + "</p>");

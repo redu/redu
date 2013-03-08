@@ -1,11 +1,8 @@
 $(function() {
+  // Adiciona o tokeninput a um campo com dados da dada URL.
   $.fn.searchTokenInput = function(url) {
-    $this = $(this)
-
     $(this).tokenInput(
-      // TODO: tem algum erro com o controlador. Corrigir com Jess. Por enquanto usa um JSON local para testes.
-      // url + "?format=json", {
-      [{"links":[{"rel":"self_public","href":"http://127.0.0.1:3000/pessoas/34269290404"}],"id":1902,"name":"Filipe Fernandes"},{"links":[{"rel":"self_public","href":"http://127.0.0.1:3000/pessoas/bmbsmb"}],"id":3997,"name":"Filipe Magalh\u00e3es"},{"links":[{"rel":"self_public","href":"http://127.0.0.1:3000/pessoas/filipefms3"}],"id":333,"name":"Filipe Marques"},{"links":[{"rel":"self_public","href":"http://127.0.0.1:3000/pessoas/filipe"}],"id":414,"name":"Filipe Santos"},{"links":[{"rel":"self_public","href":"http://127.0.0.1:3000/qualidade"}],"id":390,"name":"Qualidade, Relacionamento e Inova\u00e7\u00e3o"},{"links":[{"rel":"self_public","href":"http://127.0.0.1:3000/www"}],"id":45,"name":"Pernambuco"},{"links":[{"rel":"self_public","href":"http://127.0.0.1:3000/computacao-cientifica"}],"id":633,"name":"Computa\u00e7\u00e3o Cient\u00edfica"},{"links":[{"rel":"self_public","href":"http://127.0.0.1:3000/coordenadorticdesouselogmailcom"}],"id":709,"name":"Web2.0"},{"links":[{"rel":"self_public","href":"http://127.0.0.1:3000/lorem-ipsum-dolor-sit-amet-orci-aliquams/cursos/lorem-ipsum-dolor-sit-amet-consectetur-adipiscing-volutpat"}],"id":882,"name":"Lorem ipsum dolor sit amet, consectetur adipiscing volutpat."},{"links":[{"rel":"self_public","href":"http://127.0.0.1:3000/computacao-cientifica/cursos/teoria-da-computacao"}],"id":729,"name":"Teoria da Computa\u00e7\u00e3o"},{"links":[{"rel":"self_public","href":"http://127.0.0.1:3000/coordenadorticdesouselogmailcom/cursos/coordenadorticdesouselogmailcom"}],"id":828,"name":"Web 2.0"},{"links":[{"rel":"self_public","href":"http://127.0.0.1:3000/testepp/cursos/teste"}],"id":860,"name":"teste"},{"links":[{"rel":"slef_public","href":"http://127.0.0.1:3000/espacos/569"}],"id":569,"name":"Refer\u00eancias"},{"links":[{"rel":"slef_public","href":"http://127.0.0.1:3000/espacos/952"}],"id":952,"name":"Matem\u00e1tica Intervalar"},{"links":[{"rel":"slef_public","href":"http://127.0.0.1:3000/espacos/1126"}],"id":1126,"name":"Web2.0"},{"links":[{"rel":"slef_public","href":"http://127.0.0.1:3000/espacos/1175"}],"id":1175,"name":"tested"}], {
+      url + "?format=json", {
         crossDomain: false,
         hintText: "Faça sua busca",
         noResultsText: "Sem resultados",
@@ -17,36 +14,36 @@ $(function() {
         // Adiciona esse sufixo para as classes do plugin.
         theme: "redu",
         resultsFormatter: function(item) {
-          return ('<li class="portal-search-result-item control-autocomplete-suggestion"><a class="control-autocomplete-suggestion-link" href="' + item.links[0].href + '" title="' + item.name + '"><img class="control-autocomplete-thumbnail" src="/images/new/missing_users_thumb_32.png" width="32" height="32"/><div class="control-autocomplete-added-info"><span class="control-autocomplete-name text-truncate">' + item.name + '</span><span class="control-autocomplete-mail legend text-truncate">' + item.name + '</span></div></a></li>');
+          return ('<li class="portal-search-result-item control-autocomplete-suggestion"><a class="control-autocomplete-suggestion-link" href="' + item.links[0].href + '" title="' + item.name + '"><img class="control-autocomplete-thumbnail" src="' + item.thumbnail + '" width="32" height="32"/><div class="control-autocomplete-added-info"><span class="control-autocomplete-name text-truncate">' + item.name + '</span><span class="control-autocomplete-mail legend text-truncate">' + item.legend + '</span></div></a></li>');
         },
         onAdd: function(item) {
           // Redireciona quando um item é clicado.
           window.location.href = item.links[0].href;
         }
     });
-  }
+  };
 
   var updateTokenInput = function(url) {
-    $(".token-input-list").remove();
+    // Remove o tokeninput anterior.
+    $(".token-input-list-redu").remove();
+    // Adiciona um novo.
     $("#q").searchTokenInput(url);
-  }
+  };
 
-  // TODO: Re-ativar quando estiver trabalhando na busca instantânea.
   updateTokenInput($(".form-search").attr("action"));
 
-  $(".form-search-filters-dropdown :radio").change(function() {
-    $this = $(this)[0];
+  // Altera o action do form e tokeninput de acordo com o filtro selecionado.
+  $(document).on("change", ".form-search-filters-dropdown input:radio", function() {
+    var val = $(this).val()
+      , url = "/busca";
 
-    if($this.value === "geral"){
-      url = "/busca"
-    }else if($this.value === "ambientes") {
-      url = "/busca/ambientes"
-    }else if($this.value === "perfil") {
-      url = "/busca/perfis"
+    if (val === "ambientes") {
+      url = url + "/ambientes";
+    } else if (val === "perfil") {
+      url = url + "/perfis";
     }
 
     $(".form-search").attr("action", url);
-    // TODO: Re-ativar quando estiver trabalhando na busca instantânea.
     updateTokenInput(url);
   });
 
@@ -58,8 +55,40 @@ $(function() {
     }
   });
 
-  // BUGFIX: remove o .token-input-list-redu adicionado quando um filtro é escolhido.
-  $(document).on("change", "input:radio", function() {
-    $(".token-input-list-redu").last().remove();
+  // Organiza o dropdown de resultados.
+  $(document).on("organizeResults", ".token-input-dropdown-redu", function() {
+    var $dropdown = $(this)
+      , $list = $dropdown.find("ul")
+      , $results = $list.find(".portal-search-result-item")
+      , maxResults = 3
+      , filter = $(".form-search-filters input:radio:checked").val();
+
+    if (filter === "geral") {
+      var $profiles = $results.filter(function() {
+          return $(this).data("tokeninput").type === "profile";
+        })
+        , $environments = $results.filter(function() {
+          return $(this).data("tokeninput").type === "environment";
+        })
+
+      if ($profiles.length > 0) {
+        $list.prepend('<li class="portal-search-result-category icon-profile-gray_16_18-before">Perfis</li>');
+      }
+
+      if ($environments.length > 0) {
+        $firstEnvironment = $results.filter(function() {
+          return $(this).data("tokeninput").type === "environment";
+        }).first();
+
+        $('<li class="portal-search-result-category icon-environment-gray_16_18-before">Ambientes de Aprendizagem</li>').insertBefore($firstEnvironment);
+      }
+    } else {
+      if ($results.length > maxResults) {
+        var linkSeeMore = "#";
+
+        $results.last().remove();
+        $dropdown.append('<hr><a class="portal-search-link-see-more" title="Ver mais resultados" href="' + linkSeeMore + '">Ver mais</a>');
+      }
+    }
   });
 });
