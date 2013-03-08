@@ -105,14 +105,40 @@
   background: url("/images/search/search-background_160.png") no-repeat 391px -49px;
 }
 
+.portal-search-result-item {
+  padding: 0 5px;
+}
+
+.portal-search-link-see-more {
+  text-align: center;
+  display: block;
+}
+
+.portal-search-result-category {
+  color: #b3b3b3;
+  padding: 0 10px;
+}
+.portal-search-result-category:hover, .portal-search-result-category.control-autocomplete-suggestion-selected {
+  background-color: #f7f7f7;
+}
+
+.portal-search-result-category +
+.portal-search-result-item,
+.portal-search-result-item +
+.portal-search-result-category {
+  margin-top: 5px;
+}
+
 .token-input-list-redu {
   margin: 0;
   list-style-type: none;
 }
 
+.token-input-dropdown-redu {
+  padding: 10px 0;
+}
 .token-input-dropdown-redu ul {
   margin: 0;
-  padding: 10px 0;
   list-style-type: none;
 }
 .token-input-dropdown-redu .control-autocomplete-suggestion-link {
@@ -123,6 +149,9 @@
 }
 .token-input-dropdown-redu .control-autocomplete-name {
   color: black;
+}
+.token-input-dropdown-redu .control-autocomplete-mail {
+  height: 11px;
 }
 .token-input-dropdown-redu .control-autocomplete-added-info {
   width: 85%;

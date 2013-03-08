@@ -98,3 +98,58 @@
   // Imagem de fundo do cabeçalho.
   background: url("/images/search/search-background_160.png") no-repeat 391px -49px;
 }
+
+.portal-search-result-item { padding: 0 5px; }
+
+.portal-search-link-see-more {
+  text-align: center;
+  display: block;
+}
+
+.portal-search-result-category {
+  color: $gray5;
+  padding: 0 10px;
+
+  &:hover,
+  &.control-autocomplete-suggestion-selected { background-color: $gray1; }
+}
+
+.portal-search-result-category +
+.portal-search-result-item,
+.portal-search-result-item +
+.portal-search-result-category { margin-top: 5px; }
+
+
+// ==========================================================================
+// Tema para o jQuery Tokeninput do formulário de busca.
+// ==========================================================================
+
+
+.token-input-list-redu {
+  margin: 0;
+  list-style-type: none;
+}
+
+.token-input-dropdown-redu {
+  padding: 10px 0;
+
+  ul {
+    margin: 0;
+    list-style-type: none;
+  }
+
+  .control-autocomplete-suggestion-link {
+    width: 100%;
+    @include box-sizing;
+  }
+
+  .control-autocomplete-name { color: $black; }
+
+  .control-autocomplete-mail { height: 11px; }
+
+  .control-autocomplete-added-info {
+    $thumbnail-width: 32px;
+    $thumbnail-spacing-info: 5px;
+    @include calc("width", "100% - (#{$thumbnail-width} + #{$thumbnail-spacing-info})", 85%);
+  }
+}
