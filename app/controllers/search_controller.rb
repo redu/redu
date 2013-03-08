@@ -26,7 +26,7 @@ class SearchController < BaseController
     respond_to do |format|
       format.html # search/index.html.erb
       format.json do
-        render :json => SearchService.new.make_representable(results)
+        render :json => SearchService.new(:params => params).make_representable(results)
       end
     end
   end
@@ -43,7 +43,7 @@ class SearchController < BaseController
     respond_to do |format|
       format.html # search/profiles.html.erb
       format.json do
-        render :json => SearchService.new.make_representable([@profiles])
+        render :json => SearchService.new(:params => params).make_representable([@profiles])
       end
     end
   end
@@ -82,7 +82,7 @@ class SearchController < BaseController
     respond_to do |format|
       format.html # search/environments.html.erb
       format.json do
-        render :json => SearchService.new.make_representable(results)
+        render :json => SearchService.new(:params => params).make_representable(results)
       end
     end
   end
