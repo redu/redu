@@ -32,10 +32,14 @@ class AuthenticationsController < BaseController
         session[:return_to] = nil
       end
     else
-      logger.info "Facebook with invalid user:",
-        auth_service.authenticated_user.errors
-      flash[:notice] = t :facebook_connect_error
-        redirect_to application_path
+      logger.info "Facebook with invalid user:"
+      logger.info  auth_service.authenticated_user.errors.inspect
+      flash[:error] = t :facebook_connect_error
+
+      @user = auth_service.authenticated_user
+      @user_session = UserSession.new
+      params[:opened_signup_modal] = "open-me"
+      render 'base/site_index', :layout => 'landing'
     end
   end
 

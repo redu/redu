@@ -207,4 +207,14 @@ describe AuthenticationService do
       end
     end
   end
+
+  context '#build_user' do
+    context 'without omniauth' do
+      let(:subject) { AuthenticationService.new(:omniauth => nil) }
+
+      it 'should return nil' do
+        subject.build_user.should be_nil
+      end
+    end
+  end
 end

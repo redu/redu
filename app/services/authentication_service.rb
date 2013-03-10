@@ -34,6 +34,25 @@ class AuthenticationService
     user
   end
 
+  # Inicializa o usuário baseado nos dados do omniauth
+  def build_user
+    return nil unless omniauth
+
+    User.new do |u|
+      u.enable_humanizer = false
+      u.login = name_service.valid_login(omniauth[:info])
+      u.email = omniauth[:info][:email]
+      u.reset_password
+      u.tos = '1'
+      u.first_name = omniauth[:info][:first_name]
+      u.last_name = omniauth[:info][:last_name]
+      u.activated_at = Time.now
+      u.authentications.build(:provider => omniauth[:provider],
+                              :uid => omniauth[:uid])
+      u.avatar = get_avatar
+    end
+  end
+
   private
 
   # Cria o usuário baseado nos parâmetros do omniauth
@@ -48,23 +67,6 @@ class AuthenticationService
     end
 
     user
-  end
-
-  # Inicializa o usuário baseado nos dados do omniauth
-  def build_user
-    User.new do |u|
-      u.enable_humanizer = false
-      u.login = name_service.valid_login(omniauth[:info])
-      u.email = omniauth[:info][:email]
-      u.reset_password
-      u.tos = '1'
-      u.first_name = omniauth[:info][:first_name]
-      u.last_name = omniauth[:info][:last_name]
-      u.activated_at = Time.now
-      u.authentications.build(:provider => omniauth[:provider],
-                              :uid => omniauth[:uid])
-      u.avatar = get_avatar
-    end
   end
 
   # Retorna avatar usado no Facebook se este não for o default de lá

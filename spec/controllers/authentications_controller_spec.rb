@@ -66,8 +66,28 @@ describe AuthenticationsController do
         UserSession.find.should be_nil
       end
 
+      it "should assign @user_session" do
+        assigns[:user_session].should_not be_nil
+      end
+
+      it "should assign @user" do
+        assigns[:user].should_not be_nil
+        assigns[:user].should be_a User
+      end
+
+      it "should assign @user with omniauth param" do
+        assigns[:user].email.should == omniauth[:info][:email]
+        assigns[:user].first_name.should == omniauth[:info][:first_name]
+        assigns[:user].last_name.should == omniauth[:info][:last_name]
+      end
+
+      it "should set param opened_signup_modal to 'open-me'" do
+        controller.params[:opened_signup_modal].should_not be_nil
+        controller.params[:opened_signup_modal].should == "open-me"
+      end
+
       it { should set_the_flash.to(I18n.t("facebook_connect_error")) }
-      it { should redirect_to(application_path)  }
+      it { should render_template('base/site_index') }
     end
 
     context 'with aditional params' do

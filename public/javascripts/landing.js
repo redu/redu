@@ -45,4 +45,7 @@ $(function() {
   $('.facebook-sign-in-button, .header-sign-in-recover').click( function(e) {
     e.stopPropagation();
   });
+
+  // Abre as modais que devem ser abertas após carregar a página
+  $("#modal-sign-up.open-me").modal("show");
 });
