@@ -345,17 +345,14 @@ class Course < ActiveRecord::Base
 
   searchable do
     text :name, :boost => 6.0
-    text :owner, :boost => 5.0 do
+
+    text :owner, :boost => 3.0 do
       owner.display_name if owner
     end
-    text :teachers, :boost => 4.0 do
-      teachers.map { |t| t.display_name }
+
+    text :teachers, :boost => 3.0 do
+      teachers.map { |t| t.display_name + "  " }
     end
-    text :audiences, :boost => 3.0 do
-      audiences.map { |a| a.name }
-    end
-    text :description, :boost => 2.0
-    text :tag_list
   end
 
   protected

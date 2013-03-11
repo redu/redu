@@ -140,18 +140,19 @@ class User < ActiveRecord::Base
   has_private_messages
 
   searchable do
-    text :name, :boost => 7.0 do
+    text :name, :boost => 6.0 do
       display_name
     end
-
-    text :birth_localization, :boost => 6.0
-    text :localization, :boost => 5.0
 
     text :job, :boost => 4.0, :stored => true do
       experiences.actual_jobs.map{ |exp| exp.title + "  " }
     end
 
-    text :education_place, :boost => 3.0, :stored => true do
+    # Places tem o mesmo boost
+    text :birth_localization, :boost => 2.0
+    text :localization, :boost => 2.0
+
+    text :education_place, :boost => 2.0, :stored => true do
       education = most_important_education.first
       unless education.nil?
         education.educationable.institution + "  "
@@ -160,10 +161,6 @@ class User < ActiveRecord::Base
 
     text :workplace, :boost => 2.0, :stored => true do
       experiences.actual_jobs.map{ |exp| exp.company + "  " }
-    end
-
-    text :tags, :stored => true do
-      tags.map{ name + "  "}
     end
   end
 

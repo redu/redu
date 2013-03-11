@@ -98,13 +98,12 @@ class Environment < ActiveRecord::Base
 
   # Busca de ambientes
   searchable do
-    text :name, :boost => 5.0
-    text :administrators, :boost => 4.0 do
-      administrators.map { |a| a.display_name }
+    text :name, :boost => 6.0
+    text :initials, :boost => 5.0
+
+    text :administrators, :boost => 3.0 do
+      administrators.map { |a| a.display_name + "  " }
     end
-    text :description, :boost => 3.0
-    text :tag_list, :boost => 2.0
-    text :initials
   end
 
   protected
