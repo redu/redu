@@ -84,7 +84,7 @@ $(function() {
       }
     } else {
       if ($results.length > maxResults) {
-        var linkSeeMore = "#";
+        var linkSeeMore = $(".form-search").attr("action") + "?q=" + $("#token-input-q").val();
 
         $results.last().remove();
         $dropdown.append('<hr><a class="portal-search-link-see-more" title="Ver mais resultados" href="' + linkSeeMore + '">Ver mais</a>');
