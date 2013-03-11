@@ -656,7 +656,8 @@ $.TokenListInstantSearch = function (input, url_or_data, settings) {
         }
 
         // Squeeze input_box so we force no unnecessary line break
-        input_box.width(0);
+        // Evita que a largura do campo seja diminuída.
+        // input_box.width(0);
 
         // Insert the new tokens
         if($(input).data("settings").tokenLimit == null || token_count < $(input).data("settings").tokenLimit) {
