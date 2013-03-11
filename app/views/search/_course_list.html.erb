@@ -18,5 +18,7 @@ clearfix
   <ul class="list-2-columns list-columns-separator clearfix portal-search-list-results">
     <%= render :partial => "course", :collection => courses %>
   </ul>
-  <hr class="list-separator">
+  <% if courses.num_pages > 1 %>
+    <hr class="list-separator">
+  <% end %>
 <% end %>
