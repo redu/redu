@@ -13,6 +13,7 @@ $(function() {
         resultsLimit: 6,
         // Adiciona esse sufixo para as classes do plugin.
         theme: "redu",
+        searchDelay: 600,
         resultsFormatter: function(item) {
           return ('<li class="portal-search-result-item control-autocomplete-suggestion"><a class="control-autocomplete-suggestion-link" href="' + item.links[0].href + '" title="' + item.name + '"><img class="control-autocomplete-thumbnail" src="' + item.thumbnail + '" width="32" height="32"/><div class="control-autocomplete-added-info"><span class="control-autocomplete-name text-truncate">' + item.name + '</span><span class="control-autocomplete-mail legend text-truncate">' + item.legend + '</span></div></a></li>');
         },
