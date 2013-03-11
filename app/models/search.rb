@@ -12,8 +12,12 @@ class Search
   end
 
   def search(opts)
+    opts[:include] |= []
+
     klass.send("search", { :include => opts[:include] }) do
-      fulltext opts[:query]
+      fulltext opts[:query] do
+        fields opts[:fields] if opts[:fields]
+      end
       order_by :score, opts[:order]
       paginate :page => opts[:page], :per_page => opts[:per_page]
     end

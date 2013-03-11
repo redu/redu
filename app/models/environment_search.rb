@@ -5,10 +5,15 @@ class EnvironmentSearch < Search
 
   def self.perform(query, per_page, format = nil, page = nil)
     searcher = EnvironmentSearch.new
-    # Instant search não necessita dos includes
-    includes = format == "json" ? [] : [:user_environment_associations, :courses]
+
+    # Instant search não necessita dos includes, deve procurar apenas pelos nomes
+    if format == "json"
+      fields = :name
+      includes = [:user_environment_associations, :courses]
+    end
 
     searcher.search({ :query => query, :page => page,
-                      :per_page => per_page, :include => includes })
+                      :per_page => per_page, :include => includes,
+                      :fields => fields })
   end
 end
