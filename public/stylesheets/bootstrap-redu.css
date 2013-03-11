@@ -137,16 +137,6 @@ textarea {
   visibility: hidden;
 }
 
-.text-replacement {
-  border: 0;
-  font: 0/0 a;
-  color: transparent;
-  background-color: transparent;
-}
-.textshadow .text-replacement {
-  text-shadow: none;
-}
-
 .clearfix:before, .clearfix:after {
   display: table;
   content: "";
@@ -7271,4 +7261,14 @@ hr {
 }
 .space-search-list-item .general-list-item-footer {
   padding: 0 10px 10px;
+}
+
+.text-replacement {
+  border: 0;
+  font: 0/0 a;
+  color: transparent;
+  background-color: transparent;
+}
+.textshadow .text-replacement {
+  text-shadow: none;
 }
