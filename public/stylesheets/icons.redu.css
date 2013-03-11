@@ -1527,7 +1527,7 @@
   background: url("../images/new/icons-small.png") 0 -880px no-repeat;
 }
 
-.icon-teacher-lightblue_16_18 { background-position: -80px -880px }
+/*.icon-teacher-lightblue_16_18 { background-position: -80px -880px }*/
 .icon-teacher-lightblue_16_18-before:before,
 .tabs .ui-state-active .icon-teacher_16_18-before:before,
 .subtabs .ui-state-default .icon-teacher_16_18-before:before {
