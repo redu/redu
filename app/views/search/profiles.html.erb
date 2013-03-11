@@ -2,18 +2,16 @@
 
 <div class="span16">
   <%= render :partial => "header", :locals => { :query => @query } %>
-  <div class="portal-body content-body search-content">
+  <div class="portal-body content-body">
     <%= new_tabs :search %>
     <%# Se foi encontrado algum resultado. %>
     <% if @total_results > 0 %>
-      <div class="search-results">
-        <%= render :partial => "result_quantity",
-          :locals => { :query => @query,
-                       :total_results => @total_results } %>
-        <%= render :partial => "user_list",
-          :locals => { :profiles => @profiles,
-                       :query => @query } %>
-      </div>
+      <%= render :partial => "result_quantity",
+        :locals => { :query => @query,
+                     :total_results => @total_results } %>
+      <%= render :partial => "user_list",
+        :locals => { :profiles => @profiles,
+                     :query => @query } %>
       <%= paginate @profiles, :theme => "numbers",
         :outer_window => 1, :inner_window => 4 %>
     <%# Nenhum resultado encontrado. %>
