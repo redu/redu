@@ -792,7 +792,8 @@ $.TokenListInstantSearch = function (input, url_or_data, settings) {
         dropdown
             .css({
                 position: "fixed",
-                top: $(token_list).offset().top + $(token_list).height() + 10,
+                // Mantem a posição superior fixa.
+                top: "45px",
                 left: $(token_list).offset().left,
                 width: $(token_list).width(),
                 'z-index': $(input).data("settings").zindex
