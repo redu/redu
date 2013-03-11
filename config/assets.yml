@@ -20,6 +20,7 @@ javascripts:
     - public/javascripts/jquery.autosize.min.js
     - public/javascripts/vendor/placeholder-polyfill.min.js
     - public/javascripts/jquery.tokeninput.js
+    - public/javascripts/jquery.tokeninput-instant-search.js
     - public/javascripts/bootstrap-redu.js
     - public/javascripts/swfobject.js # Necessário ao browserdetection.js
     - public/javascripts/browserdetection.js
@@ -63,6 +64,7 @@ javascripts:
     - public/javascripts/jquery.remotipart.js
     - public/javascripts/lazyload.js
     - public/javascripts/jquery.fcbkcomplete.min.js
+    - public/javascripts/jquery.tokeninput-instant-search.js
     - public/javascripts/jquery.tokeninput.js
     - public/javascripts/jquery.filestyle.mini.js
     - public/javascripts/jquery.placeholder.js
@@ -169,6 +171,7 @@ stylesheets:
     - public/stylesheets/canvas.css
     - public/stylesheets/bootstrap-redu-nav-global.css
     - public/stylesheets/nav-global-icons.css
+    - public/stylesheets/search.css
   ie:
     - public/stylesheets/ie.css
   ie8:

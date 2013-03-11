@@ -1,7 +1,7 @@
 $(function() {
   // Adiciona o tokeninput a um campo com dados da dada URL.
   $.fn.searchTokenInput = function(url) {
-    $(this).tokenInput(
+    $(this).tokenInputInstaSearch(
       url + "?format=json", {
         crossDomain: false,
         hintText: "Faça sua busca",
