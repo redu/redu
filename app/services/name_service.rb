@@ -21,7 +21,7 @@ class NameService
 
   def truncate(name)
     max = max_length - 4
-    "#{name.slice(0..max)}#{SecureRandom.hex(2)}"
+    "#{name.slice(0..max - 1)}#{SecureRandom.hex(2)}"
   end
 
   def inflate(name)
