@@ -5,48 +5,48 @@
     space: a disciplina da coleção.
 %>
 <li class="portal-search-item">
-  <div class="general-list-item clearfix">
+  <div class="general-list-item course-n-space-search-list-item space-search-list-item">
     <div class="general-list-item-body">
-      <div class="general-list-item-column">
-        <%= link_to environment_path(space.course.environment),
+      <%= link_to environment_path(space.course.environment),
+        :title => space.course.environment.name,
+        :class => "general-list-item-column list-environment-course-space-image-link" do %>
+        <%= image_tag space.course.environment.avatar.url(:thumb_32),
+          :alt => space.course.environment.name,
           :title => space.course.environment.name,
-          :class => "list-environment-course-space-image-link" do %>
-          <%= image_tag space.course.environment.avatar.url(:thumb_32),
-            :alt => space.course.environment.name,
-            :title => space.course.environment.name,
-            :size => "32x32" %>
-        <% end %>
-      </div>
+          :size => "32x32" %>
+      <% end %>
       <div class="general-list-item-column">
         <% role_icon = user_course_role(space.course, current_user) %>
         <% unless role_icon.nil? %>
           <span class="icon-<%= role_icon %>-lightblue_16_18 show text-replacement pull-right" rel="tooltip" title="<%= role_icon_to_text(role_icon)%>"><%= role_icon_to_text(role_icon)%></span>
         <% end %>
-        <span class="legend"><%= space.course.environment.name %> —</span>
+        <span class="legend text-truncate general-list-item-text-overlap-icon" title="<%= space.course.environment.name %>"><%= space.course.environment.name %> —</span>
         <h5 class="general-list-item-title">
           <%= link_to space.course.name,
             environment_course_path(space.course.environment, space.course),
-            :class => "general-list-item-title-link",
+            :class => "general-list-item-title-link text-truncate general-list-item-text-overlap-icon",
             :title => space.course.name %>
         </h5>
         <% unless space.course.owner.nil? %>
-          <span class="legend">Criado por <%= link_to space.course.owner.try(:display_name), user_path(space.course.owner) %></span>
+          <span class="legend text-truncate" title="<%= space.course.owner.try(:display_name) %>">Criado por <%= link_to space.course.owner.try(:display_name), user_path(space.course.owner) %></span>
         <% end %>
+        <%# TODO: Criar helper que retornar os professores do curso. %>
+        <% course_teachers = [link_to("1", nil), link_to("2", nil)] %>
+        <%# TODO: Criar helper que pluraliza "professor". %>
+        <span class="legend text-truncate" title="">Professor: <%= raw(course_teachers.join(", ")) %></span>
       </div>
     </div>
-    <ul class="space-information">
-      <li><hr></li>
-      <li>
-        <%= link_to space.name, space_path(space),
-          :title => space.name,
-          :class => "icon-space-lightblue_16_18-before space-name" %>
-      </li>
+    <hr>
+    <div class="general-list-item-footer">
+      <%= link_to space.name, space_path(space),
+        :title => space.name,
+        :class => "icon-space-lightblue_16_18-before text-truncate" %>
       <%# TODO: Progresso do usuário na disciplina. %>
       <%#
       <li class="progress-bar-short progress-bar-thin progress-bar-total">
         <span class="progress-bar-completed text-replacement" style="width: 100%;">100%</span>
       </li>
       %>
-    </ul>
+    </div>
   </div>
 </li>

@@ -5,32 +5,34 @@
     course: o curso da coleção.
 %>
 <li class="portal-search-item">
-  <div class="general-list-item">
+  <div class="general-list-item course-n-space-search-list-item course-search-list-item">
     <div class="general-list-item-body">
-      <div class="general-list-item-column">
-        <%= link_to environment_path(course.environment),
-          :title => course.environment.name,
-          :class => "list-environment-course-space-image-link" do %>
-          <%= image_tag course.environment.avatar.url(:thumb_32),
-            :alt => course.environment.name, :title => course.environment.name,
-            :size => "32x32" %>
-        <% end %>
-      </div>
+      <%= link_to environment_path(course.environment),
+        :title => course.environment.name,
+        :class => "general-list-item-column list-environment-course-space-image-link" do %>
+        <%= image_tag course.environment.avatar.url(:thumb_32),
+          :alt => course.environment.name, :title => course.environment.name,
+          :size => "32x32" %>
+      <% end %>
       <div class="general-list-item-column">
         <% role_icon = user_course_role(course, current_user) %>
         <% unless role_icon.nil? %>
           <span class="icon-<%= role_icon %>-lightblue_16_18 show text-replacement pull-right" rel="tooltip" title="<%= role_icon_to_text(role_icon)%>"><%= role_icon_to_text(role_icon)%></span>
         <% end %>
-        <span class="legend"><%= course.environment.name %> —</span>
+        <span class="legend text-truncate general-list-item-text-overlap-icon" title="<%= course.environment.name %>"><%= course.environment.name %> —</span>
         <h5 class="general-list-item-title">
           <%= link_to course.name,
             environment_course_path(course.environment, course),
-            :class => "general-list-item-title-link",
+            :class => "general-list-item-title-link text-truncate general-list-item-text-overlap-icon",
             :title => course.name %>
         </h5>
         <% unless course.owner.nil? %>
-          <span class="legend">Criado por <%= link_to course.owner.try(:display_name), user_path(course.owner) %></span>
+          <span class="legend text-truncate" title="<%= course.owner.try(:display_name) %>">Criado por <%= link_to course.owner.try(:display_name), user_path(course.owner) %></span>
         <% end %>
+        <%# TODO: Criar helper que retornar os professores do curso. %>
+        <% course_teachers = [link_to("1", nil), link_to("2", nil)] %>
+        <%# TODO: Criar helper que pluraliza "professor". %>
+        <span class="legend text-truncate" title="">Professor: <%= raw(course_teachers.join(", ")) %></span>
         <ul class="general-list-item-counters">
           <li class="general-list-item-counter icon-members-gray_16_18-before">
             <%= pluralize(course.user_course_associations.length, "Membro") %>
@@ -43,21 +45,29 @@
            <li class="general-list-item-counter icon-space-gray_16_18-before">
             <%= course.spaces.length %>
           </li>
-          <% if show_course_spaces(course) %>
-            <li class="dropdown">
-              <a id="spaces-1" class="dropdown-toggle button-default button-dropdown" role="button" data-toggle="dropdown" data-target="#">
-                <span class="icon-arrow-down-lightblue_8_10 show text-replacement">Expandir</span>
-              </a>
-              <ul class="dropdown-menu" role="menu" aria-labelledby="spaces-1">
-                <li><span>Lista de Disciplinas (<%= course.spaces.length %>)</span></li>
-                <% course.spaces.each do |space| %>
-                  <li><%= link_to space.name, space_path(space), :class => "icon-space-lightblue_16_18-before" %></li>
-                <% end %>
-              </ul>
-            </li>
-          <% end %>
         </ul>
       </div>
     </div>
+    <% if show_course_spaces(course) %>
+      <div class="dropdown general-list-item-bottom-right-button">
+        <button class="dropdown-toggle button-default button-dropdown" data-toggle="dropdown" role="button">
+          <span class="icon-arrow-down-lightblue_8_10 show text-replacement">Expandir</span>
+        </button>
+        <span class="dropdown-arrow icon-arrow-up-dropdown-lightblue_20_8 text-replacement">Seta</span>
+        <div class="dropdown-menu nav-global-profile-dropdown">
+          <span class="nav-global-profile-header">Lista de Disiciplinas (<%= course.spaces.count %>)</span>
+          <ul class="nav-global-profile-items">
+            <% course.spaces.each do |space| %>
+              <li class="nav-global-profile-item">
+                <%= link_to space.name,
+                  space_path(space),
+                  :class => "nav-global-profile-item-link icon-space-lightblue_16_18-before text-truncate",
+                  :title => space.name %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    <% end %>
   </div>
 </li>

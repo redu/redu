@@ -1,7 +1,7 @@
 <%# Se o convite de amizade foi feito nas páginas de busca por perfil. %>
 <% if @in_search %>
   var $friendSearchResult = $("#search-results-user-<%= @friend.id %>");
-  var $button = $friendSearchResult.find(".user-n-environment-search-list-item-button");
+  var $button = $friendSearchResult.find(".general-list-item-bottom-right-button");
   var $message = "";
   $(".tooltip").remove();
 

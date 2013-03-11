@@ -21,7 +21,7 @@
           <h4 class="general-list-item-title">
             <%= link_to environment.name, environment_path(environment),
               :title => environment.name,
-              :class => "general-list-item-title-link text-truncate" %>
+              :class => "general-list-item-title-link text-truncate general-list-item-text-overlap-icon" %>
           </h4>
           <% cache ["search_environment_administrators", environment.id] do %>
             <%= truncate_html(content_tag(:span, raw("Administrado por #{show_administrators_list(environment.administrators)}"), :class => "legend", :title => "Administrado por #{strip_links(show_administrators_list(environment.administrators))}"), :length => 110) %>
@@ -35,25 +35,25 @@
               <%= pluralize(environment.courses.length, "Curso") %>
             </li>
           </ul>
-          <div class="dropdown user-n-environment-search-list-item-button">
-            <button class="dropdown-toggle button-default button-dropdown" data-toggle="dropdown" role="button">
-              <span class="icon-arrow-down-lightblue_8_10 show text-replacement">Expandir</span>
-            </button>
-            <span class="dropdown-arrow icon-arrow-up-dropdown-lightblue_20_8 text-replacement">Seta</span>
-            <div class="dropdown-menu nav-global-profile-dropdown">
-              <div class="nav-global-profile-header">Lista de Cursos (<%= environment.courses.count %>)</div>
-              <ul class="nav-global-profile-items">
-                <% environment.courses.each do |course| %>
-                  <li class="nav-global-profile-item">
-                    <%= link_to course.name,
-                      environment_course_path(environment, course),
-                      :class => "icon-course-lightblue_16_18-before text-truncate",
-                      :title => course.name %>
-                  </li>
-                <% end %>
-              </ul>
-            </div>
-          </div>
+        </div>
+      </div>
+      <div class="dropdown general-list-item-bottom-right-button">
+        <button class="dropdown-toggle button-default button-dropdown" data-toggle="dropdown" role="button">
+          <span class="icon-arrow-down-lightblue_8_10 show text-replacement">Expandir</span>
+        </button>
+        <span class="dropdown-arrow icon-arrow-up-dropdown-lightblue_20_8 text-replacement">Seta</span>
+        <div class="dropdown-menu nav-global-profile-dropdown">
+          <span class="nav-global-profile-header">Lista de Cursos (<%= environment.courses.count %>)</span>
+          <ul class="nav-global-profile-items">
+            <% environment.courses.each do |course| %>
+              <li class="nav-global-profile-item">
+                <%= link_to course.name,
+                  environment_course_path(environment, course),
+                  :class => "nav-global-profile-item-link icon-course-lightblue_16_18-before text-truncate",
+                  :title => course.name %>
+              </li>
+            <% end %>
+          </ul>
         </div>
       </div>
     </div>
