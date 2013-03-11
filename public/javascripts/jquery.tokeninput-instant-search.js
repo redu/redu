@@ -787,6 +787,7 @@ $.TokenListInstantSearch = function (input, url_or_data, settings) {
     }
 
     function show_dropdown() {
+        dropdown.prepend('<span class="dropdown-arrow icon-arrow-up-dropdown-lightblue_20_8" style="left: 25px; top: -8px; display: block;"></span>');
         dropdown
             .css({
                 position: "fixed",
