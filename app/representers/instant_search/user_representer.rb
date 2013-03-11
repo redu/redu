@@ -5,12 +5,13 @@ module InstantSearch
 
     property :id
     property :display_name, :from => :name
-    link :self_public do
-      url_for(self)
-    end
     property :thumbnail
     property :type
     property :legend
+
+    link :self_public do
+      url_for(self)
+    end
 
     def thumbnail
       self.avatar.url(:thumb_32)

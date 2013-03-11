@@ -5,12 +5,13 @@ module InstantSearch
 
     property :id
     property :name
-    link :self_public do
-      environment_course_url(self.environment, self)
-    end
     property :thumbnail
     property :type
     property :legend
+
+    link :self_public do
+      environment_course_url(self.environment, self)
+    end
 
     def thumbnail
       self.environment.avatar.url(:thumb_32)
