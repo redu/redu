@@ -137,6 +137,10 @@
 .token-input-dropdown-redu {
   padding: 10px 0;
 }
+.token-input-dropdown-redu p {
+  color: #b3b3b3;
+  text-align: center;
+}
 .token-input-dropdown-redu ul {
   margin: 0;
   list-style-type: none;
