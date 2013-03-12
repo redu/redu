@@ -21,16 +21,16 @@ class BaseController < ApplicationController
   end
 
   def site_index
-    # FIXME verificar se causa algum prejuízo na performance, ou só criar a sessão se o current_user for nil
-    @user_session = UserSession.new
-    @user = User.new
+    if current_user
+      redirect_to home_user_path(current_user)
+    else
+      @user_session = UserSession.new
+      @user = User.new
 
-    respond_to do |format|
-      format.html do
-        if current_user
-          redirect_to home_user_path(current_user) and return
+      respond_to do |format|
+        format.html do
+          render :layout => 'landing'
         end
-        render :layout => 'landing'
       end
     end
   end
