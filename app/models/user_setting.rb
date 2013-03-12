@@ -1,6 +1,6 @@
 class UserSetting < ActiveRecord::Base
   belongs_to :user
-  enumerate :view_mural, :with => Privacy
+  classy_enum_attr :view_mural, :enum => 'Privacy', :default => 'friends'
   serialize :explored
   attr_protected :explored
 

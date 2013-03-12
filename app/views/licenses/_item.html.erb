@@ -4,5 +4,5 @@
   <td class="user-login"><%= item.login %></td>
   <td class="date"><%= l item.period_start %></td>
   <td class="date"><%= item.period_end ? (l item.period_end) : "-" %></td>
-  <td><%= Role.human_attribute_name(Role[item.role]) %></td>
+  <td><%= item.role.text %></td>
 </tr>

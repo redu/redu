@@ -132,7 +132,6 @@ GEM
     aasm (3.0.6)
       activerecord
     abstract (1.0.0)
-    active_enum (0.9.1)
     activerecord-import (0.2.9)
       activerecord (~> 3.0)
       activerecord (~> 3.0)
@@ -174,6 +173,8 @@ GEM
     chunky_png (1.2.6)
     ckeditor (3.4.2.pre)
       mime-types (>= 1.16)
+    classy_enum (3.2.0)
+      rails (>= 3.0)
     closure-compiler (1.1.1)
     cocaine (0.2.1)
     columnize (0.3.2)
@@ -424,7 +425,6 @@ PLATFORMS
 DEPENDENCIES
   aasm
   actionmailer_inline_css!
-  active_enum
   activerecord-import
   acts-as-taggable-on
   acts_as_tree (~> 0.1.1)
@@ -439,6 +439,7 @@ DEPENDENCIES
   bundler (~> 1.2)
   cancan (~> 1.6.7)
   ckeditor (= 3.4.2.pre)
+  classy_enum
   compass-rails
   daemons (= 1.0.10)
   date_validator

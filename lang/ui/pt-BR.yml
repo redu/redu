@@ -1,4 +1,14 @@
 pt-BR:
+  classy_enum:
+    role:
+      admin: "Administrador"
+      moderator: "Moderador"
+      member: "Aluno"
+      environment_admin: "Administrador do ambiente"
+      course_admin: "Administrador do curso"
+      teacher: "Professor"
+      tutor: "Tutor"
+      student: "Aluno"
   date:
     formats:
       published_date: "%d/%m/%Y"
@@ -169,15 +179,6 @@ pt-BR:
       question:
         statement: "Enunciado"
         explanation: "Justificativa"
-      role:
-        admin: "Administrador"
-        moderator: "Moderador"
-        member: "Aluno"
-        environment_admin: "Administrador do ambiente"
-        course_admin: "Administrador do curso"
-        teacher: "Professor"
-        tutor: "Tutor"
-        student: "Aluno"
       invoice:
         open: "A calcular"
         pending: "A vencer"

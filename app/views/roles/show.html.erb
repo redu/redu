@@ -22,7 +22,7 @@
       <%= link_to @user.email, @user, :class => "call" %>
       <span class="info">Inscreveu-se há <%= time_ago_in_words(@environment_membership.created_at) %></span>
     </div>
-    <% is_admin = @environment_membership.role.eql?(Role[:environment_admin]) %>
+    <% is_admin = @environment_membership.role.environment_admin? %>
     <% @courses_memberships.each do |membership| %>
       <%= form_tag environment_course_user_roles_path(@environment, membership.course, @user), :method => :post do %>
         <table class="admin-role-table">
@@ -48,11 +48,11 @@
               <% else %>
                 <td class="edit-roles">
                   <%= label_tag "role_#{Role[:teacher]}", "Professor", :class => "label " %>
-                  <%= radio_button_tag :role, Role[:teacher], membership.role.eql?(Role[:teacher]) ? true : false, :class => "input-checkbox"  %>
+                  <%= radio_button_tag :role, Role[:teacher], membership.role.teacher? ? true : false, :class => "input-checkbox"  %>
                   <%= label_tag "role_#{Role[:member]}", "Membro", :class => "label" %>
-                  <%= radio_button_tag :role, Role[:member], membership.role.eql?(Role[:member]) ? true : false , :class => "input-checkbox" %>
+                  <%= radio_button_tag :role, Role[:member], membership.role.member? ? true : false , :class => "input-checkbox" %>
                   <%= label_tag "role_#{Role[:tutor]}", "Tutor", :class => "label" %>
-                  <%= radio_button_tag :role, Role[:tutor], membership.role.eql?(Role[:tutor]) ? true : false, :class => "input-checkbox"  %>
+                  <%= radio_button_tag :role, Role[:tutor], membership.role.tutor? ? true : false, :class => "input-checkbox"  %>
                 </td>
                 <td class="course-cell">
                   <%= link_to membership.course.name,
