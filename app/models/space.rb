@@ -21,16 +21,16 @@ class Space < ActiveRecord::Base
   has_many :users, :through => :user_space_associations
   # environment_admins
   has_many :administrators, :through => :user_space_associations,
-    :source => :user, :conditions => ["user_space_associations.role = ?", 3]
+    :source => :user, :conditions => ["user_space_associations.role = ?", :environment_admin]
   # teachers
   has_many :teachers, :through => :user_space_associations,
-    :source => :user, :conditions => ["user_space_associations.role = ?", 5]
+    :source => :user, :conditions => ["user_space_associations.role = ?", :teacher]
   # tutors
   has_many :tutors, :through => :user_space_associations,
-    :source => :user, :conditions => [ "user_space_associations.role = ?", 6]
+    :source => :user, :conditions => [ "user_space_associations.role = ?", :tutor]
   # students (member)
   has_many :students, :through => :user_space_associations,
-    :source => :user, :conditions => [ "user_space_associations.role = ?", 2]
+    :source => :user, :conditions => [ "user_space_associations.role = ?", :member]
 
  # new members (form 1 week ago)
   has_many :new_members, :through => :user_space_associations,
@@ -51,8 +51,8 @@ class Space < ActiveRecord::Base
 
   scope :of_course, lambda { |course_id| where(:course_id => course_id) }
   scope :published, where(:published => true)
-  scope :teachers, joins(
-        :user_space_associations).where("user_space_associations.role = ?", 5)
+  scope :teachers, joins(:user_space_associations).
+    where("user_space_associations.role = ?", :teacher)
 
   # ACCESSORS
   attr_protected :owner, :removed, :lectures_count, :members_count,

@@ -14,7 +14,7 @@ class Enrollment < ActiveRecord::Base
   has_many :asset_reports, :dependent => :destroy
   has_many :lectures, :through => :asset_reports
 
-  enumerate :role
+  classy_enum_attr :role, :default => 'member'
 
   validates_uniqueness_of :user_id, :scope => :subject_id
 

@@ -48,7 +48,7 @@ class User < ActiveRecord::Base
   has_many :courses_owned, :class_name => "Course",
     :foreign_key => "user_id"
   has_many :favorites, :order => "created_at desc", :dependent => :destroy
-  enumerate :role
+  classy_enum_attr :role, :default => 'member'
   has_many :enrollments, :dependent => :destroy
 
   #subject
@@ -445,29 +445,29 @@ class User < ActiveRecord::Base
 
   def environment_admin?(entity)
     association = get_association_with entity
-    association && association.role && association.role.eql?(Role[:environment_admin])
+    association && association.role && association.role.environment_admin?
   end
 
   def admin?
-    @is_admin ||= role.eql?(Role[:admin])
+    @is_admin ||= role.admin?
   end
 
   def teacher?(entity)
     association = get_association_with entity
     return false if association.nil?
-    association && association.role && association.role.eql?(Role[:teacher])
+    association && association.role && association.role.teacher?
   end
 
   def tutor?(entity)
     association = get_association_with entity
     return false if association.nil?
-    association && association.role && association.role.eql?(Role[:tutor])
+    association && association.role && association.role.tutor?
   end
 
   def member?(entity)
     association = get_association_with entity
     return false if association.nil?
-    association && association.role && association.role.eql?(Role[:member])
+    association && association.role && association.role.member?
   end
 
   def male?
