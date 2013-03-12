@@ -25,22 +25,22 @@ class Course < ActiveRecord::Base
   has_many :administrators, :through => :user_course_associations,
     :source => :user,
     :conditions => [ "course_enrollments.role = ? AND course_enrollments.state = ?",
-                      3, 'approved' ]
+                      :environment_admin, 'approved' ]
   # teachers
   has_many :teachers, :through => :user_course_associations,
     :source => :user,
     :conditions => [ "course_enrollments.role = ? AND course_enrollments.state = ?",
-                      5, 'approved' ]
+                      :teacher, 'approved' ]
   # tutors
   has_many :tutors, :through => :user_course_associations,
     :source => :user,
     :conditions => [ "course_enrollments.role = ? AND course_enrollments.state = ?",
-                      6, 'approved' ]
+                      :tutor, 'approved' ]
   # students (member)
   has_many :students, :through => :user_course_associations,
     :source => :user,
     :conditions => [ "course_enrollments.role = ? AND course_enrollments.state = ?",
-                      2, 'approved' ]
+                      :member, 'approved' ]
 
   # new members (form 1 week ago)
   has_many :new_members, :through => :user_course_associations,
@@ -49,7 +49,7 @@ class Course < ActiveRecord::Base
 
   has_many :teachers_and_tutors, :through => :user_course_associations,
     :source => :user, :select => 'users.id',
-    :conditions => [ "(course_enrollments.role = ? OR course_enrollments.role = ?) AND course_enrollments.state = ?", 6, 5, 'approved']
+    :conditions => [ "(course_enrollments.role = ? OR course_enrollments.role = ?) AND course_enrollments.state = ?", :teacher, :tutor, 'approved']
 
   has_and_belongs_to_many :audiences
 
@@ -71,25 +71,25 @@ class Course < ActiveRecord::Base
   scope :user_behave_as_administrator, lambda { |user_id|
     joins(:user_course_associations).
       where("course_enrollments.user_id = ? AND course_enrollments.role = ?",
-             user_id, 3)
+             user_id, :environment_admin)
   }
 
   scope :user_behave_as_teacher, lambda { |user_id|
     joins(:user_course_associations).
       where("course_enrollments.user_id = ? AND course_enrollments.role = ?",
-              user_id, 5)
+              user_id, :teacher)
   }
 
   scope :user_behave_as_tutor, lambda { |user_id|
     joins(:user_course_associations).
       where("course_enrollments.user_id = ? AND course_enrollments.role = ?",
-              user_id, 6)
+              user_id, :tutor)
   }
 
   scope :user_behave_as_student, lambda { |user_id|
     joins(:user_course_associations).
       where("course_enrollments.user_id = ? AND course_enrollments.role = ? AND course_enrollments.state = ?",
-              user_id, 2, 'approved')
+              user_id, :member, 'approved')
   }
 
   attr_protected :owner, :published, :environment
@@ -192,7 +192,7 @@ class Course < ActiveRecord::Base
     enrollments = []
     enrollments_finalized = []
     course_association = user.get_association_with(self)
-    course_association.destroy
+    course_association.try(:destroy)
 
     # Atualizando license atual para setar o period_end
     set_period_end(user)

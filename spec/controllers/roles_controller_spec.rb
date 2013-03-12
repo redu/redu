@@ -26,7 +26,7 @@ describe RolesController do
         moderated_course.save
 
         put :update, :environment_id => @environment.path, :user_id => @member.login,
-        :role => Role[:environment_admin].to_i, :locale => "pt-BR"
+        :role => Role[:environment_admin], :locale => "pt-BR"
         @member.get_association_with(moderated_course).should be_approved
       end
 
@@ -34,19 +34,19 @@ describe RolesController do
 
     it "should turn the user into environment_admin" do
       put :update, :environment_id => @environment.path, :user_id => @member.login,
-        :role => Role[:environment_admin].to_i, :locale => "pt-BR"
+        :role => Role[:environment_admin], :locale => "pt-BR"
 
       @courses.each do |c|
-        @member.get_association_with(c).role.should == Role[:environment_admin]
+        @member.get_association_with(c).role.should be_environment_admin
       end
     end
 
     it "should turn admin into member" do
       put :update, :environment_id => @environment.path, :user_id => @member.login,
-        :role => Role[:member].to_i, :locale => "pt-BR"
+        :role => Role[:member], :locale => "pt-BR"
 
       @courses.each do |c|
-        @member.get_association_with(c).role.should == Role[:member]
+        @member.get_association_with(c).role.should be_member
       end
     end
   end
@@ -55,34 +55,33 @@ describe RolesController do
     it "should turn member into teacher" do
       put :update, :environment_id => @environment.path,
         :course_id => @courses.first.path, :user_id => @member.login,
-        :role => Role[:teacher].to_i, :locale => "pt-BR"
+        :role => Role[:teacher], :locale => "pt-BR"
 
-      @member.get_association_with(@courses.first).role.should == Role[:teacher]
+      @member.get_association_with(@courses.first).role.should be_teacher
     end
 
     it "should turn member into tutor" do
       put :update, :environment_id => @environment.path,
         :course_id => @courses.first.path, :user_id => @member.login,
-        :role => Role[:tutor].to_i, :locale => "pt-BR"
+        :role => Role[:tutor], :locale => "pt-BR"
 
-      @member.get_association_with(@courses.first).role.should == Role[:tutor]
+      @member.get_association_with(@courses.first).role.should be_tutor
     end
 
     it "should change the role just on the specified course" do
       put :update, :environment_id => @environment.path,
         :course_id => @courses.first.path, :user_id => @member.login,
-        :role => Role[:teacher].to_i, :locale => "pt-BR"
+        :role => Role[:teacher], :locale => "pt-BR"
 
-      @member.get_association_with(@courses.last).role.should == Role[:member]
+      @member.get_association_with(@courses.last).role.should be_member
     end
 
     it "should not turn environment_admin into anything" do
       put :update, :environment_id => @environment.path,
         :course_id => @courses.first.path, :user_id => @owner.login,
-        :role => Role[:teacher].to_i, :locale => "pt-BR"
+        :role => Role[:teacher], :locale => "pt-BR"
 
-      @owner.get_association_with(@courses.first).role.should ==
-        Role[:environment_admin]
+      @owner.get_association_with(@courses.first).role.should be_environment_admin
     end
   end
 

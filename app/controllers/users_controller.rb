@@ -88,15 +88,17 @@ class UsersController < BaseController
 
         # Se tem um token de convite para o curso, aprova o convite para o
         # usuário recém-cadastrado
-        if params.has_key?(:invitation_token)
+        if params.has_key?(:invitation_token) &&
           invite = UserCourseInvitation.find_by_token(params[:invitation_token])
+
           invite.user = @user
           invite.accept!
         end
 
         # Invitation Token
-        if params.has_key?(:friendship_invitation_token)
+        if params.has_key?(:friendship_invitation_token) &&
           invite = Invitation.find_by_token(params[:friendship_invitation_token])
+
           invite.accept!(@user)
         end
 
@@ -105,13 +107,16 @@ class UsersController < BaseController
       else
         # Se tem um token de convite para o curso, atribui as variáveis
         # necessárias para mostrar o convite em Users#new
-        if params.has_key?(:invitation_token)
+        if params.has_key?(:invitation_token) &&
           @user_course_invitation = UserCourseInvitation.find_by_token(
             params[:invitation_token])
-            @course = @user_course_invitation.course
-            @environment = @course.environment
-        elsif params.has_key?(:friendship_invitation_token)
-          invitation = Invitation.find_by_token(params[:friendship_invitation_token])
+
+          @course = @user_course_invitation.course
+          @environment = @course.environment
+        elsif params.has_key?(:friendship_invitation_token) &&
+          invitation = Invitation.find_by_token(
+            params[:friendship_invitation_token])
+
           @invitation_user = invitation.user
           uca = UserCourseAssociation.where(:user_id => @invitation_user).approved
           @contacts = {:total => @invitation_user.friends.count}

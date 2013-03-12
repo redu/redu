@@ -6,6 +6,13 @@ GIT
       activesupport (>= 2.3.2)
 
 GIT
+  remote: git://github.com/brianmario/mysql2.git
+  revision: 445fa89fc8ce1ab20505d6f3f5316a682bb58fa1
+  branch: 0.2.x
+  specs:
+    mysql2 (0.2.19b6)
+
+GIT
   remote: git://github.com/edgarjs/ajaxful-rating.git
   revision: 81b563ef4e4f7937b769ea64b589d990dc833b43
   branch: rails3
@@ -125,7 +132,6 @@ GEM
     aasm (3.0.6)
       activerecord
     abstract (1.0.0)
-    active_enum (0.9.1)
     activerecord-import (0.2.9)
       activerecord (~> 3.0)
       activerecord (~> 3.0)
@@ -167,6 +173,8 @@ GEM
     chunky_png (1.2.6)
     ckeditor (3.4.2.pre)
       mime-types (>= 1.16)
+    classy_enum (3.2.0)
+      rails (>= 3.0)
     closure-compiler (1.1.1)
     cocaine (0.2.1)
     columnize (0.3.2)
@@ -280,7 +288,6 @@ GEM
       tzinfo (~> 0.3.22)
     multi_json (1.0.4)
     multipart-post (1.1.5)
-    mysql2 (0.2.7)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
     net-ssh (2.5.2)
@@ -418,7 +425,6 @@ PLATFORMS
 DEPENDENCIES
   aasm
   actionmailer_inline_css!
-  active_enum
   activerecord-import
   acts-as-taggable-on
   acts_as_tree (~> 0.1.1)
@@ -433,6 +439,7 @@ DEPENDENCIES
   bundler (~> 1.2)
   cancan (~> 1.6.7)
   ckeditor (= 3.4.2.pre)
+  classy_enum
   compass-rails
   daemons (= 1.0.10)
   date_validator
@@ -454,7 +461,7 @@ DEPENDENCIES
   kaminari
   mime-types
   mongoid (~> 2.2.6)
-  mysql2 (~> 0.2.1)
+  mysql2!
   newrelic_rpm (= 3.0.1)
   no_peeping_toms!
   oauth-plugin (~> 0.4.0)

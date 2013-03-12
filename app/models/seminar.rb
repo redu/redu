@@ -48,9 +48,9 @@ class Seminar < ActiveRecord::Base
   # Retorna parâmetro da URL que identifica unicamente o vídeo
   def truncate_youtube_url
     if self.external_resource_type.eql?('youtube')
-      capture = self.external_resource.scan(/youtube\.com\/watch\?v=([A-Za-z0-9._%-]*)[&\w;=\+_\-]*/)
+      capture = self.external_resource.match(/youtube.com.*(?:\/|v=)([^&$]+)/)
       # Pegando texto capturado ou retornando nil se o regex falhar
-      capture = capture.try(:first).try(:first)
+      capture = capture[1]
       self.external_resource = capture
     end
   end

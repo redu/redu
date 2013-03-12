@@ -5,7 +5,7 @@ class UserSpaceAssociation < ActiveRecord::Base
   belongs_to :user
   belongs_to :space
 
-  enumerate :role
+  classy_enum_attr :role, :default => 'member'
 
   scope :users_by_name,
     lambda { |name| includes(:user).

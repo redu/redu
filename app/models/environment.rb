@@ -17,20 +17,20 @@ class Environment < ActiveRecord::Base
   # environment_admins
   has_many :administrators, :through => :user_environment_associations,
     :source => :user,
-    :conditions => [ "user_environment_associations.role = ?", 3 ]
+    :conditions => [ "user_environment_associations.role = ?", :environment_Admin ]
   # teachers
   has_many :teachers, :through => :user_environment_associations,
     :source => :user,
-    :conditions => [ "user_environment_associations.role = ?", 5 ]
+    :conditions => [ "user_environment_associations.role = ?", :teacher ]
   # tutors
   has_many :tutors, :through => :user_environment_associations,
     :source => :user,
-    :conditions => [ "user_environment_associations.role = ?", 6 ]
+    :conditions => [ "user_environment_associations.role = ?", :tutor ]
 
   # students (role member)
   has_many :students, :through => :user_environment_associations,
     :source => :user,
-    :conditions => [ "user_environment_associations.role = ?", 2 ]
+    :conditions => [ "user_environment_associations.role = ?", :member ]
 
   has_one :partner, :through => :partner_environment_association
   has_one :partner_environment_association
