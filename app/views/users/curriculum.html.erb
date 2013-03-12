@@ -24,15 +24,7 @@
       </div>
       <%# Abas e sub-abas %>
       <%= new_tabs(:new_users) %>
-      <%# TODO: Remover quando estiver integrado ao simple-navigation %>
-      <div class="tab-buttons">
-        <%= link_to "Biografia", edit_user_path(@user),
-          :title => "Biografia",
-          :class => "tab-button icon-biography_16_18-before" %>
-        <%= link_to "Currículo", curriculum_user_path(@user),
-          :title => "Currículo",
-          :class => "tab-button tab-button-active icon-curriculum_16_18-before" %>
-      </div>
+      <%= new_subtabs(:new_users) %>
 
       <hr class="list-separator">
 
