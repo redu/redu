@@ -143,7 +143,7 @@ module BaseHelper
         message = options.include?(:message) ? options[:message] : locale.t(:body)
 
         error_messages = objects.sum do |object|
-          object.errors.collect { |attr, error| attr }.map do |attr|
+          object.errors.collect do |attr, error|
             object.class.human_attribute_name(attr, :default => attr)
           end
         end.uniq.join(", ").html_safe
@@ -202,7 +202,7 @@ module BaseHelper
         message = options.include?(:message) ? options[:message] : locale.t(:body)
 
         error_messages = objects.sum do |object|
-          object.errors.collect { |attr, error| attr }.map do |attr|
+          object.errors.collect do |attr, error|
             object.class.human_attribute_name(attr, :default => attr)
           end
         end.uniq.join(", ").html_safe
