@@ -386,7 +386,6 @@ GEM
       multi_json (~> 1.0)
       rubyzip
     shoulda-matchers (1.0.0.beta2)
-    shuber-sortable (1.0.6)
     signature (0.1.2)
       ruby-hmac
     system_timer (1.2.4)
@@ -483,7 +482,6 @@ DEPENDENCIES
   ruby-prof
   scribd_fu!
   shoulda-matchers
-  shuber-sortable
   simple-navigation!
   system_timer
   translate_routes

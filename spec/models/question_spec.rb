@@ -203,4 +203,10 @@ describe Question do
       end
     end
   end
+
+  it_should_behave_like "acts as list" do
+    let(:scope_class) { Exercise }
+    let(:scope_instance) { Factory(:exercise) }
+    let(:scope_instance_with_3_items) { Factory(:complete_exercise) }
+  end
 end

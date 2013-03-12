@@ -475,6 +475,12 @@ describe Lecture do
     end
   end
 
+  it_should_behave_like "acts as list" do
+    let(:scope_class) { Subject }
+    let(:scope_instance) { Factory(:subject) }
+    let(:scope_instance_with_3_items) { Factory(:complete_subject) }
+  end
+
   protected
   def attrs_except(entities, attrs_to_remove)
     entities.collect do |entity|
