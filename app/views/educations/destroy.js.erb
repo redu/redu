@@ -1,8 +1,8 @@
 $("#education-<%= @education.id %>").slideUp(150, "swing", function() {
-  // Remove o item.
+  <%# Remove o item. %>
   $(this).remove();
 
-  // Se for o último item removido, mostra o formulário de criação.
+  <%# Se for o último item removido, mostra o formulário de criação. %>
   if ($("#curriculum .educations").children().length === 0) {
     $("#curriculum .education .config-new-item").hide();
     $("#new_education").css("padding-top", 0)

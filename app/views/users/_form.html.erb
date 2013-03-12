@@ -4,11 +4,13 @@
   Variáveis:
     user: o usuário.
 %>
+
 <%= form_for user,
   :html => { :multipart => true,
   :class => "form-horizontal form-config-profile" } do |f| %>
   <%= new_concave_error_messages_for(user, :id => nil,
     :class => 'system-message message-warning fade in') %>
+
   <%# Avatar %>
   <div class="control-group row">
     <div class="control-label span3">
@@ -23,6 +25,7 @@
         :alt => user.display_name %>
     </div>
   </div>
+
   <%# Nome %>
   <div class="control-group row">
     <div class="control-label span3">
@@ -35,6 +38,7 @@
       <%= concave_errors_for(f.object, :first_name) %>
     </div>
   </div>
+
   <%# Sobrenome %>
   <div class="control-group row">
     <div class="control-label span3">
@@ -47,6 +51,7 @@
       <%= concave_errors_for(f.object, :last_name) %>
     </div>
   </div>
+
   <%# Data de nascimento %>
   <div class="control-group control-select-date row">
     <div class="control-label span3">
@@ -58,6 +63,7 @@
       <%= concave_errors_for(f.object, :birthday) %>
     </div>
   </div>
+
   <%# Sexo %>
   <div class="control-group control-inline row">
     <div class="control-label span3">
@@ -73,6 +79,7 @@
       <%= concave_errors_for(f.object, :gender) %>
     </div>
   </div>
+
   <%# Cidade onde nasceu %>
   <div class="control-group row">
     <div class="control-label span3">
@@ -84,6 +91,7 @@
       <%= concave_errors_for(f.object, :birth_localization) %>
     </div>
   </div>
+
   <%# Cidade onde vive %>
   <div class="control-group row">
     <div class="control-label span3">
@@ -95,6 +103,7 @@
       <%= concave_errors_for(f.object, :localization) %>
     </div>
   </div>
+
   <%# Celular %>
   <div class="control-group row">
     <div class="control-label span3">
@@ -117,6 +126,7 @@
       <%= concave_errors_for(f.object, :mobile) %>
     </div>
   </div>
+
   <%# Idiomas %>
   <div class="control-group row">
     <div class="control-label span3">
@@ -128,6 +138,7 @@
       <%= concave_errors_for(f.object, :languages) %>
     </div>
   </div>
+
   <%# Sobre você %>
   <div class="control-group row">
     <div class="control-label span3">
@@ -141,6 +152,7 @@
       <%= concave_errors_for(f.object, :description) %>
     </div>
   </div>
+
   <%# Frase marcante %>
   <div class="control-group row">
     <div class="control-label span3">
@@ -153,6 +165,7 @@
       <%= concave_errors_for(f.object, :favorite_quotation) %>
     </div>
   </div>
+
   <%# Áreas de seu interesse %>
   <div class="control-group row">
     <div class="control-label span3">
@@ -165,6 +178,7 @@
       <%= concave_errors_for(f.object, :tag_list) %>
     </div>
   </div>
+
   <%# Perfils adicionais %>
   <div class="control-group row" id="biography">
     <div class="control-label span3">

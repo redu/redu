@@ -1,8 +1,8 @@
 $("#experience-<%= @experience.id %>").slideUp(150, "swing", function() {
-  // Remove o item;
+  <%# Remove o item; %>
   $(this).remove();
 
-  // Se for o último item removido, mostra o formulário de criação.
+  <%# Se for o último item removido, mostra o formulário de criação. %>
   if ($("#curriculum .experiences").children().length === 0) {
     $("#curriculum .experience .config-new-item").hide();
     $("#new_experience").css("padding-top", 0)

@@ -133,11 +133,13 @@ module BaseHelper
       end
       options[:object_name] ||= params.first
 
-      I18n.with_options :locale => options[:locale], :scope => [:activerecord, :errors, :template] do |locale|
+      I18n.with_options :locale => options[:locale],
+        :scope => [:activerecord, :errors, :template] do |locale|
         header_message = if options.include?(:header_message)
-                           options[:header_message]
+                            options[:header_message]
                          else
-                           locale.t :header, :count => count, :model => options[:object_name].to_s.gsub('_', ' ')
+                            locale.t :header, :count => count,
+                              :model => options[:object_name].to_s.gsub('_', ' ')
                          end
 
         message = options.include?(:message) ? options[:message] : locale.t(:body)
@@ -151,7 +153,9 @@ module BaseHelper
 
 
         contents = ''
-        contents << content_tag(options[:header_tag] || :h2, header_message) unless header_message.blank?
+        unless header_message.blank?
+          contents << content_tag(options[:header_tag] || :h2, header_message)
+        end
         contents << content_tag(:p, message) unless message.blank?
         contents << content_tag(:p, error_messages, :class => "invalid_fields")
 
@@ -192,11 +196,13 @@ module BaseHelper
       end
       options[:object_name] ||= params.first
 
-      I18n.with_options :locale => options[:locale], :scope => [:activerecord, :errors, :template] do |locale|
+      I18n.with_options :locale => options[:locale],
+        :scope => [:activerecord, :errors, :template] do |locale|
         header_message = if options.include?(:header_message)
-                           options[:header_message]
+                            options[:header_message]
                          else
-                           locale.t :header, :count => count, :model => options[:object_name].to_s.gsub('_', ' ')
+                            locale.t :header, :count => count,
+                              :model => options[:object_name].to_s.gsub('_', ' ')
                          end
 
         message = options.include?(:message) ? options[:message] : locale.t(:body)
@@ -211,8 +217,9 @@ module BaseHelper
 
         contents = ''
         contents << content_tag(:span, "×", :class => "message-close", "data-dismiss" => "alert")
-        # contents << content_tag(options[:header_tag] || :h2, header_message) unless header_message.blank?
-        contents << content_tag(:p, content_tag(options[:header_tag] || :strong, header_message) + " " + message) unless message.blank?
+        unless message.blank?
+          contents << content_tag(:p, content_tag(options[:header_tag] || :strong, header_message) + " " + message)
+        end
         contents << content_tag(:p, error_messages, :class => "invalid_fields")
 
         content_tag(:div, contents.html_safe, html)
