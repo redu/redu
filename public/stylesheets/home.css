@@ -496,6 +496,11 @@ ul.requisitions .list-mix-inner .avatar {
 ul.requisitions .list-mix-inner span {
   color: #6d6e6f;
 }
+ul.requisitions .list-mix-inner span.waiting {
+  float: right;
+  margin-left: 10px;
+  margin-top: 7px;
+}
 ul.requisitions .actions {
   margin: 0;
   padding: 0;
