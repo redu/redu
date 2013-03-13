@@ -12,6 +12,12 @@ describe 'UserCompletnessCache' do
         let(:requisition) { get :home, :id => user.to_param,
                             :locale => 'pt-BR' }
       end
+
+      it_should_behave_like 'cache writing' do
+        let(:controller) { UsersController.new }
+        let(:requisition) { get :show, :id => user.to_param,
+                            :locale => 'pt-BR' }
+      end
     end
 
     context "expiration" do
