@@ -1,0 +1,36 @@
+.landing-advantages .landing-navigation-title { margin: 0; }
+
+.benefits {
+  padding: 20px 40px 20px 40px;
+  max-width: 858px;
+
+  .type-user {
+    max-width: 860px;
+    float: left;
+
+    .button-user{
+      float: left;
+      margin-top: 20px;
+    }
+
+    &.student {
+      margin: 0;
+      color: $green4;
+    }
+
+    .benefit-call h4{
+      font-weight: 100;
+      margin-top: 65px;
+    }
+
+    &.teacher {
+      margin: 0;
+      color: $orange4;
+      .benefit-call h4 {
+        margin-top: 40px;
+
+        & + h4 { margin-top: 20px; }
+      }
+    }
+  }
+}

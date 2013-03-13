@@ -140,6 +140,7 @@ stylesheets:
     - public/stylesheets/landing-new.css
     - public/stylesheets/outdated-browser-new.css
     - public/stylesheets/icons.redu.css
+    - public/stylesheets/authoring-page.css
   common:
     - public/stylesheets/reset.css
     - public/stylesheets/960.css

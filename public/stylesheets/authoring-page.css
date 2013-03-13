@@ -1,0 +1,76 @@
+.content-body {
+  overflow: hidden;
+  margin-bottom: 100px;
+  margin-top: 20px;
+}
+.content-body .back {
+  float: right;
+  margin-right: 40px;
+}
+.content-body .introduction {
+  padding: 20px 40px 20px 40px;
+}
+.content-body .introduction h4 {
+  font-weight: 100;
+  color: #6d6e6f;
+}
+.content-body .introduction h4 + h4 {
+  margin-top: 20px;
+}
+
+.landing-advantages .landing-navigation-title {
+  margin: 0;
+}
+
+.benefits {
+  padding: 20px 40px 20px 40px;
+  max-width: 858px;
+}
+.benefits .type-user {
+  max-width: 860px;
+  float: left;
+}
+.benefits .type-user .button-user {
+  float: left;
+  margin-top: 20px;
+}
+.benefits .type-user.student {
+  margin: 0;
+  color: #61a080;
+}
+.benefits .type-user .benefit-call h4 {
+  font-weight: 100;
+  margin-top: 65px;
+}
+.benefits .type-user.teacher {
+  margin: 0;
+  color: #ff7c35;
+}
+.benefits .type-user.teacher .benefit-call h4 {
+  margin-top: 40px;
+}
+.benefits .type-user.teacher .benefit-call h4 + h4 {
+  margin-top: 20px;
+}
+
+.projects-table {
+  padding: 20px 40px 20px 40px;
+}
+.projects-table h3 {
+  margin: 40px 0px 20px 0;
+}
+.projects-table table {
+  margin-bottom: 20px;
+}
+.projects-table table .label-online {
+  margin-left: 10px;
+}
+
+.welcome-authoring {
+  padding-top: 60px;
+}
+.welcome-authoring .authoring-call {
+  color: #6d6e6f;
+  margin-top: 20px;
+  font-family: museo-sans-rounded, museo-sans, "Helvetica Neue", Arial, sans-serif;
+}
