@@ -24,10 +24,10 @@
 </div>
 
 <div id ="external_resource_field" class="seminar-field" style="<%= showup ?  'display: none;' : 'display: block;' %>">
-  <%= f.label :external_resource, "URL" %>
-  <%= f.text_field :external_resource %>
+  <%= f.label :external_resource_url, "URL" %>
+  <%= f.text_field :external_resource_url %>
   <span class="tip">Endereço do vídeo no Youtube</span>
-  <%= concave_errors_for(f.object, :external_resource) %>
+  <%= concave_errors_for(f.object, :external_resource_url) %>
 </div>
 
 <div id="youtube_preview" class="clearfix" style="<%= showup ?  'display: none;' : 'display: block;' %>">

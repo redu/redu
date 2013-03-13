@@ -261,6 +261,36 @@ describe Lecture do
       end
     end
 
+    context "and itself is a external seminar" do
+      let(:subject) do
+        Factory(:lecture, :subject => @sub, :owner => @sub.owner,
+                :lectureable => Factory(:seminar_youtube))
+      end
+
+      before do
+        @new_lecture = subject.clone_for_subject!(@new_subject.id)
+      end
+
+      it "generates a lecture differente of itself" do
+        @new_lecture.should_not == subject
+      end
+
+      it "generates a clone" do
+        @new_lecture.should be_is_clone
+      end
+
+      it "generates a clone that belongs to correct subject" do
+        @new_lecture.subject.should == @new_subject
+      end
+
+      context "when clonning external resource url" do
+        it "should be the same url" do
+          @new_lecture.lectureable.external_resource_url.should == \
+            subject.lectureable.external_resource_url
+        end
+      end
+    end
+
     context "and itself is a exercise" do
       let(:subject) do
         Factory(:lecture, :subject => @sub, :owner => @sub.owner,
