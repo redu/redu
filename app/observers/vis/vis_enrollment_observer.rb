@@ -4,9 +4,10 @@ class VisEnrollmentObserver < ActiveRecord::Observer
 
   def before_update(enrollment)
     if enrollment.graduated? and enrollment.grade_changed?
-      notify_vis(enrollment, "subject_finalized")
+      delay_hierarchy_notification("subject_finalized", enrollment)
     elsif !enrollment.graduated? and enrollment.changed_attributes['grade'] == 100
-      notify_vis(enrollment, "remove_subject_finalized")
+      delay_hierarchy_notification("remove_subject_finalized",
+                                     enrollment)
     end
   end
 end

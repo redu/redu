@@ -4,7 +4,7 @@ FactoryGirl.define do
     s.description "Lorem ipsum dolor sit amet, consectetur magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation"
 
     s.association :owner, :factory => :user
-    s.association :course, :factory => :course
+    s.course { |space| Factory(:course, :owner => space.owner) }
   end
 
   factory :complete_space, :parent => :space do

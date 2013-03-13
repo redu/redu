@@ -215,10 +215,10 @@ class Course < ActiveRecord::Base
       end
     end
     # Associa o delayed_job para a remoção dos enrollments em visualização
-    delay_hierarchy_notification(enrollments.compact, "remove_enrollment")
+    delay_hierarchy_notification("remove_enrollment", enrollments.compact)
     # Envia notificação de remove_subject_finalized para visualização
-    delay_hierarchy_notification(enrollments_finalized.compact,
-                                 "remove_subject_finalized")
+    delay_hierarchy_notification("remove_subject_finalized",
+                                 enrollments_finalized.compact)
   end
 
 
@@ -247,7 +247,7 @@ class Course < ActiveRecord::Base
     enrollments = Subject.enroll(user, subjects, role)
 
     # Associa o delayed_job para a criação dos enrollments em visualização
-    delay_hierarchy_notification(enrollments, "enrollment")
+    delay_hierarchy_notification("enrollment", enrollments)
   end
 
   # Verifica se o usuário em questão está esperando aprovação num determinado

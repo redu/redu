@@ -1,86 +1,72 @@
 require 'spec_helper'
 
 describe EnrollmentVisNotification do
+  let(:environment_owner) { Factory(:user) }
+  let(:environment) { Factory(:environment, :owner => environment_owner) }
+  let(:user) { Factory(:user) }
+
   context "in a Course" do
+    let(:space) { Factory(:space, :course => subject) }
+    subject { Factory(:course, :owner => environment_owner,
+                      :environment => environment) }
+
     before do
-      @environment_owner = Factory(:user)
-      @environment = Factory(:environment, :owner => @environment_owner)
+      @subj = Factory(:subject, :space => space,
+                      :owner => subject.owner, :finalized => true)
+      @subj2 = Factory(:subject, :space => space,
+                       :owner => subject.owner, :finalized => true)
     end
 
-    subject { Factory(:course, :owner => @environment_owner,
-                      :environment => @environment) }
+    context "when an user is joining and there is a subject" do
 
-    context "when joining an user" do
-      before do
-        @space = Factory(:space, :course => subject)
-        @subj = Factory(:subject, :space => @space,
-                        :owner => subject.owner,
-                        :finalized => true)
-        @user = Factory(:user)
-        subject.reload
-      end
-
-      xit "should send a notification to vis" do
+      it "should send a notification to vis" do
         WebMock.disable_net_connect!
         vis_stub_request
 
-        subj2 = Factory(:subject, :space => @space,
-                        :owner => subject.owner,
-                        :finalized => true)
-
         enrollments = []
-        subject.join(@user)
-        enrollments << @user.get_association_with(@subj)
-        enrollments << @user.get_association_with(subj2)
+        subject.join(user)
+        enrollments << user.get_association_with(@subj)
+        enrollments << user.get_association_with(@subj2)
 
         enrollments.each do |enroll|
           params = fill_params(enroll, "enrollment")
-
           vis_a_request(params).should have_been_made
         end
       end
     end
 
     context "removes an user (unjoin)" do
+      let(:space_2) { Factory(:space, :course => subject) }
+
       before do
-        @plan = Factory(:active_licensed_plan, :billable => @environment)
-        @plan.create_invoice_and_setup
-        @environment.create_quota
-        @environment.reload
-        @space = Factory(:space, :course => subject)
-        @space_2 = Factory(:space, :course => subject)
-        @sub = Factory(:subject, :space => @space, :owner => subject.owner,
-                       :finalized => true)
-        @sub_2 = Factory(:subject, :space => @space_2, :owner => subject.owner,
-                         :finalized => true)
-        @user = Factory(:user)
-        subject.join @user
-        subject.reload
+       @subj2.space = space_2
+       @subj2.save
+
+       subject.join user
       end
 
-      xit "should send a remove enrollment notification and a remove subject finalized notification to vis" do
+      it "should send a remove enrollment notification and a remove subject finalized notification to vis" do
         WebMock.reset!
         WebMock.disable_net_connect!
+
         vis_stub_request
 
         enrollments = []
-        subject.users.each do |user|
-          enrollment = user.get_association_with(@sub)
-          if enrollment
-            enrollment.grade = 100
-            enrollment.graduated = true
-            enrollment.save
-            enrollments << enrollment
-          end
-          enrollment_2 = user.get_association_with(@sub_2)
-          enrollments << enrollment_2 if enrollment_2
+        enrollment = user.get_association_with(@sub)
+        if enrollment
+          enrollment.grade = 100
+          enrollment.graduated = true
+          enrollment.save
+          enrollments << enrollment
         end
-        subject.unjoin(@user)
+
+        enrollment_2 = user.get_association_with(@sub2)
+        enrollments << enrollment_2 if enrollment_2
+
+        subject.unjoin user
 
         enrollments.each do |enroll|
-
           params = fill_params(enroll, "remove_enrollment")
-
           vis_a_request(params).should have_been_made
 
           if enroll.graduated
@@ -89,24 +75,20 @@ describe EnrollmentVisNotification do
           end
         end
       end
+
     end
   end
 
   context "in a Enrollment Observer" do
-    before do
-      subject_owner = Factory(:user)
-      @space = Factory(:space)
-      @space.course.join subject_owner
-      @sub = Factory(:subject, :owner => subject_owner,
-                     :space => @space)
-    end
+    let(:subj) { Factory(:subject,
+                         :owner => environment_owner) }
 
-    subject { Factory(:enrollment, :subject => @sub) }
+    subject { Factory(:enrollment, :subject => subj, :user => user) }
 
     context "when updating" do
       let :lectures do
         3.times.collect do
-          Factory(:lecture, :subject => @sub, :owner => @sub.owner)
+          Factory(:lecture, :subject => subj, :owner => subj.owner)
         end
       end
 
@@ -115,7 +97,7 @@ describe EnrollmentVisNotification do
         vis_stub_request
       end
 
-      xit "when grade is not full (< 100) and became full should send a 'subject_finalized' notification to vis" do
+      it "when grade is not full (< 100) and became full should send a 'subject_finalized' notification to vis" do
         ActiveRecord::Observer.with_observers(:vis_enrollment_observer) do
           lectures
           subject.asset_reports.each { |a| a.done = true; a.save }
@@ -123,7 +105,6 @@ describe EnrollmentVisNotification do
         end
 
         params = fill_params(subject, "subject_finalized")
-
         vis_a_request(params).should have_been_made
       end
 
@@ -135,7 +116,6 @@ describe EnrollmentVisNotification do
         end
 
         params = fill_params(subject, "subject_finalized")
-
         vis_a_request(params).should_not have_been_made
       end
 
@@ -151,11 +131,10 @@ describe EnrollmentVisNotification do
           end
 
           params = fill_params(subject, "subject_finalized")
-
           vis_a_request(params).should_not have_been_made
         end
 
-        xit "when grade is updated for less then 100 should send a 'removed_subject_finalized' notification to vis" do
+        it "when grade is updated for less then 100 should send a 'removed_subject_finalized' notification to vis" do
           lectures
           subject.asset_reports.each { |a| a.done = true; a.save }
           subject.update_grade!
@@ -194,7 +173,7 @@ describe EnrollmentVisNotification do
         @enrolls = @user.enrollments
       end
 
-      xit "should send vis notification 'remove_enrollment'" do
+      it "should send vis notification 'remove_enrollment'" do
         WebMock.disable_net_connect!
         vis_stub_request
 
@@ -230,7 +209,7 @@ describe EnrollmentVisNotification do
           Factory(:enrollment, :subject => sub3, :user => @user, :graduated => true)
         end
 
-        xit "should send vis notification 'remove_subject_finalized'" do
+        it "should send vis notification 'remove_subject_finalized'" do
           WebMock.disable_net_connect!
           vis_stub_request
 
@@ -246,6 +225,38 @@ describe EnrollmentVisNotification do
             end
           end
         end
+      end
+    end
+  end
+
+  context "when a Subject is updated to finalized = true" do
+    let(:course) { Factory(:course, :owner => environment_owner) }
+    let(:space) { Factory(:space, :course => course,
+                          :owner => environment_owner) }
+
+    subject { Factory(:subject, :space => space,
+                      :owner => environment_owner) }
+
+    before do
+      5.times do
+        course.join Factory(:user)
+      end
+    end
+
+
+    it "should send notifications about all users" do
+      WebMock.disable_net_connect!
+      vis_stub_request
+
+      ActiveRecord::Observer.
+        with_observers(:subject_observer) do
+        subject.finalized = true
+        subject.save
+      end
+
+      subject.enrollments.each do |enroll|
+        params = fill_params(enroll, "enrollment")
+        vis_a_request(params).should have_been_made
       end
     end
   end

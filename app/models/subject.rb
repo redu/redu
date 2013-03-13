@@ -84,7 +84,7 @@ class Subject < ActiveRecord::Base
         Enrollment.create(:user_id => usa.user_id, :subject => self,
                           :role => usa.role)
       end
-      delay_hierarchy_notification(enrollments, "enrollment")
+      delay_hierarchy_notification("enrollment", enrollments)
     end
   end
 
