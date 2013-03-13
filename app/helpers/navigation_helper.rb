@@ -39,7 +39,8 @@ module NavigationHelper
           end
         end
       primary.item :teach, 'Ensine', teach_index_path,
-        :title => 'Ensine', :class => 'nav-global-button'
+        :title => 'Ensine', :class => 'nav-global-button',
+        :highlights_on => lambda{ global_highlighted == :teach }
       primary.item :courses, 'Cursos', courses_index_path,
         :title => 'Cursos', :class => 'nav-global-button',
         :highlights_on => lambda{ global_highlighted == :courses } do |sidebar|
@@ -63,6 +64,9 @@ module NavigationHelper
     elsif !request.fullpath.match(%r(\A#{ partners_path })).nil? ||
           !request.fullpath.match(%r(\A#{ users_path }/)).nil?
       :global
+    elsif !request.fullpath.match(%r(\A#{ environments_path }[?])).nil? ||
+          !request.fullpath.match(%r(\A#{ teach_index_path })).nil?
+      :teach
     else
       :courses
     end
