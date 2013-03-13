@@ -28,10 +28,10 @@ module SearchHelper
   # Defino o nome do papel de acordo com o ícone usado.
   def role_icon_to_text(role_icon)
     case role_icon
-    when "manager" then raw(t 'activerecord.attributes.role.environment_admin')
-    when "teacher" then raw(t 'activerecord.attributes.role.teacher')
-    when "tutor" then raw(t 'activerecord.attributes.role.tutor')
-    when "member" then raw(t 'activerecord.attributes.role.member')
+    when "manager" then raw(t 'classy_enum.role.admin')
+    when "teacher" then raw(t 'classy_enum.role.teacher')
+    when "tutor" then raw(t 'classy_enum.role.tutor')
+    when "member" then raw(t 'classy_enum.role.member')
     end
   end
 
