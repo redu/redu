@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
   # Constants
   MALE    = 'M'
   FEMALE  = 'F'
+  MIN_LOGIN_LENGTH = 5
+  MAX_LOGIN_LENGTH = 20
 
   # CALLBACKS
   before_create :make_activation_code
@@ -46,7 +48,7 @@ class User < ActiveRecord::Base
   has_many :courses_owned, :class_name => "Course",
     :foreign_key => "user_id"
   has_many :favorites, :order => "created_at desc", :dependent => :destroy
-  enumerate :role
+  classy_enum_attr :role, :default => 'member'
   has_many :enrollments, :dependent => :destroy
 
   #subject
@@ -183,7 +185,7 @@ class User < ActiveRecord::Base
   validates :login,
     :exclusion => { :in => Redu::Application.config.extras["reserved_logins"] },
     :format => { :with => /^[A-Za-z0-9_-]*[A-Za-z]+[A-Za-z0-9_-]*$/ },
-    :length => { :minimum => 6, :maximum => 20 }
+    :length => { :minimum => MIN_LOGIN_LENGTH, :maximum => MAX_LOGIN_LENGTH }
   validates_uniqueness_of :login, :case_sensitive => false
   validates :email,
     :format => { :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/ },
@@ -214,67 +216,6 @@ class User < ActiveRecord::Base
 
   def self.encrypt(password, salt)
     Digest::SHA1.hexdigest("--#{salt}--#{password}--")
-  end
-
-  # Cria um usuário com a hash retornada pelo provedor de autenticação omniauth
-  def self.create_with_omniauth(auth)
-    create! do |user|
-      user.enable_humanizer = false
-      user.login = User.get_login_from_provider_username(auth[:info])
-      user.email = auth[:info][:email]
-      user.reset_password
-      user.tos = '1'
-      user.first_name = auth[:info][:first_name]
-      user.last_name = auth[:info][:last_name]
-      user.activated_at = Time.now
-      user.authentications.build(:provider => auth[:provider],
-                                 :uid => auth[:uid])
-      if auth[:info][:image]
-        # Atualiza o avatar do usuário de acordo com seu avatar no Facebook
-        # a menos que a imagem do avatar seja a default
-        unless auth[:info][:image] ==
-          "http://graph.facebook.com/100002476817463/picture?type=square"
-          user.avatar = open(auth[:info][:image])
-        end
-      end
-      user.create_settings!
-    end
-  end
-
-  # Valida e, se necessário, modifica o nome de usuário do provedor externo para
-  # que se adeque às regras do login do Redu
-  def self.get_login_from_provider_username(info_hash)
-    login = info_hash[:nickname].delete('. ') if info_hash[:nickname]
-    unless login
-      # Usuário não possui um nickname no Facebook.
-      # Gera login a partir de nome e sobrenome.
-      login = "#{info_hash[:first_name]}#{info_hash[:last_name]}"
-      login = login.delete('. ').parameterize
-    end
-
-    # Modo safe para descobrir o tamanho máximo válido para login de usuário
-    max_length = (User.validators_on(:login).select { |v| v.class ==
-      ActiveModel::Validations::LengthValidator }).first.options[:maximum]
-    unless login.length <= max_length
-      login = login.first(max_length)
-    end
-
-    # Verifica se já existe um login
-    get_nonexistent_login(login, nil, max_length)
-  end
-
-  # Gera logins únicos adicionando um número no final
-  def self.get_nonexistent_login(login, n, max_length)
-    if !User.find_by_login("#{login}#{n}") && login.length <= max_length
-      return "#{login}#{n}"
-    else
-      n = 0 unless n != nil
-      # Valida o tamanho máximo do login
-      unless login.length + (n+1).to_s.length <= max_length
-        login = login.first(max_length -((n+1).to_s.length))
-      end
-      self.get_nonexistent_login(login, n+1, max_length)
-    end
   end
 
   ## Instance Methods
@@ -529,29 +470,29 @@ class User < ActiveRecord::Base
 
   def environment_admin?(entity)
     association = get_association_with entity
-    association && association.role && association.role.eql?(Role[:environment_admin])
+    association && association.role && association.role.environment_admin?
   end
 
   def admin?
-    @is_admin ||= role.eql?(Role[:admin])
+    @is_admin ||= role.admin?
   end
 
   def teacher?(entity)
     association = get_association_with entity
     return false if association.nil?
-    association && association.role && association.role.eql?(Role[:teacher])
+    association && association.role && association.role.teacher?
   end
 
   def tutor?(entity)
     association = get_association_with entity
     return false if association.nil?
-    association && association.role && association.role.eql?(Role[:tutor])
+    association && association.role && association.role.tutor?
   end
 
   def member?(entity)
     association = get_association_with entity
     return false if association.nil?
-    association && association.role && association.role.eql?(Role[:member])
+    association && association.role && association.role.member?
   end
 
   def male?

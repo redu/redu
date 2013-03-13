@@ -198,6 +198,9 @@ module Redu
     # Service objects
     config.autoload_paths << "#{config.root}/app/services"
 
+    # Enumerators
+    config.autoload_paths << "#{config.root}/app/enums"
+
     # Configurações do Pusher (redu app)
     config.pusher = {
       :app_id => '4577',
@@ -239,6 +242,7 @@ module Redu
                                         :vis_status_observer,
                                         :vis_user_observer,
                                         :vis_lecture_observer,
+                                        :seminar_observer,
       ]
     end
 

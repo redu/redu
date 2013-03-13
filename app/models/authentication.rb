@@ -8,12 +8,16 @@ class Authentication < ActiveRecord::Base
   def self.handle_invitation_token(state, user)
     state = parse(state)
     if state
-      if state.has_key?("invitation_token") # Convite para curso
+      # Convite para curso
+      if state.has_key?("invitation_token") &&
         invite = UserCourseInvitation.find_by_token(state["invitation_token"])
+
         invite.user = user
         invite.accept!
-      elsif state.has_key?("friendship_invitation_token") # Solicitação de amizade
+        # Solicitação de amizade
+      elsif state.has_key?("friendship_invitation_token") &&
         invite = Invitation.find_by_token(state["friendship_invitation_token"])
+
         invite.accept!(user)
       end
     end

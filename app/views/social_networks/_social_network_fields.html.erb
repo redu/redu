@@ -1,7 +1,7 @@
 <li id="social-network-<%= f.object.id %>">
   <%= f.select :name,
     options_for_select(
-      SocialNetwork::Networks.to_select,
+      SocialNetworkSite.all,
       :selected => f.object.name),
       { :include_blank => "adicionar" },
       { :class => "select-network" } %>

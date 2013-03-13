@@ -3,7 +3,7 @@
 FactoryGirl.define do
   factory :authentication do
       association :user
-      provider "facebook"
+      provider "some-provider"
       sequence :uid do |n|
         "JIOjwqfqwfj#{n}"
       end

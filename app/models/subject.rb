@@ -79,15 +79,13 @@ class Subject < ActiveRecord::Base
   end
 
   def create_enrollment_associations
-    enrollments = self.space.user_space_associations.all.collect do |users_space|
-      Enrollment.create(:user_id => users_space.user_id,
-                     :subject => self,
-                     :role => users_space.role)
+    self.space.user_space_associations.find_in_batches do |usas|
+      enrollments = usas.collect do |usa|
+        Enrollment.create(:user_id => usa.user_id, :subject => self,
+                          :role => usa.role)
+      end
+      delay_hierarchy_notification(enrollments, "enrollment")
     end
-
-    delay_hierarchy_notification(enrollments, "enrollment")
-
-    enrollments
   end
 
   def graduated?(user)

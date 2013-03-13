@@ -10,7 +10,7 @@ gem 'aasm'
 gem 'actionmailer_inline_css',
   :git => 'git://github.com/ndbroadbent/actionmailer_inline_css.git',
   :branch => 'master'
-gem 'active_enum'
+gem 'classy_enum'
 gem 'activerecord-import'
 gem 'acts_as_tree', '~> 0.1.1'
 gem 'acts-as-taggable-on'
@@ -45,7 +45,8 @@ gem 'jammit-s3'
 gem 'jquery-rails', '>= 1.0.12'
 gem 'kaminari'
 gem 'mime-types'
-gem 'mysql2', '~> 0.2.1'
+gem 'mysql2', :git => 'git://github.com/brianmario/mysql2.git',
+  :branch => '0.2.x'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'pusher'

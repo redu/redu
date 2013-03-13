@@ -69,6 +69,13 @@ class Lecture < ActiveRecord::Base
     clone = self.clone :include => { :lectureable => nested_attrs },
       :except => [:rating_average, :view_count, :position, :subject_id]
 
+    if self.lectureable.is_a?(Seminar)
+      if self.lectureable.external?
+        clone.lectureable.external_resource_url = \
+          self.lectureable.external_resource_url
+      end
+    end
+
     clone.is_clone = true
     clone.subject = Subject.find(subject_id)
     clone.save
