@@ -1,7 +1,6 @@
 FactoryGirl.define do
   factory :seminar_youtube, :class => :seminar do
-    external_resource 'http://www.youtube.com/watch?v=LADHwoN2LMM'
-    external_resource_type 'youtube'
+    external_resource_url 'http://www.youtube.com/watch?v=LADHwoN2LMM'
   end
 
   factory :seminar_upload, :class => :seminar do

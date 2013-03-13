@@ -22,9 +22,10 @@ describe Seminar do
 
     it "should accept Youtube URL in any order" do
       url = "http://www.youtube.com/watch?feature=player_embedded&v=3ZNdzDglRms"
-      Factory(:seminar_youtube, :external_resource => url).external_resource.
-        should == "3ZNdzDglRms"
 
+      Factory(:seminar_youtube,
+              :external_resource_url => url).external_resource.
+        should == "3ZNdzDglRms"
     end
 
     context do
@@ -34,5 +35,4 @@ describe Seminar do
       end
     end
   end
-
 end
