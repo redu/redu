@@ -183,6 +183,7 @@ Redu::Application.routes.draw do
   match 'contact' => "base#contact", :as => :contact
   match '/teach' => 'base#teach_index', :as => :teach_index
   match '/courses' => 'courses#index', :as => :courses_index, :via => :get
+  match 'authoring' => 'base#authoring', :as => :authoring
 
   resources :plans, :only => [] do
     member do

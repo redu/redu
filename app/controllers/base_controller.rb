@@ -61,6 +61,10 @@ class BaseController < ApplicationController
     redirect_to "http://tech.redu.com.br"
   end
 
+  def authoring
+    render :layout => 'landing'
+  end
+
   protected
 
   # Mostra ou não o layout com base na presença do header x-pjax
