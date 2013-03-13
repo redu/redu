@@ -273,5 +273,7 @@ module Redu
     # Quantidade de resultados da busca exibidos por páginas
     config.search_results_per_page = 10
     config.search_preview_results_per_page = 4
+    config.instant_search_results_per_page = 5
+    config.instant_search_preview_results_per_page = 2
   end
 end

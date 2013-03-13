@@ -24,11 +24,8 @@ class SearchService
   # Realiza a busca com os params já setados
   def perform_results(klass, opts = { :preview => false,
                                       :space_search => false })
-    if opts[:preview]
-      per_page = Redu::Application.config.search_preview_results_per_page
-    else
-      per_page = Redu::Application.config.search_results_per_page
-    end
+
+    per_page = search_per_page(opts[:preview], @params[:format], @params[:action])
 
     results = klass.perform(@params[:q], per_page, @params[:format],
                             @params[:page]).results
@@ -40,6 +37,20 @@ class SearchService
     end
 
     results
+  end
+
+  def search_per_page(preview, format, action)
+    if format == "json"
+      if action == "profiles"
+        Redu::Application.config.instant_search_results_per_page
+      else
+        Redu::Application.config.instant_search_preview_results_per_page
+      end
+    elsif preview
+      Redu::Application.config.search_preview_results_per_page
+    else
+      Redu::Application.config.search_results_per_page
+    end
   end
 
   # Faz a representação da busca em formato JSON
