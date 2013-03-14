@@ -505,6 +505,15 @@ describe Lecture do
     end
   end
 
+  context "when acting as a list" do
+    it "should include SimpleActsAsList::ModelAdditions" do
+      Lecture.should include(SimpleActsAsList::ModelAdditions)
+    end
+
+    # Just to be sure that simple_acts_as_list was called
+    it { should respond_to :last_item? }
+  end
+
   protected
   def attrs_except(entities, attrs_to_remove)
     entities.collect do |entity|
