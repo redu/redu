@@ -15,13 +15,13 @@
       <%= render :partial => "environment_list",
         :locals => { :environments => @environments,
                      :query => @query } %>
-      <% unless @courses.empty? %>
+      <% unless (individual_search_page? or @courses.empty?) %>
         <hr class="list-separator">
       <% end %>
       <%= render :partial => "course_list",
         :locals => { :courses => @courses,
                      :query => @query } %>
-      <% unless @spaces.empty? %>
+      <% unless (individual_search_page? or @spaces.empty?) %>
         <hr class="list-separator">
       <% end %>
       <%= render :partial => "space_list",
