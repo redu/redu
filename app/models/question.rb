@@ -15,7 +15,7 @@ class UniqueTruthValidator < ActiveModel::EachValidator
 end
 
 class Question < ActiveRecord::Base
-  include ActsAsList
+  include SimpleActsAsList::ModelAdditions
 
   belongs_to :exercise
   has_many :alternatives, :dependent => :destroy
@@ -26,7 +26,7 @@ class Question < ActiveRecord::Base
   validates_presence_of :statement
   validates :alternatives, :unique_truth => true
 
-  acts_as_list :scope => :exercise_id
+  simple_acts_as_list :scope => :exercise_id
 
   accepts_nested_attributes_for :alternatives, :allow_destroy => true,
     :reject_if => Proc.new {|attrs| attrs['text'].blank? &&

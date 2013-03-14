@@ -475,10 +475,13 @@ describe Lecture do
     end
   end
 
-  it_should_behave_like "acts as list" do
-    let(:scope_class) { Subject }
-    let(:scope_instance) { Factory(:subject) }
-    let(:scope_instance_with_3_items) { Factory(:complete_subject) }
+  context "when acting as a list" do
+    it "should include SimpleActsAsList::ModelAdditions" do
+      Lecture.should include(SimpleActsAsList::ModelAdditions)
+    end
+
+    # Just to be sure that simple_acts_as_list was called
+    it { should respond_to :last_item? }
   end
 
   protected

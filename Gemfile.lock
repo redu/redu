@@ -389,6 +389,8 @@ GEM
     shoulda-matchers (1.0.0.beta2)
     signature (0.1.2)
       ruby-hmac
+    simple_acts_as_list (0.0.1)
+      activesupport
     system_timer (1.2.4)
     test_xml (0.1.2)
       nokogiri (>= 1.3.2)
@@ -484,6 +486,7 @@ DEPENDENCIES
   scribd_fu!
   shoulda-matchers
   simple-navigation!
+  simple_acts_as_list (~> 0.0)
   system_timer
   translate_routes
   untied-publisher (~> 0.0.6)
