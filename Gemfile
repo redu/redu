@@ -58,7 +58,6 @@ gem 'rd_searchlogic', :require => 'searchlogic'
 gem 'remotipart', '~> 1.0'
 gem 'scribd_fu', :git => 'git://github.com/guiocavalcanti/scribd_fu.git',
   :branch => 'without-scape'
-gem 'shuber-sortable'
 gem 'simple-navigation', :git => 'git://github.com/andi/simple-navigation.git'
 gem 'translate_routes'
 gem 'useragent', '~> 0.4.8'
@@ -69,6 +68,7 @@ gem 'zencoder'
 gem 'untied-publisher', '~> 0.0.6'
 gem 'system_timer'
 gem 'json', '>= 1.7.7'
+gem 'simple_acts_as_list', '~> 0.0'
 
 # Gems específicos para a API
 gem 'oauth-plugin', '~> 0.4.0'
