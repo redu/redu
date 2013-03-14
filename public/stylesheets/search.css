@@ -111,6 +111,10 @@
 .portal-search-result-item {
   padding: 0 5px;
 }
+.portal-search-result-item +
+.portal-search-result-item {
+  margin-top: 10px;
+}
 
 .portal-search-link-see-more {
   text-align: center;
@@ -168,6 +172,9 @@
   width: calc(100% - (32px + 5px));
 }
 
+.portal-search-list-results {
+  padding-bottom: 10px;
+}
 .portal-search-list-results .portal-search-item {
   width: 49%;
   width: -moz-calc((100% - ((2 - 1) * 20px)) / 2);

@@ -101,7 +101,12 @@
   background: url("/images/search/search-background_160.png") no-repeat 391px -49px;
 }
 
-.portal-search-result-item { padding: 0 5px; }
+.portal-search-result-item {
+  padding: 0 5px;
+
+  & +
+  & { margin-top: 10px; }
+}
 
 .portal-search-link-see-more {
   text-align: center;
@@ -168,6 +173,7 @@
   $list-item-class: ".portal-search-item";
   $columns: 2;
   $gutter: 20px;
+  padding-bottom: 10px;
 
   #{$list-item-class} {
     $old-browser-value: percentage(((100 / $columns) - 1) / 100);
