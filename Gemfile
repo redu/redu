@@ -68,7 +68,7 @@ gem 'zencoder'
 gem 'untied-publisher', '~> 0.0.6'
 gem 'system_timer'
 gem 'json', '>= 1.7.7'
-gem 'simple_acts_as_list', '~> 0.0'
+gem 'simple_acts_as_list'
 
 # Gems específicos para a API
 gem 'oauth-plugin', '~> 0.4.0'

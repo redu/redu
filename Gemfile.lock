@@ -486,7 +486,7 @@ DEPENDENCIES
   scribd_fu!
   shoulda-matchers
   simple-navigation!
-  simple_acts_as_list (~> 0.0)
+  simple_acts_as_list
   system_timer
   translate_routes
   untied-publisher (~> 0.0.6)
