@@ -61,7 +61,7 @@ $(function() {
     var $dropdown = $(this)
       , $list = $dropdown.find("ul")
       , $results = $list.find(".portal-search-result-item")
-      , maxResults = 3
+      , maxResults = 5
       , filter = $(".form-search-filters input:radio:checked").val();
 
     if (filter === "geral") {
