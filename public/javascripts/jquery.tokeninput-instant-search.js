@@ -331,7 +331,11 @@ $.TokenListInstantSearch = function (input, url_or_data, settings) {
 
                 case KEY.TAB:
                 case KEY.ENTER:
+                    $(this).closest('.form-search-filters').submit();
+                    return false;
                 case KEY.NUMPAD_ENTER:
+                    $(this).closest('.form-search-filters').submit();
+                    return false;
                 case KEY.COMMA:
                   if(selected_dropdown_item) {
                     add_token($(selected_dropdown_item).data("tokeninput"));

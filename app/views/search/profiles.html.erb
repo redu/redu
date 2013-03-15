@@ -12,6 +12,9 @@
       <%= render :partial => "user_list",
         :locals => { :profiles => @profiles,
                      :query => @query } %>
+      <% if @profiles.num_pages > 1 %>
+        <hr class="list-separator">
+      <% end %>
       <%= paginate @profiles, :theme => "numbers",
         :outer_window => 1, :inner_window => 4 %>
     <%# Nenhum resultado encontrado. %>
