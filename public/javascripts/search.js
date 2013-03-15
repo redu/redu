@@ -83,13 +83,13 @@ $(function() {
 
         $('<li class="portal-search-result-category icon-environment-gray_16_18-before">Ambientes de Aprendizagem</li>').insertBefore($firstEnvironment);
       }
-    } else {
-      if ($results.length > maxResults) {
-        var linkSeeMore = $(".form-search").attr("action") + "?q=" + $("#token-input-q").val();
+    }
 
-        $results.last().remove();
-        $dropdown.append('<hr><a class="portal-search-link-see-more" title="Ver mais resultados" href="' + linkSeeMore + '">Ver mais</a>');
-      }
+    if ($results.length > maxResults) {
+      var linkSeeMore = $(".form-search").attr("action") + "?q=" + $("#token-input-q").val();
+
+      $results.last().remove();
+      $dropdown.append('<hr><a class="portal-search-link-see-more" title="Ver mais resultados" href="' + linkSeeMore + '">Ver mais</a>');
     }
   });
 });
