@@ -753,3 +753,48 @@ input[type="radio"], input[type="checkbox"] {
 .legend {
   color: #b3b3b3;
 }
+
+.control-autocomplete-thumbnail, .control-autocomplete-name, .control-autocomplete-added-info {
+  vertical-align: middle;
+}
+
+.control-autocomplete-thumbnail {
+  width: 32px;
+  height: 32px;
+}
+
+.control-autocomplete-thumbnail+.control-autocomplete-name, .control-autocomplete-thumbnail+.control-autocomplete-added-info {
+  margin-left: 5px;
+}
+
+.control-autocomplete-added-info {
+  display: inline-block;
+}
+
+.control-autocomplete-suggestion-selected {
+  background-color: white;
+  color: black;
+}
+
+.control-autocomplete-added-info .control-autocomplete-name, .control-autocomplete-added-info .control-autocomplete-mail {
+  display: block;
+}
+
+.dropdown-menu hr {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  clear: both;
+  margin: 10px 0;
+  border-left: none;
+  border-right: none;
+  border-top: 1px solid rgb(204, 204, 204);
+  border-bottom: 1px solid white;
+}
+
+.text-truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
