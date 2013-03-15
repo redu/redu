@@ -2096,7 +2096,7 @@ $(function() {
       var $this = $(this)
 
       if ($this.is('form')) {
-        var $submit = $this.find('input:submit, button[type="text"]')
+        var $submit = $this.find('input:submit, button[type="submit"]')
 
         $submit
           .removeClass($submit.data('spinnerClass'))
@@ -2153,24 +2153,30 @@ $(function() {
   }
 
   SearchField.prototype.expand = function () {
-    var $target = $(this.$element.data('toggle'))
-      , isFocused = this.$element.data('isFocused')
+    var $target = $(this.$element.data("toggle"))
+      , isFocused = this.$element.data("isFocused")
 
     if (!isFocused) {
-      this.$element.parent().animate({ width: '+=' + this.options.increment }, 'fast');
       $target.hide()
-      this.$element.data('isFocused', true)
+
+      this.$element
+        .data("isFocused", true)
+        .closest("." + this.options.classes.formSearchExpandable)
+        .animate({ width: "+=" + this.options.increment }, 150)
     }
   }
 
   SearchField.prototype.collapse = function () {
-    var $target = $(this.$element.data('toggle'))
-      , isFocused = this.$element.data('isFocused')
+    var $target = $(this.$element.data("toggle"))
+      , isFocused = this.$element.data("isFocused")
 
     if (isFocused) {
-      this.$element.parent().animate({ width: '-=' + this.options.increment }, 'fast');
       $target.show()
-      this.$element.data('isFocused', false)
+
+      this.$element
+        .data("isFocused", false)
+        .closest("." + this.options.classes.formSearchExpandable)
+        .animate({ width: "-=" + this.options.increment }, 150)
     }
   }
 
@@ -2181,16 +2187,26 @@ $(function() {
   $.fn.searchField = function (option) {
     return this.each(function () {
       var $this = $(this)
-        , data = $this.data('searchField')
-        , options = typeof option == 'object' && option
-      if (!data) $this.data('searchField', (data = new SearchField(this, options)))
-      if (option == 'expand') data.expand()
-      else if (option == 'collapse') data.collapse()
+        , data = $this.data("searchField")
+        , options = typeof option == "object" && option
+      if (!data) $this.data("searchField", (data = new SearchField(this, options)))
+      if (option == "expand") data.expand()
+      else if (option == "collapse") data.collapse()
     })
   }
 
   $.fn.searchField.defaults = {
     increment: 100
+  , classes: {
+      // Padrão a todo formulário de busca.
+      formSearch: "form-search"
+      // Formulário de busca que expande/contrai.
+    , formSearchExpandable: "form-search-expandable"
+      // Formulário de busca com dropdown de filtros.
+    , formSearchFilters: "form-search-filters"
+      // Campo de texto onde o termo de busca é digitado.
+    , inputField: "control-area"
+    }
   }
 
   $.fn.searchField.Constructor = SearchField
@@ -2200,26 +2216,21 @@ $(function() {
   * =============== */
 
   $(function () {
-    $('body')
-      .on('focusin', '.form-search-expandable', function ( e ) {
-        var $searchField = $(e.target)
+    var formSearchExpandableInputSelector = "." + $.fn.searchField.defaults.classes.formSearchExpandable + " ." + $.fn.searchField.defaults.classes.inputField
+      , formSearchFiltersInputSelector = "." + $.fn.searchField.defaults.classes.formSearchFilters + " ." + $.fn.searchField.defaults.classes.inputField
 
-        if ($searchField.hasClass('control-area')) {
-          $searchField.searchField('expand')
-        }
+    $(document)
+      .on("focusin", formSearchExpandableInputSelector, function (e) {
+        $(this).searchField("expand")
       })
-      .on('focusout', '.form-search-expandable', function ( e ) {
-        var $searchField = $(e.target)
-
-        if ($searchField.hasClass('control-area')) {
-          $searchField.searchField('collapse')
-        }
+      .on("focusout", formSearchExpandableInputSelector, function (e) {
+        $(this).searchField("collapse")
       })
-      .on("keypress", ".form-search-filters .control-area", function(e) {
+      .on("keypress", formSearchFiltersInputSelector, function(e) {
         // Submete o formulário quando o Enter é pressionado ao invés de abrir o dropdown.
         if (e.which == 13) {
-          $(this).closest('.form-search-filters').submit();
-          return false;
+          $(this).closest("." + $.fn.searchField.defaults.classes.formSearch).submit()
+          return false
         }
       })
   })
