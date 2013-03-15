@@ -12,6 +12,7 @@ describe 'SearchTeacherCache' do
 
       before do
         # Necessário para a chamada da paginação na view
+        courses.stub!(:total_count).and_return(1)
         courses.stub!(:current_page).and_return(1)
         courses.stub!(:num_pages).and_return(1)
         courses.stub!(:limit_value).and_return(1)
@@ -22,7 +23,8 @@ describe 'SearchTeacherCache' do
 
       it_should_behave_like 'cache writing' do
         let(:controller) { SearchController.new }
-        let(:requisition) { get :courses_only, :q => 'Makeup', :locale => 'pt-BR' }
+        let(:requisition) { get :environments, :f => ['cursos'],
+                            :q => 'Makeup', :locale => 'pt-BR' }
       end
     end
 
@@ -40,7 +42,7 @@ describe 'SearchTeacherCache' do
 
       it "expires when user_course_association role is updated" do
         Factory(:user_course_association, :user => user,
-                :course => course, :role => :student).approve!
+                :course => course, :role => :member).approve!
 
         ActiveRecord::Observer.with_observers(:user_course_association_cache_observer) do
           performing_cache(cache_identifier) do |cache|

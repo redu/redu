@@ -13,6 +13,7 @@ describe 'SearchUserCache' do
 
       before do
         # Necessário para a chamada da paginação na view
+        users.stub!(:total_count).and_return(1)
         users.stub!(:current_page).and_return(1)
         users.stub!(:num_pages).and_return(1)
         users.stub!(:limit_value).and_return(1)

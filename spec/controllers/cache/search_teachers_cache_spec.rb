@@ -12,17 +12,19 @@ describe 'SearchTeacherssCache' do
 
       before do
         # Necessário para a chamada da paginação na view
+        courses.stub!(:total_count).and_return(1)
         courses.stub!(:current_page).and_return(1)
         courses.stub!(:num_pages).and_return(1)
         courses.stub!(:limit_value).and_return(1)
 
         # Stub para resultado da busca com o spunspot
-        EnvironmentSearch.stub_chain(:perform, :results).and_return(courses)
+        CourseSearch.stub_chain(:perform, :results).and_return(courses)
       end
 
       it_should_behave_like 'cache writing' do
         let(:controller) { SearchController.new }
-        let(:requisition) { get :environments, :q => 'Makeup', :locale => 'pt-BR' }
+        let(:requisition) { get :environments, :f => ['cursos'],
+                            :q => 'Makeup', :locale => 'pt-BR' }
       end
     end
 

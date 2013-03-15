@@ -12,6 +12,7 @@ describe 'SearchAdministratorsCache' do
 
       before do
         # Necessário para a chamada da paginação na view
+        environments.stub!(:total_count).and_return(1)
         environments.stub!(:current_page).and_return(1)
         environments.stub!(:num_pages).and_return(1)
         environments.stub!(:limit_value).and_return(1)
@@ -22,7 +23,8 @@ describe 'SearchAdministratorsCache' do
 
       it_should_behave_like 'cache writing' do
         let(:controller) { SearchController.new }
-        let(:requisition) { get :environments_only, :q => 'Makeup', :locale => 'pt-BR' }
+        let(:requisition) { get :environments, :f => ['ambientes'],
+                            :q => 'Makeup', :locale => 'pt-BR' }
       end
     end
 
