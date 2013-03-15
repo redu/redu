@@ -146,7 +146,6 @@ GEM
       amq-client (~> 0.9.12)
       amq-protocol (~> 1.2.0)
       eventmachine
-    ar_mailer_rails3 (2.1.12)
     arel (2.0.10)
     authlogic (3.0.2)
       activerecord (~> 3.0.7)
@@ -430,7 +429,6 @@ DEPENDENCIES
   acts-as-taggable-on
   acts_as_tree (~> 0.1.1)
   ajaxful_rating!
-  ar_mailer_rails3
   authlogic
   awesome_nested_fields
   aws-s3

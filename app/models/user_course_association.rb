@@ -69,7 +69,7 @@ class UserCourseAssociation < CourseEnrollment
   validates_uniqueness_of :user_id, :scope => [:course_id, :type]
 
   def send_course_invitation_notification
-    UserNotifier.course_invitation(self.user, self.course).deliver
+    UserNotifier.delay(:queue => 'email').course_invitation(self.user, self.course)
   end
 
   def send_pending_moderation_notification
@@ -86,7 +86,8 @@ class UserCourseAssociation < CourseEnrollment
   # Notifica adimistradores do curso a respeito de moderações pendentes
   def notify_pending_moderation
     self.course.administrators.each do |admin|
-      UserNotifier.course_moderation_requested(course, admin, user).deliver
+      UserNotifier.delay(:queue => 'email').
+        course_moderation_requested(course, admin, user)
     end
   end
 

@@ -17,7 +17,6 @@ gem 'acts-as-taggable-on'
 gem 'ajaxful_rating',
   :git => 'git://github.com/edgarjs/ajaxful-rating.git',
   :branch => 'rails3'
-gem 'ar_mailer_rails3'
 gem 'authlogic'
 gem 'awesome_nested_fields'
 gem 'aws-s3', :require => 'aws/s3'

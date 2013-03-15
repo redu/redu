@@ -101,7 +101,9 @@ class Subject < ActiveRecord::Base
   # Notifica todos alunos matriculados sobre a adição de Subject
   def notify_subject_added
     if notificable?
-      self.space.users.all.each { |u| UserNotifier.subject_added(u, self).deliver }
+      self.space.users.all.each do|u|
+        UserNotifier.delay(:queue => 'email').subject_added(u, self)
+      end
     end
   end
 
