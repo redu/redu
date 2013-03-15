@@ -65,7 +65,7 @@ describe "Log" do
       filters = { :type => 'Log', :logeable_type => ['User', 'Space'] }
       get "/api/users/#{current_user.id}/statuses", params.merge(filters)
       ids = parse(response.body).collect { |status| status["id"] }
-      ids.to_set.should == (current_user.logs + space_logs).flatten.collect(&:id).to_set
+      ids.to_set.should == (user_logs + space_logs).flatten.collect(&:id).to_set
     end
 
     it "should ignore empty logeable_type filter" do
