@@ -142,7 +142,7 @@ GEM
       amq-protocol (>= 1.2.0)
       eventmachine
     amq-protocol (1.2.0)
-    amqp (0.9.9)
+    amqp (0.9.10)
       amq-client (~> 0.9.12)
       amq-protocol (~> 1.2.0)
       eventmachine
@@ -164,8 +164,8 @@ GEM
     bson_ext (1.7.0)
       bson (~> 1.7.0)
     builder (2.1.2)
-    bunny (0.9.0.pre6)
-      amq-protocol (>= 1.0.1)
+    bunny (0.9.0.pre8)
+      amq-protocol (>= 1.2.0)
     cancan (1.6.7)
     childprocess (0.3.1)
     chronic (0.6.7)
@@ -217,7 +217,7 @@ GEM
       eventmachine (>= 1.0.0.beta.4)
     erubis (2.6.6)
       abstract (>= 1.0.0)
-    eventmachine (1.0.0)
+    eventmachine (1.0.3)
     exceptional (2.0.32)
       rack
     excon (0.9.6)
@@ -343,8 +343,8 @@ GEM
     redu_analytics (0.0.2)
       lazy_high_charts
     remotipart (1.0.2)
-    representable (1.3.3)
-      json
+    representable (1.3.4)
+      multi_json
       nokogiri
     roar (0.11.7)
       representable (>= 1.2.8)
@@ -398,11 +398,11 @@ GEM
     treetop (1.4.12)
       polyglot
       polyglot (>= 0.3.1)
-    tzinfo (0.3.35)
-    untied-publisher (0.0.6)
+    tzinfo (0.3.37)
+    untied-publisher (0.0.7.pre)
       activerecord
       amqp
-      bunny (= 0.9.0.pre6)
+      bunny (>= 0.0.9.pre8)
       configurable
       json
       representable
@@ -487,7 +487,7 @@ DEPENDENCIES
   simple_acts_as_list
   system_timer
   translate_routes
-  untied-publisher (~> 0.0.6)
+  untied-publisher (~> 0.0.7.pre)
   useragent (~> 0.4.8)
   vis_client!
   webmock!

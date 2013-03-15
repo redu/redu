@@ -64,7 +64,7 @@ gem 'vis_client', :git => 'git@github.com:redu/vis_client.git'
 gem 'whenever', :require => false
 gem 'will_paginate', '~> 3.0.pre2'
 gem 'zencoder'
-gem 'untied-publisher', '~> 0.0.6'
+gem 'untied-publisher', '~> 0.0.7.pre'
 gem 'system_timer'
 gem 'json', '>= 1.7.7'
 gem 'simple_acts_as_list'
