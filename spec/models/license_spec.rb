@@ -4,8 +4,7 @@ describe License do
   it { should belong_to :invoice }
   it { should belong_to :course }
 
-  [:name, :email, :period_start,
-   :role, :course, :invoice].each do |validate|
+  [:name, :email, :period_start, :course, :invoice].each do |validate|
     it { should validate_presence_of validate}
   end
 
