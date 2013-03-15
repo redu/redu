@@ -65,6 +65,9 @@
 .projects-table table .label-online {
   margin-left: 10px;
 }
+.projects-table table td {
+  width: 50%;
+}
 
 .welcome-authoring {
   padding-top: 60px;
