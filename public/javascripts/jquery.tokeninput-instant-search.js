@@ -242,7 +242,7 @@ $.TokenListInstantSearch = function (input, url_or_data, settings) {
             outline: "none"
         })
         // Adiciona o valor do atributo name original.
-        .attr("name", $(input).attr("name").replace("-old", ""))
+        .attr("name", $(input).attr("name").replace(/-old/g, ""))
         .attr("placeholder", $(input).attr("placeholder"))
         .attr("id", $(input).data("settings").idPrefix + input.id)
         .focus(function () {
