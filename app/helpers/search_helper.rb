@@ -43,6 +43,14 @@ module SearchHelper
     }.join(', ').html_safe
   end
 
+  # Define a formatação da lista de professores
+  def show_teachers_list(collection)
+    collection.collect { |teacher|
+      link_to(teacher.display_name, user_path(teacher),
+              :title => teacher.display_name)
+    }.join(', ').html_safe
+  end
+
   # Exibe o contador de amigos em comum entre parênteses somente quando há algum.
   def show_mutual_friends_counter(user)
     mutual_friends_counter = mutual_friends(user).length

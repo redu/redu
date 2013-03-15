@@ -5,6 +5,7 @@ class UserCourseAssociationCacheObserver < ActiveRecord::Observer
   def after_create(uca)
     if uca.role == Role[:teacher]
       expire_search_course_teachers_count_for(uca.course)
+      expire_search_course_teachers_for(uca.course)
     end
 
     expire_courses_requisitions_for(uca.user)
@@ -19,6 +20,7 @@ class UserCourseAssociationCacheObserver < ActiveRecord::Observer
     elsif uca.role_changed?
       expire_course_members_count_for(uca.course)
       expire_search_course_teachers_count_for(uca.course)
+      expire_search_course_teachers_for(uca.course)
     end
   end
 
@@ -29,6 +31,7 @@ class UserCourseAssociationCacheObserver < ActiveRecord::Observer
 
     if uca.role == Role[:teacher]
       expire_search_course_teachers_count_for(uca.course)
+      expire_search_course_teachers_for(uca.course)
     end
 
     expire_course_members_count_for(uca.course)
@@ -43,5 +46,4 @@ class UserCourseAssociationCacheObserver < ActiveRecord::Observer
 
     expire_courses_requisitions_for(invited_users)
   end
-
 end

@@ -6,7 +6,9 @@ pt-BR:
       member: "Aluno"
       environment_admin: "Administrador do ambiente"
       course_admin: "Administrador do curso"
-      teacher: "Professor"
+      teacher:
+        one: "Professor"
+        other: "Professores"
       tutor: "Tutor"
       student: "Aluno"
   date:

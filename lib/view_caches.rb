@@ -38,6 +38,10 @@ module ViewCaches
     expire_fragments('search_course_teachers_count', courses)
   end
 
+  def expire_search_course_teachers_for(courses)
+    expire_fragments('search_course_teachers', courses)
+  end
+
   def expire_search_environment_administrators_for(environments)
     expire_fragments('search_environment_administrators', environments)
   end
