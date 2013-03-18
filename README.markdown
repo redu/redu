@@ -122,13 +122,15 @@ $ > sudo monit restart delayed_job.1
 
 ### Serviço de entrega de e-mails
 
-Nossos e-mails são entregues pelo [Amazon SES](http://aws.amazon.com/ses/). Como a entrega de e-mails é uma tarefa excessivamente bloquente, isso é feito em background pelo [ar_mailer_rails3](https://github.com/yzhang/ar_mailer_rails3).
+Nossos e-mails são entregues pelo [Amazon SES](http://aws.amazon.com/ses/). Como a entrega de e-mails é uma tarefa excessivamente bloquente, isso é feito em segundo plano pelo [DelayedJob](https://github.com/collectiveidea/delayed_job#rails-3-mailers).
 
-Para reinicializar o deamon responsável pelo envio, utilziar os seguintes comandos
+Para utilizar entrega em segundo plano, é necessário chamar o método do ActionMailer da seguinte forma: ``object.delay(:queue => 'email').method``. Onde ``method`` é tipo de notificação que deve ser gerada. Por exemplo, para enviar o e-mail de convite, a chamada seria a seguinte:
 
-```sh
-$ bundle exec ar_sendmail_rails3 --delay 15 --daemonize
+```ruby
+UserNotifier.delay(:queue => 'email').external_user_course_invitation(user_course_invitation, course)
 ```
+
+É importante notar que e-mails devem ser enfileirados na fila ``email`` para evitar que o envio dos mesmos afetem a vazão do processamento de outros Jobs. Para cada e-mail será enfileirado um Job do DelayedJob que lidará com a renderização da View e entrega para a Amazon SES. 
 
 
 Para mais informações de uso: ``bundle exec ar_sendmail_rails3 -h``
