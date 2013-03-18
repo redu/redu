@@ -1,10 +1,15 @@
 .projects-table {
   padding: 20px 40px 20px 40px;
 
-  h3 { margin: 40px 0px 20px 0; }
+  h3 { margin: 40px 0 0 0; }
+
+  h4 {
+    font-weight: 100;
+    color: $gray6;
+  }
 
   table {
-    margin-bottom: 20px;
+    margin: 20px 0;
 
     .label-online, .label-news { margin-left: 10px; }
 
