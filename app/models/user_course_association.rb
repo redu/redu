@@ -13,7 +13,7 @@ class UserCourseAssociation < CourseEnrollment
 
   # Filtra por palavra-chave (procura em User)
   scope :with_keyword, lambda { |keyword|
-    if not keyword.empty? and keyword.size > 3
+    if not keyword.empty? and keyword.size > 2
       where("users.first_name LIKE :keyword " + \
         "OR users.last_name LIKE :keyword " + \
         "OR users.login LIKE :keyword", {:keyword => "%#{keyword.to_s}%"}).
