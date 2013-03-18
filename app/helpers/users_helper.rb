@@ -25,7 +25,7 @@ module UsersHelper
 
   # Atual 'friendship' para dois usuários
   def current_friendship(user, someone = current_user)
-    someone.friendship_for user
+    user.friendship_for someone
   end
 
   # Amigos em comum para dois usuários

@@ -9,6 +9,8 @@ class EnvironmentSearch < Search
     # Instant search não necessita dos includes, deve procurar apenas pelos nomes
     if format == "json"
       fields = :name
+      includes = []
+    else
       includes = [:user_environment_associations, :courses]
     end
 

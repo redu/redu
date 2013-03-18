@@ -9,6 +9,8 @@ class UserSearch < Search
     # Instant search não necessita dos includes, deve procurar apenas pelos nomes
     if format == "json"
       fields = :name
+      includes = []
+    else
       includes = [:experiences, :friends, :friendships,
                   { :educations  => :educationable }]
     end

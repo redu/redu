@@ -9,6 +9,8 @@ class SpaceSearch < Search
     # Instant search não necessita dos includes, deve procurar apenas pelos nomes
     if format == "json"
       fields = :name
+      includes = []
+    else
       includes = [{ :course => [:user_course_associations,
                                 :environment, :owner] }]
     end
