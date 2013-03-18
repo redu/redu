@@ -11,29 +11,15 @@ describe SearchController do
   describe "GET index" do
     context "services" do
       before do
-        @params_service = SearchParamsService.new(params)
-        SearchParamsService.stub!(:new).and_return(@params_service)
-
         @search_service = SearchService.new(:params => params,
                                             :current_user => @user)
         SearchService.stub!(:new).and_return(@search_service)
       end
 
-      it "should instantiate search params service" do
-        klass_method = @params_service.method(:klasses_for_search)
-        @params_service.should_receive(:klasses_for_search) do
-          klass_method.call
-        end
-
-        get :index, params
-      end
-
       it "should instantiate search service" do
         klass_method = @search_service.method(:perform_klasses_results)
         @search_service.should_receive(:perform_klasses_results) do
-          klass_method.call(
-            [UserSearch, EnvironmentSearch, CourseSearch, SpaceSearch],
-            :preview => true)
+          klass_method.call(:preview => true)
         end
 
         get :index, params
@@ -72,7 +58,7 @@ describe SearchController do
       it "should instantiate search service" do
         klass_method = @search_service.method(:perform_results)
         @search_service.should_receive(:perform_results) do
-          klass_method.call( UserSearch)
+          klass_method.call(UserSearch)
         end
 
         get :profiles, params
@@ -101,29 +87,15 @@ describe SearchController do
   describe "GET environments" do
     context "services" do
       before do
-        @params_service = SearchParamsService.new(params)
-        SearchParamsService.stub!(:new).and_return(@params_service)
-
         @search_service = SearchService.new(:params => params,
                                             :current_user => @user)
         SearchService.stub!(:new).and_return(@search_service)
       end
 
-      it "should instatiate search params service" do
-        klass_method = @params_service.method(:klasses_for_search)
-        @params_service.should_receive(:klasses_for_search) do
-          klass_method.call
-        end
-
-        get :environments, params
-      end
-
       it "should instantiate search service" do
         klass_method = @search_service.method(:perform_klasses_results)
         @search_service.should_receive(:perform_klasses_results) do
-          klass_method.call(
-            [EnvironmentSearch, CourseSearch, SpaceSearch],
-            :preview => true)
+          klass_method.call(:preview => true)
         end
 
         get :environments, params

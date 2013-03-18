@@ -5,13 +5,10 @@ class SearchController < BaseController
 
   # Busca por Perfis + Ambientes (AVA's, Cursos e Disciplinas)
   def index
-    params_service = SearchParamsService.new(params)
     search_service = SearchService.new(:params => params,
                                        :current_user => current_user)
 
-    klasses = params_service.klasses_for_search
-    klasses_results = search_service.perform_klasses_results(klasses,
-                                                             :preview => true)
+    klasses_results = search_service.perform_klasses_results(:preview => true)
 
     @profiles = klasses_results["UserSearch"]
     @environments = klasses_results["EnvironmentSearch"]
@@ -51,17 +48,14 @@ class SearchController < BaseController
   # Busca por Ambientes (AVA's, Cursos e Disciplinas)
   # Esta action recebe filtros para mostrar resultados desejados
   def environments
-    params_service = SearchParamsService.new(params)
     search_service = SearchService.new(:params => params,
                                        :current_user => current_user)
     @query = params[:q]
 
-    @individual_page = params_service.individual_page?
-    preview = params_service.preview?
+    @individual_page = search_service.individual_page?
+    preview = search_service.preview?
 
-    klasses = params_service.klasses_for_search
-    klasses_results = search_service.perform_klasses_results(klasses,
-                                                             :preview => preview)
+    klasses_results = search_service.perform_klasses_results(:preview => preview)
 
     @environments = klasses_results["EnvironmentSearch"] ||=
       Kaminari.paginate_array([])
