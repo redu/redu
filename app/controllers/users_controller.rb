@@ -275,7 +275,8 @@ class UsersController < BaseController
       @user = User.find_by_email(@recover_password.email)
 
       if @user.try(:reset_password)
-        UserNotifier.delay(:queue => 'email').user_reseted_password(@user)
+        UserNotifier.delay(:queue => 'email').
+          user_reseted_password(@user, @user.password)
         @user.save
 
         # O usuario estava ficando logado, apos o comando @user.save.
