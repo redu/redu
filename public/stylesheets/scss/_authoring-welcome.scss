@@ -2,10 +2,11 @@
   padding-top: 60px;
   background-image: url("../images/light.png");
   background-repeat: no-repeat;
+  background-position: 0;
 
   .authoring-call {
     color: $gray6;
-    margin-top: 20px;
+    padding-bottom: 20px;
     font-family: $museo-sans-rounded;
   }
 

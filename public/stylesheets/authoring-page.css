@@ -73,9 +73,10 @@
   padding-top: 60px;
   background-image: url("../images/light.png");
   background-repeat: no-repeat;
+  background-position: 0;
 }
 .welcome-authoring .authoring-call {
   color: #6d6e6f;
-  margin-top: 20px;
+  padding-bottom: 20px;
   font-family: museo-sans-rounded, museo-sans, "Helvetica Neue", Arial, sans-serif;
 }
