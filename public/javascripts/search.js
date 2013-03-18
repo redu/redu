@@ -48,11 +48,15 @@ $(function() {
     updateTokenInput(url);
   });
 
-  // Evita que o formulário seja submetido vazio.
   $(document).on("submit", ".form-search", function(e) {
+    // Evita que o formulário seja submetido vazio.
     var val = $(this).find('#token-input-q').val();
     if ($.trim(val) === "") {
       return false;
+
+    } else {
+      // Remove o campo de busca original para que seu valor não fique na URL.
+      $("#q").remove();
     }
   });
 
