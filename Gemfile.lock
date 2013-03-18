@@ -63,7 +63,7 @@ GIT
 
 GIT
   remote: git://github.com/rails/rails.git
-  revision: f2839f1dbafc7c8b0bdceb6c636f5d44b7d686bc
+  revision: 77403a9b04073713e2b758c22174a81bb3cd62b9
   branch: 3-0-stable
   specs:
     actionmailer (3.0.20)
@@ -338,7 +338,7 @@ GEM
     rake (0.8.7)
     rd_searchlogic (3.0.1)
       activerecord (>= 3.0.0)
-    rdoc (3.12.1)
+    rdoc (3.12.2)
       json (~> 1.4)
     redu_analytics (0.0.2)
       lazy_high_charts
