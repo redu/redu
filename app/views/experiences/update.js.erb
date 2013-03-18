@@ -1,11 +1,9 @@
 <% if @experience.valid? %>
-  <%# Remove o item da lista e o re-adiciona atualizado. %>
+  <%# Substitui o item da lista pela versão atualizada. %>
   $("#experience-<%= @experience.id %>").slideUp(150, "swing", function() {
-    $(this).remove();
-
     var $newItem = $("<%= escape_javascript render :partial => 'experiences/item',
         :locals => { :item => @experience } %>");
-    $("#curriculum .experiences").prepend($newItem);
+    $(this).replaceWith($newItem);
 
     <%# Esconde o formulário de edição. %>
     $newItem.find("form").hide();
