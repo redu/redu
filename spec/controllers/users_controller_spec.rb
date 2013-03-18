@@ -284,7 +284,7 @@ describe UsersController do
             :password_confirmation => "new-pass",
             :settings_attributes => {
               :id => @user.settings.id,
-              :view_mural => "1"
+              :view_mural => :public
             }
           }
         }

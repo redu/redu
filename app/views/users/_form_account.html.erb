@@ -18,9 +18,9 @@
 
   <%= f.fields_for :settings do |builder| %>
     <%= field_set_tag "Quem pode ver o meu mural:", :class => "inline" do %>
-      <%= builder.radio_button :view_mural, Privacy[:public], { :checked => @user.settings.view_mural.eql?(Privacy[:public]) ?  true : false } %>
+      <%= builder.radio_button :view_mural, Privacy[:public], { :checked => @user.settings.view_mural.public? ?  true : false } %>
       <%= builder.label "view_mural_#{Privacy[:public]}".to_sym, "Todos" %>
-      <%= builder.radio_button :view_mural, Privacy[:friends], { :checked => @user.settings.view_mural.eql?(Privacy[:friends]) ?  true : false } %>
+      <%= builder.radio_button :view_mural, Privacy[:friends], { :checked => @user.settings.view_mural.friends?  true : false } %>
       <%= builder.label "view_mural_#{Privacy[:friends]}".to_sym, "Apenas amigos" %>
     <% end %>
   <% end %>
