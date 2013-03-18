@@ -787,7 +787,10 @@ $.TokenListInstantSearch = function (input, url_or_data, settings) {
 
     // Hide and clear the results dropdown
     function hide_dropdown () {
-        dropdown.hide().empty();
+        setTimeout(function() {
+            dropdown.hide().empty();
+        }, 100);
+
         selected_dropdown_item = null;
     }
 
