@@ -1,20 +1,19 @@
-.content-body {
-  overflow: hidden;
+.authoring-content {
   margin-bottom: 100px;
   margin-top: 20px;
 }
-.content-body .back {
+.authoring-content .back {
   float: right;
   margin-right: 40px;
 }
-.content-body .introduction {
-  padding: 20px 40px 20px 40px;
+.authoring-content .introduction {
+  padding: 20px 40px;
 }
-.content-body .introduction h4 {
+.authoring-content .introduction h4 {
   font-weight: 100;
   color: #6d6e6f;
 }
-.content-body .introduction h4 + h4 {
+.authoring-content .introduction h4 + h4 {
   margin-top: 20px;
 }
 
@@ -23,11 +22,12 @@
 }
 
 .benefits {
-  padding: 20px 40px 20px 40px;
-  max-width: 858px;
+  padding: 20px 40px;
 }
 .benefits .type-user {
-  max-width: 860px;
+  max-width: -webkit-calc(100% - 80px);
+  max-width: -moz-calc(100% - 80px);
+  max-width: calc(100% - 80px);
   float: left;
 }
 .benefits .type-user .button-user {
@@ -54,7 +54,7 @@
 }
 
 .projects-table {
-  padding: 20px 40px 20px 40px;
+  padding: 20px 40px;
 }
 .projects-table h3 {
   margin: 40px 0 0 0;
@@ -73,13 +73,21 @@
   width: 50%;
 }
 
-.welcome-authoring {
+.title-authoring {
   padding-top: 60px;
+<<<<<<< HEAD
   background-image: url("../images/light.png");
   background-repeat: no-repeat;
   background-position: 0;
+=======
+  background-image: url("../images/landing/light-welcome.png");
+  background-repeat: no-repeat;
+>>>>>>> Insere a luz de fundo no título da página, coloca a partial welcome da landing no local ideal, remove overflow desnecessário do content-body, reescreve valor do padding seguindo padrão para 2 valores, define variável para padding vertical e horizontal padrões do content-body, remove largura fixa para a partial de benefícios
 }
-.welcome-authoring .authoring-call {
+.title-authoring .title-call {
+  font-weight: 500;
+}
+.title-authoring .subtitle-call {
   color: #6d6e6f;
   padding-bottom: 20px;
   font-family: museo-sans-rounded, museo-sans, "Helvetica Neue", Arial, sans-serif;

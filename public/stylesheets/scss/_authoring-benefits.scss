@@ -1,11 +1,12 @@
 .landing-advantages .landing-navigation-title { margin: 0; }
 
 .benefits {
-  padding: 20px 40px 20px 40px;
-  max-width: 858px;
+  padding: $authoring-content-vertical-padding $authoring-content-horizontal-padding;
 
   .type-user {
-    max-width: 860px;
+    max-width: -webkit-calc(100% - 80px);
+    max-width: -moz-calc(100% - 80px);
+    max-width: calc(100% - 80px);
     float: left;
 
     .button-user{

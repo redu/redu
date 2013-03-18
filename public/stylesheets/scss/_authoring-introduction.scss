@@ -1,15 +1,15 @@
-.content-body {
-  overflow: hidden;
+.authoring-content {
   margin-bottom: 100px;
   margin-top: 20px;
 
   .back {
     float: right;
-    margin-right: 40px;
+    margin-right: $authoring-content-horizontal-padding;
   }
 
   .introduction {
-    padding: 20px 40px 20px 40px;
+    padding: $authoring-content-vertical-padding $authoring-content-horizontal-padding;
+
 
     h4 {
       font-weight: 100;
