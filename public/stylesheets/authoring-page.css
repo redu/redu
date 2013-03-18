@@ -62,7 +62,7 @@
 .projects-table table {
   margin-bottom: 20px;
 }
-.projects-table table .label-online {
+.projects-table table .label-online, .projects-table table .label-news {
   margin-left: 10px;
 }
 .projects-table table td {
