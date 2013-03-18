@@ -9,7 +9,7 @@ class Subject < ActiveRecord::Base
   has_many :graduated_members, :through => :enrollments, :source => :user,
     :conditions => ["enrollments.graduated = 1"]
   has_many :teachers, :through => :enrollments, :source => :user,
-    :conditions => ["enrollments.role = ?", 5] # Teacher
+    :conditions => ["enrollments.role = ?", :teacher]
   has_many :statuses, :as => :statusable, :order => "created_at DESC"
   has_many :logs, :as => :logeable, :order => "created_at DESC",
     :dependent => :destroy
