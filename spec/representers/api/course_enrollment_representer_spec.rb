@@ -15,15 +15,4 @@ describe CourseEnrollmentRepresenter do
       end
     end
   end
-
-  context "CourseEnrollment" do
-    subject do
-      s = Factory.create(:user_course_association, :role => nil)
-      s.extend(CourseEnrollmentRepresenter)
-    end
-
-    it "should set #role to nil" do
-      subject.to_hash.fetch("role").should be_nil
-    end
-  end
 end
