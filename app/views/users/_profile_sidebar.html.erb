@@ -11,12 +11,13 @@
         :collection => @contacts %>
     </ul><!-- end .connections -->
   <% else %>
-    <% @friends_in_common = @user.friends_in_common_with(current_user).shuffle %>
-    <span class="call icon-contacts-gray_16_18-before">Em comum: <span class="count"><%= @friends_in_common.count %></span></span>
-    <ul class="connections clearfix">
-      <%= render :partial => 'users/item_medium_24',
+    <%# TODO: Descomentar quando os amigos em comum estiver funcionado novamente. %>
+    <%# @friends_in_common = @user.friends_in_common_with(current_user).shuffle %>
+    <%# <span class="call icon-contacts-gray_16_18-before">Em comum: <span class="count"> %><%# @friends_in_common.count %><%# </span></span> %>
+    <%# <ul class="connections clearfix"> %>
+      <%# render :partial => 'users/item_medium_24',
         :collection => @friends_in_common[0..3] %>
-    </ul><!-- end .connections -->
+    <%# </ul> %><%# end .connections %>
     <hr class="separator"/>
     <ul class="connections con-endless clearfix">
       <% @contacts = Kaminari::paginate_array(@user.friends_not_in_common_with(current_user)).
