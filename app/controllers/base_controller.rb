@@ -4,10 +4,6 @@ class BaseController < ApplicationController
 
   rescue_from CanCan::AccessDenied, :with => :deny_access
 
-  def tos
-    render :layout => 'clean'
-  end
-
   def privacy
     render :layout => 'clean'
   end

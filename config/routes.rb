@@ -179,7 +179,6 @@ Redu::Application.routes.draw do
 
   # Indexes
   match 'privacy' => "base#privacy", :as => :privacy
-  match 'tos' => "base#tos", :as => :tos
   match 'contact' => "base#contact", :as => :contact
   match '/teach' => 'base#teach_index', :as => :teach_index
   match '/courses' => 'courses#index', :as => :courses_index, :via => :get
