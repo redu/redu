@@ -183,7 +183,6 @@ Redu::Application.routes.draw do
   match 'contact' => "base#contact", :as => :contact
   match '/teach' => 'base#teach_index', :as => :teach_index
   match '/courses' => 'courses#index', :as => :courses_index, :via => :get
-  match 'authoring' => 'base#authoring', :as => :authoring
 
   resources :plans, :only => [] do
     member do
@@ -268,6 +267,8 @@ Redu::Application.routes.draw do
     end
     resources :plans, :only => [:create]
   end
+
+  resources :pages, :only => :show
 
   root :to => 'base#site_index', :as => :home
   root :to => "base#site_index", :as => :application
