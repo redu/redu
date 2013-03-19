@@ -4,10 +4,6 @@ class BaseController < ApplicationController
 
   rescue_from CanCan::AccessDenied, :with => :deny_access
 
-  def privacy
-    render :layout => 'clean'
-  end
-
   def teach_index
     authorize! :teach_index, :base
 

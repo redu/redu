@@ -9,7 +9,7 @@
         <%= link_to "Termos de Uso", page_path("tos"), :title => "Termos de Uso" %>
       </li>
       <li class="privacy-policy">
-        <%= link_to "Política de Privacidade", privacy_path, :title => "Política de Privacidade" %>
+        <%= link_to "Política de Privacidade", page_path("privacy"), :title => "Política de Privacidade" %>
       </li>
       <li class="active contact">
         <%= link_to "Fale conosco", contact_path, :title => "Fale conosco" %>
@@ -19,7 +19,7 @@
   <div class="grid_12 alpha">
     <ul class="top-navigation">
       <li><%= link_to "Termos de Uso", page_path("tos"), :title => "Termos de Uso" %><span class="separator">|</span></li>
-      <li><%= link_to "Política de Privacidade", privacy_path, :title => "Política de Privacidade" %><span class="separator">|</span></li>
+      <li><%= link_to "Política de Privacidade", page_path("privacy"), :title => "Política de Privacidade" %><span class="separator">|</span></li>
       <li><%= link_to "Fale conosco", contact_path, :title => "Fale conosco", :class => "active" %><span class="separator">|</span></li>
       <li><%= link_to "Página inicial", home_path, :title => "Página inicial" %></li>
     </ul>
