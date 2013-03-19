@@ -1,5 +1,5 @@
 class BaseController < ApplicationController
-  layout :choose_layout, :except => [:landing]
+  layout :choose_layout, :except => [:basic]
   # Work around (ver método self.login_required_base)
 
   rescue_from CanCan::AccessDenied, :with => :deny_access
@@ -29,7 +29,7 @@ class BaseController < ApplicationController
 
       respond_to do |format|
         format.html do
-          render :layout => 'landing'
+          render :layout => 'basic'
         end
       end
     end
@@ -62,7 +62,7 @@ class BaseController < ApplicationController
   end
 
   def authoring
-    render :layout => 'landing'
+    render :layout => 'basic'
   end
 
   protected

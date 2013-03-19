@@ -2,10 +2,14 @@
 // Estilos para a página de autoria
 // ==========================================================================
 
-// Mixins de imagens do Compass.
+// Estilo da página de variáveis.
 @import "ui-components/variables";
-@import "authoring-variables";
-@import "authoring-introduction";
-@import "authoring-benefits";
-@import "authoring-projects";
-@import "authoring-title";
+@import "authoring/authoring-variables";
+// Estilo da partial de introdução.
+@import "authoring/authoring-introduction";
+// Estilo da partial de benefícios.
+@import "authoring/authoring-benefits";
+// Estilo da partial de projetos.
+@import "authoring/authoring-projects";
+// Estilo da partial do título.
+@import "authoring/authoring-title";
