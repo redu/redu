@@ -15,7 +15,11 @@
   <body data-spy="scroll" data-target=".filters" data-offset="140">
     <%= render :partial => "shared/outdated_browser_new" %>
     <div class="main-wrapper">
-      <%= render :partial => "shared/header_not_logged_in" %>
+      <% if current_user %>
+        <%= render :partial => "shared/nav_global" %>
+      <% else %>
+        <%= render :partial => "shared/header_not_logged_in" %>
+      <% end %>
       <%= render :partial => "shared/system_flash_message" %>
       <%= yield %>
       <div class="footer-pusher"></div>
