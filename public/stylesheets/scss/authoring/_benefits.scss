@@ -1,4 +1,4 @@
-.landing-advantages .landing-navigation-title { margin: 0; }
+.authoring-content .landing-advantages .landing-navigation-title { margin: 0; }
 
 .benefits {
   padding: $authoring-content-vertical-padding $authoring-content-horizontal-padding;
@@ -9,9 +9,14 @@
     max-width: calc(100% - 80px);
     float: left;
 
-    .button-user{
+    .button-user {
       float: left;
       margin-top: 20px;
+
+      img {
+        width: 200px;
+        height: 200px;
+      }
     }
 
     &.student {
@@ -19,7 +24,7 @@
       color: $green4;
     }
 
-    .benefit-call h4{
+    .benefit-call h4 {
       font-weight: 100;
       margin-top: 65px;
     }
