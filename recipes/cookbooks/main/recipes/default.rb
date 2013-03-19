@@ -10,6 +10,7 @@ require_recipe "mongo_ssh_tunnel"
 require_recipe "s3cmd"
 require_recipe "rabbitmq_ssh_tunnel"
 require_recipe "delayed_job"
+require_recipe "custom_prompt"
 
 # uncomment to turn on thinking sphinx/ultra sphinx. Remember to edit cookbooks/sphinx/recipes/default.rb first!
 # require_recipe "sphinx"
