@@ -1,23 +1,20 @@
-<% if @profile %>
-  <%= render :partial => 'users/profile_sidebar' %>
-<% else %>
-  <%= render :partial => 'users/home_sidebar' %>
-<% end %>
-<div class="main grid_10" style="width: 580px;">
-  <ol id="breadcrumbs" class="clearfix">
-    <li>
-      <%= link_to 'Home', home_user_path(current_user), :class => 'replacement icon-small home icon-home-lightblue_16_18' %>
-    </li>
-    <li>
-      <%= link_to 'Contatos', user_friendships_path(@user.login, :profile => true), :class => 'icon-contacts-lightblue_16_18-before' %>
-    </li>
-  </ol>
-
-  <div id="contacts">
-    <ul class="clearfix">
-      <%= render :partial => "users/item_medium", :collection => @friends %>
-    </ul>
-    <%= will_paginate @friends, :renderer => EndlessRenderer %>
+<div class="span3">
+  <%= render :partial => "users/left_sidebar",
+     :locals => { :user => @user } %>
+</div>
+<div class="span10">
+  <div class="content-area">
+    <%= render :partial => "friendships/breadcrumb",
+       :locals => { :user => @user } %>
+    <div class="content-body">
+      <div class="content-section">
+      </div>
+    </div>
+    <%= render :partial => "friendships/breadcrumb",
+       :locals => { :user => @user } %>
   </div>
-
-</div><!-- end .main -->
+</div>
+<div class="span3">
+  <%= render :partial => "users/right_sidebar",
+     :locals => { :user => @user } %>
+</div>

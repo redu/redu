@@ -10,7 +10,9 @@ class FriendshipsController < BaseController
       paginate(:page => params[:page], :per_page => 16)
 
     respond_to do |format|
-      format.html
+      format.html do
+        render :layout => 'new_application'
+      end
       format.js { render_endless 'users/item_medium', @friends, '#contacts > ul' }
     end
   end
