@@ -79,4 +79,71 @@ describe Api::ConnectionsController do
         contact.first_name
     end
   end
+
+  context "POST /users/:user_id/connections" do
+    context "when created" do
+      before do
+        params[:connection] = { :contact_id => contact.id }
+        post "/api/users/#{user.id}/connections", params
+      end
+
+      it "should return code 201 (created)" do
+        response.code.should == "201"
+      end
+
+      it "should return the entity" do
+        parse(response.body).should have_key 'id'
+      end
+    end
+
+    it "should not create when not valid" do
+      user.be_friends_with(contact)
+      params[:connection] = { :contact_id => contact.id }
+      post "/api/users/#{user.id}/connections", params
+
+      response.code.should == "303"
+    end
+  end
+
+  context "PUT /connections/:id" do
+    it "should return code 201" do
+      contact.be_friends_with(user)
+      connection = user.friendships.first
+      put "api/connections/#{connection.id}", params
+
+      response.code.should == "200"
+    end
+
+    it "should return code 404 when doesnt exist" do
+      put "api/connections/212121", params
+
+      response.code.should == "404"
+    end
+
+    it "should return code 303 when not valid" do
+      user.be_friends_with(contact)
+      connection = user.friendships.first
+      put "api/connections/#{connection.id}", params
+
+      response.code.should == "303"
+    end
+  end
+
+  context "DELETE /connections/:id" do
+    it "should return status 200" do
+      user.be_friends_with(contact)
+      contact.be_friends_with(user)
+      connection = user.friendships.first
+
+      delete "/api/connections/#{connection.id}", params
+
+      response.code.should == "200"
+    end
+
+    it "should return 404 when doesnt exist" do
+      delete "/api/connections/09202", params
+
+      response.code.should == "404"
+    end
+  end
 end
