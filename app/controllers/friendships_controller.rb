@@ -23,7 +23,9 @@ class FriendshipsController < BaseController
     @contacts_recommendations = @user.recommended_contacts(5)
 
     respond_to do |format|
-      format.html
+      format.html do
+        render :layout => 'new_application'
+      end
     end
   end
 

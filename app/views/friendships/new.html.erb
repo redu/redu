@@ -1,19 +1,24 @@
-<%= render :partial => 'users/home_sidebar' %>
-<div class="main grid_10 omega friends-invitations">
-  <%= render :partial => 'friendships/breadcrumbs' %>
-  <%= render :partial => "friendships/friend_invitation" %>
-  <%= render :partial => "invitations/manage_invitations",
-  :locals => { :invitations => @invitations,
-               :friendship_requests => @friendship_requests } %>
+<div class="span3">
+  <%= render :partial => "users/left_sidebar",
+     :locals => { :user => @user } %>
 </div>
-<div class="secondary-sidebar home-sidebar friendship-sidebar">
-  <div class="contact-recommendations">
-    <div class="call">
-      <span class="icon-contacts-white-green_16_18-before">Conecte-se</span>
+<div class="span10">
+  <div class="content-area">
+    <%= render :partial => "friendships/breadcrumb",
+       :locals => { :user => @user } %>
+    <div class="content-body">
+      <div class="content-section">
+        <%= render :partial => "friendships/friend_invitation" %>
+        <%= render :partial => "invitations/manage_invitations",
+        :locals => { :invitations => @invitations,
+                     :friendship_requests => @friendship_requests } %>
+      </div>
     </div>
-    <ul>
-      <%= render :partial => 'users/recommendation_item',
-        :collection => @contacts_recommendations %>
-    </ul>
+    <%= render :partial => "friendships/breadcrumb",
+       :locals => { :user => @user } %>
   </div>
-</div><!-- end .offering -->
+</div>
+<div class="span3">
+  <%= render :partial => "users/right_sidebar",
+     :locals => { :user => @user } %>
+</div>
