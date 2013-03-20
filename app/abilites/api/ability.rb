@@ -12,6 +12,7 @@ module Api
     include Api::ChatMessageAbility
     include Api::FolderAbility
     include Api::MyfileAbility
+    include Api::ConnectionAbility
 
     include Api::ActivityAbility
     include Api::LogAbility
