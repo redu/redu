@@ -22,6 +22,8 @@
         </ul>
         <%= link_to "Convidar amigos", new_user_friendship_path(@user), :class => "button-primary icon-contacts-white_blue_16_18-before pull-right" %>
       </div>
+      <%= new_tabs(:new_users) do %>
+      <% end %>
     </div>
     <%= render :partial => "friendships/breadcrumb",
        :locals => { :user => @user } %>
