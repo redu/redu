@@ -20,5 +20,55 @@ module Api
 
       respond_with(:api, connection, :represent_with => ConnectionRepresenter)
     end
+
+    def create
+      user = User.find(params[:user_id])
+      authorize! :manage, user
+
+      friend = User.find(params[:connection][:contact_id])
+      connection = user.friendship_for(friend)
+
+      # Cria uma nova amizade
+      if connection.nil?
+        connection = user.be_friends_with(friend).first
+
+        respond_with(:api, connection,
+                     :location => api_connection_url(connection),
+                     :represent_with => ConnectionRepresenter)
+      else
+        respond_with(:api, connection, :status => :see_other,
+                     :location => { :url => api_connection_url(connection),
+                                    :method => :put },
+                     :represent_with => ConnectionRepresenter)
+      end
+    end
+
+    def update
+      connection = Friendship.find(params[:id])
+      authorize! :manage, connection
+
+      # Aceita pedido de amizade
+      if connection.pending?
+        connection = connection.user.be_friends_with(connection.friend).first
+
+        respond_with(:api, connection,
+                     :location => api_connection_url(connection),
+                     :represent_with => ConnectionRepresenter)
+      else
+        respond_with(:api, connection, :status => :see_other,
+                     :location => { :url => api_connection_url(connection),
+                                    :method => :put },
+                     :represent_with => ConnectionRepresenter)
+      end
+    end
+
+    def destroy
+      connection = Friendship.find(params[:id])
+      authorize! :manage, connection
+
+      connection.user.destroy_friendship_with(connection.friend)
+
+      respond_with(:api, connection, :represent_with => ConnectionRepresenter)
+    end
   end
 end
