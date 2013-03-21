@@ -147,7 +147,7 @@ class User < ActiveRecord::Base
             :date => { :before => Proc.new { 13.years.ago } }
   validates_acceptance_of :tos
   validates_format_of :mobile,
-                      :with => /^\(\d{2}\)\s\d{4}-\d{4}$/,
+                      :with => /^\+\d{2}\s\(\d{2}\)\s\d{4}-\d{4}$/,
                       :allow_blank => true
   validates_format_of :first_name, :with => /^\S(\S|\s)*\S$/
   validates_format_of :last_name, :with => /^\S(\S|\s)*\S$/
