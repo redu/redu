@@ -68,12 +68,12 @@ class Invoice < ActiveRecord::Base
   end
 
   def send_pending_notice
-    UserNotifier.pending_notice(self.plan.user, self, self.threshold_date).
-      deliver
+    UserNotifier.delay(:queue => 'email').
+      pending_notice(self.plan.user, self, self.threshold_date)
   end
 
   def send_overdue_notice
-    UserNotifier.overdue_notice(self.plan.user, self).deliver
+    UserNotifier.delay(:queue => 'email').overdue_notice(self.plan.user, self)
   end
 
   def send_confirmation_and_unlock_plan
@@ -82,6 +82,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def send_payment_confirmation
-    UserNotifier.payment_confirmation(self.plan.user, self).deliver
+    UserNotifier.delay(:queue => 'email').
+      payment_confirmation(self.plan.user, self)
   end
 end

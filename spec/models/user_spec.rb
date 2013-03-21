@@ -207,8 +207,8 @@ describe User do
       end
 
       context "length" do
-        it "should not be valid when login has less than 6 letters" do
-          u = Factory.build(:user, :login => "mylog")
+        it "should not be valid when login has less than 5 letters" do
+          u = Factory.build(:user, :login => "nick")
           u.should_not be_valid
           u.errors[:login].should_not be_empty
         end

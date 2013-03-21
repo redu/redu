@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   # Constants
   MALE    = 'M'
   FEMALE  = 'F'
-  MIN_LOGIN_LENGTH = 6
+  MIN_LOGIN_LENGTH = 5
   MAX_LOGIN_LENGTH = 20
 
   # CALLBACKS

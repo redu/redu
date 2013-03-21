@@ -63,7 +63,7 @@ GIT
 
 GIT
   remote: git://github.com/rails/rails.git
-  revision: f2839f1dbafc7c8b0bdceb6c636f5d44b7d686bc
+  revision: 77403a9b04073713e2b758c22174a81bb3cd62b9
   branch: 3-0-stable
   specs:
     actionmailer (3.0.20)
@@ -142,11 +142,10 @@ GEM
       amq-protocol (>= 1.2.0)
       eventmachine
     amq-protocol (1.2.0)
-    amqp (0.9.9)
+    amqp (0.9.10)
       amq-client (~> 0.9.12)
       amq-protocol (~> 1.2.0)
       eventmachine
-    ar_mailer_rails3 (2.1.12)
     arel (2.0.10)
     authlogic (3.0.2)
       activerecord (~> 3.0.7)
@@ -165,8 +164,8 @@ GEM
     bson_ext (1.7.0)
       bson (~> 1.7.0)
     builder (2.1.2)
-    bunny (0.9.0.pre6)
-      amq-protocol (>= 1.0.1)
+    bunny (0.9.0.pre8)
+      amq-protocol (>= 1.2.0)
     cancan (1.6.7)
     childprocess (0.3.1)
     chronic (0.6.7)
@@ -218,7 +217,7 @@ GEM
       eventmachine (>= 1.0.0.beta.4)
     erubis (2.6.6)
       abstract (>= 1.0.0)
-    eventmachine (1.0.0)
+    eventmachine (1.0.3)
     exceptional (2.0.32)
       rack
     excon (0.9.6)
@@ -339,13 +338,13 @@ GEM
     rake (0.8.7)
     rd_searchlogic (3.0.1)
       activerecord (>= 3.0.0)
-    rdoc (3.12.1)
+    rdoc (3.12.2)
       json (~> 1.4)
     redu_analytics (0.0.2)
       lazy_high_charts
     remotipart (1.0.2)
-    representable (1.3.3)
-      json
+    representable (1.3.4)
+      multi_json
       nokogiri
     roar (0.11.7)
       representable (>= 1.2.8)
@@ -387,9 +386,10 @@ GEM
       multi_json (~> 1.0)
       rubyzip
     shoulda-matchers (1.0.0.beta2)
-    shuber-sortable (1.0.6)
     signature (0.1.2)
       ruby-hmac
+    simple_acts_as_list (0.0.1)
+      activesupport
     system_timer (1.2.4)
     test_xml (0.1.2)
       nokogiri (>= 1.3.2)
@@ -398,11 +398,11 @@ GEM
     treetop (1.4.12)
       polyglot
       polyglot (>= 0.3.1)
-    tzinfo (0.3.35)
-    untied-publisher (0.0.6)
+    tzinfo (0.3.37)
+    untied-publisher (0.0.7.pre)
       activerecord
       amqp
-      bunny (= 0.9.0.pre6)
+      bunny (>= 0.0.9.pre8)
       configurable
       json
       representable
@@ -429,7 +429,6 @@ DEPENDENCIES
   acts-as-taggable-on
   acts_as_tree (~> 0.1.1)
   ajaxful_rating!
-  ar_mailer_rails3
   authlogic
   awesome_nested_fields
   aws-s3
@@ -484,11 +483,11 @@ DEPENDENCIES
   ruby-prof
   scribd_fu!
   shoulda-matchers
-  shuber-sortable
   simple-navigation!
+  simple_acts_as_list
   system_timer
   translate_routes
-  untied-publisher (~> 0.0.6)
+  untied-publisher (~> 0.0.7.pre)
   useragent (~> 0.4.8)
   vis_client!
   webmock!

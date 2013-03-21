@@ -144,8 +144,8 @@ class LicensedInvoice < Invoice
 
   # Redefinindo método de Invoice
   def send_pending_notice
-    UserNotifier.licensed_pending_notice(self.plan.user, self, self.threshold_date).
-      deliver
+    UserNotifier.delay(:queue => 'email').
+      licensed_pending_notice(self.plan.user, self, self.threshold_date)
   end
 
   def remove_duplicated_licenses

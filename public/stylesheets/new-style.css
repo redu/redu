@@ -1191,6 +1191,10 @@ body {
   -webkit-border-radius: 5px;
 }
 
+#course-spaces .actions .leave{
+  margin-right: 15px;
+}
+
 #course-spaces.preview {
   background-color: rgb(247, 247, 247);
 }

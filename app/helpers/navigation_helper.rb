@@ -31,7 +31,8 @@ module NavigationHelper
       # Os métodos são renderizados de acordo com seu contexto
       #   Se o contexto for :global só renderiza a navegação global
       #   Se for outro contexto este será renderizado dentro do item que está ativado
-      primary.item :start, 'Início', home_user_path(current_user),
+      primary.item :start, 'Início',
+        current_user ? home_user_path(current_user) : application_path,
         :title => 'Início', :class => 'nav-global-button',
         :highlights_on => lambda{ global_highlighted == :start } do |sidebar|
           unless opts[:context] == :global
@@ -39,7 +40,8 @@ module NavigationHelper
           end
         end
       primary.item :teach, 'Ensine', teach_index_path,
-        :title => 'Ensine', :class => 'nav-global-button'
+        :title => 'Ensine', :class => 'nav-global-button',
+        :highlights_on => lambda{ global_highlighted == :teach }
       primary.item :courses, 'Cursos', courses_index_path,
         :title => 'Cursos', :class => 'nav-global-button',
         :highlights_on => lambda{ global_highlighted == :courses } do |sidebar|
@@ -63,6 +65,9 @@ module NavigationHelper
     elsif !request.fullpath.match(%r(\A#{ partners_path })).nil? ||
           !request.fullpath.match(%r(\A#{ users_path }/)).nil?
       :global
+    elsif !request.fullpath.match(%r(\A#{ environments_path }[?])).nil? ||
+          !request.fullpath.match(%r(\A#{ teach_index_path })).nil?
+      :teach
     else
       :courses
     end

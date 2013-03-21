@@ -58,11 +58,9 @@ module InvitationsProcessor
       emails.each do |email|
         invitee = User.where(:email => email)
         if invitee.empty?
-          Invitation.invite(:user => user,
-                            :hostable => user,
-                            :email => email) do |invitation|
-                              UserNotifier.friendship_invitation(invitation).deliver
-                            end
+          Invitation.invite(:user => user, :hostable => user, :email => email) do |invitation|
+            UserNotifier.delay(:queue => 'email').friendship_invitation(invitation)
+          end
         else
           redu_users_ids << invitee.first.id
         end

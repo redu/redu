@@ -32,7 +32,7 @@ class Message < ActiveRecord::Base
   end
 
   def notify_recipient
-    UserNotifier.message_notification(self).deliver
+    UserNotifier.delay(:queue => 'email').message_notification(self)
   end
 
 end

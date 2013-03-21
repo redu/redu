@@ -1,4 +1,6 @@
 class Seminar < ActiveRecord::Base
+  attr_accessor :external_resource_url
+
   # Lectureable que representa um objeto multimídia simples, podendo ser aúdio,
   # vídeo ou mídia externa (e.g youtube).
   include AASM
@@ -7,9 +9,6 @@ class Seminar < ActiveRecord::Base
   has_attached_file :media, Redu::Application.config.video_transcoded
   # Video original. Mantido para caso seja necessário refazer o transcoding
   has_attached_file :original, {}.merge(Redu::Application.config.video_original)
-
-  # Callbacks
-  before_create :truncate_youtube_url
 
   has_one :lecture, :as => :lectureable
 
@@ -44,16 +43,6 @@ class Seminar < ActiveRecord::Base
   validate :accepted_content_type, :unless => :external?
   validates_attachment_size :original, :less_than => 1.gigabyte,
     :unless => :external?
-
-  # Retorna parâmetro da URL que identifica unicamente o vídeo
-  def truncate_youtube_url
-    if self.external_resource_type.eql?('youtube')
-      capture = self.external_resource.match(/youtube.com.*(?:\/|v=)([^&$]+)/)
-      # Pegando texto capturado ou retornando nil se o regex falhar
-      capture = capture[1]
-      self.external_resource = capture
-    end
-  end
 
   # Converte o video para FLV (Zencoder)
   def transcode
@@ -98,11 +87,20 @@ class Seminar < ActiveRecord::Base
     self.external_resource_type == "youtube"
   end
 
-  # Retorna URL completa do Youtube
+  # Virtual attribute para url do vídeo
   def external_resource_url
-    if yid = self.external_resource
-      "http://www.youtube.com/watch?v=#{yid}"
+    unless external_resource.nil?
+      "http://www.#{ self.external_resource_type }.com/watch?v=#{ self.external_resource }"
     end
+  end
+
+  def external_resource_url=(url)
+    self.external_resource_type = "youtube"
+
+    capture = url.match(/youtube.com.*(?:\/|v=)([^&$]+)/)
+    # Pegando texto capturado ou retornando nil se o regex falhar
+    capture = capture[1]
+    self.external_resource = capture
   end
 
   def type

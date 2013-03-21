@@ -49,13 +49,13 @@ Variáveis:
       <div class="controls span6">
         <div class="control-radio">
           <%= builder.radio_button :view_mural, Privacy[:public], {
-            :checked => user.settings.view_mural.eql?(Privacy[:public]) ?
+            :checked => user.settings.view_mural.public? ?
             true : false } %>
           <%= builder.label "view_mural_#{Privacy[:public]}".to_sym, "Todos" %>
         </div>
         <div class="control-radio">
           <%= builder.radio_button :view_mural, Privacy[:friends], {
-            :checked => user.settings.view_mural.eql?(Privacy[:friends]) ?
+            :checked => user.settings.view_mural.friends? ?
             true : false } %>
           <%= builder.label "view_mural_#{Privacy[:friends]}".to_sym,
             "Apenas amigos" %>

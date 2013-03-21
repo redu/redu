@@ -7,10 +7,6 @@ module LogRepresenter
   property :logeable_type
 
   link :logeable do
-    if %w(Lecture Course Subject User).include? self.logeable_type
-      polymorphic_url([:api, self.logeable])
-    else # friendship
-      api_user_url(self.user)
-    end
+    polymorphic_url([:api, self.logeable])
   end
 end
