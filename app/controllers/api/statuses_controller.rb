@@ -1,6 +1,6 @@
 module Api
   class StatusesController < Api::ApiController
-    ALLOWED_LOGEABLE_TYPE = %w(Course Subject Lecture Space User CourseEnrollment).freeze
+    ALLOWED_LOGEABLE_TYPE = %w(Course Subject Lecture Space User CourseEnrollment)
 
     def show
       status = Status.includes(:user => :social_networks).find(params[:id])
@@ -89,6 +89,14 @@ module Api
 
     def filter_and_includes(statuses)
       statuses = statuses.not_compound_log
+
+      log_filter = if params.has_key?(:logeable_type)
+                     ALLOWED_LOGEABLE_TYPE & [params[:logeable_type]].flatten
+                   else
+                     ALLOWED_LOGEABLE_TYPE
+                   end
+      statuses = statuses.
+        where("statuses.logeable_type IN (?) OR statuses.logeable_type IS NULL", log_filter)
       statuses = statuses.includes(:user => :social_networks)
     end
 
@@ -97,11 +105,7 @@ module Api
       when 'help'
         statuses.where(:type => 'Help')
       when 'log'
-        logs = statuses.where(:type => 'Log')
-        # Quando :logeable_type => ['User','Friendship']
-        filter = [params.fetch(:logeable_type, ALLOWED_LOGEABLE_TYPE)].flatten
-        logs = logs.where(:logeable_type => filter) unless filter.empty?
-        logs
+        statuses.where(:type => 'Log')
       when 'activity'
         statuses.where(:type => 'Activity')
       else
