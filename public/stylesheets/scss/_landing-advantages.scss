@@ -29,7 +29,7 @@
       .button-user {
         h3 { margin-left: 65px; }
 
-        span.legend {
+        .legend {
           margin-left: 79px;
 
           .textshadow & { text-shadow: 0 -1px 0 rgb(242, 74, 0); }
@@ -53,7 +53,7 @@
       .button-user {
         h3 { margin-left: 70px; }
 
-        span.legend {
+        .legend {
           margin-left: 68px;
 
           .textshadow & { text-shadow: 0 -1px 0 rgb(192, 39, 45); }
@@ -79,7 +79,7 @@
         .textshadow & { text-shadow: 0 1px 3px $black; }
       }
 
-      span.legend {
+      .legend {
         font-size: 10px;
         font-family: arial, sans-serif;
         position: absolute;

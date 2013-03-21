@@ -565,10 +565,10 @@ body {
 .landing-advantages .type-user.teacher .button-user h3 {
   margin-left: 65px;
 }
-.landing-advantages .type-user.teacher .button-user span.legend {
+.landing-advantages .type-user.teacher .button-user .legend {
   margin-left: 79px;
 }
-.textshadow .landing-advantages .type-user.teacher .button-user span.legend {
+.textshadow .landing-advantages .type-user.teacher .button-user .legend {
   text-shadow: 0 -1px 0 #f24a00;
 }
 .landing-advantages .type-user.gestor {
@@ -589,10 +589,10 @@ body {
 .landing-advantages .type-user.developer .button-user h3 {
   margin-left: 70px;
 }
-.landing-advantages .type-user.developer .button-user span.legend {
+.landing-advantages .type-user.developer .button-user .legend {
   margin-left: 68px;
 }
-.textshadow .landing-advantages .type-user.developer .button-user span.legend {
+.textshadow .landing-advantages .type-user.developer .button-user .legend {
   text-shadow: 0 -1px 0 #c0272d;
 }
 .landing-advantages .type-user.student {
@@ -612,7 +612,7 @@ body {
 .textshadow .landing-advantages .type-user .button-user h3 {
   text-shadow: 0 1px 3px black;
 }
-.landing-advantages .type-user .button-user span.legend {
+.landing-advantages .type-user .button-user .legend {
   font-size: 10px;
   font-family: arial, sans-serif;
   position: absolute;
