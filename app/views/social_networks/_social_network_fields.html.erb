@@ -8,7 +8,7 @@
 <li id="social-network-<%= f.object.id %>" class="form-config-social-network clearfix">
   <%= f.select :name,
     options_for_select(
-      SocialNetworkSite.all,
+      SocialNetworkSite.all.collect { |s| [s.text, s] },
       :selected => f.object.name),
       { :include_blank => "Adicionar" },
       { :class => "select-network form-config-social-network-select span2" } %>
