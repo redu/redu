@@ -15,19 +15,19 @@
       <%= render :partial => "environment_list",
         :locals => { :environments => @environments,
                      :query => @query } %>
-      <% unless (individual_search_page? or @courses.empty?) %>
+      <% unless (@individual_page || @courses.empty?) %>
         <hr class="list-separator">
       <% end %>
       <%= render :partial => "course_list",
         :locals => { :courses => @courses,
                      :query => @query } %>
-      <% unless (individual_search_page? or @spaces.empty?) %>
+      <% unless (@individual_page || @spaces.empty?) %>
         <hr class="list-separator">
       <% end %>
       <%= render :partial => "space_list",
         :locals => { :spaces => @spaces,
                      :query => @query } %>
-      <% if individual_search_page? %>
+      <% if @individual_page %>
         <% if @entity_paginate.num_pages > 1 %>
           <hr class="list-separator">
         <% end %>

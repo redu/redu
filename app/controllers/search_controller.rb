@@ -17,6 +17,7 @@ class SearchController < BaseController
 
     # Total de resultados
     @total_results = search_service.total_count_results
+    @individual_page = search_service.individual_page?
     @query = params[:q]
 
     respond_to do |format|
@@ -33,8 +34,9 @@ class SearchController < BaseController
     search_service.perform_results
 
     @profiles = search_service.klass_results("UserSearch")
-    @total_results = search_service.total_count_results
 
+    @total_results = search_service.total_count_results
+    @individual_page = search_service.individual_page?
     @query = params[:q]
 
     respond_to do |format|

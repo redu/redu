@@ -57,20 +57,15 @@ module SearchHelper
       :title => "Amigos em comum")
   end
 
-  # Verifica se a página atual é uma página individual de busca.
-  def individual_search_page?
-    current_page?(search_profiles_path) or (params[:f].size == 1 if params[:f])
-  end
-
   # Define se o link "Veja todos os resultados" deve ser mostrado.
   def show_see_all_results_link?(total_found)
-    !individual_search_page? and total_found > Redu::Application.config.search_preview_results_per_page
+    !@individual_page and total_found > Redu::Application.config.search_preview_results_per_page
   end
 
   # Retorna a quantidade correta de itens buscados dependendo da página.
   def search_results_counter(items)
     # Nas páginas individuais, o contador mostrado é a quantidade de itens visíveis na tela.
-    if individual_search_page?
+    if @individual_page
       items.count
     # Nas páginas restantes (busca geral e ambientes geral), o contador mostrado é o número total de itens encontrados.
     else

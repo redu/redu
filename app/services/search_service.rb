@@ -72,7 +72,7 @@ class SearchService
 
   # Se a action receber apenas um filtro é mostrada uma página individual
   def individual_page?
-    @filters.size == 1
+    @filters.size == 1 || @params[:action] == "profiles"
   end
 
   # Preview quando não é uma página individual
@@ -83,7 +83,7 @@ class SearchService
   protected
 
   def search_results
-    @results.values.flatten!
+    @results.values
   end
 
   def has_filter?(entity)
