@@ -22,6 +22,10 @@ describe SearchService do
       subject.filters.should_not be_nil
     end
 
+    it "should define results" do
+      subject.results.should_not be_nil
+    end
+
     it "should define empty filters" do
       service = SearchService.new({ :params => {} })
 
@@ -54,15 +58,16 @@ describe SearchService do
       @spaces << @my_space
 
       SpaceSearch.stub_chain(:perform, :results).and_return(@spaces)
+      subject.perform_results
     end
 
     it "should not show spaces when user don't have access for it" do
-      subject.perform_results["SpaceSearch"].first.should \
+      subject.klass_results("SpaceSearch").first.should \
         == @my_space
     end
 
     it "should paginate the filters" do
-      subject.perform_results["SpaceSearch"].should \
+      subject.klass_results("SpaceSearch").should \
         respond_to :paginate
     end
   end
@@ -80,6 +85,16 @@ describe SearchService do
 
     it "should not be preview" do
       subject.preview?.should be_false
+    end
+
+    it "should rescue results from search" do
+      subject.perform_results
+
+      subject.klass_results("SpaceSearch").should_not be_nil
+    end
+
+    it "should paginate result" do
+      subject.result_paginate.should respond_to(:paginate)
     end
   end
 end

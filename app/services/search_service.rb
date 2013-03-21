@@ -1,14 +1,15 @@
 # Serviço para busca.
 # Métodos auxiliares que lidam com os parametros da requisição
 # e com a chamada da busca pelos métodos individuais.
-# Desacopla ao máximo a lógica do controller e trazendo para esta classe
+# Desacopla ao máximo a lógica do controller trazendo para esta classe
 class SearchService
-  attr_reader :params, :user, :filters
+  attr_reader :params, :user, :filters, :results
 
   def initialize(opts={})
     @params = opts[:params].clone
     @user = opts[:current_user]
     @filters = params[:f] ? params[:f].clone : {}
+    @results = Array.new
   end
 
   # Executa busca para as classes definidas pelo usuário
@@ -30,15 +31,20 @@ class SearchService
       end
     end
 
-    results
+    @results = results
+  end
+
+  def total_count_results
+    search_results.map{ |entity| entity.total_count }.sum
   end
 
   # Faz a representação da busca em formato JSON
   # - collections: coleção de tipos de resultados
-  def make_representable(collections)
+  def make_representable
     # Para cada tipo de resultado aplica o representer, transforma em JSON
-    # e devolve apenas os values do Hash segundo o formato que o tokeninput recebe na view
-    all = collections.map do |collection|
+    # e devolve apenas os values do Hash segundo o formato que o tokeninput
+    # recebe na view
+    all = search_results.map do |collection|
       unless collection.empty?
         representer = collection.extend(InstantSearch::CollectionRepresenter)
         itens = JSON.parse(representer.to_json)
@@ -48,6 +54,20 @@ class SearchService
     end
 
     all.flatten!
+  end
+
+  # Recupera resultado referente a uma classe sempre define um array paginado
+  # O método perform_results deve ser chamado antes.
+  def klass_results(klass)
+    @results[klass] ||= Kaminari.paginate_array([])
+  end
+
+  # Pagina a única busca que possui resultados
+  # O método perform_results deve ser chamado antes.
+  def result_paginate
+    if individual_page?
+      @results.select{ |entity| entity.size > 0 }.first || []
+    end
   end
 
   # Se a action receber apenas um filtro é mostrada uma página individual
@@ -61,6 +81,10 @@ class SearchService
   end
 
   protected
+
+  def search_results
+    @results.values.flatten!
+  end
 
   def has_filter?(entity)
     # Se os filtros não existirem está implícito que
