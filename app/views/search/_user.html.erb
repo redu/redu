@@ -35,7 +35,6 @@
           <span class="legend icon-biography-gray_8_10-before text-truncate" title="<%= "Mora em #{user.localization}" %>">Mora em <%= user.localization %></span>
         <% end %>
         <ul class="general-list-item-counters">
-          <%#: TODO (ui-components): remover o hover azul destes dois ícones abaixo. %>
           <li class="general-list-item-counter icon-contacts-gray_16_18-before">
             <%= pluralize(user.friends.length, "Amigo", "Amigos") %> <%= show_mutual_friends_counter(user) %>
           </li>
