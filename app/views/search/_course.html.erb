@@ -27,7 +27,7 @@
             :title => course.name %>
         </h5>
         <% unless course.owner.nil? %>
-          <span class="legend text-truncate" title="<%= course.owner.try(:display_name) %>">Criado por <%= link_to course.owner.try(:display_name), user_path(course.owner) %></span>
+          <span class="legend text-truncate" title="<%= course.owner.display_name %>">Criado por <%= link_to course.owner.display_name, user_path(course.owner) %></span>
         <% end %>
         <% cache ['search_course_teachers', course.id] do %>
           <% teachers = course.teachers %>
