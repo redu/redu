@@ -30,6 +30,7 @@ javascripts:
     - public/javascripts/jquery.timeago.js
     - public/javascripts/timeago.js
     - public/javascripts/jquery.fcbkcomplete.min.js # Auto complete do facebook
+    - public/javascripts/users.js
     - public/javascripts/old-create-status.js
     - public/javascripts/underscore.js
     - public/javascripts/underscore-sharing-template.redu.jquery.js

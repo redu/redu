@@ -11,5 +11,11 @@ class UserCacheObserver < ActiveRecord::Observer
       expire_friends_requisitions_for(future_friends)
       expire_nav_global_dropdown_menu_for(user)
     end
+
+    expire_completness_bar_for(user)
+  end
+
+  def after_destroy(user)
+    expire_completness_bar_for(user)
   end
 end

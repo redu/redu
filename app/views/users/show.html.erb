@@ -85,7 +85,7 @@
           <ul class="indent clearfix">
             <% @user.experiences.each do |experience| %>
               <li>
-                <%= render :partial => "experiences/item_detail", :locals => { :item => experience } %>
+                <%= render :partial => "experiences/item_detail_old", :locals => { :item => experience } %>
               </li>
             <% end %>
           </ul>
@@ -100,10 +100,10 @@
             <span class="label">Educação:</span>
             <ul class="indent clearfix">
               <% @user.educations.higher_educations.each do |higher| %>
-                <%= render :partial => "educations/higher_education_detail", :locals => { :item => higher } %>
+                <%= render :partial => "educations/higher_education_detail_old", :locals => { :item => higher } %>
               <% end %>
               <% @user.educations.high_schools.each do |high| %>
-                <%= render :partial => "educations/high_school_detail", :locals => { :item => high } %>
+                <%= render :partial => "educations/high_school_detail_old", :locals => { :item => high } %>
               <% end %>
             </ul>
           <% end %>
@@ -111,7 +111,7 @@
             <span class="label">Complemento:</span>
             <ul class="indent clearfix">
               <% @user.educations.complementary_courses.each do |compl_course| %>
-                <%= render :partial => "educations/complementary_course_detail",
+                <%= render :partial => "educations/complementary_course_detail_old",
                   :locals => { :item => compl_course }%>
               <% end %>
             </ul>
@@ -120,7 +120,7 @@
             <span class="label">Evento:</span>
             <ul class="indent clearfix">
               <% @user.educations.event_educations.each do |event| %>
-                <%= render :partial => "educations/event_education_detail", :locals => { :item => event } %>
+                <%= render :partial => "educations/event_education_detail_old", :locals => { :item => event } %>
               <% end %>
             </ul>
           <% end %>
