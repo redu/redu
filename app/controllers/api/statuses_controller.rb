@@ -1,5 +1,6 @@
 module Api
   class StatusesController < Api::ApiController
+    ALLOWED_LOGEABLE_TYPE = %w(Course Subject Lecture Space User CourseEnrollment).freeze
 
     def show
       status = Status.includes(:user => :social_networks).find(params[:id])
@@ -98,7 +99,7 @@ module Api
       when 'log'
         logs = statuses.where(:type => 'Log')
         # Quando :logeable_type => ['User','Friendship']
-        filter = [params.fetch(:logeable_type, [])].flatten
+        filter = [params.fetch(:logeable_type, ALLOWED_LOGEABLE_TYPE)].flatten
         logs = logs.where(:logeable_type => filter) unless filter.empty?
         logs
       when 'activity'
