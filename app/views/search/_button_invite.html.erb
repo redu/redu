@@ -10,7 +10,7 @@
   <%# Se existir pedido de amizade %>
   <% if current_friendship(user) %>
     <%# Se eu fiz o pedido %>
-    <% if current_friendship(user).status == "requested" %>
+    <% if current_friendship(user).status == "pending" %>
       <%= render "button_invite_disabled" %>
     <%# Se eu tenho que aceitar algum pedido %>
     <% else %>
