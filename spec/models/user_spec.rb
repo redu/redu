@@ -61,6 +61,8 @@ describe User do
   it { should have_many(:results).dependent(:destroy) }
 
   it { User.new.should respond_to(:notify).with(1) }
+  it { User.new.should respond_to(:can?) }
+  it { User.new.should respond_to(:cannot?) }
 
   [:first_name, :last_name].each do |attr|
     it do
@@ -926,6 +928,14 @@ describe User do
         user.password = ""
         user.password.should_not be_blank
       end
+    end
+  end
+
+  context "ability" do
+    let(:user) { Factory(:user) }
+
+    it "should return the Ability" do
+      user.ability.should_not be_nil
     end
   end
 

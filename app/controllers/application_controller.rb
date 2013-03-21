@@ -59,6 +59,10 @@ class ApplicationController < ActionController::Base
     @current_user = current_user_session && current_user_session.user
   end
 
+  def current_ability
+    current_user.ability
+  end
+
   def last_request_update_allowed?
     false
   end

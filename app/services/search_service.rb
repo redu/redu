@@ -106,7 +106,7 @@ class SearchService
   # pagina de acordo com os parâmetros recebidos
   def filter_and_paginate_my_spaces(collection, user, options)
     # Filtra os espaços que o usuário tem acesso
-    my_spaces = collection.select{ |space| user.has_access_to?(space) }
+    my_spaces = collection.select{ |space| user.can? :show, space }
 
     Kaminari.paginate_array(my_spaces).page(options[:page]).
       per(options[:per_page])

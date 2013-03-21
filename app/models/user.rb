@@ -193,6 +193,8 @@ class User < ActiveRecord::Base
     :confirmation => true
   validates_uniqueness_of :email, :case_sensitive => false
 
+  delegate :can?, :cannot?, :to => :ability
+
   # override activerecord's find to allow us to find by name or id transparently
   def self.find(*args)
     if args.is_a?(Array) and args.first.is_a?(String) and (args.first.index(/[a-zA-Z\-_]+/) or args.first.to_i.eql?(0) )
@@ -216,6 +218,11 @@ class User < ActiveRecord::Base
 
   def self.encrypt(password, salt)
     Digest::SHA1.hexdigest("--#{salt}--#{password}--")
+  end
+
+  # Define ability para qualquer usuário
+  def ability
+    @ability ||= Ability.new(self)
   end
 
   ## Instance Methods
