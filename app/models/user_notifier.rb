@@ -265,8 +265,9 @@ class UserNotifier < ActionMailer::Base
   end
 
   # Redefinição de senha
-  def user_reseted_password(user)
+  def user_reseted_password(user, new_password)
     @user = user
+    @new_password = new_password
 
     mail(:to => user.email,
          :subject => "Redefinição de senha") do |format|

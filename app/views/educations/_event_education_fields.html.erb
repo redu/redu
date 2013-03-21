@@ -1,17 +1,39 @@
-<%= f.label :name, "Nome do evento:" %>
-<%= f.text_field :name %>
-<%= concave_errors_for f.object, :name %>
+<div class="control-group row">
+  <div class="control-label span3">
+    <%= f.label :name, "Nome do evento" %>
+  </div>
+  <div class="controls span6">
+    <%= f.text_field :name,
+        :placeholder => "Título do evento que você participou" %>
+    <%= concave_errors_for f.object, :name %>
+  </div>
+</div>
 
-<%= f.label :role, "Seu papel:" %>
-<%= f.select :role, (options_for_select [["Participante", "participant"],
-                     ["Palestrante", "speaker"], ["Organizador", "organizer"]],
-                     :selected => f.object.role),
-                     {}, { :class => "role" } %>
+<div class="control-group row">
+  <div class="control-label span3">
+    <%= f.label :role, "Seu papel" %>
+  </div>
+  <div class="controls span6">
+    <%= f.select :role, (options_for_select [["Participante", "participant"],
+                         ["Palestrante", "speaker"], ["Organizador", "organizer"]],
+                         :selected => f.object.role),
+                         {}, { :class => "role" } %>
+  </div>
+</div>
 
-<%= f.label :year, "Ano:" %>
-<%= f.date_select :year,
-  :start_year => (Date.today - 90.years).year,
-  :end_year => (Date.today + 10.years).year,
-  :discard_day => true, :discard_month => true %>
+<div class="control-group row">
+  <div class="control-label span3">
+    <%= f.label :year, "Ano" %>
+  </div>
+  <div class="controls control-select-date span6">
+    <%= f.date_select :year,
+      :start_year => (Date.today - 90.years).year,
+      :end_year => (Date.today + 10.years).year,
+      :discard_day => true, :discard_month => true %>
+  </div>
+</div>
 
-<%= f.submit %>
+<div class="offset3 span6 curriculum-buttons">
+  <button type="submit" class="button-default add-item icon-curriculum-lightblue_16_18-before pull-right"><% if f.object.new_record? %>Adicionar item<% else %>Salvar item<% end %></button>
+  <button class="button-default cancel pull-right">Cancelar</button>
+</div>

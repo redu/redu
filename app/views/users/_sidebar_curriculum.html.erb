@@ -1,0 +1,28 @@
+<%#
+  Barra lateral direita da página de Configurações - Perfil - Currículo
+
+  Variáveis:
+    user: o usuário logado.
+%>
+<div class="home-right-sidebar">
+  <%# Status do Perfil %>
+  <%= render :partial => "users/profile_status",
+    :locals => { :user => user } %>
+  <%# Currículo %>
+  <div class="right-sidebar-area">
+    <h6 class="right-sidebar-area-title">Currículo</h6>
+    <div class="nav-local-separator"></div>
+    <p class="legend">Nesta seção, você pode alocar informações a respeito
+      de sua formação escolar e acadêmica, bem como sua experiência no
+      mercado de trabalho.</p>
+    <p class="legend">Em educação há quatro categorias: Ensino Fundamental,
+      Superior, Complementar e Eventos.</p>
+    <p class="legend"><strong>Fundamental:</strong> corresponde à sua
+      educação básica escolar;</p>
+    <p class="legend"><strong>Superior:</strong> academia e correlatos;</p>
+    <p class="legend"><strong>Complementar:</strong> cursos extras;</p>
+    <p class="legend"><strong>Eventos:</strong> seminários e palestras.</p>
+    <p class="legend">Exponha seu currículo de forma simples e divulgue-o
+      junto a sua rede de contatos.</p>
+  </div>
+</div>

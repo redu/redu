@@ -15,7 +15,7 @@ class Contact
 
   def deliver
     if valid?
-      UserNotifier.contact_redu(self).deliver
+      UserNotifier.delay(:queue => 'email').contact_redu(self)
     else
       false
     end

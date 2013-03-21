@@ -1,6 +1,13 @@
 <div class="actions clearfix">
   <% if can?(:teach, course) %>
-      <%= link_to 'Criar nova disciplina', new_space_path(:course_id => course.id), :class => "concave-button" %>
+    <% if current_user.teacher?(course) %>
+      <%= link_to 'Abandonar curso',
+        unjoin_environment_course_path(course.environment, course),
+        :method => :post,
+        :confirm => 'Você perderá o vínculo e o acesso a este curso e isso não poderá ser desfeito. Tem certeza?',
+        :class => 'leave icon-delete-gray_8_10-before' %>
+    <% end %>
+    <%= link_to 'Criar nova disciplina', new_space_path(:course_id => course.id), :class => "concave-button" %>
   <% else %>
     <% if course.users.include?(current_user) %>
       <% if course.published == false %>

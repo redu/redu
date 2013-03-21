@@ -2,7 +2,9 @@ class License < ActiveRecord::Base
   belongs_to :invoice
   belongs_to :course
 
-  validates_presence_of :name, :email, :period_start, :role, :course, :invoice
+  classy_enum_attr :role
+
+  validates_presence_of :name, :email, :period_start, :course, :invoice
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
 
   # Retorna todas as licenças que estão em uso

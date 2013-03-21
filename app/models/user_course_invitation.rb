@@ -47,7 +47,7 @@ class UserCourseInvitation < CourseEnrollment
     :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/
 
   def send_external_user_course_invitation
-    UserNotifier.external_user_course_invitation(self, self.course).deliver
+    UserNotifier.delay(:queue => 'email').external_user_course_invitation(self, self.course)
   end
 
   protected

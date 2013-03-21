@@ -3,9 +3,9 @@
 # Recipe:: default
 #
 
-if node[:instance_role] == 'app_master'
+if node[:instance_role] == 'util'
   app_name = 'redu'
-  %w(general email).each_with_index do |queue, count|
+  %w(general email vis).each_with_index do |queue, count|
     template "/etc/monit.d/delayed_job.#{count}.#{app_name}.monitrc" do
       source "dj.monitrc.erb"
       owner "root"

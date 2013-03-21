@@ -60,7 +60,7 @@ class Plan < ActiveRecord::Base
   end
 
   def send_blocked_notice
-    UserNotifier.blocked_notice(self.user, self).deliver
+    UserNotifier.delay(:queue => 'email').blocked_notice(self.user, self)
   end
 
   # Retorna o invoice atual

@@ -152,7 +152,7 @@ class UsersController < BaseController
   def edit
     @user.social_networks.build
     respond_to do |format|
-      format.html
+      format.html { render :layout => 'new_application' }
     end
   end
 
@@ -168,7 +168,7 @@ class UsersController < BaseController
     @complementary_course = ComplementaryCourse.new
     @event_education = EventEducation.new
     respond_to do |format|
-      format.html
+      format.html { render :layout => 'new_application' }
     end
   end
 
@@ -195,11 +195,11 @@ class UsersController < BaseController
       @complementary_course = ComplementaryCourse.new
       @event_education = EventEducation.new
       @user.social_networks.build
-      render 'users/edit'
+      render 'users/edit', :layout => 'new_application'
     end
 
   rescue ActiveRecord::RecordInvalid
-    render 'users/edit'
+      render 'users/edit', :layout => 'new_application'
   end
 
   def update_account
@@ -226,7 +226,7 @@ class UsersController < BaseController
       flash[:notice] = t :your_changes_were_saved
       redirect_to(account_user_path(@user))
     else
-      render 'users/account'
+      render 'users/account', :layout => 'new_application'
     end
   end
 
@@ -262,7 +262,7 @@ class UsersController < BaseController
     if @recover_username.valid?
       @user = User.find_by_email(@recover_username.email)
       if @user
-        UserNotifier.user_forgot_username(@user).deliver
+        UserNotifier.delay(:queue => 'email').user_forgot_username(@user)
       else # Email não cadastrado no Redu
         @recover_username.mark_email_as_invalid!
       end
@@ -275,7 +275,8 @@ class UsersController < BaseController
       @user = User.find_by_email(@recover_password.email)
 
       if @user.try(:reset_password)
-        UserNotifier.user_reseted_password(@user).deliver
+        UserNotifier.delay(:queue => 'email').
+          user_reseted_password(@user, @user.password)
         @user.save
 
         # O usuario estava ficando logado, apos o comando @user.save.
@@ -297,7 +298,7 @@ class UsersController < BaseController
     end
     if @user
       flash[:notice] = t :activation_email_resent_message
-      UserNotifier.user_signedup(@user).deliver
+      UserNotifier.delay(:queue => 'email').user_signedup(@user)
       redirect_to application_path and return
     else
       flash[:error] = t :activation_email_not_sent_message
@@ -331,7 +332,7 @@ class UsersController < BaseController
 
   def account
     respond_to do |format|
-      format.html
+      format.html { render :layout => 'new_application' }
     end
 
   end

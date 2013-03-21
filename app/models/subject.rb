@@ -9,7 +9,7 @@ class Subject < ActiveRecord::Base
   has_many :graduated_members, :through => :enrollments, :source => :user,
     :conditions => ["enrollments.graduated = 1"]
   has_many :teachers, :through => :enrollments, :source => :user,
-    :conditions => ["enrollments.role = ?", 5] # Teacher
+    :conditions => ["enrollments.role = ?", :teacher]
   has_many :statuses, :as => :statusable, :order => "created_at DESC"
   has_many :logs, :as => :logeable, :order => "created_at DESC",
     :dependent => :destroy
@@ -101,7 +101,9 @@ class Subject < ActiveRecord::Base
   # Notifica todos alunos matriculados sobre a adição de Subject
   def notify_subject_added
     if notificable?
-      self.space.users.all.each { |u| UserNotifier.subject_added(u, self).deliver }
+      self.space.users.all.each do|u|
+        UserNotifier.delay(:queue => 'email').subject_added(u, self)
+      end
     end
   end
 

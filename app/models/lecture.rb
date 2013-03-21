@@ -1,7 +1,7 @@
 class Lecture < ActiveRecord::Base
-  require 'sortable'
   # Entidade polimórfica que representa o objeto de aprendizagem. Pode possuir
   # três especializações: Seminar, InteractiveClass e Page.
+  include SimpleActsAsList::ModelAdditions
 
   after_create :delay_create_asset_report
 
@@ -36,7 +36,7 @@ class Lecture < ActiveRecord::Base
   # PLUGINS
   acts_as_taggable
   ajaxful_rateable :stars => 5
-  sortable :scope => :subject_id
+  simple_acts_as_list :scope => :subject_id
 
   # VALIDATIONS
   validates_presence_of :name
@@ -68,6 +68,13 @@ class Lecture < ActiveRecord::Base
 
     clone = self.clone :include => { :lectureable => nested_attrs },
       :except => [:rating_average, :view_count, :position, :subject_id]
+
+    if self.lectureable.is_a?(Seminar)
+      if self.lectureable.external?
+        clone.lectureable.external_resource_url = \
+          self.lectureable.external_resource_url
+      end
+    end
 
     clone.is_clone = true
     clone.subject = Subject.find(subject_id)
