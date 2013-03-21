@@ -1,4 +1,4 @@
-<li class="<%= social_network.name == 'google+' ? 'icon-googleplus_16_18-before' :  "icon-#{social_network.name}_16_18-before" %>">
+<li class="<%= "icon-#{social_network.name.downcase}_16_18-before" %>">
 
   <span class="bio">
     <%= link_to social_network.url, generate_url(social_network.url) %>
