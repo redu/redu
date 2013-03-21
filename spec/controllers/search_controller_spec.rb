@@ -17,8 +17,8 @@ describe SearchController do
       end
 
       it "should instantiate search service" do
-        klass_method = @search_service.method(:perform_klasses_results)
-        @search_service.should_receive(:perform_klasses_results) do
+        klass_method = @search_service.method(:perform_results)
+        @search_service.should_receive(:perform_results) do
           klass_method.call(:preview => true)
         end
 
@@ -58,7 +58,7 @@ describe SearchController do
       it "should instantiate search service" do
         klass_method = @search_service.method(:perform_results)
         @search_service.should_receive(:perform_results) do
-          klass_method.call(UserSearch)
+          klass_method.call
         end
 
         get :profiles, params
@@ -93,8 +93,8 @@ describe SearchController do
       end
 
       it "should instantiate search service" do
-        klass_method = @search_service.method(:perform_klasses_results)
-        @search_service.should_receive(:perform_klasses_results) do
+        klass_method = @search_service.method(:perform_results)
+        @search_service.should_receive(:perform_results) do
           klass_method.call(:preview => true)
         end
 

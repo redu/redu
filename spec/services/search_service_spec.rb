@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe SearchService do
-  let(:params) {{ :q => 'Alex', :f => ["ambientes"],
+  let(:params) {{ :q => 'Alex', :f => ["disciplinas"],
                   :action => "environments", :locale => 'pt-BR' }}
   let(:per_page) { 10 }
   let(:user) { Factory(:user) }
@@ -30,22 +30,13 @@ describe SearchService do
   end
 
   context "perform search" do
-    it "should perform results for an class" do
-      klass_method = CourseSearch.method(:perform)
-      CourseSearch.should_receive(:perform).once do
-        klass_method.call(params[:q], per_page)
-      end
-
-      subject.perform_results(CourseSearch, :preview => false)
-    end
-
     it "should perform search for many classes" do
-      klass_method = EnvironmentSearch.method(:perform)
-      EnvironmentSearch.should_receive(:perform).once do
+      klass_method = SpaceSearch.method(:perform)
+      SpaceSearch.should_receive(:perform).once do
         klass_method.call(params[:q], per_page)
       end
 
-      subject.perform_klasses_results(:preview => false)
+      subject.perform_results
     end
   end
 
@@ -66,12 +57,12 @@ describe SearchService do
     end
 
     it "should not show spaces when user don't have access for it" do
-      subject.perform_results(SpaceSearch, { :space_search => true }).first.should \
+      subject.perform_results["SpaceSearch"].first.should \
         == @my_space
     end
 
     it "should paginate the filters" do
-      subject.perform_results(SpaceSearch, { :space_search => true }).should \
+      subject.perform_results["SpaceSearch"].should \
         respond_to :paginate
     end
   end

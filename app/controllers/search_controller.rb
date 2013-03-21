@@ -8,7 +8,7 @@ class SearchController < BaseController
     search_service = SearchService.new(:params => params,
                                        :current_user => current_user)
 
-    klasses_results = search_service.perform_klasses_results(:preview => true)
+    klasses_results = search_service.perform_results(:preview => true)
 
     @profiles = klasses_results["UserSearch"]
     @environments = klasses_results["EnvironmentSearch"]
@@ -23,7 +23,7 @@ class SearchController < BaseController
     respond_to do |format|
       format.html # search/index.html.erb
       format.json do
-        render :json => SearchService.new(:params => params).make_representable(results)
+        render :json => search_service.make_representable(results)
       end
     end
   end
@@ -32,7 +32,7 @@ class SearchController < BaseController
   def profiles
     search_service = SearchService.new(:params => params)
 
-    @profiles = search_service.perform_results(UserSearch)
+    @profiles = search_service.perform_results["UserSearch"]
     @total_results = @profiles.total_count
 
     @query = params[:q]
@@ -40,7 +40,7 @@ class SearchController < BaseController
     respond_to do |format|
       format.html # search/profiles.html.erb
       format.json do
-        render :json => SearchService.new(:params => params).make_representable([@profiles])
+        render :json => search_service.make_representable([@profiles])
       end
     end
   end
@@ -55,7 +55,7 @@ class SearchController < BaseController
     @individual_page = search_service.individual_page?
     preview = search_service.preview?
 
-    klasses_results = search_service.perform_klasses_results(:preview => preview)
+    klasses_results = search_service.perform_results(:preview => preview)
 
     @environments = klasses_results["EnvironmentSearch"] ||=
       Kaminari.paginate_array([])
@@ -76,7 +76,7 @@ class SearchController < BaseController
     respond_to do |format|
       format.html # search/environments.html.erb
       format.json do
-        render :json => SearchService.new(:params => params).make_representable(results)
+        render :json => search_service.make_representable(results)
       end
     end
   end
