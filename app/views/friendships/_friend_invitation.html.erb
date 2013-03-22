@@ -1,19 +1,23 @@
 <%= new_tabs(:new_users) do %>
 <% end %>
-<div class="content-section">
-  <div id="admin-invitations" class="body">
-    <span class="invite-description">Amplie sua rede de contatos convidando amigos. Procure pelo nome ou endereço de e-mail; Caso a pessoa não seja cadastrada no Redu, enviaremos um convite.</span>
-    <%= form_tag user_friendships_path(@user),
-      :class => 'form-common', :id => "invite-members" do %>
-      <div id="invite_email_button" class="clearfix" >
-       <%= link_to "Clique aqui para convidar este endereço de e-mail", "#",
-        :class => 'concave-button', :id => 'invite_email', :style => 'display: none;' %>
+<div class="content-section clearfix">
+  <span class="invite-description">Amplie sua rede de contatos convidando amigos. Procure pelo nome ou endereço de e-mail; Caso a pessoa não seja cadastrada no Redu, enviaremos um convite.</span>
+  <%= form_for user_friendships_path(@user),
+    :id => "invite-members", :html => { :class => "invite-friend-form" } do |f| %>
+    <div id="invite_email_button" class="clearfix" >
+     <%= link_to "Clique aqui para convidar este endereço de e-mail", "#",
+      :class => 'concave-button', :id => 'invite_email', :style => 'display: none;' %>
+    </div>
+    <div class="control-group">
+      <div class="control-label">
+        <%= f.label :name, "Digite um nome e/ou endereço de e-mail para convidar", :for => "friend_id" %>
       </div>
-      <%= label_tag "name", "Digite um nome e/ou endereço de e-mail para convidar" %>
-      <%= text_field_tag "friend_id" %>
-      <%= hidden_field_tag "emails", "" %>
-      <%= hidden_field_tag "goto_invitations", "true" %>
-      <%= submit_tag "Convidar", :class => "button-success pull-right"%>
-    <% end %>
-  </div><!-- end friendship-invitations -->
+      <div class="controls">
+        <%= f.text_field "friend_id", :placeholder => "Convide Amigos pelo nome ou e-mail" %>
+      </div>
+    </div>
+    <%= f.hidden_field "emails", :value => "" %>
+    <%= f.hidden_field "goto_invitations", :value => "true" %>
+    <%= f.submit "Convidar", :class => "button-success pull-right"%>
+  <% end %>
 </div>

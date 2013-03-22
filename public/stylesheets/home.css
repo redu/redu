@@ -660,6 +660,21 @@ ul.requisitions .actions input:last-child {
   background: none;
 }
 
+.invite-description {
+  color: #b3b3b3;
+  font-weight: 300;
+  display: block;
+  margin-bottom: 30px;
+}
+
+.invite-friend-form label {
+  display: block;
+  margin-bottom: 5px;
+}
+.invite-friend-form .button-success {
+  margin-top: 5px;
+}
+
 .home-container {
   /* labels inativos */
   /* botoes */

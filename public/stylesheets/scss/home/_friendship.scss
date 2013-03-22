@@ -13,3 +13,19 @@
 }
 
 .list-2-columns.list-columns-separator > li:first-child:after { background: none; }
+
+.invite-description {
+  color: $gray5;
+  font-weight: 300;
+  display: block;
+  margin-bottom: 30px;
+}
+
+.invite-friend-form {
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .button-success { margin-top: 5px; }
+}
