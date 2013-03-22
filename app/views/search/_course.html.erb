@@ -54,7 +54,7 @@
         </ul>
       </div>
     </div>
-    <% if show_course_spaces(course) %>
+    <% if can? :show, course %>
       <div class="dropdown general-list-item-bottom-right-button">
         <button class="dropdown-toggle button-default button-dropdown" data-toggle="dropdown" role="button">
           <span class="icon-arrow-down-lightblue_8_10 show text-replacement">Expandir</span>

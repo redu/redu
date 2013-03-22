@@ -1,16 +1,20 @@
 module SearchHelper
   # Define o papel do usuário no Ambiente
   def user_environment_role(environment, user)
-    uea = environment.user_environment_associations.select{ |assoc|
-      assoc.user_id == user.id }.first
+    assocs = environment.user_environment_associations.select do |assoc|
+      assoc.user_id == user.id
+    end
+    uea = assocs.first
 
     role_icon(uea.try(:role))
   end
 
   # Define o papel do usuário no Curso
   def user_course_role(course, user)
-    uca = course.user_course_associations.select{
-      |assoc| assoc.user_id == user.id }.first
+    assocs = course.user_course_associations.select do |assoc|
+      assoc.user_id == user.id
+    end
+    uca = assocs.first
 
     role_icon(uca.try(:role))
   end
@@ -37,18 +41,22 @@ module SearchHelper
 
   # Define a formatação da lista de administradores
   def show_administrators_list(collection)
-    collection.collect { |admin|
+    links = collection.collect do |admin|
       link_to(admin.display_name, user_path(admin),
               :title => admin.display_name)
-    }.join(', ').html_safe
+    end
+
+    links.join(', ').html_safe
   end
 
   # Define a formatação da lista de professores
   def show_teachers_list(collection)
-    collection.collect { |teacher|
+    links = collection.collect do |teacher|
       link_to(teacher.display_name, user_path(teacher),
               :title => teacher.display_name)
-    }.join(', ').html_safe
+    end
+
+    links.join(', ').html_safe
   end
 
   # Exibe o contador de amigos em comum entre parênteses somente quando há algum.
@@ -71,11 +79,5 @@ module SearchHelper
     else
       items.total_count
     end
-  end
-
-  # Só permite mostrar as disciplinas do curso se o usuário tem acesso ao mesmo
-  # e se existe pelo menos uma disciplina para mostrar
-  def show_course_spaces(course)
-    course.spaces.length > 0 && current_user.has_access_to?(course)
   end
 end
