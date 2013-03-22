@@ -10,8 +10,9 @@
       <div class="content-section">
         <%= render :partial => "friendships/friend_header" %>
       </div>
-        <%= render :partial => "friendships/friend_invitation" %>
-        <%= render :partial => "invitations/manage_invitations",:locals => { :invitations => @invitations, :friendship_requests => @friendship_requests } %>
+      <%= render :partial => "friendships/friend_invitation" %>
+      <hr class="list-separator">
+      <%= render :partial => "invitations/manage_invitations",:locals => { :invitations => @invitations, :friendship_requests => @friendship_requests } %>
     </div>
     <%= render :partial => "friendships/breadcrumb",
       :locals => { :user => @user } %>
