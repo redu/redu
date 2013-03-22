@@ -188,6 +188,7 @@ module Redu
     # Observers têm direito a um lar
     config.autoload_paths << "#{config.root}/app/observers"
     config.autoload_paths << "#{config.root}/app/observers/vis"
+    config.autoload_paths << "#{config.root}/app/observers/search"
 
     # Doorkeepers definem eventos que serão propagados no message bus
     config.autoload_paths << "#{config.root}/app/doorkeepers"
@@ -237,7 +238,6 @@ module Redu
                                         :solr_profile_indexer_observer,
                                         :solr_education_indexer_observer,
                                         :solr_hierarchy_indexer_observer,
-                                        :solr_audience_indexer_observer,
                                         :vis_enrollment_observer,
                                         :vis_status_observer,
                                         :vis_user_observer,
