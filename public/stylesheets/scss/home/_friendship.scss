@@ -14,6 +14,8 @@
 
 .list-2-columns.list-columns-separator > li:first-child:after { background: none; }
 
+.empty-invite-list span { margin: 20px auto; }
+
 .invite-description {
   color: $gray5;
   font-weight: 300;

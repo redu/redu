@@ -660,6 +660,10 @@ ul.requisitions .actions input:last-child {
   background: none;
 }
 
+.empty-invite-list span {
+  margin: 20px auto;
+}
+
 .invite-description {
   color: #b3b3b3;
   font-weight: 300;
