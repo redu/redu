@@ -29,7 +29,11 @@ class BaseController < ApplicationController
 
       respond_to do |format|
         format.html do
-          render :layout => 'landing'
+          # TODO: Testando o front-end mobile. Retornar ao original quando for
+          # possível detectar o acesso mobile para redirecionar para a view e
+          # layout mobile.
+          # render :layout => 'landing'
+          render 'mobile_login', :layout => 'mobile'
         end
       end
     end
