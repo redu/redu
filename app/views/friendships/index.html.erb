@@ -15,9 +15,12 @@
                :title => "Meus Contatos" %>
           </li>
           <li class="header-breadcrumb-item">
-            <%= link_to "Amigos", user_friendships_path(@user),
-               :class => "header-bradcrumb-link",
-               :title => "Amigos" %>
+            <%= link_to user_friendships_path(@user),
+              :class => "header-bradcrumb-link",
+              :title => "Amigos" do %>
+                Amigos <%= content_tag(:span, parentize(@total_friends),
+                         :class => "header-breadcrumb-item-light") %>
+              <% end %>
           </li>
         </ul>
         <%= link_to "Convidar amigos", new_user_friendship_path(@user), :class => "button-primary icon-contacts-white_blue_16_18-before pull-right" %>
