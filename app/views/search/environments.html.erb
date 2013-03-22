@@ -10,7 +10,7 @@
         :locals => { :query => @query,
                      :total_results => @total_results } %>
       <div class="filters-wrapper">
-        <%= filters :search %>
+        <%= new_subtabs :search %>
       </div>
       <%= render :partial => "environment_list",
         :locals => { :environments => @environments,
