@@ -1,0 +1,63 @@
+<ul class="header-breadcrumb">
+  <li class="header-breadcrumb-item">
+    <%= link_to "Meus Contatos", user_friendships_path(@user),
+      :class => "header-bradcrumb-link icon-message-gray_32_34-before",
+      :title => "Meus Contatos" %>
+  </li>
+  <li class="header-breadcrumb-item">
+    <%= link_to "Amigos", user_friendships_path(@user),
+      :class => "header-bradcrumb-link",
+      :title => "Amigos" %>
+  </li>
+  <li class="header-breadcrumb-item">
+    <%= link_to "Convidar amigos", new_user_friendship_path(@user)
+    %>
+  </li>
+</ul>
+<script type="text/javascript">
+  jQuery(function(){
+    $("#invite_email").live("click", function(){
+      var email = $.trim($("input[autocomplete=off]").val());
+      $("#emails").val($("#emails").val() + "," + email);
+      $("input[autocomplete=off]").val("")
+
+      var item = "<li class=\"token-input-token email\"><p class=\"invited-mail\" title=\"" + email + "\">" + email + "</p><span class=\"invite-to-redu\">(Convidar para o Redu)</span><span class=\"token-input-delete-token-email\">x</span></li>"
+      $(".token-input-input-token").before(item);
+      $(this).hide();
+      return false;
+    });
+
+      $(".token-input-delete-token-email").live("click", function(){
+        $(this).parent().remove();
+        var emails = $("#emails").val();
+        var deleted_email = $(this).siblings('.invited-mail')[0].getAttribute("title");
+        var emails = emails.replace(deleted_email, "");
+        $("#emails").val(emails);
+      });
+
+    $(".form-common").ajaxComplete(function(){
+      if ($(".token-input-dropdown li").length == 0) {
+        var emailRegex = /^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/;
+        var entered_value = $.trim($("input[autocomplete=off]").val());
+        if (emailRegex.test(entered_value)) {
+          $("#invite_email").show();
+        }else{
+            $("#invite_email").hide();
+        }
+      }else{
+        $("#invite_email").hide();
+      }
+    });
+
+    $("#friend_id").tokenInput("<%= auto_complete_users_path(:format => :js) %>", {
+      crossDomain: false,
+      hintText: "Digite o nome e sobrenome ou e-mail",
+      noResultsText: "Sem resultados",
+      searchingText: "Buscando...",
+      });
+
+    //Adicionando classe friendship-dropdown. Tokeninput não permite definição de novas classes (apenas sufixo).
+    $(".token-input-dropdown").addClass("friendship-dropdown");
+  });
+
+</script>

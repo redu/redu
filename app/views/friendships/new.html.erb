@@ -1,24 +1,23 @@
 <div class="span3">
   <%= render :partial => "users/left_sidebar",
-     :locals => { :user => @user } %>
+    :locals => { :user => @user } %>
 </div>
 <div class="span10">
   <div class="content-area">
     <%= render :partial => "friendships/breadcrumb",
-       :locals => { :user => @user } %>
+      :locals => { :user => @user } %>
     <div class="content-body">
       <div class="content-section">
-        <%= render :partial => "friendships/friend_invitation" %>
-        <%= render :partial => "invitations/manage_invitations",
-        :locals => { :invitations => @invitations,
-                     :friendship_requests => @friendship_requests } %>
+        <%= render :partial => "friendships/friend_header" %>
       </div>
+        <%= render :partial => "friendships/friend_invitation" %>
+        <%= render :partial => "invitations/manage_invitations",:locals => { :invitations => @invitations, :friendship_requests => @friendship_requests } %>
     </div>
     <%= render :partial => "friendships/breadcrumb",
-       :locals => { :user => @user } %>
+      :locals => { :user => @user } %>
   </div>
 </div>
 <div class="span3">
   <%= render :partial => "users/right_sidebar",
-     :locals => { :user => @user } %>
+    :locals => { :user => @user } %>
 </div>
