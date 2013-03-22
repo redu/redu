@@ -66,7 +66,7 @@ class SearchService
   # O método perform_results deve ser chamado antes.
   def result_paginate
     if individual_page?
-      @results.select{ |entity| entity.size > 0 }.first || []
+      search_results.select{ |entity| entity.size > 0 }.first || []
     end
   end
 
