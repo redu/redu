@@ -25,7 +25,15 @@ ul.requisitions {
 
     .avatar { float: left; }
 
-    span { color: $gray6; }
+    span {
+      color: $gray6;
+
+      &.waiting {
+        float: right;
+        margin-left: 10px;
+        margin-top: 7px;
+      }
+    }
   }
 
   .actions {
