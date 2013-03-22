@@ -1,18 +1,16 @@
-<% cache ["user_completness_bar", @user.id] do %>
-  <% completeness = @user.completeness %>
-  <% unless completeness == 100 %>
-    <div class="incomplete-profile">
-      <em>Seu perfil ainda não está completo</em>
-      <div class="progress">
-        <span class="progress-value"><%= completeness %>%</span>
-        <div class="progress-completed">
-          <div class="completed" style="width: <%= completeness %>%;">
-            <span> <%= completeness %>%</span>
-          </div>
+<% completeness = @user.completeness %>
+<% unless completeness == 100 %>
+  <div class="incomplete-profile">
+    <em>Seu perfil ainda não está completo</em>
+    <div class="progress">
+      <span class="progress-value"><%= completeness %>%</span>
+      <div class="progress-completed">
+        <div class="completed" style="width: <%= completeness %>%;">
+          <span> <%= completeness %>%</span>
         </div>
       </div>
-      <%= link_to 'Preencher perfil', edit_user_path(@user),
-        :class => 'edit icon-manage-gray_8_10-before' %>
     </div>
-  <% end %>
+    <%= link_to 'Preencher perfil', edit_user_path(@user),
+      :class => 'edit icon-manage-gray_8_10-before' %>
+  </div>
 <% end %>
