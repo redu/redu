@@ -152,7 +152,7 @@ class UsersController < BaseController
   def edit
     @user.social_networks.build
     respond_to do |format|
-      format.html
+      format.html { render :layout => 'new_application' }
     end
   end
 
@@ -168,7 +168,7 @@ class UsersController < BaseController
     @complementary_course = ComplementaryCourse.new
     @event_education = EventEducation.new
     respond_to do |format|
-      format.html
+      format.html { render :layout => 'new_application' }
     end
   end
 
@@ -195,11 +195,11 @@ class UsersController < BaseController
       @complementary_course = ComplementaryCourse.new
       @event_education = EventEducation.new
       @user.social_networks.build
-      render 'users/edit'
+      render 'users/edit', :layout => 'new_application'
     end
 
   rescue ActiveRecord::RecordInvalid
-    render 'users/edit'
+      render 'users/edit', :layout => 'new_application'
   end
 
   def update_account
@@ -226,7 +226,7 @@ class UsersController < BaseController
       flash[:notice] = t :your_changes_were_saved
       redirect_to(account_user_path(@user))
     else
-      render 'users/account'
+      render 'users/account', :layout => 'new_application'
     end
   end
 
@@ -332,7 +332,7 @@ class UsersController < BaseController
 
   def account
     respond_to do |format|
-      format.html
+      format.html { render :layout => 'new_application' }
     end
 
   end

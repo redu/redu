@@ -7645,3 +7645,10 @@ button[disabled=disabled] {
 .create-status.inform-my-status textarea { width: 515px; }
 
 .status-large .concave-form .concave-input { margin-top: 0; }
+
+.text-truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}

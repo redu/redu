@@ -22,6 +22,10 @@ module ViewCaches
     expire_fragments('nav_global_dropdown_menu', users)
   end
 
+  def expire_completness_bar_for(users)
+    expire_fragments('user_completness_bar', users)
+  end
+
   def expire_course_members_count_for(course)
     expire_fragments('course_members_count', course)
   end

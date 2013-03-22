@@ -55,4 +55,26 @@ module UsersHelper
       "block"
     end
   end
+
+  # Retorna o título correto do formulário de adição/edição em currículo.
+  def form_curriculum_title(curriculum_item)
+    if curriculum_item.new_record?
+      action = "Novo"
+    else
+      action = "Editando"
+    end
+
+    "#{action} item"
+  end
+
+  # Retorna o texto correto do botão de submissão do formulário de adição/edição em currículo.
+  def form_curriculum_submit_text(curriculum_item)
+    if curriculum_item.new_record?
+      action = "Adicionar"
+    else
+      action = "Salvar"
+    end
+
+    "#{action} item"
+  end
 end

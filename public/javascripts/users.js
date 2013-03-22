@@ -2,7 +2,7 @@
     // Esconde a data final de uma experiência
     $.fn.refreshEndDateVisibility = function(){
       return this.each(function(){
-          $(this).parent().siblings(".end-date").hide();
+          $(this).parents(".edit-form").find(".end-date").hide();
       });
     };
 
@@ -14,10 +14,10 @@
         if (experiences.length > 0
           && $("#new_experience .field_with_errors").length == 0) {
           $("#new_experience").hide();
-          $("#curriculum .new-experience-button").show();
+          $("#curriculum .experience .config-new-item").show();
         } else {
           $("#new_experience").show();
-          $("#curriculum .new-experience-button").hide();
+          $("#curriculum .experience .config-new-item").hide();
         }
       }
 
@@ -26,11 +26,30 @@
         if (educations.length > 0
           && $("#new_education .field_with_errors").length == 0) {
           $("#new_education").hide();
-          $("#curriculum .new-education-button").show();
+          $("#curriculum .education .config-new-item").show();
         } else {
           $("#new_education").show();
-          $("#curriculum .new-education-button").hide();
+          $("#curriculum .education .config-new-item").hide();
         }
+      }
+    };
+
+    removeTitle = function() {
+      var experience_title = $('#new_experience').find('.title');
+      var education_title = $('#new_education').find('.title');
+      var experience_cancel = $('#new_experience .cancel');
+      var education_cancel = $('#new_education .cancel');
+
+      if (!$('#curriculum .experiences li').length) {
+        $('#new_experience').css('padding-top', 0);
+        experience_cancel.hide();
+        experience_title.remove();
+      }
+
+      if (!$('#curriculum .educations li').length) {
+        $('#new_education').css('padding-top', 0);
+        education_cancel.hide();
+        education_title.remove();
       }
     };
 
@@ -91,76 +110,115 @@
     jQuery(function(){
         $(".experience-current:checked").refreshEndDateVisibility();
         refreshDefaultFormsVisibility();
+        removeTitle();
         $("#biography").refreshSocialNetwork();
         // Esconde os forms de edição
+        $("#curriculum .experiences form").hide();
         $("#curriculum .educations form").hide();
         $(".explanation-sidebar .incomplete-profile .edit").hide();
 
-        $(".experience-current").live("change", function(){
-            $("#curriculum .end-date").slideToggle();
+        $(document).on('change', '.experience-current', function(){
+            $("#curriculum .end-date").slideToggle(150, 'swing');
         });
 
-        $("#curriculum .new-experience-button").live("click", function(){
-            $(this).hide();
-            $("#new_experience").slideDown();
+        $(document).on('click', '#curriculum .new-experience-button', function(){
+            $('#curriculum .experience .config-new-item').hide();
+            $('#curriculum .experience .curriculum-buttons .cancel').show();
+            $("#new_experience").slideDown(150, 'swing');
             return false;
         });
 
-        $("#curriculum .new-education-button").live("click", function(){
-            $(this).hide();
-            $("#new_education").slideToggle();
+        $(document).on('click', '#curriculum .new-education-button', function(){
+            $('#curriculum .education .config-new-item').hide();
+            $('#curriculum .education .curriculum-buttons .cancel').show();
+            $("#new_education").slideToggle(150, 'swing');
             return false;
         });
 
         // Mostra o form de edição e esconde o item de Experiência
-        $("#curriculum .edit-experience").live("click", function(){
+        $(document).on('click', '#curriculum .edit-experience', function(){
             $experiences = $("#curriculum .experiences > li");
+            $infos = $(this).parent('.config-experience');
             $experiences.find(".infos").show();
             $experiences.find("form").slideUp();
             $("#new_experience").hide();
-            $("#curriculum .new-experience-button").hide();
+            $("#curriculum .experience .config-new-item").hide();
 
-            var $infos = $(this).parent();
-            $infos.slideUp();
-            $infos.siblings("form").slideDown();
+            $infos = $(this).parents('.infos');
+            $infos.slideUp(150, 'swing');
+            $('#curriculum .experience .curriculum-buttons .cancel').show();
+            $infos.siblings("form").slideDown(150, 'swing');
             return false;
         });
 
         // Mostra o form de edição e esconde o item de Educação
-        $("#curriculum .edit-education").live("click", function(){
+        $(document).on('click', '#curriculum .edit-education', function(){
             $educations = $("#curriculum .educations > li");
+            $infos = $(this).parent('.config-experience');
             $educations.find(".infos").show();
             $educations.find("form").slideUp();
             $("#new_education").hide();
-            $("#curriculum .new-education-button").hide();
+            $("#curriculum .education .config-new-item").hide();
 
-            var $infos = $(this).parent();
-            $infos.slideUp();
-            $infos.siblings("form").slideDown();
+            $infos = $(this).parents('.infos');
+            $infos.slideUp(150, 'swing');
+            $('#curriculum .education .curriculum-buttons .cancel').show();
+            $infos.siblings("form").slideDown(150, 'swing');
             return false;
         });
 
+        $(document).on('click', '#curriculum .education .cancel', function(){
+            $educations = $("#curriculum .educations > li");
+            $infos = $(this).parent('.config-experience');
+            $educations.find(".infos").show();
+            $educations.find("form").slideUp(150, 'swing');
+            $("#new_education").slideUp(150, 'swing');
+            $("#curriculum .education .config-new-item").show();
+
+            $infos = $(this).parents('.infos');
+            $infos.slideUp(150, 'swing');
+            $infos.siblings("form").slideUp(150, 'swing');
+            return false;
+        });
+
+        $(document).on('click', '#curriculum .experience .cancel', function(){
+            $experiences = $("#curriculum .experiences > li");
+            $infos = $(this).parent('.config-experience');
+            $experiences.find(".infos").show();
+            $experiences.find("form").slideUp(150, 'swing');
+            $("#new_experience").slideUp(150, 'swing');
+            $("#curriculum .experience .config-new-item").show();
+
+            $infos = $(this).parents('.infos');
+            $infos.slideUp(150, 'swing');
+            $infos.siblings("form").slideUp(150, 'swing');
+            return false;
+        });
+
+        $(document).on('click', '.curriculum-buttons .add-item', function() {
+          $('.curriculum-buttons .cancel').hide();
+        });
+
         $("#education_type").refreshShowCorrectForm();
-        $("#education_type").live("change", function() {
-            $(this).refreshShowCorrectForm();
+        $(document).on('change', '#education_type', function() {
+          $(this).refreshShowCorrectForm();
         });
 
 
         $("#higher_education_kind").refreshShowCorrectFields();
-        $("#higher_education_kind").live("change", function() {
+        $(document).on('change', '#higher_education_kind', function() {
             $(this).refreshShowCorrectFields();
         });
 
-        $(document).ajaxComplete(function(){
-            refreshDefaultFormsVisibility();
-            $(".experience-current:checked").refreshEndDateVisibility();
-            $("#biography").refreshSocialNetwork();
-            // Esconde os forms de edição
-            $("#curriculum .educations form").hide();
-            // Esconde link para editar perfil na barra de completude
-            $(".explanation-sidebar .incomplete-profile .edit").hide();
-            $("#education_type").refreshShowCorrectForm();
-            $("#higher_education_kind").refreshShowCorrectFields();
+        $(document).ajaxComplete(function() {
+          refreshDefaultFormsVisibility();
+          removeTitle();
+          $(".experience-current:checked").refreshEndDateVisibility();
+          $("#biography").refreshSocialNetwork();
+          // Esconde link para editar perfil na barra de completude
+          $(".explanation-sidebar .incomplete-profile .edit").hide();
+          $("#education_type").refreshShowCorrectForm();
+          $("#higher_education_kind").refreshShowCorrectFields();
         });
     });
 })($);

@@ -4,13 +4,18 @@ module LogRepresenter
   include StatusRepresenter
 
   property :action_text, :from => :text
-  property :logeable_type
+  property :computed_logeable_type, :from => :logeable_type
+
+  def computed_logeable_type
+    return 'Enrollment' if logeable.is_a? CourseEnrollment
+    self.logeable_type
+  end
 
   link :logeable do
-    if %w(Lecture Course Subject User).include? self.logeable_type
+    if logeable.is_a? CourseEnrollment
+      api_enrollment_url(logeable.becomes(CourseEnrollment))
+    else
       polymorphic_url([:api, self.logeable])
-    else # friendship
-      api_user_url(self.user)
     end
   end
 end

@@ -31,7 +31,8 @@ module NavigationHelper
       # Os métodos são renderizados de acordo com seu contexto
       #   Se o contexto for :global só renderiza a navegação global
       #   Se for outro contexto este será renderizado dentro do item que está ativado
-      primary.item :start, 'Início', home_user_path(current_user),
+      primary.item :start, 'Início',
+        current_user ? home_user_path(current_user) : application_path,
         :title => 'Início', :class => 'nav-global-button',
         :highlights_on => lambda{ global_highlighted == :start } do |sidebar|
           unless opts[:context] == :global

@@ -1,7 +1,7 @@
 <%= form_for @user_session || UserSession.new, :remote => true, :url => sessions_path, :html => { :class => "user-dates header-sign-in-form", :id => "form-sign-in" } do |f| %>
   <div class="control-group">
     <div class="control-label">
-      <%= f.label :login, "Login" %>
+      <%= f.label :login, "Login ou e-mail" %>
     </div>
     <div class="controls">
       <%= f.text_field :login, :placeholder => "Seu login ou e-mail cadastrado" %>

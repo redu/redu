@@ -1,6 +1,12 @@
+<%#
+  Barra lateral direita da página de Visão Geral.
+
+  Variáveis:
+    user: o usuário logado.
+%>
 <div class="home-right-sidebar">
   <%= render :partial => "users/profile_status",
-    :locals => { :progress_percentage => user.completeness } %>
+    :locals => { :user => user } %>
   <%= render :partial => "users/explore_redu_sidebar",
     :locals => { :user => user } %>
   <%= render :partial => "users/invite_friends",

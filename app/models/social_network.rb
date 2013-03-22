@@ -1,6 +1,6 @@
 class SocialNetwork < ActiveRecord::Base
   belongs_to :user
 
-  validates_presence_of :name
+  classy_enum_attr :name, :enum => 'SocialNetworkSite'
   validates_presence_of :url
 end
