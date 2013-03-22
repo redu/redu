@@ -37,13 +37,13 @@ module SearchNavigation
   # Define se subtabs ficará ativa
   def search_environments_highlights?(filter)
     # Se "f" não estiver definido, aciona nenhum os filtros
-    params[:f] ? params[:f].include?(filter) : false
+    params[:f].try(:include?, filter)
   end
 
   # Define quais serão os filtros do path das subtabs
   def search_environments_with_params(filter)
     # Clona objeto para que não haja inconsistência
-    filters = params[:f].clone if params[:f]
+    filters = params[:f].try(:clone)
     filters ||= []
 
     if filters.include?(filter)
