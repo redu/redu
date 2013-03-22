@@ -3,5 +3,5 @@
   <%= link_to item_medium, :title => item_medium.display_name do %>
     <%= image_tag item_medium.avatar.url(:thumb_90), :class => 'avatar', :size => "90x90" %>
   <% end %>
-  <%= link_to item_medium.display_name, user_path(item_medium) %>
+  <%= link_to item_medium.display_name, user_path(item_medium), :title => item_medium.display_name, :class => 'text-truncate' %>
 </li>
