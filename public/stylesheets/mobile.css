@@ -1,0 +1,14 @@
+body {
+  background-image: url("/images/landing/background.png");
+}
+
+.mobile-header-logo-link {
+  background-image: url("/images/mobile/background-light-2x.png");
+  background-size: cover;
+  text-align: center;
+  display: block;
+}
+
+.mobile-header-logo {
+  max-height: 200px;
+}
