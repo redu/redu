@@ -1,7 +1,15 @@
 <%# Usuário representado pelo avatar (thumb_90) e o link do nome  %>
-<li>
-  <%= link_to item_medium, :title => item_medium.display_name do %>
-    <%= image_tag item_medium.avatar.url(:thumb_90), :class => 'avatar', :size => "90x90" %>
-  <% end %>
-  <%= link_to item_medium.display_name, user_path(item_medium), :title => item_medium.display_name, :class => 'text-truncate' %>
+<li class="general-list-item middle-width">
+  <div class="general-list-item-body">
+    <div class="general-list-item-column">
+      <%= link_to item_medium, :title => item_medium.display_name do %>
+        <%= image_tag item_medium.avatar.url(:thumb_90), :class => 'avatar', :size => "64x64" %>
+      <% end %>
+    </div>
+    <div class="general-list-item-column">
+      <%= link_to item_medium.display_name, user_path(item_medium), :title => item_medium.display_name, :class => 'link-name text-truncate' %>
+      <span class="legend">Professor</span>
+      <span class="legend">22 amigos em comum</span>
+    </div>
+  </div>
 </li>

@@ -630,11 +630,6 @@ ul.requisitions .list-mix-inner .avatar {
 ul.requisitions .list-mix-inner span {
   color: #6d6e6f;
 }
-ul.requisitions .list-mix-inner span.waiting {
-  float: right;
-  margin-left: 10px;
-  margin-top: 7px;
-}
 ul.requisitions .actions {
   margin: 0;
   padding: 0;
@@ -648,6 +643,21 @@ ul.requisitions .actions form {
 }
 ul.requisitions .actions input:last-child {
   margin-left: 5px;
+}
+
+.friendship-list .legend {
+  font-size: 12px;
+  line-height: 18px;
+}
+.friendship-list .link-name {
+  font-weight: bold;
+}
+.friendship-list .general-list-item-column .legend + .legend {
+  margin-top: 0;
+}
+
+.list-2-columns.list-columns-separator > li:first-child:after {
+  background: none;
 }
 
 .home-container {

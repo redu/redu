@@ -1,0 +1,15 @@
+// ==========================================================================
+// Meus Contatos
+// ==========================================================================
+
+.friendship-list {
+  .legend {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .link-name { font-weight: bold; }
+  .general-list-item-column .legend + .legend { margin-top: 0; }
+}
+
+.list-2-columns.list-columns-separator > li:first-child:after { background: none; }
