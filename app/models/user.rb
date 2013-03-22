@@ -654,10 +654,12 @@ class User < ActiveRecord::Base
   def most_important_education
     educations = []
     edu = self.educations
-    include_most_important_education_if_any(educations, edu, 'HigherEducation')
-    include_most_important_education_if_any(educations, edu, 'ComplementaryCourse')
-    include_most_important_education_if_any(educations, edu, 'HighSchool')
 
+    educations << edu.select { |e| e.educationable_type == 'HigherEducation' }.first
+    educations << edu.select { |e| e.educationable_type == 'ComplementaryCourse' }.first
+    educations << edu.select { |e| e.educationable_type == 'HighSchool' }.first
+
+    educations.compact!
     educations
   end
 
@@ -719,12 +721,5 @@ class User < ActiveRecord::Base
     %w(login first_name last_name email).each do |var|
       self.send("#{var}=", (self.send(var).strip if attribute_present? var))
     end
-  end
-
-  # Auxilia User#most_important_education abstraindo a lógica de inclusão no
-  # array apenas se o usuário possuir uma Education com o type especificado
-  def include_most_important_education_if_any(array, user_educations, type)
-    important_education = Education.most_important(user_educations, type)
-    array << important_education if important_education
   end
 end

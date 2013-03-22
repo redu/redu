@@ -19,11 +19,4 @@ class Education < ActiveRecord::Base
   scope :higher_educations, where("educationable_type LIKE 'HigherEducation'")
   scope :complementary_courses, where("educationable_type LIKE 'ComplementaryCourse'")
   scope :event_educations, where("educationable_type LIKE 'EventEducation'")
-
-  # Retorna o primeiro Education no array educations com o tipo especificado
-  def self.most_important(educations, type)
-    typed_educations = educations.select { |e| e.educationable_type == type }
-
-    typed_educations.first unless typed_educations.empty?
-  end
 end

@@ -21,7 +21,7 @@ class SearchService
       per_page = search_per_page(opts[:preview])
 
       results[klass.to_s] = klass.perform(@params[:q], per_page, @params[:format],
-                              @params[:page]).results
+                                          @params[:page]).results
 
       if klass == SpaceSearch
         page = @params[:page].nil? ? 1 : @params[:page]
