@@ -1,23 +1,13 @@
-<tr id="request-<%= friendship_item.id %>" class="invite">
-  <td class="cell-checkbox">
-    <%= check_box_tag 'friendship_requests[]', friendship_item.id, false,
-      {:class => "autoCheck",
-       :id => "remove-#{friendship_item.id}"}  %>
-  </td>
-  <td class="cell-user-info">
-    <%= image_tag friendship_item.friend.avatar(:thumb_32),
-      :class => "avatar", :width => 32, :height => 32 %>
-    <span class="user">
-      <%= link_to friendship_item.friend.display_name,
-        friendship_item.friend,
-        :target => "_blank"%>
-    </span>
-    <span class="tip">
-      O usuário ainda não aceitou o convite de amizade.
-    </span>
-  </td>
-  <td class="cell-reinvite">
-    <%= link_to 'Reenviar convite', resend_email_user_friendship_path(friendship_item.user, friendship_item), :remote => true, :method => :post,
-      :class => 'reinvite' %>
-  </td>
-</tr>
+<div class="invitation list-mix-inner clearfix">
+  <%= link_to friendship_item.friend, :title => friendship_item.friend.display_name,
+    :class => 'invitation-thumbnail-link' do %>
+    <%= image_tag friendship_item.friend.avatar(:thumb_90), :class => 'invitation-thumbnail', :size => "48x48" %>
+  <% end %>
+  <div class="invitation-inner">
+    <span class="invitation-link-remove icon-close-gray_16_18 text-replacement link-fake">Remover</span>
+    <%= link_to 'Reenviar convite', resend_email_user_friendship_path(friendship_item.user, friendship_item),
+      :remote => true, :method => :post, :class => 'invitation-link-resend link-secondary' %>
+    <%= link_to friendship_item.friend.display_name, friendship_item.friend, :class => 'invitation-title text-truncate' %>
+    <span class="invitation-legend legend">Convite enviado em <%= friendship_item.requested_at.strftime('%d %b, %Y, %kh%M') %></span>
+  </div>
+</div>
