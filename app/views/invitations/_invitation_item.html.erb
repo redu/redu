@@ -1,0 +1,9 @@
+<div class="invitation list-mix-inner clearfix">
+  <div class="invitation-inner">
+    <span class="invitation-link-remove icon-close-gray_16_18 text-replacement link-fake">Remover</span>
+    <%= link_to 'Reenviar convite', resend_email_invitation_path(invitation_item),
+      :remote => true, :method => :post, :class => 'invitation-link-resend link-secondary' %>
+    <span class="invitation-title text-truncate" title='<%= invitation_item.email %>'><%= invitation_item.email %></span>
+    <span class="invitation-legend legend">Convite enviado em <%= invitation_item.created_at.strftime('%d %b, %Y, %kh%M') %></span>
+  </div>
+</div>
