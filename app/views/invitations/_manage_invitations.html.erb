@@ -1,27 +1,9 @@
 <% unless invitations.empty? and friendship_requests.empty? %>
-  <div class="notice">
-    <h3 class="form-header">Aguardando a resposta de <%= (invitations.count + friendship_requests.count) %> membro(s)</h3>
-  </div>
-  <div id="user_list" class="invitation-list">
+  <div class="content-section clearfix">
+    <h6 class="sent-invitations">Convites enviados: <%= (invitations.count + friendship_requests.count) %></h6>
     <%= form_tag destroy_invitations_invitations_path, :method => :post do %>
-      <table id="user_list_table" class ="concave-invitation-table">
-        <thead>
-          <tr style="display: none;">
-            <th>
-              <input type="checkbox" id="select_all">
-            </th>
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <%= render :partial => 'invitations/invitation_item',
-                     :collection => invitations %>
-          <%= render :partial => 'invitations/friendship_item',
-                     :collection => friendship_requests %>
-        </tbody>
-      </table>
-      <%= submit_tag "Remover selecionados", :class => 'concave-remove' %>
+      <%= render :partial => 'invitations/invitation_item', :collection => invitations %>
+      <%= render :partial => 'invitations/friendship_item', :collection => friendship_requests %>
     <% end %>
   </div>
 <% else %>

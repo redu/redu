@@ -14,6 +14,14 @@
 
 .list-2-columns.list-columns-separator > li:first-child:after { background: none; }
 
+.sent-invitations {
+  color: $gray5;
+  letter-spacing: 0;
+  text-align: center;
+  font-weight: 100;
+  margin-bottom: 20px;
+}
+
 .empty-invite-list span { margin: 20px auto; }
 
 .invite-description {
