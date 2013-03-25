@@ -322,7 +322,8 @@ Redu::Application.routes.draw do
       resources :users, :only => :index, :path => :contacts,
         :as => :contacts
       resources :chats, :only => :index
-      resources :connections, :only => [:index, :create]
+      resources :friendships, :path => :connections,
+        :as => 'connections', :only => [:index, :create]
     end
 
     match 'me' => 'users#show'
@@ -346,7 +347,8 @@ Redu::Application.routes.draw do
     resources :canvas, :only => [:show, :update, :destroy]
     resources :asset_reports, :path => "progress", :only => [:show, :update]
 
-    resources :connections, :only => [:show, :update, :destroy]
+    resources :friendships, :path => "connections",
+      :only => [:show, :update, :destroy]
 
     match "vis/spaces/:space_id/lecture_participation",
       :to => 'vis#lecture_participation',

@@ -1,17 +1,17 @@
 require 'api_spec_helper'
 
-describe Api::ConnectionsController do
+describe Api::FriendshipsController do
   let(:user) { Factory(:user) }
-  let(:contact) { Factory(:user) }
+  let(:friend) { Factory(:user) }
   let(:token) { _, _, token = generate_token(user); token }
   let(:params) {{ :oauth_token => token, :format => 'json' }}
 
   context "GET /connections/:id" do
     before do
-      contact.be_friends_with(user)
-      connection = user.friendships.first
+      friend.be_friends_with(user)
+      friendship = user.friendships.first
 
-      get "api/connections/#{connection.id}", params
+      get "api/connections/#{friendship.id}", params
     end
 
     context "correct document" do
@@ -51,11 +51,11 @@ describe Api::ConnectionsController do
 
   context "GET /users/:user_id/connections" do
     before do
-      contact.be_friends_with(user)
-      user.be_friends_with(contact)
+      friend.be_friends_with(user)
+      user.be_friends_with(friend)
 
-      contact_2 = Factory(:user)
-      contact_2.be_friends_with(user)
+      friend_2 = Factory(:user)
+      friend_2.be_friends_with(user)
     end
 
     it "should return status 200" do
@@ -76,14 +76,14 @@ describe Api::ConnectionsController do
       get "api/users/#{user.id}/connections", params
 
       parse(response.body).first['contact']['first_name'].should == \
-        contact.first_name
+        friend.first_name
     end
   end
 
   context "POST /users/:user_id/connections" do
     context "when created" do
       before do
-        params[:connection] = { :contact_id => contact.id }
+        params[:connection] = { :contact_id => friend.id }
         post "/api/users/#{user.id}/connections", params
       end
 
@@ -97,8 +97,8 @@ describe Api::ConnectionsController do
     end
 
     it "should not create when not valid" do
-      user.be_friends_with(contact)
-      params[:connection] = { :contact_id => contact.id }
+      user.be_friends_with(friend)
+      params[:connection] = { :contact_id => friend.id }
       post "/api/users/#{user.id}/connections", params
 
       response.code.should == "303"
@@ -107,9 +107,9 @@ describe Api::ConnectionsController do
 
   context "PUT /connections/:id" do
     it "should return code 201" do
-      contact.be_friends_with(user)
-      connection = user.friendships.first
-      put "api/connections/#{connection.id}", params
+      friend.be_friends_with(user)
+      friendship = user.friendships.first
+      put "api/connections/#{friendship.id}", params
 
       response.code.should == "200"
     end
@@ -121,9 +121,9 @@ describe Api::ConnectionsController do
     end
 
     it "should return code 303 when not valid" do
-      user.be_friends_with(contact)
-      connection = user.friendships.first
-      put "api/connections/#{connection.id}", params
+      user.be_friends_with(friend)
+      friendship = user.friendships.first
+      put "api/connections/#{friendship.id}", params
 
       response.code.should == "303"
     end
@@ -131,11 +131,11 @@ describe Api::ConnectionsController do
 
   context "DELETE /connections/:id" do
     it "should return status 200" do
-      user.be_friends_with(contact)
-      contact.be_friends_with(user)
-      connection = user.friendships.first
+      user.be_friends_with(friend)
+      friend.be_friends_with(user)
+      friendship = user.friendships.first
 
-      delete "/api/connections/#{connection.id}", params
+      delete "/api/connections/#{friendship.id}", params
 
       response.code.should == "200"
     end

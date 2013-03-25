@@ -1,9 +1,9 @@
 module Api
-  module ConnectionAbility
+  module FriendshipAbility
     extend ActiveSupport::Concern
 
     module InstanceMethods
-      def connection_abilities(user)
+      def friendship_abilities(user)
         if user
           can :manage, Friendship, :user_id => user.id
           can :read, Friendship do |f|

@@ -1,4 +1,4 @@
-module ConnectionRepresenter
+module FriendshipRepresenter
   include Roar::Representer::JSON
   include Roar::Representer::Feature::Hypermedia
 
@@ -14,7 +14,7 @@ module ConnectionRepresenter
   end
 
   link :self do
-    api_connection_url(self)
+    api_friendship_url(self)
   end
 
   link :contact do
