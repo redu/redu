@@ -1,1 +1,38 @@
 <%= render :partial => "base/mobile/header" %>
+
+<%= form_for @user_session || UserSession.new, :remote => true,
+  :url => sessions_path, :html => { :class => "mobile-content" } do |f| %>
+  <div class="content-section">
+    <div class="control-group">
+      <div class="control-label">
+        <%= f.label :login, "Login ou e-mail" %>
+      </div>
+      <div class="controls">
+        <%= f.text_field :login, :placeholder => "Seu login ou e-mail cadastrado" %>
+        <%= concave_errors_for f.object, :login %>
+      </div>
+    </div>
+    <div class="control-group">
+      <div class="control-label">
+        <%= f.label :password, "Senha" %>
+      </div>
+      <div class="controls">
+        <%= f.password_field :password, :placeholder =>"Sua senha" %>
+        <%= concave_errors_for f.object, :password %>
+      </div>
+    </div>
+    <div class="mobile-login-password-recovery">
+      <label class="control-checkbox pull-left">
+        <input id="mobile-form-sign-in-show-password" type="checkbox"> Mostrar senha
+      </label>
+      <%= link_to "Esqueceu?", recover_username_password_path,
+        :class => "pull-right link-secondary", :title => "Esqueceu a senha?" %>
+    </div>
+  </div>
+  <div class="mobile-login-buttons clearfix">
+    <%# TODO: Link para versão desktop, onde o usuário poderá se cadastrar. %>
+    <%= link_to "Cadastrar-se", application_path, :title => "Cadastrar-se",
+      :class => "mobile-login-button button-success pull-left" %>
+    <button type="submit" class="mobile-login-button button-primary pull-right">Entrar</button>
+  </div>
+<% end %>

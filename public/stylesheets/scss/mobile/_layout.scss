@@ -4,3 +4,11 @@
 
 
 body { background-image: url("/images/landing/background.png"); }
+
+.mobile-content {
+  @include box-shadow;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-top: 1px solid $gray5;
+
+  .content-section { padding: 20px; }
+}

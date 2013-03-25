@@ -1,0 +1,15 @@
+// ==========================================================================
+// Tela de login
+// ==========================================================================
+
+
+.mobile-login-password-recovery {
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.mobile-login-button {
+  @include box-sizing;
+  @include border-radius(0);
+  width: 50%;
+}
