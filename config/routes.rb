@@ -320,6 +320,8 @@ Redu::Application.routes.draw do
       resources :users, :only => :index, :path => :contacts,
         :as => :contacts
       resources :chats, :only => :index
+      resources :friendships, :path => :connections,
+        :as => 'connections', :only => [:index, :create]
     end
 
     match 'me' => 'users#show'
@@ -341,6 +343,9 @@ Redu::Application.routes.draw do
 
     resources :myfiles, :path => "files", :only => [:show]
     resources :canvas, :only => [:show, :update, :destroy]
+
+    resources :friendships, :path => "connections",
+      :only => [:show, :update, :destroy]
 
     match "vis/spaces/:space_id/lecture_participation",
       :to => 'vis#lecture_participation',
