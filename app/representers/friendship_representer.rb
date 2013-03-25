@@ -4,10 +4,8 @@ module FriendshipRepresenter
 
   property :id
   property :status
-
-  #TODO Fazer um representar menor para User
-  property :contact, :extend => UserRepresenter, :class => User
-  property :user, :extend => UserRepresenter, :class => User
+  property :contact, :extend => UserPartialRepresenter, :class => User
+  property :user, :extend => UserPartialRepresenter, :class => User
 
   def contact
     self.friend
