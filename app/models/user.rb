@@ -37,7 +37,8 @@ class User < ActiveRecord::Base
     :foreign_key => "user_id"
   # Course
   has_many :courses, :through => :user_course_associations,
-    :conditions => ["courses.destroy_soon = ? AND course_enrollments.state = ?", false, 'approved']
+    :conditions => ["courses.destroy_soon = ? AND
+                    course_enrollments.state = ?", false, 'approved']
   # Authentication
   has_many :authentications, :dependent => :destroy
   has_many :chats, :dependent => :destroy

@@ -9,28 +9,11 @@ describe SearchService do
   subject { SearchService.new(:params => params,
                               :current_user => user) }
 
-  context "initializing" do
-    it "should instantiate params" do
-      subject.params.should_not be_nil
-    end
-
-    it "should instantiate current user" do
-      subject.user.should_not be_nil
-    end
-
-    it "should define filters" do
-      subject.filters.should_not be_nil
-    end
-
-    it "should define results" do
-      subject.results.should_not be_nil
-    end
-
-    it "should define empty filters" do
-      service = SearchService.new({ :params => {} })
-
-      service.filters.should be_empty
-    end
+  describe ".new" do
+    it { should respond_to(:params) }
+    it { should respond_to(:user) }
+    it { should respond_to :filters }
+    it { should respond_to :results }
   end
 
   context "perform search" do
@@ -72,29 +55,33 @@ describe SearchService do
     end
   end
 
-  context "methods" do
-    it "should be an individual page" do
-      subject.individual_page?.should be_true
-    end
+  describe "#individual_page?" do
+    it { subject.individual_page?.should be_true }
 
-    it "should not be an individual page" do
+    it "should be_false" do
       service = SearchService.new({ :params => {} })
 
       service.individual_page?.should be_false
     end
+  end
 
-    it "should not be preview" do
-      subject.preview?.should be_false
-    end
+  describe "#preview" do
+    it { subject.preview?.should be_false }
+  end
 
-    it "should rescue results from search" do
+  describe "#klass_results" do
+    before do
       subject.perform_results
-
-      subject.klass_results("SpaceSearch").should_not be_nil
     end
 
-    it "should paginate result" do
-      subject.result_paginate.should respond_to(:paginate)
+    it { subject.klass_results("SpaceSearch".should_not be_nil) }
+  end
+
+  describe "#result_paginate" do
+    before do
+      subject.perform_results
     end
+
+    it { subject.result_paginate.should respond_to(:paginate) }
   end
 end

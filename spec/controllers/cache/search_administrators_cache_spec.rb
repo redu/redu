@@ -11,14 +11,7 @@ describe 'SearchAdministratorsCache' do
       let(:environments) { [environment] }
 
       before do
-        # Necessário para a chamada da paginação na view
-        environments.stub!(:total_count).and_return(1)
-        environments.stub!(:current_page).and_return(1)
-        environments.stub!(:num_pages).and_return(1)
-        environments.stub!(:limit_value).and_return(1)
-
-        # Stub para resultado da busca com o sunspot
-        EnvironmentSearch.stub_chain(:perform, :results).and_return(environments)
+        mock_search_perform(environments, EnvironmentSearch)
       end
 
       it_should_behave_like 'cache writing' do

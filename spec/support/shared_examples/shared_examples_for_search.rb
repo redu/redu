@@ -4,7 +4,7 @@ shared_examples_for "a Sunspot::Search performer" do
   it { subject.class.should respond_to(:perform) }
   its(:klass) { should eq(subject) }
 
-  describe :perform do
+  describe ".perform" do
     let(:performer) { subject.class } # não é uma instância, mas sim a classe!
     let(:query) { 'Query' }
     let(:page) { 1 }

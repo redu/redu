@@ -11,14 +11,7 @@ describe 'SearchTeacherCache' do
       let(:courses) { [course] }
 
       before do
-        # Necessário para a chamada da paginação na view
-        courses.stub!(:total_count).and_return(1)
-        courses.stub!(:current_page).and_return(1)
-        courses.stub!(:num_pages).and_return(1)
-        courses.stub!(:limit_value).and_return(1)
-
-        # Stub para resultado da busca com o sunspot
-        CourseSearch.stub_chain(:perform, :results).and_return(courses)
+        mock_search_perform(courses, CourseSearch)
       end
 
       it_should_behave_like 'cache writing' do

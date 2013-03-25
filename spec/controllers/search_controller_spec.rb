@@ -1,11 +1,12 @@
 require 'spec_helper'
+require 'authlogic/test_case'
 
 describe SearchController do
   let(:params) { { :q => 'Alex', :locale => 'pt-BR' } }
 
   before do
     @user = Factory(:user)
-    controller.stub(:current_user => @user)
+    login_as @user
   end
 
   describe "GET index" do

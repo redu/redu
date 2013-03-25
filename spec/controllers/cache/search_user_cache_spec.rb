@@ -12,14 +12,7 @@ describe 'SearchUserCache' do
       let(:users) { [other_user] }
 
       before do
-        # Necessário para a chamada da paginação na view
-        users.stub!(:total_count).and_return(1)
-        users.stub!(:current_page).and_return(1)
-        users.stub!(:num_pages).and_return(1)
-        users.stub!(:limit_value).and_return(1)
-
-        # Stub para resultado da busca com o sunspot
-        UserSearch.stub_chain(:perform, :results).and_return(users)
+        mock_search_perform(users, UserSearch)
       end
 
       it_should_behave_like 'cache writing' do # spec/support/cache_writing...
