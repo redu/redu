@@ -1,12 +1,12 @@
 <div class="exercise-nav">
   <ol>
-    <li class="endless-lecture">
-      <% if prev_range = current.item_at_offset(-4) %>
+    <% if prev_range = current.item_at_offset(-4) %>
+      <li class="endless-lecture">
         <%= link_to "...", exercise_question_path(exercise, prev_range) %>
-      <% end %>
-    </li>
+      </li>
+    <% end %>
     <% limit, offset = pagination(current) %>
-    <% questions_navigation = questions_array(exercise.questions.size, exercise.questions.limit(limit).offset(offset).order('position ASC'), current) %>
+    <% questions_navigation = exercise.questions.limit(limit).offset(offset).order('position ASC') %>
     <% questions_navigation.each do |question| %>
       <% choice = question.choice_for(current_user) if question %>
       <% if review %>
