@@ -30,7 +30,7 @@ describe "Friendship abilities" do
     subject { Api::Ability.new(friend) }
 
     it "shold not be able read" do
-      subject.should_not be_able_to :read, friendship
+      subject.should_not be_able_to :manage, friendship
     end
   end
 end
