@@ -325,7 +325,9 @@ class UsersController < BaseController
     @status = Status.new
 
     respond_to do |format|
-      format.html
+      format.html do
+        render :layout => 'new_application'
+      end
       format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
     end
   end

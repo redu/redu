@@ -1,19 +1,26 @@
-<%= render :partial => 'users/home_sidebar' %>
-<div class="main grid_10" style="width: 580px;">
-  <ol id="breadcrumbs" class="clearfix">
-    <li>
-      <a href="#" class="replacement home icon-small icon-home-lightblue_16_18">Home</a>
-    </li>
-  </ol>
-  <%= render :partial => 'statuses/create_status',
-    :locals => { :statusable => current_user } %>
-   <div id="statuses" class="statuses">
-    <ol>
-      <%= render :partial => 'statuses/item', :collection => @statuses %>
-   </ol>
-
-   <%= will_paginate @statuses, :renderer => EndlessRenderer %>
-  </div><!-- end .statuses -->
-
-
-</div><!-- end .main -->
+<div class="span3">
+  <%= render :partial => "users/left_sidebar",
+    :locals => { :user => @user } %>
+</div>
+<div class="span10">
+  <div class="content-area">
+    <%= render :partial => "users/breadcrumb_wall",
+      :locals => { :user => @user } %>
+    <div class="content-body">
+      <div class="content-section">
+        <%= render :partial => 'statuses/create_status',
+          :locals => { :statusable => current_user } %>
+        <div id="statuses" class="statuses">
+          <ol><%= render :partial => 'statuses/item', :collection => @statuses %></ol>
+          <%= will_paginate @statuses, :renderer => EndlessRenderer %>
+        </div>
+      </div>
+    </div>
+    <%= render :partial => "users/breadcrumb_wall",
+      :locals => { :user => @user } %>
+  </div>
+</div>
+<div class="span3">
+  <%= render :partial => "users/right_sidebar",
+    :locals => { :user => @user } %>
+</div>
