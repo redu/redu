@@ -2,7 +2,7 @@ module Api
   class FriendshipsController < Api::ApiController
     def index
       user = User.find(params[:user_id])
-      authorize! :read, user
+      authorize! :manage, user
 
       friendships = user.friendships
 
@@ -16,7 +16,7 @@ module Api
 
     def show
       friendship = Friendship.find(params[:id])
-      authorize! :read, friendship
+      authorize! :manage, friendship
 
       respond_with(:api, friendship)
     end
