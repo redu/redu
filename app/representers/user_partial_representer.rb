@@ -1,23 +1,11 @@
-module UserRepresenter
+module UserPartialRepresenter
   include Roar::Representer::JSON
   include Roar::Representer::Feature::Hypermedia
 
   property :id
   property :login
-  property :email
   property :first_name
   property :last_name
-  property :birthday
-  property :friends_count
-  property :mobile
-  property :localization
-  property :birth_localization
-  property :thumbnails
-  property :created_at
-  property :updated_at
-  collection :social_networks, :extend => SocialNetworkRepresenter,
-    :class => SocialNetwork
-
 
   #FIXME tornar isso genérico para qualquer thumbnail de qualquer entidade
   def thumbnails
@@ -50,6 +38,7 @@ module UserRepresenter
   end
 
   link :connections do
-    api_user_connections_url(self)
+    api_friendship_url(self)
   end
 end
+
