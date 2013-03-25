@@ -28,3 +28,4 @@ backup/.tmp/*
 chromedriver.log
 solr/data/*
 solr/pids/*
+config/sunspot.yml
