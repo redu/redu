@@ -2,11 +2,15 @@ module Api
   class AssetReportsController < Api::ApiController
     def show
       asset_report = AssetReport.find(params[:id])
+      authorize! :read, asset_report
+
       respond_with asset_report
     end
 
     def update
       asset_report = AssetReport.find(params[:id])
+      authorize! :manage, asset_report
+
       asset_report.done = params[:progress][:finalized].to_s
       asset_report.save
       respond_with asset_report
@@ -16,6 +20,8 @@ module Api
     # GET /api/subjects/:subject_id/progress?user_id[]=1&user_id[]=67
     def index
       context = context(params)
+      authorize! :manage, context
+
       asset_reports = context.asset_reports
       asset_reports = filter_by_users(asset_reports, params[:user_id])
 
