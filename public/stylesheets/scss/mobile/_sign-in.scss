@@ -8,6 +8,8 @@
   margin-top: 20px;
 }
 
+.mobile-login-buttons { @include box-shadow(0 -2px 6px rgba(0, 0, 0, 0.3)); }
+
 .mobile-login-button {
   @include box-sizing;
   @include border-radius(0);
