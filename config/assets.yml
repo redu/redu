@@ -12,6 +12,7 @@ s3_upload_files:
 
 javascripts:
   mobile:
+    - public/javascripts/rails.js
     - public/javascripts/vendor/modernizr.js
     - public/javascripts/jquery.autosize.min.js
     - public/javascripts/bootstrap-redu.js

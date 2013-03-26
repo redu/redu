@@ -1,9 +1,25 @@
-var $form = $("#form-sign-in");
+<% if @mobile %>
+  var $form = $("#mobile-form-sign-in");
+<% else %>
+  var $form = $("#form-sign-in");
+<% end %>
 
+<%# Erro de validação. %>
 <% if @user_session %>
-  var $newForm = $("<%= escape_javascript render 'shared/form_sign_in',
-                   :user_session => @user_session %>");
+  <% if @mobile %>
+    <%# Para o formulário do login mobile. %>
+    var $newForm = $("<%= escape_javascript render 'base/mobile/form_sign_in',
+                     :user_session => @user_session %>");
+
+  <% else %>
+    <%# Login normal. %>
+    var $newForm = $("<%= escape_javascript render 'shared/form_sign_in',
+                     :user_session => @user_session %>");
+  <% end %>
+
   $form.replaceWith($newForm);
+
+<%# Login expirado. %>
 <% else %>
   $form.append('<%= escape_javascript render "shared/system_message",
                :message => "O prazo máximo de 30 para ativar sua conta expirou. Portanto,

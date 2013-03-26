@@ -12,6 +12,9 @@
     <%= include_javascripts :mobile %>
   </head>
   <body>
-    <%= yield %>
+    <%= render :partial => "base/mobile/header" %>
+    <div class="mobile-content">
+      <%= yield %>
+    </div>
   </body>
 </html>

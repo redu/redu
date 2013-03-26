@@ -1,6 +1,6 @@
 $(function() {
   // Checkbox de mostrar senha.
-  $("#mobile-form-sign-in-show-password").change(function() {
+  $(document).on("change", "#mobile-form-sign-in-show-password", function() {
     var $passwordField = $("#user_session_password");
 
     if ($(this).prop("checked")) {
@@ -8,5 +8,5 @@ $(function() {
     } else {
       $passwordField.get(0).type = "password";
     }
-  })
+  });
 });
