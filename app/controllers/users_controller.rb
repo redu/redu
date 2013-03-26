@@ -254,7 +254,11 @@ class UsersController < BaseController
   def recover_username_password
     @recover_username = RecoveryEmail.new
     @recover_password = RecoveryEmail.new
-    render :layout => 'cold'
+    # TODO: Testando o front-end mobile. Retornar ao original quando for
+    # possível detectar o acesso mobile para redirecionar para a view e
+    # layout mobile.
+    # render :layout => 'cold'
+    render 'mobile_password_recovery', :layout => 'mobile'
   end
 
   def recover_username
@@ -271,6 +275,9 @@ class UsersController < BaseController
 
   def recover_password
     @recover_password = RecoveryEmail.new(params[:recovery_email])
+    # TODO: Melhor forma de dizer que veio do login mobile?
+    @mobile = params[:mobile]
+
     if @recover_password.valid?
       @user = User.find_by_email(@recover_password.email)
 
