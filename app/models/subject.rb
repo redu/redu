@@ -13,6 +13,7 @@ class Subject < ActiveRecord::Base
   has_many :statuses, :as => :statusable, :order => "created_at DESC"
   has_many :logs, :as => :logeable, :order => "created_at DESC",
     :dependent => :destroy
+  has_many :asset_reports
 
   scope :recent, lambda { where('created_at > ?', 1.week.ago) }
   scope :visible, lambda { where('visible = ?', true) }

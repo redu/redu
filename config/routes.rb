@@ -303,11 +303,13 @@ Redu::Application.routes.draw do
 
     resources :subjects, :except => [:new, :edit, :index, :create] do
       resources :lectures, :only => [:create, :index]
+      resources :asset_reports, :path => "progress", :only => [:index]
     end
 
     resources :lectures, :except => [:new, :edit, :index, :create] do
       resources :user, :only => :index
       resources :statuses, :only => [:index, :create]
+      resources :asset_reports, :path => "progress", :only => [:index]
     end
 
     resources :users, :only => :show do
@@ -341,6 +343,7 @@ Redu::Application.routes.draw do
 
     resources :myfiles, :path => "files", :only => [:show]
     resources :canvas, :only => [:show, :update, :destroy]
+    resources :asset_reports, :path => "progress", :only => [:show, :update]
 
     match "vis/spaces/:space_id/lecture_participation",
       :to => 'vis#lecture_participation',
