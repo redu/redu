@@ -31,12 +31,11 @@
       <label class="control-checkbox pull-left">
         <input id="mobile-form-sign-in-show-password" type="checkbox"> Mostrar senha
       </label>
-      <%= link_to "Esqueceu?", recover_username_password_path,
+      <%= link_to "Esqueceu?", recover_username_password_path(:mobile => true),
         :class => "pull-right", :title => "Esqueceu a senha?" %>
     </div>
   </div>
   <div class="mobile-login-buttons clearfix">
-    <%# TODO: Link para versão desktop, onde o usuário poderá se cadastrar. %>
     <%= link_to "Cadastrar-se", application_path, :title => "Cadastrar-se",
       :class => "mobile-login-button button-success pull-left" %>
     <button type="submit" class="mobile-login-button button-primary pull-right">Entrar</button>

@@ -6,7 +6,6 @@ class SessionsController < BaseController
 
   def create
     @user_session = UserSession.new(params[:user_session])
-    # TODO: Melhor forma de dizer que veio do login mobile?
     @mobile = params[:mobile]
 
     @user_session.save do |result|
