@@ -13,6 +13,8 @@ module Api
 
       asset_report.done = params[:progress][:finalized].to_s
       asset_report.save
+      asset_report.enrollment.update_grade!
+
       respond_with asset_report
     end
 

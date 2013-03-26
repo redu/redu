@@ -43,17 +43,21 @@ describe "AssetReports API" do
     let(:user) { user_joined_on_course(course, Role[:member]) }
     let(:asset_report) { user.enrollments.first.asset_reports.first }
 
-    before do
-      put_params = params.merge(:progress => { :finalized => "true" })
-      put "/api/progress/#{asset_report.id}", put_params
-    end
+    let(:put_params) { params.merge(:progress => { :finalized => "true" }) }
 
     it "should return status 200" do
+      put "/api/progress/#{asset_report.id}", put_params
       response.code.should == "200"
     end
 
     it "should update finalized to true" do
+      put "/api/progress/#{asset_report.id}", put_params
       asset_report.reload.done.should be_true
+    end
+
+    it "should call update_grade! on enrollment" do
+      Enrollment.any_instance.should_receive(:update_grade!).once
+      put "/api/progress/#{asset_report.id}", put_params
     end
   end
 
