@@ -22,7 +22,11 @@
   margin-bottom: 20px;
 }
 
-.empty-invite-list span { margin: 20px auto; }
+.empty-invite-list {
+  span { margin: 20px auto; }
+
+  p { color: rgb(179, 179, 179); }
+}
 
 .invite-description {
   color: $gray5;

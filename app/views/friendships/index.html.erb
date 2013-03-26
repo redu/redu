@@ -30,9 +30,16 @@
       <div class="row">
         <div class="span10">
           <div class="content-section">
+            <% if @friends.size == 0 %>
+              <div class="empty-invite-list">
+                <span class="icon-invite-empty_128_130 show text-replacement"></span>
+                <p>Adicione amigos e crie sua rede social educacional. Você pode conversar, ajudar e tirar dúvidas com seus amigos. <a>Que tal procurar?</a></p>
+              </div>
+            <% else %>
             <ul class="list-2-columns list-columns-separator friendship-list clearfix">
               <%= render :partial => "users/item_medium", :collection => @friends %>
             </ul>
+            <% end %>
           </div>
         </div>
       </div>
