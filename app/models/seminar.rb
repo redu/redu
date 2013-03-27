@@ -95,12 +95,15 @@ class Seminar < ActiveRecord::Base
   end
 
   def external_resource_url=(url)
-    self.external_resource_type = "youtube"
-
     capture = url.match(/youtube.com.*(?:\/|v=)([^&$]+)/)
-    # Pegando texto capturado ou retornando nil se o regex falhar
-    capture = capture[1]
-    self.external_resource = capture
+
+    unless capture.nil?
+      self.external_resource_type = "youtube"
+
+      # Pegando texto capturado ou retornando nil se o regex falhar
+      capture = capture[1]
+      self.external_resource = capture
+    end
   end
 
   def type
