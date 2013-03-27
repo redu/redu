@@ -7,13 +7,12 @@
     per_page:      number of items to fetch per page
     remote:        data-remote
 -%>
-<span class="page<%= ' current' if page.current? %>">
-  <% if page.current? %>
-    <%= link_to page, nil, :class => "filter filter-active" %>
-  <% else %>
-    <%= link_to page, url,
-                opts = { :remote => remote,
-                         :rel => page.next? ? 'next' : page.prev? ? 'prev' : nil,
-                         :class => "button-default" } %>
-  <% end %>
-</span>
+
+<%# Página atual. %>
+<% if page.current? %>
+  <%= content_tag :span, page, :class => "button-default filter-active", :title => "Página #{page} (atual)" %>
+
+<%# Páginas restantes. %>
+<% else %>
+  <%= link_to page, url, opts = { :remote => remote, :class => "button-default", :title => "Página #{page}" } %>
+<% end %>
