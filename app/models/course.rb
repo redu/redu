@@ -2,6 +2,7 @@ class Course < ActiveRecord::Base
   include ActsAsBillable
   include EnrollmentVisNotification
   include DestroySoon::ModelAdditions
+  include CourseSearchable
 
   # Apenas deve ser chamado na criação do segundo curso em diante
   after_create :create_user_course_association, :unless => "self.environment.nil?"
@@ -340,18 +341,6 @@ class Course < ActiveRecord::Base
       self.approved_users.count < self.plan.members_limit
     else
       self.environment.can_add_entry?
-    end
-  end
-
-  searchable do
-    text :name, :boost => 6.0
-
-    text :owner, :boost => 3.0 do
-      owner.display_name if owner
-    end
-
-    text :teachers, :boost => 3.0 do
-      teachers.map { |t| t.display_name + "  " }
     end
   end
 

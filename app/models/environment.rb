@@ -1,6 +1,7 @@
 class Environment < ActiveRecord::Base
   include ActsAsBillable
   include DestroySoon::ModelAdditions
+  include EnvironmentSearchable
 
   # Representa o ambiente onde o ensino a distância acontece. Pode ser visto
   # como um instituição o provedor de ensino dentro do sistema.
@@ -93,16 +94,6 @@ class Environment < ActiveRecord::Base
       (user.courses & self.courses).each do |c|
         c.unjoin user
       end
-    end
-  end
-
-  # Busca de ambientes
-  searchable do
-    text :name, :boost => 6.0
-    text :initials, :boost => 5.0
-
-    text :administrators, :boost => 3.0 do
-      administrators.map { |a| a.display_name + "  " }
     end
   end
 

@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   include Invitable::Base
   include Humanizer
+  include UserSearchable
 
   # Valida a resposta ao captcha
   attr_writer :enable_humanizer
@@ -141,31 +142,6 @@ class User < ActiveRecord::Base
   ajaxful_rater
   acts_as_taggable
   has_private_messages
-
-  searchable do
-    text :name, :boost => 6.0 do
-      display_name
-    end
-
-    text :job, :boost => 4.0, :stored => true do
-      experiences.actual_jobs.map{ |exp| exp.title + "  " }
-    end
-
-    # Places tem o mesmo boost
-    text :birth_localization, :boost => 2.0
-    text :localization, :boost => 2.0
-
-    text :education_place, :boost => 2.0, :stored => true do
-      education = most_important_education.first
-      unless education.nil?
-        education.educationable.institution + "  "
-      end
-    end
-
-    text :workplace, :boost => 2.0, :stored => true do
-      experiences.actual_jobs.map{ |exp| exp.company + "  " }
-    end
-  end
 
   # VALIDATIONS
   validates_presence_of :first_name, :last_name
