@@ -6,7 +6,12 @@
     <% end %>
     <span class="space icons-big icon-space-white_64_64 replacement"><%=  space.name %></span>
   </div>
-  <%= local_nav :spaces %>
+  <%# Contexto do sidebar %>
+  <% if content_for?(:space_sidebar_navigation) %>
+    <%= content_for(:space_sidebar_navigation) %>
+  <% else %>
+    <%= local_nav :spaces %>
+  <% end %>
   <% teachers_count = space.teachers.count %>
   <% unless teachers_count == 0 %>
     <span class="call icon-teacher-gray_16_18-before">Professores: <%= link_to teachers_count, space_users_path(space, :role => :teachers), :class => "count" %></span>
