@@ -12,19 +12,19 @@
       <%= render :partial => "user_list",
         :locals => { :profiles => @profiles,
                      :query => @query } %>
-      <% unless @environments.empty? %>
+      <% unless (@profiles.empty? || @environments.empty?) %>
         <hr class="list-separator">
       <% end %>
       <%= render :partial => "environment_list",
         :locals => { :environments => @environments,
                      :query => @query } %>
-      <% unless @courses.empty? %>
+      <% unless (@profiles.empty? || @environments.empty? || @courses.empty?) %>
         <hr class="list-separator">
       <% end %>
       <%= render :partial => "course_list",
         :locals => { :courses => @courses,
                      :query => @query } %>
-      <% unless @spaces.empty? %>
+      <% unless (@profiles.empty? || @environments.empty? || @courses.empty? || @spaces.empty?) %>
         <hr class="list-separator">
       <% end %>
       <%= render :partial => "space_list",
