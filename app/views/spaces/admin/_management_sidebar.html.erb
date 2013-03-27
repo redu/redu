@@ -1,0 +1,14 @@
+<%#
+  Sidebar para gerenciamento de Space.
+  Define contexto correto para o sidebar que será renderizado
+
+  Variáveis:
+    space: space que está sendo gerenciado
+%>
+<div class="management-sidebar">
+  <% content_for(:space_sidebar_navigation) do %>
+    <%= local_nav :spaces_admin %>
+  <% end %>
+  <%= render :partial => 'spaces/sidebar',
+    :locals => { :space => space } %>
+</div>
