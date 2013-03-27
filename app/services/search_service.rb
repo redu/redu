@@ -1,35 +1,34 @@
-# Serviço para busca.
-# Métodos auxiliares que lidam com os parametros da requisição
-# e com a chamada da busca pelos métodos individuais.
-# Desacopla ao máximo a lógica do controller trazendo para esta classe
 class SearchService
+  # Serviço para busca.
+  # Métodos auxiliares que lidam com os parametros da requisição
+  # e com a chamada da busca pelos métodos individuais.
+  # Desacopla ao máximo a lógica do controller trazendo para esta classe
+
   def initialize(opts={})
     @params = opts[:params].clone
     @user = opts[:current_user]
     @filters = params[:f] ? params[:f].clone : {}
-    @results = Array.new
+    @results = Hash.new
   end
 
   # Executa busca para as classes definidas pelo usuário
   def perform_results(opts = { :preview => false })
-    results = Hash.new
-
     # Para cada classe executa a busca correspondente
     klasses_for_search.each do |klass|
       per_page = search_per_page(opts[:preview])
 
-      results[klass.to_s] = klass.perform(@params[:q], per_page, @params[:format],
-                                          @params[:page]).results
+      results[klass.to_s] = klass.perform(params[:q], per_page, params[:format],
+                                          params[:page]).results
 
       if klass == SpaceSearch
-        page = @params[:page].nil? ? 1 : @params[:page]
+        page = params[:page].nil? ? 1 : params[:page]
         options = { :page => page, :per_page => per_page }
         results[klass.to_s] =
-          filter_and_paginate_my_spaces(results["SpaceSearch"], @user, options)
+          filter_and_paginate_my_spaces(results["SpaceSearch"], user, options)
       end
     end
 
-    @results = results
+    results
   end
 
   def total_count_results
@@ -37,7 +36,6 @@ class SearchService
   end
 
   # Faz a representação da busca em formato JSON
-  # - collections: coleção de tipos de resultados
   def make_representable
     # Para cada tipo de resultado aplica o representer, transforma em JSON
     # e devolve apenas os values do Hash segundo o formato que o tokeninput
@@ -54,14 +52,14 @@ class SearchService
     all.flatten!
   end
 
-  # Recupera resultado referente a uma classe sempre define um array paginado
-  # O método perform_results deve ser chamado antes.
+  # Recupera resultado referente a uma classe e sempre define um array paginado
+  # O retorno será nil se o perform_results não tiver sido chamado antes
   def klass_results(klass)
-    @results[klass] ||= Kaminari.paginate_array([])
+    results[klass] ||= Kaminari.paginate_array([])
   end
 
   # Pagina a única busca que possui resultados
-  # O método perform_results deve ser chamado antes.
+  # O retorno será nil se o perform_results não tiver sido chamado antes
   def result_paginate
     if individual_page?
       search_results.select{ |entity| entity.size > 0 }.first || []
@@ -70,7 +68,7 @@ class SearchService
 
   # Se a action receber apenas um filtro é mostrada uma página individual
   def individual_page?
-    @filters.size == 1 || @params[:action] == "profiles"
+    filters.size == 1 || params[:action] == "profiles"
   end
 
   # Preview quando não é uma página individual
@@ -83,13 +81,13 @@ class SearchService
   attr_reader :params, :user, :filters, :results
 
   def search_results
-    @results.values
+    results.values
   end
 
   def has_filter?(entity)
     # Se os filtros não existirem está implícito que
     # todos os filtros estão ativados
-    @filters.include?(entity) || @filters.empty?
+    filters.include?(entity) || filters.empty?
   end
 
   # Define para quais classes serão feitas as buscas dependendo dos parametros
@@ -98,11 +96,11 @@ class SearchService
 
     # Verifica quais filtros estão ativos e
     # avalia a busca dos modelos correspondentes
-    if @params[:action] == "environments"
+    if params[:action] == "environments"
       klasses << EnvironmentSearch if has_filter?("ambientes")
       klasses << CourseSearch if has_filter?("cursos")
       klasses << SpaceSearch if has_filter?("disciplinas")
-    elsif @params[:action] == "profiles"
+    elsif params[:action] == "profiles"
       klasses << UserSearch
     else
       klasses = [UserSearch, EnvironmentSearch, CourseSearch, SpaceSearch]
@@ -113,8 +111,8 @@ class SearchService
 
   # Define a quantidade de resultados da busca que serão mostrados
   def search_per_page(preview)
-    if @params[:format] == "json"
-      if @params[:action] == "profiles"
+    if params[:format] == "json"
+      if params[:action] == "profiles"
         Redu::Application.config.instant_search_results_per_page
       else
         Redu::Application.config.instant_search_preview_results_per_page
