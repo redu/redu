@@ -83,7 +83,7 @@ describe "Media API" do
       href_to("raw", lecture).should_not be_blank
     end
 
-    it "should have the correct mimetyoe" do
+    it "should have the correct mimetype" do
       post "/api/subjects/#{sub.id}/lectures", seminar_params
       parse(response.body)["mimetype"].should == "video/mpeg"
     end
@@ -131,7 +131,7 @@ describe "Media API" do
       href_to("raw", lecture).should == file
     end
 
-    it "should have the correct mimetyoe" do
+    it "should have the correct mimetype" do
       post "/api/subjects/#{sub.id}/lectures", seminar_params
       parse(response.body)["mimetype"].should == "video/x-youtube"
     end
