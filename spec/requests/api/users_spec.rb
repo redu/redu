@@ -43,13 +43,6 @@ describe "User" do
       sn['profile'].should == social_networks.first.url
     end
 
-    it "should hold the correct thumbnail" do
-      get "/api/users/#{@user.id}", :oauth_token => @token, :format => 'json'
-
-      thumb = parse(response.body)['thumbnails'].first
-      thumb['href'].should == @current_user.avatar.url(:thumb_32)
-    end
-
     %w(self enrollments statuses timeline contacts chats connections).each do |rel|
       it "should link to #{rel}" do
         get "/api/users/#{@user.id}", :oauth_token => @token, :format => 'json'

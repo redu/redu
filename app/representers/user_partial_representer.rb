@@ -2,17 +2,12 @@ module UserPartialRepresenter
   include Roar::Representer::JSON
   include Roar::Representer::Feature::Hypermedia
 
+  include Api::ThumbnailCollection
+
   property :id
   property :login
   property :first_name
   property :last_name
-  property :thumbnails
-
-  #FIXME tornar isso genérico para qualquer thumbnail de qualquer entidade
-  def thumbnails
-    [ { :size => "32x32", :href => self.avatar.url(:thumb_32) },
-      { :size => "110x110", :href => self.avatar.url(:thumb_110) } ]
-  end
 
   link :self do
     api_user_url(self)
