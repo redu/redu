@@ -7,7 +7,7 @@ describe "Media API" do
   let(:space) { course.spaces.first }
   let(:sub) { Factory(:subject, :owner => current_user, :space => space) }
   let(:token) { _, _, token = generate_token(current_user); token }
-  let(:params) do
+  let(:base_params) do
     { :oauth_token => token, :format => :json }
   end
 
@@ -17,7 +17,7 @@ describe "Media API" do
         Factory(:lecture, :lectureable => Factory(:seminar_youtube), :subject => sub)
       end
       before do
-        get "/api/lectures/#{subject.id}", params
+        get "/api/lectures/#{subject.id}", base_params
       end
 
       it_should_behave_like "a lecture"
@@ -41,7 +41,7 @@ describe "Media API" do
         Factory(:lecture, :lectureable => Factory(:seminar_upload), :subject => sub)
       end
       before do
-        get "/api/lectures/#{subject.id}", params
+        get "/api/lectures/#{subject.id}", base_params
       end
 
       it_should_behave_like "a lecture"
