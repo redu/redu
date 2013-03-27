@@ -57,4 +57,84 @@ describe "Media API" do
       end
     end
   end
+
+  context "POST /api/subjects/:id/lectures (uploaded video)" do
+    let(:file) do
+      fixture_file_upload("/api/video_example.avi", "video/mpeg")
+    end
+    let(:seminar_params) do
+      { :lecture => { :name => 'Lorem', :type => 'Media', :media => file } }.
+        merge(base_params)
+    end
+
+    it "should return 201 HTTP code" do
+      post "/api/subjects/#{sub.id}/lectures", seminar_params
+      response.code.should == "201"
+    end
+
+    it "should return the correct type" do
+      post "/api/subjects/#{sub.id}/lectures", seminar_params
+      parse(response.body)['type'].should == 'Media'
+    end
+
+    it "should return the link to the raw video" do
+      post "/api/subjects/#{sub.id}/lectures", seminar_params
+      lecture = parse(response.body)
+      href_to("raw", lecture).should_not be_blank
+    end
+
+    it "should have the correct mimetyoe" do
+      post "/api/subjects/#{sub.id}/lectures", seminar_params
+      parse(response.body)["mimetype"].should == "video/mpeg"
+    end
+
+    context "with validation error" do
+      let(:seminar_params) do
+        { :lecture => { :name => 'Lorem', :type => 'Media', :media => nil } }.
+          merge(base_params)
+      end
+
+      it "should return 422 HTTP code" do
+        post "/api/subjects/#{sub.id}/lectures", seminar_params
+        response.code.should == "422"
+      end
+
+      it "should return the validation error" do
+        post "/api/subjects/#{sub.id}/lectures", seminar_params
+        response.body.should =~ /não pode ser deixado em branco/
+      end
+    end
+  end
+
+  context "POST /api/subjects/:id/lectures (youtube video)" do
+    let(:file) do
+      "http://www.youtube.com/watch?v=h--OXNNCEz0"
+    end
+    let(:seminar_params) do
+      { :lecture => { :name => 'Lorem', :type => 'Media', :media => file } }.
+        merge(base_params)
+    end
+
+    it "should return 201 HTTP code" do
+      post "/api/subjects/#{sub.id}/lectures", seminar_params
+      response.code.should == "201"
+    end
+
+    it "should return the correct type" do
+      post "/api/subjects/#{sub.id}/lectures", seminar_params
+      parse(response.body)['type'].should == 'Media'
+    end
+
+    it "should return the link to the raw video" do
+      post "/api/subjects/#{sub.id}/lectures", seminar_params
+      lecture = parse(response.body)
+      href_to("raw", lecture).should == file
+    end
+
+    it "should have the correct mimetyoe" do
+      post "/api/subjects/#{sub.id}/lectures", seminar_params
+      parse(response.body)["mimetype"].should == "video/x-youtube"
+    end
+  end
+
 end

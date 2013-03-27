@@ -12,14 +12,20 @@ module Api
 
     def create
       subject = Subject.find(params[:subject_id])
-      canvas_builder = CanvasService.new(:access_token => current_access_token)
+
+      builder = case params[:lecture][:type]
+      when 'Canvas'
+        CanvasService.new(:access_token => current_access_token)
+      when 'Media'
+        SeminarService.new
+      end
 
       lecture = Lecture.new do |l|
         l.name = params[:lecture][:name]
         l.position = params[:lecture][:position]
         l.owner = current_user
         l.subject = subject
-        l.lectureable = canvas_builder.create(params[:lecture])
+        l.lectureable = builder ? builder.create(params[:lecture]) : nil
       end
 
       authorize! :manage, lecture
