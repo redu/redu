@@ -6,6 +6,7 @@ module UserPartialRepresenter
   property :login
   property :first_name
   property :last_name
+  property :thumbnails
 
   #FIXME tornar isso genérico para qualquer thumbnail de qualquer entidade
   def thumbnails
@@ -38,7 +39,7 @@ module UserPartialRepresenter
   end
 
   link :connections do
-    api_friendship_url(self)
+    api_user_connections_url(self)
   end
 end
 
