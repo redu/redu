@@ -1,6 +1,12 @@
 body {
   background-image: url("/images/landing/background.png");
 }
+.multiplebgs body {
+  background-image: url("/images/mobile/background-light-2x.png"), url("/images/landing/background.png");
+  background-size: cover, auto;
+  background-repeat: no-repeat, repeat;
+  background-position: center top, 0 0;
+}
 
 .mobile-content {
   -webkit-box-shadow: 0 1px 0 white inset;
@@ -13,16 +19,16 @@ body {
   padding: 20px;
 }
 
-.mobile-header-logo-link {
-  padding: 24px;
-  background-image: url("/images/mobile/background-light-2x.png");
-  background-size: cover;
+.mobile-header {
+  padding: 24px 0;
   text-align: center;
-  display: block;
 }
 
 .mobile-header-logo {
-  max-height: 200px;
+  width: 225px;
+  height: 200px;
+  background-image: url("/images/mobile/logo-redu-vertical-1x.png");
+  display: inline-block;
 }
 
 .mobile-login-password-recovery {
