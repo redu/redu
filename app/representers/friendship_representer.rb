@@ -16,7 +16,7 @@ module FriendshipRepresenter
   end
 
   link :contact do
-    api_user_url(self.user)
+    api_user_url(self.friend)
   end
 
   link :user do
