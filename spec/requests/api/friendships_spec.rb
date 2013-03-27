@@ -9,6 +9,7 @@ describe Api::FriendshipsController do
   context "GET /connections/:id" do
     before do
       friend.be_friends_with(user)
+      user.be_friends_with(friend)
       friendship = user.friendships.first
 
       get "api/connections/#{friendship.id}", params
