@@ -11,6 +11,8 @@ module Api
         friendships = friendships.where(:status => params[:status].to_s)
       end
 
+      friendships = friendships.page(params[:page])
+
       respond_with(:api, friendships)
     end
 

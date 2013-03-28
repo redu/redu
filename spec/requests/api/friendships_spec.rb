@@ -79,6 +79,20 @@ describe Api::FriendshipsController do
       parse(response.body).first['contact']['first_name'].should == \
         friend.first_name
     end
+
+    it_should_behave_like "pagination" do
+      let(:entities) do
+        4.times.collect do
+          contact = Factory(:user)
+          contact.be_friends_with(user)
+          user.be_friends_with(contact)
+        end
+      end
+      let(:params) do
+        ["/api/users/#{user.id}/connections",
+         { :oauth_token => token, :format => 'json' }]
+      end
+    end
   end
 
   context "POST /users/:user_id/connections" do
