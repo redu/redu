@@ -15,16 +15,15 @@ describe Document do
 
   context "scribdfu" do
     before do
-      @file = mock("attached_file",
-                   :url => "http://test.com/path/to/somewhere",
-                   :path => "/path/to/somewhere", :options => {})
+      @file = File.open("#{Rails.root}/spec/fixtures/api/pdf_example.pdf")
       @document = Document.new(:ipaper_id => 123456,
-                               :ipaper_access_key => "abcdef")
-      @document.stub(:attachment) { @file }
+                               :ipaper_access_key => "abcdef",
+                               :attachment => @file)
       @document.stub('scribdable?') { true }
 
       mock_scribd_api
     end
+    after { @file.close }
 
     it "should upload to scribd" do
       values = {:ipaper_id => 'doc_id', :ipaper_access_key => 'access_key'}
