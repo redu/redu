@@ -20,35 +20,3 @@
 
 # Stubs search for all specs
 Sunspot.session = Sunspot::Rails::StubSessionProxy.new(Sunspot.session)
-
-# Rspec hook for enable it on selected tests
-RSpec.configure do |config|
-  config.before :sunspot => true do
-    Sunspot.session = Sunspot.session.original_session
-    Sunspot.remove_all!
-  end
-
-  config.after :sunspot => true do
-    Sunspot.session = Sunspot::Rails::StubSessionProxy.new(Sunspot.session)
-  end
-end
-
-#
-# Make sunspot index right away in test environment.
-#
-module Sunspot
-  module Rails
-    module Searchable
-      module InstanceMethods
-        def solr_index
-          solr_index!
-        end
-
-        def solr_remove_from_index
-          solr_remove_from_index!
-        end
-      end
-    end
-  end
-end
-

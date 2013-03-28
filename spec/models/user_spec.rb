@@ -935,7 +935,7 @@ describe User do
     let(:user) { Factory(:user) }
 
     it "should return the Ability" do
-      user.ability.should_not be_nil
+      user.ability.should be_a Ability
     end
   end
 

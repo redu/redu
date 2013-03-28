@@ -1,13 +1,13 @@
 require 'spec_helper'
 
 describe ApplicationController do
-  describe 'Check tour exploration' do
-    controller do
-      def show
-        render :text => "show called"
-      end
+  controller do
+    def show
+      render :text => "show called"
     end
+  end
 
+  describe 'Check tour exploration' do
     context 'when logged in' do
       let(:user) { Factory(:user) }
       before do
@@ -73,6 +73,29 @@ describe ApplicationController do
           get :show, :id => 'anyid', :exploring_tour => "true"
         end
       end
+    end
+  end
+
+  describe 'Current ability' do
+    context "when logged in" do
+      let(:user) { Factory(:user) }
+      before do
+        login_as user
+        get :show, :id => '1'
+      end
+
+      it "current_user should be a valid user" do
+        controller.send(:current_user).should == user
+      end
+
+      it "current_ability should be a valid ability" do
+        controller.send(:current_ability).should == user.ability
+      end
+    end
+
+    context "when not logged in" do
+      it { controller.send(:current_user).should be_nil }
+      it { controller.send(:current_ability).should be_nil }
     end
   end
 end

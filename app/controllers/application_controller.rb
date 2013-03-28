@@ -60,7 +60,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_ability
-    current_user.ability
+    current_user.try(:ability)
   end
 
   def last_request_update_allowed?
