@@ -3,29 +3,18 @@
 // ==========================================================================
 
 // Encapsulador.
-.landing-partners-wrapper {
-  padding: 20px 20px 40px;
-
-  h2 {
-    color: $gray3;
-
-    .textshadow & { text-shadow: 0 1px 0 $gray5; }
-  }
-
-  h2 + .landing-partners { margin-top: 20px; }
-
-  .partners-title {
-    font-size: 18px !important;
-    line-height: 21px;
-    letter-spacing: -1px;
-    font-weight: 500;
-  }
+.landing-partners .landing-navigation-title {
+  padding: 20px 20px 30px;
 }
 
-.landing-partners { overflow: hidden; }
+// Patrocinadores.
+.partners {
+  padding: 40px 20px;
+  overflow: hidden;
+}
 
 // Patrocinador.
-.landing-partner {
+.partner {
   float: left;
 
   & + & { margin-left: 20px; }
