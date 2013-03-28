@@ -11,8 +11,9 @@ class SpaceSearch < Search
       fields = :name
       includes = []
     else
-      includes = [{ :course => [:user_course_associations,
-                                :environment, :owner] }]
+      includes = [:owner,
+                  { :course => [:user_course_associations,
+                                :environment] }]
     end
 
     # Busca por Spaces não terá paginação automática pois o resultado

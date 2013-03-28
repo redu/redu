@@ -27,8 +27,8 @@
             :class => "general-list-item-title-link text-truncate general-list-item-text-overlap-icon",
             :title => space.course.name %>
         </h5>
-        <% unless space.course.owner.nil? %>
-          <span class="legend text-truncate" title="<%= space.course.owner.display_name %>">Criado por <%= link_to space.course.owner.display_name, user_path(space.course.owner) %></span>
+        <% unless space.owner.nil? %>
+          <span class="legend text-truncate" title="<%= space.owner.display_name %>">Criado por <%= link_to space.owner.display_name, user_path(space.owner) %></span>
         <% end %>
         <% cache ['search_course_teachers', space.course.id] do %>
           <% teachers = space.course.teachers %>

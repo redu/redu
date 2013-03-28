@@ -5,8 +5,8 @@ module InstantSearch
     include Representable::JSON::Collection
 
     def self.extend_object(obj)
-      if obj.first # Assume-se que o obj em questão é um array não vazio
-        self.representation_wrap = obj.first.class.name.pluralize.downcase
+      if instance = obj.first
+        self.representation_wrap = instance.class.name.pluralize.downcase
       end
       super
     end
