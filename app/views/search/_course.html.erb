@@ -15,9 +15,9 @@
           :size => "32x32" %>
       <% end %>
       <div class="general-list-item-column">
-        <% role_icon = user_course_role(course, current_user) %>
+        <% role_icon, role_text = user_course_role(course, current_user) %>
         <% unless role_icon.nil? %>
-          <span class="icon-<%= role_icon %>-lightblue_16_18 show text-replacement pull-right" rel="tooltip" title="<%= role_icon_to_text(role_icon)%>"><%= role_icon_to_text(role_icon)%></span>
+          <span class="icon-<%= role_icon %>-lightblue_16_18 show text-replacement pull-right" rel="tooltip" title="<%= role_text %>"><%= role_text %></span>
         <% end %>
         <span class="legend text-truncate general-list-item-text-overlap-icon" title="<%= course.environment.name %>"><%= course.environment.name %> —</span>
         <h5 class="general-list-item-title">

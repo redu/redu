@@ -22,20 +22,11 @@ module SearchHelper
   # Define o ícone a ser usado dependendo do papel.
   def role_icon(role)
     case role
-    when (Role[:environment_admin] or Role[:course_admin] or Role[:admin]) then "manager"
-    when Role[:teacher] then "teacher"
-    when Role[:tutor] then "tutor"
-    when Role[:member] then "member"
-    end
-  end
-
-  # Defino o nome do papel de acordo com o ícone usado.
-  def role_icon_to_text(role_icon)
-    case role_icon
-    when "manager" then raw(t 'classy_enum.role.admin')
-    when "teacher" then raw(t 'classy_enum.role.teacher')
-    when "tutor" then raw(t 'classy_enum.role.tutor')
-    when "member" then raw(t 'classy_enum.role.member')
+    when (Role[:environment_admin] || Role[:course_admin] || Role[:admin]) then
+      ["manager", raw(t 'classy_enum.role.admin')]
+    when Role[:teacher] then ["teacher", raw(t 'classy_enum.role.teacher')]
+    when Role[:tutor] then ["tutor", raw(t 'classy_enum.role.tutor')]
+    when Role[:member] then ["member", raw(t 'classy_enum.role.member')]
     end
   end
 
@@ -67,7 +58,7 @@ module SearchHelper
 
   # Define se o link "Veja todos os resultados" deve ser mostrado.
   def show_see_all_results_link?(total_found)
-    !@individual_page and total_found > Redu::Application.config.search_preview_results_per_page
+    !@individual_page && total_found > Redu::Application.config.search_preview_results_per_page
   end
 
   # Retorna a quantidade correta de itens buscados dependendo da página.
