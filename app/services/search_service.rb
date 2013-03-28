@@ -40,7 +40,7 @@ class SearchService
     # Para cada tipo de resultado aplica o representer, transforma em JSON
     # e devolve apenas os values do Hash segundo o formato que o tokeninput
     # recebe na view
-    all = search_results.to_a.map do |collection|
+    all = search_results.map do |collection|
       representer = collection.extend(InstantSearch::CollectionRepresenter)
       itens = JSON.parse(representer.to_json)
 
@@ -48,7 +48,7 @@ class SearchService
     end
 
     # Deixa o array com um apenas um nível e remove os resultados nil
-    all.flatten!.compact!
+    all.flatten!.compact
   end
 
   # Recupera resultado referente a uma classe e sempre define um array paginado
