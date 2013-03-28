@@ -2,6 +2,8 @@ module EnvironmentRepresenter
   include Roar::Representer::JSON
   include Roar::Representer::Feature::Hypermedia
 
+  include Api::ThumbnailCollection
+
   property :name
   property :description
   property :created_at
