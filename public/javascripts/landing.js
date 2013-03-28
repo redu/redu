@@ -48,4 +48,10 @@ $(function() {
 
   // Abre as modais que devem ser abertas após carregar a página
   $("#modal-sign-up.open-me").modal("show");
+
+  $('#button-sign-in').click(function() {
+    setTimeout(function() {
+      $('#user_session_login').focus();
+    }, 100);
+  });
 });
