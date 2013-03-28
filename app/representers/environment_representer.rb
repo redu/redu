@@ -11,6 +11,11 @@ module EnvironmentRepresenter
   property :path
   property :initials
   property :id
+  property :courses_count
+
+  def courses_count
+    self.courses.count
+  end
 
   link :self do
     api_environment_url(self)
