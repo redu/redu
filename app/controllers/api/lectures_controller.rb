@@ -16,6 +16,8 @@ module Api
       builder = case params[:lecture][:type]
       when 'Canvas'
         CanvasService.new(:access_token => current_access_token)
+      when 'Document'
+        DocumentService.new
       when 'Media'
         SeminarService.new
       end

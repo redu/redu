@@ -32,4 +32,34 @@ describe "Documents API" do
        end
      end
    end
+
+  context "when POST /api/subjects/:id/lectures" do
+    it_should_behave_like "a lecture created" do
+      let(:mimetype) { "application/vnd.ms-powerpoint" }
+      let(:url) { "/api/subjects/#{subj.id}/lectures"  }
+      let(:lecture_params) do
+        { :lecture => \
+          { :name => 'Lorem', :type => 'Document',
+            :media => fixture_file_upload("/api/document_example.pptx", mimetype) }
+        }.merge(params)
+      end
+    end
+
+    context "with validation error" do
+      let(:lecture_params) do
+        { :lecture => { :name => 'Lorem', :type => 'Document', :media => nil } }.
+          merge(params)
+      end
+
+      it "should return 422 HTTP code" do
+        post "/api/subjects/#{subj.id}/lectures", lecture_params
+        response.code.should == "422"
+      end
+
+      it "should return the validation error" do
+        post "/api/subjects/#{subj.id}/lectures", lecture_params
+        response.body.should =~ /lectureable\.attachment/
+      end
+    end
+  end
 end
