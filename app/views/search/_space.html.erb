@@ -33,11 +33,11 @@
         <% cache ['search_course_teachers', space.course.id] do %>
           <% teachers = space.course.teachers %>
           <% unless teachers.empty? %>
-            <%= truncate_html(
+            <%= raw(truncate_html(
               content_tag(
                 :span, raw( t('classy_enum.role.teacher', :count => teachers.size) + ": #{show_teachers_list(teachers)}"),
                 :class => "legend",
-                :title => "#{strip_links(show_teachers_list(teachers))}"), :length => 110) %>
+                :title => "#{strip_links(show_teachers_list(teachers))}"), :length => 110)) %>
             <% end %>
         <% end %>
       </div>

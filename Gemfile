@@ -69,8 +69,6 @@ gem 'will_paginate', '~> 3.0.pre2'
 gem 'zencoder'
 gem 'untied-publisher', '~> 0.0.6'
 gem 'system_timer'
-gem 'truncate_html', :git => 'https://github.com/hgmnz/truncate_html.git',
-  :ref => 'f3e08' # Suporte a Ruby < 1.9
 gem 'json', '>= 1.7.7'
 
 # Gems específicos para a API

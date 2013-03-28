@@ -126,13 +126,6 @@ GIT
   specs:
     vis_client (0.0.6)
 
-GIT
-  remote: https://github.com/hgmnz/truncate_html.git
-  revision: f3e085346a09967cb1eee0592e379e12324125b8
-  ref: f3e08
-  specs:
-    truncate_html (0.5.4)
-
 GEM
   remote: http://rubygems.org/
   remote: http://gems.github.com/
@@ -511,7 +504,6 @@ DEPENDENCIES
   sunspot_solr
   system_timer
   translate_routes
-  truncate_html!
   untied-publisher (~> 0.0.6)
   useragent (~> 0.4.8)
   vis_client!
