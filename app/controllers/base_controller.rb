@@ -3,6 +3,8 @@ class BaseController < ApplicationController
   # Work around (ver método self.login_required_base)
 
   rescue_from CanCan::AccessDenied, :with => :deny_access
+  rescue_from ActiveRecord::RecordNotUnique,
+    :with => Proc.new { redirect_to application_path }
 
   def tos
     render :layout => 'clean'
