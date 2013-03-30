@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   helper_method :current_user_session, :current_user
 
+  before_filter :detect_mobile
   after_filter :check_tour_exploration
 
   unless Rails.application.config.consider_all_requests_local
@@ -66,5 +67,12 @@ class ApplicationController < ActionController::Base
   def check_tour_exploration
     return if current_user.nil? || !params.has_key?(:exploring_tour)
     current_user.settings.visit!(request.path)
+  end
+
+  def detect_mobile
+    user_agent = UserAgent.parse(request.user_agent)
+    if user_agent.mobile?
+      prepend_view_path "app/views/mobile"
+    end
   end
 end
