@@ -6,7 +6,6 @@ class SessionsController < BaseController
 
   def create
     @user_session = UserSession.new(params[:user_session])
-    @mobile = params[:mobile]
 
     @user_session.save do |result|
       if result

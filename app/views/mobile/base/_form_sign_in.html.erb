@@ -6,7 +6,7 @@
 %>
 
 <%= form_for user_session || UserSession.new, :remote => true,
-  :url => sessions_path(:mobile => true), :html => { :id => "mobile-form-sign-in" } do |f| %>
+  :url => sessions_path, :html => { :id => "mobile-form-sign-in" } do |f| %>
   <div class="content-section">
     <div class="control-group">
       <div class="control-label">
@@ -30,7 +30,7 @@
       <label class="control-checkbox pull-left">
         <input id="mobile-form-sign-in-show-password" type="checkbox"> Mostrar senha
       </label>
-      <%= link_to "Esqueceu?", recover_username_password_path(:mobile => true),
+      <%= link_to "Esqueceu?", recover_username_password_path,
         :class => "pull-right", :title => "Esqueceu a senha?" %>
     </div>
   </div>

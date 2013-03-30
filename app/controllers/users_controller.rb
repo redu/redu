@@ -255,11 +255,7 @@ class UsersController < BaseController
     @recover_username = RecoveryEmail.new
     @recover_password = RecoveryEmail.new
 
-    if params[:mobile] == 'true'
-      render 'mobile_password_recovery', :layout => 'mobile'
-    else
-      render :layout => 'cold'
-    end
+    render :layout => 'cold'
   end
 
   def recover_username
@@ -276,7 +272,6 @@ class UsersController < BaseController
 
   def recover_password
     @recover_password = RecoveryEmail.new(params[:recovery_email])
-    @mobile = params[:mobile]
 
     if @recover_password.valid?
       @user = User.find_by_email(@recover_password.email)

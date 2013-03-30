@@ -29,11 +29,7 @@ class BaseController < ApplicationController
 
       respond_to do |format|
         format.html do
-          if params[:mobile] == 'true'
-            render 'mobile_login', :layout => 'mobile'
-          else
-            render :layout => 'landing'
-          end
+          render :layout => 'landing'
         end
       end
     end
