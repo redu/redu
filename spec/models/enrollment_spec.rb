@@ -78,13 +78,5 @@ describe Enrollment do
     end
   end
 
-  context "when application validation fail" do
-    it "should prevent duplicate subject_id and user_id" do
-      @duplicate = Factory.build(:enrollment, :subject_id => subject.subject_id,
-                                 :user_id => subject.user_id)
-      expect {
-        @duplicate.save(:validate => false)
-      }.should raise_error(ActiveRecord::RecordNotUnique)
-    end
-  end
+  it_should_behave_like 'have unique index database'
 end

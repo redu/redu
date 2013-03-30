@@ -905,15 +905,6 @@ describe User do
     subject.most_important_education.should == [edu2, edu3, edu1]
   end
 
-  context "when application validation fail" do
-    it "should prevent duplicate logins" do
-      @duplicate = Factory.build(:user, :login => subject.login)
-      expect {
-        @duplicate.save(:validate => false)
-      }.should raise_error(ActiveRecord::RecordNotUnique)
-    end
-  end
-
   context "Authlogic" do
     context "when passwords are blank" do
       let(:user) { Factory(:user) }
@@ -924,6 +915,8 @@ describe User do
       end
     end
   end
+
+  it_should_behave_like 'have unique index database'
 
   private
   def create_friendship(user1, user2)
