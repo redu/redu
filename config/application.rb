@@ -198,6 +198,9 @@ module Redu
     # Service objects
     config.autoload_paths << "#{config.root}/app/services"
 
+    # Vis Representer
+    config.autoload_paths << "#{config.root}/app/representers/vis"
+
     # Configurações do Pusher (redu app)
     config.pusher = {
       :app_id => '4577',
