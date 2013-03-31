@@ -1,5 +1,4 @@
 class Subject < ActiveRecord::Base
-  include EnrollmentVisNotification
 
   belongs_to :space
   belongs_to :owner, :class_name => "User", :foreign_key => :user_id
@@ -84,7 +83,8 @@ class Subject < ActiveRecord::Base
         Enrollment.create(:user_id => usa.user_id, :subject => self,
                           :role => usa.role)
       end
-      delay_hierarchy_notification("enrollment", enrollments)
+      VisClient.notify_delayed("/hierarchy_notifications.json",
+                               "enrollment", enrollments)
     end
   end
 

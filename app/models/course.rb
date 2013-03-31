@@ -1,6 +1,5 @@
 class Course < ActiveRecord::Base
   include ActsAsBillable
-  include EnrollmentVisNotification
   include DestroySoon::ModelAdditions
 
   # Apenas deve ser chamado na criação do segundo curso em diante
@@ -214,11 +213,13 @@ class Course < ActiveRecord::Base
         enrollment.try(:destroy)
       end
     end
-    # Associa o delayed_job para a remoção dos enrollments em visualização
-    delay_hierarchy_notification("remove_enrollment", enrollments.compact)
-    # Envia notificação de remove_subject_finalized para visualização
-    delay_hierarchy_notification("remove_subject_finalized",
-                                 enrollments_finalized.compact)
+
+    # Usa VisClient para enviar as requisições
+    VisClient.notify_delayed("/hierarchy_notifications.json",
+                             "remove_enrollment", enrollments.compact)
+    VisClient.notify_delayed("/hierarchy_notifications.json",
+                             "remove_subject_finalized",
+                             enrollments_finalized.compact)
   end
 
 
@@ -247,7 +248,7 @@ class Course < ActiveRecord::Base
     enrollments = Subject.enroll(user, subjects, role)
 
     # Associa o delayed_job para a criação dos enrollments em visualização
-    delay_hierarchy_notification("enrollment", enrollments)
+    VisClient.notify_delayed("/hierarchy_notifications.json", "enrollment", enrollments.compact)
   end
 
   # Verifica se o usuário em questão está esperando aprovação num determinado
