@@ -39,7 +39,7 @@ class LectureService
   protected
 
   def create_asset_report(lecture, user)
-    return unless defined?(:@lecture)
+    return if lecture.new_record?
 
     if enrollment = user.get_association_with(lecture)
       lecture.create_asset_report(:enrollments => [enrollment])
