@@ -105,52 +105,6 @@ class CoursesController < BaseController
 
   end
 
-  def index
-    paginating_params = {
-      :page => params[:page],
-      :order => 'updated_at DESC',
-      :per_page => Redu::Application.config.items_per_page
-    }
-
-    if params.has_key? :role
-      if params[:role] == 'student'
-        @courses = Course.published.
-          user_behave_as_student(current_user).includes([:tags, :audiences, :environment])
-      elsif params[:role] == 'tutor'
-        @courses = Course.published.
-          user_behave_as_tutor(current_user).includes([:tags, :audiences, :environment])
-      elsif params[:role] == 'teacher'
-        @courses = Course.published.
-          user_behave_as_teacher(current_user).includes([:tags, :audiences, :environment])
-      elsif params[:role] == 'administrator'
-        @courses = Course.user_behave_as_administrator(current_user).
-          includes([:tags, :audiences, :environment])
-      end
-    else
-      @courses = Course.published.includes([:tags, :audiences, :environment])
-    end
-
-    if params.has_key?(:search) && params[:search] != ''
-      search = params[:search].to_s.split
-      @courses = @courses.name_like_all(search)
-    end
-
-    if params.has_key?(:audiences_ids)
-      @courses = @courses.with_audiences(params[:audiences_ids])
-    end
-
-    @courses = @courses.page(params[:page]).
-      per(Redu::Application.config.items_per_page).order('updated_at DESC')
-
-    respond_to do |format|
-      format.html
-      format.js do
-        render_endless('courses/item_detailed', @courses, '#courses_list',
-                       :template => 'shared/endless_kaminari')
-      end
-    end
-  end
-
   # Visão do Course para usuários não-membros.
   def preview
     #FIXME please. Used for redirect to a valid url

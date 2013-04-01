@@ -254,7 +254,14 @@ class EnvironmentsController < BaseController
   end
 
   def index
-    @user = User.find(params[:user_id])
+    if params.has_key?(:user_id)
+      @user = User.find(params[:user_id])
+      view_path = 'users/environments/index'
+    else
+      @user = current_user
+      view_path = 'environments/index'
+    end
+
     authorize! :manage, @user
 
     @total_environments = @user.environments.count
@@ -264,9 +271,10 @@ class EnvironmentsController < BaseController
 
     respond_to do |format|
       format.html do
-        render 'users/environments/index', :layout => 'new_application'
+        render view_path, :layout => 'new_application'
       end
       format.js do
+        #TODO endless para página de 'Ambientes'
         render_endless('users/environments/environment', @environments,
                        '#my-environments',
                        { :template => 'shared/new_endless_kaminari',
