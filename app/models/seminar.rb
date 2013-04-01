@@ -46,7 +46,7 @@ class Seminar < ActiveRecord::Base
 
   # Converte o video para FLV (Zencoder)
   def transcode
-    return if Rails.env.development?
+    return if Rails.env.development? || Rails.env.test?
     seminar_info = {
       :id => self.id,
       :class => self.class.to_s.tableize,
