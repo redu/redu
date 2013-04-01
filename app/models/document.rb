@@ -24,10 +24,6 @@ class Document < ActiveRecord::Base
     end
   end
 
-  def need_uploading?
-    !(self.conversion_processing? or self.conversion_complete?)
-  end
-
   def upload_to_scribd
     super if persisted?
   end

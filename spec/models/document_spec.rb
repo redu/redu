@@ -33,10 +33,19 @@ describe Document do
     end
     after { @file.close }
 
-    it "should upload to scribd" do
-      values = {:ipaper_id => 'doc_id', :ipaper_access_key => 'access_key'}
-      @document.should_receive(:update_attributes).with(values)
-      @document.save
+    context "#upload_to_scribd" do
+      it "should upload to scribd" do
+        values = {:ipaper_id => 'doc_id', :ipaper_access_key => 'access_key'}
+        @document.should_receive(:update_attributes).with(values)
+        @document.save
+      end
+    end
+
+    context "#scribd_url" do
+      it "returns the document's url on scribd" do
+        @document.scribd_url.should == "http://www.scribd.com/embeds/123456/" \
+          "content?start_page=1&view_mode=list&access_key=abcdef"
+      end
     end
 
     it "returns the document's url on scribd" do
