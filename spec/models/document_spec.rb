@@ -1,15 +1,23 @@
 require 'spec_helper'
 
 describe Document do
+  subject { Factory.build(:document) }
+
   it { should have_attached_file(:attachment) }
 
-  context "validates" do
-    it "the content_type" do
-      doc = Document.new
-      doc.stub(:attachment_content_type) { "application/fay" }
+  describe "validates" do
+    context "content_type" do
+      it "should be invalid for not acceptable types" do
+        subject.attachment_content_type = "application/fay"
 
-      doc.should_not be_valid
-      doc.errors[:attachment_content_type].should_not be_empty
+        subject.should_not be_valid
+        subject.errors[:attachment_content_type].should_not be_empty
+      end
+
+      it "should be valid for document types" do
+        subject.attachment_content_type = "application/pdf"
+        subject.should be_valid
+      end
     end
   end
 
@@ -36,5 +44,4 @@ describe Document do
         "content?start_page=1&view_mode=list&access_key=abcdef"
     end
   end
-
 end
