@@ -54,6 +54,8 @@ class LectureService
       CanvasService.new(@ability, @attrs)
     when 'Media'
       SeminarService.new(@ability, @attrs)
+    when 'Page'
+      PageService.new(@ability, @attrs)
     else 'Document' # default
       DocumentService.new(@ability, @attrs)
     end

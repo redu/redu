@@ -5,6 +5,11 @@ module PageRepresenter
 
   property :content
   property :raw
+  property :mimetype
+
+  def mimetype
+    'text/html'
+  end
 
   def content
     self.lectureable.body

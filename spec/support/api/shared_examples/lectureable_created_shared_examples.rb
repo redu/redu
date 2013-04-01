@@ -9,11 +9,6 @@ shared_examples_for "a lecture created" do
     parse(response.body)['type'].should == lecture_params[:lecture][:type]
   end
 
-  it "should return the link to the raw file" do
-    lecture = parse(response.body)
-    href_to("raw", lecture).should_not be_blank
-  end
-
   it "should have the correct mimetype" do
     parse(response.body)["mimetype"].should == mimetype
   end
