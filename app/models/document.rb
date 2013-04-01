@@ -1,8 +1,10 @@
 class Document < ActiveRecord::Base
+  CONTENT_TYPES = Redu::Application.config.mimetypes['documents'] +
+    Redu::Application.config.mimetypes['image']
+
   has_attached_file :attachment, Redu::Application.config.paperclip_documents
   has_ipaper_and_uses 'Paperclip'
-  validates_attachment_content_type :attachment,
-    :content_type => Redu::Application.config.mimetypes['documents']
+  validates_attachment_content_type :attachment, :content_type => CONTENT_TYPES
   validates_attachment_presence :attachment
 
   has_one :lecture, :as => :lectureable
@@ -29,6 +31,8 @@ class Document < ActiveRecord::Base
   end
 
   def scribd_url
-    self.display_ipaper.slice(/src=\"\S+\"/).slice(/http\S+/).split(/\"/)[0]
+    if self.ipaper_document
+      self.display_ipaper.slice(/src=\"\S+\"/).slice(/http\S+/).split(/\"/)[0]
+    end
   end
 end

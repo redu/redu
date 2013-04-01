@@ -10,7 +10,7 @@ describe "Documents API" do
   let(:params) { { :oauth_token => token, :format => 'json' } }
 
   context "when GET /lectures/:id" do
-    context "with attachment with document format" do
+    context "with a document as attachment" do
       subject do
         mock_scribd_api
         Factory(:lecture, :lectureable => Factory(:document),
@@ -31,6 +31,31 @@ describe "Documents API" do
         it "should have the link #{link}" do
           href_to(link, parse(response.body)).should_not be_blank
         end
+      end
+    end
+
+    context "with an image as attachment" do
+      subject do
+        Factory(:lecture, :lectureable => Factory(:document_with_image),
+                :subject => subj, :owner => subj.owner)
+      end
+
+      before do
+        get "/api/lectures/#{subject.id}", params
+      end
+
+      it_should_behave_like "a lecture"
+
+      it "should have property mimetype" do
+        parse(response.body).should have_key "mimetype"
+      end
+
+      it "should have the link raw" do
+        href_to("raw", parse(response.body)).should_not be_blank
+      end
+
+      it "should not have the link scribd" do
+        href_to("scribd", parse(response.body)).should be_blank
       end
     end
   end

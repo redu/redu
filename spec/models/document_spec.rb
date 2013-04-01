@@ -18,6 +18,11 @@ describe Document do
         subject.attachment_content_type = "application/pdf"
         subject.should be_valid
       end
+
+      it "should be valid for image types" do
+        subject.attachment_content_type = "image/jpeg"
+        subject.should be_valid
+      end
     end
   end
 
@@ -47,10 +52,22 @@ describe Document do
           "content?start_page=1&view_mode=list&access_key=abcdef"
       end
     end
+  end
 
-    it "returns the document's url on scribd" do
-      @document.scribd_url.should == "http://www.scribd.com/embeds/123456/" \
-        "content?start_page=1&view_mode=list&access_key=abcdef"
+  context "when is a image" do
+    subject { Factory(:document_with_image) }
+
+    context "#upload_to_scribd" do
+      it "should not upload to scribd" do
+        subject.should_not_receive(:update_attributes)
+        subject.save
+      end
+    end
+
+    context "#scribd_url" do
+      it "should return nil" do
+        subject.scribd_url.should be_nil
+      end
     end
   end
 end
