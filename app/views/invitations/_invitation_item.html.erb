@@ -1,4 +1,4 @@
-<div class="invitation list-mix-inner clearfix">
+<div id=<%="invitation-#{invitation_item.id}" %> class="invitation list-mix-inner clearfix">
   <div class="invitation-inner">
     <span class="invitation-link-remove icon-close-gray_16_18 text-replacement link-fake">Remover</span>
     <%= link_to 'Reenviar convite', resend_email_invitation_path(invitation_item),

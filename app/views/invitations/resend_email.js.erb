@@ -1,3 +1,7 @@
-var $message = $("<span/>", { "class" : "reinvited" }).text("Convite reenviado");
+var $message = $("<span/>", { "class" : "invitation-link-resend link-secondary" }).text("Convite reenviado");
 
-$("#<%= @invitation_id %> .reinvite").replaceWith($message);
+$("#<%= @invitation_id %> .invitation-link-resend").replaceWith($message);
+var $invited = $('#<%= @invitation_id %> .invitation-title').html();
+$('.main-wrapper').prepend('<div class="alert system-message message-success"><span data-dismiss="alert" class="message-close">×</span><p>O convite para ' + $invited + ' foi reenviado com sucesso!</p></div>');
+
+$('.alert').delay(3000).fadeOut(1000, 'linear');

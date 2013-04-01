@@ -1,4 +1,4 @@
-<div class="invitation list-mix-inner clearfix">
+<div id="request-<%= friendship_item.id %>" class="invitation list-mix-inner clearfix">
   <%= link_to friendship_item.friend, :title => friendship_item.friend.display_name,
     :class => 'invitation-thumbnail-link' do %>
     <%= image_tag friendship_item.friend.avatar(:thumb_90), :class => 'invitation-thumbnail', :size => "48x48" %>

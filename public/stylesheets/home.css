@@ -682,6 +682,10 @@ ul.requisitions .actions input:last-child {
   margin-bottom: 30px;
 }
 
+span.invitation-link-resend {
+  color: #b3b3b3;
+}
+
 .invite-friend-form label {
   display: block;
   margin-bottom: 5px;
