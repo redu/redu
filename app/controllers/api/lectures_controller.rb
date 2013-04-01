@@ -45,5 +45,14 @@ module Api
         end
       end
     end
+
+    def destroy
+      lecture = Lecture.find(params[:id])
+      authorize! :manage, lecture
+
+      lecture.destroy
+
+      respond_with :api, lecture
+    end
   end
 end
