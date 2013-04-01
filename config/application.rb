@@ -221,7 +221,6 @@ module Redu
                                         :experience_observer,
                                         :log_observer,
                                         :user_course_association_observer,
-                                        :result_observer,
                                         :user_walledgarden_apps_observer,
                                         :user_environment_association_cache_observer,
                                         :friendship_cache_observer,
@@ -238,6 +237,7 @@ module Redu
                                         :vis_status_observer,
                                         :vis_user_observer,
                                         :vis_lecture_observer,
+                                        :vis_result_observer,
                                         :seminar_observer,
       ]
     end
