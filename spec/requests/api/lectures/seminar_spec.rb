@@ -59,15 +59,21 @@ describe "Media API" do
   end
 
   context "POST /api/subjects/:id/lectures (uploaded video)" do
-    it_should_behave_like "a lecture created" do
-      let(:mimetype) { 'video/mpeg' }
-      let(:url) { "/api/subjects/#{sub.id}/lectures"  }
-      let(:lecture_params) do
-        { :lecture => \
-          { :name => 'Lorem', :type => 'Media',
-            :media => fixture_file_upload("/api/video_example.avi", mimetype) }
-        }.merge(base_params)
-      end
+    let(:mimetype) { 'video/mpeg' }
+    let(:url) { "/api/subjects/#{sub.id}/lectures"  }
+    let(:lecture_params) do
+      { :lecture => \
+        { :name => 'Lorem', :type => 'Media',
+          :media => fixture_file_upload("/api/video_example.avi", mimetype) }
+      }.merge(base_params)
+    end
+
+    it_should_behave_like "a lecture created"
+
+    it "should have raw link" do
+      post url, lecture_params
+      lecture = parse(response.body)
+      href_to("raw", lecture).should_not be_blank
     end
 
     context "with validation error" do
@@ -94,10 +100,10 @@ describe "Media API" do
       { :lecture => { :name => 'Lorem', :type => 'Media', :media => file } }.
         merge(base_params)
     end
+    let(:url) { "/api/subjects/#{sub.id}/lectures"  }
 
     it_should_behave_like "a lecture created" do
       let(:mimetype) { 'video/x-youtube' }
-      let(:url) { "/api/subjects/#{sub.id}/lectures"  }
     end
 
     it "should return the link to the raw video" do

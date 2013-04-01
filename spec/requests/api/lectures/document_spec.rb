@@ -61,15 +61,21 @@ describe "Documents API" do
   end
 
   context "when POST /api/subjects/:id/lectures" do
-    it_should_behave_like "a lecture created" do
-      let(:mimetype) { "application/vnd.ms-powerpoint" }
-      let(:url) { "/api/subjects/#{subj.id}/lectures"  }
-      let(:lecture_params) do
-        { :lecture => \
-          { :name => 'Lorem', :type => 'Document',
-            :media => fixture_file_upload("/api/document_example.pptx", mimetype) }
-        }.merge(params)
-      end
+    let(:url) { "/api/subjects/#{subj.id}/lectures"  }
+    let(:mimetype) { "application/vnd.ms-powerpoint" }
+    let(:lecture_params) do
+      { :lecture => \
+        { :name => 'Lorem', :type => 'Document',
+          :media => fixture_file_upload("/api/document_example.pptx", mimetype) }
+      }.merge(params)
+    end
+
+    it_should_behave_like "a lecture created"
+
+    it "should have raw link" do
+      post url, lecture_params
+      lecture = parse(response.body)
+      href_to("raw", lecture).should_not be_blank
     end
 
     context "with validation error" do
