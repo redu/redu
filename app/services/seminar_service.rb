@@ -6,6 +6,7 @@ class SeminarService < LectureableService
         s.external_resource_url = media
       else
         s.original = media
+        s.external_resource_type = 'upload'
       end
       block.call(s) if block
     end
