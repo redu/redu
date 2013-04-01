@@ -12,30 +12,15 @@ module Api
 
     def create
       subject = Subject.find(params[:subject_id])
+      authorize! :manage, subject
 
-      builder = case params[:lecture][:type]
-      when 'Canvas'
-        CanvasService.new(:access_token => current_access_token)
-      when 'Document'
-        DocumentService.new
-      when 'Media'
-        SeminarService.new
+      options = { :access_token => current_access_token }.merge(params[:lecture])
+      service = LectureService.new(current_ability, options)
+      lecture = service.create do |lecture|
+        lecture.owner = current_user
+        lecture.subject = subject
       end
 
-      lecture = Lecture.new do |l|
-        l.name = params[:lecture][:name]
-        l.position = params[:lecture][:position]
-        l.owner = current_user
-        l.subject = subject
-        l.lectureable = builder ? builder.create(params[:lecture]) : nil
-      end
-
-      authorize! :manage, lecture
-      lecture.save
-
-      if enrollment = current_user.get_association_with(lecture)
-        lecture.create_asset_report(:enrollments => [enrollment])
-      end
 
       opts = if lecture.valid?
         klass = representer_for_resource(lecture.lectureable) || LectureRepresenter
