@@ -2,7 +2,6 @@ module ActsAsActivity
   extend ActiveSupport::Concern
   included do
     validates_presence_of :text
-    validates_length_of :text, :maximum => 800
   end
 
   module InstanceMethods
