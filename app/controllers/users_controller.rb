@@ -247,6 +247,7 @@ class UsersController < BaseController
   def recover_username_password
     @recover_username = RecoveryEmail.new
     @recover_password = RecoveryEmail.new
+
     render :layout => 'cold'
   end
 
@@ -264,6 +265,7 @@ class UsersController < BaseController
 
   def recover_password
     @recover_password = RecoveryEmail.new(params[:recovery_email])
+
     if @recover_password.valid?
       @user = User.find_by_email(@recover_password.email)
 

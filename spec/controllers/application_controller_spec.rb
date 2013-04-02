@@ -75,4 +75,42 @@ describe ApplicationController do
       end
     end
   end
+
+  describe "Detect mobile" do
+    # Necessário por causa da manipulação do view_paths
+    render_views
+
+    controller do
+      def index
+        render :text => "index called"
+      end
+    end
+
+    let(:view_paths) { @controller.view_paths }
+    let(:mobile_views_path) do
+      ActionView::FileSystemResolver.new("app/views/mobile")
+    end
+
+    context "when accessed from a mobile device" do
+      before do
+        mock_user_agent(:mobile => true)
+      end
+
+      it "prepends mobile views path" do
+        get :index, :locale => 'pt-BR'
+        view_paths.should include(mobile_views_path)
+      end
+    end
+
+    context "when accessed from a non mobile device" do
+      before do
+        mock_user_agent(:mobile => false)
+      end
+
+      it "does not prepend mobile views path" do
+        get :index, :locale => 'pt-BR'
+        view_paths.should_not include(mobile_views_path)
+      end
+    end
+  end
 end
