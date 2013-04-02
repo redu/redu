@@ -11,6 +11,8 @@ s3_upload_files:
   - public/stylesheets/**
 
 javascripts:
+  landing:
+    - public/javascripts/landing.js
   mobile:
     - public/javascripts/rails.js
     - public/javascripts/vendor/modernizr.js
@@ -54,7 +56,6 @@ javascripts:
     - public/javascripts/browserdetection.js
     - public/javascripts/jquery.cookie.js
     - public/javascripts/outdated-browser.js
-    - public/javascripts/landing.js
   common:
     - public/javascripts/rails.js
     - public/javascripts/application.js
