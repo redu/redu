@@ -270,10 +270,9 @@ describe SessionsController do
           mock_user_agent(:mobile => false)
         end
 
-        it "should raise MissingTemplate (404 in production)" do
-          expect {
-            get :new, :locale => 'pt-BR'
-          }.to raise_error(ActionView::MissingTemplate)
+        it "should redirect to application_path" do
+          get :new, :locale => 'pt-BR'
+          response.should redirect_to(application_path)
         end
       end
     end
