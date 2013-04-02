@@ -41,7 +41,7 @@ javascripts:
     - public/javascripts/underscore.js
     - public/javascripts/underscore-sharing-template.redu.jquery.js
     - public/javascripts/embedly.redu.jquery.js
-  landing:
+  basic:
     - public/javascripts/rails.js
     - public/javascripts/vendor/modernizr.js
     - public/javascripts/lazyload.js
@@ -145,10 +145,11 @@ stylesheets:
     - public/stylesheets/wall.css
     - public/stylesheets/fb_style.css
     - public/stylesheets/outdated-browser-new.css
-  landing:
+  basic:
     - public/stylesheets/landing-new.css
     - public/stylesheets/outdated-browser-new.css
     - public/stylesheets/icons.redu.css
+    - public/stylesheets/authoring-page.css
   common:
     - public/stylesheets/reset.css
     - public/stylesheets/960.css

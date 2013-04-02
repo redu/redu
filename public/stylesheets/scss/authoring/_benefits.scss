@@ -1,0 +1,37 @@
+.authoring-content .landing-advantages .landing-navigation-title { margin: 0; }
+
+.benefits {
+  padding: $authoring-content-vertical-padding $authoring-content-horizontal-padding;
+
+  .type-user {
+    max-width: -webkit-calc(100% - 80px);
+    max-width: -moz-calc(100% - 80px);
+    max-width: calc(100% - 80px);
+    float: left;
+
+    .button-user {
+      float: left;
+      margin-top: 20px;
+    }
+
+    &.student {
+      margin: 0;
+      color: $green4;
+    }
+
+    .benefit-call h4 {
+      font-weight: 100;
+      margin-top: 65px;
+    }
+
+    &.teacher {
+      margin: 0;
+      color: $orange4;
+      .benefit-call h4 {
+        margin-top: 40px;
+
+        & + h4 { margin-top: 20px; }
+      }
+    }
+  }
+}

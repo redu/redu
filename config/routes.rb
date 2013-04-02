@@ -179,8 +179,6 @@ Redu::Application.routes.draw do
   match 'users/activate/:id' => 'users#activate', :as => :activate
 
   # Indexes
-  match 'privacy' => "base#privacy", :as => :privacy
-  match 'tos' => "base#tos", :as => :tos
   match 'contact' => "base#contact", :as => :contact
   match '/teach' => 'base#teach_index', :as => :teach_index
   match '/courses' => 'courses#index', :as => :courses_index, :via => :get
@@ -268,6 +266,8 @@ Redu::Application.routes.draw do
     end
     resources :plans, :only => [:create]
   end
+
+  resources :pages, :only => :show
 
   root :to => 'base#site_index', :as => :home
   root :to => "base#site_index", :as => :application

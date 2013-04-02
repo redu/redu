@@ -54,4 +54,7 @@ $(function() {
       $('#user_session_login').focus();
     }, 100);
   });
+
+  // Ativa o Scrollspy do Twitter.
+  $("body").scrollspy({ target: ".filters", offset: 140 });
 });
