@@ -41,7 +41,7 @@ Wed Dec 12 08:48:20 [initandlisten] MongoDB starting : pid=4144 port=27017 dbpat
 Wed Dec 12 08:48:21 [initandlisten] waiting for connections on port 27017
 ```
 
-Criação dos bancos e esquema:
+Criação dos bancos e esquema (veja este [issue](https://github.com/redu/redu/issues/1141)):
 
 ```sh
 $ redu > bundle exec rake db:create
