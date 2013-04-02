@@ -38,6 +38,7 @@ Redu::Application.routes.draw do
 
   # sessions routes
   match '/signup' => 'users#new', :as => :signup
+  get '/login' => 'sessions#new', :as => :login
   match '/logout' => 'sessions#destroy', :as => :logout
 
   # Authentications
@@ -54,7 +55,7 @@ Redu::Application.routes.draw do
   match '/resend_activation' => 'users#resend_activation',
     :as => :resend_activation
   match '/account/edit' => 'users#edit_account', :as => :edit_account_from_email
-  resources :sessions, :only => [:create, :destroy]
+  resources :sessions, :only => [:new, :create, :destroy]
 
   # site routes
   match '/about' => 'base#about', :as => :about
