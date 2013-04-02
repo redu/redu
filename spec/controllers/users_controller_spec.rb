@@ -168,32 +168,6 @@ describe UsersController do
           end
         end
       end
-
-      context "when application validation fail" do
-        before do
-          @existent_user = User.create(@post_params[:user])
-
-          # Forcing skip validation
-          User.any_instance.stub(:valid?) { true }
-          Rails.application.config.consider_all_requests_local = false
-        end
-
-
-        it "does NOT create a new user" do
-          expect {
-            post :create, @post_params
-          }.should_not change(User, :count)
-        end
-
-        it "redirects to application_path" do
-          post :create, @post_params
-          response.should redirect_to application_path
-        end
-
-        after do
-          Rails.application.config.consider_all_requests_local = true
-        end
-      end
     end
   end
 

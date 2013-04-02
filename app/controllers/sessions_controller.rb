@@ -1,7 +1,7 @@
 class SessionsController < BaseController
   respond_to :html, :js
 
-  layout 'clean'
+  layout 'cold'
   before_filter :less_than_30_days_of_registration_required, :only => :create
 
   def create
@@ -72,6 +72,20 @@ class SessionsController < BaseController
     session[:return_to] = nil
     current_user_session.destroy if current_user_session
     redirect_to home_path
+  end
+
+  # Possui apenas versão mobile
+  def new
+    if current_user
+      redirect_to home_user_path(current_user)
+    else
+      user_agent = UserAgent.parse(request.user_agent)
+      if user_agent.mobile?
+        @user_session = UserSession.new
+      else
+        redirect_to application_path
+      end
+    end
   end
 
   protected

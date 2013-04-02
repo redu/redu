@@ -33,4 +33,34 @@ describe "Page API" do
       parse(response.body).fetch("content").should == subject.lectureable.body
     end
   end
+
+  context "when POST /api/subjects/:id/lectures (Page)" do
+    it_should_behave_like "a lecture created" do
+      let(:mimetype) { 'text/html' }
+      let(:url) { "/api/subjects/#{subj.id}/lectures"  }
+      let(:lecture_params) do
+        { :lecture => \
+          { :name => 'Lorem', :type => 'Page', :content => "<html></html>" }
+        }.merge(base_params)
+      end
+    end
+
+    context "with validation errors" do
+      let(:lecture_params) do
+        { :lecture => { :name => 'Lorem', :type => 'Page', :content => nil } }.
+          merge(base_params)
+      end
+      before do
+        post "/api/subjects/#{subj.id}/lectures", lecture_params
+      end
+
+      it "should return 422 HTTP code" do
+        response.code.should == "422"
+      end
+
+      it "should return the validation error" do
+        response.body.should =~ /lectureable\.body/
+      end
+    end
+  end
 end

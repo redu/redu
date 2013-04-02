@@ -2,6 +2,8 @@ module EnvironmentRepresenter
   include Roar::Representer::JSON
   include Roar::Representer::Feature::Hypermedia
 
+  include Api::ThumbnailCollection
+
   property :name
   property :description
   property :created_at
@@ -9,6 +11,11 @@ module EnvironmentRepresenter
   property :path
   property :initials
   property :id
+  property :courses_count
+
+  def courses_count
+    self.courses.count
+  end
 
   link :self do
     api_environment_url(self)

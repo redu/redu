@@ -11,6 +11,12 @@ s3_upload_files:
   - public/stylesheets/**
 
 javascripts:
+  mobile:
+    - public/javascripts/rails.js
+    - public/javascripts/vendor/modernizr.js
+    - public/javascripts/jquery.autosize.min.js
+    - public/javascripts/bootstrap-redu.js
+    - public/javascripts/mobile-login.js
   new_application:
     - public/javascripts/rails.js
     - public/javascripts/vendor/modernizr.js
@@ -130,6 +136,8 @@ javascripts:
     - public/javascripts/olark.js
 
 stylesheets:
+  mobile:
+    - public/stylesheets/mobile.css
   new_application:
     - public/stylesheets/icons.redu.css
     - public/stylesheets/utils.css

@@ -17,8 +17,8 @@ describe "Activity" do
     response.code.should == '200'
   end
 
-  it "should have id, text, created_at, links and type" do
-    %w(id text created_at links updated_at type).each do |attr|
+  it "should have id, text, created_at, links, type and answers_count" do
+    %w(id text created_at links updated_at type answers_count).each do |attr|
       @entity.should have_key attr
     end
   end

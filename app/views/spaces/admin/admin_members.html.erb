@@ -1,7 +1,7 @@
 <%= render :partial => 'shared/management_background' %>
-<div class="management-sidebar">
-  <%= render :partial => 'spaces/sidebar', :locals => { :space => @space } %>
-</div>
+<%= render :partial => 'spaces/admin/management_sidebar',
+  :locals => { :space => @space } %>
+
 <div class="main space grid_12 omega big-col">
   <%= render :partial => "spaces/breadcrumbs", :locals => { :space => @space } %>
 

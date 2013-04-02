@@ -4,7 +4,7 @@ require 'zip/zipfilesystem'
 # It's called Myfile, because File is a reserved word.
 # Files are in (belong to) a folder and are uploaded by (belong to) a User.
 class Myfile < ActiveRecord::Base
-  CONTENT_TYPES =  ['image/jpeg', 'image/png', 'image/gif' ] + \
+  CONTENT_TYPES =  Redu::Application.config.mimetypes['image'] + \
     Redu::Application.config.mimetypes['documents'] + \
     Redu::Application.config.mimetypes['audio']
 

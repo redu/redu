@@ -1,0 +1,20 @@
+<!doctype html>
+<!--[if gt IE 8]><html class="gt-ie8" lang="pt-br"><![endif]-->
+<!--[if gt IE 8]><!--><html lang="pt-br"><!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <title><%= raw(page_title) %></title>
+    <%= csrf_meta_tag %>
+    <%= stylesheet_link_tag "bootstrap-redu.min.css" %>
+    <%= include_stylesheets :mobile %>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <%= include_javascripts :mobile %>
+  </head>
+  <body>
+    <%= render :partial => "base/header" %>
+    <div class="mobile-content">
+      <%= yield %>
+    </div>
+  </body>
+</html>

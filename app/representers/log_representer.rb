@@ -14,7 +14,7 @@ module LogRepresenter
   link :logeable do
     if logeable.is_a? CourseEnrollment
       api_enrollment_url(logeable.becomes(CourseEnrollment))
-    else
+    elsif %w(Lecture Course Subject User Friendship Space).include? self.logeable_type
       polymorphic_url([:api, self.logeable])
     end
   end

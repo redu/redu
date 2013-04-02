@@ -24,8 +24,8 @@ describe "Help" do
       @entity = parse(response.body)
     end
 
-    it "should have type, text, created_at" do
-      %w(type text created_at).each do |attr|
+    it "should have type, text, created_at answers_count" do
+      %w(type text created_at answers_count).each do |attr|
         @entity.should have_key attr
       end
     end

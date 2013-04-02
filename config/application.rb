@@ -86,15 +86,7 @@ module Redu
 
     # ActionMailer
     config.action_mailer.raise_delivery_errors = true
-    config.action_mailer.delivery_method = :smtp
-    config.action_mailer.smtp_settings = {
-      :address => "email-smtp.us-east-1.amazonaws.com",
-      :port => 465,
-      :domain => 'redu.com.br',
-      :authentication => :login,
-      :user_name => 'AKIAINQ5Y2UPLZJQM3EA',
-      :password => 'AqEmj6PTCT8HJCpUB9qmIXQb+G2SaKEFjKcWrR9MLUaF'
-    }
+    config.action_mailer.delivery_method = :test
 
     config.paperclip = {
       :storage => :s3,
@@ -106,14 +98,18 @@ module Redu
 
     config.paperclip_environment = config.paperclip.merge({
       :styles => { :thumb_32 => "32x32#",
+                   :thumb_48 => "48x48#",
                    :thumb_90 => "90x90#",
+                   :thumb_96 => "96x96#",
                    :thumb_140 => "140x140#" }
     })
 
     config.paperclip_user = config.paperclip.merge({
       :styles => { :thumb_24 => "24x24#",
                    :thumb_32 => "32x32#",
+                   :thumb_48 => "48x48#",
                    :thumb_90 => "90x90#",
+                   :thumb_96 => "96x96#",
                    :thumb_110 => "110x110#",
                    :thumb_160 => "160x160#" }
     })
