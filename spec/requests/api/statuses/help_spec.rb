@@ -42,5 +42,10 @@ describe "Help" do
       let(:user) { embeder.user }
       let(:entity) { @entity }
     end
+
+    it_should_behave_like 'having breadcrumbs', "Lecture" do
+      let(:get_params) { params }
+      let(:status) { help }
+    end
   end
 end

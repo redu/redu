@@ -3,6 +3,8 @@ module ActivityRepresenter
   include Roar::Representer::Feature::Hypermedia
   include StatusRepresenter
 
+  include Api::BreadcrumbLinks
+
   property :answers_count
 
   def answers_count

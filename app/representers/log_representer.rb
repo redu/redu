@@ -3,6 +3,8 @@ module LogRepresenter
   include Roar::Representer::Feature::Hypermedia
   include StatusRepresenter
 
+  include Api::BreadcrumbLinks
+
   property :action_text, :from => :text
   property :computed_logeable_type, :from => :logeable_type
 
