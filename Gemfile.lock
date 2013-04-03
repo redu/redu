@@ -205,7 +205,7 @@ GEM
       activerecord (~> 3.0.20)
       activesupport (~> 3.0.20)
       rake
-    diff-lcs (1.1.3)
+    diff-lcs (1.2.2)
     dynamic_form (1.1.4)
     em-http-request (1.0.3)
       addressable (>= 2.2.3)
@@ -357,19 +357,21 @@ GEM
       test_xml
     rscribd (1.3.0)
       mime-types
-    rspec (2.9.0)
-      rspec-core (~> 2.9.0)
-      rspec-expectations (~> 2.9.0)
-      rspec-mocks (~> 2.9.0)
-    rspec-core (2.9.0)
-    rspec-expectations (2.9.1)
-      diff-lcs (~> 1.1.3)
-    rspec-mocks (2.9.0)
-    rspec-rails (2.9.0)
+    rspec (2.13.0)
+      rspec-core (~> 2.13.0)
+      rspec-expectations (~> 2.13.0)
+      rspec-mocks (~> 2.13.0)
+    rspec-core (2.13.1)
+    rspec-expectations (2.13.0)
+      diff-lcs (>= 1.1.3, < 2.0)
+    rspec-mocks (2.13.0)
+    rspec-rails (2.13.0)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       railties (>= 3.0)
-      rspec (~> 2.9.0)
+      rspec-core (~> 2.13.0)
+      rspec-expectations (~> 2.13.0)
+      rspec-mocks (~> 2.13.0)
     ruby-debug (0.10.4)
       columnize (>= 0.1)
       ruby-debug-base (~> 0.10.4.0)
@@ -480,7 +482,7 @@ DEPENDENCIES
   remotipart (~> 1.0)
   roar
   roar-rails
-  rspec-rails (~> 2.8)
+  rspec-rails (~> 2.0)
   ruby-debug
   ruby-prof
   scribd_fu!
