@@ -1,7 +1,6 @@
 module StatusVisRepresenter
   include Roar::Representer::JSON
   include Roar::Representer::Feature::Hypermedia
-  @@type = nil
 
   property :type
   property :user_id
@@ -16,14 +15,6 @@ module StatusVisRepresenter
   property :in_response_to_type
   property :created_at
   property :updated_at
-
-  def type
-    @@type
-  end
-
-  def self.type=(type)
-    @@type = type
-  end
 
   def status_id
     self.id

@@ -1,7 +1,6 @@
 module ResultVisRepresenter
   include Roar::Representer::JSON
   include Roar::Representer::Feature::Hypermedia
-  @@type = nil
 
   property :type
   property :user_id
@@ -12,14 +11,6 @@ module ResultVisRepresenter
   property :grade
   property :created_at
   property :updated_at
-
-  def type
-    @@type
-  end
-
-  def self.type=(type)
-    @@type = type
-  end
 
   def lecture_id
     self.exercise.lecture.id
