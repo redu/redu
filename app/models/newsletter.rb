@@ -2,13 +2,15 @@ class Newsletter
   # Classe abstrata que lida com o envio de newsletter utilizando o
   # NewsletterMailer.
   #
-  # Classes filhas devem implementar o método #deliver.
+  # A estratégia utilizada para iterar sobre a lista de e-mails deve ser
+  # implementada nas classes filhas sobrescrevendo o método #deliver.
   def initialize(options={})
     @template = options.delete(:template)
   end
 
-  # Deve ser implementado nas classes filhas. Aceita um bloco que deve ser invocado
-  # com o os parâmetros email e um hash de opções que será passado para o mailer.
+  # As classes filhas devem implementar o método #deliver que é responsável
+  # por iterar a lista de e-mails e invocar o bloco recebido por parâmetro
+  # sempre que um e-mail precisar ser enviado.
   #
   # Exemplo:
   #
