@@ -274,7 +274,6 @@ class EnvironmentsController < BaseController
         render view_path, :layout => 'new_application'
       end
       format.js do
-        #TODO endless para página de 'Ambientes'
         render_endless('users/environments/environment', @environments,
                        '#my-environments',
                        { :template => 'shared/new_endless_kaminari',

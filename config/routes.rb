@@ -188,7 +188,7 @@ Redu::Application.routes.draw do
   match 'tos' => "base#tos", :as => :tos
   match 'contact' => "base#contact", :as => :contact
   match '/teach' => 'base#teach_index', :as => :teach_index
-  match '/environments' => 'environments#index', :as => :environments_index
+  get '/environments' => 'environments#index', :as => :environments_index
 
   resources :plans, :only => [] do
     member do
