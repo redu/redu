@@ -6,6 +6,7 @@ class SearchService
 
   def initialize(opts={})
     @params = opts[:params].clone
+    @ability = opts[:ability]
     @user = opts[:current_user]
     @filters = params[:f] ? params[:f].clone : {}
     @results = Hash.new
@@ -79,7 +80,7 @@ class SearchService
 
   protected
 
-  attr_reader :params, :user, :filters, :results
+  attr_reader :params, :user, :ability, :filters, :results
 
   def search_results
     results.values
@@ -129,7 +130,7 @@ class SearchService
   # pagina de acordo com os parâmetros recebidos
   def filter_and_paginate_my_spaces(collection, user, options)
     # Filtra os espaços que o usuário tem acesso
-    my_spaces = collection.select{ |space| user.can? :show, space }
+    my_spaces = collection.select{ |space| ability.can? :show, space }
 
     Kaminari.paginate_array(my_spaces).page(options[:page]).
       per(options[:per_page])

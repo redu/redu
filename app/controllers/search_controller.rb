@@ -6,6 +6,7 @@ class SearchController < BaseController
   # Busca por Perfis + Ambientes (AVA's, Cursos e Disciplinas)
   def index
     search_service = SearchService.new(:params => params,
+                                       :ability => current_ability,
                                        :current_user => current_user)
 
     search_service.perform_results(:preview => true)
@@ -51,6 +52,7 @@ class SearchController < BaseController
   # Esta action recebe filtros para mostrar resultados desejados
   def environments
     search_service = SearchService.new(:params => params,
+                                       :ability => current_ability,
                                        :current_user => current_user)
     @query = params[:q]
     @individual_page = search_service.individual_page?

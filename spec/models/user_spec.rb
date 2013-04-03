@@ -931,14 +931,6 @@ describe User do
     end
   end
 
-  context "ability" do
-    let(:user) { Factory(:user) }
-
-    it "should return the Ability" do
-      user.ability.should be_a Ability
-    end
-  end
-
   private
   def create_friendship(user1, user2)
     user1.be_friends_with(user2)

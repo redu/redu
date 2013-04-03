@@ -7,11 +7,13 @@ describe SearchService do
   let(:user) { Factory(:user) }
 
   subject { SearchService.new(:params => params,
+                              :ability => Ability.new(user),
                               :current_user => user) }
 
   describe ".new" do
     it { should respond_to(:params) }
     it { should respond_to(:user) }
+    it { should respond_to :ability }
     it { should respond_to :filters }
     it { should respond_to :results }
   end

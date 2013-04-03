@@ -197,11 +197,6 @@ class User < ActiveRecord::Base
     Digest::SHA1.hexdigest("--#{salt}--#{password}--")
   end
 
-  # Define ability para qualquer usuário
-  def ability
-    @ability ||= Ability.new(self)
-  end
-
   ## Instance Methods
   def process_invitation!(invitee, invitation)
     friendship_invitation = self.be_friends_with(invitee)
