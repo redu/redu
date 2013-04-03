@@ -69,15 +69,15 @@ gem 'system_timer'
 gem 'json', '>= 1.7.7'
 gem 'simple_acts_as_list'
 gem 'ey_config'
+gem 'destroy_soon'
+gem 'redu_analytics'
+gem 'humanizer'
 
 # Gems específicos para a API
 gem 'oauth-plugin', '~> 0.4.0'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'roar-rails'
 gem 'roar'
-gem 'destroy_soon'
-gem 'redu_analytics'
-gem 'humanizer'
 
 # Gems específicos de algum ambiente
 group :development, :test do
