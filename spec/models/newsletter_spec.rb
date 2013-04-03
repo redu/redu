@@ -22,5 +22,16 @@ describe Newsletter do
 
       subject.send
     end
+
+    it "should accept :subject" do
+      mail = mock('Mail', :deliver => nil)
+      subject.stub(:deliver).and_yield("foo@bar.com", {})
+
+      NewsletterMailer.should_receive(:newsletter).
+        with("foo@bar.com", { :template =>  template,
+                              :subject => "Forever young!" }).and_return(mail)
+
+      subject.send(:subject => "Forever young!")
+    end
   end
 end

@@ -20,9 +20,10 @@ class Newsletter
   def deliver(&block); end
 
   # Delega o controle para o método #deliver e envia o e-mail.
-  def send
+  def send(mail_options={})
     deliver do |email, options|
-      mailer.newsletter(email, { :template => @template }.merge(options)).deliver
+      opts = { :template => @template }.merge(options.merge(mail_options))
+      mailer.newsletter(email, opts).deliver
     end
   end
 
