@@ -1,0 +1,21 @@
+<%#
+  A lista de resultados dos cursos.
+clearfix
+  Variáveis:
+    courses: os cursos encontrados.
+    query: o termo pesquisado.
+%>
+<% if courses.count > 0 %>
+  <div class="portal-search-category">
+    <span class="portal-search-category-title icon-course-gray_32_34-before">Cursos: <%= search_results_counter(courses) %></span>
+    <% if show_see_all_results_link?(courses.total_count) %>
+      <%= link_to "Veja todos os resultados",
+        search_environments_path(:q => query, :f => ["cursos"]),
+        :title => "Veja todos os resultados de cursos",
+        :class => "portal-search-category-link" %>
+    <% end %>
+  </div>
+  <ul class="list-2-columns list-columns-separator clearfix portal-search-list-results">
+    <%= render :partial => "course", :collection => courses %>
+  </ul>
+<% end %>

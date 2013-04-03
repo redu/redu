@@ -323,17 +323,30 @@ describe EnvironmentsController do
       @user_environments.each { |e| user.environments << e }
 
       login_as user
-      get :index, :user_id => user.to_param, :locale => 'pt-BR'
     end
 
-    it 'assigns @user' do
-      assigns[:user].should_not be_nil
-      assigns[:user].should == user
+    context "my environments" do
+      before do
+        get :index, :user_id => user.to_param, :locale => 'pt-BR'
+      end
+
+      it 'assigns @user' do
+        assigns[:user].should_not be_nil
+        assigns[:user].should == user
+      end
+
+      it 'assigns all user environments to @environments' do
+        assigns[:environments].should_not be_nil
+        assigns[:environments].to_set.should == @user_environments.to_set
+      end
     end
 
-    it 'assigns all user environments to @environments' do
-      assigns[:environments].should_not be_nil
-      assigns[:environments].to_set.should == @user_environments.to_set
+    context "environments" do
+      before do
+        get :index, :locale => 'pt-BR'
+      end
+
+      it { response.should render_template 'environments/index'}
     end
   end
 

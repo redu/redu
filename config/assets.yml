@@ -27,6 +27,8 @@ javascripts:
     - public/javascripts/form.redu.jquery.js
     - public/javascripts/jquery.autosize.min.js
     - public/javascripts/vendor/placeholder-polyfill.min.js
+    - public/javascripts/jquery.tokeninput.js
+    - public/javascripts/jquery.tokeninput-instant-search.js
     - public/javascripts/bootstrap-redu.js
     - public/javascripts/swfobject.js # Necessário ao browserdetection.js
     - public/javascripts/browserdetection.js
@@ -43,6 +45,7 @@ javascripts:
     - public/javascripts/underscore.js
     - public/javascripts/underscore-sharing-template.redu.jquery.js
     - public/javascripts/embedly.redu.jquery.js
+    - public/javascripts/search.js
   basic:
     - public/javascripts/rails.js
     - public/javascripts/vendor/modernizr.js
@@ -69,6 +72,7 @@ javascripts:
     - public/javascripts/jquery.remotipart.js
     - public/javascripts/lazyload.js
     - public/javascripts/jquery.fcbkcomplete.min.js
+    - public/javascripts/jquery.tokeninput-instant-search.js
     - public/javascripts/jquery.tokeninput.js
     - public/javascripts/jquery.filestyle.mini.js
     - public/javascripts/jquery.placeholder.js
@@ -90,7 +94,10 @@ javascripts:
     - public/javascripts/embedly.redu.jquery.js
     - public/javascripts/jquery.timeago.js
     - public/javascripts/timeago.js
-    - public/javascripts/bootstrap-redu-dropdown.js
+    - public/javascripts/bootstrap-redu-dropdown.js # Somente para a nav global.
+    - public/javascripts/bootstrap-nav-global.js # Somente para a nav global.
+    - public/javascripts/bootstrap-redu-search-form.js # Somente para a nav global.
+    - public/javascripts/search.js
   chat:
     - public/javascripts/jquery.pjax.js
     - public/javascripts/pusher.js
@@ -143,9 +150,11 @@ stylesheets:
     - public/stylesheets/icons.redu.css
     - public/stylesheets/utils.css
     - public/stylesheets/home.css
+    - public/stylesheets/search.css
     - public/stylesheets/wall.css
     - public/stylesheets/fb_style.css
     - public/stylesheets/outdated-browser-new.css
+    - public/stylesheets/token-input.css
   basic:
     - public/stylesheets/landing-new.css
     - public/stylesheets/outdated-browser-new.css
@@ -174,6 +183,7 @@ stylesheets:
     - public/stylesheets/canvas.css
     - public/stylesheets/bootstrap-redu-nav-global.css
     - public/stylesheets/nav-global-icons.css
+    - public/stylesheets/search.css
   ie:
     - public/stylesheets/ie.css
   ie8:

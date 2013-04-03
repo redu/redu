@@ -7,6 +7,8 @@ describe EventEducation do
   it { should validate_presence_of :role }
   it { should validate_presence_of :year }
 
+  it { should have_one :education }
+
   context "validations" do
     context "validates if role is one of the permitted" do
       %w(participant speaker organizer).each do |r|

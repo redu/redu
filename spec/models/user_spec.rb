@@ -61,6 +61,8 @@ describe User do
   it { should have_many(:results).dependent(:destroy) }
 
   it { User.new.should respond_to(:notify).with(1) }
+  it { User.new.should respond_to(:can?) }
+  it { User.new.should respond_to(:cannot?) }
 
   [:first_name, :last_name].each do |attr|
     it do
@@ -903,6 +905,19 @@ describe User do
 
     subject.reload
     subject.most_important_education.should == [edu2, edu3, edu1]
+  end
+
+  it "should not return nil elements in most important education array" do
+    subject.most_important_education.should == []
+  end
+
+  context "when application validation fail" do
+    it "should prevent duplicate logins" do
+      @duplicate = Factory.build(:user, :login => subject.login)
+      expect {
+        @duplicate.save(:validate => false)
+      }.should raise_error(ActiveRecord::RecordNotUnique)
+    end
   end
 
   context "Authlogic" do

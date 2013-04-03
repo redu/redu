@@ -208,6 +208,8 @@ class Ability
         end
       end
 
+      # Busca
+      can :search, :all
     end
 
     # Todos podem ver o preview

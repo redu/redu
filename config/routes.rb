@@ -15,6 +15,11 @@ Redu::Application.routes.draw do
   match '/analytics/course_by_date', :to => 'analytics_dashboard#course_by_date'
   match '/analytics/post_by_date', :to => 'analytics_dashboard#post_by_date'
 
+  match '/search' => 'search#index', :as => :search
+  # Rota para todos os ambientes em geral e quando houver mais de um filtro selecionado
+  match '/search/environments' => 'search#environments', :as => :search_environments
+  match '/search/profiles' => 'search#profiles', :as => :search_profiles
+
   post "presence/auth"
   post "presence/multiauth"
   post "presence/send_chat_message"
@@ -140,6 +145,7 @@ Redu::Application.routes.draw do
       get :show_mural
       get :curriculum
     end
+
     collection do
       get :auto_complete
     end
@@ -181,7 +187,7 @@ Redu::Application.routes.draw do
   # Indexes
   match 'contact' => "base#contact", :as => :contact
   match '/teach' => 'base#teach_index', :as => :teach_index
-  match '/courses' => 'courses#index', :as => :courses_index, :via => :get
+  get '/environments' => 'environments#index', :as => :environments_index
 
   resources :plans, :only => [] do
     member do

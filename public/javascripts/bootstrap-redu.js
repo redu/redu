@@ -1340,7 +1340,6 @@ $(function() {
     }
   })
 
-
   // No elemento de opção com texto e formulários de busca, quando o campo ou
   // área de texto estiverem selecionados, mudar a cor da borda e os ícones dos
   // botões de cinza para azul. O inverso acontece quando deselecionado.

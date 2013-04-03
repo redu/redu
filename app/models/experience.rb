@@ -16,7 +16,13 @@ class Experience < ActiveRecord::Base
   validate :end_date_absense, :if => Proc.new { |exp| exp.current == true }
 
   scope :actual_jobs, where(:end_date => nil)
+
+  def self.current_jobs(experiences)
+    experiences.select { |e| e.end_date == nil }
+  end
+
   private
+
   # Verifica se o start_date ocorre antes do end_date
   def start_before_end_date
     if self.end_date < self.start_date

@@ -38,6 +38,7 @@ gem 'eventmachine'
 gem 'exceptional'
 gem 'factory_girl_rails', '~> 1.7.0'
 gem 'fog', '~> 1.1.0' # Necessário ao backup
+gem 'has_friends', :git => 'git@github.com:jessicabarbalho/has_friends.git'
 gem 'invitable', :git => 'git@github.com:redu/invitable.git'
 gem 'jammit-s3'
 gem 'jquery-rails', '>= 1.0.12'
@@ -53,11 +54,11 @@ gem 'paperclip', '~> 2.7'
 gem 'rails', :git => 'git://github.com/rails/rails.git',
   :branch => '3-0-stable'
 gem 'rake', '0.8.7'
-gem 'rd_searchlogic', :require => 'searchlogic'
 gem 'remotipart', '~> 1.0'
 gem 'scribd_fu', :git => 'git://github.com/guiocavalcanti/scribd_fu.git',
   :branch => 'without-scape'
 gem 'simple-navigation', :git => 'git://github.com/andi/simple-navigation.git'
+gem 'sunspot_rails'
 gem 'translate_routes'
 gem 'useragent', '~> 0.4.8'
 gem 'vis_client', :git => 'git@github.com:redu/vis_client.git'
@@ -87,6 +88,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 2.0'
   gem 'ruby-debug'
   gem 'shoulda-matchers'
+  gem 'sunspot_solr'
 end
 
 group :test do

@@ -1,13 +1,13 @@
 require 'spec_helper'
 
 describe ApplicationController do
-  describe 'Check tour exploration' do
-    controller do
-      def show
-        render :text => "show called"
-      end
+  controller do
+    def show
+      render :text => "show called"
     end
+  end
 
+  describe 'Check tour exploration' do
     context 'when logged in' do
       let(:user) { Factory(:user) }
       before do

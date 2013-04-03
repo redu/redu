@@ -69,12 +69,8 @@ body {
   margin-top: 10px;
 }
 
-.content-body + .breadcrumb-mini {
-  margin-bottom: 20px;
-}
-
-.breadcrumb-mini {
-  margin-top: 15px;
+.content-area {
+  padding: 14px 0 21px 0;
 }
 
 .container {
