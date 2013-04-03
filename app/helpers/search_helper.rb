@@ -22,7 +22,7 @@ module SearchHelper
   # Define o ícone a ser usado dependendo do papel.
   def role_icon(role)
     case role
-    when (Role[:environment_admin] || Role[:course_admin] || Role[:admin]) then
+    when (Role[:environment_admin]) then
       ["manager", raw(t 'classy_enum.role.admin')]
     when Role[:teacher] then ["teacher", raw(t 'classy_enum.role.teacher')]
     when Role[:tutor] then ["tutor", raw(t 'classy_enum.role.tutor')]
