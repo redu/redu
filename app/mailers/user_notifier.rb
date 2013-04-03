@@ -1,15 +1,4 @@
-class UserNotifier < ActionMailer::Base
-
-  include ActionView::Helpers::TextHelper
-  include ActionView::Helpers::SanitizeHelper
-  extend  ActionView::Helpers::SanitizeHelper::ClassMethods # Required for rails 2.2
-
-  include BaseHelper
-
-  default :from => "\"Equipe Redu\" <#{Redu::Application.config.email}>",
-      :content_type => "text/plain",
-      :reply_to => "#{Redu::Application.config.email}"
-
+class UserNotifier < BaseMailer
   # Enviado ao aprovar a participação de um usuário num Course
   def approve_membership(user, course)
     @user = user
