@@ -24,11 +24,11 @@
             :class => "icon-message-lightblue_16_18-before" %>
         </li>
       <% end %>
-      <% unless user.settings.visited?(courses_index_path) %>
+      <% unless user.settings.visited?("search-courses") %>
         <li class="what-is-missing-item">
-          <%= link_to "Procure por um Curso.",
-            courses_index_path(:exploring_tour => true),
-            :class => "icon-course-lightblue_16_18-before" %>
+          <%= link_to "Procure por um Curso.", "#",
+            :class => "icon-course-lightblue_16_18-before",
+            "data-tour" => "search-courses" %>
         </li>
       <% end %>
       <% unless user.settings.visited?(teach_index_path) %>

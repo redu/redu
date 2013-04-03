@@ -13,9 +13,6 @@ module Redu
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
-    # Custom directories with classes and modules you want to be autoloadable.
-    # config.autoload_paths += %W(#{config.root}/extras)
-
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
     # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
@@ -174,6 +171,9 @@ module Redu
     # Usado pelo WYSIWYG CKEditor
     config.autoload_paths << "#{config.root}/app/models/ckeditor"
 
+    # Classes auxiliares para Search
+    config.autoload_paths << "#{config.root}/app/models/search"
+
     # Usado pelo simple-navigation (renderer customizado)
     config.autoload_paths << "#{config.root}/app/navigation_renderers"
     config.autoload_paths << "#{config.root}/app/navigations" # arquivos de navegação dinâmica
@@ -185,6 +185,7 @@ module Redu
     # Observers têm direito a um lar
     config.autoload_paths << "#{config.root}/app/observers"
     config.autoload_paths << "#{config.root}/app/observers/vis"
+    config.autoload_paths << "#{config.root}/app/observers/search"
 
     # Doorkeepers definem eventos que serão propagados no message bus
     config.autoload_paths << "#{config.root}/app/doorkeepers"
@@ -231,6 +232,9 @@ module Redu
                                         :lecture_cache_observer,
                                         :asset_report_cache_observer,
                                         :chat_message_observer,
+                                        :solr_profile_indexer_observer,
+                                        :solr_education_indexer_observer,
+                                        :solr_hierarchy_indexer_observer,
                                         :vis_enrollment_observer,
                                         :vis_status_observer,
                                         :vis_user_observer,
@@ -262,5 +266,11 @@ module Redu
     # Seta locale defaul para pt-br
     config.i18n.default_locale = :"pt-BR"
     I18n.locale = config.i18n.default_locale
+
+    # Quantidade de resultados da busca exibidos por páginas
+    config.search_results_per_page = 10
+    config.search_preview_results_per_page = 4
+    config.instant_search_results_per_page = 6
+    config.instant_search_preview_results_per_page = 2
   end
 end

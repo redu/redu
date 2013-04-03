@@ -1,6 +1,7 @@
 .bundle
 db/*.sqlite3
 log/*.log
+log/*.lck
 tmp/
 *.swp
 mongrel/
@@ -25,3 +26,6 @@ backup/.tmp/*
 .rvmrc
 .rspec
 chromedriver.log
+solr/data/*
+solr/pids/*
+config/sunspot.yml

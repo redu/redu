@@ -1,5 +1,6 @@
 class Space < ActiveRecord::Base
   include DestroySoon::ModelAdditions
+  include SpaceSearchable
 
   # Representa uma disciplina de ensino. O objetivo principal do Space é agrupar
   # objetos de ensino (Lecture e Subject) e promover a interação de muitos

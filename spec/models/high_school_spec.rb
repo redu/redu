@@ -5,4 +5,6 @@ describe HighSchool do
 
   it { should validate_presence_of :institution }
   it { should validate_presence_of :end_year }
+
+  it { should have_one :education }
 end

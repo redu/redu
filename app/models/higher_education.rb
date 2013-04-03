@@ -2,6 +2,8 @@ class HigherEducation < ActiveRecord::Base
   # Representa uma formação do usuário no Ensino Superior
   # É uma especialização de Education
 
+  has_one :education, :as => :educationable
+
   validates_presence_of :kind, :institution, :start_year, :end_year
   validates_presence_of :course, :if => Proc.new { |h| h.technical? or
     h.degree? or h.bachelorship? }

@@ -17,6 +17,7 @@ module NavigationHelper
   include SpacesNavigation
   include PartnersNavigation
   include NewUsersNavigation
+  include SearchNavigation
 
   # Renderiza navegação global
   def render_dynamic_navigation(opts = { :level => 1, :renderer => :list })
@@ -36,17 +37,16 @@ module NavigationHelper
         :title => 'Início', :class => 'nav-global-button',
         :highlights_on => lambda{ global_highlighted == :start } do |sidebar|
           unless opts[:context] == :global
-            method(navigation_method).call(sidebar) if active_navigation_item_key(:level => 1) != :courses
+            method(navigation_method).call(sidebar) if active_navigation_item_key(:level => 1) != :environments
           end
         end
       primary.item :teach, 'Ensine', teach_index_path,
-        :title => 'Ensine', :class => 'nav-global-button',
-        :highlights_on => lambda{ global_highlighted == :teach }
-      primary.item :courses, 'Cursos', courses_index_path,
-        :title => 'Cursos', :class => 'nav-global-button',
-        :highlights_on => lambda{ global_highlighted == :courses } do |sidebar|
+        :title => 'Ensine', :class => 'nav-global-button'
+      primary.item :environments, 'Ambientes', environments_index_path,
+        :title => 'Ambientes', :class => 'nav-global-button',
+        :highlights_on => lambda{ global_highlighted == :environments } do |sidebar|
           unless opts[:context] == :global
-            method(navigation_method).call(sidebar) if active_navigation_item_key(:level => 1) == :courses
+            method(navigation_method).call(sidebar) if active_navigation_item_key(:level => 1) == :environments
           end
         end
       primary.item :apps, 'Aplicativos', Redu::Application.config.redu_services[:apps][:url],
@@ -69,7 +69,7 @@ module NavigationHelper
           !request.fullpath.match(%r(\A#{ teach_index_path })).nil?
       :teach
     else
-      :courses
+      :environments
     end
   end
 end

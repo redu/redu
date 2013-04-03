@@ -33,6 +33,9 @@ RSpec.configure do |config|
   # Inclui o helper para fazer mock da API do scribd
   config.include ScribdSpecHelper
 
+  # Inclui helper para fazer mock dos métodos da Busca
+  config.include SearchSpecHelper
+
   # Inclui o helper para habilitar a utilização de cache
   # em determinados contextos
   config.include CacheSpecHelper
