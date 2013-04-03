@@ -136,6 +136,16 @@
   margin-top: 5px;
 }
 
+.portal-environments {
+  background: url("/images/environments/environments-background_160.png") no-repeat 391px -45px;
+}
+.portal-environments .portal-title-link {
+  width: 110px;
+}
+.portal-environments .portal-header-message {
+  width: 245px;
+}
+
 .token-input-list-redu {
   margin: 0;
   list-style-type: none;

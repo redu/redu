@@ -126,6 +126,15 @@
 .portal-search-result-item +
 .portal-search-result-category { margin-top: 5px; }
 
+// Portal de Ambientes.
+.portal-environments {
+  // Imagem de fundo do cabeçalho.
+  background: url("/images/environments/environments-background_160.png") no-repeat 391px -45px;
+
+  .portal-title-link { width: 110px; }
+  .portal-header-message { width: 245px; }
+}
+
 
 // ==========================================================================
 // Tema para o jQuery Tokeninput do formulário de busca.

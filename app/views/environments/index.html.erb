@@ -1,32 +1,32 @@
+<%= content_for :container_class do %>portal-environments<% end %>
+
 <div class="span16">
-  <div class="content-area">
-    <%= render :partial => "index_header" %>
+  <%= render :partial => "index_header" %>
 
-    <div class="content-body">
-      <div class="content-section">
-        <ul class="header-breadcrumb">
-          <li class="header-breadcrumb-item">
-            <%= link_to "Ambientes que Participo", environments_index_path(@user),
-              :class => "header-bradcrumb-link icon-environment-round-gray_32_34-before",
-              :title => "Ambientes que Participo"%>
-          </li>
-        </ul>
-      </div>
-      <% if @environments.empty? %>
-        <hr class="list-separator">
-        <div class="empty-environment">
-          <span class="empty-environment-icon icon-environment-empty_128_130 text-replacement" title="Nenhum ambiente">Nenhum ambiente</span>
-          <p class="empty-environment-content">Você ainda não participa de um Ambiente de Aprendizagem.</p>
-        </div>
-      <% else %>
-        <ul id="my-environments" class="list-environment-course-space">
-          <%= render :partial => "users/environments/environment",
-            :collection => @environments, :locals => { :user => @user } %>
-        </ul>
-      <% end %>
-      <%= paginate @environments, :theme => 'new_endless' %>
+  <div class="content-body">
+    <div class="content-section">
+      <ul class="header-breadcrumb">
+        <li class="header-breadcrumb-item">
+          <%= link_to "Ambientes que Participo", environments_index_path(@user),
+            :class => "header-bradcrumb-link icon-environment-round-gray_32_34-before",
+            :title => "Ambientes que Participo"%>
+        </li>
+      </ul>
     </div>
-
-    <%= render :partial => "breadcrumb_mini" %>
+    <% if @environments.empty? %>
+      <hr class="list-separator">
+      <div class="empty-environment">
+        <span class="empty-environment-icon icon-environment-empty_128_130 text-replacement" title="Nenhum ambiente">Nenhum ambiente</span>
+        <p class="empty-environment-content">Você ainda não participa de um Ambiente de Aprendizagem.</p>
+      </div>
+    <% else %>
+      <ul id="my-environments" class="list-environment-course-space">
+        <%= render :partial => "users/environments/environment",
+          :collection => @environments, :locals => { :user => @user } %>
+      </ul>
+    <% end %>
+    <%= paginate @environments, :theme => 'new_endless' %>
   </div>
+
+  <%= render :partial => "breadcrumb_mini" %>
 </div>
