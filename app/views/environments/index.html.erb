@@ -1,17 +1,14 @@
 <div class="span16">
   <div class="content-area">
-    <%= render :partial => "users/environments/breadcrumb",
-       :locals => { :user => @user } %>
+    <%= render :partial => "index_header" %>
+
     <div class="content-body">
       <div class="content-section">
         <ul class="header-breadcrumb">
           <li class="header-breadcrumb-item">
-            <%= link_to environments_index_path(@user),
+            <%= link_to "Ambientes que Participo", environments_index_path(@user),
               :class => "header-bradcrumb-link icon-environment-round-gray_32_34-before",
-              :title => "Ambientes que Participo" do %>
-              Ambientes que Participo <%= content_tag(:span, parentize(@total_environments),
-                :class => "header-breadcrumb-item-light") %>
-            <% end %>
+              :title => "Ambientes que Participo"%>
           </li>
         </ul>
       </div>
@@ -29,8 +26,7 @@
       <% end %>
       <%= paginate @environments, :theme => 'new_endless' %>
     </div>
-    <%= render :partial => "users/environments/breadcrumb",
-       :locals => { :user => @user } %>
+
+    <%= render :partial => "breadcrumb_mini" %>
   </div>
 </div>
-
