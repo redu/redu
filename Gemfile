@@ -84,7 +84,7 @@ group :development, :test do
   gem 'jasmine'
   gem 'no_peeping_toms', :git => 'git://github.com/patmaddox/no-peeping-toms.git'
   gem 'rails3-generators'
-  gem 'rspec-rails', '~> 2.8'
+  gem 'rspec-rails', '~> 2.0'
   gem 'ruby-debug'
   gem 'shoulda-matchers'
 end
