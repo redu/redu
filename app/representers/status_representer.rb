@@ -8,7 +8,7 @@ module StatusRepresenter
   property :text
   property :created_at
   property :updated_at
-  property :user, :extend => UserRepresenter, :class => User
+  property :user, :extend => UserPartialRepresenter, :class => User
 
   link :self do
     api_status_url self
