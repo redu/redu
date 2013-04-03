@@ -145,6 +145,9 @@
 .portal-environments .portal-header-message {
   width: 245px;
 }
+.portal-environments .list-environment-course-space-item {
+  padding: 10px 40px;
+}
 
 .token-input-list-redu {
   margin: 0;
