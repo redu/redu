@@ -11,6 +11,14 @@ s3_upload_files:
   - public/stylesheets/**
 
 javascripts:
+  landing:
+    - public/javascripts/landing.js
+  mobile:
+    - public/javascripts/rails.js
+    - public/javascripts/vendor/modernizr.js
+    - public/javascripts/jquery.autosize.min.js
+    - public/javascripts/bootstrap-redu.js
+    - public/javascripts/mobile-login.js
   new_application:
     - public/javascripts/rails.js
     - public/javascripts/vendor/modernizr.js
@@ -32,12 +40,13 @@ javascripts:
     - public/javascripts/jquery.timeago.js
     - public/javascripts/timeago.js
     - public/javascripts/jquery.fcbkcomplete.min.js # Auto complete do facebook
+    - public/javascripts/users.js
     - public/javascripts/old-create-status.js
     - public/javascripts/underscore.js
     - public/javascripts/underscore-sharing-template.redu.jquery.js
     - public/javascripts/embedly.redu.jquery.js
     - public/javascripts/search.js
-  landing:
+  basic:
     - public/javascripts/rails.js
     - public/javascripts/vendor/modernizr.js
     - public/javascripts/lazyload.js
@@ -50,7 +59,6 @@ javascripts:
     - public/javascripts/browserdetection.js
     - public/javascripts/jquery.cookie.js
     - public/javascripts/outdated-browser.js
-    - public/javascripts/landing.js
   common:
     - public/javascripts/rails.js
     - public/javascripts/application.js
@@ -136,6 +144,8 @@ javascripts:
     - public/javascripts/olark.js
 
 stylesheets:
+  mobile:
+    - public/stylesheets/mobile.css
   new_application:
     - public/stylesheets/icons.redu.css
     - public/stylesheets/utils.css
@@ -145,10 +155,11 @@ stylesheets:
     - public/stylesheets/fb_style.css
     - public/stylesheets/outdated-browser-new.css
     - public/stylesheets/token-input.css
-  landing:
+  basic:
     - public/stylesheets/landing-new.css
     - public/stylesheets/outdated-browser-new.css
     - public/stylesheets/icons.redu.css
+    - public/stylesheets/authoring-page.css
   common:
     - public/stylesheets/reset.css
     - public/stylesheets/960.css

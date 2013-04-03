@@ -465,6 +465,140 @@ body {
   color: #b3b3b3;
 }
 
+.form-config-fieldset {
+  margin: 10px 0;
+}
+
+.form-config-legend {
+  font: 300 18px/18px museo-sans, "Helvetica Neue", Arial, sans-serif;
+  letter-spacing: -1px;
+  color: #73c3e6;
+  margin: 0 0 20px 20px;
+}
+.form-config-legend[class*="icon-"][class*="-before"]:before {
+  margin-right: 10px;
+}
+
+.list-separator +
+.form-config-profile {
+  margin-top: 10px;
+}
+.form-config-profile .control-group +
+.list-separator {
+  margin-top: 20px;
+}
+
+.form-config-avatar {
+  margin-top: 20px;
+}
+
+.form-config-social-networks {
+  margin: 0;
+  list-style: none;
+}
+
+input[type="hidden"] +
+.form-config-social-network, .form-config-social-network +
+.form-config-social-network {
+  margin-top: 10px;
+}
+.form-config-social-network .message-close {
+  margin-top: 7px;
+}
+
+.form-config-social-network-select {
+  margin-left: 0;
+}
+
+.form-config-social-network-select +
+.form-config-social-network-url {
+  margin-left: 5px;
+}
+
+.curriculum-container .experiences,
+.curriculum-container .educations {
+  margin: 0;
+}
+.curriculum-container form .end-date {
+  margin-top: 10px;
+}
+.curriculum-container form .errors_on_field {
+  text-align: left;
+}
+.curriculum-container .list-mix-item {
+  padding: 0 20px;
+}
+.curriculum-container .form-education {
+  margin-top: 20px;
+}
+.curriculum-container ul +
+.form-horizontal {
+  padding-top: 20px;
+}
+
+.config-experience {
+  list-style: none;
+}
+.config-experience .list-mix-inner {
+  padding: 10px;
+}
+.config-experience .time,
+.config-experience .in-between {
+  color: #b3b3b3;
+}
+.config-experience .title {
+  display: block;
+}
+.config-experience .description {
+  color: #6d6e6f;
+}
+.config-experience .title,
+.config-experience .description {
+  padding-right: 40px;
+}
+.config-experience .edit-experience,
+.config-experience .edit-education {
+  float: right;
+  clear: right;
+  padding-top: 5px;
+}
+.config-experience +
+.config-experience {
+  margin-top: 10px;
+}
+.config-experience +
+.config-experience .form-horizontal {
+  padding-top: 10px;
+}
+
+.config-new-item {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.curriculum-title {
+  color: #73c3e6;
+}
+
+.curriculum-buttons {
+  margin-top: 10px;
+}
+.curriculum-buttons .add-item {
+  margin-right: 20px;
+}
+.curriculum-buttons .cancel {
+  margin-right: 5px;
+  height: 35px;
+}
+
+.form-config-account .control-group:last-child .controls {
+  margin-bottom: 3px;
+}
+.form-config-account .button-primary +
+.button-danger {
+  margin-right: 10px;
+}
+
 ul.requisitions {
   margin: 0;
   overflow: visible;

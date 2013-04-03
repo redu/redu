@@ -931,6 +931,8 @@ describe User do
     end
   end
 
+  it_should_behave_like 'have unique index database'
+
   private
   def create_friendship(user1, user2)
     user1.be_friends_with(user2)

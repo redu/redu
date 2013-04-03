@@ -1,22 +1,38 @@
-var education_form = "<%= escape_javascript render :partial => 'educations/form',
-  :locals => { :user => @user, :high_school => @high_school,
-    :higher_education => @higher_education,
-    :complementary_course => @complementary_course,
-    :event_education => @event_education } %>"
-<% if @education.valid? %>
-  $("#new_education").slideToggle().remove();
-  var education_item = "<%= escape_javascript render :partial => 'educations/item',
-  :locals => { :item => @education } %>"
-  $("#curriculum .educations").append(education_item);
+var $newEducation = $("#new_education");
 
-  $("#curriculum .educations").after(education_form);
-  $("#curriculum .new-education-button").show();
-  $("#education-<%= @education.id %> form").hide();
-  $("#new_education").hide();
+<% if @education.valid? %>
+  <%# Esconde o formulário de criação e o substitui por um novo com campos vazios. %>
+  var educationForm = "<%= escape_javascript render :partial => 'educations/form',
+  :locals => { :user => @user, :high_school => HighSchool.new,
+    :higher_education => HigherEducation.new,
+    :complementary_course => ComplementaryCourse.new,
+    :event_education => EventEducation.new } %>";
+  $newEducation
+    .slideToggle(150, "swing")
+    .replaceWith(educationForm);
+
+  <%# Cria o item adicionado e esconde seu formulário de edição. %>
+  var $educationItem = $("<%= escape_javascript render :partial => 'educations/item',
+      :locals => { :item => @education } %>");
+  $educationItem.find("form").hide();
+
+  <%# Adiciona o item a lista. %>
+  var $curriculum = $("#curriculum");
+  $curriculum.find(".educations").append($educationItem);
+
+  <%# Mostra o botão de adicionar novo item. %>
+  $curriculum.find(".new-education-button").show();
+
 <% else %>
-  $("#new_education").replaceWith(education_form);
-  $("#new_education form").hide();
+  <%# Substitui o formulário de criação com os erros de validação. %>
+  var educationForm = "<%= escape_javascript render :partial => 'educations/form',
+    :locals => { :user => @user, :high_school => @high_school,
+      :higher_education => @higher_education,
+      :complementary_course => @complementary_course,
+      :event_education => @event_education } %>";
+  $newEducation
+    .replaceWith(educationForm)
+    .find("form").hide();
   $("#education_type").val("<%= @education.educationable.class.to_s.underscore %>");
   $("#higher_education_kind").val("<%= @higher_education.kind %>");
 <% end %>
-

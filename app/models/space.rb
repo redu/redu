@@ -110,7 +110,7 @@ class Space < ActiveRecord::Base
   def notify_space_added
     if self.notificable?
       self.course.approved_users.each do |u|
-        UserNotifier.space_added(u, self).deliver
+        UserNotifier.delay(:queue => 'email').space_added(u, self)
       end
     end
   end

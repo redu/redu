@@ -1,19 +1,30 @@
-var $form = $("#new_experience");
+var $newExperience = $("#new_experience");
+
 <% if @experience.valid? %>
-  $form.slideToggle().remove();
-  var experience_item = "<%= escape_javascript render :partial => 'experiences/item',
-  :locals => { :item => @experience } %>"
-  $("#curriculum .experiences").append(experience_item);
+  <%# Esconde o formulário de criação e o substitui por um novo com campos vazios. %>
+  var experienceForm = "<%= escape_javascript render :partial => 'experiences/form',
+    :locals => { :user => @user, :experience => Experience.new } %>";
+  $newExperience
+    .slideUp(150, "swing")
+    .replaceWith(experienceForm);
 
-  <%# Coloca novo form %>
-  var experience_form = "<%= escape_javascript render :partial => 'experiences/form',
-    :locals => { :user => @user, :experience => Experience.new } %>"
-  $("#curriculum .experiences").after(experience_form);
-  $("#curriculum .new-experience-button").show();
+  <%# Cria o item adicionado e esconde seu formulário de edição. %>
+  var $experienceItem = $("<%= escape_javascript render :partial => 'experiences/item',
+    :locals => { :item => @experience } %>");
+  $experienceItem.find("form").hide();
+
+  <%# Adiciona o item a lista. %>
+  var $curriculum = $("#curriculum");
+  $curriculum.find(".experiences").append($experienceItem);
+
+  <%# Mostra o botão de adicionar novo item. %>
+  $curriculum.find(".new-experience-button").show();
+
 <% else %>
-  var experience_form = "<%= escape_javascript render :partial => 'experiences/form',
-    :locals => { :user => @experience.user, :experience => @experience } %>"
-  $("#new_experience").replaceWith(experience_form);
-  $("#new_experience").show();
+  <%# Substitui o formulário de criação com os erros de validação. %>
+  var experienceForm = "<%= escape_javascript render :partial => 'experiences/form',
+    :locals => { :user => @experience.user, :experience => @experience } %>";
+  $newExperience
+    .replaceWith(experienceForm)
+    .show();
 <% end %>
-

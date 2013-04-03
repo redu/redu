@@ -177,7 +177,7 @@ class CoursesController < BaseController
       rejected_ucas = @course.user_course_associations.waiting.
         where(:user_id => rejected.keys)
       rejected_ucas.each do |uca|
-        UserNotifier.reject_membership(uca.user, @course).deliver
+        UserNotifier.delay(:queue => 'email').reject_membership(uca.user, @course)
         uca.destroy
       end
 
@@ -203,7 +203,7 @@ class CoursesController < BaseController
           where(:user_id => approved.keys)
         approved_ucas.each do |uca|
           uca.approve!
-          UserNotifier.approve_membership(uca.user, @course).deliver
+          UserNotifier.delay(:queue => 'email').approve_membership(uca.user, @course)
         end
       elsif can?(:add_entry?, @course) and !rejected.to_hash.empty?
         # Avisa que os membros rejeitados foram moderados mesmo se não houver membros para serem aprovados

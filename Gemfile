@@ -17,7 +17,6 @@ gem 'acts-as-taggable-on'
 gem 'ajaxful_rating',
   :git => 'git://github.com/edgarjs/ajaxful-rating.git',
   :branch => 'rails3'
-gem 'ar_mailer_rails3'
 gem 'authlogic'
 gem 'awesome_nested_fields'
 gem 'aws-s3', :require => 'aws/s3'
@@ -58,7 +57,6 @@ gem 'rake', '0.8.7'
 gem 'remotipart', '~> 1.0'
 gem 'scribd_fu', :git => 'git://github.com/guiocavalcanti/scribd_fu.git',
   :branch => 'without-scape'
-gem 'shuber-sortable'
 gem 'simple-navigation', :git => 'git://github.com/andi/simple-navigation.git'
 gem 'sunspot_rails'
 gem 'translate_routes'
@@ -67,9 +65,10 @@ gem 'vis_client', :git => 'git@github.com:redu/vis_client.git'
 gem 'whenever', :require => false
 gem 'will_paginate', '~> 3.0.pre2'
 gem 'zencoder'
-gem 'untied-publisher', '~> 0.0.6'
+gem 'untied-publisher', '~> 0.0.7.pre'
 gem 'system_timer'
 gem 'json', '>= 1.7.7'
+gem 'simple_acts_as_list'
 
 # Gems específicos para a API
 gem 'oauth-plugin', '~> 0.4.0'

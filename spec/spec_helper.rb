@@ -47,6 +47,9 @@ RSpec.configure do |config|
   # Inclui o helper para logar um usuário
   config.include AuthlogicSpecHelper
 
+  # Inclui o helper para fazer mock do User Agent
+  config.include UserAgentSpecHelper
+
   # Desabilita criação de logs nos specs
   ActiveRecord::Observer.disable_observers
 

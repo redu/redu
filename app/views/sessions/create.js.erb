@@ -1,9 +1,13 @@
 var $form = $("#form-sign-in");
 
+<%# Erro de validação. %>
 <% if @user_session %>
   var $newForm = $("<%= escape_javascript render 'shared/form_sign_in',
                    :user_session => @user_session %>");
+
   $form.replaceWith($newForm);
+
+<%# Login expirado. %>
 <% else %>
   $form.append('<%= escape_javascript render "shared/system_message",
                :message => "O prazo máximo de 30 para ativar sua conta expirou. Portanto,

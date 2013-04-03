@@ -26,9 +26,11 @@ class PartnerContact
   def deliver
     if self.valid?
       if self.migration
-        UserNotifier.partner_environment_migration_notice(self).deliver
+        UserNotifier.delay(:queue => 'email').
+          partner_environment_migration_notice(self)
       else
-        UserNotifier.partner_environment_notice(self).deliver
+        UserNotifier.delay(:queue => 'email').
+          partner_environment_notice(self)
       end
     end
   end
