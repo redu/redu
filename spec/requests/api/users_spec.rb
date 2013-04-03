@@ -3,7 +3,9 @@ require "api_spec_helper"
 describe "User" do
   before do
     @user = Factory(:user, :mobile => "+55 (81) 9194-5317",
-                    :localization => "Recife", :birth_localization => "Recife")
+                    :localization => "Recife", :birth_localization => "Recife",
+                    :description => "Descrição usuário",
+                    :favorite_quotation => "rede social educacional")
     @application, @current_user, @token = generate_token(@user)
   end
 
@@ -11,19 +13,20 @@ describe "User" do
     let(:social_networks) do
       2.times.collect { Factory(:social_network, :user => @current_user) }
     end
-    before do
-    end
+
+    let(:tags) { "educação, informática" }
 
     it "should return status 200 (ok)" do
       get "/api/users/#{@user.id}", :oauth_token => @token, :format => 'json'
       response.code.should == "200"
     end
 
-    it "should have login, id, links, email, first_name, last_name, " + \
-       " birthday, friends_count, mobile, localization, birth_localization" do
+    it "should have login, id, links, email, first_name, last_name," + \
+       " birthday, friends_count, created_at updated_at, mobile, localization," + \
+       " birth_localization, social_networks interested_areas thumbnails" do
       get "/api/users/#{@user.id}", :oauth_token => @token, :format => 'json'
 
-      %w(login id links email first_name last_name birthday friends_count created_at updated_at mobile localization birth_localization social_networks thumbnails).each do |attr|
+      %w(login id links email first_name last_name description favorite_quotation birthday friends_count created_at updated_at mobile localization birth_localization social_networks interested_areas thumbnails).each do |attr|
         parse(response.body).should have_key attr
       end
     end
@@ -41,6 +44,23 @@ describe "User" do
 
       sn = parse(response.body)['social_networks'].first
       sn['profile'].should == social_networks.first.url
+    end
+
+    context "interested areas" do
+      before do
+        @user.tag_list = tags
+        @user.save
+        get "/api/users/#{@user.id}", :oauth_token => @token, :format => 'json'
+      end
+
+      it "should hold user interested areas" do
+        parse(response.body)['interested_areas'].count.should == 2
+      end
+
+      it "should hold correct intereseted areas" do
+        sn = parse(response.body)['interested_areas'].first
+        sn['name'].should == @user.tags.first.name
+      end
     end
 
     %w(self enrollments statuses timeline contacts chats connections).each do |rel|

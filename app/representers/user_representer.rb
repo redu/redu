@@ -9,6 +9,8 @@ module UserRepresenter
   property :email
   property :first_name
   property :last_name
+  property :description
+  property :favorite_quotation
   property :birthday
   property :friends_count
   property :mobile
@@ -16,6 +18,7 @@ module UserRepresenter
   property :birth_localization
   property :created_at
   property :updated_at
+  collection :tags, :from => :interested_areas, :extend => TagRepresenter
   collection :social_networks, :extend => SocialNetworkRepresenter,
     :class => SocialNetwork
 
