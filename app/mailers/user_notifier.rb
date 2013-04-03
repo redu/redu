@@ -1,15 +1,4 @@
-class UserNotifier < ActionMailer::Base
-
-  include ActionView::Helpers::TextHelper
-  include ActionView::Helpers::SanitizeHelper
-  extend  ActionView::Helpers::SanitizeHelper::ClassMethods # Required for rails 2.2
-
-  include BaseHelper
-
-  default :from => "\"Equipe Redu\" <#{Redu::Application.config.email}>",
-      :content_type => "text/plain",
-      :reply_to => "#{Redu::Application.config.email}"
-
+class UserNotifier < BaseMailer
   # Enviado ao aprovar a participação de um usuário num Course
   def approve_membership(user, course)
     @user = user
@@ -285,33 +274,5 @@ class UserNotifier < ActionMailer::Base
       format.html
     end
 
-  end
-
-  # Envia newsletter para usuário.
-  #
-  # :user, instância do usuário
-  # :template, template a ser usado
-  # :subject, assunto do e-mail
-  # :opts, informações disponíveis através de @vars na view
-  #
-  # Para enviar e-mail para todos usuários, é recomendado utilizar o
-  # find_in_batches para evitar estouro de memória:
-  #
-  #   User.find_in_batches(:batch_size => 100) do |users|
-  #     users.each do |u|
-  #       subject = "Professor e Aluno, precisamos de você!"
-  #       mail = UserNotifier.newsletter(u, "user_notifier/form_android.html.erb",
-  #                                      :subject => subject)
-  #       mail.deliver
-  #     end
-  #   end
-  def newsletter(user, template, opts={})
-    subject = opts.delete(:subject) || "Novidades do Redu"
-    @user = user
-    @vars = { :user => @user }.merge(opts)
-
-    mail(:to => user.email, :subject => subject) do |format|
-      format.html { render :template => template, :layout => false }
-    end
   end
 end
