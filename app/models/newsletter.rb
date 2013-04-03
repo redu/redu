@@ -25,13 +25,13 @@ class Newsletter
   def send(mail_options={})
     deliver do |email, options|
       opts = { :template => @template }.merge(options.merge(mail_options))
-      mailer.newsletter(email, opts).deliver
+      mailer.newsletter(email, opts)
     end
   end
 
   protected
 
   def mailer
-    NewsletterMailer
+    NewsletterMailer.delay(:queue => 'email')
   end
 end
