@@ -221,6 +221,7 @@ GEM
     exceptional (2.0.32)
       rack
     excon (0.9.6)
+    ey_config (0.0.6)
     factory_girl (2.6.4)
       activesupport (>= 2.3.9)
     factory_girl_rails (1.7.0)
@@ -449,6 +450,7 @@ DEPENDENCIES
   em-http-request
   eventmachine
   exceptional
+  ey_config
   factory_girl_rails (~> 1.7.0)
   fog (~> 1.1.0)
   humanizer

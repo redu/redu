@@ -68,6 +68,7 @@ gem 'untied-publisher', '~> 0.0.7.pre'
 gem 'system_timer'
 gem 'json', '>= 1.7.7'
 gem 'simple_acts_as_list'
+gem 'ey_config'
 
 # Gems específicos para a API
 gem 'oauth-plugin', '~> 0.4.0'
