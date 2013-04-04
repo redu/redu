@@ -2,7 +2,6 @@ module EnrollmentVisRepresenter
   include Roar::Representer::JSON
   include Roar::Representer::Feature::Hypermedia
 
-  property :type
   property :user_id
   property :subject_id
   property :space_id
