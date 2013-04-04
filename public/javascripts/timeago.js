@@ -2,7 +2,6 @@
     // Brazilian Portuguese
     // Time ago in words
     jQuery.timeago.settings.strings = {
-       suffixAgo: "atrás",
        suffixFromNow: "nesse momento",
        seconds: "alguns segundos",
        minute: "há um minuto",
