@@ -43,12 +43,12 @@
           <li class="general-list-item-counter icon-members-gray_16_18-before">
             <%= pluralize(course.user_course_associations.length, "Membro") %>
           </li>
-          <li class="general-list-item-counter icon-teacher-gray_16_18-before">
+          <li class="general-list-item-counter icon-teacher-gray_16_18-before" rel="tooltip" title="<%= pluralize(course.teachers.count, "Professor", "Professores") %>">
             <% cache ["search_course_teachers_count", course.id] do %>
               <%= course.teachers.count %>
             <% end %>
           </li>
-           <li class="general-list-item-counter icon-space-gray_16_18-before">
+           <li class="general-list-item-counter icon-space-gray_16_18-before" rel="tooltip" title="<%= pluralize(course.spaces.length, "Disciplina") %>">
             <%= course.spaces.length %>
           </li>
         </ul>
