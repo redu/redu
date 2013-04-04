@@ -1,3 +1,7 @@
+# Helper retirado de https://github.com/ianwhite/truncate_html.
+#
+# TODO: Trocar pela gem truncate_html (https://github.com/hgmnz/truncate_html),
+#       pois é melhor mantida, quando usarmos Ruby 1.9.
 require "rexml/parsers/pullparser"
 
 module TruncateHtmlHelper
