@@ -3,7 +3,7 @@ FactoryGirl.define do
     sequence(:name){ |n| "Curso #{n}" }
     sequence(:path){ |n| "curso-#{n}" }
     association :owner, :factory => :user
-    association :environment
+    environment { |course| Factory(:environment, :owner => course.owner) }
     association :quota, :factory => :quota
   end
 
