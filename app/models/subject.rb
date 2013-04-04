@@ -83,8 +83,9 @@ class Subject < ActiveRecord::Base
         Enrollment.create(:user_id => usa.user_id, :subject => self,
                           :role => usa.role)
       end
+
       VisClient.notify_delayed("/hierarchy_notifications.json",
-                               "enrollment", enrollments)
+                               "enrollment", enrollments.compact)
     end
   end
 
