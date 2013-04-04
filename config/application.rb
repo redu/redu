@@ -198,7 +198,7 @@ module Redu
     # Service objects
     config.autoload_paths << "#{config.root}/app/services"
 
-    # Vis Representer
+    # Vis Representers
     config.autoload_paths << "#{config.root}/app/representers/vis"
 
     # Configurações do Pusher (redu app)
