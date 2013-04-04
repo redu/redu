@@ -10,7 +10,6 @@ module NavigationHelper
   include UserProfileNavigation
   include EnvironmentsAdminNavigation
   include EnvironmentsNavigation
-  include CoursesIndexNavigation
   include CoursesAdminNavigation
   include CoursesNavigation
   include SpacesAdminNavigation
