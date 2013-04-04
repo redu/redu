@@ -356,7 +356,7 @@ describe Course do
       end
     end
 
-    context "whith a role" do
+    context "with a role" do
       before do
         subject.join(@user, Role[:environment_admin])
       end
@@ -413,6 +413,17 @@ describe Course do
         expect {
           subject.join(@user)
         }.should change(License, :count).by(1)
+      end
+    end
+
+    context "using VisClient" do
+      it "should call VisClient.notify_delayed" do
+        enrollment = Factory(:enrollment, :subject => @subj,
+                                   :user => @user)
+        VisClient.should_receive(:notify_delayed).
+          with("/hierarchy_notifications.json", "enrollment",
+               [enrollment])
+        subject.join(@user)
       end
     end
   end
@@ -475,6 +486,27 @@ describe Course do
       @sub.members.should_not include(@user)
       @sub_2.members.should_not include(@user)
     end
+
+    it "should call VisClient.notify_delayed for all enrollments and for finalized enrollments" do
+      enrollments = []
+      enrollments << @user.get_association_with(@sub)
+      enrollment2 = @user.get_association_with(@sub_2)
+      enrollment2.grade = 100
+      enrollment2.graduated = true
+      enrollment2.save
+      enrollments << enrollment2
+
+      VisClient.should_receive(:notify_delayed).
+        with("/hierarchy_notifications.json",
+             "remove_enrollment", enrollments)
+      VisClient.should_receive(:notify_delayed).
+        with("/hierarchy_notifications.json",
+             "remove_subject_finalized", [enrollment2])
+
+      subject.unjoin @user
+    end
+
+
 
     context "when plan is licensed" do
       it "should set the period end of a license that" do
