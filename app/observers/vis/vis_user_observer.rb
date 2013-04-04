@@ -3,15 +3,14 @@ class VisUserObserver < ActiveRecord::Observer
 
   def before_destroy(user)
     finalized = []
-    user.enrollments.each do |enroll|
+    enrollments = user.enrollments
+    enrollments.each do |enroll|
       finalized << enroll if enroll.try(:graduated)
     end
 
     VisClient.notify_delayed("/hierarchy_notifications.json",
-                             "remove_enrollment",
-                             user.enrollments.compact)
+                             "remove_enrollment", enrollments.compact)
     VisClient.notify_delayed("/hierarchy_notifications.json",
-                             "remove_subject_finalized",
-                             finalized.compact)
+                             "remove_subject_finalized", finalized.compact)
   end
 end

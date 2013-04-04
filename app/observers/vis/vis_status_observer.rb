@@ -10,7 +10,7 @@ class VisStatusObserver < ActiveRecord::Observer
       when "Activity", "Help"
         unless status.statusable.statusable.is_a? User
           VisClient.notify_delayed("/hierarchy_notifications.json",
-                                   "answered_"+status.statusable.type.downcase,
+                                   ("answered_"+status.statusable.type.downcase),
                                    status.becomes(Status))
         end
       end
@@ -27,7 +27,7 @@ class VisStatusObserver < ActiveRecord::Observer
       when "Activity", "Help"
         unless status.statusable.statusable.is_a? User
           VisClient.notify_delayed("/hierarchy_notifications.json",
-                                   "remove_answered_"+status.statusable.type.downcase,
+                                   ("remove_answered_"+status.statusable.type.downcase),
                                    status.becomes(Status))
         end
       end
