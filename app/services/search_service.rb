@@ -51,7 +51,7 @@ class SearchService
     # Deixa o array com um apenas um nível, remove os resultados nil
     # O .reverse para que o resultado de profile venha em primeiro
     # (requisito do dropdown da busca)
-    all.flatten!.compact.reverse
+    all.flatten!.try(:compact)
   end
 
   # Recupera resultado referente a uma classe e sempre define um array paginado
