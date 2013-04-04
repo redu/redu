@@ -182,12 +182,13 @@
 .portal-search-list-results {
   $list-item-class: ".portal-search-item";
   $columns: 2;
-  $gutter: 20px;
+  $gutter: 20;
   padding-bottom: 10px;
 
   #{$list-item-class} {
     $old-browser-value: percentage(((100 / $columns) - 1) / 100);
-    $expression: "(100% - ((#{$columns} - 1) * #{$gutter})) / #{$columns}";
+    $calc: ($columns - 1) * $gutter;
+    $expression: "(100% - #{$calc}px) / #{$columns}";
     @include calc("width", $expression, $old-browser-value);
     margin-left: $gutter;
   }
@@ -195,7 +196,7 @@
   &.list-columns-separator {
     #{$list-item-class}:nth-child(#{$columns}n+1):after {
       $old-browser-value: percentage((100 * $columns) / 100);
-      $expression: "100% * #{$columns} + #{$gutter} * (#{$columns} - 1)";
+      $expression: "100%  *  #{$columns}  +  #{$gutter}px  *  (#{$columns}  -  1)";
       @include calc("width", $expression, $old-browser-value);
     }
   }

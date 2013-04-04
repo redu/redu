@@ -190,16 +190,16 @@
 }
 .portal-search-list-results .portal-search-item {
   width: 49%;
-  width: -moz-calc((100% - ((2 - 1) * 20px)) / 2);
-  width: -o-calc((100% - ((2 - 1) * 20px)) / 2);
-  width: -webkit-calc((100% - ((2 - 1) * 20px)) / 2);
-  width: calc((100% - ((2 - 1) * 20px)) / 2);
-  margin-left: 20px;
+  width: -moz-calc((100% - 20px) / 2);
+  width: -o-calc((100% - 20px) / 2);
+  width: -webkit-calc((100% - 20px) / 2);
+  width: calc((100% - 20px) / 2);
+  margin-left: 20;
 }
 .portal-search-list-results.list-columns-separator .portal-search-item:nth-child(2n+1):after {
   width: 200%;
-  width: -moz-calc(100% * 2 + 20px * (2 - 1));
-  width: -o-calc(100% * 2 + 20px * (2 - 1));
-  width: -webkit-calc(100% * 2 + 20px * (2 - 1));
-  width: calc(100% * 2 + 20px * (2 - 1));
+  width: -moz-calc(100%  *  2  +  20px  *  (2  -  1));
+  width: -o-calc(100%  *  2  +  20px  *  (2  -  1));
+  width: -webkit-calc(100%  *  2  +  20px  *  (2  -  1));
+  width: calc(100%  *  2  +  20px  *  (2  -  1));
 }
