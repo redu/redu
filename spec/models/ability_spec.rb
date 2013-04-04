@@ -2106,4 +2106,22 @@ describe Ability do
       end
     end
   end
+
+  context "when searching" do
+    context "logged user" do
+      let(:user) { Factory(:user) }
+
+      it "should be able to perform searches" do
+        Ability.new(user).should be_able_to :search, :all
+      end
+    end
+
+    context "not logged user" do
+      let(:user) { nil }
+
+      it "should not be able to perform searches" do
+        Ability.new(user).should_not be_able_to :search, :all
+      end
+    end
+  end
 end

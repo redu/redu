@@ -2,8 +2,6 @@
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
-require 'db/create_roles'
-require 'db/create_privacies'
 require 'paperclip/matchers'
 require 'webmock/rspec'
 
@@ -35,6 +33,9 @@ RSpec.configure do |config|
   # Inclui o helper para fazer mock da API do scribd
   config.include ScribdSpecHelper
 
+  # Inclui helper para fazer mock dos métodos da Busca
+  config.include SearchSpecHelper
+
   # Inclui o helper para habilitar a utilização de cache
   # em determinados contextos
   config.include CacheSpecHelper
@@ -46,9 +47,8 @@ RSpec.configure do |config|
   # Inclui o helper para logar um usuário
   config.include AuthlogicSpecHelper
 
-  # Adiciona os papéis ao BD, pois estes são necessários nos testes.
-  create_roles
-  create_privacies
+  # Inclui o helper para fazer mock do User Agent
+  config.include UserAgentSpecHelper
 
   # Desabilita criação de logs nos specs
   ActiveRecord::Observer.disable_observers

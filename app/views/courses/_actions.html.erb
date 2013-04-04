@@ -1,30 +1,21 @@
 <div class="actions clearfix">
   <% if can?(:teach, course) %>
-      <%= link_to 'Criar nova disciplina', new_space_path(:course_id => course.id), :class => "concave-button" %>
+    <% if current_user.teacher?(course) %>
+      <%= link_to 'Abandonar curso',
+        unjoin_environment_course_path(course.environment, course),
+        :method => :post,
+        :confirm => 'Você perderá o vínculo e o acesso a este curso e isso não poderá ser desfeito. Tem certeza?',
+        :class => 'leave icon-delete-gray_8_10-before' %>
+    <% end %>
+    <%= link_to 'Criar nova disciplina', new_space_path(:course_id => course.id), :class => "concave-button" %>
   <% else %>
-    <% unless course.users.include?(current_user) %>
-      <% if (current_page? preview_environment_course_path(course.environment,
-        course)) %>
-        <% if current_user %>
-          <% if can? :add_entry, course %>
-            <%= link_to 'Matricular-se',
-              join_environment_course_path(course.environment, course),
-              :method => :post, :class => 'join concave-important',
-              :disable_with => 'Matricular-se' %>
-          <% else %>
-            <span class="join waiting">Limite de vagas atingido</span>
-          <% end %>
-          <% else %>
-            <%= link_to "Efetuar login", application_path %>
-          <% end %>
-      <% end %>
-    <% else %>
+    <% if course.users.include?(current_user) %>
       <% if course.published == false %>
         <span class="join waiting"> O curso está despublicado, para maiores informações consulte o dono do curso.</span>
       <% elsif course.waiting_user_approval?(current_user) %>
-        <span class="join waiting">Você já foi convidado.</span>
+        <span class="join waiting">Você já foi convidado, aceite o convite no Início.</span>
       <% elsif course.waiting_approval?(current_user) %>
-        <span class="join waiting">Aguardando moderação</span>
+        <span class="join waiting">Aguardando os responsáveis pelo curso liberarem o seu acesso.</span>
       <% else %>
         <%= link_to 'Abandonar curso',
           unjoin_environment_course_path(course.environment, course),

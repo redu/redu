@@ -1,3 +1,29 @@
+<%# Se o convite de amizade foi feito nas páginas de busca por perfil. %>
+<% if @in_search %>
+  var $friendSearchResult = $("#search-results-user-<%= @friend.id %>");
+  var $button = $friendSearchResult.find(".general-list-item-bottom-right-button");
+  var $message = "";
+  $(".tooltip").remove();
+
+  <%# Foi enviado um convite. %>
+  <% if @in_search_send %>
+    <%# Substitui o botão com o do estado desabilitado. %>
+    var $newButton = $("<%= escape_javascript render :partial => 'search/button_invite_disabled' %>");
+    $button.replaceWith($newButton);
+    $message = $("<%= escape_javascript render :partial => 'shared/system_message', :locals => { :type => 'info', :message => ('Seu convite de amizade foi enviado para ' + @friend.display_name) } %>");
+
+  <%# Um convite foi aceito. %>
+  <% elsif @in_search_accept %>
+    <%# Adiciona o ícone de amigo e remove o botão. %>
+    var $iconIsFriend = $("<%= escape_javascript render :partial => 'search/icon_is_friend' %>");
+    $iconIsFriend.prependTo($friendSearchResult.find(".general-list-item-column:last-child"));
+    $button.remove();
+    $message = $("<%= escape_javascript render :partial => 'shared/system_message', :locals => { :type => 'success', :message => ('Você aceitou o convite de amizado enviado por ' + @friend.display_name) } %>");
+  <% end %>
+
+  $message.prependTo("body");
+<% end %>
+
 <% if @recommendation %>
   $("#recommendation-<%= @friend.id %>").slideUp(function() {
     $(this).remove();

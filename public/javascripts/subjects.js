@@ -1,8 +1,8 @@
 (function($){
   $(document).ready(function(){
     $.refreshSubjects = function(){
-      $("#lecture_lectureable_attributes_external_resource").die();
-      $("#lecture_lectureable_attributes_external_resource").ytPreview({ titleField : ".new-resource #lecture_name" });
+      $("#lecture_lectureable_attributes_external_resource_url").die();
+      $("#lecture_lectureable_attributes_external_resource_url").ytPreview({ titleField : ".new-resource #lecture_name" });
       // Scroll até o módulo que está sendo visualizado
       $('#space-subjects .subjects .child .lectures:not(:hidden)').scrollToSubject();
     }

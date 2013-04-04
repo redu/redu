@@ -227,7 +227,6 @@ describe Presence do
       "member" => false,
       "environment_admin" => false,
       "tutor" => true,
-      "course_admin" => false,
       "admin" => true }
   end
 
@@ -247,7 +246,6 @@ describe Presence do
         "member" => false,
         "environment_admin" => false,
         "tutor" => false,
-        "course_admin" => false,
         "admin" => false }
     end
 
@@ -260,7 +258,6 @@ describe Presence do
         "member" => false,
         "environment_admin" => false,
         "tutor" => false,
-        "course_admin" => false,
         "admin" => true }
     end
   end

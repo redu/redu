@@ -1,7 +1,7 @@
 class UserEnvironmentAssociation < ActiveRecord::Base
   belongs_to :user
   belongs_to :environment
-  enumerate :role
+  classy_enum_attr :role, :default => 'member'
 
   # Filtra por papéis (lista)
   scope :with_roles, lambda { |roles|
@@ -11,7 +11,7 @@ class UserEnvironmentAssociation < ActiveRecord::Base
   }
   # Filtra por palavra-chave (procura em User)
   scope :with_keyword, lambda { |keyword|
-      if not keyword.empty? and keyword.size > 4
+      if not keyword.empty? and keyword.size > 2
         where("users.first_name LIKE :keyword " + \
             "OR users.last_name LIKE :keyword " + \
             "OR users.login LIKE :keyword", {:keyword => "%#{keyword.to_s}%"}).

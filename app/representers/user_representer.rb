@@ -2,28 +2,25 @@ module UserRepresenter
   include Roar::Representer::JSON
   include Roar::Representer::Feature::Hypermedia
 
+  include Api::ThumbnailCollection
+
   property :id
   property :login
   property :email
   property :first_name
   property :last_name
+  property :description
+  property :favorite_quotation
   property :birthday
   property :friends_count
   property :mobile
   property :localization
   property :birth_localization
-  property :thumbnails
   property :created_at
   property :updated_at
+  collection :tags, :from => :interested_areas, :extend => TagRepresenter
   collection :social_networks, :extend => SocialNetworkRepresenter,
     :class => SocialNetwork
-
-
-  #FIXME tornar isso genérico para qualquer thumbnail de qualquer entidade
-  def thumbnails
-    [ { :size => "32x32", :href => self.avatar.url(:thumb_32) },
-      { :size => "110x110", :href => self.avatar.url(:thumb_110) } ]
-  end
 
   link :self do
     api_user_url(self)
@@ -49,4 +46,7 @@ module UserRepresenter
     api_user_chats_url(self)
   end
 
+  link :connections do
+    api_user_connections_url(self)
+  end
 end

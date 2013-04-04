@@ -61,6 +61,8 @@ describe User do
   it { should have_many(:results).dependent(:destroy) }
 
   it { User.new.should respond_to(:notify).with(1) }
+  it { User.new.should respond_to(:can?) }
+  it { User.new.should respond_to(:cannot?) }
 
   [:first_name, :last_name].each do |attr|
     it do
@@ -207,8 +209,8 @@ describe User do
       end
 
       context "length" do
-        it "should not be valid when login has less than 6 letters" do
-          u = Factory.build(:user, :login => "mylog")
+        it "should not be valid when login has less than 5 letters" do
+          u = Factory.build(:user, :login => "nick")
           u.should_not be_valid
           u.errors[:login].should_not be_empty
         end
@@ -905,6 +907,10 @@ describe User do
     subject.most_important_education.should == [edu2, edu3, edu1]
   end
 
+  it "should not return nil elements in most important education array" do
+    subject.most_important_education.should == []
+  end
+
   context "when application validation fail" do
     it "should prevent duplicate logins" do
       @duplicate = Factory.build(:user, :login => subject.login)
@@ -913,112 +919,6 @@ describe User do
       }.should raise_error(ActiveRecord::RecordNotUnique)
     end
   end
-
-  describe 'create_with_omniauth' do
-
-    context "when facebook authenticated user with valid fields" do
-      before { @auth = OmniAuth.config.mock_auth[:facebook] }
-
-      context "and user nickname has points" do
-        before do
-          @temp = @auth[:info][:nickname]
-          @auth[:info][:nickname] = "nick.with.points"
-        end
-
-        after do
-          @auth[:info][:nickname] = @temp
-        end
-
-        it "should generate a valid login" do
-          User.create_with_omniauth(@auth).should be_valid
-        end
-      end
-
-      context "and user nickname exceeds max length" do
-        before do
-          @temp = @auth[:info][:nickname]
-          @auth[:info][:nickname] = "onenicknamewithshitlengthvalidonfacebook"
-        end
-
-        after do
-          @auth[:info][:nickname] = @temp
-        end
-
-        it "should generate a valid login" do
-          User.create_with_omniauth(@auth).should be_valid
-        end
-
-        context "and there's already an user with generated valid login" do
-          before { Factory.create(:user, :login => 'onenicknamewithshitl') }
-
-          it "should generate a valid login" do
-            User.create_with_omniauth(@auth).should be_valid
-          end
-        end
-      end
-
-      context "but there's already an user with given nickname" do
-        before { Factory.create(:user, :login => 'SomeUserville') }
-
-        it "should return a valid user" do
-          User.create_with_omniauth(@auth).should be_valid
-        end
-
-        context "and the most obvious nickname is taken too" do
-          before { Factory.create(:user, :login => 'SomeUserville1') }
-
-          it "should return a valid user" do
-            User.create_with_omniauth(@auth).should be_valid
-          end
-        end
-      end
-
-      it 'should create a new user' do
-        expect {
-          User.create_with_omniauth(@auth)
-        }.to change(User, :count).by(1)
-      end
-
-      it 'should set login for new user properly' do
-        User.create_with_omniauth(@auth).login.should_not be_nil
-      end
-
-      it 'should set e-mail for new user properly' do
-        User.create_with_omniauth(@auth).email.should == @auth[:info][:email]
-      end
-
-      it 'should set first name for new user properly' do
-        User.create_with_omniauth(@auth).first_name.should == @auth[:info][:first_name]
-      end
-
-      it 'should set last name for new user properly' do
-        User.create_with_omniauth(@auth).last_name.should == @auth[:info][:last_name]
-      end
-
-      it 'should create a new authentication' do
-        expect {
-          User.create_with_omniauth(@auth)
-        }.to change(Authentication, :count).by(1)
-      end
-
-      it 'should create a new authentication for correct user' do
-        login = User.get_login_from_provider_username(@auth[:info])
-        User.create_with_omniauth(@auth)
-        Authentication.find_by_uid(@auth[:uid]).user.should == User.
-          find(login)
-      end
-
-      it 'should set uid for new authentication properly' do
-        User.create_with_omniauth(@auth)
-        Authentication.find_by_uid(@auth[:uid]).should_not be_nil
-      end
-
-      it 'should set provider for new authentication properly' do
-        User.create_with_omniauth(@auth)
-        Authentication.find_by_uid(@auth[:uid]).provider.should == @auth[:provider]
-      end
-    end # context "when facebook authenticated user with valid fields"
-  end # describe 'create_with_omniauth'
 
   context "Authlogic" do
     context "when passwords are blank" do
@@ -1030,6 +930,8 @@ describe User do
       end
     end
   end
+
+  it_should_behave_like 'have unique index database'
 
   private
   def create_friendship(user1, user2)

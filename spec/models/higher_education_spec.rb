@@ -8,6 +8,8 @@ describe HigherEducation do
   it { should validate_presence_of :start_year }
   it { should validate_presence_of :end_year }
 
+  it { should have_one(:education) }
+
   context "validations" do
     %w(technical degree bachelorship).each do |kind|
       it "validates presence of course when kind is #{kind}" do

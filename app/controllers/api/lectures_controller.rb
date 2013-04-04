@@ -12,22 +12,15 @@ module Api
 
     def create
       subject = Subject.find(params[:subject_id])
-      canvas_builder = CanvasService.new(:access_token => current_access_token)
+      authorize! :manage, subject
 
-      lecture = Lecture.new do |l|
-        l.name = params[:lecture][:name]
-        l.position = params[:lecture][:position]
-        l.owner = current_user
-        l.subject = subject
-        l.lectureable = canvas_builder.create(params[:lecture])
+      options = { :access_token => current_access_token }.merge(params[:lecture])
+      service = LectureService.new(current_ability, options)
+      lecture = service.create do |lecture|
+        lecture.owner = current_user
+        lecture.subject = subject
       end
 
-      authorize! :manage, lecture
-      lecture.save
-
-      if enrollment = current_user.get_association_with(lecture)
-        lecture.create_asset_report(:enrollments => [enrollment])
-      end
 
       opts = if lecture.valid?
         klass = representer_for_resource(lecture.lectureable) || LectureRepresenter
@@ -51,6 +44,15 @@ module Api
           render :json => lectures.extend(LecturesRepresenter)
         end
       end
+    end
+
+    def destroy
+      lecture = Lecture.find(params[:id])
+      authorize! :manage, lecture
+
+      lecture.destroy
+
+      respond_with :api, lecture
     end
   end
 end

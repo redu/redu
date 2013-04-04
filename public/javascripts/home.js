@@ -215,6 +215,17 @@ $(document).ready(function(){
         } else {
           var identifier = dataTour || href.split("#")[1];
           $.post(url, { id : identifier });
+
+          if (dataTour === "search-courses") {
+            setTimeout(function() {
+              $(".form-search-filters-dropdown input[value=ambientes]:radio")
+                .change()
+                .prop('checked', true);
+              $('#token-input-q').focus();
+            }, 100);
+
+            return false;
+          }
         }
       });
     });

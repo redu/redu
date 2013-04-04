@@ -14,7 +14,7 @@ class Enrollment < ActiveRecord::Base
   has_many :asset_reports, :dependent => :destroy
   has_many :lectures, :through => :asset_reports
 
-  enumerate :role
+  classy_enum_attr :role, :default => 'member'
 
   validates_uniqueness_of :user_id, :scope => :subject_id
 
@@ -29,7 +29,7 @@ class Enrollment < ActiveRecord::Base
   # FIXME Testar
   # Filtra por palavra-chave (procura em User)
   scope :with_keyword, lambda { |keyword|
-    if not keyword.empty? and keyword.size > 4
+    if not keyword.empty? and keyword.size > 2
       where("users.first_name LIKE :keyword " + \
         "OR users.last_name LIKE :keyword " + \
         "OR users.login LIKE :keyword", {:keyword => "%#{keyword.to_s}%"})

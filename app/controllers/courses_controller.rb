@@ -18,11 +18,11 @@ class CoursesController < BaseController
     session[:return_to] = request.fullpath
 
     if @course.blocked?
-      flash[:notice] = "Entre em contato com o administrador deste curso."
+      flash[:info] = "Entre em contato com o administrador deste curso."
     elsif current_user.nil?
-      flash[:notice] = "Essa área só pode ser vista após você acessar o Redu com seu nome e senha."
+      flash[:info] = "Essa área só pode ser vista após você acessar o Redu com seu nome e senha."
     else
-      flash[:notice] = "Você não tem acesso a essa página"
+      flash[:info] = "Você não tem acesso a essa página"
     end
 
     redirect_to preview_environment_course_path(@environment, @course)
@@ -105,52 +105,6 @@ class CoursesController < BaseController
 
   end
 
-  def index
-    paginating_params = {
-      :page => params[:page],
-      :order => 'updated_at DESC',
-      :per_page => Redu::Application.config.items_per_page
-    }
-
-    if params.has_key? :role
-      if params[:role] == 'student'
-        @courses = Course.published.
-          user_behave_as_student(current_user).includes([:tags, :audiences, :environment])
-      elsif params[:role] == 'tutor'
-        @courses = Course.published.
-          user_behave_as_tutor(current_user).includes([:tags, :audiences, :environment])
-      elsif params[:role] == 'teacher'
-        @courses = Course.published.
-          user_behave_as_teacher(current_user).includes([:tags, :audiences, :environment])
-      elsif params[:role] == 'administrator'
-        @courses = Course.user_behave_as_administrator(current_user).
-          includes([:tags, :audiences, :environment])
-      end
-    else
-      @courses = Course.published.includes([:tags, :audiences, :environment])
-    end
-
-    if params.has_key?(:search) && params[:search] != ''
-      search = params[:search].to_s.split
-      @courses = @courses.name_like_all(search)
-    end
-
-    if params.has_key?(:audiences_ids)
-      @courses = @courses.with_audiences(params[:audiences_ids])
-    end
-
-    @courses = @courses.page(params[:page]).
-      per(Redu::Application.config.items_per_page).order('updated_at DESC')
-
-    respond_to do |format|
-      format.html
-      format.js do
-        render_endless('courses/item_detailed', @courses, '#courses_list',
-                       :template => 'shared/endless_kaminari')
-      end
-    end
-  end
-
   # Visão do Course para usuários não-membros.
   def preview
     #FIXME please. Used for redirect to a valid url
@@ -162,11 +116,16 @@ class CoursesController < BaseController
       redirect_to environment_course_path(@environment, @course) and return
     end
 
+    # Ao retornar, usário é direcionado a página de preview, pois se voltar
+    # para o show poderá receber mensagens de acesso negado que irão
+    # confundí-lo
+    session[:return_to] = request.fullpath
+
     @spaces = @course.spaces.paginate(:page => params[:page],
                                       :order => 'name ASC',
                                       :per_page => Redu::Application.config.items_per_page)
     respond_to do |format|
-      format.html
+      format.html { render :layout => 'new_application' }
       format.js do
         render_endless 'spaces/item_short', @spaces, '#course-preview > ul'
       end
@@ -218,7 +177,7 @@ class CoursesController < BaseController
       rejected_ucas = @course.user_course_associations.waiting.
         where(:user_id => rejected.keys)
       rejected_ucas.each do |uca|
-        UserNotifier.reject_membership(uca.user, @course).deliver
+        UserNotifier.delay(:queue => 'email').reject_membership(uca.user, @course)
         uca.destroy
       end
 
@@ -244,7 +203,7 @@ class CoursesController < BaseController
           where(:user_id => approved.keys)
         approved_ucas.each do |uca|
           uca.approve!
-          UserNotifier.approve_membership(uca.user, @course).deliver
+          UserNotifier.delay(:queue => 'email').approve_membership(uca.user, @course)
         end
       elsif can?(:add_entry?, @course) and !rejected.to_hash.empty?
         # Avisa que os membros rejeitados foram moderados mesmo se não houver membros para serem aprovados

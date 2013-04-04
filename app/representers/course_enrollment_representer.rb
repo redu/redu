@@ -11,7 +11,7 @@ module CourseEnrollmentRepresenter
   property :computed_role, :from => :role, :render_nil => true
 
   def computed_role
-    Role[self.role]
+    self.role
   end
 
   link :self do

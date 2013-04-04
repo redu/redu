@@ -76,7 +76,7 @@ class InvitationsController < ApplicationController
     begin
       authorize! :resend_email, @invitation
       @invitation.resend_email do |invitation|
-        UserNotifier.friendship_invitation(invitation).deliver
+        UserNotifier.delay(:queue => 'email').friendship_invitation(invitation)
       end
     rescue
     end

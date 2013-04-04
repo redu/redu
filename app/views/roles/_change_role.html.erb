@@ -1,4 +1,4 @@
-<% is_admin = membership.role.eql?(Role[:environment_admin]) %>
+<% is_admin = membership.role.environment_admin? %>
 <div class="make-admin icon-environment_admin-<%= is_admin ? "lightblue" : "gray" %>_16_18-after">
   <% if is_admin %>
   <span class="current-role strong">Administrador</span>

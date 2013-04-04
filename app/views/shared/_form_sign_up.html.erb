@@ -49,7 +49,8 @@
           </div>
           <div class="controls span4">
             <%= f.text_field :first_name,
-              :placeholder => "Seu primeiro nome" %>
+              :placeholder => "Seu primeiro nome",
+              :maxlength => 25 %>
             <%= concave_errors_for f.object, :first_name %>
           </div>
         </div>
@@ -58,7 +59,8 @@
             <%= f.label :last_name, "Sobrenome" %>
           </div>
           <div class="controls span4">
-            <%= f.text_field :last_name, :placeholder => "Seu último nome" %>
+            <%= f.text_field :last_name, :placeholder => "Seu último nome",
+              :maxlength => 25 %>
             <%= concave_errors_for f.object, :last_name %>
           </div>
         </div>
@@ -70,7 +72,7 @@
           </div>
           <div class="controls span4">
             <%= f.text_field :email, :placeholder =>
-              "Seu e-mail de contato" %>
+              "Seu e-mail de contato", :maxlength => 100 %>
             <%= concave_errors_for f.object, :email %>
           </div>
         </div>
@@ -80,7 +82,7 @@
           </div>
           <div class="controls span4">
             <%= f.text_field :email_confirmation, :placeholder =>
-              "Digite novamente o e-mail" %>
+              "Digite novamente o e-mail", :maxlength => 100 %>
             <%= concave_errors_for f.object, :email_confirmation %>
           </div>
         </div>
@@ -95,7 +97,7 @@
           </div>
           <div class="controls span4">
             <%= f.text_field :login, :placeholder =>
-              "Como será o seu apelido?" %>
+              "Como será o seu apelido?", :maxlength => 20 %>
             <%= concave_errors_for f.object, :login %>
           </div>
         </div>
@@ -118,7 +120,7 @@
           </div>
           <div class="controls span4">
             <%= f.password_field :password,
-              :placeholder => "Digite sua senha" %>
+              :placeholder => "Digite sua senha", :maxlength => 20 %>
             <%= concave_errors_for f.object, :password %>
           </div>
         </div>
@@ -128,7 +130,7 @@
           </div>
           <div class="controls span4">
             <%= f.password_field :password_confirmation,
-              :placeholder => "Confirme sua senha" %>
+              :placeholder => "Confirme sua senha", :maxlength => 20 %>
             <%= concave_errors_for f.object, :password_confirmation %>
           </div>
         </div>

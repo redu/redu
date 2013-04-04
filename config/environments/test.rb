@@ -40,7 +40,7 @@ Redu::Application.configure do
 
   # Armazena no sist. de arquivos
   config.paperclip = {
-    :path => File.join(Rails.root.to_s, "public/images/:class/:attachment/:id/:style/:basename.:extension"),
+    :path => File.join(Rails.root.to_s, "public/:class/:attachment/:id/:style/:basename.:extension"),
     :url => "/system/:class/:attachment/:id/:style/:basename.:extension",
     :default_url => "/images/new/missing_:class_:style.png"
   }
@@ -71,8 +71,8 @@ Redu::Application.configure do
   OmniAuth.config.test_mode = true
 
   # Configura o mockup do OmniAuth
-  OmniAuth.config.mock_auth[:facebook] = {
-    :provider => 'facebook',
+  OmniAuth.config.mock_auth[:some_provider] = {
+    :provider => 'some-provider',
     :uid => '123545',
     :info => {:email => 'user@example.com',
       :first_name => 'Some',

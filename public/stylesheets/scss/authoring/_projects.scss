@@ -1,0 +1,18 @@
+.projects-table {
+  padding: $authoring-content-vertical-padding $authoring-content-horizontal-padding;
+
+  h3 { margin-top: 30px; }
+
+  h4 {
+    font-weight: 100;
+    color: $gray6;
+  }
+
+  table {
+    margin: 20px 0;
+
+    .label-online, .label-news { margin-left: 10px; }
+
+    td { width: 50% }
+  }
+}

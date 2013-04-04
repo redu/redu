@@ -1,6 +1,6 @@
 class UserCourseAssociation < CourseEnrollment
   belongs_to :user
-  enumerate :role
+  classy_enum_attr :role, :default => 'member'
   has_many :logs, :as => :logeable, :order => "created_at DESC",
     :dependent => :destroy
 
@@ -13,7 +13,7 @@ class UserCourseAssociation < CourseEnrollment
 
   # Filtra por palavra-chave (procura em User)
   scope :with_keyword, lambda { |keyword|
-    if not keyword.empty? and keyword.size > 3
+    if not keyword.empty? and keyword.size > 2
       where("users.first_name LIKE :keyword " + \
         "OR users.last_name LIKE :keyword " + \
         "OR users.login LIKE :keyword", {:keyword => "%#{keyword.to_s}%"}).
@@ -69,7 +69,7 @@ class UserCourseAssociation < CourseEnrollment
   validates_uniqueness_of :user_id, :scope => [:course_id, :type]
 
   def send_course_invitation_notification
-    UserNotifier.course_invitation(self.user, self.course).deliver
+    UserNotifier.delay(:queue => 'email').course_invitation(self.user, self.course)
   end
 
   def send_pending_moderation_notification
@@ -86,7 +86,8 @@ class UserCourseAssociation < CourseEnrollment
   # Notifica adimistradores do curso a respeito de moderações pendentes
   def notify_pending_moderation
     self.course.administrators.each do |admin|
-      UserNotifier.course_moderation_requested(course, admin, user).deliver
+      UserNotifier.delay(:queue => 'email').
+        course_moderation_requested(course, admin, user)
     end
   end
 

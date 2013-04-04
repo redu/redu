@@ -15,6 +15,11 @@ Redu::Application.routes.draw do
   match '/analytics/course_by_date', :to => 'analytics_dashboard#course_by_date'
   match '/analytics/post_by_date', :to => 'analytics_dashboard#post_by_date'
 
+  match '/search' => 'search#index', :as => :search
+  # Rota para todos os ambientes em geral e quando houver mais de um filtro selecionado
+  match '/search/environments' => 'search#environments', :as => :search_environments
+  match '/search/profiles' => 'search#profiles', :as => :search_profiles
+
   post "presence/auth"
   post "presence/multiauth"
   post "presence/send_chat_message"
@@ -38,6 +43,7 @@ Redu::Application.routes.draw do
 
   # sessions routes
   match '/signup' => 'users#new', :as => :signup
+  get '/login' => 'sessions#new', :as => :login
   match '/logout' => 'sessions#destroy', :as => :logout
 
   # Authentications
@@ -54,7 +60,7 @@ Redu::Application.routes.draw do
   match '/resend_activation' => 'users#resend_activation',
     :as => :resend_activation
   match '/account/edit' => 'users#edit_account', :as => :edit_account_from_email
-  resources :sessions, :only => [:create, :destroy]
+  resources :sessions, :only => [:new, :create, :destroy]
 
   # site routes
   match '/about' => 'base#about', :as => :about
@@ -139,6 +145,7 @@ Redu::Application.routes.draw do
       get :show_mural
       get :curriculum
     end
+
     collection do
       get :auto_complete
     end
@@ -178,11 +185,9 @@ Redu::Application.routes.draw do
   match 'users/activate/:id' => 'users#activate', :as => :activate
 
   # Indexes
-  match 'privacy' => "base#privacy", :as => :privacy
-  match 'tos' => "base#tos", :as => :tos
   match 'contact' => "base#contact", :as => :contact
   match '/teach' => 'base#teach_index', :as => :teach_index
-  match '/courses' => 'courses#index', :as => :courses_index, :via => :get
+  get '/environments' => 'environments#index', :as => :environments_index
 
   resources :plans, :only => [] do
     member do
@@ -268,6 +273,8 @@ Redu::Application.routes.draw do
     resources :plans, :only => [:create]
   end
 
+  resources :pages, :only => :show
+
   root :to => 'base#site_index', :as => :home
   root :to => "base#site_index", :as => :application
 end
@@ -303,11 +310,13 @@ Redu::Application.routes.draw do
 
     resources :subjects, :except => [:new, :edit, :index, :create] do
       resources :lectures, :only => [:create, :index]
+      resources :asset_reports, :path => "progress", :only => [:index]
     end
 
     resources :lectures, :except => [:new, :edit, :index, :create] do
       resources :user, :only => :index
       resources :statuses, :only => [:index, :create]
+      resources :asset_reports, :path => "progress", :only => [:index]
     end
 
     resources :users, :only => :show do
@@ -320,6 +329,8 @@ Redu::Application.routes.draw do
       resources :users, :only => :index, :path => :contacts,
         :as => :contacts
       resources :chats, :only => :index
+      resources :friendships, :path => :connections,
+        :as => 'connections', :only => [:index, :create]
     end
 
     match 'me' => 'users#show'
@@ -341,6 +352,10 @@ Redu::Application.routes.draw do
 
     resources :myfiles, :path => "files", :only => [:show]
     resources :canvas, :only => [:show, :update, :destroy]
+    resources :asset_reports, :path => "progress", :only => [:show, :update]
+
+    resources :friendships, :path => "connections",
+      :only => [:show, :update, :destroy]
 
     match "vis/spaces/:space_id/lecture_participation",
       :to => 'vis#lecture_participation',

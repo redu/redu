@@ -22,6 +22,7 @@ describe Subject do
   it { should have_many(:members).through(:enrollments) }
   it { should have_many(:statuses) }
   it { should have_many(:logs) }
+  it { should have_many(:asset_reports) }
 
   it { should validate_presence_of :name }
   #FIXME falhando por problema de tradução

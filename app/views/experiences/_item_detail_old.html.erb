@@ -1,0 +1,14 @@
+<div class="details">
+  <span class='title'><%= item.title %></span> em <span class="company"><%= item.company %></span>
+  <span class="period">
+    <% if item.current? %>
+      <%= t item.start_date.strftime("%B %Y") %> -  Atual
+      (<%= distance_of_time_in_words item.start_date, Date.today %>)
+    <% else %>
+      <%= t item.start_date.strftime("%B %Y") %> - <%= t item.end_date.strftime("%B %Y") %>
+      (<%= distance_of_time_in_words item.start_date, item.end_date %>)
+    <% end %>
+  </span>
+
+  <div class="description"><%= item.description %></div>
+</div>

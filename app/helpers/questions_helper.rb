@@ -12,17 +12,4 @@ module QuestionsHelper
 
     [limit, offset]
   end
-
-  def questions_array(size, questions, current)
-    position = current.position
-
-    left_questions = 0
-    left_questions = 4 - position if 4 - position > 0
-
-    left_questions.times do
-      questions = [nil] + questions
-    end
-
-    questions
-  end
 end

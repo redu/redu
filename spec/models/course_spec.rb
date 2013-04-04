@@ -334,25 +334,25 @@ describe Course do
       it "creates environment association" do
         assoc = @user.get_association_with(@environment)
         assoc.should_not be_nil
-        assoc.role.should == Role[:member]
+        assoc.role.should be_member
       end
 
       it "creates course association" do
         assoc = @user.get_association_with(subject)
         assoc.should_not be_nil
-        assoc.role.should == Role[:member]
+        assoc.role.should be_member
       end
 
       it "creates space association" do
         assoc = @user.get_association_with(@space)
         assoc.should_not be_nil
-        assoc.role.should == Role[:member]
+        assoc.role.should be_member
       end
 
       it "enrolls the user" do
         assoc = @user.get_association_with(@subj)
         assoc.should_not be_nil
-        assoc.role.should == Role[:member]
+        assoc.role.should be_member
       end
     end
 
@@ -598,8 +598,8 @@ describe Course do
       @user.user_environment_associations.last.environment.
         should == subject.environment
       @user.user_space_associations.last.space.should == @space
-      @user.user_environment_associations.last.role.should == Role[:tutor]
-      @user.user_space_associations.last.role.should == Role[:tutor]
+      @user.user_environment_associations.last.role.should be_tutor
+      @user.user_space_associations.last.role.should be_tutor
     end
 
     it "should not double create environment association" do
@@ -630,7 +630,7 @@ describe Course do
     it "sets up the member Role as default" do
       @incoming_user = Factory(:user)
       assoc = subject.invite(@incoming_user)
-      assoc.role.should == Role[:member]
+      assoc.role.should be_member
     end
 
     context "when the user is not associated at all" do

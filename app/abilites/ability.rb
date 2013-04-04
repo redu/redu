@@ -109,8 +109,8 @@ class Ability
       # User
       can :read, User
       can :view_mural, User do |u|
-        u.settings.view_mural == Privacy[:public] or
-        (u.settings.view_mural == Privacy[:friends] && u.friends?(user))
+        u.settings.view_mural.public? or
+        (u.settings.view_mural.friends? && u.friends?(user))
       end
 
       # Space
@@ -208,6 +208,8 @@ class Ability
         end
       end
 
+      # Busca
+      can :search, :all
     end
 
     # Todos podem ver o preview

@@ -1,19 +1,4 @@
-require 'db/create_roles'
-require 'db/create_privacies'
-
 namespace :bootstrap do
-
-  desc "Insert default Privacies"
-  task :privacies => :environment do
-    create_privacies
-  end
-
-  desc "Insert default Roles"
-  task :roles => :environment do
-    create_roles
-    #set all existing users to 'member'
-    User.update_all("role = #{Role[:member]}")
-  end
 
   desc "Insert test administrator"
   task :default_admin => :environment do
@@ -100,6 +85,6 @@ namespace :bootstrap do
   end
 
   desc "Run all bootstrapping tasks"
-  task :all => [:roles, :privacies, :audiences, :default_user, :default_admin,
+  task :all => [:audiences, :default_user, :default_admin,
                 :partner, :reduvis_app, :reduapps_app]
 end

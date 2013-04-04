@@ -36,7 +36,6 @@
               var name = $this.attr("name");
 
               $(settings.escapeSelectors(name)).remove();
-              $(settings.titleField).val("");
 
               if(settings.isURL(value)){
                 var ytCode = settings.ytCode(value);
@@ -44,7 +43,10 @@
 
                 if(ytCode) {
                   $.get(settings.ytAPI(ytCode), { "v" : 2, "alt" : "json"}, function(data){
+                    // Substitui o título da aula pelo do vídeo somente se o primeiro já não estiver preenchido.
+                    if ($(settings.titleField).val() === "") {
                       $(settings.titleField).val(data.entry.title["$t"]);
+                    }
                   }, "jsonp");
 
                   // Removendo wrapper anterior, se houver e adicionado o novo iframe
