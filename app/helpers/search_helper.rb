@@ -52,8 +52,10 @@ module SearchHelper
 
   # Exibe o contador de amigos em comum entre parênteses somente quando há algum.
   def show_mutual_friends_counter(user)
-    content_tag(:span, parentize(mutual_friends(user).length), :rel => "tooltip",
-      :title => "Amigos em comum")
+    unless user == current_user
+      content_tag(:span, parentize(mutual_friends(user).length), :rel => "tooltip",
+        :title => "Amigos em comum")
+    end
   end
 
   # Define se o link "Veja todos os resultados" deve ser mostrado.
