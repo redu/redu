@@ -40,10 +40,6 @@ RSpec.configure do |config|
   # em determinados contextos
   config.include CacheSpecHelper
 
-  # Inclui o helper para o uso de requisição de vis,
-  # funciona juntamente com o webmock
-  config.include VisSpecHelper
-
   # Inclui o helper para logar um usuário
   config.include AuthlogicSpecHelper
 

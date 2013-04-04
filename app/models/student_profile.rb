@@ -2,7 +2,6 @@ class StudentProfile < ActiveRecord::Base
   # Perfil de um User num determinado Subject. Contém informações sobre aulas
   # realizadas, porcentagem do Subject cursado e informações sobre desempenho
   # no Subject.
-  include VisClient
 
   after_create :creates_assets_reports
 
@@ -29,24 +28,6 @@ class StudentProfile < ActiveRecord::Base
     if total == done
       self.grade = 100
       self.graduated = true
-
-      params = {
-        :user_id => self.user_id,
-        :lecture_id => nil,
-        :subject_id => self.subject_id,
-        :space_id => self.subject.space.id,
-        :course_id => self.subject.space.course.id,
-        :type => "subject_finalized",
-        :status_id => nil,
-        :statusable_id => nil,
-        :statusable_type => nil,
-        :in_response_to_id => nil,
-        :in_response_to_type => nil,
-        :created_at => self.created_at,
-        :updated_at => self.updated_at
-      }
-
-      #self.send_async_info(params, Redu::Application.config.vis_client[:url])
     end
     self.save
 

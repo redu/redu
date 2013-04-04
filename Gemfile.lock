@@ -122,9 +122,14 @@ GIT
 
 GIT
   remote: git@github.com:redu/vis_client.git
-  revision: be54ea9998109eac8029cbf8e3d14bbefcc73637
+  revision: b714c9fd25ee9d737587bad549a92e048c7106ba
   specs:
-    vis_client (0.0.6)
+    vis_client (0.0.7)
+      configurable
+      faraday
+      json
+      roar
+      system_timer
 
 GEM
   remote: http://rubygems.org/
