@@ -25,7 +25,7 @@ describe 'Canvas API' do
       let(:url) { "/api/subjects/#{sub.id}/lectures"  }
       let(:lecture_params) do
         { :lecture => \
-          { :name => 'Lorem', :type => 'Canvas', :current_url => "http://foo.bar.com"
+          { :name => 'Lorem', :type => 'Canvas', :current_url => "http://foo.bar.com" }
         }.merge(base_params)
       end
     end
