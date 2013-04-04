@@ -54,6 +54,18 @@ Inserção de dados mandatórios:
 $ redu > bundle exec rake bootstrap:all
 ```
 
+Inicialização do servidor de busca:
+
+```sh
+$ redu > bundle exec rake sunspot:solr:start
+```
+
+Indexação dos modelos:
+
+```sh
+$ redu > bundle exec rake sunspot:solr:reindex
+```
+
 Inicialização do servidor de desenvolvimento:
 
 ```sh
@@ -68,6 +80,7 @@ Para fazer o Redu funcionar em ambiente de desenvolvimento você precisará inst
 
 - MySQL 5.1
 - MongoDB 2.0.6
+- Solr 1.4.0
 
 ### Coding style
 
