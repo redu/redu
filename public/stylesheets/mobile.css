@@ -35,6 +35,10 @@ body {
   overflow: hidden;
   margin-top: 20px;
 }
+.mobile-login-password-recovery +
+.facebook-sign-in {
+  margin-top: 20px;
+}
 
 .mobile-login-buttons {
   -webkit-box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.3);
