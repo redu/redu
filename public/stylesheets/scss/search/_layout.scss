@@ -173,7 +173,8 @@
   .control-autocomplete-added-info {
     $thumbnail-width: 32px;
     $thumbnail-spacing-info: 5px;
-    @include calc("width", "100% - (#{$thumbnail-width} + #{$thumbnail-spacing-info})", 85%);
+    $calc: $thumbnail-width + $thumbnail-spacing-info;
+    @include calc("width", "100% - #{$calc}", 85%);
   }
 }
 
@@ -182,13 +183,13 @@
 .portal-search-list-results {
   $list-item-class: ".portal-search-item";
   $columns: 2;
-  $gutter: 20;
+  $gutter: 20px;
   padding-bottom: 10px;
 
   #{$list-item-class} {
     $old-browser-value: percentage(((100 / $columns) - 1) / 100);
     $calc: ($columns - 1) * $gutter;
-    $expression: "(100% - #{$calc}px) / #{$columns}";
+    $expression: "(100% - #{$calc}) / #{$columns}";
     @include calc("width", $expression, $old-browser-value);
     margin-left: $gutter;
   }
@@ -196,7 +197,9 @@
   &.list-columns-separator {
     #{$list-item-class}:nth-child(#{$columns}n+1):after {
       $old-browser-value: percentage((100 * $columns) / 100);
-      $expression: "100%  *  #{$columns}  +  #{$gutter}px  *  (#{$columns}  -  1)";
+      $calc1: 100% * $columns;
+      $calc2: $gutter * ($columns - 1);
+      $expression: "#{$calc1} + #{$calc2}";
       @include calc("width", $expression, $old-browser-value);
     }
   }

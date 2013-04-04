@@ -179,10 +179,10 @@
 }
 .token-input-dropdown-redu .control-autocomplete-added-info {
   width: 85%;
-  width: -moz-calc(100% - (32px + 5px));
-  width: -o-calc(100% - (32px + 5px));
-  width: -webkit-calc(100% - (32px + 5px));
-  width: calc(100% - (32px + 5px));
+  width: -moz-calc(100% - 37px);
+  width: -o-calc(100% - 37px);
+  width: -webkit-calc(100% - 37px);
+  width: calc(100% - 37px);
 }
 
 .portal-search-list-results {
@@ -194,12 +194,12 @@
   width: -o-calc((100% - 20px) / 2);
   width: -webkit-calc((100% - 20px) / 2);
   width: calc((100% - 20px) / 2);
-  margin-left: 20;
+  margin-left: 20px;
 }
 .portal-search-list-results.list-columns-separator .portal-search-item:nth-child(2n+1):after {
   width: 200%;
-  width: -moz-calc(100%  *  2  +  20px  *  (2  -  1));
-  width: -o-calc(100%  *  2  +  20px  *  (2  -  1));
-  width: -webkit-calc(100%  *  2  +  20px  *  (2  -  1));
-  width: calc(100%  *  2  +  20px  *  (2  -  1));
+  width: -moz-calc(200% + 20px);
+  width: -o-calc(200% + 20px);
+  width: -webkit-calc(200% + 20px);
+  width: calc(200% + 20px);
 }
