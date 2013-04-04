@@ -26,7 +26,6 @@ describe VisResultObserver do
       end
 
       it "should not call VisClient.notify_delayed" do
-        subject
         VisClient.should_not_receive(:notify_delayed)
 
         ActiveRecord::Observer.with_observers(:vis_result_observer) do
