@@ -4,12 +4,14 @@
 var findIconClasses = function(classes) {
   var iconClasses = [];
 
-  classes = classes.split(' ');
-  $.each(classes, function(index, value) {
-    if (value.indexOf('icon-') !== -1) {
-      iconClasses.push(value);
-    }
-  });
+  if (classes) {
+    classes = classes.split(' ');
+    $.each(classes, function(index, value) {
+      if (value.indexOf('icon-') !== -1) {
+        iconClasses.push(value);
+      }
+    });
+  }
 
   return iconClasses.join(' ');
 };
@@ -1340,6 +1342,7 @@ $(function() {
     }
   })
 
+
   // No elemento de opção com texto e formulários de busca, quando o campo ou
   // área de texto estiverem selecionados, mudar a cor da borda e os ícones dos
   // botões de cinza para azul. O inverso acontece quando deselecionado.
@@ -2015,22 +2018,6 @@ $(function() {
       settings = $.extend(settings, options)
 
       var $this = $(this)
-
-      // Encontra possíveis classes de ícones.
-      var findIconClasses = function(classes) {
-        var iconClasses = []
-
-        if(classes){
-          classes = classes.split(' ')
-            $.each(classes, function(index, value) {
-              if (value.indexOf('icon-') !== -1) {
-                iconClasses.push(value)
-              }
-            })
-        }
-
-        return iconClasses.join(' ')
-      }
 
       // Se for um formulário.
       if ($this.is('form')) {
