@@ -27,31 +27,23 @@
       </div>
       <%= new_tabs(:new_users) do %>
       <% end %>
-      <div class="row">
-        <div class="span10">
-          <div class="content-section">
-            <% if @friends.size == 0 %>
-              <div class="empty-invite-list">
-                <span class="icon-invite-empty_128_130 show text-replacement"></span>
-                <p>Adicione amigos e crie sua rede social educacional. Você pode conversar, ajudar e tirar dúvidas com seus amigos. <a>Que tal procurar?</a></p>
-              </div>
-            <% else %>
-            <ul class="list-2-columns list-columns-separator friendship-list clearfix">
-              <%= render :partial => "users/item_medium", :collection => @friends %>
-            </ul>
-            <% end %>
-          </div>
-        </div>
-      </div>
-      <hr class="list-separator">
       <div class="content-section">
-        <div class="pagination">
-          <a href="#" class="button-default" title="1">1</a>
-          <a href="#" class="button-default" title="2">2</a>
-          <a href="#" class="button-default" title="3">3</a>
-          <a href="#" class="button-default" title="4">4</a>
-        </div>
+        <% if @friends.size == 0 %>
+          <div class="empty-invite-list">
+            <span class="icon-invite-empty_128_130 show text-replacement"></span>
+            <p>Adicione amigos e crie sua rede social educacional. Você pode conversar, ajudar e tirar dúvidas com seus amigos. <a>Que tal procurar?</a></p>
+          </div>
+        <% else %>
+          <ul class="list-2-columns list-columns-separator friendship-list clearfix">
+            <%= render :partial => "users/item_medium", :collection => @friends %>
+          </ul>
+        <% end %>
       </div>
+      <% if @friends.num_pages > 1 %>
+        <hr class="list-separator">
+      <% end %>
+      <%= paginate @friends, :theme => "numbers",
+        :outer_window => 1, :inner_window => 4 %>
     </div>
     <%= render :partial => "friendships/breadcrumb",
        :locals => { :user => @user } %>

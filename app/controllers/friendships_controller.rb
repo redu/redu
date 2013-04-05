@@ -7,8 +7,7 @@ class FriendshipsController < BaseController
   def index
     @profile = params[:profile] if params.has_key? :profile
     @total_friends = @user.friends.count
-    @friends = @user.friends.
-      paginate(:page => params[:page], :per_page => 16)
+    @friends = @user.friends.page(params[:page]).per(20)
 
     respond_to do |format|
       format.html do
