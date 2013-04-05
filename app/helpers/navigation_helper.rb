@@ -59,10 +59,11 @@ module NavigationHelper
     # Início só é selecionado se estiver relacionado ao current user
     if !request.fullpath.match(%r(\A#{ users_path }/#{ current_user.to_param })).nil?
       :start
-    # Não aciona a navegacão global se estiver na área relacionada a partners
-    # ou ao profile de outro usuário
+    # Não aciona a navegacão global se estiver na área relacionada a partners,
+    # profile de outro usuário, busca ou páginas estáticas
     elsif !request.fullpath.match(%r(\A#{ partners_path })).nil? ||
           !request.fullpath.match(%r(\A#{ search_path })).nil? ||
+          !request.fullpath.match(%r(\A#{ page_path })).nil? ||
           !request.fullpath.match(%r(\A#{ users_path }/)).nil?
       :global
     elsif !request.fullpath.match(%r(\A#{ environments_path }[?])).nil? ||
