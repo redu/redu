@@ -46,7 +46,7 @@ class Seminar < ActiveRecord::Base
 
   # Converte o video para FLV (Zencoder)
   def transcode
-    return if Rails.env.development?
+    return if Rails.env.development? || Rails.env.test?
     seminar_info = {
       :id => self.id,
       :class => self.class.to_s.tableize,
@@ -95,12 +95,15 @@ class Seminar < ActiveRecord::Base
   end
 
   def external_resource_url=(url)
-    self.external_resource_type = "youtube"
-
     capture = url.match(/youtube.com.*(?:\/|v=)([^&$]+)/)
-    # Pegando texto capturado ou retornando nil se o regex falhar
-    capture = capture[1]
-    self.external_resource = capture
+
+    unless capture.nil?
+      self.external_resource_type = "youtube"
+
+      # Pegando texto capturado ou retornando nil se o regex falhar
+      capture = capture[1]
+      self.external_resource = capture
+    end
   end
 
   def type

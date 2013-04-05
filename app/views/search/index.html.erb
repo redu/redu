@@ -1,0 +1,42 @@
+<%= content_for :container_class do %>portal-search<% end %>
+
+<div class="span16">
+  <%= render :partial => "header", :locals => { :query => @query } %>
+  <div class="portal-body content-body">
+    <%= new_tabs :search %>
+    <%# Se foi encontrado algum resultado. %>
+    <% if @total_results > 0 %>
+      <%= render :partial => "result_quantity",
+        :locals => { :total_results => @total_results,
+                     :query => @query } %>
+      <%= render :partial => "user_list",
+        :locals => { :profiles => @profiles,
+                     :query => @query } %>
+      <% unless (@profiles.empty? || @environments.empty?) %>
+        <hr class="list-separator">
+      <% end %>
+      <%= render :partial => "environment_list",
+        :locals => { :environments => @environments,
+                     :query => @query } %>
+      <% unless (@profiles.empty? || @environments.empty? || @courses.empty?) %>
+        <hr class="list-separator">
+      <% end %>
+      <%= render :partial => "course_list",
+        :locals => { :courses => @courses,
+                     :query => @query } %>
+      <% unless (@profiles.empty? || @environments.empty? || @courses.empty? || @spaces.empty?) %>
+        <hr class="list-separator">
+      <% end %>
+      <%= render :partial => "space_list",
+        :locals => { :spaces => @spaces,
+                     :query => @query } %>
+    <%# Nenhum resultado encontrado. %>
+    <% else %>
+      <%= render :partial => "empty_search_result",
+        :locals => { :query => @query } %>
+    <% end %>
+  </div>
+  <div class="breadcrumb-mini-wrapper">
+    <%= render :partial => "breadcrumb_mini", :locals => { :query => @query } %>
+  </div>
+</div>

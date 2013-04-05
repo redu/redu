@@ -4,12 +4,14 @@
 var findIconClasses = function(classes) {
   var iconClasses = [];
 
-  classes = classes.split(' ');
-  $.each(classes, function(index, value) {
-    if (value.indexOf('icon-') !== -1) {
-      iconClasses.push(value);
-    }
-  });
+  if (classes) {
+    classes = classes.split(' ');
+    $.each(classes, function(index, value) {
+      if (value.indexOf('icon-') !== -1) {
+        iconClasses.push(value);
+      }
+    });
+  }
 
   return iconClasses.join(' ');
 };
@@ -2016,20 +2018,6 @@ $(function() {
       settings = $.extend(settings, options)
 
       var $this = $(this)
-
-      // Encontra possíveis classes de ícones.
-      var findIconClasses = function(classes) {
-        var iconClasses = []
-
-        classes = classes.split(' ')
-        $.each(classes, function(index, value) {
-          if (value.indexOf('icon-') !== -1) {
-            iconClasses.push(value)
-          }
-        })
-
-        return iconClasses.join(' ')
-      }
 
       // Se for um formulário.
       if ($this.is('form')) {

@@ -24,10 +24,11 @@
 #resource .exercise-nav ol {
   margin: 14px 10px 1px 10px;
   overflow: hidden;
+  text-align: center;
 }
 
 #resource .exercise-nav ol li {
-  float: left;
+  display: inline-block;
   width: 57px;
   height: 35px;
   text-align: center;
@@ -77,7 +78,7 @@
   color: rgb(232, 59, 59);
 }
 
-#resource .exercise .concave-clean {  
+#resource .exercise .concave-clean {
   padding: 6px 12px 7px 12px;
   color: rgb(77, 173, 214);
   border: 1px solid rgb(204, 204, 204);

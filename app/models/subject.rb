@@ -1,5 +1,4 @@
 class Subject < ActiveRecord::Base
-  include EnrollmentVisNotification
 
   belongs_to :space
   belongs_to :owner, :class_name => "User", :foreign_key => :user_id
@@ -13,6 +12,7 @@ class Subject < ActiveRecord::Base
   has_many :statuses, :as => :statusable, :order => "created_at DESC"
   has_many :logs, :as => :logeable, :order => "created_at DESC",
     :dependent => :destroy
+  has_many :asset_reports
 
   scope :recent, lambda { where('created_at > ?', 1.week.ago) }
   scope :visible, lambda { where('visible = ?', true) }
@@ -84,7 +84,9 @@ class Subject < ActiveRecord::Base
         Enrollment.create(:user_id => usa.user_id, :subject => self,
                           :role => usa.role)
       end
-      delay_hierarchy_notification(enrollments, "enrollment")
+
+      VisClient.notify_delayed("/hierarchy_notifications.json",
+                               "enrollment", enrollments.compact)
     end
   end
 

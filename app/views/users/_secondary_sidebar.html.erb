@@ -1,24 +1,29 @@
 <div class="secondary-sidebar profile-sidebar">
   <div class="actions">
-    <% friendship = current_user.friendship_for @user %>
-    <% is_friend = current_user.friends?(@user) %>
-    <% if is_friend %>
+    <% # Usuários = current_user e o perfil visitado %>
+    <% # Se os usuários forem amigos, existe a opção de acabar com a amizade %>
+    <% if is_friend?(@user) %>
       <%= link_to 'Remover contato',
-        user_friendship_path(current_user, friendship.id),
+        user_friendship_path(current_user, current_friendship(@user).id),
         :remote => true,
         :method => :delete,
         :class => "disconnect icon-delete-gray_8_10-before"%>
     <% end %>
+
+    <% # Se o perfil for o do current user %>
     <% if can? :manage, @user %>
       <%= render :partial => 'users/completeness_bar' %>
     <% end %>
 
-    <% friendship = @user.friendship_for current_user %>
-    <% if !is_friend and current_user != @user %>
-      <% if friendship %>
-        <% if friendship.status == 'pending' %>
+    <% # Se os usuários não forem amigos ainda %>
+    <% if !is_friend?(@user) %>
+      <% # Se existe requisição pendente %>
+      <% if current_friendship(@user) %>
+        <% # Se current_user já enviou requisição de amizade %>
+        <% if current_friendship(@user).status == 'pending' %>
           <a class="waiting">Aguardando aceitação</a>
-        <% elsif current_user != @user %>
+        <% # Se o usuario do perfil enviou requisiçnao de amizade %>
+        <% else %>
           <%= link_to 'Aceitar pedido de conexão',
             user_friendships_path(current_user,
                                   :friend_id => @user.id),
@@ -26,15 +31,17 @@
                                   :class => "waiting",
                                   :id => "follow_link" %>
         <% end %>
-      <% else %>
+      <% # Se não houver requisição de amizade eles não podem ser a mesma pessoa %>
+      <% elsif !@user.is?(current_user) %>
         <%= render :partial => 'friendships/form', :locals => {
           :user => current_user, :friend => @user } %>
       <% end %>
     <% end %>
 
-    <% if is_friend and !(current_user == @user) %>
-      <%= link_to (user_messages_path(current_user),
-                   :class => 'send-message') do %>
+    <% # Se os usuário forem amigos, opção para escrever mensagem %>
+    <% if is_friend?(@user) %>
+      <%= link_to(user_messages_path(current_user),
+                  :class => 'send-message') do %>
         <span class="write-message icon-add_message-lightblue_16_18-before">Escrever Mensagem</span>
       <% end %>
     <% end %>

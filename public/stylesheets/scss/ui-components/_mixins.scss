@@ -46,7 +46,7 @@
 @mixin pseudo-before($marginRight: 5px, $float: true) {
   content: "";
   display: inline-block;
-  vertical-align: bottom;
+  vertical-align: middle;
   margin-right: $marginRight;
 
   @if ($float) { float: left; }
@@ -58,7 +58,7 @@
 @mixin pseudo-after($marginLeft: 5px, $float: true) {
   content: "";
   display: inline-block;
-  vertical-align: bottom;
+  vertical-align: middle;
   margin-left: $marginLeft;
 
   @if ($float) { float: right; }
@@ -78,6 +78,28 @@
   @include link-visited($color);
 
   &:hover { color: $color; }
+}
+
+// Define a largura da área prefixada e o padding esquerdo da área infixa.
+//  $area-infix-padding-left: o padding esquerdo da área infixa.
+//  $area-prefix-width: a largura da área prefixada.
+@mixin area-prefix(
+  $area-infix-padding-left,
+  $area-prefix-width) {
+  .area-prefix { width: $area-prefix-width; }
+
+  .area-infix { padding-left: $area-prefix-width + $area-infix-padding-left; }
+}
+
+// Define a largura da área sufixada e o padding direito da área infixa.
+//  $area-infix-padding-right: o padding direito da área infixa.
+//  $area-suffix-width: a largura da área sufixada.
+@mixin area-suffix(
+  $area-infix-padding-right,
+  $area-suffix-width) {
+  .area-suffix { width: $area-suffix-width; }
+
+  .area-infix { padding-right: $area-suffix-width + $area-infix-padding-right; }
 }
 
 
@@ -110,10 +132,42 @@
 
 // Border radius.
 //  $radius: o(s) raio(s) da(s) borda(s).
-@mixin border-radius($radius: 5px) {
+@mixin border-radius($radius: $border-radius-default) {
   -webkit-border-radius: $radius;
      -moz-border-radius: $radius;
           border-radius: $radius;
+}
+
+// Border radius superior esquerda.
+//  $radius: o raio da borda.
+@mixin border-top-left-radius($radius: $border-radius-default) {
+  -webkit-border-top-left-radius: $radius;
+      -moz-border-radius-topleft: $radius;
+          border-top-left-radius: $radius;
+}
+
+// Border radius superior direito.
+//  $radius: o raio da borda.
+@mixin border-top-right-radius($radius: $border-radius-default) {
+  -webkit-border-top-right-radius: $radius;
+      -moz-border-radius-topright: $radius;
+          border-top-right-radius: $radius;
+}
+
+// Border radius inferior direito.
+//  $radius: o raio da borda.
+@mixin border-bottom-right-radius($radius: $border-radius-default) {
+  -webkit-border-bottom-right-radius: $radius;
+      -moz-border-radius-bottomright: $radius;
+          border-bottom-right-radius: $radius;
+}
+
+// Border radius inferior esquerdo.
+//  $radius: o raio da borda.
+@mixin border-bottom-left-radius($radius: $border-radius-default) {
+  -webkit-border-bottom-left-radius: $radius;
+      -moz-border-radius-bottomleft: $radius;
+          border-bottom-left-radius: $radius;
 }
 
 // Drop shadows.
@@ -140,6 +194,14 @@
   -webkit-box-sizing: $box-mode;
      -moz-box-sizing: $box-mode;
           box-sizing: $box-mode;
+}
+
+// Background clipping.
+//  $clip: o modelo.
+@mixin background-clip($clip) {
+  -webkit-background-clip: $clip;
+     -moz-background-clip: $clip;
+          background-clip: $clip;
 }
 
 // Opacidade.
@@ -416,63 +478,71 @@
     border-color: $disabled-border-color;
     background-color: $disabled-background-color;
     background-image: none;
+    cursor: not-allowed;
   }
 }
 
 // Dado uma lista, organiza seus itens em colunas de tamanhos iguais.
-//  $columns: a quantidade de colunas desejada.
+//  $n: a quantidade de colunas desejada.
 //  $gutter: o espaçamento esquerdo entre cada item.
 //  $list-item-class: o nome da classe ou elemento do item da lista.
-@mixin list-column($columns: 2, $gutter: 10px, $list-item-class: "li") {
-  overflow: hidden;
-  padding-bottom: 1px;
+@mixin list-column($n: 2, $gutter: 10px, $list-item-class: "li") {
   list-style: none;
   margin: 0;
 
   & > #{$list-item-class} {
     @include box-sizing;
-    $old-browser-value: percentage(((100 / $columns) - 1) / 100) + 1;
+    $old-browser-value: percentage(((100 / $n) - 1) / 100);
     // Calcula a porcentagem de largura de cada item, levando em consideração
     // também os espaçamentos esquerdos.
-    $expression: "(100% - ((#{$columns} - 1) * #{$gutter})) / #{$columns}";
+    $expression: "(100% - ((#{$n} - 1) * #{$gutter})) / #{$n}";
     @include calc("width", $expression, $old-browser-value);
     margin-left: $gutter;
     float: left;
     position: relative;
 
-    // Remove o espaçamento do primeiro e cada ($columns+1)-ésimo item.
-    &:first-child,
-    &:nth-child(#{$columns}n+1) { margin-left: 0; }
+    // Remove o espaçamento de cada ($n+1)-ésimo item.
+    &:nth-child(#{$n}n+1) {
+      margin-left: 0;
+      clear: left;
+    }
   }
 }
 
 // Dado uma lista, adiciona uma linha separadora depois de cada $n-ésimo item.
 //  $n: a ordem do item em que o separador será incluído.
-//  $margin-bottom: o tamanho do espaçamento entre linhas.
+//  $gutter: o espaçamento esquerdo entre cada item.
+//  $margin-top: o tamanho do espaçamento entre linhas.
 //  $color: a cor do separador.
 //  $list-item-class: o nome da classe ou elemento do item da lista.
-@mixin list-column-separator($n: 2, $margin-bottom: 10px, $color: $gray3, $list-item-class: "li") {
+@mixin list-column-separator($n: 2, $gutter: 10px, $margin-top: 20px,
+  $color: $gray3, $list-item-class: "li") {
   & > #{$list-item-class} {
-    &:nth-child(#{$n}n) {
-      margin-bottom: $margin-bottom;
+    margin-top: $margin-top;
+
+    &:nth-child(#{$n}n+1) {
       position: relative;
 
       &:after {
         background-color: $color;
-        bottom: (- ($margin-bottom / 2));
+        $old-browser-value: 103%;
+        $expression: "100% + (#{$margin-top} / 2) - 1px";
+        @include calc("bottom", $expression, $old-browser-value);
         content: "";
         display: block;
         height: 1px;
-        right: 0;
+        left: 0;
         position: absolute;
-        width: (100% * $n) + 50;
+        $old-browser-value: percentage((100 * $n) / 100);
+        $expression: "100% * #{$n} + #{$gutter} * (#{$n} - 1)";
+        @include calc("width", $expression, $old-browser-value);
       }
+    }
 
-      &:last-child {
-        margin-bottom: 0;
+    @while $n > 0 {
+      &:nth-child(#{$n}) { margin-top: 0; }
 
-        &:after { content: none; }
-      }
+      $n: $n - 1;
     }
   }
 }

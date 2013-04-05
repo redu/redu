@@ -17,8 +17,8 @@ describe "Activity" do
     response.code.should == '200'
   end
 
-  it "should have id, text, created_at, links and type" do
-    %w(id text created_at links updated_at type).each do |attr|
+  it "should have id, text, created_at, links, type and answers_count" do
+    %w(id text created_at links updated_at type answers_count).each do |attr|
       @entity.should have_key attr
     end
   end
@@ -39,6 +39,27 @@ describe "Activity" do
     let(:embeder) { activity }
     let(:user) { embeder.user }
     let(:entity) { @entity }
+  end
+
+  it_should_behave_like 'having breadcrumbs', "User" do
+    let(:get_params) { params }
+    let(:status) { activity }
+  end
+
+  it_should_behave_like 'having breadcrumbs', "Space" do
+    let(:get_params) { params }
+    let(:status) do
+      Factory(:activity, :user => current_user,
+              :statusable => Factory(:space, :owner => current_user))
+    end
+  end
+
+  it_should_behave_like 'having breadcrumbs', "Lecture" do
+    let(:get_params) { params }
+    let(:status) do
+      Factory(:activity, :user => current_user,
+              :statusable => Factory(:lecture, :owner => current_user))
+    end
   end
 end
 

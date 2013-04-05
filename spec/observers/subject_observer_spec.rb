@@ -62,6 +62,16 @@ describe SubjectObserver do
         end
       end
 
+      it "should call VisClient.notify_delayed when subject is finalized" do
+
+        VisClient.should_receive(:notify_delayed)
+
+        ActiveRecord::Observer.with_observers(:subject_observer) do
+          @subject.finalized = true
+          @subject.save
+        end
+      end
+
       it "shouldn't create enrollment associations when subject isn't finalized" do
         ActiveRecord::Observer.with_observers(:subject_observer) do
           expect {

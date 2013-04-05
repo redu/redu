@@ -1,16 +1,10 @@
 class BaseController < ApplicationController
-  layout :choose_layout, :except => [:landing]
+  layout :choose_layout, :except => [:basic]
   # Work around (ver método self.login_required_base)
 
   rescue_from CanCan::AccessDenied, :with => :deny_access
-
-  def tos
-    render :layout => 'clean'
-  end
-
-  def privacy
-    render :layout => 'clean'
-  end
+  rescue_from ActiveRecord::RecordNotUnique,
+    :with => Proc.new { redirect_to application_path }
 
   def teach_index
     authorize! :teach_index, :base
@@ -29,7 +23,7 @@ class BaseController < ApplicationController
 
       respond_to do |format|
         format.html do
-          render :layout => 'landing'
+          render :layout => 'basic'
         end
       end
     end

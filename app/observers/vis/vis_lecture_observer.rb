@@ -1,17 +1,16 @@
 class VisLectureObserver < ActiveRecord::Observer
-
   observe :lecture
 
-  #def before_destroy(lecture)
-  #  if exercise? lecture
-  #    job = ExerciseFinalizedNotificationJob.new(lecture)
-  #    Delayed::Job.enqueue(job, :queue => 'general')
-  #  end
-  #end
+  def before_destroy(lecture)
+    lectureable = lecture.lectureable
+    if lectureable.is_a? Exercise
+      finalized_results = lectureable.results.select do |r|
+        r.finalized?
+      end
 
-  protected
-
-  def exercise?(lecture)
-    lecture.lectureable_type == "Exercise"
+      VisClient.notify_delayed("/hierarchy_notifications.json",
+                               "remove_exercise_finalized",
+                               finalized_results)
+    end
   end
 end

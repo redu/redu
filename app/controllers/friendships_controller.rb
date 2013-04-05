@@ -50,6 +50,9 @@ class FriendshipsController < BaseController
       format.js do
         @show_user = params.has_key? :show_user
         @recommendation = params.has_key? :recommendation
+        @in_search = params.has_key? :in_search
+        @in_search_send = params.has_key? :in_search_send
+        @in_search_accept = params.has_key? :in_search_accept
       end
     end
   end

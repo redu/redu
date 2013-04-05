@@ -42,6 +42,26 @@ describe "Log" do
       let(:user) { embeder.user }
       let(:entity) { @entity }
     end
+
+    it_should_behave_like 'having breadcrumbs', "User" do
+      let(:get_params) { params }
+      let(:status) do
+        Factory(:log, :user => current_user, :statusable => current_user)
+      end
+    end
+
+    it_should_behave_like 'having breadcrumbs', "Space" do
+      let(:get_params) { params }
+      let(:status) { log }
+    end
+
+    it_should_behave_like 'having breadcrumbs', "Lecture" do
+      let(:get_params) { params }
+      let(:status) do
+        Factory(:log, :user => current_user,
+                :statusable => Factory(:lecture, :owner => current_user))
+      end
+    end
   end
 
   context "when GET /api/users/:id/statuses" do

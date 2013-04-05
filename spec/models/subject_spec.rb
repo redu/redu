@@ -22,6 +22,7 @@ describe Subject do
   it { should have_many(:members).through(:enrollments) }
   it { should have_many(:statuses) }
   it { should have_many(:logs) }
+  it { should have_many(:asset_reports) }
 
   it { should validate_presence_of :name }
   #FIXME falhando por problema de tradução
@@ -224,47 +225,6 @@ describe Subject do
   it "verifies if a not enrolled user did not complete the subject" do
     unenrolled_user = Factory(:user)
     subject.graduated?(unenrolled_user).should be_false
-  end
-
-  context "when create a new subject" do
-    before do
-      WebMock.disable_net_connect!
-      3.times do
-        u = Factory(:user)
-        @course.join(u)
-      end
-      @stub = stub_request(:post, Redu::Application.config.vis_client[:url]).
-        with(:headers => {'Authorization'=>['JOjLeRjcK', 'core-team'],
-                          'Content-Type'=>'application/json'}).
-                          to_return(:status => 200, :body => "", :headers => {})
-
-
-      @subject = Factory(:subject, :owner => @user, :space => @space)
-      @subject.create_enrollment_associations
-      @enrollments = @subject.enrollments
-    end
-
-    it "should send a notification to visualization" do
-      @enrollments.collect do |enroll|
-        params = {
-          :lecture_id => nil,
-          :subject_id => enroll.subject_id,
-          :space_id => enroll.subject.space_id,
-          :course_id => enroll.subject.space.course_id,
-          :user_id => enroll.user_id,
-          :type => "enrollment",
-          :status_id => nil,
-          :statusable_id => nil,
-          :statusable_type => nil,
-          :in_response_to_id => nil,
-          :in_response_to_type => nil,
-          :created_at => enroll.created_at,
-          :updated_at => enroll.updated_at
-        }
-
-        vis_a_request(params).should have_been_made
-      end
-    end
   end
 
   it "should remove subjects unfinalized that was created more then 1 days ago" do

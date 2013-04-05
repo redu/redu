@@ -33,16 +33,18 @@ RSpec.configure do |config|
   # Inclui o helper para fazer mock da API do scribd
   config.include ScribdSpecHelper
 
+  # Inclui helper para fazer mock dos métodos da Busca
+  config.include SearchSpecHelper
+
   # Inclui o helper para habilitar a utilização de cache
   # em determinados contextos
   config.include CacheSpecHelper
 
-  # Inclui o helper para o uso de requisição de vis,
-  # funciona juntamente com o webmock
-  config.include VisSpecHelper
-
   # Inclui o helper para logar um usuário
   config.include AuthlogicSpecHelper
+
+  # Inclui o helper para fazer mock do User Agent
+  config.include UserAgentSpecHelper
 
   # Desabilita criação de logs nos specs
   ActiveRecord::Observer.disable_observers
