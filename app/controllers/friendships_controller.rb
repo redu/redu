@@ -10,9 +10,7 @@ class FriendshipsController < BaseController
     @friends = @user.friends.page(params[:page]).per(20)
 
     respond_to do |format|
-      format.html do
-        render :layout => 'new_application'
-      end
+      format.html { render :layout => 'new_application' }
       format.js { render_endless 'users/item_medium', @friends, '#contacts > ul' }
     end
   end
@@ -23,9 +21,7 @@ class FriendshipsController < BaseController
     @contacts_recommendations = @user.recommended_contacts(5)
 
     respond_to do |format|
-      format.html do
-        render :layout => 'new_application'
-      end
+      format.html { render :layout => 'new_application' }
     end
   end
 
