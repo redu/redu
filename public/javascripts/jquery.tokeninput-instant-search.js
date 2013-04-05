@@ -273,6 +273,8 @@ $.TokenListInstantSearch = function (input, url_or_data, settings) {
             switch(event.keyCode) {
                 case KEY.LEFT:
                 case KEY.RIGHT:
+                    // Permite mover o cursor para direita e esquerda.
+                    break;
                 case KEY.UP:
                 case KEY.DOWN:
                     if(!$(this).val()) {
