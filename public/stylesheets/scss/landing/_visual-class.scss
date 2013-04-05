@@ -6,28 +6,20 @@ $landing-visual-background-color: $gray1;
 
 // Título.
 .landing-visual-title {
-  position: relative;
+  text-align: right;
 
-  h3 {
-    text-align: right;
-    color: $black;
-
-    a { color: $black; }
-  }
+  a { color: $black; }
 
   h4 {
-    text-align: right;
     color: $gray5;
     padding-top: 10px;
     letter-spacing: 0px;
-    .textshadow & { text-shadow: 1px 1px 0 white; }
   }
 }
 
 // Wrapper.
 .landing-visual-outer-wrapper {
-  @include box-sizing(border-box);
-  padding: 25px 0;
+  padding: 20px 0;
   background-color: $landing-visual-background-color;
 
   .cssgradients & { @include background-image(linear-gradient(rgba(0, 0, 0, 0.4), $landing-visual-background-color 5%, $landing-visual-background-color 95%, rgba(0, 0, 0, 0.4) 100%)); }
