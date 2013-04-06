@@ -1,14 +1,16 @@
 <%# Usuário representado pelo avatar (thumb_90) e o link do nome  %>
 <li class="general-list-item middle-width">
   <div class="general-list-item-body">
+    <% name = item_medium.display_name %>
     <div class="general-list-item-column">
-      <%= link_to item_medium, :title => item_medium.display_name do %>
+      <%= link_to item_medium, :title => name do %>
         <%= image_tag item_medium.avatar.url(:thumb_90), :class => 'avatar', :size => "64x64" %>
       <% end %>
     </div>
     <div class="general-list-item-column">
-      <%= link_to item_medium.display_name, user_path(item_medium), :title => item_medium.display_name, :class => 'link-name text-truncate' %>
-      <span class="legend text-truncate" title="<%= item_medium.experiences.actual_jobs.map{ |exp| exp.title.strip }.join(", ") %>"><%= item_medium.experiences.actual_jobs.map{ |exp| exp.title.strip }.join(", ") %></span>
+      <%= link_to name, user_path(item_medium), :title => name, :class => 'link-name text-truncate' %>
+      <% experiences = item_medium.experiences.actual_jobs.map{ |exp| exp.title.strip }.join(", ") %>
+      <span class="legend text-truncate" title="<%= experiences %>"><%= experiences %></span>
       <span class="legend"><%= pluralize(mutual_friends(item_medium).length, "contato") %> em comum</span>
     </div>
   </div>
