@@ -11,19 +11,21 @@ class ConnectionError < StandardError
 end
 
 def insert_enrollments(date)
-  Enrollment.where("created_at >= '#{date}'").each do |enrollment|
-    unless enrollment.subject.space.nil?
-      unless enrollment.subject.space.course.nil?
-        params_enroll = fill_enroll(enrollment, "enrollment")
-        send_async_info(params_enroll,
-                             Redu::Application.config.vis_client[:url])
+  Enrollment.where("created_at >= '#{date}'").find_each do |enrollment|
+    unless enrollment.subject.nil?
+      unless enrollment.subject.space.nil?
+        unless enrollment.subject.space.course.nil?
+          params_enroll = fill_enroll(enrollment, "enrollment")
+          send_async_info(params_enroll,
+                          Redu::Application.config.vis_client[:url])
+        end
       end
     end
   end
 end
 
 def insert_subject_finalized(date)
-  Enrollment.where("grade = 100 AND graduated = true AND created_at >= '#{date}'").each do |profile|
+  Enrollment.where("grade = 100 AND graduated = true AND created_at >= '#{date}'").find_each do |profile|
     params_finalized = fill_enroll(profile, "subject_finalized")
     send_async_info(params_finalized,
                     Redu::Application.config.vis_client[:url])
@@ -31,7 +33,7 @@ def insert_subject_finalized(date)
 end
 
 def insert_exercise_finalized(date)
-  Exercise.where("created_at > '#{date}'").each do |exercise|
+  Exercise.where("created_at > '#{date}'").find_each do |exercise|
     exercise.results.finalized.each do |finalized|
       params = fill_exercise(finalized)
       send_async_info(params,
@@ -41,7 +43,7 @@ def insert_exercise_finalized(date)
 end
 
 def insert_statuses(date)
-  Status.where("type IN ('Activity', 'Help', 'Answer') AND created_at >= '#{date}'").each do |status|
+  Status.where("type IN ('Activity', 'Help', 'Answer') AND created_at >= '#{date}'").find_each do |status|
 
     # Filling params according type of the Status
     case status.statusable.class.to_s
@@ -82,7 +84,7 @@ def insert_statuses(date)
 end
 
 def remove_enrollments(date)
-  Enrollment.where("created_at >= '#{date}'").each do |enrollment|
+  Enrollment.where("created_at >= '#{date}'").find_each do |enrollment|
     if (enrollment.user.get_association_with enrollment.subject.space).nil?
       params_remove_enrollment = fill_enroll(enrollment, "remove_enrollment")
 
