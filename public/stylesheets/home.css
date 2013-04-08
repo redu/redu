@@ -224,7 +224,7 @@ body {
 }
 .home-tour #tour-5 {
   top: 13px;
-  left: 171px;
+  left: 188px;
 }
 .home-tour #tour-5:after {
   border: 9px solid transparent;
@@ -235,7 +235,7 @@ body {
 }
 .home-tour #tour-6 {
   top: 13px;
-  left: 260px;
+  left: 288px;
 }
 .home-tour #tour-6:after {
   border: 9px solid transparent;
@@ -246,37 +246,38 @@ body {
 }
 .home-tour #tour-7 {
   top: 13px;
-  left: 600px;
+  left: 625px;
 }
 .home-tour #tour-7:after {
+  border: 9px solid transparent;
+  border-bottom-color: #f7f7f7;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -9px;
+}
+.home-tour #tour-8 {
+  top: 13px;
+  left: 600px;
+}
+.home-tour #tour-8:after {
   border: 9px solid transparent;
   border-bottom-color: #f7f7f7;
   bottom: 100%;
   left: 93%;
   margin-left: -9px;
 }
-.home-tour #tour-8 {
+.home-tour #tour-9 {
   top: 45px;
   left: 175px;
-}
-.home-tour #tour-8:after {
-  border: 9px solid transparent;
-  border-right-color: #f7f7f7;
-  right: 100%;
-  top: 15px;
-}
-.home-tour #tour-9 {
-  top: 160px;
-  left: 210px;
 }
 .home-tour #tour-9:after {
   border: 9px solid transparent;
   border-right-color: #f7f7f7;
   right: 100%;
-  top: 50%;
-  margin-top: -9px;
+  top: 15px;
 }
 .home-tour #tour-10 {
+  top: 160px;
   left: 210px;
 }
 .home-tour #tour-10:after {
@@ -286,34 +287,44 @@ body {
   top: 50%;
   margin-top: -9px;
 }
+.home-tour #tour-11 {
+  left: 210px;
+}
 .home-tour #tour-11:after {
+  border: 9px solid transparent;
+  border-right-color: #f7f7f7;
+  right: 100%;
+  top: 50%;
+  margin-top: -9px;
+}
+.home-tour #tour-12:after {
   border: 9px solid transparent;
   border-left-color: #f7f7f7;
   left: 100%;
   top: 50%;
   margin-top: -9px;
 }
-.home-tour #tour-12 {
+.home-tour #tour-13 {
   left: auto;
   top: auto;
   right: 20px;
   bottom: 50px;
   position: fixed;
 }
-.home-tour #tour-12:after {
+.home-tour #tour-13:after {
   border: 9px solid transparent;
   border-top-color: #f7f7f7;
   top: 100%;
   right: 20px;
 }
-.home-tour #tour-13 {
+.home-tour #tour-14 {
   bottom: 60px;
   left: 50%;
   top: auto;
   margin-left: -465px;
   position: fixed;
 }
-.home-tour #tour-13:after {
+.home-tour #tour-14:after {
   border: 9px solid transparent;
   border-top-color: #f7f7f7;
   top: 100%;
