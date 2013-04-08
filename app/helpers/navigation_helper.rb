@@ -53,8 +53,7 @@ module NavigationHelper
     end
   end
 
-  # Define item ativo na navegação global, se a url não usar o sidebar
-  # de pessoas, aciona o highlights para Cursos
+  # Define item ativo na navegação global
   def global_highlighted
     # Início só é selecionado se estiver relacionado ao current user
     if !request.fullpath.match(%r(\A#{ users_path }/#{ current_user.to_param })).nil?
@@ -63,7 +62,7 @@ module NavigationHelper
     # profile de outro usuário, busca ou páginas estáticas
     elsif !request.fullpath.match(%r(\A#{ partners_path })).nil? ||
           !request.fullpath.match(%r(\A#{ search_path })).nil? ||
-          !(params[:controller] == :pages) ||
+          (params[:controller] == "pages") ||
           !request.fullpath.match(%r(\A#{ users_path }/)).nil?
       :global
     elsif !request.fullpath.match(%r(\A#{ environments_path }[?])).nil? ||
