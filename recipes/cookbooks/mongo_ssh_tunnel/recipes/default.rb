@@ -55,7 +55,7 @@ tunnel_vars = {
 
 # set this to match on the node[:instance_role] of the instance the tunnel
 # should be set up on
-if ['app_master', 'util'].include? node[:instance_role]
+if ['app_master', 'app', 'util'].include? node[:instance_role]
 
   template "/etc/init.d/#{tunnel_name}" do
     source "ssh_tunnel.initd.erb"
