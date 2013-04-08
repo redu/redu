@@ -126,13 +126,10 @@ class FoldersController < BaseController
 
   # Update the folder attributes with the posted variables from the 'rename' view.
   def update
-    if @folder.update_attributes(:name => params[:folder][:name], :date_modified => Time.now)
+    if @folder.update_attributes(:name => params[:folder][:name],
+                                 :date_modified => Time.now)
       respond_to do |format|
-        # back to the list
-        format.js {
-          params[:id] = @folder.parent_id
-          list
-        }
+        format.js { list }
       end
     end
   end
