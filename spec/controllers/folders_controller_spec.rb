@@ -5,7 +5,7 @@ describe FoldersController do
   let(:user) { Factory(:user) }
   let(:space) { Factory(:space, :owner => user) }
   let(:params) do
-    { :locale => 'pt-BR', :format => :html,
+    { :locale => 'pt-BR', :format => :js,
       :space_id => space.id,
       :folder => { :name => 'New folder',
                    :parent_id => space.folders.first.id,
@@ -31,11 +31,6 @@ describe FoldersController do
 
     it "should update date_modified" do
       assigns[:folder].date_modified.should be_within(0.5).of(Time.now)
-    end
-
-    it "should redirect to space_folders" do
-      parent = space.folders.first
-      response.should redirect_to space_folders_path(space, :id => parent)
     end
   end
 end

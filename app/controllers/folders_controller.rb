@@ -101,29 +101,29 @@ class FoldersController < BaseController
     end
   end
 
-
   # Create a new folder with the posted variables from the 'new' view.
   def create
     if request.post?
-      @folder = Folder.new(params[:folder])
-      @folder.date_modified = Time.now
-      @folder.user = current_user
+      folder_service = FolderService.new(params[:folder])
+      @folder = folder_service.create do |folder|
+        folder.user = current_user
+        folder.date_modified = Time.now
+      end
 
       respond_to do |format|
-        if @folder.save
-          params[:space_id] = params[:folder][:space_id]
+        redirect = space_folders_path(@space, :id => @folder.parent)
+        if @folder.valid?
           list(@folder.id)
-          # back to the list
-          format.html {
+          format.html do
             flash[:notice] = 'Diretório criado!'
-            redirect_to space_folders_path(:space_id => params[:folder][:space_id], :id => @folder.parent.id)
-          }
+            redirect_to redirect
+          end
           format.js { render :partial => "folders/index" }
         else
-          format.html {
+          format.html do
             flash[:error] = 'Não foi possível criar o diretório'
-            redirect_to space_folders_path(@space, @folder.parent)
-          }
+            redirect_to redirect
+          end
           format.js
         end
       end
