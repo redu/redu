@@ -5,13 +5,9 @@ describe MyfileService do
     let(:file) do
       File.open("#{Rails.root}/spec/fixtures/api/pdf_example.pdf")
     end
-    let(:quota) do
-      mock_model('Quota')
-    end
+    let(:quota) { mock_model('Quota') }
     let(:ability) { mock('Ability') }
-    let(:model_attrs) do
-      { :attachment => file }
-    end
+    let(:model_attrs) { { :attachment => file } }
     let(:params) do
       model_attrs.merge({ :quota => quota, :ability => ability })
     end
