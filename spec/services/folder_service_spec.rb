@@ -49,7 +49,7 @@ describe FolderService do
     describe "#build" do
       it "should instanciate Folder" do
         model = mock_model('Folder')
-        subject.stub(:model).and_return(model)
+        subject.stub(:model_class).and_return(model)
 
         model.should_receive(:new).with(model_attrs)
         subject.build

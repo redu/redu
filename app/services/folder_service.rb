@@ -1,29 +1,6 @@
-class FolderService
-
-  def initialize(opts)
-    @ability = opts.delete(:ability)
-    @quota = opts.delete(:quota)
-    @attrs = opts
-  end
-
-  # Cria Folder com os atributos passados na inicialização garantindo a
-  # autorização (:manage).
-  #
-  # Retorna a instância do MyFfile.
-  # Lança CanCan::AccessDenied caso não haja autorização
-  def create(&block)
-    instance = build(&block)
-    authorize!(instance)
-    instance.save
-    instance
-  end
-
-  def build(&block)
-    if block
-      model.new(attrs, &block)
-    else
-      model.new(attrs)
-    end
+class FolderService < StoredContentService
+  def initialize(options)
+    super options.merge(:model_class => Folder)
   end
 
   # Destroy Folder e garante a autorização (:manage).
@@ -39,10 +16,10 @@ class FolderService
 
   protected
 
-  attr_reader :attrs, :quota, :ability
-
-  def model
-    Folder
+  def infered_quota
+    if @model && @model.space
+      @model.space.course.quota || @model.space.course.environment.quota
+    end
   end
 
   def authorize!(folder)

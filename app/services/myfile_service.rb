@@ -1,10 +1,6 @@
-class MyfileService
-  attr_reader :ability
-
+class MyfileService < StoredContentService
   def initialize(options)
-    @ability = options.delete(:ability)
-    @quota = options.delete(:quota)
-    @attrs = options
+    super options.merge(:model_class => Myfile)
   end
 
   # Cria MyFile com os atributos passados na inicialização garantindo a
@@ -20,20 +16,6 @@ class MyfileService
     @model
   end
 
-  def build(&block)
-    if block
-      model_class.new(@attrs, &block)
-    else
-      model_class.new(@attrs)
-    end
-  end
-
-  # Retorna quota. Caso não tenha sido passada na inicialização tenta inferir
-  # a partir do objeto criado pelo serviço.
-  def quota
-    @quota ||= infered_quota
-  end
-
   protected
 
   def infered_quota
@@ -44,13 +26,5 @@ class MyfileService
 
   def authorize!(myfile)
     ability.authorize!(:upload_file, myfile)
-  end
-
-  def refresh!
-    quota.refresh!
-  end
-
-  def model_class
-    Myfile
   end
 end
