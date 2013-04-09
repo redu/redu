@@ -7,11 +7,11 @@ class FolderService < StoredContentService
   #
   # Retorna a instância do Folder.
   # Lança CanCan::AccessDenied caso não haja autorização
-  def destroy(folder)
-    authorize!(folder)
-    folder.destroy
-    refresh! #só atualiza quotas na destruição
-    folder
+  def destroy
+    authorize!(model)
+    model.destroy
+    refresh!
+    model
   end
 
   protected

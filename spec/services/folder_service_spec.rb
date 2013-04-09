@@ -9,9 +9,10 @@ describe FolderService do
       model_attrs.merge({ :quota => quota, :ability => ability })
     end
 
-    subject { FolderService.new(params) }
 
     describe "#create" do
+      subject { FolderService.new(params) }
+
       before do
         ability.stub(:authorize!).and_return(true)
       end
@@ -47,6 +48,8 @@ describe FolderService do
     end
 
     describe "#build" do
+      subject { FolderService.new(params) }
+
       it "should instanciate Folder" do
         model = mock_model('Folder')
         subject.stub(:model_class).and_return(model)
@@ -62,31 +65,32 @@ describe FolderService do
     end
 
     describe "#destroy" do
+      let!(:folder) { Factory(:folder) }
+      subject { FolderService.new(params.merge(:model => folder)) }
+
       before do
         ability.stub(:authorize!).and_return(true)
         quota.stub(:refresh!)
-        @folder = Folder.create(:name => 'Folder destroy')
       end
 
       it "should destroy Folder" do
         expect {
-          subject.destroy(@folder)
+          subject.destroy
         }.to change(Folder, :count).by(-1)
       end
 
       it "should #refresh! quota" do
         subject.send(:quota).should_receive(:refresh!)
-        subject.destroy(@folder)
+        subject.destroy
       end
 
       it "should return the folder instance" do
-        subject.destroy(@folder).should == @folder
+        subject.destroy.should == folder
       end
 
       it "should delegate to Ability's authorize!" do
-        ability.should_receive(:authorize!).
-          with(:manage, an_instance_of(Folder))
-        subject.destroy(@folder)
+        ability.should_receive(:authorize!).with(:manage, folder)
+        subject.destroy
       end
 
       it "should raise exception when there's no authorization" do
@@ -94,7 +98,7 @@ describe FolderService do
           and_raise(CanCan::AccessDenied.new("Not authorized!"))
 
         expect {
-          subject.destroy(@folder)
+          subject.destroy
         }.to raise_error(CanCan::AccessDenied)
       end
     end

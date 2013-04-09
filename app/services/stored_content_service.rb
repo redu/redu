@@ -6,6 +6,7 @@ class StoredContentService
     @ability = opts.delete(:ability)
     @quota = opts.delete(:quota)
     @model_class = opts.delete(:model_class)
+    @model = opts.delete(:model)
     @attrs = opts
   end
 
