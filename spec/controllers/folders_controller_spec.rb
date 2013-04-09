@@ -44,4 +44,20 @@ describe FoldersController do
       assigns[:folder].date_modified.should_not be_nil
     end
   end
+
+  context "DELETE destroy" do
+    let(:folder) { Factory(:folder, :space => space) }
+    let(:params) { base_params.merge(:id => folder.to_param) }
+
+    it "should assign folder" do
+      delete :destroy_folder, params
+      assigns[:folder].should == folder
+    end
+
+    it "should call FolderService.destroy" do
+      FolderService.any_instance.should_receive(:destroy).with(folder).
+        and_call_original
+      delete :destroy_folder, params
+    end
+  end
 end

@@ -140,11 +140,12 @@ class FoldersController < BaseController
 
   # Delete a folder.
   def destroy_folder
-    @parent_id = @folder.parent_id
-    @space_id = @folder.space_id
-    @folder.destroy
-    @space.course.quota.try(:refresh!)
-    @space.course.environment.quota.try(:refresh!)
+    quota = @space.course.quota || @space.course.environment.quota
+    options = { :ability => current_ability, :quota => quota }
+
+    folder_service = FolderService.new(options)
+    folder_service.destroy(@folder)
+
     respond_to do |format|
       # back to the list
       format.js {
