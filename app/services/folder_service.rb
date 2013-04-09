@@ -1,14 +1,13 @@
 class FolderService < StoredContentService
-  def initialize(options)
+  def initialize(options={})
     super options.merge(:model_class => Folder)
   end
 
-  # Atualiza Folder e garante a autorização (:manage).
+  # Atualiza Folder.
   #
   # Retorna true caso o modelo tenha sido salvo.
   # Lança CanCan::AccessDenied caso não haja autorização
   def update(attrs)
-    authorize!(model)
     model.update_attributes(attrs)
   end
 
@@ -18,9 +17,5 @@ class FolderService < StoredContentService
     if model && model.space
       model.space.course.quota || model.space.course.environment.quota
     end
-  end
-
-  def authorize!(folder)
-    ability.authorize!(:manage, folder)
   end
 end

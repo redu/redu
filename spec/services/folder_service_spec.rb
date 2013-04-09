@@ -3,19 +3,14 @@ require 'spec_helper'
 describe FolderService do
   context "creating folder" do
     let(:quota) { mock_model('Quota') }
-    let(:ability) { mock('Ability') }
     let(:model_attrs) {{ :name => 'New Folder' }}
     let(:params) do
-      model_attrs.merge({ :quota => quota, :ability => ability })
+      model_attrs.merge({ :quota => quota })
     end
 
 
     describe "#create" do
       subject { FolderService.new(params) }
-
-      before do
-        ability.stub(:authorize!).and_return(true)
-      end
 
       it "should create Folder" do
         expect {
@@ -29,21 +24,6 @@ describe FolderService do
         end
 
         folder.user.should_not be_nil
-      end
-
-      it "should delegate to Ability's authorize!" do
-        ability.should_receive(:authorize!).
-          with(:manage, an_instance_of(Folder))
-        subject.create
-      end
-
-      it "should raise exception when there's no authorization" do
-        ability.stub(:authorize!).
-          and_raise(CanCan::AccessDenied.new("Not authorized!"))
-
-        expect {
-          subject.create
-        }.to raise_error(CanCan::AccessDenied)
       end
     end
 
@@ -69,7 +49,6 @@ describe FolderService do
       subject { FolderService.new(params.merge(:model => folder)) }
 
       before do
-        ability.stub(:authorize!).and_return(true)
         quota.stub(:refresh!)
       end
 
@@ -87,20 +66,6 @@ describe FolderService do
       it "should return the folder instance" do
         subject.destroy.should == folder
       end
-
-      it "should delegate to Ability's authorize!" do
-        ability.should_receive(:authorize!).with(:manage, folder)
-        subject.destroy
-      end
-
-      it "should raise exception when there's no authorization" do
-        ability.stub(:authorize!).
-          and_raise(CanCan::AccessDenied.new("Not authorized!"))
-
-        expect {
-          subject.destroy
-        }.to raise_error(CanCan::AccessDenied)
-      end
     end
 
     describe "#update" do
@@ -108,10 +73,6 @@ describe FolderService do
       let(:user) { Factory(:user) }
       subject { FolderService.new(params.merge(:model => folder)) }
       let(:folder_params) { { :name => "Old" } }
-
-      before do
-        ability.stub(:authorize!).and_return(true)
-      end
 
       it "should update folder attributes" do
         expect {
@@ -125,20 +86,6 @@ describe FolderService do
 
       it "should return false if folder is invalid" do
           subject.update({ :name => "" }).should be_false
-      end
-
-      it "should delegate to Ability's authorize!" do
-        ability.should_receive(:authorize!).with(:manage, folder)
-        subject.update(folder_params)
-      end
-
-      it "should raise exception when there's no authorization" do
-        ability.stub(:authorize!).
-          and_raise(CanCan::AccessDenied.new("Not authorized!"))
-
-        expect {
-          subject.update(folder_params)
-        }.to raise_error(CanCan::AccessDenied)
       end
     end
   end

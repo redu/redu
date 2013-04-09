@@ -1,9 +1,7 @@
 class StoredContentService
   # Responsável pela manipulação de entidades que atualizam as Quota do AVA.
-  attr_reader :ability
 
   def initialize(opts)
-    @ability = opts.delete(:ability)
     @quota = opts.delete(:quota)
     @model_class = opts.delete(:model_class)
     @model = opts.delete(:model)
@@ -25,7 +23,6 @@ class StoredContentService
   # Lança CanCan::AccessDenied caso não haja autorização
   def create(&block)
     @model = build(&block)
-    authorize!(model)
     model.save
     model
   end
@@ -35,7 +32,6 @@ class StoredContentService
   # Retorna a instância do Folder.
   # Lança CanCan::AccessDenied caso não haja autorização
   def destroy
-    authorize!(model)
     model.destroy
     refresh!
     model
