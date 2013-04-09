@@ -4,6 +4,7 @@ require 'authlogic/test_case'
 describe FoldersController do
   let(:user) { Factory(:user) }
   let(:space) { Factory(:space, :owner => user) }
+  let(:folder) { Factory(:folder, :space => space) }
   let(:base_params) do
     { :locale => 'pt-BR', :format => :js, :space_id => space.id }
   end
@@ -21,7 +22,7 @@ describe FoldersController do
 
     it "should assign folder" do
       post :create, params
-      assigns[:folder].should == folder
+      assigns[:folder].should_not be_nil
     end
 
     it "should assing space" do
@@ -46,7 +47,6 @@ describe FoldersController do
   end
 
   context "DELETE destroy" do
-    let(:folder) { Factory(:folder, :space => space) }
     let(:params) { base_params.merge(:id => folder.to_param) }
 
     it "should call FolderService.destroy" do
@@ -56,7 +56,6 @@ describe FoldersController do
   end
 
   context "POST update" do
-    let(:folder) { Factory(:folder, :space => space) }
     let(:params) do
       base_params.merge(:id => folder.to_param, "folder" => { "name" => "New" })
     end

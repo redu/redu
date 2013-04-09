@@ -103,9 +103,7 @@ class FoldersController < BaseController
 
   # Create a new folder with the posted variables from the 'new' view.
   def create
-    quota = @space.course.quota || @space.course.environment.quota
-    options = { :ability => current_ability, :quota => quota }.
-      merge(params[:folder])
+    options = { :ability => current_ability }.merge(params[:folder])
 
     folder_service = FolderService.new(options)
     @folder = folder_service.create do |folder|
@@ -131,11 +129,7 @@ class FoldersController < BaseController
   # Update the folder attributes with the posted variables from the 'rename' view.
   def update
     folder_attrs = params[:folder].merge(:date_modified => Time.now)
-
-    quota = @space.course.quota || @space.course.environment.quota
-    options = { :ability => current_ability, :quota => quota }
-
-    folder_service = FolderService.new(options)
+    folder_service = FolderService.new(:ability => current_ability)
 
     if folder_service.update(folder_attrs)
       respond_to do |format|
@@ -146,8 +140,7 @@ class FoldersController < BaseController
 
   # Delete a folder.
   def destroy_folder
-    quota = @space.course.quota || @space.course.environment.quota
-    options = { :ability => current_ability, :quota => quota, :model => @folder }
+    options = { :ability => current_ability, :model => @folder }
 
     folder_service = FolderService.new(options)
     folder_service.destroy
