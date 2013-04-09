@@ -130,8 +130,14 @@ class FoldersController < BaseController
 
   # Update the folder attributes with the posted variables from the 'rename' view.
   def update
-    if @folder.update_attributes(:name => params[:folder][:name],
-                                 :date_modified => Time.now)
+    folder_attrs = params[:folder].merge(:date_modified => Time.now)
+
+    quota = @space.course.quota || @space.course.environment.quota
+    options = { :ability => current_ability, :quota => quota }
+
+    folder_service = FolderService.new(options)
+
+    if folder_service.update(folder_attrs)
       respond_to do |format|
         format.js { list }
       end

@@ -14,6 +14,15 @@ class FolderService < StoredContentService
     model
   end
 
+  # Atualiza Folder e garante a autorização (:manage).
+  #
+  # Retorna true caso o modelo tenha sido salvo.
+  # Lança CanCan::AccessDenied caso não haja autorização
+  def update(attrs)
+    authorize!(model)
+    model.update_attributes(attrs)
+  end
+
   protected
 
   def infered_quota
