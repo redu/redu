@@ -25,8 +25,4 @@ class FolderService < StoredContentService
   def authorize!(folder)
     ability.authorize!(:manage, folder)
   end
-
-  def refresh!
-    quota.refresh!
-  end
 end

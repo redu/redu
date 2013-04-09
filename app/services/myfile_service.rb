@@ -9,10 +9,7 @@ class MyfileService < StoredContentService
   # Retorna a instância do MyFfile.
   # Lança CanCan::AccessDenied caso não haja autorização
   def create(&block)
-    @model = build(&block)
-    authorize!(model)
-    model.save
-    refresh!
+    refresh! { super }
     model
   end
 

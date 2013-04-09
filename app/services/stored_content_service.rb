@@ -37,7 +37,8 @@ class StoredContentService
 
   protected
 
-  def refresh!
+  def refresh!(&block)
+    yield if block_given?
     quota.refresh!
   end
 
