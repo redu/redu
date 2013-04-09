@@ -11,25 +11,24 @@ s3_upload_files:
   - public/stylesheets/**
 
 javascripts:
+  bootstrap: &bootstrap
+    - public/javascripts/rails.js
+    - public/javascripts/vendor/modernizr.js
+    - public/javascripts/jquery.autosize.min.js
+    - public/javascripts/vendor/placeholder-polyfill.min.js
+    - public/javascripts/bootstrap-redu.js
   landing:
     - public/javascripts/landing.js
   mobile:
-    - public/javascripts/rails.js
-    - public/javascripts/vendor/modernizr.js
-    - public/javascripts/jquery.autosize.min.js
-    - public/javascripts/bootstrap-redu.js
+    - *bootstrap
     - public/javascripts/mobile-login.js
   new_application:
-    - public/javascripts/rails.js
-    - public/javascripts/vendor/modernizr.js
+    - *bootstrap
     - public/javascripts/lazyload.js
     - public/javascripts/asyncjs.jquery.js
     - public/javascripts/form.redu.jquery.js
-    - public/javascripts/jquery.autosize.min.js
-    - public/javascripts/vendor/placeholder-polyfill.min.js
     - public/javascripts/jquery.tokeninput.js
     - public/javascripts/jquery.tokeninput-instant-search.js
-    - public/javascripts/bootstrap-redu.js
     - public/javascripts/swfobject.js # Necessário ao browserdetection.js
     - public/javascripts/browserdetection.js
     - public/javascripts/jquery.cookie.js
@@ -47,13 +46,9 @@ javascripts:
     - public/javascripts/embedly.redu.jquery.js
     - public/javascripts/search.js
   basic:
-    - public/javascripts/rails.js
-    - public/javascripts/vendor/modernizr.js
+    - *bootstrap
     - public/javascripts/lazyload.js
     - public/javascripts/asyncjs.jquery.js
-    - public/javascripts/jquery.autosize.min.js
-    - public/javascripts/vendor/placeholder-polyfill.min.js
-    - public/javascripts/bootstrap-redu.js
     - public/javascripts/vendor/bootstrap-scrollspy.js
     - public/javascripts/swfobject.js # Necessário ao browserdetection.js
     - public/javascripts/browserdetection.js
