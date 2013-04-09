@@ -1,5 +1,5 @@
 class MyfileService
-  attr_reader :ability, :quota
+  attr_reader :ability
 
   def initialize(options)
     @ability = options.delete(:ability)
@@ -13,22 +13,34 @@ class MyfileService
   # Retorna a instância do MyFfile.
   # Lança CanCan::AccessDenied caso não haja autorização
   def create(&block)
-    instance = build(&block)
-    authorize!(instance)
-    instance.save
+    @model = build(&block)
+    authorize!(@model)
+    @model.save
     refresh!
-    instance
+    @model
   end
 
   def build(&block)
     if block
-      model.new(@attrs, &block)
+      model_class.new(@attrs, &block)
     else
-      model.new(@attrs)
+      model_class.new(@attrs)
     end
   end
 
+  # Retorna quota. Caso não tenha sido passada na inicialização tenta inferir
+  # a partir do objeto criado pelo serviço.
+  def quota
+    @quota ||= infered_quota
+  end
+
   protected
+
+  def infered_quota
+    if @model && @model.folder
+      @model.folder.space.course.quota || @model.folder.space.course.environment.quota
+    end
+  end
 
   def authorize!(myfile)
     ability.authorize!(:upload_file, myfile)
@@ -38,7 +50,7 @@ class MyfileService
     quota.refresh!
   end
 
-  def model
+  def model_class
     Myfile
   end
 end
