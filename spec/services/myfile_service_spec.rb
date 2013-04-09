@@ -6,16 +6,14 @@ describe MyfileService do
       File.open("#{Rails.root}/spec/fixtures/api/pdf_example.pdf")
     end
     let(:quota) { mock_model('Quota') }
-    let(:ability) { mock('Ability') }
     let(:model_attrs) { { :attachment => file } }
     let(:params) do
-      model_attrs.merge({ :quota => quota, :ability => ability })
+      model_attrs.merge({ :quota => quota })
     end
     subject do
       MyfileService.new(params)
     end
     before do
-      ability.stub(:authorize!).and_return(true)
       quota.stub(:refresh!)
     end
 
@@ -33,21 +31,6 @@ describe MyfileService do
         end
 
         myfile.user.should_not be_nil
-      end
-
-      it "should deletgate to Ability's authorize!" do
-        subject.ability.should_receive(:authorize!).
-          with(:upload_file, an_instance_of(Myfile))
-        subject.create
-      end
-
-      it "should raise exception when there's no authorization" do
-        ability.stub(:authorize!).
-          and_raise(CanCan::AccessDenied.new("Not authorized!"))
-
-        expect {
-          subject.create
-        }.to raise_error(CanCan::AccessDenied)
       end
 
       it "should #refresh! quota" do
@@ -87,13 +70,11 @@ describe MyfileService do
       end
 
       context "when not passed to .new" do
-        let(:options) { { :ability => ability }.merge(model_attrs) }
-
         it "should infer the quota when it's not passed to .new" do
           folder = mock_model("Folder")
           folder.stub_chain(:space, :course, :quota).and_return(quota)
 
-          service = MyfileService.new(options)
+          service = MyfileService.new(model_attrs)
 
           service.create do |s|
             s.folder = folder
@@ -103,7 +84,7 @@ describe MyfileService do
         end
 
         it "should return nil if the wasn't  created" do
-          service = MyfileService.new(options)
+          service = MyfileService.new(model_attrs)
           service.quota.should be_nil
         end
       end
@@ -112,11 +93,6 @@ describe MyfileService do
     describe "#destroy" do
       let!(:myfile) { Factory(:myfile) }
       subject { MyfileService.new(params.merge(:model => myfile)) }
-
-      before do
-        ability.stub(:authorize!).and_return(true)
-        quota.stub(:refresh!)
-      end
 
       it "should destroy Myfile" do
         expect {
@@ -131,20 +107,6 @@ describe MyfileService do
 
       it "should return the myfile instance" do
         subject.destroy.should == myfile
-      end
-
-      it "should delegate to Ability's authorize!" do
-        ability.should_receive(:authorize!).with(:manage, myfile)
-        subject.destroy
-      end
-
-      it "should raise exception when there's no authorization" do
-        ability.stub(:authorize!).
-          and_raise(CanCan::AccessDenied.new("Not authorized!"))
-
-        expect {
-          subject.destroy
-        }.to raise_error(CanCan::AccessDenied)
       end
     end
   end
