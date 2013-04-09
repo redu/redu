@@ -103,7 +103,11 @@ class FoldersController < BaseController
 
   # Create a new folder with the posted variables from the 'new' view.
   def create
-    folder_service = FolderService.new(params[:folder])
+    quota = @space.course.quota || @space.course.environment.quota
+    options = { :ability => current_ability, :quota => quota }.
+      merge(params[:folder])
+
+    folder_service = FolderService.new(options)
     @folder = folder_service.create do |folder|
       folder.user = current_user
       folder.date_modified = Time.now
