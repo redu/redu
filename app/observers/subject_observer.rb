@@ -7,7 +7,7 @@ class SubjectObserver < ActiveRecord::Observer
     # Cria enrollments caso o subject tenha sido finalizado
     if (model.finalized_changed? & model.finalized == true)
       job = CreateEnrollmentJob.new(:subject_id => model.id)
-      Delayed::Job.enqueue(job, :queue => 'general')
+      Delayed::Job.enqueue(job, :queue => 'hierarchy-associations')
     end
   end
 end
