@@ -2,7 +2,7 @@ shared_examples_for "a Sunspot::Search performer" do
 
   it { should be_a_kind_of(Search) }
   it { subject.class.should respond_to(:perform) }
-  its(:klass) { should eq(subject) }
+  its(:klass) { should eq(subject.send(:klass)) }
 
   describe ".perform" do
     let(:performer) { subject.class } # não é uma instância, mas sim a classe!
