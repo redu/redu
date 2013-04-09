@@ -42,7 +42,7 @@ class PlansController < BaseController
     @plans = @user.plans.current.includes(:billable)
 
     respond_to do |format|
-      format.html
+      format.html { render :layout => 'new_application' }
     end
   end
 
