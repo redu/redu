@@ -17,8 +17,8 @@ class FolderService < StoredContentService
   protected
 
   def infered_quota
-    if @model && @model.space
-      @model.space.course.quota || @model.space.course.environment.quota
+    if model && model.space
+      model.space.course.quota || model.space.course.environment.quota
     end
   end
 

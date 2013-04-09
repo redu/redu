@@ -10,17 +10,17 @@ class MyfileService < StoredContentService
   # Lança CanCan::AccessDenied caso não haja autorização
   def create(&block)
     @model = build(&block)
-    authorize!(@model)
-    @model.save
+    authorize!(model)
+    model.save
     refresh!
-    @model
+    model
   end
 
   protected
 
   def infered_quota
-    if @model && @model.folder
-      @model.folder.space.course.quota || @model.folder.space.course.environment.quota
+    if model && model.folder
+      model.folder.space.course.quota || model.folder.space.course.environment.quota
     end
   end
 
