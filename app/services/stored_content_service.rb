@@ -30,6 +30,17 @@ class StoredContentService
     model
   end
 
+  # Destroi entidade e garante a autorização.
+  #
+  # Retorna a instância do Folder.
+  # Lança CanCan::AccessDenied caso não haja autorização
+  def destroy
+    authorize!(model)
+    model.destroy
+    refresh!
+    model
+  end
+
   # Retorna quota. Caso não tenha sido passada na inicialização tenta inferir
   # a partir do objeto criado pelo serviço.
   def quota

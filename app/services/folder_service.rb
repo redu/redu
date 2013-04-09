@@ -3,17 +3,6 @@ class FolderService < StoredContentService
     super options.merge(:model_class => Folder)
   end
 
-  # Destroy Folder e garante a autorização (:manage).
-  #
-  # Retorna a instância do Folder.
-  # Lança CanCan::AccessDenied caso não haja autorização
-  def destroy
-    authorize!(model)
-    model.destroy
-    refresh!
-    model
-  end
-
   # Atualiza Folder e garante a autorização (:manage).
   #
   # Retorna true caso o modelo tenha sido salvo.
