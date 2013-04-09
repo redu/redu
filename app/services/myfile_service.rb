@@ -3,13 +3,13 @@ class MyfileService < StoredContentService
     super options.merge(:model_class => Myfile)
   end
 
-  # Cria MyFile com os atributos passados na inicialização garantindo a
-  # autorização (:upload_file) e que as quotas são atualizadas.
-  #
-  # Retorna a instância do MyFfile.
-  # Lança CanCan::AccessDenied caso não haja autorização
+  # Sobrescreve create por causa de autorização específica.
   def create(&block)
-    refresh! { super }
+    refresh! do
+      @model = build(&block)
+      ability.authorize!(:upload_file, model)
+      model.save
+    end
     model
   end
 
@@ -22,6 +22,6 @@ class MyfileService < StoredContentService
   end
 
   def authorize!(myfile)
-    ability.authorize!(:upload_file, myfile)
+    ability.authorize!(:manage, myfile)
   end
 end

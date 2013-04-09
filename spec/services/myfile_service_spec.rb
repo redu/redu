@@ -108,6 +108,44 @@ describe MyfileService do
         end
       end
     end
-  end
 
+    describe "#destroy" do
+      let!(:myfile) { Factory(:myfile) }
+      subject { MyfileService.new(params.merge(:model => myfile)) }
+
+      before do
+        ability.stub(:authorize!).and_return(true)
+        quota.stub(:refresh!)
+      end
+
+      it "should destroy Myfile" do
+        expect {
+          subject.destroy
+        }.to change(Myfile, :count).by(-1)
+      end
+
+      it "should #refresh! quota" do
+        subject.send(:quota).should_receive(:refresh!)
+        subject.destroy
+      end
+
+      it "should return the myfile instance" do
+        subject.destroy.should == myfile
+      end
+
+      it "should delegate to Ability's authorize!" do
+        ability.should_receive(:authorize!).with(:manage, myfile)
+        subject.destroy
+      end
+
+      it "should raise exception when there's no authorization" do
+        ability.stub(:authorize!).
+          and_raise(CanCan::AccessDenied.new("Not authorized!"))
+
+        expect {
+          subject.destroy
+        }.to raise_error(CanCan::AccessDenied)
+      end
+    end
+  end
 end
