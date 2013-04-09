@@ -18,12 +18,12 @@ describe MyfileService do
     subject do
       MyfileService.new(params)
     end
+    before do
+      ability.stub(:authorize!).and_return(true)
+      quota.stub(:refresh!)
+    end
 
     context "#create" do
-      before do
-        ability.stub(:authorize!).and_return(true)
-        quota.stub(:refresh!)
-      end
 
       it "should create a Myfile" do
         expect {
@@ -70,7 +70,7 @@ describe MyfileService do
     context "#build" do
       it "should instanciate MyFile" do
         model = mock_model('Myfile')
-        subject.stub(:model).and_return(model)
+        subject.stub(:model_class).and_return(model)
 
         model.should_receive(:new).with(model_attrs)
 
@@ -80,6 +80,36 @@ describe MyfileService do
       it "should yield to Myfile.new" do
         expect { |b| subject.build(&b) }.
           to yield_with_args(an_instance_of(Myfile))
+      end
+    end
+
+    context "#quota" do
+      context "when passed to .new" do
+        it "should return the quota passed to .new" do
+          subject.quota.should == quota
+        end
+      end
+
+      context "when not passed to .new" do
+        let(:options) { { :ability => ability }.merge(model_attrs) }
+
+        it "should infer the quota when it's not passed to .new" do
+          folder = mock_model("Folder")
+          folder.stub_chain(:space, :course, :quota).and_return(quota)
+
+          service = MyfileService.new(options)
+
+          service.create do |s|
+            s.folder = folder
+          end
+
+          service.quota.should == quota
+        end
+
+        it "should return nil if the wasn't  created" do
+          service = MyfileService.new(options)
+          service.quota.should be_nil
+        end
       end
     end
   end
