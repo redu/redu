@@ -54,4 +54,24 @@ describe FoldersController do
       delete :destroy_folder, params
     end
   end
+
+  context "POST update" do
+    let(:folder) { Factory(:folder, :space => space) }
+    let(:params) do
+      base_params.merge(:id => folder.to_param, "folder" => { "name" => "New" })
+    end
+
+    it "should assign folder" do
+      post :update, params
+      assigns[:folder].should == folder
+    end
+
+    it "should call FolderService.update" do
+      update_params = params["folder"].
+        merge("date_modified" => an_instance_of(Time))
+      FolderService.any_instance.should_receive(:update).with(update_params).
+        and_call_original
+      post :update, params
+    end
+  end
 end

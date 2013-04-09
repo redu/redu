@@ -102,5 +102,44 @@ describe FolderService do
         }.to raise_error(CanCan::AccessDenied)
       end
     end
+
+    describe "#update" do
+      let(:folder) { Factory(:folder) }
+      let(:user) { Factory(:user) }
+      subject { FolderService.new(params.merge(:model => folder)) }
+      let(:folder_params) { { :name => "Old" } }
+
+      before do
+        ability.stub(:authorize!).and_return(true)
+      end
+
+      it "should update folder attributes" do
+        expect {
+          subject.update(folder_params)
+        }.to change { folder.name }.to(folder_params[:name])
+      end
+
+      it "should return true if folder is valid" do
+          subject.update(folder_params).should be_true
+      end
+
+      it "should return false if folder is invalid" do
+          subject.update({ :name => "" }).should be_false
+      end
+
+      it "should delegate to Ability's authorize!" do
+        ability.should_receive(:authorize!).with(:manage, folder)
+        subject.update(folder_params)
+      end
+
+      it "should raise exception when there's no authorization" do
+        ability.stub(:authorize!).
+          and_raise(CanCan::AccessDenied.new("Not authorized!"))
+
+        expect {
+          subject.update(folder_params)
+        }.to raise_error(CanCan::AccessDenied)
+      end
+    end
   end
 end
