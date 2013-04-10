@@ -49,19 +49,18 @@ class SearchService
     end
 
     # Deixa o array com um apenas um nível, remove os resultados nil
-    # O .reverse para que o resultado de profile venha em primeiro
-    # (requisito do dropdown da busca)
-    all.flatten!.try(:compact)
+    all = all.flatten!.try(:compact)
+    # Ordena para que os profiles sejam os priméiros no resultado
+    # [requisito de front-end] Ver #1482
+    all.try(:sort){|a, b| b["type"] <=> a["type"]}
   end
 
   # Recupera resultado referente a uma classe e sempre define um array paginado
-  # O retorno será nil se o perform_results não tiver sido chamado antes
   def klass_results(klass)
     results[klass] ||= Kaminari.paginate_array([])
   end
 
   # Pagina a única busca que possui resultados
-  # O retorno será nil se o perform_results não tiver sido chamado antes
   def result_paginate
     if individual_page?
       search_results.select{ |entity| entity.size > 0 }.first || []
