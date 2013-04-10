@@ -346,7 +346,7 @@ Redu::Application.routes.draw do
     resources :chat_messages, :only => :show
 
     resources :folders, :only => [:show, :index] do
-      resources :myfiles, :path => "files", :only => :index
+      resources :myfiles, :path => "files", :only => [:index, :create]
       resources :folders, :only => :index
     end
 
