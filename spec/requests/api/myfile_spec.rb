@@ -32,6 +32,10 @@ describe "File API" do
       end
     end
 
+    it "should have a valid link to folder" do
+      href_to("folder", parse(response.body)).should =~ /#{folder.id}/
+    end
+
     it "should return a file with a right name" do
       parse(response.body).fetch("name").should == subject.attachment_file_name
     end
