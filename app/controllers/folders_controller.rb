@@ -16,36 +16,20 @@ class FoldersController < BaseController
   # FILE
   def destroy_file
     @myfile = Myfile.find(params[:file_id], :include => :folder)
-
-    @folder_id = @myfile.folder.id
-    @space_id = @myfile.folder.space_id
+    service = MyfileService.new(:model => @myfile)
+    service.destroy
 
     respond_to do |format|
-      if @myfile.destroy
-        @space.course.quota.try(:refresh!)
-        @space.course.environment.quota.try(:refresh!)
-
-        format.html do
-          flash[:notice] = 'Arquivo removido!'
-          redirect_to space_folders_path(:id => @folder_id, :space_id => @space_id)
-        end
-        format.js do
-            list
-            render :partial => 'folders/index'
-        end
-      else
-        format.html {
-          flash[:error] = @myfile.errors.full_messages.join(", ")
-          redirect_to space_folders_path(:id => @folder_id, :space_id => @space_id)
-        }
-        format.js do
-          render :update do |page|
-            # update the page with an error message
-          end
-        end
+      format.html do
+        flash[:notice] = 'Arquivo removido!'
+        redirect_to space_folders_path(:id => @folder.id,
+                                       :space_id => @space.id)
+      end
+      format.js do
+        list
+        render :partial => 'folders/index'
       end
     end
-
   end
 
   # Upload the file and create a record in the database.
