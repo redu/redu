@@ -73,4 +73,39 @@ describe FoldersController do
       post :update, params
     end
   end
+
+  context "Myfiles" do
+    context "POST do_the_upload" do
+      let(:file) do
+        File.open("#{Rails.root}/spec/fixtures/api/pdf_example.pdf")
+      end
+      let(:my_file_params) do
+        { :folder_id => folder.to_param, :attachment => file }
+      end
+      let(:params) do
+        base_params.merge(:space_id => space.to_param,
+                          :id => folder.to_param, :myfile => my_file_params)
+      end
+
+      before do
+        space.course.plan = Factory.build(:plan, :billable => nil)
+        Folder.any_instance.stub(:can_upload_file?) { true }
+      end
+
+      it "should call MyfileService.create" do
+        MyfileService.any_instance.should_receive(:create).and_call_original
+        post :do_the_upload, params
+      end
+
+      it "should assign myfile" do
+        post :do_the_upload, params
+        assigns[:myfile].should_not be_nil
+      end
+
+      it "should set the user in myfile" do
+        post :do_the_upload, params
+        assigns[:myfile].user.should == user
+      end
+    end
+  end
 end
