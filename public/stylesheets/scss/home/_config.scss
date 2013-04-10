@@ -128,3 +128,21 @@
   .button-primary +
   .button-danger { margin-right: 10px; }
 }
+
+// Planos
+// ==========================================================================
+
+.pending {
+  color: $orange3;
+  font-style: italic;
+}
+.overdue {
+  color: $red4;
+  font-style: italic;
+}
+.pag-seguro {
+  padding-top: 20px;
+}
+.plans-sidebar {
+  p + p { margin-top: 15px; }
+}

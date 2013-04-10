@@ -610,6 +610,24 @@ input[type="hidden"] +
   margin-right: 10px;
 }
 
+.pending {
+  color: #ffa935;
+  font-style: italic;
+}
+
+.overdue {
+  color: #e1272d;
+  font-style: italic;
+}
+
+.pag-seguro {
+  padding-top: 20px;
+}
+
+.plans-sidebar p + p {
+  margin-top: 15px;
+}
+
 ul.requisitions {
   margin: 0;
   overflow: visible;

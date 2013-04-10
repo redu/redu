@@ -44,6 +44,6 @@
 </div>
 <div class="span3">
   <%= render :partial => "invoices/explanation_sidebar",
-    :more_infos => raw("<p class='legend'>Para saber todas as informações relativas às datas de fatura, especificações dos planos e o seu estado de uso atual, clique no nome do plano relativo a um curso.</p>") %>
+    :locals => { :more_infos => raw("<p class='legend'>Para saber todas as informações relativas às datas de fatura, especificações dos planos e o seu estado de uso atual, clique no nome do plano relativo a um curso.</p>") } %>
 </div>
 
