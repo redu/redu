@@ -1,82 +1,113 @@
-<script type="text/javascript">
-  jQuery(function(){
-    $(".pagseguro-concave-form input[type=submit]").addClass("concave-important");
-  });
-</script>
-<%= render :partial => 'users/home_sidebar' %>
-<div class="main grid_10" style="width: 580px;">
-  <%= render :partial => 'users/breadcrumbs' %>
-  <div id="invoice-index">
-    <%= tabs :users, :class => "plan-panel" do %>
-    <div class="call">
-      <% if @plan.billable.is_a? Environment %>
-        <%= content_tag(:h3, @plan.billable.name, :class => "billable") %>
-      <% elsif @plan.billable.is_a? Course %>
-        <%= content_tag(:h3, @plan.billable.environment.name, :class => "environment") %>
-        <%= content_tag(:h3, @plan.billable.name, :class => "billable") %>
-      <% elsif @plan.billable_audit %>
-        <%= content_tag :span, @plan.billable_audit["name"] %>
-      <% end %>
-    </div>
-    <% if can? :migrate, @plan %>
-      <%= link_to "Upgrade", options_plan_path(@plan), :class => "concave-important upgrade-button" %>
-    <% end %>
-    <% if @quota %>
-      <div class="plan-use">
-        <span class="plan-type"><%= @plan.name %></span>
-        <%= render :partial => "invoices/quotas",
-          :locals => { :quota_file => @plan.billable.percentage_quota_file,
-                       :plan => @plan,
-                       :quota_multimedia => @plan.billable.percentage_quota_multimedia,
-                       :quota_members => @plan.billable.percentage_quota_members,
-                       :quota => @quota } %>
+<div class="span3">
+  <%= render :partial => "users/left_sidebar",
+    :locals => { :user => @user } %>
+</div>
+<div class="span10">
+  <div class="content-area">
+    <%= render :partial => "users/breadcrumb_configurations",
+      :locals => { :user => @user } %>
+    <div class="content-body">
+      <div class="content-section">
+        <%# Cabeçalho %>
+        <ul class="header-breadcrumb">
+          <li class="header-breadcrumb-item">
+            <%= link_to "Configurações", edit_user_path(@user),
+               :class => "header-bradcrumb-link icon-manage-gray_32_34-before",
+               :title => "Configurações" %>
+          </li>
+          <li class="header-breadcrumb-item">
+            <%= link_to "Planos", user_plans_path(@user),
+               :class => "header-bradcrumb-link",
+               :title => "Planos" %>
+          </li>
+          <li class="header-breadcrumb-item">
+            <%= link_to "Detalhes", plan_invoices_path(@plan),
+               :class => "header-bradcrumb-link",
+               :title => "Detalhes de Plano" %>
+          </li>
+        </ul>
       </div>
-    <% end %>
-    <table class="common spaced">
-      <thead>
-        <tr>
-          <th style="width: 20%">Fatura:</th>
-          <th style="width: 22%">Data:</th>
-          <th style="width: 20%">Estado:</th>
-          <th style="width: 20%">Valor:</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody class="payments">
-        <% @invoices.each do |invoice| %>
-          <tr class="data">
-            <td class="number"><%= invoice.id.to_s.rjust(10, "0") %></td>
-            <td>
-              <span class="date">
-                <%= content_tag(:span, "#{l invoice.period_start} a", :class => "start") %>
-                <%= content_tag(:span, (l invoice.period_end), :class => "done") %>
-              </span>
-            </td>
-            <td>
-              <span class="state <%= invoice.state %>">
-                <%= Invoice.human_attribute_name(invoice.state)%>
-              </span>
-            </td>
-            <td>
-              <span class="value">
-                <%= number_to_currency(invoice.total) %>
-              </span>
-            </td>
-            <td class="pay-status">
-              <% if can? :pay_with_pagseguro, invoice %>
-                <div class="pagseguro-concave-form">
-                  <%= pagseguro_form invoice.plan.create_order, :submit => "Pagar" %>
-                </div>
-              <% elsif invoice.paid? %>
-                <span class="icon icon-small icon-confirm-green_16_18"></span>
-              <% end %>
-            </td>
-          </tr>
+      <%# Abas e sub-abas %>
+      <%= new_tabs(:new_users) %>
+      <div class="content-section">
+        <div>
+          <% if @plan.billable.is_a? Environment %>
+            <%= content_tag(:h3, @plan.billable.name, :class => "billable") %>
+          <% elsif @plan.billable.is_a? Course %>
+            <%= content_tag(:h3, @plan.billable.environment.name, :class => "environment") %>
+            <%= content_tag(:h3, @plan.billable.name, :class => "billable") %>
+          <% elsif @plan.billable_audit %>
+            <%= content_tag :span, @plan.billable_audit["name"] %>
+          <% end %>
+        </div>
+
+        <% if can? :migrate, @plan %>
+          <%= link_to "Upgrade", options_plan_path(@plan), :class => "concave-important upgrade-button" %>
         <% end %>
-      </tbody>
-    </table>
-    <%= link_to "< voltar para lista de planos", user_plans_path(@plan.user), :class => "back bottom" %>
-  <% end %>
+
+        <% if @quota %>
+          <div class="plan-use">
+            <span class="plan-type"><%= @plan.name %></span>
+            <%= render :partial => "invoices/quotas",
+              :locals => { :quota_file => @plan.billable.percentage_quota_file,
+                           :plan => @plan,
+                           :quota_multimedia => @plan.billable.percentage_quota_multimedia,
+                           :quota_members => @plan.billable.percentage_quota_members,
+                           :quota => @quota } %>
+          </div>
+        <% end %>
+
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 20%">Fatura:</th>
+              <th style="width: 22%">Data:</th>
+              <th style="width: 20%">Estado:</th>
+              <th style="width: 20%">Valor:</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody class="payments">
+            <% @invoices.each do |invoice| %>
+              <tr class="data">
+                <td class="number"><%= invoice.id.to_s.rjust(10, "0") %></td>
+                <td>
+                  <span class="date">
+                    <%= content_tag(:span, "#{l invoice.period_start} a", :class => "start") %>
+                    <%= content_tag(:span, (l invoice.period_end), :class => "done") %>
+                  </span>
+                </td>
+                <td>
+                  <span class="state <%= invoice.state %>">
+                    <%= Invoice.human_attribute_name(invoice.state)%>
+                  </span>
+                </td>
+                <td>
+                  <span class="value">
+                    <%= number_to_currency(invoice.total) %>
+                  </span>
+                </td>
+                <td class="pay-status">
+                  <% if can? :pay_with_pagseguro, invoice %>
+                    <div class="pagseguro-concave-form">
+                      <%= pagseguro_form invoice.plan.create_order, :submit => "Pagar" %>
+                    </div>
+                  <% elsif invoice.paid? %>
+                    <span class="icon icon-small icon-confirm-green_16_18"></span>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+        <%= link_to "< voltar para lista de planos", user_plans_path(@user), :class => "legend" %>
+      </div>
+    </div>
+    <%= render :partial => "users/breadcrumb_configurations",
+      :locals => { :user => @user } %>
   </div>
 </div>
-<%= render "invoices/explanation_sidebar" %>
+<div class="span3">
+  <%= render :partial => 'invoices/explanation_sidebar' %>
+</div>

@@ -6,6 +6,7 @@ class InvoicesController < BaseController
   load_and_authorize_resource :partner, :only => :index
 
   def index
+    @user = @plan.user
     # Conflita com o caso que não há @partner, se carregado pelo CanCan
     if params[:client_id]
       @client = @partner.partner_environment_associations.find(params[:client_id])
@@ -38,7 +39,7 @@ class InvoicesController < BaseController
         format.html { render "partners/invoices/index" } if @reference_period
         format.html { render "partners/invoices/monthly" }
       else
-        format.html
+        format.html { render :layout => 'new_application' }
       end
     end
   end
