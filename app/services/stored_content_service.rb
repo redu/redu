@@ -1,5 +1,6 @@
 class StoredContentService
   # Responsável pela manipulação de entidades que atualizam as Quota do AVA.
+  attr_reader :model
 
   def initialize(opts)
     @quota = opts.delete(:quota)
@@ -50,6 +51,6 @@ class StoredContentService
     quota.refresh!
   end
 
-  attr_reader :attrs, :model, :model_class
+  attr_reader :attrs, :model_class
 end
 

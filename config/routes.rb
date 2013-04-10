@@ -347,8 +347,10 @@ Redu::Application.routes.draw do
 
     resources :folders, :only => [:show, :index] do
       resources :myfiles, :path => "files", :only => [:index, :create]
-      resources :folders, :only => :index
+      resources :folders, :only => [:index, :create]
     end
+
+    resources :folders, :only => [:update, :destroy]
 
     resources :myfiles, :path => "files", :only => [:show, :destroy]
     resources :canvas, :only => [:show, :update, :destroy]
