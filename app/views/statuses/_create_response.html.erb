@@ -14,9 +14,6 @@
         :class => "status-icon-answer replacement concave-label" %>
       <%= f.text_area :text, :rows => 1,
         :class => "status-answer-#{random_number}" %>
-      <%= render :partial => 'shared/limit_char_field',
-        :locals => { :class_textarea => "status-answer-#{random_number}", :limit => 800 }%>
-
       <div class="status-buttons">
         <%= link_to 'Cancelar', nil, :rel => "nofollow", :class => 'cancel concave-clean' %>
         <%= f.submit 'Postar', :class => "button-primar" %>

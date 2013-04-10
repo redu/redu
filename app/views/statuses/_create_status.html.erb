@@ -16,7 +16,7 @@
       <%= f.label :text, "Seu mural",
         :class => "status-icon replacement"%>
       <%= f.text_area :text, :rows => 1, :class => "status textarea status-#{random_number}" %>
-      <%= render 'shared/limit_char_field', :class_textarea => "status-#{random_number}", :limit => 800 %>
+      <br>
       <div class="status-buttons">
         <%= f.submit 'Postar' %>
         <%= link_to 'Cancelar', nil, :rel => "nofollow", :class => 'cancel concave-clean' %>
