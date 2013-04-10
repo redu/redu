@@ -1,4 +1,6 @@
 class FoldersController < BaseController
+  check_authorization
+
   load_and_authorize_resource :space
   load_and_authorize_resource :folder, :through => :space,
     :through_association => :folders_and_subfolders
@@ -49,26 +51,18 @@ class FoldersController < BaseController
   # Upload the file and create a record in the database.
   # The file will be stored in the 'current' folder.
   def do_the_upload
-    @myfile = Myfile.new(params[:myfile])
-    @myfile.user = current_user
+    authorize! :upload_file, @folder
 
-    authorize! :upload_file, @myfile
+    service = MyfileService.new(params[:myfile])
+    @myfile = service.create do |myfile|
+      myfile.user = current_user
+    end
 
     respond_to do |format|
-      if @myfile.save
-        @space.course.quota.try(:refresh!)
-        @space.course.environment.quota.try(:refresh!)
-        format.html { redirect_to @space }
-        format.js do
-          list
-          render :do_the_upload
-        end
-      else
-        format.html { redirect_to @space }
-        format.js do
-          list
-          render :do_the_upload
-        end
+      format.html { redirect_to @space }
+      format.js do
+        list
+        render :do_the_upload
       end
     end
   end
@@ -101,55 +95,48 @@ class FoldersController < BaseController
     end
   end
 
-
   # Create a new folder with the posted variables from the 'new' view.
   def create
-    if request.post?
-      @folder = Folder.new(params[:folder])
-      @folder.date_modified = Time.now
-      @folder.user = current_user
+    folder_service = FolderService.new(params[:folder])
+    @folder = folder_service.create do |folder|
+      folder.user = current_user
+      folder.date_modified = Time.now
+    end
 
-      respond_to do |format|
-        if @folder.save
-          params[:space_id] = params[:folder][:space_id]
-          list(@folder.id)
-          # back to the list
-          format.html {
-            flash[:notice] = 'Diretório criado!'
-            redirect_to space_folders_path(:space_id => params[:folder][:space_id], :id => @folder.parent.id)
-          }
-          format.js { render :partial => "folders/index" }
-        else
-          format.html {
-            flash[:error] = 'Não foi possível criar o diretório'
-            redirect_to space_folders_path(@space, @folder.parent)
-          }
-          format.js
-        end
+    respond_to do |format|
+      if @folder.valid?
+        list(@folder.id)
+        flash[:notice] = 'Diretório criado!'
+      else
+        flash[:error] = 'Não foi possível criar o diretório'
       end
+
+      format.html do
+        redirect_to space_folders_path(@space, :id => @folder.parent)
+      end
+      format.js
     end
   end
 
   # Update the folder attributes with the posted variables from the 'rename' view.
   def update
-    if @folder.update_attributes(:name => params[:folder][:name], :date_modified => Time.now)
+    folder_attrs = params[:folder].merge(:date_modified => Time.now)
+    folder_service = FolderService.new(:model => @folder)
+
+    if folder_service.update(folder_attrs)
       respond_to do |format|
-        # back to the list
-        format.js {
-          params[:id] = @folder.parent_id
-          list
-        }
+        format.js { list @folder.parent_id }
       end
     end
   end
 
   # Delete a folder.
   def destroy_folder
-    @parent_id = @folder.parent_id
-    @space_id = @folder.space_id
-    @folder.destroy
-    @space.course.quota.try(:refresh!)
-    @space.course.environment.quota.try(:refresh!)
+    options = { :model => @folder }
+
+    folder_service = FolderService.new(options)
+    folder_service.destroy
+
     respond_to do |format|
       # back to the list
       format.js {

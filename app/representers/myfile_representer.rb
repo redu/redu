@@ -14,7 +14,7 @@ module MyfileRepresenter
   end
 
   link :folder do
-    api_folder_url(self)
+    api_folder_url(self.folder)
   end
 
   link :space do

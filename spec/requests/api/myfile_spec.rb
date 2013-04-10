@@ -4,8 +4,7 @@ describe "File API" do
   let(:environment) { Factory(:complete_environment) }
   let(:course) { environment.courses.first }
   let(:space) { course.spaces.first }
-  let(:folder) { Factory(:folder, :space => space,
-                         :user => course.owner) }
+  let(:folder) { space.root_folder }
   let(:token) { _, _, token = generate_token(course.owner); token }
   let(:params) { { :oauth_token => token, :format => 'json' } }
 
@@ -33,6 +32,10 @@ describe "File API" do
       end
     end
 
+    it "should have a valid link to folder" do
+      href_to("folder", parse(response.body)).should =~ /#{folder.id}/
+    end
+
     it "should return a file with a right name" do
       parse(response.body).fetch("name").should == subject.attachment_file_name
     end
@@ -55,6 +58,55 @@ describe "File API" do
 
     it "should contain a file with a certain name" do
       parse(response.body).first.fetch("name") == files.first.attachment_file_name
+    end
+  end
+
+  context "when POST /api/folders/:id/files" do
+    context "without validation errors" do
+      let(:mimetype) { "application/vnd.ms-powerpoint" }
+      let(:file) do
+        fixture_file_upload("/api/document_example.pptx", mimetype)
+      end
+      before do
+        post "/api/folders/#{folder.id}/files", params.
+        merge({ :file => { :content => file } })
+      end
+
+      it "should return code 201" do
+        response.code.should == "201"
+      end
+
+      it "should return the correct link" do
+        href_to("raw", parse(response.body)).should =~ /document_example.pptx/
+      end
+
+      it "should return the correct mimetyipe" do
+        parse(response.body)["mimetype"].should == mimetype
+      end
+    end
+
+    context "with validation error" do
+      before do
+        post "/api/folders/#{folder.id}/files", params.
+         merge({ :file => { :content => nil } })
+      end
+
+      it "should return code 422" do
+        response.code.should == "422"
+      end
+
+      it "should contain validation error" do
+        response.body.should =~ /attachment/
+      end
+    end
+  end
+
+  context "DELETE /api/files/:id" do
+    subject { Factory(:myfile, :folder => folder, :user => course.owner) }
+
+    it "should return 200" do
+      delete "/api/files/#{subject.id}", params
+      response.code.should == "200"
     end
   end
 end
