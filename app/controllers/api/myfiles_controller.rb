@@ -30,5 +30,16 @@ module Api
 
       respond_with(:api, file)
     end
+
+    def destroy
+      file = Myfile.find(params[:id])
+      service = MyfileService.new(:model => file)
+
+      authorize! :manage, file
+
+      service.destroy
+
+      respond_with file
+    end
   end
 end
