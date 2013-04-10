@@ -136,8 +136,8 @@ class Ability
       can :multiauth, User
 
       # My file
-      cannot :upload_file, Myfile do |myfile|
-        !myfile.can_upload_file?
+      cannot :upload_file, Folder do |folder|
+        !folder.can_upload_file?
       end
 
       # Join in a Course
