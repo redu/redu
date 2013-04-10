@@ -60,9 +60,9 @@ describe FoldersController do
       base_params.merge(:id => folder.to_param, "folder" => { "name" => "New" })
     end
 
-    it "should assign folder" do
+    it "should assign parent folder" do
       post :update, params
-      assigns[:folder].should == folder
+      assigns[:folder].should == folder.parent
     end
 
     it "should call FolderService.update" do

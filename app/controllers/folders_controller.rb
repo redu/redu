@@ -131,7 +131,7 @@ class FoldersController < BaseController
 
     if folder_service.update(folder_attrs)
       respond_to do |format|
-        format.js { list }
+        format.js { list @folder.parent_id }
       end
     end
   end
