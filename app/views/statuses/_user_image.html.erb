@@ -1,7 +1,7 @@
 <% if item.user %>
   <%= image_tag item.user.avatar.url(:thumb_32),
-    :width => 32, :height => 32, :class => 'friend-avatar' %>
+    :width => 32, :height => 32, :class => 'author-thumbnail' %>
 <% else %>
   <%= image_tag "/images/new/missing_users_thumb_32.png", :width => 32, :height => 32,
-    :class => 'friend-avatar'%>
+    :class => 'author-thumbnail'%>
 <% end %>

@@ -1,24 +1,22 @@
 <li id="status-<%= compound.id %>">
-  <div class="status icons-big-after icon-grouping-lightblue_64_66-after">
-    <div class="status-context">
+  <div class="status">
+    <div class="context">
       <% if compound.statusable.environment.avatar_file_name %>
         <%= image_tag compound.statusable.environment.avatar.url(:thumb_32),
           :size => '32x32',
           :class => 'avatar'
         %>
     <% else %>
-      <%= image_tag 'new/missing_courses_thumb_32.png', :class => 'avatar' %>
+      <%= image_tag 'new/missing_courses_thumb_32.png', :class => 'author-thumbnail' %>
     <% end %>
-      <%= link_to compound.statusable.environment.name, environment_path(compound.statusable.environment),
-        :class => "status-main" %>
-      <%= link_to compound.statusable.name, environment_course_path(compound.statusable.environment, compound.statusable),
-        :class => "status-secondary icon-expand-gray_8_10-before" %>
-      <span class="status-info">
+      <%= link_to compound.statusable.environment.name, environment_path(compound.statusable.environment) %>
+      <%= link_to compound.statusable.name, environment_course_path(compound.statusable.environment, compound.statusable) %>
+      <span class="action">
         possui <%= compound.logs.count %> novos membros
       </span>
     </div>
-    <div class="box">
-      <ul class="grouped-photos">
+    <div class="grouping-elements">
+      <ul>
         <%= render :partial => "statuses/compound_item",
           :collection => compound.logs.collect {|log| log.logeable.user },
           :as => :compound_user %>

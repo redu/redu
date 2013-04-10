@@ -1,5 +1,5 @@
 <% if item.user %>
-  <%= link_to item.user.display_name, user_path(item.user), :class => "username" %>
+  <%= link_to item.user.display_name, user_path(item.user), :class => "link-name" %>
 <% else %>
-  <span class="username">[Usuário Removido]</span>
+  <span class="link-name">[Usuário Removido]</span>
 <% end %>

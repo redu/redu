@@ -13,7 +13,7 @@
     <%= render :partial => 'statuses/create_status',
       :locals => { :statusable => @space } %>
     <div id="statuses" class="statuses">
-      <ol>
+      <ol class="status-list">
         <%= render :partial => 'statuses/item', :collection => @statuses %>
       </ol>
 

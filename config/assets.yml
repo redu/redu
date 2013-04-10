@@ -25,8 +25,8 @@ javascripts:
     - public/javascripts/jquery.cookie.js
     - public/javascripts/outdated-browser.js
     - public/javascripts/home.js
-    - public/javascripts/statuses.js
     - public/javascripts/wall_spinner.js
+    - public/javascripts/bootstrap-wall.js
     - public/javascripts/jquery.timeago.js
     - public/javascripts/timeago.js
     - public/javascripts/jquery.fcbkcomplete.min.js # Auto complete do facebook
@@ -134,7 +134,7 @@ stylesheets:
     - public/stylesheets/icons.redu.css
     - public/stylesheets/utils.css
     - public/stylesheets/home.css
-    - public/stylesheets/wall.css
+    - public/stylesheets/bootstrap-redu.css
     - public/stylesheets/fb_style.css
     - public/stylesheets/outdated-browser-new.css
   landing:

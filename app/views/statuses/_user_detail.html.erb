@@ -1,9 +1,9 @@
 <% if item.user %>
   <%= image_tag item.user.avatar.url(:thumb_32),
-    :class => "avatar", :width => 32, :height => 32 %>
-  <%= link_to item.user.display_name, user_path(item.user), :class => "username" %>
+    :class => "author-thumbnail", :width => 32, :height => 32 %>
+  <%= link_to item.user.display_name, user_path(item.user), :class => "link-name" %>
 <% else %>
   <%= image_tag "/images/new/missing_users_thumb_32.png",
-    :class => "avatar", :width => 32, :height => 32 %>
-  <span class="username">[Usuário Removido]</span>
+    :class => "author-thumbnail", :width => 32, :height => 32 %>
+  <span class="link-name">[Usuário Removido]</span>
 <% end %>

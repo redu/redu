@@ -1,6 +1,5 @@
-<div class="status-contents">
-  <div class="distance-top"></div>
-  <p class="status-message"><%= status_message(status.text) %></p>
+<div class="status-content status-tab tab-left">
+  <p><%= status_message(status.text) %></p>
 
   <% if status.status_resources.first %>
     <div class="post-resource">

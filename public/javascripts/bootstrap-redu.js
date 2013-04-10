@@ -2299,6 +2299,18 @@ $.fn.groupResponses = function(opts){
     if ($responses.length > options.maxResponses) {
       $responses.filter(":lt(" + ($responses.length - options.maxResponses) + ")").slideUp(150, "swing");
       $(this).find(".show-responses").show();
+
+    // Exibe Respostas caso haja
+    if ($responses.length > 0 ) {
+      $responses.parent().show();
+    }
+
+
+    if ($responses.length > options.maxResponses) {
+      $responses.filter(":lt(" + ($responses.length - options.maxResponses) + ")").slideUp(150, "swing");
+      $(this).find(".show-responses").show();
+    } else {
+      $responses.first().find('hr').hide();
     }
   });
 }
@@ -2358,7 +2370,11 @@ $(function() {
     var $link = $this.parent().find(".context-link");
     var findIconClass = function (classes) {
       for (i = 0; classes.length; i++) {
+<<<<<<< HEAD
         if (classes[i].indexOf("icon") !== -1) {
+=======
+        if (classes[i].indexOf("icon-") !== -1) {
+>>>>>>> Novo layout do mural para thumbnail de usuários, nome de usuários, actions, criar status, responer status e respostas do mural
           return classes[i];
         }
       }

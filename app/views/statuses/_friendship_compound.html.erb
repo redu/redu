@@ -1,23 +1,21 @@
 <li id="status-<%= compound.id %>">
-  <div class="status icons-big-after icon-contact-lightblue_64_66-after">
-    <div class="status-text">
+  <hr class="list-separator">
+  <div class="status without-context">
+    <div class="subject">
       <%= image_tag compound.statusable.avatar.url(:thumb_32),
-        :class => "avatar", :width => 32, :height => 32 %>
+        :class => "author-thumbnail", :width => 32, :height => 32 %>
       <%= link_to "#{compound.statusable.first_name} #{compound.statusable.last_name}",
-        user_path(compound.statusable), :class => "username" %>
-      <span class="status-info">
+        user_path(compound.statusable), :class => "link-name" %>
+      <span class="action">
         adicionou <%= compound.logs.count %> novas pessoas à sua rede de contatos
       </span>
     </div>
-    <div class="box">
-      <ul class="grouped-photos">
+    <div class="subject-content">
+      <ul class="grouping-elements">
         <%= render :partial => "statuses/compound_item",
           :collection => compound.logs.collect {|log| log.logeable.friend },
           :as => :compound_user %>
       </ul>
-      <% unless compound.logs.count <= 11 %>
-        <a href="#" class="show-more">Ver mais </a>
-      <% end %>
     </div>
   </div>
 </li>

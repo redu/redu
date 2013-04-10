@@ -7618,6 +7618,7 @@ hr {
 .status-list .log .subject-content .status-content {
   margin-top: 5px;
 }
+<<<<<<< HEAD
 .status-list .log .subject-content .grouping-elements {
   margin-right: 20px;
   height: 40px;
@@ -7626,6 +7627,16 @@ hr {
   display: inline;
 }
 .status-list .log .subject-content .grouping-elements li img {
+=======
+.status-list .subject-content .grouping-elements {
+  margin-right: 20px;
+  height: 40px;
+}
+.status-list .subject-content .grouping-elements li {
+  display: inline;
+}
+.status-list .subject-content .grouping-elements li img {
+>>>>>>> Novo layout do mural para thumbnail de usuários, nome de usuários, actions, criar status, responer status e respostas do mural
   margin: 8px 3px 0 0;
 }
 .status-list .status .context {

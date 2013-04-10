@@ -1,15 +1,14 @@
 <li id="status-<%= log.id %>">
-  <div class="status icons-big-after icon-contact-lightblue_64_66-after">
-    <div class="status-text">
+  <hr class="list-separator">
+  <div class="status without-context">
+    <div class="subject">
       <%= render "statuses/user_detail", :item => log %>
-      <span class="status-info"> <%= raw auto_link(log.action_text) %></span>
+      <span class="action"> <%= raw auto_link(log.action_text) %></span>
       <%= render :partial => 'statuses/timeago', :locals => { :item => log } %>
     </div>
-    <div class="status-content">
-      <%= image_tag log.logeable.friend.avatar.url(:thumb_32), :width => 32, :height => 32, :class => 'friend-avatar' %>
-      <%= link_to log.logeable.friend.display_name, user_path(log.logeable.friend), :class => "username" %>
-      <span class="friend-summary">
-      </span>
+    <div class="subject-content">
+      <%= image_tag log.logeable.friend.avatar.url(:thumb_32), :width => 32, :height => 32, :class => 'author-thumbnail' %>
+      <%= link_to log.logeable.friend.display_name, user_path(log.logeable.friend), :class => "link-name" %>
     </div>
   </div>
 </li>

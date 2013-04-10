@@ -1,26 +1,22 @@
 <%# Preview de links externos %>
 <%= render 'statuses/template_preview' %>
-
 <%# Form de status  %>
 <% random_number = get_random_number%>
-<div class="create-status inform-my-status">
-  <%= form_for @status, :remote => true, :html => { :class => "form-loader concave-form" } do |f| %>
+<div class="create-status status-tab tab-left">
+  <%= form_for @status, :remote => true do |f| %>
     <%= flash[:statuses_errors] %>
     <%= hidden_field_tag "return", request.url %>
     <%= hidden_field :status, :statusable_id, :value => statusable.id %>
     <%= hidden_field :status, :statusable_type, :value => statusable.class.to_s %>
     <%= hidden_field_tag "status[type]", 'Activity' %>
-    <div class="distance-top"></div>
     <%= f.error_messages %>
     <%= field_set_tag do %>
-      <%= f.label :text, "Seu mural",
-        :class => "status-icon replacement"%>
-      <%= f.text_area :text, :rows => 1, :class => "status textarea status-#{random_number}" %>
-      <%= render 'shared/limit_char_field', :class_textarea => "status-#{random_number}", :limit => 800 %>
-      <div class="status-buttons">
-        <%= f.submit 'Postar' %>
-        <%= link_to 'Cancelar', nil, :rel => "nofollow", :class => 'cancel concave-clean' %>
-      </div>
+      <%= f.text_area :text, :rows => 1, :cols => 50, :class => "textarea status-#{random_number}", :placeholder => "Compartilhe algo com seus amigos através de seu mural" %>
+      <hr>
+      <ul class="status-buttons" style="display: none;">
+        <li><%= f.submit 'Enviar', :class =>"button-primary" %></li>
+        <li><%= link_to 'Cancelar', nil, :rel => "nofollow", :class => 'cancel button-default' %></li>
+      </ul>
   <% end %>
 <% end %>
 </div>
