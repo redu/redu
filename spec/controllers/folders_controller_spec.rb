@@ -107,5 +107,23 @@ describe FoldersController do
         assigns[:myfile].user.should == user
       end
     end
+
+    context "DELETE destroy_file" do
+      let(:myfile) { Factory(:myfile) }
+      let(:params) do
+        base_params.merge(:space_id => space.to_param,
+                          :id => folder.to_param, :file_id => myfile.to_param)
+      end
+
+      it "should call MyfileService.destroy" do
+        MyfileService.any_instance.should_receive(:destroy).and_call_original
+        delete :destroy_file, params
+      end
+
+      it "should assign myfile" do
+        delete :destroy_file, params
+        assigns[:myfile].should == myfile
+      end
+    end
   end
 end
