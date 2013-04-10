@@ -54,7 +54,7 @@ class FriendshipsController < BaseController
 
   def destroy
     @friend = User.find(@friendship.friend_id)
-    destroy_friendship(@friend)
+    destroy_friendship_with(@friend)
     respond_to do |format|
       format.html do
         if params.has_key? :goto_home
@@ -78,14 +78,4 @@ class FriendshipsController < BaseController
       end
     end
   end
-
-  protected
-  def destroy_friendship(choosen_user)
-    friendship_in = current_user.friendship_for(choosen_user)
-    friendship_out = choosen_user.friendship_for(current_user)
-    # FIXME só deletar se existir conexão
-    friendship_in.destroy
-    friendship_out.destroy
-  end
-
 end
