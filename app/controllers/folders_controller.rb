@@ -1,4 +1,6 @@
 class FoldersController < BaseController
+  check_authorization
+
   load_and_authorize_resource :space
   load_and_authorize_resource :folder, :through => :space,
     :through_association => :folders_and_subfolders
