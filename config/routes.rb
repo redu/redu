@@ -350,7 +350,7 @@ Redu::Application.routes.draw do
       resources :folders, :only => :index
     end
 
-    resources :myfiles, :path => "files", :only => [:show]
+    resources :myfiles, :path => "files", :only => [:show, :destroy]
     resources :canvas, :only => [:show, :update, :destroy]
     resources :asset_reports, :path => "progress", :only => [:show, :update]
 
