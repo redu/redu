@@ -18,7 +18,7 @@
           <li class="header-breadcrumb-item">
             <%= link_to "Planos", user_plans_path(@user),
              :class => "header-bradcrumb-link",
-             :title => "Conta" %>
+             :title => "Planos" %>
           </li>
           <li class="header-breadcrumb-item">
             <%= link_to "Detalhes", plan_invoices_path(@plan),
@@ -26,7 +26,7 @@
              :title => "Detalhes de Plano" %>
           </li>
           <li class="header-breadcrumb-item">
-            <%= link_to "Upgrade", plan_invoices_path(@plan),
+            <%= link_to "Upgrade", options_plan_path(@plan),
              :class => "header-bradcrumb-link",
              :title => "Upgrade" %>
           </li>
