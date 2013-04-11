@@ -1,28 +1,36 @@
 <script type="text/javascript">
   jQuery(function(){
     $("#invite_email").live("click", function(){
-      var email = $.trim($("input[autocomplete=off]").val());
-      $("#emails").val($("#emails").val() + "," + email);
-      $("input[autocomplete=off]").val("")
+      var $this = $(this);
+      var $form = $this.parents('#invite-members');
+      var $textField = $form.find("input[autocomplete=off]");
+
+      var email = $.trim($textField.val());
+      $form.find("#emails").val($("#emails").val() + "," + email);
+      $textField.val("")
 
       var item = "<li class=\"token-input-token email\"><p class=\"invited-mail\" title=\"" + email + "\">" + email + "</p><span class=\"invite-to-redu\">(Convidar para o Redu)</span><span class=\"token-input-delete-token-email\">x</span></li>"
       $(".token-input-input-token").before(item);
-      $(this).hide();
+      $this.hide();
       return false;
     });
 
       $(".token-input-delete-token-email").live("click", function(){
-        $(this).parent().remove();
-        var emails = $("#emails").val();
-        var deleted_email = $(this).siblings('.invited-mail')[0].getAttribute("title");
+        var $this = $(this);
+        var $emailsField = $this.parents("#invite-members").find("#emails");
+        $this.parent().remove();
+
+        var emails = $emailsField.val();
+        var deleted_email = $this.siblings('.invited-mail')[0].getAttribute("title");
         var emails = emails.replace(deleted_email, "");
-        $("#emails").val(emails);
+        $emailsField.val(emails);
     });
 
     $(".form-common").ajaxComplete(function(){
+      var $this = $(this);
       if ($(".token-input-dropdown li").length == 0) {
         var emailRegex = /^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/;
-        var entered_value = $.trim($("input[autocomplete=off]").val());
+        var entered_value = $.trim($this.find("input[autocomplete=off]").val());
         if (emailRegex.test(entered_value)) {
           $("#invite_email").show();
         }else{
