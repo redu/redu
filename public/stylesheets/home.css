@@ -650,6 +650,10 @@ input[type="hidden"] +
   display: block;
   clear: left;
 }
+.plan-details .progress-bar-medium {
+  float: right;
+  display: inline-block;
+}
 .plan-details .quotas {
   list-style-type: none;
 }

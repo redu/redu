@@ -45,17 +45,37 @@
           <%= link_to "Upgrade", options_plan_path(@plan), :class => "concave-important upgrade-button" %>
         <% end %>
 
-        <% if @quota %>
-          <div class="plan-use">
-            <span class="plan-type"><%= @plan.name %></span>
-            <%= render :partial => "invoices/quotas",
-              :locals => { :quota_file => @plan.billable.percentage_quota_file,
-                           :plan => @plan,
-                           :quota_multimedia => @plan.billable.percentage_quota_multimedia,
-                           :quota_members => @plan.billable.percentage_quota_members,
-                           :quota => @quota } %>
-          </div>
-        <% end %>
+        <ul class="list-mix plan-details">
+          <li>
+            <div class="list-mix-item">
+              <div class="list-mix-inner">
+                <div class="list-mix-header">
+                  <span class="plan-name"><%= @plan.name %></span>
+                  <% if can? :migrate, @plan %>
+                    <%= link_to "Upgrade", options_plan_path(@plan), :class => "button-success pull-right" %>
+                  <% end %>
+                  <% if @plan.pending_payment? %>
+                    <% if @plan.invoice.overdue? %>
+                      <p class="no-pending legend">Fatura em aberto, plano bloqueado</p>
+                    <% else %>
+                      <%= content_tag(:span, "Fatura em aberto. #{@plan.invoice.threshold_date - Date.today} dias restantes.", :class => "plan-status no-pending legend") %>
+                    <% end %>
+                  <% else %>
+                    <span class="no-pending legend">Sem pendências</span>
+                  <% end %>
+                </div>
+                <% if @quota %>
+                  <%= render :partial => "invoices/quotas",
+                    :locals => { :quota_file => @plan.billable.percentage_quota_file,
+                                 :plan => @plan,
+                                 :quota_multimedia => @plan.billable.percentage_quota_multimedia,
+                                 :quota_members => @plan.billable.percentage_quota_members,
+                                 :quota => @quota } %>
+                <% end %>
+              </div>
+            </div>
+          </li>
+        </ul>
 
         <table>
           <thead>
