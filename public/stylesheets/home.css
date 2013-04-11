@@ -628,6 +628,47 @@ input[type="hidden"] +
   margin-top: 15px;
 }
 
+.plan-details {
+  margin-top: 20px;
+}
+.plan-details li + li {
+  margin-top: 10px;
+}
+.plan-details .list-mix-inner {
+  padding: 10px;
+}
+.plan-details .list-mix-header {
+  padding-bottom: 10px;
+  overflow: hidden;
+  line-height: 18px;
+}
+.plan-details .plan-name {
+  color: #5fc080;
+  float: left;
+}
+.plan-details .plan-status {
+  display: block;
+  clear: left;
+}
+.plan-details .quotas {
+  list-style-type: none;
+}
+.plan-details .quotas li + li {
+  margin-top: 0;
+  padding-top: 5px;
+}
+.plan-details .quotas .plan-price {
+  color: #6d6e6f;
+  font-weight: 300;
+}
+.plan-details .quotas .plan-period {
+  float: right;
+  clear: right;
+}
+.plan-details .quotas .plan-quota {
+  color: black;
+}
+
 ul.requisitions {
   margin: 0;
   overflow: visible;

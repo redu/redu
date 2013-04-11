@@ -146,3 +146,42 @@
 .plans-sidebar {
   p + p { margin-top: 15px; }
 }
+.plan-details {
+  margin-top: 20px;
+
+  li + li { margin-top: 10px; }
+
+  .list-mix-inner { padding: 10px; }
+  .list-mix-header {
+    padding-bottom: 10px;
+    overflow: hidden;
+    line-height: 18px;
+  }
+
+  .plan-name {
+    color: $green3;
+    float: left;
+  }
+
+  .plan-status {
+    display: block;
+    clear: left;
+  }
+
+  .quotas {
+    list-style-type: none;
+    li + li {
+      margin-top: 0;
+      padding-top: 5px;
+    }
+    .plan-price {
+      color: $gray6;
+      font-weight: 300;
+    }
+    .plan-period {
+      float: right;
+      clear: right;
+    }
+    .plan-quota { color: $black; }
+  }
+}

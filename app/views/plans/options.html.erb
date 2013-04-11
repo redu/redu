@@ -46,15 +46,19 @@
               <%= content_tag :span, @plan.billable_audit["name"] %>
             <% end %>
           </div>
-          <div class="options-plan">
-            <h1 class="plan-user">Professor</h1>
-            <ul class="plans-list">
+          <div>
+            <h5 class="plan-user">Planos para Professor</h5>
+            <ul class="list-mix plan-details">
               <% if @plan.name == Plan.from_preset(:free).name %>
-                <%= render "plans/item_medium", :plan_preset => :free, :actual_plan => @plan %>
+                <%= render :partial => "plans/item_medium",
+                  :locals => { :plan_preset => :free, :actual_plan => @plan } %>
               <% end %>
-              <%= render "plans/item_medium", :plan_preset => :professor_lite, :actual_plan => @plan %>
-              <%= render "plans/item_medium", :plan_preset => :professor_standard, :actual_plan => @plan %>
-              <%= render "plans/item_medium", :plan_preset => :professor_plus, :actual_plan => @plan %>
+              <%= render :partial => "plans/item_medium",
+                :locals => { :plan_preset => :professor_lite, :actual_plan => @plan } %>
+              <%= render :partial => "plans/item_medium",
+                :locals => { :plan_preset => :professor_standard, :actual_plan => @plan } %>
+              <%= render :partial => "plans/item_medium",
+                :locals => { :plan_preset => :professor_plus, :actual_plan => @plan } %>
             </ul>
           </div>
         </div>
