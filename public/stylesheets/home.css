@@ -637,6 +637,13 @@ input[type="hidden"] +
   color: #b3b3b3;
   font-weight: 300;
 }
+.plans-title.course {
+  color: #6d6e6f;
+  margin-bottom: -5px;
+}
+.plans-title.teacher {
+  padding-top: 20px;
+}
 
 .plan-details {
   margin-top: 20px;

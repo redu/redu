@@ -35,19 +35,19 @@
       <%# Abas e sub-abas %>
       <%= new_tabs(:new_users) %>
       <div class="content-section">
-        <div class="panel plan-panel">
-          <div class="call">
+        <div>
+          <div>
             <% if @plan.billable.is_a? Environment %>
-              <%= content_tag(:h3, @plan.billable.name, :class => "billable") %>
+              <%= content_tag(:h4, @plan.billable.name, :class => "plans-title course") %>
             <% elsif @plan.billable.is_a? Course %>
-              <%= content_tag(:h3, @plan.billable.environment.name, :class => "environment") %>
-              <%= content_tag(:h3, @plan.billable.name, :class => "billable") %>
+              <%= content_tag(:h4, @plan.billable.environment.name, :class => "plans-title course") %>
+              <%= content_tag(:span, @plan.billable.name, :class => "legend") %>
             <% elsif @plan.billable_audit %>
               <%= content_tag :span, @plan.billable_audit["name"] %>
             <% end %>
           </div>
           <div>
-            <h5 class="plan-user">Planos para Professor</h5>
+            <h5 class="plans-title teacher">Planos para Professor</h5>
             <ul class="list-mix plan-details">
               <% if @plan.name == Plan.from_preset(:free).name %>
                 <%= render :partial => "plans/item_medium",

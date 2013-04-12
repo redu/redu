@@ -153,6 +153,14 @@
 .plans-title {
   color: $gray5;
   font-weight: 300;
+
+  &.course {
+    color: $gray6;
+    margin-bottom: -5px;
+  }
+  &.teacher {
+    padding-top: 20px;
+  }
 }
 .plan-details {
   margin-top: 20px;
