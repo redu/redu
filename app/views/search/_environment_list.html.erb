@@ -6,7 +6,7 @@
     query: o termo pesquisado.
 %>
 <% if environments.count > 0 %>
-  <div class="portal-search-category">
+  <div class="portal-search-category content-section">
     <span class="portal-search-category-title icon-environment-gray_32_34-before">Ambientes: <%= search_results_counter(environments) %></span>
     <% if show_see_all_results_link?(environments.total_count) %>
       <%= link_to "Veja todos os resultados",

@@ -153,7 +153,7 @@ textarea {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 100%;
+  max-width: 100%;
 }
 
 .area-fix {
@@ -6894,7 +6894,6 @@ hr {
   width: calc((100% - ((1 - 1) * 10px)) / 1);
   margin-left: 10px;
   float: left;
-  position: relative;
 }
 .list-1-columns > li:nth-child(1n+1) {
   margin-left: 0;
@@ -6928,6 +6927,9 @@ hr {
 .list-1-columns.list-columns-separator > li:nth-child(1) {
   margin-top: 0;
 }
+.list-1-columns.list-columns-separator > li:first-child:after {
+  background: none;
+}
 
 .list-2-columns {
   list-style: none;
@@ -6944,7 +6946,6 @@ hr {
   width: calc((100% - ((2 - 1) * 10px)) / 2);
   margin-left: 10px;
   float: left;
-  position: relative;
 }
 .list-2-columns > li:nth-child(2n+1) {
   margin-left: 0;
@@ -6981,6 +6982,9 @@ hr {
 .list-2-columns.list-columns-separator > li:nth-child(1) {
   margin-top: 0;
 }
+.list-2-columns.list-columns-separator > li:first-child:after {
+  background: none;
+}
 
 .list-3-columns {
   list-style: none;
@@ -6997,7 +7001,6 @@ hr {
   width: calc((100% - ((3 - 1) * 10px)) / 3);
   margin-left: 10px;
   float: left;
-  position: relative;
 }
 .list-3-columns > li:nth-child(3n+1) {
   margin-left: 0;
@@ -7036,6 +7039,9 @@ hr {
 }
 .list-3-columns.list-columns-separator > li:nth-child(1) {
   margin-top: 0;
+}
+.list-3-columns.list-columns-separator > li:first-child:after {
+  background: none;
 }
 
 .general-list-item {
@@ -7223,28 +7229,12 @@ hr {
   height: 50px;
 }
 
-.middle-width {
-  float: left;
-  overflow: visible;
-  width: 90%;
-  width: -webkit-calc(50% - 50px);
-  width: -moz-calc(50% - 50px);
-  width: calc(50% - 50px);
-  list-style: none;
-}
-
-.member-list .separator {
-  overflow: hidden;
-  list-style: none;
-  clear: both;
-}
-.member-list .general-list-item {
-  float: left;
-  margin-left: 15px;
-}
-.member-list .general-list-item .legend {
+.member-list-item .legend {
   font-size: 12px;
   line-height: 18px;
+}
+.member-list-item .legend +
+.legend {
   margin-top: 0;
 }
 
@@ -7332,7 +7322,6 @@ hr {
   -webkit-border-bottom-left-radius: 3px;
   -moz-border-radius-bottomleft: 3px;
   border-bottom-left-radius: 3px;
-  float: left;
 }
 
 .invitation-token-inner {
@@ -7342,7 +7331,7 @@ hr {
   padding: 7px 10px;
   background-color: #e1f1e1;
 }
-.invitation-token-thumbnail +
+.invitation-token-thumbnail-link +
 .invitation-token-inner {
   -webkit-border-top-left-radius: 0;
   -moz-border-radius-topleft: 0;
@@ -7369,12 +7358,17 @@ hr {
 }
 
 .invitation-token-title {
-  width: 96%;
-  width: -moz-calc(100% - (10px + 16px));
-  width: -o-calc(100% - (10px + 16px));
-  width: -webkit-calc(100% - (10px + 16px));
-  width: calc(100% - (10px + 16px));
-  display: block;
+  max-width: 96%;
+  max-width: -moz-calc(100% - (10px + 16px));
+  max-width: -o-calc(100% - (10px + 16px));
+  max-width: -webkit-calc(100% - (10px + 16px));
+  max-width: calc(100% - (10px + 16px));
+}
+.invitation-token-title, .invitation-token-title:hover, .invitation-token-title:visited {
+  color: black;
+}
+.invitation-token-title:hover {
+  text-decoration: none;
 }
 
 .invitation-token-email {
@@ -7383,7 +7377,6 @@ hr {
   max-width: -o-calc(100% - (10px + 115px));
   max-width: -webkit-calc(100% - (10px + 115px));
   max-width: calc(100% - (10px + 115px));
-  width: auto;
   display: inline-block;
 }
 
@@ -7441,12 +7434,11 @@ hr {
 }
 
 .invitation-title {
-  width: 83%;
-  width: -moz-calc(100% - (10px + 50px + 10px + 16px));
-  width: -o-calc(100% - (10px + 50px + 10px + 16px));
-  width: -webkit-calc(100% - (10px + 50px + 10px + 16px));
-  width: calc(100% - (10px + 50px + 10px + 16px));
-  display: block;
+  max-width: 83%;
+  max-width: -moz-calc(100% - (10px + 50px + 10px + 16px));
+  max-width: -o-calc(100% - (10px + 50px + 10px + 16px));
+  max-width: -webkit-calc(100% - (10px + 50px + 10px + 16px));
+  max-width: calc(100% - (10px + 50px + 10px + 16px));
   color: #4dadd6;
 }
 
@@ -7476,7 +7468,6 @@ hr {
   max-width: -o-calc(100% - (10px + 75px));
   max-width: -webkit-calc(100% - (10px + 75px));
   max-width: calc(100% - (10px + 75px));
-  width: auto;
 }
 .invitation-title-link[class*="icon-"][class*="-before"]:before {
   vertical-align: bottom;

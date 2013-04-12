@@ -86,7 +86,10 @@
   color: rgb(178, 178, 178);
 }
 
-.portal-search-category { padding: 10px 20px 15px 20px; }
+.portal-search-category { border-bottom: 1px solid $gray3; }
+
+.portal-search-category +
+.portal-search-list-results { margin-top: 5px; }
 
 .portal-search-category-title +
 .portal-search-category-link { margin-left: 20px; }
