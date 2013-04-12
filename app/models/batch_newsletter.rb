@@ -14,7 +14,7 @@ class BatchNewsletter < Newsletter
 
   def deliver(&block)
     @users.find_each do |user|
-      block.call(user.email, {})
+      block.call(user.email, {:user => user})
     end
   end
 end
