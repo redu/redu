@@ -673,6 +673,13 @@ input[type="hidden"] +
   color: black;
 }
 
+.invoices-table {
+  margin-top: 40px;
+}
+.invoices-table tbody {
+  color: #6d6e6f;
+}
+
 ul.requisitions {
   margin: 0;
   overflow: visible;

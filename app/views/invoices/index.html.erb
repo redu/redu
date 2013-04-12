@@ -77,37 +77,30 @@
           </li>
         </ul>
 
-        <table>
+        <table class="table-without-borderradius invoices-table">
           <thead>
             <tr>
-              <th style="width: 20%">Fatura:</th>
-              <th style="width: 22%">Data:</th>
-              <th style="width: 20%">Estado:</th>
-              <th style="width: 20%">Valor:</th>
-              <th></th>
+              <th style="width: 20%">Fatura</th>
+              <th style="width: 20%">Início</th>
+              <th style="width: 20%">Término</th>
+              <th style="width: 20%">Valor</th>
+              <th style="width: 20%">Situação</th>
             </tr>
           </thead>
-          <tbody class="payments">
+          <tbody class="legend">
             <% @invoices.each do |invoice| %>
-              <tr class="data">
-                <td class="number"><%= invoice.id.to_s.rjust(10, "0") %></td>
+              <tr>
+                <td><%= invoice.id.to_s.rjust(10, "0") %></td>
                 <td>
-                  <span class="date">
-                    <%= content_tag(:span, "#{l invoice.period_start} a", :class => "start") %>
-                    <%= content_tag(:span, (l invoice.period_end), :class => "done") %>
-                  </span>
+                  <span><%= content_tag(:span, (l invoice.period_start)) %></span>
                 </td>
                 <td>
-                  <span class="state <%= invoice.state %>">
-                    <%= Invoice.human_attribute_name(invoice.state)%>
-                  </span>
+                  <span><%= content_tag(:span, (l invoice.period_end)) %></span>
                 </td>
                 <td>
-                  <span class="value">
-                    <%= number_to_currency(invoice.total) %>
-                  </span>
+                  <span><%= number_to_currency(invoice.total) %></span>
                 </td>
-                <td class="pay-status">
+                <td>
                   <% if can? :pay_with_pagseguro, invoice %>
                     <div class="pagseguro-concave-form">
                       <%= pagseguro_form invoice.plan.create_order, :submit => "Pagar" %>
@@ -131,3 +124,8 @@
 <div class="span3">
   <%= render :partial => 'plans/explanation_sidebar' %>
 </div>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("form.pagseguro input").addClass('button-primary');
+  });
+</script>
