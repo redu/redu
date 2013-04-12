@@ -220,7 +220,7 @@ class UserNotifier < BaseMailer
     @user, @friend = user, friend
     uca = @friend.user_course_associations.approved
 
-    @contacts = { :total => @user.friends.count,
+    @contacts = { :total => @friend.friends.count,
                   :in_common => user.friends_in_common_with(@friend).count }
     @courses = { :total => @friend.courses.count,
                  :environment_admin => uca.with_roles([:environment_admin]).count,

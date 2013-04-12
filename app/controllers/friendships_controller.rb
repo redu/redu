@@ -70,7 +70,8 @@ class FriendshipsController < BaseController
   def resend_email
     user = @friendship.user
     friend = @friendship.friend
-    UserNotifier.delay(:queue => 'email').friendship_requested(friend, user)
+    UserNotifier.delay(:queue => 'email').friendship_requested(user,
+                                                               friend)
     respond_to do |format|
       format.js do
         @invitation_id = "request-#{params[:id]}"
