@@ -113,8 +113,9 @@
             <% end %>
           </tbody>
         </table>
-
-        <%= link_to "< voltar para lista de planos", user_plans_path(@user), :class => "legend" %>
+      </div>
+      <div class="content-section clearfix">
+        <%= link_to "< voltar para a lista de cursos e planos", user_plans_path(@user), :class => "legend pull-right" %>
       </div>
     </div>
     <%= render :partial => "users/breadcrumb_configurations",

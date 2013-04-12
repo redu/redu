@@ -69,7 +69,9 @@
         <span class="legend">Você é uma Instituição de Ensino ou Empresa? Entre em contato com a nossa parceira CNS e explique as suas necessidades.</span>
         <%= render :partial => "partners/partner_contacts/new",
           :locals => { :environment => nil, :migration => true, :billable_url => @billable_url } %>
-        <%= link_to "< voltar para detalhes do plano atual", plan_invoices_path(@plan), :class => "legend" %>
+      </div>
+      <div class="content-section clearfix">
+        <%= link_to "< voltar para detalhes do plano atual", plan_invoices_path(@plan), :class => "legend pull-right" %>
       </div>
     </div>
     <%= render :partial => "users/breadcrumb_configurations",
