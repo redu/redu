@@ -54,7 +54,7 @@ class FriendshipsController < BaseController
 
   def destroy
     @friend = User.find(@friendship.friend_id)
-    destroy_friendship_with(@friend)
+    @user.destroy_friendship_with(@friend)
     respond_to do |format|
       format.html do
         if params.has_key? :goto_home
