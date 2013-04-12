@@ -113,4 +113,36 @@ describe ApplicationController do
       end
     end
   end
+
+  describe "Rescue from CanCan::AccessDenied" do
+    controller do
+      def index
+        raise CanCan::AccessDenied
+      end
+    end
+
+    context "when accessed from a mobile device" do
+      before do
+        mock_user_agent(:mobile => true)
+      end
+
+      it "redirects to /entrar" do
+        get :index, :locale => 'pt-BR'
+        # Hardcoded porque anonymous controller sobrescreve as rotas
+        response.should redirect_to("/entrar")
+      end
+    end
+
+    context "when accessed from a non mobile device" do
+      before do
+        mock_user_agent(:mobile => false)
+      end
+
+      it "redirects to /" do
+        get :index, :locale => 'pt-BR'
+        # Hardcoded porque anonymous controller sobrescreve as rotas
+        response.should redirect_to("/")
+      end
+    end
+  end
 end

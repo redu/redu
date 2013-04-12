@@ -2,7 +2,6 @@ class BaseController < ApplicationController
   layout :choose_layout, :except => [:basic]
   # Work around (ver método self.login_required_base)
 
-  rescue_from CanCan::AccessDenied, :with => :deny_access
   rescue_from ActiveRecord::RecordNotUnique,
     :with => Proc.new { redirect_to application_path }
 
@@ -101,10 +100,5 @@ class BaseController < ApplicationController
       :partial_locals => partial_locals # Locals necessários no partial do item
     }
       render :template => 'shared/sidebar_endless', :locals => locals
-  end
-
-  def deny_access(exception)
-    flash[:error] = "Essa área só pode ser vista após você acessar o Redu com seu nome e senha."
-    redirect_to home_path
   end
 end
