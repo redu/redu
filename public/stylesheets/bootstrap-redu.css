@@ -7523,13 +7523,25 @@ hr {
 .subject-content {
   margin-left: 42px;
 }
+.subject .see-all,
+.subject-content .see-all {
+  float: right;
+}
 
-.status.without-context .subject,
-.status.without-context .subject-content {
+.status.without-context .subject {
   margin-left: 0;
+  overflow: hidden;
+}
+.status.without-context .subject-content {
+  margin: 5px 0 0 42px;
 }
 .status.without-context .subject-info {
   margin-top: 0;
+}
+.status.without-context .status-content,
+.status.without-context .responses,
+.status.without-context .create-response {
+  margin-left: 0;
 }
 
 .status-list li {
@@ -7601,33 +7613,6 @@ hr {
   padding: 0;
   margin-top: 0;
 }
-.status-list .log .subject {
-  margin-top: 5px;
-}
-.status-list .log .subject-info[class*="icon-"]:before {
-  position: absolute;
-  margin-left: -75px;
-}
-.status-list .log .see-all {
-  float: right;
-}
-.status-list .log .subject-info .action[class*="icon-"]:before {
-  position: absolute;
-  margin-left: -35px;
-}
-.status-list .log .subject-content .status-content {
-  margin-top: 5px;
-}
-<<<<<<< HEAD
-.status-list .log .subject-content .grouping-elements {
-  margin-right: 20px;
-  height: 40px;
-}
-.status-list .log .subject-content .grouping-elements li {
-  display: inline;
-}
-.status-list .log .subject-content .grouping-elements li img {
-=======
 .status-list .subject-content .grouping-elements {
   margin-right: 20px;
   height: 40px;
@@ -7636,8 +7621,18 @@ hr {
   display: inline;
 }
 .status-list .subject-content .grouping-elements li img {
->>>>>>> Novo layout do mural para thumbnail de usuários, nome de usuários, actions, criar status, responer status e respostas do mural
   margin: 8px 3px 0 0;
+}
+.status-list .log .subject {
+  margin-top: 5px;
+}
+.status-list .log .subject-info[class*="icon-"]:before {
+  position: absolute;
+  margin-left: -75px;
+}
+.status-list .log .subject-info .action[class*="icon-"]:before {
+  position: absolute;
+  margin-left: -35px;
 }
 .status-list .status .context {
   margin-bottom: 5px;

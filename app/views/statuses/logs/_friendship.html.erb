@@ -2,9 +2,16 @@
   <hr class="list-separator">
   <div class="status without-context">
     <div class="subject">
-      <%= render "statuses/user_detail", :item => log %>
-      <span class="action"> <%= raw auto_link(log.action_text) %></span>
-      <%= render :partial => 'statuses/timeago', :locals => { :item => log } %>
+      <%= image_tag log.statusable.avatar.url(:thumb_32),
+        :class => "author-thumbnail", :width => 32, :height => 32 %>
+      <div class="subject-info">
+        <%= link_to "#{log.statusable.first_name} #{log.statusable.last_name}",
+          user_path(log.statusable), :class => "link-name" %>
+        <span class="action">
+          <%= raw auto_link(log.action_text) %>
+        </span>
+        <%= render :partial => 'statuses/timeago', :locals => { :item => log } %>
+      </div>
     </div>
     <div class="subject-content">
       <%= image_tag log.logeable.friend.avatar.url(:thumb_32), :width => 32, :height => 32, :class => 'author-thumbnail' %>

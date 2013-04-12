@@ -4,13 +4,17 @@
     <div class="subject">
       <%= image_tag compound.statusable.avatar.url(:thumb_32),
         :class => "author-thumbnail", :width => 32, :height => 32 %>
-      <%= link_to "#{compound.statusable.first_name} #{compound.statusable.last_name}",
-        user_path(compound.statusable), :class => "link-name" %>
-      <span class="action">
-        adicionou <%= compound.logs.count %> novas pessoas à sua rede de contatos
-      </span>
+      <div class="subject-info">
+        <%= link_to "#{compound.statusable.first_name} #{compound.statusable.last_name}",
+          user_path(compound.statusable), :class => "link-name" %>
+        <span class="action">
+          adicionou <%= compound.logs.count %> novas pessoas à sua rede de contatos
+        </span>
+        <%= render :partial => 'statuses/timeago', :locals => { :item => compound } %>
+      </div>
     </div>
     <div class="subject-content">
+      <span href="#" class="link-fake see-all link-secondary">+ ver todos</span>
       <ul class="grouping-elements">
         <%= render :partial => "statuses/compound_item",
           :collection => compound.logs.collect {|log| log.logeable.friend },
