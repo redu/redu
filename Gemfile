@@ -13,7 +13,7 @@ gem 'actionmailer_inline_css',
 gem 'classy_enum'
 gem 'activerecord-import'
 gem 'acts_as_tree', '~> 0.1.1'
-gem 'acts-as-taggable-on'
+gem 'acts-as-taggable-on', :git => 'git://github.com/mbleigh/acts-as-taggable-on.git'
 gem 'ajaxful_rating',
   :git => 'git://github.com/edgarjs/ajaxful-rating.git',
   :branch => 'rails3'

@@ -36,6 +36,13 @@ GIT
       rscribd
 
 GIT
+  remote: git://github.com/mbleigh/acts-as-taggable-on.git
+  revision: c1754d494e1ec4fc2aba4a7ad671d90bac9200db
+  specs:
+    acts-as-taggable-on (2.3.3)
+      rails (~> 3.0)
+
+GIT
   remote: git://github.com/meskyanichi/backup.git
   revision: bca9ab8b05cfaf65e78f069264ca78f5b4231799
   specs:
@@ -146,7 +153,6 @@ GEM
     activerecord-import (0.2.9)
       activerecord (~> 3.0)
       activerecord (~> 3.0)
-    acts-as-taggable-on (2.0.6)
     acts_as_tree (0.1.1)
     addressable (2.3.2)
     amq-client (0.9.12)
@@ -448,7 +454,7 @@ DEPENDENCIES
   aasm
   actionmailer_inline_css!
   activerecord-import
-  acts-as-taggable-on
+  acts-as-taggable-on!
   acts_as_tree (~> 0.1.1)
   ajaxful_rating!
   authlogic
