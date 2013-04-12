@@ -6,7 +6,7 @@ clearfix
     query: o termo pesquisado.
 %>
 <% if courses.count > 0 %>
-  <div class="portal-search-category">
+  <div class="portal-search-category content-section">
     <span class="portal-search-category-title icon-course-gray_32_34-before">Cursos: <%= search_results_counter(courses) %></span>
     <% if show_see_all_results_link?(courses.total_count) %>
       <%= link_to "Veja todos os resultados",
