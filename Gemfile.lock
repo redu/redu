@@ -441,6 +441,7 @@ GEM
       chronic (~> 0.6.3)
     will_paginate (3.0.pre2)
     xml-simple (1.0.15)
+    yajl-ruby (1.1.0)
     yui-compressor (0.9.6)
       POpen4 (>= 0.1.4)
     zencoder (2.3.1)
@@ -486,7 +487,6 @@ DEPENDENCIES
   jammit-s3
   jasmine
   jquery-rails (>= 1.0.12)
-  json (>= 1.7.7)
   kaminari
   mime-types
   mongoid (~> 2.2.6)
@@ -524,4 +524,5 @@ DEPENDENCIES
   webmock!
   whenever
   will_paginate (~> 3.0.pre2)
+  yajl-ruby
   zencoder
