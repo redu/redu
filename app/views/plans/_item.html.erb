@@ -4,8 +4,8 @@
       <% if item.billable.is_a? Environment %>
         <%= content_tag(:p, item.billable.name, :class => "name") %>
       <% else %>
-        <%= item.billable.environment.name %>
-        <%= content_tag(:p, item.billable.name, :class => "name") %>
+        <%= content_tag(:span, item.billable.environment.name, :class => "plans-name") %>
+        <%= content_tag(:p, item.billable.name, :class => "legend") %>
       <% end %>
     <% else %>
       <span class="name"><%= item.billable_audit.try(:[], "name") || "Sem informações" %> (removido)</span>
@@ -15,12 +15,12 @@
     <%= link_to item.name, plan_invoices_path(item), :class => "name #{item.invoice.try(:overdue?) ? 'pending-user' : ''}" %>
     <% if item.pending_payment? %>
       <% if item.invoice.overdue? %>
-        <p class="no-pending">Fatura em aberto, plano bloqueado</p>
+        <p class="no-pending legend">Fatura em aberto, plano bloqueado</p>
       <% else %>
-        <%= content_tag(:p, "Faltam #{item.invoice.threshold_date - Date.today} dias restantes", :class => "no-pending") %>
+        <%= content_tag(:p, "Fatura em aberto. #{item.invoice.threshold_date - Date.today} dias restantes.", :class => "no-pending legend") %>
       <% end %>
     <% else %>
-      <span class="no-pending">Sem pendência</span>
+      <span class="no-pending legend">Sem pendências</span>
     <% end %>
   </td>
 </tr>

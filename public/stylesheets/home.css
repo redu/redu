@@ -628,6 +628,11 @@ input[type="hidden"] +
   margin-top: 15px;
 }
 
+.plans-name {
+  font-weight: bold;
+  color: #6d6e6f;
+}
+
 .plans-title {
   color: #b3b3b3;
   font-weight: 300;

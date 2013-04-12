@@ -146,6 +146,10 @@
 .plans-sidebar {
   p + p { margin-top: 15px; }
 }
+.plans-name {
+  font-weight: bold;
+  color: $gray6;
+}
 .plans-title {
   color: $gray5;
   font-weight: 300;
