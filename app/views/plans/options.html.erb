@@ -65,9 +65,10 @@
       </div>
       <hr class="list-separator">
       <div class="content-section">
-        <span class="plan-user">Instituição de Ensino ou Empresa</span>
-        <p class="plan-user-call">Você é uma instituição de Ensino ou Empresa e deseja mudar a categoria do seu atual plano? Explique suas necessidades para a nossa parceria</p>
-        <%= render 'partners/partner_contacts/new', :environment => nil, :migration => true, :billable_url => @billable_url %>
+        <h5 class="plans-title">Planos para Instituição de Ensino ou Empresa</h5>
+        <span class="legend">Você é uma Instituição de Ensino ou Empresa? Entre em contato com a nossa parceira CNS e explique as suas necessidades.</span>
+        <%= render :partial => "partners/partner_contacts/new",
+          :locals => { :environment => nil, :migration => true, :billable_url => @billable_url } %>
         <%= link_to "< voltar para detalhes do plano atual", plan_invoices_path(@plan), :class => "legend" %>
       </div>
     </div>

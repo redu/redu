@@ -628,6 +628,11 @@ input[type="hidden"] +
   margin-top: 15px;
 }
 
+.plans-title {
+  color: #b3b3b3;
+  font-weight: 300;
+}
+
 .plan-details {
   margin-top: 20px;
 }
@@ -678,6 +683,10 @@ input[type="hidden"] +
 }
 .invoices-table tbody {
   color: #6d6e6f;
+}
+
+#partner-contact-form fieldset + fieldset {
+  margin-top: 20px;
 }
 
 ul.requisitions {

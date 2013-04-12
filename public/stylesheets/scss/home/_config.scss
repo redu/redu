@@ -146,6 +146,10 @@
 .plans-sidebar {
   p + p { margin-top: 15px; }
 }
+.plans-title {
+  color: $gray5;
+  font-weight: 300;
+}
 .plan-details {
   margin-top: 20px;
 
@@ -194,4 +198,7 @@
   margin-top: 40px;
 
   tbody { color: $gray6; }
+}
+#partner-contact-form {
+  fieldset + fieldset { margin-top: 20px; }
 }

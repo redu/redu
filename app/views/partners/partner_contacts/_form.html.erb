@@ -17,24 +17,36 @@
   <% end %>
 <% end %>
 <%= field_set_tag nil, :class => "category-fieldset" do %>
-  <%= label_tag "Categoria" %>
-  <ul class="single-column">
-    <li>
-      <%= f.radio_button "category", "institution", :checked => true %>
-      <%= f.label "category_institution", "Instituição de ensino" %>
-    </li>
-    <li>
-      <%= f.radio_button "category", "company" %>
-      <%= f.label "category_company", "Empresa" %>
-    </li>
-  </ul>
+  <div class="control-group row">
+    <div class="control-label span3">
+      <%= label_tag "Categoria" %>
+    </div>
+    <div class="controls span6">
+      <label class="control-radio"><%= f.radio_button "category", "institution", :checked => true %>Instituição de ensino</label>
+      <label class="control-radio"><%= f.radio_button "category", "company" %>Empresa</label>
+    </div>
+  </div>
 <% end %>
 <%= field_set_tag do %>
-  <%= f.label :email, "E-mail para contato:" %>
-  <%= f.text_field :email %>
-  <span class="tip">Digite um endereço de e-mail utilizado para contatos administrativos</span>
-  <%= f.label :details, "Informações adicionais:" %>
-  <%= f.text_area :details, :size => "" %>
-  <span class="tip">Detalhe suas necessidades básicas ou outras informações extras</span>
-  <%= submit_tag "Avançar", :class => "concave-important" %>
+  <div class="control-group row">
+    <div class="control-label span3">
+      <%= f.label :email, "E-mail para contato" %>
+    </div>
+    <div class="controls span6">
+      <%= f.text_field :email, :placeholder => 'Endereço de e-mail para contatos administrativos' %>
+    </div>
+  </div>
+  <div class="control-group row">
+    <div class="control-label span3">
+      <%= f.label :details, "Informações adicionais" %>
+    </div>
+    <div class="controls span6">
+      <%= f.text_area :details, :rows => 5, :placeholder => 'Detalhe as necessidades de ensino a distância de sua organização' %>
+    </div>
+  </div>
+  <div class="control-group row">
+    <div class="controls span9">
+      <%= submit_tag "Enviar", :class => "button-success pull-right" %>
+    </div>
+  </div>
 <% end %>
