@@ -572,6 +572,16 @@ describe User do
       @id = @lecture.subject.id
       subject.subjects_id.should eq([@id])
     end
+
+    context "#find" do
+      it "should find by login" do
+        User.find(subject.login).should == subject
+      end
+
+      it "should find by ID" do
+        User.find(subject.id).should == subject
+      end
+    end
   end
 
   context "callbacks" do
