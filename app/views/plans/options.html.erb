@@ -12,56 +12,50 @@
         <ul class="header-breadcrumb">
           <li class="header-breadcrumb-item">
             <%= link_to "Configurações", edit_user_path(@user),
-             :class => "header-bradcrumb-link icon-manage-gray_32_34-before",
-             :title => "Configurações" %>
+              :class => "header-bradcrumb-link icon-manage-gray_32_34-before",
+              :title => "Configurações" %>
           </li>
           <li class="header-breadcrumb-item">
             <%= link_to "Planos", user_plans_path(@user),
-             :class => "header-bradcrumb-link",
-             :title => "Planos" %>
+              :class => "header-bradcrumb-link",
+              :title => "Planos" %>
           </li>
           <li class="header-breadcrumb-item">
             <%= link_to "Detalhes", plan_invoices_path(@plan),
-             :class => "header-bradcrumb-link",
-             :title => "Detalhes de Plano" %>
+              :class => "header-bradcrumb-link",
+              :title => "Detalhes de Plano" %>
           </li>
           <li class="header-breadcrumb-item">
             <%= link_to "Upgrade", options_plan_path(@plan),
-             :class => "header-bradcrumb-link",
-             :title => "Upgrade" %>
+              :class => "header-bradcrumb-link",
+              :title => "Upgrade" %>
           </li>
         </ul>
       </div>
       <%# Abas e sub-abas %>
       <%= new_tabs(:new_users) %>
       <div class="content-section">
-        <div>
-          <div>
-            <% if @plan.billable.is_a? Environment %>
-              <%= content_tag(:h4, @plan.billable.name, :class => "plans-title course") %>
-            <% elsif @plan.billable.is_a? Course %>
-              <%= content_tag(:h4, @plan.billable.environment.name, :class => "plans-title course") %>
-              <%= content_tag(:span, @plan.billable.name, :class => "legend") %>
-            <% elsif @plan.billable_audit %>
-              <%= content_tag :span, @plan.billable_audit["name"] %>
-            <% end %>
-          </div>
-          <div>
-            <h5 class="plans-title teacher">Planos para Professor</h5>
-            <ul class="list-mix plan-details">
-              <% if @plan.name == Plan.from_preset(:free).name %>
-                <%= render :partial => "plans/item_medium",
-                  :locals => { :plan_preset => :free, :actual_plan => @plan } %>
-              <% end %>
-              <%= render :partial => "plans/item_medium",
-                :locals => { :plan_preset => :professor_lite, :actual_plan => @plan } %>
-              <%= render :partial => "plans/item_medium",
-                :locals => { :plan_preset => :professor_standard, :actual_plan => @plan } %>
-              <%= render :partial => "plans/item_medium",
-                :locals => { :plan_preset => :professor_plus, :actual_plan => @plan } %>
-            </ul>
-          </div>
-        </div>
+        <% if @plan.billable.is_a? Environment %>
+          <%= content_tag(:h4, @plan.billable.name, :class => "plans-title course") %>
+        <% elsif @plan.billable.is_a? Course %>
+          <%= content_tag(:h4, @plan.billable.environment.name, :class => "plans-title course") %>
+          <%= content_tag(:span, @plan.billable.name, :class => "legend") %>
+        <% elsif @plan.billable_audit %>
+          <%= content_tag :span, @plan.billable_audit["name"] %>
+        <% end %>
+        <h5 class="plans-title teacher">Planos para Professor</h5>
+        <ul class="list-mix plan-details">
+          <% if @plan.name == Plan.from_preset(:free).name %>
+            <%= render :partial => "plans/item_medium",
+              :locals => { :plan_preset => :free, :actual_plan => @plan } %>
+          <% end %>
+          <%= render :partial => "plans/item_medium",
+            :locals => { :plan_preset => :professor_lite, :actual_plan => @plan } %>
+          <%= render :partial => "plans/item_medium",
+            :locals => { :plan_preset => :professor_standard, :actual_plan => @plan } %>
+          <%= render :partial => "plans/item_medium",
+            :locals => { :plan_preset => :professor_plus, :actual_plan => @plan } %>
+        </ul>
       </div>
       <hr class="list-separator">
       <div class="content-section">
