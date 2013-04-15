@@ -27,7 +27,6 @@ class FriendshipsController < BaseController
   def new
     @invitations = @user.invitations
     @friendship_requests = @user.friendships.requested
-    @contacts_recommendations = @user.recommended_contacts(5)
 
     respond_to do |format|
       format.html { render :layout => 'new_application' }

@@ -269,6 +269,8 @@ $.TokenList = function (input, url_or_data, settings) {
             switch(event.keyCode) {
                 case KEY.LEFT:
                 case KEY.RIGHT:
+                    // Permite mover o cursor para direita e esquerda.
+                    break;
                 case KEY.UP:
                 case KEY.DOWN:
                     if(!$(this).val()) {
@@ -425,6 +427,8 @@ $.TokenList = function (input, url_or_data, settings) {
     // The list to store the dropdown items in
     var dropdown = $("<div>")
         .addClass($(input).data("settings").classes.dropdown)
+        // Adiciona a classe de dropdown do bootstrap.
+        .addClass("dropdown-menu")
         .appendTo("body")
         .hide();
 
@@ -552,9 +556,10 @@ $.TokenList = function (input, url_or_data, settings) {
         var width_left = token_list.width() - input_box.offset().left - token_list.offset().left;
         // Enter new content into resizer and resize input accordingly
         input_resizer.html(_escapeHTML(input_val));
+        // Conserta o redimensionamento do campo.
         // Get maximum width, minimum the size of input and maximum the widget's width
-        input_box.width(Math.min(token_list.width(),
-                                 Math.max(width_left, input_resizer.width() + 30)));
+        // input_box.width(Math.min(token_list.width(),
+        //                          Math.max(width_left, input_resizer.width() + 30)));
     }
 
     function is_printable_character(keycode) {
@@ -593,11 +598,12 @@ $.TokenList = function (input, url_or_data, settings) {
         // The 'delete token' button
         if(!readonly) {
           $("<span>" + $(input).data("settings").deleteText + "</span>")
-              .addClass($(input).data("settings").classes.tokenDelete)
-              .appendTo($this_token)
+            // Modifica para o fechar do bootstrap.
+              .addClass("invitation-link-remove icon-close-gray_16_18 text-replacement link-fake")
+              .prependTo($this_token.find(".invitation-token-inner"))
               .click(function () {
                   if (!$(input).data("settings").disabled) {
-                      delete_token($(this).parent());
+                      delete_token($(this).closest(".invitation-token"));
                       hidden_input.change();
                       return false;
                   }
@@ -651,7 +657,8 @@ $.TokenList = function (input, url_or_data, settings) {
         }
 
         // Squeeze input_box so we force no unnecessary line break
-        input_box.width(0);
+        // Conserta o redimensionamento do campo.
+        // input_box.width(0);
 
         // Insert the new tokens
         if($(input).data("settings").tokenLimit == null || token_count < $(input).data("settings").tokenLimit) {
@@ -777,15 +784,22 @@ $.TokenList = function (input, url_or_data, settings) {
 
     // Hide and clear the results dropdown
     function hide_dropdown () {
-        dropdown.hide().empty();
+        // Permite que o dropdown seja clicável para o caso de convidar por e-mail.
+        setTimeout(function() {
+            dropdown.hide().empty();
+        }, 150);
+
         selected_dropdown_item = null;
     }
 
     function show_dropdown() {
+        // Seta o dropdown bootstrap.
+        dropdown.prepend('<span class="dropdown-arrow icon-arrow-up-dropdown-lightblue_20_8" style="left: 25px; top: -8px; display: block;"></span>');
         dropdown
             .css({
                 position: "absolute",
-                top: token_list.offset().top + token_list[0].getBoundingClientRect().height,
+                // Desce mais o dropdown.
+                top: token_list.offset().top + token_list[0].getBoundingClientRect().height + 10,
                 left: token_list.offset().left,
                 width: token_list.width(),
                 'z-index': $(input).data("settings").zindex
@@ -891,6 +905,8 @@ $.TokenList = function (input, url_or_data, settings) {
             }
 
             item.addClass($(input).data("settings").classes.selectedDropdownItem);
+            // Adiciona a classe de item do dropdown selecionado do bootstrap.
+            item.addClass("control-autocomplete-suggestion-selected");
             selected_dropdown_item = item.get(0);
         }
     }
@@ -898,6 +914,8 @@ $.TokenList = function (input, url_or_data, settings) {
     // Remove highlighting from an item in the results dropdown
     function deselect_dropdown_item (item) {
         item.removeClass($(input).data("settings").classes.selectedDropdownItem);
+        // Remove a classe de item do dropdown selecionado do bootstrap.
+        item.removeClass("control-autocomplete-suggestion-selected");
         selected_dropdown_item = null;
     }
 

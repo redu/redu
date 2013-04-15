@@ -1,13 +1,21 @@
+<%#
+  Gerenciamento de convites enviados.
+
+  Variáveis:
+    invitations: convites enviados.
+    friendship_requests: convites de amizade enviados.
+%>
+
 <% unless invitations.empty? and friendship_requests.empty? %>
   <div class="content-section clearfix">
     <h6 class="sent-invitations">Convites enviados: <%= (invitations.count + friendship_requests.count) %></h6>
-    <%= form_tag destroy_invitations_invitations_path, :method => :post do %>
-      <%= render :partial => 'invitations/invitation_item', :collection => invitations %>
-      <%= render :partial => 'invitations/friendship_item', :collection => friendship_requests %>
-    <% end %>
+    <ul class="sent-invitations-list">
+      <%= render :partial => "invitations/invitation_item", :collection => invitations %>
+      <%= render :partial => "invitations/friendship_item", :collection => friendship_requests %>
+    </ul>
   </div>
 <% else %>
-  <div class="empty-invite-list">
-    <span class="icon-invite-empty_128_130 show text-replacement">
+  <div class="empty-message">
+    <span class="empty-message-icon icon-invite-empty_128_130 text-replacement" title="Nenhum convite enviado">Nenhum convite enviado</span>
   </div>
 <% end %>

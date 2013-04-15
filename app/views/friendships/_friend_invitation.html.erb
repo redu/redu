@@ -1,23 +1,25 @@
-<%= new_tabs(:new_users) do %>
-<% end %>
-<div class="content-section clearfix">
-  <span class="invite-description">Amplie sua rede de contatos convidando amigos. Procure pelo nome ou endereço de e-mail; Caso a pessoa não seja cadastrada no Redu, enviaremos um convite.</span>
-  <%= form_for user_friendships_path(@user),
-    :id => "invite-members", :html => { :class => "invite-friend-form" } do |f| %>
-    <div id="invite_email_button" class="clearfix" >
-     <%= link_to "Clique aqui para convidar este endereço de e-mail", "#",
-      :class => 'concave-button', :id => 'invite_email', :style => 'display: none;' %>
-    </div>
+<%#
+  Seção com o formulário de enviar convites.
+
+  Variáveis:
+    user: o usuário da sessão.
+%>
+
+<div class="content-section">
+  <p class="invite-description">Amplie sua rede de contatos convidando Amigos. Procure pelo nome ou endereço de e-mail; caso a pessoa não seja cadastrada no Redu, enviaremos um convite.</p>
+  <%= form_for user_friendships_path(user),
+    :html => { :class => "invite-friend-form clearfix" } do |f| %>
     <div class="control-group">
       <div class="control-label">
-        <%= f.label :name, "Digite um nome e/ou endereço de e-mail para convidar", :for => "friend_id" %>
+        <label for="token-input-user-invitation">Digite um nome e/ou endereço de e-mail para convidar</label>
       </div>
       <div class="controls">
-        <%= f.text_field "friend_id", :placeholder => "Convide Amigos pelo nome ou e-mail" %>
+        <input type="text" name="friend_id" id="user-invitation" class="user-invitation" placeholder="Convide Amigos pelo nome ou e-mail">
       </div>
     </div>
-    <%= f.hidden_field "emails", :value => "" %>
-    <%= f.hidden_field "goto_invitations", :value => "true" %>
-    <%= f.submit "Convidar", :class => "button-success pull-right"%>
+    <%= hidden_field_tag "emails", "" %>
+    <%= hidden_field_tag "goto_invitations", "true" %>
+    <%= f.submit "Convidar", :class => "button-success pull-right",
+      :disabled => true, :title => "Adicione pelo menos uma pessoa para ativá-lo" %>
   <% end %>
 </div>

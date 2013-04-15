@@ -2,40 +2,34 @@
 // Meus Contatos
 // ==========================================================================
 
-.friendship-list {
-  .legend {
-    font-size: 12px;
-    line-height: 18px;
-  }
 
-  .link-name { font-weight: bold; }
-  .general-list-item-column .legend + .legend { margin-top: 0; }
-}
-
-.list-2-columns.list-columns-separator > li:first-child:after { background: none; }
-
-.sent-invitations {
-  color: $gray5;
-  letter-spacing: 0;
-  text-align: center;
-  font-weight: 100;
-  margin-bottom: 20px;
-}
-
-.empty-invite-list {
-  span { margin: 20px auto; }
-
-  p { color: rgb(179, 179, 179); }
-}
+// Convidar amigos
+// ==========================================================================
 
 .invite-description {
   color: $gray5;
-  font-weight: 300;
-  display: block;
   margin-bottom: 30px;
 }
 
-span.invitation-link-resend { color: $gray5; }
+.empty-message {
+  .friend-invitation & {
+    margin-top: 20px;
+    margin-bottom: 25px;
+  }
+}
+
+.sent-invitations {
+  color: $gray5;
+  text-align: center;
+}
+
+.sent-invitations-list {
+  margin: 0;
+  list-style-type: none;
+}
+
+.sent-invitations +
+.sent-invitations-list { margin-top: 20px; }
 
 .invite-friend-form {
   label {
@@ -44,4 +38,21 @@ span.invitation-link-resend { color: $gray5; }
   }
 
   .button-success { margin-top: 5px; }
+
+  .invitation-token +
+  .token-input-input-token-redu { margin-top: 10px; }
+}
+
+.invite-by-email-dropdown { padding: 0 10px; }
+
+.invite-by-email-dropdown-message {
+  float: left;
+  position: relative;
+  top: 7px;
+}
+
+.invite-by-email-dropdown-email {
+  display: inline-block;
+  width: auto;
+  max-width: 225px;
 }

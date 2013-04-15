@@ -637,6 +637,11 @@ ul.requisitions .list-mix-inner .avatar {
 ul.requisitions .list-mix-inner span {
   color: #6d6e6f;
 }
+ul.requisitions .list-mix-inner span.waiting {
+  float: right;
+  margin-left: 10px;
+  margin-top: 7px;
+}
 ul.requisitions .actions {
   margin: 0;
   padding: 0;
@@ -652,45 +657,29 @@ ul.requisitions .actions input:last-child {
   margin-left: 5px;
 }
 
-.friendship-list .legend {
-  font-size: 12px;
-  line-height: 18px;
-}
-.friendship-list .link-name {
-  font-weight: bold;
-}
-.friendship-list .general-list-item-column .legend + .legend {
-  margin-top: 0;
+.invite-description {
+  color: #b3b3b3;
+  margin-bottom: 30px;
 }
 
-.list-2-columns.list-columns-separator > li:first-child:after {
-  background: none;
+.friend-invitation .empty-message {
+  margin-top: 20px;
+  margin-bottom: 25px;
 }
 
 .sent-invitations {
   color: #b3b3b3;
-  letter-spacing: 0;
   text-align: center;
-  font-weight: 100;
-  margin-bottom: 20px;
 }
 
-.empty-invite-list span {
-  margin: 20px auto;
-}
-.empty-invite-list p {
-  color: #b3b3b3;
+.sent-invitations-list {
+  margin: 0;
+  list-style-type: none;
 }
 
-.invite-description {
-  color: #b3b3b3;
-  font-weight: 300;
-  display: block;
-  margin-bottom: 30px;
-}
-
-span.invitation-link-resend {
-  color: #b3b3b3;
+.sent-invitations +
+.sent-invitations-list {
+  margin-top: 20px;
 }
 
 .invite-friend-form label {
@@ -699,6 +688,26 @@ span.invitation-link-resend {
 }
 .invite-friend-form .button-success {
   margin-top: 5px;
+}
+.invite-friend-form .invitation-token +
+.token-input-input-token-redu {
+  margin-top: 10px;
+}
+
+.invite-by-email-dropdown {
+  padding: 0 10px;
+}
+
+.invite-by-email-dropdown-message {
+  float: left;
+  position: relative;
+  top: 7px;
+}
+
+.invite-by-email-dropdown-email {
+  display: inline-block;
+  width: auto;
+  max-width: 225px;
 }
 
 .home-container {

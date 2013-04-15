@@ -1,4 +1,4 @@
-var $message = $("<span/>", { "class" : "invitation-link-resend link-secondary" }).text("Convite reenviado");
+var $message = $("<span/>", { "class" : "invitation-link-resend legend" }).text("Convite reenviado");
 
 $("#<%= @invitation_id %> .invitation-link-resend").replaceWith($message);
 var $invited = $('#<%= @invitation_id %> .invitation-title').html();

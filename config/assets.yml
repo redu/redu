@@ -45,6 +45,8 @@ javascripts:
     - public/javascripts/underscore-sharing-template.redu.jquery.js
     - public/javascripts/embedly.redu.jquery.js
     - public/javascripts/search.js
+    - public/javascripts/mustache.js
+    - public/javascripts/friend-invitation.js
   basic:
     - *bootstrap
     - public/javascripts/lazyload.js

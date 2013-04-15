@@ -1,13 +1,29 @@
-<div id="request-<%= friendship_item.id %>" class="invitation list-mix-inner clearfix">
+<%#
+  Convite de amizade enviado para usuário do Redu.
+
+  Variáveis:
+    friendship_item: o item de amizade com informações sobre o usuário convidado.
+%>
+
+<li id="request-<%= friendship_item.id %>" class="invitation list-mix-inner clearfix">
   <%= link_to friendship_item.friend, :title => friendship_item.friend.display_name,
-    :class => 'invitation-thumbnail-link' do %>
-    <%= image_tag friendship_item.friend.avatar(:thumb_90), :class => 'invitation-thumbnail', :size => "48x48" %>
+    :class => "invitation-thumbnail-link" do %>
+    <%= image_tag friendship_item.friend.avatar(:thumb_90),
+      :title => friendship_item.friend.display_name,
+      :alt => friendship_item.friend.display_name,
+      :class => "invitation-thumbnail", :size => "48x48" %>
   <% end %>
   <div class="invitation-inner">
-    <span class="invitation-link-remove icon-close-gray_16_18 text-replacement link-fake">Remover</span>
-    <%= link_to 'Reenviar convite', resend_email_user_friendship_path(friendship_item.user, friendship_item),
-      :remote => true, :method => :post, :class => 'invitation-link-resend link-secondary' %>
-    <%= link_to friendship_item.friend.display_name, friendship_item.friend, :class => 'invitation-title text-truncate' %>
-    <span class="invitation-legend legend">Convite enviado em <%= friendship_item.requested_at.strftime('%d %b, %Y, %kh%M') %></span>
+    <%# TODO: Back-end de remover pedido de amizade individual e resposta JS. %>
+    <%= link_to "Remover", destroy_invitations_invitations_path(friendship_item.id),
+      :remote => true, :method => :post,
+      :class => "invitation-link-remove icon-close-gray_16_18 text-replacement" %>
+    <%= link_to "Reenviar convite", resend_email_user_friendship_path(friendship_item.user, friendship_item),
+      :remote => true, :method => :post,
+      :class => "invitation-link-resend link-secondary" %>
+    <%= link_to friendship_item.friend.display_name, friendship_item.friend,
+      :class => "invitation-title text-truncate" %>
+    <%# TODO: Mostrar o timestamp de quando o convite foi enviado quando #1502 for consertado. %>
+    <%# <span class="invitation-legend legend">Convite enviado em %><%# friendship_item.requested_at.strftime('%d %b, %Y, %kh%M') %><%# </span> %>
   </div>
-</div>
+</li>
