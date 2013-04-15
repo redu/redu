@@ -6,11 +6,20 @@ class FriendshipsController < BaseController
 
   def index
     @profile = params[:profile] if params.has_key? :profile
-    @total_friends = @user.friends.count
-    @friends = @user.friends.page(params[:page]).per(20)
+    # Diferencia a nova tela de meus contatos com a tela de contatos de outros usuários.
+    if @profile
+      @friends = @user.friends.paginate(:page => params[:page], :per_page => 16)
+    else
+      @total_friends = @user.friends.count
+      @friends = @user.friends.page(params[:page]).per(20)
+    end
 
     respond_to do |format|
-      format.html { render :layout => 'new_application' }
+      format.html do
+        unless @profile
+          render :layout => 'new_application'
+        end
+      end
       format.js { render_endless 'users/item_medium', @friends, '#contacts > ul' }
     end
   end
