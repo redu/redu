@@ -191,6 +191,7 @@
 
   .quotas {
     list-style-type: none;
+    li { padding-left: 43px; }
     li + li {
       margin-top: 0;
       padding-top: 5px;
@@ -204,6 +205,15 @@
       clear: right;
     }
     .plan-quota { color: $black; }
+
+    .quota-documents {
+      padding-left: 0;
+
+      .icon {
+        float: left;
+        margin-right: 5px;
+      }
+    }
   }
 }
 .invoices-table {

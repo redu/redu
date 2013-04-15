@@ -26,7 +26,9 @@
             <%= content_tag(:span, "#{plan.members_limit}", :class => "plan-quota") %>
           </li>
         <% end %>
-        <li>
+        <li class="quota-documents">
+          <%= content_tag(:span, "Apresentações", :class => "icon-presentation-gray_16_18 show text-replacement icon") %>
+          <%= content_tag(:span, "Documentos", :class => "icon-text-page-gray_16_18 show text-replacement icon") %>
           <%= content_tag(:span, "Documentos:", :class => "icon-file-gray_16_18-before") %>
           <%= content_tag(:span, number_to_human_size(plan.file_storage_limit, :precision => 0), :class => "plan-quota") %>
         </li>

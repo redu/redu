@@ -674,6 +674,9 @@ input[type="hidden"] +
 .plan-details .quotas {
   list-style-type: none;
 }
+.plan-details .quotas li {
+  padding-left: 43px;
+}
 .plan-details .quotas li + li {
   margin-top: 0;
   padding-top: 5px;
@@ -688,6 +691,13 @@ input[type="hidden"] +
 }
 .plan-details .quotas .plan-quota {
   color: black;
+}
+.plan-details .quotas .quota-documents {
+  padding-left: 0;
+}
+.plan-details .quotas .quota-documents .icon {
+  float: left;
+  margin-right: 5px;
 }
 
 .invoices-table {
