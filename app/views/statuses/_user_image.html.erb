@@ -1,7 +1,10 @@
 <% if item.user %>
-  <%= image_tag item.user.avatar.url(:thumb_32),
-    :width => 32, :height => 32, :class => 'author-thumbnail' %>
+  <%= link_to user_path(item.user), :rel => "nofollow", :title => item.user.display_name, :class => 'author-thumbnail' do %>
+    <%= image_tag item.user.avatar.url(:thumb_32),
+      :width => 32, :height => 32 %>
+  <% end %>
 <% else %>
-  <%= image_tag "/images/new/missing_users_thumb_32.png", :width => 32, :height => 32,
-    :class => 'author-thumbnail'%>
+  <%= link_to user_path(item.user), :rel => "nofollow", :title => item.user.display_name, :class => 'author-thumbnail' do %>
+    <%= image_tag "/images/new/missing_users_thumb_32.png", :width => 32, :height => 32 %>
+    <% end %>
 <% end %>
