@@ -116,9 +116,9 @@ GIT
 
 GIT
   remote: git@github.com:jessicabarbalho/has_friends.git
-  revision: 9bcf3a91166b5e3c8c05cb8fc1aa5c6b7e231f42
+  revision: 50eef3e5f113761f7586f7cb76a9eb541eb96d63
   specs:
-    has_friends (0.0.2)
+    has_friends (0.0.3)
 
 GIT
   remote: git@github.com:redu/invitable.git
