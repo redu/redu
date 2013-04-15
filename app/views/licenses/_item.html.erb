@@ -4,5 +4,5 @@
   <td class="user-login"><%= item.login %></td>
   <td class="date"><%= l item.period_start %></td>
   <td class="date"><%= item.period_end ? (l item.period_end) : "-" %></td>
-  <td><%= item.role.text %></td>
+  <td><%= t("classy_enum.role.#{item.role}", :count => 1) %></td>
 </tr>
