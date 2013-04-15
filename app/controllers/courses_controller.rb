@@ -307,8 +307,7 @@ class CoursesController < BaseController
   def search_users_admin
     roles = []
     roles = params[:role_filter].collect {|r| r.to_i} if params[:role_filter]
-    keyword = []
-    keyword = params[:search_user] || nil
+    keyword = params[:search_user] || []
 
     @memberships = @course.user_course_associations.approved.with_roles(roles)
     @memberships = @memberships.with_keyword(keyword).paginate(
@@ -316,6 +315,7 @@ class CoursesController < BaseController
       :page => params[:page],
       :order => 'course_enrollments.updated_at DESC',
       :per_page => Redu::Application.config.items_per_page)
+    @spaces_count = @course.spaces.count
 
       respond_to do |format|
         format.js { render "courses/admin/search_users_admin" }
