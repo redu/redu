@@ -21,7 +21,7 @@
       <%= link_to "Mural da Disciplina:", mural_space_path(item),
         :class => "title icon-wall-lightblue_16_18-before" %>
       <li class="comments">
-        <span class="all"><%= pluralize item.statuses.count, "comentário" %></span>
+        <span class="all"><%= pluralize Status.from_hierarchy(item).count, "comentário" %></span>
         <span class="new"><%= pluralize Status.recent_from_hierarchy(item).count,  "novo" %></span>
       </li>
     </ul>
