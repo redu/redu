@@ -131,7 +131,16 @@ Para reinicializar o DelayedJob, em produção, use ``monit restart``. Por exemp
 ```sh
 $ > sudo monit restart delayed_job.0
 $ > sudo monit restart delayed_job.1
+$ > sudo monit restart delayed_job.2
+$ > sudo monit restart delayed_job.3
 ```
+
+#### Responsabilidades de cada worker do Delayed Job
+
+- `delayed_job.0` (general): Execução de tarefas gerais como criação de associações entre usuários e postagens no mural (não há necessidade de serem executadas imediatamente).
+- `delayed_job.1` (email): Envio de emails.
+- `delayed_job.2` (vis): Envio de dados para Vis (requisições HTTP).
+- `delayed_job.3` (hierarchy-associations): Criação de associações da hierarquia que precisam ser feitas o quanto antes.
 
 ### Serviço de entrega de e-mails
 
@@ -179,14 +188,16 @@ Em produção utilizamos o [Monit](http://mmonit.com/monit/) para monitorar proc
 $ sudo monit summary
 The Monit daemon 5.0.3 uptime: 7d 22h 12m
 
+Process 'solr_redu_9080'            running
 Process 'rabbitmq_ssh_tunnel'       running
 Process 'nrsysmond'                 running
 Process 'mongo_ssh_tunnel'          running
 Process 'mini_httpd'                running
-Process 'memcache_11211'            running
+Process 'delayed_job.3'             running
+Process 'delayed_job.2'             running
 Process 'delayed_job.1'             running
 Process 'delayed_job.0'             running
-System 'domU-12-31-39-0C-D1-A1'     running
+System 'domU-12-31-39-09-9C-54'     running
 ```
 
 Para mais informações sobre como utilizar o monit, execute ``sudo monit -h``.
