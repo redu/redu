@@ -23,7 +23,8 @@
       :class => "invitation-link-resend link-secondary" %>
     <%= link_to friendship_item.friend.display_name, friendship_item.friend,
       :class => "invitation-title text-truncate" %>
-    <%# TODO: Mostrar o timestamp de quando o convite foi enviado quando #1502 for consertado. %>
-    <%# <span class="invitation-legend legend">Convite enviado em %><%# friendship_item.requested_at.strftime('%d %b, %Y, %kh%M') %><%# </span> %>
+    <% if friendship_item.requested_at %>
+      <span class="invitation-legend legend">Convite enviado em <%= friendship_item.requested_at.strftime("%d %b, %Y, %kh%M") %></span>
+    <% end %>
   </div>
 </li>
