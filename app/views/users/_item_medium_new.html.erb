@@ -16,7 +16,7 @@
     <div class="general-list-item-column">
       <%= link_to item_medium_new.display_name, user_path(item_medium_new),
         :title => item_medium_new.display_name, :class => "link-name text-truncate" %>
-      <% experiences = item_medium_new.experiences.actual_jobs.map{ |exp| exp.title.strip }.join(", ") %>
+      <% experiences = current_experiences(item_medium_new) %>
       <span class="legend text-truncate" title="<%= experiences %>"><%= experiences %></span>
       <span class="legend"><%= pluralize(mutual_friends(item_medium_new).length, "contato") %> em comum</span>
     </div>
