@@ -11,7 +11,6 @@ $(function() {
     }, 100);
   });
 
-
   var config = {
     // Formulário de enviar convites.
     formInvitation: ".invite-friend-form",
@@ -58,11 +57,11 @@ $(function() {
       searchDelay: 300,
       tokenFormatter: function(item) {
         // Template para o token de usuários cadastrados.
-        return Mustache.render('<li class="invitation-token clearfix"><a href="{{profile_link}}" class="invitation-token-thumbnail-link pull-left"><img class="invitation-token-thumbnail" src="{{avatar}}" alt="{{name}}" title="{{name}}" width="32" height="32"></a><div class="invitation-token-inner"><a href="{{profile_link}}" class="invitation-token-title text-truncate" title="{{name}}">{{name}}</a></div></li>', { avatar: item.avatar_32, name: item.name, profile_link: item.profile_link });
+        return _.template('<li class="invitation-token clearfix"><a href="<%= profile_link %>" class="invitation-token-thumbnail-link pull-left"><img class="invitation-token-thumbnail" src="<%= avatar %>" alt="<%= name %>" title="<%= name %>" width="32" height="32"></a><div class="invitation-token-inner"><a href="<%= profile_link %>" class="invitation-token-title text-truncate" title="<%= name %>"><%= name %></a></div></li>', { avatar: item.avatar_32, name: item.name, profile_link: item.profile_link });
       },
       resultsFormatter: function(item) {
         // Template para os resultados de usuários encontrados.
-        return Mustache.render('<li class="portal-search-result-item control-autocomplete-suggestion"><img class="control-autocomplete-thumbnail" src="{{avatar}}" width="32" height="32"/><div class="control-autocomplete-added-info"><span class="control-autocomplete-name text-truncate">{{name}}</span></div></li>', { avatar: item.avatar_32, name: item.name });
+        return _.template('<li class="portal-search-result-item control-autocomplete-suggestion"><img class="control-autocomplete-thumbnail" src="<%= avatar %>" width="32" height="32"/><div class="control-autocomplete-added-info"><span class="control-autocomplete-name text-truncate"><%= name %></span></div></li>', { avatar: item.avatar_32, name: item.name });
       },
       onAdd: function(item) { enableSubmit(); },
       onDelete: function(item) { disableSubmit(); }
@@ -76,9 +75,9 @@ $(function() {
       var enteredValue = $.trim($("#token-input-user-invitation").val());
 
       if (emailRegex.test(enteredValue)) {
-        $(config.dropdown).find("p").replaceWith(Mustache.render('<li class="invite-by-email-dropdown clearfix"><p class="invite-by-email-dropdown-message"><strong id="invite-by-email-dropdown-email" class="invite-by-email-dropdown-email text-truncate" title="{{email}}">{{email}}</strong> ainda não possui cadastro no Redu.</p><button id="invite-by-email-button" class="button-primary pull-right">Convidar</button></li>', { email: enteredValue }));
+        $(config.dropdown).find("p").replaceWith(_.template('<li class="invite-by-email-dropdown clearfix"><p class="invite-by-email-dropdown-message"><strong id="invite-by-email-dropdown-email" class="invite-by-email-dropdown-email text-truncate" title="<%= email %>"><%= email %></strong> ainda não possui cadastro no Redu.</p><button id="invite-by-email-button" class="button-primary pull-right">Convidar</button></li>', { email: enteredValue }));
       } else {
-        $(config.dropdown).find("p").html(Mustache.render('Não achamos <strong>{{name}}</strong>. Busque por outro nome ou um endereço de e-mail.', { name: enteredValue }));
+        $(config.dropdown).find("p").html(_.template('Não achamos <strong><%= name %></strong>. Busque por outro nome ou um endereço de e-mail.', { name: enteredValue }));
       }
     }
   });
@@ -91,7 +90,7 @@ $(function() {
 
       $emails.val($emails.val() + "," + email);
       $("#token-input-user-invitation").val("");
-      $(".invite-friend-form .token-input-input-token-redu").before(Mustache.render('<li class="invitation-token"><div class="invitation-token-inner"><span class="invite-by-email-token-remove invitation-link-remove icon-close-gray_16_18 text-replacement link-fake">Remover</span><div class="invitation-token-title"><span class="invitation-token-email text-truncate" title="{{email}}">{{email}}</span><span class="invitation-token-legend legend">(Convidar para o Redu)</span></div></div></li>', { email: email }));
+      $(".invite-friend-form .token-input-input-token-redu").before(_.template('<li class="invitation-token"><div class="invitation-token-inner"><span class="invite-by-email-token-remove invitation-link-remove icon-close-gray_16_18 text-replacement link-fake">Remover</span><div class="invitation-token-title"><span class="invitation-token-email text-truncate" title="<%= email %>"><%= email %></span><span class="invitation-token-legend legend">(Convidar para o Redu)</span></div></div></li>', { email: email }));
       enableSubmit();
     })
     // Remove o token de convidar pessoas para o Redu por e-mail.
