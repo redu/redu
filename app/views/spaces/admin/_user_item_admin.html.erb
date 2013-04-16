@@ -10,6 +10,6 @@
     </div>
   </td>
   <% role =  user_item_admin.role %>
-  <td class="cell role-info centered-cell"><span class="member-detail role icon-<%= role %>-gray_16_18-before"><%= role.text %></span></td>
+  <td class="cell role-info centered-cell"><span class="member-detail role icon-<%= role %>-gray_16_18-before"><%= t("classy_enum.role.#{role}", :count => 1) %></span></td>
 </tr>
 

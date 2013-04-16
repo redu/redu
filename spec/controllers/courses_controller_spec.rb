@@ -896,4 +896,29 @@ describe CoursesController do
       end
     end
   end
+
+  context "GET search_users_admin" do
+    let(:course) { Factory(:course) }
+    let(:environment) { course.environment }
+    let(:user) { course.owner }
+
+    before do
+      login_as user
+
+      xhr :get, :search_users_admin, :locale => "pt-BR",
+        :environment_id => environment.to_param, :id => course.to_param
+    end
+
+    it "assigns memberships" do
+      assigns[:memberships].should_not be_nil
+    end
+
+    it "assigns spaces_count" do
+      assigns[:spaces_count].should_not be_nil
+    end
+
+    it "renders admin/search_users_admin" do
+      response.should render_template "courses/admin/search_users_admin"
+    end
+  end
 end

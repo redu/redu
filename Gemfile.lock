@@ -36,6 +36,13 @@ GIT
       rscribd
 
 GIT
+  remote: git://github.com/mbleigh/acts-as-taggable-on.git
+  revision: c1754d494e1ec4fc2aba4a7ad671d90bac9200db
+  specs:
+    acts-as-taggable-on (2.3.3)
+      rails (~> 3.0)
+
+GIT
   remote: git://github.com/meskyanichi/backup.git
   revision: bca9ab8b05cfaf65e78f069264ca78f5b4231799
   specs:
@@ -109,9 +116,9 @@ GIT
 
 GIT
   remote: git@github.com:jessicabarbalho/has_friends.git
-  revision: 9bcf3a91166b5e3c8c05cb8fc1aa5c6b7e231f42
+  revision: 50eef3e5f113761f7586f7cb76a9eb541eb96d63
   specs:
-    has_friends (0.0.2)
+    has_friends (0.0.3)
 
 GIT
   remote: git@github.com:redu/invitable.git
@@ -146,7 +153,6 @@ GEM
     activerecord-import (0.2.9)
       activerecord (~> 3.0)
       activerecord (~> 3.0)
-    acts-as-taggable-on (2.0.6)
     acts_as_tree (0.1.1)
     addressable (2.3.2)
     amq-client (0.9.12)
@@ -435,6 +441,7 @@ GEM
       chronic (~> 0.6.3)
     will_paginate (3.0.pre2)
     xml-simple (1.0.15)
+    yajl-ruby (1.1.0)
     yui-compressor (0.9.6)
       POpen4 (>= 0.1.4)
     zencoder (2.3.1)
@@ -448,7 +455,7 @@ DEPENDENCIES
   aasm
   actionmailer_inline_css!
   activerecord-import
-  acts-as-taggable-on
+  acts-as-taggable-on!
   acts_as_tree (~> 0.1.1)
   ajaxful_rating!
   authlogic
@@ -480,7 +487,6 @@ DEPENDENCIES
   jammit-s3
   jasmine
   jquery-rails (>= 1.0.12)
-  json (>= 1.7.7)
   kaminari
   mime-types
   mongoid (~> 2.2.6)
@@ -518,4 +524,5 @@ DEPENDENCIES
   webmock!
   whenever
   will_paginate (~> 3.0.pre2)
+  yajl-ruby
   zencoder
