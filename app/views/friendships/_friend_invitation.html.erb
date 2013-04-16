@@ -7,8 +7,7 @@
 
 <div class="content-section">
   <p class="invite-description">Amplie sua rede de contatos convidando Amigos. Procure pelo nome ou endereço de e-mail; caso a pessoa não seja cadastrada no Redu, enviaremos um convite.</p>
-  <%= form_for user_friendships_path(user),
-    :html => { :class => "invite-friend-form clearfix" } do |f| %>
+  <%= form_tag user_friendships_path(user), :class => "invite-friend-form clearfix" do %>
     <div class="control-group">
       <div class="control-label">
         <label for="token-input-user-invitation">Digite um nome e/ou endereço de e-mail para convidar</label>
@@ -19,7 +18,7 @@
     </div>
     <%= hidden_field_tag "emails", "" %>
     <%= hidden_field_tag "goto_invitations", "true" %>
-    <%= f.submit "Convidar", :class => "button-success pull-right",
+    <%= submit_tag "Convidar", :class => "button-success pull-right",
       :disabled => true, :title => "Adicione pelo menos uma pessoa para ativá-lo" %>
   <% end %>
 </div>
