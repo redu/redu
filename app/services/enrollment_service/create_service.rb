@@ -22,17 +22,22 @@ module EnrollmentService
         InferredEnrollmentStrategy.new(subjects)
       end
 
-      bulk_insert(builder.to_a)
+      importer.import(builder.to_a)
+    end
+
+    def importer
+      @importer ||= EnrollmentBulkImporter.new
     end
 
     protected
 
-    def bulk_insert(values)
-      columns = [:user_id, :subject_id, :role]
-      options = { :validate => false, :on_duplicate_key_update => [:user_id, :role] }
+    class EnrollmentBulkImporter < EnrollmentService::BulkImporter
+      def initialize
+        columns = [:user_id, :subject_id, :role]
+        options = { :validate => false, :on_duplicate_key_update => [:role] }
 
-      Enrollment.import(columns, values, options)
+        super Enrollment, columns, options
+      end
     end
-
   end
 end

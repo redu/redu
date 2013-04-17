@@ -26,9 +26,7 @@ module EnrollmentService
           end
         end
 
-        Enrollment.should_receive(:import).
-          with([:user_id, :subject_id, :role], columns, :validate => false,
-               :on_duplicate_key_update => [:user_id, :role])
+        subject.importer.should_receive(:import).with(columns)
 
         subject.create
       end
