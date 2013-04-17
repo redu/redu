@@ -30,7 +30,7 @@ module EnrollmentService
           with([:user_id, :subject_id, :role], columns, :validate => false,
                :on_duplicate_key_update => [:user_id, :role])
 
-          subject.create
+        subject.create
       end
 
       it "should create the correct Enrollments quantity" do

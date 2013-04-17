@@ -10,7 +10,7 @@ module EnrollmentService
       @subjects = @subjects.respond_to?(:map) ? @subjects : [@subjects]
     end
 
-    # Matricula usuários Subject.
+    # Matricula usuários no Subject.
     # Parâmetros:
     #   - Opcional: lista de pares do tipo [[User,Role]] representando os usuários
     #     a serem matriculados. Caso não seja passado os usuários do Space serão
