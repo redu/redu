@@ -51,7 +51,13 @@ module EnrollmentService
           should == users.count * subjects.count
       end
 
-      it "should not duplicate records"
+      it "should not duplicate records" do
+        subject.create
+
+        expect {
+          subject.create
+        }.to_not change(Enrollment, :count)
+      end
     end
   end
 end
