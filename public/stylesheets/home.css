@@ -715,6 +715,9 @@ input[type="hidden"] +
 .invoices-table tbody {
   color: #6d6e6f;
 }
+.invoices-table tbody td:last-child {
+  text-align: center;
+}
 
 #partner-contact-form fieldset + fieldset {
   margin-top: 20px;

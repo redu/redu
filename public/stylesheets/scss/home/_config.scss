@@ -214,7 +214,10 @@
 .invoices-table {
   margin-top: 40px;
 
-  tbody { color: $gray6; }
+  tbody {
+    color: $gray6;
+    td:last-child { text-align: center; }
+  }
 }
 #partner-contact-form {
   fieldset + fieldset { margin-top: 20px; }
