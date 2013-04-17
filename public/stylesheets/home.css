@@ -610,14 +610,20 @@ input[type="hidden"] +
   margin-right: 10px;
 }
 
+.no-pending {
+  color: #5fc080 !important;
+}
+
 .pending {
-  color: #ffa935;
-  font-style: italic;
+  color: #ffa935 !important;
 }
 
 .overdue {
-  color: #e1272d;
-  font-style: italic;
+  color: #e1272d !important;
+}
+
+.closed {
+  color: black !important;
 }
 
 .pag-seguro {

@@ -132,17 +132,11 @@
 // Planos
 // ==========================================================================
 
-.pending {
-  color: $orange3;
-  font-style: italic;
-}
-.overdue {
-  color: $red4;
-  font-style: italic;
-}
-.pag-seguro {
-  padding-top: 20px;
-}
+.no-pending { color: $green3 !important; }
+.pending { color: $orange3 !important; }
+.overdue { color: $red4 !important; }
+.closed { color: $black !important; }
+.pag-seguro { padding-top: 20px; }
 .plans-sidebar {
   p + p { margin-top: 15px; }
 }
