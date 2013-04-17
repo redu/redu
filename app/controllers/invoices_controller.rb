@@ -6,7 +6,9 @@ class InvoicesController < BaseController
   load_and_authorize_resource :partner, :only => :index
 
   def index
-    @user = @plan.user
+    if @plan
+      @user = @plan.user
+    end
     # Conflita com o caso que não há @partner, se carregado pelo CanCan
     if params[:client_id]
       @client = @partner.partner_environment_associations.find(params[:client_id])
