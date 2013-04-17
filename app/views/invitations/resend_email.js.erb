@@ -1,7 +1,6 @@
 var $message = $("<span/>", { "class" : "invitation-link-resend legend" }).text("Convite reenviado");
-
 $("#<%= @invitation_id %> .invitation-link-resend").replaceWith($message);
-var $invited = $('#<%= @invitation_id %> .invitation-title').html();
-$('.main-wrapper').prepend('<div class="alert system-message message-success"><span data-dismiss="alert" class="message-close">×</span><p>O convite para ' + $invited + ' foi reenviado com sucesso!</p></div>');
 
-$('.alert').delay(3000).fadeOut(1000, 'linear');
+var $systemMessage = $('<%= escape_javascript render :partial => "shared/system_message", :locals => { :message => "O convite para <strong>#{@invited}</strong> foi reenviado com sucesso!", :type => "success" } %>');
+$("body").append($systemMessage);
+$systemMessage.delay(3000).fadeOut(1000, "linear");

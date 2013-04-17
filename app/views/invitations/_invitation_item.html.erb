@@ -7,13 +7,15 @@
 
 <li id="<%= "invitation-#{invitation_item.id}" %>" class="invitation list-mix-inner">
   <div class="invitation-inner">
-    <%# TODO: Back-end de remover convite individual e resposta JS. %>
-    <%= link_to "Remover", destroy_invitations_invitations_path(invitation_item.id),
-      :remote => true, :method => :post,
-      :class => "invitation-link-remove icon-close-gray_16_18 text-replacement" %>
+    <%= link_to "Remover", invitation_path(invitation_item),
+      :remote => true, :method => :delete,
+      :class => "invitation-link-remove icon-close-gray_16_18 text-replacement",
+      :confirm => "Deseja remover este convite?",
+      :title => "Remover convite" %>
     <%= link_to "Reenviar convite", resend_email_invitation_path(invitation_item),
       :remote => true, :method => :post,
-      :class => "invitation-link-resend link-secondary" %>
+      :class => "invitation-link-resend link-secondary",
+      :title => "Reenviar convite" %>
     <span class="invitation-title text-truncate" title="<%= invitation_item.email %>"><%= invitation_item.email %></span>
     <span class="invitation-legend legend">Convite enviado em <%= invitation_item.updated_at.strftime("%d %b, %Y, %kh%M") %></span>
   </div>

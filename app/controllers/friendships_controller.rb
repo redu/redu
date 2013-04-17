@@ -82,7 +82,8 @@ class FriendshipsController < BaseController
                                                                friend)
     respond_to do |format|
       format.js do
-        @invitation_id = "request-#{params[:id]}"
+        @invited = friend.display_name
+        @invitation_id = "friendship-request-for-#{friend.id}"
         render 'invitations/resend_email'
       end
     end

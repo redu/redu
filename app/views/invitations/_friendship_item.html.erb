@@ -5,7 +5,7 @@
     friendship_item: o item de amizade com informações sobre o usuário convidado.
 %>
 
-<li id="request-<%= friendship_item.id %>" class="invitation list-mix-inner clearfix">
+<li id="friendship-request-for-<%= friendship_item.friend.id %>" class="invitation list-mix-inner clearfix">
   <%= link_to friendship_item.friend, :title => friendship_item.friend.display_name,
     :class => "invitation-thumbnail-link" do %>
     <%= image_tag friendship_item.friend.avatar(:thumb_90),
@@ -14,13 +14,15 @@
       :class => "invitation-thumbnail", :size => "48x48" %>
   <% end %>
   <div class="invitation-inner">
-    <%# TODO: Back-end de remover pedido de amizade individual e resposta JS. %>
-    <%= link_to "Remover", destroy_invitations_invitations_path(friendship_item.id),
-      :remote => true, :method => :post,
-      :class => "invitation-link-remove icon-close-gray_16_18 text-replacement" %>
+    <%= link_to "Remover", user_friendship_path(current_user, friendship_item),
+      :remote => true, :method => :delete,
+      :class => "invitation-link-remove icon-close-gray_16_18 text-replacement",
+      :confirm => "Deseja remover este convite?",
+      :title => "Remover convite" %>
     <%= link_to "Reenviar convite", resend_email_user_friendship_path(friendship_item.user, friendship_item),
       :remote => true, :method => :post,
-      :class => "invitation-link-resend link-secondary" %>
+      :class => "invitation-link-resend link-secondary",
+      :title => "Reenviar convite" %>
     <%= link_to friendship_item.friend.display_name, friendship_item.friend,
       :class => "invitation-title text-truncate" %>
     <% if friendship_item.requested_at %>

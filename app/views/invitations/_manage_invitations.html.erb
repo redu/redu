@@ -6,16 +6,16 @@
     friendship_requests: convites de amizade enviados.
 %>
 
-<% unless invitations.empty? and friendship_requests.empty? %>
-  <div class="content-section clearfix">
-    <h6 class="sent-invitations">Convites enviados: <%= (invitations.count + friendship_requests.count) %></h6>
-    <ul class="sent-invitations-list">
-      <%= render :partial => "invitations/invitation_item", :collection => invitations %>
-      <%= render :partial => "invitations/friendship_item", :collection => friendship_requests %>
-    </ul>
-  </div>
-<% else %>
-  <div class="empty-message">
-    <span class="empty-message-icon icon-invite-empty_128_130 text-replacement" title="Nenhum convite enviado">Nenhum convite enviado</span>
-  </div>
-<% end %>
+<div class="sent-invitations-section">
+  <% unless invitations.empty? and friendship_requests.empty? %>
+    <div class="content-section">
+      <h6 class="sent-invitations">Convites enviados: <span class="sent-invitations-counter"><%= (invitations.count + friendship_requests.count) %></span></h6>
+      <ul class="sent-invitations-list">
+        <%= render :partial => "invitations/invitation_item", :collection => invitations %>
+        <%= render :partial => "invitations/friendship_item", :collection => friendship_requests %>
+      </ul>
+    </div>
+  <% else %>
+    <%= render "empty_invitations" %>
+  <% end %>
+</div>
