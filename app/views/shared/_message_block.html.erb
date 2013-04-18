@@ -1,0 +1,23 @@
+<%#
+  Mensagem em bloco.
+
+  Variáveis:
+    type: o tipo (warning|success|info|busy).
+    close: se deve mostrar o ícone de fechar.
+    message: a messagem.
+    button: algum botão, se necessário.
+%>
+
+<div class='<%= "message-block message-#{type} fade in" %>'>
+  <% if close %>
+    <span data-dismiss="alert" class="message-close">×</span>
+  <% end %>
+  <div class="message-block-content">
+    <%= message %>
+  </div>
+  <% if button %>
+    <div class="message-block-actions">
+      <%= button %>
+    </div>
+  <% end %>
+</div>
