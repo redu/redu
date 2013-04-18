@@ -293,7 +293,7 @@ class UsersController < BaseController
     end
     if @user
       flash[:notice] = t :activation_email_resent_message
-      UserNotifier.delay(:queue => 'email').user_signedup(@user)
+      UserNotifier.delay(:queue => 'email').user_signedup(@user.id)
       redirect_to application_path and return
     else
       flash[:error] = t :activation_email_not_sent_message

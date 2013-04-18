@@ -659,4 +659,46 @@ describe UsersController do
       response.should redirect_to(application_path(:anchor => "modal-sign-up"))
     end
   end
+
+  describe "GET resend_activation" do
+    let(:user) { Factory(:user) }
+
+    context "with email" do
+      it "assigns @user" do
+        get :resend_activation, :locale => "pt-BR", :email => user.email
+        assigns[:user].should == user
+      end
+
+      it "delivers a signup notification" do
+        UserNotifier.delivery_method = :test
+        UserNotifier.perform_deliveries = true
+        UserNotifier.deliveries = []
+
+        expect {
+          get :resend_activation, :locale => "pt-BR", :email => user.email
+        }.to change(UserNotifier.deliveries, :count).by(1)
+
+        UserNotifier.deliveries.last.subject.should =~ /Ative sua conta/
+      end
+    end
+
+    context "with id" do
+      it "assigns @user" do
+        get :resend_activation, :locale => "pt-BR", :id => user.id
+        assigns[:user].should == user
+      end
+
+      it "delivers a signup notification" do
+        UserNotifier.delivery_method = :test
+        UserNotifier.perform_deliveries = true
+        UserNotifier.deliveries = []
+
+        expect {
+          get :resend_activation, :locale => "pt-BR", :id => user.id
+        }.to change(UserNotifier.deliveries, :count).by(1)
+
+        UserNotifier.deliveries.last.subject.should =~ /Ative sua conta/
+      end
+    end
+  end
 end

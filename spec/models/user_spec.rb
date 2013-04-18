@@ -589,19 +589,6 @@ describe User do
       subject.activation_code.should_not be_nil
     end
 
-    it "delivers a signup notification to the user after create" do
-      UserNotifier.delivery_method = :test
-      UserNotifier.perform_deliveries = true
-      UserNotifier.deliveries = []
-
-      ActiveRecord::Observer.with_observers(:user_observer) do
-        subject = Factory(:user)
-      end
-
-      UserNotifier.deliveries.size.should == 1
-      UserNotifier.deliveries.last.subject.should =~ /Ative sua conta/
-    end
-
     it "updates last login after create" do
       subject.last_login_at.should_not be_nil
     end

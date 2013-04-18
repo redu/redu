@@ -234,10 +234,10 @@ class UserNotifier < BaseMailer
   end
 
   # Email de ativação de conta
-  def user_signedup(user)
-    @user = user
+  def user_signedup(user_id)
+    @user = User.find(user_id)
 
-    mail(:to => user.email,
+    mail(:to => @user.email,
          :subject => "Ative sua conta") do |format|
       format.html
      end

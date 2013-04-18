@@ -20,6 +20,9 @@ class User < ActiveRecord::Base
   before_create :make_activation_code
   after_create  :update_last_login
   before_validation :strip_whitespace
+  after_commit :on => :create do
+    UserNotifier.delay(:queue => 'email').user_signedup(self.id)
+  end
 
   # ASSOCIATIONS
   has_many :chat_messages
