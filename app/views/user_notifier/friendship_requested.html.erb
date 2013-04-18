@@ -1,14 +1,14 @@
 <td colspan="2">
   <table class="request-common">
     <tr>
-      <td rowspan="3" class="avatar-cell"><%= image_tag @friend.avatar(:thumb_110), :size => "110x110", :class => "contact-avatar" %></td>
+      <td rowspan="3" class="avatar-cell"><%= image_tag @user.avatar(:thumb_110), :size => "110x110", :class => "contact-avatar" %></td>
       <td class="connection-name-cell">
-        <%= link_to @friend.display_name, user_url(@friend), :class=> "contact-name" %>
+        <%= link_to @user.display_name, user_url(@user), :class=> "contact-name" %>
         <span class="call">deseja iniciar uma conexão com você</span>
       </td>
       <td rowspan="3" class="acceptance-cell">
         <%= image_tag "new/mail/icon-friendship-big.png", :size => "64x64" %>
-        <%= link_to "Aceitar ou recusar o pedido", home_user_url(@user), :class => "accept-contact" %>
+        <%= link_to "Aceitar ou recusar o pedido", home_user_url(@friend), :class => "accept-contact" %>
       </td>
     </tr>
     <tr>
