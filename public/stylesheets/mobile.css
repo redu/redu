@@ -8,6 +8,10 @@ body {
   background-position: center top, 0 0;
 }
 
+.mobile-flash-message .message-block {
+  margin: 20px;
+}
+
 .mobile-content {
   -webkit-box-shadow: 0 1px 0 white inset;
   -moz-box-shadow: 0 1px 0 white inset;
