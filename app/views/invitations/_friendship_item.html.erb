@@ -8,7 +8,7 @@
 <li id="friendship-request-for-<%= friendship_item.friend.id %>" class="invitation list-mix-inner clearfix">
   <%= link_to friendship_item.friend, :title => friendship_item.friend.display_name,
     :class => "invitation-thumbnail-link" do %>
-    <%= image_tag friendship_item.friend.avatar(:thumb_90),
+    <%= image_tag friendship_item.friend.avatar(:thumb_48),
       :title => friendship_item.friend.display_name,
       :alt => friendship_item.friend.display_name,
       :class => "invitation-thumbnail", :size => "48x48" %>

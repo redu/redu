@@ -8,8 +8,7 @@
 <li class="general-list-item member-list-item">
   <div class="general-list-item-body">
     <%= link_to item_medium_new, :class => "general-list-item-column" do %>
-      <%# TODO: Gerar thumbnails de 64x64? %>
-      <%= image_tag item_medium_new.avatar.url(:thumb_90),
+      <%= image_tag item_medium_new.avatar.url(:thumb_64),
         :title => item_medium_new.display_name,
         :alt => item_medium_new.display_name, :size => "64x64" %>
     <% end %>
