@@ -1,14 +1,4 @@
 $(function() {
-  // Foca no campo de busca e troca o filtro para perfis.
-  $("body").on("click", ".focus-search-users", function() {
-    setTimeout(function() {
-      var $searchProfiles = $('.form-search-filters input[value="perfil"]:radio');
-
-      $searchProfiles.change().prop("checked", true);
-      $("#token-input-q").focus();
-    }, 100);
-  });
-
   var config = {
     // Formulário de enviar convites.
     formInvitation: ".invite-friend-form",

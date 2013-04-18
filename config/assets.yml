@@ -11,6 +11,9 @@ s3_upload_files:
   - public/stylesheets/**
 
 javascripts:
+  invite_friend:
+    - public/javascripts/jquery.tokeninput-invite-friend.js
+    - public/javascripts/friend-invitation.js
   bootstrap: &bootstrap
     - public/javascripts/rails.js
     - public/javascripts/vendor/modernizr.js
@@ -27,7 +30,6 @@ javascripts:
     - public/javascripts/lazyload.js
     - public/javascripts/asyncjs.jquery.js
     - public/javascripts/form.redu.jquery.js
-    - public/javascripts/jquery.tokeninput.js
     - public/javascripts/jquery.tokeninput-instant-search.js
     - public/javascripts/swfobject.js # Necessário ao browserdetection.js
     - public/javascripts/browserdetection.js
@@ -45,7 +47,6 @@ javascripts:
     - public/javascripts/underscore-sharing-template.redu.jquery.js
     - public/javascripts/embedly.redu.jquery.js
     - public/javascripts/search.js
-    - public/javascripts/friend-invitation.js
   basic:
     - *bootstrap
     - public/javascripts/lazyload.js

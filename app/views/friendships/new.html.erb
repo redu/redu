@@ -1,3 +1,7 @@
+<% content_for :header_scripts_and_styles do %>
+  <%= include_javascripts :invite_friend %>
+<% end %>
+
 <div class="span3">
   <%= render "users/left_sidebar", :user => @user %>
 </div>
