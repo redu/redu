@@ -1,5 +1,5 @@
 .icon-sprite, .icon-arrow-down-blue_8_10, .button-default:hover .icon-arrow-down-lightblue_8_10, .icon-arrow-down-gray_8_10, .icon-arrow-down-lightblue_8_10, .icon-arrow-up-blue_8_10, .open .button-default:hover .icon-arrow-down-lightblue_8_10, .icon-arrow-up-dropdown-lightblue_20_8, .icon-arrow-up-lightblue_8_10, .open .icon-arrow-down-lightblue_8_10, .icon-basic-guide-blue_16_18, .icon-basic-guide-gray_16_18, .icon-basic-guide-gray_16_18-before:before, .icon-basic-guide-lightblue_16_18, .icon-environment-blue_16_18, .icon-environment-gray_16_18, .icon-environment-gray_16_18-before:before, .icon-environment-lightblue_16_18, .icon-magnifier-blue_16_18, .icon-magnifier-gray_16_18, .icon-magnifier-lightblue_16_18, .icon-manage-blue_16_18, .icon-manage-lightblue_16_18-before:hover:before, .icon-manage-lightblue_16_18, .icon-manage-lightblue_16_18-before:before, .icon-message-blue_16_18, .icon-message-lightblue_16_18-before:hover:before, .icon-message-lightblue_16_18, .icon-message-lightblue_16_18-before:before, .icon-partner-blue_16_18, .icon-partner-lightblue_16_18-before:hover:before, .icon-partner-lightblue_16_18, .icon-partner-lightblue_16_18-before:before, .icon-profile-blue_16_18, .icon-profile-lightblue_16_18-before:hover:before, .icon-profile-gray_16_18, .icon-profile-gray_16_18-before:before, .icon-profile-lightblue_16_18, .icon-profile-lightblue_16_18-before:before {
-  background: url('/images/nav-global/icon-s20cf38da10.png') no-repeat;
+  background: url('/images/nav-global/icon-s00855ddf8c.png') no-repeat;
 }
 
 .icon-arrow-down-blue_8_10, .button-default:hover .icon-arrow-down-lightblue_8_10 {
@@ -149,6 +149,6 @@
 [class*="icon-"][class*="-before"]:before {
   content: "";
   display: inline-block;
-  vertical-align: bottom;
+  vertical-align: middle;
   margin-right: 5px;
 }

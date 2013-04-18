@@ -189,15 +189,6 @@ class User < ActiveRecord::Base
       User.find_by_login(login) || User.find_by_email(login)
     end
 
-    # Authenticates a user by their login name and unencrypted password.
-    # Returns the user or nil.
-    def authenticate(login, password)
-      # hide records with a nil activated_at
-      u = find :first, :conditions => ['login = ?', login]
-      u = find :first, :conditions => ['email = ?', login] if u.nil?
-      u && u.authenticated?(password) && u.update_last_login ? u : nil
-    end
-
     def encrypt(password, salt)
       Digest::SHA1.hexdigest("--#{salt}--#{password}--")
     end

@@ -678,15 +678,6 @@ describe User do
 
   end
 
-  it "authenticates a user by their login and password" do
-    User.authenticate(subject.login, subject.password).should == subject
-  end
-
-  it "does not authenticate a user by wrong login or password" do
-    User.authenticate("another-login", subject.password).should_not == subject
-    User.authenticate(subject.login, "another-pass").should_not == subject
-  end
-
   it "encrypts a password" do
     User.encrypt("some-password", "some-salt").
       should == "6f1a2796c36f64731bd5f992dc71618c2fc38e9e"
