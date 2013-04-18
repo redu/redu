@@ -1,5 +1,5 @@
 module EnrollmentService
-  class DecoratedEnrollmentsStrategy < Struct.new(:subjects, :user_role_pairs)
+  class UsersAndRolesEnrollmentBuilder < Struct.new(:subjects, :user_role_pairs)
     # Define estratégia para construir uma matriz do tipo
     # [user_id, subject_id, role] baseado em uma coleção de Subject e pares
     # [(User,Role)].

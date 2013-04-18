@@ -1,5 +1,5 @@
 module EnrollmentService
-  class InferredEnrollmentStrategy < Struct.new(:subjects)
+  class InferredEnrollmentBuilder < Struct.new(:subjects)
     # Define estratégia para construir uma matriz do tipo
     # [user_id, subject_id, role] baseado em uma coleção de Subject e User.
 

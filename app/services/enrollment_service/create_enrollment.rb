@@ -16,12 +16,7 @@ module EnrollmentService
     #     a serem matriculados. Caso não seja passado os usuários do Space serão
     #     utilizados.
     def create(users_and_roles=nil)
-      builder = if users_and_roles
-        DecoratedEnrollmentsStrategy.new(subjects, users_and_roles)
-      else
-        InferredEnrollmentStrategy.new(subjects)
-      end
-
+      builder = infer_builder_from_arguments(:users_and_roles => users_and_roles)
       importer.import(builder.to_a)
     end
 
@@ -30,6 +25,14 @@ module EnrollmentService
     end
 
     protected
+
+    def infer_builder_from_arguments(arguments={})
+      if users_and_roles = arguments[:users_and_roles]
+        UsersAndRolesEnrollmentBuilder.new(subjects, users_and_roles)
+      else
+        InferredEnrollmentBuilder.new(subjects)
+      end
+    end
 
     class EnrollmentBulkImporter < EnrollmentService::BulkImporter
       def initialize
