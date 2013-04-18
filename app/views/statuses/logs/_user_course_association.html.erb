@@ -1,17 +1,26 @@
 <li id="status-<%= log.id %>">
-  <div class="status icons-big-after icon-course-lightblue_64_66-after">
-    <div class="status-context">
-      <span class="status-subject icon-small icon-environment-lightblue_32_34">
+  <hr class="list-separator">
+  <div class="status">
+    <div class="context">
+      <% if log.logeable.course.environment.avatar_file_name %>
+        <%= link_to log.logeable.name, environment_course_path(log.logeable.environment, log.logeable) do %>
+        <%= image_tag log.logeable.environment.avatar.url(:thumb_32), :size => '32x32', :class => 'author-thumbnail' %>
+        <% end %>
+      <% else %>
+        <%= link_to log.logeable.course.name, environment_course_path(log.logeable.course.environment,log.logeable), :class => "text-replacement context-icon icon-course-gray_32_34-before" %>
+      <% end %>
+      <span class="legend">
+        <%= log.logeable.course.environment.name %>
       </span>
-      <%= link_to log.logeable.course.environment.name, environment_path(log.logeable.course.environment), :class => "status-main" %>
-        <%= link_to log.logeable.course.name, environment_course_path(log.logeable.course.environment, log.logeable.course), :class => "status-secondary icon-expand-gray_8_10-before" %>
+      <%= link_to log.logeable.course.name, environment_course_path(log.logeable.course.environment, log.logeable) %>
     </div>
-    <div class="status-log">
+    <div class="subject">
       <%= render "statuses/user_image", :item => log %>
       <div class="status-icon icon-<%= log.user ? role_at(log.user, log.logeable.course) : "member" %>-gray_16_18-before">
         <%= render "statuses/user_name", :item => log %>
-        <span class="status-info"><%= raw log.text %></span>
-        <%= link_to log.logeable.course.name, environment_course_path(log.logeable.course.environment, log.logeable.course) %>
+        <span class="action"><%= raw log.text %></span>
+        <%= link_to log.logeable.course.name, environment_course_path(log.logeable.course.environment, log.logeable.course),
+        :class => "target icon-course-gray_16_18-before" %>
         <%= render :partial => 'statuses/timeago', :locals => { :item => log } %>
       </div>
     </div>

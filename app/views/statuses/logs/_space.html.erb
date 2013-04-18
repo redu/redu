@@ -1,18 +1,20 @@
 <li id="status-<%= log.id %>">
   <hr class="list-separator">
   <div class="status">
-    <div class="subject log">
-      <span class="status-subject icon-small icon-course-lightblue_32_34">
+    <div class="context">
+      <%= link_to log.logeable.name, space_path(log.logeable), :class => "text-replacement context-icon icon-space-gray_32_34-before" %>
+      <span class="legend">
+        <%= log.logeable.course.environment.name %> >
+        <%= log.logeable.course.name %>
       </span>
-      <%= link_to log.logeable.course.environment.name, environment_path(log.logeable.course.environment), :class => "status-main" %>
-      <%= link_to log.logeable.course.name, environment_course_path(log.logeable.course.environment, log.logeable.course), :class => "status-secondary icon-expand-gray_8_10-before" %>
+      <%= link_to log.logeable.name, space_path(log.logeable) %>
     </div>
-    <div class="status log">
+    <div class="subject">
       <%= render "statuses/user_image", :item => log %>
       <div class="status-icon icon-<%= log.user ? role_at(log.user, log.logeable) : "member" %>-gray_16_18-before">
         <%= render "statuses/user_name", :item => log %>
         <span class="action"> <%= raw auto_link(log.action_text) %></span>
-        <%= link_to log.logeable.name, space_path(log.logeable), :class => "status-secondary icon-expand-gray_16_18-before" %>
+        <%= link_to log.logeable.name, space_path(log.logeable), :class => "status-secondary icon-space-gray_16_18-before" %>
         <%= render :partial => 'statuses/timeago', :locals => { :item => log } %>
       </div>
     </div>

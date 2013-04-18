@@ -1,8 +1,9 @@
 <li id="status-<%= log.id %>">
+  <hr class="list-separator">
   <div class="status">
-    <div class="status-text">
+    <div class="subject">
       <%= render "statuses/user_detail", :item => log %>
-      <span class="status-info"> <%= raw auto_link(log.action_text) %></span>
+      <span class="action"> <%= raw auto_link(log.action_text) %></span>
       <%= render :partial => 'statuses/timeago', :locals => { :item => log } %>
     </div>
   </div>

@@ -1,10 +1,13 @@
 <li id="status-<%= log.id %>">
-  <div class="status icons-big-after icon-document-lightblue_64_66-after">
-    <div class="status-context">
-      <span class="status-subject icon-small icon-space-lightblue_32_34">
+  <hr class="list-separator">
+  <div class="status">
+    <div class="context">
+      <% link_to log.logeable.name, space_subject_lecture_path(log.logeable.subject.space, log.logeable.subject, log.logeable), :class => "text-replacement context-icon icon-lecture-gray_32_34-before" %>
+      <span class="legend">
+        <%= log.logeable.environment.name %>
+        <%= log.logeable.course.name %>
       </span>
-      <%= link_to log.logeable.subject.space.name, space_path(log.logeable.subject.space), :class => "status-main" %>
-      <%= link_to log.logeable.subject.name, space_subject_lecture_path(log.logeable.subject.space, log.logeable.subject, log.logeable), :class => "status-secondary icon-expand-gray_8_10-before" %>
+      <%= link_to log.logeable.name, environment_space_path(log.logeable.environment, log.logeable) %>
     </div>
     <div class="status-log">
       <%= render "statuses/user_image", :item => log %>

@@ -3,15 +3,18 @@
   <div class="status">
     <div class="context">
       <% if log.logeable.environment.avatar_file_name %>
-        <%= image_tag log.logeable.environment.avatar.url(:thumb_32),
-          :size => '32x32',
-          :class => 'author-thumbnail'
-        %>
+        <%= link_to log.logeable.name, environment_course_path(log.logeable.environment, log.logeable) do %>
+          <%= image_tag log.logeable.environment.avatar.url(:thumb_32),
+            :size => '32x32',
+           :class => 'author-thumbnail'
+          %>
+        <% end %>
       <% else %>
-        <span class="status-subject icon-small icon-environment-lightblue_32_34">
-        </span>
+          <%= link_to log.logeable.name, environment_course_path(log.logeable.environment, log.logeable), :class => "text-replacement context-icon icon-course-gray_32_34-before" %>
       <% end %>
-      <%= link_to log.logeable.environment.name, environment_path(log.logeable.environment) %>
+      <span class="legend">
+        <%= log.logeable.environment.name %>
+      </span>
       <%= link_to log.logeable.name, environment_course_path(log.logeable.environment, log.logeable) %>
     </div>
     <div class="subject">
@@ -20,7 +23,7 @@
         <%= render "statuses/user_name", :item => log %>
         <span class="action"> <%= raw auto_link(log.action_text) %></span>
         <%= link_to log.logeable.name, environment_course_path(log.logeable.environment, log.logeable),
-          :class => "target icon-space-gray_16_18-before" %>
+          :class => "target icon-course-gray_16_18-before" %>
         <%= render :partial => 'statuses/timeago', :locals => { :item => log } %>
       </div>
     </div>
