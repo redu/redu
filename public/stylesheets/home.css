@@ -657,6 +657,104 @@ ul.requisitions .actions input:last-child {
   margin-left: 5px;
 }
 
+.invite-description {
+  color: #b3b3b3;
+  margin-bottom: 30px;
+}
+
+.friend-invitation .empty-message {
+  margin-top: 20px;
+  margin-bottom: 25px;
+}
+
+.sent-invitations {
+  color: #b3b3b3;
+  text-align: center;
+}
+
+.sent-invitations-list {
+  margin: 0;
+  list-style-type: none;
+}
+
+.sent-invitations +
+.sent-invitations-list {
+  margin-top: 20px;
+}
+
+.invite-friend-form label {
+  display: block;
+  margin-bottom: 5px;
+}
+.invite-friend-form .button-success {
+  margin-top: 5px;
+}
+.invite-friend-form .invitation-token +
+.token-input-input-token-redu {
+  margin-top: 10px;
+}
+
+.invite-by-email-dropdown {
+  padding: 0 10px;
+}
+
+.invite-by-email-dropdown-message {
+  float: left;
+  position: relative;
+  top: 7px;
+}
+
+.invite-by-email-dropdown-email {
+  display: inline-block;
+  width: auto;
+  max-width: 225px;
+}
+
+.friend-invitation .token-input-list-redu {
+  -webkit-box-shadow: inset 0 1px 0 white;
+  -moz-box-shadow: inset 0 1px 0 white;
+  box-shadow: inset 0 1px 0 white;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  border: 1px solid #cccccc;
+  padding: 6px 10px;
+}
+.cssgradients .friend-invitation .token-input-list-redu {
+  background-image: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(60.0%, #ffffff), color-stop(100%, #e6e6e6));
+  background-image: -webkit-linear-gradient(bottom, #ffffff 60.0%, #e6e6e6);
+  background-image: -moz-linear-gradient(bottom, #ffffff 60.0%, #e6e6e6);
+  background-image: -o-linear-gradient(bottom, #ffffff 60.0%, #e6e6e6);
+  background-image: linear-gradient(bottom, #ffffff 60.0%, #e6e6e6);
+}
+.no-cssgradients.gt-ie8 .friend-invitation .token-input-list-redu {
+  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2U2ZTZlNiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjQwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
+}
+
+.friend-invitation .token-input-focused-redu {
+  color: black;
+  background-color: white !important;
+  background-image: none !important;
+  border-color: #73c3e6;
+  outline: 0;
+  -webkit-box-shadow: inset 0 0 0 rgba(0, 0, 0, 0), 0 0 6px 1px #73c3e6;
+  -moz-box-shadow: inset 0 0 0 rgba(0, 0, 0, 0), 0 0 6px 1px #73c3e6;
+  box-shadow: inset 0 0 0 rgba(0, 0, 0, 0), 0 0 6px 1px #73c3e6;
+}
+
+.friend-invitation .token-input-list-redu input[type="text"] {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  border: none;
+  background: transparent;
+  padding: 0;
+  height: 18px;
+}
+.friend-invitation .token-input-list-redu input[type="text"]:focus {
+  background-color: transparent !important;
+}
+
 .home-container {
   /* labels inativos */
   /* botoes */

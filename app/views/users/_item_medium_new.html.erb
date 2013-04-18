@@ -1,0 +1,24 @@
+<%#
+  Item de usuário da lista de contatos.
+
+  Variáveis:
+    item_medium_new: usuário da lista.
+%>
+
+<li class="general-list-item member-list-item">
+  <div class="general-list-item-body">
+    <%= link_to item_medium_new, :class => "general-list-item-column" do %>
+      <%# TODO: Usar :thumb_64 quando o mesmo estiver sido gerado. %>
+      <%= image_tag item_medium_new.avatar.url(:thumb_90),
+        :title => item_medium_new.display_name,
+        :alt => item_medium_new.display_name, :size => "64x64" %>
+    <% end %>
+    <div class="general-list-item-column">
+      <%= link_to item_medium_new.display_name, user_path(item_medium_new),
+        :title => item_medium_new.display_name, :class => "link-name text-truncate" %>
+      <% experiences = current_experiences(item_medium_new) %>
+      <span class="legend text-truncate" title="<%= experiences %>"><%= experiences %></span>
+      <span class="legend"><%= pluralize(mutual_friends(item_medium_new).length, "contato") %> em comum</span>
+    </div>
+  </div>
+</li>

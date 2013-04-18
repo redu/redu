@@ -33,6 +33,7 @@ class InvitationsController < ApplicationController
     flash[:notice] = "O convite foi removido com sucesso."
 
     respond_to do |format|
+      format.js
       format.html { redirect_to home_user_path(current_user) }
     end
   end
@@ -83,6 +84,7 @@ class InvitationsController < ApplicationController
 
     respond_to do |format|
       format.js do
+        @invited = @invitation.email
         @invitation_id = "invitation-#{@invitation.id}"
         render 'invitations/resend_email'
       end

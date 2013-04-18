@@ -1,74 +1,24 @@
-<script type="text/javascript">
-  jQuery(function(){
-    $("#invite_email").live("click", function(){
-      var $this = $(this);
-      var $form = $this.parents('#invite-members');
-      var $textField = $form.find("input[autocomplete=off]");
+<%#
+  Seção com o formulário de enviar convites.
 
-      var email = $.trim($textField.val());
-      $form.find("#emails").val($("#emails").val() + "," + email);
-      $textField.val("")
+  Variáveis:
+    user: o usuário da sessão.
+%>
 
-      var item = "<li class=\"token-input-token email\"><p class=\"invited-mail\" title=\"" + email + "\">" + email + "</p><span class=\"invite-to-redu\">(Convidar para o Redu)</span><span class=\"token-input-delete-token-email\">x</span></li>"
-      $(".token-input-input-token").before(item);
-      $this.hide();
-      return false;
-    });
-
-      $(".token-input-delete-token-email").live("click", function(){
-        var $this = $(this);
-        var $emailsField = $this.parents("#invite-members").find("#emails");
-        $this.parent().remove();
-
-        var emails = $emailsField.val();
-        var deleted_email = $this.siblings('.invited-mail')[0].getAttribute("title");
-        var emails = emails.replace(deleted_email, "");
-        $emailsField.val(emails);
-    });
-
-    $(".form-common").ajaxComplete(function(){
-      var $this = $(this);
-      if ($(".token-input-dropdown li").length == 0) {
-        var emailRegex = /^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/;
-        var entered_value = $.trim($this.find("input[autocomplete=off]").val());
-        if (emailRegex.test(entered_value)) {
-          $("#invite_email").show();
-        }else{
-            $("#invite_email").hide();
-        }
-      }else{
-        $("#invite_email").hide();
-      }
-    });
-
-    $("#friend_id").tokenInput("<%= auto_complete_users_path(:format => :js) %>", {
-      crossDomain: false,
-      hintText: "Digite o nome e sobrenome ou e-mail",
-      noResultsText: "Sem resultados",
-      searchingText: "Buscando...",
-      });
-
-    //Adicionando classe friendship-dropdown. Tokeninput não permite definição de novas classes (apenas sufixo).
-    $(".token-input-dropdown").addClass("friendship-dropdown");
-  });
-
-</script>
-
-  <div id="admin-invitations" class="body">
-    <div class="invite-header icons-big-before icon-invite-friends-lightblue_64_66-before">
-      <h3 class="invite-title">Convide seus amigos</h3>
-      <span class="invite-description">Amplie sua rede de contatos convidando amigos. Procure pelo nome ou endereço de e-mail; Caso a pessoa não seja cadastrada no Redu, enviaremos um convite. </span>
+<div class="content-section">
+  <p class="invite-description">Amplie sua rede de contatos convidando Amigos. Procure pelo nome ou endereço de e-mail; caso a pessoa não seja cadastrada no Redu, enviaremos um convite.</p>
+  <%= form_tag user_friendships_path(user), :class => "invite-friend-form clearfix" do %>
+    <div class="control-group">
+      <div class="control-label">
+        <label for="token-input-user-invitation">Digite um nome e/ou endereço de e-mail para convidar</label>
+      </div>
+      <div class="controls">
+        <input type="text" name="friend_id" id="user-invitation" class="user-invitation" placeholder="Convide Amigos pelo nome ou e-mail">
+      </div>
     </div>
-     <%= form_tag user_friendships_path(@user),
-        :class => 'form-common', :id => "invite-members" do %>
-        <div id="invite_email_button" class="clearfix" >
-         <%= link_to "Clique aqui para convidar este endereço de e-mail", "#",
-          :class => 'concave-button', :id => 'invite_email', :style => 'display: none;' %>
-        </div>
-        <%= label_tag "name", "Nome ou e-mail:" %>
-        <%= text_field_tag "friend_id" %>
-        <%= hidden_field_tag "emails", "" %>
-        <%= hidden_field_tag "goto_invitations", "true" %>
-        <%= submit_tag "Enviar convites", :class => "concave-button" %>
-      <% end %>
-  </div><!-- end friendship-invitations -->
+    <%= hidden_field_tag "emails", "" %>
+    <%= hidden_field_tag "goto_invitations", "true" %>
+    <%= submit_tag "Convidar", :class => "button-success pull-right",
+      :disabled => true, :title => "Adicione pelo menos uma pessoa para ativá-lo" %>
+  <% end %>
+</div>

@@ -6,11 +6,20 @@ class FriendshipsController < BaseController
 
   def index
     @profile = params[:profile] if params.has_key? :profile
-    @friends = @user.friends.
-      paginate(:page => params[:page], :per_page => 16)
+    # Diferencia a nova tela de meus contatos com a tela de contatos de outros usuários.
+    if @profile
+      @friends = @user.friends.paginate(:page => params[:page], :per_page => 16)
+    else
+      @total_friends = @user.friends.count
+      @friends = @user.friends.page(params[:page]).per(20)
+    end
 
     respond_to do |format|
-      format.html
+      format.html do
+        unless @profile
+          render :layout => 'new_application'
+        end
+      end
       format.js { render_endless 'users/item_medium', @friends, '#contacts > ul' }
     end
   end
@@ -18,10 +27,9 @@ class FriendshipsController < BaseController
   def new
     @invitations = @user.invitations
     @friendship_requests = @user.friendships.requested
-    @contacts_recommendations = @user.recommended_contacts(5)
 
     respond_to do |format|
-      format.html
+      format.html { render :layout => 'new_application' }
     end
   end
 
@@ -74,7 +82,8 @@ class FriendshipsController < BaseController
       friendship_requested(user, friend)
     respond_to do |format|
       format.js do
-        @invitation_id = "request-#{params[:id]}"
+        @invited = friend.display_name
+        @invitation_id = "friendship-request-for-#{friend.id}"
         render 'invitations/resend_email'
       end
     end
