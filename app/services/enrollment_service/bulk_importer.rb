@@ -1,5 +1,5 @@
 module EnrollmentService
-  class BulkImporter
+  class BulkMapper
     attr_reader :klass, :columns, :default_options
 
     def initialize(klass, columns, opts={})
@@ -8,7 +8,7 @@ module EnrollmentService
       @default_options = opts
     end
 
-    def import(values, opts={})
+    def insert(values, opts={})
       klass.import(columns, values, default_options.merge(opts))
 
       values

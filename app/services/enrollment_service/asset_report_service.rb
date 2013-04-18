@@ -18,7 +18,7 @@ module EnrollmentService
     end
 
     def importer
-      @importer ||= AssetReportBulkImporter.new
+      @importer ||= AssetReportBulkMapper.new
     end
 
     protected
@@ -39,7 +39,7 @@ module EnrollmentService
       arel.values_of(:id, :subject_id)
     end
 
-    class AssetReportBulkImporter < EnrollmentService::BulkImporter
+    class AssetReportBulkMapper < EnrollmentService::BulkMapper
       def initialize
         columns = [:subject_id, :lecture_id, :enrollment_id]
         options = { :validate => false, :on_duplicate_key_update => [:done] }

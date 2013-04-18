@@ -17,7 +17,7 @@ module EnrollmentService
     #     utilizados.
     def create(users_and_roles=nil)
       builder = infer_builder_from_arguments(:users_and_roles => users_and_roles)
-      importer.import(builder.to_a)
+      importer.insert(builder.to_a)
     end
 
     def importer
@@ -34,7 +34,7 @@ module EnrollmentService
       end
     end
 
-    class EnrollmentBulkImporter < EnrollmentService::BulkImporter
+    class EnrollmentBulkMapper < EnrollmentService::BulkMapper
       def initialize
         columns = [:user_id, :subject_id, :role]
         options = { :validate => false, :on_duplicate_key_update => [:role] }
