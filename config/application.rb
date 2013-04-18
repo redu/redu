@@ -105,6 +105,7 @@ module Redu
       :styles => { :thumb_24 => "24x24#",
                    :thumb_32 => "32x32#",
                    :thumb_48 => "48x48#",
+                   :thumb_64 => "64x64#",
                    :thumb_90 => "90x90#",
                    :thumb_96 => "96x96#",
                    :thumb_110 => "110x110#",

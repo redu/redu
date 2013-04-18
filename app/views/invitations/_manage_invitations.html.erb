@@ -1,31 +1,21 @@
-<% unless invitations.empty? and friendship_requests.empty? %>
-  <div class="notice">
-    <h3 class="form-header">Aguardando a resposta de <%= (invitations.count + friendship_requests.count) %> membro(s)</h3>
-  </div>
-  <div id="user_list" class="invitation-list">
-    <%= form_tag destroy_invitations_invitations_path, :method => :post do %>
-      <table id="user_list_table" class ="concave-invitation-table">
-        <thead>
-          <tr style="display: none;">
-            <th>
-              <input type="checkbox" id="select_all">
-            </th>
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <%= render :partial => 'invitations/invitation_item',
-                     :collection => invitations %>
-          <%= render :partial => 'invitations/friendship_item',
-                     :collection => friendship_requests %>
-        </tbody>
-      </table>
-      <%= submit_tag "Remover selecionados", :class => 'concave-remove' %>
-    <% end %>
-  </div>
-<% else %>
-  <div class="notice empty-list">
-    <h3 class="form-header">Não há convites pendentes no momento</h3>
-  </div>
-<% end %>
+<%#
+  Gerenciamento de convites enviados.
+
+  Variáveis:
+    invitations: convites enviados.
+    friendship_requests: convites de amizade enviados.
+%>
+
+<div class="sent-invitations-section">
+  <% unless invitations.empty? and friendship_requests.empty? %>
+    <div class="content-section">
+      <h6 class="sent-invitations">Convites enviados: <span class="sent-invitations-counter"><%= (invitations.count + friendship_requests.count) %></span></h6>
+      <ul class="sent-invitations-list">
+        <%= render :partial => "invitations/invitation_item", :collection => invitations %>
+        <%= render :partial => "invitations/friendship_item", :collection => friendship_requests %>
+      </ul>
+    </div>
+  <% else %>
+    <%= render "empty_invitations" %>
+  <% end %>
+</div>

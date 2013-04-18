@@ -1,0 +1,22 @@
+<%#
+  Convite para entrar no Redu para pessoas de fora.
+
+  Variáveis:
+    invitation_item: o item de convite com informações sobre a pessoa convidada.
+%>
+
+<li id="<%= "invitation-#{invitation_item.id}" %>" class="invitation list-mix-inner">
+  <div class="invitation-inner">
+    <%= link_to "Remover", invitation_path(invitation_item),
+      :remote => true, :method => :delete,
+      :class => "invitation-link-remove icon-close-gray_16_18 text-replacement",
+      :confirm => "Deseja remover este convite?",
+      :title => "Remover convite" %>
+    <%= link_to "Reenviar convite", resend_email_invitation_path(invitation_item),
+      :remote => true, :method => :post,
+      :class => "invitation-link-resend link-secondary",
+      :title => "Reenviar convite" %>
+    <span class="invitation-title text-truncate" title="<%= invitation_item.email %>"><%= invitation_item.email %></span>
+    <span class="invitation-legend legend">Convite enviado em <%= invitation_item.updated_at.strftime("%d %b, %Y, %kh%M") %></span>
+  </div>
+</li>

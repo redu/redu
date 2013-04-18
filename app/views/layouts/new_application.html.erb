@@ -17,6 +17,7 @@
     <% end %>
     <%= render :partial => "shared/typekit" %>
     <%= render :partial => "shared/analytics" %>
+    <%= yield :header_scripts_and_styles %>
   </head>
   <body>
     <%# Torna possível sobrescrever a navegação global nas views que utilizam este layout %>
