@@ -116,7 +116,7 @@ GIT
 
 GIT
   remote: git@github.com:jessicabarbalho/has_friends.git
-  revision: 50eef3e5f113761f7586f7cb76a9eb541eb96d63
+  revision: bcb9026a9110732ea9d6e4de568cbb2d1e283d8f
   specs:
     has_friends (0.0.3)
 

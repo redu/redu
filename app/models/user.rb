@@ -20,6 +20,9 @@ class User < ActiveRecord::Base
   before_create :make_activation_code
   after_create  :update_last_login
   before_validation :strip_whitespace
+  after_commit :on => :create do
+    UserNotifier.delay(:queue => 'email').user_signedup(self.id)
+  end
 
   # ASSOCIATIONS
   has_many :chat_messages
@@ -184,15 +187,6 @@ class User < ActiveRecord::Base
 
     def find_by_login_or_email(login)
       User.find_by_login(login) || User.find_by_email(login)
-    end
-
-    # Authenticates a user by their login name and unencrypted password.
-    # Returns the user or nil.
-    def authenticate(login, password)
-      # hide records with a nil activated_at
-      u = find :first, :conditions => ['login = ?', login]
-      u = find :first, :conditions => ['email = ?', login] if u.nil?
-      u && u.authenticated?(password) && u.update_last_login ? u : nil
     end
 
     def encrypt(password, salt)

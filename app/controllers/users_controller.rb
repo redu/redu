@@ -293,7 +293,7 @@ class UsersController < BaseController
     end
     if @user
       flash[:notice] = t :activation_email_resent_message
-      UserNotifier.delay(:queue => 'email').user_signedup(@user)
+      UserNotifier.delay(:queue => 'email').user_signedup(@user.id)
 
       user_agent = UserAgent.parse(request.user_agent)
       if user_agent.mobile?
