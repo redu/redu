@@ -2,12 +2,10 @@ $(function() {
   // Foca no campo de busca e troca o filtro para perfis.
   $("body").on("click", ".focus-search-users", function() {
     setTimeout(function() {
-      var $searchForm = $(".form-search-filters");
-      var $searchProfiles = $searchForm.find('input[value="perfil"]:radio');
-      var $searchInput = $searchForm.find("input:text:visible");
+      var $searchProfiles = $('.form-search-filters input[value="perfil"]:radio');
 
       $searchProfiles.change().prop("checked", true);
-      $searchInput.focus();
+      $("#token-input-q").focus();
     }, 100);
   });
 
