@@ -22,13 +22,7 @@ module EnrollmentService
         InferredEnrollmentStrategy.new(subjects)
       end
 
-      records = importer.import(builder.to_a)
-
-      subject_ids = records.map(&:second).uniq
-      lectures = Lecture.select(:id).where(:subject_id => subject_ids)
-      asset_report_service = AssetReportService.new(lectures)
-      enrollments = Enrollment.where(:subject_id => subject_ids)
-      asset_report_service.create(enrollments)
+      importer.import(builder.to_a)
     end
 
     def importer
