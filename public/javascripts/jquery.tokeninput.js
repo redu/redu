@@ -801,7 +801,8 @@ $.TokenList = function (input, url_or_data, settings) {
                 // Desce mais o dropdown.
                 top: token_list.offset().top + token_list[0].getBoundingClientRect().height + 10,
                 left: token_list.offset().left,
-                width: token_list.width(),
+                // Aumenta a largura por causa do padding.
+                width: token_list.width() + 20,
                 'z-index': $(input).data("settings").zindex
             })
             .show();
