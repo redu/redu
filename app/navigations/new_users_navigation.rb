@@ -73,7 +73,7 @@ module NewUsersNavigation
         :class => 'tab',
         :link => { :class => 'tab-title icon-plan_16_18-before',
                    :title => 'Planos' },
-        :details => { :text => 'detalhes', :class => 'tab-sub-title legend',
+        :details => { :text => 'Detalhes', :class => 'tab-sub-title legend',
                       :if => action_matcher({'invoices' => ['index']}) }
     end
     sidebar.item :oauth_clients, 'Aplicativos', new_user_oauth_client_path(@user),
