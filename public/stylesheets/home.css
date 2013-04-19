@@ -633,9 +633,6 @@ input[type="hidden"] +
 .plans-sidebar p + p {
   margin-top: 15px;
 }
-.plans-sidebar .status {
-  font-style: italic;
-}
 
 .plans-name {
   font-weight: bold;
