@@ -4,7 +4,7 @@
     <% # Se os usuários forem amigos, existe a opção de acabar com a amizade %>
     <% if is_friend?(@user) %>
       <%= link_to 'Remover contato',
-        user_friendship_path(current_user, current_friendship(@user).id),
+        user_friendship_path(current_user, current_friendship(current_user, @user).id),
         :remote => true,
         :method => :delete,
         :class => "disconnect icon-delete-gray_8_10-before"%>
