@@ -48,12 +48,12 @@ module EnrollmentService
       def create_enrollments(users, subjects, role=Role[:member])
         users_and_roles = users.map { |u| [u, role.to_s] }
 
-        enrollments = CreateEnrollment.new(:subject => subjects)
+        enrollments = EnrollmentEntityService.new(:subject => subjects)
         enrollments.create(users_and_roles)
       end
 
       def create_asset_reports(lectures, enrollments=nil)
-        asset_reports = AssetReportService.new(:lecture => lectures)
+        asset_reports = AssetReportEntityService.new(:lecture => lectures)
         asset_reports.create(enrollments)
       end
 

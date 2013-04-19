@@ -1,5 +1,5 @@
 module EnrollmentService
-  class AssetReportService
+  class AssetReportEntityService
     attr_reader :lectures
 
     def initialize(opts={})

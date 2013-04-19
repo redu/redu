@@ -1,5 +1,5 @@
 module EnrollmentService
-  class CreateEnrollment
+  class EnrollmentEntityService
     attr_reader :subjects
 
     # Parâmetros:

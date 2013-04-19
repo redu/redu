@@ -1,15 +1,15 @@
 require 'spec_helper'
 
 module EnrollmentService
-  describe AssetReportService do
-    subject { AssetReportService.new(:lecture => lectures) }
+  describe AssetReportEntityService do
+    subject { AssetReportEntityService.new(:lecture => lectures) }
     let(:subj) { Factory(:subject, :space => nil) }
     let(:lectures) do
       3.times.collect { Factory(:lecture, :subject => subj, :owner => subj.owner) }
     end
 
     before do
-      CreateEnrollment.new(:subject => subj).
+      EnrollmentEntityService.new(:subject => subj).
         create(3.times.collect { [Factory(:user), Role[:member]] })
     end
 

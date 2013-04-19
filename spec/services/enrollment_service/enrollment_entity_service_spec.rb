@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module EnrollmentService
-  describe CreateEnrollment do
+  describe EnrollmentEntityService do
     let(:spaces) { 2.times.map { Factory(:space) } }
     let(:usas) do
       spaces.map do |space|
@@ -24,7 +24,7 @@ module EnrollmentService
       columns
     end
 
-    subject { CreateEnrollment.new(:subject => subjects) }
+    subject { EnrollmentEntityService.new(:subject => subjects) }
 
     context "#create" do
       it "should delegate to insert with correct arguments" do

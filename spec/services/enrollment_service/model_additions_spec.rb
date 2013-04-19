@@ -5,8 +5,8 @@ module EnrollmentService
     subject { Factory(:subject, :space => nil) }
     let(:user) { Factory(:user) }
     let(:vis_client) { mock('VisClient') }
-    let(:create_enrollment_service) { mock('CreateEnrollment') }
-    let(:asset_report_service) { mock('AssetReportService') }
+    let(:create_enrollment_service) { mock('EnrollmentEntityService') }
+    let(:asset_report_service) { mock('AssetReportEntityService') }
 
     before do
       vis_client.stub(:notify_delayed)
@@ -19,7 +19,7 @@ module EnrollmentService
       end
 
       context "with one user" do
-        it "should invoke CreateEnrollmentService" do
+        it "should invoke EnrollmentEntityService" do
           mock_enrollment_service(create_enrollment_service)
 
           create_enrollment_service.
@@ -28,7 +28,7 @@ module EnrollmentService
           subject.enroll(user)
         end
 
-        it "should invoke AssetReportService" do
+        it "should invoke AssetReportEntityService" do
           subject.lectures << Factory(:lecture, :owner => subject.owner)
 
           mock_asset_report_service(asset_report_service)
@@ -48,7 +48,7 @@ module EnrollmentService
       context "with multiple users" do
         let(:users) { FactoryGirl.create_list(:user, 3) }
 
-        it "should invoke CreateEnrollmentService" do
+        it "should invoke EnrollmentEntityService" do
           mock_enrollment_service(create_enrollment_service)
 
           create_enrollment_service.
@@ -57,7 +57,7 @@ module EnrollmentService
           subject.enroll(users)
         end
 
-        it "should invoke AssetReportService" do
+        it "should invoke AssetReportEntityService" do
           subject.lectures << Factory(:lecture, :owner => subject.owner)
 
           mock_asset_report_service(asset_report_service)
@@ -86,17 +86,17 @@ module EnrollmentService
           subject.save
         end
 
-        xit "should invoke CreateEnrollmentService#create without arguments" do
+        xit "should invoke EnrollmentEntityService#create without arguments" do
           mock_enrollment_service(create_enrollment_service)
           create_enrollment_service.should_receive(:create)
 
           subject.enroll
         end
 
-        xit "should invoke AssetReportService" do
+        xit "should invoke AssetReportEntityService" do
           subject.lectures << Factory(:lecture, :owner => subject.owner)
 
-          AssetReportService.stub(:new).and_return(asset_report_service)
+          AssetReportEntityService.stub(:new).and_return(asset_report_service)
 
           asset_report_service.should_receive(:create) do |args|
             args.map(&:user_id).should =~ space.users.map(&:id)
@@ -116,11 +116,11 @@ module EnrollmentService
     end
 
     def mock_enrollment_service(m)
-      CreateEnrollment.stub(:new).and_return(m)
+      EnrollmentEntityService.stub(:new).and_return(m)
     end
 
     def mock_asset_report_service(m)
-      AssetReportService.stub(:new).and_return(m)
+      AssetReportEntityService.stub(:new).and_return(m)
     end
   end
 end
