@@ -45,5 +45,27 @@ module EnrollmentService
         subject.create(user_role_pairs)
       end
     end
+
+    context "#destroy" do
+      let!(:enrollments) do
+        subjects.map do |sub|
+          3.times.map { Factory(:enrollment, :subject => sub) }
+        end.flatten
+      end
+      let(:users) { enrollments.map(&:user) }
+
+      it "should remove the correct quantity of enrollments" do
+        expect {
+          subject.destroy(users)
+        }.to change(Enrollment, :count).by(-enrollments.length)
+      end
+
+      it "should remove correct enrollments" do
+        subject.destroy(users)
+        subjects.map { |s| s.reload }
+        subjects.map(&:enrollments).flatten.to_set.should_not be_superset \
+          enrollments.to_set
+      end
+    end
   end
 end

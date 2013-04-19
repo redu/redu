@@ -24,6 +24,22 @@ module EnrollmentService
       @importer ||= EnrollmentBulkMapper.new
     end
 
+    # Desmatricula usuários do Subject(s).
+    # Parâmetros:
+    #   - users: Usuários a serem desmatriculados dos subject(s).
+    #
+    # Atenção: Não invoca callbacks (nem remove associações :dependent).
+    def destroy(users)
+      users_ids = users.map(&:id)
+      enrollments = Enrollment.where(:subject_id => subjects.map(&:id))
+
+      enrollments_ids = enrollments.flatten.map do |e|
+        e.id if users_ids.include? e.user_id
+      end.compact
+
+      Enrollment.delete_all(["id IN (?)", enrollments_ids])
+    end
+
     protected
 
     def infer_builder_from_arguments(arguments={})
