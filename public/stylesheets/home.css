@@ -610,19 +610,19 @@ input[type="hidden"] +
   margin-right: 10px;
 }
 
-.no-pending {
+.plan-status-no-pending {
   color: #5fc080 !important;
 }
 
-.pending {
+.plan-status-pending {
   color: #ffa935 !important;
 }
 
-.overdue {
+.plan-status-overdue {
   color: #e1272d !important;
 }
 
-.closed {
+.plan-status-closed {
   color: black !important;
 }
 

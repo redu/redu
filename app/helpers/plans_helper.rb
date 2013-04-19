@@ -1,17 +1,18 @@
+# define cor de texto de acordo com o status de pagamento do plano
 module PlansHelper
   def plan_payment_status(plan)
     invoice = plan.invoice
     if plan.pending_payment?
       if invoice.overdue?
-        'overdue'
+        'plan-status-overdue'
       else
-        'pending'
+        'plan-status-pending'
       end
     else
       if invoice.closed?
-        'closed'
+        'plan-status-closed'
       else
-        'no-pending'
+        'plan-status-no-pending'
       end
     end
   end
