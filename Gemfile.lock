@@ -209,6 +209,7 @@ GEM
     css_parser (1.2.5)
       addressable
     daemons (1.0.10)
+    dalli (2.6.2)
     date_validator (0.6.1)
       activemodel (~> 3.0.0)
     deep_cloneable (1.2.3)
@@ -470,6 +471,7 @@ DEPENDENCIES
   classy_enum
   compass-rails
   daemons (= 1.0.10)
+  dalli
   date_validator
   deep_cloneable
   delayed_job_mongoid

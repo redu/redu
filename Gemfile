@@ -73,6 +73,7 @@ gem 'ey_config'
 gem 'destroy_soon'
 gem 'redu_analytics'
 gem 'humanizer'
+gem 'dalli'
 
 # Gems específicos para a API
 gem 'oauth-plugin', '~> 0.4.0'
