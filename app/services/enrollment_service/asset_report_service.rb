@@ -14,7 +14,7 @@ module EnrollmentService
     #     serão criados.
     def create(enrollments=nil)
       values = values_from_enrollments(enrollments)
-      importer.import(values)
+      importer.insert(values)
     end
 
     def importer

@@ -21,7 +21,7 @@ module EnrollmentService
     end
 
     def importer
-      @importer ||= EnrollmentBulkImporter.new
+      @importer ||= EnrollmentBulkMapper.new
     end
 
     protected
@@ -31,15 +31,6 @@ module EnrollmentService
         UsersAndRolesEnrollmentBuilder.new(subjects, users_and_roles)
       else
         InferredEnrollmentBuilder.new(subjects)
-      end
-    end
-
-    class EnrollmentBulkMapper < EnrollmentService::BulkMapper
-      def initialize
-        columns = [:user_id, :subject_id, :role]
-        options = { :validate => false, :on_duplicate_key_update => [:role] }
-
-        super Enrollment, columns, options
       end
     end
   end
