@@ -2,11 +2,19 @@ module EnrollmentService
   module ModelAdditions
     extend ActiveSupport::Concern
 
-    # Matricula o usuário com o role especificado. Retorna true ou false
-    # dependendo do resultado
-    def enroll(users=nil, role=Role[:member])
-      users = users.respond_to?(:map) ? users : [users]
-      self.class.enroll(users, [self], role)
+    # Matricula um ou mais User no Subject. Caso nenhum parâmetro seja passado
+    # os Users do Space serão matriculados com os mesmos papéis.
+    #
+    # options:
+    #   - role: papél dos Users. Só é levado em consideração quado o parâmetro
+    #   user é passado. Caso seja omitido o papél sera Role[:member]
+    def enroll(users=nil, opts = {})
+      options = {
+        :role => Role[:member]
+      }.merge(opts)
+      options[:users] = (users.respond_to?(:map) ? users : [users]) if users
+
+      self.class.enroll([self], options)
     end
 
     # Desmatricula o usuário
@@ -20,17 +28,33 @@ module EnrollmentService
     end
 
     module ClassMethods
-      def enroll(users, subjects, role=Role[:member], options = {})
-        create_enrollments(users, subjects, role)
+      # Matricula usuários em um ou mais Subjects
+      # Parâmetros:
+      #   subjects: Subjects aos quais o usuário será matriculado. Caso
+      #   esta opção seja utilizada sem a opção :role, os papéis serão
+      #   inferidos a partir do papel do usuário no Space.
+      #
+      # options:
+      #   - role: Papéis dos usuários
+      #   - users: Users que serão matriculados. Caso seja omitido os usuários
+      #   do Space serão matriculados com o mesmo papél.
+      def enroll(subjects, options = {})
+        role = options[:role] || Role[:member]
+        users = options[:users]
 
-        subject_ids = map_ids(subjects)
-        enrollments = Enrollment.
-          where(:subject_id => subject_ids, :user_id => map_ids(users))
-        lectures = Lecture.where(:subject_id => subject_ids).
-          select("id, subject_id")
+        enrollments = create_enrollment(subjects, users, :role => role)
+        create_asset_report(subjects, users)
 
-        create_asset_reports(lectures, enrollments)
-        send_state_to_vis(enrollments)
+        # FIXME: fazer create_asset_report e create_enrollment retornarem
+        # os asset reports e enrollments.
+        if users
+          enrollments = Enrollment.
+            where(:subject_id => pluck_ids(subjects), :user_id => pluck_ids(users))
+        else
+          enrollments = Enrollment.where(:subject_id => pluck_ids(subjects))
+        end
+
+        notify_vis_about_enrollment_creation(enrollments)
 
         enrollments
       end
@@ -45,23 +69,50 @@ module EnrollmentService
 
       private
 
-      def create_enrollments(users, subjects, role=Role[:member])
-        users_and_roles = users.map { |u| [u, role.to_s] }
+      # Cria Enrollment entre os User e Subject passados.
+      # Parâmetros:
+      #   - subjects (obrigatório): Lista de Subject ao qual os users
+      #   serão matriculados
+      #   - users (opcional): Lista de User que serão matriculados. Se omitido
+      #   os usuários do Space serão matriculados
+      # options:
+      #   - role: Papel dos usuários
+      def create_enrollment(subjects, users=nil, opts={})
+        options = { :role => Role[:member] }.merge(opts)
 
-        enrollments = EnrollmentEntityService.new(:subject => subjects)
-        enrollments.create(users_and_roles)
+        service = EnrollmentEntityService.new(:subject => subjects)
+
+        if users
+          users_and_roles = users.map { |u| [u, options[:role].to_s] }
+          service.create(users_and_roles)
+        else
+          service.create
+        end
       end
 
-      def create_asset_reports(lectures, enrollments=nil)
+      # Cria AssetReport entre todas as Lectures dos Subjects passados e os
+      # Users. Caso users seja omitido, todos os Users matriculados no Subject
+      # serão utilizados.
+      def create_asset_report(subjects, users=nil)
+        subject_ids = pluck_ids(subjects)
+        lectures = Lecture.where(:subject_id => subject_ids).select("id, subject_id")
         asset_reports = AssetReportEntityService.new(:lecture => lectures)
-        asset_reports.create(enrollments)
+
+        if users
+          enrollments = Enrollment.
+            where(:subject_id => subject_ids, :user_id => pluck_ids(users))
+
+          asset_reports.create(enrollments)
+        else
+          asset_reports.create
+        end
       end
 
-      def map_ids(resources)
+      def pluck_ids(resources)
         resources.map(&:id).uniq
       end
 
-      def send_state_to_vis(enrollments)
+      def notify_vis_about_enrollment_creation(enrollments)
         url = "/hierarchy_notifications.json"
         vis_client.notify_delayed(url, "enrollment", enrollments)
       end

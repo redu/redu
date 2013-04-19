@@ -28,6 +28,15 @@ module EnrollmentService
           subject.enroll(user)
         end
 
+        it "should invoke EnrollmentEntityServie#create with the role passed" do
+          mock_enrollment_service(create_enrollment_service)
+
+          create_enrollment_service.
+            should_receive(:create).with([[user, Role[:environment_admin].to_s]])
+
+          subject.enroll(user, :role => Role[:environment_admin])
+        end
+
         it "should invoke AssetReportEntityService" do
           subject.lectures << Factory(:lecture, :owner => subject.owner)
 
@@ -86,21 +95,16 @@ module EnrollmentService
           subject.save
         end
 
-        xit "should invoke EnrollmentEntityService#create without arguments" do
+        it "should invoke EnrollmentEntityService#create without arguments" do
           mock_enrollment_service(create_enrollment_service)
           create_enrollment_service.should_receive(:create)
-
           subject.enroll
         end
 
-        xit "should invoke AssetReportEntityService" do
-          subject.lectures << Factory(:lecture, :owner => subject.owner)
-
-          AssetReportEntityService.stub(:new).and_return(asset_report_service)
-
-          asset_report_service.should_receive(:create) do |args|
-            args.map(&:user_id).should =~ space.users.map(&:id)
-          end
+        it "should invoke AssetReportEntityService" do
+          mock_asset_report_service(asset_report_service)
+          asset_report_service.should_receive(:create)
+          subject.enroll
         end
 
         it "should return the enrollments"

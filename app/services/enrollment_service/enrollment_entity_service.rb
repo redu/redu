@@ -43,10 +43,12 @@ module EnrollmentService
     protected
 
     def infer_builder_from_arguments(arguments={})
-      if users_and_roles = arguments[:users_and_roles]
-        UsersAndRolesEnrollmentBuilder.new(subjects, users_and_roles)
-      else
+      users_and_roles = arguments[:users_and_roles] || []
+
+      if users_and_roles.empty?
         InferredEnrollmentBuilder.new(subjects)
+      else
+        UsersAndRolesEnrollmentBuilder.new(subjects, users_and_roles)
       end
     end
   end
