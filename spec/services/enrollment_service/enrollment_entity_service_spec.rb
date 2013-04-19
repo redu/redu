@@ -3,30 +3,26 @@ require 'spec_helper'
 module EnrollmentService
   describe EnrollmentEntityService do
     let(:spaces) { 2.times.map { Factory(:space) } }
-    let(:usas) do
-      spaces.map do |space|
-        2.times.map { Factory(:user_space_association, :space => space) }
-      end.flatten
-    end
     let(:subjects) do
       spaces.map do |space|
         2.times.map { Factory(:subject, :space => space) }
       end.flatten
     end
-    let(:enrollments_attrs) do
-      columns = []
-      subjects.map do |subj|
-        space = subj.space
-        space.user_space_associations.each do |uca|
-          columns << [uca.user_id, subj.id, uca.role.to_s]
-        end
-      end
-      columns
-    end
 
     subject { EnrollmentEntityService.new(:subject => subjects) }
 
     context "#create" do
+      let(:enrollments_attrs) do
+        columns = []
+        subjects.map do |subj|
+          space = subj.space
+          space.user_space_associations.each do |uca|
+            columns << [uca.user_id, subj.id, uca.role.to_s]
+          end
+        end
+        columns
+      end
+
       it "should delegate to insert with correct arguments" do
         subject.importer.should_receive(:insert).with(enrollments_attrs)
 
