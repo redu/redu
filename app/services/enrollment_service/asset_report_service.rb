@@ -38,14 +38,5 @@ module EnrollmentService
       arel = enrollments_arel || Enrollment.where(:subject_id => subject_ids)
       arel.values_of(:id, :subject_id)
     end
-
-    class AssetReportBulkMapper < EnrollmentService::BulkMapper
-      def initialize
-        columns = [:subject_id, :lecture_id, :enrollment_id]
-        options = { :validate => false, :on_duplicate_key_update => [:done] }
-
-        super AssetReport, columns, options
-      end
-    end
   end
 end
