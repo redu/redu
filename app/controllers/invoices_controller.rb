@@ -17,6 +17,14 @@ class InvoicesController < BaseController
     if @plan
       @invoices = @plan.invoices
       @quota = @plan.billable.quota if @plan.billable
+      # FIXME Planos dos parceiros não deveriam estar associados ao user.
+      # A lógica abaixo foi adicionada pois planos de parceiros são listados
+      # nos planos pessoais do usuário
+      @partner = @plan.billable.partner if @plan.billable.is_a? Environment
+      if @partner
+        @client = @partner.partner_environment_associations.
+          where(:environment_id => @plan.billable).first
+      end
     elsif @partner
       @invoices = @partner.invoices
       if params.fetch(:year, false)
@@ -30,8 +38,8 @@ class InvoicesController < BaseController
                            end
         @invoices = @invoices.of_period(@reference_period)
       end
-
     end
+
     @invoices = @invoices.pending if params.fetch(:pending, false)
 
     respond_to do |format|

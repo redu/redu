@@ -46,20 +46,4 @@ describe UserObserver do
       end
     end
   end
-
-  context "mailer" do
-    before do
-      UserNotifier.delivery_method = :test
-      UserNotifier.perform_deliveries = true
-      UserNotifier.deliveries = []
-    end
-
-    it "notifies the signup" do
-      ActiveRecord::Observer.with_observers(:user_observer) do
-        expect {
-          Factory(:user)
-        }.should change(UserNotifier.deliveries, :count).by(1)
-      end
-    end
-  end
 end

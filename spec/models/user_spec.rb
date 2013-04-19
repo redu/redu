@@ -572,24 +572,21 @@ describe User do
       @id = @lecture.subject.id
       subject.subjects_id.should eq([@id])
     end
+
+    context "#find" do
+      it "should find by login" do
+        User.find(subject.login).should == subject
+      end
+
+      it "should find by ID" do
+        User.find(subject.id).should == subject
+      end
+    end
   end
 
   context "callbacks" do
     it "make an activation code before create" do
       subject.activation_code.should_not be_nil
-    end
-
-    it "delivers a signup notification to the user after create" do
-      UserNotifier.delivery_method = :test
-      UserNotifier.perform_deliveries = true
-      UserNotifier.deliveries = []
-
-      ActiveRecord::Observer.with_observers(:user_observer) do
-        subject = Factory(:user)
-      end
-
-      UserNotifier.deliveries.size.should == 1
-      UserNotifier.deliveries.last.subject.should =~ /Ative sua conta/
     end
 
     it "updates last login after create" do
@@ -679,15 +676,6 @@ describe User do
       end
     end
 
-  end
-
-  it "authenticates a user by their login and password" do
-    User.authenticate(subject.login, subject.password).should == subject
-  end
-
-  it "does not authenticate a user by wrong login or password" do
-    User.authenticate("another-login", subject.password).should_not == subject
-    User.authenticate(subject.login, "another-pass").should_not == subject
   end
 
   it "encrypts a password" do

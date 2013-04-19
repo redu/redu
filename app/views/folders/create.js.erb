@@ -1,17 +1,8 @@
-$('.errorMEssageFiled').remove();
+$('.errorMessageField').remove();
 $('.spinner').hide();
 
 <% if @folder.valid? %>
-  $('.new-file-inner:visible, .new-folder-inner:visible', '#folder-admin').hide();
-  $('input[type=file], input[type=text]', '#folder-admin').val('');
-
-  $('#file_list').html("<%= escape_javascript (
-    render :partial => "folders/list") %>")
-  $('#folder-context').html("<%= escape_javascript (
-    render :partial => "folders/context", :locals => { :folder => @folder }) %>")
-  $('#folder-admin').html("<%= escape_javascript (
-    render :partial => "folders/admin",
-    :locals => { :folder => @folder, :myfile => @myfile, :space => @space }) %>")
+  <%= render :partial => "folders/index" %>
 <% else %>
   var error = $("<div class='errorMessageField'>").html(" <%= escape_javascript @folder.errors.full_messages.join(",") %>");
   $('.new-folder-inner form').prepend(error);

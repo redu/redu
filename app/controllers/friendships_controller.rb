@@ -6,11 +6,20 @@ class FriendshipsController < BaseController
 
   def index
     @profile = params[:profile] if params.has_key? :profile
-    @friends = @user.friends.
-      paginate(:page => params[:page], :per_page => 16)
+    # Diferencia a nova tela de meus contatos com a tela de contatos de outros usuários.
+    if @profile
+      @friends = @user.friends.paginate(:page => params[:page], :per_page => 16)
+    else
+      @total_friends = @user.friends.count
+      @friends = @user.friends.page(params[:page]).per(20)
+    end
 
     respond_to do |format|
-      format.html
+      format.html do
+        unless @profile
+          render :layout => 'new_application'
+        end
+      end
       format.js { render_endless 'users/item_medium', @friends, '#contacts > ul' }
     end
   end
@@ -18,10 +27,9 @@ class FriendshipsController < BaseController
   def new
     @invitations = @user.invitations
     @friendship_requests = @user.friendships.requested
-    @contacts_recommendations = @user.recommended_contacts(5)
 
     respond_to do |format|
-      format.html
+      format.html { render :layout => 'new_application' }
     end
   end
 
@@ -54,7 +62,7 @@ class FriendshipsController < BaseController
 
   def destroy
     @friend = User.find(@friendship.friend_id)
-    destroy_friendship(@friend)
+    @user.destroy_friendship_with(@friend)
     respond_to do |format|
       format.html do
         if params.has_key? :goto_home
@@ -70,22 +78,14 @@ class FriendshipsController < BaseController
   def resend_email
     user = @friendship.user
     friend = @friendship.friend
-    UserNotifier.delay(:queue => 'email').friendship_requested(friend, user)
+    UserNotifier.delay(:queue => 'email').
+      friendship_requested(user, friend)
     respond_to do |format|
       format.js do
-        @invitation_id = "request-#{params[:id]}"
+        @invited = friend.display_name
+        @invitation_id = "friendship-request-for-#{friend.id}"
         render 'invitations/resend_email'
       end
     end
   end
-
-  protected
-  def destroy_friendship(choosen_user)
-    friendship_in = current_user.friendship_for(choosen_user)
-    friendship_out = choosen_user.friendship_for(current_user)
-    # FIXME só deletar se existir conexão
-    friendship_in.destroy
-    friendship_out.destroy
-  end
-
 end

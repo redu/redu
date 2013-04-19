@@ -71,4 +71,16 @@ class Folder < ActiveRecord::Base
   def is_root
     (self.parent_id == nil)
   end
+
+  # Verifica se o curso tem espaço suficiente para o arquivo
+  def can_upload_file?
+    space = self.space
+    plan = space.course.plan || space.course.environment.plan
+    return false if plan.state != "active"
+
+    plan = space.course.plan || space.course.environment.plan
+    quota = space.course.quota || space.course.environment.quota
+
+    quota.files <= plan.file_storage_limit
+  end
 end

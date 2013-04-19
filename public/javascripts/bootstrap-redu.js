@@ -39,7 +39,7 @@ var findIconClasses = function(classes) {
 
   $(function () {
 
-    "use strict"; // jshint ;_;
+    "use strict";
 
 
     /* CSS TRANSITION SUPPORT (http://www.modernizr.com/)
@@ -98,7 +98,7 @@ var findIconClasses = function(classes) {
 
 !function ($) {
 
-  "use strict"; // jshint ;_;
+  "use strict";
 
 
  /* ALERT CLASS DEFINITION
@@ -188,7 +188,7 @@ var findIconClasses = function(classes) {
 
 !function ($) {
 
-  "use strict"; // jshint ;_;
+  "use strict";
 
 
  /* DROPDOWN CLASS DEFINITION
@@ -338,7 +338,7 @@ var findIconClasses = function(classes) {
 
 !function ($) {
 
-  "use strict"; // jshint ;_;
+  "use strict";
 
 
  /* MODAL CLASS DEFINITION
@@ -558,7 +558,7 @@ var findIconClasses = function(classes) {
 
 !function ($) {
 
-  "use strict"; // jshint ;_;
+  "use strict";
 
 
  /* TOOLTIP PUBLIC CLASS DEFINITION
@@ -841,7 +841,7 @@ $(function() {
 
 !function ($) {
 
-  "use strict"; // jshint ;_;
+  "use strict";
 
 
  /* POPOVER PUBLIC CLASS DEFINITION
@@ -1169,8 +1169,8 @@ $(function() {
       })
     },
 
-    // Adiciona/remove a classe indicativa de controle em foco.
-    toggleFocusLabel: function(options) {
+    // Adiciona a classe indicativa de controle em foco.
+    focusLabel: function(options) {
       var settings = $.extend({
         // Classe adicionada quando o controle está me foco.
         controlFocusedClass: 'control-focused'
@@ -1178,7 +1178,19 @@ $(function() {
       , controlGroupClass: 'control-group'
       }, options)
 
-      $(this).parents('.' + settings.controlGroupClass).toggleClass(settings.controlFocusedClass)
+      $(this).parents('.' + settings.controlGroupClass).addClass(settings.controlFocusedClass)
+    },
+
+    // Remove a classe indicativa de controle em foco.
+    removeFocusLabel: function(options) {
+      var settings = $.extend({
+        // Classe adicionada quando o controle está me foco.
+        controlFocusedClass: 'control-focused'
+        // Classe que identifica o container do controle.
+      , controlGroupClass: 'control-group'
+      }, options)
+
+      $(this).parents('.' + settings.controlGroupClass).removeClass(settings.controlFocusedClass)
     },
 
     // Ajusta a altura do textarea de acordo com seu atributo rows.
@@ -1294,10 +1306,14 @@ $(function() {
 $(function() {
   $('input[type="text"][maxlength], input[type="password"][maxlength], textarea[maxlength]').reduForm('countChars');
 
-  $(document).on('focus blur', 'input[type="text"], input[type="password"], input[type="file"], textarea, select', function(e) {
-    $(this).reduForm('toggleFocusLabel')
-  })
-
+  var focusInputSelectors = 'input[type="text"], input[type="password"], input[type="file"], textarea, select';
+  $(document)
+    .on('focus', focusInputSelectors, function(e) {
+      $(this).reduForm('focusLabel')
+    })
+    .on('blur', focusInputSelectors, function(e) {
+      $(this).reduForm('removeFocusLabel')
+    })
 
   // Comportamento de escurer texto do checkbox/radio selecionado.
 
@@ -2129,7 +2145,7 @@ $(function() {
 
 !function ($) {
 
-  "use strict"; // jshint ;_;
+  "use strict";
 
 
  /* DEFINIÇÃO DE CLASSE DO CAMPO DE BUSCA.
@@ -2224,3 +2240,20 @@ $(function() {
   })
 
 }(window.jQuery);
+$(function() {
+  var settings = {
+    // Engloba todo o botão dropdown e formulário de login.
+    buttonSignInWrapper: ".header-button-sign-in"
+    // O botão dropdown.
+  , buttonDropdown: ".dropdown-toggle"
+    // O campo de login (logicamente deve ser o primeiro).
+  , inputLogin: "input:text:first"
+  }
+
+  // Foca no primeiro campo (de login) quando o botão dropdown "Entrar no Redu" é aberto.
+  $("body").on("click", settings.buttonSignInWrapper + " " + settings.buttonDropdown, function() {
+    setTimeout(function() {
+      $(settings.buttonSignInWrapper).find(settings.inputLogin).focus()
+    }, 100)
+  })
+})

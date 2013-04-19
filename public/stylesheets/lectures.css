@@ -279,9 +279,7 @@
 }
 
 #resource .statistics li {
-  display: block;
-  float: left;
-
+  display: inline;
   color: rgb(179, 179, 179);
 }
 

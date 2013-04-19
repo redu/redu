@@ -89,7 +89,12 @@
 }
 
 .portal-search-category {
-  padding: 10px 20px 15px 20px;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.portal-search-category +
+.portal-search-list-results {
+  margin-top: 5px;
 }
 
 .portal-search-category-title +

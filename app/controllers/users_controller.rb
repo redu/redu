@@ -293,8 +293,14 @@ class UsersController < BaseController
     end
     if @user
       flash[:notice] = t :activation_email_resent_message
-      UserNotifier.delay(:queue => 'email').user_signedup(@user)
-      redirect_to application_path and return
+      UserNotifier.delay(:queue => 'email').user_signedup(@user.id)
+
+      user_agent = UserAgent.parse(request.user_agent)
+      if user_agent.mobile?
+        redirect_to login_path and return
+      else
+        redirect_to application_path and return
+      end
     else
       flash[:error] = t :activation_email_not_sent_message
     end
@@ -338,7 +344,7 @@ class UsersController < BaseController
       @users = User.with_keyword(params[:q])
       @users = @users.map do |u|
         { :id => u.id, :name => u.display_name, :avatar_32 => u.avatar.url(:thumb_32),
-          :mail => u.email }
+          :mail => u.email, :profile_link => user_path(u) }
       end
     elsif params[:tag] # Usado em messages: somente amigos
       @users = current_user.friends.with_keyword(params[:tag])

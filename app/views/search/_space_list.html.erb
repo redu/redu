@@ -6,7 +6,7 @@
     query: o termo pesquisado.
 %>
 <% if spaces.count > 0 %>
-  <div class="portal-search-category">
+  <div class="portal-search-category content-section">
     <span class="portal-search-category-title icon-space-gray_32_34-before">Disciplinas: <%= search_results_counter(spaces) %></span>
     <% if show_see_all_results_link?(spaces.total_count) %>
       <%= link_to "Veja todos os resultados",

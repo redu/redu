@@ -499,7 +499,6 @@
     @include calc("width", $expression, $old-browser-value);
     margin-left: $gutter;
     float: left;
-    position: relative;
 
     // Remove o espaçamento de cada ($n+1)-ésimo item.
     &:nth-child(#{$n}n+1) {
@@ -544,6 +543,8 @@
 
       $n: $n - 1;
     }
+
+    &:first-child:after { background: none; }
   }
 }
 

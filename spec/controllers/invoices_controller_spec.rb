@@ -70,7 +70,7 @@ describe InvoicesController do
           :locale => "pt-BR"
       end
 
-      it "should assign licensed invoice" do
+      it "should assign plan" do
         assigns[:plan].should_not be_nil
       end
 

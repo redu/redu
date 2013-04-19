@@ -237,10 +237,6 @@ describe Ability do
           @ability = Ability.new(@env_admin)
           @course = Factory.build(:course, :owner => @env_admin,
                                  :environment => @environment)
-
-          Factory(:user_course_association, :course => @course,
-                  :user => @env_admin, :role => :environment_admin,
-                  :state => "approved")
         end
 
         it "creates a course"  do

@@ -20,7 +20,9 @@
     <td class="footer-info-wrapper">
       <div class="footer-info">
         Esta notificação foi enviada para
-        <% if @user %>
+        <% if @friend %>
+          <a href="mailto:<%= @friend.email %>"><%= @friend.email %></a>.
+        <% elsif @user %>
           <a href="mailto:<%= @user.email %>"><%= @user.email %></a>.
         <% else %>
           <a href="mailto:<%= @email %>"><%= @email %></a>.

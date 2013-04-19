@@ -411,6 +411,15 @@ module AsyncJSHelper
       result = "(#{number.to_s})"
     end
   end
+
+  # Retorna a classe e cumprimento correto dependendo do tipo de mensagem flash.
+  def flash_message(type)
+    case type
+    when :info then ["info", "Aviso."]
+    when :notice then ["success", "Muito bem!"]
+    when :error then ["warning", "Opa!"]
+    end
+  end
 end
 
 ActionView::Base.send(:include, AsyncJSHelper)

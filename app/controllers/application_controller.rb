@@ -13,12 +13,7 @@ class ApplicationController < ActionController::Base
     rescue_from ActionController::UnknownAction,      :with => :render_not_found
   end
 
-  rescue_from CanCan::AccessDenied do |exception|
-    session[:return_to] ||= request.fullpath
-
-    flash[:error] = "Essa área só pode ser vista após você acessar o Redu com seu nome e senha."
-    redirect_to home_path
-  end
+  rescue_from CanCan::AccessDenied, :with => :deny_access
 
   def routing_error
     respond_to do |format|
@@ -73,6 +68,19 @@ class ApplicationController < ActionController::Base
     user_agent = UserAgent.parse(request.user_agent)
     if user_agent.mobile?
       prepend_view_path "app/views/mobile"
+    end
+  end
+
+  def deny_access(exception)
+    session[:return_to] ||= request.fullpath
+
+    flash[:error] = "Essa área só pode ser vista após você acessar o Redu com seu nome e senha."
+
+    user_agent = UserAgent.parse(request.user_agent)
+    if user_agent.mobile?
+      redirect_to login_path
+    else
+      redirect_to home_path
     end
   end
 end

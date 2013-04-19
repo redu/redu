@@ -13,7 +13,7 @@ gem 'actionmailer_inline_css',
 gem 'classy_enum'
 gem 'activerecord-import'
 gem 'acts_as_tree', '~> 0.1.1'
-gem 'acts-as-taggable-on'
+gem 'acts-as-taggable-on', :git => 'git://github.com/mbleigh/acts-as-taggable-on.git'
 gem 'ajaxful_rating',
   :git => 'git://github.com/edgarjs/ajaxful-rating.git',
   :branch => 'rails3'
@@ -67,12 +67,13 @@ gem 'will_paginate', '~> 3.0.pre2'
 gem 'zencoder'
 gem 'untied-publisher', '~> 0.0.7.pre'
 gem 'system_timer'
-gem 'json', '>= 1.7.7'
+gem 'yajl-ruby'
 gem 'simple_acts_as_list'
 gem 'ey_config'
 gem 'destroy_soon'
 gem 'redu_analytics'
 gem 'humanizer'
+gem 'dalli'
 
 # Gems específicos para a API
 gem 'oauth-plugin', '~> 0.4.0'
