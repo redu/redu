@@ -1,4 +1,5 @@
 class Subject < ActiveRecord::Base
+  include EnrollmentService::ModelAdditions
 
   belongs_to :space
   belongs_to :owner, :class_name => "User", :foreign_key => :user_id
@@ -21,41 +22,6 @@ class Subject < ActiveRecord::Base
 
   validates_presence_of :name
 
-  # Associa um usuário a vários subjects
-  # - Retorna os enrollments criados
-  def self.enroll(user, subjects, role = Role[:member])
-    enrolls = subjects.collect do |subject|
-      Enrollment.new(:subject => subject, :user => user, :role => role)
-    end
-
-    Enrollment.import(enrolls, :validate => false)
-    enrollments = Enrollment.where('user_id = ? AND subject_id IN (?)', user, subjects).includes(:subject => [:lectures])
-    enrollments.each { |e| e.create_assets_reports }
-    enrollments
-  end
-
-  def recent?
-    self.created_at > 1.week.ago
-  end
-
-  # Matricula o usuário com o role especificado. Retorna true ou false
-  # dependendo do resultado
-  def enroll(user, role = Role[:member])
-    enrollment = self.enrollments.create(:user => user, :role => role)
-    enrollment.valid?
-    enrollment
-  end
-
-  # Desmatricula o usuário
-  def unenroll(user)
-    enrollment = user.get_association_with(self)
-    enrollment.destroy
-  end
-
-  def enrolled?(user)
-    !user.get_association_with(self).nil?
-  end
-
   def change_lectures_order!(ids_order)
     ids_order.each_with_index do |id, i|
       unless !Lecture.exists?(id)
@@ -64,6 +30,10 @@ class Subject < ActiveRecord::Base
         lecture.save
       end
     end
+  end
+
+  def recent?
+    self.created_at > 1.week.ago
   end
 
   def convert_lectureables!

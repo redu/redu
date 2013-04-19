@@ -246,7 +246,7 @@ class Course < ActiveRecord::Base
     UserSpaceAssociation.import(usas, :validate => false)
 
     subjects = self.spaces.includes(:subjects).collect(&:subjects).flatten
-    enrollments = Subject.enroll(user, subjects, role)
+    enrollments = Subject.enroll([user], subjects, role)
 
     # Associa o delayed_job para a criação dos enrollments em visualização
     VisClient.notify_delayed("/hierarchy_notifications.json", "enrollment", enrollments.compact)

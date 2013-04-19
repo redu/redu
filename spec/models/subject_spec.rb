@@ -108,93 +108,9 @@ describe Subject do
     subject.should_not be_recent
   end
 
-  it "responds to enroll" do
-    should respond_to :enroll
-  end
-
-  it "responds to unenroll" do
-    should respond_to :unenroll
-  end
-
-  it "responds to enrolled?" do
-    should respond_to :enrolled?
-  end
 
   it "responds to graduated?" do
     should respond_to :graduated?
-  end
-
-  context "enrollments" do
-    before :each do
-      @enrolled_user = Factory(:user)
-    end
-
-    it "enrolls an user" do
-      expect {
-        subject.enroll(@enrolled_user)
-      }.to change(subject.enrollments, :count).by(1)
-    end
-
-    it "enrolls an user with a given role" do
-      subject.enroll(@enrolled_user, Role[:teacher]).should be_true
-      subject.enrollments.last.role.should == Role[:teacher]
-    end
-
-    it "unenrolls an user" do
-      enrollment = Factory(:enrollment, :user => @enrolled_user,
-                           :subject => subject)
-
-      expect {
-        subject.unenroll(@enrolled_user)
-      }.to change(subject.enrollments, :count).by(-1)
-    end
-
-    it "verifies if an user is enrolled" do
-      subject.enroll(@enrolled_user)
-      subject.enrolled?(@enrolled_user).should be_true
-    end
-
-    it "verifies if an user is not enrolled" do
-      subject.enrolled?(@enrolled_user).should be_false
-    end
-
-    context 'when enrolling to many subjects' do
-      let(:subjects) { (1..4).collect { Factory(:subject) } }
-
-      it 'creates the enrollments' do
-        expect {
-          Subject.enroll(@enrolled_user, subjects)
-        }.to change(Enrollment, :count).by(subjects.length)
-      end
-
-      it 'returns the created enrollments' do
-        Subject.enroll(@enrolled_user, subjects).to_set.should ==
-          Enrollment.all.to_set
-      end
-
-      it 'creates enrollments with the correct user and subjects' do
-        enrollments = Subject.enroll(@enrolled_user, subjects)
-        enrollments.collect(&:user).to_set.should have(1).item
-        enrollments.collect(&:subject).to_set.should == subjects.to_set
-      end
-
-      context 'when that has many lectures' do
-        before do
-          subjects.each do |s|
-            (1..3).each do
-              Factory(:lecture, :subject => s)
-            end
-          end
-        end
-
-        it 'creates the assets reports for each enrollment' do
-          enrolls = Subject.enroll(@enrolled_user, subjects)
-          enrolls.each do |e|
-            e.asset_reports.should have(3).items
-          end
-        end
-      end
-    end
   end
 
   context "lectures" do
