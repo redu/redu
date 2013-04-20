@@ -20,21 +20,30 @@ describe 'Canvas API' do
   end
 
   context "POST /api/spaces/:id/canvas" do
-    it_should_behave_like "a lecture created" do
-      let(:mimetype) { 'application/x-canvas' }
-      let(:url) { "/api/subjects/#{sub.id}/lectures"  }
-      let(:lecture_params) do
-        { :lecture => \
-          { :name => 'Lorem', :type => 'Canvas', :current_url => "http://foo.bar.com" }
-        }.merge(base_params)
-      end
+    let(:canvas_params) do
+      params[:canvas] = {
+        :name => "My awesome canvas",
+        :current_url => "http://foo.bar.com"
+      }
+      params
+    end
+    before do
+      post "api/spaces/#{space.id}/canvas", canvas_params
+    end
+
+    it "should return the 201 HTTP code" do
+      response.code.should == "201"
+    end
+
+    it "should create with the name specified" do
+      parse(response.body)["name"].should == canvas_params[:canvas][:name]
     end
 
     it_should_behave_like "a canvas"
 
     context "with validation error" do
       before do
-        canvas_params[:lecture][:current_url] = "not a URL"
+        canvas_params[:canvas][:current_url] = "not a URL"
         post "api/spaces/#{space.id}/canvas", canvas_params
       end
 

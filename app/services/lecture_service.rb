@@ -51,7 +51,7 @@ class LectureService
   def lectureable_service
     @lectureable ||= case @attrs[:type]
     when 'Canvas'
-      CanvasService.new(@ability, @attrs)
+      LectureableCanvasService.new(@ability, @attrs)
     when 'Media'
       SeminarService.new(@ability, @attrs)
     when 'Page'

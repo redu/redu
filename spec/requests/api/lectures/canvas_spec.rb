@@ -10,41 +10,33 @@ describe "Canvas API" do
   let(:base_params) { { :oauth_token => token, :format => 'json' } }
 
   context "when POST /subjects/:subject_id/lectures" do
-    context "when creating canvas" do
-      context "when the params is correct" do
-        let(:params) do
-          base_params.merge({:lecture => {
-            :name => "My Goku Lecture",
-            :type => "Canvas",
-            :position => 1,
-          }})
-        end
-
-        it "should return code 201 (created)" do
-          post "api/subjects/#{subj.id}/lectures", params
-          response.code.should == '201'
-        end
-
-        it "should return the entity" do
-          post "api/subjects/#{subj.id}/lectures", params
-          parse(response.body)['name'].should == params[:lecture][:name]
-        end
-      end
-
-      context "when the params aren't correct" do
-        let(:params) { base_params.merge({ :lecture => { :name => "" } }) }
-
-        it "should return code 422 when not valid" do
-          post "api/subjects/#{subj.id}/lectures", params
-          response.code.should == '422'
-        end
-
-        it "should return the error explanation" do
-          post "api/subjects/#{subj.id}/lectures", params
-          parse(response.body).should have_key "name"
+    context "when the params is correct" do
+      it_should_behave_like "a lecture created" do
+        let(:mimetype) { 'application/x-canvas' }
+        let(:url) { "/api/subjects/#{subj.id}/lectures"  }
+        let(:lecture_params) do
+          { :lecture => \
+            { :name => 'Lorem', :type => 'Canvas',
+              :current_url => "http://foo.bar.com" }
+          }.merge(base_params)
         end
       end
     end
+
+    context "when the params aren't correct" do
+      let(:params) { base_params.merge({ :lecture => { :name => "" } }) }
+
+      it "should return code 422 when not valid" do
+        post "api/subjects/#{subj.id}/lectures", params
+        response.code.should == '422'
+      end
+
+      it "should return the error explanation" do
+        post "api/subjects/#{subj.id}/lectures", params
+        parse(response.body).should have_key "name"
+      end
+    end
+  end
 
     context "when creating canvas with URL" do
       context "when the params are correct" do
@@ -88,7 +80,6 @@ describe "Canvas API" do
         end
       end
     end
-  end
 
   context "when GET /lectures/:id" do
     subject do
