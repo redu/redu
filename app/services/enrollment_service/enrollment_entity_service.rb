@@ -33,8 +33,8 @@ module EnrollmentService
       users_ids = users.respond_to?(:map) ? users.map(&:id) : [users.id]
       enrollments = Enrollment.where(:subject_id => subjects)
 
-      enrollments_ids = enrollments.flatten.map do |e|
-        e.id if users_ids.include? e.user_id
+      enrollments_ids = enrollments.values_of(:id, :user_id).map do |id, u_id|
+        id if users_ids.include? u_id
       end.compact
 
       Enrollment.delete_all(["id IN (?)", enrollments_ids])

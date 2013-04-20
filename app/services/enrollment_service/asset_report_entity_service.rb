@@ -32,9 +32,9 @@ module EnrollmentService
         [enrollments.id]
       assets = AssetReport.where(:lecture_id => lectures)
 
-      assets_ids = assets.select do |asset|
-        enrollments_ids.include? asset.enrollment_id
-      end
+      assets_ids = assets.values_of(:id, :enrollment_id).map do |a_id, e_id|
+        a_id if enrollments_ids.include? e_id
+      end.compact
 
       AssetReport.delete_all(["id IN (?)", assets_ids])
     end
