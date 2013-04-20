@@ -461,10 +461,10 @@ describe Course do
       @environment.reload
       @space = Factory(:space, :course => subject)
       @space_2 = Factory(:space, :course => subject)
-      @sub = Factory(:subject, :space => @space, :owner => subject.owner,
-                     :finalized => true)
-      @sub_2 = Factory(:subject, :space => @space_2, :owner => subject.owner,
-                     :finalized => true)
+      @sub = Factory(:complete_subject, :space => @space,
+                     :owner => subject.owner)
+      @sub_2 = Factory(:complete_subject, :space => @space_2,
+                       :owner => subject.owner)
       @user = Factory(:user)
       subject.join @user
       subject.reload
@@ -485,6 +485,15 @@ describe Course do
       subject.unjoin @user
       @sub.members.should_not include(@user)
       @sub_2.members.should_not include(@user)
+    end
+
+    it "destroys user's asset reports related to the course" do
+      qtt_lectures = @sub.lectures.count + @sub_2.lectures.count
+
+      expect {
+        subject.unjoin @user
+      }.to change(AssetReport, :count).by(-qtt_lectures)
+      @user.enrollments.map(&:asset_reports).flatten.count.should == 0
     end
 
     it "should call VisClient.notify_delayed for all enrollments and for finalized enrollments" do

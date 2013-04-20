@@ -190,7 +190,6 @@ class Course < ActiveRecord::Base
   # * Pode ser chamado mesmo se o usuário estiver sob moderação
   def unjoin(user)
     enrollments = []
-    enrollments_finalized = []
     course_association = user.get_association_with(self)
     course_association.try(:destroy)
 
@@ -207,14 +206,21 @@ class Course < ActiveRecord::Base
       space_association = user.get_association_with(space)
       space_association.try(:destroy)
 
-      space.subjects.each do |subject|
-        enrollment = user.get_association_with subject
-        enrollments << enrollment
-        enrollments_finalized << enrollment if enrollment.try(:graduated)
-        enrollment.try(:destroy)
-      end
+      space_enrollments = Enrollment.where(:subject_id => space.subjects)
+      enrollments << space_enrollments.select { |e| e.user_id == user.id }
     end
+    enrollments.flatten!
 
+    subjects = Subject.where(:space_id => self.spaces)
+    enrollments_service = EnrollmentService::EnrollmentEntityService.
+      new(:subject => subjects)
+    enrollments_service.destroy(user)
+
+    lectures = Lecture.where(:subject_id => subjects)
+    asset_reports_service = EnrollmentService::AssetReportEntityService.new(:lecture => lectures)
+    asset_reports_service.destroy(enrollments)
+
+    enrollments_finalized = enrollments.select { |e| e.graduated? }
     # Usa VisClient para enviar as requisições
     VisClient.notify_delayed("/hierarchy_notifications.json",
                              "remove_enrollment", enrollments.compact)
