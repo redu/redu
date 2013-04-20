@@ -51,5 +51,34 @@ module EnrollmentService
 
       it "should update grades"
     end
+
+    context "#destroy" do
+      let!(:asset_reports) do
+        lectures.map do |l|
+          l.subject.enrollments.map do |enrollment|
+            Factory(:asset_report, :enrollment => enrollment, :lecture => l)
+          end.flatten
+        end.flatten
+      end
+      let(:enrollments) { subjects.map(&:enrollments).flatten }
+
+      it "should accept a single enrollment as argument" do
+        expect {
+          subject.destroy(enrollments.first)
+        }.to_not raise_error
+      end
+
+      it "should remove the correct quantity of asset reports" do
+        expect {
+          subject.destroy(enrollments)
+        }.to change(AssetReport, :count).by(-asset_reports.length)
+      end
+
+      it "should remove the correct asset reports" do
+        subject.destroy(enrollments)
+        enrollments.map(&:asset_reports).flatten.to_set.should_not \
+          be_superset asset_reports.to_set
+      end
+    end
   end
 end

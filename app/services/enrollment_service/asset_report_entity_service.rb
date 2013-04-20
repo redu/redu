@@ -21,6 +21,24 @@ module EnrollmentService
       @importer ||= AssetReportBulkMapper.new
     end
 
+    # Destrói AssetReport dos Enrollments com a(s) Lecture(s).
+    # Parâmetros:
+    #   - enrollments: Enrollments que devem ter os asset reports com a(s)
+    #   lecture(s) destruídos.
+    #
+    # Atenção: Não invoca callbacks (nem remove associações :dependent).
+    def destroy(enrollments)
+      enrollments_ids = enrollments.respond_to?(:map) ? enrollments.map(&:id) :
+        [enrollments.id]
+      assets = AssetReport.where(:lecture_id => lectures)
+
+      assets_ids = assets.select do |asset|
+        enrollments_ids.include? asset.enrollment_id
+      end
+
+      AssetReport.delete_all(["id IN (?)", assets_ids])
+    end
+
     protected
 
     def values_from_enrollments(enrollments)
