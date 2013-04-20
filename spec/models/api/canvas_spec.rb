@@ -37,6 +37,22 @@ describe Api::Canvas do
         subject.current_url
       }.to_not raise_error(NoMethodError)
     end
+
+    it "should append the hash passed as a querystring" do
+      subject.url = "http://foo.bar.com?bla=bla"
+      subject.save
+
+      qs = { :foo => :bar }
+      subject.current_url(qs).should == "#{subject.url}&foo=bar"
+    end
+
+    it "should add the hash passed as a querystring" do
+      subject.url = "http://foo.bar.com"
+      subject.save
+
+      qs = { :foo => :bar }
+      subject.current_url(qs).should == "#{subject.url}?foo=bar"
+    end
   end
 
   context "#current_name" do
