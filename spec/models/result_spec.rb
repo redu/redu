@@ -27,7 +27,7 @@ describe Result do
       it "should set started_at" do
         expect {
           subject.start!
-        }.should change(subject, :started_at)
+        }.to change(subject, :started_at)
 
         subject.started_at.should be_within(1).of(Time.zone.now)
       end
@@ -38,7 +38,7 @@ describe Result do
         subject.start!
         expect {
           subject.finalize!
-        }.should change(subject, :finalized_at)
+        }.to change(subject, :finalized_at)
         subject.finalized_at.should be_within(1).of(Time.zone.now)
       end
 
@@ -49,7 +49,7 @@ describe Result do
 
         expect {
           subject.finalize!
-        }.should change { subject.grade.try(:round,2) }.to(BigDecimal.new("3.0"))
+        }.to change { subject.grade.try(:round,2) }.to(BigDecimal.new("3.0"))
       end
 
       it "should assign the exam choices" do

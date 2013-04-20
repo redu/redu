@@ -10,7 +10,7 @@ describe LectureObserver do
           sub.save
           lecture = Factory(:lecture, :subject => sub,
                              :owner => sub.owner)
-        }.should change(Log, :count).by(1)
+        }.to change(Log, :count).by(1)
       end
     end
   end

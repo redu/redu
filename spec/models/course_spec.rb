@@ -89,7 +89,7 @@ describe Course do
     it "does NOT create a course association with all environment admins if it does NOT have an environment" do
       expect {
         subject = Factory(:course, :environment => nil)
-      }.should_not change(UserCourseAssociation, :count)
+      }.to_not change(UserCourseAssociation, :count)
     end
   end
 
@@ -311,7 +311,7 @@ describe Course do
 
     expect {
       subject.change_role(user, Role[:tutor])
-    }.should change {
+    }.to change {
       subject.user_course_associations.last.role }.to(Role[:tutor])
 
   end
@@ -412,7 +412,7 @@ describe Course do
         @user= Factory(:user)
         expect {
           subject.join(@user)
-        }.should change(License, :count).by(1)
+        }.to change(License, :count).by(1)
       end
     end
 
@@ -520,7 +520,7 @@ describe Course do
       it "removes the user from the environment" do
         expect {
           subject.unjoin @user
-        }.should change(UserEnvironmentAssociation, :count).by(-1)
+        }.to change(UserEnvironmentAssociation, :count).by(-1)
         @environment.users.should_not include(@user)
       end
     end
@@ -534,7 +534,7 @@ describe Course do
       it "let the user as a member of the environment"  do
         expect {
           subject.unjoin @user
-        }.should_not change(UserEnvironmentAssociation, :count)
+        }.to_not change(UserEnvironmentAssociation, :count)
         @environment.users.should include(@user)
       end
     end
@@ -549,7 +549,7 @@ describe Course do
       it 'dont raise an error' do
         expect {
           subject.unjoin @user_pending
-        }.should_not raise_error
+        }.to_not raise_error
       end
     end
   end
@@ -607,7 +607,7 @@ describe Course do
         2.times do
           subject.create_hierarchy_associations(@user, Role[:tutor])
         end
-      }.should change(UserEnvironmentAssociation, :count).by(1)
+      }.to change(UserEnvironmentAssociation, :count).by(1)
     end
 
     it "should not double create space association" do
@@ -615,7 +615,7 @@ describe Course do
         2.times do
           subject.create_hierarchy_associations(@user, Role[:tutor])
         end
-      }.should change(UserSpaceAssociation, :count).by(1)
+      }.to change(UserSpaceAssociation, :count).by(1)
     end
   end
 
@@ -661,7 +661,7 @@ describe Course do
       it "does not create a new association" do
         expect {
           subject.invite(@incoming_user)
-        }.should_not change(UserCourseAssociation, :count)
+        }.to_not change(UserCourseAssociation, :count)
       end
 
       it "changes his state to approved" do
@@ -679,7 +679,7 @@ describe Course do
       it "does not create a new association" do
         expect {
           subject.invite(@incoming_user)
-        }.should_not change(UserCourseAssociation, :count)
+        }.to_not change(UserCourseAssociation, :count)
       end
     end
 
@@ -693,7 +693,7 @@ describe Course do
       it "does not change his state" do
         expect {
           subject.invite(@already_member)
-        }.should_not change {
+        }.to_not change {
           @already_member.get_association_with(subject).state
         }
       end
@@ -712,7 +712,7 @@ describe Course do
       it "does NOT change his state" do
         expect {
           subject.invite(@already_invited)
-        }.should_not change {
+        }.to_not change {
           @already_invited.get_association_with(subject).state
         }
       end
@@ -749,7 +749,7 @@ describe Course do
         it "creates an email invitation" do
           expect {
             subject.invite_by_email(@not_registered_email)
-          }.should change(UserCourseInvitation, :count).by(1)
+          }.to change(UserCourseInvitation, :count).by(1)
         end
       end
 
@@ -761,7 +761,7 @@ describe Course do
         it "does NOT create a new invitation" do
           expect {
             subject.invite_by_email(@not_registered_email)
-          }.should_not change(UserCourseInvitation, :count)
+          }.to_not change(UserCourseInvitation, :count)
         end
       end
 
@@ -773,14 +773,14 @@ describe Course do
         it "does NOT create an e-mail invitation" do
           expect {
             subject.invite_by_email(@registered_user.email)
-          }.should_not change(UserCourseInvitation, :count)
+          }.to_not change(UserCourseInvitation, :count)
         end
 
         it "creates an association" do
           subject.reload
           expect {
             subject.invite_by_email(@registered_user.email)
-          }.should change(UserCourseAssociation, :count).by(1)
+          }.to change(UserCourseAssociation, :count).by(1)
         end
       end
 
@@ -797,7 +797,7 @@ describe Course do
         it "does NOT change his state" do
           expect {
             subject.invite_by_email @email_already_invited
-          }.should_not change {
+          }.to_not change {
             @invitation.reload.state
           }
         end
@@ -931,7 +931,7 @@ describe Course do
         it "should only destroy itself" do
           expect {
             subject.audit_billable_and_destroy
-          }.should_not raise_error
+          }.to_not raise_error
         end
       end
     end

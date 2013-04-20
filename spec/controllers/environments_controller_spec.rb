@@ -141,7 +141,7 @@ describe EnvironmentsController do
           ActiveRecord::Observer.with_observers :course_observer do
             expect {
               post :create, @params
-            }.should_not raise_error
+            }.to_not raise_error
           end
         end
       end

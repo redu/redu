@@ -478,7 +478,7 @@ describe LicensedInvoice do
       it "should not raise error" do
         expect {
         LicensedInvoice.refresh_states!
-        }.should_not raise_error(AASM::InvalidTransition)
+        }.to_not raise_error(AASM::InvalidTransition)
       end
     end
   end
@@ -500,7 +500,7 @@ describe LicensedInvoice do
       @user= Factory(:user)
       expect {
         subject.create_license(@user, Role[:member], @course)
-      }.should change(License, :count).by(1)
+      }.to change(License, :count).by(1)
     end
   end
 

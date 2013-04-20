@@ -10,7 +10,7 @@ describe FriendshipObserver do
         expect {
           @user1.be_friends_with(@user2)
           @user2.be_friends_with(@user1)
-        }.should change(Log, :count).by(2)
+        }.to change(Log, :count).by(2)
       end
     end
   end
@@ -34,7 +34,7 @@ describe FriendshipObserver do
       ActiveRecord::Observer.with_observers(:friendship_observer) do
         expect {
           neo.be_friends_with(smith)
-        }.should change(UserNotifier.deliveries, :count).by(1)
+        }.to change(UserNotifier.deliveries, :count).by(1)
         UserNotifier.deliveries.last.subject.should \
           == "#{neo.display_name} quer se conectar"
         UserNotifier.deliveries.last.text_part.to_s.should \

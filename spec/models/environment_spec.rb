@@ -141,7 +141,7 @@ describe Environment do
 
     expect {
       subject.change_role(user, Role[:environment_admin])
-    }.should change {
+    }.to change {
       subject.user_environment_associations.last.role }.to(Role[:environment_admin])
   end
 
@@ -275,7 +275,7 @@ describe Environment do
         it "should only destroy itself" do
           expect {
             subject.audit_billable_and_destroy
-          }.should_not raise_error
+          }.to_not raise_error
         end
       end
     end

@@ -27,7 +27,7 @@ describe PackagePlan do
 
       expect {
         @invoice = subject.create_invoice()
-      }.should change(subject.invoices, :count).to(1)
+      }.to change(subject.invoices, :count).to(1)
 
       @invoice.amount.round(8).should == expected_amount.round(8)
       @invoice.period_end.should == Date.today.advance(:days => 30)
@@ -71,7 +71,7 @@ describe PackagePlan do
        it "should create one invoice" do
          expect {
            subject.create_invoice_and_setup
-         }.should change(Invoice, :count).by(1)
+         }.to change(Invoice, :count).by(1)
        end
 
        it "sends the pending invoice e-mail correctly" do
@@ -79,7 +79,7 @@ describe PackagePlan do
 
          expect {
            invoice = subject.create_invoice_and_setup
-         }.should change(UserNotifier.deliveries, :size).by(1)
+         }.to change(UserNotifier.deliveries, :size).by(1)
 
         mail = UserNotifier.deliveries.last
         mail.should_not be_nil

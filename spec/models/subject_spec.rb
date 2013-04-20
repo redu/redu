@@ -45,14 +45,14 @@ describe Subject do
     it "does NOT create an Enrollment between the Subject and the owner when update it" do
       expect {
         subject.save # Other updates
-      }.should_not change(subject.enrollments.reload, :count)
+      }.to_not change(subject.enrollments.reload, :count)
     end
 
     it "does NOT create an Enrollment between the subject and the owner after create, if the owner is a Redu admin" do
       redu_admin = Factory(:user, :role => Role[:admin])
       expect {
         Factory(:subject, :owner => redu_admin, :space => @space)
-      }.should_not change(Enrollment, :count)
+      }.to_not change(Enrollment, :count)
     end
 
   end
@@ -132,7 +132,7 @@ describe Subject do
     it "enrolls an user" do
       expect {
         subject.enroll(@enrolled_user)
-      }.should change(subject.enrollments, :count).by(1)
+      }.to change(subject.enrollments, :count).by(1)
     end
 
     it "enrolls an user with a given role" do
@@ -146,7 +146,7 @@ describe Subject do
 
       expect {
         subject.unenroll(@enrolled_user)
-      }.should change(subject.enrollments, :count).by(-1)
+      }.to change(subject.enrollments, :count).by(-1)
     end
 
     it "verifies if an user is enrolled" do
@@ -164,7 +164,7 @@ describe Subject do
       it 'creates the enrollments' do
         expect {
           Subject.enroll(@enrolled_user, subjects)
-        }.should change(Enrollment, :count).by(subjects.length)
+        }.to change(Enrollment, :count).by(subjects.length)
       end
 
       it 'returns the created enrollments' do
@@ -236,6 +236,6 @@ describe Subject do
 
     expect {
       Subject.destroy_subjects_unfinalized
-    }.should change(Subject, :count).by(-3)
+    }.to change(Subject, :count).by(-3)
   end
 end

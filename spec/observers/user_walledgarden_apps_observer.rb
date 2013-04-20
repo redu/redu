@@ -8,7 +8,7 @@ describe UserWalledgardenAppsObserver do
 
     it "creates an OAuth2Token for the user" do
       with_observers do
-        expect { Factory(:user) }.should change(Oauth2Token, :count).by(1)
+        expect { Factory(:user) }.to change(Oauth2Token, :count).by(1)
       end
     end
 

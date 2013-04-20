@@ -223,7 +223,7 @@ describe PresenceController do
     it "creates a ChatMessage" do
       expect {
         post :send_chat_message, @post_params
-      }.should change(ChatMessage, :count).by(1)
+      }.to change(ChatMessage, :count).by(1)
       message = ChatMessage.last
       message.user.should == @user
       message.contact.id.should == @post_params[:contact_id]

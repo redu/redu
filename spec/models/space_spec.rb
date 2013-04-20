@@ -45,7 +45,7 @@ describe Space do
     it "creates a root folder" do
       expect {
         space = Factory(:space)
-      }.should change(Folder, :count).by(1)
+      }.to change(Folder, :count).by(1)
     end
 
     it "creates a space association with all users of course's spaces" do
@@ -217,7 +217,7 @@ describe Space do
     expect {
       # have to play the bootstrap:roles for the test environment
       subject.change_role(user, Role[:teacher])
-    }.should change {
+    }.to change {
       subject.user_space_associations.last.role }.to(Role[:teacher])
 
   end

@@ -45,13 +45,13 @@ describe PackageInvoice do
     it "should refresh correctly" do
       expect {
         PackageInvoice.refresh_states!
-      }.should change { PackageInvoice.overdue.count }.to(2)
+      }.to change { PackageInvoice.overdue.count }.to(2)
     end
 
     it "should block the plan when overdue" do
       expect {
         PackageInvoice.refresh_states!
-      }.should change { Plan.blocked.count }.from(0).to(2)
+      }.to change { Plan.blocked.count }.from(0).to(2)
     end
 
     it "should not raise error if a plan is already blocked" do
@@ -62,7 +62,7 @@ describe PackageInvoice do
 
       expect {
         PackageInvoice.refresh_states!
-      }.should_not raise_error(AASM::InvalidTransition)
+      }.to_not raise_error(AASM::InvalidTransition)
     end
 
     it "should generate next invoice" do
@@ -133,13 +133,13 @@ describe PackageInvoice do
       expect {
         subject.pend!
         subject.close!
-      }.should change(subject, :state).to("closed")
+      }.to change(subject, :state).to("closed")
     end
 
     it "pends" do
       expect {
         subject.pend!
-      }.should change(subject, :state).to("pending")
+      }.to change(subject, :state).to("pending")
     end
 
     context "when it pays" do
@@ -155,7 +155,7 @@ describe PackageInvoice do
       it "changes current state" do
         expect {
           subject.pay!
-        }.should change(subject, :state).to("paid")
+        }.to change(subject, :state).to("paid")
 
         subject.due_at.should  be_within(5).of(Time.now)
       end
@@ -163,7 +163,7 @@ describe PackageInvoice do
       it "unblocks the plan" do
         expect {
           subject.pay!
-        }.should change { subject.plan.aasm_current_state }.from(:blocked).to(:active)
+        }.to change { subject.plan.aasm_current_state }.from(:blocked).to(:active)
       end
 
       it "sends confirmation e-mail" do
@@ -194,7 +194,7 @@ describe PackageInvoice do
     it "overdues" do
       expect {
         subject.overdue!
-      }.should change(subject, :state).to("overdue")
+      }.to change(subject, :state).to("overdue")
     end
 
     context "when overdue" do
@@ -208,7 +208,7 @@ describe PackageInvoice do
       it "stays on same stage if overdue again" do
         expect {
           subject.overdue!
-        }.should_not change(subject, :state)
+        }.to_not change(subject, :state)
       end
 
       it "sends overdue e-mail" do
