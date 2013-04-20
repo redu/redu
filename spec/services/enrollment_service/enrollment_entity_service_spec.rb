@@ -54,6 +54,12 @@ module EnrollmentService
       end
       let(:users) { enrollments.map(&:user) }
 
+      it "should accept a single user as argument" do
+        expect {
+          subject.destroy(users.first)
+        }.to_not raise_error
+      end
+
       it "should remove the correct quantity of enrollments" do
         expect {
           subject.destroy(users)

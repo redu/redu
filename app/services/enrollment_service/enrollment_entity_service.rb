@@ -30,8 +30,8 @@ module EnrollmentService
     #
     # Atenção: Não invoca callbacks (nem remove associações :dependent).
     def destroy(users)
-      users_ids = users.map(&:id)
-      enrollments = Enrollment.where(:subject_id => subjects.map(&:id))
+      users_ids = users.respond_to?(:map) ? users.map(&:id) : [users.id]
+      enrollments = Enrollment.where(:subject_id => subjects)
 
       enrollments_ids = enrollments.flatten.map do |e|
         e.id if users_ids.include? e.user_id
