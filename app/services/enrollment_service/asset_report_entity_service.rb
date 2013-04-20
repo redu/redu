@@ -25,10 +25,16 @@ module EnrollmentService
 
     def values_from_enrollments(enrollments)
       pairs = enrollment_id_and_subject_id_pairs(enrollments)
-      lecture_ids = lectures.map(&:id)
+      lecture_id_and_subject_id_pairs = lectures.map { |l| [l.id, l.subject_id] }
 
+      # Cria os pares de acordo com a verificação de que a Lecture
+      # pertence ao Subject
       pairs.reduce([]) do |memo, (enrollment_id, subject_id)|
-        lecture_ids.each { |id| memo << [subject_id, id, enrollment_id] }
+        lecture_id_and_subject_id_pairs.each do |l_id, l_subject_id|
+          if l_subject_id == subject_id
+            memo << [subject_id, l_id, enrollment_id]
+          end
+        end
         memo
       end
     end

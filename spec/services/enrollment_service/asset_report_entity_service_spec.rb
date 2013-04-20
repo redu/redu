@@ -3,13 +3,15 @@ require 'spec_helper'
 module EnrollmentService
   describe AssetReportEntityService do
     subject { AssetReportEntityService.new(:lecture => lectures) }
-    let(:subj) { Factory(:subject, :space => nil) }
-    let(:lectures) do
-      3.times.collect { Factory(:lecture, :subject => subj, :owner => subj.owner) }
+    let(:subjects) { 2.times.map { Factory(:subject, :space => nil) } }
+    let!(:lectures) do
+      subjects.map do |subj|
+        3.times.map { Factory(:lecture, :subject => subj, :owner => subj.owner) }
+      end.flatten
     end
 
     before do
-      EnrollmentEntityService.new(:subject => subj).
+      EnrollmentEntityService.new(:subject => subjects).
         create(3.times.collect { [Factory(:user), Role[:member]] })
     end
 
@@ -21,22 +23,30 @@ module EnrollmentService
       let(:columns) { [:subject_id, :lecture_id, :enrollment_id] }
       it "should delegate to the importer with correct arguments" do
         values = []
-        subj.enrollments.each do |enrollment|
-          lectures.each { |l| values << [l.subject_id, l.id, enrollment.id] }
+        enrollments = subjects.map(&:enrollments).flatten
+
+        enrollments.each do |enrollment|
+          enrollment.subject.lectures.each do |l|
+            values << [l.subject_id, l.id, enrollment.id]
+          end
         end
 
         subject.importer.should_receive(:insert).with(values)
         subject.create
       end
 
-      it "should accept an optional list of Enrollments" do
+      it "should accept an optional ARel query that return enrollments" do
         values = []
-        subj.enrollments.each do |enrollment|
-          lectures.each { |l| values << [l.subject_id, l.id, enrollment.id] }
+        enrollments = subjects.map(&:enrollments).flatten
+
+        enrollments.each do |enrollment|
+          enrollment.subject.lectures.each do |l|
+            values << [l.subject_id, l.id, enrollment.id]
+          end
         end
 
         subject.importer.should_receive(:insert).with(values)
-        subject.create(subj.enrollments)
+        subject.create(Enrollment.where(:subject_id => subjects))
       end
 
       it "should update grades"
