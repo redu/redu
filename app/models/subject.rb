@@ -48,18 +48,6 @@ class Subject < ActiveRecord::Base
     end
   end
 
-  def create_enrollment_associations
-    self.space.user_space_associations.find_in_batches do |usas|
-      enrollments = usas.collect do |usa|
-        Enrollment.create(:user_id => usa.user_id, :subject => self,
-                          :role => usa.role)
-      end
-
-      VisClient.notify_delayed("/hierarchy_notifications.json",
-                               "enrollment", enrollments.compact)
-    end
-  end
-
   def graduated?(user)
     self.enrolled?(user) && user.get_association_with(self).graduated?
   end

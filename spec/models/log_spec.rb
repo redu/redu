@@ -183,7 +183,7 @@ describe Log do
         course.join(user)
         sub = Factory(:subject, :owner => user, :space => @space,
                       :visible => true)
-        sub.create_enrollment_associations
+        sub.enroll
         @lecture = Factory(:lecture, :subject => sub,
                          :owner => sub.owner)
         @lecture.subject.finalized = true

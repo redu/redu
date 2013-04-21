@@ -34,7 +34,7 @@ describe Subject do
   context "callbacks" do
 
     it "creates an Enrollment between the Subject and the owner after create" do
-      subject.create_enrollment_associations
+      subject.enroll
       subject.enrollments.first.should_not be_nil
       subject.enrollments.last.user.should == subject.owner
       subject.enrollments.last.role.
@@ -90,7 +90,7 @@ describe Subject do
       users = (1..4).collect { Factory(:user) }
       teachers = (1..4).collect { Factory(:user) }
       users.each { |u| subject.enroll(u) }
-      teachers.each { |u| subject.enroll(u, Role[:teacher]) }
+      teachers.each { |u| subject.enroll(u, :role => Role[:teacher]) }
 
       subject.teachers.should == teachers
     end

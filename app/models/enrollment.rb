@@ -4,11 +4,6 @@ class Enrollment < ActiveRecord::Base
   # Contém informações sobre aulas realizadas, porcentagem do Subject cursado
   # e informações sobre desempenho no Subject.
 
-  # Em alguns casos o enrollment é chamado utilizando o gem activerecord-import
-  # por questões de otimização. Este gem desabilita qualquer tipo de callback
-  # cuidado ao adicionar callbacks a esta entidade.
-  after_create :create_assets_reports
-
   belongs_to :user
   belongs_to :subject
   has_many :asset_reports, :dependent => :destroy
@@ -53,13 +48,4 @@ class Enrollment < ActiveRecord::Base
     return self.grade
   end
 
-  def create_assets_reports
-    assets = subject.lectures.collect do |lecture|
-      AssetReport.new(:enrollment => self, :subject => self.subject,
-                         :lecture => lecture)
-    end
-
-    AssetReport.import(assets, :validate => false,
-                       :on_duplicate_key_update => [:done])
-  end
 end

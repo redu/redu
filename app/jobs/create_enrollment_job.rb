@@ -7,7 +7,7 @@ class CreateEnrollmentJob
 
   def perform
     subject = Subject.find_by_id(@subject_id)
-    subject.create_enrollment_associations if subject
+    subject.enroll if subject
   end
 
 end

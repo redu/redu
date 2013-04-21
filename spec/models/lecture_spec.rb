@@ -11,7 +11,7 @@ describe Lecture do
     course.join(@user)
     @sub = Factory(:subject, :owner => @user, :space => @space,
                    :finalized => true)
-    @sub.create_enrollment_associations
+    @sub.enroll
   end
 
   subject { Factory(:lecture, :subject => @sub,
@@ -89,7 +89,7 @@ describe Lecture do
     end
 
     before do
-      sub.create_enrollment_associations
+      sub.enroll
       AssetReport.stub(:import)
     end
 
@@ -104,10 +104,11 @@ describe Lecture do
 
     context "passing a enrollment as argument" do
       it "should create AssetReport with enrollment passed" do
-        enrollment = sub.enroll(Factory.create(:user))
-        args = { :subject => sub, :enrollment => enrollment, :lecture => subject }
+        enrollments = sub.enroll(Factory.create(:user))
+        args = { :subject => sub, :enrollment => enrollments.first,
+                 :lecture => subject }
         AssetReport.should_receive(:new).with(args)
-        subject.create_asset_report(:enrollments => [enrollment])
+        subject.create_asset_report(:enrollments => enrollments)
       end
     end
 

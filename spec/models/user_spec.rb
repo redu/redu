@@ -810,7 +810,7 @@ describe User do
 
     subject_entity = Factory(:subject, :owner => subject,
                              :space => space, :finalized => true)
-    subject_entity.create_enrollment_associations
+    subject_entity.enroll
     subject.get_association_with(subject_entity).
       should == subject.enrollments.last
 
