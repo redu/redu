@@ -17,10 +17,12 @@ module EnrollmentService
       self.class.enroll([self], options)
     end
 
-    # Desmatricula o usuário
-    def unenroll(user)
-      enrollment = user.get_association_with(self)
-      enrollment.destroy
+    # Desmatricula um ou mais User do Subject.
+    #
+    # Parâmetros:
+    #   - users: Users que serão desmatriculados.
+    def unenroll(users)
+      self.class.unenroll([self], users)
     end
 
     def enrolled?(user)
@@ -57,6 +59,23 @@ module EnrollmentService
         notify_vis_about_enrollment_creation(enrollments)
 
         enrollments
+      end
+
+      # Desmatricula usuários em um ou mais Subjects.
+      #
+      # Parâmetros:
+      #   subjects: Subjects aos quais o usuário será desmatriculado.
+      #   users: Users que serão desmatriculados.
+      def unenroll(subjects, users)
+        lectures = Lecture.where(:subject_id => subjects).select("id")
+        asset_report_service = AssetReportEntityService.new(:lectures => \
+                                                            lectures)
+        enrollments = Enrollment.where(:subject_id => subjects,
+                                       :user_id => users).select("id")
+        asset_report_service.destroy(enrollments)
+
+        enrollment_service = EnrollmentEntityService.new(:subjects => subjects)
+        enrollment_service.destroy(users)
       end
 
       def vis_client=(client)

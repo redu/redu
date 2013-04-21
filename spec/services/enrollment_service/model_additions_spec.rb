@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module EnrollmentService
   describe Subject do
-    subject { Factory(:subject, :space => nil) }
+    subject { Factory(:complete_subject, :space => nil) }
     let(:user) { Factory(:user) }
     let(:vis_client) { mock('VisClient') }
     let(:create_enrollment_service) { mock('EnrollmentEntityService') }
@@ -137,8 +137,115 @@ module EnrollmentService
       end
     end
 
-    it "responds to unenroll" do
-      should respond_to :unenroll
+    context "#unenroll" do
+      context "with one user" do
+        it "should invoke .unenroll with self and user" do
+          Subject.should_receive(:unenroll).with([subject], user)
+          subject.unenroll(user)
+        end
+      end
+
+      context "with multiple users" do
+        let(:users) { FactoryGirl.create_list(:user, 3) }
+
+        it "should invoke .unenroll with self and users" do
+          Subject.should_receive(:unenroll).with([subject], users)
+          subject.unenroll(users)
+        end
+      end
+    end
+
+    context ".unenroll" do
+      it "responds to unenroll" do
+        Subject.should respond_to :unenroll
+      end
+
+      context "with one user and subject" do
+        let(:enrollment) do
+          Factory(:enrollment, :user => user, :subject => subject)
+        end
+
+        it "should instantiate EnrollmentEntityService with subject" do
+          create_enrollment_service.stub(:destroy)
+          mock_enrollment_service(create_enrollment_service)
+
+          EnrollmentEntityService.should_receive(:new).with(:subjects => \
+                                                            subject)
+          Subject.unenroll(subject, user)
+        end
+
+        it "should instantiate AssetReportEntityService with lecture" do
+          asset_report_service.stub(:destroy)
+          mock_asset_report_service(asset_report_service)
+
+          AssetReportEntityService.should_receive(:new).
+            with(:lectures => subject.lectures)
+          Subject.unenroll(subject, user)
+        end
+
+        it "should invoke EnrollmentEntityService with user" do
+          mock_enrollment_service(create_enrollment_service)
+          create_enrollment_service.should_receive(:destroy).with(user)
+          Subject.unenroll(subject, user)
+        end
+
+        it "should invoke AssetReportEntityService with user's enrollment" do
+          mock_asset_report_service(asset_report_service)
+          asset_report_service.should_receive(:destroy).with([enrollment])
+          Subject.unenroll(subject, user)
+        end
+      end
+
+      context "with multiple users and subjects" do
+        let(:users) { FactoryGirl.create_list(:user, 3) }
+        let(:subjects) do
+          FactoryGirl.create_list(:complete_subject, 3, :space => nil)
+        end
+        let(:enrollments) do
+          subjects.map do |subj|
+            users.map do |user|
+              Factory(:enrollment, :user => user, :subject => subj)
+            end.flatten
+          end.flatten
+        end
+
+        it "should instantiate EnrollmentEntityService with subjects" do
+          mock_enrollment_service(create_enrollment_service)
+          create_enrollment_service.stub(:destroy)
+
+          EnrollmentEntityService.should_receive(:new).
+            with(:subjects => subjects)
+          Subject.unenroll(subjects, users)
+        end
+
+        it "should instantiate AssetReportEntityService with lectures" do
+          mock_asset_report_service(asset_report_service)
+          asset_report_service.stub(:destroy)
+
+          lectures = subjects.map(&:lectures).flatten
+          AssetReportEntityService.should_receive(:new).with(:lectures => \
+                                                             lectures)
+          Subject.unenroll(subjects, users)
+        end
+
+        it "should invoke EnrollmentEntityService with users" do
+          mock_enrollment_service(create_enrollment_service)
+          create_enrollment_service.should_receive(:destroy).with(users)
+          Subject.unenroll(subjects, users)
+        end
+
+        it "should invoke AssetReportEntityService with users' enrollments" do
+          mock_asset_report_service(asset_report_service)
+          enrollments_id_only = Enrollment.select("id").
+            find(enrollments.map(&:id))
+
+          asset_report_service.should_receive(:destroy) do |args|
+            args =~ enrollments_id_only
+          end
+
+          Subject.unenroll(subjects, users)
+        end
+      end
     end
 
     it "responds to enrolled?" do
