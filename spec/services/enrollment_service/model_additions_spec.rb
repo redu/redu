@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module EnrollmentService
   describe Subject do
-    subject { Factory(:subject, :space => nil) }
+    let(:subj) { Factory(:subject, :space => nil) }
     let(:user) { Factory(:user) }
     let(:vis_client) { mock('VisClient') }
     let(:create_enrollment_service) { mock('EnrollmentEntityService') }
@@ -13,7 +13,8 @@ module EnrollmentService
       Subject.vis_client = vis_client
     end
 
-    context "#enroll" do
+    context ".enroll" do
+      subject { Subject }
       it "responds to enroll" do
         should respond_to :enroll
       end
@@ -23,28 +24,28 @@ module EnrollmentService
           create_enrollment_service.stub(:create)
 
           EnrollmentEntityService.should_receive(:new).
-            with(:subject => [subject]).and_return(create_enrollment_service)
+            with(:subject => [subj]).and_return(create_enrollment_service)
 
-          subject.enroll(user)
+          subject.enroll(subj, :users => [user])
         end
 
         it "should initalize AssetReportEntityService with the correct arguments" do
-          add_lecture_to(subject)
+          add_lecture_to(subj)
           asset_report_service.stub(:create)
 
           AssetReportEntityService.should_receive(:new).
-            with(:lecture => subject.lectures).and_return(asset_report_service)
+            with(:lecture => subj.lectures).and_return(asset_report_service)
 
-          subject.enroll(user)
+          subject.enroll(subj, :users => [user])
         end
 
-        it "should invoke EnrollmentEntityService" do
+        it "should invoke EnrollmentEntityService#create without role" do
           mock_enrollment_service(create_enrollment_service)
 
           create_enrollment_service.
             should_receive(:create).with([[user, Role[:member].to_s]])
 
-          subject.enroll(user)
+          subject.enroll(subj, :users => [user])
         end
 
         it "should invoke EnrollmentEntityServie#create with the role passed" do
@@ -53,22 +54,24 @@ module EnrollmentService
           create_enrollment_service.
             should_receive(:create).with([[user, Role[:environment_admin].to_s]])
 
-          subject.enroll(user, :role => Role[:environment_admin])
+          subject.
+            enroll([subj], :users => [user], :role => Role[:environment_admin])
         end
 
-        it "should invoke AssetReportEntityService" do
-          add_lecture_to(subject)
+        it "should invoke AssetReportEntityService#create with the enrollments" do
+          add_lecture_to(subj)
           mock_asset_report_service(asset_report_service)
 
           asset_report_service.should_receive(:create) do |args|
             args.first.should be_an_instance_of(Enrollment)
           end
 
-          subject.enroll(user)
+          subject.enroll(subj, :users => [user])
         end
 
         it "should return the enrollment" do
-          subject.enroll(user).should == [user.get_association_with(subject)]
+          subject.enroll(subj, :users => [user]).
+            should == [user.get_association_with(subj)]
         end
       end
 
@@ -81,53 +84,52 @@ module EnrollmentService
           create_enrollment_service.
             should_receive(:create).with(users.map { |u| [u, Role[:member].to_s]})
 
-          subject.enroll(users)
+          subject.enroll(subj, :users => users)
         end
 
         it "should invoke AssetReportEntityService#create with enrollments" do
-          subject.lectures << Factory(:lecture, :owner => subject.owner)
-
+          add_lecture_to(subj)
           mock_asset_report_service(asset_report_service)
 
           asset_report_service.should_receive(:create) do |args|
             args.map(&:user_id).should =~ users.map(&:id)
           end
 
-          subject.enroll(users)
+          subject.enroll(subj, :users => users)
         end
 
         it "should return the enrollments" do
-          subject.enroll(users).
-            should == users.map { |u| u.get_association_with subject }
+          subject.enroll(subj, :users => users).
+            should == users.map { |u| u.get_association_with subj }
         end
       end
 
       context "with no users" do
         let(:space) do
-          Factory(:space, :owner => subject.owner, :course => nil)
+          Factory(:space, :owner => subj.owner, :course => nil)
         end
 
         before do
-          space.user_space_associations << \
-            Factory(:user_space_association, :user => user, :space => space)
-          subject.space = space
-          subject.save
+          Factory(:user_space_association, :user => user, :space => space)
+          subj.space = space
+          subj.save
         end
 
         it "should invoke EnrollmentEntityService#create without arguments" do
           mock_enrollment_service(create_enrollment_service)
           create_enrollment_service.should_receive(:create)
-          subject.enroll
+          subject.enroll(subj)
         end
 
         it "should invoke AssetReportEntityService#create without arguments" do
           mock_asset_report_service(asset_report_service)
           asset_report_service.should_receive(:create)
-          subject.enroll
+          subject.enroll(subj)
         end
 
         it "should return the enrollments" do
-          subject.enroll.should =~ space.users.map { |u| u.get_association_with(subject) }
+          subject.enroll([subj]).
+            should =~ space.users.map { |u| u.get_association_with(subj) }
         end
       end
     end
@@ -262,9 +264,7 @@ module EnrollmentService
     def add_lecture_to(subj)
       subjects = subj.respond_to?(:map) ? subj : [subj]
 
-      subjects.each do |s|
-        Factory(:lecture, :owner => s.owner, :subject => s)
-      end
+      Factory(:lecture, :owner => subj.owner, :subject => subj)
     end
   end
 end

@@ -32,15 +32,17 @@ module EnrollmentService
     module ClassMethods
       # Matricula usuários em um ou mais Subjects
       # Parâmetros:
-      #   subjects: Subjects aos quais o usuário será matriculado. Caso
-      #   esta opção seja utilizada sem a opção :role, os papéis serão
+      #   subjects: Um ou mais Subject aos quais o usuário será matriculado.
+      #   Caso esta opção seja utilizada sem a opção :role, os papéis serão
       #   inferidos a partir do papel do usuário no Space.
       #
       # options:
       #   - role: Papéis dos usuários
       #   - users: Users que serão matriculados. Caso seja omitido os usuários
       #   do Space serão matriculados com o mesmo papél.
-      def enroll(subjects, options = {})
+      def enroll(subject_or_subjects, options = {})
+        subjects = subject_or_subjects.
+          respond_to?(:map) ? subject_or_subjects : [subject_or_subjects]
         role = options[:role] || Role[:member]
         users = options[:users]
 
