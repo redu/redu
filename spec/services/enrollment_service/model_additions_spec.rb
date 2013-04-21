@@ -131,6 +131,50 @@ module EnrollmentService
             should =~ space.users.map { |u| u.get_association_with(subject) }
         end
       end
+
+      context "with multiple subjects and users" do
+        let(:users) { FactoryGirl.create_list(:user, 3) }
+        let(:subjects) { FactoryGirl.create_list(:subject, 3, :space => nil) }
+
+        it "should initialize EnrollmentEntityService with the correct args" do
+          create_enrollment_service.stub(:create)
+          EnrollmentEntityService.should_receive(:new).
+            with(:subject => subjects).and_return(create_enrollment_service)
+
+          Subject.enroll(subjects, :users => users)
+        end
+
+        it "should initialize AssetReportEntityService with the correct args" do
+          add_lecture_to(subjects)
+          asset_report_service.stub(:create)
+          lectures = subjects.map(&:lectures).flatten
+
+          AssetReportEntityService.should_receive(:new).
+            with(:lecture => lectures).and_return(asset_report_service)
+
+          Subject.enroll(subjects, :users => users)
+        end
+
+        it "should invoke EnrollmentEntityService#create users and roles" do
+          mock_enrollment_service(create_enrollment_service)
+          users_and_roles = users.map { |u| [u, Role[:member]] }
+
+          create_enrollment_service.should_receive(:create).with(users_and_roles)
+
+          Subject.enroll(subjects, :users => users)
+        end
+
+        it "should invoke AssetReportEntityService#create with the enrollments" do
+          add_lecture_to(subjects)
+          mock_asset_report_service(asset_report_service)
+
+          asset_report_service.should_receive(:create) do |args|
+            args.map(&:user_id).should =~ users.map(&:id) * subjects.length
+          end
+
+          Subject.enroll(subjects, :users => users)
+        end
+      end
     end
 
     context "#enroll" do
