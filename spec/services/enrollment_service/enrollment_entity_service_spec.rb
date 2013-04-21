@@ -12,19 +12,16 @@ module EnrollmentService
     subject { EnrollmentEntityService.new(:subject => subjects) }
 
     context "#create" do
-      let(:enrollments_attrs) do
+      it "should delegate to insert with correct arguments" do
         columns = []
-        subjects.map do |subj|
+        subjects.each do |subj|
           space = subj.space
           space.user_space_associations.each do |uca|
             columns << [uca.user_id, subj.id, uca.role.to_s]
           end
         end
-        columns
-      end
 
-      it "should delegate to insert with correct arguments" do
-        subject.importer.should_receive(:insert).with(enrollments_attrs)
+        subject.importer.should_receive(:insert).with(columns)
 
         subject.create
       end
