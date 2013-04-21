@@ -70,13 +70,13 @@ module EnrollmentService
       #   users: Users que serão desmatriculados.
       def unenroll(subjects, users)
         lectures = Lecture.where(:subject_id => subjects).select("id")
-        asset_report_service = AssetReportEntityService.new(:lectures => \
+        asset_report_service = AssetReportEntityService.new(:lecture => \
                                                             lectures)
         enrollments = Enrollment.where(:subject_id => subjects,
                                        :user_id => users).select("id")
         asset_report_service.destroy(enrollments)
 
-        enrollment_service = EnrollmentEntityService.new(:subjects => subjects)
+        enrollment_service = EnrollmentEntityService.new(:subject => subjects)
         enrollment_service.destroy(users)
       end
 

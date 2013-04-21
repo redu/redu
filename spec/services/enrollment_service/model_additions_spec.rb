@@ -165,7 +165,7 @@ module EnrollmentService
           create_enrollment_service.stub(:destroy)
           mock_enrollment_service(create_enrollment_service)
 
-          EnrollmentEntityService.should_receive(:new).with(:subjects => \
+          EnrollmentEntityService.should_receive(:new).with(:subject => \
                                                             subject)
           Subject.unenroll(subject, user)
         end
@@ -177,7 +177,7 @@ module EnrollmentService
           mock_asset_report_service(asset_report_service)
 
           AssetReportEntityService.should_receive(:new).
-            with(:lectures => subject.lectures)
+            with(:lecture => subject.lectures)
           Subject.unenroll(subject, user)
         end
 
@@ -212,7 +212,7 @@ module EnrollmentService
           create_enrollment_service.stub(:destroy)
 
           EnrollmentEntityService.should_receive(:new).
-            with(:subjects => subjects)
+            with(:subject => subjects)
           Subject.unenroll(subjects, users)
         end
 
@@ -223,7 +223,7 @@ module EnrollmentService
           asset_report_service.stub(:destroy)
 
           lectures = subjects.map(&:lectures).flatten
-          AssetReportEntityService.should_receive(:new).with(:lectures => \
+          AssetReportEntityService.should_receive(:new).with(:lecture => \
                                                              lectures)
           Subject.unenroll(subjects, users)
         end
