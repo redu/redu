@@ -263,8 +263,7 @@ module EnrollmentService
       subjects = subj.respond_to?(:map) ? subj : [subj]
 
       subjects.each do |s|
-        s.lectures << \
-          Factory(:lecture, :owner => s.owner, :subject => s)
+        Factory(:lecture, :owner => s.owner, :subject => s)
       end
     end
   end
