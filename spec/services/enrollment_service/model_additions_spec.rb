@@ -19,6 +19,25 @@ module EnrollmentService
       end
 
       context "with one user" do
+        it "should initalize EnrollmentEntityService with the correct arguments" do
+          create_enrollment_service.stub(:create)
+
+          EnrollmentEntityService.should_receive(:new).
+            with(:subject => [subject]).and_return(create_enrollment_service)
+
+          subject.enroll(user)
+        end
+
+        it "should initalize AssetReportEntityService with the correct arguments" do
+          add_lecture_to(subject)
+          asset_report_service.stub(:create)
+
+          AssetReportEntityService.should_receive(:new).
+            with(:lecture => subject.lectures).and_return(asset_report_service)
+
+          subject.enroll(user)
+        end
+
         it "should invoke EnrollmentEntityService" do
           mock_enrollment_service(create_enrollment_service)
 
@@ -38,8 +57,7 @@ module EnrollmentService
         end
 
         it "should invoke AssetReportEntityService" do
-          subject.lectures << Factory(:lecture, :owner => subject.owner)
-
+          add_lecture_to(subject)
           mock_asset_report_service(asset_report_service)
 
           asset_report_service.should_receive(:create) do |args|
@@ -51,6 +69,11 @@ module EnrollmentService
 
         it "should return the enrollment" do
           subject.enroll(user).should == [user.get_association_with(subject)]
+        end
+
+        def add_lecture_to(subj)
+          subject.lectures << \
+            Factory(:lecture, :owner => subj.owner, :subject => subj)
         end
       end
 
