@@ -57,7 +57,7 @@ module EnrollmentService
       context "with multiple users" do
         let(:users) { FactoryGirl.create_list(:user, 3) }
 
-        it "should invoke EnrollmentEntityService" do
+        it "should invoke EnrollmentEntityService#create with users and roles" do
           mock_enrollment_service(create_enrollment_service)
 
           create_enrollment_service.
@@ -66,7 +66,7 @@ module EnrollmentService
           subject.enroll(users)
         end
 
-        it "should invoke AssetReportEntityService" do
+        it "should invoke AssetReportEntityService#create with enrollments" do
           subject.lectures << Factory(:lecture, :owner => subject.owner)
 
           mock_asset_report_service(asset_report_service)
@@ -102,7 +102,7 @@ module EnrollmentService
           subject.enroll
         end
 
-        it "should invoke AssetReportEntityService" do
+        it "should invoke AssetReportEntityService#create without arguments" do
           mock_asset_report_service(asset_report_service)
           asset_report_service.should_receive(:create)
           subject.enroll
