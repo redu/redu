@@ -44,7 +44,7 @@ module EnrollmentService
         role = options[:role] || Role[:member]
         users = options[:users]
 
-        enrollments = create_enrollment(subjects, users, :role => role)
+        create_enrollment(subjects, users, :role => role)
         create_asset_report(subjects, users)
 
         # FIXME: fazer create_asset_report e create_enrollment retornarem
