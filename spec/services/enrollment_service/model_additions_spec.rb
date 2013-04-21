@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module EnrollmentService
   describe Subject do
-    subject { Factory(:complete_subject, :space => nil) }
+    subject { Factory(:subject, :space => nil) }
     let(:user) { Factory(:user) }
     let(:vis_client) { mock('VisClient') }
     let(:create_enrollment_service) { mock('EnrollmentEntityService') }
@@ -69,11 +69,6 @@ module EnrollmentService
 
         it "should return the enrollment" do
           subject.enroll(user).should == [user.get_association_with(subject)]
-        end
-
-        def add_lecture_to(subj)
-          subject.lectures << \
-            Factory(:lecture, :owner => subj.owner, :subject => subj)
         end
       end
 
@@ -175,6 +170,8 @@ module EnrollmentService
         end
 
         it "should instantiate AssetReportEntityService with lecture" do
+          add_lecture_to(subject)
+
           asset_report_service.stub(:destroy)
           mock_asset_report_service(asset_report_service)
 
@@ -219,6 +216,8 @@ module EnrollmentService
         end
 
         it "should instantiate AssetReportEntityService with lectures" do
+          add_lecture_to(subjects)
+
           mock_asset_report_service(asset_report_service)
           asset_report_service.stub(:destroy)
 
@@ -258,6 +257,15 @@ module EnrollmentService
 
     def mock_asset_report_service(m)
       AssetReportEntityService.stub(:new).and_return(m)
+    end
+
+    def add_lecture_to(subj)
+      subjects = subj.respond_to?(:map) ? subj : [subj]
+
+      subjects.each do |s|
+        s.lectures << \
+          Factory(:lecture, :owner => s.owner, :subject => s)
+      end
     end
   end
 end
