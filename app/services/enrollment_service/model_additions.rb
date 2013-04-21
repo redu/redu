@@ -9,12 +9,13 @@ module EnrollmentService
     #   - role: papél dos Users. Só é levado em consideração quado o parâmetro
     #   user é passado. Caso seja omitido o papél sera Role[:member]
     def enroll(users=nil, opts = {})
-      options = {
-        :role => Role[:member]
-      }.merge(opts)
-      options[:users] = (users.respond_to?(:map) ? users : [users]) if users
+      options = {}
+      if users
+        options = { :role => Role[:member] }.merge(opts)
+        options[:users] = (users.respond_to?(:map) ? users : [users])
+      end
 
-      self.class.enroll([self], options)
+      self.class.enroll(self, options)
     end
 
     # Desmatricula um ou mais User do Subject.
@@ -116,7 +117,8 @@ module EnrollmentService
       # serão utilizados.
       def create_asset_report(subjects, users=nil)
         subject_ids = pluck_ids(subjects)
-        lectures = Lecture.where(:subject_id => subject_ids).select("id, subject_id")
+        lectures = Lecture.
+          where(:subject_id => subject_ids).select("id, subject_id")
         asset_reports = AssetReportEntityService.new(:lecture => lectures)
 
         if users

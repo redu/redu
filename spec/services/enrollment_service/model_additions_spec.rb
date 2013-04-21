@@ -133,6 +133,34 @@ module EnrollmentService
       end
     end
 
+    context "#enroll" do
+      context "without users" do
+        it "should delegate to .enroll with self" do
+          Subject.should_receive(:enroll).with(subject, {})
+
+          subject.enroll
+        end
+      end
+
+      context "with multiple users" do
+        let(:users) { FactoryGirl.build_list(:user, 3) }
+
+        it "should delegate to .enroll with self and :users" do
+          Subject.should_receive(:enroll).
+            with(subject, :users => users, :role => Role[:member])
+
+          subject.enroll(users)
+        end
+
+        it "should accept the :role" do
+          Subject.should_receive(:enroll).
+            with(subject, :users => users, :role => Role[:environment_admin])
+
+          subject.enroll(users, :role => Role[:environment_admin])
+        end
+      end
+    end
+
     context "#unenroll" do
       context "with one user" do
         it "should invoke .unenroll with self and user" do
