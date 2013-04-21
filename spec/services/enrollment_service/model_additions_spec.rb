@@ -86,11 +86,12 @@ module EnrollmentService
 
       context "with no users" do
         let(:space) do
-          Factory(:space, :owner => subject.owner)
+          Factory(:space, :owner => subject.owner, :course => nil)
         end
 
         before do
-          space.users << user
+          space.user_space_associations << \
+            Factory(:user_space_association, :user => user, :space => space)
           subject.space = space
           subject.save
         end
@@ -107,7 +108,9 @@ module EnrollmentService
           subject.enroll
         end
 
-        it "should return the enrollments"
+        it "should return the enrollments" do
+          subject.enroll.should =~ space.users.map { |u| u.get_association_with(subject) }
+        end
       end
     end
 
