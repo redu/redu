@@ -212,21 +212,7 @@ class Course < ActiveRecord::Base
     enrollments.flatten!
 
     subjects = Subject.where(:space_id => self.spaces)
-    enrollments_service = EnrollmentService::EnrollmentEntityService.
-      new(:subject => subjects)
-    enrollments_service.destroy(user)
-
-    lectures = Lecture.where(:subject_id => subjects)
-    asset_reports_service = EnrollmentService::AssetReportEntityService.new(:lecture => lectures)
-    asset_reports_service.destroy(enrollments)
-
-    enrollments_finalized = enrollments.select { |e| e.graduated? }
-    # Usa VisClient para enviar as requisições
-    VisClient.notify_delayed("/hierarchy_notifications.json",
-                             "remove_enrollment", enrollments.compact)
-    VisClient.notify_delayed("/hierarchy_notifications.json",
-                             "remove_subject_finalized",
-                             enrollments_finalized.compact)
+    Subject.unenroll(subjects, user)
   end
 
 

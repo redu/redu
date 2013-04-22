@@ -481,41 +481,12 @@ describe Course do
       @space_2.users.should_not include(@user)
     end
 
-    it "removes a user from all enrolled subjects" do
-      subject.unjoin @user
-      @sub.members.should_not include(@user)
-      @sub_2.members.should_not include(@user)
-    end
-
-    it "destroys user's asset reports related to the course" do
-      qtt_lectures = @sub.lectures.count + @sub_2.lectures.count
-
-      expect {
-        subject.unjoin @user
-      }.to change(AssetReport, :count).by(-qtt_lectures)
-      @user.enrollments.map(&:asset_reports).flatten.count.should == 0
-    end
-
-    it "should call VisClient.notify_delayed for all enrollments and for finalized enrollments" do
-      enrollments = []
-      enrollments << @user.get_association_with(@sub)
-      enrollment2 = @user.get_association_with(@sub_2)
-      enrollment2.grade = 100
-      enrollment2.graduated = true
-      enrollment2.save
-      enrollments << enrollment2
-
-      VisClient.should_receive(:notify_delayed).
-        with("/hierarchy_notifications.json",
-             "remove_enrollment", enrollments)
-      VisClient.should_receive(:notify_delayed).
-        with("/hierarchy_notifications.json",
-             "remove_subject_finalized", [enrollment2])
+    it "should invoke Subject.unenroll with all subjects" do
+      subjects = [@sub, @sub_2]
+      Subject.should_receive(:unenroll).with(subjects, @user)
 
       subject.unjoin @user
     end
-
-
 
     context "when plan is licensed" do
       it "should set the period end of a license that" do
