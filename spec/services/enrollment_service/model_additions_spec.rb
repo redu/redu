@@ -2,21 +2,18 @@ require 'spec_helper'
 
 module EnrollmentService
   describe Subject do
-    subject { Factory(:subject, :space => nil) }
+    subject { Factory(:subject,:space =>nil) }
     let(:user) { Factory(:user) }
-    let(:vis_client) { mock('VisClient') }
+    let(:vis_adapter) { mock("VisAdapter") }
     let(:create_enrollment_service) { mock('EnrollmentEntityService') }
     let(:asset_report_service) { mock('AssetReportEntityService') }
 
-    before do
-      vis_client.stub(:notify_delayed)
-      Subject.vis_client = vis_client
-    end
-    after do
-      Subject.vis_client = VisClient
-    end
-
     context ".enroll" do
+      before do
+        mock_vis_adapter(vis_adapter)
+        vis_adapter.stub(:notify_enrollment_creation)
+      end
+
       it "responds to enroll" do
         should respond_to :enroll
       end
@@ -209,6 +206,12 @@ module EnrollmentService
     end
 
     context "#unenroll" do
+      before do
+        mock_vis_adapter(vis_adapter)
+        vis_adapter.stub(:notify_enrollment_removal)
+        vis_adapter.stub(:notify_graduated_enrollment_removal)
+      end
+
       context "with one user" do
         it "should invoke .unenroll with self and user" do
           Subject.should_receive(:unenroll).with([subject], user)
@@ -227,6 +230,12 @@ module EnrollmentService
     end
 
     context ".unenroll" do
+      before do
+        mock_vis_adapter(vis_adapter)
+        vis_adapter.stub(:notify_enrollment_removal)
+        vis_adapter.stub(:notify_graduated_enrollment_removal)
+      end
+
       it "responds to unenroll" do
         Subject.should respond_to :unenroll
       end
@@ -272,7 +281,7 @@ module EnrollmentService
       context "with multiple users and subjects" do
         let(:users) { FactoryGirl.create_list(:user, 3) }
         let(:subjects) do
-          FactoryGirl.create_list(:complete_subject, 3, :space => nil)
+          FactoryGirl.create_list(:subject, 3, :space => nil)
         end
         let(:enrollments) do
           subjects.map do |s|
@@ -311,13 +320,62 @@ module EnrollmentService
 
         it "should invoke AssetReportEntityService with users' enrollments" do
           mock_asset_report_service(asset_report_service)
-          enrollments_id_only = Enrollment.select("id").
-            find(enrollments.map(&:id))
+          asset_report_service.should_receive(:destroy).with(enrollments)
+          Subject.unenroll(subjects, users)
+        end
+      end
+    end
 
-          asset_report_service.should_receive(:destroy) do |args|
-            args =~ enrollments_id_only
+    context "VisAdapter notifications" do
+      let(:subjects) do
+        FactoryGirl.create_list(:subject, 3, :space => nil)
+      end
+      let(:users) { FactoryGirl.create_list(:user, 3) }
+
+      before do
+        set_space_to(subjects)
+      end
+
+      context ".enroll" do
+        it "should invoke VisAdapter for created enrollments" do
+          mock_vis_adapter(vis_adapter)
+          vis_adapter.should_receive(:notify_enrollment_creation) do |args|
+            args.first.should be_an_instance_of(Enrollment)
           end
 
+          Subject.enroll(subjects, :users => users)
+        end
+      end
+
+      context ".unenroll" do
+        let(:enrollments) do
+          subjects.map do |s|
+            users.map do |user|
+              Factory(:enrollment, :user => user, :subject => s)
+            end.flatten
+          end.flatten
+        end
+
+        it "should invoke VisAdapter for removed enrollments" do
+          vis_adapter.stub(:notify_graduated_enrollment_removal)
+          mock_vis_adapter(vis_adapter)
+
+          vis_adapter.should_receive(:notify_enrollment_removal).
+            with(enrollments)
+          Subject.unenroll(subjects, users)
+        end
+
+        it "should invoke VisAdapter for removed graduated enrollments" do
+          graduated_enrollments = enrollments[0..2]
+          graduated_enrollments.each do |e|
+            e.update_attribute(:graduated, true)
+          end
+
+          vis_adapter.stub(:notify_enrollment_removal)
+          mock_vis_adapter(vis_adapter)
+
+          vis_adapter.should_receive(:notify_graduated_enrollment_removal).
+            with(graduated_enrollments)
           Subject.unenroll(subjects, users)
         end
       end
@@ -335,11 +393,24 @@ module EnrollmentService
       AssetReportEntityService.stub(:new).and_return(m)
     end
 
+    def mock_vis_adapter(m)
+      VisAdapter.stub(:new).and_return(m)
+    end
+
     def add_lecture_to(subj)
       subjects = subj.respond_to?(:map) ? subj : [subj]
 
       subjects.each do |s|
         Factory(:lecture, :owner => s.owner, :subject => s)
+      end
+    end
+
+    def set_space_to(subj)
+      subjects = subj.respond_to?(:map) ? subj : [subj]
+
+      subjects.each do |s|
+        s.space = Factory(:space)
+        s.save
       end
     end
   end

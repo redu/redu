@@ -59,7 +59,8 @@ module EnrollmentService
           enrollments = Enrollment.where(:subject_id => pluck_ids(subjects))
         end
 
-        notify_vis_about_enrollment_creation(enrollments)
+        vis_adapter = VisAdapter.new
+        vis_adapter.notify_enrollment_creation(enrollments)
 
         enrollments
       end
@@ -73,20 +74,16 @@ module EnrollmentService
         lectures = Lecture.where(:subject_id => subjects).select("id")
         asset_report_service = AssetReportEntityService.new(:lecture => \
                                                             lectures)
-        enrollments = Enrollment.where(:subject_id => subjects,
-                                       :user_id => users).select("id")
+        enrollments = Enrollment.where(:subject_id => subjects, :user_id => users)
         asset_report_service.destroy(enrollments)
+
+        vis_adapter = VisAdapter.new
+        vis_adapter.notify_enrollment_removal(enrollments)
+        graduated_enrollments = enrollments.select { |e| e.graduated? }
+        vis_adapter.notify_graduated_enrollment_removal(graduated_enrollments)
 
         enrollment_service = EnrollmentEntityService.new(:subject => subjects)
         enrollment_service.destroy(users)
-      end
-
-      def vis_client=(client)
-        @@vis_client = client
-      end
-
-      def vis_client
-        @@vis_client ||= VisClient
       end
 
       private
@@ -133,11 +130,6 @@ module EnrollmentService
 
       def pluck_ids(resources)
         resources.map(&:id).uniq
-      end
-
-      def notify_vis_about_enrollment_creation(enrollments)
-        url = "/hierarchy_notifications.json"
-        vis_client.notify_delayed(url, "enrollment", enrollments)
       end
     end
   end
