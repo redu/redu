@@ -9,7 +9,8 @@ module EnrollmentService
     end
 
     def insert(values, opts={})
-      klass.import(columns, values, default_options.merge(opts))
+      choosed_columns = opts.delete(:columns) || columns
+      klass.import(choosed_columns, values, default_options.merge(opts))
 
       values
     end

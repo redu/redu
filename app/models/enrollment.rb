@@ -30,22 +30,4 @@ class Enrollment < ActiveRecord::Base
         "OR users.login LIKE :keyword", {:keyword => "%#{keyword.to_s}%"})
     end
   }
-
-  # Atualiza a porcentagem de cumprimento do módulo.
-  def update_grade!
-    total = self.asset_reports.size
-    done = self.asset_reports.select { |asset| asset.done? }.size
-
-    if total == done
-      self.grade = 100
-      self.graduated = true
-    else
-      self.grade = (( done.to_f * 100 ) / total)
-      self.graduated = false
-    end
-    self.save
-
-    return self.grade
-  end
-
 end

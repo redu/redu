@@ -1,6 +1,6 @@
 module EnrollmentService
   class EnrollmentEntityService
-    attr_reader :subjects
+    attr_reader :subjects, :enrollments
 
     # Parâmetros:
     #   - :subject Subject ou coleção de Subjects para os quais os Enrollments
@@ -8,6 +8,9 @@ module EnrollmentService
     def initialize(opts={})
       @subjects = opts.delete(:subject)
       @subjects = @subjects.respond_to?(:map) ? @subjects : [@subjects]
+
+      @enrollments = opts.delete(:enrollment)
+      @enrollments = @enrollments.respond_to?(:map) ? @enrollments : [@enrollments]
     end
 
     # Matricula usuários no Subject.
@@ -38,6 +41,22 @@ module EnrollmentService
       end.compact
 
       Enrollment.delete_all(["id IN (?)", enrollments_ids])
+    end
+
+    # Atualiza grade dos Enrollments passados na inicialização.
+    def update_grade!
+      asset_reports = AssetReport.where(:enrollment_id => enrollments)
+
+      grader = GradeCalculator.new(asset_reports)
+      values = grader.calculate_grade
+
+      opts = {
+        :on_duplicate_key_update => [:grade, :graduated],
+        :columns => [:id, :grade, :graduated]
+      }
+      importer.insert(values, opts)
+
+      enrollments
     end
 
     protected
