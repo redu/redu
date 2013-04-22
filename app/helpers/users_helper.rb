@@ -96,6 +96,6 @@ module UsersHelper
 
   # Retorna os títulos das funções das experiências profissionais de um usuário separados por vírgula.
   def current_experiences(user)
-    user.experiences.actual_jobs.map{ |exp| exp.title.strip }.join(", ")
+    Experience.current_jobs(user.experiences).map{ |exp| exp.title.strip }.join(", ")
   end
 end
