@@ -1,5 +1,5 @@
 class Subject < ActiveRecord::Base
-  include EnrollmentService::ModelAdditions
+  include EnrollmentService::SubjectAdditions::ModelAdditions
 
   belongs_to :space
   belongs_to :owner, :class_name => "User", :foreign_key => :user_id
