@@ -47,7 +47,7 @@ describe Authentication do
       it "creates UserCourseAssociation" do
         expect {
           Authentication.handle_invitation_token(@state, user)
-        }.should change(UserCourseAssociation, :count).by(1)
+        }.to change(UserCourseAssociation, :count).by(1)
       end
     end # context "when state is a course invitation token"
 

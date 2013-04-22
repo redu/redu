@@ -93,7 +93,7 @@ describe UserCourseInvitation do
         subject.user = Factory(:user)
         expect {
           subject.accept!
-        }.should change(UserCourseAssociation, :count).by(1)
+        }.to change(UserCourseAssociation, :count).by(1)
         assoc = UserCourseAssociation.last
         assoc.course.should == subject.course
         assoc.user.should == subject.user
@@ -104,7 +104,7 @@ describe UserCourseInvitation do
         subject.user = Factory(:user)
         expect {
           subject.accept!
-        }.should change(UserCourseInvitation, :count).by(-1)
+        }.to change(UserCourseInvitation, :count).by(-1)
       end
     end
   end

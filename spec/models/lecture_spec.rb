@@ -414,13 +414,13 @@ describe Lecture do
       it "saves a lecture" do
         expect {
           @lecture.save
-        }.should change(Lecture, :count).by(1)
+        }.to change(Lecture, :count).by(1)
       end
 
       it "saves a lectureable (Page)" do
         expect {
           @lecture.save
-        }.should change(Page, :count).by(1)
+        }.to change(Page, :count).by(1)
       end
     end
 
@@ -443,13 +443,13 @@ describe Lecture do
       it "does NOT save a lecture" do
         expect {
           @lecture.save
-        }.should_not change(Lecture, :count)
+        }.to_not change(Lecture, :count)
       end
 
       it "does NOT save a lectureable (Page)" do
         expect {
           @lecture.save
-        }.should_not change(Page, :count)
+        }.to_not change(Page, :count)
       end
     end
 
@@ -486,7 +486,7 @@ describe Lecture do
             lecture.owner = @sub.owner
             lecture.subject = @sub
             end
-          }.should change(Exercise, :count).by(1)
+          }.to change(Exercise, :count).by(1)
         end
 
         it "should return nil when there is not a _type" do

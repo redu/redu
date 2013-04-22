@@ -29,7 +29,7 @@ describe StatusesController do
         expect {
           request.env["HTTP_REFERER"] = user_url(@statusable)
           post :create, @params
-        }.should change(Status, :count).by(1)
+        }.to change(Status, :count).by(1)
       end
 
       context "without proper authorization" do
@@ -43,7 +43,7 @@ describe StatusesController do
           expect {
             request.env["HTTP_REFERER"] = user_url(@statusable)
             post :create, @params
-          }.should_not change(Activity, :count)
+          }.to_not change(Activity, :count)
         end
       end
 
@@ -75,7 +75,7 @@ describe StatusesController do
             request.env["HTTP_REFERER"] = user_url(@statusable)
             expect {
               post :create, @params
-            }.should_not change(Activity, :count)
+            }.to_not change(Activity, :count)
           end
         end
       end
@@ -100,7 +100,7 @@ describe StatusesController do
           request.env["HTTP_REFERER"] = \
             space_subject_lecture_url(@space, @subject, @statusable)
           post :create, @params
-        }.should change(Help, :count).by(1)
+        }.to change(Help, :count).by(1)
       end
     end
   end
@@ -122,7 +122,7 @@ describe StatusesController do
         expect {
           request.env["HTTP_REFERER"] = user_url(@statusable)
           post :respond, @params
-        }.should change(subject.answers, :count).by(1)
+        }.to change(subject.answers, :count).by(1)
 
       end
     end
@@ -151,7 +151,7 @@ describe StatusesController do
           request.env["HTTP_REFERER"] = \
             space_subject_lecture_url(@space, @subject, @lecture)
           post :respond, @params
-        }.should change(@help.answers, :count).by(1)
+        }.to change(@help.answers, :count).by(1)
       end
     end
   end
@@ -167,7 +167,7 @@ describe StatusesController do
       it "destroys successfully" do
         expect {
           delete :destroy, @params
-        }.should change(Activity, :count).by(-1)
+        }.to change(Activity, :count).by(-1)
       end
 
       context "that has an associated resource" do
@@ -180,13 +180,13 @@ describe StatusesController do
         it "should destroys the status successfully" do
           expect {
             delete :destroy, @params
-          }.should change(Status, :count).by(-1)
+          }.to change(Status, :count).by(-1)
         end
 
         it "should destroys the status resource successfully" do
           expect {
             delete :destroy, @params
-          }.should change(StatusResource, :count).by(-1)
+          }.to change(StatusResource, :count).by(-1)
         end
       end
     end

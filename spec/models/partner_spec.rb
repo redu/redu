@@ -45,13 +45,13 @@ describe Partner do
       it "doesnt change anything on partner admins" do
         expect {
           subject.add_collaborator(@collaborator)
-        }.should_not change { subject.users }
+        }.to_not change { subject.users }
       end
 
       it "doesnt change anything on environment admins" do
         expect {
           subject.add_collaborator(@collaborator)
-        }.should_not change {
+        }.to_not change {
           subject.environments.collect { |e| e.administrators }
         }
       end
@@ -59,7 +59,7 @@ describe Partner do
       it "doesnt change anything on course admins" do
         expect {
           subject.add_collaborator(@collaborator)
-        }.should_not change {
+        }.to_not change {
           environments = subject.environments
           environments.collect { |e| e.courses }.flatten.collect { |c| c.administrators }
         }
@@ -131,19 +131,19 @@ describe Partner do
     it "creates three UserEnvironmentAssociation" do
       expect{
         subject.join_hierarchy(@collaborator, Role[:environment_admin])
-      }.should change(UserEnvironmentAssociation, :count).by(3)
+      }.to change(UserEnvironmentAssociation, :count).by(3)
     end
 
     it "creates three UserCourseAssociation" do
       expect{
         subject.join_hierarchy(@collaborator, Role[:environment_admin])
-      }.should change(UserCourseAssociation, :count).by(3)
+      }.to change(UserCourseAssociation, :count).by(3)
     end
 
     it "creates one license for each course" do
       expect{
         subject.join_hierarchy(@collaborator, Role[:environment_admin])
-      }.should change(License, :count).by(3)
+      }.to change(License, :count).by(3)
     end
 
     context "when trying to join again" do
@@ -154,19 +154,19 @@ describe Partner do
       it "creates three UserEnvironmentAssociation" do
         expect{
           subject.join_hierarchy(@collaborator, Role[:environment_admin])
-        }.should_not change(UserEnvironmentAssociation, :count)
+        }.to_not change(UserEnvironmentAssociation, :count)
       end
 
       it "creates three UserCourseAssociation" do
         expect{
           subject.join_hierarchy(@collaborator, Role[:environment_admin])
-        }.should_not change(UserCourseAssociation, :count)
+        }.to_not change(UserCourseAssociation, :count)
       end
 
       it "creates one license for each course" do
         expect{
           subject.join_hierarchy(@collaborator, Role[:environment_admin])
-        }.should_not change(License, :count)
+        }.to_not change(License, :count)
       end
     end
   end

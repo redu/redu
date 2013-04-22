@@ -27,7 +27,7 @@ describe SessionsController do
           it "invites the loged user to the course identified by the token invitation" do
             expect {
               post :create, @post_params
-            }.should change(UserCourseAssociation, :count).by(1)
+            }.to change(UserCourseAssociation, :count).by(1)
           end
 
           it "should redirect to home_user_path" do
@@ -49,7 +49,7 @@ describe SessionsController do
           it "invites the loged user to the course identified by the token invitation" do
             expect {
               post :create, @post_params
-            }.should change(UserCourseAssociation, :count).by(1)
+            }.to change(UserCourseAssociation, :count).by(1)
           end
 
           it "should redirect to home_user_path" do

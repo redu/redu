@@ -6,7 +6,7 @@ describe ExperienceObserver do
       ActiveRecord::Observer.with_observers(:experience_observer) do
         expect {
           Factory(:experience)
-        }.should change(Log, :count).by(1)
+        }.to change(Log, :count).by(1)
       end
     end
   end

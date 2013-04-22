@@ -216,28 +216,31 @@ class UserNotifier < BaseMailer
   end
 
   # Enviado para o usuário requisitado numa requisição de conexão
+  #
+  # friend = User que está recebendo o convite
+  # user = User que está enviando o convite
   def friendship_requested(user, friend)
     @user, @friend = user, friend
-    uca = @friend.user_course_associations.approved
+    uca = @user.user_course_associations.approved
 
-    @contacts = { :total => @friend.friends.count,
-                  :in_common => user.friends_in_common_with(@friend).count }
-    @courses = { :total => @friend.courses.count,
+    @contacts = { :total => @user.friends.count,
+                  :in_common => @user.friends_in_common_with(@friend).count }
+    @courses = { :total => @user.courses.count,
                  :environment_admin => uca.with_roles([:environment_admin]).count,
                  :tutor => uca.with_roles([:tutor]).count,
                  :teacher => uca.with_roles([:teacher]).count }
 
-    mail(:subject => "#{friend.display_name} quer se conectar",
-         :to => @user.email) do |format|
+    mail(:subject => "#{user.display_name} quer se conectar",
+         :to => @friend.email) do |format|
       format.html
      end
   end
 
   # Email de ativação de conta
-  def user_signedup(user)
-    @user = user
+  def user_signedup(user_id)
+    @user = User.find(user_id)
 
-    mail(:to => user.email,
+    mail(:to => @user.email,
          :subject => "Ative sua conta") do |format|
       format.html
      end

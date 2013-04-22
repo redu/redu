@@ -18,7 +18,7 @@
     <%= lazy_load(:canvas, :jammit => true, :clear => false) do %>
       $(document).ready(function(){
         var canvas = new Canvas({
-          remote : "<%= "#{@canvas.current_url}?redu_space_id=#{@space.id}&redu_container=space&redu_user_id=#{current_user.id}".html_safe %>"
+        remote : "<%= @canvas_url.html_safe %>"
         });
       });
     <% end %>

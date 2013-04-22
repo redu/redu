@@ -85,7 +85,7 @@ describe LicensedPlan do
     it "should create an invoice" do
       expect {
         @plan.create_invoice_and_setup
-      }.should change(Invoice, :count).by(1)
+      }.to change(Invoice, :count).by(1)
     end
   end
 
@@ -104,7 +104,7 @@ describe LicensedPlan do
       it "should create licenses for all course users" do
         expect {
           subject.setup_for_migration
-        }.should change(License, :count).
+        }.to change(License, :count).
           by(subject.billable.approved_users.count)
       end
 
@@ -135,7 +135,7 @@ describe LicensedPlan do
         users = subject.billable.courses.collect(&:approved_users)
         expect {
           subject.setup_for_migration
-        }.should change(License, :count).by(users.flatten.size)
+        }.to change(License, :count).by(users.flatten.size)
       end
 
       it "should create license with correct infos" do

@@ -16,7 +16,7 @@ describe LogObserver do
      ActiveRecord::Observer.with_observers(:log_observer) do
        expect {
          Factory(:log, :logeable => @uca)
-       }.should change(CompoundLog, :count).by(1)
+       }.to change(CompoundLog, :count).by(1)
      end
    end
 
@@ -24,7 +24,7 @@ describe LogObserver do
      ActiveRecord::Observer.with_observers(:log_observer) do
        expect {
          Factory(:log, :logeable => @friendship)
-       }.should change(CompoundLog, :count).by(1)
+       }.to change(CompoundLog, :count).by(1)
      end
    end
   end

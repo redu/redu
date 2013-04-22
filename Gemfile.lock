@@ -116,9 +116,9 @@ GIT
 
 GIT
   remote: git@github.com:jessicabarbalho/has_friends.git
-  revision: 9bcf3a91166b5e3c8c05cb8fc1aa5c6b7e231f42
+  revision: bcb9026a9110732ea9d6e4de568cbb2d1e283d8f
   specs:
-    has_friends (0.0.2)
+    has_friends (0.0.3)
 
 GIT
   remote: git@github.com:redu/invitable.git
@@ -209,6 +209,7 @@ GEM
     css_parser (1.2.5)
       addressable
     daemons (1.0.10)
+    dalli (2.6.2)
     date_validator (0.6.1)
       activemodel (~> 3.0.0)
     deep_cloneable (1.2.3)
@@ -472,6 +473,7 @@ DEPENDENCIES
   classy_enum
   compass-rails
   daemons (= 1.0.10)
+  dalli
   date_validator
   deep_cloneable
   delayed_job_mongoid

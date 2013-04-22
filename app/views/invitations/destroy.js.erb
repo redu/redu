@@ -1,0 +1,22 @@
+<%# Remove convite da página de Convidar Amigos. %>
+var $removedInvitation = $("#invitation-<%= @invitation.id %>");
+$removedInvitation.slideUp(150, "swing", function() {
+  $removedInvitation.remove();
+
+  var remainingInvitations = $(".sent-invitations-list").children().length;
+  <%# Atualiza o contador. %>
+  if (remainingInvitations > 0) {
+    var $sentInvitationsCounter = $(".sent-invitations-counter");
+    $sentInvitationsCounter.text(remainingInvitations);
+
+  <%# Mostra mensagem de nenhum convite. %>
+  } else {
+    var $sentInvitationsArea = $(".sent-invitations-section");
+    var $emptyInvitations = $('<%= escape_javascript render :partial => "friendships/empty_invitations" %>');
+    $sentInvitationsArea.html($emptyInvitations);
+  }
+
+  var $systemMessage = $('<%= escape_javascript render :partial => "shared/system_message", :locals => { :message => "O convite para <strong>#{@invitation.email}</strong> foi removido com sucesso.", :type => "success" } %>');
+  $("body").append($systemMessage);
+  $systemMessage.delay(3000).fadeOut(1000, "linear");
+});

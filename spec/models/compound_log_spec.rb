@@ -24,7 +24,7 @@ describe CompoundLog do
     it "should not delete compounded logs" do
       expect {
         subject.destroy
-      }.should change(Log, :count).by(0)
+      }.to change(Log, :count).by(0)
     end
 
     it "should change compounded log's compound property to false" do
@@ -73,7 +73,7 @@ describe CompoundLog do
             expect {
                 @robert.be_friends_with(@ned)
                 @ned.be_friends_with(@robert)
-            }.should change(CompoundLog, :count).by(2)
+            }.to change(CompoundLog, :count).by(2)
             # Um compound para cada statusable(user)
           end
         end
@@ -100,7 +100,7 @@ describe CompoundLog do
               @robert.be_friends_with(@cercei)
               @cercei.be_friends_with(@robert)
               @robert_compound.reload
-            }.should change(@robert_compound.logs, :count).from(1).to(2)
+            }.to change(@robert_compound.logs, :count).from(1).to(2)
           end
         end
 
@@ -118,7 +118,7 @@ describe CompoundLog do
               expect {
                 @robert.be_friends_with(@cercei)
                 @cercei.be_friends_with(@robert)
-              }.should change(CompoundLog, :count).by(2)
+              }.to change(CompoundLog, :count).by(2)
             end
           end
         end # context "but it's ttl has expired"
@@ -179,7 +179,7 @@ describe CompoundLog do
                                                 :status_observer) do
             expect {
               @course.join(@pycelle)
-            }.should change(CompoundLog, :count).by(1)
+            }.to change(CompoundLog, :count).by(1)
           end
         end
 
@@ -215,7 +215,7 @@ describe CompoundLog do
             expect {
                 @course.join(jaime)
                 @course_compound.reload
-            }.should change(@course_compound.logs, :count).from(1).to(2)
+            }.to change(@course_compound.logs, :count).from(1).to(2)
           end
         end
 
@@ -238,7 +238,7 @@ describe CompoundLog do
                                                   :status_observer) do
               expect {
                 @course.join(varys)
-              }.should change(CompoundLog, :count).by(1)
+              }.to change(CompoundLog, :count).by(1)
             end
               CompoundLog.where(:statusable_id => @course.id).count.should == 2
           end

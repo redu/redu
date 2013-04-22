@@ -83,10 +83,10 @@ describe SubjectsController do
       end
 
       it "creates a record with the current user as owner" do
-        lambda {
+        expect {
           post :create, :locale => "pt-BR", :subject => @post_params,
           :space_id => @space.id
-        }.should change(Subject, :count).by(1)
+        }.to change(Subject, :count).by(1)
         Subject.all.last.owner.should == @user
       end
 
@@ -106,10 +106,10 @@ describe SubjectsController do
       end
 
       it "does NOT create a record" do
-        lambda {
+        expect {
           post :create, :locale => "pt-BR", :format => "js",
           :subject => @post_params, :space_id => @space.id
-        }.should_not change(Subject, :count)
+        }.to_not change(Subject, :count)
       end
 
       it "assigns the subject" do
@@ -142,11 +142,11 @@ describe SubjectsController do
 
     context "when successful" do
       it "updates the record" do
-        lambda {
+        expect {
           put :update, :locale => "pt-BR", :id => @subject.id,
           :space_id => @space.id,
           :subject => { :name => "Módulo"}
-        }.should change{ @subject.reload.name }.to("Módulo")
+        }.to change{ @subject.reload.name }.to("Módulo")
       end
 
       it "assigns the subject" do
@@ -160,11 +160,11 @@ describe SubjectsController do
 
     context "when failing" do
       it "does NOT update the record" do
-        lambda {
+        expect {
           put :update, :locale => "pt-BR", :id => @subject.id,
           :space_id => @space.id,
           :subject => { :name => "" }
-        }.should_not change{ @subject.reload.description }
+        }.to_not change{ @subject.reload.description }
       end
 
       it "assigns the subject" do

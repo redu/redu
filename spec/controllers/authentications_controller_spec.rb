@@ -143,7 +143,7 @@ describe AuthenticationsController do
         it "invites the loged user to the course identified by the token invitation" do
           expect {
             get :create, :locale => 'pt-BR', :state => @state
-          }.should change(UserCourseAssociation, :count).by(1)
+          }.to change(UserCourseAssociation, :count).by(1)
         end
       end
 

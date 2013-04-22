@@ -11,6 +11,8 @@ module InstantSearch
       super
     end
 
-    items :class => ActiveRecord::Base, :extend => InstantSearch::PolymorphicExtender
+    items :class => ActiveRecord::Base, :extend => Proc.new { |model|
+      InstantSearch.const_get(model.class.to_s + "Representer")
+    }
   end
 end
