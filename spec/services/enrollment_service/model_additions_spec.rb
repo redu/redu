@@ -12,6 +12,9 @@ module EnrollmentService
       vis_client.stub(:notify_delayed)
       Subject.vis_client = vis_client
     end
+    after do
+      Subject.vis_client = VisClient
+    end
 
     context ".enroll" do
       it "responds to enroll" do
