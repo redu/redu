@@ -253,9 +253,6 @@ class Course < ActiveRecord::Base
 
     subjects = self.spaces.includes(:subjects).collect(&:subjects).flatten
     enrollments = Subject.enroll(subjects, :users => [user], :role => role)
-
-    # Associa o delayed_job para a criação dos enrollments em visualização
-    VisClient.notify_delayed("/hierarchy_notifications.json", "enrollment", enrollments.compact)
   end
 
   # Verifica se o usuário em questão está esperando aprovação num determinado
