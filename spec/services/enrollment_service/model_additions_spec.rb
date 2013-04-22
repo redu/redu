@@ -265,13 +265,14 @@ module EnrollmentService
           Subject.unenroll(subject, user)
         end
 
-        it "should invoke EnrollmentEntityService with user" do
+        it "should invoke EnrollmentEntityService#destroy with user" do
           mock_enrollment_service(create_enrollment_service)
           create_enrollment_service.should_receive(:destroy).with(user)
           Subject.unenroll(subject, user)
         end
 
-        it "should invoke AssetReportEntityService with user's enrollment" do
+        it "should invoke AssetReportEntityService#destroy with user's " \
+          "enrollment" do
           mock_asset_report_service(asset_report_service)
           asset_report_service.should_receive(:destroy).with([enrollment])
           Subject.unenroll(subject, user)
@@ -312,13 +313,14 @@ module EnrollmentService
           Subject.unenroll(subjects, users)
         end
 
-        it "should invoke EnrollmentEntityService with users" do
+        it "should invoke EnrollmentEntityService#destroy with users" do
           mock_enrollment_service(create_enrollment_service)
           create_enrollment_service.should_receive(:destroy).with(users)
           Subject.unenroll(subjects, users)
         end
 
-        it "should invoke AssetReportEntityService with users' enrollments" do
+        it "should invoke AssetReportEntityService#destroy with users'" \
+          "enrollments" do
           mock_asset_report_service(asset_report_service)
           asset_report_service.should_receive(:destroy).with(enrollments)
           Subject.unenroll(subjects, users)
