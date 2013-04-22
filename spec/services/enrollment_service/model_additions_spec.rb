@@ -267,7 +267,7 @@ module EnrollmentService
 
         it "should invoke EnrollmentEntityService#destroy with user" do
           mock_enrollment_service(create_enrollment_service)
-          create_enrollment_service.should_receive(:destroy).with(user)
+          create_enrollment_service.should_receive(:destroy).with([user])
           Subject.unenroll(subject, user)
         end
 

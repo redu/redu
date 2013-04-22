@@ -59,8 +59,7 @@ module EnrollmentService
           enrollments = Enrollment.where(:subject_id => pluck_ids(subjects))
         end
 
-        vis_adapter = VisAdapter.new
-        vis_adapter.notify_enrollment_creation(enrollments)
+        notify_enrollment_creation(enrollments)
 
         enrollments
       end
@@ -69,21 +68,18 @@ module EnrollmentService
       #
       # Parâmetros:
       #   subjects: Subjects aos quais o usuário será desmatriculado.
-      #   users: Users que serão desmatriculados.
-      def unenroll(subjects, users)
-        lectures = Lecture.where(:subject_id => subjects).select("id")
-        asset_report_service = AssetReportEntityService.new(:lecture => \
-                                                            lectures)
-        enrollments = Enrollment.where(:subject_id => subjects, :user_id => users)
-        asset_report_service.destroy(enrollments)
+      #   user_or_users: Um ou mais Users que serão desmatriculados.
+      def unenroll(subjects, user_or_users)
+        users = user_or_users.respond_to?(:map) ? user_or_users :
+          [user_or_users]
 
-        vis_adapter = VisAdapter.new
-        vis_adapter.notify_enrollment_removal(enrollments)
-        graduated_enrollments = enrollments.select { |e| e.graduated? }
-        vis_adapter.notify_graduated_enrollment_removal(graduated_enrollments)
+        enrollments = Enrollment.where(:subject_id => subjects).select do |e|
+          users.include? e.user
+        end
 
-        enrollment_service = EnrollmentEntityService.new(:subject => subjects)
-        enrollment_service.destroy(users)
+        destroy_asset_report(subjects, enrollments)
+        notify_enrollment_removal(enrollments)
+        destroy_enrollment(subjects, users)
       end
 
       private
@@ -130,6 +126,45 @@ module EnrollmentService
 
       def pluck_ids(resources)
         resources.map(&:id).uniq
+      end
+
+
+      # Notifica remoção de enrollments a Vis
+      # Parâmetros:
+      #   enrollments: Enrollments que serão enviados para Vis
+      def notify_enrollment_removal(enrollments)
+        vis_adapter = VisAdapter.new
+        vis_adapter.notify_enrollment_removal(enrollments)
+        graduated_enrollments = enrollments.select { |e| e.graduated? }
+        vis_adapter.notify_graduated_enrollment_removal(graduated_enrollments)
+      end
+
+      # Notifica criação de enrollments a Vis
+      # Parâmetros:
+      #   enrollments: Enrollments que serão enviados para Vis
+      def notify_enrollment_creation(enrollments)
+        vis_adapter = VisAdapter.new
+        vis_adapter.notify_enrollment_creation(enrollments)
+      end
+
+      # Destrói os enrollments entre os Subjects e Users
+      # Parâmetros:
+      #   subjects: Subjects que os Users serão desmatriculados
+      #   users: Users que serão desmatriculados
+      def destroy_enrollment(subjects, users)
+        enrollment_service = EnrollmentEntityService.new(:subject => subjects)
+        enrollment_service.destroy(users)
+      end
+
+      # Destrói os asset reports dos Enrollments nos Subjects
+      # Parâmetros:
+      #   subjects: Subjects que possuem as aulas
+      #   enrollments: Enrollments que terão os asset reports removidos
+      def destroy_asset_report(subjects, enrollments)
+        lectures = Lecture.where(:subject_id => subjects).select("id")
+        asset_report_service = AssetReportEntityService.new(:lecture => \
+                                                            lectures)
+        asset_report_service.destroy(enrollments)
       end
     end
   end
