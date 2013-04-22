@@ -2,7 +2,9 @@ require 'spec_helper'
 
 describe VisEnrollmentObserver do
   let(:subj) { Factory(:subject) }
-  subject { Factory(:enrollment, :subject => subj, :user => subj.owner) }
+  subject { subj.enrollments.first }
+
+  before { subj.enroll(subj.owner) }
 
   describe "before update" do
 
