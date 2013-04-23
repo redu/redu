@@ -44,7 +44,7 @@ module EnrollmentService
     end
 
     # Atualiza grade dos Enrollments passados na inicialização.
-    def update_grade!
+    def update_grade
       asset_reports = AssetReport.where(:enrollment_id => enrollments)
 
       grader = GradeCalculator.new(asset_reports)

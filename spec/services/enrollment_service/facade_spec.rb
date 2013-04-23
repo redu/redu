@@ -211,7 +211,7 @@ module EnrollmentService
         subject.update_grade(enrollments)
       end
 
-      it "should call EnrollmentEntityService#update_grade!" do
+      it "should call EnrollmentEntityService#update_grade" do
         mock_enrollment_service(enrollment_service)
 
         enrollment_service.should_receive(:update_grade).with(enrollments)

@@ -71,7 +71,7 @@ module EnrollmentService
       end
     end
 
-    context "#update_grade!" do
+    context "#update_grade" do
       let(:enrollment) do
         Factory(:enrollment, :subject => nil)
       end
@@ -87,21 +87,21 @@ module EnrollmentService
       context "when all asset reports are done" do
         before { asset_reports.map { |ar| ar.update_attribute(:done, true) } }
         it "should set graduated to true" do
-          subject.update_grade!
+          subject.update_grade
           enrollment.reload.graduated.should be_true
         end
 
         it "should set grade to 100" do
-          subject.update_grade!
+          subject.update_grade
           enrollment.reload.grade.should == 100
         end
 
         it "should not change Enrollment count" do
-          expect { subject.update_grade! }.to_not change(Enrollment, :count)
+          expect { subject.update_grade }.to_not change(Enrollment, :count)
         end
 
         it "should return the enrollments" do
-          subject.update_grade!.map(&:class).should == [Enrollment]
+          subject.update_grade.map(&:class).should == [Enrollment]
         end
       end
 
@@ -113,12 +113,12 @@ module EnrollmentService
         end
 
         it "should set graduated to false" do
-          subject.update_grade!
+          subject.update_grade
           enrollment.reload.graduated.should be_false
         end
 
         it "should set grade to 66.66" do
-          subject.update_grade!
+          subject.update_grade
           enrollment.reload.grade.should be_within(0.1).of(66.66)
         end
       end
