@@ -673,10 +673,6 @@ input[type="hidden"] +
   display: block;
   clear: left;
 }
-.plan-details .progress-bar-medium {
-  float: right;
-  display: inline-block;
-}
 .plan-details .plan-price {
   color: #6d6e6f;
   font-weight: 300;
