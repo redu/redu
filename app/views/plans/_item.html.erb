@@ -8,7 +8,7 @@
         <%= content_tag(:p, item.billable.name, :class => "legend") %>
       <% end %>
     <% else %>
-      <span class="name"><%= item.billable_audit.try(:[], "name") || "Sem informações" %> (removido)</span>
+      <span class="plans-name"><%= item.billable_audit.try(:[], "name") || "Sem informações" %> (removido)</span>
     <% end %>
   </td>
   <td>
