@@ -60,6 +60,7 @@ module EnrollmentService
             enrollments = Enrollment.where(:subject_id => pluck_ids(subjects))
           end
 
+          service_facade.update_grade(enrollments)
           service_facade.notify_enrollment_creation(enrollments)
 
           enrollments

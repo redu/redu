@@ -18,6 +18,7 @@ module EnrollmentService
       it "should invoke Facade#create_enrollment with correct arguments" do
         facade.stub(:create_asset_report)
         facade.stub(:notify_enrollment_creation)
+        facade.stub(:update_grade)
 
         facade.should_receive(:create_enrollment).with(subjects, users,
                                                        :role => Role[:member])
@@ -27,6 +28,7 @@ module EnrollmentService
       it "should invoke Facade#create_asset_report with correct arguments" do
         facade.stub(:create_enrollment)
         facade.stub(:notify_enrollment_creation)
+        facade.stub(:update_grade)
 
         facade.should_receive(:create_asset_report).with(subjects, users)
         Subject.enroll(subjects, :users => users)
@@ -36,12 +38,23 @@ module EnrollmentService
         " arguments" do
         facade.stub(:create_enrollment)
         facade.stub(:create_asset_report)
+        facade.stub(:update_grade)
 
         enrollments = subjects.map(&:enrollments).flatten
 
         facade.should_receive(:notify_enrollment_creation) do |args|
           args.should =~ enrollments
         end
+
+        Subject.enroll(subjects, :users => users)
+      end
+
+      it "should invoke Facade#update_grade" do
+        facade.stub(:create_enrollment)
+        facade.stub(:create_asset_report)
+        facade.stub(:notify_enrollment_creation)
+
+        facade.should_receive(:update_grade)
 
         Subject.enroll(subjects, :users => users)
       end

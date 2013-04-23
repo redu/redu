@@ -83,7 +83,7 @@ module EnrollmentService
     # Atualiza os campos #grade e #graduated dos Enrollments passados.
     def update_grade(enrollments)
       service = EnrollmentEntityService.new(:enrollments => enrollments)
-      service.update_grade(enrollments)
+      service.update_grade
     end
 
     private
