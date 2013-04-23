@@ -47,35 +47,6 @@ describe Lecture do
     should respond_to :recent?
   end
 
-  context "callbacks" do
-    context "creates a AssertReport between the StudentProfile and the Lecture after create" do
-      it "when the owner is the subject owner" do
-        subject.asset_reports.of_user(subject.owner).should_not be_empty
-      end
-
-      it "when the owner is an environment_admin" do
-        # First lecture is created
-        subject.should_not be_new_record
-
-        another_admin = Factory(:user)
-        @space.course.spaces.reload
-        @space.subjects.reload
-        @space.course.join another_admin
-        @space.course.environment.change_role(another_admin,
-                                              Role[:environment_admin])
-
-        lecture = Factory(:lecture, :subject => @sub,
-                          :owner => another_admin)
-
-        lecture.asset_reports.should_not be_empty
-        lecture.asset_reports.count.should == @sub.members.count
-        @sub.members.each do |member|
-          lecture.asset_reports.of_user(member).should_not be_empty
-        end
-      end
-    end
-  end
-
   context "#create_asset_report" do
     let(:environment) { Factory.create(:complete_environment) }
     let(:user) { environment.owner }
