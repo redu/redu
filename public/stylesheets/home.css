@@ -698,12 +698,12 @@ input[type="hidden"] +
 .plan-details .quotas .plan-quota {
   color: black;
 }
-.plan-details .quotas .quota-documents {
-  padding-left: 0;
-}
-.plan-details .quotas .quota-documents .icon {
+.plan-details .quotas .icon {
   float: left;
   margin-right: 5px;
+}
+.plan-details .quotas .quota-documents {
+  padding-left: 0;
 }
 
 .invoices-table {

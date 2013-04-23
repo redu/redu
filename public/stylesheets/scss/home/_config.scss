@@ -199,15 +199,11 @@
       clear: right;
     }
     .plan-quota { color: $black; }
-
-    .quota-documents {
-      padding-left: 0;
-
-      .icon {
-        float: left;
-        margin-right: 5px;
-      }
+    .icon {
+      float: left;
+      margin-right: 5px;
     }
+    .quota-documents { padding-left: 0; }
   }
 }
 .invoices-table {

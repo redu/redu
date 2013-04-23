@@ -144,7 +144,6 @@ stylesheets:
   mobile:
     - public/stylesheets/mobile.css
   new_application:
-    - public/stylesheets/icons.redu.css
     - public/stylesheets/utils.css
     - public/stylesheets/home.css
     - public/stylesheets/search.css

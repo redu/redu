@@ -22,18 +22,21 @@
           <h5 class="pull-right plan-price"><%= number_to_currency plan.price %></h5>
           <span class="plan-period">/mês</span>
           <li>
-            <%= content_tag(:span, "Membros:", :class => "icon-members-gray_16_18-before") %>
+            <%= content_tag(:span, "Membros", :class => "icon-members-gray_16_18 show text-replacement icon") %>
+            <%= content_tag(:span, "Membros:") %>
             <%= content_tag(:span, "#{plan.members_limit}", :class => "plan-quota") %>
           </li>
         <% end %>
         <li class="quota-documents">
           <%= content_tag(:span, "Apresentações", :class => "icon-presentation-gray_16_18 show text-replacement icon") %>
           <%= content_tag(:span, "Documentos", :class => "icon-text-page-gray_16_18 show text-replacement icon") %>
-          <%= content_tag(:span, "Documentos:", :class => "icon-file-gray_16_18-before") %>
+          <%= content_tag(:span, "Arquivos", :class => "icon-file-gray_16_18 show text-replacement icon") %>
+          <%= content_tag(:span, "Documentos:") %>
           <%= content_tag(:span, number_to_human_size(plan.file_storage_limit, :precision => 0), :class => "plan-quota") %>
         </li>
         <li>
-          <%= content_tag(:span, "Vídeos: ", :class => "icon-video-gray_16_18-before") %>
+          <%= content_tag(:span, "Vídeos", :class => "icon-video-gray_16_18 show text-replacement icon") %>
+          <%= content_tag(:span, "Vídeos:") %>
           <%= content_tag(:span, number_to_human_size(plan.video_storage_limit, :precision => 0), :class => "plan-quota") %>
         </li>
       </ul>
