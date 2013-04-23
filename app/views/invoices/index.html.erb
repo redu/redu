@@ -96,9 +96,7 @@
                 </td>
                 <td>
                   <% if can? :pay_with_pagseguro, invoice %>
-                    <div class="pagseguro-concave-form">
-                      <%= pagseguro_form invoice.plan.create_order, :submit => "Pagar" %>
-                    </div>
+                    <%= pagseguro_form invoice.plan.create_order, :submit => "Pagar" %>
                   <% elsif invoice.paid? %>
                     <span class="no-pending legend">Pago</span>
                   <% end %>
