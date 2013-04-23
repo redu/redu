@@ -183,20 +183,17 @@
     display: inline-block;
   }
 
+  .plan-price {
+    color: $gray6;
+    font-weight: 300;
+  }
+
   .quotas {
     list-style-type: none;
     li { padding-left: 43px; }
     li + li {
       margin-top: 0;
       padding-top: 5px;
-    }
-    .plan-price {
-      color: $gray6;
-      font-weight: 300;
-    }
-    .plan-period {
-      float: right;
-      clear: right;
     }
     .plan-quota { color: $black; }
     .icon {

@@ -14,13 +14,16 @@
           <% end %>
         <% end %>
       </div>
-      <ul class="quotas">
+      <div class="pull-right">
+        <h5 class="plan-price"><%= number_to_currency plan.price %></h5>
         <% if plan.members_limit == 1.0/0 # Infinity %>
-          <h5 class="pull-right plan-price"><%= number_to_currency plan.price %></h5>
-          <span class="plan-period">/licença</span>
+          <span class="pull-right">/licença</span>
         <% else %>
-          <h5 class="pull-right plan-price"><%= number_to_currency plan.price %></h5>
-          <span class="plan-period">/mês</span>
+          <span class="pull-right">/mês</span>
+        <% end %>
+      </div>
+      <ul class="quotas">
+        <% unless plan.members_limit == 1.0/0 # Infinity %>
           <li>
             <%= content_tag(:span, "Membros", :class => "icon-members-gray_16_18 show text-replacement icon") %>
             <%= content_tag(:span, "Membros:") %>

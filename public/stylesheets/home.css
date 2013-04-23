@@ -677,6 +677,10 @@ input[type="hidden"] +
   float: right;
   display: inline-block;
 }
+.plan-details .plan-price {
+  color: #6d6e6f;
+  font-weight: 300;
+}
 .plan-details .quotas {
   list-style-type: none;
 }
@@ -686,14 +690,6 @@ input[type="hidden"] +
 .plan-details .quotas li + li {
   margin-top: 0;
   padding-top: 5px;
-}
-.plan-details .quotas .plan-price {
-  color: #6d6e6f;
-  font-weight: 300;
-}
-.plan-details .quotas .plan-period {
-  float: right;
-  clear: right;
 }
 .plan-details .quotas .plan-quota {
   color: black;
