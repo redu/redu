@@ -62,44 +62,65 @@ module EnrollmentService
         mock_asset_report_service(asset_report_service)
       end
 
-      it "should initalize AssetReportEntityService with the correct arguments" do
-        add_lecture_to(subj)
-        asset_report_service.stub(:create)
-
-        AssetReportEntityService.should_receive(:new).
-          with(:lecture => subj.lectures).and_return(asset_report_service)
-
-        subject.create_asset_report([subj], [user])
-      end
-
-      it "should invoke AssetReportEntityService#create with enrollments" do
-        add_lecture_to(subj)
-        subject.create_enrollment([subj], users)
-
-        asset_report_service.should_receive(:create) do |args|
-          args.map(&:user_id).should =~ users.map(&:id)
-        end
-
-        subject.create_asset_report([subj], users)
-      end
-
-      context "with no users" do
-        it "should invoke AssetReportEntityService#create without arguments" do
-          asset_report_service.should_receive(:create)
-          subject.create_asset_report([subj])
-        end
-      end
-
       context "with multiple subjects and users" do
-        it "should invoke AssetReportEntityService#create with the enrollments" do
+        before do
           add_lecture_to(subjects)
+        end
+
+        it "should initalize AssetReportEntityService with the correct arguments" do
+          subject.create_enrollment(subjects, users)
+          asset_report_service.stub(:create)
+
+          lectures = subjects.map(&:lectures).flatten
+          AssetReportEntityService.should_receive(:new).
+            with(:lecture => lectures).and_return(asset_report_service)
+
+          subject.create_asset_report(:subjects => subjects, :users => users)
+        end
+
+        it "should invoke AssetReportEntityService#create with the enrollments" do
           subject.create_enrollment(subjects, users)
 
           asset_report_service.should_receive(:create) do |args|
             args.map(&:user_id).should =~ users.map(&:id) * subjects.length
           end
 
-          subject.create_asset_report(subjects, users)
+          subject.create_asset_report(:subjects => subjects, :users => users)
+        end
+      end
+
+      context "with multiple lectures and users" do
+        let(:lectures) { lectures = subjects.map(&:lectures).flatten }
+
+        before do
+          add_lecture_to(subjects)
+        end
+
+        it "should initalize AssetReportEntityService with the correct arguments" do
+          subject.create_enrollment(subjects, users)
+          asset_report_service.stub(:create)
+
+          AssetReportEntityService.should_receive(:new).
+            with(:lecture => lectures).and_return(asset_report_service)
+
+          subject.create_asset_report(:lectures => lectures, :users => users)
+        end
+
+        it "should invoke AssetReportEntityService#create with the enrollments" do
+          subject.create_enrollment(subjects, users)
+
+          asset_report_service.should_receive(:create) do |args|
+            args.map(&:user_id).should =~ users.map(&:id) * subjects.length
+          end
+
+          subject.create_asset_report(:lectures => lectures, :users => users)
+        end
+      end
+
+      context "without users" do
+        it "should invoke AssetReportEntityService#create without arguments" do
+          asset_report_service.should_receive(:create)
+          subject.create_asset_report(:subjects => subjects)
         end
       end
     end

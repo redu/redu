@@ -2,18 +2,33 @@ module EnrollmentService
   class Facade
     include Singleton
 
-    # Cria AssetReport entre todas as Lectures dos Subjects passados e os
-    # Users. Caso users seja omitido, todos os Users matriculados no Subject
-    # serão utilizados.
-    def create_asset_report(subjects, users=nil)
-      subject_ids = pluck_ids(subjects)
-      lectures = Lecture.
-        where(:subject_id => subject_ids).select("id, subject_id")
+    # Cria AssetReport entre Users e Lectures. Caso sejam passadas as
+    # Lectures, os usuários serão ligados a elas. Caso sejam passados
+    # os Subjects, os usuários serão ligados às Lectures destes Subjects.
+    #
+    # Caso users seja omitido, todos os Users matriculados no Subjects
+    # (passados como argumento ou Subjects das Lectures passadas como
+    # argumento) serão utilizados.
+    #
+    # Parâmetros:
+    #   - subjects: Subjects que contém as lectures
+    #     ou
+    #   - lectures: Lectures que serão associadas aos Users
+    #   - (Opcional) users: Users que serão associados às Lectures
+    def create_asset_report(opts={})
+      subjects = opts[:subjects]
+      lectures = opts[:lectures]
+      users = opts[:users]
+
+      lectures ||= Lecture.where(:subject_id => subjects).
+        select("id, subject_id")
       asset_reports = AssetReportEntityService.new(:lecture => lectures)
+
+      subjects_ids = subjects || lectures.map(&:subject_id)
 
       if users
         enrollments = Enrollment.
-          where(:subject_id => subject_ids, :user_id => pluck_ids(users))
+          where(:subject_id => subjects_ids, :user_id => users)
 
         asset_reports.create(enrollments)
       else
@@ -84,12 +99,6 @@ module EnrollmentService
     def update_grade(enrollments)
       service = EnrollmentEntityService.new(:enrollments => enrollments)
       service.update_grade
-    end
-
-    private
-
-    def pluck_ids(resources)
-      resources.map(&:id).uniq
     end
   end
 end
