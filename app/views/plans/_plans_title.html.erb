@@ -1,0 +1,8 @@
+<% if @plan.billable.is_a? Environment %>
+  <%= content_tag(:h4, @plan.billable.name, :class => "plans-title course") %>
+<% elsif @plan.billable.is_a? Course %>
+  <%= content_tag(:h4, @plan.billable.environment.name, :class => "plans-title course") %>
+  <%= content_tag(:span, @plan.billable.name, :class => "legend") %>
+<% elsif @plan.billable_audit %>
+  <%= content_tag :span, @plan.billable_audit["name"] %>
+<% end %>
