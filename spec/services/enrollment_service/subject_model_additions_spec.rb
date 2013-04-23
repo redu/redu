@@ -7,53 +7,43 @@ module EnrollmentService
     let(:facade) { mock("Facade") }
 
     context ".enroll" do
+      let!(:subjects) { FactoryGirl.create_list(:subject, 3) }
+      let(:users) { FactoryGirl.create_list(:user, 3) }
+      before { mock_facade(facade) }
+
       it "responds to enroll" do
         should respond_to :enroll
       end
 
-      context do
-        let!(:subjects) { FactoryGirl.create_list(:subject, 3) }
-        let(:users) { FactoryGirl.create_list(:user, 3) }
-        let(:enrollments) do
-          subjects.map do |s|
-            users.map do |user|
-              Factory(:enrollment, :user => user, :subject => s)
-            end.flatten
-          end.flatten
+      it "should invoke Facade#create_enrollment with correct arguments" do
+        facade.stub(:create_asset_report)
+        facade.stub(:notify_enrollment_creation)
+
+        facade.should_receive(:create_enrollment).with(subjects, users,
+                                                       :role => Role[:member])
+        Subject.enroll(subjects, :users => users)
+      end
+
+      it "should invoke Facade#create_asset_report with correct arguments" do
+        facade.stub(:create_enrollment)
+        facade.stub(:notify_enrollment_creation)
+
+        facade.should_receive(:create_asset_report).with(subjects, users)
+        Subject.enroll(subjects, :users => users)
+      end
+
+      it "should invoke Facade#notify_enrollment_creation with correct" \
+        " arguments" do
+        facade.stub(:create_enrollment)
+        facade.stub(:create_asset_report)
+
+        enrollments = subjects.map(&:enrollments).flatten
+
+        facade.should_receive(:notify_enrollment_creation) do |args|
+          args.should =~ enrollments
         end
 
-        it "should invoke Facade#create_enrollment with correct arguments" do
-          facade.stub(:create_asset_report)
-          facade.stub(:notify_enrollment_creation)
-          mock_facade(facade)
-
-          facade.should_receive(:create_enrollment).with(subjects, users,
-                                                         :role => Role[:member])
-          Subject.enroll(subjects, :users => users)
-        end
-
-        it "should invoke Facade#create_asset_report with correct arguments" do
-          facade.stub(:create_enrollment)
-          facade.stub(:notify_enrollment_creation)
-          mock_facade(facade)
-
-          facade.should_receive(:create_asset_report).with(subjects, users)
-          Subject.enroll(subjects, :users => users)
-        end
-
-        it "should invoke Facade#notify_enrollment_creation with correct" \
-          " arguments" do
-          facade.stub(:create_enrollment)
-          facade.stub(:create_asset_report)
-          mock_facade(facade)
-
-          enrollments
-          facade.should_receive(:notify_enrollment_creation) do |args|
-            args.should =~ enrollments
-          end
-
-          Subject.enroll(subjects, :users => users)
-          end
+        Subject.enroll(subjects, :users => users)
       end
     end
 
