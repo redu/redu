@@ -80,6 +80,13 @@ module EnrollmentService
       asset_report_service.destroy(enrollments)
     end
 
+    # Atualiza os campos #grade e #graduated dos Enrollments passados.
+    def update_grade(enrollments)
+      service = EnrollmentEntityService.new(:enrollments => enrollments)
+      service.update_grade(enrollments)
+    end
+
+    private
 
     def pluck_ids(resources)
       resources.map(&:id).uniq

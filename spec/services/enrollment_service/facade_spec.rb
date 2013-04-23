@@ -200,6 +200,26 @@ module EnrollmentService
       end
     end
 
+    context "#update_grade" do
+      let(:enrollments) { 3.times.map { mock_model Enrollment } }
+      before { enrollment_service.stub(:update_grade) }
+
+      it "should initialize EnrollmentEntityService with the enrollments" do
+        EnrollmentEntityService.should_receive(:new).
+          with(:enrollments => enrollments).and_return(enrollment_service)
+
+        subject.update_grade(enrollments)
+      end
+
+      it "should call EnrollmentEntityService#update_grade!" do
+        mock_enrollment_service(enrollment_service)
+
+        enrollment_service.should_receive(:update_grade).with(enrollments)
+
+        subject.update_grade(enrollments)
+      end
+    end
+
     def mock_enrollment_service(m)
       EnrollmentEntityService.stub(:new).and_return(m)
     end
