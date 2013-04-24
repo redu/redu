@@ -186,7 +186,7 @@ $.refreshDOMEffects = function(){
   // Flash message
   $(".flash-message").parent().next().css("marginTop", "10px");
   $(".flash-message .close-flash").click(function(e){
-    $(this).parent().slideToggle();
+    $(this).parent().slideUp(150, "swing");
     $("#content").css("marginTop","20px");
     $("#home").css("marginTop","40px");
   });
