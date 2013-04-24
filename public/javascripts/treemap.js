@@ -137,6 +137,7 @@ var StudentsTreemap = function() {
       report.find(".row-head").append($("<th/>", { 'class': "head", 'text': "Média dos exercícios" }));
       if (!print){
           report.find(".row-head").append($("<th/>", { 'class': "head", 'text': "Link" }));
+          report.find("tbody").css('height', '500px').css('overflow', 'auto');
       }
 
       data.children.sort(compare);
