@@ -57,8 +57,7 @@ var StudentsTreemap = function() {
       // Busca o nome do aluno nos dados da API
       var user = searchUser(vis[index].user_id, api)[0];
       if (user) {
-        item.name = user.first_name;
-        item.last_name = user.last_name;
+        item.name = user.name;
         item.id = vis[index].user_id;
       };
 
@@ -152,7 +151,7 @@ var StudentsTreemap = function() {
 
           var div = row.find(".student-info");
           div.append($("<span/>", { 'class': "student-name",
-              'text': object.name + " " + object.last_name }));
+              'text': object.name }));
 
           row.append($("<td/>", { 'id': "activities", 'class': "cell" }));
           row.find("#activities").append($("<span/>",
@@ -198,9 +197,9 @@ var StudentsTreemap = function() {
   }
 
   function compare(a,b) {
-      if ((a.name + "  " + a.last_name).toUpperCase() < (b.name + "  " + b.last_name).toUpperCase())
+      if ((a.name).toUpperCase() < (b.name).toUpperCase())
           return -1;
-      if ((a.name + "  " + a.last_name).toUpperCase() > (b.name + "  " + b.last_name).toUpperCase())
+      if ((a.name).toUpperCase() > (b.name).toUpperCase())
           return 1;
       return 0;
   }
@@ -267,7 +266,7 @@ var StudentsTreemap = function() {
               .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
               .attr("alt", function(d) {
                 var nota = d.grade !== -1 ? d.grade : "nenhum exercício realizado"
-                return "Nome: " + d.name + " " + d.last_name
+                return "Nome: " + d.name
                         + "</br>Comentários: " + d.activities
                         + "</br>Pedidos de Ajuda: " + d.helps
                         + "</br>Respostas à comentários: " + d.answered_activities

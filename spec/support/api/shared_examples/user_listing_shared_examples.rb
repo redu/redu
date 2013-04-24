@@ -34,5 +34,14 @@ shared_examples_for "user listing" do
 
     parse(response.body).length.should == 1
   end
+
+  it "when return users for visualization should have only id and name" do
+    get "/api/#{entity_name}/#{subject.id}/users", :reduce => true,
+    :oauth_token => token, :format => 'json'
+
+    %w(id name).each do |attr|
+      parse(response.body).first.should have_key attr
+    end
+  end
 end
 

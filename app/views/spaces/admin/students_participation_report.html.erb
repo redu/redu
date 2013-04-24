@@ -65,7 +65,7 @@
             var treemap = new StudentsTreemap();
             treemap.load({ form: $("#graph-form"),
             renderTo: "treemap-chart",
-            url: "<%= api_space_users_path(@space.id, :oauth_token => @token, :role=>"member") %>",
+            url: "<%= api_space_users_path(@space.id, :oauth_token => @token, :role=>"member", :reduce => true) %>",
             print: "<%= students_participation_report_show_space_path(@space.id) %>"});
           <% end %>
 

@@ -19,10 +19,19 @@ module Api
       authorize! :read, context
 
       users = users_with_indiferent_access(context)
-      users = users.includes(:social_networks, :tags)
       users = filter_by_role(context, users, params[:role]) if params[:role]
 
-      respond_with(:api, context, users)
+      if params[:reduce]
+        respond_to do |format|
+          format.json do
+            render :json => users.map{ |user|
+              { :id => user.id, :name =>user.display_name }}.to_json
+          end
+        end
+      else
+        users = users.includes(:social_networks, :tags)
+        respond_with(:api, context, users)
+      end
     end
 
     protected
