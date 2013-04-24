@@ -286,7 +286,7 @@ var StudentsTreemap = function() {
               .attr("y", function(d) { return d.dy / 2; })
               .attr("dy", ".35em")
               .attr("text-anchor", "middle")
-              .text(function(d) { return d.name + " " + d.last_name; })
+              .text(function(d) { return d.name; })
               .style("opacity", function(d) { d.w = this.getComputedTextLength(); return d.dx > d.w ? 1 : 0; });
 
             // Tooltip da célula
