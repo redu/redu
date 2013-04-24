@@ -844,3 +844,7 @@
 .statuses .button-primary {
   line-height: 16px;
 }
+
+textarea {
+  resize: vertical !important;
+}
