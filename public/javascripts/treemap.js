@@ -74,6 +74,9 @@ var StudentsTreemap = function() {
       json.children.push(item);
     })
 
+    // Filtra os objetos para que não mostrem os usuarios da disciplina
+    // que não são apenas alunos, estes não terão a opção 'name' preenchida
+    json.children = json.children.filter(function(d) { return !!d.name; });
     return json;
   }
 
@@ -296,9 +299,12 @@ var StudentsTreemap = function() {
             $(".cell").tipTip({ defaultPosition: "left",
                                 attribute: "alt" });
 
-            // Relatório descritivo
-            removeReportDescription();
-            reportDescription(graphView.form, root, false, graphView.print);
+            // Se houver muitos dados não cria relatório detalhado
+            if (root.children.length < 500) {
+              // Relatório descritivo
+              removeReportDescription();
+              reportDescription(graphView.form, root, false, graphView.print);
+            };
           } // Success end
         }) // Ajax en
       }) // LoadGraph end
@@ -309,25 +315,24 @@ var StudentsTreemap = function() {
       // Inicializa o javascript do form
       var graph = graphView.form.plotGraphForm(graphView.renderTo);
       graph.loadGraph(function(jsonVis) {
+        // Requisição para api precisa ser feita em busca do nome dos alunos
+        $.ajax({
+          url: graphView.url,
+          method: "GET",
+          success: function(jsonApi) {
+            // Constrói o JSON característico do treemap usando os dados retornados das duas requisições
+            root = buildJSON(jsonVis, jsonApi);
 
-          // Requisição para api precisa ser feita em busca do nome dos alunos
-          $.ajax({
-              url: graphView.url,
-              method: "GET",
-              success: function(jsonApi) {
-                  // Constrói o JSON característico do treemap usando os dados retornados das duas requisições
-                  root = buildJSON(jsonVis, jsonApi);
+            // Relatório descritivo
+            removeReportDescription();
+            reportDescription(graphView.form, root, true);
 
-                  // Relatório descritivo
-                  removeReportDescription();
-                  reportDescription(graphView.form, root, true);
-
-                  $("#report").show();
-                  $("#treemap-chart").hide();
-                  $("#report-description").hide();
-                  $("#report").find(".concave-button").hide();
-              }
-          })
+            $("#report").show();
+            $("#treemap-chart").hide();
+            $("#report-description").hide();
+            $("#report").find(".concave-button").hide();
+            }
+        })
       })
     } // Print end
   } // Return end
