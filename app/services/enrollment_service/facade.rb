@@ -64,7 +64,7 @@ module EnrollmentService
       vis_adapter = VisAdapter.new
       vis_adapter.notify_enrollment_removal(enrollments)
       graduated_enrollments = enrollments.select { |e| e.graduated? }
-      vis_adapter.notify_graduated_enrollment_removal(graduated_enrollments)
+      vis_adapter.notify_remove_subject_finalized(graduated_enrollments)
     end
 
     # Notifica criação de enrollments a Vis
@@ -97,8 +97,21 @@ module EnrollmentService
 
     # Atualiza os campos #grade e #graduated dos Enrollments passados.
     def update_grade(enrollments)
-      service = EnrollmentEntityService.new(:enrollments => enrollments)
+      service = EnrollmentEntityService.new(:enrollment => enrollments)
+      vis_adapter = VisAdapter.new
       service.update_grade
+
+      enrollments
+    end
+
+    def notify_subject_finalized(enrollments)
+      vis_adapter = VisAdapter.new
+      vis_adapter.notify_subject_finalized(enrollments)
+    end
+
+    def notify_remove_subject_finalized(enrollments)
+      vis_adapter = VisAdapter.new
+      vis_adapter.notify_remove_subject_finalized(enrollments)
     end
   end
 end

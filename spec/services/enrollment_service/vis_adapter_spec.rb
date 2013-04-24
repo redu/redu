@@ -47,10 +47,17 @@ module EnrollmentService
       end
     end
 
-    describe "#notify_graduated_enrollment_removal" do
+    describe "#notify_remove_subject_finalized" do
       it "should invoke VisClient with correct arguments" do
         set_vis_client_expectation("remove_subject_finalized", enrollments)
-        vis_adapter.notify_graduated_enrollment_removal(enrollments)
+        vis_adapter.notify_remove_subject_finalized(enrollments)
+      end
+    end
+
+    describe "#notify_subject_finalized" do
+      it "should invoke VisClient with correct arguments" do
+        set_vis_client_expectation("subject_finalized", enrollments)
+        vis_adapter.notify_subject_finalized(enrollments)
       end
     end
 

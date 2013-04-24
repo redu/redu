@@ -14,6 +14,7 @@ module EnrollmentService
     before do
       mock_vis_adapter(vis_adapter)
       vis_adapter.stub(:notify_enrollment_creation)
+      vis_adapter.stub(:notify_subject_finalized)
     end
 
     context "#create_enrollment" do
@@ -129,7 +130,7 @@ module EnrollmentService
       before do
         mock_vis_adapter(vis_adapter)
         vis_adapter.stub(:notify_enrollment_removal)
-        vis_adapter.stub(:notify_graduated_enrollment_removal)
+        vis_adapter.stub(:notify_remove_subject_finalized)
         mock_asset_report_service(asset_report_service)
       end
 
@@ -174,8 +175,8 @@ module EnrollmentService
 
     context "VisAdapter" do
       before do
-        set_space_to(subjects)
         mock_vis_adapter(vis_adapter)
+        set_space_to(subjects)
       end
 
       context "#notify_enrollment_creation" do
@@ -198,7 +199,7 @@ module EnrollmentService
         end
 
         it "should invoke VisAdapter for removed enrollments" do
-          vis_adapter.stub(:notify_graduated_enrollment_removal)
+          vis_adapter.stub(:notify_remove_subject_finalized)
 
           vis_adapter.should_receive(:notify_enrollment_removal).
             with(enrollments)
@@ -213,7 +214,7 @@ module EnrollmentService
             e.update_attribute(:graduated, true)
           end
 
-          vis_adapter.should_receive(:notify_graduated_enrollment_removal).
+          vis_adapter.should_receive(:notify_remove_subject_finalized).
             with(graduated_enrollments)
 
           subject.notify_enrollment_removal(enrollments)
@@ -223,11 +224,14 @@ module EnrollmentService
 
     context "#update_grade" do
       let(:enrollments) { 3.times.map { mock_model Enrollment } }
-      before { enrollment_service.stub(:update_grade) }
+      before do
+        enrollment_service.stub(:update_grade)
+        vis_adapter.stub(:notify_subject_finalized)
+      end
 
       it "should initialize EnrollmentEntityService with the enrollments" do
         EnrollmentEntityService.should_receive(:new).
-          with(:enrollments => enrollments).and_return(enrollment_service)
+          with(:enrollment => enrollments).and_return(enrollment_service)
 
         subject.update_grade(enrollments)
       end

@@ -1,4 +1,6 @@
 class Enrollment < ActiveRecord::Base
+  include EnrollmentService::EnrollmentAdditions::ModelAdditions
+
   # Entidade intermediária entre User e Subject. É criada quando o usuário se
   # matricula num determinado Subject.
   # Contém informações sobre aulas realizadas, porcentagem do Subject cursado

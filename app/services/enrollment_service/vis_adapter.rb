@@ -8,15 +8,25 @@ module EnrollmentService
     end
 
     def notify_enrollment_creation(enrollments)
-      vis_client.notify_delayed(url, "enrollment", enrollments)
+      notify(:enrollment, enrollments)
     end
 
     def notify_enrollment_removal(enrollments)
-      vis_client.notify_delayed(url, "remove_enrollment", enrollments)
+      notify(:remove_enrollment, enrollments)
     end
 
-    def notify_graduated_enrollment_removal(enrollments)
-      vis_client.notify_delayed(url, "remove_subject_finalized", enrollments)
+    def notify_remove_subject_finalized(enrollments)
+      notify(:remove_subject_finalized, enrollments)
+    end
+
+    def notify_subject_finalized(enrollments)
+      notify(:subject_finalized, enrollments)
+    end
+
+    private
+
+    def notify(message, enrollments)
+      vis_client.notify_delayed(url, message.to_s, enrollments)
     end
   end
 end

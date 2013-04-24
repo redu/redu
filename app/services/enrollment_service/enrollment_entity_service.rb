@@ -43,23 +43,29 @@ module EnrollmentService
       Enrollment.delete_all(["id IN (?)", enrollments_ids])
     end
 
-    # Atualiza grade dos Enrollments passados na inicialização.
+    # Atualiza grade dos Enrollments passados na inicialização baseado nos
+    # seus AssetReports.
     def update_grade
       asset_reports = AssetReport.where(:enrollment_id => enrollments)
+      updated_enrollments = calculate_grade(asset_reports)
+      update_enrollments(updated_enrollments)
+      enrollments
+    end
 
+    private
+
+    def calculate_grade(asset_reports)
       grader = GradeCalculator.new(asset_reports)
-      values = grader.calculate_grade
+      grader.calculate_grade
+    end
 
+    def update_enrollments(values)
       opts = {
         :on_duplicate_key_update => [:grade, :graduated],
         :columns => [:id, :grade, :graduated]
       }
       importer.insert(values, opts)
-
-      enrollments
     end
-
-    protected
 
     def infer_builder_from_arguments(arguments={})
       users_and_roles = arguments[:users_and_roles] || []
