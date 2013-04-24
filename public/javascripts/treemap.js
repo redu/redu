@@ -141,50 +141,43 @@ var StudentsTreemap = function() {
 
       data.children.sort(compare);
 
-      $.each(data.children, function(index, object){
-          report.find("tbody").append($("<tr/>",
-                  { 'id': "" + object.id, 'class': "row" }));
+      // Template
+      var table = "<% _.each(_.extend(children, print), function(object){ %>" +
+            "<tr class='row' id='row-<%=object.id%>'>" +
+                "<td class='cell'>" +
+                    "<div class='student-info'>" +
+                        "<span><%=object.name%></span>" +
+                    "</div>" +
+                "</td>" +
+                "<td class='cell'>" +
+                    "<span class='participation'><%=object.activities%></span>" +
+                "</td>" +
+                "<td class='cell'>" +
+                    "<span class='participation'><%=object.answered_activities%></span>" +
+                "</td>" +
+                "<td class='cell'>" +
+                    "<span class='participation'><%=object.helps%></span>" +
+                "</td>" +
+                "<td class='cell'>" +
+                    "<span class='participation'><%=object.answered_activities%></span>" +
+                "</td>" +
+                "<td class='cell'>" +
+                    "<span class='participation'><%=object.grade === -1 ? 'Não realizou' : object.grade%></span>" +
+                "</td>" +
+                "<% if (!print) { %>" +
+                    "<td class='cell treemap-link'>" +
+                        "<a href=#<%=object.id%>>no mapa</a>" +
+                    "</td>" +
+                "<% };%>" +
+            "</tr>" +
+          "<% }); %>"
 
-          var row = report.find("#" + object.id);
-          row.append($("<td/>", { 'class': "cell" }));
-          row.find(".cell").append($("<div/>", { 'class': "student-info" }));
+      report.find("tbody").append(_.template(table, _.extend(data, { print: print })));
 
-          var div = row.find(".student-info");
-          div.append($("<span/>", { 'class': "student-name",
-              'text': object.name }));
-
-          row.append($("<td/>", { 'id': "activities", 'class': "cell" }));
-          row.find("#activities").append($("<span/>",
-                  { 'class': "participation", 'text': object.activities }));
-
-          row.append($("<td/>", { 'id': "answered_activities", 'class': "cell" }));
-          row.find("#answered_activities").append($("<span/>",
-                  { 'class': "participation", 'text': object.answered_activities }));
-
-          row.append($("<td/>", { 'id': "helps", 'class': "cell" }));
-          row.find("#helps").append($("<span/>",
-                  { 'class': "participation", 'text': object.helps }));
-
-          row.append($("<td/>", { 'id': "answered_helps", 'class': "cell" }));
-          row.find("#answered_helps").append($("<span/>",
-                  { 'class': "participation", 'text': object.answered_helps }));
-
-          row.append($("<td/>", { 'id': "grade", 'class': "cell" }));
-          row.find("#grade").append($("<span/>",
-                  { 'class': "participation",
-                    'text': object.grade === -1 ? "Não realizou" : object.grade }));
-
-          if (!print){
-              row.append($("<td/>", { 'class': "cell treemap-link" }));
-              row.find(".treemap-link").append($("<a/>",
-                          { 'text': "no mapa", 'href': "#" + object.id }));
-
-              row.find(".treemap-link").click(function(){
-                  $("rect").css("stroke-width", 0);
-                  $("g > #" + object.id).css("stroke-width", 5).
-                  css("stroke", "black");
-              });
-          }
+      $(".treemap-link").click(function(){
+          $("rect").css("stroke-width", 0);
+          $("g > #" + $(this).find("a")[0].href.split("#")[1]).css("stroke-width", 5).
+          css("stroke", "black");
       });
 
       report.append($("<a/>", { 'class': "concave-button", 'text': "Imprimir", href: url }));
@@ -298,12 +291,9 @@ var StudentsTreemap = function() {
             $(".cell").tipTip({ defaultPosition: "left",
                                 attribute: "alt" });
 
-            // Se houver muitos dados não cria relatório detalhado
-            if (root.children.length < 500) {
-              // Relatório descritivo
-              removeReportDescription();
-              reportDescription(graphView.form, root, false, graphView.print);
-            };
+            // Relatório descritivo
+            removeReportDescription();
+            reportDescription(graphView.form, root, false, graphView.print);
           } // Success end
         }) // Ajax en
       }) // LoadGraph end
