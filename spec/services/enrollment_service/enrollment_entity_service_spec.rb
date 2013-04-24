@@ -75,7 +75,7 @@ module EnrollmentService
       let(:enrollment) do
         Factory(:enrollment, :subject => nil)
       end
-      let(:asset_reports) do
+      let!(:asset_reports) do
         FactoryGirl.create_list(:asset_report, 3, :enrollment => enrollment)
       end
       subject { EnrollmentEntityService.new(:enrollment => enrollment) }
@@ -84,43 +84,13 @@ module EnrollmentService
         subject.enrollments.should =~ [enrollment]
       end
 
-      context "when all asset reports are done" do
-        before { asset_reports.map { |ar| ar.update_attribute(:done, true) } }
-        it "should set graduated to true" do
-          subject.update_grade
-          enrollment.reload.graduated.should be_true
-        end
+      it "should invoke GradeCalculator#calculate_grade" do
+        calculator = mock('GradeCalculator')
 
-        it "should set grade to 100" do
-          subject.update_grade
-          enrollment.reload.grade.should == 100
-        end
+        GradeCalculator.stub(:new).and_return(calculator)
+        calculator.should_receive(:calculate_grade).and_return([[11,11,"member"]])
 
-        it "should not change Enrollment count" do
-          expect { subject.update_grade }.to_not change(Enrollment, :count)
-        end
-
-        it "should return the enrollments" do
-          subject.update_grade.map(&:class).should == [Enrollment]
-        end
-      end
-
-      context "when part 1/3 of the asset reports are done" do
-        before do
-          asset_reports.each_with_index do |as, index|
-            as.update_attribute(:done, true) if index % 2 == 0
-          end
-        end
-
-        it "should set graduated to false" do
-          subject.update_grade
-          enrollment.reload.graduated.should be_false
-        end
-
-        it "should set grade to 66.66" do
-          subject.update_grade
-          enrollment.reload.grade.should be_within(0.1).of(66.66)
-        end
+        subject.update_grade
       end
     end
   end
