@@ -19,4 +19,16 @@ shared_examples_for "created lecture" do
     lecture.name.should == create_params[:lecture][:name]
     lecture.lectureable.should == lectureable
   end
+
+  it "should invoke Lecture#create_asset_report" do
+    lecture = mock_lecture_initialize
+    lecture.should_receive(:create_asset_report)
+    post :create, create_params
+  end
+
+  def mock_lecture_initialize
+    lecture = Factory(:lecture)
+    Lecture.stub(:new).and_return(lecture)
+    lecture
+  end
 end
