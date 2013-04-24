@@ -21,11 +21,10 @@ module Api
       users = users_with_indiferent_access(context)
       users = filter_by_role(context, users, params[:role]) if params[:role]
 
-      if params[:reduce]
+      if params[:partial]
         respond_to do |format|
           format.json do
-            render :json => users.map{ |user|
-              { :id => user.id, :name =>user.display_name }}.to_json
+            render :json => users.to_json(:only => [:id, :first_name, :last_name])
           end
         end
       else

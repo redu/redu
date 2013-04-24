@@ -36,11 +36,11 @@ shared_examples_for "user listing" do
   end
 
   it "when return users for visualization should have only id and name" do
-    get "/api/#{entity_name}/#{subject.id}/users", :reduce => true,
+    get "/api/#{entity_name}/#{subject.id}/users", :partial => true,
     :oauth_token => token, :format => 'json'
 
-    %w(id name).each do |attr|
-      parse(response.body).first.should have_key attr
+    %w(id first_name first_name).each do |attr|
+      parse(response.body).first["user"].should have_key attr
     end
   end
 end

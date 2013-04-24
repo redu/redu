@@ -4,7 +4,7 @@
   var treemap = new StudentsTreemap();
   treemap.print({ form: $("#graph-form"),
   renderTo: "treemap-chart",
-  url: "<%= api_space_users_path(@space.id, :oauth_token => @token, :role=>'member', :reduce => true) %>" })
+  url: "<%= api_space_users_path(@space.id, :oauth_token => @token, :role=>'member', :partial => true) %>" })
 <% end %>
 
 <div id="space-manage" class="body management">

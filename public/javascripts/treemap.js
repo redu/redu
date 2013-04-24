@@ -55,9 +55,10 @@ var StudentsTreemap = function() {
       var item = {};
 
       // Busca o nome do aluno nos dados da API
-      var user = searchUser(vis[index].user_id, api)[0];
-      if (user) {
-        item.name = user.name;
+      var userObject = searchUser(vis[index].user_id, api)[0];
+      if (userObject) {
+        item.name = userObject.user.first_name;
+        item.last_name = userObject.user.last_name;
         item.id = vis[index].user_id;
       };
 
@@ -92,7 +93,7 @@ var StudentsTreemap = function() {
   var searchUser = function(userId, api) {
     // O retorno conterá apenas um elemento visto que um id só pode pertencer a um usuário
     return api.filter(function(item) {
-      return item.id === userId;
+      return item.user.id === userId;
     });
   }
 
@@ -137,7 +138,7 @@ var StudentsTreemap = function() {
       report.find(".row-head").append($("<th/>", { 'class': "head", 'text': "Média dos exercícios" }));
       if (!print){
           report.find(".row-head").append($("<th/>", { 'class': "head", 'text': "Link" }));
-          report.find("tbody").css('height', '500px').css('overflow', 'auto');
+          report.find("tbody").css('max-height', '500px').css('overflow', 'auto');
       }
 
       data.children.sort(compare);
@@ -147,7 +148,7 @@ var StudentsTreemap = function() {
             "<tr class='row' id='row-<%=object.id%>'>" +
                 "<td class='cell'>" +
                     "<div class='student-info'>" +
-                        "<span><%=object.name%></span>" +
+                        "<span><%=object.name + ' ' + object.last_name%></span>" +
                     "</div>" +
                 "</td>" +
                 "<td class='cell'>" +
@@ -191,9 +192,9 @@ var StudentsTreemap = function() {
   }
 
   function compare(a,b) {
-      if ((a.name).toUpperCase() < (b.name).toUpperCase())
+      if ((a.name + " " + a.last_name).toUpperCase() < (b.name + " " + a.last_name).toUpperCase())
           return -1;
-      if ((a.name).toUpperCase() > (b.name).toUpperCase())
+      if ((a.name + " " + a.last_name).toUpperCase() > (b.name + " " + a.last_name).toUpperCase())
           return 1;
       return 0;
   }
@@ -260,7 +261,7 @@ var StudentsTreemap = function() {
               .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
               .attr("alt", function(d) {
                 var nota = d.grade !== -1 ? d.grade : "nenhum exercício realizado"
-                return "Nome: " + d.name
+                return "Nome: " + d.name + " " + d.last_name
                         + "</br>Comentários: " + d.activities
                         + "</br>Pedidos de Ajuda: " + d.helps
                         + "</br>Respostas à comentários: " + d.answered_activities
@@ -285,7 +286,7 @@ var StudentsTreemap = function() {
               .attr("y", function(d) { return d.dy / 2; })
               .attr("dy", ".35em")
               .attr("text-anchor", "middle")
-              .text(function(d) { return d.name; })
+              .text(function(d) { return d.name + " " + d.last_name; })
               .style("opacity", function(d) { d.w = this.getComputedTextLength(); return d.dx > d.w ? 1 : 0; });
 
             // Tooltip da célula
