@@ -30,7 +30,8 @@ module EnrollmentService
         facade.stub(:notify_enrollment_creation)
         facade.stub(:update_grade)
 
-        facade.should_receive(:create_asset_report).with(subjects, users)
+        facade.should_receive(:create_asset_report).with(:subjects => subjects,
+                                                         :users => users)
         Subject.enroll(subjects, :users => users)
       end
 

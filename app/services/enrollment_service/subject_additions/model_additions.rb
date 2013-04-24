@@ -49,7 +49,8 @@ module EnrollmentService
           users = options[:users]
 
           service_facade.create_enrollment(subjects, users, :role => role)
-          service_facade.create_asset_report(subjects, users)
+          service_facade.create_asset_report(:subjects => subjects,
+                                             :users => users)
 
           # FIXME: fazer create_asset_report e create_enrollment retornarem
           # os asset reports e enrollments.
