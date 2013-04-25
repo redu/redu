@@ -1,28 +1,110 @@
-<%= render :partial => 'lectures/javascripts' %>
-<%= render :partial => 'subjects/sidebar' %>
-<div class="main space grid_12 omega big-col">
-  <%= render :partial => "subjects/breadcrumbs", :locals => { :subject => @subject } %>
-  <%= render :partial => 'subjects/header',
-    :locals => { :subject => @subject, :space => @space } %>
+<div class="span3">
+  <div class="lecture-left-sidebar">
+    <%= image_tag "../images/home/thumbnail-missing-environment-160.png" %>
+     <ul class="breadcrumb-icons">
+      <li class="breadcrumb-icon-item">
+        <a class="breadcrumb-icon-link" title="Universidade Voluptat Metus" href="#">
+          <span class="breadcrumb-icon text-replacement icon-environment-gray_32_34-before">Universidade Voluptat Metus</span>
+        </a>
+      </li>
+      <li class="breadcrumb-icon-item">
+        <a class="breadcrumb-icon-link" title="Curso Lorem Ipsum" href="#">
+          <span class="breadcrumb-icon text-replacement icon-course-gray_32_34-before" title="Curso Lorem Ipsum">Curso Lorem Ipsum</span>
+        </a>
+      </li>
+      <li class="breadcrumb-icon-item">
+        <a class="breadcrumb-icon-link" title="Disciplina Vestibulum Scelerisque" href="#">
+          <span class="breadcrumb-icon text-replacement icon-space-gray_32_34-before" title="Disciplina Vestibulum Scelerisque">Disciplina Vestibulum Scelerisque</span>
+        </a>
+      </li>
+      <li class="breadcrumb-icon-item breadcrumb-icon-active">
+        <a class="breadcrumb-icon-link" title="Módulo X" href="#">
+          <span class="breadcrumb-icon text-replacement icon-subject-lightblue_32_34-before" title="Módulo X">Módulo X</span>
+        </a>
+      </li>
+    </ul>
 
-  <div id="resource" class="hierarchy-listing-wrapper">
-    <div class="resource-head">
-      <%= render :partial => 'lectures/info',
-        :locals => { :lecture => @lecture } %>
-      <%= render :partial => 'lectures/context',
-        :locals => { :student_grade => @student_grade, :done => @done } %>
+    <ul class="nav-local">
+      <li class="nav-local-item link-container icon-subject-lightblue_16_18-before">
+        <a class="nav-local-link link-target" href="#" title="Aulas">Aulas</a>
+      </li>
+      <li class="nav-local-item icon-arrow-right-squared-gray_16_18-before link-container">
+        <a class="nav-local-link nav-local-lecture-link link-target" href="#" title="Aula de vídeo lore...">1. Aula de vídeo lore...</a>
+      </li>
+      <li class="nav-local-item link-container icon-wall-lightblue_16_18-before">
+        <a class="nav-local-link link-target" href="#" title="Mural">Mural</a>
+      </li>
+      <li class="nav-local-item link-container icon-wiki-lightblue_16_18-before">
+        <a class="nav-local-link link-target" href="#" title="Wiki">Wiki</a>
+      </li>
+      <li class="nav-local-item link-container icon-file-lightblue_16_18-before">
+        <a class="nav-local-link link-target" href="#" title="Arquivos de Apoio">Arquivos de Apoio</a>
+      </li>
+      <li class="nav-local-item link-container icon-members-lightblue_16_18-before">
+        <a class="nav-local-link link-target" href="#" title="Membros">Membros</a>
+      </li>
+    </ul>
+
+    <div class="nav-local-balloon">
+      <span class="nav-local-balloon-arrow icon-arrow-up-balloon-gray_20_8"></span>
+      <span class="nav-local-balloon-item">
+        <input type="checkbox" id="is-lecture-completed"><label for="is-lecture-completed" class="nav-local-balloon-is-lecture-completed">Aula finalizada?</label>
+      </span>
+      <div class="nav-local-separator"></div>
+      <div class="button-toolbar">
+        <button class="button-default" rel="tooltip" data-original-title="Comentários">
+          <span class="icon-comment-lightblue_16_18 show text-replacement">Comentários</span>
+        </button>
+        <button class="button-default" rel="tooltip" data-original-title="Dúvidas">
+          <span class="icon-request-help-lightblue_16_18 show text-replacement">Dúvidas</span>
+        </button>
+        <button class="button-default" rel="tooltip" data-original-title="Luzes">
+          <span class="icon-lights-lightblue_16_18 show text-replacement">Luzes</span>
+        </button>
+      </div>
+      <div class="nav-local-separator"></div>
+      <span class="nav-local-balloon-item">
+        <select>
+          <option>1. Aula de ví...</option>
+          <option>2. Aula de ví...</option>
+        </select>
+      </span>
+      <span class="nav-local-balloon-item">
+        <div class="button-toolbar">
+          <button class="button-default" rel="tooltip" data-original-title="Anterior">
+            <span class="icon-arrow-left-lightblue_16_18 show text-replacement">Anterior</span>
+          </button>
+          <button class="button-default" rel="tooltip" data-original-title="Próximo">
+            <span class="icon-arrow-right-lightblue_16_18 show text-replacement">Próximo</span>
+          </button>
+        </div>
+      </span>
+      <div class="nav-local-separator"></div>
+      <span class="nav-local-balloon-item icon-subject-gray_16_18-before">Aulas: 4 / 20</span>
+      <span class="nav-local-balloon-item">
+        <div rel="tooltip" class="progress-bar-legend progress-bar-medium" data-original-title="20% completado">
+          <span class="legend">20%</span>
+          <div class="progress-bar-thick progress-bar-total">
+            <span style="width: 20%;" class="progress-bar-completed text-replacement">20%</span>
+          </div>
+        </div>
+      </span>
+      <div class="nav-local-separator"></div>
+      <span class="nav-local-balloon-item icon-content-gray_16_18-before">Módulos: 1 / 5</span>
+      <span class="nav-local-balloon-item">
+        <div rel="tooltip" class="progress-bar-legend progress-bar-medium" data-original-title="20% completado">
+          <span class="legend">20%</span>
+          <div class="progress-bar-thin progress-bar-total">
+            <span style="width: 20%;" class="progress-bar-completed text-replacement">20%</span>
+          </div>
+        </div>
+      </span>
     </div>
-
-    <div class="resource-content clearfix">
-      <%= render :partial => 'lectures/details',
-        :locals => { :lecture => @lecture} %>
-      <div class="stage page-content content">
-        <iframe id="page-iframe" width="100%" src="<%= page_content_space_subject_lecture_path(@space, @subject, @lecture) %>">
-        </iframe>
-     </div>
+  </div>
+</div>
+<div class="span13">
+  <div class="content-area">
+    <div class="content-body">
     </div>
-
-    <%= render 'lectures/create_statuses', :lecture => @lecture, :statuses => @statuses %>
-  </div><!-- end #resource -->
-
-</div><!-- end .main -->
+  </div>
+</div>

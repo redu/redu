@@ -19,14 +19,19 @@ body {
   height: 180px;
 }
 
-.home-left-sidebar {
+.home-left-sidebar, .lecture-left-sidebar {
   padding-top: 17px;
 }
-.home-left-sidebar a:visited {
+.home-left-sidebar a:visited, .lecture-left-sidebar a:visited {
   color: #4dadd6;
 }
-.home-left-sidebar a:hover {
+.home-left-sidebar a:hover, .lecture-left-sidebar a:hover {
   color: #158ac4;
+}
+
+.lecture-left-sidebar {
+  padding-top: 43px;
+  padding-bottom: 21px;
 }
 
 .home-hello-user +
@@ -62,6 +67,10 @@ body {
 
 .nav-local-general-course span {
   padding-left: 21px;
+}
+
+.breadcrumb-icons {
+  margin: 20px 0;
 }
 
 .breadcrumb-mini + .content-body,

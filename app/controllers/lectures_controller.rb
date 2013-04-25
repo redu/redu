@@ -59,7 +59,7 @@ class LecturesController < BaseController
     respond_to do |format|
       if @lecture.lectureable_type == 'Page'
         format.html do
-          render :show_page
+          render :show_page, :layout => 'new_application'
         end
       elsif @lecture.lectureable_type == 'Seminar'
         format.html do
