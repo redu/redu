@@ -145,6 +145,23 @@ module EnrollmentService
           subject.destroy_enrollment(subjects, users)
         end
 
+        it "should invoke EnrollmentEntityService#destroy with users" do
+          mock_enrollment_service(enrollment_service)
+          enrollment_service.should_receive(:destroy).with(users)
+          subject.destroy_enrollment(subjects, users)
+        end
+      end
+    end
+
+    context "#destroy_asset_report" do
+      before do
+        mock_vis_adapter(vis_adapter)
+        vis_adapter.stub(:notify_enrollment_removal)
+        vis_adapter.stub(:notify_remove_subject_finalized)
+        mock_asset_report_service(asset_report_service)
+      end
+
+      context "with multiple users and subjects" do
         it "should initialize AssetReportEntityService with lectures" do
           add_lecture_to(subjects)
           subject.create_enrollment(subjects, users)
@@ -155,12 +172,6 @@ module EnrollmentService
             with(:lecture => lectures)
 
           subject.destroy_asset_report(subjects, users)
-        end
-
-        it "should invoke EnrollmentEntityService#destroy with users" do
-          mock_enrollment_service(enrollment_service)
-          enrollment_service.should_receive(:destroy).with(users)
-          subject.destroy_enrollment(subjects, users)
         end
 
         it "should invoke AssetReportEntityService#destroy with users'" \
@@ -254,7 +265,7 @@ module EnrollmentService
     end
 
     def mock_vis_adapter(m)
-      VisAdapter.stub(:new).and_return(m)
+      subject.stub(:vis_adapter).and_return(m)
     end
 
     def add_lecture_to(subj)
