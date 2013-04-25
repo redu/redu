@@ -5,6 +5,12 @@
 
 .container { position: relative; }
 
+.content-body .header {
+  margin-top: -11px;
+  margin-left: -1px;
+  margin-right: -1px;
+}
+
 .home-container {
   padding: 10px 20px;
   overflow: hidden;
