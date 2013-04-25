@@ -266,32 +266,35 @@ describe Lecture do
   end
 
 
-  context "destroy" do
-    before do
-      @lec = Factory(:lecture, :subject => @sub,
-                     :owner => @sub.owner)
+  context "#refresh_students_profile" do
+    subject { Factory(:lecture, :subject => @sub, :owner => @sub.owner) }
+    let(:enrollments) do
+      FactoryGirl.create_list(:enrollment, 2, :subject => @sub)
+    end
+    let(:assets) do
+      enrollments.map do |e|
+        FactoryGirl.create(:asset_report, :lecture => subject,
+                           :subject => @sub, :enrollment => e)
+      end.flatten
     end
 
-    #FIXME encontrar um jeito melhor de se testar o refresh_students_profiles
-    it "should update all students profiles" do
-      assets = AssetReport.all(:conditions => {
-                               :subject_id => subject.subject.id,
-                               :lecture_id => @lec.id})
+    before do
       assets.each do |asset|
         asset.done = 1
         asset.save
       end
-      @lec.refresh_students_profiles
-      grade = Enrollment.sum('grade', :conditions =>
-                             {:subject_id => subject.subject.id})
-      grade.should == 100
+    end
 
-      @lec.destroy
-      @lec.subject.reload
-      @lec.refresh_students_profiles
-      grade = Enrollment.sum('grade', :conditions =>
-                             {:subject_id => subject.subject.id})
-      grade.should == 0
+    it "should update all students profiles" do
+      subject.refresh_students_profiles
+      grade = enrollments.map(&:reload).map(&:grade)
+      grade.should == [100, 100]
+
+      subject.destroy
+      subject.subject.reload
+      subject.refresh_students_profiles
+      grade = enrollments.map(&:reload).map(&:grade)
+      grade.should == [0, 0]
     end
   end
 
