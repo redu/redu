@@ -47,53 +47,6 @@ describe Lecture do
     should respond_to :recent?
   end
 
-  context "#create_asset_report" do
-    let(:environment) { Factory.create(:complete_environment) }
-    let(:user) { environment.owner }
-    let(:course) { environment.courses.first }
-    let(:space) { course.spaces.first }
-    let(:sub) do
-      Factory(:subject, :owner => user, :space => space, :finalized => true)
-    end
-    let(:subject) do
-      Factory(:lecture, :subject => sub, :owner => user)
-    end
-
-    before do
-      sub.enroll
-      AssetReport.stub(:import)
-    end
-
-    context "with no arguments" do
-      it "should create AssetReports with Subject's enrollments and Lecture" do
-        args = { :subject => sub, :enrollment => sub.enrollments.first,
-                 :lecture => subject }
-        AssetReport.should_receive(:new).with(args)
-        subject.create_asset_report
-      end
-    end
-
-    context "passing a enrollment as argument" do
-      it "should create AssetReport with enrollment passed" do
-        enrollments = sub.enroll(Factory.create(:user))
-        args = { :subject => sub, :enrollment => enrollments.first,
-                 :lecture => subject }
-        AssetReport.should_receive(:new).with(args)
-        subject.create_asset_report(:enrollments => enrollments)
-      end
-    end
-
-    it "should invoke Enrollment#update_grade!" do
-      sub.enrollments.map { |e| e.should_receive(:update_grade!) }
-      subject.create_asset_report
-    end
-
-    it "should batch insert AssetReports (AssetReport.import)" do
-      AssetReport.should_receive(:import)
-      subject.create_asset_report
-    end
-  end
-
   context "finders" do
     it "retrieves lectures that are seminars" do
       pending "Need seminar Factory" do
