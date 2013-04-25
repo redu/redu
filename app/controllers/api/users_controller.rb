@@ -22,10 +22,8 @@ module Api
       users = filter_by_role(context, users, params[:role]) if params[:role]
 
       if params[:partial]
-        respond_to do |format|
-          format.json do
-            render :json => users.to_json(:only => [:id, :first_name, :last_name])
-          end
+        respond_with(users) do |format|
+          format.json { render :json => users.to_json(:only => [:id, :first_name, :last_name]) }
         end
       else
         users = users.includes(:social_networks, :tags)

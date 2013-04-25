@@ -55,10 +55,11 @@ var StudentsTreemap = function() {
       var item = {};
 
       // Busca o nome do aluno nos dados da API
-      var userObject = searchUser(vis[index].user_id, api)[0];
-      if (userObject) {
-        item.name = userObject.user.first_name;
-        item.last_name = userObject.user.last_name;
+      var user = searchUser(vis[index].user_id, api);
+      if (user) {
+        // Informações básicas do aluno
+        item.name = user.first_name;
+        item.last_name = user.last_name;
         item.id = vis[index].user_id;
       };
 
@@ -74,9 +75,8 @@ var StudentsTreemap = function() {
       json.children.push(item);
     })
 
-    // Filtra os objetos para que não mostrem os usuarios da disciplina
-    // que não são apenas alunos, estes não terão a opção 'name' preenchida
-    json.children = json.children.filter(function(d) { return !!d.name; });
+    // Filtra os filhos para que só mostrem os membros (alunos) da disciplina
+    json.children = json.children.filter(function(child) { return child.name; });
     return json;
   }
 
@@ -92,9 +92,16 @@ var StudentsTreemap = function() {
   // Função que busca o nome do usuário pelo seu id
   var searchUser = function(userId, api) {
     // O retorno conterá apenas um elemento visto que um id só pode pertencer a um usuário
-    return api.filter(function(item) {
+    var response = api.filter(function(item) {
       return item.user.id === userId;
     });
+
+    // Se houver resposta, retorna o usuário
+    if (response[0]) {
+      return response[0].user;
+    }
+
+    return response;
   }
 
   // Função usada para remover treemap antigo, caso houver
