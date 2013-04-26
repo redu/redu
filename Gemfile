@@ -44,8 +44,7 @@ gem 'jammit-s3'
 gem 'jquery-rails', '>= 1.0.12'
 gem 'kaminari'
 gem 'mime-types'
-gem 'mysql2', :git => 'git://github.com/brianmario/mysql2.git',
-  :branch => '0.2.x'
+gem "mysql2", "~> 0.3.11"
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'pusher'

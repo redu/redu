@@ -6,13 +6,6 @@ GIT
       activesupport (>= 2.3.2)
 
 GIT
-  remote: git://github.com/brianmario/mysql2.git
-  revision: 445fa89fc8ce1ab20505d6f3f5316a682bb58fa1
-  branch: 0.2.x
-  specs:
-    mysql2 (0.2.19b6)
-
-GIT
   remote: git://github.com/edgarjs/ajaxful-rating.git
   revision: f22e2c38d601f8279e959fbe9a578b2314235505
   branch: rails3
@@ -289,6 +282,7 @@ GEM
       tzinfo (~> 0.3.22)
     multi_json (1.0.4)
     multipart-post (1.2.0)
+    mysql2 (0.3.11)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
     net-ssh (2.6.7)
@@ -492,7 +486,7 @@ DEPENDENCIES
   kaminari
   mime-types
   mongoid (~> 2.7.1)
-  mysql2!
+  mysql2 (~> 0.3.11)
   newrelic_rpm (= 3.0.1)
   no_peeping_toms!
   oauth-plugin (~> 0.4.0)
