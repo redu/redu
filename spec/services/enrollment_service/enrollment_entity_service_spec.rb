@@ -39,7 +39,21 @@ module EnrollmentService
 
         subject.importer.should_receive(:insert).with(records)
 
-        subject.create(user_role_pairs)
+        subject.create(:users_and_roles => user_role_pairs)
+      end
+
+      it "should accept optional users and role" do
+        users = FactoryGirl.create_list(:user, 2)
+        role = Role[:member]
+
+        records = []
+        subjects.each do |s|
+          users.each { |user| records << [user.id, s.id, role] }
+        end
+
+        subject.importer.should_receive(:insert).with(records)
+
+        subject.create(:users => users, :role => role)
       end
     end
 

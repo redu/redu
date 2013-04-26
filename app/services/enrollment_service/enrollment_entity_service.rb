@@ -15,10 +15,20 @@ module EnrollmentService
 
     # Matricula usuários no Subject.
     # Parâmetros:
-    #   - Opcional: lista de pares do tipo [[User,Role]] representando os usuários
-    #     a serem matriculados. Caso não seja passado os usuários do Space serão
-    #     utilizados.
-    def create(users_and_roles=nil)
+    #   - users_and_roles (opcional): lista de pares do tipo [[User,Role]]
+    #     representando os usuários a serem matriculados.
+    #   - users (opcional): lista de usuários a serem matriculados.
+    #   - role (opcional): papel com o qual os usuários serão matriculados.
+    #
+    #   Caso não seja passado nenhum argumento, os usuários do Space serão
+    #   utilizados.
+    def create(opts={})
+      users_and_roles = opts[:users_and_roles]
+      role = opts[:role] || Role[:member]
+      users = opts[:users] || []
+
+      users_and_roles ||= users.map { |u| [u, role.to_s] }
+
       builder = infer_builder_from_arguments(:users_and_roles => users_and_roles)
       importer.insert(builder.to_a)
     end

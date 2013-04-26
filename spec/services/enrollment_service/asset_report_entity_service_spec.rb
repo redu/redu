@@ -12,7 +12,7 @@ module EnrollmentService
 
     before do
       EnrollmentEntityService.new(:subject => subjects).
-        create(3.times.collect { [Factory(:user), Role[:member]] })
+        create(:users => FactoryGirl.create_list(:user, 3))
     end
 
     it "should wrap a collection of lectures" do

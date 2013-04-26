@@ -31,29 +31,33 @@ module EnrollmentService
         subject.create_enrollment([subj], [user])
       end
 
-      it "should invoke EnrollmentEntityService#create with users and roles" do
-        users_and_roles = users.map { |u| [u, Role[:member].to_s]}
-
-        enrollment_service.should_receive(:create).with(users_and_roles)
-
+      it "should invoke EnrollmentEntityService#create with only users" do
+        enrollment_service.should_receive(:create).with(:users => users,
+                                                        :role => nil)
         subject.create_enrollment([subj], users)
       end
 
       it "should invoke EnrollmentEntityServie#create with the role passed" do
-        users_and_roles = users.map { |u| [u, Role[:environment_admin].to_s]}
-
-        enrollment_service.should_receive(:create).with(users_and_roles)
-
-        subject.create_enrollment([subj], users, :role => Role[:environment_admin])
+        role = Role[:environment_admin]
+        enrollment_service.should_receive(:create).with(:users => users,
+                                                        :role => role)
+        subject.create_enrollment([subj], users, :role => role)
       end
 
       context "with multiple subjects and users" do
         it "should invoke EnrollmentEntityService#create users and roles" do
-          users_and_roles = users.map { |u| [u, Role[:member]] }
+          role = Role[:member]
+          enrollment_service.should_receive(:create).with(:users => users,
+                                                          :role => role)
+          subject.create_enrollment(subjects, users, :role => role)
+        end
+      end
 
-          enrollment_service.should_receive(:create).with(users_and_roles)
-
-          subject.create_enrollment(subjects, users)
+      context "without args" do
+        it "should invoke EnrollmentEntityService#create with nil" do
+          enrollment_service.should_receive(:create).with(:users => nil,
+                                                          :role => nil)
+          subject.create_enrollment(subjects)
         end
       end
     end

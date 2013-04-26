@@ -45,16 +45,8 @@ module EnrollmentService
     # options:
     #   - role: Papel dos usuários
     def create_enrollment(subjects, users=nil, opts={})
-      options = { :role => Role[:member] }.merge(opts)
-
       service = EnrollmentEntityService.new(:subject => subjects)
-
-      if users
-        users_and_roles = users.map { |u| [u, options[:role].to_s] }
-        service.create(users_and_roles)
-      else
-        service.create
-      end
+      service.create(:users => users, :role => opts[:role])
     end
 
     # Notifica remoção de enrollments a Vis
