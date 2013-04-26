@@ -27,7 +27,7 @@
             <%= render "statuses/user_image", :item => item %>
             <%= render "statuses/user_name", :item => item %>
             <span class="action">pediu <span class="help">ajuda</span> na Aula</span>
-            <%= link_to item.statusable.name, space_subject_lecture_path(item.statusable.subject.space) %>
+            <%= link_to item.statusable.name, space_subject_lecture_path(item.statusable.subject.space, item.statusable.subject, item.statusable) %>
             <% if can? :manage, item %>
               <%= link_to 'Fechar',
                 status_path(item),
@@ -53,7 +53,7 @@
       <hr class="list-separator">
       <div class="status">
         <div class="context">
-          <%= link_to item.statusable.name, space_subject_lecture_path(item.statusable.subject.space, item.statusable.subject, item.statusable), :class => "text-replacement context-icon icon-subject-gray_32_34-before" %>
+          <%= link_to item.statusable.name, space_subject_lecture_path(item.statusable.subject.space, item.statusable.subject, item.statusable), :class => "text-replacement context-icon icon-lecture-gray_32_34-before" %>
           <span class="legend">
             <%= item.statusable.subject.space.course.environment.name %> >
             <%= item.statusable.subject.name  %> >
@@ -65,13 +65,13 @@
           <%= render "statuses/user_image", :item => item %>
           <div class="subject-info icon-<%= item.user ? role_at(item.user, item.statusable) : "member" %>-gray_16_18-before ">
             <%= render "statuses/user_name", :item => item %>
-            <span class="action">comentou no mural da aula  <%= link_to item.statusable.name, space_subject_lecture_path(item.statusable.subject.space, item.statusable.subject, item.statusable) %></span>
+            <span class="action">comentou no mural da aula </span><%= link_to item.statusable.name, space_subject_lecture_path(item.statusable.subject.space, item.statusable.subject, item.statusable) %>
             <% if can? :manage, item %>
               <%= link_to 'Fechar',
                 status_path(item),
                 :method => :delete,
                 :remote => true,
-                :class => 'icon-icon-close icon-small icon-close-gray_16_16 replacement',
+                :class => 'icon-close icon-small icon-close-gray_16_16 replacement',
                 :confirm => 'Ao remover o comentário, todas as respostas serão apagadas. Deseja removê-lo?' %>
           <% end %>
             <%= render :partial => 'statuses/timeago', :locals => { :item => item } %>

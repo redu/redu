@@ -4,7 +4,7 @@
     <div class="context">
       <%= link_to log.logeable.name, space_path(log.logeable), :class => "text-replacement context-icon icon-space-gray_32_34-before" %>
       <span class="legend">
-        <%= log.logeable.space.course.environment.name %>
+        <%= log.logeable.space.course.environment.name %> >
         <%= log.logeable.space.course.name %>
       </span>
         <%= link_to log.logeable.space.name, space_path(log.logeable.space, log.logeable) %>

@@ -1,17 +1,18 @@
 <li id="status-<%= compound.id %>">
   <hr class="list-separator">
   <div class="status without-context">
-    <div class="subject">
+    <div class="context">
       <%= link_to user_path(compound.user), :rel => "nofollow", :title => "#{compound.statusable.first_name} #{compound.statusable.last_name}", :class => "author-thumbnail" do %>
         <%= image_tag compound.statusable.avatar.url(:thumb_32), :width => 32, :height => 32 %>
       <% end %>
-      <div class="subject-info">
-        <%= link_to "#{compound.statusable.first_name} #{compound.statusable.last_name}",
+      <%= link_to "#{compound.statusable.first_name} #{compound.statusable.last_name}",
           user_path(compound.statusable), :class => "link-name" %>
+    </div>
+    <div class="subject">
+      <div class="subject-info">
         <span class="action">
           adicionou <%= compound.logs.count %> novas pessoas à sua rede de contatos
         </span>
-        <%= render :partial => 'statuses/timeago', :locals => { :item => compound } %>
         <span href="#" class="link-fake see-all link-secondary">+ ver todos</span>
       </div>
     </div>

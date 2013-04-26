@@ -4,10 +4,16 @@
   $status = $("#status-<%= status_id %>");
 
   $status.find(".responses").show();
-  $status.find(".create-status").slideUp();
-  $status.find(".toggle-statuses .qty").text($status.find(".responses > ol > li").length);
+  $status.find(".create-response").slideUp();
+  $status.find(".toggle-statuses .qty").text($status.find(".responses > li").length);
   $status.find("form textarea").val('');
-  $status.find(".responses ol").append(response);
-  $status.find(".responses > ol > li").last().hide();
-  $status.find(".responses > ol > li").last().slideDown();
+  if ($status.find(".responses > li").length < 5) {
+    $(response).insertBefore($status.find(".responses > li:last"));
+  }
+  else {
+    $status.find(".responses > li:last").prev().append(response);
+  }
+  $status.find(".responses").countComments().groupResponses();
+  $status.find(".responses .see-more").exibeComments();
 <% end %>
+

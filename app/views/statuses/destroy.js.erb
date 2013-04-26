@@ -1,6 +1,8 @@
 $("#status-<%= @status.id %>").slideUp(function(){
-  if ($(this).siblings("li").length == 0) {
+  $countAtt = $(this).closest(".responses");
+  if ($(this).siblings("li").length == 2) {
     $(this).parents(".responses").hide();
   };
   $(this).remove();
+  $countAtt.countComments().groupResponses();
 });

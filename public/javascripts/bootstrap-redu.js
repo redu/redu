@@ -39,7 +39,7 @@ var findIconClasses = function(classes) {
 
   $(function () {
 
-    "use strict"; // jshint ;_;
+    "use strict";
 
 
     /* CSS TRANSITION SUPPORT (http://www.modernizr.com/)
@@ -98,7 +98,7 @@ var findIconClasses = function(classes) {
 
 !function ($) {
 
-  "use strict"; // jshint ;_;
+  "use strict";
 
 
  /* ALERT CLASS DEFINITION
@@ -188,7 +188,7 @@ var findIconClasses = function(classes) {
 
 !function ($) {
 
-  "use strict"; // jshint ;_;
+  "use strict";
 
 
  /* DROPDOWN CLASS DEFINITION
@@ -338,7 +338,7 @@ var findIconClasses = function(classes) {
 
 !function ($) {
 
-  "use strict"; // jshint ;_;
+  "use strict";
 
 
  /* MODAL CLASS DEFINITION
@@ -558,7 +558,7 @@ var findIconClasses = function(classes) {
 
 !function ($) {
 
-  "use strict"; // jshint ;_;
+  "use strict";
 
 
  /* TOOLTIP PUBLIC CLASS DEFINITION
@@ -841,7 +841,7 @@ $(function() {
 
 !function ($) {
 
-  "use strict"; // jshint ;_;
+  "use strict";
 
 
  /* POPOVER PUBLIC CLASS DEFINITION
@@ -1169,8 +1169,8 @@ $(function() {
       })
     },
 
-    // Adiciona/remove a classe indicativa de controle em foco.
-    toggleFocusLabel: function(options) {
+    // Adiciona a classe indicativa de controle em foco.
+    focusLabel: function(options) {
       var settings = $.extend({
         // Classe adicionada quando o controle está me foco.
         controlFocusedClass: 'control-focused'
@@ -1178,7 +1178,19 @@ $(function() {
       , controlGroupClass: 'control-group'
       }, options)
 
-      $(this).parents('.' + settings.controlGroupClass).toggleClass(settings.controlFocusedClass)
+      $(this).parents('.' + settings.controlGroupClass).addClass(settings.controlFocusedClass)
+    },
+
+    // Remove a classe indicativa de controle em foco.
+    removeFocusLabel: function(options) {
+      var settings = $.extend({
+        // Classe adicionada quando o controle está me foco.
+        controlFocusedClass: 'control-focused'
+        // Classe que identifica o container do controle.
+      , controlGroupClass: 'control-group'
+      }, options)
+
+      $(this).parents('.' + settings.controlGroupClass).removeClass(settings.controlFocusedClass)
     },
 
     // Ajusta a altura do textarea de acordo com seu atributo rows.
@@ -1294,10 +1306,14 @@ $(function() {
 $(function() {
   $('input[type="text"][maxlength], input[type="password"][maxlength], textarea[maxlength]').reduForm('countChars');
 
-  $(document).on('focus blur', 'input[type="text"], input[type="password"], input[type="file"], textarea, select', function(e) {
-    $(this).reduForm('toggleFocusLabel')
-  })
-
+  var focusInputSelectors = 'input[type="text"], input[type="password"], input[type="file"], textarea, select';
+  $(document)
+    .on('focus', focusInputSelectors, function(e) {
+      $(this).reduForm('focusLabel')
+    })
+    .on('blur', focusInputSelectors, function(e) {
+      $(this).reduForm('removeFocusLabel')
+    })
 
   // Comportamento de escurer texto do checkbox/radio selecionado.
 
@@ -1397,7 +1413,7 @@ $(function() {
 
   // Plugins.
 
-  $('textarea').autosize()
+  $('.controls textarea').autosize()
 
   placeHolderConfig = {
     // Nome da classe usada para estilizar o placeholder.
@@ -2129,7 +2145,7 @@ $(function() {
 
 !function ($) {
 
-  "use strict"; // jshint ;_;
+  "use strict";
 
 
  /* DEFINIÇÃO DE CLASSE DO CAMPO DE BUSCA.
@@ -2230,15 +2246,15 @@ $.fn.exibeComments = function(opts){
     var $this = $(this);
 
     $this.live("click", function(e){
+      console.log(2)
       var $responses = $this.parents(".responses");
 
       // Esconde todas as respostas mais antigas
       if ($responses.hasClass("open")){
         $responses.find(".last-responses").html("Visualizando as últimas respostas...");
-        $responses.countComments();
         $responses.find('li').animate(150);
-        $responses.groupResponses();
         $responses.removeClass("open");
+        $responses.groupResponses();
       }
 
       // Exibe todas as respostas
@@ -2296,9 +2312,15 @@ $.fn.groupResponses = function(opts){
     $.extend(options, opts)
 
     var $responses = $this.find("li:not(.show-responses)");
+    debugger
     if ($responses.length > options.maxResponses) {
       $responses.filter(":lt(" + ($responses.length - options.maxResponses) + ")").slideUp(150, "swing");
       $(this).find(".show-responses").show();
+    }
+
+    else {
+      $(this).find(".show-responses").hide();
+      $responses.first().find('hr').hide();
     }
 
     // Exibe Respostas caso haja
@@ -2306,16 +2328,14 @@ $.fn.groupResponses = function(opts){
       $responses.parent().show();
     }
 
-
-    if ($responses.length > options.maxResponses) {
-      $responses.filter(":lt(" + ($responses.length - options.maxResponses) + ")").slideUp(150, "swing");
-      $(this).find(".show-responses").show();
-    } else {
-      $responses.first().find('hr').hide();
-    }
+    // // Remove hr da primeira resposta
+    // if ($responses.length > options.maxResponses) {
+    //   $responses.filter(":lt(" + ($responses.length - options.maxResponses) + ")").slideUp(150, "swing");
+    //   $(this).find(".show-responses").show();
+    // } else {
+    // }
   });
 }
-
 
 // Agrupa membros
 $.fn.groupMembers = function(opts){
@@ -2323,16 +2343,17 @@ $.fn.groupMembers = function(opts){
     var $this = $(this);
     var options = {
       elementWidth : 34,
-      elementHeight : 40
+      elementHeight : 40,
+      widthMax : 408
     }
     $.extend(options, opts)
 
     var $elements = $this.find("li");
     var width = $this.width();
-    var newHeight = (Math.ceil((($elements.length * options.elementWidth) /  width)) *  options.elementHeight);
+    var newHeight = (Math.ceil((($elements.length * options.elementWidth) /  options.widthMax)) *  options.elementHeight);
 
     // Exibe os elementos agrupados
-    $(".log .see-all").live("click",function(e) {
+    $this.closest(".status").find(".link-fake.see-all").click(function(e) {
 
       // Exibe todos os elementos
       if ($this.hasClass("open")) {
@@ -2372,7 +2393,7 @@ $(function() {
     var $link = $this.parent().find(".context-link");
     var findIconClass = function (classes) {
       for (i = 0; classes.length; i++) {
-        if (classes[i].indexOf("icon-") !== -1) {
+        if (classes[i].indexOf("icon") !== -1) {
           return classes[i];
         }
       }
@@ -2404,3 +2425,20 @@ $(function() {
   })
 
 });
+$(function() {
+  var settings = {
+    // Engloba todo o botão dropdown e formulário de login.
+    buttonSignInWrapper: ".header-button-sign-in"
+    // O botão dropdown.
+  , buttonDropdown: ".dropdown-toggle"
+    // O campo de login (logicamente deve ser o primeiro).
+  , inputLogin: "input:text:first"
+  }
+
+  // Foca no primeiro campo (de login) quando o botão dropdown "Entrar no Redu" é aberto.
+  $("body").on("click", settings.buttonSignInWrapper + " " + settings.buttonDropdown, function() {
+    setTimeout(function() {
+      $(settings.buttonSignInWrapper).find(settings.inputLogin).focus()
+    }, 100)
+  })
+})

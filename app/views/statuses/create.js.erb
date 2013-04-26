@@ -1,8 +1,8 @@
-newStatus = "<%= escape_javascript (render :partial =>"statuses/item", :locals => {:item => @status, :statusable => @status.statusable}) %>";
+$newStatus = $("<%= escape_javascript (render :partial =>"statuses/item", :locals => {:item => @status, :statusable => @status.statusable}) %>");
 
-$("#statuses > ol").prepend(newStatus);
+$("#statuses > ol").prepend($newStatus);
 $("#statuses > ol > li:first .responses").hide();
 $('#status_text').val('');
-$('.answer').val('');
+$newStatus.find('textarea').val('');
 $('textarea.status:visible').parents('div.fieldWithErrors:first').removeClass('fieldWithErrors');
 $('.errorMessageField').remove();
