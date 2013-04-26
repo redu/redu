@@ -1,5 +1,6 @@
 class UserCourseInvitation < CourseEnrollment
   require 'active_support'
+  require 'securerandom'
 
   belongs_to :user
 
@@ -52,7 +53,7 @@ class UserCourseInvitation < CourseEnrollment
 
   protected
   def generate_token
-    self.token = ActiveSupport::SecureRandom.base64(8).gsub("/","_").
+    self.token = SecureRandom.base64(8).gsub("/","_").
       gsub(/=+$/,"")
   end
 
