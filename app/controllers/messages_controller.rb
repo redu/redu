@@ -6,7 +6,7 @@ class MessagesController < BaseController
     authorize! :manage, @user
     @total_messages = @user.received_messages.count
     @messages = @user.received_messages.page(params[:page]).
-      per(Redu::Application.config.items_per_page)
+      per_page(Redu::Application.config.items_per_page)
 
     respond_to do |format|
       format.html do
@@ -24,7 +24,7 @@ class MessagesController < BaseController
     authorize! :manage, @user
     @total_messages = @user.sent_messages.count
     @messages = @user.sent_messages.page(params[:page]).
-      per(Redu::Application.config.items_per_page)
+      per_page(Redu::Application.config.items_per_page)
 
     respond_to do |format|
         format.html do

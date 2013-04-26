@@ -30,7 +30,7 @@
   <% end %>
   <span class="call icon-member-gray_16_18-before">Alunos: <%= link_to space.students.count, space_users_path(space, :role => :students), :class => "count" %></span>
   <ul class="connections students clearfix">
-    <% @sidebar_students = space.students.page(params[:page]).per(4) %>
+    <% @sidebar_students = space.students.page(params[:page]).per_page(4) %>
     <%= render :partial => 'users/item_medium_24',
       :collection => @sidebar_students %>
   </ul><!-- end .connections -->

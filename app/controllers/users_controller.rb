@@ -53,10 +53,10 @@ class UsersController < BaseController
 
   def contacts_endless
     @contacts = if current_user == @user
-      Kaminari::paginate_array(@user.friends).page(params[:page]).per(8)
+      Kaminari::paginate_array(@user.friends).page(params[:page]).per_page(8)
     else
       Kaminari::paginate_array(@user.friends_not_in_common_with(current_user)).
-        page(params[:page]).per(4)
+        page(params[:page]).per_page(4)
     end
 
     respond_to do |format|
@@ -66,7 +66,7 @@ class UsersController < BaseController
   end
 
   def environments_endless
-    @environments = @user.environments.page(params[:page]).per(4)
+    @environments = @user.environments.page(params[:page]).per_page(4)
 
     respond_to do |format|
       format.js { render_sidebar_endless 'environments/item_medium',

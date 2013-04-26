@@ -267,7 +267,7 @@ class EnvironmentsController < BaseController
     @total_environments = @user.environments.count
     @environments = @user.environments.
       includes(:courses => :spaces).page(params[:page]).
-      per(Redu::Application.config.items_per_page)
+      per_page(Redu::Application.config.items_per_page)
 
     respond_to do |format|
       format.html do

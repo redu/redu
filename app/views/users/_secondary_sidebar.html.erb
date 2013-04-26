@@ -52,7 +52,7 @@
       <span class="icon-environment-white-green_16_18-before">Cursos inscritos: <%= subscribed_courses_count %></span>
     </div>
     <ul>
-      <% @environments = @user.environments.page(params[:page]).per(4) %>
+      <% @environments = @user.environments.page(params[:page]).per_page(4) %>
       <%= render :partial => 'environments/item_medium',
         :collection => @environments %>
     </ul>
