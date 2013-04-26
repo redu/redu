@@ -509,7 +509,7 @@ DEPENDENCIES
   remotipart (~> 1.0)
   roar
   roar-rails
-  rspec (~> 2.13.0)
+  rspec (~> 2.13)
   ruby-debug
   ruby-prof
   scribd_fu!
