@@ -45,7 +45,7 @@
       </li>
     </ul>
 
-    <div class="nav-local-balloon">
+    <div class="nav-local-balloon" data-spy="affix">
       <span class="nav-local-balloon-arrow icon-arrow-up-balloon-gray_20_8"></span>
       <span class="nav-local-balloon-item">
         <input type="checkbox" id="is-lecture-completed"><label for="is-lecture-completed" class="nav-local-balloon-is-lecture-completed">Aula finalizada?</label>
@@ -153,6 +153,9 @@
       <div class="content-section">
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc suscipit sodales nunc, ut vulputate leo egestas nec. Duis tincidunt adipiscing lorem, nec pharetra tortor mattis a. Integer metus justo, tempus vel ultricies ut, commodo quis mauris. Vestibulum scelerisque lacus in purus euismod rhoncus. Maecenas ac nulla ut neque vehicula malesuada non eu libero. Mauris ac nisi id neque laoreet consectetur non nec justo. Cras feugiat congue nulla sed dignissim. Suspendisse nisl ipsum, dignissim id feugiat non, convallis pellentesque lectus. Cras ut luctus turpis. Cras a ligula a mi congue fermentum at at sem. Suspendisse potenti. Nulla varius nunc non sapien pellentesque quis sagittis sapien dictum. In eget vehicula leo. Mauris consequat fringilla quam.</p>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc suscipit sodales nunc, ut vulputate leo egestas nec. Duis tincidunt adipiscing lorem, nec pharetra tortor mattis a. Integer metus justo, tempus vel ultricies ut, commodo quis mauris. Vestibulum scelerisque lacus in purus euismod rhoncus. Maecenas ac nulla ut neque vehicula malesuada non eu libero. Mauris ac nisi id neque laoreet consectetur non nec justo. Cras feugiat congue nulla sed dignissim. Suspendisse nisl ipsum, dignissim id feugiat non, convallis pellentesque lectus. Cras ut luctus turpis. Cras a ligula a mi congue fermentum at at sem. Suspendisse potenti. Nulla varius nunc non sapien pellentesque quis sagittis sapien dictum. In eget vehicula leo. Mauris consequat fringilla quam.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc suscipit sodales nunc, ut vulputate leo egestas nec. Duis tincidunt adipiscing lorem, nec pharetra tortor mattis a. Integer metus justo, tempus vel ultricies ut, commodo quis mauris. Vestibulum scelerisque lacus in purus euismod rhoncus. Maecenas ac nulla ut neque vehicula malesuada non eu libero. Mauris ac nisi id neque laoreet consectetur non nec justo. Cras feugiat congue nulla sed dignissim. Suspendisse nisl ipsum, dignissim id feugiat non, convallis pellentesque lectus. Cras ut luctus turpis. Cras a ligula a mi congue fermentum at at sem. Suspendisse potenti. Nulla varius nunc non sapien pellentesque quis sagittis sapien dictum. In eget vehicula leo. Mauris consequat fringilla quam.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc suscipit sodales nunc, ut vulputate leo egestas nec. Duis tincidunt adipiscing lorem, nec pharetra tortor mattis a. Integer metus justo, tempus vel ultricies ut, commodo quis mauris. Vestibulum scelerisque lacus in purus euismod rhoncus. Maecenas ac nulla ut neque vehicula malesuada non eu libero. Mauris ac nisi id neque laoreet consectetur non nec justo. Cras feugiat congue nulla sed dignissim. Suspendisse nisl ipsum, dignissim id feugiat non, convallis pellentesque lectus. Cras ut luctus turpis. Cras a ligula a mi congue fermentum at at sem. Suspendisse potenti. Nulla varius nunc non sapien pellentesque quis sagittis sapien dictum. In eget vehicula leo. Mauris consequat fringilla quam.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc suscipit sodales nunc, ut vulputate leo egestas nec. Duis tincidunt adipiscing lorem, nec pharetra tortor mattis a. Integer metus justo, tempus vel ultricies ut, commodo quis mauris. Vestibulum scelerisque lacus in purus euismod rhoncus. Maecenas ac nulla ut neque vehicula malesuada non eu libero. Mauris ac nisi id neque laoreet consectetur non nec justo. Cras feugiat congue nulla sed dignissim. Suspendisse nisl ipsum, dignissim id feugiat non, convallis pellentesque lectus. Cras ut luctus turpis. Cras a ligula a mi congue fermentum at at sem. Suspendisse potenti. Nulla varius nunc non sapien pellentesque quis sagittis sapien dictum. In eget vehicula leo. Mauris consequat fringilla quam.</p>
       </div>
       <hr class="list-separator">
 
@@ -164,3 +167,10 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    var offset = $('.nav-local-balloon').offset();
+    $('.nav-local-balloon').attr('data-offset-top', offset.top + 76);
+  });
+</script>

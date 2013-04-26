@@ -2240,6 +2240,172 @@ $(function() {
   })
 
 }(window.jQuery);
+// Exibe todos os comentários
+$.fn.exibeComments = function(opts){
+  return this.each(function(){
+    var $this = $(this);
+
+    $this.live("click", function(e){
+      var $responses = $this.parents(".responses");
+
+      // Esconde todas as respostas mais antigas
+      if ($responses.hasClass("open")){
+        $responses.find(".last-responses").html("Visualizando as últimas respostas...");
+        $responses.countComments();
+        $responses.find('li').animate(150);
+        $responses.groupResponses();
+        $responses.removeClass("open");
+      }
+
+      // Exibe todas as respostas
+      else {
+        $responses.find(".last-responses").html("Visualizando todas as respostas...");
+        $responses.find("li").slideDown(150, 'swing');
+        $this.html("esconder todas as respostas");
+        // Adiciona a class open para informar que todas as respostas estão exibidas
+        $responses.addClass("open");
+      }
+    });
+  });
+};
+
+// Exibe área de criação de respostas
+$(".actions .reply-status span").live("click", function(e){
+  var $this = $(this);
+
+  $this.parents(".subject-content").find(".create-response").slideToggle(150, 'swing');
+});
+
+// Esconde formulário para criação de respostas
+$(".create-response .status-buttons .cancel").live("click",function(e){
+  var $this = $(this);
+
+  $this.parents(".create-response").slideUp(150, 'swing');
+});
+
+// Expande o text-area para a criação de status
+$(".create-status textarea").live("click",function(e){
+  var $textArea = $(this);
+  var $button = $textArea.parent().find(".status-buttons");
+
+  $textArea.animate({ height: 136 }, 150);
+  $button.slideDown(150, "swing");
+  e.preventDefault();
+})
+
+// Cancelar a criação de status
+$(".create-status .status-buttons .cancel").live("click", function(e){
+  e.preventDefault()
+  var $this = $(this);
+
+  $this.parents("form").find("textarea").animate({ height: 30 }, 150);
+  $this.parents(".status-buttons").slideUp(150, 'swing');
+})
+
+// Agrupa respostas
+$.fn.groupResponses = function(opts){
+  return this.each(function(){
+    var $this = $(this);
+    var options = {
+      maxResponses : 3
+    }
+    $.extend(options, opts)
+
+    var $responses = $this.find("li:not(.show-responses)");
+    if ($responses.length > options.maxResponses) {
+      $responses.filter(":lt(" + ($responses.length - options.maxResponses) + ")").slideUp(150, "swing");
+      $(this).find(".show-responses").show();
+    }
+  });
+}
+
+// Agrupa membros
+$.fn.groupMembers = function(opts){
+  return this.each(function(){
+    var $this = $(this);
+    var options = {
+      elementWidth : 34,
+      elementHeight : 40
+    }
+    $.extend(options, opts)
+
+    var $elements = $this.find("li");
+    var width = $this.width();
+    var newHeight = (Math.ceil((($elements.length * options.elementWidth) /  width)) *  options.elementHeight);
+
+    // Exibe os elementos agrupados
+    $(".log .see-all").live("click",function(e) {
+
+      // Exibe todos os elementos
+      if ($this.hasClass("open")) {
+        $this.animate({ height: options.elementHeight }, 150);
+        $this.removeClass("open");
+        $(this).html("+ ver todos");
+      }
+
+      // Esconde elementos para agrupar
+      else {
+        $this.addClass("open");
+        $this.animate({ height: newHeight }, 150);
+        $(this).html("- esconder todos");
+      }
+    });
+  })
+}
+
+//Conta a quantidade de respostas de um post
+$.fn.countComments = function(){
+  return this.each(function(){
+    var $this = $(this);
+    var quantity = $this.find(".response").length;
+    $this.find(".see-more").html("Mostrar todas as " + quantity + " respostas");
+  });
+};
+
+$(function() {
+  $('.responses').groupResponses();
+  $('.grouping-elements').groupMembers();
+  $(".responses").countComments();
+  $(".responses .see-more").exibeComments();
+
+  // Deixa ícone do contexto do estilo hover ao passar o mouse no link do mesmo, e vice-versa.
+  $(".context-icon").each( function(){
+    var $this = $(this);
+    var $link = $this.parent().find(".context-link");
+    var findIconClass = function (classes) {
+      for (i = 0; classes.length; i++) {
+        if (classes[i].indexOf("icon") !== -1) {
+          return classes[i];
+        }
+      }
+    };
+
+    var iconClass = findIconClass($this.attr("class").split(" "));
+
+    // Troca ícone de estado normal para estado hover alterando sua cor
+    var iconHoverClass = iconClass.replace("gray", "blue");
+
+    $this.mouseover(function() {
+      $link.addClass("context-link");
+    });
+
+    $this.mouseout(function() {
+      $link.removeClass("context-link");
+    });
+
+    $link.mouseover(function() {
+      $this.removeClass(iconClass);
+      $this.addClass(iconHoverClass);
+    });
+
+    $link.mouseout(function() {
+      $this.removeClass(iconHoverClass);
+      $this.addClass(iconClass);
+    });
+
+  })
+
+});
 $(function() {
   var settings = {
     // Engloba todo o botão dropdown e formulário de login.
@@ -2257,3 +2423,120 @@ $(function() {
     }, 100)
   })
 })
+/* ==========================================================
+ * bootstrap-affix.js v2.3.1
+ * http://twitter.github.com/bootstrap/javascript.html#affix
+ * ==========================================================
+ * Copyright 2012 Twitter, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ========================================================== */
+
+
+!function ($) {
+
+  "use strict";
+
+
+ /* AFFIX CLASS DEFINITION
+  * ====================== */
+
+  var Affix = function (element, options) {
+    this.options = $.extend({}, $.fn.affix.defaults, options)
+    this.$window = $(window)
+      .on('scroll.affix.data-api', $.proxy(this.checkPosition, this))
+      .on('click.affix.data-api',  $.proxy(function () { setTimeout($.proxy(this.checkPosition, this), 1) }, this))
+    this.$element = $(element)
+    this.checkPosition()
+  }
+
+  Affix.prototype.checkPosition = function () {
+    if (!this.$element.is(':visible')) return
+
+    var scrollHeight = $(document).height()
+      , scrollTop = this.$window.scrollTop()
+      , position = this.$element.offset()
+      , offset = this.options.offset
+      , offsetBottom = offset.bottom
+      , offsetTop = offset.top
+      , reset = 'affix affix-top affix-bottom'
+      , affix
+
+    if (typeof offset != 'object') offsetBottom = offsetTop = offset
+    if (typeof offsetTop == 'function') offsetTop = offset.top()
+    if (typeof offsetBottom == 'function') offsetBottom = offset.bottom()
+
+    affix = this.unpin !== null && (scrollTop + this.unpin <= position.top) ?
+      false    : offsetBottom !== null && (position.top + this.$element.height() >= scrollHeight - offsetBottom) ?
+      'bottom' : offsetTop !== null && scrollTop <= offsetTop ?
+      'top'    : false
+
+    if (this.affixed === affix) return
+
+    this.affixed = affix
+    this.unpin = affix == 'bottom' ? position.top - scrollTop : null
+
+    this.$element.removeClass(reset).addClass('affix' + (affix ? '-' + affix : ''))
+  }
+
+
+ /* AFFIX PLUGIN DEFINITION
+  * ======================= */
+
+  var old = $.fn.affix
+
+  $.fn.affix = function (option) {
+    return this.each(function () {
+      var $this = $(this)
+        , data = $this.data('affix')
+        , options = typeof option == 'object' && option
+      if (!data) $this.data('affix', (data = new Affix(this, options)))
+      if (typeof option == 'string') data[option]()
+    })
+  }
+
+  $.fn.affix.Constructor = Affix
+
+  $.fn.affix.defaults = {
+    offset: 0
+  }
+
+
+ /* AFFIX NO CONFLICT
+  * ================= */
+
+  $.fn.affix.noConflict = function () {
+    $.fn.affix = old
+    return this
+  }
+
+
+ /* AFFIX DATA-API
+  * ============== */
+
+  $(window).on('load', function () {
+    $('[data-spy="affix"]').each(function () {
+      var $spy = $(this)
+        , data = $spy.data()
+
+      data.offset = data.offset || {}
+
+      data.offsetBottom && (data.offset.bottom = data.offsetBottom)
+      data.offsetTop && (data.offset.top = data.offsetTop)
+
+      $spy.affix(data)
+    })
+  })
+
+
+}(window.jQuery);

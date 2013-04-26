@@ -73,6 +73,11 @@ body {
   margin: 20px 0;
 }
 
+.affix {
+  position: fixed;
+  top: 50px;
+}
+
 .breadcrumb-mini + .content-body,
 .content-body + .breadcrumb-mini {
   margin-top: 10px;
