@@ -693,6 +693,18 @@ a:hover,
   cursor: pointer;
 }
 
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-center {
+  text-align: center;
+}
+
 table {
   border-spacing: 0;
   border-collapse: collapse;
@@ -6076,9 +6088,6 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
 .header-item:hover {
   border-color: #73c3e6;
   z-index: 1000;
-}
-.header-item .header-item + .header-item:hover {
-  border-bottom: 1px solid black;
 }
 .cssgradients .header-item {
   background-image: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #e6e6e6), color-stop(100%, #ffffff));
