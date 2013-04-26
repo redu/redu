@@ -40,7 +40,7 @@ class MessagesController < BaseController
 
   def show
     authorize! :manage, @user
-    @message = Message.read(params[:id], current_user)
+    @message = Message.message_read(params[:id], current_user)
     @reply = Message.new_reply(@user, @message, params)
 
     if @message.sender == @user
