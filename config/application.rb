@@ -254,6 +254,9 @@ module Redu
     #Oauth
     config.middleware.use OAuth::Rack::OAuthFilter
 
+    # Seta as exceções da aplicação
+    config.exceptions_app = self.routes
+
     config.vis_data_authentication = {
       :password => "NyugAkSoP",
       :username => "api-team"

@@ -369,7 +369,7 @@ Redu::Application.routes.draw do
       :to => 'vis#students_participation',
       :as => :vis_students_participation
 
-    # Hack para capturar exceções ActionController::RoutingError
-    match '*', :to => 'api#routing_error'
+    # Captura exceções ActionController::RoutingError
+    match '/404', :to => 'api#routing_error'
   end
 end
