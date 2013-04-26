@@ -72,6 +72,8 @@ gem 'destroy_soon'
 gem 'redu_analytics'
 gem 'humanizer'
 gem 'dalli'
+gem 'simple-private-messages', '0.0.0', # A gem não possui .gemspec
+  :git => 'git://github.com/jongilbraith/simple-private-messages.git'
 
 # Gems específicos para a API
 gem 'oauth-plugin', '~> 0.4.0'

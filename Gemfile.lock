@@ -29,6 +29,12 @@ GIT
       rscribd
 
 GIT
+  remote: git://github.com/jongilbraith/simple-private-messages.git
+  revision: 7ba7d3c9f7670ef3bddfc90390a49556a94f7013
+  specs:
+    simple-private-messages (0.0.0)
+
+GIT
   remote: git://github.com/mbleigh/acts-as-taggable-on.git
   revision: 18d95ef13700a90d9cf1eb40e24ceb0d3bfe90e7
   specs:
@@ -509,6 +515,7 @@ DEPENDENCIES
   scribd_fu!
   shoulda-matchers
   simple-navigation!
+  simple-private-messages (= 0.0.0)!
   simple_acts_as_list
   sunspot_rails
   sunspot_solr
