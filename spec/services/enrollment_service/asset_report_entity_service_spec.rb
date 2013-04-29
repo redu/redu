@@ -21,9 +21,10 @@ module EnrollmentService
 
     context "#create" do
       let(:columns) { [:subject_id, :lecture_id, :enrollment_id] }
+      let(:enrollments) { subjects.map(&:enrollments).flatten }
+
       it "should delegate to the importer with correct arguments" do
         values = []
-        enrollments = subjects.map(&:enrollments).flatten
 
         enrollments.each do |enrollment|
           enrollment.subject.lectures.each do |l|
@@ -35,9 +36,8 @@ module EnrollmentService
         subject.create
       end
 
-      it "should accept an optional ARel query that return enrollments" do
+      it "should accept enrollments as argument" do
         values = []
-        enrollments = subjects.map(&:enrollments).flatten
 
         enrollments.each do |enrollment|
           enrollment.subject.lectures.each do |l|
@@ -46,9 +46,16 @@ module EnrollmentService
         end
 
         subject.importer.should_receive(:insert).with(values)
-        subject.create(Enrollment.where(:subject_id => subjects))
+        subject.create(enrollments)
       end
 
+      it "should return created asset reports" do
+        assets = subject.create(enrollments)
+
+        created_assets = AssetReport.all.reverse[0..(lectures.length *
+                                                         enrollments.length)]
+        assets.to_set.should == created_assets.to_set
+      end
       it "should update grades"
     end
 

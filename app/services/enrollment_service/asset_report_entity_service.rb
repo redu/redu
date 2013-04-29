@@ -9,12 +9,16 @@ module EnrollmentService
 
     # Cria AssetReport entre os User do Subject e as Lecture passadas na
     # inicialização.
+    #
     # Parâmetros:
-    #   - Opcional: ARel representando Enrollment para os quais AssetReport
-    #     serão criados.
+    #   - enrollments: Enrollments para os quais AssetReports serão criados.
     def create(enrollments=nil)
       values = values_from_enrollments(enrollments)
+      enrollments_ids = values.map(&:last).uniq
+
       importer.insert(values)
+
+      find_created_asset_reports(enrollments_ids)
     end
 
     def importer
@@ -57,10 +61,19 @@ module EnrollmentService
       end
     end
 
-    def enrollment_id_and_subject_id_pairs(enrollments_arel)
-      subject_ids = lectures.map(&:subject_id).uniq
-      arel = enrollments_arel || Enrollment.where(:subject_id => subject_ids)
-      arel.values_of(:id, :subject_id)
+    def enrollment_id_and_subject_id_pairs(enrollments)
+      if enrollments
+        enrollments.map { |e| [e.id, e.subject_id] }
+      else
+        subject_ids = lectures.map(&:subject_id).uniq
+        Enrollment.where(:subject_id => subject_ids).values_of(:id, :subject_id)
+      end
+    end
+
+    def find_created_asset_reports(enrollments_ids)
+      AssetReport.where(:lecture_id => lectures).select do |a|
+        enrollments_ids.include? a.enrollment_id
+      end
     end
   end
 end

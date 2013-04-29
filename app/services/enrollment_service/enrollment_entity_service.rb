@@ -22,6 +22,8 @@ module EnrollmentService
     #
     #   Caso não seja passado nenhum argumento, os usuários do Space serão
     #   utilizados.
+    #
+    #   Retorna enrollments criados.
     def create(opts={})
       users_and_roles = opts[:users_and_roles]
       role = opts[:role] || Role[:member]
@@ -30,7 +32,11 @@ module EnrollmentService
       users_and_roles ||= users.map { |u| [u, role.to_s] }
 
       builder = infer_builder_from_arguments(:users_and_roles => users_and_roles)
-      importer.insert(builder.to_a)
+      values = builder.to_a
+      importer.insert(values)
+
+      users_ids = values.map(&:first)
+      find_created_enrollments(users_ids)
     end
 
     def importer
@@ -84,6 +90,12 @@ module EnrollmentService
         InferredEnrollmentBuilder.new(subjects)
       else
         UsersAndRolesEnrollmentBuilder.new(subjects, users_and_roles)
+      end
+    end
+
+    def find_created_enrollments(users_ids)
+      Enrollment.where(:subject_id => subjects).select do |e|
+        users_ids.include? e.user_id
       end
     end
   end

@@ -48,16 +48,8 @@ module EnrollmentService
           role = options[:role] || Role[:member]
           users = options[:users]
 
-          service_facade.create_enrollment(subjects, users, :role => role)
-
-          # FIXME: fazer create_asset_report e create_enrollment retornarem
-          # os asset reports e enrollments.
-          if users
-            enrollments = Enrollment.
-              where(:subject_id => pluck_ids(subjects), :user_id => pluck_ids(users))
-          else
-            enrollments = Enrollment.where(:subject_id => pluck_ids(subjects))
-          end
+          enrollments = service_facade.create_enrollment(subjects, users,
+                                                         :role => role)
 
           lectures = Lecture.where(:subject_id => subjects)
           service_facade.create_asset_report(:lectures => lectures,

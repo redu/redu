@@ -13,6 +13,7 @@ module EnrollmentService
     context ".enroll" do
       let!(:subjects) { FactoryGirl.create_list(:subject, 3) }
       let(:users) { FactoryGirl.create_list(:user, 3) }
+      let!(:enrollments) { FactoryGirl.create_list(:enrollment, 2) }
 
       before { mock_facade(facade) }
 
@@ -31,34 +32,22 @@ module EnrollmentService
       end
 
       it "should invoke Facade#create_asset_report with correct arguments" do
-        facade.stub(:create_enrollment) do
-          subjects.each do |s|
-            users.each do
-              |u| FactoryGirl.create(:enrollment, :subject => s, :user => u)
-            end
-          end
-        end
+        facade.stub(:create_enrollment) { enrollments }
         facade.stub(:notify_enrollment_creation)
         facade.stub(:update_grade)
 
-        enrollments = Enrollment.where(:subject_id => subjects)
-
         facade.should_receive(:create_asset_report) do |args|
           args[:lectures].should == lectures
-          args[:enrollments].map(&:id).should == enrollments.map(&:id)
+          args[:enrollments].should == enrollments
         end
         Subject.enroll(subjects, :users => users)
       end
 
       it "should invoke Facade#notify_enrollment_creation with correct" \
         " arguments" do
-        facade.stub(:create_enrollment) do
-          subjects.each { |s| FactoryGirl.create(:enrollment, :subject => s)}
-        end
+        facade.stub(:create_enrollment) { enrollments }
         facade.stub(:create_asset_report)
         facade.stub(:update_grade)
-
-        enrollments = subjects.map(&:enrollments).flatten
 
         facade.should_receive(:notify_enrollment_creation) do |args|
           args.should =~ enrollments

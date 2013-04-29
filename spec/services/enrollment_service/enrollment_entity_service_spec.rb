@@ -55,6 +55,16 @@ module EnrollmentService
 
         subject.create(:users => users, :role => role)
       end
+
+      it "should return created enrollments" do
+        users = FactoryGirl.create_list(:user, 2)
+
+        enrollments = subject.create(:users => users)
+
+        created_enrollments = Enrollment.all.reverse[0..(subjects.length *
+                                                          users.length)]
+        enrollments.to_set.should == created_enrollments.to_set
+      end
     end
 
     context "#destroy" do
