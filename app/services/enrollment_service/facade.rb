@@ -56,12 +56,11 @@ module EnrollmentService
       enrollment_service.destroy(users)
     end
 
-    # Destrói os asset reports dos Enrollments nos Subjects
+    # Destrói os asset reports dos Enrollments nas Lectures
     # Parâmetros:
-    #   subjects: Subjects que possuem as aulas
+    #   lectures: Lectures que possuem os asset reports
     #   enrollments: Enrollments que terão os asset reports removidos
-    def destroy_asset_report(subjects, enrollments)
-      lectures = Lecture.where(:subject_id => subjects).select("id")
+    def destroy_asset_report(lectures, enrollments)
       asset_report_service = AssetReportEntityService.new(:lecture => \
                                                           lectures)
       asset_report_service.destroy(enrollments)

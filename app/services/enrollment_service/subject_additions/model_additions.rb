@@ -81,8 +81,9 @@ module EnrollmentService
           enrollments = Enrollment.where(:subject_id => subjects).select do |e|
             users.include? e.user
           end
+          lectures = Lecture.where(:subject_id => subjects)
 
-          service_facade.destroy_asset_report(subjects, enrollments)
+          service_facade.destroy_asset_report(lectures, enrollments)
           service_facade.notify_enrollment_removal(enrollments)
           service_facade.destroy_enrollment(subjects, users)
         end

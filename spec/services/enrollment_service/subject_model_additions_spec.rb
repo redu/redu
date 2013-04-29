@@ -5,14 +5,14 @@ module EnrollmentService
     subject { Factory(:subject, :space => nil) }
     let(:user) { Factory(:user) }
     let(:facade) { mock("Facade") }
+    let(:lectures) do
+      subjects.each { |s| FactoryGirl.create(:lecture, :subject => s) }
+      Lecture.where(:subject_id => subjects)
+    end
 
     context ".enroll" do
       let!(:subjects) { FactoryGirl.create_list(:subject, 3) }
       let(:users) { FactoryGirl.create_list(:user, 3) }
-      let(:lectures) do
-        subjects.each { |s| FactoryGirl.create(:lecture, :subject => s) }
-        Lecture.where(:subject_id => subjects)
-      end
 
       before { mock_facade(facade) }
 
@@ -138,7 +138,7 @@ module EnrollmentService
           facade.stub(:destroy_enrollment)
           mock_facade(facade)
 
-          facade.should_receive(:destroy_asset_report).with(subjects,
+          facade.should_receive(:destroy_asset_report).with(lectures,
                                                             enrollments)
           Subject.unenroll(subjects, users)
         end

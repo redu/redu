@@ -147,10 +147,9 @@ module EnrollmentService
           asset_report_service.stub(:destroy)
 
           lectures = subjects.map(&:lectures).flatten
-          AssetReportEntityService.should_receive(:new).
-            with(:lecture => lectures)
-
-          subject.destroy_asset_report(subjects, users)
+          AssetReportEntityService.should_receive(:new).with(:lecture => \
+                                                             lectures)
+          subject.destroy_asset_report(lectures, users)
         end
 
         it "should invoke AssetReportEntityService#destroy with users'" \
