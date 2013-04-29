@@ -38,7 +38,7 @@ describe Course do
   xit { should validate_uniqueness_of(:path).scoped_to :environment_id}
   it { should ensure_length_of(:name).is_at_most 60 }
   it { should ensure_length_of(:description).is_at_most 250 }
-  it { should validate_format_of(:path).with("teste-medio")}
+  it { should allow_value("test-medio").for(:path)}
 
   it { should_not allow_mass_assignment_of :owner }
   it { should_not allow_mass_assignment_of :published }
