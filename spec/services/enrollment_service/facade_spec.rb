@@ -60,6 +60,22 @@ module EnrollmentService
           subject.create_enrollment(subjects)
         end
       end
+
+      context "VisAdapter" do
+        let(:enrollments) do
+          FactoryGirl.create_list(:enrollment, 2, :subject => nil)
+        end
+
+        it "should invoke VisAdapter#notify_enrollment_creation with created" \
+          " enrollments" do
+          enrollment_service.stub(:create).and_return(enrollments)
+
+          vis_adapter.should_receive(:notify_enrollment_creation).
+            with(enrollments)
+
+          subject.create_enrollment([subj], [user])
+        end
+      end
     end
 
     context "#create_asset_report" do
@@ -106,17 +122,21 @@ module EnrollmentService
     end
 
     context "#destroy_enrollment" do
+      let(:enrollments) do
+        FactoryGirl.create_list(:enrollment, 3, :subject => nil)
+      end
+
       before do
         mock_vis_adapter(vis_adapter)
         vis_adapter.stub(:notify_enrollment_removal)
         vis_adapter.stub(:notify_remove_subject_finalized)
-        mock_asset_report_service(asset_report_service)
+        mock_enrollment_service(enrollment_service)
       end
 
       context "with multiple users and subjects" do
         it "should initialize EnrollmentEntityService with subjects" do
+          enrollment_service.stub(:get_enrollments_for).and_return(enrollments)
           enrollment_service.stub(:destroy)
-          mock_enrollment_service(enrollment_service)
 
           EnrollmentEntityService.should_receive(:new).
             with(:subject => subjects)
@@ -124,9 +144,48 @@ module EnrollmentService
           subject.destroy_enrollment(subjects, users)
         end
 
+        it "should invoke EnrollmentEntityService#get_enrollments_for with" \
+          " users" do
+          enrollment_service.stub(:destroy)
+
+          enrollment_service.should_receive(:get_enrollments_for).with(users).
+            and_return(enrollments)
+          subject.destroy_enrollment(subjects, users)
+        end
+
         it "should invoke EnrollmentEntityService#destroy with users" do
-          mock_enrollment_service(enrollment_service)
+          enrollment_service.stub(:get_enrollments_for).and_return(enrollments)
+
           enrollment_service.should_receive(:destroy).with(users)
+          subject.destroy_enrollment(subjects, users)
+        end
+      end
+
+      context "VisAdapter" do
+        let!(:graduated_enrollments) do
+          e = enrollments.last
+          e.update_attributes(:graduated => true)
+          [e]
+        end
+
+        before do
+          enrollment_service.stub(:destroy)
+          enrollment_service.stub(:get_enrollments_for).and_return(enrollments)
+        end
+
+        it "should invoke VisAdapter#notify_enrollment_removal with removed" \
+          " enrollments" do
+          vis_adapter.should_receive(:notify_enrollment_removal).
+            with(enrollments)
+
+          subject.destroy_enrollment(subjects, users)
+        end
+
+        it "should invoke VisAdapter#notify_remove_subject_finalized with" \
+          " removed graduated enrollments" do
+          vis_adapter.should_receive(:notify_remove_subject_finalized).
+            with(graduated_enrollments)
+
           subject.destroy_enrollment(subjects, users)
         end
       end
@@ -158,55 +217,6 @@ module EnrollmentService
           enrollments = subjects.map(&:enrollments).flatten
           asset_report_service.should_receive(:destroy).with(enrollments)
           subject.destroy_asset_report(subjects, enrollments)
-        end
-      end
-    end
-
-    context "VisAdapter" do
-      before do
-        mock_vis_adapter(vis_adapter)
-        set_space_to(subjects)
-      end
-
-      context "#notify_enrollment_creation" do
-        it "should invoke VisAdapter for created enrollments" do
-          subject.create_enrollment(subjects, users)
-          enrollments = subjects.map(&:enrollments).flatten
-
-          vis_adapter.should_receive(:notify_enrollment_creation) do |args|
-            args.first.should be_an_instance_of(Enrollment)
-          end
-
-          subject.notify_enrollment_creation(enrollments)
-        end
-      end
-
-      context "#notify_enrollment_removal" do
-        let(:enrollments) do
-          subject.create_enrollment(subjects, users)
-          subjects.map(&:enrollments).flatten
-        end
-
-        it "should invoke VisAdapter for removed enrollments" do
-          vis_adapter.stub(:notify_remove_subject_finalized)
-
-          vis_adapter.should_receive(:notify_enrollment_removal).
-            with(enrollments)
-
-          subject.notify_enrollment_removal(enrollments)
-        end
-
-        it "should invoke VisAdapter for removed graduated enrollments" do
-          vis_adapter.stub(:notify_enrollment_removal)
-          graduated_enrollments = enrollments[0..2]
-          graduated_enrollments.each do |e|
-            e.update_attribute(:graduated, true)
-          end
-
-          vis_adapter.should_receive(:notify_remove_subject_finalized).
-            with(graduated_enrollments)
-
-          subject.notify_enrollment_removal(enrollments)
         end
       end
     end

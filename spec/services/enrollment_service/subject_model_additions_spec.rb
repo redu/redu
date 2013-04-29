@@ -43,19 +43,6 @@ module EnrollmentService
         Subject.enroll(subjects, :users => users)
       end
 
-      it "should invoke Facade#notify_enrollment_creation with correct" \
-        " arguments" do
-        facade.stub(:create_enrollment) { enrollments }
-        facade.stub(:create_asset_report)
-        facade.stub(:update_grade)
-
-        facade.should_receive(:notify_enrollment_creation) do |args|
-          args.should =~ enrollments
-        end
-
-        Subject.enroll(subjects, :users => users)
-      end
-
       it "should invoke Facade#update_grade" do
         facade.stub(:create_enrollment)
         facade.stub(:create_asset_report)
@@ -131,16 +118,6 @@ module EnrollmentService
                                                             enrollments)
           Subject.unenroll(subjects, users)
         end
-
-        it "should invoke Facede#notify_enrollment_removal with correct" \
-          " arguments" do
-          facade.stub(:destroy_asset_report)
-          facade.stub(:destroy_enrollment)
-          mock_facade(facade)
-
-          facade.should_receive(:notify_enrollment_removal).with(enrollments)
-          Subject.unenroll(subjects, users)
-          end
 
         it "should invoke Facede#destroy_enrollment with correct arguments" do
           facade.stub(:destroy_asset_report)

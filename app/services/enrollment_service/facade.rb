@@ -26,25 +26,13 @@ module EnrollmentService
     #   os usuários do Space serão matriculados
     # options:
     #   - role: Papel dos usuários
+    #
+    #   Retorna os enrollments criados.
     def create_enrollment(subjects, users=nil, opts={})
       service = EnrollmentEntityService.new(:subject => subjects)
-      service.create(:users => users, :role => opts[:role])
-    end
-
-    # Notifica remoção de enrollments a Vis
-    # Parâmetros:
-    #   enrollments: Enrollments que serão enviados para Vis
-    def notify_enrollment_removal(enrollments)
-      vis_adapter.notify_enrollment_removal(enrollments)
-      graduated_enrollments = enrollments.select { |e| e.graduated? }
-      vis_adapter.notify_remove_subject_finalized(graduated_enrollments)
-    end
-
-    # Notifica criação de enrollments a Vis
-    # Parâmetros:
-    #   enrollments: Enrollments que serão enviados para Vis
-    def notify_enrollment_creation(enrollments)
+      enrollments = service.create(:users => users, :role => opts[:role])
       vis_adapter.notify_enrollment_creation(enrollments)
+      enrollments
     end
 
     # Destrói os enrollments entre os Subjects e Users
@@ -53,6 +41,10 @@ module EnrollmentService
     #   users: Users que serão desmatriculados
     def destroy_enrollment(subjects, users)
       enrollment_service = EnrollmentEntityService.new(:subject => subjects)
+
+      enrollments = enrollment_service.get_enrollments_for(users)
+      notify_enrollment_removal(enrollments)
+
       enrollment_service.destroy(users)
     end
 
@@ -86,6 +78,12 @@ module EnrollmentService
 
     def vis_adapter
       @vis_adapter ||= VisAdapter.new
+    end
+
+    def notify_enrollment_removal(enrollments)
+      vis_adapter.notify_enrollment_removal(enrollments)
+      graduated_enrollments = enrollments.select { |e| e.graduated? }
+      vis_adapter.notify_remove_subject_finalized(graduated_enrollments)
     end
   end
 end

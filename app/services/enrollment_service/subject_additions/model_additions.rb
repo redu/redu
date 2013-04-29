@@ -56,7 +56,6 @@ module EnrollmentService
                                              :enrollments => enrollments)
 
           service_facade.update_grade(enrollments)
-          service_facade.notify_enrollment_creation(enrollments)
 
           enrollments
         end
@@ -76,7 +75,6 @@ module EnrollmentService
           lectures = Lecture.where(:subject_id => subjects)
 
           service_facade.destroy_asset_report(lectures, enrollments)
-          service_facade.notify_enrollment_removal(enrollments)
           service_facade.destroy_enrollment(subjects, users)
         end
 
