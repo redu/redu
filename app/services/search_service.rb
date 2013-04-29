@@ -132,6 +132,6 @@ class SearchService
     my_spaces = collection.select{ |space| ability.can? :show, space }
 
     Kaminari.paginate_array(my_spaces).page(options[:page]).
-      per_page(options[:per_page])
+      per(options[:per_page])
   end
 end

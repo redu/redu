@@ -66,7 +66,7 @@ class Lecture < ActiveRecord::Base
       nested_attrs = { :questions => :alternatives }
     end
 
-    clone = self.clone :include => { :lectureable => nested_attrs },
+    clone = self.dup :include => { :lectureable => nested_attrs },
       :except => [:rating_average, :view_count, :position, :subject_id]
 
     if self.lectureable.is_a?(Seminar)
@@ -95,7 +95,7 @@ class Lecture < ActiveRecord::Base
     self.subject.finalized && self.subject.visible
   end
 
-  def build_lectureable(params)
+  def build_lectureable(params, options={})
     return if params[:_type].blank?
 
     begin
