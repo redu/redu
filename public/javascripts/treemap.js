@@ -55,8 +55,9 @@ var StudentsTreemap = function() {
       var item = {};
 
       // Busca o nome do aluno nos dados da API
-      var user = searchUser(vis[index].user_id, api)[0];
+      var user = searchUser(vis[index].user_id, api);
       if (user) {
+        // Informações básicas do aluno
         item.name = user.first_name;
         item.last_name = user.last_name;
         item.id = vis[index].user_id;
@@ -74,6 +75,8 @@ var StudentsTreemap = function() {
       json.children.push(item);
     })
 
+    // Filtra os filhos para que só mostrem os membros (alunos) da disciplina
+    json.children = json.children.filter(function(child) { return child.name; });
     return json;
   }
 
@@ -89,9 +92,16 @@ var StudentsTreemap = function() {
   // Função que busca o nome do usuário pelo seu id
   var searchUser = function(userId, api) {
     // O retorno conterá apenas um elemento visto que um id só pode pertencer a um usuário
-    return api.filter(function(item) {
-      return item.id === userId;
+    var response = api.filter(function(item) {
+      return item.user.id === userId;
     });
+
+    // Se houver resposta, retorna o usuário
+    if (response[0]) {
+      return response[0].user;
+    }
+
+    return response;
   }
 
   // Função usada para remover treemap antigo, caso houver
@@ -135,54 +145,48 @@ var StudentsTreemap = function() {
       report.find(".row-head").append($("<th/>", { 'class': "head", 'text': "Média dos exercícios" }));
       if (!print){
           report.find(".row-head").append($("<th/>", { 'class': "head", 'text': "Link" }));
+          report.find("tbody").css('max-height', '500px').css('overflow', 'auto');
       }
 
       data.children.sort(compare);
 
-      $.each(data.children, function(index, object){
-          report.find("tbody").append($("<tr/>",
-                  { 'id': "" + object.id, 'class': "row" }));
+      // Template
+      var table = "<% _.each(_.extend(children, print), function(object){ %>" +
+            "<tr class='row' id='row-<%=object.id%>'>" +
+                "<td class='cell'>" +
+                    "<div class='student-info'>" +
+                        "<span><%=object.name + ' ' + object.last_name%></span>" +
+                    "</div>" +
+                "</td>" +
+                "<td class='cell'>" +
+                    "<span class='participation'><%=object.activities%></span>" +
+                "</td>" +
+                "<td class='cell'>" +
+                    "<span class='participation'><%=object.answered_activities%></span>" +
+                "</td>" +
+                "<td class='cell'>" +
+                    "<span class='participation'><%=object.helps%></span>" +
+                "</td>" +
+                "<td class='cell'>" +
+                    "<span class='participation'><%=object.answered_activities%></span>" +
+                "</td>" +
+                "<td class='cell'>" +
+                    "<span class='participation'><%=object.grade === -1 ? 'Não realizou' : object.grade%></span>" +
+                "</td>" +
+                "<% if (!print) { %>" +
+                    "<td class='cell treemap-link'>" +
+                        "<a href=#<%=object.id%>>no mapa</a>" +
+                    "</td>" +
+                "<% };%>" +
+            "</tr>" +
+          "<% }); %>"
 
-          var row = report.find("#" + object.id);
-          row.append($("<td/>", { 'class': "cell" }));
-          row.find(".cell").append($("<div/>", { 'class': "student-info" }));
+      report.find("tbody").append(_.template(table, _.extend(data, { print: print })));
 
-          var div = row.find(".student-info");
-          div.append($("<span/>", { 'class': "student-name",
-              'text': object.name + " " + object.last_name }));
-
-          row.append($("<td/>", { 'id': "activities", 'class': "cell" }));
-          row.find("#activities").append($("<span/>",
-                  { 'class': "participation", 'text': object.activities }));
-
-          row.append($("<td/>", { 'id': "answered_activities", 'class': "cell" }));
-          row.find("#answered_activities").append($("<span/>",
-                  { 'class': "participation", 'text': object.answered_activities }));
-
-          row.append($("<td/>", { 'id': "helps", 'class': "cell" }));
-          row.find("#helps").append($("<span/>",
-                  { 'class': "participation", 'text': object.helps }));
-
-          row.append($("<td/>", { 'id': "answered_helps", 'class': "cell" }));
-          row.find("#answered_helps").append($("<span/>",
-                  { 'class': "participation", 'text': object.answered_helps }));
-
-          row.append($("<td/>", { 'id': "grade", 'class': "cell" }));
-          row.find("#grade").append($("<span/>",
-                  { 'class': "participation",
-                    'text': object.grade === -1 ? "Não realizou" : object.grade }));
-
-          if (!print){
-              row.append($("<td/>", { 'class': "cell treemap-link" }));
-              row.find(".treemap-link").append($("<a/>",
-                          { 'text': "no mapa", 'href': "#" + object.id }));
-
-              row.find(".treemap-link").click(function(){
-                  $("rect").css("stroke-width", 0);
-                  $("g > #" + object.id).css("stroke-width", 5).
-                  css("stroke", "black");
-              });
-          }
+      $(".treemap-link").click(function(){
+          $("rect").css("stroke-width", 0);
+          $("g > #" + $(this).find("a")[0].href.split("#")[1]).css("stroke-width", 5).
+          css("stroke", "black");
       });
 
       report.append($("<a/>", { 'class': "concave-button", 'text': "Imprimir", href: url }));
@@ -195,9 +199,9 @@ var StudentsTreemap = function() {
   }
 
   function compare(a,b) {
-      if ((a.name + "  " + a.last_name).toUpperCase() < (b.name + "  " + b.last_name).toUpperCase())
+      if ((a.name + " " + a.last_name).toUpperCase() < (b.name + " " + a.last_name).toUpperCase())
           return -1;
-      if ((a.name + "  " + a.last_name).toUpperCase() > (b.name + "  " + b.last_name).toUpperCase())
+      if ((a.name + " " + a.last_name).toUpperCase() > (b.name + " " + a.last_name).toUpperCase())
           return 1;
       return 0;
   }
@@ -309,25 +313,24 @@ var StudentsTreemap = function() {
       // Inicializa o javascript do form
       var graph = graphView.form.plotGraphForm(graphView.renderTo);
       graph.loadGraph(function(jsonVis) {
+        // Requisição para api precisa ser feita em busca do nome dos alunos
+        $.ajax({
+          url: graphView.url,
+          method: "GET",
+          success: function(jsonApi) {
+            // Constrói o JSON característico do treemap usando os dados retornados das duas requisições
+            root = buildJSON(jsonVis, jsonApi);
 
-          // Requisição para api precisa ser feita em busca do nome dos alunos
-          $.ajax({
-              url: graphView.url,
-              method: "GET",
-              success: function(jsonApi) {
-                  // Constrói o JSON característico do treemap usando os dados retornados das duas requisições
-                  root = buildJSON(jsonVis, jsonApi);
+            // Relatório descritivo
+            removeReportDescription();
+            reportDescription(graphView.form, root, true);
 
-                  // Relatório descritivo
-                  removeReportDescription();
-                  reportDescription(graphView.form, root, true);
-
-                  $("#report").show();
-                  $("#treemap-chart").hide();
-                  $("#report-description").hide();
-                  $("#report").find(".concave-button").hide();
-              }
-          })
+            $("#report").show();
+            $("#treemap-chart").hide();
+            $("#report-description").hide();
+            $("#report").find(".concave-button").hide();
+            }
+        })
       })
     } // Print end
   } // Return end
