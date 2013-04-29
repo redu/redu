@@ -104,6 +104,8 @@
 </div>
 <div class="span13">
   <div class="content-area">
+    <%= render :partial => "lectures/breadcrumb",
+      :locals => { :user => current_user, :lecture => @lecture } %>
     <div class="content-body">
       <ul class="header">
         <li class="header-item link-container">
@@ -165,6 +167,8 @@
       </div>
       <hr class="list-separator">
     </div>
+    <%= render :partial => "lectures/breadcrumb",
+      :locals => { :user => current_user, :lecture => @lecture } %>
   </div>
 </div>
 
