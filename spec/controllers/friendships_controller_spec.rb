@@ -129,7 +129,7 @@ describe FriendshipsController do
     end
 
     it 'assigns invitation_id' do
-      assigns(:invitation_id).should == "request-#{@friendship_request.id}"
+      assigns(:invitation_id).should == "friendship-request-for-#{@friendship_request.friend.id}"
     end
 
     it 'render js template' do
