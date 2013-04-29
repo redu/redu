@@ -68,6 +68,13 @@ module EnrollmentService
       enrollments
     end
 
+    def get_enrollments_for(users)
+      users_ids = users.respond_to?(:map) ? users.map(&:id) : [users.id]
+
+      enrollments = Enrollment.where(:subject_id => subjects)
+      enrollments.select { |e| users_ids.include? e.user_id }
+    end
+
     private
 
     def calculate_grade(asset_reports)

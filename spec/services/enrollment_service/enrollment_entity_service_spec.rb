@@ -117,5 +117,19 @@ module EnrollmentService
         subject.update_grade
       end
     end
+
+    describe "#get_enrollments_for" do
+      let(:enrollments) do
+        subjects.map { |s| FactoryGirl.create(:enrollment, :subject => s) }
+      end
+      let!(:extra_enrollments) do
+        subjects.map { |s| FactoryGirl.create(:enrollment, :subject => s) }
+      end
+      let(:users) { enrollments.map(&:user).flatten }
+
+      it "should return users's enrollments" do
+        subject.get_enrollments_for(users).should == enrollments
+      end
+    end
   end
 end
