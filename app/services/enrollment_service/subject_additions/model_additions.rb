@@ -48,16 +48,7 @@ module EnrollmentService
           role = options[:role] || Role[:member]
           users = options[:users]
 
-          enrollments = service_facade.create_enrollment(subjects, users,
-                                                         :role => role)
-
-          lectures = Lecture.where(:subject_id => subjects)
-          service_facade.create_asset_report(:lectures => lectures,
-                                             :enrollments => enrollments)
-
-          service_facade.update_grade(enrollments)
-
-          enrollments
+          delayed_enroll(subjects, users, role)
         end
 
         # Desmatricula usuários em um ou mais Subjects.
@@ -79,6 +70,16 @@ module EnrollmentService
         end
 
         private
+
+        def delayed_enroll(subjects, users, role)
+          job = CreateEnrollmentJob.
+            new(:subject => subjects, :user => users, :role => role)
+          enqueue(job)
+        end
+
+        def enqueue(job)
+          Delayed::Job.enqueue(job)
+        end
 
         def service_facade
           EnrollmentService::Facade.instance

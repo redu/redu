@@ -17,7 +17,8 @@ module EnrollmentService
       it "should invoke Facade#create_asset_report with self" do
         facade.stub(:update_grade)
         mock_facade(facade)
-        facade.should_receive(:create_asset_report).with(:lectures => [subject])
+        facade.should_receive(:create_asset_report).
+          with(:lectures => [subject], :enrollments => [])
         subject.create_asset_report
       end
 

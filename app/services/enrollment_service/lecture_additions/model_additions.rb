@@ -4,11 +4,21 @@ module EnrollmentService
       extend ActiveSupport::Concern
 
       def create_asset_report
-        service_facade.create_asset_report(:lectures => [self])
-        service_facade.update_grade(self.subject.enrollments)
+        delayed_create_asset_report
       end
 
       private
+
+      def delayed_create_asset_report
+        enrollments = self.subject.enrollments
+        job = CreateAssetReportJob.
+          new(:lecture => [self], :enrollment => enrollments)
+        enqueue(job)
+      end
+
+      def enqueue(job)
+        Delayed::Job.enqueue(job)
+      end
 
       def service_facade
         Facade.instance

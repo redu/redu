@@ -36,10 +36,12 @@ module EnrollmentService
         facade.stub(:notify_enrollment_creation)
         facade.stub(:update_grade)
 
+        lectures
         facade.should_receive(:create_asset_report) do |args|
-          args[:lectures].should == lectures
-          args[:enrollments].should == enrollments
+          args[:lectures].should =~ lectures
+          args[:enrollments].should =~ enrollments
         end
+
         Subject.enroll(subjects, :users => users)
       end
 
