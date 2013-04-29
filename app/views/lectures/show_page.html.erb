@@ -109,21 +109,37 @@
     <div class="content-body">
       <ul class="header">
         <li class="header-item link-container">
-          <a href="#1" title="Universidade Voluptat Metus" class="header-link link-target icon-environment-gray_16_18-before">Universidade Voluptat Metus</a>
+         <%= link_to @lecture.subject.space.course.environment.name, environment_path(@lecture.subject.space.course.environment), :class => 'header-link link-target icon-environment-gray_16_18-before' %>
           <div class="pull-right">
-            <span class="header-info icon-description-gray_16_18 text-replacement" rel="popover" data-content="Descrição do ambiente." data-original-title="">Descrição</span><span class="header-info icon-tag-gray_16_18 show text-replacement" rel="popover" data-content="Marcadores do ambiente." data-original-title="">Marcadores</span><span class="header-info icon-private-gray_16_18 text-replacement" rel="tooltip" data-original-title="Ambiente privado.">Privado</span>
+            <% unless @lecture.subject.space.course.environment.description.blank? %>
+              <span class="header-info icon-description-gray_16_18 text-replacement" rel="popover" data-content="<%= @lecture.subject.space.course.environment.description %>">Descrição</span>
+            <% end %>
+            <% unless @lecture.subject.space.course.environment.tags.empty? %>
+              <span class="header-info icon-tag-gray_16_18 show text-replacement" rel="popover" data-content="<%= @lecture.subject.space.course.environment.tags %>">Marcadores</span>
+            <% end %>
+            <span class="header-info icon-private-gray_16_18 text-replacement" rel="tooltip" data-original-title="Ambiente privado.">Privado</span>
           </div>
         </li>
         <li class="header-item link-container">
-          <a href="#2" title="Curso Lorem Ipsum" class="header-link link-target icon-course-gray_16_18-before">Curso Lorem Ipsum</a>
+          <%= link_to @lecture.subject.space.course.name, environment_course_path(@lecture.subject.space.course.environment, @lecture.subject.space.course), :class => 'header-link link-target icon-course-gray_16_18-before' %>
           <div class="pull-right">
-            <span class="header-info icon-description-gray_16_18 text-replacement" rel="popover" data-content="Descrição do curso." data-original-title="">Descrição</span><span class="header-info icon-tag-gray_16_18 text-replacement" rel="popover" data-content="Marcadores do curso." data-original-title="">Marcadores</span>
+            <% unless @lecture.subject.space.course.description.blank? %>
+              <span class="header-info icon-description-gray_16_18 text-replacement" rel="popover" data-content="<%= @lecture.subject.space.course.description %>">Descrição</span>
+            <% end %>
+            <% unless @lecture.subject.space.course.tags.empty? %>
+              <span class="header-info icon-tag-gray_16_18 text-replacement" rel="popover" data-content="<%= @lecture.subject.space.course.tags %>">Marcadores</span>
+            <% end %>
           </div>
         </li>
         <li class="header-item active header-item-subject">
-          <a href="#3" title="Disciplina Vestibulum Scelerisque" class="header-link link-target icon-space-gray_16_18-before">Disciplina Vestibulum Scelerisque</a>
+          <%= link_to @lecture.subject.space.name, space_path(@lecture.subject.space), :class => 'header-link link-target icon-space-gray_16_18-before' %>
           <div class="pull-right">
-            <span class="header-info label-news" rel="tooltip" data-original-title="40 novos avisos">40</span><span class="header-info label-doubts" rel="tooltip" data-original-title="40 novos pedidos de ajuda">40</span><span class="header-info icon-description-gray_16_18 text-replacement" rel="popover" data-content="Descrição da disciplina." data-original-title="">Descrição</span><span class="header-info icon-tag-gray_16_18 text-replacement" rel="popover" data-content="Marcadores da disciplina." data-original-title="">Marcadores</span>
+            <% unless @lecture.subject.space.description.blank? %>
+              <span class="header-info icon-description-gray_16_18 text-replacement" rel="popover" data-content="<%= @lecture.subject.space.description %>">Descrição</span>
+            <% end %>
+            <% unless @lecture.subject.space.tags.empty? %>
+              <span class="header-info icon-tag-gray_16_18 text-replacement" rel="popover" data-content="<%= @lecture.subject.space.tags %>">Marcadores</span>
+            <% end %>
           </div>
         </li>
       </ul>
