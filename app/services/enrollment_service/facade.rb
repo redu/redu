@@ -2,38 +2,20 @@ module EnrollmentService
   class Facade
     include Singleton
 
-    # Cria AssetReport entre Users e Lectures. Caso sejam passadas as
-    # Lectures, os usuários serão ligados a elas. Caso sejam passados
-    # os Subjects, os usuários serão ligados às Lectures destes Subjects.
+    # Cria AssetReport entre Enrollments e Lectures.
     #
-    # Caso users seja omitido, todos os Users matriculados no Subjects
-    # (passados como argumento ou Subjects das Lectures passadas como
-    # argumento) serão utilizados.
+    # Caso enrollments seja omitido, todos os Enrollments do Subjects
+    # serão utilizados.
     #
     # Parâmetros:
-    #   - subjects: Subjects que contém as lectures
-    #     ou
     #   - lectures: Lectures que serão associadas aos Users
-    #   - (Opcional) users: Users que serão associados às Lectures
+    #   - (Opcional) enrollments: enrollments que serão associados às Lectures
     def create_asset_report(opts={})
-      subjects = opts[:subjects]
       lectures = opts[:lectures]
-      users = opts[:users]
+      enrollments = opts[:enrollments]
 
-      lectures ||= Lecture.where(:subject_id => subjects).
-        select("id, subject_id")
       asset_reports = AssetReportEntityService.new(:lecture => lectures)
-
-      subjects_ids = subjects || lectures.map(&:subject_id)
-
-      if users
-        enrollments = Enrollment.
-          where(:subject_id => subjects_ids, :user_id => users)
-
-        asset_reports.create(enrollments)
-      else
-        asset_reports.create
-      end
+      asset_reports.create(enrollments)
     end
 
     # Cria Enrollment entre os User e Subject passados.
