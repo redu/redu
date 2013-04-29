@@ -472,7 +472,7 @@ describe UsersController do
       end
 
       it "assigns correctly number of statuses." do
-        assigns[:statuses].should == @statuses
+        assigns[:statuses].to_set.should == @statuses.to_set
       end
     end
   end
@@ -534,7 +534,7 @@ describe UsersController do
       end
 
       it "assigns correctly number of statuses." do
-        assigns[:statuses].should == @statuses
+        assigns[:statuses].to_set.should == @statuses.to_set
       end
     end
   end
