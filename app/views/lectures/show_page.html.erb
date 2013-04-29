@@ -151,7 +151,7 @@
           </a>
           <div class="lecture-authoring-info">
             <span class="lecture-authoring-written-by legend">por</span>
-            <a class="link-name icon-teacher-gray_16_18-before" href="#" title="Nome sobrenome">Nome sobrenome</a>
+            <%= link_to @lecture.owner.display_name, user_path(@lecture.owner), :class => 'link-name icon-teacher-gray_16_18-before' %>
           </div>
         </div>
         <div class="lecture-stats">
