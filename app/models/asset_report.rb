@@ -13,6 +13,6 @@ class AssetReport < ActiveRecord::Base
   scope :done, where(:done => true)
   scope :of_subject, lambda { |subject_id| where(:subject_id => subject_id) }
   scope :of_user, lambda { |user_id|
-    joins(:enrollment).where("enrollments.user_id = ?", user_id)
+    includes(:enrollment).where("enrollments.user_id = ?", user_id)
   }
 end
