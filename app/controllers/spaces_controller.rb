@@ -151,7 +151,7 @@ class SpacesController < BaseController
   def update
     @plan = @space.course.plan || @space.course.environment.plan
     @billable = @plan.billable
-    @header_space = @space.clone
+    @header_space = @space.dup
     @header_space.id = @space.id
 
     respond_to do |format|

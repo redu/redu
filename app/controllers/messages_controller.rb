@@ -79,7 +79,7 @@ class MessagesController < BaseController
       @reply = Message.new(params[:message])
       @reply.save
       if @reply.valid?
-        @new_reply = @reply.clone
+        @new_reply = @reply.dup
         @new_reply.body = ""
       end
 

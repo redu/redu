@@ -128,7 +128,7 @@ class LicensedInvoice < Invoice
   # Duplica todas as licenças em uso para o invoice passado como parâmetro
   def replicate_licenses_to(invoice)
     self.licenses.in_use.each do |l|
-      new = l.clone
+      new = l.dup
       new.attributes = {:created_at => nil, :updated_at => nil,
                         :period_start => invoice.period_start,
                         :invoice => invoice }
