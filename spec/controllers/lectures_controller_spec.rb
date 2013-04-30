@@ -110,6 +110,12 @@ describe LecturesController do
       @enrolled_user.enrollments.first.grade.should == 33.3333
     end
 
+    it "should assign student_grade" do
+      post :done, :locale => "pt-BR", :id => @lectures[0].id,
+        :subject_id => @subject.id, :space_id => @space.id, :done => "1"
+      assigns[:student_grade].should_not be_nil
+    end
+
     context 'when html request' do
       it "redirects to lecture show" do
         post :done, :locale => "pt-BR", :id => @lectures[0].id,
