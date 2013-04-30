@@ -64,40 +64,42 @@
           </li>
         </ul>
 
-        <table class="table-without-borderradius invoices-table">
-          <thead>
-            <tr>
-              <th style="width: 20%">Fatura</th>
-              <th style="width: 20%">Início</th>
-              <th style="width: 20%">Término</th>
-              <th style="width: 20%">Valor</th>
-              <th style="width: 20%">Situação</th>
-            </tr>
-          </thead>
-          <tbody class="legend">
-            <% @invoices.each do |invoice| %>
+        <% unless @invoices.empty? %>
+          <table class="table-without-borderradius invoices-table">
+            <thead>
               <tr>
-                <td><%= invoice.id.to_s.rjust(10, "0") %></td>
-                <td>
-                  <span><%= content_tag(:span, (l invoice.period_start)) %></span>
-                </td>
-                <td>
-                  <span><%= content_tag(:span, (l invoice.period_end)) %></span>
-                </td>
-                <td>
-                  <span><%= number_to_currency(invoice.total) %></span>
-                </td>
-                <td>
-                  <% if can? :pay_with_pagseguro, invoice %>
-                    <%= pagseguro_form invoice.plan.create_order, :submit => "Pagar" %>
-                  <% elsif invoice.paid? %>
-                    <span class="no-pending legend">Pago</span>
-                  <% end %>
-                </td>
+                <th style="width: 20%">Fatura</th>
+                <th style="width: 20%">Início</th>
+                <th style="width: 20%">Término</th>
+                <th style="width: 20%">Valor</th>
+                <th style="width: 20%">Situação</th>
               </tr>
-            <% end %>
-          </tbody>
-        </table>
+            </thead>
+            <tbody class="legend">
+              <% @invoices.each do |invoice| %>
+                <tr>
+                  <td><%= invoice.id.to_s.rjust(10, "0") %></td>
+                  <td>
+                    <span><%= content_tag(:span, (l invoice.period_start)) %></span>
+                  </td>
+                  <td>
+                    <span><%= content_tag(:span, (l invoice.period_end)) %></span>
+                  </td>
+                  <td>
+                    <span><%= number_to_currency(invoice.total) %></span>
+                  </td>
+                  <td>
+                    <% if can? :pay_with_pagseguro, invoice %>
+                      <%= pagseguro_form invoice.plan.create_order, :submit => "Pagar" %>
+                    <% elsif invoice.paid? %>
+                      <span class="no-pending legend">Pago</span>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
       </div>
       <div class="content-section clearfix">
         <%= link_to "< voltar para a lista de cursos e planos", user_plans_path(@user), :class => "legend pull-right" %>
