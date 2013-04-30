@@ -6,15 +6,13 @@ class InvoicesController < BaseController
   load_and_authorize_resource :partner, :only => :index
 
   def index
-    if @plan
-      @user = @plan.user
-    end
     # Conflita com o caso que não há @partner, se carregado pelo CanCan
     if params[:client_id]
       @client = @partner.partner_environment_associations.find(params[:client_id])
     end
 
     if @plan
+      @user = @plan.user
       @invoices = @plan.invoices
       @quota = @plan.billable.quota if @plan.billable
       # FIXME Planos dos parceiros não deveriam estar associados ao user.
