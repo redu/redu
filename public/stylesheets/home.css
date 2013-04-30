@@ -708,10 +708,6 @@ input[type="hidden"] +
   text-align: center;
 }
 
-#partner-contact-form fieldset + fieldset {
-  margin-top: 20px;
-}
-
 ul.requisitions {
   margin: 0;
   overflow: visible;
