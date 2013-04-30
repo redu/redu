@@ -7652,3 +7652,30 @@ button[disabled=disabled] {
   text-overflow: ellipsis;
   width: 100%;
 }
+
+/* Mensagem de mural privado. */
+
+.icon-private-gray_128_130 {
+  background-image: url("../images/new/private-gray_128_130.png");
+  width: 128px;
+  height: 130px;
+}
+
+.empty-message {
+  margin-top: 165px;
+  text-align: center;
+}
+
+.empty-message-icon {
+  display: block;
+  margin: 0 auto;
+}
+
+.empty-message-icon +
+.empty-message-content {
+  margin-top: 10px;
+}
+
+.empty-message-content {
+  color: #b3b3b3;
+}
