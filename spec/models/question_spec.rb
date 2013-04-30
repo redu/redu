@@ -186,10 +186,10 @@ describe Question do
       before do
         alternatives_attrs =  {
           :alternatives_attributes => {
-          "1" => { :text => "Lorem 1", :correct => "0" },
-          "3" => { :text => "Lorem 3", :correct => "0"},
-          "4" => {:text => "", :correct => "1"},
-        }
+            "1" => { :text => "Lorem 1", :correct => "0" },
+            "3" => { :text => "Lorem 3", :correct => "0" },
+            "4" => { :text => "", :correct => "1" }
+          }
         }
         @question.attributes = alternatives_attrs
       end
@@ -199,7 +199,7 @@ describe Question do
       end
 
       it "alternative with blank text it is not valid" do
-        @question.alternatives.last.should_not be_valid
+        @question.alternatives.first.should_not be_valid
       end
     end
   end
