@@ -150,9 +150,9 @@ describe Api::CourseEnrollmentsController do
       @href = @href.fetch('href','')
     end
 
-    it "should return status 200 (ok)" do
+    it "should return status 204 (ok)" do
       delete @href, params
-      response.code.should == '200'
+      response.code.should == '204'
     end
 
     it "should remove the enrollment" do

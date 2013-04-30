@@ -16,9 +16,9 @@ describe 'API Authorization' do
            :oauth_token => @token,
            :format => 'json'
 
-      user_url = href_to("user", parse(response.body))
+      self_url = href_to("self", parse(response.body))
 
-      get user_url,
+      get self_url,
           :oauth_token => @token,
           :format => 'json'
 
@@ -32,9 +32,9 @@ describe 'API Authorization' do
           {:environment => @params, :format => 'json' },
           {"HTTP_AUTHORIZATION" => "OAuth #{@token}"})
 
-      user_url = href_to("user", parse(response.body))
+      self_url = href_to("self", parse(response.body))
 
-      get(user_url, {:format => 'json'}, {"HTTP_AUTHORIZATION" => "OAuth #{@token}"})
+      get(self_url, {:format => 'json'}, {"HTTP_AUTHORIZATION" => "OAuth #{@token}"})
       response.code.should == '200'
     end
   end

@@ -45,9 +45,9 @@ describe "AssetReports API" do
 
     let(:put_params) { params.merge(:progress => { :finalized => "true" }) }
 
-    it "should return status 200" do
+    it "should return status 204" do
       put "/api/progress/#{asset_report.id}", put_params
-      response.code.should == "200"
+      response.code.should == "204"
     end
 
     it "should update finalized to true" do
