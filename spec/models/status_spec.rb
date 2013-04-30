@@ -155,7 +155,7 @@ describe Status do
 
     describe :visible do
       it "should return visible statuses" do
-        Status.visible.where_values_hash.should == { :compound => false }
+        Status.visible.where_values_hash.should == { "compound" => false }
       end
     end
   end # context scope
