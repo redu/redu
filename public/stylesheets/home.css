@@ -610,50 +610,15 @@ input[type="hidden"] +
   margin-right: 10px;
 }
 
-ul.requisitions {
+.requisitions {
   margin: 0;
-  overflow: visible;
-}
-ul.requisitions li {
-  list-style: none;
-  width: 100%;
-  margin-bottom: 0;
-}
-ul.requisitions li:before {
-  margin: 0;
-}
-ul.requisitions .list-mix-inner {
-  padding: 10px;
-  margin-right: 0;
-}
-ul.requisitions .list-mix-inner .details {
-  margin-left: 10px;
-  float: left;
-  width: 476px;
-}
-ul.requisitions .list-mix-inner .avatar {
-  float: left;
-}
-ul.requisitions .list-mix-inner span {
+  list-style-type: none;
   color: #6d6e6f;
 }
-ul.requisitions .list-mix-inner span.waiting {
-  float: right;
-  margin-left: 10px;
-  margin-top: 7px;
+.requisitions .list-mix-inner {
+  padding-right: 10px;
 }
-ul.requisitions .actions {
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  clear: both;
-  float: right;
-}
-ul.requisitions .actions form {
-  overflow: hidden;
-  float: left;
-}
-ul.requisitions .actions input:last-child {
+.requisitions .button-success {
   margin-left: 5px;
 }
 

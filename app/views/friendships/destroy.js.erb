@@ -1,13 +1,13 @@
-// Caso em que a requisição é aceita na home
-$("#requisition-<%= @friend.id %>").slideToggle();
+<%# Caso em que a requisição é aceita na home. %>
+$("#requisition-<%= @friend.id %>").slideUp(150, "swing");
 
-// Caso em que a requisição é aceita no perfil do usuário
+<%# Caso em que a requisição é aceita no perfil do usuário. %>
 $(".secondary-sidebar .disconnect").remove();
 var addFriend = "<%= escape_javascript render :partial => "friendships/form",
   :locals => { :user => current_user, :friend => @friend } %>"
 $(".secondary-sidebar .actions").append(addFriend);
 
-// Remove contato da lista de contatos do Chat
+<%# Remove contato da lista de contatos do Chat. %>
 if (chat) {
   chat.unsubscribePresence("<%= @friend.presence_channel %>");
   chat.unsubscribePrivate("<%= current_user.private_channel_with(@friend) %>");

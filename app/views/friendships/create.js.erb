@@ -32,7 +32,7 @@
     :collection => current_user.recommended_contacts(1) %>"
   $(".members-to-add").append(new_recommendation);
 <% elsif !@show_user %>
-  $("#requisition-<%= @friend.id %>").slideToggle();
+  $("#requisition-<%= @friend.id %>").slideUp(150, "swing");
 <% end %>
 
 <% if current_user.friends? @friend %>

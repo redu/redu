@@ -1,33 +1,40 @@
-<li id="requisition-<%= item_invitation.id %>" class="list-mix-item clearfix">
+<%#
+  Convite para participar de curso.
+
+  Variáveis:
+    item_invitation: o convite para participar de curso.
+%>
+
+<li id="requisition-<%= item_invitation.id %>" class="list-mix-item">
   <div class="list-mix-inner">
-    <div class="grid_5 course">
-      <%= link_to environment_course_path(item_invitation.course.environment, item_invitation.course), :class => 'avatar' do %>
-        <%= image_tag 'new/missing_environments_thumb_32.png', :class => 'avatar' %>
+    <div class="general-list-item-body">
+      <%= link_to environment_course_path(item_invitation.course.environment, item_invitation.course), :class => "general-list-item-column" do %>
+        <%= image_tag item_invitation.course.environment.avatar.url(:thumb_32), :size => "32x32", :alt => item_invitation.course.environment.name, :title => item_invitation.course.environment.name %>
       <% end %>
-      <div class="grid_4 course details">
-        <span>Você foi convidado a participar do Curso</span>
+      <div class="general-list-item-column">
+        Você foi convidado a participar do curso
         <%= link_to item_invitation.course.name,
           preview_environment_course_path(item_invitation.course.environment,
-                                          item_invitation.course),
-          :class => 'name' %>
+                                          item_invitation.course) %>
+        <p class="legend"><%= item_invitation.updated_at.strftime("%d %b, %Y, %kh%M") %></p>
       </div>
     </div>
-    <div class="actions">
-      <%= form_tag deny_environment_course_path(
-                                   item_invitation.course.environment,
-                                   item_invitation.course),
-                                   :remote => true, :class => 'form-loader' do %>
-        <%= submit_tag "Recusar", :class => 'button-default' %>
-      <% end %>
+    <div class="general-list-item-footer">
       <% if can? :add_entry, item_invitation.course %>
         <%= form_tag accept_environment_course_path(
           item_invitation.course.environment,
           item_invitation.course),
-          :remote => true, :class => "form-loader" do %>
-          <%= submit_tag "Aceitar", :class => 'button-success' %>
+          :remote => true, :class => "pull-right" do %>
+          <%= submit_tag "Aceitar", :class => "button-success" %>
         <% end %>
       <% else %>
-        <span class="waiting">Limite de vagas atingido</span>
+        <button class="button-success pull-right" disabled="disabled">Limite de vagas atingido</button>
+      <% end %>
+      <%= form_tag deny_environment_course_path(
+                                   item_invitation.course.environment,
+                                   item_invitation.course),
+                                   :remote => true, :class => "pull-right" do %>
+        <%= submit_tag "Recusar", :class => "button-default" %>
       <% end %>
     </div>
   </div>
