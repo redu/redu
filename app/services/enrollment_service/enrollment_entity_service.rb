@@ -62,8 +62,7 @@ module EnrollmentService
     # Atualiza grade dos Enrollments passados na inicialização baseado nos
     # seus AssetReports.
     def update_grade
-      asset_reports = AssetReport.where(:enrollment_id => enrollments)
-      updated_enrollments = calculate_grade(asset_reports)
+      updated_enrollments = calculate_grade(enrollments)
       update_enrollments(updated_enrollments)
       enrollments
     end
@@ -83,8 +82,8 @@ module EnrollmentService
 
     private
 
-    def calculate_grade(asset_reports)
-      grader = GradeCalculator.new(asset_reports)
+    def calculate_grade(enrollments)
+      grader = GradeCalculator.new(enrollments)
       grader.calculate_grade
     end
 

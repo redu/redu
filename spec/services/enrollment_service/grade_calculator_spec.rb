@@ -7,7 +7,7 @@ module EnrollmentService
       let(:asset_reports) do
         FactoryGirl.create_list(:asset_report, 3, :enrollment => enrollment)
       end
-      subject { GradeCalculator.new(asset_reports) }
+      subject { GradeCalculator.new([enrollment]) }
 
       context "when all asset reports are done" do
         before { asset_reports.map { |ar| ar.update_attribute(:done, true) } }
@@ -20,6 +20,20 @@ module EnrollmentService
         it "should set grade to 100" do
           _, grade, _ = subject.calculate_grade.first
           grade.should == 100
+        end
+      end
+
+      context "when the enrollment have no asset reports" do
+        before { enrollment.update_attribute(:graduated, true) }
+
+        it "should set grade to 0" do
+          _, grade, _ = subject.calculate_grade.first
+          grade.should == 0
+        end
+
+        it "should set graduated to false" do
+          _, _, graduated  = subject.calculate_grade.first
+          graduated.should be_false
         end
       end
 
