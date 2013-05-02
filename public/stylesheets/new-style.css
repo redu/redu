@@ -5467,6 +5467,10 @@ table.concave-invitation-table .cell-reinvite .reinvited {
   float: right;
 }
 
+#invite_email {
+  margin-top: 10px;
+}
+
 #admin-invitations .form-common .concave-button {
   margin: 10px 0px 0px 0px;
 }
