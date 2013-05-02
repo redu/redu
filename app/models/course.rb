@@ -205,11 +205,7 @@ class Course < ActiveRecord::Base
     self.spaces.each do |space|
       space_association = user.get_association_with(space)
       space_association.try(:destroy)
-
-      space_enrollments = Enrollment.where(:subject_id => space.subjects)
-      enrollments << space_enrollments.select { |e| e.user_id == user.id }
     end
-    enrollments.flatten!
 
     subjects = Subject.where(:space_id => self.spaces)
     Subject.unenroll(subjects, user)
