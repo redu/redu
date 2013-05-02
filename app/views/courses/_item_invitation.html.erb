@@ -16,7 +16,7 @@
         <%= link_to item_invitation.course.name,
           preview_environment_course_path(item_invitation.course.environment,
                                           item_invitation.course) %>
-        <p class="legend"><%= item_invitation.updated_at.strftime("%d %b, %Y, %kh%M") %></p>
+        <p class="legend"><%= l item_invitation.updated_at, :format => :elegant %></p>
       </div>
     </div>
     <div class="general-list-item-footer">

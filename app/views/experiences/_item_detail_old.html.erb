@@ -2,10 +2,10 @@
   <span class='title'><%= item.title %></span> em <span class="company"><%= item.company %></span>
   <span class="period">
     <% if item.current? %>
-      <%= t item.start_date.strftime("%B %Y") %> -  Atual
+      <%= l item.start_date, :format => "%B %Y" %> -  Atual
       (<%= distance_of_time_in_words item.start_date, Date.today %>)
     <% else %>
-      <%= t item.start_date.strftime("%B %Y") %> - <%= t item.end_date.strftime("%B %Y") %>
+      <%= l item.start_date, :format => "%B %Y" %> - <%= l item.end_date, :format => "%B %Y" %>
       (<%= distance_of_time_in_words item.start_date, item.end_date %>)
     <% end %>
   </span>

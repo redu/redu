@@ -26,7 +26,7 @@
     <%= link_to friendship_item.friend.display_name, friendship_item.friend,
       :class => "invitation-title text-truncate" %>
     <% if friendship_item.requested_at %>
-      <span class="invitation-legend legend">Convite enviado em <%= friendship_item.requested_at.strftime("%d %b, %Y, %kh%M") %></span>
+      <span class="invitation-legend legend">Convite enviado em <%= l friendship_item.requested_at, :format => :elegant %></span>
     <% end %>
   </div>
 </li>

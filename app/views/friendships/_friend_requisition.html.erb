@@ -17,7 +17,7 @@
       <div class="general-list-item-column">
         <%= link_to friendship.friend.display_name, user_path(friendship.friend) %> quer se conectar a você
         <% if friendship.requested_at %>
-          <p class="legend"><%= friendship.requested_at.strftime("%d %b, %Y, %kh%M") %></p>
+          <p class="legend"><%= l friendship.requested_at, :format => :elegant %></p>
         <% end %>
       </div>
     </div>
