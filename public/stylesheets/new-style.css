@@ -2061,9 +2061,10 @@ body {
 
 #footer .copyright {
   float: left;
-  font-size: .9em;
+  font-size: .8em;
   color: #B2B2B2;
   padding: 10px 0;
+  width: 480px;
 }
 
 #nav-footer {

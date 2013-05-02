@@ -249,12 +249,30 @@
 }
 
 .content p,
+.content ul,
+.content ol,
 .content .last-updated {
   font-family: Arial, sans-serif;
   font-size: 12px;
   line-height: 17px;
   color: rgb(109, 110, 111);
   margin-bottom: 20px;
+}
+
+.content ol {
+  list-style-type: decimal;
+  list-style-position: inside;
+}
+
+.content ul {
+  list-style-type: disc;
+  list-style-position: inside;
+}
+
+.content .legend {
+  color: #b3b3b3;
+  font-size: 11px;
+  line-height: 11px;
 }
 
 .content .section {
