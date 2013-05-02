@@ -130,6 +130,10 @@ module EnrollmentService
       it "should return users's enrollments" do
         subject.get_enrollments_for(users).should == enrollments
       end
+
+      it "should return a ActiveRecord::Relation" do
+        subject.get_enrollments_for(users).should be_a ActiveRecord::Relation
+      end
     end
   end
 end

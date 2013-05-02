@@ -71,8 +71,14 @@ module EnrollmentService
     def get_enrollments_for(users)
       users_ids = users.respond_to?(:map) ? users.map(&:id) : [users.id]
 
-      enrollments = Enrollment.where(:subject_id => subjects)
-      enrollments.select { |e| users_ids.include? e.user_id }
+      enrollments_values = Enrollment.where(:subject_id => subjects).
+        values_of(:id, :user_id)
+
+      enrollments_ids = enrollments_values.collect do |id, user_id|
+        id if users_ids.include? user_id
+      end.compact
+
+      Enrollment.where(:id => enrollments_ids)
     end
 
     private
