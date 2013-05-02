@@ -43,7 +43,7 @@
 
       $("#users").tokenInput("<%= auto_complete_users_path(:format => :js) %>", {
         crossDomain: false,
-        hintText: "Digite o nome e sobrenome ou e-mail",
+        hintText: "",
         noResultsText: "Sem resultados",
         searchingText: "Buscando...",
       });
@@ -80,7 +80,7 @@
           :class => 'concave-button', :id => 'invite_email', :style => 'display: none;' %>
         </div>
         <%= label_tag "name", "Nome ou e-mail:" %>
-        <%= text_field_tag "users" %>
+        <%= text_field_tag "users", nil, :placeholder => "Digite o nome e sobrenome ou e-mail" %>
         <%= hidden_field_tag "emails", "" %>
         <%= submit_tag "Enviar convites", :class => "concave-button" %>
       <% end %>
