@@ -26,7 +26,16 @@ module EnrollmentService
     private
 
     def notify(message, enrollments)
-      vis_client.notify_delayed(url, message.to_s, enrollments)
+      enrolls = includes_relationships_if_arel(enrollments)
+      vis_client.notify_delayed(url, message.to_s, enrolls)
+    end
+
+    def includes_relationships_if_arel(enrollments)
+      if enrollments.is_a? ActiveRecord::Relation
+        enrollments.includes(:subject => [:space => :course])
+      else
+        enrollments
+      end
     end
   end
 end
