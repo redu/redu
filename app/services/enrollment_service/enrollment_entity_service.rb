@@ -36,7 +36,7 @@ module EnrollmentService
       importer.insert(values)
 
       users_ids = values.map(&:first)
-      find_created_enrollments(users_ids)
+      get_enrollments_for(User.where(:id => users_ids))
     end
 
     def importer
@@ -103,12 +103,6 @@ module EnrollmentService
         InferredEnrollmentBuilder.new(subjects)
       else
         UsersAndRolesEnrollmentBuilder.new(subjects, users_and_roles)
-      end
-    end
-
-    def find_created_enrollments(users_ids)
-      Enrollment.where(:subject_id => subjects).select do |e|
-        users_ids.include? e.user_id
       end
     end
   end
