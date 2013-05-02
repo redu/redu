@@ -76,6 +76,23 @@ module EnrollmentService
           subject.create_enrollment([subj], [user])
         end
       end
+
+      context "UntiedAdapter" do
+        let(:enrollments) do
+          FactoryGirl.create_list(:enrollment, 2, :subject => nil)
+        end
+        let(:untied_adapter) { mock('UntiedAdapter') }
+
+        it "should invoke UntiedAdapter#notify_after_create" do
+          subject.stub(:untied_adapter).and_return(untied_adapter)
+          enrollment_service.stub(:create).and_return(enrollments)
+
+          untied_adapter.should_receive(:notify_after_create).
+            with(enrollments)
+
+          subject.create_enrollment([subj], [user])
+        end
+      end
     end
 
     context "#create_asset_report" do
@@ -166,12 +183,8 @@ module EnrollmentService
         end
       end
 
-      context "VisAdapter" do
-        let!(:graduated_enrollments) do
-          e = enrollments.last
-          e.update_attributes(:graduated => true)
-          [e]
-        end
+      context "Adapters" do
+        let(:untied_adapter) { mock('UntiedAdapter') }
 
         before do
           enrollment_service.stub(:destroy)
@@ -179,20 +192,39 @@ module EnrollmentService
             and_return(enrollments_arel)
         end
 
-        it "should invoke VisAdapter#notify_enrollment_removal with removed" \
-          " enrollments" do
-          vis_adapter.should_receive(:notify_enrollment_removal).
-            with(enrollments)
+        context "VisAdapter" do
+          let!(:graduated_enrollments) do
+            e = enrollments.last
+            e.update_attributes(:graduated => true)
+            [e]
+          end
 
-          subject.destroy_enrollment(subjects, users)
+          it "should invoke VisAdapter#notify_enrollment_removal with removed" \
+            " enrollments" do
+            vis_adapter.should_receive(:notify_enrollment_removal).
+              with(enrollments)
+
+            subject.destroy_enrollment(subjects, users)
+          end
+
+          it "should invoke VisAdapter#notify_remove_subject_finalized with" \
+            " removed graduated enrollments" do
+            vis_adapter.should_receive(:notify_remove_subject_finalized).
+              with(graduated_enrollments)
+
+            subject.destroy_enrollment(subjects, users)
+          end
         end
 
-        it "should invoke VisAdapter#notify_remove_subject_finalized with" \
-          " removed graduated enrollments" do
-          vis_adapter.should_receive(:notify_remove_subject_finalized).
-            with(graduated_enrollments)
+        context "UntiedAdapter" do
+          it "should invoke UntiedAdapter#notify_after_destroy" do
+            subject.stub(:untied_adapter).and_return(untied_adapter)
 
-          subject.destroy_enrollment(subjects, users)
+            untied_adapter.should_receive(:notify_after_destroy).
+              with(enrollments)
+
+            subject.destroy_enrollment(subjects, users)
+          end
         end
       end
     end

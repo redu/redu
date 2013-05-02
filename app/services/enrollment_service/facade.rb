@@ -31,7 +31,10 @@ module EnrollmentService
     def create_enrollment(subjects, users=nil, opts={})
       service = EnrollmentEntityService.new(:subject => subjects)
       enrollments = service.create(:users => users, :role => opts[:role])
+
+      untied_adapter.notify_after_create(enrollments)
       vis_adapter.notify_enrollment_creation(enrollments)
+
       enrollments
     end
 
@@ -43,6 +46,7 @@ module EnrollmentService
       enrollment_service = EnrollmentEntityService.new(:subject => subjects)
 
       enrollments = enrollment_service.get_enrollments_for(users)
+      untied_adapter.notify_after_destroy(enrollments)
       notify_enrollment_removal(enrollments)
 
       enrollment_service.destroy(users)
@@ -53,8 +57,7 @@ module EnrollmentService
     #   lectures: Lectures que possuem os asset reports
     #   enrollments: Enrollments que terão os asset reports removidos
     def destroy_asset_report(lectures, enrollments)
-      asset_report_service = AssetReportEntityService.new(:lecture => \
-                                                          lectures)
+      asset_report_service = AssetReportEntityService.new(:lecture => lectures)
       asset_report_service.destroy(enrollments)
     end
 
@@ -78,6 +81,10 @@ module EnrollmentService
 
     def vis_adapter
       @vis_adapter ||= VisAdapter.new
+    end
+
+    def untied_adapter
+      @untied_adapter ||= UntiedAdapter.new
     end
 
     def notify_enrollment_removal(enrollments)
