@@ -1490,6 +1490,10 @@ body {
   margin: 3px 0px;
 }
 
+.hierarchy-listing .child .tags {
+  margin-top: 40px;
+}
+
 .hierarchy-listing .child .description,
 .hierarchy-listing .child .tags a {
   font-size: .87em;
@@ -1512,6 +1516,7 @@ body {
 
 .hierarchy-listing .child .tags a{
   color: rgb(179, 179, 179);
+  margin-top: 0;
 }
 
 .hierarchy-listing .child .spaces {
