@@ -19,18 +19,18 @@ module EnrollmentService
 
         self.reload
 
-        if finalized_subject?(prev_graduated, prev_grade)
+        if finalized_subject?(prev_grade)
           service_facade.notify_subject_finalized(self)
-        elsif unfinalized_subject?(prev_graduated, prev_grade)
+        elsif unfinalized_subject?(prev_grade)
           service_facade.notify_remove_subject_finalized(self)
         end
       end
 
-      def finalized_subject?(prev_graduated, prev_grade)
+      def finalized_subject?(prev_grade)
         self.graduated? && (prev_grade != self.grade)
       end
 
-      def unfinalized_subject?(prev_graduated, prev_grade)
+      def unfinalized_subject?(prev_grade)
         !self.graduated? && ((prev_grade != self.grade) && (prev_grade == 100))
       end
 
