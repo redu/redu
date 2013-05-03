@@ -125,10 +125,13 @@ describe Subject do
   end
 
   it "verifies if a user completed the subject" do
+    Factory(:lecture, :subject => subject, :owner => subject.owner)
     graduated = Factory(:user)
     subject.enroll(graduated)
     subject.lectures.each { |l| l.mark_as_done_for!(graduated, true) }
-    graduated.get_association_with(subject).update_grade!
+    e = graduated.get_association_with(subject)
+    e.update_grade!
+
     subject.graduated?(graduated).should be_true
   end
 
