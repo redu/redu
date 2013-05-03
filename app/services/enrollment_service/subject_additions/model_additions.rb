@@ -77,7 +77,7 @@ module EnrollmentService
         end
 
         def enqueue(job)
-          Delayed::Job.enqueue(job)
+          Delayed::Job.enqueue(job, :queue => :general)
         end
 
         def service_facade

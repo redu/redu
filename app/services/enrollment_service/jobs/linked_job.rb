@@ -26,7 +26,7 @@ module EnrollmentService
       private
 
       def enqueue(job=nil)
-        Delayed::Job.enqueue(job) if job
+        Delayed::Job.enqueue(job, :queue => :general) if job
       end
     end
   end
