@@ -18,7 +18,7 @@ module EnrollmentService
 
       importer.insert(values)
 
-      find_created_asset_reports(enrollments_ids)
+      get_asset_reports_for(enrollments_ids)
     end
 
     def importer
@@ -41,6 +41,10 @@ module EnrollmentService
       end.compact
 
       AssetReport.delete_all(["id IN (?)", assets_ids])
+    end
+
+    def get_asset_reports_for(enrollments)
+      AssetReport.where(:lecture_id => lectures, :enrollment_id => enrollments)
     end
 
     protected
@@ -67,12 +71,6 @@ module EnrollmentService
       else
         subject_ids = lectures.map(&:subject_id).uniq
         Enrollment.where(:subject_id => subject_ids).values_of(:id, :subject_id)
-      end
-    end
-
-    def find_created_asset_reports(enrollments_ids)
-      AssetReport.where(:lecture_id => lectures).select do |a|
-        enrollments_ids.include? a.enrollment_id
       end
     end
   end

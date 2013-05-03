@@ -87,5 +87,24 @@ module EnrollmentService
           be_superset asset_reports.to_set
       end
     end
+
+    describe "#get_asset_reports_for" do
+      let(:asset_reports) do
+        lectures.map { |l| FactoryGirl.create(:asset_report, :lecture => l) }
+      end
+      let!(:extra_asset_reports) do
+        lectures.map { |l| FactoryGirl.create(:asset_report, :lecture => l) }
+      end
+      let(:enrollments) { asset_reports.map(&:enrollment).flatten }
+
+      it "should return enrollments's asset reports" do
+        subject.get_asset_reports_for(enrollments).should == asset_reports
+      end
+
+      it "should return a ActiveRecord::Relation" do
+        subject.get_asset_reports_for(enrollments).should be_a \
+          ActiveRecord::Relation
+      end
+    end
   end
 end
