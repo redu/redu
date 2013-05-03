@@ -1,22 +1,24 @@
 module EnrollmentService
-  class CreateAssetReportJob < LinkedJob
-    def initialize(opts={})
-      options.set(:lecture, opts.delete(:lecture))
-      options.set(:enrollment, opts.delete(:enrollment))
-    end
+  module Jobs
+    class CreateAssetReportJob < LinkedJob
+      def initialize(opts={})
+        options.set(:lecture, opts.delete(:lecture))
+        options.set(:enrollment, opts.delete(:enrollment))
+      end
 
-    def execute
-      lectures = options.arel_of(:lecture)
-      enrollments = options.arel_of(:enrollment)
+      def execute
+        lectures = options.arel_of(:lecture)
+        enrollments = options.arel_of(:enrollment)
 
-      facade.
-        create_asset_report(:lectures => lectures, :enrollments => enrollments)
+        facade.
+          create_asset_report(:lectures => lectures, :enrollments => enrollments)
 
-      { :enrollments => enrollments }
-    end
+        { :enrollments => enrollments }
+      end
 
-    def build_next_job(env)
-      UpdateGradeJob.new(:enrollment => env[:enrollments])
+      def build_next_job(env)
+        UpdateGradeJob.new(:enrollment => env[:enrollments])
+      end
     end
   end
 end

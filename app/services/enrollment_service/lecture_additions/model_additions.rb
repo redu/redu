@@ -11,7 +11,7 @@ module EnrollmentService
 
       def delayed_create_asset_report
         enrollments = self.subject.enrollments
-        job = CreateAssetReportJob.
+        job = Jobs::CreateAssetReportJob.
           new(:lecture => [self], :enrollment => enrollments)
         enqueue(job)
       end

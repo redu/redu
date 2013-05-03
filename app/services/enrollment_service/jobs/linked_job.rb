@@ -1,31 +1,33 @@
 module EnrollmentService
-  class LinkedJob
-    def perform
-      env = execute || {}
-      next_job = build_next_job(env)
+  module Jobs
+    class LinkedJob
+      def perform
+        env = execute || {}
+        next_job = build_next_job(env)
 
-      enqueue(next_job)
-    end
+        enqueue(next_job)
+      end
 
-    def execute; end
+      def execute; end
 
-    def build_next_job(env)
-      Rails.logger.info "#{self.class} defines no next job. Nothing to do."
-      nil
-    end
+      def build_next_job(env)
+        Rails.logger.info "#{self.class} defines no next job. Nothing to do."
+        nil
+      end
 
-    def facade
-      Facade.instance
-    end
+      def facade
+        Facade.instance
+      end
 
-    def options
-      @options ||= LinkedJobOptions.new
-    end
+      def options
+        @options ||= LinkedJobOptions.new
+      end
 
-    private
+      private
 
-    def enqueue(job=nil)
-      Delayed::Job.enqueue(job) if job
+      def enqueue(job=nil)
+        Delayed::Job.enqueue(job) if job
+      end
     end
   end
 end
