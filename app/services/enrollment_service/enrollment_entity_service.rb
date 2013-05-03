@@ -49,14 +49,9 @@ module EnrollmentService
     #
     # Atenção: Não invoca callbacks (nem remove associações :dependent).
     def destroy(users)
-      users_ids = users.respond_to?(:map) ? users.map(&:id) : [users.id]
-      enrollments = Enrollment.where(:subject_id => subjects)
+      enrollments = Enrollment.where(:subject_id => subjects, :user_id => users)
 
-      enrollments_ids = enrollments.values_of(:id, :user_id).map do |id, u_id|
-        id if users_ids.include? u_id
-      end.compact
-
-      Enrollment.delete_all(["id IN (?)", enrollments_ids])
+      Enrollment.delete_all(["id IN (?)", enrollments.values_of(:id)])
     end
 
     # Atualiza grade dos Enrollments passados na inicialização baseado nos
@@ -68,16 +63,7 @@ module EnrollmentService
     end
 
     def get_enrollments_for(users)
-      users_ids = users.respond_to?(:map) ? users.map(&:id) : [users.id]
-
-      enrollments_values = Enrollment.where(:subject_id => subjects).
-        values_of(:id, :user_id)
-
-      enrollments_ids = enrollments_values.collect do |id, user_id|
-        id if users_ids.include? user_id
-      end.compact
-
-      Enrollment.where(:id => enrollments_ids)
+      Enrollment.where(:subject_id => subjects, :user_id => users)
     end
 
     private

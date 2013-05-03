@@ -122,8 +122,11 @@ module EnrollmentService
     end
 
     context "#destroy_enrollment" do
-      let(:enrollments) do
-        FactoryGirl.create_list(:enrollment, 3, :subject => nil)
+      let!(:enrollments) do
+        FactoryGirl.create_list(:enrollment, 2, :subject => nil)
+      end
+      let(:enrollments_arel) do
+        Enrollment.limit(2)
       end
 
       before do
@@ -135,7 +138,8 @@ module EnrollmentService
 
       context "with multiple users and subjects" do
         it "should initialize EnrollmentEntityService with subjects" do
-          enrollment_service.stub(:get_enrollments_for).and_return(enrollments)
+          enrollment_service.stub(:get_enrollments_for).
+            and_return(enrollments_arel)
           enrollment_service.stub(:destroy)
 
           EnrollmentEntityService.should_receive(:new).
@@ -149,12 +153,13 @@ module EnrollmentService
           enrollment_service.stub(:destroy)
 
           enrollment_service.should_receive(:get_enrollments_for).with(users).
-            and_return(enrollments)
+            and_return(enrollments_arel)
           subject.destroy_enrollment(subjects, users)
         end
 
         it "should invoke EnrollmentEntityService#destroy with users" do
-          enrollment_service.stub(:get_enrollments_for).and_return(enrollments)
+          enrollment_service.stub(:get_enrollments_for).
+            and_return(enrollments_arel)
 
           enrollment_service.should_receive(:destroy).with(users)
           subject.destroy_enrollment(subjects, users)
@@ -170,7 +175,8 @@ module EnrollmentService
 
         before do
           enrollment_service.stub(:destroy)
-          enrollment_service.stub(:get_enrollments_for).and_return(enrollments)
+          enrollment_service.stub(:get_enrollments_for).
+            and_return(enrollments_arel)
         end
 
         it "should invoke VisAdapter#notify_enrollment_removal with removed" \

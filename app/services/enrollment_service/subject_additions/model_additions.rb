@@ -60,9 +60,8 @@ module EnrollmentService
           users = user_or_users.respond_to?(:map) ? user_or_users :
             [user_or_users]
 
-          enrollments = Enrollment.where(:subject_id => subjects).select do |e|
-            users.include? e.user
-          end
+          enrollments = Enrollment.where(:subject_id => subjects,
+                                         :user_id => users)
           lectures = Lecture.where(:subject_id => subjects)
 
           service_facade.destroy_asset_report(lectures, enrollments)

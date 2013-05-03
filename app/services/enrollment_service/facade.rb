@@ -81,9 +81,10 @@ module EnrollmentService
     end
 
     def notify_enrollment_removal(enrollments)
-      vis_adapter.notify_enrollment_removal(enrollments)
-      graduated_enrollments = enrollments.select { |e| e.graduated? }
+      graduated_enrollments = enrollments.where(:graduated => true)
       vis_adapter.notify_remove_subject_finalized(graduated_enrollments)
+
+      vis_adapter.notify_enrollment_removal(enrollments)
     end
   end
 end

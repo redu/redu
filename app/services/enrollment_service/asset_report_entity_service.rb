@@ -32,15 +32,10 @@ module EnrollmentService
     #
     # Atenção: Não invoca callbacks (nem remove associações :dependent).
     def destroy(enrollments)
-      enrollments_ids = enrollments.respond_to?(:map) ? enrollments.map(&:id) :
-        [enrollments.id]
-      assets = AssetReport.where(:lecture_id => lectures)
+      assets = AssetReport.where(:lecture_id => lectures,
+                                 :enrollment_id => enrollments)
 
-      assets_ids = assets.values_of(:id, :enrollment_id).map do |a_id, e_id|
-        a_id if enrollments_ids.include? e_id
-      end.compact
-
-      AssetReport.delete_all(["id IN (?)", assets_ids])
+      AssetReport.delete_all(["id IN (?)", assets.values_of(:id)])
     end
 
     def get_asset_reports_for(enrollments)
