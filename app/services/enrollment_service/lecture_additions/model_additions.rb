@@ -17,7 +17,7 @@ module EnrollmentService
       end
 
       def enqueue(job)
-        Delayed::Job.enqueue(job, :queue => :general)
+        Delayed::Job.enqueue(job, :queue => "hierachy-associations")
       end
 
       def service_facade
