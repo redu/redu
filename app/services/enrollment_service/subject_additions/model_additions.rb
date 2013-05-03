@@ -83,10 +83,6 @@ module EnrollmentService
         def service_facade
           EnrollmentService::Facade.instance
         end
-
-        def pluck_ids(resources)
-          resources.map(&:id).uniq
-        end
       end
     end
   end
