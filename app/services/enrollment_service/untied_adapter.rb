@@ -20,7 +20,7 @@ module EnrollmentService
     end
 
     def queue
-      @queue ||= Untied::Publisher::BatchQueue.new
+      @queue ||= Untied::Publisher::QueueProxy.new
     end
 
     private
