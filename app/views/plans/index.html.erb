@@ -39,10 +39,9 @@
           </table>
         </div>
       <% else %>
-        <div class="empty-message">
-          <span class="empty-message-icon icon-plans-empty_128_130 text-replacement" title="Nenhuma mensagem">Nenhuma plano</span>
-          <p class="empty-message-content">Você ainda não possui planos.</p>
-        </div>
+        <%= render "shared/empty_message", :icon_message => "Nenhum plano",
+          :icon_class => "icon-plans-empty_128_130",
+          :message => "Você ainda não possui nenhum plano." %>
       <% end %>
     </div>
     <%= render :partial => "users/breadcrumb_configurations",
