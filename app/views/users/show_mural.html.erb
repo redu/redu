@@ -12,10 +12,9 @@
       <%= will_paginate @statuses, :renderer => EndlessRenderer %>
     </div><!-- end .statuses -->
   <% else %>
-    <div class="empty-message">
-      <span class="empty-message-icon icon-private-gray_128_130 text-replacement" title="Mural disponível apenas para Amigos">Mural disponível apenas para Amigos</span>
-      <p class="empty-message-content">Este mural está disponível disponível apenas para Amigos.</p>
-    </div>
+    <%= render "shared/empty_message", :icon_message => "Mural disponível apenas para Amigos",
+      :icon_class => "icon-private-gray_128_130",
+      :message => "Este mural está disponível disponível apenas para Amigos." %>
   <% end %>
 
 </div>

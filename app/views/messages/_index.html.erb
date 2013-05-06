@@ -8,14 +8,14 @@
 %>
 <div class="content-section">
   <% if messages.empty? %>
-    <div class="empty-message">
-      <span class="empty-message-icon icon-message-empty_128_130 text-replacement" title="Nenhuma mensagem">Nenhuma mensagem</span>
-      <% if mailbox == :inbox %>
-        <p class="empty-message-content">Você ainda não recebeu mensagens.</p>
-      <% else %>
-        <p class="empty-message-content">Você ainda não enviou mensagens.</p>
-      <% end %>
-    </div>
+    <% if mailbox == :inbox %>
+      <% inbox_type = "recebeu" %>
+    <% else %>
+      <% inbox_type = "enviou" %>
+    <% end %>
+    <%= render "shared/empty_message", :icon_message => "Nenhuma mensagem",
+      :icon_class => "icon-message-empty_128_130",
+      :message => "Você ainda não #{inbox_type} mensagens." %>
   <% else %>
     <%= form_tag delete_selected_user_messages_path(@user),
       :class => "form-checklist messages-list" do %>
