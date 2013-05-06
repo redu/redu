@@ -32,8 +32,9 @@
                      :query => @query } %>
     <%# Nenhum resultado encontrado. %>
     <% else %>
-      <%= render :partial => "empty_search_result",
-        :locals => { :query => @query } %>
+      <%= render "shared/empty_message", :icon_message => "Nenhum resultado encontrado",
+        :icon_class => "icon-search-empty_128_130",
+        :message => raw("Sentimos muito, mas não achamos resultado para <strong>#{@query}</strong>. Tente outro termo.") %>
     <% end %>
   </div>
   <div class="breadcrumb-mini-wrapper">
