@@ -111,7 +111,7 @@ module EnrollmentService
           end.flatten
         end
 
-        it "should invoke Facede#destroy_asset_report with correct arguments" do
+        it "should invoke Facade#destroy_asset_report with correct arguments" do
           facade.stub(:notify_enrollment_removal)
           facade.stub(:destroy_enrollment)
           mock_facade(facade)
@@ -121,7 +121,7 @@ module EnrollmentService
           Subject.unenroll(subjects, users)
         end
 
-        it "should invoke Facede#destroy_enrollment with correct arguments" do
+        it "should invoke Facade#destroy_enrollment with correct arguments" do
           facade.stub(:destroy_asset_report)
           facade.stub(:notify_enrollment_removal)
           mock_facade(facade)
