@@ -23,7 +23,7 @@ module EnrollmentService
       end
 
       it "should initalize EnrollmentEntityService with the correct arguments" do
-        enrollment_service.stub(:create)
+        enrollment_service.stub(:create).and_return([])
 
         EnrollmentEntityService.should_receive(:new).
           with(:subject => [subj]).and_return(enrollment_service)
@@ -32,31 +32,33 @@ module EnrollmentService
       end
 
       it "should invoke EnrollmentEntityService#create with only users" do
-        enrollment_service.should_receive(:create).with(:users => users,
-                                                        :role => nil)
+        enrollment_service.should_receive(:create).
+          with(:users => users, :role => nil).and_return([])
         subject.create_enrollment([subj], users)
       end
 
       it "should invoke EnrollmentEntityServie#create with the role passed" do
         role = Role[:environment_admin]
-        enrollment_service.should_receive(:create).with(:users => users,
-                                                        :role => role)
+        enrollment_service.should_receive(:create).
+          with(:users => users, :role => role).and_return([])
+
         subject.create_enrollment([subj], users, :role => role)
       end
 
       context "with multiple subjects and users" do
         it "should invoke EnrollmentEntityService#create users and roles" do
           role = Role[:member]
-          enrollment_service.should_receive(:create).with(:users => users,
-                                                          :role => role)
+          enrollment_service.should_receive(:create).
+            with(:users => users, :role => role).and_return([])
+
           subject.create_enrollment(subjects, users, :role => role)
         end
       end
 
       context "without args" do
         it "should invoke EnrollmentEntityService#create with nil" do
-          enrollment_service.should_receive(:create).with(:users => nil,
-                                                          :role => nil)
+          enrollment_service.should_receive(:create).
+            with(:users => nil, :role => nil).and_return([])
           subject.create_enrollment(subjects)
         end
       end
@@ -123,7 +125,7 @@ module EnrollmentService
 
           asset_report_service.should_receive(:create) do |args|
             args.map(&:user_id).should =~ users.map(&:id) * subjects.length
-          end
+          end.and_return([])
 
           subject.create_asset_report(:lectures => lectures,
                                       :enrollments => enrollments)
@@ -132,7 +134,7 @@ module EnrollmentService
 
       context "without users" do
         it "should invoke AssetReportEntityService#create without arguments" do
-          asset_report_service.should_receive(:create)
+          asset_report_service.should_receive(:create).and_return([])
           subject.create_asset_report(:lectures => lectures)
         end
       end
