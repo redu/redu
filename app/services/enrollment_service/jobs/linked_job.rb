@@ -26,7 +26,7 @@ module EnrollmentService
       private
 
       def enqueue(job=nil)
-        Delayed::Job.enqueue(job, :queue => "hierachy-associations") if job
+        Delayed::Job.enqueue(job, :queue => "hierarchy-associations") if job
       end
     end
   end
