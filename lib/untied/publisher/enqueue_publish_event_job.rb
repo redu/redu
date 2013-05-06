@@ -11,7 +11,7 @@ module Untied
       private
 
       def enqueue(job)
-        Delayed::Job.enqueue(job)
+        Delayed::Job.enqueue(job, :queue => "vis")
       end
     end
   end
