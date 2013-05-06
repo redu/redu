@@ -1,3 +1,14 @@
+<%#
+  Cotas de uso do plano.
+
+  Variáveis:
+    plan: o plano.
+    quota_members: a cota de membros.
+    quota: a cota;
+    quota_file: a cota de documentos.
+    quota_multimedia: a cota de vídeos.
+%>
+
 <ul class="quotas">
   <% unless plan.members_limit == 1.0/0 # Infinity %>
     <li>

@@ -1,3 +1,14 @@
+<%#
+  Cotas de uso do plano (antiga).
+
+  Variáveis:
+    plan: o plano.
+    quota_members: a cota de membros.
+    quota: a cota;
+    quota_file: a cota de documentos.
+    quota_multimedia: a cota de vídeos.
+%>
+
 <ul class="quotas clearfix">
   <% unless plan.members_limit == 1.0/0 # Infinity %>
     <li class="clearfix">
@@ -25,7 +36,7 @@
         <div class="meta">
           <span class="label">documentos:</span>
           <span class="numeric">
-            <strong class="strong"><%= number_to_human_size(quota.files, :precision => 0) %></strong> /
+            <strong class="strong"><%= "#{bytes_to_mb(quota.files)} MB" %></strong> /
             <%= number_to_human_size(plan.file_storage_limit, :precision => 0) %>
           </span>
         </div>
@@ -47,7 +58,7 @@
         <div class="meta">
           <span class="label">vídeos:</span>
           <span class="numeric">
-            <strong class="strong"><%= number_to_human_size(quota.multimedia, :precision => 0) %></strong> /
+            <strong class="strong"><%= "#{bytes_to_mb(quota.multimedia)} MB" %></strong> /
             <%= number_to_human_size(plan.video_storage_limit, :precision => 0) %>
           </span>
         </div>
