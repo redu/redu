@@ -1,26 +1,26 @@
-<tr class="course row">
-  <td class="environment cell">
+<tr class="link-container">
+  <td>
     <% if item.billable %>
       <% if item.billable.is_a? Environment %>
-        <%= content_tag(:p, item.billable.name, :class => "name") %>
+        <%= content_tag(:p, item.billable.name, :class => "plans-name") %>
       <% else %>
-        <%= item.billable.environment.name %>
-        <%= content_tag(:p, item.billable.name, :class => "name") %>
+        <%= content_tag(:span, item.billable.environment.name, :class => "plans-name") %>
+        <%= content_tag(:p, item.billable.name, :class => "legend") %>
       <% end %>
     <% else %>
-      <span class="name"><%= item.billable_audit.try(:[], "name") || "Sem informações" %> (removido)</span>
+      <span class="plans-name"><%= item.billable_audit.try(:[], "name") || "Sem informações" %> (removido)</span>
     <% end %>
   </td>
-  <td class="type-user cell">
-    <%= link_to item.name, plan_invoices_path(item), :class => "name #{item.invoice.try(:overdue?) ? 'pending-user' : ''}" %>
+  <td>
+    <%= link_to item.name, plan_invoices_path(item), :class => "#{plan_payment_status_class(item)} link-target" %>
     <% if item.pending_payment? %>
       <% if item.invoice.overdue? %>
-        <p class="no-pending">Fatura em aberto, plano bloqueado</p>
+        <p class="legend">Fatura em aberto, plano bloqueado</p>
       <% else %>
-        <%= content_tag(:p, "Faltam #{item.invoice.threshold_date - Date.today} dias restantes", :class => "no-pending") %>
+        <%= content_tag(:p, "Fatura em aberto. #{item.invoice.threshold_date - Date.today} dias restantes.", :class => "legend") %>
       <% end %>
     <% else %>
-      <span class="no-pending">Sem pendência</span>
+      <p class="legend">Sem pendências</p>
     <% end %>
   </td>
 </tr>

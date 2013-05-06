@@ -12,6 +12,7 @@ class InvoicesController < BaseController
     end
 
     if @plan
+      @user = @plan.user
       @invoices = @plan.invoices
       @quota = @plan.billable.quota if @plan.billable
       # FIXME Planos dos parceiros não deveriam estar associados ao user.
@@ -46,7 +47,7 @@ class InvoicesController < BaseController
         format.html { render "partners/invoices/index" } if @reference_period
         format.html { render "partners/invoices/monthly" }
       else
-        format.html
+        format.html { render :layout => 'new_application' }
       end
     end
   end
