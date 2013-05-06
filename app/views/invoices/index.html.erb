@@ -30,7 +30,7 @@
       <%# Abas e sub-abas %>
       <%= new_tabs(:new_users) %>
       <div class="content-section">
-        <%= render :partial => "plans/plans_title" %>
+        <%= render "plans/plans_title", :plan => @plan %>
 
         <ul class="list-mix plan-details">
           <li>

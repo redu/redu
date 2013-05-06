@@ -35,7 +35,7 @@
       <%# Abas e sub-abas %>
       <%= new_tabs(:new_users) %>
       <div class="content-section">
-        <%= render :partial => "plans/plans_title" %>
+        <%= render "plans/plans_title", :plan => @plan %>
         <h5 class="plans-title teacher">Planos para Professor</h5>
         <ul class="list-mix plan-details">
           <% if @plan.name == Plan.from_preset(:free).name %>
