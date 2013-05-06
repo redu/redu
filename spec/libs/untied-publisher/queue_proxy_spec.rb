@@ -17,7 +17,9 @@ module Untied
         it "should use Queue otherwise" do
           subject.stub(:simple_queue).and_return(simple_queue)
           simple_queue.should_receive(:enqueue)
-          subject.enqueue(:after_destroy, mock_model('Enrollment'))
+          enrollment = mock_model('Enrollment')
+          enrollment.stub(:serializable_hash).and_return({})
+          subject.enqueue(:after_destroy, enrollment)
         end
       end
 

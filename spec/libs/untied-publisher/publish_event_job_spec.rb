@@ -5,12 +5,13 @@ module Untied
     describe PublishEventJob do
       let(:model) { Factory(:social_network) }
       subject do
-        PublishEventJob.new(:after_create, model.class.to_s, model.id)
+        PublishEventJob.new(:after_create, model.class.to_s, model)
       end
 
       context ".new" do
         it "should accept a hash" do
-          job = PublishEventJob.new(:after_create, 'SocialNetwork', model.serializable_hash)
+          job = PublishEventJob.
+            new(:after_create, 'SocialNetwork', model.serializable_hash)
           job.producer.should_receive(:publish) do |event|
             event.payload.should == model.serializable_hash
           end
@@ -18,8 +19,8 @@ module Untied
           job.perform
         end
 
-        it "should accept entity ID" do
-          job = PublishEventJob.new(:after_create, 'SocialNetwork', model.id)
+        it "should accept entity" do
+          job = PublishEventJob.new(:after_create, 'SocialNetwork', model)
           job.producer.should_receive(:publish) do |event|
             event.payload.should == model
           end

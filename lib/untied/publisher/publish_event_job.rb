@@ -3,14 +3,16 @@ module Untied
     class PublishEventJob
       attr_reader :event_name, :class_name, :model_id
 
-      def initialize(event_name, class_name, id_or_hash)
+      def initialize(event_name, class_name, id_model_or_hash)
         @event_name = event_name
         @class_name = class_name
 
-        if id_or_hash.is_a? Hash
-          @payload = id_or_hash
+        if id_model_or_hash.is_a? Hash
+          @payload = id_model_or_hash
+        elsif id_model_or_hash.is_a? Fixnum
+          @model_id = id_model_or_hash.to_i
         else
-          @model_id = id_or_hash.to_i
+          @model_id = id_model_or_hash.id
         end
       end
 
