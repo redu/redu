@@ -37,7 +37,7 @@
             <div class="list-mix-item">
               <div class="list-mix-inner">
                 <div class="list-mix-header">
-                  <span class="plan-name <%= plan_payment_status(@plan) %>"><%= @plan.name %></span>
+                  <%= content_tag :span, @plan.name, :class => "plan-name #{plan_payment_status_class(@plan)}" %>
                   <% if can? :migrate, @plan %>
                     <%= link_to "Upgrade", options_plan_path(@plan), :class => "button-success pull-right" %>
                   <% end %>

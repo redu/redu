@@ -1,6 +1,6 @@
 module PlansHelper
-  # define cor de texto de acordo com o status de pagamento do plano
-  def plan_payment_status(plan)
+  # Define a classe (cor de texto) de acordo com o status de pagamento do plano.
+  def plan_payment_status_class(plan)
     invoice = plan.invoice
     if plan.pending_payment?
       if invoice.try(:overdue?)
