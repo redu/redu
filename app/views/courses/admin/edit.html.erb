@@ -15,7 +15,7 @@
         <div class="plan-panel">
           <div class="plan-use">
             <span class="plan-type"><%= @course.plan.name %></span>
-            <%= render :partial => "invoices/quotas",
+            <%= render :partial => "invoices/quotas_old",
               :locals => { :quota_file => @course.percentage_quota_file,
                            :plan => @course.plan,
                            :quota_multimedia => @course.percentage_quota_multimedia,
