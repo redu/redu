@@ -587,6 +587,104 @@ input[type="hidden"] +
   margin-right: 10px;
 }
 
+.plan-status-no-pending {
+  color: #5fc080 !important;
+}
+
+.plan-status-pending {
+  color: #ffa935 !important;
+}
+
+.plan-status-overdue {
+  color: #e1272d !important;
+}
+
+.plan-status-closed {
+  color: black !important;
+}
+
+.pag-seguro {
+  padding-top: 20px;
+}
+
+.plans-sidebar p + p {
+  margin-top: 15px;
+}
+
+.plans-name {
+  font-weight: bold;
+  color: #6d6e6f;
+}
+
+.plans-title {
+  color: #b3b3b3;
+  font-weight: 300;
+}
+.plans-title.course {
+  color: #6d6e6f;
+  margin-bottom: -5px;
+}
+.plans-title.teacher {
+  padding-top: 10px;
+}
+
+.plan-details {
+  margin-top: 20px;
+}
+.plan-details li + li {
+  margin-top: 10px;
+}
+.plan-details .list-mix-inner {
+  padding: 10px;
+}
+.plan-details .list-mix-header {
+  padding-bottom: 10px;
+  overflow: hidden;
+  line-height: 18px;
+}
+.plan-details .plan-name {
+  color: #5fc080;
+  float: left;
+}
+.plan-details .plan-status {
+  display: block;
+  clear: left;
+}
+.plan-details .plan-price {
+  color: #6d6e6f;
+  font-weight: 300;
+}
+.plan-details .quotas {
+  list-style-type: none;
+}
+.plan-details .quotas li {
+  padding-left: 43px;
+}
+.plan-details .quotas li + li {
+  margin-top: 0;
+  padding-top: 5px;
+}
+.plan-details .quotas .plan-quota {
+  color: black;
+}
+.plan-details .quotas .icon {
+  float: left;
+  margin-right: 5px;
+}
+.plan-details .quotas .quota-documents {
+  padding-left: 0;
+}
+
+.invoices-table {
+  margin-top: 40px;
+}
+.invoices-table tbody {
+  color: #6d6e6f;
+}
+.invoices-table tbody td:last-child {
+  text-align: center;
+}
+
 .requisitions {
   margin: 0;
   list-style-type: none;

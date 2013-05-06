@@ -1,66 +1,47 @@
-<ul class="quotas clearfix">
+<%#
+  Cotas de uso do plano.
+
+  Variáveis:
+    plan: o plano.
+    quota_members: a cota de membros.
+    quota: a cota;
+    quota_file: a cota de documentos.
+    quota_multimedia: a cota de vídeos.
+%>
+
+<ul class="quotas">
   <% unless plan.members_limit == 1.0/0 # Infinity %>
-    <li class="clearfix">
-      <div class="meta">
-        <span class="label">membros:</span>
-        <span class="numeric">
-          <strong class="strong"><%= plan.billable.users.count %></strong> /
-          <%= plan.members_limit %>
+    <li>
+      <span class="icon-members-gray_16_18 show text-replacement icon">Membros</span>
+      <span>Membros: <%= plan.billable.users.count %> / <%= plan.members_limit %></span>
+      <div class="progress-bar-legend progress-bar-medium pull-right">
+        <span class="legend"><%= quota_members.round %>%</span>
+        <span class="progress-bar-total progress-bar-thin">
+          <span class="progress-bar-completed text-replacement" style="width: <%= quota_members.round %>%;"><%= quota_members.round %>%</span>
         </span>
       </div>
-      <div class="used">
-        <span class="percentage"><%= quota_members.round %>%</span>
-        <div class="progress">
-          <div class="completed" style="width: <%= quota_members.round %>%;">
-            <%= quota_members.round %>%
-          </div>
-        </div>
-      </div>
-      <ul class="resources">
-        <li class="icon-small icon-members-gray_16_18 replacement">membros</li>
-      </ul>
     </li>
   <% end %>
-      <li class="clearfix">
-        <div class="meta">
-          <span class="label">documentos:</span>
-          <span class="numeric">
-            <strong class="strong"><%= "#{bytes_to_mb(quota.files)} MB" %></strong> /
-            <%= number_to_human_size(plan.file_storage_limit, :precision => 0) %>
-          </span>
-        </div>
-        <div class="used">
-          <span class="percentage"><%= quota_file.round %>%</span>
-          <div class="progress">
-            <div class="completed" style="width: <%= quota_file.round %>%;">
-              <%= quota_file.round %>%
-            </div>
-          </div>
-        </div>
-        <ul class="resources">
-          <li class="icon-small icon-document-gray_16_18 replacement">documentos e apresentações</li>
-          <li class="icon-small icon-page-gray_16_18 replacement">página simples</li>
-          <li class="icon-small icon-file-gray_16_18 replacement">arquivos de apoio</li>
-        </ul>
-      </li>
-      <li class="clearfix">
-        <div class="meta">
-          <span class="label">vídeos:</span>
-          <span class="numeric">
-            <strong class="strong"><%= "#{bytes_to_mb(quota.multimedia)} MB" %></strong> /
-            <%= number_to_human_size(plan.video_storage_limit, :precision => 0) %>
-          </span>
-        </div>
-        <div class="used">
-          <span class="percentage"><%= quota_multimedia.round %>%</span>
-          <div class="progress">
-            <div class="completed" style="width: <%= quota_multimedia.round %>%;">
-              <%= quota_multimedia.round %>%
-            </div>
-          </div>
-        </div>
-        <ul class="resources">
-          <li class="icon-small icon-seminar-gray_16_18 replacement">vídeo-aulas</li>
-        </ul>
-      </li>
-    </ul>
+  <li class="quota-documents">
+    <span class="icon-presentation-gray_16_18 show text-replacement icon">Apresentações</span>
+    <span class="icon-text-page-gray_16_18 show text-replacement icon">Documentos</span>
+    <span class="icon-file-gray_16_18 show text-replacement icon">Arquivos</span>
+    <span>Documentos: <%= "#{bytes_to_mb(quota.files)} MB" %> / <%= number_to_human_size(plan.file_storage_limit, :precision => 0) %></span>
+    <div class="progress-bar-legend progress-bar-medium pull-right">
+      <span class="legend"><%= quota_file.round %>%</span>
+      <span class="progress-bar-total progress-bar-thin">
+        <span class="progress-bar-completed text-replacement" style="width: <%= quota_file.round %>%;"><%= quota_file.round %>%</span>
+      </span>
+    </div>
+  </li>
+  <li>
+    <span class="icon-video-gray_16_18 show text-replacement icon">Vídeos</span>
+    <span>Vídeos: <%= "#{bytes_to_mb(quota.multimedia)} MB" %> / <%= number_to_human_size(plan.video_storage_limit, :precision => 0) %></span>
+    <div class="progress-bar-legend progress-bar-medium pull-right">
+      <span class="legend"><%= quota_multimedia.round %>%</span>
+      <span class="progress-bar-total progress-bar-thin">
+        <span class="progress-bar-completed text-replacement" style="width: <%= quota_multimedia.round %>%;"><%= quota_multimedia.round %>%</span>
+      </span>
+    </div>
+  </li>
+</ul>
