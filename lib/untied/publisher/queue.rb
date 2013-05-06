@@ -6,7 +6,7 @@ module Untied
         delayed_job.enqueue(job, :queue => :vis)
       end
 
-      private
+      protected
 
       def delayed_job
         Delayed::Job

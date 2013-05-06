@@ -10,15 +10,17 @@ module EnrollmentService
 
     def produce_event(event_name, enrollments)
       enrollments = build_collection(enrollments)
+
       enrollments.each do |enrollment|
         queue.enqueue(event_name, enrollment)
       end
+      queue.commit
 
       enrollments
     end
 
     def queue
-      @queue ||= Untied::Publisher::Queue.new
+      @queue ||= Untied::Publisher::BatchQueue.new
     end
 
     private
