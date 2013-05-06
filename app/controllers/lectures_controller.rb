@@ -71,6 +71,11 @@ class LecturesController < BaseController
         end
       elsif @lecture.lectureable_type == 'Api::Canvas'
         format.html do
+          options = { :redu_space_id => @space.id, :redu_subject_id => @subject.id,
+                      :redu_lecture_id => @lecture_id, :redu_container => :lecture,
+                      :redu_user_id => current_user.id }
+          @canvas_url = @lecture.lectureable.current_url(options)
+
           render :show_canvas
         end
       elsif @lecture.lectureable_type == 'Exercise'

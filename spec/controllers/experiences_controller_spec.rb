@@ -25,7 +25,7 @@ describe ExperiencesController do
       it "creates an experience to the logged user" do
         expect {
           post :create, @post_params
-        }.should change(Experience, :count).by(1)
+        }.to change(Experience, :count).by(1)
         Experience.last.user.should == @user
       end
 
@@ -55,7 +55,7 @@ describe ExperiencesController do
       it "does NOT create an experience to the logged user" do
         expect {
           post :create, @post_params
-        }.should_not change(Experience, :count)
+        }.to_not change(Experience, :count)
       end
     end
   end
@@ -153,7 +153,7 @@ describe ExperiencesController do
     it "destroys the experience" do
       expect {
         post :destroy, @post_params
-      }.should change(Experience, :count).by(-1)
+      }.to change(Experience, :count).by(-1)
     end
   end
 

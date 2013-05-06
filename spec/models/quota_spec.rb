@@ -99,14 +99,14 @@ describe Quota do
         it "should update multimedia files value" do
           expect {
             subject.refresh!
-          }.should change { subject.multimedia }.from(0).to(@updated_seminars_size)
+          }.to change { subject.multimedia }.from(0).to(@updated_seminars_size)
         end
 
         it "should update quota files value" do
           total_files_size = @updated_files_size + @updated_documents_size
           expect {
             subject.refresh!
-          }.should change { subject.files }.from(0).to(total_files_size)
+          }.to change { subject.files }.from(0).to(total_files_size)
         end
 
       end
@@ -143,14 +143,14 @@ describe Quota do
         it "should update multimedia files value" do
           expect {
             subject.refresh!
-          }.should change { subject.multimedia }.from(0).to(@updated_seminars_size)
+          }.to change { subject.multimedia }.from(0).to(@updated_seminars_size)
         end
 
         it "should update quota files value" do
           total_files_size = @updated_files_size + @updated_documents_size
           expect {
             subject.refresh!
-          }.should change { subject.files }.from(0).to(total_files_size)
+          }.to change { subject.files }.from(0).to(total_files_size)
         end
 
       end

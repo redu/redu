@@ -6,7 +6,7 @@ describe EducationObserver do
       ActiveRecord::Observer.with_observers(:education_observer) do
         expect {
           Factory(:education)
-        }.should change(Log, :count).by(1)
+        }.to change(Log, :count).by(1)
       end
     end
   end

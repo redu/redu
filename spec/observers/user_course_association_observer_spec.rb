@@ -11,7 +11,7 @@ describe UserCourseAssociationObserver do
         expect {
           @uca.save
           @uca.approve!
-        }.should change(@uca.logs, :count).by(1)
+        }.to change(@uca.logs, :count).by(1)
       end
     end
 
@@ -21,7 +21,7 @@ describe UserCourseAssociationObserver do
           @uca.save
           expect {
             @uca.approve!
-          }.should change(@uca.course, :updated_at)
+          }.to change(@uca.course, :updated_at)
         end
     end
   end
@@ -42,7 +42,7 @@ describe UserCourseAssociationObserver do
         ActiveRecord::Observer.with_observers(:user_course_association_observer) do
           expect {
             course.join(user)
-          }.should change(UserNotifier.deliveries, :count).by(1)
+          }.to change(UserNotifier.deliveries, :count).by(1)
         end
       end
     end
@@ -56,7 +56,7 @@ describe UserCourseAssociationObserver do
         ActiveRecord::Observer.with_observers(:user_course_association_observer) do
           expect {
             course.join(user)
-          }.should_not change(UserNotifier.deliveries, :count)
+          }.to_not change(UserNotifier.deliveries, :count)
         end
       end
     end
@@ -69,7 +69,7 @@ describe UserCourseAssociationObserver do
         ActiveRecord::Observer.with_observers(:user_course_association_observer) do
           expect {
             course.invite(user)
-          }.should change(UserNotifier.deliveries, :count).by(1)
+          }.to change(UserNotifier.deliveries, :count).by(1)
         end
       end
 
@@ -81,7 +81,7 @@ describe UserCourseAssociationObserver do
           ActiveRecord::Observer.with_observers(:user_course_association_observer) do
             expect {
               course.invite(user)
-            }.should change(UserNotifier.deliveries, :count).by(1)
+            }.to change(UserNotifier.deliveries, :count).by(1)
           end
         end
       end

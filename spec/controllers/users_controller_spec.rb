@@ -81,7 +81,7 @@ describe UsersController do
           it "invites the new user to the course identified by the token invitation" do
             expect {
               post :create, @post_params
-            }.should change(UserCourseAssociation, :count).by(1)
+            }.to change(UserCourseAssociation, :count).by(1)
             UserCourseAssociation.last.user.email.
               should == @post_params[:user][:email]
           end
@@ -104,7 +104,7 @@ describe UsersController do
           it "invites the new user to the course identified by the token invitation" do
             expect {
               post :create, @post_params
-            }.should change(UserCourseAssociation, :count).by(1)
+            }.to change(UserCourseAssociation, :count).by(1)
             UserCourseAssociation.last.user.email.should == @another_email
           end
 
@@ -317,7 +317,7 @@ describe UsersController do
     it "destroys the user" do
       expect {
         post :destroy, @post_params
-      }.should change(User, :count).by(-1)
+      }.to change(User, :count).by(-1)
     end
 
     it "redirects to site_index" do

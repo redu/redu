@@ -11,7 +11,7 @@ describe SubjectObserver do
           expect {
             sub.finalized = true
             sub.save
-          }.should change(sub.logs, :count).by(1)
+          }.to change(sub.logs, :count).by(1)
         end
       end
     end # context "Logger"
@@ -33,7 +33,7 @@ describe SubjectObserver do
           expect {
             @sub.finalized = true
             @sub.save
-          }.should change(UserNotifier.deliveries, :count).by(1)
+          }.to change(UserNotifier.deliveries, :count).by(1)
         end
       end
 
@@ -42,7 +42,7 @@ describe SubjectObserver do
           @sub.update_attribute(:finalized, true)
           expect {
             @sub.update_attribute(:name, "Novo nome")
-          }.should_not change(UserNotifier.deliveries, :count).by(1)
+          }.to_not change(UserNotifier.deliveries, :count).by(1)
         end
       end
     end # context "mailer"
@@ -58,7 +58,7 @@ describe SubjectObserver do
           expect {
             @subject.finalized = true
             @subject.save
-          }.should change(Enrollment, :count)
+          }.to change(Enrollment, :count)
         end
       end
 
@@ -77,7 +77,7 @@ describe SubjectObserver do
           expect {
             # Esse caso testa também a situação de o (valor do) atributo não ser alterado
             @subject.update_attributes(:finalized => false)
-          }.should_not change(Enrollment, :count)
+          }.to_not change(Enrollment, :count)
         end
       end
     end # context "when subject is not yes finalized"

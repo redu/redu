@@ -1,25 +1,37 @@
-<li id="requisition-<%= friendship.friend.id %>" class="list-mix-item clearfix">
+<%#
+  Convite de amizade.
+
+  Variáveis:
+    friendship: o convite de amizade.
+%>
+
+<li id="requisition-<%= friendship.friend.id %>" class="list-mix-item">
   <div class="list-mix-inner">
-    <div class="grid_5 friend">
-      <%= link_to user_path(friendship.friend), :class => 'avatar' do %>
-        <%= image_tag friendship.friend.avatar.url(:thumb_32) %>
+    <div class="general-list-item-body">
+      <%= link_to user_path(friendship.friend),
+        :class => "general-list-item-column" do %>
+        <%= image_tag friendship.friend.avatar.url(:thumb_32), :size => "32x32",
+          :alt => friendship.friend.display_name,
+          :title => friendship.friend.display_name %>
       <% end %>
-      <div class="grid_4 friend details">
-        <%= link_to friendship.friend.display_name, user_path(friendship.friend), :class => 'name' %>
-        <span>quer se conectar a você.</span>
+      <div class="general-list-item-column">
+        <%= link_to friendship.friend.display_name, user_path(friendship.friend) %> quer se conectar a você
+        <% if friendship.requested_at %>
+          <p class="legend"><%= l friendship.requested_at, :format => :elegant %></p>
+        <% end %>
       </div>
     </div>
-    <div class="actions">
-      <%= form_for [current_user, friendship],
-        :html => {:method => :delete, :class => "form-loader"}, :remote => true do %>
-        <%= hidden_field_tag "goto_home", true %>
-        <%= submit_tag "Recusar", :class => 'button-default' %>
-      <% end %>
-      <%= form_for [current_user, Friendship.new],
-        :remote => true, :html => { :method => :post, :class => "form-loader" } do %>
+    <div class="general-list-item-footer">
+      <%= form_for [current_user, Friendship.new], :remote => true,
+        :html => { :method => :post, :class => "pull-right" } do %>
         <%= hidden_field_tag "goto_home", true %>
         <%= hidden_field_tag "friend_id", friendship.friend.id %>
-        <%= submit_tag "Aceitar", :class => 'button-success' %>
+        <%= submit_tag "Aceitar", :class => "button-success" %>
+      <% end %>
+      <%= form_for [current_user, friendship], :remote => true,
+        :html => { :method => :delete, :class => "pull-right" } do %>
+        <%= hidden_field_tag "goto_home", true %>
+        <%= submit_tag "Recusar", :class => "button-default" %>
       <% end %>
     </div>
   </div>

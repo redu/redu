@@ -209,3 +209,7 @@ Em produção o Redu funciona através do [Passenger](http://www.modrails.com/do
 ```sh
 $ > /etc/init.d/niginx restart
 ```
+
+#### Cache
+
+Utilizamos o [Memcached](http://memcached.org/) como sistema de *caching*, o [setup](https://support.cloud.engineyard.com/entries/22375358-Using-Memcached-on-Engine-Yard-Cloud) é feito por default pelo Engine Yard (ambiente em *cluster*). Nós apenas configuramos para usar o cliente [Dalli](https://github.com/mperham/dalli) em produção.

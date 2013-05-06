@@ -33,6 +33,7 @@
           var entered_value = $.trim($this.find("input[autocomplete=off]").val());
           if (emailRegex.test(entered_value)) {
             $("#invite_email").show();
+            $(".token-input-dropdown").hide();
           }else{
               $("#invite_email").hide();
           }
@@ -43,7 +44,7 @@
 
       $("#users").tokenInput("<%= auto_complete_users_path(:format => :js) %>", {
         crossDomain: false,
-        hintText: "Digite o nome e sobrenome ou e-mail",
+        hintText: "",
         noResultsText: "Sem resultados",
         searchingText: "Buscando...",
       });
@@ -75,14 +76,16 @@
       <% end %>
       <%= form_tag invite_members_environment_course_path(@environment, @course),
         :class => 'form-common', :id => "invite-members" do %>
-        <div id="invite_email_button" class="clearfix" >
-         <%= link_to "Clique aqui para convidar este endereço de e-mail", "#",
-          :class => 'concave-button', :id => 'invite_email', :style => 'display: none;' %>
-        </div>
         <%= label_tag "name", "Nome ou e-mail:" %>
-        <%= text_field_tag "users" %>
+        <%= text_field_tag "users", nil, :placeholder => "Digite o nome e sobrenome ou e-mail" %>
         <%= hidden_field_tag "emails", "" %>
-        <%= submit_tag "Enviar convites", :class => "concave-button" %>
+        <div class="clearfix">
+          <%= submit_tag "Enviar convites", :class => "concave-button" %>
+          <div id="invite_email_button" class="clearfix" >
+           <%= link_to "Clique aqui para convidar este e-mail", "#",
+            :class => 'concave-clean', :id => 'invite_email', :style => 'display: none;' %>
+          </div>
+        </div>
       <% end %>
       <div class="course-info">
         <span class="info-title icon-members-gray_16_18-before">Membro(s):</span>

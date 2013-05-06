@@ -30,7 +30,7 @@ describe Enrollment do
       @sub.space.course.join(new_user)
       expect {
         @sub.enroll(new_user)
-      }.should change {
+      }.to change {
         AssetReport.count
       }.by(@sub.lectures.count)
     end
@@ -53,7 +53,7 @@ describe Enrollment do
       subject.asset_reports[0..1].each { |a| a.done = true; a.save }
       expect {
         subject.update_grade!
-      }.should change(subject, :grade).by_at_most(66.6666666666667 + 10e-5).
+      }.to change(subject, :grade).by_at_most(66.6666666666667 + 10e-5).
         by_at_least(66.6666666666667 - 10e-5) # Aproximação
       subject.graduated.should be_false
     end
@@ -74,7 +74,7 @@ describe Enrollment do
         Factory(:lecture, :subject => @sub, :owner => @sub.owner)
         subject.reload
         subject.update_grade!
-      }.should change(subject, :graduated).to(false)
+      }.to change(subject, :graduated).to(false)
     end
   end
 

@@ -21,9 +21,9 @@ module Api
       end
 
       if canvas.valid?
-      respond_with(canvas, :represent_with => RawCanvasRepresenter)
+        respond_with(canvas, :represent_with => RawCanvasRepresenter)
       else
-      respond_with(:api, canvas)
+        respond_with(:api, canvas)
       end
     end
 

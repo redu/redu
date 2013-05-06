@@ -166,13 +166,13 @@ describe LecturesController do
       it "creates a lecture" do
         expect {
           post :create, @post_params
-        }.should change(Lecture, :count).by(1)
+        }.to change(Lecture, :count).by(1)
       end
 
       it "creates a lectureable (Page)" do
         expect {
           post :create, @post_params
-        }.should change(Page, :count).by(1)
+        }.to change(Page, :count).by(1)
       end
 
       it "associates a lectureable (Page) to a lecture" do
@@ -238,13 +238,13 @@ describe LecturesController do
       it "creates the lecture" do
         expect {
           post :create, @params
-        }.should change(Lecture, :count).by(1)
+        }.to change(Lecture, :count).by(1)
       end
 
       it "creates the Exercise" do
         expect {
           post :create, @params
-        }.should change(Exercise, :count).by(1)
+        }.to change(Exercise, :count).by(1)
       end
 
       it "associates the Exercise to the Lecture" do
@@ -279,7 +279,7 @@ describe LecturesController do
       it "should not create the Exercise" do
         expect {
           post :create, @params
-        }.should_not change(Exercise, :count).by(1)
+        }.to_not change(Exercise, :count).by(1)
       end
 
       it "should validate correctly" do
@@ -330,7 +330,7 @@ describe LecturesController do
       it "updates the lecture" do
         expect {
           post :update, @params
-        }.should change { subject.lectureable.questions.first.reload.statement }.
+        }.to change { subject.lectureable.questions.first.reload.statement }.
           to("new statement")
       end
 
@@ -339,7 +339,7 @@ describe LecturesController do
           first[:alternatives_attributes].values.last["_destroy"] = true
         expect {
           post :update, @params
-        }.should change(Alternative, :count).by(-1)
+        }.to change(Alternative, :count).by(-1)
       end
     end
 

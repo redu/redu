@@ -7,6 +7,10 @@ class CanvasController < BaseController
     authorize! :read, @canvas
     @client_application = @canvas.client_application
 
+    options = { :redu_space_id => @space.id, :redu_container => :space,
+                :redu_user_id => current_user.id }
+    @canvas_url = @canvas.current_url(options)
+
     respond_with(@canvas)
   end
 end

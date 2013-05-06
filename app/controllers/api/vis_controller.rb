@@ -8,8 +8,7 @@ module Api
       space = Space.find(params[:space_id])
       authorize! :manage, space
 
-      param = { :users_id => params[:users_id],
-                :date_start => params[:date_start],
+      param = { :date_start => params[:date_start],
                 :date_end => params[:date_end],
                 :space_id => params[:space_id] }
       url = Redu::Application.config.vis[:students_participation]

@@ -16,10 +16,10 @@ describe SocialNetworksController do
     end
 
     it "should destroy social network" do
-      lambda {
+      expect {
         post :destroy, :locale => "pt-BR", :user_id => @social_network.user.login,
              :id => @social_network.id
-      }.should change(SocialNetwork, :count).by(-1)
+      }.to change(SocialNetwork, :count).by(-1)
     end
 
   end

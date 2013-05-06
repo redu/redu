@@ -56,7 +56,7 @@ describe CoursesController do
 
         expect {
           post :create, @params
-        }.should_not change(Invoice, :count)
+        }.to_not change(Invoice, :count)
       end
     end
   end
@@ -207,7 +207,7 @@ describe CoursesController do
       it "should create only two licenses" do
         expect{
           post :moderate_members_requests, @params
-        }.should change(License, :count).from(0).to(2)
+        }.to change(License, :count).from(0).to(2)
       end
     end
   end
@@ -334,7 +334,7 @@ describe CoursesController do
       it "detroys the UCA" do
         expect {
           post :deny, @params
-        }.should change(UserCourseAssociation, :count).by(-1)
+        }.to change(UserCourseAssociation, :count).by(-1)
       end
     end
   end
@@ -471,7 +471,7 @@ describe CoursesController do
         it "should create license on respective invoice" do
           expect {
             post :join, @params
-          }.should change(License, :count).by(1)
+          }.to change(License, :count).by(1)
         end
       end
 
@@ -512,7 +512,7 @@ describe CoursesController do
         login_as  @new_user
         expect {
           post :join, @params
-        }.should_not change(UserCourseAssociation, :count).by(1)
+        }.to_not change(UserCourseAssociation, :count).by(1)
       end
     end
 
@@ -535,7 +535,7 @@ describe CoursesController do
           login_as @new_user
           expect {
             post :accept, @params
-          }.should_not change(@course.approved_users, :count).by(1)
+          }.to_not change(@course.approved_users, :count).by(1)
         end
       end
 
@@ -548,7 +548,7 @@ describe CoursesController do
             :locale => "pt-BR"}
           expect {
             post :moderate_members_requests, @params
-          }.should_not change(@course.approved_users, :count).by(1)
+          }.to_not change(@course.approved_users, :count).by(1)
         end
       end
     end
@@ -892,7 +892,7 @@ describe CoursesController do
           get :show, @params = { :locale => 'pt-BR',
                                  :environment_id => course.environment.to_param,
                                  :id => course.to_param }
-        }.should change { user.user_course_associations.last.last_accessed_at }
+        }.to change { user.user_course_associations.last.last_accessed_at }
       end
     end
   end

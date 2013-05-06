@@ -141,13 +141,15 @@ javascripts:
     - public/javascripts/olark.js
 
 stylesheets:
+  wall_old:
+    - public/stylesheets/icons.redu.css
+    - public/stylesheets/wall.css
   mobile:
     - public/stylesheets/mobile.css
   new_application:
     - public/stylesheets/utils.css
     - public/stylesheets/home.css
     - public/stylesheets/search.css
-    - public/stylesheets/wall.css
     - public/stylesheets/fb_style.css
     - public/stylesheets/outdated-browser-new.css
     - public/stylesheets/token-input.css

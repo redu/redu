@@ -904,7 +904,7 @@ describe User do
       @duplicate = Factory.build(:user, :login => subject.login)
       expect {
         @duplicate.save(:validate => false)
-      }.should raise_error(ActiveRecord::RecordNotUnique)
+      }.to raise_error(ActiveRecord::RecordNotUnique)
     end
   end
 

@@ -6,7 +6,7 @@
         <div class="new-folder-inner holder" style="display:none;">
           <% @new_folder = Folder.new %>
           <%= form_for [space, @new_folder],
-            :remote => true, :method => :post, :html => { :class => 'form-loader' } do |f| %>
+            :remote => true, :method => :post, :html => { :class => 'form-loader concave-form' } do |f| %>
             <%= f.text_field :name %>
             <%= f.hidden_field :space_id, :value => space.id %>
             <%= f.hidden_field :parent_id, :value => folder.id %>

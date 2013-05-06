@@ -40,7 +40,7 @@ describe ResultsController do
       @exercise.start_for(@user)
       expect {
         post :create, @params
-      }.should_not change(Result, :count)
+      }.to_not change(Result, :count)
     end
   end
 

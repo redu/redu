@@ -136,14 +136,14 @@ describe InvitationsController do
         @params.store(:invitations_ids, @invitations)
         expect {
           post :destroy_invitations, @params
-        }.should change(Invitation, :count).by(-5)
+        }.to change(Invitation, :count).by(-5)
       end
 
       it "should be destroy all friendship requests(requested and pending)" do
         @params.store(:friendship_requests, @friendship_requests)
         expect {
           post :destroy_invitations, @params
-        }.should change(Friendship, :count).by(-10)
+        }.to change(Friendship, :count).by(-10)
       end
     end
   end
@@ -185,7 +185,7 @@ describe InvitationsController do
       @params.store(:id, @new_invitation.id)
       expect {
         delete :destroy, @params
-      }.should change(Invitation, :count).by(-1)
+      }.to change(Invitation, :count).by(-1)
     end
 
     it 'sucess message should be presented' do
@@ -206,7 +206,7 @@ describe InvitationsController do
       it 'Should be redirected to not found' do
         expect {
           delete :destroy, @params
-        }.should raise_error ActiveRecord::RecordNotFound
+        }.to raise_error ActiveRecord::RecordNotFound
       end
     end
   end

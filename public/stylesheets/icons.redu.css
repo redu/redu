@@ -540,7 +540,7 @@
 }
 
 .icon-environment-blue_16_18,
-.icon-environment-lightblue_16_18:hover { background-position: -160px 0; }
+.icon-environment-lightblue_16_18:hover { background-position: -160px 0 !important; }
 .icon-environment-blue_16_18-before:before,
 .icon-environment-lightblue_16_18-before:hover:before,
 .subtabs .ui-state-default .icon-environment_16_18-before:hover:before,
@@ -555,7 +555,7 @@
 
 .icon-environment-lightblue_32_34 { background-position: -400px 0px !important;}
 
-/*.icon-environment-lightblue_16_18 { background-position: -80px 0 }*/
+.icon-environment-lightblue_16_18 { background-position: -80px 0 !important; }
 .icon-environment-lightblue_16_18-before:before,
 .subtabs .ui-state-default .icon-environment_16_18-before:before,
 .local-nav .icon-environment_16_18-before:before {

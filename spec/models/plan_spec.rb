@@ -30,26 +30,26 @@ describe Plan do
     it "shoould reactivate withdout error" do
       expect {
         subject.activate!
-      }.should_not change { subject.state }
+      }.to_not change { subject.state }
     end
 
     it "blocks" do
       expect {
         subject.block!
-      }.should change { subject.state }.to "blocked"
+      }.to change { subject.state }.to "blocked"
     end
 
     it "sends an email when blocked" do
       expect {
         subject.block!
-      }.should change {UserNotifier.deliveries.size }.by(1)
+      }.to change {UserNotifier.deliveries.size }.by(1)
       UserNotifier.deliveries.last.body.should =~ /foi bloqueado/
     end
 
     it "migrates" do
       expect {
         subject.migrate!
-      }.should change { subject.state }.to "migrated"
+      }.to change { subject.state }.to "migrated"
     end
 
     it "activates" do
@@ -57,7 +57,7 @@ describe Plan do
 
       expect {
         subject.activate!
-      }.should change(subject, :state).from("blocked").to("active")
+      }.to change(subject, :state).from("blocked").to("active")
     end
   end
 
@@ -213,7 +213,7 @@ describe Plan do
       it "should change to migrated" do
         expect {
           subject.migrate_to @new_plan
-        }.should change{ subject.state }.to("migrated")
+        }.to change{ subject.state }.to("migrated")
       end
 
       it "should have new plan as current" do
@@ -237,7 +237,7 @@ describe Plan do
         last_invoice_period_end = subject.invoice.period_end
         expect {
           subject.migrate_to @new_plan
-        }.should change(@new_plan.invoices, :count).by(1)
+        }.to change(@new_plan.invoices, :count).by(1)
         subject.invoice.period_end.should == Date.yesterday
         @new_plan.invoice.period_start.should == Date.today
         @new_plan.invoice.period_end.should == last_invoice_period_end
@@ -264,7 +264,7 @@ describe Plan do
         it "should change last invoice to closed" do
           expect {
             subject.migrate_to @new_plan
-          }.should change{ subject.invoice.state }.to("closed")
+          }.to change{ subject.invoice.state }.to("closed")
         end
 
         it "should have an addition on new invoice" do
@@ -286,7 +286,7 @@ describe Plan do
         it "should change last invoice to closed" do
           expect {
             subject.migrate_to @new_plan
-          }.should change{ subject.invoice.state }.to("closed")
+          }.to change{ subject.invoice.state }.to("closed")
         end
 
         it "should have an addition of 9.70 on new invoice" do
@@ -309,7 +309,7 @@ describe Plan do
         it "should maintain last invoice as paid" do
           expect {
             subject.migrate_to @new_plan
-          }.should_not change{ subject.invoice.state }
+          }.to_not change{ subject.invoice.state }
         end
 
         it "should have a discount of 5.16 on new invoice" do
@@ -498,7 +498,7 @@ describe Plan do
     it "sends email when blocked" do
       expect {
         subject.block!
-      }.should change(UserNotifier.deliveries, :count).by(1)
+      }.to change(UserNotifier.deliveries, :count).by(1)
     end
   end
 
