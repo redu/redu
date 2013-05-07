@@ -442,6 +442,36 @@ describe Lecture do
     it { should respond_to :last_item? }
   end
 
+  describe "#finalized?" do
+    let(:subj) { subject.subject }
+
+    context "when subject is unfinalized" do
+      before do
+        subj.update_attribute(:finalized, false)
+      end
+
+      it "should not be finalized" do
+        subject.should_not be_finalized
+      end
+    end
+
+    context "when subject is finalized" do
+      before do
+        subj.update_attribute(:finalized, true)
+      end
+
+      it "should not be finalized if it's a new record" do
+        subject = Factory.build(:lecture)
+        subject.should_not be_finalized
+      end
+
+      it "should be finalized if it's persisted" do
+        subject.save
+        subject.should be_finalized
+      end
+    end
+  end
+
   protected
   def attrs_except(entities, attrs_to_remove)
     entities.collect do |entity|

@@ -121,4 +121,8 @@ class Lecture < ActiveRecord::Base
       true
     end
   end
+
+  def finalized?
+    self.persisted? && self.subject.finalized?
+  end
 end

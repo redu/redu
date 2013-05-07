@@ -148,7 +148,7 @@ class LecturesController < BaseController
       end
     end
 
-    @lecture.create_asset_report unless @lecture.new_record?
+    @lecture.create_asset_report if @lecture.finalized?
 
     @quota = @course.quota || @course.environment.quota
     @plan = @course.plan || @course.environment.plan
