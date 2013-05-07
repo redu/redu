@@ -11,6 +11,7 @@
 <div id="course-preview" class="main grid_12 omega big-col">
   <%= render :partial => "courses/breadcrumbs",
     :locals => { :course => @course } %>
+  <%= render "enroll_button", :course => @course, :extra_classes => nil %>
   <%= render :partial => 'courses/header',
     :locals => { :course => @course }  %>
 
@@ -19,27 +20,10 @@
       :locals => { :course => @course }%>
 
     <%= big_tabs :courses do %>
-      <div class="flash-message notice ">
-        <ul class="message icons-big-before icon-privacy-lightred_64_66-before">
-          <li>O conteúdo desta página é restrito aos membros do grupo.</li>
-          <li>Para visualizar as disciplinas do curso, matricule-se e aguarde a confirmação.</li>
-
-          <li>Você também pode ver os atuais <%= link_to "membros do curso", environment_course_users_path(@course.environment, @course)%>.</li>
-          <li>
-        </ul>
-        <% unless @course.users.include?(current_user) %>
-          <% if current_user %>
-            <% if can? :add_entry, @course %>
-              <%= link_to 'Matricular-se',
-                join_environment_course_path(@course.environment, @course),
-                :method => :post, :class => 'button-success button-big join-button' %>
-            <% else %>
-              <button class="button-success button-big button-disabled join-button" rel="popover" data-original-title="Limite de vagas atingido." data-content="O limite de vagas foi atingido, portanto, você não poderá se matricular agora. Fale com o administrador ou professor do curso para que ele libere mais vagas.">Matricular-se</button>
-            <% end %>
-          <% else %>
-            <button class="button-success button-big button-disabled join-button" rel="popover" data-original-title="Deseja participar deste curso?" data-content="Para se matricular neste curso, você precisa se cadastrar no Redu. Caso já tenha cadastro, basta acessar sua conta e este botão ficará disponível para a solicitação da matrícula. </br> </br> Cadastre-se ou acesse a sua conta através do menu superior &#8593;.">Matricular-se</button>
-          <% end %>
-        <% end %>
+      <div class="course-preview-wrapper">
+        <span class="course-preview-icon icon-privacy-lightred_58_62 text-replacement" title="Curso privado">Curso privado</span>
+        <p class="course-preview-message">Este Curso requer <%= link_to "o seu pedido de participação", "http://ajuda.redu.com.br/duvidas-frequentes/como-posso-participar-de-um-curso", :title => "Central de Ajuda", :target => "_blank" %>, ou seja, apenas quem faz parte dele consegue visualizar seu conteúdo. Você pode pedir acesso clicando no botão abaixo e esperar a sua aprovação.</p>
+        <%= render "enroll_button", :course => @course, :extra_classes => "button-big" %>
       </div>
     <% end %>
   </div>
