@@ -1,5 +1,6 @@
 module EnrollmentService
   module Jobs
+    # Permite a criação de Jobs ligados ligados entre sí.
     class LinkedJob
       def perform
         env = execute || {}
@@ -8,8 +9,12 @@ module EnrollmentService
         enqueue(next_job)
       end
 
+      # Deve ser implementado na classe concreta. Deve retornar um Hash
+      # que será passado para #build_next_job
       def execute; end
 
+      # Dever retornar o próximo Job a ser enfileirado. Recebe o Hash retornado
+      # em #execute
       def build_next_job(env)
         Rails.logger.info "#{self.class} defines no next job. Nothing to do."
         nil
