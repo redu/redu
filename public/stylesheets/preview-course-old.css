@@ -816,3 +816,19 @@ ul, ol {
   margin: 20px 20px 0 0;
   float: right;
 }
+
+/* Ícone de membros usado na aba. */
+.icon-members-gray_32_34-before:before {
+  content: "";
+  width: 32px!important;
+  height: 34px!important;
+  background: url("../images/new/icons-small.png") -320px -480px no-repeat;
+}
+
+/* Separador ">" do breadcrumb. */
+.icon-expand-gray_16_18-before:before {
+  content: "";
+  width: 16px!important;
+  height: 18px!important;
+  background: url("../images/new/icons-small.png") -560px -800px no-repeat;
+}
