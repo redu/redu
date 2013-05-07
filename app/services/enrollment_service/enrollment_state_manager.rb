@@ -1,6 +1,13 @@
 module EnrollmentService
-  # Responsvável por notificar Vis sobre a mudança de estado de Enrollment#graduated
-  class EnrollmentStateManager < Struct.new(:enrollments)
+  # Responsvável por notificar Vis sobre a mudança de estado de
+  # Enrollment#graduated.
+  class EnrollmentStateManager
+    attr_reader :enrollments
+
+    def initialize(enrollments)
+      @enrollments = enrollments.respond_to?(:map) ? enrollments : [enrollments]
+    end
+
     def notify_vis_if_enrollment_change(&block)
       prev_graduated = pluck_columns
 
@@ -12,6 +19,8 @@ module EnrollmentService
     end
 
     private
+
+    attr_writer :enrollments
 
     def notify_diff(prev, post)
       finalized, unfinalized = diff(prev, post)

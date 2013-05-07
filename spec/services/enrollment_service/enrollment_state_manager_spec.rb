@@ -9,6 +9,14 @@ module EnrollmentService
         create_list(:enrollment, 3, :graduated => false, :subject => nil)
     end
 
+    context "#enrollments" do
+      it "should transform single record into collection" do
+        enrollment = mock_model('Enrollment')
+        EnrollmentStateManager.new(enrollment).enrollments.should ==
+          [enrollment]
+      end
+    end
+
     context "#facade" do
       before do
         subject.stub(:service_facade).and_return(facade)
