@@ -1490,6 +1490,15 @@ body {
   margin: 3px 0px;
 }
 
+.hierarchy-listing .child .privacy-legend {
+  font-style: italic;
+  font-size: .87em;
+  color: rgb(179, 179, 179);
+  float: left;
+  width: 100%;
+  margin: 3px 0px;
+}
+
 .hierarchy-listing .child .tags {
   margin-top: 40px;
 }
@@ -7685,4 +7694,10 @@ button[disabled=disabled] {
 
 .empty-message-content {
   color: #b3b3b3;
+}
+
+.icon-privacy-green_16_18 {
+  background-image: url("../images/new/icon-privacy-green_16_18.png");
+  width: 16px;
+  height: 18px;
 }
