@@ -210,7 +210,7 @@ class UserNotifier < BaseMailer
                  :tutor => uca.with_roles([:tutor]).count,
                  :teacher => uca.with_roles([:teacher]).count }
 
-    mail(:subject => 'Você foi convidado para do Redu', :to => @email) do |format|
+    mail(:subject => 'Você foi convidado para o Redu', :to => @email) do |format|
       format.html
     end
   end

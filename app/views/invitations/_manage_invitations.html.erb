@@ -16,6 +16,7 @@
       </ul>
     </div>
   <% else %>
-    <%= render "empty_invitations" %>
+    <%= render "shared/empty_message", :icon_message => "Nenhum convite enviado",
+      :icon_class => "icon-invite-empty_128_130" %>
   <% end %>
 </div>

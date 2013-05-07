@@ -1490,6 +1490,10 @@ body {
   margin: 3px 0px;
 }
 
+.hierarchy-listing .child .tags {
+  margin-top: 40px;
+}
+
 .hierarchy-listing .child .description,
 .hierarchy-listing .child .tags a {
   font-size: .87em;
@@ -1512,6 +1516,7 @@ body {
 
 .hierarchy-listing .child .tags a{
   color: rgb(179, 179, 179);
+  margin-top: 0;
 }
 
 .hierarchy-listing .child .spaces {
@@ -2056,9 +2061,10 @@ body {
 
 #footer .copyright {
   float: left;
-  font-size: .9em;
+  font-size: .8em;
   color: #B2B2B2;
   padding: 10px 0;
+  width: 480px;
 }
 
 #nav-footer {
@@ -5457,15 +5463,16 @@ table.concave-invitation-table .cell-reinvite .reinvited {
 }
 
 #admin-invitations #invite_email_button {
-  height: 70px;
+  margin-right: 10px;
+  float: right;
+}
+
+#invite_email {
+  margin-top: 10px;
 }
 
 #admin-invitations .form-common .concave-button {
-  margin: 10px 0px 0px 165px;
-}
-
-#admin-invitations .form-common .concave-button#invite_email {
-  margin-left: 183px;
+  margin: 10px 0px 0px 0px;
 }
 
 .friends-invitations #admin-invitations .form-common .concave-button {
@@ -7651,4 +7658,31 @@ button[disabled=disabled] {
   overflow: hidden;
   text-overflow: ellipsis;
   width: 100%;
+}
+
+/* Mensagem de mural privado. */
+
+.icon-private-gray_128_130 {
+  background-image: url("../images/new/private-gray_128_130.png");
+  width: 128px;
+  height: 130px;
+}
+
+.empty-message {
+  margin-top: 165px;
+  text-align: center;
+}
+
+.empty-message-icon {
+  display: block;
+  margin: 0 auto;
+}
+
+.empty-message-icon +
+.empty-message-content {
+  margin-top: 10px;
+}
+
+.empty-message-content {
+  color: #b3b3b3;
 }

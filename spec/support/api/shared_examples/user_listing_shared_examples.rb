@@ -34,5 +34,16 @@ shared_examples_for "user listing" do
 
     parse(response.body).length.should == 1
   end
+
+  context "whenr return users in partial form" do
+    it "should have only id, first_name and last_name" do
+      get "/api/#{entity_name}/#{subject.id}/users", :partial => true,
+      :oauth_token => token, :format => 'json'
+
+      %w(id first_name first_name).each do |attr|
+        parse(response.body).first["user"].should have_key attr
+      end
+    end
+  end
 end
 
