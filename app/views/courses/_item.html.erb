@@ -7,6 +7,7 @@
       <%= link_to "Editar", edit_environment_course_path(item.environment, item),
         :class => "manage icon-manage-gray_8_10-before"%>
     <% end %>
+    <%= course_privacy_legend(item) %>
     <% unless item.workload.nil? %>
       <span class="workload">(<%= item.workload %> horas)</span>
     <% end %>

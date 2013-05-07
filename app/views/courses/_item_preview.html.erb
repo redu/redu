@@ -4,6 +4,7 @@
     <%= link_to item_preview.name,
       environment_course_path(item_preview.environment, item_preview),
       :class => 'name' %>
+    <%= course_privacy_legend(item_preview) %>
     <% unless item_preview.workload.nil? %>
       <span class="workload"><%= item_preview.workload %> horas</span>
     <% end %>

@@ -1490,6 +1490,15 @@ body {
   margin: 3px 0px;
 }
 
+.hierarchy-listing .child .privacy-legend {
+  font-style: italic;
+  font-size: .87em;
+  color: rgb(179, 179, 179);
+  float: left;
+  width: 100%;
+  margin: 3px 0px;
+}
+
 .hierarchy-listing .child .tags {
   margin-top: 40px;
 }
