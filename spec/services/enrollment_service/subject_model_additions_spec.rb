@@ -54,6 +54,21 @@ module EnrollmentService
 
         Subject.enroll(subjects, :users => users)
       end
+
+      it "should create a Jobs::CreateEnrollmentJob" do
+        facade.stub(:create_asset_report)
+        facade.stub(:notify_enrollment_creation)
+        facade.stub(:update_grade)
+
+        job_mock = mock('Jobs::CreateEnrollmentJob')
+        job_mock.stub(:perform)
+
+        Jobs::CreateEnrollmentJob.should_receive(:new).
+          with(:subject => subjects, :user => users, :role => :member).
+          and_return(job_mock)
+
+        Subject.enroll(subjects, :users => users)
+      end
     end
 
     context "#enroll" do

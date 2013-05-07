@@ -72,7 +72,7 @@ module EnrollmentService
 
         def delayed_enroll(subjects, users, role)
           job = Jobs::CreateEnrollmentJob.
-            new(:subject => subjects, :user => users, :role => role)
+            new(:subject => subjects, :user => users, :role => role.to_sym)
           enqueue(job)
         end
 
