@@ -1378,15 +1378,20 @@ textarea:-moz-placeholder {
 }
 
 .control-file-wrapper {
+  height: 32px;
+}
+
+.control-file {
   position: absolute;
   top: 0;
-  left: 0;
 }
-.control-file-wrapper .button-default + .control-file-text, .control-file-wrapper .filter + .control-file-text {
+.control-file .button-default +
+.control-file-text, .control-file .filter +
+.control-file-text {
   margin-left: 10px;
 }
-.control-file-wrapper .button-default, .control-file-wrapper .filter,
-.control-file-wrapper .control-file-text {
+.control-file .button-default, .control-file .filter,
+.control-file .control-file-text {
   vertical-align: middle;
 }
 
