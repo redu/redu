@@ -7695,3 +7695,9 @@ button[disabled=disabled] {
 .empty-message-content {
   color: #b3b3b3;
 }
+
+.icon-privacy-green_16_18 {
+  background-image: url("../images/new/icon-privacy-green_16_18.png");
+  width: 16px;
+  height: 18px;
+}
