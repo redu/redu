@@ -24,6 +24,8 @@ backup/log/*
 backup/.tmp/*
 .vagrant
 .rvmrc
+.ruby-version
+.ruby-gemset
 .rspec
 chromedriver.log
 solr/data/*
