@@ -11,7 +11,7 @@ describe Lecture do
     course.join(@user)
     @sub = Factory(:subject, :owner => @user, :space => @space,
                    :finalized => true)
-    @sub.create_enrollment_associations
+    @sub.enroll
   end
 
   subject { Factory(:lecture, :subject => @sub,
@@ -45,81 +45,6 @@ describe Lecture do
 
   it "responds to recent?" do
     should respond_to :recent?
-  end
-
-  context "callbacks" do
-    context "creates a AssertReport between the StudentProfile and the Lecture after create" do
-      it "when the owner is the subject owner" do
-        subject.asset_reports.of_user(subject.owner).should_not be_empty
-      end
-
-      it "when the owner is an environment_admin" do
-        # First lecture is created
-        subject.should_not be_new_record
-
-        another_admin = Factory(:user)
-        @space.course.spaces.reload
-        @space.subjects.reload
-        @space.course.join another_admin
-        @space.course.environment.change_role(another_admin,
-                                              Role[:environment_admin])
-
-        lecture = Factory(:lecture, :subject => @sub,
-                          :owner => another_admin)
-
-        lecture.asset_reports.should_not be_empty
-        lecture.asset_reports.count.should == @sub.members.count
-        @sub.members.each do |member|
-          lecture.asset_reports.of_user(member).should_not be_empty
-        end
-      end
-    end
-  end
-
-  context "#create_asset_report" do
-    let(:environment) { Factory.create(:complete_environment) }
-    let(:user) { environment.owner }
-    let(:course) { environment.courses.first }
-    let(:space) { course.spaces.first }
-    let(:sub) do
-      Factory(:subject, :owner => user, :space => space, :finalized => true)
-    end
-    let(:subject) do
-      Factory(:lecture, :subject => sub, :owner => user)
-    end
-
-    before do
-      sub.create_enrollment_associations
-      AssetReport.stub(:import)
-    end
-
-    context "with no arguments" do
-      it "should create AssetReports with Subject's enrollments and Lecture" do
-        args = { :subject => sub, :enrollment => sub.enrollments.first,
-                 :lecture => subject }
-        AssetReport.should_receive(:new).with(args)
-        subject.create_asset_report
-      end
-    end
-
-    context "passing a enrollment as argument" do
-      it "should create AssetReport with enrollment passed" do
-        enrollment = sub.enroll(Factory.create(:user))
-        args = { :subject => sub, :enrollment => enrollment, :lecture => subject }
-        AssetReport.should_receive(:new).with(args)
-        subject.create_asset_report(:enrollments => [enrollment])
-      end
-    end
-
-    it "should invoke Enrollment#update_grade!" do
-      sub.enrollments.map { |e| e.should_receive(:update_grade!) }
-      subject.create_asset_report
-    end
-
-    it "should batch insert AssetReports (AssetReport.import)" do
-      AssetReport.should_receive(:import)
-      subject.create_asset_report
-    end
   end
 
   context "finders" do
@@ -341,32 +266,35 @@ describe Lecture do
   end
 
 
-  context "destroy" do
-    before do
-      @lec = Factory(:lecture, :subject => @sub,
-                     :owner => @sub.owner)
+  context "#refresh_students_profile" do
+    subject { Factory(:lecture, :subject => @sub, :owner => @sub.owner) }
+    let(:enrollments) do
+      FactoryGirl.create_list(:enrollment, 2, :subject => @sub)
+    end
+    let(:assets) do
+      enrollments.map do |e|
+        FactoryGirl.create(:asset_report, :lecture => subject,
+                           :subject => @sub, :enrollment => e)
+      end.flatten
     end
 
-    #FIXME encontrar um jeito melhor de se testar o refresh_students_profiles
-    it "should update all students profiles" do
-      assets = AssetReport.all(:conditions => {
-                               :subject_id => subject.subject.id,
-                               :lecture_id => @lec.id})
+    before do
       assets.each do |asset|
         asset.done = 1
         asset.save
       end
-      @lec.refresh_students_profiles
-      grade = Enrollment.sum('grade', :conditions =>
-                             {:subject_id => subject.subject.id})
-      grade.should == 100
+    end
 
-      @lec.destroy
-      @lec.subject.reload
-      @lec.refresh_students_profiles
-      grade = Enrollment.sum('grade', :conditions =>
-                             {:subject_id => subject.subject.id})
-      grade.should == 0
+    it "should update all students profiles" do
+      subject.refresh_students_profiles
+      grade = enrollments.map(&:reload).map(&:grade)
+      grade.should == [100, 100]
+
+      subject.destroy
+      subject.subject.reload
+      subject.refresh_students_profiles
+      grade = enrollments.map(&:reload).map(&:grade)
+      grade.should == [0, 0]
     end
   end
 
@@ -512,6 +440,36 @@ describe Lecture do
 
     # Just to be sure that simple_acts_as_list was called
     it { should respond_to :last_item? }
+  end
+
+  describe "#finalized?" do
+    let(:subj) { subject.subject }
+
+    context "when subject is unfinalized" do
+      before do
+        subj.update_attribute(:finalized, false)
+      end
+
+      it "should not be finalized" do
+        subject.should_not be_finalized
+      end
+    end
+
+    context "when subject is finalized" do
+      before do
+        subj.update_attribute(:finalized, true)
+      end
+
+      it "should not be finalized if it's a new record" do
+        subject = Factory.build(:lecture)
+        subject.should_not be_finalized
+      end
+
+      it "should be finalized if it's persisted" do
+        subject.save
+        subject.should be_finalized
+      end
+    end
   end
 
   protected

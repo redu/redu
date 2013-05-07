@@ -1,13 +1,10 @@
 class Enrollment < ActiveRecord::Base
+  include EnrollmentService::EnrollmentAdditions::ModelAdditions
+
   # Entidade intermediária entre User e Subject. É criada quando o usuário se
   # matricula num determinado Subject.
   # Contém informações sobre aulas realizadas, porcentagem do Subject cursado
   # e informações sobre desempenho no Subject.
-
-  # Em alguns casos o enrollment é chamado utilizando o gem activerecord-import
-  # por questões de otimização. Este gem desabilita qualquer tipo de callback
-  # cuidado ao adicionar callbacks a esta entidade.
-  after_create :create_assets_reports
 
   belongs_to :user
   belongs_to :subject
@@ -35,31 +32,4 @@ class Enrollment < ActiveRecord::Base
         "OR users.login LIKE :keyword", {:keyword => "%#{keyword.to_s}%"})
     end
   }
-
-  # Atualiza a porcentagem de cumprimento do módulo.
-  def update_grade!
-    total = self.asset_reports.size
-    done = self.asset_reports.select { |asset| asset.done? }.size
-
-    if total == done
-      self.grade = 100
-      self.graduated = true
-    else
-      self.grade = (( done.to_f * 100 ) / total)
-      self.graduated = false
-    end
-    self.save
-
-    return self.grade
-  end
-
-  def create_assets_reports
-    assets = subject.lectures.collect do |lecture|
-      AssetReport.new(:enrollment => self, :subject => self.subject,
-                      :lecture => lecture)
-    end
-
-    AssetReport.import(assets, :validate => false,
-                       :on_duplicate_key_update => [:done])
-  end
 end

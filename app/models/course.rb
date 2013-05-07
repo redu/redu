@@ -190,7 +190,6 @@ class Course < ActiveRecord::Base
   # * Pode ser chamado mesmo se o usuário estiver sob moderação
   def unjoin(user)
     enrollments = []
-    enrollments_finalized = []
     course_association = user.get_association_with(self)
     course_association.try(:destroy)
 
@@ -206,21 +205,10 @@ class Course < ActiveRecord::Base
     self.spaces.each do |space|
       space_association = user.get_association_with(space)
       space_association.try(:destroy)
-
-      space.subjects.each do |subject|
-        enrollment = user.get_association_with subject
-        enrollments << enrollment
-        enrollments_finalized << enrollment if enrollment.try(:graduated)
-        enrollment.try(:destroy)
-      end
     end
 
-    # Usa VisClient para enviar as requisições
-    VisClient.notify_delayed("/hierarchy_notifications.json",
-                             "remove_enrollment", enrollments.compact)
-    VisClient.notify_delayed("/hierarchy_notifications.json",
-                             "remove_subject_finalized",
-                             enrollments_finalized.compact)
+    subjects = Subject.where(:space_id => self.spaces)
+    Subject.unenroll(subjects, user)
   end
 
 
@@ -246,10 +234,7 @@ class Course < ActiveRecord::Base
     UserSpaceAssociation.import(usas, :validate => false)
 
     subjects = self.spaces.includes(:subjects).collect(&:subjects).flatten
-    enrollments = Subject.enroll(user, subjects, role)
-
-    # Associa o delayed_job para a criação dos enrollments em visualização
-    VisClient.notify_delayed("/hierarchy_notifications.json", "enrollment", enrollments.compact)
+    enrollments = Subject.enroll(subjects, :users => [user], :role => role)
   end
 
   # Verifica se o usuário em questão está esperando aprovação num determinado

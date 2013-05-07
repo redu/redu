@@ -70,6 +70,7 @@ gem 'ey_config'
 gem 'destroy_soon'
 gem 'redu_analytics'
 gem 'humanizer'
+gem 'valium'
 gem 'dalli'
 
 # Gems específicos para a API
