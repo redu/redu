@@ -43,14 +43,6 @@ GIT
       rails (~> 3.0)
 
 GIT
-  remote: git://github.com/meskyanichi/backup.git
-  revision: bca9ab8b05cfaf65e78f069264ca78f5b4231799
-  specs:
-    backup (3.0.24)
-      open4 (~> 1.3.0)
-      thor (~> 0.14.6)
-
-GIT
   remote: git://github.com/ndbroadbent/actionmailer_inline_css.git
   revision: 037a5340aa235802c6c093a21be87b95176ee83e
   branch: master
@@ -238,7 +230,6 @@ GEM
     eventmachine (1.0.3)
     exceptional (2.0.32)
       rack
-    excon (0.9.6)
     ey_config (0.0.6)
     factory_girl (2.6.4)
       activesupport (>= 2.3.9)
@@ -248,17 +239,6 @@ GEM
     faraday (0.8.7)
       multipart-post (~> 1.1)
     ffi (1.0.11)
-    fog (1.1.2)
-      builder
-      excon (~> 0.9.0)
-      formatador (~> 0.2.0)
-      mime-types
-      multi_json (~> 1.0.3)
-      net-scp (~> 1.0.4)
-      net-ssh (>= 2.1.3)
-      nokogiri (~> 1.5.0)
-      ruby-hmac
-    formatador (0.2.3)
     fssm (0.2.9)
     hashie (1.2.0)
     hooks (0.2.2)
@@ -306,9 +286,6 @@ GEM
       tzinfo (~> 0.3.22)
     multi_json (1.0.4)
     multipart-post (1.2.0)
-    net-scp (1.0.4)
-      net-ssh (>= 1.99.1)
-    net-ssh (2.5.2)
     newrelic_rpm (3.0.1)
     nokogiri (1.5.9)
     oauth (0.4.5)
@@ -463,7 +440,6 @@ DEPENDENCIES
   awesome_nested_fields
   aws-s3
   aws-sdk
-  backup!
   bson_ext
   bundler (~> 1.2)
   cancan (~> 1.6.7)
@@ -482,7 +458,6 @@ DEPENDENCIES
   exceptional
   ey_config
   factory_girl_rails (~> 1.7.0)
-  fog (~> 1.1.0)
   has_friends!
   humanizer
   invitable!
