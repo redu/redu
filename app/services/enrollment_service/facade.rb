@@ -34,6 +34,8 @@ module EnrollmentService
 
       untied_adapter.notify_after_create(enrollments)
       vis_adapter.notify_enrollment_creation(enrollments)
+
+      enrollments
     end
 
     # Destrói os enrollments entre os Subjects e Users
