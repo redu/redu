@@ -129,7 +129,7 @@ GIT
 
 GIT
   remote: git@github.com:redu/vis_client.git
-  revision: 8fb81d9cef26fa6ba74aceda78b2b7230fe5595d
+  revision: 2a96816b118f6fe5978945d232f8366acbb84ce7
   specs:
     vis_client (0.0.7)
       activerecord (~> 3.0)
