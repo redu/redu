@@ -34,8 +34,6 @@ module EnrollmentService
 
       untied_adapter.notify_after_create(enrollments)
       vis_adapter.notify_enrollment_creation(enrollments)
-
-      enrollments
     end
 
     # Destrói os enrollments entre os Subjects e Users
@@ -64,7 +62,11 @@ module EnrollmentService
     # Atualiza os campos #grade e #graduated dos Enrollments passados.
     def update_grade(enrollments)
       service = EnrollmentEntityService.new(:enrollment => enrollments)
-      service.update_grade
+      state_manager = EnrollmentStateManager.new(enrollments)
+
+      state_manager.notify_vis_if_enrollment_change do
+        service.update_grade
+      end
 
       enrollments
     end
