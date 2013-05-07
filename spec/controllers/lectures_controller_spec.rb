@@ -116,6 +116,17 @@ describe LecturesController do
       assigns[:student_grade].should_not be_nil
     end
 
+    it "should reload the enrollment (student_profile)" do
+      enrollment = mock_model(Enrollment)
+      @enrolled_user.enrollments.stub(:where).and_return([enrollment])
+      enrollment.stub(:update_grade!)
+
+      enrollment.should_receive(:reload).and_return(enrollment)
+
+      post :done, :locale => "pt-BR", :id => @lectures[0].id,
+        :subject_id => @subject.id, :space_id => @space.id, :done => "1"
+    end
+
     context 'when html request' do
       it "redirects to lecture show" do
         post :done, :locale => "pt-BR", :id => @lectures[0].id,

@@ -214,7 +214,7 @@ class LecturesController < BaseController
     student_profile = current_user.enrollments.
       where(:subject_id => @subject).last
     student_profile.update_grade!
-    @student_grade = student_profile.grade.to_i
+    @student_grade = student_profile.reload.grade.to_i
 
    respond_to do |format|
      format.js
