@@ -63,7 +63,7 @@ module EnrollmentService
 
       def toggle_graduated(enrollments)
         enrollments = enrollments.respond_to?(:map) ? enrollments : [enrollments]
-        enrollments.map { |e| e.toggle(:graduated) }
+        enrollments.map { |e| e.toggle!(:graduated) }
       end
     end
   end

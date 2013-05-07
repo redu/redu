@@ -20,8 +20,6 @@ module EnrollmentService
 
     private
 
-    attr_writer :enrollments
-
     def notify_diff(prev, post)
       finalized, unfinalized = diff(prev, post)
 
@@ -65,7 +63,7 @@ module EnrollmentService
 
     def reload!
       ids = pluck_columns(:id)
-      enrollments = Enrollment.where(:id => ids)
+      @enrollments = Enrollment.where(:id => ids)
     end
 
     def service_facade
