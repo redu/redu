@@ -8,17 +8,18 @@ module Untied
       let(:simple_queue) { mock('Untied::Publisher::Queue') }
 
       context "#enqueue" do
+        let(:enrollment) { mock_model('Enrollment') }
+        before { enrollment.stub(:attributes).and_return({}) }
+
         it "should use BatchQueue for non after_destroy events" do
           subject.stub(:batch_queue).and_return(batch_queue)
           batch_queue.should_receive(:enqueue)
-          subject.enqueue(:after_create, mock_model('Enrollment'))
+          subject.enqueue(:after_create, enrollment)
         end
 
         it "should use Queue otherwise" do
           subject.stub(:simple_queue).and_return(simple_queue)
           simple_queue.should_receive(:enqueue)
-          enrollment = mock_model('Enrollment')
-          enrollment.stub(:serializable_hash).and_return({})
           subject.enqueue(:after_destroy, enrollment)
         end
       end
