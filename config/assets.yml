@@ -143,7 +143,6 @@ javascripts:
 stylesheets:
   wall_old:
     - public/stylesheets/icons.redu.css
-    - public/stylesheets/wall.css
   mobile:
     - public/stylesheets/mobile.css
   new_application:
@@ -153,6 +152,7 @@ stylesheets:
     - public/stylesheets/fb_style.css
     - public/stylesheets/outdated-browser-new.css
     - public/stylesheets/token-input.css
+    - public/stylesheets/wall.css
   basic:
     - public/stylesheets/landing-new.css
     - public/stylesheets/outdated-browser-new.css
