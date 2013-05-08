@@ -152,13 +152,13 @@ GEM
       activerecord (~> 3.0)
     acts_as_tree (0.1.1)
     addressable (2.3.2)
-    amq-client (0.9.12)
+    amq-client (1.0.2)
       amq-protocol (>= 1.2.0)
       eventmachine
-    amq-protocol (1.2.0)
-    amqp (0.9.10)
-      amq-client (~> 0.9.12)
-      amq-protocol (~> 1.2.0)
+    amq-protocol (1.5.0)
+    amqp (1.0.2)
+      amq-client (~> 1.0.2)
+      amq-protocol (>= 1.3.0)
       eventmachine
     arel (2.0.10)
     authlogic (3.0.2)
@@ -178,8 +178,8 @@ GEM
     bson_ext (1.7.0)
       bson (~> 1.7.0)
     builder (2.1.2)
-    bunny (0.9.0.pre8)
-      amq-protocol (>= 1.2.0)
+    bunny (0.9.0.pre10)
+      amq-protocol (>= 1.4.0)
     cancan (1.6.7)
     childprocess (0.3.1)
     chronic (0.6.7)
@@ -289,7 +289,7 @@ GEM
       activemodel (~> 3.0.0)
       mongo (~> 1.3)
       tzinfo (~> 0.3.22)
-    multi_json (1.0.4)
+    multi_json (1.7.3)
     multipart-post (1.2.0)
     newrelic_rpm (3.0.1)
     nokogiri (1.5.9)
@@ -343,7 +343,7 @@ GEM
     redu_analytics (0.0.2)
       lazy_high_charts
     remotipart (1.0.2)
-    representable (1.4.0)
+    representable (1.5.0)
       multi_json
       nokogiri
     roar (0.11.14)
@@ -410,10 +410,10 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.37)
-    untied-publisher (0.0.7.pre)
+    untied-publisher (0.0.7.pre1)
       activerecord
       amqp
-      bunny (>= 0.0.9.pre8)
+      bunny (>= 0.0.9.pre10)
       configurable
       json
       representable
@@ -502,7 +502,7 @@ DEPENDENCIES
   sunspot_solr
   system_timer
   translate_routes
-  untied-publisher (~> 0.0.7.pre)
+  untied-publisher (~> 0.0.7.pre1)
   useragent (~> 0.4.8)
   valium
   vis_client!

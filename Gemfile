@@ -62,7 +62,7 @@ gem 'vis_client', :git => 'git@github.com:redu/vis_client.git'
 gem 'whenever', :require => false
 gem 'will_paginate', '~> 3.0.pre2'
 gem 'zencoder'
-gem 'untied-publisher', '~> 0.0.7.pre'
+gem 'untied-publisher', '~> 0.0.7.pre1'
 gem 'system_timer'
 gem 'yajl-ruby'
 gem 'simple_acts_as_list'
