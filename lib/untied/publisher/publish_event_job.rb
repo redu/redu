@@ -21,7 +21,7 @@ module Untied
       end
 
       def producer
-        @producer ||= Untied::Publisher.adapter.producer.new
+        @@producer ||= Untied::Publisher.adapter.producer.new
       end
 
       private
