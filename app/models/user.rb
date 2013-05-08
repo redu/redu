@@ -22,6 +22,9 @@ class User < ActiveRecord::Base
   before_validation :strip_whitespace
   after_commit :on => :create do
     UserNotifier.delay(:queue => 'email').user_signedup(self.id)
+
+    environment = Environment.find_by_path('ava-redu')
+    environment.courses.each { |c| c.join(self) } if environment
   end
 
   # ASSOCIATIONS
