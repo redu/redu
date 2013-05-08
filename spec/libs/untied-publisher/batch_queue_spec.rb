@@ -64,6 +64,18 @@ module Untied
           subject.commit
           subject.commit
         end
+
+        it "should not double commit events when Exception is raised" do
+          Delayed::Job.stub(:enqueue).and_raise Exception.new
+
+          enrollments.map { |e| subject.enqueue(:after_create, e) }
+
+          begin
+            subject.commit
+          rescue Exception; end
+
+          subject.should be_empty
+        end
       end
     end
   end

@@ -6,8 +6,11 @@ module Untied
       end
 
       def commit
-        jobs.map { |job| delayed_job.enqueue(job, :queue => "general") }
-        events.clear
+        begin
+          jobs.map { |job| delayed_job.enqueue(job, :queue => "general") }
+        ensure
+          events.clear
+        end
       end
 
       def empty?
