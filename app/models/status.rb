@@ -63,10 +63,14 @@ class Status < ActiveRecord::Base
   end
 
   def self.associate_with(status, users)
-    associations = users.collect(&:id).collect do |u_id|
-      StatusUserAssociation.new(:user_id => u_id, :status_id => status.id)
-    end
-    StatusUserAssociation.import(associations, :validate => false)
+    ids = \
+      users.is_a?(ActiveRecord::Relation) ? users.value_of(:id) : users.map(&:id)
+
+    columns = [:user_id, :status_id]
+    options = { :validate => false, :on_duplicate_key_update => [:user_id] }
+    values = ids.map { |user_id| [user_id, status.id] }
+
+    StatusUserAssociation.import(columns, values, options)
   end
 
   def answers_ids(id)
