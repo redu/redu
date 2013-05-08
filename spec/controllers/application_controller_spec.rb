@@ -144,5 +144,30 @@ describe ApplicationController do
         response.should redirect_to("/")
       end
     end
+
+    context "when accessing an ApplicationControllerSubclass" do
+      class ApplicationControllerSubclass < ApplicationController
+        rescue_from CanCan::AccessDenied, :with => :deny_access
+
+        private
+
+        def deny_access(exception, &block)
+          super(exception) do
+            flash.delete(:error)
+          end
+        end
+      end
+
+      controller(ApplicationControllerSubclass) do
+        def index
+          raise CanCan::AccessDenied
+        end
+      end
+
+      it "should accept a block" do
+        get :index, :locale => 'pt-BR'
+        flash[:error].should be_nil
+      end
+    end
   end
 end

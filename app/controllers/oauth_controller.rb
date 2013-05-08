@@ -5,6 +5,8 @@ class OauthController < ApplicationController
   include OAuth::Controllers::ProviderController
   layout 'new_application'
 
+  rescue_from CanCan::AccessDenied, :with => :deny_access
+
   def login_required
     authorize! :authorize_oauth, :base
   end
@@ -67,5 +69,11 @@ class OauthController < ApplicationController
   def callback_match?(verification_code, params)
     @verification_code.redirect_url.blank? && params[:redirect_uri].blank? ||
        @verification_code.redirect_url == params[:redirect_uri]
+  end
+
+  def deny_access(exception, &block)
+    super(exception) do
+      flash.delete(:error)
+    end
   end
 end
