@@ -8,7 +8,9 @@ describe User do
     it { should have_many attr }
     end
 
-  it { should have_many(:enrollments).dependent :destroy}
+  # Subject
+  it { should have_many(:enrollments).dependent(:destroy) }
+  it { should have_many(:asset_reports).through(:enrollments) }
 
   it { should have_one(:settings).dependent(:destroy) }
 

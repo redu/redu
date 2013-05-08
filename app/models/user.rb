@@ -58,6 +58,7 @@ class User < ActiveRecord::Base
   has_many :favorites, :order => "created_at desc", :dependent => :destroy
   classy_enum_attr :role, :default => 'member'
   has_many :enrollments, :dependent => :destroy
+  has_many :asset_reports, :through => :enrollments
 
   #subject
   has_many :subjects, :order => 'name ASC',
