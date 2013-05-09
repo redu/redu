@@ -26,7 +26,9 @@ module Api
       context = context(params)
       authorize! :manage, context
 
-      asset_reports = context.asset_reports
+      asset_reports = context.asset_reports.includes(:lecture, :subject,
+                                                     { :enrollment => :user })
+
       asset_reports = filter_by_users(asset_reports, params[:users_ids])
       asset_reports = filter_by(:lecture, asset_reports, params[:lectures_ids])
       asset_reports = filter_by(:subject, asset_reports, params[:subjects_ids])
