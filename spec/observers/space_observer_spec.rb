@@ -7,7 +7,7 @@ describe SpaceObserver do
         space = Factory.build(:space)
         expect {
           space.save
-        }.should change(space.logs, :count).by(1)
+        }.to change(space.logs, :count).by(1)
       end
     end
   end
@@ -30,7 +30,7 @@ describe SpaceObserver do
       ActiveRecord::Observer.with_observers(:space_observer) do
         expect {
           Factory(:space, :owner => @course.owner, :course => @course)
-        }.should change(UserNotifier.deliveries, :count).by(4)
+        }.to change(UserNotifier.deliveries, :count).by(4)
       end
     end
   end

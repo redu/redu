@@ -237,10 +237,6 @@ describe Ability do
           @ability = Ability.new(@env_admin)
           @course = Factory.build(:course, :owner => @env_admin,
                                  :environment => @environment)
-
-          Factory(:user_course_association, :course => @course,
-                  :user => @env_admin, :role => :environment_admin,
-                  :state => "approved")
         end
 
         it "creates a course"  do
@@ -2103,6 +2099,24 @@ describe Ability do
         it "can manage the lecture" do
           @ability_admin.should be_able_to(:manage, @lecture)
         end
+      end
+    end
+  end
+
+  context "when searching" do
+    context "logged user" do
+      let(:user) { Factory(:user) }
+
+      it "should be able to perform searches" do
+        Ability.new(user).should be_able_to :search, :all
+      end
+    end
+
+    context "not logged user" do
+      let(:user) { nil }
+
+      it "should not be able to perform searches" do
+        Ability.new(user).should_not be_able_to :search, :all
       end
     end
   end

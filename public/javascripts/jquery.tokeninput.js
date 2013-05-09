@@ -136,6 +136,7 @@ $.TokenList = function (input, url_or_data, settings) {
 
     // Create a new text input an attach keyup events
     var input_box = $("<input type=\"text\"  autocomplete=\"off\">")
+        .attr("placeholder", $(input).attr("placeholder"))
         .css({
             outline: "none"
         })
@@ -328,7 +329,7 @@ $.TokenList = function (input, url_or_data, settings) {
         // Enter new content into resizer and resize input accordingly
         var escaped = input_val.replace(/&/g, '&amp;').replace(/\s/g,' ').replace(/</g, '&lt;').replace(/>/g, '&gt;');
         input_resizer.html(escaped);
-        input_box.width(input_resizer.width() + 30);
+        // input_box.width(input_resizer.width() + 30);
     }
 
     function is_printable_character(keycode) {

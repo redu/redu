@@ -9,8 +9,12 @@ Redu::Application.configure do
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
-  # Use a different cache store in production
-  config.cache_store = :file_store, "#{config.root}/tmp/cache"
+  # Use Memcached as cache store (default config from ey)
+  ## parse the memcached.yml
+  memcached_config = YAML.load_file(Rails.root.join('config/memcached.yml'))
+  memcached_hosts = memcached_config['defaults']['servers']
+  ## pass the servers to dalli setup
+  config.cache_store = :dalli_store, *memcached_hosts
 
   # Specifies the header that your server uses for sending files
   config.action_dispatch.x_sendfile_header = "X-Sendfile"
@@ -77,4 +81,13 @@ Redu::Application.configure do
     :students_participation => "http://vis.redu.com.br/user_spaces/participation.json"
   }
 
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address => "email-smtp.us-east-1.amazonaws.com",
+    :port => 465,
+    :domain => 'redu.com.br',
+    :authentication => :login,
+    :user_name => 'AKIAINQ5Y2UPLZJQM3EA',
+    :password => 'AqEmj6PTCT8HJCpUB9qmIXQb+G2SaKEFjKcWrR9MLUaF'
+  }
 end

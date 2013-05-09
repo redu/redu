@@ -1,7 +1,7 @@
 class Course < ActiveRecord::Base
   include ActsAsBillable
-  include EnrollmentVisNotification
   include DestroySoon::ModelAdditions
+  include CourseSearchable
 
   # Apenas deve ser chamado na criação do segundo curso em diante
   after_create :create_user_course_association, :unless => "self.environment.nil?"
@@ -190,7 +190,6 @@ class Course < ActiveRecord::Base
   # * Pode ser chamado mesmo se o usuário estiver sob moderação
   def unjoin(user)
     enrollments = []
-    enrollments_finalized = []
     course_association = user.get_association_with(self)
     course_association.try(:destroy)
 
@@ -206,19 +205,10 @@ class Course < ActiveRecord::Base
     self.spaces.each do |space|
       space_association = user.get_association_with(space)
       space_association.try(:destroy)
-
-      space.subjects.each do |subject|
-        enrollment = user.get_association_with subject
-        enrollments << enrollment
-        enrollments_finalized << enrollment if enrollment.try(:graduated)
-        enrollment.try(:destroy)
-      end
     end
-    # Associa o delayed_job para a remoção dos enrollments em visualização
-    delay_hierarchy_notification(enrollments.compact, "remove_enrollment")
-    # Envia notificação de remove_subject_finalized para visualização
-    delay_hierarchy_notification(enrollments_finalized.compact,
-                                 "remove_subject_finalized")
+
+    subjects = Subject.where(:space_id => self.spaces)
+    Subject.unenroll(subjects, user)
   end
 
 
@@ -244,10 +234,7 @@ class Course < ActiveRecord::Base
     UserSpaceAssociation.import(usas, :validate => false)
 
     subjects = self.spaces.includes(:subjects).collect(&:subjects).flatten
-    enrollments = Subject.enroll(user, subjects, role)
-
-    # Associa o delayed_job para a criação dos enrollments em visualização
-    delay_hierarchy_notification(enrollments, "enrollment")
+    enrollments = Subject.enroll(subjects, :users => [user], :role => role)
   end
 
   # Verifica se o usuário em questão está esperando aprovação num determinado

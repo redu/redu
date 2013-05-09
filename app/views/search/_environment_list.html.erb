@@ -1,0 +1,21 @@
+<%#
+  A lista de resultados dos ambientes.
+
+  Variáveis:
+    enviroments: os ambientes encontrados.
+    query: o termo pesquisado.
+%>
+<% if environments.count > 0 %>
+  <div class="portal-search-category content-section">
+    <span class="portal-search-category-title icon-environment-gray_32_34-before">Ambientes: <%= search_results_counter(environments) %></span>
+    <% if show_see_all_results_link?(environments.total_count) %>
+      <%= link_to "Veja todos os resultados",
+        search_environments_path(:q => query, :f => ["ambientes"]),
+        :title => "Veja todos os resultados de ambientes",
+        :class => "portal-search-category-link" %>
+    <% end %>
+  </div>
+  <ul class="list-2-columns list-columns-separator clearfix portal-search-list-results">
+    <%= render :partial => "environment", :collection => environments %>
+  </ul>
+<% end %>

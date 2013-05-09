@@ -81,7 +81,7 @@ describe UsersController do
           it "invites the new user to the course identified by the token invitation" do
             expect {
               post :create, @post_params
-            }.should change(UserCourseAssociation, :count).by(1)
+            }.to change(UserCourseAssociation, :count).by(1)
             UserCourseAssociation.last.user.email.
               should == @post_params[:user][:email]
           end
@@ -104,7 +104,7 @@ describe UsersController do
           it "invites the new user to the course identified by the token invitation" do
             expect {
               post :create, @post_params
-            }.should change(UserCourseAssociation, :count).by(1)
+            }.to change(UserCourseAssociation, :count).by(1)
             UserCourseAssociation.last.user.email.should == @another_email
           end
 
@@ -166,32 +166,6 @@ describe UsersController do
             assigns(:courses)[:tutor].should == @courses[:tutor]
             assigns(:courses)[:teacher].should == @courses[:teacher]
           end
-        end
-      end
-
-      context "when application validation fail" do
-        before do
-          @existent_user = User.create(@post_params[:user])
-
-          # Forcing skip validation
-          User.any_instance.stub(:valid?) { true }
-          Rails.application.config.consider_all_requests_local = false
-        end
-
-
-        it "does NOT create a new user" do
-          expect {
-            post :create, @post_params
-          }.should_not change(User, :count)
-        end
-
-        it "redirects to application_path" do
-          post :create, @post_params
-          response.should redirect_to application_path
-        end
-
-        after do
-          Rails.application.config.consider_all_requests_local = true
         end
       end
     end
@@ -343,7 +317,7 @@ describe UsersController do
     it "destroys the user" do
       expect {
         post :destroy, @post_params
-      }.should change(User, :count).by(-1)
+      }.to change(User, :count).by(-1)
     end
 
     it "redirects to site_index" do
@@ -683,6 +657,48 @@ describe UsersController do
     it "redirects to application_path" do
       get :new, :locale => 'pt-BR'
       response.should redirect_to(application_path(:anchor => "modal-sign-up"))
+    end
+  end
+
+  describe "GET resend_activation" do
+    let(:user) { Factory(:user) }
+
+    context "with email" do
+      it "assigns @user" do
+        get :resend_activation, :locale => "pt-BR", :email => user.email
+        assigns[:user].should == user
+      end
+
+      it "delivers a signup notification" do
+        UserNotifier.delivery_method = :test
+        UserNotifier.perform_deliveries = true
+        UserNotifier.deliveries = []
+
+        expect {
+          get :resend_activation, :locale => "pt-BR", :email => user.email
+        }.to change(UserNotifier.deliveries, :count).by(1)
+
+        UserNotifier.deliveries.last.subject.should =~ /Ative sua conta/
+      end
+    end
+
+    context "with id" do
+      it "assigns @user" do
+        get :resend_activation, :locale => "pt-BR", :id => user.id
+        assigns[:user].should == user
+      end
+
+      it "delivers a signup notification" do
+        UserNotifier.delivery_method = :test
+        UserNotifier.perform_deliveries = true
+        UserNotifier.deliveries = []
+
+        expect {
+          get :resend_activation, :locale => "pt-BR", :id => user.id
+        }.to change(UserNotifier.deliveries, :count).by(1)
+
+        UserNotifier.deliveries.last.subject.should =~ /Ative sua conta/
+      end
     end
   end
 end

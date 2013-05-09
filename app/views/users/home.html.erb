@@ -1,3 +1,7 @@
+<% content_for :header_scripts_and_styles do %>
+  <%= include_stylesheets :wall_old %>
+<% end %>
+
 <div class="span3">
   <%= render :partial => "users/left_sidebar",
      :locals => { :user => @user } %>
@@ -12,7 +16,7 @@
       <% cache ['home_friends_requisitions', @user.id] do %>
         <% unless @friends_requisitions.length == 0 %>
           <div class="home-container">
-            <ul class="friends requisitions">
+            <ul class="requisitions">
               <%= render :partial => 'friendships/friend_requisition',
                 :collection => @friends_requisitions, :as => :friendship %>
             </ul>
@@ -23,7 +27,7 @@
       <% cache ['home_courses_requisitions', @user.id] do %>
         <% unless @course_invitations.length == 0 %>
           <div class="home-container">
-            <ul class="courses requisitions">
+            <ul class="requisitions">
               <%= render :partial => 'courses/item_invitation',
                 :collection => @course_invitations %>
             </ul>

@@ -2,6 +2,8 @@
 // Estilos para o novo Início
 // ==========================================================================
 
+@import "compass/css3/images";
+
 // UI-components.
 @import "ui-components/variables";
 @import "ui-components/mixins";
@@ -36,6 +38,9 @@
 
 // Convites
 @import "home/invites";
+
+// Meus Contatos
+@import "home/friendship";
 
 // Criar status do layout antigo.
 @import "home/old-create-status";

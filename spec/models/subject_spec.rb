@@ -22,6 +22,7 @@ describe Subject do
   it { should have_many(:members).through(:enrollments) }
   it { should have_many(:statuses) }
   it { should have_many(:logs) }
+  it { should have_many(:asset_reports) }
 
   it { should validate_presence_of :name }
   #FIXME falhando por problema de tradução
@@ -33,7 +34,7 @@ describe Subject do
   context "callbacks" do
 
     it "creates an Enrollment between the Subject and the owner after create" do
-      subject.create_enrollment_associations
+      subject.enroll
       subject.enrollments.first.should_not be_nil
       subject.enrollments.last.user.should == subject.owner
       subject.enrollments.last.role.
@@ -44,14 +45,14 @@ describe Subject do
     it "does NOT create an Enrollment between the Subject and the owner when update it" do
       expect {
         subject.save # Other updates
-      }.should_not change(subject.enrollments.reload, :count)
+      }.to_not change(subject.enrollments.reload, :count)
     end
 
     it "does NOT create an Enrollment between the subject and the owner after create, if the owner is a Redu admin" do
       redu_admin = Factory(:user, :role => Role[:admin])
       expect {
         Factory(:subject, :owner => redu_admin, :space => @space)
-      }.should_not change(Enrollment, :count)
+      }.to_not change(Enrollment, :count)
     end
 
   end
@@ -89,7 +90,7 @@ describe Subject do
       users = (1..4).collect { Factory(:user) }
       teachers = (1..4).collect { Factory(:user) }
       users.each { |u| subject.enroll(u) }
-      teachers.each { |u| subject.enroll(u, Role[:teacher]) }
+      teachers.each { |u| subject.enroll(u, :role => Role[:teacher]) }
 
       subject.teachers.should == teachers
     end
@@ -107,93 +108,9 @@ describe Subject do
     subject.should_not be_recent
   end
 
-  it "responds to enroll" do
-    should respond_to :enroll
-  end
-
-  it "responds to unenroll" do
-    should respond_to :unenroll
-  end
-
-  it "responds to enrolled?" do
-    should respond_to :enrolled?
-  end
 
   it "responds to graduated?" do
     should respond_to :graduated?
-  end
-
-  context "enrollments" do
-    before :each do
-      @enrolled_user = Factory(:user)
-    end
-
-    it "enrolls an user" do
-      expect {
-        subject.enroll(@enrolled_user)
-      }.should change(subject.enrollments, :count).by(1)
-    end
-
-    it "enrolls an user with a given role" do
-      subject.enroll(@enrolled_user, Role[:teacher]).should be_true
-      subject.enrollments.last.role.should == Role[:teacher]
-    end
-
-    it "unenrolls an user" do
-      enrollment = Factory(:enrollment, :user => @enrolled_user,
-                           :subject => subject)
-
-      expect {
-        subject.unenroll(@enrolled_user)
-      }.should change(subject.enrollments, :count).by(-1)
-    end
-
-    it "verifies if an user is enrolled" do
-      subject.enroll(@enrolled_user)
-      subject.enrolled?(@enrolled_user).should be_true
-    end
-
-    it "verifies if an user is not enrolled" do
-      subject.enrolled?(@enrolled_user).should be_false
-    end
-
-    context 'when enrolling to many subjects' do
-      let(:subjects) { (1..4).collect { Factory(:subject) } }
-
-      it 'creates the enrollments' do
-        expect {
-          Subject.enroll(@enrolled_user, subjects)
-        }.should change(Enrollment, :count).by(subjects.length)
-      end
-
-      it 'returns the created enrollments' do
-        Subject.enroll(@enrolled_user, subjects).to_set.should ==
-          Enrollment.all.to_set
-      end
-
-      it 'creates enrollments with the correct user and subjects' do
-        enrollments = Subject.enroll(@enrolled_user, subjects)
-        enrollments.collect(&:user).to_set.should have(1).item
-        enrollments.collect(&:subject).to_set.should == subjects.to_set
-      end
-
-      context 'when that has many lectures' do
-        before do
-          subjects.each do |s|
-            (1..3).each do
-              Factory(:lecture, :subject => s)
-            end
-          end
-        end
-
-        it 'creates the assets reports for each enrollment' do
-          enrolls = Subject.enroll(@enrolled_user, subjects)
-          enrolls.each do |e|
-            e.asset_reports.should have(3).items
-          end
-        end
-      end
-    end
   end
 
   context "lectures" do
@@ -208,10 +125,13 @@ describe Subject do
   end
 
   it "verifies if a user completed the subject" do
+    Factory(:lecture, :subject => subject, :owner => subject.owner)
     graduated = Factory(:user)
     subject.enroll(graduated)
     subject.lectures.each { |l| l.mark_as_done_for!(graduated, true) }
-    graduated.get_association_with(subject).update_grade!
+    e = graduated.get_association_with(subject)
+    e.update_grade!
+
     subject.graduated?(graduated).should be_true
   end
 
@@ -226,47 +146,6 @@ describe Subject do
     subject.graduated?(unenrolled_user).should be_false
   end
 
-  context "when create a new subject" do
-    before do
-      WebMock.disable_net_connect!
-      3.times do
-        u = Factory(:user)
-        @course.join(u)
-      end
-      @stub = stub_request(:post, Redu::Application.config.vis_client[:url]).
-        with(:headers => {'Authorization'=>['JOjLeRjcK', 'core-team'],
-                          'Content-Type'=>'application/json'}).
-                          to_return(:status => 200, :body => "", :headers => {})
-
-
-      @subject = Factory(:subject, :owner => @user, :space => @space)
-      @subject.create_enrollment_associations
-      @enrollments = @subject.enrollments
-    end
-
-    it "should send a notification to visualization" do
-      @enrollments.collect do |enroll|
-        params = {
-          :lecture_id => nil,
-          :subject_id => enroll.subject_id,
-          :space_id => enroll.subject.space_id,
-          :course_id => enroll.subject.space.course_id,
-          :user_id => enroll.user_id,
-          :type => "enrollment",
-          :status_id => nil,
-          :statusable_id => nil,
-          :statusable_type => nil,
-          :in_response_to_id => nil,
-          :in_response_to_type => nil,
-          :created_at => enroll.created_at,
-          :updated_at => enroll.updated_at
-        }
-
-        vis_a_request(params).should have_been_made
-      end
-    end
-  end
-
   it "should remove subjects unfinalized that was created more then 1 days ago" do
     3.times do
       Factory(:subject, :owner => @user, :space => @space,
@@ -276,6 +155,6 @@ describe Subject do
 
     expect {
       Subject.destroy_subjects_unfinalized
-    }.should change(Subject, :count).by(-3)
+    }.to change(Subject, :count).by(-3)
   end
 end

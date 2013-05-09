@@ -3,15 +3,15 @@
     <%= link_to 'Redu: potencializando o talento das pessoas.',
       :title => 'Página Inicial' %>
   </h1>
-  <div class="copyright">Copyright 2010 - redu.com.br. Todos os direitos reservados.</div>
+  <div class="copyright">Tudo o que encontrar aqui pode ser copiado, modificado, distribuído e reutilizado, desde que algumas condições sejam respeitadas e as previstas em lei. Observe tais condições em cada conteúdo.</div>
 
   <div id="nav-footer">
     <ul>
       <li>
-        <%= link_to "Privacidade", :controller => "base", :action => "privacy" %>
+        <%= link_to "Privacidade", page_path("privacy") %>
       </li>
       <li>
-        <%= link_to "Termos de uso", :controller => "base", :action => "tos" %>
+        <%= link_to "Termos de uso", page_path("tos") %>
       </li>
       <li>
         <%= link_to "Contato", :controller => "base", :action => "contact" %>

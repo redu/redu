@@ -50,10 +50,10 @@ class LecturesController < BaseController
 
     @can_manage_lecture = can?(:manage, @lecture)
 
-    if current_user.get_association_with(@lecture.subject)
+    if enrollment = current_user.get_association_with(@lecture.subject)
       asset_report = @lecture.asset_reports.of_user(current_user).first
-      @student_grade = asset_report.enrollment.grade.to_i
-      @done = asset_report.done
+      @student_grade = enrollment.grade.to_i
+      @done = asset_report.try(:done)
     end
 
     respond_to do |format|
@@ -71,6 +71,11 @@ class LecturesController < BaseController
         end
       elsif @lecture.lectureable_type == 'Api::Canvas'
         format.html do
+          options = { :redu_space_id => @space.id, :redu_subject_id => @subject.id,
+                      :redu_lecture_id => @lecture_id, :redu_container => :lecture,
+                      :redu_user_id => current_user.id }
+          @canvas_url = @lecture.lectureable.current_url(options)
+
           render :show_canvas
         end
       elsif @lecture.lectureable_type == 'Exercise'
@@ -143,6 +148,8 @@ class LecturesController < BaseController
       end
     end
 
+    @lecture.create_asset_report if @lecture.finalized?
+
     @quota = @course.quota || @course.environment.quota
     @plan = @course.plan || @course.environment.plan
 
@@ -206,8 +213,8 @@ class LecturesController < BaseController
 
     student_profile = current_user.enrollments.
       where(:subject_id => @subject).last
-
-    @student_grade = student_profile.update_grade!.to_i
+    student_profile.update_grade!
+    @student_grade = student_profile.reload.grade.to_i
 
    respond_to do |format|
      format.js

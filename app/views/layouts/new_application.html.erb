@@ -17,26 +17,36 @@
     <% end %>
     <%= render :partial => "shared/typekit" %>
     <%= render :partial => "shared/analytics" %>
+    <%= yield :header_scripts_and_styles %>
   </head>
   <body>
-    <%# Torna possível sobrescrever a navegação global nas views que utilizam este layout  %>
+    <%# Torna possível sobrescrever a navegação global nas views que utilizam este layout %>
     <% if content_for?(:nav_global) %>
       <%= content_for(:nav_global) %>
     <% else %>
       <%= render(:partial => "shared/nav_global") %>
     <% end %>
-
     <div class="main-wrapper">
-      <%= render :partial => "shared/outdated_browser_new" %>
+      <% if content_for?(:outdated_browser) %>
+        <%= content_for(:outdated_browser) %>
+      <% else %>
+        <%= render :partial => "shared/outdated_browser_new" %>
+      <% end %>
       <%= render :partial => "shared/system_flash_message" %>
       <div class="container <%= content_for(:container_class) %>">
         <div class="row">
           <%= yield %>
         </div>
       </div>
-      <div class="footer-pusher"></div>
+      <% unless content_for?(:footer) %>
+        <div class="footer-pusher"></div>
+      <% end %>
     </div>
-    <%= render :partial => "shared/footer" %>
+    <% if content_for?(:footer) %>
+      <%= content_for(:footer) %>
+    <% else %>
+      <%= render :partial => "shared/footer" %>
+    <% end %>
     <%# É possível sobrescrever a inicialização do olark %>
     <% if content_for?(:olark_script) %>
       <%= content_for(:olar_script) %>

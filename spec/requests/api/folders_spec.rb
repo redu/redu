@@ -102,4 +102,80 @@ describe "Folders API" do
       end
     end
   end
+
+  context "when POST /api/folders/:id/folder" do
+    let(:root) { space.root_folder }
+
+    context "without validation error" do
+      let(:folder_params) do
+        { :folder => { :name => "Guila's folder" } }
+      end
+      before do
+        post "/api/folders/#{root.id}/folders", params.merge(folder_params)
+      end
+
+      it "should return code 201" do
+        response.code.should == "201"
+      end
+
+      it "should have the correct name" do
+        parse(response.body)["name"].should == folder_params[:folder][:name]
+      end
+    end
+
+    context "with validation error" do
+      let(:folder_params) do
+        { :folder => { :name => nil } }
+      end
+      before do
+        post "/api/folders/#{root.id}/folders", params.merge(folder_params)
+      end
+
+      it "should return 422" do
+        response.code.should == "422"
+      end
+
+      it "should return validation error" do
+        response.body.should =~ /name/
+      end
+    end
+  end
+
+  context "when PUT /api/folders/:id" do
+    subject do
+      Factory(:complete_folder, :space => space, :parent => space.root_folder)
+    end
+
+    it "should return code 200" do
+      put "/api/folders/#{subject.id}", params.
+        merge({ :folder => { :name => 'Foobar' } })
+      response.code.should == "200"
+    end
+
+    context "with validation error" do
+      before do
+        put "/api/folders/#{subject.id}", params.
+          merge({ :folder => { :name => nil } })
+      end
+
+      it "should return 422 code" do
+        response.code.should == "422"
+      end
+
+      it "should include the validation error" do
+        response.body.should =~ /name/
+      end
+    end
+  end
+
+  context "DELETE /api/files/:id" do
+    subject do
+      Factory(:complete_folder, :space => space, :parent => space.root_folder)
+    end
+
+    it "should return 200" do
+      delete "/api/folders/#{subject.id}", params
+      response.code.should == "200"
+    end
+  end
 end

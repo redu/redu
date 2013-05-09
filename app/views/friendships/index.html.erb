@@ -1,23 +1,86 @@
+<%# Página de contatos mostrada no perfil de outros usuários (design sem bootstrap). %>
 <% if @profile %>
   <%= render :partial => 'users/profile_sidebar' %>
+  <div class="main grid_10" style="width: 580px;">
+    <ol id="breadcrumbs" class="clearfix">
+      <li>
+        <%= link_to 'Home', home_user_path(current_user), :class => 'replacement icon-small home icon-home-lightblue_16_18' %>
+      </li>
+      <li>
+        <%= link_to 'Contatos', user_friendships_path(@user.login, :profile => true), :class => 'icon-contacts-lightblue_16_18-before' %>
+      </li>
+    </ol>
+
+    <div id="contacts">
+      <ul class="clearfix">
+        <%= render :partial => "users/item_medium", :collection => @friends %>
+      </ul>
+      <%= will_paginate @friends, :renderer => EndlessRenderer %>
+    </div>
+
+  </div><!-- end .main -->
+
+<%# Nova página de contatos do usuário da sessão. %>
 <% else %>
-  <%= render :partial => 'users/home_sidebar' %>
-<% end %>
-<div class="main grid_10" style="width: 580px;">
-  <ol id="breadcrumbs" class="clearfix">
-    <li>
-      <%= link_to 'Home', home_user_path(current_user), :class => 'replacement icon-small home icon-home-lightblue_16_18' %>
-    </li>
-    <li>
-      <%= link_to 'Contatos', user_friendships_path(@user.login, :profile => true), :class => 'icon-contacts-lightblue_16_18-before' %>
-    </li>
-  </ol>
-
-  <div id="contacts">
-    <ul class="clearfix">
-      <%= render :partial => "users/item_medium", :collection => @friends %>
-    </ul>
-    <%= will_paginate @friends, :renderer => EndlessRenderer %>
+  <div class="span3">
+    <%= render "users/left_sidebar", :user => @user %>
   </div>
+  <div class="span10">
+    <div class="content-area">
+      <%= render "friendships/breadcrumb", :user => @user %>
+      <div class="content-body">
+        <div class="content-section">
+          <ul class="header-breadcrumb">
+            <li class="header-breadcrumb-item">
+              <%= link_to "Meus Contatos", user_friendships_path(@user),
+                :class => "header-bradcrumb-link icon-connections-gray_32_34-before",
+                :title => "Meus Contatos" %>
+            </li>
+            <li class="header-breadcrumb-item">
+              <%= link_to user_friendships_path(@user),
+                :class => "header-bradcrumb-link",
+                :title => "Amigos" do %>
+                Amigos <%= content_tag(:span, parentize(@total_friends), :class => "header-breadcrumb-item-light") %>
+              <% end %>
+            </li>
+          </ul>
+          <%= link_to "Convidar amigos", new_user_friendship_path(@user), :class => "button-primary icon-invite-white_blue_16_18-before pull-right" %>
+        </div>
+        <%= new_tabs(:new_users) %>
+        <div class="content-section">
+          <% if @friends.size == 0 %>
+            <script>
+              $(function() {
+                // Foca no campo de busca e troca o filtro para perfis.
+                $("body").on("click", ".focus-search-users", function() {
+                  setTimeout(function() {
+                    var $searchProfiles = $('.form-search-filters input[value="perfil"]:radio');
 
-</div><!-- end .main -->
+                    $searchProfiles.change().prop("checked", true);
+                    $("#token-input-q").focus();
+                  }, 100);
+                });
+              });
+            </script>
+            <%= render "shared/empty_message", :icon_message => "Nenhum contato",
+              :icon_class => "icon-invite-empty_128_130",
+              :message => raw('Adicione amigos e crie sua rede social educacional. Você pode conversar, ajudar e tirar dúvidas com seus amigos. <span class="focus-search-users link-fake" title="Procure por usuários no Redu">Que tal procurar?</span>') %>
+          <% else %>
+            <ul class="list-2-columns list-columns-separator clearfix">
+              <%= render :partial => "users/item_medium_new", :collection => @friends %>
+            </ul>
+          <% end %>
+        </div>
+        <% if @friends.num_pages > 1 %>
+          <hr class="list-separator">
+        <% end %>
+        <%= paginate @friends, :theme => "numbers",
+          :outer_window => 1, :inner_window => 4 %>
+      </div>
+      <%= render "friendships/breadcrumb", :user => @user %>
+    </div>
+  </div>
+  <div class="span3">
+    <%= render "users/right_sidebar", :user => @user %>
+  </div>
+<% end %>

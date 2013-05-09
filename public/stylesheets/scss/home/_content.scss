@@ -1,15 +1,9 @@
 .breadcrumb-mini + .content-body,
 .content-body + .breadcrumb-mini { margin-top: 10px; }
 
-.content-body + .breadcrumb-mini { margin-bottom: 20px; }
+.content-area { padding: 14px 0 21px 0; }
 
-.breadcrumb-mini {
-  margin-top: 15px;
-}
-
-.container {
-  position: relative;
-}
+.container { position: relative; }
 
 .home-container {
   padding: 10px 20px;
@@ -182,7 +176,7 @@
 
   #tour-5 {
     top: 13px;
-    left: 171px;
+    left: 188px;
 
     &:after {
       border: 9px solid transparent;
@@ -196,7 +190,7 @@
 
   #tour-6 {
     top: 13px;
-    left: 260px;
+    left: 288px;
 
     &:after {
       border: 9px solid transparent;
@@ -210,6 +204,20 @@
 
   #tour-7 {
     top: 13px;
+    left: 625px;
+
+    &:after {
+      border: 9px solid transparent;
+      border-bottom-color: $gray1;
+
+      bottom: 100%;
+      left: 50%;
+      margin-left: -9px;
+    }
+  }
+
+  #tour-8 {
+    top: 13px;
     left: 600px;
 
     &:after {
@@ -222,7 +230,7 @@
     }
   }
 
-  #tour-8 {
+  #tour-9 {
     top: 45px;
     left: 175px;
 
@@ -235,7 +243,7 @@
     }
   }
 
-  #tour-9 {
+  #tour-10 {
     top: 160px;
     left: 210px;
 
@@ -249,7 +257,7 @@
     }
   }
 
-  #tour-10 {
+  #tour-11 {
     left: 210px;
 
     &:after {
@@ -262,7 +270,7 @@
     }
   }
 
-  #tour-11 {
+  #tour-12 {
     &:after {
       border: 9px solid transparent;
       border-left-color: $gray1;
@@ -273,7 +281,7 @@
     }
   }
 
-  #tour-12 {
+  #tour-13 {
     left: auto;
     top: auto;
     right: 20px;
@@ -289,7 +297,7 @@
     }
   }
 
-  #tour-13 {
+  #tour-14 {
     bottom: 60px;
     left: 50%;
     top: auto;

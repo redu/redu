@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   helper_method :current_user_session, :current_user
 
+  before_filter :detect_mobile
   after_filter :check_tour_exploration
 
   unless Rails.application.config.consider_all_requests_local
@@ -12,12 +13,7 @@ class ApplicationController < ActionController::Base
     rescue_from ActionController::UnknownAction,      :with => :render_not_found
   end
 
-  rescue_from CanCan::AccessDenied do |exception|
-    session[:return_to] ||= request.fullpath
-
-    flash[:error] = "Essa área só pode ser vista após você acessar o Redu com seu nome e senha."
-    redirect_to home_path
-  end
+  rescue_from CanCan::AccessDenied, :with => :deny_access
 
   def routing_error
     respond_to do |format|
@@ -66,5 +62,27 @@ class ApplicationController < ActionController::Base
   def check_tour_exploration
     return if current_user.nil? || !params.has_key?(:exploring_tour)
     current_user.settings.visit!(request.path)
+  end
+
+  def detect_mobile
+    user_agent = UserAgent.parse(request.user_agent)
+    if user_agent.mobile?
+      prepend_view_path "app/views/mobile"
+    end
+  end
+
+  def deny_access(exception, &block)
+    session[:return_to] ||= request.fullpath
+
+    flash[:error] = "Essa área só pode ser vista após você acessar o Redu com seu nome e senha."
+
+    yield if block_given?
+
+    user_agent = UserAgent.parse(request.user_agent)
+    if user_agent.mobile?
+      redirect_to login_path
+    else
+      redirect_to home_path
+    end
   end
 end

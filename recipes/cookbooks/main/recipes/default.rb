@@ -12,6 +12,7 @@ require_recipe "rabbitmq_ssh_tunnel"
 require_recipe "delayed_job"
 require_recipe "custom_prompt"
 require_recipe "mongodb::backup"
+require_recipe "sunspot"
 
 # uncomment to turn on thinking sphinx/ultra sphinx. Remember to edit cookbooks/sphinx/recipes/default.rb first!
 # require_recipe "sphinx"

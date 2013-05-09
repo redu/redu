@@ -1,0 +1,20 @@
+<%#
+  Mensagem do que foi pesquisado e quantidade de resultados encontrados.
+
+  Variáveis:
+    query: o termo pesquisado.
+    total_results: a quantidade total de resultados encontrados.
+%>
+<div class="portal-search-result-message">
+  <p>Você buscou por <strong>"<%= query %>"</strong>. Achamos <strong><%= total_results %></strong> resultados.</p>
+
+  <%# Mensagem só exibida na busca geral. %>
+  <% if current_page?(search_path) %>
+    <p>Clique numa aba para maiores detalhes.</p>
+  <% end %>
+
+  <%# Mensagem só exibida nas busca por ambientes, cursos e disciplinas. %>
+  <% if current_page?(search_environments_path) %>
+    <p>Use os filtros abaixo para facilitar a busca.</p>
+  <% end %>
+</div>

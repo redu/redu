@@ -73,7 +73,7 @@ module NewUsersNavigation
         :class => 'tab',
         :link => { :class => 'tab-title icon-plan_16_18-before',
                    :title => 'Planos' },
-        :details => { :text => 'detalhes', :class => 'tab-sub-title legend',
+        :details => { :text => 'Detalhes', :class => 'tab-sub-title legend',
                       :if => action_matcher({'invoices' => ['index']}) }
     end
     sidebar.item :oauth_clients, 'Aplicativos', new_user_oauth_client_path(@user),
@@ -101,6 +101,16 @@ module NewUsersNavigation
         end
       end
     end
-    sidebar.item :my_contacts, 'Meus Contatos', user_friendships_path(@user), :class => 'icon-contacts_16_18-before nav-local-item', :link => { :class => 'nav-local-link link-target', :title => 'Meus Contatos' }
+    sidebar.item :my_contacts, 'Meus Contatos', user_friendships_path(@user),
+      :class => 'icon-contacts_16_18-before nav-local-item',
+      :link => { :class => 'nav-local-link link-target', :title => 'Meus Contatos' } do |contacts_tab|
+      # Abas
+      contacts_tab.dom_class = 'tabs'
+      contacts_tab.selected_class = 'tab-active'
+      contacts_tab.item :friends, 'Amigos', user_friendships_path(@user),
+        :highlights_on => Proc.new { action_matcher({'friendships' => ['index', 'new']}).call },
+        :class => 'tab',
+        :link => { :class => 'tab-title icon-contacts-lightblue_16_18-before', :title => 'Amigos' }
+    end
   end
 end

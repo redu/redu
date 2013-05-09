@@ -8,7 +8,9 @@ describe User do
     it { should have_many attr }
     end
 
-  it { should have_many(:enrollments).dependent :destroy}
+  # Subject
+  it { should have_many(:enrollments).dependent(:destroy) }
+  it { should have_many(:asset_reports).through(:enrollments) }
 
   it { should have_one(:settings).dependent(:destroy) }
 
@@ -61,6 +63,8 @@ describe User do
   it { should have_many(:results).dependent(:destroy) }
 
   it { User.new.should respond_to(:notify).with(1) }
+  it { User.new.should respond_to(:can?) }
+  it { User.new.should respond_to(:cannot?) }
 
   [:first_name, :last_name].each do |attr|
     it do
@@ -570,24 +574,21 @@ describe User do
       @id = @lecture.subject.id
       subject.subjects_id.should eq([@id])
     end
+
+    context "#find" do
+      it "should find by login" do
+        User.find(subject.login).should == subject
+      end
+
+      it "should find by ID" do
+        User.find(subject.id).should == subject
+      end
+    end
   end
 
   context "callbacks" do
     it "make an activation code before create" do
       subject.activation_code.should_not be_nil
-    end
-
-    it "delivers a signup notification to the user after create" do
-      UserNotifier.delivery_method = :test
-      UserNotifier.perform_deliveries = true
-      UserNotifier.deliveries = []
-
-      ActiveRecord::Observer.with_observers(:user_observer) do
-        subject = Factory(:user)
-      end
-
-      UserNotifier.deliveries.size.should == 1
-      UserNotifier.deliveries.last.subject.should =~ /Ative sua conta/
     end
 
     it "updates last login after create" do
@@ -677,15 +678,6 @@ describe User do
       end
     end
 
-  end
-
-  it "authenticates a user by their login and password" do
-    User.authenticate(subject.login, subject.password).should == subject
-  end
-
-  it "does not authenticate a user by wrong login or password" do
-    User.authenticate("another-login", subject.password).should_not == subject
-    User.authenticate(subject.login, "another-pass").should_not == subject
   end
 
   it "encrypts a password" do
@@ -798,7 +790,7 @@ describe User do
 
     subject_entity = Factory(:subject, :owner => subject,
                              :space => space, :finalized => true)
-    subject_entity.create_enrollment_associations
+    subject_entity.enroll
     subject.get_association_with(subject_entity).
       should == subject.enrollments.last
 
@@ -905,12 +897,16 @@ describe User do
     subject.most_important_education.should == [edu2, edu3, edu1]
   end
 
+  it "should not return nil elements in most important education array" do
+    subject.most_important_education.should == []
+  end
+
   context "when application validation fail" do
     it "should prevent duplicate logins" do
       @duplicate = Factory.build(:user, :login => subject.login)
       expect {
         @duplicate.save(:validate => false)
-      }.should raise_error(ActiveRecord::RecordNotUnique)
+      }.to raise_error(ActiveRecord::RecordNotUnique)
     end
   end
 
@@ -924,6 +920,8 @@ describe User do
       end
     end
   end
+
+  it_should_behave_like 'have unique index database'
 
   private
   def create_friendship(user1, user2)

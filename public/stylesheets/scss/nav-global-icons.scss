@@ -42,3 +42,21 @@ $icon-sprite-dimensions: true;
   .open & { @extend .icon-arrow-up-lightblue_8_10; }
   .open .button-default:hover & { @extend .icon-arrow-up-blue_8_10; }
 }
+
+
+// Filtros.
+
+// Busca geral.
+.icon-basic-guide-gray_16_18-before {
+  &:before { @extend .icon-basic-guide-gray_16_18; }
+}
+
+// Busca por ambiente.
+.icon-environment-gray_16_18-before {
+  &:before { @extend .icon-environment-gray_16_18; }
+}
+
+// Busca por perfil.
+.icon-profile-gray_16_18-before {
+  &:before { @extend .icon-profile-gray_16_18; }
+}

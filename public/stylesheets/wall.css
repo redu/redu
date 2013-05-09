@@ -211,3 +211,7 @@
 .textshadow .text-replacement {
   text-shadow: none;
 }
+
+textarea {
+  resize: vertical !important;
+}

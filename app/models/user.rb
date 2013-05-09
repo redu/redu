@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   include Invitable::Base
   include Humanizer
+  include UserSearchable
 
   # Valida a resposta ao captcha
   attr_writer :enable_humanizer
@@ -19,6 +20,12 @@ class User < ActiveRecord::Base
   before_create :make_activation_code
   after_create  :update_last_login
   before_validation :strip_whitespace
+  after_commit :on => :create do
+    UserNotifier.delay(:queue => 'email').user_signedup(self.id)
+
+    environment = Environment.find_by_path('ava-redu')
+    environment.courses.each { |c| c.join(self) } if environment
+  end
 
   # ASSOCIATIONS
   has_many :chat_messages
@@ -37,7 +44,8 @@ class User < ActiveRecord::Base
     :foreign_key => "user_id"
   # Course
   has_many :courses, :through => :user_course_associations,
-    :conditions => ["courses.destroy_soon = ?", false]
+    :conditions => ["courses.destroy_soon = ? AND
+                    course_enrollments.state = ?", false, 'approved']
   # Authentication
   has_many :authentications, :dependent => :destroy
   has_many :chats, :dependent => :destroy
@@ -50,6 +58,7 @@ class User < ActiveRecord::Base
   has_many :favorites, :order => "created_at desc", :dependent => :destroy
   classy_enum_attr :role, :default => 'member'
   has_many :enrollments, :dependent => :destroy
+  has_many :asset_reports, :through => :enrollments
 
   #subject
   has_many :subjects, :order => 'name ASC',
@@ -168,32 +177,27 @@ class User < ActiveRecord::Base
     :confirmation => true
   validates_uniqueness_of :email, :case_sensitive => false
 
-  # override activerecord's find to allow us to find by name or id transparently
-  def self.find(*args)
-    if args.is_a?(Array) and args.first.is_a?(String) and (args.first.index(/[a-zA-Z\-_]+/) or args.first.to_i.eql?(0) )
-      find_by_login(args)
-    else
-      super
+  delegate :can?, :cannot?, :to => :ability
+
+  class << self
+    # override activerecord's find to allow us to find by name or id transparently
+    def find(*args)
+      if args.is_a?(Array) and args.first.is_a?(String) and (args.first.index(/[a-zA-Z\-_]+/) or args.first.to_i.eql?(0) )
+        find_by_login(args)
+      else
+        super
+      end
+    end
+
+    def find_by_login_or_email(login)
+      User.find_by_login(login) || User.find_by_email(login)
+    end
+
+    def encrypt(password, salt)
+      Digest::SHA1.hexdigest("--#{salt}--#{password}--")
     end
   end
 
-  def self.find_by_login_or_email(login)
-    User.find_by_login(login) || User.find_by_email(login)
-  end
-
-  # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
-  def self.authenticate(login, password)
-    # hide records with a nil activated_at
-    u = find :first, :conditions => ['login = ?', login]
-    u = find :first, :conditions => ['email = ?', login] if u.nil?
-    u && u.authenticated?(password) && u.update_last_login ? u : nil
-  end
-
-  def self.encrypt(password, salt)
-    Digest::SHA1.hexdigest("--#{salt}--#{password}--")
-  end
-
-  ## Instance Methods
   def process_invitation!(invitee, invitation)
     friendship_invitation = self.be_friends_with(invitee)
     invitation.delete
@@ -619,17 +623,15 @@ class User < ActiveRecord::Base
             contacts_ids, contacts_and_pending_ids, self.id)
   end
 
-  def friends_in_common_with(user)
-    User.where(:login => 'yayreduyay123')
-  end
-
   def most_important_education
     educations = []
     edu = self.educations
-    educations << edu.higher_educations.first unless edu.higher_educations.empty?
-    educations << edu.complementary_courses.first unless edu.complementary_courses.empty?
-    educations << edu.high_schools.first unless edu.high_schools.empty?
 
+    educations << edu.select { |e| e.educationable_type == 'HigherEducation' }.first
+    educations << edu.select { |e| e.educationable_type == 'ComplementaryCourse' }.first
+    educations << edu.select { |e| e.educationable_type == 'HighSchool' }.first
+
+    educations.compact!
     educations
   end
 

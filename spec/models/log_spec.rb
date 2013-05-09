@@ -135,7 +135,7 @@ describe Log do
       it "cannot double log" do
         expect {
           Log.setup(@subject)
-        }.should_not change(@subject.logs, :count)
+        }.to_not change(@subject.logs, :count)
       end
 
       it "sets Space as statusable" do
@@ -183,7 +183,7 @@ describe Log do
         course.join(user)
         sub = Factory(:subject, :owner => user, :space => @space,
                       :visible => true)
-        sub.create_enrollment_associations
+        sub.enroll
         @lecture = Factory(:lecture, :subject => sub,
                          :owner => sub.owner)
         @lecture.subject.finalized = true
@@ -338,7 +338,7 @@ describe Log do
                     @robert.be_friends_with(@jhon)
                     @jhon.be_friends_with(@robert)
                     @robert_compound.reload
-                  }.should change(@robert_compound.logs, :count).from(1).to(2)
+                  }.to change(@robert_compound.logs, :count).from(1).to(2)
               end
             end
           end
@@ -352,7 +352,7 @@ describe Log do
                   expect {
                     @robert.be_friends_with(@ned)
                     @ned.be_friends_with(@robert)
-                  }.should change(CompoundLog, :count).by(2)
+                  }.to change(CompoundLog, :count).by(2)
               end
             end
           end
@@ -384,7 +384,7 @@ describe Log do
                   expect {
                     @users.each { |u| @course.join(u) }
                     @course_compound.reload
-                  }.should change(@course_compound.logs, :count)
+                  }.to change(@course_compound.logs, :count)
               end
             end
           end
@@ -398,7 +398,7 @@ describe Log do
                   expect {
                     @course = Factory(:course)
                     @course.join(@aemon)
-                  }.should change(CompoundLog, :count).by(1)
+                  }.to change(CompoundLog, :count).by(1)
               end
             end
           end

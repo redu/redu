@@ -75,7 +75,7 @@ describe Question do
     it "should choose alternative" do
       expect {
         subject.choose_alternative(@alternatives.first, @user)
-      }.should change(Choice, :count).by(1)
+      }.to change(Choice, :count).by(1)
     end
 
     it "should choose alternative when passing an ID" do
@@ -83,7 +83,7 @@ describe Question do
 
       expect {
         subject.choose_alternative(alt_id, @user)
-      }.should change(Choice, :count).by(1)
+      }.to change(Choice, :count).by(1)
     end
 
     it "should assign the user" do
@@ -115,7 +115,7 @@ describe Question do
       subject.choose_alternative(@alternatives.last, @user)
       expect {
         subject.choose_alternative(@alternatives.first, @user)
-      }.should_not change(Choice, :count)
+      }.to_not change(Choice, :count)
     end
 
     it "should update the choice" do
@@ -172,13 +172,13 @@ describe Question do
       it "saves the question" do
         expect {
           @question.save
-        }.should change(Question, :count).by(1)
+        }.to change(Question, :count).by(1)
       end
 
       it "saves only the complete alternatives" do
         expect {
           @question.save
-        }.should change(Alternative, :count).by(4)
+        }.to change(Alternative, :count).by(4)
       end
     end
 

@@ -1,0 +1,25 @@
+// ==========================================================================
+// Layout
+// ==========================================================================
+
+
+body {
+  background-image: url("/images/landing/background.png");
+
+  .multiplebgs & {
+    background-image: url("/images/mobile/background-light-2x.png"), url("/images/landing/background.png");
+    background-size: cover, auto;
+    background-repeat: no-repeat, repeat;
+    background-position: center top, 0 0;
+  }
+}
+
+.mobile-flash-message .message-block { margin: 20px; }
+
+.mobile-content {
+  @include box-shadow;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-top: 1px solid $gray5;
+
+  .content-section { padding: 20px; }
+}

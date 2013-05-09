@@ -47,7 +47,7 @@ describe UserCourseAssociation do
       it "should go to invited" do
         expect {
           subject.invite!
-        }.should change(subject, :state).to("invited")
+        }.to change(subject, :state).to("invited")
       end
 
       it "should send mail" do
@@ -64,7 +64,7 @@ describe UserCourseAssociation do
       it "should go to rejected" do
         expect {
           subject.deny!
-        }.should change(subject, :state).to("rejected")
+        }.to change(subject, :state).to("rejected")
       end
     end
 
@@ -76,13 +76,13 @@ describe UserCourseAssociation do
       it "should go to approved" do
         expect {
           subject.accept!
-        }.should change(subject, :state).to("approved")
+        }.to change(subject, :state).to("approved")
       end
 
       it "should create environment association" do
         expect {
           subject.accept!
-        }.should change {
+        }.to change {
           subject.course.environment.user_environment_associations.count
         }.by(1)
 
@@ -110,7 +110,7 @@ describe UserCourseAssociation do
       it "should create environment association" do
         expect {
           subject.approve!
-        }.should change {
+        }.to change {
           subject.course.environment.user_environment_associations.count
         }.by(1)
 
@@ -247,7 +247,7 @@ describe UserCourseAssociation do
     it "should send email notifications" do
       expect {
         @new_uca.notify_pending_moderation
-      }.should change(UserNotifier.deliveries, :count).by(4) # os 3 mais owner
+      }.to change(UserNotifier.deliveries, :count).by(4) # os 3 mais owner
     end
 
     it "should send email notifications with correct content" do
@@ -258,4 +258,6 @@ describe UserCourseAssociation do
       end
     end
   end
+
+  it_should_behave_like 'have unique index database'
 end

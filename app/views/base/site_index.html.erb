@@ -1,3 +1,8 @@
+<% content_for :header_scripts_and_styles do %>
+  <%= include_javascripts :landing %>
+<% end %>
+
+<%= render :partial => "landing/welcome" %>
 <div class="container">
   <div class="landing-navigation">
     <%= render :partial => "landing/filters" %>
@@ -9,7 +14,7 @@
     <%= render :partial => "landing/functionalities" %>
     <hr id="planos"  class="list-separator"/>
     <%= render :partial => "landing/plans" %>
-    <hr class="list-separator"/>
+    <hr id="parceiros" class="list-separator"/>
     <%= render :partial => "landing/partners" %>
   </div>
 </div>

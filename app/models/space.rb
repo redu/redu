@@ -1,5 +1,6 @@
 class Space < ActiveRecord::Base
   include DestroySoon::ModelAdditions
+  include SpaceSearchable
 
   # Representa uma disciplina de ensino. O objetivo principal do Space é agrupar
   # objetos de ensino (Lecture e Subject) e promover a interação de muitos
@@ -94,7 +95,7 @@ class Space < ActiveRecord::Base
   # ver app/jobs/create_user_space_association_job.rb
   def delay_create_space_association_for_users_course
     job = CreateUserSpaceAssociationJob.new(:space_id => self.id)
-    Delayed::Job.enqueue(job, :queue => 'general')
+    Delayed::Job.enqueue(job, :queue => 'hierarchy-associations')
   end
 
   def myfiles

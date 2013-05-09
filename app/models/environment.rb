@@ -1,6 +1,7 @@
 class Environment < ActiveRecord::Base
   include ActsAsBillable
   include DestroySoon::ModelAdditions
+  include EnvironmentSearchable
 
   # Representa o ambiente onde o ensino a distância acontece. Pode ser visto
   # como um instituição o provedor de ensino dentro do sistema.
@@ -111,6 +112,4 @@ class Environment < ActiveRecord::Base
       :role => Role[:environment_admin])
       course_assoc.approve!
   end
-
-
 end

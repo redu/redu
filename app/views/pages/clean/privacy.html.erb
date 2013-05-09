@@ -1,0 +1,31 @@
+<%= content_for :wrapper_class do %>overlay<% end %>
+<div class="container_16">
+  <div class="grid_4">
+    <h1 class="logo-top" title="Redu">
+      <%= link_to "Redu", home_path %>
+    </h1>
+    <ul class="left-navigation">
+      <li class="term-of-service">
+        <%= link_to "Termos de Uso", page_path("tos"), :title => "Termos de Uso" %>
+      </li>
+      <li class="active privacy-policy">
+        <%= link_to "Política de Privacidade", page_path("privacy"), :title => "Política de Privacidade" %>
+      </li>
+      <li class="contact">
+        <%= link_to "Fale Conosco", contact_path, :title => "Fale Conosco" %>
+      </li>
+    </ul>
+  </div>
+  <div class="grid_12 alpha">
+    <ul class="top-navigation">
+      <li><%= link_to "Termos de Uso", page_path("tos"), :title => "Termos de Uso" %><span class="separator">|</span></li>
+      <li><%= link_to "Política de Privacidade", page_path("privacy"), :title => "Política de Privacidade", :class => "active" %><span class="separator">|</span></li>
+      <li><%= link_to "Fale Conosco", contact_path, :title => "Fale Conosco" %><span class="separator">|</span></li>
+      <li><%= link_to "Página inicial", home_path, :title => "Página inicial" %></li>
+    </ul>
+    <h2 class="content-title privacy-policy" title="Política de Privacidade">Política de Privacidade</h2>
+    <div class="content">
+      <%= render "shared/privacy_policy" %>
+    </div>
+  </div>
+</div>

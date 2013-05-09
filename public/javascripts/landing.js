@@ -48,4 +48,7 @@ $(function() {
 
   // Abre as modais que devem ser abertas após carregar a página
   $("#modal-sign-up.open-me").modal("show");
+
+  // Ativa o Scrollspy do Twitter.
+  $("body").scrollspy({ target: ".filters", offset: 140 });
 });

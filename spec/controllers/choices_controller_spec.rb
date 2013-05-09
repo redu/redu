@@ -42,7 +42,7 @@ describe ChoicesController do
     it "should create the choice" do
       expect {
         post :create, @params
-      }.should change(Choice, :count).by(1)
+      }.to change(Choice, :count).by(1)
     end
 
     it "should not double the choice" do
@@ -50,7 +50,7 @@ describe ChoicesController do
 
       expect {
         post :create, @params
-      }.should_not change(Choice, :count)
+      }.to_not change(Choice, :count)
     end
 
     it "should render questions/choice_form" do
@@ -81,7 +81,7 @@ describe ChoicesController do
       it "should not raise error" do
         expect {
           post :create, @params
-        }.should_not raise_error
+        }.to_not raise_error
       end
 
       it "should render question/choice_form" do

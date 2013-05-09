@@ -14,6 +14,9 @@ Redu::Application.configure do
   config.action_view.debug_rjs             = true
   config.action_controller.perform_caching = false
 
+  # Use Memcached as cache store, if caching is enabled
+  config.cache_store = :dalli_store
+
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = false
 
@@ -66,7 +69,8 @@ Redu::Application.configure do
 
   # Configurações de VisClient
   config.vis_client = {
-    :url => "http://localhost:4000/hierarchy_notifications.json"
+    :url => "http://localhost:4000/hierarchy_notifications.json",
+    :host => "http://localhost:4000"
   }
 
   config.vis = {

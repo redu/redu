@@ -7,6 +7,9 @@ class Friendship < ActiveRecord::Base
   end
 
   def notify_request
-    UserNotifier.friendship_requested(user, friend).deliver
+    if requested?
+      UserNotifier.delay(:queue => 'email').
+        friendship_requested(user, friend)
+    end
   end
 end

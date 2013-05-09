@@ -30,17 +30,17 @@ describe FriendshipsController do
     end
 
     it "creates a friendship, returning HTML" do
-      lambda {
+      expect {
         post :create, :locale => "pt-BR", :user_id => @user.login,
         :friend_id => @new_user.id
-      }.should change(Friendship, :count).by(2)
+      }.to change(Friendship, :count).by(2)
     end
 
     it "creates a friendship, returning JS" do
-      lambda {
+      expect {
         post :create, :locale => "pt-BR", :user_id => @user.login,
         :friend_id => @new_user.id, :goto_home => true, :format => :js
-      }.should change(Friendship, :count).by(2)
+      }.to change(Friendship, :count).by(2)
     end
 
     it "redirects to user profile, unsing HTML " do
@@ -66,17 +66,17 @@ describe FriendshipsController do
     end
 
     it "destroy a friendship, returning JS" do
-      lambda {
+      expect {
         post :destroy, :locale => "pt-BR", :user_id => @user.login,
         :id => @friendship.id, :format => :js
-      }.should change(Friendship, :count).by(-2)
+      }.to change(Friendship, :count).by(-2)
     end
 
     it "destroy a friendship, returning HTML" do
-      lambda {
+      expect {
         post :destroy, :locale => "pt-BR", :user_id => @user.login,
         :id => @friendship.id
-      }.should change(Friendship, :count).by(-2)
+      }.to change(Friendship, :count).by(-2)
     end
 
     it "redirects to user profile returning HTML" do
@@ -121,15 +121,18 @@ describe FriendshipsController do
 
 
   context 'When resend invitation email' do
+    let(:friend) { @friends[0] }
+    let(:friendship_request) { @user.friendship_for(friend) }
     before do
-      controller.process_invites({'emails' => 'example1@email.com', 'friend_id' => @friends[0].id}, @user)
-      @friendship_request = @user.friendships.requested.first
-      @params = {:locale => "pt-BR", :id => @friendship_request.id, :user_id => @user.login, :format => 'js'}
-      post :resend_email, @params
+      controller.process_invites({'emails' => 'example1@email.com',
+                                  'friend_id' => friend.id }, @user)
+      @params = { :locale => "pt-BR", :id => friendship_request.id,
+                  :user_id => @user.login }
+      xhr :post, :resend_email, @params
     end
 
     it 'assigns invitation_id' do
-      assigns(:invitation_id).should == "request-#{@friendship_request.id}"
+      assigns(:invitation_id).should == "friendship-request-for-#{friend.id}"
     end
 
     it 'render js template' do

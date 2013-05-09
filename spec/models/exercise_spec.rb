@@ -139,7 +139,7 @@ describe Exercise do
     it "should create and start a result" do
       expect {
         subject.start_for(@user)
-      }.should change(subject.results.started, :count).by(1)
+      }.to change(subject.results.started, :count).by(1)
     end
 
     context "when there are a waiting result" do
@@ -151,7 +151,7 @@ describe Exercise do
         subject.results.where(:user_id => @user).should_not be_empty
         expect {
           subject.start_for(@user)
-        }.should_not change(subject.results, :count)
+        }.to_not change(subject.results, :count)
       end
 
       it "should destroy the previous result" do
@@ -172,7 +172,7 @@ describe Exercise do
         subject.results.where(:user_id => @user).should_not be_empty
         expect {
           subject.start_for(@user)
-        }.should_not change(subject.results, :count)
+        }.to_not change(subject.results, :count)
       end
 
       it "should destroy the previous result" do
@@ -193,7 +193,7 @@ describe Exercise do
       it "shouldnt create another result" do
         expect {
           subject.start_for(@user)
-        }.should_not change(subject.results, :count)
+        }.to_not change(subject.results, :count)
       end
 
       it "should return the finalized result" do
@@ -332,13 +332,13 @@ describe Exercise do
       it "saves the exercise" do
         expect {
           @exercise.save
-        }.should change(Exercise, :count).by(1)
+        }.to change(Exercise, :count).by(1)
       end
 
       it "saves only the complete questions" do
         expect {
           @exercise.save
-        }.should change(Question, :count).by(1)
+        }.to change(Question, :count).by(1)
       end
     end
 

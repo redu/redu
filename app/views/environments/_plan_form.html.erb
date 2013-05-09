@@ -1,3 +1,7 @@
+<%#
+  Formulário de escolha de planos do Ensine.
+%>
+
   <%= lazy_load('https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js') do %>
     jQuery(function(){
       // Abas
@@ -64,7 +68,7 @@
           </li>
           <li>
             <strong>30 MB</strong>
-            de aramazenamento de vídeos no Redu
+            de armazenamento de vídeos no Redu
           </li>
         </ul>
         <div class="pricing">
@@ -113,7 +117,7 @@
           </li>
           <li>
             <strong>90 MB</strong>
-            de aramazenamento de vídeo no Redu
+            de armazenamento de vídeo no Redu
           </li>
         </ul>
         <div class="pricing">
@@ -162,7 +166,7 @@
           </li>
           <li>
             <strong>150 MB</strong>
-            de aramazenamento de vídeo no Redu
+            de armazenamento de vídeo no Redu
           </li>
         </ul>
         <div class="pricing">
@@ -206,6 +210,6 @@
     <p class="partner-details">
       A CNS Consultores Associados, em parceria com o Redu,  traz uma nova concepção de educação a distância, oferecendo soluções pedagógicas adequadas, por meio de um ambiente virtual de aprendizagem (A.v.A.) inovador, com conteúdos personalizados e metodologias motivadoras.
     </p>
-    <%= render :partial => 'partners/partner_contacts/new', :locals => { :environment => @environment } %>
+    <%= render :partial => 'partners/partner_contacts/new_old', :locals => { :environment => @environment } %>
   </div><!-- end #partner -->
 </div>

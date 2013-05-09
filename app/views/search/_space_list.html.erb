@@ -1,0 +1,21 @@
+<%#
+  A lista de resultados das disciplinas.
+
+  Variáveis:
+    spaces: as disciplinas encontrados.
+    query: o termo pesquisado.
+%>
+<% if spaces.count > 0 %>
+  <div class="portal-search-category content-section">
+    <span class="portal-search-category-title icon-space-gray_32_34-before">Disciplinas: <%= search_results_counter(spaces) %></span>
+    <% if show_see_all_results_link?(spaces.total_count) %>
+      <%= link_to "Veja todos os resultados",
+        search_environments_path(:q => query, :f => ["disciplinas"]),
+        :title => "Veja todos os resultados de disciplinas",
+        :class => "portal-search-category-link" %>
+    <% end %>
+  </div>
+  <ul class="list-2-columns list-columns-separator clearfix portal-search-list-results">
+    <%= render :partial => "space", :collection => spaces %>
+  </ul>
+<% end %>

@@ -1,0 +1,209 @@
+// ==========================================================================
+// Layout.
+// ==========================================================================
+
+
+// Comum a todos os portais.
+
+.portal-header/*.clearfix*/ {
+  padding-top: 19px;
+  position: relative;
+
+  .breadcrumb-mini-wrapper {
+    position: absolute;
+    bottom: -5px;
+    width: 100%;
+  }
+
+  & +
+  .content-body { margin-top: 15px; }
+}
+
+.breadcrumb-mini-wrapper {
+  height: 18px;
+  text-align: center;
+
+  .breadcrumb-mini { display: inline-block; }
+
+  .content-body +
+  & {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+}
+
+.portal-body {
+  .tabs { padding-top: 14px; }
+
+  .tabs +
+  .portal-search-result-message { margin-top: 20px; }
+
+  .tabs +
+  .filters-wrapper { margin-top: 10px; }
+
+  .portal-search-result-message +
+  .filters-wrapper { margin-top: 15px; }
+}
+
+.filters-wrapper {
+  text-align: center;
+  height: 34px;
+
+  .filters { display: inline-block; }
+}
+
+.portal-search-result-message { text-align: center; }
+
+.portal-search-result-empty {
+  padding-top: 80px;
+  text-align: center;
+}
+
+.portal-search-result-empty-icon { display: inline-block; }
+
+.portal-search-result-empty-icon +
+.portal-search-result-empty-message { margin-top: 20px; }
+
+.portal-search-result-empty-message {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  color: $gray5;
+}
+
+// Portal de busca.
+.portal-header-message/*.legend*/ {
+  margin-top: 4px;
+  width: 240px;
+  float: right;
+  text-align: right;
+  line-height: 14px;
+}
+
+.portal-search-category-title {
+  font: 300 16px/18px $museo-sans;
+  letter-spacing: -1px;
+  color: rgb(178, 178, 178);
+}
+
+.portal-search-category { border-bottom: 1px solid $gray3; }
+
+.portal-search-category +
+.portal-search-list-results { margin-top: 5px; }
+
+.portal-search-category-title +
+.portal-search-category-link { margin-left: 20px; }
+
+.portal-search-item {
+  &:nth-child(odd) { padding-left: 20px; }
+  &:nth-child(even) { padding-right: 20px; }
+}
+
+.portal-search {
+  // Imagem de fundo do cabeçalho.
+  background: url("/images/search/search-background_160.png") no-repeat 391px -49px;
+}
+
+.portal-search-result-item {
+  padding: 0 5px;
+
+  & +
+  & { margin-top: 10px; }
+}
+
+.portal-search-link-see-more {
+  text-align: center;
+  display: block;
+}
+
+.portal-search-result-category {
+  color: $gray5;
+  padding: 0 10px;
+
+  &:hover,
+  &.control-autocomplete-suggestion-selected { background-color: $gray1; }
+}
+
+.portal-search-result-category +
+.portal-search-result-item,
+.portal-search-result-item +
+.portal-search-result-category { margin-top: 5px; }
+
+// Portal de Ambientes.
+.portal-environments {
+  // Imagem de fundo do cabeçalho.
+  background: url("/images/environments/environments-background_160.png") no-repeat 391px -45px;
+
+  .portal-title-link { width: 110px; }
+  .portal-header-message { width: 245px; }
+  .list-environment-course-space-item { padding: 10px 40px; }
+}
+
+
+// ==========================================================================
+// Tema para o jQuery Tokeninput do formulário de busca.
+// ==========================================================================
+
+
+.token-input-list-redu {
+  margin: 0;
+  list-style-type: none;
+}
+
+.token-input-dropdown-redu {
+  padding: 10px 0;
+
+  // Mensagem de buscando e sem resultados.
+  p {
+    color: $gray5;
+    text-align: center;
+  }
+
+  ul {
+    margin: 0;
+    list-style-type: none;
+  }
+
+  .control-autocomplete-suggestion-link {
+    width: 100%;
+    @include box-sizing;
+  }
+
+  .control-autocomplete-name { color: $black; }
+
+  .control-autocomplete-mail { height: 11px; }
+
+  .control-autocomplete-added-info {
+    $thumbnail-width: 32px;
+    $thumbnail-spacing-info: 5px;
+    $calc: $thumbnail-width + $thumbnail-spacing-info;
+    @include calc("width", "100% - #{$calc}", 85%);
+  }
+}
+
+
+// Altera o espaçamento entre os resultados para 20px;
+.portal-search-list-results {
+  $list-item-class: ".portal-search-item";
+  $columns: 2;
+  $gutter: 20px;
+  padding-bottom: 10px;
+
+  #{$list-item-class} {
+    $old-browser-value: percentage(((100 / $columns) - 1) / 100);
+    $calc: ($columns - 1) * $gutter;
+    $expression: "(100% - #{$calc}) / #{$columns}";
+    @include calc("width", $expression, $old-browser-value);
+    margin-left: $gutter;
+  }
+
+  &.list-columns-separator {
+    #{$list-item-class}:nth-child(#{$columns}n+1):after {
+      $old-browser-value: percentage((100 * $columns) / 100);
+      $calc1: 100% * $columns;
+      $calc2: $gutter * ($columns - 1);
+      $expression: "#{$calc1} + #{$calc2}";
+      @include calc("width", $expression, $old-browser-value);
+    }
+  }
+}

@@ -26,6 +26,8 @@ documents:
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
     'application/vnd.openxmlformats-officedocument.wordprocessingml.template',
     'application/vnd.oasis.opendocument.text']
+image: ['image/bmp', 'image/x-windows-bmp', 'image/gif', 'image/jpeg',
+  'image/pjpeg', 'image/png']
 video:
   [ 'application/x-mp4',
     'video/x-flv',

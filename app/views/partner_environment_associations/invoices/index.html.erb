@@ -20,7 +20,7 @@
       <% if @quota %>
         <div class="plan-use">
           <span class="plan-type"><%= @plan.name %></span>
-          <%= render :partial => "invoices/quotas",
+          <%= render :partial => "invoices/quotas_old",
             :locals => { :quota_file => @plan.billable.percentage_quota_file,
                          :plan => @plan,
                          :quota_multimedia => @plan.billable.percentage_quota_multimedia,
@@ -75,4 +75,4 @@
     <% end %>
   </div>
 </div>
-<%= render "invoices/explanation_sidebar" %>
+<%= render "invoices/explanation_sidebar_old" %>

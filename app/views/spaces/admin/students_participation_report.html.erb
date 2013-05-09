@@ -1,7 +1,7 @@
 <%= render :partial => 'shared/management_background' %>
-<div class="management-sidebar">
-  <%= render :partial => 'spaces/sidebar', :locals => { :space => @space } %>
-</div>
+<%= render :partial => 'spaces/admin/management_sidebar',
+  :locals => { :space => @space } %>
+
 <div class="main space grid_12 omega big-col">
   <%= render :partial => 'spaces/breadcrumbs',
     :locals => { :space => @space, :header_space => @header_space } %>
@@ -65,18 +65,12 @@
             var treemap = new StudentsTreemap();
             treemap.load({ form: $("#graph-form"),
             renderTo: "treemap-chart",
-            url: "<%= api_space_users_path(@space.id, :oauth_token => @token, :role=>"member") %>",
+            url: "<%= api_space_users_path(@space.id, :oauth_token => @token, :role=>"member", :partial => true) %>",
             print: "<%= students_participation_report_show_space_path(@space.id) %>"});
           <% end %>
 
          <%= form_tag api_vis_students_participation_path(@space.id), :method => :get,
             :remote => true, :class => "concave-form", :id => "graph-form" do %>
-            <% @space.students_id.each do |id| %>
-              <%= hidden_field_tag "users_id[]", id %>
-            <% end %>
-
-            <%= hidden_field_tag :space_id, @space.id %>
-
             <p id="form-explanation">
                 Selecione o período da informação que vai obter:
             </p>

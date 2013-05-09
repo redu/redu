@@ -41,4 +41,6 @@ describe UserEnvironmentAssociation do
         should == subject.environment.user_environment_associations.to_set
     end
   end
+
+  it_should_behave_like 'have unique index database'
 end

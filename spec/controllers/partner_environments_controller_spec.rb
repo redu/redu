@@ -40,13 +40,13 @@ describe PartnerEnvironmentAssociationsController do
     it "save correctly" do
       expect {
         post :create, @params
-      }.should change(Environment, :count).by(1)
+      }.to change(Environment, :count).by(1)
     end
 
     it "should create a plan" do
       expect {
         post :create, @params
-      }.should change(Plan, :count).by(1)
+      }.to change(Plan, :count).by(1)
     end
 
     context "with validation error" do

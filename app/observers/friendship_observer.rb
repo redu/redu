@@ -4,8 +4,6 @@ class FriendshipObserver < ActiveRecord::Observer
   end
 
   def after_create(friendship)
-    if friendship.pending?
-      friendship.notify_request
-    end
+    friendship.notify_request
   end
 end

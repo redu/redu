@@ -54,6 +54,18 @@ Inserção de dados mandatórios:
 $ redu > bundle exec rake bootstrap:all
 ```
 
+Inicialização do servidor de busca:
+
+```sh
+$ redu > bundle exec rake sunspot:solr:start
+```
+
+Indexação dos modelos:
+
+```sh
+$ redu > bundle exec rake sunspot:solr:reindex
+```
+
 Inicialização do servidor de desenvolvimento:
 
 ```sh
@@ -68,6 +80,7 @@ Para fazer o Redu funcionar em ambiente de desenvolvimento você precisará inst
 
 - MySQL 5.1
 - MongoDB 2.0.6
+- Solr 1.4.0
 
 ### Coding style
 
@@ -118,7 +131,16 @@ Para reinicializar o DelayedJob, em produção, use ``monit restart``. Por exemp
 ```sh
 $ > sudo monit restart delayed_job.0
 $ > sudo monit restart delayed_job.1
+$ > sudo monit restart delayed_job.2
+$ > sudo monit restart delayed_job.3
 ```
+
+#### Responsabilidades de cada worker do Delayed Job
+
+- `delayed_job.0` (general): Execução de tarefas gerais como criação de associações entre usuários e postagens no mural (não há necessidade de serem executadas imediatamente).
+- `delayed_job.1` (email): Envio de emails.
+- `delayed_job.2` (vis): Envio de dados para Vis (requisições HTTP).
+- `delayed_job.3` (hierarchy-associations): Criação de associações da hierarquia que precisam ser feitas o quanto antes.
 
 ### Serviço de entrega de e-mails
 
@@ -143,6 +165,15 @@ O Redu (http://www.redu.com.br) funciona na infraestrutura da [Amazon](http://aw
 $ > ey deploy -a redu -r master --migrate
 ```
 
+#### Gems em repositórios privados
+
+Existem duas formas de utilizar Gems privados no Redu:
+
+A primeira é colocá-lo em um repositório privado e dar acesso ao usuário [tiago-redu](http://github.com/tiago-redu). Este usuário possui as credenciais da instância ``app_master``.
+
+A segunda é utilizar o servidor de Gem privado [The Shire](http://github.com/redu/the-shire).
+
+
 #### SSH
 
 Para realizar login na instância do Redu via SSH basta executar o seguinte comando:
@@ -166,14 +197,16 @@ Em produção utilizamos o [Monit](http://mmonit.com/monit/) para monitorar proc
 $ sudo monit summary
 The Monit daemon 5.0.3 uptime: 7d 22h 12m
 
+Process 'solr_redu_9080'            running
 Process 'rabbitmq_ssh_tunnel'       running
 Process 'nrsysmond'                 running
 Process 'mongo_ssh_tunnel'          running
 Process 'mini_httpd'                running
-Process 'memcache_11211'            running
+Process 'delayed_job.3'             running
+Process 'delayed_job.2'             running
 Process 'delayed_job.1'             running
 Process 'delayed_job.0'             running
-System 'domU-12-31-39-0C-D1-A1'     running
+System 'domU-12-31-39-09-9C-54'     running
 ```
 
 Para mais informações sobre como utilizar o monit, execute ``sudo monit -h``.
@@ -185,3 +218,7 @@ Em produção o Redu funciona através do [Passenger](http://www.modrails.com/do
 ```sh
 $ > /etc/init.d/niginx restart
 ```
+
+#### Cache
+
+Utilizamos o [Memcached](http://memcached.org/) como sistema de *caching*, o [setup](https://support.cloud.engineyard.com/entries/22375358-Using-Memcached-on-Engine-Yard-Cloud) é feito por default pelo Engine Yard (ambiente em *cluster*). Nós apenas configuramos para usar o cliente [Dalli](https://github.com/mperham/dalli) em produção.

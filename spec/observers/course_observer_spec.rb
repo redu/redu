@@ -8,7 +8,7 @@ describe CourseObserver do
 
         expect {
           course.save
-        }.should change(course.logs, :count).by(1)
+        }.to change(course.logs, :count).by(1)
       end
     end
   end
@@ -34,7 +34,7 @@ describe CourseObserver do
         ActiveRecord::Observer.with_observers :course_observer do
           expect {
             subject.destroy
-          }.should_not raise_error
+          }.to_not raise_error
         end
       end
     end

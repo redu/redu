@@ -69,12 +69,8 @@ body {
   margin-top: 10px;
 }
 
-.content-body + .breadcrumb-mini {
-  margin-bottom: 20px;
-}
-
-.breadcrumb-mini {
-  margin-top: 15px;
+.content-area {
+  padding: 14px 0 21px 0;
 }
 
 .container {
@@ -224,7 +220,7 @@ body {
 }
 .home-tour #tour-5 {
   top: 13px;
-  left: 171px;
+  left: 188px;
 }
 .home-tour #tour-5:after {
   border: 9px solid transparent;
@@ -235,7 +231,7 @@ body {
 }
 .home-tour #tour-6 {
   top: 13px;
-  left: 260px;
+  left: 288px;
 }
 .home-tour #tour-6:after {
   border: 9px solid transparent;
@@ -246,37 +242,38 @@ body {
 }
 .home-tour #tour-7 {
   top: 13px;
-  left: 600px;
+  left: 625px;
 }
 .home-tour #tour-7:after {
+  border: 9px solid transparent;
+  border-bottom-color: #f7f7f7;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -9px;
+}
+.home-tour #tour-8 {
+  top: 13px;
+  left: 600px;
+}
+.home-tour #tour-8:after {
   border: 9px solid transparent;
   border-bottom-color: #f7f7f7;
   bottom: 100%;
   left: 93%;
   margin-left: -9px;
 }
-.home-tour #tour-8 {
+.home-tour #tour-9 {
   top: 45px;
   left: 175px;
-}
-.home-tour #tour-8:after {
-  border: 9px solid transparent;
-  border-right-color: #f7f7f7;
-  right: 100%;
-  top: 15px;
-}
-.home-tour #tour-9 {
-  top: 160px;
-  left: 210px;
 }
 .home-tour #tour-9:after {
   border: 9px solid transparent;
   border-right-color: #f7f7f7;
   right: 100%;
-  top: 50%;
-  margin-top: -9px;
+  top: 15px;
 }
 .home-tour #tour-10 {
+  top: 160px;
   left: 210px;
 }
 .home-tour #tour-10:after {
@@ -286,34 +283,44 @@ body {
   top: 50%;
   margin-top: -9px;
 }
+.home-tour #tour-11 {
+  left: 210px;
+}
 .home-tour #tour-11:after {
+  border: 9px solid transparent;
+  border-right-color: #f7f7f7;
+  right: 100%;
+  top: 50%;
+  margin-top: -9px;
+}
+.home-tour #tour-12:after {
   border: 9px solid transparent;
   border-left-color: #f7f7f7;
   left: 100%;
   top: 50%;
   margin-top: -9px;
 }
-.home-tour #tour-12 {
+.home-tour #tour-13 {
   left: auto;
   top: auto;
   right: 20px;
   bottom: 50px;
   position: fixed;
 }
-.home-tour #tour-12:after {
+.home-tour #tour-13:after {
   border: 9px solid transparent;
   border-top-color: #f7f7f7;
   top: 100%;
   right: 20px;
 }
-.home-tour #tour-13 {
+.home-tour #tour-14 {
   bottom: 60px;
   left: 50%;
   top: auto;
   margin-left: -465px;
   position: fixed;
 }
-.home-tour #tour-13:after {
+.home-tour #tour-14:after {
   border: 9px solid transparent;
   border-top-color: #f7f7f7;
   top: 100%;
@@ -322,29 +329,6 @@ body {
 .home-tour .absolute {
   margin: 0;
   position: absolute;
-}
-
-.list-separator +
-.empty-environment {
-  margin-top: 100px;
-}
-
-.empty-environment {
-  text-align: center;
-}
-
-.empty-environment-icon {
-  display: block;
-  margin: 0 auto;
-}
-
-.empty-environment-icon +
-.empty-environment-content {
-  margin-top: 10px;
-}
-
-.empty-environment-content {
-  color: #b3b3b3;
 }
 
 .list-environment-course-space {
@@ -599,51 +583,212 @@ input[type="hidden"] +
   margin-right: 10px;
 }
 
-ul.requisitions {
-  margin: 0;
-  overflow: visible;
+.plan-status-no-pending {
+  color: #5fc080 !important;
 }
-ul.requisitions li {
-  list-style: none;
-  width: 100%;
-  margin-bottom: 0;
+
+.plan-status-pending {
+  color: #ffa935 !important;
 }
-ul.requisitions li:before {
-  margin: 0;
+
+.plan-status-overdue {
+  color: #e1272d !important;
 }
-ul.requisitions .list-mix-inner {
-  padding: 10px;
-  margin-right: 0;
+
+.plan-status-closed {
+  color: black !important;
 }
-ul.requisitions .list-mix-inner .details {
-  margin-left: 10px;
-  float: left;
-  width: 476px;
+
+.pag-seguro {
+  padding-top: 20px;
 }
-ul.requisitions .list-mix-inner .avatar {
-  float: left;
+
+.plans-sidebar p + p {
+  margin-top: 15px;
 }
-ul.requisitions .list-mix-inner span {
+
+.plans-name {
+  font-weight: bold;
   color: #6d6e6f;
 }
-ul.requisitions .list-mix-inner span.waiting {
-  float: right;
-  margin-left: 10px;
-  margin-top: 7px;
+
+.plans-title {
+  color: #b3b3b3;
+  font-weight: 300;
 }
-ul.requisitions .actions {
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  clear: both;
-  float: right;
+.plans-title.course {
+  color: #6d6e6f;
+  margin-bottom: -5px;
 }
-ul.requisitions .actions form {
+.plans-title.teacher {
+  padding-top: 10px;
+}
+
+.plan-details {
+  margin-top: 20px;
+}
+.plan-details li + li {
+  margin-top: 10px;
+}
+.plan-details .list-mix-inner {
+  padding: 10px;
+}
+.plan-details .list-mix-header {
+  padding-bottom: 10px;
   overflow: hidden;
+  line-height: 18px;
+}
+.plan-details .plan-name {
+  color: #5fc080;
   float: left;
 }
-ul.requisitions .actions input:last-child {
+.plan-details .plan-status {
+  display: block;
+  clear: left;
+}
+.plan-details .plan-price {
+  color: #6d6e6f;
+  font-weight: 300;
+}
+.plan-details .quotas {
+  list-style-type: none;
+}
+.plan-details .quotas li {
+  padding-left: 43px;
+}
+.plan-details .quotas li + li {
+  margin-top: 0;
+  padding-top: 5px;
+}
+.plan-details .quotas .plan-quota {
+  color: black;
+}
+.plan-details .quotas .icon {
+  float: left;
+  margin-right: 5px;
+}
+.plan-details .quotas .quota-documents {
+  padding-left: 0;
+}
+
+.invoices-table {
+  margin-top: 40px;
+}
+.invoices-table tbody {
+  color: #6d6e6f;
+}
+.invoices-table tbody td:last-child {
+  text-align: center;
+}
+
+.requisitions {
+  margin: 0;
+  list-style-type: none;
+  color: #6d6e6f;
+}
+.requisitions .list-mix-inner {
+  padding-right: 10px;
+}
+.requisitions .button-success {
   margin-left: 5px;
+}
+
+.invite-description {
+  color: #b3b3b3;
+  margin-bottom: 30px;
+}
+
+.friend-invitation .empty-message {
+  margin-top: 20px;
+  margin-bottom: 25px;
+}
+
+.sent-invitations {
+  color: #b3b3b3;
+  text-align: center;
+}
+
+.sent-invitations-list {
+  margin: 0;
+  list-style-type: none;
+}
+
+.sent-invitations +
+.sent-invitations-list {
+  margin-top: 20px;
+}
+
+.invite-friend-form label {
+  display: block;
+  margin-bottom: 5px;
+}
+.invite-friend-form .button-success {
+  margin-top: 5px;
+}
+.invite-friend-form .invitation-token +
+.token-input-input-token-redu {
+  margin-top: 10px;
+}
+
+.invite-by-email-dropdown {
+  padding: 0 10px;
+}
+
+.invite-by-email-dropdown-message {
+  float: left;
+  position: relative;
+  top: 7px;
+}
+
+.invite-by-email-dropdown-email {
+  display: inline-block;
+  width: auto;
+  max-width: 225px;
+}
+
+.friend-invitation .token-input-list-redu {
+  -webkit-box-shadow: inset 0 1px 0 white;
+  -moz-box-shadow: inset 0 1px 0 white;
+  box-shadow: inset 0 1px 0 white;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  border: 1px solid #cccccc;
+  padding: 6px 10px;
+}
+.cssgradients .friend-invitation .token-input-list-redu {
+  background-image: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(60.0%, #ffffff), color-stop(100%, #e6e6e6));
+  background-image: -webkit-linear-gradient(bottom, #ffffff 60.0%, #e6e6e6);
+  background-image: -moz-linear-gradient(bottom, #ffffff 60.0%, #e6e6e6);
+  background-image: -o-linear-gradient(bottom, #ffffff 60.0%, #e6e6e6);
+  background-image: linear-gradient(bottom, #ffffff 60.0%, #e6e6e6);
+}
+.no-cssgradients.gt-ie8 .friend-invitation .token-input-list-redu {
+  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2U2ZTZlNiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjQwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
+}
+
+.friend-invitation .token-input-focused-redu {
+  color: black;
+  background-color: white !important;
+  background-image: none !important;
+  border-color: #73c3e6;
+  outline: 0;
+  -webkit-box-shadow: inset 0 0 0 rgba(0, 0, 0, 0), 0 0 6px 1px #73c3e6;
+  -moz-box-shadow: inset 0 0 0 rgba(0, 0, 0, 0), 0 0 6px 1px #73c3e6;
+  box-shadow: inset 0 0 0 rgba(0, 0, 0, 0), 0 0 6px 1px #73c3e6;
+}
+
+.friend-invitation .token-input-list-redu input[type="text"] {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  border: none;
+  background: transparent;
+  padding: 0;
+  height: 18px;
+}
+.friend-invitation .token-input-list-redu input[type="text"]:focus {
+  background-color: transparent !important;
 }
 
 .home-container {

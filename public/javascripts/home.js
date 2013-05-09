@@ -61,20 +61,20 @@ $(document).ready(function(){
     $('.nav-global-button').css('background-color', 'transparent');
   });
 
-  // Cursos
+  // Ambientes
   $('#tour-5').on('show', function () {
     $('.nav-global').css('position', 'static');
     $('.nav-global').css('margin-bottom', '0');
     $('.main-wrapper').css('padding-top', '0');
-    $('.nav-global-button[title="Cursos"]').css('position', 'relative');
-    $('.nav-global-button[title="Cursos"]').css('z-index', 1060);
+    $('.nav-global-button[title="Ambientes"]').css('position', 'relative');
+    $('.nav-global-button[title="Ambientes"]').css('z-index', 1060);
     $('.nav-global-button').css('background-color', '#F7F7F7');
     $('.nav-global-button').css('border-radius', '5px');
     $('.nav-global-button').css('-moz-border-radius', '5px');
   });
 
   $('#tour-5').on('hide', function () {
-    $('.nav-global-button[title="Cursos"]').css('z-index', 1020);
+    $('.nav-global-button[title="Ambientes"]').css('z-index', 1020);
     $('.nav-global').css('position', 'fixed');
     $('.nav-global').css('margin-bottom', '18px');
     $('.main-wrapper').css('padding-top', '42px');
@@ -102,8 +102,24 @@ $(document).ready(function(){
     $('.nav-global-button').css('background-color', 'transparent');
   });
 
-  // Suas Configurações
+  // Busca
   $('#tour-7').on('show', function () {
+    $('.nav-global').css('position', 'static');
+    $('.nav-global').css('margin-bottom', '0');
+    $('.main-wrapper').css('padding-top', '0');
+    $('.form-search').css('position', 'relative');
+    $('.form-search').css('z-index', 1060);
+  });
+
+  $('#tour-7').on('hide', function () {
+    $('.form-search').css('z-index', 1020);
+    $('.nav-global').css('position', 'fixed');
+    $('.nav-global').css('margin-bottom', '18px');
+    $('.main-wrapper').css('padding-top', '42px');
+  });
+
+  // Suas Configurações
+  $('#tour-8').on('show', function () {
     $('.nav-global').css('position', 'static');
     $('.nav-global').css('margin-bottom', '0');
     $('.main-wrapper').css('padding-top', '0');
@@ -111,7 +127,7 @@ $(document).ready(function(){
     $('.nav-global-button-dropdown').css('z-index', 1060);
   });
 
-  $('#tour-7').on('hide', function () {
+  $('#tour-8').on('hide', function () {
     $('.nav-global-button-dropdown').css('z-index', 1020);
     $('.nav-global').css('position', 'fixed');
     $('.nav-global').css('margin-bottom', '18px');
@@ -119,17 +135,17 @@ $(document).ready(function(){
   });
 
   // Seu Perfil
-  $('#tour-8').on('show', function () {
+  $('#tour-9').on('show', function () {
     $('.home-profile-area-photo').css('position', 'relative');
     $('.home-profile-area-photo').css('z-index', 1060);
   });
 
-  $('#tour-8').on('hide', function () {
+  $('#tour-9').on('hide', function () {
     $('.home-profile-area-photo').css('z-index', 1000);
   });
 
   // Menu de Navegação do Início
-  $('#tour-9').on('show', function () {
+  $('#tour-10').on('show', function () {
     $('.nav-local').css('position', 'relative');
     $('.nav-local').css('z-index', 1060);
     $('.nav-local').css('background-color', '#F7F7F7');
@@ -137,13 +153,13 @@ $(document).ready(function(){
     $('.nav-local').css('-moz-border-radius', '5px');
   });
 
-  $('#tour-9').on('hide', function () {
+  $('#tour-10').on('hide', function () {
     $('.nav-local').css('z-index', 1000);
     $('.nav-local').css('background-color', 'transparent');
   });
 
   // Seção ativa do Início
-  $('#tour-10').on('show', function () {
+  $('#tour-11').on('show', function () {
     var position = $('.nav-local-item-active').position();
     $(this).css('top', position.top + 77);
     $('.nav-local').css('z-index', 'auto');
@@ -151,12 +167,12 @@ $(document).ready(function(){
     $('.nav-local-item-active').css('z-index', 1060);
   });
 
-  $('#tour-10').on('hide', function () {
+  $('#tour-11').on('hide', function () {
     $('.nav-local-item-active').css('z-index', 1000);
   });
 
   // Convide seus amigos
-  $('#tour-11').on('show', function () {
+  $('#tour-12').on('show', function () {
     var position = $('#home-invite-friends').position();
     $(this).css('top', position.top - 50);
     $(this).css('left', position.left - 360);
@@ -167,26 +183,26 @@ $(document).ready(function(){
     $('#home-invite-friends').css('-moz-border-radius', '5px');
   });
 
-  $('#tour-11').on('hide', function () {
+  $('#tour-12').on('hide', function () {
     $('#home-invite-friends').css('z-index', 1000);
     $('#home-invite-friends').css('background-color', 'none');
   });
 
   // Oráculo
-  $('#tour-12').on('show', function () {
+  $('#tour-13').on('show', function () {
     $('#habla_window_div').css('cssText', 'margin: 0px 20px; bottom: 0px; right: 0px; display: none; position: fixed; z-index: 1600 !important;');
   });
 
-  $('#tour-12').on('hide', function () {
+  $('#tour-13').on('hide', function () {
     $('#habla_window_div').css('cssText', 'margin: 0px 20px; bottom: 0px; right: 0px; display: none; position: fixed;');
   });
 
   // Chat
-  $('#tour-13').on('show', function () {
+  $('#tour-14').on('show', function () {
     $('#chat').css('z-index', 1060);
   });
 
-  $('#tour-13').on('hide', function () {
+  $('#tour-14').on('hide', function () {
     $('#chat').css('z-index', 1000);
   });
 
@@ -215,6 +231,17 @@ $(document).ready(function(){
         } else {
           var identifier = dataTour || href.split("#")[1];
           $.post(url, { id : identifier });
+
+          if (dataTour === "search-courses") {
+            setTimeout(function() {
+              $(".form-search-filters-dropdown input[value=ambientes]:radio")
+                .change()
+                .prop('checked', true);
+              $('#token-input-q').focus();
+            }, 100);
+
+            return false;
+          }
         }
       });
     });

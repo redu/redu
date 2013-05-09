@@ -1228,31 +1228,42 @@ $(function() {
       , buttonText: 'Escolher arquivo'
       , filePath: 'control-file-text'
       , filePathText: 'Nenhum arquivo selecionado.'
+      , controlFile: 'control-file'
       , wrapper: 'control-file-wrapper'
       }, options)
 
       return this.each(function() {
-        var $input = $(this).css('opacity', 0)
+        var $input = $(this).css({
+            'opacity': 0
+          })
           , inputVal = $input.val()
-          , $button = $(document.createElement('a')).addClass(settings.buttonDefault).text(settings.buttonText)
+          , $wrapper = $(document.createElement('div')).addClass(settings.wrapper)
+          , $controlFile = $(document.createElement('div')).addClass(settings.controlFile)
+          , $button = $(document.createElement('button')).addClass(settings.buttonDefault).text(settings.buttonText).attr('type', 'button')
           , $filePath = $(document.createElement('span')).addClass(settings.filePath).text($input.data('legend') || settings.filePathText)
-          , $wrapper = $(document.createElement('div')).addClass(settings.wrapper).append($button).append($filePath)
-          , $controlParent = $input.parent()
 
-        $wrapper.appendTo($controlParent)
-        // Ajusta a altura.
-        $input.height($wrapper.height())
+        $input.wrap($wrapper)
+        $controlFile.append($button).append($filePath).insertAfter($input)
 
         // No FF, se um arquivo for escolhido e der refresh, o input mantém o valor.
         if (inputVal !== '') {
           $filePath.text(inputVal)
         }
 
-        // Repassa o clique pro input file.
-        $button.on('click', function(e) {
-          e.preventDefault
-          $input.trigger('click')
-        })
+        if (!$.browser.msie) {
+          // Repassa o clique pro input file.
+          $button.on('click', function(e) {
+            $input.trigger('click')
+          })
+        } else {
+          // No IE, põe o input file original na frente.
+          $input.css({
+            'position': 'absolute',
+            'width': $button.width(),
+            'height': $button.height(),
+            'z-index': 2
+          })
+        }
 
         // Repassa o nome do arquivo para o span.
         $input.on('change', function() {
@@ -1455,7 +1466,7 @@ $(function() {
 
           container.on('click', function(e) {
             if (!$(e.target).is('input[type="checkbox"]')) {
-              link.click()
+              window.location = link.attr('href')
             }
           })
         })
@@ -2312,7 +2323,6 @@ $.fn.groupResponses = function(opts){
     $.extend(options, opts)
 
     var $responses = $this.find("li:not(.show-responses)");
-    debugger
     if ($responses.length > options.maxResponses) {
       $responses.filter(":lt(" + ($responses.length - options.maxResponses) + ")").slideUp(150, "swing");
       $(this).find(".show-responses").show();

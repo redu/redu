@@ -78,74 +78,67 @@ class UsersController < BaseController
 
   def create
     @user = User.new(params[:user])
-    begin
-      if @user.save
-        @user.create_settings!
-        if @key
-          @key.user = @user
-          @key.save
-        end
+    if @user.save
+      @user.create_settings!
+      if @key
+        @key.user = @user
+        @key.save
+      end
 
-        # Se tem um token de convite para o curso, aprova o convite para o
-        # usuário recém-cadastrado
-        if params.has_key?(:invitation_token) &&
-          invite = UserCourseInvitation.find_by_token(params[:invitation_token])
+      # Se tem um token de convite para o curso, aprova o convite para o
+      # usuário recém-cadastrado
+      if params.has_key?(:invitation_token) &&
+        invite = UserCourseInvitation.find_by_token(params[:invitation_token])
 
-          invite.user = @user
-          invite.accept!
-        end
+        invite.user = @user
+        invite.accept!
+      end
 
-        # Invitation Token
-        if params.has_key?(:friendship_invitation_token) &&
-          invite = Invitation.find_by_token(params[:friendship_invitation_token])
+      # Invitation Token
+      if params.has_key?(:friendship_invitation_token) &&
+        invite = Invitation.find_by_token(params[:friendship_invitation_token])
 
-          invite.accept!(@user)
-        end
+        invite.accept!(@user)
+      end
 
-        flash[:notice] = t(:email_signup_thanks, :email => @user.email)
-        respond_with(@user)
-      else
-        # Se tem um token de convite para o curso, atribui as variáveis
-        # necessárias para mostrar o convite em Users#new
-        if params.has_key?(:invitation_token) &&
-          @user_course_invitation = UserCourseInvitation.find_by_token(
-            params[:invitation_token])
+      flash[:notice] = t(:email_signup_thanks, :email => @user.email)
+      respond_with(@user)
+    else
+      # Se tem um token de convite para o curso, atribui as variáveis
+      # necessárias para mostrar o convite em Users#new
+      if params.has_key?(:invitation_token) &&
+        @user_course_invitation = UserCourseInvitation.find_by_token(
+          params[:invitation_token])
 
-          @course = @user_course_invitation.course
-          @environment = @course.environment
-        elsif params.has_key?(:friendship_invitation_token) &&
-          invitation = Invitation.find_by_token(
-            params[:friendship_invitation_token])
+        @course = @user_course_invitation.course
+        @environment = @course.environment
+      elsif params.has_key?(:friendship_invitation_token) &&
+        invitation = Invitation.find_by_token(
+          params[:friendship_invitation_token])
 
-          @invitation_user = invitation.user
-          uca = UserCourseAssociation.where(:user_id => @invitation_user).approved
-          @contacts = {:total => @invitation_user.friends.count}
-          @courses = { :total => @invitation_user.courses.count,
-                       :environment_admin => uca.with_roles([:environment_admin]).count,
-                       :tutor => uca.with_roles([:tutor]).count,
-                       :teacher => uca.with_roles([:teacher]).count }
-        end
+        @invitation_user = invitation.user
+        uca = UserCourseAssociation.where(:user_id => @invitation_user).approved
+        @contacts = {:total => @invitation_user.friends.count}
+        @courses = { :total => @invitation_user.courses.count,
+                     :environment_admin => uca.with_roles([:environment_admin]).count,
+                     :tutor => uca.with_roles([:tutor]).count,
+                     :teacher => uca.with_roles([:teacher]).count }
+      end
 
-        unless @user.oauth_token.nil?
-          @user = User.find_by_oauth_token(@user.oauth_token)
-          unless @user.nil?
-            @user_session = UserSession.create(@user)
-            current_user = @user_session.record
-            flash[:notice] = t :thanks_youre_now_logged_in
-            redirect_back_or_default user_path(current_user)
-          else
-            flash[:error] = t :uh_oh_we_couldnt_log_you_in_with_the_username_and_password_you_entered_try_again
-            respond_with(@user)
-          end
+      unless @user.oauth_token.nil?
+        @user = User.find_by_oauth_token(@user.oauth_token)
+        unless @user.nil?
+          @user_session = UserSession.create(@user)
+          current_user = @user_session.record
+          flash[:notice] = t :thanks_youre_now_logged_in
+          redirect_back_or_default user_path(current_user)
         else
+          flash[:error] = t :uh_oh_we_couldnt_log_you_in_with_the_username_and_password_you_entered_try_again
           respond_with(@user)
         end
+      else
+        respond_with(@user)
       end
-    # FIXME Após migrar o Rails (> 3.0.10) ver se a solução clean funciona.
-    # Necessário pois o rescue_from estava dando conflito com o
-    # rescue_from Exception (mais geral). See #863.
-    rescue ActiveRecord::RecordNotUnique
-      redirect_to application_path
     end
   end
 
@@ -254,6 +247,7 @@ class UsersController < BaseController
   def recover_username_password
     @recover_username = RecoveryEmail.new
     @recover_password = RecoveryEmail.new
+
     render :layout => 'cold'
   end
 
@@ -271,6 +265,7 @@ class UsersController < BaseController
 
   def recover_password
     @recover_password = RecoveryEmail.new(params[:recovery_email])
+
     if @recover_password.valid?
       @user = User.find_by_email(@recover_password.email)
 
@@ -298,8 +293,14 @@ class UsersController < BaseController
     end
     if @user
       flash[:notice] = t :activation_email_resent_message
-      UserNotifier.delay(:queue => 'email').user_signedup(@user)
-      redirect_to application_path and return
+      UserNotifier.delay(:queue => 'email').user_signedup(@user.id)
+
+      user_agent = UserAgent.parse(request.user_agent)
+      if user_agent.mobile?
+        redirect_to login_path and return
+      else
+        redirect_to application_path and return
+      end
     else
       flash[:error] = t :activation_email_not_sent_message
     end
@@ -345,7 +346,7 @@ class UsersController < BaseController
       @users = User.with_keyword(params[:q])
       @users = @users.map do |u|
         { :id => u.id, :name => u.display_name, :avatar_32 => u.avatar.url(:thumb_32),
-          :mail => u.email }
+          :mail => u.email, :profile_link => user_path(u) }
       end
     elsif params[:tag] # Usado em messages: somente amigos
       @users = current_user.friends.with_keyword(params[:tag])

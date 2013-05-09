@@ -19,7 +19,7 @@ module UsersHelper
 
   def explored_all_tips?(user)
     user.settings.visited?(edit_user_path(user),new_user_friendship_path(user),
-                  user_messages_path(user), courses_index_path,
+                  user_messages_path(user), environments_index_path,
                   teach_index_path, "basic-guide", "tour-1")
   end
 
@@ -56,6 +56,22 @@ module UsersHelper
     end
   end
 
+  # Dois usuários são amigos quando eles tem um 'friendship'
+  # aceito e eles não são a mesma pessoa
+  def is_friend?(user, someone = current_user)
+    user.friends?(someone) and !user.is?(someone)
+  end
+
+  # Atual 'friendship' para dois usuários
+  def current_friendship(user, someone = current_user)
+    user.friendship_for someone
+  end
+
+  # Amigos em comum para dois usuários
+  def mutual_friends(user, someone = current_user)
+    user.friends_in_common_with(someone)
+  end
+
   # Retorna o título correto do formulário de adição/edição em currículo.
   def form_curriculum_title(curriculum_item)
     if curriculum_item.new_record?
@@ -76,5 +92,10 @@ module UsersHelper
     end
 
     "#{action} item"
+  end
+
+  # Retorna os títulos das funções das experiências profissionais de um usuário separados por vírgula.
+  def current_experiences(user)
+    Experience.current_jobs(user.experiences).map{ |exp| exp.title.strip }.join(", ")
   end
 end

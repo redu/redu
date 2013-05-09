@@ -1,0 +1,47 @@
+<%= content_for :container_class do %>portal-search<% end %>
+
+<div class="span16">
+  <%= render :partial => "header", :locals => { :query => @query } %>
+  <div class="portal-body content-body">
+    <%= new_tabs :search %>
+    <%# Se foi encontrado algum resultado. %>
+    <% if @total_results > 0 %>
+      <%= render :partial => "result_quantity",
+        :locals => { :query => @query,
+                     :total_results => @total_results } %>
+      <div class="filters-wrapper">
+        <%= new_subtabs :search %>
+      </div>
+      <%= render :partial => "environment_list",
+        :locals => { :environments => @environments,
+                     :query => @query } %>
+      <% unless (@environments.empty? || @courses.empty?) %>
+        <hr class="list-separator">
+      <% end %>
+      <%= render :partial => "course_list",
+        :locals => { :courses => @courses,
+                     :query => @query } %>
+      <% unless (@environments.empty? || @courses.empty? || @spaces.empty?) %>
+        <hr class="list-separator">
+      <% end %>
+      <%= render :partial => "space_list",
+        :locals => { :spaces => @spaces,
+                     :query => @query } %>
+      <% if @individual_page %>
+        <% if @entity_paginate.num_pages > 1 %>
+          <hr class="list-separator">
+        <% end %>
+        <%= paginate @entity_paginate, :theme => "numbers",
+          :outer_window => 1, :inner_window => 4  %>
+      <% end %>
+    <%# Nenhum resultado encontrado. %>
+    <% else %>
+      <%= render "shared/empty_message", :icon_message => "Nenhum resultado encontrado",
+        :icon_class => "icon-search-empty_128_130",
+        :message => raw("Sentimos muito, mas não achamos resultado para <strong>#{@query}</strong>. Tente outro termo.") %>
+    <% end %>
+  </div>
+  <div class="breadcrumb-mini-wrapper">
+    <%= render :partial => "breadcrumb_mini", :locals => { :query => @query } %>
+  </div>
+</div>

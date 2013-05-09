@@ -25,7 +25,7 @@ describe EducationsController do
       it "creates an education" do
         expect {
           post :create, @post_params
-        }.should change(Education, :count).by(1)
+        }.to change(Education, :count).by(1)
         Education.last.user.should == @user
         Education.last.educationable.should == HighSchool.last
       end
@@ -64,13 +64,13 @@ describe EducationsController do
       it "does NOT create an education" do
         expect {
           post :create, @post_params
-        }.should_not change(Education, :count)
+        }.to_not change(Education, :count)
       end
 
       it "does NOT create an high_school" do
         expect {
           post :create, @post_params
-        }.should_not change(HighSchool, :count)
+        }.to_not change(HighSchool, :count)
       end
 
       it "@high_school is the educationable" do
@@ -94,7 +94,7 @@ describe EducationsController do
       it "creates an education" do
         expect {
           post :create, @post_params
-        }.should change(Education, :count).by(1)
+        }.to change(Education, :count).by(1)
         Education.last.user.should == @user
         Education.last.educationable.should == HigherEducation.last
       end
@@ -112,7 +112,7 @@ describe EducationsController do
       it "creates an education" do
         expect {
           post :create, @post_params
-        }.should change(Education, :count).by(1)
+        }.to change(Education, :count).by(1)
         Education.last.user.should == @user
         Education.last.educationable.should == ComplementaryCourse.last
       end
@@ -129,7 +129,7 @@ describe EducationsController do
       it "creates an education" do
         expect {
           post :create, @post_params
-        }.should change(Education, :count).by(1)
+        }.to change(Education, :count).by(1)
         Education.last.user.should == @user
         Education.last.educationable.should == EventEducation.last
       end
@@ -256,13 +256,13 @@ describe EducationsController do
     it "destroys the education" do
       expect {
         post :destroy, @params
-      }.should change(Education, :count).by(-1)
+      }.to change(Education, :count).by(-1)
     end
 
     it "destroys the educationable" do
       expect {
         post :destroy, @params
-      }.should change(HighSchool, :count).by(-1)
+      }.to change(HighSchool, :count).by(-1)
     end
 
     context "with education of kind higher_education" do
@@ -277,7 +277,7 @@ describe EducationsController do
       it "destroys the educationable" do
         expect {
           post :destroy, @params
-        }.should change(HigherEducation, :count).by(-1)
+        }.to change(HigherEducation, :count).by(-1)
       end
     end
 
@@ -293,7 +293,7 @@ describe EducationsController do
       it "destroys the educationable" do
         expect {
           post :destroy, @params
-        }.should change(ComplementaryCourse, :count).by(-1)
+        }.to change(ComplementaryCourse, :count).by(-1)
       end
     end
 
@@ -309,7 +309,7 @@ describe EducationsController do
       it "destroys the educationable" do
         expect {
           post :destroy, @params
-        }.should change(EventEducation, :count).by(-1)
+        }.to change(EventEducation, :count).by(-1)
       end
     end
   end

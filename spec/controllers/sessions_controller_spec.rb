@@ -27,7 +27,7 @@ describe SessionsController do
           it "invites the loged user to the course identified by the token invitation" do
             expect {
               post :create, @post_params
-            }.should change(UserCourseAssociation, :count).by(1)
+            }.to change(UserCourseAssociation, :count).by(1)
           end
 
           it "should redirect to home_user_path" do
@@ -49,7 +49,7 @@ describe SessionsController do
           it "invites the loged user to the course identified by the token invitation" do
             expect {
               post :create, @post_params
-            }.should change(UserCourseAssociation, :count).by(1)
+            }.to change(UserCourseAssociation, :count).by(1)
           end
 
           it "should redirect to home_user_path" do
@@ -245,6 +245,47 @@ describe SessionsController do
       it "redirects to home_path" do
         get :destroy, { :locale => "pt-BR" }
         response.should redirect_to(home_path)
+      end
+    end
+  end
+
+  context "GET new" do
+    let(:user) { Factory(:user) }
+
+    context "when there is not a current user" do
+      context "with a mobile user agent" do
+        before do
+          mock_user_agent(:mobile => true)
+          get :new, :locale => 'pt-BR'
+        end
+
+        it "should assign @user_session" do
+          assigns[:user_session].should_not be_nil
+          assigns[:user_session].should be_a UserSession
+        end
+      end
+
+      context "with a non mobile user agent" do
+        before do
+          mock_user_agent(:mobile => false)
+        end
+
+        it "should redirect to application_path" do
+          get :new, :locale => 'pt-BR'
+          response.should redirect_to(application_path)
+        end
+      end
+    end
+
+    context "when there is a current user" do
+      before do
+        login_as user
+
+        get :new, :locale => 'pt-BR'
+      end
+
+      it "redirects to home_user_path" do
+        response.should redirect_to(home_user_path(user))
       end
     end
   end

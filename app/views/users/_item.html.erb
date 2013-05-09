@@ -7,7 +7,7 @@
       <span class="courses-count"><%# pluralize item.user_course_associations.approved.count, "curso matriculado", "cursos matriculados" %></span>
     <% else %>
       <% role =  item.get_association_with(entity).role %>
-      <span class="role icon-<%= role %>-gray_16_18-before"><%= role.text %></span>
+      <span class="role icon-<%= role %>-gray_16_18-before"><%= t("classy_enum.role.#{role}", :count => 1) %></span>
     <% end %>
     <% if current_user and
       item.get_association_with(entity).role.member? %>

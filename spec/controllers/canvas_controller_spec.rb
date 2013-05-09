@@ -42,7 +42,7 @@ describe CanvasController do
       it "should redirect to 404" do
         expect {
           get 'show', :id => 123, :space_id => 456, :locale => 'pt-BR'
-        }.should raise_error ActiveRecord::RecordNotFound
+        }.to raise_error ActiveRecord::RecordNotFound
       end
     end
   end

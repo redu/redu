@@ -1,0 +1,31 @@
+<%# Formulário de busca com filtros. %>
+<%= form_tag(search_path, :method => "GET", :class => "form-search form-search-filters form-search-expandable pull-left area-fix") do %>
+  <div class="button-group area-prefix">
+    <button class="form-search-filters-button button-default clearfix dropdown-toggle" data-toggle="dropdown">
+      <span class="control-search-icon icon-basic-guide-gray_16_18 text-replacement pull-left">Filtrar</span>
+      <span class="button-dropdown-arrow icon-arrow-down-gray_8_10 text-replacement">Expandir</span>
+    </button>
+    <span class="dropdown-arrow icon-arrow-up-dropdown-lightblue_20_8 text-replacement">Seta</span>
+    <ul class="nav-global-profile-items dropdown-menu form-search-filters-dropdown">
+      <li class="nav-global-profile-item">
+        <label class="control-radio">
+          <input type="radio" name="radio" value="geral" checked="checked"><span class="legend icon-basic-guide-gray_16_18-before">Busca Geral</span>
+        </label>
+      </li>
+      <li class="nav-global-profile-item">
+        <label class="control-radio">
+          <input type="radio" name="radio" value="ambientes"><span class="legend icon-environment-gray_16_18-before">Ambientes</span>
+        </label>
+      </li>
+      <li class="nav-global-profile-item">
+        <label class="control-radio">
+          <input type="radio" name="radio" value="perfil"><span class="legend icon-profile-gray_16_18-before">Perfil</span>
+        </label>
+      </li>
+    </ul>
+  </div>
+  <%= text_field_tag(:q, nil, :placeholder => "Pesquise...", :class => "control-area area-infix") %>
+  <button class="button-default area-suffix" type="submit">
+    <span class="control-search-icon icon-magnifier-gray_16_18 text-replacement ">Buscar</span>
+  </button>
+<% end %>

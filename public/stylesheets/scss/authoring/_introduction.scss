@@ -1,0 +1,21 @@
+.authoring-content {
+  margin-bottom: 100px;
+  margin-top: 20px;
+
+  .back {
+    float: right;
+    margin-right: $authoring-content-horizontal-padding;
+  }
+
+  .introduction {
+    padding: $authoring-content-vertical-padding $authoring-content-horizontal-padding;
+
+
+    h4 {
+      font-weight: 100;
+      color: $gray6;
+    }
+
+    h4 + h4 { margin-top: 20px; }
+  }
+}

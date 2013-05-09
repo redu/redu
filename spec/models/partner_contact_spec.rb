@@ -36,11 +36,11 @@ describe PartnerContact do
 
       expect {
         subject.deliver
-      }.should_not change(UserNotifier.deliveries, :size)
+      }.to_not change(UserNotifier.deliveries, :size)
     end
 
     it "delivers correctly" do
-      expect { subject.deliver }.should change {UserNotifier.deliveries.size }.by(1)
+      expect { subject.deliver }.to change {UserNotifier.deliveries.size }.by(1)
     end
   end
 
@@ -76,7 +76,7 @@ describe PartnerContact do
      end
 
      it "delivers correctly" do
-       expect { subject.deliver }.should change {UserNotifier.deliveries.size }.by(1)
+       expect { subject.deliver }.to change {UserNotifier.deliveries.size }.by(1)
      end
 
      it "delivers migration message" do

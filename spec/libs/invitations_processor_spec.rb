@@ -20,7 +20,7 @@ describe InvitationsProcessor do
     @param['friend_id'] = @friends.collect{ |f| "#{f.id}," }.to_s
     expect {
       subject.process_invites(@param, @user)
-    }.should change{ @user.friendships.count }.by(5)
+    }.to change{ @user.friendships.count }.by(5)
     Friendship.all.count.should == 10
   end
 
@@ -29,7 +29,7 @@ describe InvitationsProcessor do
     @user.invitations.count.should == 0
     expect {
       subject.process_invites(@param, @user)
-    }.should change(Invitation, :count).by(5)
+    }.to change(Invitation, :count).by(5)
     @user.invitations.count.should == 5
   end
 
@@ -38,7 +38,7 @@ describe InvitationsProcessor do
     @param['friend_id'] = @friends.collect{ |f| "#{f.id}," }.to_s
     expect {
       subject.process_invites(@param, @user)
-    }.should change{ Invitation.all.count}.from(0).to(5)
+    }.to change{ Invitation.all.count}.from(0).to(5)
     Friendship.all.count.should == 10
     @user.friendships.count.should == 5
     @user.invitations.count.should == 5
@@ -48,7 +48,7 @@ describe InvitationsProcessor do
     @param['emails'] = ['teste@mail.com, teste@mail.com']
     expect {
       subject.process_invites(@param, @user)
-    }.should change(Invitation, :count).by(1)
+    }.to change(Invitation, :count).by(1)
   end
 
   it "when email exists in redu database, a friendship should be created instead of a invitation" do
@@ -57,7 +57,7 @@ describe InvitationsProcessor do
     user = Factory(:user)
     expect {
       subject.process_invites(@param, user)
-    }.should change(Invitation, :count).by(5)
+    }.to change(Invitation, :count).by(5)
     Friendship.all.count.should == 2
     user.friendships.count.should == 1
   end
@@ -69,7 +69,7 @@ describe InvitationsProcessor do
       @param['friend_id'] = requested_user.id
       expect {
         subject.process_invites(@param, @user)
-      }.should change(Invitation, :count).by(0)
+      }.to change(Invitation, :count).by(0)
       @user.friendships.count.should == 1
       requested_user.friendships.count.should == 1
     end
@@ -88,13 +88,13 @@ describe InvitationsProcessor do
     it "Destroy all friendship requests" do
       expect {
         subject.batch_destroy_friendships(@friendship_requests, @user)
-      }.should change(Friendship, :count).by(@friendship_requests.count*-2)
+      }.to change(Friendship, :count).by(@friendship_requests.count*-2)
     end
 
     it "Destroy all invitations" do
       expect{
         subject.batch_destroy_invitations(@invitations, @user)
-      }.should change(Invitation, :count).by(@invitations.count*-1)
+      }.to change(Invitation, :count).by(@invitations.count*-1)
     end
   end
 end

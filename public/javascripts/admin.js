@@ -119,7 +119,7 @@
 
   // Pede confirmação do usuário para finalizar o módulo
   $("#subject_submit").live("click", function(e){
-    var $openForms = $("form:visible:not([class~='new-subject'])");
+    var $openForms = $(".resource-form:visible");
     if($openForms.length > 0){
       var answer = confirm("As aulas que não foram adicionadas e/ou salvas serão perdidas. Deseja continuar?")
       if(answer == true){

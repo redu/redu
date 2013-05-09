@@ -11,15 +11,31 @@ s3_upload_files:
   - public/stylesheets/**
 
 javascripts:
-  new_application:
-    - public/javascripts/rails.js
-    - public/javascripts/vendor/modernizr.js
+  lazyload: &lazyload
     - public/javascripts/lazyload.js
     - public/javascripts/asyncjs.jquery.js
-    - public/javascripts/form.redu.jquery.js
+  webview:
+    - public/javascripts/vendor/jquery.js
+    - *lazyload
+  invite_friend:
+    - public/javascripts/jquery.tokeninput-invite-friend.js
+    - public/javascripts/friend-invitation.js
+  bootstrap: &bootstrap
+    - public/javascripts/rails.js
+    - public/javascripts/vendor/modernizr.js
     - public/javascripts/jquery.autosize.min.js
     - public/javascripts/vendor/placeholder-polyfill.min.js
     - public/javascripts/bootstrap-redu.js
+  landing:
+    - public/javascripts/landing.js
+  mobile:
+    - *bootstrap
+    - public/javascripts/mobile-login.js
+  new_application:
+    - *bootstrap
+    - *lazyload
+    - public/javascripts/form.redu.jquery.js
+    - public/javascripts/jquery.tokeninput-instant-search.js
     - public/javascripts/swfobject.js # Necessário ao browserdetection.js
     - public/javascripts/browserdetection.js
     - public/javascripts/jquery.cookie.js
@@ -35,20 +51,15 @@ javascripts:
     - public/javascripts/underscore.js
     - public/javascripts/underscore-sharing-template.redu.jquery.js
     - public/javascripts/embedly.redu.jquery.js
-  landing:
-    - public/javascripts/rails.js
-    - public/javascripts/vendor/modernizr.js
-    - public/javascripts/lazyload.js
-    - public/javascripts/asyncjs.jquery.js
-    - public/javascripts/jquery.autosize.min.js
-    - public/javascripts/vendor/placeholder-polyfill.min.js
-    - public/javascripts/bootstrap-redu.js
+    - public/javascripts/search.js
+  basic:
+    - *bootstrap
+    - *lazyload
     - public/javascripts/vendor/bootstrap-scrollspy.js
     - public/javascripts/swfobject.js # Necessário ao browserdetection.js
     - public/javascripts/browserdetection.js
     - public/javascripts/jquery.cookie.js
     - public/javascripts/outdated-browser.js
-    - public/javascripts/landing.js
   common:
     - public/javascripts/rails.js
     - public/javascripts/application.js
@@ -60,13 +71,13 @@ javascripts:
     - public/javascripts/swfobject.js
     - public/javascripts/jquery.iframe-transport.js
     - public/javascripts/jquery.remotipart.js
-    - public/javascripts/lazyload.js
+    - *lazyload
     - public/javascripts/jquery.fcbkcomplete.min.js
+    - public/javascripts/jquery.tokeninput-instant-search.js
     - public/javascripts/jquery.tokeninput.js
     - public/javascripts/jquery.filestyle.mini.js
     - public/javascripts/jquery.placeholder.js
     - public/javascripts/form.redu.jquery.js
-    - public/javascripts/asyncjs.jquery.js
     - public/javascripts/users.js
     - public/javascripts/jquery.cookie.js
     - public/javascripts/ytpreview.jquery.js
@@ -83,8 +94,11 @@ javascripts:
     - public/javascripts/embedly.redu.jquery.js
     - public/javascripts/jquery.timeago.js
     - public/javascripts/timeago.js
-    - public/javascripts/bootstrap-redu-dropdown.js
     - public/javascripts/wall.js
+    - public/javascripts/bootstrap-redu-dropdown.js # Somente para a nav global.
+    - public/javascripts/bootstrap-nav-global.js # Somente para a nav global.
+    - public/javascripts/bootstrap-redu-search-form.js # Somente para a nav global.
+    - public/javascripts/search.js
   chat:
     - public/javascripts/jquery.pjax.js
     - public/javascripts/pusher.js
@@ -114,8 +128,7 @@ javascripts:
   clean:
     - public/javascripts/rails.js
     - public/javascripts/modernizr.js
-    - public/javascripts/lazyload.js
-    - public/javascripts/asyncjs.jquery.js
+    - *lazyload
     - public/javascripts/jquery.noisy.js
     - public/javascripts/jquery.placeholder.js
     - public/javascripts/form.redu.jquery.js
@@ -131,17 +144,24 @@ javascripts:
     - public/javascripts/olark.js
 
 stylesheets:
-  new_application:
+  wall_old:
     - public/stylesheets/icons.redu.css
+  mobile:
+    - public/stylesheets/mobile.css
+  new_application:
     - public/stylesheets/utils.css
     - public/stylesheets/home.css
     - public/stylesheets/bootstrap-redu.css
+    - public/stylesheets/search.css
     - public/stylesheets/fb_style.css
     - public/stylesheets/outdated-browser-new.css
-  landing:
+    - public/stylesheets/token-input.css
+    - public/stylesheets/wall.css
+  basic:
     - public/stylesheets/landing-new.css
     - public/stylesheets/outdated-browser-new.css
     - public/stylesheets/icons.redu.css
+    - public/stylesheets/authoring-page.css
   common:
     - public/stylesheets/reset.css
     - public/stylesheets/960.css
@@ -165,6 +185,7 @@ stylesheets:
     - public/stylesheets/bootstrap-redu-nav-global.css
     - public/stylesheets/nav-global-icons.css
     - public/stylesheets/wall.css
+    - public/stylesheets/search.css
   ie:
     - public/stylesheets/ie.css
   ie8:

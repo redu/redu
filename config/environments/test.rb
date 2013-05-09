@@ -40,7 +40,7 @@ Redu::Application.configure do
 
   # Armazena no sist. de arquivos
   config.paperclip = {
-    :path => File.join(Rails.root.to_s, "public/images/:class/:attachment/:id/:style/:basename.:extension"),
+    :path => File.join(Rails.root.to_s, "public/:class/:attachment/:id/:style/:basename.:extension"),
     :url => "/system/:class/:attachment/:id/:style/:basename.:extension",
     :default_url => "/images/new/missing_:class_:style.png"
   }
@@ -83,6 +83,7 @@ Redu::Application.configure do
   # Configurações de VisClient
   config.vis_client = {
    :url => "http://localhost:4000/hierarchy_notifications.json",
+   :host => "http://localhost:4000",
    :migration => "http://localhost:4000/database_hierarchy_notifications.json"
   }
 

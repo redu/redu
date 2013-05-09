@@ -39,7 +39,7 @@ class AuthenticationsController < BaseController
       @user = auth_service.authenticated_user
       @user_session = UserSession.new
       params[:opened_signup_modal] = "open-me"
-      render 'base/site_index', :layout => 'landing'
+      render 'base/site_index', :layout => 'basic'
     end
   end
 

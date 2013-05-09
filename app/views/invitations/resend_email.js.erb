@@ -1,3 +1,6 @@
-var $message = $("<span/>", { "class" : "reinvited" }).text("Convite reenviado");
+var $message = $("<span/>", { "class" : "invitation-link-resend legend" }).text("Convite reenviado");
+$("#<%= @invitation_id %> .invitation-link-resend").replaceWith($message);
 
-$("#<%= @invitation_id %> .reinvite").replaceWith($message);
+var $systemMessage = $('<%= escape_javascript render :partial => "shared/system_message", :locals => { :message => "O convite para <strong>#{@invited}</strong> foi reenviado com sucesso!", :type => "success" } %>');
+$("body").append($systemMessage);
+$systemMessage.delay(3000).fadeOut(1000, "linear");

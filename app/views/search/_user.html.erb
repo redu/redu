@@ -1,0 +1,51 @@
+<%#
+  Elemento da coleção de perfis.
+
+  Variáveis:
+    user: o usuário da coleção.
+%>
+<li id="search-results-user-<%= user.id %>" class="portal-search-item">
+  <div class="general-list-item user-n-environment-search-list-item user-search-list-item">
+    <div class="general-list-item-body">
+      <%= link_to user_path(user), :title => user.display_name,
+        :class => "general-list-item-column" do %>
+        <%= image_tag user.avatar.url(:thumb_90),
+          :alt => user.display_name, :title => user.display_name,
+          :size => "90x90" %>
+      <% end %>
+      <div class="general-list-item-column">
+        <% if is_friend?(user) %>
+          <%= render "icon_is_friend" %>
+        <% end %>
+        <h4 class="general-list-item-title">
+          <%= link_to user.display_name, user_path(user),
+            :title => user.display_name,
+            :class => "general-list-item-title-link text-truncate general-list-item-text-overlap-icon" %>
+        </h4>
+        <% job = Experience.current_jobs(user.experiences).first %>
+        <% unless job.nil? %>
+          <span class="legend icon-curriculum-professional-gray_8_10-before text-truncate" title="<%= "#{job.title} na #{job.company}" %>"><%= job.title %> na <%= job.company %></span>
+        <% end %>
+
+        <% education = user.most_important_education.first %>
+        <% unless education.nil? %>
+          <span class="legend icon-curriculum-academic-gray_8_10-before text-truncate" title="<%= education.educationable.institution %>"><%= education.educationable.institution %></span>
+        <% end %>
+        <% unless user.localization.blank? %>
+          <span class="legend icon-biography-gray_8_10-before text-truncate" title="<%= "Mora em #{user.localization}" %>">Mora em <%= user.localization %></span>
+        <% end %>
+        <ul class="general-list-item-counters">
+          <li class="general-list-item-counter icon-contacts-gray_16_18-before">
+            <%= pluralize(user.friends.length, "Amigo") %> <%= show_mutual_friends_counter(user) %>
+          </li>
+          <li class="general-list-item-counter icon-course-gray_16_18-before">
+            <% cache ["search_user_courses_count", user.id] do %>
+              <%= pluralize(user.courses.count, "Curso") %>
+            <% end %>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <%= render :partial => "button_invite", :locals => { :user => user } %>
+  </div>
+</li>
