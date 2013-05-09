@@ -798,6 +798,24 @@
   background: url("../images/new/icons-small.png") -160px -1280px no-repeat;
 }
 
+/* Item de navegação local do tipo canvas. */
+.icon-app_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background-image: url("../images/new/icon-app-lightblue_16_18.png");
+}
+
+/* Hover do item de navegação local do tipo canvas. */
+.icon-app_16_18-before:hover:before {
+  background-image: url("../images/new/icon-app-blue_16_18.png");
+}
+
+/* Item ativo de navegação local do tipo canvas. */
+.local-nav .ui-state-active .icon-app_16_18-before:before {
+  background-image: url("../images/new/icon-app-white_16_18.png");
+}
+
 .icon-file-gray_16_18 { background-position: 0 -1280px !important; }
 .icon-file-gray_16_18-before:before {
   content: "";

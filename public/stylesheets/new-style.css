@@ -170,6 +170,25 @@ body {
   margin: 2px 0;
 }
 
+/* Nome do canvas. */
+.local-nav-item-canvas {
+  display: block;
+}
+
+/* Autor do canvas. */
+.local-nav-item-canvas-author {
+  font-size: 11px;
+}
+
+.ui-state-active .local-nav-item-canvas-author {
+  color: rgb(247, 247, 247);
+}
+
+/* Ajusta o ícone do canvas. */
+#content .sidebar .local-nav > li > .session > a.local-nav-item-canvas-icon:before {
+  margin-top: 2px;
+}
+
 #content .sidebar .local-nav > li > .session {
   display: block;
   position: relative;
@@ -209,7 +228,7 @@ body {
 
 #content .sidebar .local-nav > li.ui-state-active > .session,
 #content .sidebar .local-nav > li.ui-state-active > .session:hover {
-  background: #4dadd6 url("../images/new/nav-user-hover.png") no-repeat center right;
+  background-color: #4dadd6;
   color: white;
 }
 
@@ -526,7 +545,7 @@ body {
 }
 
 #hierarchy-header {
-  margin: 20px;
+  margin: 20px 20px 0;
 }
 
 #hierarchy-header .parent {
@@ -933,6 +952,73 @@ body {
 
 .main.space .body {
   margin: 25px 20px 60px 20px;
+}
+
+/* Modificações na página do canvas. */
+
+.main.space .space-canvas.space-canvas-header {
+  margin-bottom: 10px;
+  margin-top: 0;
+}
+
+.main.space .space-canvas.space-canvas-body {
+  padding-top: 10px;
+  margin-top: 0;
+}
+
+.main.space .space-canvas .header {
+  margin-bottom: 0;
+}
+
+/* Separador do bootstrap. */
+
+.list-separator {
+  border: none;
+  height: 2px;
+  margin: 0;
+  padding: 9px 0;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  clear: both;
+  margin: 10px 0;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid rgb(255, 255, 255);
+}
+
+.cssgradients .list-separator:before {
+  background-image: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgb(247, 247, 247)), color-stop(100%, rgb(255, 255, 255)));
+  background-image: -webkit-linear-gradient(bottom, rgb(247, 247, 247),rgb(255, 255, 255));
+  background-image: -moz-linear-gradient(bottom, rgb(247, 247, 247),rgb(255, 255, 255));
+  background-image: -o-linear-gradient(bottom, rgb(247, 247, 247),rgb(255, 255, 255));
+  background-image: linear-gradient(bottom, rgb(247, 247, 247),rgb(255, 255, 255));
+}
+
+.list-separator:before {
+  content: "";
+  display: block;
+  height: 9px;
+  position: relative;
+  top: -8px;
+  border-bottom: 1px solid rgb(230, 230, 230);
+}
+
+.cssgradients .list-separator:after {
+  background-image: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgb(255, 255, 255)), color-stop(100%, rgb(247, 247, 247)));
+  background-image: -webkit-linear-gradient(bottom, rgb(255, 255, 255),rgb(247, 247, 247));
+  background-image: -moz-linear-gradient(bottom, rgb(255, 255, 255),rgb(247, 247, 247));
+  background-image: -o-linear-gradient(bottom, rgb(255, 255, 255),rgb(247, 247, 247));
+  background-image: linear-gradient(bottom, rgb(255, 255, 255),rgb(247, 247, 247));
+}
+
+.list-separator:after {
+  content: "";
+  display: block;
+  height: 9px;
+  position: relative;
+  bottom: 8px;
+  border-top: 1px solid rgb(255, 255, 255);
 }
 
 .main.space .body.management {
