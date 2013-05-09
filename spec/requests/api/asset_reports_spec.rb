@@ -83,6 +83,41 @@ describe "AssetReports API" do
       it_should_behave_like "asset reports listing without filter"
       it_should_behave_like "asset reports listing with filter user_id"
     end
+
+    context "when GET /users/:user_id/progress" do
+      let(:user) { user_joined_on_course(course, Role[:member]) }
+      let(:context) { user }
+
+      it_should_behave_like "asset reports listing without filter"
+
+      it_should_behave_like "user asset reports listing with filter" do
+        let(:lectures_ids) { subj.lectures[0..1].map(&:id) }
+
+        let(:filtered_asset_reports) do
+          asset_reports.select { |a| lectures_ids.include? a.lecture_id }
+        end
+        let(:params_with_filter) { params.merge(:lectures_ids => lectures_ids) }
+      end
+
+      context "with many subjects" do
+        let(:subjects) { FactoryGirl.create_list(:complete_subject, 2) }
+
+        before do
+          subjects.each { |s| s.enroll user }
+        end
+
+        it_should_behave_like "user asset reports listing with filter" do
+          let(:subjects_ids) { subjects[0..1].map(&:id) }
+
+          let(:filtered_asset_reports) do
+            asset_reports.select { |a| subjects_ids.include? a.subject_id }
+          end
+          let(:params_with_filter) do
+            params.merge(:subjects_ids => subjects_ids)
+          end
+        end
+      end
+    end
   end
 
   protected

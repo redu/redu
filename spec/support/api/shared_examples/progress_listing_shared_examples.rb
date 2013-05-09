@@ -44,3 +44,16 @@ shared_examples_for "asset reports listing with filter user_id" do
       filtered_asset_reports.collect(&:id).to_set
   end
 end
+
+shared_examples_for "user asset reports listing with filter" do
+  before do
+    get "/api/users/#{user.id}/progress", params_with_filter
+  end
+
+  it "should return only the asset reports related to the filter" do
+    assets = parse(response.body)
+
+    assets.collect { |a| a["id"] }.to_set.should ==
+      filtered_asset_reports.collect(&:id).to_set
+  end
+end
