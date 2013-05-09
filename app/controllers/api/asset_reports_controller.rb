@@ -18,14 +18,14 @@ module Api
       respond_with asset_report
     end
 
-    # GET /api/lectures/:lecture_id/progress?user_id[]=1&user_id[]=67
-    # GET /api/subjects/:subject_id/progress?user_id[]=1&user_id[]=67
+    # GET /api/lectures/:lecture_id/progress?users_ids[]=1&users_ids[]=67
+    # GET /api/subjects/:subject_id/progress?users_ids[]=1&users_ids[]=67
     def index
       context = context(params)
       authorize! :manage, context
 
       asset_reports = context.asset_reports
-      asset_reports = filter_by_users(asset_reports, params[:user_id])
+      asset_reports = filter_by_users(asset_reports, params[:users_ids])
 
       respond_with asset_reports
     end
