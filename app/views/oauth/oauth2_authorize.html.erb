@@ -9,15 +9,15 @@
   <%= render :partial => "oauth_clients/breadcrumb", :locals => { :user => @user } %>
   <div class="content-body">
     <div class="content-section">
-      <ul class="header-breadcrumb">
-        <li class="header-breadcrumb-item">
-          <%= link_to "Aplicativos", user_oauth_clients_path(@user),
-            :class => "header-breadcrumb-link icon-app-gray_32_34-before", :title => "Seus aplicativos" %>
-        </li>
-        <li class="header-breadcrumb-item">
-          <%= link_to "Autorização", "#", :class => "header-breadcrumb-link", :title => "Meus Aplicativos" %>
-        </li>
-      </ul>
+      <%= render "bootstrap/header_breadcrumb", :header_breadcrumb_items => [
+        { :name => "Aplicativos",
+          :link => user_oauth_clients_path(@user),
+          :classes => "icon-app-gray_32_34-before"
+        },
+        { :name => "Autorização",
+          :link => "#"
+        }
+        ] %>
     </div>
     <div class="content-section">
       <h3>Autorizar acesso à sua conta</h3>
