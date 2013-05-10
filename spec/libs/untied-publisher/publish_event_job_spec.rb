@@ -38,6 +38,12 @@ module Untied
 
           subject.perform
         end
+
+        it "should not fail due to ActiveRecord::RecordNotFound" do
+          expect {
+            PublishEventJob.new(:after_create, 'User', 121212).perform
+          }.to_not raise_error(ActiveRecord::RecordNotFound)
+        end
       end
     end
   end
