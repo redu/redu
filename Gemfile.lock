@@ -72,6 +72,23 @@ GIT
     invitable (0.0.7)
       rails (>= 3.0.10)
 
+GIT
+  remote: git@github.com:redu/vis_client.git
+  revision: 60d01ffb301f28fa80169afecbac33c041e60b7f
+  branch: rails-3-2
+  specs:
+    vis_client (0.0.7)
+      activerecord (~> 3)
+      bson_ext (~> 1.5)
+      configurable
+      delayed_job_mongoid
+      faraday
+      json
+      mongoid (~> 2.7)
+      roar
+      system_timer
+      valium
+
 GEM
   remote: http://rubygems.org/
   remote: http://gems.github.com/
@@ -495,6 +512,7 @@ DEPENDENCIES
   untied-publisher (~> 0.0.7.pre1)
   useragent (~> 0.4.8)
   valium
+  vis_client!
   webmock!
   whenever
   will_paginate (~> 3.0.pre2)

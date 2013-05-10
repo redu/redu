@@ -55,7 +55,8 @@ gem 'simple-navigation', :git => 'git://github.com/andi/simple-navigation.git'
 gem 'sunspot_rails'
 gem 'rails-translate-routes'
 gem 'useragent', '~> 0.4.8'
-# gem 'vis_client', :git => 'git@github.com:redu/vis_client.git'
+gem 'vis_client', :git => 'git@github.com:redu/vis_client.git',
+  :branch => 'rails-3-2'
 gem 'whenever', :require => false
 gem 'will_paginate', '~> 3.0.pre2'
 gem 'zencoder'
