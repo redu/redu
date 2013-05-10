@@ -19,13 +19,20 @@ module Api
       respond_with(decorated, :represent_with => CourseEnrollmentRepresenter)
     end
 
+
+    # /api/users/:user_id/enrollments?courses_ids[]=1
+    # /api/courses/:course_id/enrollments
     def index
       @entity = find_and_authorize_entity
-      denrollments = @entity.course_enrollments.collect do |e|
-        Api::CourseEnrollmentDecorator.new(e)
+      course_enrollments = @entity.course_enrollments
+      if params.has_key?(:user_id)
+        course_enrollments = filter_by_course_id(course_enrollments)
       end
 
-      respond_with(denrollments, :represent_with => CourseEnrollmentRepresenter)
+      decorated = course_enrollments.
+        map { |e| Api::CourseEnrollmentDecorator.new(e) }
+
+      respond_with(decorated, :represent_with => CourseEnrollmentRepresenter)
     end
 
     def destroy
@@ -39,8 +46,14 @@ module Api
 
     protected
 
-    # /api/users/:user_id/enrollments
-    # /api/courses/:course_id/enrollments
+    def filter_by_course_id(arel)
+      if ids = params[:courses_ids]
+        arel.where(:course_id => ids)
+      else
+        arel
+      end
+    end
+
     def find_and_authorize_entity
       if params.has_key?(:course_id)
         course = Course.find(params[:course_id])

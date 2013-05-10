@@ -1,0 +1,27 @@
+<%#
+  Mini breadcrumb.
+
+  Comumente utilizado no topo e fundo do conteúdo principal das páginas
+  para manter o usuário localizado na hierarquia das páginas.
+
+  Documentação:
+  http://developers.redu.com.br/ui-components/navigation.html#breadcrumbs
+
+  Variáveis:
+    breadcrumb_mini_items: um array de hashes com os itens do breadcrumb.
+      breadcrumb_mini_item: um hash com informações do item.
+        name: texto do link.
+        link: link.
+        classes: classes adicionais, tais como o ícone e
+                 se o texto deve ser escondido (.text-replacement).
+%>
+
+<ul class="breadcrumb-mini">
+  <% breadcrumb_mini_items.each do |breadcrumb_mini_item| %>
+    <li class="breadcrumb-mini-item icon-arrow-right-separator-gray_16_18-after">
+      <%= link_to breadcrumb_mini_item[:name], breadcrumb_mini_item[:link],
+        :title => breadcrumb_mini_item[:name],
+        :class => "breadcrumb-mini-link #{breadcrumb_mini_item[:classes]}" %>
+    </li>
+  <% end %>
+</ul>

@@ -9,18 +9,15 @@
     <div class="content-body">
       <div class="content-section">
         <%# Cabeçalho %>
-        <ul class="header-breadcrumb">
-          <li class="header-breadcrumb-item">
-            <%= link_to "Configurações", edit_user_path(@user),
-               :class => "header-bradcrumb-link icon-manage-gray_32_34-before",
-               :title => "Configurações" %>
-          </li>
-          <li class="header-breadcrumb-item">
-            <%= link_to "Perfil", edit_user_path(@user),
-               :class => "header-bradcrumb-link",
-               :title => "Perfil" %>
-          </li>
-        </ul>
+        <%= render "bootstrap/header_breadcrumb", :header_breadcrumb_items => [
+          { :name => "Configurações",
+            :link => edit_user_path(@user),
+            :classes => "icon-manage-gray_32_34-before"
+          },
+          { :name => "Perfil",
+            :link => edit_user_path(@user)
+          }
+          ] %>
       </div>
       <%# Abas e sub-abas %>
       <%= new_tabs(:new_users) %>

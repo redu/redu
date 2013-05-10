@@ -9,23 +9,18 @@
     <div class="content-body">
       <div class="content-section">
         <%# Cabeçalho %>
-        <ul class="header-breadcrumb">
-          <li class="header-breadcrumb-item">
-            <%= link_to "Configurações", edit_user_path(@user),
-              :class => "header-bradcrumb-link icon-manage-gray_32_34-before",
-              :title => "Configurações" %>
-          </li>
-          <li class="header-breadcrumb-item">
-            <%= link_to "Planos", user_plans_path(@user),
-              :class => "header-bradcrumb-link",
-              :title => "Planos" %>
-          </li>
-          <li class="header-breadcrumb-item">
-            <%= link_to "Detalhes", plan_invoices_path(@plan),
-              :class => "header-bradcrumb-link",
-              :title => "Detalhes de Plano" %>
-          </li>
-        </ul>
+        <%= render "bootstrap/header_breadcrumb", :header_breadcrumb_items => [
+          { :name => "Configurações",
+            :link => edit_user_path(@user),
+            :classes => "icon-manage-gray_32_34-before"
+          },
+          { :name => "Planos",
+            :link => user_plans_path(@user)
+          },
+          { :name => "Detalhes",
+            :link => plan_invoices_path(@plan)
+          }
+          ] %>
       </div>
       <%# Abas e sub-abas %>
       <%= new_tabs(:new_users) %>

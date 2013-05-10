@@ -17,7 +17,7 @@ module Untied
       end
 
       def perform
-        producer.publish(event)
+        producer.publish(event) if event
       end
 
       def producer
@@ -27,13 +27,22 @@ module Untied
       private
 
       def event
+        if payload
+          Untied::Event.
+            new(:name => event_name, :payload => payload, :origin => origin)
+        end
+      end
+
+      def origin
         origin = Untied::Publisher.config.service_name
-        Untied::Event.new(:name => event_name, :payload => payload,
-                          :origin => origin)
       end
 
       def payload
-        @payload ||= class_name.constantize.find(model_id)
+        @payload ||= find_model
+      end
+
+      def find_model
+        class_name.constantize.find_by_id(model_id)
       end
     end
   end

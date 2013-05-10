@@ -6152,25 +6152,25 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
   display: inherit;
 }
 
-.header-bradcrumb-link {
+.header-breadcrumb-link {
   font-weight: 300;
   height: inherit;
 }
-.header-breadcrumb .header-bradcrumb-link {
+.header-breadcrumb .header-breadcrumb-link {
   color: #b3b3b3;
 }
-.header-breadcrumb-item:last-child .header-bradcrumb-link {
+.header-breadcrumb-item:last-child .header-breadcrumb-link {
   color: #4dadd6;
 }
-.header-breadcrumb-item:first-child .header-bradcrumb-link:before {
+.header-breadcrumb-item:first-child .header-breadcrumb-link:before {
   float: left;
   margin-right: 10px;
   margin-top: -7px;
 }
-.header-breadcrumb-item:last-child .header-bradcrumb-link, .header-bradcrumb-link:hover {
+.header-breadcrumb-item:last-child .header-breadcrumb-link, .header-breadcrumb-link:hover {
   font-weight: 500;
 }
-.header-breadcrumb-item:last-child .header-bradcrumb-link:hover, .header-bradcrumb-link:hover {
+.header-breadcrumb-item:last-child .header-breadcrumb-link:hover, .header-breadcrumb-link:hover {
   color: #158ac4;
   text-decoration: none;
 }
@@ -6200,17 +6200,17 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
   content: "\002F";
 }
 
-.header-bradcrumb-big-link {
+.header-breadcrumb-big-link {
   color: #b3b3b3;
 }
-.header-bradcrumb-big-link:visited {
+.header-breadcrumb-big-link:visited {
   color: #b3b3b3;
 }
-.header-bradcrumb-big-link:hover {
+.header-breadcrumb-big-link:hover {
   text-decoration: none;
   color: #158ac4;
 }
-.header-breadcrumb-item:first-child .header-bradcrumb-big-link:before {
+.header-breadcrumb-item:first-child .header-breadcrumb-big-link:before {
   float: left;
   margin-right: 10px !important;
   margin-top: -7px;
