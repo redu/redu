@@ -150,9 +150,8 @@ GEM
       ffi (~> 1.0, >= 1.0.11)
     chronic (0.9.1)
     chunky_png (1.2.8)
-    ckeditor (4.0.4)
-      mime-types
-      orm_adapter
+    ckeditor (3.4.2.pre)
+      mime-types (>= 1.16)
     classy_enum (3.2.0)
       rails (>= 3.0)
     cocaine (0.3.2)
@@ -288,7 +287,6 @@ GEM
     omniauth-oauth2 (1.1.1)
       oauth2 (~> 0.8.0)
       omniauth (~> 1.0)
-    orm_adapter (0.4.0)
     pagseguro (0.1.13)
     paperclip (2.7.5)
       activerecord (>= 2.3.0)
@@ -453,7 +451,7 @@ DEPENDENCIES
   bson_ext
   bundler (~> 1.2)
   cancan (~> 1.6.7)
-  ckeditor
+  ckeditor (= 3.4.2.pre)
   classy_enum
   compass-rails
   daemons (= 1.0.10)
