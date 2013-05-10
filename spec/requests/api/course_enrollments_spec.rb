@@ -104,8 +104,10 @@ describe Api::CourseEnrollmentsController do
       @enrollment1 = { :email => 'abc@def.gh' }
       @user = Factory(:user)
       @enrollment2 = { :email => @user.email }
-      post "/api/courses/#{course.id}/enrollments", params.merge({:enrollment => @enrollment1})
-      post "/api/courses/#{course.id}/enrollments", params.merge({:enrollment => @enrollment2})
+      post "/api/courses/#{course.id}/enrollments",
+        params.merge({:enrollment => @enrollment1})
+      post "/api/courses/#{course.id}/enrollments",
+        params.merge({:enrollment => @enrollment2})
     end
 
     it "should return code 200 (ok)" do
@@ -125,17 +127,37 @@ describe Api::CourseEnrollmentsController do
     before do
       # Associando @current_user a um novo curso
       @environment2 = Factory(:complete_environment)
-      course.join(user)
-      get "/api/users/#{user.id}/enrollments", params
+      @environment2.courses.first.join(user)
     end
 
     it "should return status 200 (ok)" do
+      get "/api/users/#{user.id}/enrollments", params
       response.code.should == '200'
     end
 
     it "should return the correct enrollments" do
-      get "/api/users/#{user.id}/enrollments", :format => 'json'
+      get "/api/users/#{user.id}/enrollments", params
       parse(response.body).count.should == 2
+    end
+
+    it "should be able to filter by one courses_ids" do
+      filter = { :courses_ids => @environment2.courses.map(&:id) }
+      get "/api/users/#{user.id}/enrollments", params.merge(filter)
+
+      expected = user.course_enrollments.
+        where(:course_id => filter[:courses_ids]).value_of(:id)
+      parse(response.body).map { |c| c["id"] }.should == expected
+    end
+
+    it "should be able to filter by multiple courses_ids" do
+      filter = { :courses_ids => @environment2.courses.map(&:id) }
+      filter[:courses_ids] = environment.courses.first.id
+
+      get "/api/users/#{user.id}/enrollments", params.merge(filter)
+
+      expected = user.course_enrollments.
+        where(:course_id => filter[:courses_ids]).value_of(:id)
+      parse(response.body).map { |c| c["id"] }.should == expected
     end
   end
 
