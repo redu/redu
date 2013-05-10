@@ -73,4 +73,40 @@ module SearchHelper
       items.total_count
     end
   end
+
+  # Retorna um array de hashes com os itens do breadcrumb das páginas da busca.
+  def search_breadcrumb(query)
+    # Busca geral.
+    breadcrumb_mini_item_general = {
+      :name => "Busca",
+      :link => search_path(:q => query),
+      :classes => "icon-magnifier-lightblue_16_18-before" }
+    breadcrumb_mini_item_specific = {}
+
+    environment_search = current_page?(search_environments_path)
+    profile_search = current_page?(search_profiles_path)
+
+    # Busca por ambiente.
+    if environment_search
+      breadcrumb_mini_item_specific = {
+        :name => "Ambientes de Aprendizagem",
+        :link => search_environments_path(:q => query, :f => params[:f]),
+        :classes => "icon-environment-lightblue_16_18-before" }
+
+    # Busca por perfil.
+    elsif profile_search
+      breadcrumb_mini_item_specific = {
+        :name => "Perfil",
+        :link => search_profiles_path(:q => query),
+        :classes => "icon-profile-lightblue_16_18-before" }
+    end
+
+    # Se busca por ambiente ou perfil, esconde a busca geral.
+    if (environment_search || profile_search)
+      breadcrumb_mini_item_general[:classes] += " text-replacement"
+      [breadcrumb_mini_item_general, breadcrumb_mini_item_specific]
+    else
+      [breadcrumb_mini_item_general]
+    end
+  end
 end
