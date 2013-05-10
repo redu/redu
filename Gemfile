@@ -7,9 +7,7 @@ group :assets do
 end
 
 gem 'aasm'
-gem 'actionmailer_inline_css',
-  :git => 'git://github.com/ndbroadbent/actionmailer_inline_css.git',
-  :branch => 'master'
+gem 'premailer-rails'
 gem 'classy_enum'
 gem 'activerecord-import'
 gem 'acts_as_tree', '~> 0.1.1'

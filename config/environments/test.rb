@@ -34,7 +34,7 @@ Redu::Application.configure do
   config.active_support.deprecation = :stderr
 
   # Nome e URL do app
-  config.url = "localhost:3000"
+  config.url = "http://localhost:3000"
 
   config.action_mailer.default_url_options = { :host => config.url }
 

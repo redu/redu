@@ -26,7 +26,7 @@ Redu::Application.configure do
   config.action_dispatch.best_standards_support = :builtin
 
   # Nome e URL do app
-  config.url = "0.0.0.0:3000"
+  config.url = "http://0.0.0.0:3000"
   config.representer.default_url_options = {:host => "127.0.0.1:3000"}
 
   config.action_mailer.default_url_options = { :host => config.url }
