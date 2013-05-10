@@ -172,7 +172,7 @@ GEM
       addressable
     cssmin (1.0.3)
     daemons (1.0.10)
-    dalli (2.6.2)
+    dalli (2.6.3)
     date_validator (0.6.4)
       activemodel (>= 3)
     deep_cloneable (1.5.1)
