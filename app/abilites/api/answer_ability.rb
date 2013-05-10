@@ -2,13 +2,11 @@ module Api
   module AnswerAbility
     extend ActiveSupport::Concern
 
-    module InstanceMethods
-      def answer_abilities(user)
-        if user
-          can :manage, Answer, :user_id => user.id
-          can(:manage, Answer) { |answer| can? :manage, answer.in_response_to }
-          can(:read, Answer) { |answer| can? :read, answer.in_response_to }
-        end
+    def answer_abilities(user)
+      if user
+        can :manage, Answer, :user_id => user.id
+        can(:manage, Answer) { |answer| can? :manage, answer.in_response_to }
+        can(:read, Answer) { |answer| can? :read, answer.in_response_to }
       end
     end
   end

@@ -2,11 +2,9 @@ module Api
   module RepresenterInflector
     extend ActiveSupport::Concern
 
-    module InstanceMethods
-      def representer_for_resource(resource)
-        representer = representer_name(resource)
-        representer.constantize if const_exists? representer
-      end
+    def representer_for_resource(resource)
+      representer = representer_name(resource)
+      representer.constantize if const_exists? representer
     end
 
     def representer_name(resource)
