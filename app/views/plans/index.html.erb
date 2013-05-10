@@ -1,19 +1,55 @@
-<%= render :partial => 'users/home_sidebar' %>
-<div class="main grid_10" style="width: 580px;">
-  <%= render :partial => 'users/breadcrumbs' %>
-  <%= tabs :users, :class => "plan-panel" do %>
-      <table class="concave-admin-table">
-        <thead>
-          <tr class="label-course">
-            <th class="name-course">Curso:</th>
-            <th class="category">Categoria/Plano:</th>
-          </tr>
-        </thead>
-        <tbody>
-          <%= render :partial => 'plans/item', :collection => @plans %>
-        </tbody>
-      </table>
-  <% end %>
+<div class="span3">
+  <%= render :partial => "users/left_sidebar",
+    :locals => { :user => @user } %>
 </div>
-<%= render "invoices/explanation_sidebar", :more_infos => raw("<p>Para saber todas as informações relativas às datas de fatura, especificações dos planos e o seu estado de uso atual, clique no nome do plano relativo a um curso.</p>") %>
+<div class="span10">
+  <div class="content-area">
+    <%= render :partial => "users/breadcrumb_configurations",
+      :locals => { :user => @user } %>
+    <div class="content-body">
+      <div class="content-section">
+        <%# Cabeçalho %>
+        <ul class="header-breadcrumb">
+          <li class="header-breadcrumb-item">
+            <%= link_to "Configurações", edit_user_path(@user),
+              :class => "header-breadcrumb-link icon-manage-gray_32_34-before",
+              :title => "Configurações" %>
+          </li>
+          <li class="header-breadcrumb-item">
+            <%= link_to "Planos", user_plans_path(@user),
+              :class => "header-breadcrumb-link",
+              :title => "Planos" %>
+          </li>
+        </ul>
+      </div>
+      <%# Abas e sub-abas %>
+      <%= new_tabs(:new_users) %>
+      <% unless @user.plans.current.empty? %>
+        <div class="content-section">
+          <table class="table-with-borderradius table-with-link">
+            <thead>
+              <tr>
+                <th width="60%">Curso vinculado</th>
+                <th width="40%">Categoria / Situação</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= render :partial => 'plans/item', :collection => @plans %>
+            </tbody>
+          </table>
+        </div>
+      <% else %>
+        <%= render "shared/empty_message", :icon_message => "Nenhum plano",
+          :icon_class => "icon-plans-empty_128_130",
+          :message => "Você ainda não possui plano vinculado a um Curso." %>
+      <% end %>
+    </div>
+    <%= render :partial => "users/breadcrumb_configurations",
+      :locals => { :user => @user } %>
+  </div>
+</div>
+<div class="span3">
+  <%= render :partial => "invoices/explanation_sidebar",
+    :locals => { :more_infos => raw("<p class='legend'>Para saber todas as informações relativas às datas de fatura, especificações dos planos e o seu estado de uso atual, clique no nome do plano relativo a um curso.</p>") } %>
+</div>
 

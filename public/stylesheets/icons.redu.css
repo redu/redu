@@ -540,7 +540,7 @@
 }
 
 .icon-environment-blue_16_18,
-.icon-environment-lightblue_16_18:hover { background-position: -160px 0; }
+.icon-environment-lightblue_16_18:hover { background-position: -160px 0 !important; }
 .icon-environment-blue_16_18-before:before,
 .icon-environment-lightblue_16_18-before:hover:before,
 .subtabs .ui-state-default .icon-environment_16_18-before:hover:before,
@@ -555,7 +555,7 @@
 
 .icon-environment-lightblue_32_34 { background-position: -400px 0px !important;}
 
-/*.icon-environment-lightblue_16_18 { background-position: -80px 0 }*/
+.icon-environment-lightblue_16_18 { background-position: -80px 0 !important; }
 .icon-environment-lightblue_16_18-before:before,
 .subtabs .ui-state-default .icon-environment_16_18-before:before,
 .local-nav .icon-environment_16_18-before:before {
@@ -796,6 +796,24 @@
   width: 16px !important;
   height: 18px !important;
   background: url("../images/new/icons-small.png") -160px -1280px no-repeat;
+}
+
+/* Item de navegação local do tipo canvas. */
+.icon-app_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background-image: url("../images/new/icon-app-lightblue_16_18.png");
+}
+
+/* Hover do item de navegação local do tipo canvas. */
+.icon-app_16_18-before:hover:before {
+  background-image: url("../images/new/icon-app-blue_16_18.png");
+}
+
+/* Item ativo de navegação local do tipo canvas. */
+.local-nav .ui-state-active .icon-app_16_18-before:before {
+  background-image: url("../images/new/icon-app-white_16_18.png");
 }
 
 .icon-file-gray_16_18 { background-position: 0 -1280px !important; }

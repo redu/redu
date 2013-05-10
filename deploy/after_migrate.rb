@@ -1,5 +1,5 @@
 # Atualiza a crontab com os jobs do whenever
-if current_role == "app_master"
+on_app_master do
   run "ey_bundler_binstubs/whenever --write-crontab" \
     " --set 'environment=#{environment}&path=#{release_path}'"
 end

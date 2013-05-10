@@ -7,12 +7,14 @@
   <%= render :partial => 'spaces/header',
     :locals => { :space => @space }%>
 
-  <div class="body clearfix space-canvas">
+  <div class="body clearfix space-canvas space-canvas-header">
     <div class="header clearfix">
       <h4 class="title"><%= @client_application.name %></h4>
       <span class="detail">plataforma de aplicativos</span>
     </div>
-
+  </div>
+  <hr class="list-separator">
+  <div class="body clearfix space-canvas space-canvas-body">
     <div class="iframe-canvas">
     </div>
     <%= lazy_load(:canvas, :jammit => true, :clear => false) do %>

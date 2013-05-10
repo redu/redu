@@ -6,7 +6,7 @@ describe StatusUserAssociation do
 
   xit { should validate_uniqueness_of(:status_id) }
 
-  context "when multiple SOA with the same observer" do
+  context "when multiple SUA with the same observer" do
     before do
       @user1 = Factory(:user)
       @user2 = Factory(:user)

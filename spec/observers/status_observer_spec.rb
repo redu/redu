@@ -3,54 +3,64 @@ require 'spec_helper'
 describe StatusObserver do
   context "after create" do
 
+    def create_activity_after(&block)
+      yield if block_given?
+      ActiveRecord::Observer.with_observers(:status_observer) do
+        activity
+      end
+    end
+
     context "when statusable is user" do
-      before do
-        @owner = Factory(:user)
-        @statusable = Factory(:user)
+      let(:activity) { Factory(:activity, :user => owner, :statusable => statusable) }
+      let(:statusable) { Factory(:user) }
+      let(:owner) { Factory(:user) }
 
-        @owner_contacts = 5.times.inject([]) do |acc, i|
-          u = Factory(:user)
-          u.be_friends_with(@owner)
-          @owner.be_friends_with(u)
-          acc << u
-        end
 
-        @statusable_contacts = 3.times.inject([]) do |acc, i|
-          u = Factory(:user)
-          u.be_friends_with(@statusable)
-          @statusable.be_friends_with(u)
-          acc << u
-        end
-
-        ActiveRecord::Observer.with_observers(:status_observer) do
-          @activity = Factory(:activity,
-                              :user => @owner,
-                              :statusable => @statusable)
-          @associations = @activity.status_user_associations
-        end
-
+      def create_friendship(user1, user2)
+        user1.be_friends_with user2
+        user2.be_friends_with user1
+        user1.friends.reload
+        user2.friends.reload
+        user2
       end
 
-      it "associates the owner" do
-        @owner.status_user_associations.count.should == 1
+      def create_friendships(user1, *users)
+        users.each { |u| create_friendship(user1, u) }
+        users
       end
 
-      it "associates the owner contacts" do
-        contacts = @owner.friends.collect do |u|
-          u.status_user_associations
-        end.flatten
+      context "owner with contacts" do
+        before do
+          create_activity_after do
+            create_friendships(owner, *FactoryGirl.create_list(:user, 5))
+          end
+        end
 
-        @owner.friends.should_not be_empty
-        contacts.should_not be_empty
-        contacts.to_set.should be_subset(@associations.to_set)
+        it "associates the owner" do
+          owner.status_user_associations.count.should == 1
+        end
+
+        it "associates the owner contacts" do
+          owner.friends.reload
+          contacts = owner.friends.map(&:status_user_associations).flatten
+
+          owner.friends.count.should_not == 0
+          contacts.should_not be_empty
+          contacts.to_set.should be_subset(activity.status_user_associations.to_set)
+        end
       end
 
-      it "associates the statusable contacts" do
-        contacts = @activity.statusable.friends.collect do |u|
-          u.status_user_associations
-        end.flatten
+      context "with statusable contacts" do
+        before do
+          create_activity_after do
+            create_friendships(statusable, *FactoryGirl.create_list(:user, 3))
+          end
+        end
 
-        contacts.should_not be_empty
+        it "associates the statusable contacts" do
+          contacts = statusable.friends.map(&:status_user_associations).flatten
+          contacts.should_not be_empty
+        end
       end
     end
 

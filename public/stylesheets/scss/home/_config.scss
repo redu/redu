@@ -128,3 +128,81 @@
   .button-primary +
   .button-danger { margin-right: 10px; }
 }
+
+// Planos
+// ==========================================================================
+
+.plan-status-no-pending { color: $green3 !important; }
+.plan-status-pending { color: $orange3 !important; }
+.plan-status-overdue { color: $red4 !important; }
+.plan-status-closed { color: $black !important; }
+.pag-seguro { padding-top: 20px; }
+.plans-sidebar {
+  p + p { margin-top: 15px; }
+}
+.plans-name {
+  font-weight: bold;
+  color: $gray6;
+}
+.plans-title {
+  color: $gray5;
+  font-weight: 300;
+
+  &.course {
+    color: $gray6;
+    margin-bottom: -5px;
+  }
+  &.teacher {
+    padding-top: 10px;
+  }
+}
+.plan-details {
+  margin-top: 20px;
+
+  li + li { margin-top: 10px; }
+
+  .list-mix-inner { padding: 10px; }
+  .list-mix-header {
+    padding-bottom: 10px;
+    overflow: hidden;
+    line-height: 18px;
+  }
+
+  .plan-name {
+    color: $green3;
+    float: left;
+  }
+
+  .plan-status {
+    display: block;
+    clear: left;
+  }
+
+  .plan-price {
+    color: $gray6;
+    font-weight: 300;
+  }
+
+  .quotas {
+    list-style-type: none;
+    li { padding-left: 43px; }
+    li + li {
+      margin-top: 0;
+      padding-top: 5px;
+    }
+    .plan-quota { color: $black; }
+    .icon {
+      float: left;
+      margin-right: 5px;
+    }
+    .quota-documents { padding-left: 0; }
+  }
+}
+.invoices-table {
+  margin-top: 40px;
+
+  tbody {
+    color: $gray6;
+    td:last-child { text-align: center; }
+  }
+}

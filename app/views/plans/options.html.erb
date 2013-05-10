@@ -1,36 +1,70 @@
-<%= render :partial => 'users/home_sidebar' %>
-<div class="main grid_10" style="width: 580px;">
-  <%= render :partial => 'users/breadcrumbs' %>
-  <%= tabs :users, :class => "plan-panel" do %>
-
-    <div class="panel plan-panel">
-      <div class="call">
-        <% if @plan.billable.is_a? Environment %>
-          <%= content_tag(:h3, @plan.billable.name, :class => "billable") %>
-        <% elsif @plan.billable.is_a? Course %>
-          <%= content_tag(:h3, @plan.billable.environment.name, :class => "environment") %>
-          <%= content_tag(:h3, @plan.billable.name, :class => "billable") %>
-        <% elsif @plan.billable_audit %>
-          <%= content_tag :span, @plan.billable_audit["name"] %>
-        <% end %>
-      </div>
-      <%= link_to "< voltar para detalhes do plano atual", plan_invoices_path(@plan), :class => "back" %>
-      <div class="options-plan">
-        <h1 class="plan-user">Professor</h1>
-        <ul class="plans-list">
-          <% if @plan.name == Plan.from_preset(:free).name %>
-            <%= render "plans/item_medium", :plan_preset => :free, :actual_plan => @plan %>
-          <% end %>
-          <%= render "plans/item_medium", :plan_preset => :professor_lite, :actual_plan => @plan %>
-          <%= render "plans/item_medium", :plan_preset => :professor_standard, :actual_plan => @plan %>
-          <%= render "plans/item_medium", :plan_preset => :professor_plus, :actual_plan => @plan %>
+<div class="span3">
+  <%= render :partial => "users/left_sidebar",
+    :locals => { :user => @user } %>
+</div>
+<div class="span10">
+  <div class="content-area">
+    <%= render :partial => "users/breadcrumb_configurations",
+      :locals => { :user => @user } %>
+    <div class="content-body">
+      <div class="content-section">
+        <%# Cabeçalho %>
+        <ul class="header-breadcrumb">
+          <li class="header-breadcrumb-item">
+            <%= link_to "Configurações", edit_user_path(@user),
+              :class => "header-breadcrumb-link icon-manage-gray_32_34-before",
+              :title => "Configurações" %>
+          </li>
+          <li class="header-breadcrumb-item">
+            <%= link_to "Planos", user_plans_path(@user),
+              :class => "header-breadcrumb-link",
+              :title => "Planos" %>
+          </li>
+          <li class="header-breadcrumb-item">
+            <%= link_to "Detalhes", plan_invoices_path(@plan),
+              :class => "header-breadcrumb-link",
+              :title => "Detalhes de Plano" %>
+          </li>
+          <li class="header-breadcrumb-item">
+            <%= link_to "Upgrade", options_plan_path(@plan),
+              :class => "header-breadcrumb-link",
+              :title => "Upgrade" %>
+          </li>
         </ul>
-        <span class="plan-user">Instituição de Ensino ou Empresa</span>
-        <p class="plan-user-call">Você é uma instituição de Ensino ou Empresa e deseja mudar a categoria do seu atual plano? Explique suas necessidades para a nossa parceria</p>
-        <%= render 'partners/partner_contacts/new', :environment => nil, :migration => true, :billable_url => @billable_url %>
-        <%= link_to "< voltar para detalhes do plano atual", plan_invoices_path(@plan), :class => "back bottom" %>
+      </div>
+      <%# Abas e sub-abas %>
+      <%= new_tabs(:new_users) %>
+      <div class="content-section">
+        <%= render "plans/plans_title", :plan => @plan %>
+        <h5 class="plans-title teacher">Planos para Professor</h5>
+        <ul class="list-mix plan-details">
+          <% if @plan.name == Plan.from_preset(:free).name %>
+            <%= render :partial => "plans/item_medium",
+              :locals => { :plan_preset => :free, :actual_plan => @plan } %>
+          <% end %>
+          <%= render :partial => "plans/item_medium",
+            :locals => { :plan_preset => :professor_lite, :actual_plan => @plan } %>
+          <%= render :partial => "plans/item_medium",
+            :locals => { :plan_preset => :professor_standard, :actual_plan => @plan } %>
+          <%= render :partial => "plans/item_medium",
+            :locals => { :plan_preset => :professor_plus, :actual_plan => @plan } %>
+        </ul>
+      </div>
+      <hr class="list-separator">
+      <div class="content-section">
+        <h5 class="plans-title">Planos para Instituição de Ensino ou Empresa</h5>
+        <span class="legend">Você é uma Instituição de Ensino ou Empresa? Entre em contato com a nossa parceira CNS e explique as suas necessidades.</span>
+        <%= render :partial => "partners/partner_contacts/new",
+          :locals => { :environment => nil, :migration => true, :billable_url => @billable_url } %>
+      </div>
+      <div class="content-section clearfix">
+        <%= link_to "< voltar para detalhes do plano atual", plan_invoices_path(@plan), :class => "legend pull-right" %>
       </div>
     </div>
-  <% end %>
+    <%= render :partial => "users/breadcrumb_configurations",
+      :locals => { :user => @user } %>
+  </div>
 </div>
-<%= render "plans/explanation_sidebar" %>
+<div class="span3">
+  <%= render :partial => "plans/explanation_sidebar" %>
+</div>

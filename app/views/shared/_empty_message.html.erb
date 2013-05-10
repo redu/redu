@@ -1,0 +1,16 @@
+<%#
+  Mensagem de vazio.
+
+  Variáveis:
+    icon_message: mensagem a ser exibida no hover do ícone.
+    icon_class: classe do ícone a ser usado.
+    message: mensagem exibida abaixo do ícone.
+%>
+
+<div class="empty-message">
+  <%= content_tag :span, icon_message, :title => icon_message,
+    :class => "empty-message-icon text-replacement #{icon_class}" %>
+  <% if local_assigns.has_key? :message %>
+    <%= content_tag :p, message, :class => "empty-message-content" %>
+  <% end %>
+</div>

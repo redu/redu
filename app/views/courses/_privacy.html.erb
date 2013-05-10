@@ -1,7 +1,7 @@
 <% unless course.subscription_type == 1 %>
   <% if can?(:manage, course) %>
     <% if course.user_course_associations.waiting.exists? %>
-      <span class="privacy icon-small icon-privacy-orange_16_18 replacement">Curso fechado, existem alunos na fila de moderação.</span>
+      <span class="privacy icon-privacy-green_16_18 replacement">Curso fechado, existem alunos na fila de moderação.</span>
     <% else %>
       <span class="privacy icon-small icon-privacy-gray_16_18 replacement">Curso fechado, não existem alunos na fila de moderação.</span>
     <% end %>

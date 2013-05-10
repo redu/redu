@@ -1,6 +1,8 @@
-Factory.define :lecture do |l|
-  l.sequence(:name) { |n| "Item #{n}" }
-  l.association :lectureable, :factory => :page
-  l.association :owner, :factory => :user
-  l.association :subject
+FactoryGirl.define do
+  factory :lecture do
+    sequence(:name) { |n| "Item #{n}" }
+    association :lectureable, :factory => :page
+    association :owner, :factory => :user
+    association :subject
+  end
 end

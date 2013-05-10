@@ -753,12 +753,6 @@ ul, ol {
   margin-right: 45px;
 }
 
-.body.preview .notice .join-button {
-  margin-top: 40px;
-  margin-left: 100px;
-  font-size: 20px;
-}
-
 .icons-big-before:before {
   background-image: url("../images/new/icons-big.png");
   background-repeat: no-repeat;
@@ -792,4 +786,49 @@ ul, ol {
 
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
+}
+
+/* Novo design do botão de matricular-se no curso. */
+
+.icon-privacy-lightred_58_62 {
+  background-image: url("../images/new/icon-privacy-lightred_58_62.png");
+  width: 58px;
+  height: 62px;
+  display: inline-block;
+}
+
+.course-preview-wrapper { text-align: center; }
+
+.course-preview-message {
+  width: 435px;
+  margin-left: auto;
+  margin-right: auto;
+  color: rgb(179, 179, 179);
+}
+
+.course-preview-icon +
+.course-preview-message,
+.course-preview-message +
+.course-preview-button { margin-top: 10px; }
+
+#concave-breadcrumbs +
+.course-preview-button {
+  margin: 20px 20px 0 0;
+  float: right;
+}
+
+/* Ícone de membros usado na aba. */
+.icon-members-gray_32_34-before:before {
+  content: "";
+  width: 32px!important;
+  height: 34px!important;
+  background: url("../images/new/icons-small.png") -320px -480px no-repeat;
+}
+
+/* Separador ">" do breadcrumb. */
+.icon-expand-gray_16_18-before:before {
+  content: "";
+  width: 16px!important;
+  height: 18px!important;
+  background: url("../images/new/icons-small.png") -560px -800px no-repeat;
 }

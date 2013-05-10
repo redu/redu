@@ -10,19 +10,19 @@
         <ul class="header-breadcrumb">
           <li class="header-breadcrumb-item">
             <%= link_to "Mensagens", user_messages_path(@user),
-              :class => "header-bradcrumb-link icon-message-gray_32_34-before",
+              :class => "header-breadcrumb-link icon-message-gray_32_34-before",
               :title => "Mensagens" %>
           </li>
           <li class="header-breadcrumb-item">
             <% if defined? @total_received_messages %>
             <%= link_to user_messages_path(@user),
-              :class => "header-bradcrumb-link",
+              :class => "header-breadcrumb-link",
               :title => "Recebidas" do %>
               Recebidas <%= content_tag(:span, parentize(@total_received_messages), :class => "header-breadcrumb-item-light") %>
             <% end %>
           <% else %>
             <%= link_to index_sent_user_messages_path(@user),
-              :class => "header-bradcrumb-link",
+              :class => "header-breadcrumb-link",
               :title => "Recebidas" do %>
               Enviadas <%= content_tag(:span, parentize(@total_sent_messages), :class => "header-breadcrumb-item-light") %>
             <% end %>

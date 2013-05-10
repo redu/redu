@@ -11,9 +11,9 @@ module SpacesNavigation
     sidebar.item :files, 'Arquivos de Apoio', space_folders_path(@space),
       :link => { :class => 'icon-file_16_18-before' }
     @space.canvas.each do |canvas|
-      sidebar.item :canvas, canvas.current_name,
+      sidebar.item :canvas, render_local_nav_canvas(canvas),
         space_canvas_path(@space, canvas),
-        :link => { :class => 'icon-file_16_18-before' }
+        :link => { :class => 'icon-app_16_18-before local-nav-item-canvas-icon' }
     end
     sidebar.item :members, "Membros: #{@space.users.count}",
       space_users_path(@space), :class => 'big-separator',

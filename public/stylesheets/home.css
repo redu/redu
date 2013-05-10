@@ -335,29 +335,6 @@ body {
   position: absolute;
 }
 
-.list-separator +
-.empty-environment {
-  margin-top: 100px;
-}
-
-.empty-environment {
-  text-align: center;
-}
-
-.empty-environment-icon {
-  display: block;
-  margin: 0 auto;
-}
-
-.empty-environment-icon +
-.empty-environment-content {
-  margin-top: 10px;
-}
-
-.empty-environment-content {
-  color: #b3b3b3;
-}
-
 .list-environment-course-space {
   padding: 0;
 }
@@ -610,50 +587,113 @@ input[type="hidden"] +
   margin-right: 10px;
 }
 
-ul.requisitions {
-  margin: 0;
-  overflow: visible;
+.plan-status-no-pending {
+  color: #5fc080 !important;
 }
-ul.requisitions li {
-  list-style: none;
-  width: 100%;
-  margin-bottom: 0;
+
+.plan-status-pending {
+  color: #ffa935 !important;
 }
-ul.requisitions li:before {
-  margin: 0;
+
+.plan-status-overdue {
+  color: #e1272d !important;
 }
-ul.requisitions .list-mix-inner {
-  padding: 10px;
-  margin-right: 0;
+
+.plan-status-closed {
+  color: black !important;
 }
-ul.requisitions .list-mix-inner .details {
-  margin-left: 10px;
-  float: left;
-  width: 476px;
+
+.pag-seguro {
+  padding-top: 20px;
 }
-ul.requisitions .list-mix-inner .avatar {
-  float: left;
+
+.plans-sidebar p + p {
+  margin-top: 15px;
 }
-ul.requisitions .list-mix-inner span {
+
+.plans-name {
+  font-weight: bold;
   color: #6d6e6f;
 }
-ul.requisitions .list-mix-inner span.waiting {
-  float: right;
-  margin-left: 10px;
-  margin-top: 7px;
+
+.plans-title {
+  color: #b3b3b3;
+  font-weight: 300;
 }
-ul.requisitions .actions {
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  clear: both;
-  float: right;
+.plans-title.course {
+  color: #6d6e6f;
+  margin-bottom: -5px;
 }
-ul.requisitions .actions form {
+.plans-title.teacher {
+  padding-top: 10px;
+}
+
+.plan-details {
+  margin-top: 20px;
+}
+.plan-details li + li {
+  margin-top: 10px;
+}
+.plan-details .list-mix-inner {
+  padding: 10px;
+}
+.plan-details .list-mix-header {
+  padding-bottom: 10px;
   overflow: hidden;
+  line-height: 18px;
+}
+.plan-details .plan-name {
+  color: #5fc080;
   float: left;
 }
-ul.requisitions .actions input:last-child {
+.plan-details .plan-status {
+  display: block;
+  clear: left;
+}
+.plan-details .plan-price {
+  color: #6d6e6f;
+  font-weight: 300;
+}
+.plan-details .quotas {
+  list-style-type: none;
+}
+.plan-details .quotas li {
+  padding-left: 43px;
+}
+.plan-details .quotas li + li {
+  margin-top: 0;
+  padding-top: 5px;
+}
+.plan-details .quotas .plan-quota {
+  color: black;
+}
+.plan-details .quotas .icon {
+  float: left;
+  margin-right: 5px;
+}
+.plan-details .quotas .quota-documents {
+  padding-left: 0;
+}
+
+.invoices-table {
+  margin-top: 40px;
+}
+.invoices-table tbody {
+  color: #6d6e6f;
+}
+.invoices-table tbody td:last-child {
+  text-align: center;
+}
+
+.requisitions {
+  margin: 0;
+  list-style-type: none;
+  color: #6d6e6f;
+}
+.requisitions .list-mix-inner {
+  padding-right: 10px;
+}
+.requisitions .button-success {
   margin-left: 5px;
 }
 

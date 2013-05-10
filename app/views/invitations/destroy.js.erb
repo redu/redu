@@ -12,7 +12,7 @@ $removedInvitation.slideUp(150, "swing", function() {
   <%# Mostra mensagem de nenhum convite. %>
   } else {
     var $sentInvitationsArea = $(".sent-invitations-section");
-    var $emptyInvitations = $('<%= escape_javascript render :partial => "friendships/empty_invitations" %>');
+    var $emptyInvitations = $('<%= escape_javascript render "shared/empty_message", :icon_message => "Nenhum convite enviado", :icon_class => "icon-invite-empty_128_130" %>');
     $sentInvitationsArea.html($emptyInvitations);
   }
 

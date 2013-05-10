@@ -8,7 +8,9 @@ describe User do
     it { should have_many attr }
     end
 
-  it { should have_many(:enrollments).dependent :destroy}
+  # Subject
+  it { should have_many(:enrollments).dependent(:destroy) }
+  it { should have_many(:asset_reports).through(:enrollments) }
 
   it { should have_one(:settings).dependent(:destroy) }
 
@@ -785,7 +787,7 @@ describe User do
 
     subject_entity = Factory(:subject, :owner => subject,
                              :space => space, :finalized => true)
-    subject_entity.create_enrollment_associations
+    subject_entity.enroll
     subject.get_association_with(subject_entity).
       should == subject.enrollments.last
 

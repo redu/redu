@@ -121,15 +121,18 @@ describe FriendshipsController do
 
 
   context 'When resend invitation email' do
+    let(:friend) { @friends[0] }
+    let(:friendship_request) { @user.friendship_for(friend) }
     before do
-      controller.process_invites({'emails' => 'example1@email.com', 'friend_id' => @friends[0].id}, @user)
-      @friendship_request = @user.friendships.requested.first
-      @params = {:locale => "pt-BR", :id => @friendship_request.id, :user_id => @user.login, :format => 'js'}
-      post :resend_email, @params
+      controller.process_invites({'emails' => 'example1@email.com',
+                                  'friend_id' => friend.id }, @user)
+      @params = { :locale => "pt-BR", :id => friendship_request.id,
+                  :user_id => @user.login }
+      xhr :post, :resend_email, @params
     end
 
     it 'assigns invitation_id' do
-      assigns(:invitation_id).should == "friendship-request-for-#{@friendship_request.friend.id}"
+      assigns(:invitation_id).should == "friendship-request-for-#{friend.id}"
     end
 
     it 'render js template' do

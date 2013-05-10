@@ -50,10 +50,10 @@ class LecturesController < BaseController
 
     @can_manage_lecture = can?(:manage, @lecture)
 
-    if current_user.get_association_with(@lecture.subject)
+    if enrollment = current_user.get_association_with(@lecture.subject)
       asset_report = @lecture.asset_reports.of_user(current_user).first
-      @student_grade = asset_report.enrollment.grade.to_i
-      @done = asset_report.done
+      @student_grade = enrollment.grade.to_i
+      @done = asset_report.try(:done)
     end
 
     respond_to do |format|
@@ -148,6 +148,8 @@ class LecturesController < BaseController
       end
     end
 
+    @lecture.create_asset_report if @lecture.finalized?
+
     @quota = @course.quota || @course.environment.quota
     @plan = @course.plan || @course.environment.plan
 
@@ -211,8 +213,8 @@ class LecturesController < BaseController
 
     student_profile = current_user.enrollments.
       where(:subject_id => @subject).last
-
-    @student_grade = student_profile.update_grade!.to_i
+    student_profile.update_grade!
+    @student_grade = student_profile.reload.grade.to_i
 
    respond_to do |format|
      format.js

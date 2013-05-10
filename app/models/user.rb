@@ -21,7 +21,10 @@ class User < ActiveRecord::Base
   after_create  :update_last_login
   before_validation :strip_whitespace
   after_commit :on => :create do
-    UserNotifier.delay(:queue => 'email').user_signedup(self.id)
+    UserNotifier.delay(:queue => 'email', :priority => 1).user_signedup(self.id)
+
+    environment = Environment.find_by_path('ava-redu')
+    environment.courses.each { |c| c.join(self) } if environment
   end
 
   # ASSOCIATIONS
@@ -55,6 +58,7 @@ class User < ActiveRecord::Base
   has_many :favorites, :order => "created_at desc", :dependent => :destroy
   classy_enum_attr :role, :default => 'member'
   has_many :enrollments, :dependent => :destroy
+  has_many :asset_reports, :through => :enrollments
 
   #subject
   has_many :subjects, :order => 'name ASC',

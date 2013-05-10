@@ -18,7 +18,6 @@
         :title => item_medium_new.display_name, :class => "link-name text-truncate" %>
       <% experiences = current_experiences(item_medium_new) %>
       <span class="legend text-truncate" title="<%= experiences %>"><%= experiences %></span>
-      <span class="legend"><%= pluralize(mutual_friends(item_medium_new).length, "contato") %> em comum</span>
     </div>
   </div>
 </li>

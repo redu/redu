@@ -42,12 +42,13 @@ class PlansController < BaseController
     @plans = @user.plans.current.includes(:billable)
 
     respond_to do |format|
-      format.html
+      format.html { render :layout => 'new_application' }
     end
   end
 
   def options
     authorize! :migrate, @plan
+    @user = @plan.user
 
     if params[:client_id]
       @client = @partner.partner_environment_associations.find(params[:client_id])
@@ -64,7 +65,7 @@ class PlansController < BaseController
       if @client
         format.html { render "partner_environment_associations/plans/options" }
       else
-        format.html
+        format.html { render :layout => 'new_application' }
       end
     end
   end

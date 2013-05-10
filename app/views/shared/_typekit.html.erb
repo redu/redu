@@ -1,6 +1,15 @@
+<%#
+  Inclui o Typekit.
+
+  Variáveis:
+    badge_position: a posição da badge (valor default: "left")
+%>
+
+<% badge_position = "left" unless local_assigns.has_key? :badge_position %>
+
 <%= lazy_load("http://use.typekit.com/lpo4rgu.js", :jammit => false) do %>
   try{
     Typekit.load();
-    $(".typekit-badge").css("left", "0")
+    $(".typekit-badge").css("<%= badge_position %>", "0")
   }catch(e){}
 <% end %>

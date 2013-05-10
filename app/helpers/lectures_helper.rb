@@ -33,4 +33,28 @@ module LecturesHelper
 
     result.html_safe
   end
+
+  def mark_lecture_icon(done)
+    if done
+      "icon-class-green_16_18-before"
+    else
+      "icon-class-gray_16_18-before"
+    end
+  end
+
+  def disable_label_if(disable)
+    "disabled" if disable
+  end
+
+  def add_tiptip_if_disabled(disable, &block)
+    body = capture(&block)
+
+    if disable
+      content_tag(:span, body, :class => "tiptip", :title => "Estamos" \
+                  " processando esta aula, por favor, aguarde. Em instantes" \
+                  " você poderá finalizá-la.")
+    else
+      body
+    end
+  end
 end

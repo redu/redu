@@ -1,7 +1,9 @@
 <% content_for(:container_class) { "container-fluid" } %>
 <% content_for(:nav_global, "&nbsp;".html_safe) %>
+<% content_for(:outdated_browser, "&nbsp;".html_safe) %>
 <% content_for(:chat_script, "&nbsp;".html_safe) %>
 <% content_for(:olark_script, "&nbsp;".html_safe) %>
+<% content_for(:footer, "&nbsp;".html_safe) %>
 
 <div class="content-area authorize-app">
   <%= render :partial => "oauth_clients/breadcrumb", :locals => { :user => @user } %>
@@ -10,10 +12,10 @@
       <ul class="header-breadcrumb">
         <li class="header-breadcrumb-item">
           <%= link_to "Aplicativos", user_oauth_clients_path(@user),
-            :class => "header-bradcrumb-link icon-app-gray_32_34-before", :title => "Seus aplicativos" %>
+            :class => "header-breadcrumb-link icon-app-gray_32_34-before", :title => "Seus aplicativos" %>
         </li>
         <li class="header-breadcrumb-item">
-          <%= link_to "Autorização", "#", :class => "header-bradcrumb-link", :title => "Meus Aplicativos" %>
+          <%= link_to "Autorização", "#", :class => "header-breadcrumb-link", :title => "Meus Aplicativos" %>
         </li>
       </ul>
     </div>

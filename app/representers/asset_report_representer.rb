@@ -15,7 +15,7 @@ module AssetReportRepresenter
   end
 
   link :user do
-    api_user_path(self.enrollment.user)
+    api_user_url(self.enrollment.user)
   end
 
   link :lecture do

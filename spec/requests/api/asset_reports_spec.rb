@@ -61,36 +61,61 @@ describe "AssetReports API" do
     end
   end
 
-  context "when GET /lectures/:lecture_id/progress" do
-    let(:user) { user_joined_on_course(course, Role[:teacher]) }
-
-    it_should_behave_like "asset reports listing" do
-      let(:context) { Factory(:lecture, :subject => subj, :owner => user) }
-      let!(:asset_reports) do
-        # Criação de AssetReport através do join, pois os callbacks
-        # dificultam o teste
-        (1..3).each { course.join! Factory(:user) }
-        context.asset_reports
-      end
-      let(:filter_params) do
-        asset_reports[0..1].collect { |a| a.enrollment.user_id }
-      end
+  context "when listing asset reports" do
+    let!(:other_users) do
+      (1..2).map { user_joined_on_course(course, Role[:member]) }
     end
-  end
+    let(:asset_reports) { context.asset_reports }
 
-  context "when GET /subjects/:subject_id/progress" do
-    let(:user) { user_joined_on_course(course, Role[:teacher]) }
+    context "when GET /lectures/:lecture_id/progress" do
+      let(:user) { user_joined_on_course(course, Role[:teacher]) }
+      let(:context) { Factory(:lecture, :subject => subj, :owner => user) }
 
-    it_should_behave_like "asset reports listing" do
+
+      it_should_behave_like "asset reports listing without filter"
+      it_should_behave_like "asset reports listing with filter user_id"
+    end
+
+    context "when GET /subjects/:subject_id/progress" do
+      let(:user) { user_joined_on_course(course, Role[:teacher]) }
       let(:context) { subj }
-      let!(:asset_reports) do
-        # Criação de AssetReport através do join, pois os callbacks
-        # dificultam o teste
-        (1..3).each { course.join! Factory(:user) }
-        context.asset_reports
+
+      it_should_behave_like "asset reports listing without filter"
+      it_should_behave_like "asset reports listing with filter user_id"
+    end
+
+    context "when GET /users/:user_id/progress" do
+      let(:user) { user_joined_on_course(course, Role[:member]) }
+      let(:context) { user }
+
+      it_should_behave_like "asset reports listing without filter"
+
+      it_should_behave_like "user asset reports listing with filter" do
+        let(:lectures_ids) { subj.lectures[0..1].map(&:id) }
+
+        let(:filtered_asset_reports) do
+          asset_reports.select { |a| lectures_ids.include? a.lecture_id }
+        end
+        let(:params_with_filter) { params.merge(:lectures_ids => lectures_ids) }
       end
-      let(:filter_params) do
-        asset_reports[0..1].collect { |a| a.enrollment.user_id }
+
+      context "with many subjects" do
+        let(:subjects) { FactoryGirl.create_list(:complete_subject, 2) }
+
+        before do
+          subjects.each { |s| s.enroll user }
+        end
+
+        it_should_behave_like "user asset reports listing with filter" do
+          let(:subjects_ids) { subjects[0..1].map(&:id) }
+
+          let(:filtered_asset_reports) do
+            asset_reports.select { |a| subjects_ids.include? a.subject_id }
+          end
+          let(:params_with_filter) do
+            params.merge(:subjects_ids => subjects_ids)
+          end
+        end
       end
     end
   end

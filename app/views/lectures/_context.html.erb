@@ -14,9 +14,12 @@
         <% else %>
           <%= hidden_field_tag 'done', '1' %>
         <% end %>
-        <%= check_box_tag '', nil, done,
-          { :onclick => "$('#do_lecture').submit()" } %>
-        <%= label_tag 'Aula finalizada?', nil, :class => ( done ? "icon-class-green_16_18-before" : "icon-class-gray_16_18-before") %>
+        <% disabled = done.nil? %>
+        <%= add_tiptip_if_disabled(disabled) do %>
+          <%= check_box_tag '', nil, done, :id => 'mark-as-done', :onclick => "$('#do_lecture').submit()", :disabled => done.nil?  %>
+          <%= label_tag 'Aula finalizada?', nil, :for => 'mark-as-done',
+            :class => "#{mark_lecture_icon(done)} #{disable_label_if(disabled)}" %>
+        <% end %>
       <% end %>
     <% end %>
   <% end %>

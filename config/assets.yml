@@ -11,6 +11,12 @@ s3_upload_files:
   - public/stylesheets/**
 
 javascripts:
+  lazyload: &lazyload
+    - public/javascripts/lazyload.js
+    - public/javascripts/asyncjs.jquery.js
+  webview:
+    - public/javascripts/vendor/jquery.js
+    - *lazyload
   invite_friend:
     - public/javascripts/jquery.tokeninput-invite-friend.js
     - public/javascripts/friend-invitation.js
@@ -27,8 +33,7 @@ javascripts:
     - public/javascripts/mobile-login.js
   new_application:
     - *bootstrap
-    - public/javascripts/lazyload.js
-    - public/javascripts/asyncjs.jquery.js
+    - *lazyload
     - public/javascripts/form.redu.jquery.js
     - public/javascripts/jquery.tokeninput-instant-search.js
     - public/javascripts/swfobject.js # Necessário ao browserdetection.js
@@ -49,8 +54,7 @@ javascripts:
     - public/javascripts/search.js
   basic:
     - *bootstrap
-    - public/javascripts/lazyload.js
-    - public/javascripts/asyncjs.jquery.js
+    - *lazyload
     - public/javascripts/vendor/bootstrap-scrollspy.js
     - public/javascripts/swfobject.js # Necessário ao browserdetection.js
     - public/javascripts/browserdetection.js
@@ -67,14 +71,13 @@ javascripts:
     - public/javascripts/swfobject.js
     - public/javascripts/jquery.iframe-transport.js
     - public/javascripts/jquery.remotipart.js
-    - public/javascripts/lazyload.js
+    - *lazyload
     - public/javascripts/jquery.fcbkcomplete.min.js
     - public/javascripts/jquery.tokeninput-instant-search.js
     - public/javascripts/jquery.tokeninput.js
     - public/javascripts/jquery.filestyle.mini.js
     - public/javascripts/jquery.placeholder.js
     - public/javascripts/form.redu.jquery.js
-    - public/javascripts/asyncjs.jquery.js
     - public/javascripts/users.js
     - public/javascripts/jquery.cookie.js
     - public/javascripts/ytpreview.jquery.js
@@ -124,8 +127,7 @@ javascripts:
   clean:
     - public/javascripts/rails.js
     - public/javascripts/modernizr.js
-    - public/javascripts/lazyload.js
-    - public/javascripts/asyncjs.jquery.js
+    - *lazyload
     - public/javascripts/jquery.noisy.js
     - public/javascripts/jquery.placeholder.js
     - public/javascripts/form.redu.jquery.js
@@ -141,17 +143,18 @@ javascripts:
     - public/javascripts/olark.js
 
 stylesheets:
+  wall_old:
+    - public/stylesheets/icons.redu.css
   mobile:
     - public/stylesheets/mobile.css
   new_application:
-    - public/stylesheets/icons.redu.css
     - public/stylesheets/utils.css
     - public/stylesheets/home.css
     - public/stylesheets/search.css
-    - public/stylesheets/wall.css
     - public/stylesheets/fb_style.css
     - public/stylesheets/outdated-browser-new.css
     - public/stylesheets/token-input.css
+    - public/stylesheets/wall.css
   basic:
     - public/stylesheets/landing-new.css
     - public/stylesheets/outdated-browser-new.css

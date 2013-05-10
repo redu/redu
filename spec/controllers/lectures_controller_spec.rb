@@ -110,6 +110,23 @@ describe LecturesController do
       @enrolled_user.enrollments.first.grade.should == 33.3333
     end
 
+    it "should assign student_grade" do
+      post :done, :locale => "pt-BR", :id => @lectures[0].id,
+        :subject_id => @subject.id, :space_id => @space.id, :done => "1"
+      assigns[:student_grade].should_not be_nil
+    end
+
+    it "should reload the enrollment (student_profile)" do
+      enrollment = mock_model(Enrollment)
+      @enrolled_user.enrollments.stub(:where).and_return([enrollment])
+      enrollment.stub(:update_grade!)
+
+      enrollment.should_receive(:reload).and_return(enrollment)
+
+      post :done, :locale => "pt-BR", :id => @lectures[0].id,
+        :subject_id => @subject.id, :space_id => @space.id, :done => "1"
+    end
+
     context 'when html request' do
       it "redirects to lecture show" do
         post :done, :locale => "pt-BR", :id => @lectures[0].id,
@@ -163,28 +180,9 @@ describe LecturesController do
                                             } } })
       end
 
-      it "creates a lecture" do
-        expect {
-          post :create, @post_params
-        }.to change(Lecture, :count).by(1)
-      end
-
-      it "creates a lectureable (Page)" do
-        expect {
-          post :create, @post_params
-        }.to change(Page, :count).by(1)
-      end
-
-      it "associates a lectureable (Page) to a lecture" do
-        post :create, @post_params
-        lecture = Lecture.last
-        lectureable = Page.last
-        # Para garantir que não é uma Lecture criada anteriormente
-        lecture.name.should == @post_params[:lecture][:name]
-        lectureable.body.should ==
-          @post_params[:lecture][:lectureable_attributes][:body]
-
-        Lecture.last.lectureable.should == Page.last
+      it_should_behave_like 'created lecture' do
+        let(:lectureable_class) { Page }
+        let(:create_params) { @post_params }
       end
     end
 
@@ -235,22 +233,9 @@ describe LecturesController do
                          :questions_attributes => @questions }})
       end
 
-      it "creates the lecture" do
-        expect {
-          post :create, @params
-        }.to change(Lecture, :count).by(1)
-      end
-
-      it "creates the Exercise" do
-        expect {
-          post :create, @params
-        }.to change(Exercise, :count).by(1)
-      end
-
-      it "associates the Exercise to the Lecture" do
-        post :create, @params
-        assigns[:lecture].should_not be_nil
-        assigns[:lecture].lectureable.should_not be_nil
+      it_should_behave_like 'created lecture' do
+        let(:lectureable_class) { Exercise }
+        let(:create_params) { @params }
       end
     end
 

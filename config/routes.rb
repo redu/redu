@@ -331,6 +331,7 @@ Redu::Application.routes.draw do
       resources :chats, :only => :index
       resources :friendships, :path => :connections,
         :as => 'connections', :only => [:index, :create]
+      resources :asset_reports, :path => "progress", :only => [:index]
     end
 
     match 'me' => 'users#show'

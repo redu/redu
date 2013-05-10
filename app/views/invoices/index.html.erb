@@ -1,82 +1,119 @@
-<script type="text/javascript">
-  jQuery(function(){
-    $(".pagseguro-concave-form input[type=submit]").addClass("concave-important");
-  });
-</script>
-<%= render :partial => 'users/home_sidebar' %>
-<div class="main grid_10" style="width: 580px;">
-  <%= render :partial => 'users/breadcrumbs' %>
-  <div id="invoice-index">
-    <%= tabs :users, :class => "plan-panel" do %>
-    <div class="call">
-      <% if @plan.billable.is_a? Environment %>
-        <%= content_tag(:h3, @plan.billable.name, :class => "billable") %>
-      <% elsif @plan.billable.is_a? Course %>
-        <%= content_tag(:h3, @plan.billable.environment.name, :class => "environment") %>
-        <%= content_tag(:h3, @plan.billable.name, :class => "billable") %>
-      <% elsif @plan.billable_audit %>
-        <%= content_tag :span, @plan.billable_audit["name"] %>
-      <% end %>
-    </div>
-    <% if can? :migrate, @plan %>
-      <%= link_to "Upgrade", options_plan_path(@plan), :class => "concave-important upgrade-button" %>
-    <% end %>
-    <% if @quota %>
-      <div class="plan-use">
-        <span class="plan-type"><%= @plan.name %></span>
-        <%= render :partial => "invoices/quotas",
-          :locals => { :quota_file => @plan.billable.percentage_quota_file,
-                       :plan => @plan,
-                       :quota_multimedia => @plan.billable.percentage_quota_multimedia,
-                       :quota_members => @plan.billable.percentage_quota_members,
-                       :quota => @quota } %>
+<div class="span3">
+  <%= render :partial => "users/left_sidebar",
+    :locals => { :user => @user } %>
+</div>
+<div class="span10">
+  <div class="content-area">
+    <%= render :partial => "users/breadcrumb_configurations",
+      :locals => { :user => @user } %>
+    <div class="content-body">
+      <div class="content-section">
+        <%# Cabeçalho %>
+        <ul class="header-breadcrumb">
+          <li class="header-breadcrumb-item">
+            <%= link_to "Configurações", edit_user_path(@user),
+              :class => "header-breadcrumb-link icon-manage-gray_32_34-before",
+              :title => "Configurações" %>
+          </li>
+          <li class="header-breadcrumb-item">
+            <%= link_to "Planos", user_plans_path(@user),
+              :class => "header-breadcrumb-link",
+              :title => "Planos" %>
+          </li>
+          <li class="header-breadcrumb-item">
+            <%= link_to "Detalhes", plan_invoices_path(@plan),
+              :class => "header-breadcrumb-link",
+              :title => "Detalhes de Plano" %>
+          </li>
+        </ul>
       </div>
-    <% end %>
-    <table class="common spaced">
-      <thead>
-        <tr>
-          <th style="width: 20%">Fatura:</th>
-          <th style="width: 22%">Data:</th>
-          <th style="width: 20%">Estado:</th>
-          <th style="width: 20%">Valor:</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody class="payments">
-        <% @invoices.each do |invoice| %>
-          <tr class="data">
-            <td class="number"><%= invoice.id.to_s.rjust(10, "0") %></td>
-            <td>
-              <span class="date">
-                <%= content_tag(:span, "#{l invoice.period_start} a", :class => "start") %>
-                <%= content_tag(:span, (l invoice.period_end), :class => "done") %>
-              </span>
-            </td>
-            <td>
-              <span class="state <%= invoice.state %>">
-                <%= Invoice.human_attribute_name(invoice.state)%>
-              </span>
-            </td>
-            <td>
-              <span class="value">
-                <%= number_to_currency(invoice.total) %>
-              </span>
-            </td>
-            <td class="pay-status">
-              <% if can? :pay_with_pagseguro, invoice %>
-                <div class="pagseguro-concave-form">
-                  <%= pagseguro_form invoice.plan.create_order, :submit => "Pagar" %>
+      <%# Abas e sub-abas %>
+      <%= new_tabs(:new_users) %>
+      <div class="content-section">
+        <%= render "plans/plans_title", :plan => @plan %>
+
+        <ul class="list-mix plan-details">
+          <li>
+            <div class="list-mix-item">
+              <div class="list-mix-inner">
+                <div class="list-mix-header">
+                  <%= content_tag :span, @plan.name, :class => "plan-name #{plan_payment_status_class(@plan)}" %>
+                  <% if can? :migrate, @plan %>
+                    <%= link_to "Upgrade", options_plan_path(@plan), :class => "button-success pull-right" %>
+                  <% end %>
+                  <% if @plan.pending_payment? %>
+                    <% if @plan.invoice.overdue? %>
+                      <span class="plan-status legend">Fatura em aberto, plano bloqueado</span>
+                    <% else %>
+                      <%= content_tag(:span, "Fatura em aberto. #{@plan.invoice.threshold_date - Date.today} dias restantes.", :class => "plan-status legend") %>
+                    <% end %>
+                  <% else %>
+                    <span class="plan-status legend">Sem pendências</span>
+                  <% end %>
                 </div>
-              <% elsif invoice.paid? %>
-                <span class="icon icon-small icon-confirm-green_16_18"></span>
+                <% if @quota %>
+                  <%= render :partial => "invoices/quotas",
+                    :locals => { :quota_file => @plan.billable.percentage_quota_file,
+                                 :plan => @plan,
+                                 :quota_multimedia => @plan.billable.percentage_quota_multimedia,
+                                 :quota_members => @plan.billable.percentage_quota_members,
+                                 :quota => @quota } %>
+                <% end %>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <% unless @invoices.empty? %>
+          <table class="table-without-borderradius invoices-table">
+            <thead>
+              <tr>
+                <th style="width: 20%">Fatura</th>
+                <th style="width: 20%">Início</th>
+                <th style="width: 20%">Término</th>
+                <th style="width: 20%">Valor</th>
+                <th style="width: 20%">Situação</th>
+              </tr>
+            </thead>
+            <tbody class="legend">
+              <% @invoices.each do |invoice| %>
+                <tr>
+                  <td><%= invoice.id.to_s.rjust(10, "0") %></td>
+                  <td>
+                    <span><%= content_tag(:span, (l invoice.period_start)) %></span>
+                  </td>
+                  <td>
+                    <span><%= content_tag(:span, (l invoice.period_end)) %></span>
+                  </td>
+                  <td>
+                    <span><%= number_to_currency(invoice.total) %></span>
+                  </td>
+                  <td>
+                    <% if can? :pay_with_pagseguro, invoice %>
+                      <%= pagseguro_form invoice.plan.create_order, :submit => "Pagar" %>
+                    <% elsif invoice.paid? %>
+                      <span class="no-pending legend">Pago</span>
+                    <% end %>
+                  </td>
+                </tr>
               <% end %>
-            </td>
-          </tr>
+            </tbody>
+          </table>
         <% end %>
-      </tbody>
-    </table>
-    <%= link_to "< voltar para lista de planos", user_plans_path(@plan.user), :class => "back bottom" %>
-  <% end %>
+      </div>
+      <div class="content-section clearfix">
+        <%= link_to "< voltar para a lista de cursos e planos", user_plans_path(@user), :class => "legend pull-right" %>
+      </div>
+    </div>
+    <%= render :partial => "users/breadcrumb_configurations",
+      :locals => { :user => @user } %>
   </div>
 </div>
-<%= render "invoices/explanation_sidebar" %>
+<div class="span3">
+  <%= render :partial => 'plans/explanation_sidebar' %>
+</div>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("form.pagseguro input[type=submit]").addClass('button-primary');
+  });
+</script>

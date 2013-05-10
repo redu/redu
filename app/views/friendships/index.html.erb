@@ -33,12 +33,12 @@
           <ul class="header-breadcrumb">
             <li class="header-breadcrumb-item">
               <%= link_to "Meus Contatos", user_friendships_path(@user),
-                :class => "header-bradcrumb-link icon-connections-gray_32_34-before",
+                :class => "header-breadcrumb-link icon-connections-gray_32_34-before",
                 :title => "Meus Contatos" %>
             </li>
             <li class="header-breadcrumb-item">
               <%= link_to user_friendships_path(@user),
-                :class => "header-bradcrumb-link",
+                :class => "header-breadcrumb-link",
                 :title => "Amigos" do %>
                 Amigos <%= content_tag(:span, parentize(@total_friends), :class => "header-breadcrumb-item-light") %>
               <% end %>
@@ -62,10 +62,9 @@
                 });
               });
             </script>
-            <div class="empty-message">
-              <span class="empty-message-icon icon-invite-empty_128_130 text-replacement" title="Nenhum contato">Nenhum contato</span>
-              <p class="empty-message-content">Adicione amigos e crie sua rede social educacional. Você pode conversar, ajudar e tirar dúvidas com seus amigos. <span class="focus-search-users link-fake" title="Procure por usuários no Redu">Que tal procurar?</span></p>
-            </div>
+            <%= render "shared/empty_message", :icon_message => "Nenhum contato",
+              :icon_class => "icon-invite-empty_128_130",
+              :message => raw('Adicione amigos e crie sua rede social educacional. Você pode conversar, ajudar e tirar dúvidas com seus amigos. <span class="focus-search-users link-fake" title="Procure por usuários no Redu">Que tal procurar?</span>') %>
           <% else %>
             <ul class="list-2-columns list-columns-separator clearfix">
               <%= render :partial => "users/item_medium_new", :collection => @friends %>
