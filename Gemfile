@@ -51,7 +51,7 @@ gem 'scribd_fu', :git => 'git://github.com/guiocavalcanti/scribd_fu.git',
   :branch => 'without-scape'
 gem 'simple-navigation', :git => 'git://github.com/andi/simple-navigation.git'
 gem 'sunspot_rails'
-gem 'rails-translate-routes'
+gem 'route_translator'
 gem 'useragent'
 gem 'vis_client', :git => 'git@github.com:redu/vis_client.git',
   :branch => 'rails-3-2'

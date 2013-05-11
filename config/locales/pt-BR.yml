@@ -1,4 +1,5 @@
 pt-BR:
+  routes:
     about: "sobre"
     administrator: "administracao"
     activate: "ativar"
