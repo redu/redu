@@ -21,5 +21,12 @@ module Api
       end
       super
     end
+
+    # Retrocompatibilidade: Rails 3.2+ empacota erros em um hash do
+    # tipo { :errors => ... }
+    # https://github.com/rails/rails/commit/a0a68ecbb22dacf5111198e72e3a803e7c965881#actionpack/lib/action_controller/metal/responder.rb
+    def json_resource_errors
+      resource.errors
+    end
   end
 end
