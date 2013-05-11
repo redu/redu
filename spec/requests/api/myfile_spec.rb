@@ -65,7 +65,8 @@ describe "File API" do
     context "without validation errors" do
       let(:mimetype) { "application/vnd.ms-powerpoint" }
       let(:file) do
-        fixture_file_upload("/api/document_example.pptx", mimetype)
+        path = "#{RSpec.configuration.fixture_path}/api/document_example.pptx"
+        fixture_file_upload(path, mimetype)
       end
       before do
         post "/api/folders/#{folder.id}/files", params.
