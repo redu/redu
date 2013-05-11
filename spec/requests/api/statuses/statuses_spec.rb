@@ -272,13 +272,6 @@ describe "Statuses" do
       response.status.should == 204
     end
 
-    it "should return status 204 when log type" do
-      delete "/api/statuses/#{log.id}", :oauth_token => @token,
-        :format => 'json'
-
-      response.status.should == 204
-    end
-
     it "should return status 204 when answer type" do
       delete "/api/statuses/#{answer.id}", :oauth_token => @token,
         :format => 'json'
