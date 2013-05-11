@@ -24,9 +24,7 @@ class LecturesController < BaseController
   end
 
   def rate
-    @lecture.rate(params[:stars], current_user, params[:dimension])
-    #TODO Esta linha abaixo é usada pra quê?
-    id = "ajaxful-rating-#{!params[:dimension].blank? ? "#{params[:dimension]}-" : ''}lecture-#{@lecture.id}"
+    @lecture.rate(params[:stars], current_user)
 
     respond_to do |format|
       format.js
