@@ -71,7 +71,7 @@
             </ul>
           <% end %>
         </div>
-        <% if @friends.num_pages > 1 %>
+        <% if @friends.total_pages > 1 %>
           <hr class="list-separator">
         <% end %>
         <%= paginate @friends, :theme => "numbers",
