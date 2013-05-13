@@ -30,21 +30,21 @@ $.fn.renderTemplate = function(json) {
 
   // Fechar conteúdo embedded
   $this.find('.close').live('click', function(e){
-    var $parents = $(this).parents('fieldset');
+    var $parents = $(this).closest('form');
     $parents.find('textarea').data('last_url', "");
-    $parents.find('.post-resource').slideUp(function(){
+    $parents.find('.post-resource').slideUp(150, "swing", function(){
       $(this).remove();
     });
     e.preventDefault();
   });
 
   // Ações de navegação do thumbnail
-  $this.find('.buttons-thumbnail .control').live('click', function(){
+  $this.find('.buttons .button-default').live('click', function(){
     var $button = $(this);
-    var $parents = $button.parents('fieldset');
+    var $parents = $button.closest('form');
     var thumbnail_list = $parents.find("textarea").data("thumbnail_list");
     if($button.hasClass('remove')){
-      $parents.find('.thumbnail').fadeOut();
+      $parents.find('.preview').fadeOut();
       $parents.find('#resource_thumb_url').remove();
     } else if($button.hasClass('next')) {
       updateThumbnail($button, thumbnail_list, true);
@@ -55,7 +55,7 @@ $.fn.renderTemplate = function(json) {
 
   // Faz desaparecer o preview depois de criar a postagem
   $this.find('#status_submit').live('click', function() {
-    var $parents = $(this).parents('fieldset');
+    var $parents = $(this).closest('form');
     $parents.find("textarea").data('last_url', "");
     $parents.find('.post-resource').ajaxComplete(function() {
       $(this).slideUp(function(){
@@ -67,7 +67,7 @@ $.fn.renderTemplate = function(json) {
 
 // Atualiza o thumbnail do recurso de acordo com a resposta do embedly
 function updateThumbnail(root, thumbnail_list, get_next) {
-  var img = root.parents('fieldset').find('.thumbnail img.preview-link');
+  var img = root.closest('form').find('.thumbnail img.preview-link');
   var id = img[0].id.split('-')[1];
 
   if(get_next){
@@ -79,5 +79,5 @@ function updateThumbnail(root, thumbnail_list, get_next) {
   }
   img.attr('src', thumbnail_list[next_id]);
   img.attr('id', 'thumbnail-' + next_id);
-  root.parents('fieldset').find('#resource_thumb_url').attr('value', thumbnail_list[next_id]);
+  root.closest('form').find('#resource_thumb_url').attr('value', thumbnail_list[next_id]);
 }

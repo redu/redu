@@ -72,7 +72,7 @@ $.fn.enableEmbedding = function() {
               // Renderiza o template
               if(json.type != "error"){
                 $this.renderTemplate(json);
-                $textarea.parents('fieldset').find('.post-resource').prepend(resource_inputs);
+                $textarea.closest('form').find('.post-resource').prepend(resource_inputs);
               }
             }
           });
