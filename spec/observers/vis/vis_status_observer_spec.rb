@@ -8,7 +8,7 @@ describe VisStatusObserver do
       it "should call VisClient.notify_delayed" do
         VisClient.should_receive(:notify_delayed).
           with("/hierarchy_notifications.json", help.type.downcase,
-               help.becomes(Status))
+               help)
 
         ActiveRecord::Observer.with_observers(:vis_status_observer) do
           help.save
@@ -22,7 +22,7 @@ describe VisStatusObserver do
       it "should call VisClient.notify_delayed" do
         VisClient.should_receive(:notify_delayed).
           with("/hierarchy_notifications.json", activity.type.downcase,
-               activity.becomes(Status))
+               activity)
 
         ActiveRecord::Observer.with_observers(:vis_status_observer) do
           activity.save
@@ -38,7 +38,7 @@ describe VisStatusObserver do
       it "should call VisClient.notify_delayed" do
         VisClient.should_receive(:notify_delayed).
           with("/hierarchy_notifications.json", "answered_help",
-               answer.becomes(Status))
+               answer)
 
         ActiveRecord::Observer.with_observers(:vis_status_observer) do
           answer.save
@@ -54,7 +54,7 @@ describe VisStatusObserver do
       it "should call VisClient.notify_delayed" do
         VisClient.should_receive(:notify_delayed).
           with("/hierarchy_notifications.json", "answered_activity",
-               answer.becomes(Status))
+               answer)
 
         ActiveRecord::Observer.with_observers(:vis_status_observer) do
           answer.save
@@ -71,7 +71,7 @@ describe VisStatusObserver do
         VisClient.should_receive(:notify_delayed).
           with("/hierarchy_notifications.json",
                "remove_"+help.type.downcase,
-               help.becomes(Status))
+               help)
 
         ActiveRecord::Observer.with_observers(:vis_status_observer) do
           help.destroy
@@ -86,7 +86,7 @@ describe VisStatusObserver do
         VisClient.should_receive(:notify_delayed).
           with("/hierarchy_notifications.json",
                "remove_"+activity.type.downcase,
-               activity.becomes(Status))
+               activity)
 
         ActiveRecord::Observer.with_observers(:vis_status_observer) do
           activity.destroy
@@ -102,7 +102,7 @@ describe VisStatusObserver do
       it "should call VisClient.notify_delayed" do
         VisClient.should_receive(:notify_delayed).
           with("/hierarchy_notifications.json", "remove_answered_activity",
-               answer.becomes(Status))
+               answer)
 
         ActiveRecord::Observer.with_observers(:vis_status_observer) do
           answer.destroy
@@ -118,7 +118,7 @@ describe VisStatusObserver do
       it "should call VisClient.notify_delayed" do
         VisClient.should_receive(:notify_delayed).
           with("/hierarchy_notifications.json", "remove_answered_activity",
-               answer.becomes(Status))
+               answer)
 
         ActiveRecord::Observer.with_observers(:vis_status_observer) do
           answer.destroy

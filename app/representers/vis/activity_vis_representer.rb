@@ -1,5 +1,5 @@
 module Vis
-  module StatusVisRepresenter
+  module ActivityVisRepresenter
     include Roar::Representer::JSON
     include Roar::Representer::Feature::Hypermedia
 
@@ -21,15 +21,8 @@ module Vis
     end
 
     def lecture_id
-      case self.statusable.class.to_s
-      when "Lecture"
+      if self.statusable.class.to_s == "Lecture"
         self.statusable_id
-      when "Activity", "Help"
-        if self.statusable.statusable.class.to_s == "Lecture"
-          self.statusable.statusable_id
-        else
-          nil
-        end
       else
         nil
       end
@@ -39,12 +32,6 @@ module Vis
       case self.statusable.class.to_s
       when "Lecture"
         self.statusable.subject.id
-      when "Activity", "Help"
-        if self.statusable.statusable.class.to_s == "Lecture"
-          self.statusable.statusable.subject.id
-        else
-          nil
-        end
       else
         nil
       end
@@ -56,14 +43,6 @@ module Vis
         self.statusable.subject.space.id
       when "Space"
         self.statusable.id
-      when "Activity", "Help"
-        statusable = self.statusable
-        case statusable.statusable.class.to_s
-        when "Lecture"
-          statusable.statusable.subject.space.id
-        when "Space"
-          statusable.statusable_id
-        end
       else
         nil
       end
@@ -75,14 +54,6 @@ module Vis
         self.statusable.subject.space.course.id
       when "Space"
         self.statusable.course.id
-      when "Activity", "Help"
-        statusable = self.statusable
-        case statusable.statusable.class.to_s
-        when "Lecture"
-          statusable.statusable.subject.space.course.id
-        when "Space"
-          statusable.statusable.course.id
-        end
       else
         nil
       end
