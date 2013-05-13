@@ -77,9 +77,9 @@ body {
   position: relative;
 }
 
-.home-container h3 {
-  line-height: 26px;
-  padding-bottom: 5px;
+.home-welcome-greeting-title +
+.home-welcome-greeting-message {
+  margin-top: 5px;
 }
 
 .what-is-missing-list {
@@ -92,7 +92,8 @@ body {
   margin-top: 5px;
 }
 
-#modal-what-is-missing .message-block-actions, .home-container .message-block-actions {
+.home-what-is-missing-box .message-block-content +
+.message-block-actions {
   margin-top: 10px;
   text-align: center;
 }
