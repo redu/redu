@@ -486,7 +486,7 @@ class User < ActiveRecord::Base
     associateds = [:status_resources, { :answers => [:user, :status_resources] },
                    :user, :logeable, :statusable]
     overview.where(:compound => false).includes(associateds).
-      page(page).per_page(Redu::Application.config.items_per_page)
+      page(page).per(Redu::Application.config.items_per_page)
   end
 
   def add_favorite(favoritable_type, favoritable_id)

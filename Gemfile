@@ -56,7 +56,6 @@ gem 'useragent'
 gem 'vis_client', :git => 'git@github.com:redu/vis_client.git',
   :branch => 'rails-3-2'
 gem 'whenever', :require => false
-gem 'will_paginate', '~> 3.0.pre2'
 gem 'zencoder'
 gem 'untied-publisher', '~> 0.0.7.pre1'
 gem 'system_timer'

@@ -15,7 +15,7 @@
     <ul id="spaces_list" class="hierarchy-listing spaces">
       <%= render :partial => 'spaces/item', :collection => @spaces %>
     </ul>
-    <%= will_paginate @spaces, :renderer => EndlessRenderer %>
+    <%= paginate @spaces, :theme => 'endless' %>
   <% end %>
 </div>
 

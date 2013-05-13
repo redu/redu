@@ -15,7 +15,7 @@
       <ul class="clearfix">
         <%= render :partial => "users/item_medium", :collection => @friends %>
       </ul>
-      <%= will_paginate @friends, :renderer => EndlessRenderer %>
+      <%= paginate @friends, :theme => 'endless' %>
     </div>
 
   </div><!-- end .main -->

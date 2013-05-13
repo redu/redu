@@ -11,7 +11,7 @@
       <%= render :partial => 'courses/admin/pending_member_item_admin', :collection => pending_members %>
     </table>
     <%= submit_tag "Salvar alterações" %>
-    <%= will_paginate pending_members, :renderer => EndlessRenderer %>
+    <%= paginate pending_members, :theme => 'endless' %>
   <% end %>
 <% else %>
     <div class="box_notice">Não há solicitacões pendentes.</div>

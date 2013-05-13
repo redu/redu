@@ -29,9 +29,8 @@ class CoursesController < BaseController
   end
 
   def show
-    @spaces = @course.spaces.published.
-      paginate(:page => params[:page], :order => 'created_at ASC',
-               :per_page => Redu::Application.config.items_per_page)
+    @spaces = @course.spaces.published.order('created_at ASC').
+      page(params[:page]).per(Redu::Application.config.items_per_page)
 
     respond_with(@environment, @course) do |format|
       format.js { render_endless 'spaces/item', @spaces, '#spaces_list' }
@@ -121,9 +120,8 @@ class CoursesController < BaseController
     # confundí-lo
     session[:return_to] = request.fullpath
 
-    @spaces = @course.spaces.paginate(:page => params[:page],
-                                      :order => 'name ASC',
-                                      :per_page => Redu::Application.config.items_per_page)
+    @spaces = @course.spaces.order('name ASC').page(params[:page]).
+      per(Redu::Application.config.items_per_page)
     respond_to do |format|
       format.html { render :layout => 'new_application' }
       format.js do
@@ -134,10 +132,8 @@ class CoursesController < BaseController
 
   # Aba Disciplinas.
   def admin_spaces
-    @spaces = @course.spaces.includes(:subjects).
-      paginate(:page => params[:page],
-               :order => 'updated_at DESC',
-               :per_page => Redu::Application.config.items_per_page)
+    @spaces = @course.spaces.includes(:subjects).order('updated_at DESC').
+      page(params[:page]).per(Redu::Application.config.items_per_page)
     # Para evitar diversas consultas, a conta de membros é feita apenas
     # uma vez
     @member_count = @spaces.first.users.count if @spaces.first
@@ -154,8 +150,8 @@ class CoursesController < BaseController
   def admin_members_requests
     # FIXME Refatorar para o modelo (conditions)
     @pending_members = @course.user_course_associations.waiting.
-      paginate(:page => params[:page],:order => 'updated_at DESC',
-               :per_page => Redu::Application.config.items_per_page)
+      order('updated_at DESC').page(params[:page]).
+      per(Redu::Application.config.items_per_page)
     respond_to do |format|
       format.html { render "courses/admin/admin_members_requests" }
       format.js do
@@ -263,9 +259,9 @@ class CoursesController < BaseController
   # Aba Membros.
   def admin_members
     @memberships = @course.user_course_associations.approved.
-                     includes(:user).
-                     paginate(:page => params[:page],:order => 'updated_at DESC',
-                              :per_page => Redu::Application.config.items_per_page)
+                     includes(:user).order('updated_at DESC').
+                     page(params[:page]).
+                     per(Redu::Application.config.items_per_page)
     @spaces_count = @course.spaces.count
 
       respond_to do |format|
@@ -310,11 +306,10 @@ class CoursesController < BaseController
     keyword = params[:search_user] || []
 
     @memberships = @course.user_course_associations.approved.with_roles(roles)
-    @memberships = @memberships.with_keyword(keyword).paginate(
-      :include => [{ :user => {:user_space_associations => :space} }],
-      :page => params[:page],
-      :order => 'course_enrollments.updated_at DESC',
-      :per_page => Redu::Application.config.items_per_page)
+    @memberships = @memberships.with_keyword(keyword).
+      include(:user => {:user_space_associations => :space}).
+      order('course_enrollments.updated_at DESC').page(params[:page]).
+      per(Redu::Application.config.items_per_page)
     @spaces_count = @course.spaces.count
 
       respond_to do |format|

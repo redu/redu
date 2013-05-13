@@ -9,10 +9,11 @@ class FriendshipsController < BaseController
 
     # Diferencia a nova tela de meus contatos com a tela de contatos de outros usuários.
     if @profile
-      @friends = @user.friends.paginate(:page => params[:page], :per_page => 16)
+      @friends = @user.friends.page(params[:page]).per(16)
     else
       @total_friends = @user.friends.count
-      @friends = @user.friends.includes(:friends, :experiences).page(params[:page]).per_page(20)
+      @friends = @user.friends.includes(:friends, :experiences).
+        page(params[:page]).per(20)
     end
 
     respond_to do |format|

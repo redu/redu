@@ -53,10 +53,10 @@ class UsersController < BaseController
 
   def contacts_endless
     @contacts = if current_user == @user
-      Kaminari::paginate_array(@user.friends).page(params[:page]).per_page(8)
+      Kaminari::paginate_array(@user.friends).page(params[:page]).per(8)
     else
       Kaminari::paginate_array(@user.friends_not_in_common_with(current_user)).
-        page(params[:page]).per_page(4)
+        page(params[:page]).per(4)
     end
 
     respond_to do |format|
@@ -66,7 +66,7 @@ class UsersController < BaseController
   end
 
   def environments_endless
-    @environments = @user.environments.page(params[:page]).per_page(4)
+    @environments = @user.environments.page(params[:page]).per(4)
 
     respond_to do |format|
       format.js { render_sidebar_endless 'environments/item_medium',
@@ -321,8 +321,8 @@ class UsersController < BaseController
   end
 
   def my_wall
-    @friends = @user.friends.paginate(:page => 1, :per_page => 9)
-    @statuses = @user.statuses.visible.paginate(:page => params[:page], :per_page => 10)
+    @friends = @user.friends.page(1).per(9)
+    @statuses = @user.statuses.visible.page(params[:page]).per(10)
     @status = Status.new
 
     respond_to do |format|
@@ -365,8 +365,8 @@ class UsersController < BaseController
       redirect_to removed_page_path and return
     end
 
-    @statuses = @user.statuses.where(:compound => false).paginate(:page => params[:page],
-               :per_page => Redu::Application.config.items_per_page)
+    @statuses = @user.statuses.where(:compound => false).page(params[:page]).
+      per(Redu::Application.config.items_per_page)
     @statusable = @user
     @status = Status.new
 
@@ -396,8 +396,7 @@ class UsersController < BaseController
       end
     end
 
-    @users = @users.paginate(:page => params[:page], :order => 'first_name ASC',
-               :per_page => 18)
+    @users = @users.order('first_name ASC').page(params[:page]).per(18)
 
     respond_to do |format|
       format.html do

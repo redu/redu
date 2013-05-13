@@ -72,7 +72,7 @@ module Redu
     config.description = "Rede Social Educacional"
     config.email = "contato@redu.com.br"
 
-    # Will paginate
+    # Paginação
     config.items_per_page = 10
 
     # Máximo de caracteres p/ descrição

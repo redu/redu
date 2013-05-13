@@ -17,7 +17,7 @@
         <%= render :partial => 'courses/item',
           :collection => @courses %>
       </ul>
-      <%= will_paginate @courses, :renderer => EndlessRenderer %>
+      <%= paginate @courses, :theme => 'endless' %>
     <% end %>
   </div><!-- end #environment-courses -->
 

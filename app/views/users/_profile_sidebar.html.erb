@@ -6,7 +6,7 @@
   <%= local_nav :user_profile %>
   <% if current_user == @user %>
     <ul class="connections con-endless clearfix">
-      <% @contacts = @user.friends.page(params[:page]).per_page(8) %>
+      <% @contacts = @user.friends.page(params[:page]).per(8) %>
       <%= render :partial => 'users/item_medium_24',
         :collection => @contacts %>
     </ul><!-- end .connections -->
@@ -20,8 +20,7 @@
     <%# </ul> %><%# end .connections %>
     <hr class="separator"/>
     <ul class="connections con-endless clearfix">
-      <% @contacts = Kaminari::paginate_array(@user.friends_not_in_common_with(current_user)).
-        page(params[:page]).per_page(4) %>
+      <% @contacts = Kaminari::paginate_array(@user.friends_not_in_common_with(current_user)).page(params[:page]).per(4) %>
       <%= render :partial => 'users/item_medium_24',
         :collection => @contacts %>
     </ul><!-- end .connections -->
