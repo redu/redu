@@ -34,15 +34,13 @@ javascripts:
   new_application:
     - *bootstrap
     - *lazyload
-    - public/javascripts/form.redu.jquery.js
     - public/javascripts/jquery.tokeninput-instant-search.js
     - public/javascripts/swfobject.js # Necessário ao browserdetection.js
     - public/javascripts/browserdetection.js
     - public/javascripts/jquery.cookie.js
     - public/javascripts/outdated-browser.js
     - public/javascripts/home.js
-    - public/javascripts/wall_spinner.js
-    - public/javascripts/bootstrap-wall.js
+    - public/javascripts/statuses.js
     - public/javascripts/jquery.timeago.js
     - public/javascripts/timeago.js
     - public/javascripts/jquery.fcbkcomplete.min.js # Auto complete do facebook
@@ -148,12 +146,10 @@ stylesheets:
   new_application:
     - public/stylesheets/utils.css
     - public/stylesheets/home.css
-    - public/stylesheets/bootstrap-redu.css
     - public/stylesheets/search.css
     - public/stylesheets/fb_style.css
     - public/stylesheets/outdated-browser-new.css
     - public/stylesheets/token-input.css
-    - public/stylesheets/wall.css
   basic:
     - public/stylesheets/landing-new.css
     - public/stylesheets/outdated-browser-new.css
@@ -181,7 +177,6 @@ stylesheets:
     - public/stylesheets/canvas.css
     - public/stylesheets/bootstrap-redu-nav-global.css
     - public/stylesheets/nav-global-icons.css
-    - public/stylesheets/wall.css
     - public/stylesheets/search.css
   ie:
     - public/stylesheets/ie.css
