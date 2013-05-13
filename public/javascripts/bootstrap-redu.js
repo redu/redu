@@ -1139,7 +1139,6 @@ $(function() {
 
       return this.each(function() {
         var control = $(this)
-          , controls = control.parent()
           , maxLength = control.attr('maxlength')
           , remainingCharsText = function(charCount) {
             var charDifference = maxLength - charCount
@@ -1161,7 +1160,7 @@ $(function() {
         control.on({
           focusin: function() {
             settings.characterCounterTemplate.text(remainingCharsText(control.val().length))
-            settings.characterCounterTemplate.appendTo(controls)
+            settings.characterCounterTemplate.insertAfter(control)
           }
         , focusout: function() { settings.characterCounterTemplate.remove() }
         , keyup: function() { settings.characterCounterTemplate.text(remainingCharsText(control.val().length)) }
@@ -2022,7 +2021,7 @@ $(function() {
   , spinnerHorizontalBlue: 'spinner-horizontal-blue'
   , spinnerCircularGray: 'spinner-circular-gray'
   , spinnerCircularBlue: 'spinner-circular-blue'
-  , imgPath: 'img/'
+  , imgPath: '/images/'
   , spinnerCircularBlueGif: 'spinner-blue.gif'
   , spinnerCircularGrayGif: 'spinner-grey.gif'
   , spinnerCSS: {
@@ -2288,30 +2287,49 @@ $(".actions .reply-status span").live("click", function(e){
 });
 
 // Esconde formulário para criação de respostas
-$(".create-response .status-buttons .cancel").live("click",function(e){
-  var $this = $(this);
+$(document).on("click", ".create-response .status-buttons .cancel", function() {
+  var $cancelButton = $(this);
+  var $createStatus = $cancelButton.closest(".create-response");
+  var $preview = $createStatus.find(".post-resource");
 
-  $this.parents(".create-response").slideUp(150, 'swing');
+  $createStatus.slideUp(150, "swing", function() {
+    $preview.remove();
+  });
 });
 
-// Expande o text-area para a criação de status
-$(".create-status textarea").live("click",function(e){
+// Expande a área de texto para a criação de status.
+$(document).on("focusin", ".create-status textarea", function() {
   var $textArea = $(this);
-  var $button = $textArea.parent().find(".status-buttons");
 
-  $textArea.animate({ height: 136 }, 150);
-  $button.slideDown(150, "swing");
-  e.preventDefault();
-})
+  if (!$textArea.data("open")) {
+    $textArea
+      .animate({ height: "122px" }, 150, "swing", function() {
+        var $button = $textArea.parent().find(".status-buttons");
 
-// Cancelar a criação de status
-$(".create-status .status-buttons .cancel").live("click", function(e){
-  e.preventDefault()
-  var $this = $(this);
+        $button.slideDown(150, "swing");
+      })
+      .data("open", true);
+  }
+});
 
-  $this.parents("form").find("textarea").animate({ height: 30 }, 150);
-  $this.parents(".status-buttons").slideUp(150, 'swing');
-})
+// Cancela a criação de status.
+$(document).on("click", ".create-status .status-buttons .cancel", function() {
+  var $cancelButton = $(this);
+  var $createStatus = $cancelButton.closest(".create-status");
+  var $statusButtons = $createStatus.find(".status-buttons");
+  var $preview = $createStatus.find(".post-resource");
+  var $textArea = $createStatus.find("textarea");
+
+  $statusButtons.slideUp(150, "swing", function() {
+    $textArea
+      .animate({ height: 32 }, 150, "swing", function() {
+        $preview.slideUp(150, "swing", function() {
+          $preview.remove();
+        });
+      })
+      .data("open", false);
+  });
+});
 
 // Agrupa respostas
 $.fn.groupResponses = function(opts){

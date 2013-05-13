@@ -7535,9 +7535,6 @@ hr {
 .create-status {
   margin: 20px;
 }
-.create-status hr {
-  border: transparent;
-}
 
 .status-tab {
   position: relative;
@@ -7680,43 +7677,6 @@ hr {
   padding: 0;
   margin-top: 0;
 }
-.status-list .subject-content .thumbnail-separator {
-  margin: 0;
-}
-.status-list .subject-content .thumbnail {
-  overflow: hidden;
-  padding: 10px 0;
-}
-.status-list .subject-content .thumbnail .preview {
-  float: left;
-}
-.status-list .subject-content .thumbnail .buttons {
-  margin-top: 10px;
-}
-.status-list .subject-content .thumbnail .buttons .button-default, .status-list .subject-content .thumbnail .buttons .filter {
-  padding: 0;
-}
-.status-list .subject-content .thumbnail .buttons .button-default > [class*="icon-"], .status-list .subject-content .thumbnail .buttons .filter > [class*="icon-"] {
-  margin: 6px 10px;
-}
-.status-list .subject-content .thumbnail .buttons .button-default.button-disabled, .status-list .subject-content .thumbnail .buttons .button-disabled.filter {
-  border-color: #cccccc;
-}
-.status-list .subject-content .thumbnail img {
-  max-width: 100px;
-  width: 100%;
-  min-height: 34px;
-  margin-right: 10px;
-}
-.textshadow .status-list .subject-content .thumbnail .thumbnail-info p {
-  text-shadow: 0 1px 0 white;
-}
-.status-list .subject-content .thumbnail .thumbnail-info .post-description {
-  color: #6d6e6f;
-}
-.status-list .subject-content .thumbnail .thumbnail-info .source-site {
-  color: #cccccc;
-}
 .status-list .subject-content .grouping-elements {
   margin-right: 20px;
   height: 40px;
@@ -7761,6 +7721,58 @@ hr {
 .context-link-hover {
   color: #158ac4 !important;
   text-decoration: underline;
+}
+
+.thumbnail-separator {
+  margin: 0;
+}
+
+.post-resource {
+  margin-top: 10px;
+}
+
+.thumbnail {
+  overflow: hidden;
+  padding: 10px 0;
+}
+.thumbnail .preview {
+  float: left;
+}
+.thumbnail .buttons {
+  margin-top: 10px;
+}
+.thumbnail .buttons .button-default, .thumbnail .buttons .filter {
+  padding: 0;
+}
+.thumbnail .buttons .button-default > [class*="icon-"], .thumbnail .buttons .filter > [class*="icon-"] {
+  margin: 6px 10px;
+}
+.thumbnail .buttons .button-default.button-disabled, .thumbnail .buttons .button-disabled.filter {
+  border-color: #cccccc;
+}
+.thumbnail img {
+  max-width: 100px;
+  width: 100%;
+  min-height: 34px;
+  margin-right: 10px;
+}
+.textshadow .thumbnail .thumbnail-info p {
+  text-shadow: 0 1px 0 white;
+}
+.thumbnail .thumbnail-info .post-description {
+  color: #6d6e6f;
+}
+.thumbnail .thumbnail-info .source-site {
+  color: #cccccc;
+}
+
+.status-tab .character-counter {
+  position: static;
+  margin-top: 5px;
+  float: left;
+}
+.status-tab .status-buttons {
+  display: none;
 }
 
 .text-replacement {
