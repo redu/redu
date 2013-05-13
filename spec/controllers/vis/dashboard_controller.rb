@@ -113,14 +113,13 @@ describe Vis::DashboardController do
         @params = { :course_id => @course.id,
                     :teacher_id => @course.teachers.first.id,
                     :date_start => "2012-03-01",
-                    :date_end => "2012-02-10",
+                    :date_end => "2012-03-10",
                     :spaces => [@space.id.to_s],
                     :format => :html,
                     :locale => "pt-BR" }
 
         get :teacher_participation_interaction, @params
-        ActiveSupport::JSON.decode(response.body).
-          should_not be_true
+        response.status.should == 406
       end
 
       it "should return params correclty" do
