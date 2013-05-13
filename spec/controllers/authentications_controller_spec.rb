@@ -26,7 +26,7 @@ describe AuthenticationsController do
 
         it { should set_the_flash.
              to(I18n.t("facebook_connect_account_association")) }
-        it { should redirect_to(home_user_path(user))  }
+        it { should redirect_to(controller.home_user_path(user))  }
       end
 
       context 'and do not connect with existent user' do
@@ -42,7 +42,7 @@ describe AuthenticationsController do
         end
 
         it { should set_the_flash.to(I18n.t("thanks_youre_now_logged_in")) }
-        it { should redirect_to(home_user_path(User.last))  }
+        it { should redirect_to(controller.home_user_path(User.last))  }
       end
     end
 
@@ -114,7 +114,7 @@ describe AuthenticationsController do
             @user = User.find_by_email(request.env['omniauth.auth'][:info][:email])
           end
 
-          it { should redirect_to(home_user_path(@user))  }
+          it { should redirect_to(controller.home_user_path(@user))  }
         end
       end
 
@@ -178,6 +178,6 @@ describe AuthenticationsController do
     end
 
     it { should set_the_flash.to(I18n.t("you_need_give_us_access_to_your_facebook_data")) }
-    it { should redirect_to(home_path)  }
+    it { should redirect_to(controller.home_path)  }
   end
 end

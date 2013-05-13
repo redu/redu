@@ -714,7 +714,7 @@ describe CoursesController do
 
         it "redirects to Courses#show" do
           post :create, @post_params
-          response.should redirect_to(environment_course_path(@environment, Course.last))
+          response.should redirect_to(controller.environment_course_path(@environment, Course.last))
         end
       end
 
@@ -770,7 +770,7 @@ describe CoursesController do
         end
 
         it "redirects to Environments#show" do
-          response.should redirect_to(environment_course_path(@environment,
+          response.should redirect_to(controller.environment_course_path(@environment,
                                                               @course.reload))
         end
       end
@@ -818,7 +818,7 @@ describe CoursesController do
       end
 
       it "should show the preview page" do
-        response.should redirect_to(preview_environment_course_path(@course.environment,
+        response.should redirect_to(controller.preview_environment_course_path(@course.environment,
                                                                     @course))
       end
     end
@@ -841,7 +841,7 @@ describe CoursesController do
       end
 
       it "redirects to #show" do
-        response.should redirect_to(environment_course_path(@course.environment,
+        response.should redirect_to(controller.environment_course_path(@course.environment,
                                                             @course))
       end
     end
@@ -859,7 +859,7 @@ describe CoursesController do
       end
 
       it "redirects to #show" do
-        response.should redirect_to(environment_course_path(@course.environment,
+        response.should redirect_to(controller.environment_course_path(@course.environment,
                                                             @course))
       end
     end

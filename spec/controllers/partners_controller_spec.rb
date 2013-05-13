@@ -74,7 +74,7 @@ describe PartnersController do
       @contact_params = {:category => "institution",
                          :details => "Mensagem",
                          :migration => true,
-                         :billable_url => environment_path(@environment),
+                         :billable_url => controller.environment_path(@environment),
                          :email => "guilhermec@redu.com.br"}
 
       post :contact, :id => @partner.id, :partner_contact => @contact_params,

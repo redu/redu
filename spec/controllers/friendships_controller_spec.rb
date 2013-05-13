@@ -46,13 +46,13 @@ describe FriendshipsController do
     it "redirects to user profile, unsing HTML " do
       post :create, :locale => "pt-BR", :user_id => @user.login,
         :friend_id => @new_user.id
-      response.should redirect_to(user_path(@new_user))
+      response.should redirect_to(controller.user_path(@new_user))
     end
 
     it "redirects to user profile, unsing HTML with goto_home" do
       post :create, :locale => "pt-BR", :user_id => @user.login,
         :friend_id => @new_user.id, :goto_home => true
-      response.should redirect_to(home_user_path(@user))
+      response.should redirect_to(controller.home_user_path(@user))
     end
 
   end
@@ -82,13 +82,13 @@ describe FriendshipsController do
     it "redirects to user profile returning HTML" do
       post :destroy, :locale => "pt-BR", :user_id => @user.login,
         :id => @friendship.id
-      response.should redirect_to(user_path(@new_user))
+      response.should redirect_to(controller.user_path(@new_user))
     end
 
     it "redirects to user profile, returning HTML with goto_home" do
       post :destroy, :locale => "pt-BR", :user_id => @user.login,
         :id => @friendship.id, :goto_home => true
-      response.should redirect_to(home_user_path(@user))
+      response.should redirect_to(controller.home_user_path(@user))
     end
 
   end
