@@ -22,7 +22,7 @@
         <span class="username">[Usuário Removido]</span>
       <% end %>
     <% end %>
-    <%= render :partial => 'statuses/timeago', :locals => { :item => response } %>
+    <%= render "statuses/timeago", :timestamp => response.created_at %>
     <div clqass="status-content">
       <p><%= status_message(response.text) %></p>
       <% if response.status_resources.first %>

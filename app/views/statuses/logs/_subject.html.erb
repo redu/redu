@@ -15,7 +15,7 @@
         <%= render "statuses/user_name", :user => log.user %>
         <span class="action"> <%= raw auto_link(log.action_text) %></span>
         <%= link_to log.logeable.name, space_subject_path(log.logeable.space, log.logeable) %>
-        <%= render :partial => 'statuses/timeago', :locals => { :item => log } %>
+        <%= render "statuses/timeago", :timestamp => log.created_at %>
       </div>
     </div>
   </div>

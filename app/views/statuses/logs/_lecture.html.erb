@@ -23,7 +23,7 @@
             :class => 'icon-icon-close icon-small icon-close-gray_16_16 replacement',
             :confirm => 'Ao remover o comentário, todas as respostas serão apagadas. Deseja removê-lo?' %>
       <% end %>
-        <%= render :partial => 'statuses/timeago', :locals => { :item => log } %>
+        <%= render "statuses/timeago", :timestamp => log.created_at %>
       </div>
     </div>
   </div>

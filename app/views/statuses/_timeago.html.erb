@@ -1,3 +1,9 @@
-<time class="date legend" datetime="<%= item.created_at.to_time.iso8601 %>">
-  <%= l(item.created_at, :format => :time_ago) %>
-</time>
+<%#
+  Detalhe da data e horário.
+
+  Variáveis:
+    timestamp: detalhe da data e horário.
+%>
+
+<%= content_tag :time, l(timestamp, :format => :time_ago),
+  :class => "date legend", :datetime => timestamp.to_time.iso8601 %>
