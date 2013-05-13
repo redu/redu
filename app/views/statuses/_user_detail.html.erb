@@ -1,9 +1,13 @@
-<% if item.user %>
-  <%= image_tag item.user.avatar.url(:thumb_32),
-    :class => "author-thumbnail", :width => 32, :height => 32 %>
-  <%= link_to item.user.display_name, user_path(item.user), :class => "link-name" %>
-<% else %>
-  <%= image_tag "/images/new/missing_users_thumb_32.png",
-    :class => "author-thumbnail", :width => 32, :height => 32 %>
-  <span class="link-name">[Usuário Removido]</span>
-<% end %>
+<%#
+  Detalhes do usuário.
+
+  Variáveis:
+    log: o log do usuário.
+%>
+
+<%= render "statuses/user_image", :user => log.user %>
+<div class="subject-info">
+  <%= render "statuses/user_name", :user => log.user %>
+  <%= content_tag :span, raw(auto_link(log.action_text)), :class => "action" %>
+  <%= render "statuses/timeago", :timestamp => log.created_at %>
+</div>

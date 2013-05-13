@@ -1,10 +1,15 @@
-<li id="status-<%= log.id %>">
+<%#
+  Log de usuário.
+
+  Variáveis:
+    log: o log de usuário.
+%>
+
+<%= content_tag :li, :id => "status-#{log.id}" do %>
   <hr class="list-separator">
-  <div class="status">
+  <div class="status without-context">
     <div class="subject">
-      <%= render "statuses/user_detail", :item => log %>
-      <span class="action"> <%= raw auto_link(log.action_text) %></span>
-      <%= render :partial => 'statuses/timeago', :locals => { :item => log } %>
+      <%= render "statuses/user_detail", :log => log %>
     </div>
   </div>
-</li>
+<% end %>
