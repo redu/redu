@@ -545,62 +545,9 @@ describe UsersController do
        get :recover_username_password, :locale => "pt-BR"
       end
 
-      it "assigns recover_username" do
-        assigns[:recover_username].should_not be_nil
-        assigns[:recover_username].should be_kind_of(RecoveryEmail)
-      end
-
       it "assigns recover_password" do
         assigns[:recover_password].should_not be_nil
         assigns[:recover_password].should be_kind_of(RecoveryEmail)
-      end
-    end
-
-    context "POST recover_username" do
-      context "when submitting an registered email" do
-        before do
-          UserNotifier.delivery_method = :test
-          UserNotifier.perform_deliveries = true
-          UserNotifier.deliveries = []
-
-          @user = Factory(:user)
-          post :recover_username, :locale => "pt-BR", :format => "js", :recovery_email => { :email => @user.email }
-
-        end
-
-        it "assigns user" do
-          assigns[:user].should_not be_nil
-          assigns[:user].should be_kind_of(User)
-        end
-
-        it "assigns recover_username" do
-          assigns[:recover_username].should_not be_nil
-          assigns[:recover_username].should be_kind_of(RecoveryEmail)
-        end
-
-        it "sends an email" do
-          UserNotifier.deliveries.size.should == 1
-        end
-      end
-
-      context "when submitting an UNregistered email" do
-        before do
-          @user = Factory(:user)
-          post :recover_username, :locale => "pt-BR", :format => "js", :recovery_email => { :email => "iamnot@redu.com.br" }
-        end
-
-        it "assigns user" do
-          assigns[:user].should be_nil
-        end
-
-        it "assigns recover_username" do
-          assigns[:recover_username].should_not be_nil
-          assigns[:recover_username].should be_kind_of(RecoveryEmail)
-        end
-
-        it "adds an error to recover_username" do
-          assigns[:recover_username].errors.should_not be_empty
-        end
       end
     end
 
