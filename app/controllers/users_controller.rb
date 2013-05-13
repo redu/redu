@@ -321,14 +321,11 @@ class UsersController < BaseController
   end
 
   def my_wall
-    @friends = @user.friends.paginate(:page => 1, :per_page => 9)
     @statuses = @user.statuses.visible.paginate(:page => params[:page], :per_page => 10)
     @status = Status.new
 
     respond_to do |format|
-      format.html do
-        render :layout => 'new_application'
-      end
+      format.html { render :layout => 'new_application' }
       format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
     end
   end

@@ -1,26 +1,28 @@
 <div class="span3">
-  <%= render :partial => "users/left_sidebar",
-    :locals => { :user => @user } %>
+  <%= render "users/left_sidebar", :user => @user %>
 </div>
 <div class="span10">
   <div class="content-area">
-    <%= render :partial => "users/breadcrumb_wall",
-      :locals => { :user => @user } %>
+    <%= render "users/breadcrumb_wall", :user => @user %>
     <div class="content-body">
       <div class="content-section">
-        <%= render :partial => 'statuses/create_status',
-          :locals => { :statusable => current_user } %>
-        <div id="statuses" class="statuses">
-          <ol><%= render :partial => 'statuses/item', :collection => @statuses %></ol>
-          <%= will_paginate @statuses, :renderer => EndlessRenderer %>
-        </div>
+        <%= render "bootstrap/header_breadcrumb", :header_breadcrumb_items => [
+          { :name => "Meu Mural",
+            :link => my_wall_user_path(@user),
+            :classes => "icon-wall-gray_32_34-before"
+          }
+          ] %>
+      </div>
+      <%= render "statuses/create_status", :status => @status, :statusable => @user,
+        :placeholder => "Compartilhe algo com seus Amigos através de seu mural" %>
+      <div id="statuses" class="status-list">
+        <ol><%= render :partial => "statuses/item", :collection => @statuses %></ol>
+        <%= will_paginate @statuses, :renderer => EndlessRenderer %>
       </div>
     </div>
-    <%= render :partial => "users/breadcrumb_wall",
-      :locals => { :user => @user } %>
+    <%= render "users/breadcrumb_wall", :user => @user %>
   </div>
 </div>
 <div class="span3">
-  <%= render :partial => "users/right_sidebar",
-    :locals => { :user => @user } %>
+  <%= render "users/right_sidebar", :user => @user %>
 </div>
