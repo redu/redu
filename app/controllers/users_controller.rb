@@ -256,7 +256,8 @@ class UsersController < BaseController
     if @recover_username.valid?
       @user = User.find_by_email(@recover_username.email)
       if @user
-        UserNotifier.delay(:queue => 'email').user_forgot_username(@user)
+        UserNotifier.delay(:queue => 'email', :priority => 1).
+          user_forgot_username(@user)
       else # Email não cadastrado no Redu
         @recover_username.mark_email_as_invalid!
       end
@@ -270,7 +271,7 @@ class UsersController < BaseController
       @user = User.find_by_email(@recover_password.email)
 
       if @user.try(:reset_password)
-        UserNotifier.delay(:queue => 'email').
+        UserNotifier.delay(:queue => 'email', :priority => 1).
           user_reseted_password(@user, @user.password)
         @user.save
 
