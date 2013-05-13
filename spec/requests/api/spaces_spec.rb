@@ -178,11 +178,11 @@ describe "Spaces API" do
   end
 
   context "delete /spaces/:id" do
-    it "should return status 200" do
+    it "should return status 204" do
       delete "/api/spaces/#{@space.id}", :oauth_token => @token,
         :format => 'json'
 
-      response.status.should == 200
+      response.status.should == 204
     end
 
     it "should return 404 when doesnt exist" do

@@ -96,8 +96,8 @@ describe "Subjects API" do
         delete "api/subjects/#{@subject.id}", @params
       end
 
-      it "should return status 200" do
-        response.status.should == 200
+      it "should return status 204" do
+        response.status.should == 204
       end
     end
 
