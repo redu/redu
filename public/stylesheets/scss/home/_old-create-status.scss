@@ -1,7 +1,10 @@
 // TODO: Referente ao criar status do layout antigo.
 // Remover quando colocar o novo.
 
-.home-container {
+.home-status {
+  padding: 10px 20px;
+  overflow: hidden;
+
   .create-status.inform-my-status textarea { width: 495px; }
 
   .concave-form .concave-label {

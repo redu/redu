@@ -3,70 +3,76 @@
 <% end %>
 
 <div class="span3">
-  <%= render :partial => "users/left_sidebar",
-     :locals => { :user => @user } %>
+  <%= render "users/left_sidebar", :user => @user %>
 </div>
 <div class="span10">
   <div class="content-area">
-    <%= render :partial => "users/breadcrumb_home",
-       :locals => { :user => @user } %>
+    <%= render "users/breadcrumb_home", :user => @user %>
     <div class="content-body">
-      <%= render :partial => "users/welcome_greeting",
-         :locals => { :user => @user } %>
-      <% cache ['home_friends_requisitions', @user.id] do %>
-        <% unless @friends_requisitions.length == 0 %>
-          <div class="home-container">
+      <%# Mensagem de boas-vindas ao Redu. %>
+      <%= render "users/welcome_greeting", :user => @user %>
+
+      <%# Convites de amizades. %>
+      <% cache ["home_friends_requisitions", @user.id] do %>
+        <% unless @friends_requisitions.empty? %>
+          <div class="content-section">
             <ul class="requisitions">
-              <%= render :partial => 'friendships/friend_requisition',
+              <%= render :partial => "friendships/friend_requisition",
                 :collection => @friends_requisitions, :as => :friendship %>
             </ul>
           </div>
           <hr class="list-separator">
         <% end %>
       <% end %>
-      <% cache ['home_courses_requisitions', @user.id] do %>
-        <% unless @course_invitations.length == 0 %>
-          <div class="home-container">
+
+      <%# Convites para cursos. %>
+      <% cache ["home_courses_requisitions", @user.id] do %>
+        <% unless @course_invitations.empty? %>
+          <div class="content-section">
             <ul class="requisitions">
-              <%= render :partial => 'courses/item_invitation',
+              <%= render :partial => "courses/item_invitation",
                 :collection => @course_invitations %>
             </ul>
           </div>
           <hr class="list-separator">
         <% end %>
       <% end %>
-      <div id="what-is-missing-box" style="display: <%= what_is_missing_box_display(@user) %>;">
-        <div class="home-container">
-          <%= render :partial => "users/explore_redu", :locals => { :user => @user} %>
-        </div>
-        <hr class="list-separator">
-      </div>
-      <div id="learn-environments-box" style="display: <%= learn_environments_display(@user) %>;">
-        <div class="home-container">
-          <%= render :partial => 'users/learn_environments' %>
-        </div>
-        <hr class="list-separator">
-      </div>
 
-      <div class="home-container">
-        <%= render :partial => 'statuses/create_status',
-          :locals => { :statusable => @user } %>
+      <%# Explore o Redu. %>
+      <%= content_tag :div, :id => "what-is-missing-box",
+        :style => "display: #{what_is_missing_box_display(@user)}" do %>
+        <div class="content-section">
+          <%= render "users/explore_redu", :user => @user %>
+        </div>
+        <hr class="list-separator">
+      <% end %>
+
+      <%# Explicação de AVA. %>
+      <%= content_tag :div, :id => "learn-environments-box",
+        :style => "display: #{learn_environments_display(@user)}" do %>
+        <div class="content-section">
+          <%= render "users/learn_environments" %>
+        </div>
+        <hr class="list-separator">
+      <% end %>
+
+      <%# Status. %>
+      <div class="home-status">
+        <%= render "statuses/create_status", :statusable => @user %>
 
         <%# Mural com layout antigo %>
         <div id="statuses" class="statuses">
           <ol>
-            <%= render :partial => 'statuses/item', :collection => @statuses %>
+            <%= render :partial => "statuses/item", :collection => @statuses %>
           </ol>
 
-          <%= paginate @statuses, :theme => 'endless' %>
-        </div><!-- end .statuses -->
-      </div><!-- end .home-container -->
+          <%= paginate @statuses, :theme => "endless" %>
+        </div>
+      </div>
     </div>
-    <%= render :partial => "users/breadcrumb_home",
-       :locals => { :user => @user } %>
+    <%= render "users/breadcrumb_home", :user => @user %>
   </div>
 </div>
 <div class="span3">
-  <%= render :partial => "users/right_sidebar",
-    :locals => { :user => @user } %>
+  <%= render "users/right_sidebar", :user => @user %>
 </div>

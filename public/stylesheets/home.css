@@ -77,13 +77,9 @@ body {
   position: relative;
 }
 
-.home-container {
-  padding: 10px 20px;
-  overflow: hidden;
-}
-.home-container h3 {
-  line-height: 26px;
-  padding-bottom: 5px;
+.home-welcome-greeting-title +
+.home-welcome-greeting-message {
+  margin-top: 5px;
 }
 
 .what-is-missing-list {
@@ -96,7 +92,8 @@ body {
   margin-top: 5px;
 }
 
-#modal-what-is-missing .message-block-actions, .home-container .message-block-actions {
+.home-what-is-missing-box .message-block-content +
+.message-block-actions {
   margin-top: 10px;
   text-align: center;
 }
@@ -795,17 +792,19 @@ input[type="hidden"] +
   background-color: transparent !important;
 }
 
-.home-container {
+.home-status {
+  padding: 10px 20px;
+  overflow: hidden;
   /* labels inativos */
   /* botoes */
 }
-.home-container .create-status.inform-my-status textarea {
+.home-status .create-status.inform-my-status textarea {
   width: 495px;
 }
-.home-container .concave-form .concave-label {
+.home-status .concave-form .concave-label {
   padding-top: 7px;
 }
-.home-container .concave-form .concave-label {
+.home-status .concave-form .concave-label {
   display: block;
   color: #b3b2b3;
   font-weight: bold;
@@ -817,12 +816,12 @@ input[type="hidden"] +
   height: 23px;
   font-size: 12px;
 }
-.home-container .concave-remove,
-.home-container .concave-button,
-.home-container .concave-clean,
-.home-container .concave-important,
-.home-container .concave-important-font,
-.home-container .concave-cancel {
+.home-status .concave-remove,
+.home-status .concave-button,
+.home-status .concave-clean,
+.home-status .concave-important,
+.home-status .concave-important-font,
+.home-status .concave-cancel {
   padding: 5px 20px 6px 20px;
   color: white;
   display: inline-block;
@@ -832,101 +831,101 @@ input[type="hidden"] +
   text-align: center;
   cursor: pointer;
 }
-.home-container .concave-remove:hover,
-.home-container .concave-button:hover,
-.home-container .concave-important:hover,
-.home-container .concave-important-font:hover,
-.home-container .concave-cancel:hover {
+.home-status .concave-remove:hover,
+.home-status .concave-button:hover,
+.home-status .concave-important:hover,
+.home-status .concave-important-font:hover,
+.home-status .concave-cancel:hover {
   color: white;
 }
-.home-container .concave-remove:visited,
-.home-container .concave-button:visited,
-.home-container .concave-important:visited,
-.home-container .concave-important-font:visited,
-.home-container .concave-cancel:visited {
+.home-status .concave-remove:visited,
+.home-status .concave-button:visited,
+.home-status .concave-important:visited,
+.home-status .concave-important-font:visited,
+.home-status .concave-cancel:visited {
   color: white;
 }
-.home-container .concave-important,
-.home-container .concave-important-font {
+.home-status .concave-important,
+.home-status .concave-important-font {
   border: 1px solid #4bc080;
   background-color: #abe385;
 }
-.home-container .concave-important-font {
+.home-status .concave-important-font {
   font-family: museo-slab, "Helvetica Neue", Arial, sans-serif;
 }
-.home-container .concave-clean {
+.home-status .concave-clean {
   color: #4dadd6;
   border: 1px solid #cccccc;
   background: white;
   /* Old browsers */
 }
-.home-container .concave-button,
-.home-container .concave-cancel {
+.home-status .concave-button,
+.home-status .concave-cancel {
   border: 1px solid #4CACD5;
   background-color: #73C3E6;
 }
-.home-container .concave-form .concave-button,
-.home-container .concave-form .concave-important,
-.home-container .concave-form .concave-important-font,
-.home-container .concave-form .concave-cancel {
+.home-status .concave-form .concave-button,
+.home-status .concave-form .concave-important,
+.home-status .concave-form .concave-important-font,
+.home-status .concave-form .concave-cancel {
   margin: 20px 20px 0 0;
 }
-.home-container .concave-remove {
+.home-status .concave-remove {
   border: 1px solid #e83b3b;
   color: white;
   background-color: #ff6d6d;
 }
-.home-container .concave-form .concave-remove {
+.home-status .concave-form .concave-remove {
   margin: 20px 0px 0px 20px;
 }
-.home-container .concave-form .concave-button,
-.home-container .concave-form .concave-important,
-.home-container .concave-form .concave-important-font,
-.home-container .concave-form .concave-cancel {
+.home-status .concave-form .concave-button,
+.home-status .concave-form .concave-important,
+.home-status .concave-form .concave-important-font,
+.home-status .concave-form .concave-cancel {
   float: right;
 }
-.home-container .concave-form .concave-remove {
+.home-status .concave-form .concave-remove {
   float: left;
 }
-.home-container .concave-cancel {
+.home-status .concave-cancel {
   border: 1px solid #E83B3B;
 }
-.home-container .concave-clean:hover,
-.home-container .concave-remove:hover,
-.home-container .concave-button:hover,
-.home-container .concave-important:hover,
-.home-container .concave-important-font:hover,
-.home-container .concave-cancel:hover {
+.home-status .concave-clean:hover,
+.home-status .concave-remove:hover,
+.home-status .concave-button:hover,
+.home-status .concave-important:hover,
+.home-status .concave-important-font:hover,
+.home-status .concave-cancel:hover {
   text-decoration: none;
 }
-.borderradius .home-container .concave-clean, .borderradius .home-container .concave-remove, .borderradius .home-container .concave-button, .borderradius .home-container .concave-important, .borderradius .home-container .concave-important-font, .borderradius .home-container .concave-cancel {
+.borderradius .home-status .concave-clean, .borderradius .home-status .concave-remove, .borderradius .home-status .concave-button, .borderradius .home-status .concave-important, .borderradius .home-status .concave-important-font, .borderradius .home-status .concave-cancel {
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   border-radius: 3px;
 }
-.cssgradients .home-container .concave-important, .cssgradients .home-container .concave-important-font {
+.cssgradients .home-status .concave-important, .cssgradients .home-status .concave-important-font {
   background: -webkit-gradient(linear, left top, left bottom, from(#abe385), to(#5fc080));
   background: -moz-linear-gradient(top, #5fc080, #abe385);
 }
-.cssgradients .home-container .concave-button {
+.cssgradients .home-status .concave-button {
   background: -webkit-gradient(linear, left top, left bottom, from(#73c3e6), to(#4dadd6));
   /* webkit browsers */
   background: -moz-linear-gradient(top, #73c3e6, #4dacd6);
   /* firefox 3.6+ */
 }
-.cssgradients .home-container .concave-cancel {
+.cssgradients .home-status .concave-cancel {
   background: -webkit-gradient(linear, left top, left bottom, from(#ff6d6d), to(#e83b3b));
   /* webkit browsers */
   background: -moz-linear-gradient(top, #ff6d6d, #e83b3b);
   /* firefox 3.6+ */
 }
-.cssgradients .home-container .concave-remove {
+.cssgradients .home-status .concave-remove {
   background: -webkit-gradient(linear, left top, left bottom, from(#ff6d6d), to(#e83b3b));
   /* webkit browsers */
   background: -moz-linear-gradient(top, #ff6d6d, #e83b3b);
   /* Firefox 3.6+ */
 }
-.cssgradients .home-container .concave-clean {
+.cssgradients .home-status .concave-clean {
   background: -moz-linear-gradient(top, white 0%, #f0f0f0 97%);
   /* FF3.6+ */
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, white), color-stop(97%, #f0f0f0));
@@ -942,73 +941,73 @@ input[type="hidden"] +
   background: linear-gradient(top, #ffffff 0%, #f0f0f0 97%);
   /* W3C */
 }
-.textshadow .home-container .concave-important-font, .textshadow .home-container .concave-important {
+.textshadow .home-status .concave-important-font, .textshadow .home-status .concave-important {
   -moz-text-shadow: 0px -1px 0 #61a080;
   -webkit-text-shadow: 0px -1px 0 #61a080;
   text-shadow: 0px -1px 0 #61a080;
 }
-.textshadow .home-container .concave-button {
+.textshadow .home-status .concave-button {
   -moz-text-shadow: 0px -1px 0 #158ac4;
   -webkit-text-shadow: 0px -1px 0 #158ac4;
   text-shadow: 0px -1px 0 #158ac4;
 }
-.textshadow .home-container .concave-cancel {
+.textshadow .home-status .concave-cancel {
   -moz-text-shadow: 0px -1px 0 #e83b3b;
   -webkit-text-shadow: 0px -1px 0 #e83b3b;
   text-shadow: 0px -1px 0 #e83b3b;
 }
-.textshadow .home-container .concave-remove {
+.textshadow .home-status .concave-remove {
   -moz-text-shadow: 0px -1px 0 #c1272d;
   -webkit-text-shadow: 0px -1px 0 #c1272d;
   text-shadow: 0px -1px 0px #c1272d;
 }
-.textshadow .home-container .concave-clean {
+.textshadow .home-status .concave-clean {
   text-shadow: 0px 1px 0px #ffffff;
 }
-.home-container .concave-important-font:hover,
-.home-container .concave-important:hover {
+.home-status .concave-important-font:hover,
+.home-status .concave-important:hover {
   border: 1px solid #61a080;
 }
-.home-container .concave-button:hover {
+.home-status .concave-button:hover {
   border: 1px solid #1789C3;
   background: #1789C3;
 }
-.home-container .concave-cancel:hover {
+.home-status .concave-cancel:hover {
   border: 1px solid #C1272D;
   background: #FF6D6D;
 }
-.home-container .concave-remove:hover {
+.home-status .concave-remove:hover {
   background: #ff6d6d;
 }
-.home-container .concave-clean:hover {
+.home-status .concave-clean:hover {
   color: #1789c3;
   border: 1px solid #4cacd5;
   background: white;
   /* Old browsers */
 }
-.cssgradients .home-container .concave-important-font:hover, .cssgradients .home-container .concave-important:hover {
+.cssgradients .home-status .concave-important-font:hover, .cssgradients .home-status .concave-important:hover {
   background: -webkit-gradient(linear, left top, left bottom, from(#abe385), to(#61a080));
   background: -moz-linear-gradient(top, #abe385, #61a080);
 }
-.cssgradients .home-container .concave-cancel:hover {
+.cssgradients .home-status .concave-cancel:hover {
   background: -webkit-gradient(linear, left top, left bottom, from(#ff6d6d), to(#c1272d));
   /* webkit browsers */
   background: -moz-linear-gradient(top, #ff6d6d, #c1272d);
   /* firefox 3.6+ */
 }
-.cssgradients .home-container .concave-button:hover {
+.cssgradients .home-status .concave-button:hover {
   background: -webkit-gradient(linear, left top, left bottom, from(#73c3e6), to(#158ac4));
   /* webkit browsers */
   background: -moz-linear-gradient(top, #73c3e6, #158ac4);
   /* firefox 3.6+ */
 }
-.cssgradients .home-container .concave-remove:hover {
+.cssgradients .home-status .concave-remove:hover {
   background: -webkit-gradient(linear, left top, left bottom, from(#ff6d6d), to(#c1272d));
   /* webkit browsers */
   background: -moz-linear-gradient(top, #ff6d6d, #c1272d);
   /* Firefox 3.6+ */
 }
-.cssgradients .home-container .concave-clean:hover {
+.cssgradients .home-status .concave-clean:hover {
   background: -moz-linear-gradient(top, white 0%, #dbeff7 97%);
   /* FF3.6+ */
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, white), color-stop(97%, #dbeff7));
