@@ -15,9 +15,9 @@
       <%= link_to log.logeable.course.name, environment_course_path(log.logeable.course.environment, log.logeable) %>
     </div>
     <div class="subject">
-      <%= render "statuses/user_image", :item => log %>
+      <%= render "statuses/user_image", :user => log.user %>
       <div class="status-icon icon-<%= log.user ? role_at(log.user, log.logeable.course) : "member" %>-gray_16_18-before">
-        <%= render "statuses/user_name", :item => log %>
+        <%= render "statuses/user_name", :user => log.user %>
         <span class="action"><%= raw log.text %></span>
         <%= link_to log.logeable.course.name, environment_course_path(log.logeable.course.environment, log.logeable.course),
         :class => "target icon-course-gray_16_18-before" %>

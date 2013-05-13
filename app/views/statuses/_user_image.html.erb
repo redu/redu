@@ -1,10 +1,12 @@
-<% if item.user %>
-  <%= link_to user_path(item.user), :rel => "nofollow", :title => item.user.display_name, :class => 'author-thumbnail' do %>
-    <%= image_tag item.user.avatar.url(:thumb_32),
-      :width => 32, :height => 32 %>
-  <% end %>
-<% else %>
-  <%= link_to user_path(item.user), :rel => "nofollow", :title => item.user.display_name, :class => 'author-thumbnail' do %>
-    <%= image_tag "/images/new/missing_users_thumb_32.png", :width => 32, :height => 32 %>
-    <% end %>
+<%#
+  Link com o avatar 32x32 do usuário para o seu perfil.
+
+  Variáveis:
+    user: o usuário.
+%>
+
+<%= link_to user_path(user), :class => "author-thumbnail",
+  :title => user.display_name do %>
+  <%= image_tag user.avatar.url(:thumb_32), :alt => user.display_name,
+    :size => "32x32" %>
 <% end %>

@@ -1,5 +1,8 @@
-<% if item.user %>
-  <%= link_to item.user.display_name, user_path(item.user), :class => "link-name" %>
-<% else %>
-  <span class="link-name">[Usuário Removido]</span>
-<% end %>
+<%#
+  Link com o nome completo do usuário para o seu perfil.
+
+  Variáveis:
+    user: o usuário.
+%>
+
+<%= link_to user.display_name, user_path(user), :class => "link-name" %>

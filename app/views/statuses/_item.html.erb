@@ -29,8 +29,8 @@
         </div>
         <div class="subject">
           <div class="subject-info icon-request-help-lightorange_16_18-before icon-log">
-            <%= render "statuses/user_image", :item => item %>
-            <%= render "statuses/user_name", :item => item %>
+            <%= render "statuses/user_image", :user => item.user %>
+            <%= render "statuses/user_name", :user => item.user %>
             <span class="action">pediu <span class="help">ajuda</span> na Aula</span>
             <%= link_to item.statusable.name, space_subject_lecture_path(item.statusable.subject.space, item.statusable.subject, item.statusable) %>
             <% if can? :manage, item %>
@@ -67,9 +67,9 @@
           <%= link_to item.statusable.name,space_subject_lecture_path(item.statusable.subject.space, item.statusable.subject, item.statusable) %>
         </div>
         <div class="subject">
-          <%= render "statuses/user_image", :item => item %>
+          <%= render "statuses/user_image", :user => item.user %>
           <div class="subject-info icon-<%= item.user ? role_at(item.user, item.statusable) : "member" %>-gray_16_18-before ">
-            <%= render "statuses/user_name", :item => item %>
+            <%= render "statuses/user_name", :user => item.user %>
             <span class="action">comentou no mural da aula </span><%= link_to item.statusable.name, space_subject_lecture_path(item.statusable.subject.space, item.statusable.subject, item.statusable) %>
             <% if can? :manage, item %>
               <%= link_to 'Fechar',
@@ -104,9 +104,9 @@
           <%= link_to item.statusable.name, mural_space_path(item.statusable), :class =>"context-link" %>
         </div>
         <div class="subject">
-          <%= render "statuses/user_image", :item => item %>
+          <%= render "statuses/user_image", :user => item.user %>
           <div class="subject-info icon-<%= item.user ? role_at(item.user, item.statusable) : "member" %>-gray_16_18-before ">
-            <%= render "statuses/user_name", :item => item %>
+            <%= render "statuses/user_name", :user => item.user %>
             <span class="action">comentou na disciplina  <%= link_to item.statusable.name, mural_space_path(item.statusable) , :class => "icon-space-gray_16_18-before" %>
             </span>
             <% if can? :manage, item %>
@@ -134,7 +134,7 @@
       <hr class="list-separator">
       <div class="status without-context">
         <div class="subject">
-             <%= render "statuses/user_image", :item => item %>
+             <%= render "statuses/user_image", :user => item.user %>
           <div class="subject-info">
             <% if item.user %>
               <%= link_to item.user.display_name, user_path(item.user), :class => "link-name" %>

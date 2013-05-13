@@ -10,9 +10,9 @@
         <%= link_to log.logeable.space.name, space_path(log.logeable.space, log.logeable) %>
     </div>
     <div class="subject">
-      <%= render "statuses/user_image", :item => log %>
+      <%= render "statuses/user_image", :user => log.user %>
       <div class="status-icon icon-<%= log.user ? role_at(log.user, log.logeable) : "member" %>-gray_16_18-before">
-        <%= render "statuses/user_name", :item => log %>
+        <%= render "statuses/user_name", :user => log.user %>
         <span class="action"> <%= raw auto_link(log.action_text) %></span>
         <%= link_to log.logeable.name, space_subject_path(log.logeable.space, log.logeable) %>
         <%= render :partial => 'statuses/timeago', :locals => { :item => log } %>
