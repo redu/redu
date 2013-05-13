@@ -2,9 +2,9 @@
 
 <div class="main grid_10 omega" style="width: 580px;">
   <% if (can? :manage, @user) or (can? :view_mural, @user) %>
-    <%= render :partial => 'statuses/create_status',
-      :locals => { :statusable => @user } %>
-    <div id="statuses" class="statuses">
+    <%= render "statuses/create_status", :status => @status,
+      :statusable => @user %>
+    <div id="statuses" class="status-list">
       <ol>
         <%= render :partial => 'statuses/item', :collection => @statuses %>
       </ol>

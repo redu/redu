@@ -1,22 +1,37 @@
-<%# Preview de links externos %>
-<%= render 'statuses/template_preview' %>
-<%# Form de status  %>
-<% random_number = get_random_number%>
-<div class="create-status status-tab tab-left">
-  <%= form_for @status, :remote => true do |f| %>
+<%#
+  Formulário de criação de status.
+
+  Variáveis:
+    status: o status (normalmente um novo).
+    statusable: o item statusable.
+    placeholder: placeholder da área de texto (o valor default é nil).
+%>
+
+<% placeholder = nil unless local_assigns.has_key? :placeholder %>
+
+<%# Preview de links externos. %>
+<%= render "statuses/template_preview" %>
+
+<%# Formulário de status. %>
+<div class="create-status status-tab tab-left status-list">
+  <%= form_for status, :remote => true do |f| %>
     <%= flash[:statuses_errors] %>
     <%= hidden_field_tag "return", request.url %>
     <%= hidden_field :status, :statusable_id, :value => statusable.id %>
     <%= hidden_field :status, :statusable_type, :value => statusable.class.to_s %>
-    <%= hidden_field_tag "status[type]", 'Activity' %>
+    <%= hidden_field_tag "status[type]", "Activity" %>
     <%= f.error_messages %>
-    <%= field_set_tag do %>
-      <%= f.text_area :text, :rows => 1, :cols => 50, :class => "textarea status-#{random_number}", :placeholder => "Compartilhe algo com seus amigos através de seu mural" %>
-      <hr>
-      <ul class="status-buttons" style="display: none;">
-        <li><%= f.submit 'Enviar', :class =>"button-primary" %></li>
-        <li><%= link_to 'Cancelar', nil, :rel => "nofollow", :class => 'cancel button-default' %></li>
+    <%= f.text_area :text, :rows => 1, :placeholder => placeholder,
+      :maxlength => 800 %>
+    <div class="clearfix">
+      <ul class="status-buttons">
+        <li>
+          <input type="reset" class="button-default cancel" value="Cancelar">
+        </li>
+        <li>
+          <%= f.submit "Enviar", :class => "button-primary" %>
+        </li>
       </ul>
+    </div>
   <% end %>
-<% end %>
 </div>

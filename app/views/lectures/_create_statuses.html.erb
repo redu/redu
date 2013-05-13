@@ -3,8 +3,8 @@
     <li class="type-item type-comment selected"><a href="# " class="icon-comment2-lightblue_16_18-before" data-type="Activity">Comentar a aula</a></li>
     <li class="type-item type-help"><a href="#" class="icon-request-help-lightblue_16_18-before" data-type="Help">Pedir ajuda</a></li>
   </ul>
-  <%= render :partial => 'statuses/create_status',
-    :locals => { :statusable => lecture } %>
+  <%= render 'statuses/create_status', :status => @status,
+    :statusable => lecture %>
   <div id="statuses" class="statuses">
     <ol class="status-list">
       <%= render :partial => 'statuses/item',

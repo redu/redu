@@ -10,8 +10,8 @@
     </div>
 
     <div class="status-large" style="clear: both;">
-    <%= render :partial => 'statuses/create_status',
-      :locals => { :statusable => @space } %>
+    <%= render 'statuses/create_status', :status => @status,
+      :statusable => @space %>
     <div id="statuses" class="statuses">
       <ol class="status-list">
         <%= render :partial => 'statuses/item', :collection => @statuses %>

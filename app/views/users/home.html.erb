@@ -54,10 +54,12 @@
 
       <%# Status. %>
       <div class="home-status">
-        <%= render "statuses/create_status", :statusable => @user %>
+        <%= render "statuses/create_status", :status => @status,
+          :statusable => @user,
+          :placeholder => "Compartilhe algo com seus Amigos através de seu mural" %>
 
         <%# Mural com layout antigo %>
-        <div id="statuses" class="status-list ">
+        <div id="statuses" class="status-list">
           <ol>
             <%= render :partial => "statuses/item", :collection => @statuses %>
           </ol>
