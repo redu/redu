@@ -47,7 +47,6 @@ javascripts:
     - public/javascripts/timeago.js
     - public/javascripts/jquery.fcbkcomplete.min.js # Auto complete do facebook
     - public/javascripts/users.js
-    - public/javascripts/old-create-status.js
     - public/javascripts/underscore.js
     - public/javascripts/underscore-sharing-template.redu.jquery.js
     - public/javascripts/embedly.redu.jquery.js
@@ -144,8 +143,6 @@ javascripts:
     - public/javascripts/olark.js
 
 stylesheets:
-  wall_old:
-    - public/stylesheets/icons.redu.css
   mobile:
     - public/stylesheets/mobile.css
   new_application:
