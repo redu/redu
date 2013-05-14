@@ -11,7 +11,7 @@ $icon-sprite-dimensions: true;
 @import "nav-global/icon/*.png";
 @include all-icon-sprites;
 
-[class*="icon-"][class*="-before"]:before { @include pseudo-before(5px, false); }
+.nav-global [class*="icon-"][class*="-before"]:before { @include pseudo-before(5px, false); }
 
 // Perfil.
 .icon-profile-lightblue_16_18-before {
