@@ -26,8 +26,6 @@ javascripts:
     - public/javascripts/jquery.autosize.min.js
     - public/javascripts/vendor/placeholder-polyfill.min.js
     - public/javascripts/bootstrap-redu.js
-  landing:
-    - public/javascripts/landing.js
   mobile:
     - *bootstrap
     - public/javascripts/mobile-login.js
@@ -147,8 +145,6 @@ stylesheets:
     - public/stylesheets/outdated-browser-new.css
     - public/stylesheets/token-input.css
     - public/stylesheets/wall.css
-  basic:
-    - public/stylesheets/authoring-page.css
   common:
     - public/stylesheets/reset.css
     - public/stylesheets/960.css
