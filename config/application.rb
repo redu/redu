@@ -279,5 +279,7 @@ module Redu
     config.search_preview_results_per_page = 4
     config.instant_search_results_per_page = 6
     config.instant_search_preview_results_per_page = 2
+
+    config.assets.enabled = true
   end
 end
