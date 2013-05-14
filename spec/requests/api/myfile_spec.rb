@@ -105,9 +105,9 @@ describe "File API" do
   context "DELETE /api/files/:id" do
     subject { Factory(:myfile, :folder => folder, :user => course.owner) }
 
-    it "should return 200" do
+    it "should return 204" do
       delete "/api/files/#{subject.id}", params
-      response.code.should == "200"
+      response.code.should == "204"
     end
   end
 end

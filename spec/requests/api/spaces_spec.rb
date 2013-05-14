@@ -152,12 +152,12 @@ describe "Spaces API" do
   end
 
   context "put /spaces/:id" do
-    it "should return code 201" do
+    it "should return code 204" do
       space = { :name => 'new_space_name' }
       put "/api/spaces/#{@space.id}", :space => space, :oauth_token => @token,
         :format => 'json'
 
-      response.code.should == "200"
+      response.code.should == "204"
     end
 
     it "should return code 422 (unproccessable entity) when not valid" do
