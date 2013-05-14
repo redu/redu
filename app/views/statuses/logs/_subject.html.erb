@@ -1,23 +1,32 @@
-<li id="status-<%= log.id %>">
+<%#
+  Log do módulo.
+
+  Exemplo: "X publicou o módulo Y".
+
+  Variáveis:
+    log: o log do módulo.
+%>
+
+<%= content_tag :li, :id => "status-#{log.id}" do %>
   <hr class="list-separator">
   <div class="status">
     <div class="context">
       <%= link_to log.logeable.name, space_path(log.logeable), :class => "text-replacement context-icon icon-space-gray_32_34-before" %>
-      <span class="legend">
-        <%= log.logeable.space.course.environment.name %> >
-        <%= log.logeable.space.course.name %>
-      </span>
-        <%= link_to log.logeable.space.name, space_path(log.logeable.space, log.logeable) %>
+      <%= content_tag :span,
+        "#{log.logeable.space.course.environment.name} > #{log.logeable.space.course.name}",
+        :class => "legend" %>
+      <%= link_to log.logeable.space.name, space_path(log.logeable.space) %>
     </div>
     <div class="subject">
       <%= render "statuses/user_image", :user => log.user %>
-      <div class="status-icon icon-<%= log.user ? role_at(log.user, log.logeable) : "member" %>-gray_16_18-before">
-        <%= render "statuses/user_name", :user => log.user %>
-        <span class="action"> <%= raw auto_link(log.action_text) %></span>
-        <%= link_to log.logeable.name, space_subject_path(log.logeable.space, log.logeable) %>
+      <div class="subject-info">
+        <%= render "statuses/user_name", :user => log.user,
+          :classes => "icon-#{role_icon(role_at(log.user, log.logeable)).first}-gray_16_18-before" %>
+        <%= content_tag :span, raw(auto_link(log.action_text)), :class => "action" %>
+        <%= link_to log.logeable.name, space_subject_path(log.logeable.space, log.logeable),
+          :class => "icon-subject-gray_16_18-before" %>
         <%= render "statuses/timeago", :timestamp => log.created_at %>
       </div>
     </div>
   </div>
-</li>
-
+<% end %>
