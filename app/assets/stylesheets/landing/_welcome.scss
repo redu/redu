@@ -7,7 +7,7 @@
   @include box-sizing(border-box);
   height: 470px;
   padding-top: 60px;
-  background: transparent url('../images/landing/illustration.png') no-repeat center;
+  background: transparent image-url('landing/illustration.png') no-repeat center;
 }
 
 // Título.
@@ -28,7 +28,7 @@
   font: 700 21px/28px $museo-sans-rounded;
   letter-spacing: -1px;
   max-width: 280px;
-  background-image: url('../images/landing/light-welcome.png');
+  background-image: image-url('landing/light-welcome.png');
   background-repeat: no-repeat;
   background-position: center center;
 

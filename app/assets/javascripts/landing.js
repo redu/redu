@@ -1,3 +1,6 @@
+//= require bootstrap-scrollspy
+
+
 // Deixa o menu dos filtros fixos
 $(function() {
 

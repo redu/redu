@@ -7,12 +7,12 @@
   padding: 20px;
   height: 230px;
   background-color: $gray1;
-  background: url("../images/landing/wall-background.png") no-repeat scroll right center $gray1;
+  background: image-url("landing/wall-background.png") no-repeat scroll right center $gray1;
 
   .multiplebgs & {
-    background: 
-      url("../images/landing/icon-wall-gray_128_130.png") no-repeat scroll center center, 
-      url("../images/landing/wall-background.png") no-repeat scroll right center $gray1;
+    background:
+      image-url("landing/icon-wall-gray_128_130.png") no-repeat scroll center center,
+      image-url("landing/wall-background.png") no-repeat scroll right center $gray1;
   }
 }
 

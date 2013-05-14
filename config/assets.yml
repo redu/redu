@@ -52,14 +52,6 @@ javascripts:
     - public/javascripts/underscore-sharing-template.redu.jquery.js
     - public/javascripts/embedly.redu.jquery.js
     - public/javascripts/search.js
-  basic:
-    - *bootstrap
-    - *lazyload
-    - public/javascripts/vendor/bootstrap-scrollspy.js
-    - public/javascripts/swfobject.js # Necessário ao browserdetection.js
-    - public/javascripts/browserdetection.js
-    - public/javascripts/jquery.cookie.js
-    - public/javascripts/outdated-browser.js
   common:
     - public/javascripts/rails.js
     - public/javascripts/application.js
@@ -156,9 +148,6 @@ stylesheets:
     - public/stylesheets/token-input.css
     - public/stylesheets/wall.css
   basic:
-    - public/stylesheets/landing-new.css
-    - public/stylesheets/outdated-browser-new.css
-    - public/stylesheets/icons.redu.css
     - public/stylesheets/authoring-page.css
   common:
     - public/stylesheets/reset.css

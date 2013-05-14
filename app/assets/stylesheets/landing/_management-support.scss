@@ -20,13 +20,13 @@
 
 .icon-129px-configuracoes {
   @include size(128px, 130px);
-  background-image: url("../images/landing/icon-129px-configuracoes.png");
+  background-image: image-url("landing/icon-129px-configuracoes.png");
   margin-left: -160px;
 }
 
 .landing-support-content {
   @include size(395px, 120px);
-  background: url("../images/landing/bkg-suporte.png");
+  background: image-url("landing/bkg-suporte.png");
   height: 210px;
   float: right;
 }
