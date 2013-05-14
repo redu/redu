@@ -63,7 +63,8 @@ class SearchService
   # Pagina a única busca que possui resultados
   def result_paginate
     if individual_page?
-      search_results.select{ |entity| entity.size > 0 }.first || []
+      search_results.select{ |entity| entity.size > 0 }.first ||
+        Kaminari.paginate_array([])
     end
   end
 

@@ -84,6 +84,6 @@ describe SearchService do
       subject.perform_results
     end
 
-    it { subject.result_paginate.should respond_to(:paginate) }
+    it { subject.result_paginate.should respond_to(:page) }
   end
 end
