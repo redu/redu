@@ -1,30 +1,36 @@
-<li id="status-<%= log.id %>">
+<%#
+  Log da aula.
+
+  Exemplo: "X publicou a aula Y".
+
+  Variáveis:
+    log: o log da aula.
+%>
+
+<%= content_tag :li, :id => "status-#{log.id}" do %>
   <hr class="list-separator">
   <div class="status">
     <div class="context">
-      <%= link_to log.logeable.name, space_subject_lecture_path(log.logeable.subject.space, log.logeable.subject, log.logeable), :class => "text-replacement context-icon icon-subject-gray_32_34-before" %>
-      <span class="legend">
-        <%= log.logeable.subject.space.course.environment.name %> >
-        <%= log.logeable.subject.name  %> >
-        <%= log.logeable.subject.space.name %>
-      </span>
-      <%= link_to log.logeable.name,space_subject_lecture_path(log.logeable.subject.space, log.logeable.subject, log.logeable) %>
+      <%= link_to log.logeable.name,
+        space_subject_lecture_path(log.logeable.subject.space, log.logeable.subject, log.logeable),
+        :class => "text-replacement context-icon icon-subject-gray_32_34-before" %>
+      <%= content_tag :span,
+        "#{log.logeable.subject.space.course.environment.name} > #{log.logeable.subject.space.course.name} > #{log.logeable.subject.space.name}",
+        :class => "legend" %>
+      <%= link_to log.logeable.name,
+        space_subject_lecture_path(log.logeable.subject.space, log.logeable.subject, log.logeable) %>
     </div>
     <div class="subject">
       <%= render "statuses/user_image", :user => log.user %>
-      <div class="subject-info icon-<%= log.user ? role_at(log.user, log.logeable) : "member" %>-gray_16_18-before ">
-        <%= render "statuses/user_name", :user => log.user %>
-        <span class="action">comentou no mural da aula  <%= link_to log.logeable.name, space_subject_lecture_path(log.logeable.subject.space, log.logeable.subject, log.logeable) %></span>
-        <% if can? :manage, log %>
-          <%= link_to 'Fechar',
-            status_path(item),
-            :method => :delete,
-            :remote => true,
-            :class => 'icon-icon-close icon-small icon-close-gray_16_16 replacement',
-            :confirm => 'Ao remover o comentário, todas as respostas serão apagadas. Deseja removê-lo?' %>
-      <% end %>
+      <div class="subject-info">
+        <%= render "statuses/user_name", :user => log.user,
+          :classes => "icon-#{role_icon(role_at(log.user, log.logeable)).first}-gray_16_18-before" %>
+        <%= content_tag :span, raw(auto_link(log.action_text)), :class => "action" %>
+        <%= link_to log.logeable.name,
+          space_subject_lecture_path(log.logeable.subject.space, log.logeable.subject, log.logeable),
+          :class => "icon-subject-gray_16_18-before" %>
         <%= render "statuses/timeago", :timestamp => log.created_at %>
       </div>
     </div>
   </div>
-</li>
+<% end %>

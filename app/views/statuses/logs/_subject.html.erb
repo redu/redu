@@ -11,7 +11,8 @@
   <hr class="list-separator">
   <div class="status">
     <div class="context">
-      <%= link_to log.logeable.name, space_path(log.logeable), :class => "text-replacement context-icon icon-space-gray_32_34-before" %>
+      <%= link_to log.logeable.name, space_path(log.logeable),
+        :class => "text-replacement context-icon icon-space-gray_32_34-before" %>
       <%= content_tag :span,
         "#{log.logeable.space.course.environment.name} > #{log.logeable.space.course.name}",
         :class => "legend" %>
@@ -24,7 +25,7 @@
           :classes => "icon-#{role_icon(role_at(log.user, log.logeable)).first}-gray_16_18-before" %>
         <%= content_tag :span, raw(auto_link(log.action_text)), :class => "action" %>
         <%= link_to log.logeable.name, space_subject_path(log.logeable.space, log.logeable),
-          :class => "icon-subject-gray_16_18-before" %>
+          :class => "icon-content-gray_16_18-before" %>
         <%= render "statuses/timeago", :timestamp => log.created_at %>
       </div>
     </div>
