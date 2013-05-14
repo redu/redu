@@ -368,7 +368,7 @@ GEM
       nokogiri
     roar (0.11.17)
       representable (>= 1.5.0)
-    route_translator (3.0.1)
+    route_translator (3.0.2)
     rscribd (1.3.0)
       mime-types
     rsolr (1.0.9)
