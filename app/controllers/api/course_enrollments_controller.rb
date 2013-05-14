@@ -24,7 +24,8 @@ module Api
     # /api/courses/:course_id/enrollments
     def index
       @entity = find_and_authorize_entity
-      course_enrollments = @entity.course_enrollments
+      course_enrollments = @entity.course_enrollments.
+        includes({ :course => :enrollment }, :user)
       if params.has_key?(:user_id)
         course_enrollments = filter_by_course_id(course_enrollments)
       end
