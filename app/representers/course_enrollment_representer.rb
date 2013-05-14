@@ -23,7 +23,7 @@ module CourseEnrollmentRepresenter
   end
 
   link :environment do
-    api_course_url(self.course.environment)
+    api_environment_url(self.course.environment)
   end
 
   link :user do
