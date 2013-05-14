@@ -74,7 +74,8 @@ gem 'rails_autolink'
 # Gems específicos para a API
 gem 'oauth-plugin', '~> 0.4.0'
 gem 'rack-cors', :require => 'rack/cors'
-gem 'roar-rails'
+gem 'roar-rails', :git => 'git@github.com:guiocavalcanti/roar-rails.git',
+  :branch => 'fix-relation-and-infer'
 gem 'roar'
 
 # Gems específicos de algum ambiente
