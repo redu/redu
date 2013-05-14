@@ -13,8 +13,8 @@ class FriendshipsController < BaseController
                                         :order => 'first_name ASC')
     else
       @total_friends = @user.friends.count
-      @friends = @user.friends.includes(:friends, :experiences).page(params[:page])
-        .per(20).order('first_name ASC')
+      @friends = @user.friends.includes(:friends, :experiences).
+        page(params[:page]).per(20).order('first_name ASC')
     end
 
     respond_to do |format|
