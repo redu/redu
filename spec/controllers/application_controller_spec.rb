@@ -129,7 +129,7 @@ describe ApplicationController do
       it "redirects to /entrar" do
         get :index, :locale => 'pt-BR'
         # Hardcoded porque anonymous controller sobrescreve as rotas
-        response.should redirect_to("/login")
+        response.should redirect_to("/entrar")
       end
     end
 
