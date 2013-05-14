@@ -188,7 +188,7 @@ class EnvironmentsController < BaseController
   end
 
   def admin_members
-    @memberships = @environment.user_environment_associations.include(:user).
+    @memberships = @environment.user_environment_associations.includes(:user).
       order('updated_at DESC').page(params[:page]).
       per(Redu::Application.config.items_per_page)
 

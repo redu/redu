@@ -87,11 +87,11 @@ group :development, :test do
   gem 'rails3-generators'
   gem "rspec-rails", "~> 2.13"
   gem 'ruby-debug'
-  gem 'shoulda-matchers', "~> 1"
   gem 'sunspot_solr'
 end
 
 group :test do
+  gem 'shoulda-matchers', "~> 1"
   gem 'webmock', :git => 'git://github.com/fltiago/webmock'
   gem 'ruby-prof'
 end

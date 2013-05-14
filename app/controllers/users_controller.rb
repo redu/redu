@@ -316,8 +316,7 @@ class UsersController < BaseController
 
     respond_to do |format|
       format.html { render :layout => 'new_application' }
-      format.js { render_endless('statuses/item', @statuses, '#statuses > ol',
-                                 :template => 'shared/endless_kaminari') }
+      format.js { render_endless('statuses/item', @statuses, '#statuses > ol') }
     end
   end
 

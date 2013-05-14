@@ -35,7 +35,9 @@ class RolesController < BaseController
 
     respond_to do |format|
       format.html { redirect_to environment_user_roles_path(@environment) }
-      format.js { render(:update) { |page| page.reload } }
+      format.js do
+        render :js => "window.location = '#{environment_user_roles_path(@environment)}'"
+      end
     end
   end
 

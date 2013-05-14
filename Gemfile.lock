@@ -168,7 +168,7 @@ GEM
     builder (3.0.4)
     bunny (0.9.0.pre9)
       amq-protocol (>= 1.2.0)
-    cancan (1.6.9)
+    cancan (1.6.10)
     childprocess (0.3.9)
       ffi (~> 1.0, >= 1.0.11)
     chronic (0.9.1)
@@ -361,7 +361,7 @@ GEM
       nokogiri
     roar (0.11.17)
       representable (>= 1.5.0)
-    route_translator (3.0.1)
+    route_translator (3.0.2)
     rscribd (1.3.0)
       mime-types
     rsolr (1.0.9)
