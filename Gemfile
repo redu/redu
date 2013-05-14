@@ -36,7 +36,7 @@ gem 'has_friends', :git => 'git@github.com:jessicabarbalho/has_friends.git'
 gem 'invitable', :git => 'git@github.com:redu/invitable.git'
 gem 'jammit-s3'
 gem 'jquery-rails', '>= 1.0.12'
-gem 'kaminari'
+gem 'kaminari', :git => 'git://github.com/amatsuda/kaminari.git'
 gem 'mime-types'
 gem "mysql2", "~> 0.3.11"
 gem 'omniauth'

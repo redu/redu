@@ -1,4 +1,12 @@
 GIT
+  remote: git://github.com/amatsuda/kaminari.git
+  revision: 7d209354119a8d5d273def3a7f5c6d011c4baa0a
+  specs:
+    kaminari (0.14.1)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
+
+GIT
   remote: git://github.com/andi/simple-navigation.git
   revision: 04315d6dd5a1bde7d02e4c49d89a90a283c67a31
   specs:
@@ -256,9 +264,6 @@ GEM
     json (1.8.0)
     jwt (0.1.6)
       multi_json (>= 1.0)
-    kaminari (0.14.1)
-      actionpack (>= 3.0.0)
-      activesupport (>= 3.0.0)
     lazy_high_charts (1.4.2)
       bundler (>= 1.0)
       hash-deep-merge
@@ -482,7 +487,7 @@ DEPENDENCIES
   jammit-s3
   jasmine
   jquery-rails (>= 1.0.12)
-  kaminari
+  kaminari!
   mime-types
   mysql2 (~> 0.3.11)
   newrelic_rpm (= 3.0.1)
