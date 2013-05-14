@@ -692,7 +692,8 @@ input[type="text"] {
   height: 32px;
 }
 
-label, input[type="text"] {
+.nav-global label,
+.nav-global input[type="text"] {
   font-size: 13px;
   font-weight: normal;
   line-height: 18px;

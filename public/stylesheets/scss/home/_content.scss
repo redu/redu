@@ -5,15 +5,13 @@
 
 .container { position: relative; }
 
-.home-container {
-  padding: 10px 20px;
-  overflow: hidden;
 
-  h3 {
-    line-height: 26px;
-    padding-bottom: 5px;
-  }
-}
+// Mensagem de boas-vindas ao Redu.
+// ==========================================================================
+
+.home-welcome-greeting-title +
+.home-welcome-greeting-message { margin-top: 5px; }
+
 
 // List de links da mensagem em bloco "O que falta fazer?"
 // ==========================================================================
@@ -28,9 +26,9 @@
   & { margin-top: 5px; }
 }
 
-.message-block-actions {
-  #modal-what-is-missing &,
-  .home-container & {
+.home-what-is-missing-box {
+  .message-block-content +
+  .message-block-actions {
     margin-top: 10px;
     text-align: center;
   }

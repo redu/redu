@@ -4,10 +4,12 @@
   Variáveis:
     user: o usuário.
 %>
+
 <% unless user.settings.visited?(home_user_path(user)) %>
-  <div class="home-container">
-    <h3><%= user.display_name %>, seja bem vindo(a) ao Redu.</h3>
-    <p>O Redu é uma plataforma para ensino com tecnologia que permite criar, compartilhar e discutir conteúdos das mais diversas formas. Assim, estimulam-se a aprendizagem, colaboração e diversão. Preencha seu <em>Perfil</em>, crie (ou participe de) um <em>Ambiente de Aprendizagem</em>, se comunique e aprenda com amigos, alunos e professores.</p>
+  <div class="content-section">
+    <%= content_tag :h3, "#{user.display_name} , seja bem vindo(a) ao Redu.",
+      :class => "home-welcome-greeting-title" %>
+    <p class="home-welcome-greeting-message">O Redu é uma plataforma para ensino com tecnologia que permite criar, compartilhar e discutir conteúdos das mais diversas formas. Assim, estimulam-se a aprendizagem, colaboração e diversão. Preencha seu <em>Perfil</em>, crie (ou participe de) um <em>Ambiente de Aprendizagem</em>, se comunique e aprenda com amigos, alunos e professores.</p>
   </div>
   <hr class="list-separator">
 <% end %>

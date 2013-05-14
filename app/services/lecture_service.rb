@@ -41,9 +41,7 @@ class LectureService
   def create_asset_report(lecture, user)
     return if lecture.new_record?
 
-    if enrollment = user.get_association_with(lecture)
-      lecture.create_asset_report(:enrollments => [enrollment])
-    end
+    lecture.create_asset_report
   end
 
   # Factory method responsável por criar o LectureableService baseado

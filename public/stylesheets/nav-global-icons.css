@@ -146,7 +146,7 @@
   width: 16px;
 }
 
-[class*="icon-"][class*="-before"]:before {
+.nav-global [class*="icon-"][class*="-before"]:before {
   content: "";
   display: inline-block;
   vertical-align: middle;

@@ -11,7 +11,7 @@ module InstantSearch
       super
     end
 
-    items :class => ActiveRecord::Base, :extend => Proc.new { |model|
+    items :class => ActiveRecord::Base, :extend => Proc.new { |model, opts|
       InstantSearch.const_get(model.class.to_s + "Representer")
     }
   end
