@@ -1,3 +1,11 @@
+//= require jquery.pjax
+//= require pusher
+//= require jquery
+//= require jquery.linkify-1.0
+//= require chat.jquery
+//= require chat
+//= require loading
+
 // Utilizando pjax
 var $pjaxLinks = $("a:not([data-remote]):not([href^='#']):not([rel='nofollow']):not([href^='javascript\:']):not([onClick])");;
 // Desabilitado enquanto existem dois layouts
