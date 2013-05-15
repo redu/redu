@@ -1,6 +1,8 @@
 //= require jquery.pjax
 //= require pusher
 //= require jquery
+//= require jquery.cookie
+//= require jquery.json.js
 //= require jquery.linkify-1.0
 //= require chat.jquery
 //= require chat
