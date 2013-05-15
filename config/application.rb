@@ -239,7 +239,6 @@ module Redu
                                         :solr_education_indexer_observer,
                                         :solr_hierarchy_indexer_observer,
                                         :vis_status_observer,
-                                        :vis_user_observer,
                                         :vis_lecture_observer,
                                         :vis_result_observer,
                                         :seminar_observer,
