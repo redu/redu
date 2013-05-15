@@ -2,13 +2,14 @@ class PlansController < BaseController
 
   before_filter :find_course_environment, :except => [:index, :create]
 
-  load_and_authorize_resource :user, :find_by => :login
   load_and_authorize_resource :plan, :only => [:options], :through => :user
-  load_and_authorize_resource :partner, :only => [:create, :options]
 
   def create
-    if params[:client_id]
-      @client = @partner.partner_environment_associations.find(params[:client_id])
+    @user = load_and_authorize_if_param(User, params[:user_id])
+    @partner = load_and_authorize_if_param(Partner, params[:partner_id])
+
+    if client_id = params[:client_id]
+      @client = @partner.partner_environment_associations.find(client_id)
     end
 
     @environment = Environment.find(params[:environment_id])
@@ -38,7 +39,7 @@ class PlansController < BaseController
   end
 
   def index
-    authorize! :manage, @user
+    @user = load_and_authorize_if_param(User, params[:user_id])
     @plans = @user.plans.current.includes(:billable)
 
     respond_to do |format|
@@ -47,6 +48,8 @@ class PlansController < BaseController
   end
 
   def options
+    @partner = load_and_authorize_if_param(Partner, params[:partner_id])
+
     authorize! :migrate, @plan
     @user = @plan.user
 
@@ -78,6 +81,14 @@ class PlansController < BaseController
     if @plan.billable_type == 'Course'
       @course = @plan.billable
       @environment = @course.environment
+    end
+  end
+
+  def load_and_authorize_if_param(klass, id)
+    if id
+      instance = klass.find(id)
+      authorize! :manage, instance
+      instance
     end
   end
 end

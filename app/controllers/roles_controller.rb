@@ -1,6 +1,5 @@
 class RolesController < BaseController
   load_resource :environment, :find_by => :path
-  load_resource :course, :through => :environment, :find_by => :path
   load_resource :user, :through => :environment, :find_by => :login
 
   def index
@@ -20,7 +19,11 @@ class RolesController < BaseController
 
   def update
     authorize! :manage, @environment
-    authorize! :manage, @course if @course
+
+    if course_id = params[:course_id]
+      @course = Course.find_by_path(course_id)
+      authorize! :manage, @course
+    end
 
     role = Role.find(params[:role])
 
