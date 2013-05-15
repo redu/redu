@@ -4,18 +4,14 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
     <title><%= raw(page_title) %></title>
     <%= csrf_meta_tag %>
-    <%= include_stylesheets :common %>
+    <%= stylesheet_link_tag :application %>
     <!--[if (gte IE 6)&(lte IE 9)]>
-      <%= include_stylesheets 'ie', :embed_assets => false %>
-    <![endif]-->
-    <!--[if (gte IE 6)&(lte IE 8)]>
-      <%= include_stylesheets 'ie8', :embed_assets => false %>
+      <%= stylesheet_link_tag :ie %>
     <![endif]-->
     <link href='http://fonts.googleapis.com/css?family=Copse' rel='stylesheet' type='text/css' />
-    <%= javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js' %>
-    <%= include_javascripts :common %>
+    <%= javascript_include_tag :application %>
     <!--[if (gte IE 6)&(lte IE 8)]>
-      <%= include_javascripts :ie %>
+      <%= javascript_include_tag :ie %>
     <![endif]-->
     <%= yield :header_scripts_and_styles %>
 
@@ -27,7 +23,6 @@
     var CKEDITOR_BASEPATH = "<%=  "#{asset_host}/javascripts/ckeditor/" %>";
   //]]>
   </script>
-  <%= include_javascripts :ckeditor %>
   <%= render :partial => "shared/typekit" %>
   <%= render :partial => "shared/analytics" %>
   </head>

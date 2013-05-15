@@ -7,7 +7,7 @@
 
 <% badge_position = "left" unless local_assigns.has_key? :badge_position %>
 
-<%= lazy_load("http://use.typekit.com/lpo4rgu.js", :jammit => false) do %>
+<%= lazy_load("http://use.typekit.com/lpo4rgu.js") do %>
   try{
     Typekit.load();
     $(".typekit-badge").css("<%= badge_position %>", "0")

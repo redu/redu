@@ -110,7 +110,7 @@
       <%= f.label :mobile, "Celular" %>
     </div>
     <div class="controls span6">
-      <%= lazy_load(:user, :jammit => true, :clear => true) do %>
+      <%= lazy_load('jquery.maskedinput') do %>
           // Coloca a máscara de celular no campo correspondente
           $.fn.refreshMobileMask = function() {
             return this.each(function() {

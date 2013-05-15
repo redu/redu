@@ -1,0 +1,49 @@
+// ==========================================================================
+// Estilos para o novo Início
+// ==========================================================================
+
+@import "compass/css3/images";
+
+// UI-components.
+@import "bootstrap/variables";
+@import "bootstrap/mixins";
+
+
+// Variáveis
+@import "home/variables";
+
+// Layout
+@import "home/layout";
+
+// Barra lateral esquerda
+@import "home/left-sidebar";
+
+// Conteúdo central da home
+@import "home/content";
+
+// Conteúdo dos ambientes
+@import "home/environment";
+
+// Conteúdo da navagação local
+@import "home/local-navigation";
+
+// Barra lateral direita
+@import "home/right-sidebar";
+
+// Mensagens
+@import "home/messages";
+
+// Configurações
+@import "home/config";
+
+// Convites
+@import "home/invites";
+
+// Meus Contatos
+@import "home/friendship";
+
+// Criar status do layout antigo.
+@import "home/old-create-status";
+
+// Aplicativos
+@import "home/oauth_clients";

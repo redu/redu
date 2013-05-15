@@ -93,4 +93,7 @@ Redu::Application.configure do
     :students_participation => "http://localhost:4000/user_spaces/participation.json"
   }
 
+  # Configure static asset server for tests with Cache-Control for performance
+  config.serve_static_assets = true
+  config.static_cache_control = "public, max-age=3600"
 end

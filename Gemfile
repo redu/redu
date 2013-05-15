@@ -2,10 +2,6 @@ source 'http://rubygems.org'
 source 'http://gems.github.com'
 source 'http://reduadmin:pomp64bozos@the-shire.herokuapp.com/'
 
-group :assets do
-  gem 'compass-rails'
-end
-
 gem 'aasm'
 gem 'premailer-rails'
 gem 'classy_enum'
@@ -34,7 +30,6 @@ gem 'exceptional'
 gem 'factory_girl_rails', '~> 1.7.0'
 gem 'has_friends', :git => 'git@github.com:jessicabarbalho/has_friends.git'
 gem 'invitable', :git => 'git@github.com:redu/invitable.git'
-gem 'jammit-s3'
 gem 'jquery-rails', '>= 1.0.12'
 gem 'kaminari', :git => 'git://github.com/amatsuda/kaminari.git'
 gem 'mime-types'
@@ -77,6 +72,13 @@ gem 'rack-cors', :require => 'rack/cors'
 gem 'roar-rails', :git => 'git@github.com:guiocavalcanti/roar-rails.git',
   :branch => 'fix-relation-and-infer'
 gem 'roar'
+
+group :assets do
+  gem 'sass-rails',   '~> 3.2'
+  gem 'compass-rails'
+  gem 'therubyracer', :platforms => :ruby
+  gem 'uglifier', '~> 2'
+end
 
 # Gems específicos de algum ambiente
 group :development, :test do
