@@ -50,6 +50,3 @@ stylesheets:
     - public/stylesheets/new-fonts.css
     - public/stylesheets/new-style.css
     - public/stylesheets/print.css
-  page:
-    - public/stylesheets/reset.css
-    - public/stylesheets/new-fonts.css
