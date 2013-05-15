@@ -33,9 +33,6 @@ javascripts:
     - public/javascripts/loading.js
   user:
     - public/javascripts/jquery.maskedinput.js
-  canvas:
-    - public/javascripts/easyXDM.js
-    - public/javascripts/canvas.js
   olark:
     - public/javascripts/olark.js
 
