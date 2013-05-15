@@ -28,8 +28,6 @@ javascripts:
     - public/javascripts/chat.jquery.js
     - public/javascripts/chat.js
     - public/javascripts/loading.js
-  user:
-    - public/javascripts/jquery.maskedinput.js
   olark:
     - public/javascripts/olark.js
 
