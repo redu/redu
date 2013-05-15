@@ -1,3 +1,5 @@
+//= require jquery.tokeninput-invite-friend
+
 $(function() {
   var config = {
     // Formulário de enviar convites.

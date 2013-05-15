@@ -14,9 +14,6 @@ javascripts:
   lazyload: &lazyload
     - public/javascripts/lazyload.js
     - public/javascripts/asyncjs.jquery.js
-  invite_friend:
-    - public/javascripts/jquery.tokeninput-invite-friend.js
-    - public/javascripts/friend-invitation.js
   bootstrap: &bootstrap
     - public/javascripts/rails.js
     - public/javascripts/vendor/modernizr.js
