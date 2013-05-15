@@ -22,7 +22,7 @@
             <%= render :partial => 'spaces/admin/subject_chart_admin',
               :collection => @space.subjects, :as => :subject %>
 
-            <%= lazy_load(:chart, :jammit => true) do %>
+            <%= lazy_load(:chart) do %>
               try{
               var par = new SubjectParticipation();
               par.load("<%= api_vis_subject_activities_path(@space.id) %>",
