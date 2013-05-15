@@ -63,7 +63,7 @@ javascripts:
   common:
     - public/javascripts/rails.js
     - public/javascripts/application.js
-    - public/javascripts/modernizr.js
+    - public/javascripts/vendor/modernizr.js
     - public/javascripts/jquery.tipTip.minified.js
     - public/javascripts/folders.js
     - public/javascripts/exercises.js
@@ -126,7 +126,7 @@ javascripts:
     - public/javascripts/ckeditor/ckeditor.js
   clean:
     - public/javascripts/rails.js
-    - public/javascripts/modernizr.js
+    - public/javascripts/vendor/modernizr.js
     - *lazyload
     - public/javascripts/jquery.noisy.js
     - public/javascripts/jquery.placeholder.js
