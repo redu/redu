@@ -98,7 +98,7 @@ describe ApplicationController do
 
       it "prepends mobile views path" do
         get :index, :locale => 'pt-BR'
-        view_paths.paths.should include(controller.mobile_views_path)
+        view_paths.paths.should include(mobile_views_path)
       end
     end
 
@@ -109,7 +109,7 @@ describe ApplicationController do
 
       it "does not prepend mobile views path" do
         get :index, :locale => 'pt-BR'
-        view_paths.paths.should_not include(controller.mobile_views_path)
+        view_paths.paths.should_not include(mobile_views_path)
       end
     end
   end
