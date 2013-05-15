@@ -653,9 +653,8 @@ describe User do
       @last_compound = CompoundLog.where(:statusable_id => subject.id).last
 
       @statuses = @friends[0].overview.where(:compound => false).
-        paginate(:page => @page,
-                 :order => 'updated_at DESC',
-                 :per_page => Redu::Application.config.items_per_page)
+        order('updated_at DESC').page(@page).
+        per(Redu::Application.config.items_per_page)
     end
 
     it "assigns correctly number of statuses" do

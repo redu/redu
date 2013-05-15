@@ -307,7 +307,7 @@ class CoursesController < BaseController
 
     @memberships = @course.user_course_associations.approved.with_roles(roles)
     @memberships = @memberships.with_keyword(keyword).
-      include(:user => {:user_space_associations => :space}).
+      includes(:user => {:user_space_associations => :space}).
       order('course_enrollments.updated_at DESC').page(params[:page]).
       per(Redu::Application.config.items_per_page)
     @spaces_count = @course.spaces.count
