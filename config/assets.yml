@@ -26,9 +26,6 @@ javascripts:
     - public/javascripts/jquery.autosize.min.js
     - public/javascripts/vendor/placeholder-polyfill.min.js
     - public/javascripts/bootstrap-redu.js
-  mobile:
-    - *bootstrap
-    - public/javascripts/mobile-login.js
   chat:
     - public/javascripts/jquery.pjax.js
     - public/javascripts/pusher.js
@@ -57,8 +54,6 @@ javascripts:
     - public/javascripts/olark.js
 
 stylesheets:
-  mobile:
-    - public/stylesheets/mobile.css
   chat:
     - public/stylesheets/chat.css
   print:

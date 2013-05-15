@@ -1,3 +1,6 @@
+//= require bootstrap
+
+
 $(function() {
   // Checkbox de mostrar senha.
   $(document).on("change", "#mobile-form-sign-in-show-password", function() {
