@@ -2241,10 +2241,10 @@ body {
 }
 
 #concave-breadcrumbs .moderatorship a {
-  background-color: rgb(255, 238, 215);
+  background-color: rgb(225, 241, 225);
   font-size: .87em;
-  color: rgb(243, 94, 0);
-  border: 1px solid rgb(243, 94, 0);
+  color: rgb( 97, 160, 128);
+  border: 1px solid rgb( 97, 160, 128);
   display: block;
   float: left;
   padding: 2px 4px;
