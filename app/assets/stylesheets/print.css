@@ -1,4 +1,11 @@
-#header, #footer, #chat, #graph-form{
+/*
+*= require reset
+*= require new-fonts
+*= require new-style
+*/
+
+
+#header, #fprint.css    ooter, #chat, #graph-form{
   display: none;
 }
 
@@ -83,6 +90,6 @@ h4 { font-size: 14px;  }
   text-align: center;
 }
 
-.main-wrapper-old { 
+.main-wrapper-old {
   padding-top: 0;
 }
