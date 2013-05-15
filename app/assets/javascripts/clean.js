@@ -1,3 +1,12 @@
+//= require rails
+//= require modernizr
+//= require lazy-load
+//= require boring-browser
+//= require jquery.noisy
+//= require jquery.placeholder
+//= require form.redu.jquery
+
+
 $(function() {
     $("body").noisy({
         "intensity": 1,

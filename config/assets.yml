@@ -29,27 +29,6 @@ javascripts:
   mobile:
     - *bootstrap
     - public/javascripts/mobile-login.js
-  new_application:
-    - *bootstrap
-    - *lazyload
-    - public/javascripts/form.redu.jquery.js
-    - public/javascripts/jquery.tokeninput-instant-search.js
-    - public/javascripts/swfobject.js # Necessário ao browserdetection.js
-    - public/javascripts/browserdetection.js
-    - public/javascripts/jquery.cookie.js
-    - public/javascripts/outdated-browser.js
-    - public/javascripts/home.js
-    - public/javascripts/statuses.js
-    - public/javascripts/wall_spinner.js
-    - public/javascripts/jquery.timeago.js
-    - public/javascripts/timeago.js
-    - public/javascripts/jquery.fcbkcomplete.min.js # Auto complete do facebook
-    - public/javascripts/users.js
-    - public/javascripts/old-create-status.js
-    - public/javascripts/underscore.js
-    - public/javascripts/underscore-sharing-template.redu.jquery.js
-    - public/javascripts/embedly.redu.jquery.js
-    - public/javascripts/search.js
   chat:
     - public/javascripts/jquery.pjax.js
     - public/javascripts/pusher.js
@@ -71,18 +50,6 @@ javascripts:
     - public/javascripts/treemap.js
   user:
     - public/javascripts/jquery.maskedinput.js
-  clean:
-    - public/javascripts/rails.js
-    - public/javascripts/modernizr.js
-    - *lazyload
-    - public/javascripts/jquery.noisy.js
-    - public/javascripts/jquery.placeholder.js
-    - public/javascripts/form.redu.jquery.js
-    - public/javascripts/swfobject.js # Necessário ao browserdetection.js
-    - public/javascripts/browserdetection.js
-    - public/javascripts/jquery.cookie.js
-    - public/javascripts/outdated-browser.js
-    - public/javascripts/clean.js
   canvas:
     - public/javascripts/easyXDM.js
     - public/javascripts/canvas.js
@@ -94,18 +61,6 @@ stylesheets:
     - public/stylesheets/mobile.css
   chat:
     - public/stylesheets/chat.css
-  clean:
-    - public/stylesheets/reset.css
-    - public/stylesheets/960.css
-    - public/stylesheets/new-fonts.css
-    - public/stylesheets/utils.css
-    - public/stylesheets/icons.redu.css
-    - public/stylesheets/tipTip.css
-    - public/stylesheets/form.redu.css
-    - public/stylesheets/outdated-browser.css
-    - public/stylesheets/clean.css
-    - public/stylesheets/landing.css
-    - public/stylesheets/fb-login.css
   cold:
     - public/stylesheets/reset.css
     - public/stylesheets/960.css
