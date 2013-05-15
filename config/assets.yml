@@ -61,19 +61,6 @@ stylesheets:
     - public/stylesheets/mobile.css
   chat:
     - public/stylesheets/chat.css
-  cold:
-    - public/stylesheets/reset.css
-    - public/stylesheets/960.css
-    - public/stylesheets/new-fonts.css
-    - public/stylesheets/utils.css
-    - public/stylesheets/tipTip.css
-    - public/stylesheets/form.redu.css
-    - public/stylesheets/icons.big.redu.css
-    - public/stylesheets/icons.redu.css
-    - public/stylesheets/outdated-browser.css
-    - public/stylesheets/cold.css
-    - public/stylesheets/errors.css
-    - public/stylesheets/recover.css
   print:
     - public/stylesheets/reset.css
     - public/stylesheets/new-fonts.css
