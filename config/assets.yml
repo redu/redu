@@ -14,9 +14,6 @@ javascripts:
   lazyload: &lazyload
     - public/javascripts/lazyload.js
     - public/javascripts/asyncjs.jquery.js
-  webview:
-    - public/javascripts/vendor/jquery.js
-    - *lazyload
   invite_friend:
     - public/javascripts/jquery.tokeninput-invite-friend.js
     - public/javascripts/friend-invitation.js
