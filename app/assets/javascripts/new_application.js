@@ -1,6 +1,7 @@
 //= require bootstrap
 //= require lazy-load
 //= require boring-browser
+//= require form.redu.jquery
 //= require jquery.tokeninput-instant-search
 //= require home
 //= require statuses
