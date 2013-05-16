@@ -42,7 +42,7 @@ Redu::Application.configure do
   config.paperclip = {
     :path => File.join(Rails.root.to_s, "public/:class/:attachment/:id/:style/:basename.:extension"),
     :url => "/system/:class/:attachment/:id/:style/:basename.:extension",
-    :default_url => "/images/new/missing_:class_:style.png"
+    :default_url => "/assets/missing_:class_:style.png"
   }
 
   config.paperclip_environment.merge!(config.paperclip)

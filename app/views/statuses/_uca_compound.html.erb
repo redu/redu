@@ -7,7 +7,7 @@
           :class => 'avatar'
         %>
     <% else %>
-      <%= image_tag 'new/missing_courses_thumb_32.png', :class => 'avatar' %>
+      <%= image_tag 'missing_courses_thumb_32.png', :class => 'avatar' %>
     <% end %>
       <%= link_to compound.statusable.environment.name, environment_path(compound.statusable.environment),
         :class => "status-main" %>
