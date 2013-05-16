@@ -31,7 +31,7 @@ ul, ol {
   content: "";
   width: 150px;
   height: 17px;
-  background: url("../images/new/separators.png") -160px 0 no-repeat;
+  background: image-url("separators.png") -160px 0 no-repeat;
   float: left;
   margin-left: -3px;
   margin-top: 2px;
@@ -561,7 +561,7 @@ ul, ol {
 
 #hierarchy-header .start-subject .start {
   display: block;
-  background: url("../images/new/start-subject.png") no-repeat;
+  background: image-url("start-subject.png") no-repeat;
   width: 146px;
   height: 25px;
 }
@@ -754,7 +754,7 @@ ul, ol {
 }
 
 .icons-big-before:before {
-  background-image: url("../images/new/icons-big.png");
+  background-image: image-url("icons-big.png");
   background-repeat: no-repeat;
   background-position: 0 0;
 }
@@ -768,7 +768,7 @@ ul, ol {
 }
 
 .icons-big {
-  background-image: url("../images/new/icons-big.png");
+  background-image: image-url("icons-big.png");
   background-repeat: no-repeat;
   background-position: 0 0;
 }
@@ -791,7 +791,7 @@ ul, ol {
 /* Novo design do botão de matricular-se no curso. */
 
 .icon-privacy-lightred_58_62 {
-  background-image: url("../images/new/icon-privacy-lightred_58_62.png");
+  background-image: image-url("icon-privacy-lightred_58_62.png");
   width: 58px;
   height: 62px;
   display: inline-block;
@@ -822,7 +822,7 @@ ul, ol {
   content: "";
   width: 32px!important;
   height: 34px!important;
-  background: url("../images/new/icons-small.png") -320px -480px no-repeat;
+  background: image-url("icons-small.png") -320px -480px no-repeat;
 }
 
 /* Separador ">" do breadcrumb. */
@@ -830,5 +830,5 @@ ul, ol {
   content: "";
   width: 16px!important;
   height: 18px!important;
-  background: url("../images/new/icons-small.png") -560px -800px no-repeat;
+  background: image-url("icons-small.png") -560px -800px no-repeat;
 }

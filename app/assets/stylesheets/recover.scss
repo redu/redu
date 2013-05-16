@@ -1,13 +1,13 @@
 /* Página de recuperação de login e senha */
 
 .overlay {
-  background-image: url("../images/new/circulos-bokeh-peq.png");
+  background-image: image-url("circulos-bokeh-peq.png");
   background-repeat: no-repeat;
   background-position: 60px 0;
 }
 
 .user-data-recovery .logo-top a {
-  background-image: url("../images/new/redu-hi-vert.png");
+  background-image: image-url("redu-hi-vert.png");
   display: block;
   width: 255px;
   height: 196px;

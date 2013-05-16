@@ -3,11 +3,11 @@
 }
 
  .create-status + .statuses {
-  background: url("../images/new/dots.png") repeat-x top;
+  background: image-url("dots.png") repeat-x top;
 }
 
 .statuses > ol > li {
-  background: url("../images/new/dots.png") repeat-x bottom;
+  background: image-url("dots.png") repeat-x bottom;
   padding: 20px 0;
   overflow: hidden;
   list-style: none;
@@ -349,27 +349,27 @@
 }
 
 .create-status .post-resource .thumbnail .last .arrow {
-  background:  url("../images/new/icons-oembed-nav.png") 0 0 no-repeat;
+  background:  image-url("icons-oembed-nav.png") 0 0 no-repeat;
 }
 
 .create-status .post-resource .thumbnail .last:hover .arrow {
-  background:  url("../images/new/icons-oembed-nav.png") 0 -20px no-repeat;
+  background:  image-url("icons-oembed-nav.png") 0 -20px no-repeat;
 }
 
 .create-status .post-resource .thumbnail .next .arrow {
-  background:  url("../images/new/icons-oembed-nav.png") -20px 0 no-repeat;
+  background:  image-url("icons-oembed-nav.png") -20px 0 no-repeat;
 }
 
 .create-status .post-resource .thumbnail .next:hover .arrow {
-  background:  url("../images/new/icons-oembed-nav.png") -20px -20px no-repeat;
+  background:  image-url("icons-oembed-nav.png") -20px -20px no-repeat;
 }
 
 .create-status .post-resource .thumbnail .remove .arrow {
-  background:  url("../images/new/icons-oembed-nav.png") -40px 0 no-repeat;
+  background:  image-url("icons-oembed-nav.png") -40px 0 no-repeat;
 }
 
 .create-status .post-resource .thumbnail .remove:hover .arrow {
-  background:  url("../images/new/icons-oembed-nav.png") -40px -20px no-repeat;
+  background:  image-url("icons-oembed-nav.png") -40px -20px no-repeat;
 }
 
 .cssgradients .create-status .post-resource .thumbnail .control {
@@ -423,7 +423,7 @@
 
 .create-status .post-resource .java-icon,
 #statuses .post-resource .java-icon {
-  background-image: url("../images/new/icon-applet.png");
+  background-image: image-url("icon-applet.png");
   text-indent: -9999px;
   width: 32px;
   height: 34px;
@@ -443,17 +443,17 @@
 }
 
 .create-status .post-resource .thumbnail .desactivated.last .arrow {
-  background: url("../images/new/icones-p.png") -480px -1919px no-repeat;
+  background: image-url("icones-p.png") -480px -1919px no-repeat;
   content: '';
 }
 
 .create-status .post-resource .thumbnail .desactivated.next .arrow {
-  background: url("../images/new/icones-p.png") -480px -1839px no-repeat;
+  background: image-url("icones-p.png") -480px -1839px no-repeat;
   content: '';
 }
 
 .create-status .post-resource .thumbnail .desactivated.remove .arrow {
-  background: url("../images/new/icones-p.png") -4px -2163px no-repeat;
+  background: image-url("icones-p.png") -4px -2163px no-repeat;
   content: '';
 }
 
@@ -646,19 +646,19 @@
 }
 
 .create-status .concave-form .status-icon {
-  background: url("../images/new/icons-small.png") 0 -560px no-repeat;
+  background: image-url("icons-small.png") 0 -560px no-repeat;
 }
 
 .create-status .concave-form .status-icon.concave-label-focus {
-  background: url("../images/new/icons-small.png") -160px -560px no-repeat;
+  background: image-url("icons-small.png") -160px -560px no-repeat;
 }
 
 .create-status .concave-form .status-icon-answer {
-  background: url("../images/new/icons-small.png") -480px -640px no-repeat;
+  background: image-url("icons-small.png") -480px -640px no-repeat;
 }
 
 .create-status .concave-form .status-icon-answer.concave-label-focus {
-  background: url("../images/new/icons-small.png") -560px -640px no-repeat;
+  background: image-url("icons-small.png") -560px -640px no-repeat;
 }
 
 .create-status .status-buttons {
@@ -738,7 +738,7 @@
   padding: 26px 10px 6px 10px;
   margin-top: 20px;
   margin-bottom: 10px;
-  background: url("../images/new/dots.png") repeat-x top;
+  background: image-url("dots.png") repeat-x top;
 }
 
 .statuses .endless a {
