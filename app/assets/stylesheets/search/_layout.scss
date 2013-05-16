@@ -101,7 +101,7 @@
 
 .portal-search {
   // Imagem de fundo do cabeçalho.
-  background: url("/images/search/search-background_160.png") no-repeat 391px -49px;
+  background: image-url("search-background_160.png") no-repeat 391px -49px;
 }
 
 .portal-search-result-item {
@@ -132,7 +132,7 @@
 // Portal de Ambientes.
 .portal-environments {
   // Imagem de fundo do cabeçalho.
-  background: url("/images/environments/environments-background_160.png") no-repeat 391px -45px;
+  background: image-url("environments-background_160.png") no-repeat 391px -45px;
 
   .portal-title-link { width: 110px; }
   .portal-header-message { width: 245px; }
