@@ -14,13 +14,13 @@
 
 /* Termos de Uso, Política de Privacidade e Fale Conosco */
 .overlay {
-  background-image: url("../images/new/circulos-bokeh-peq.png");
+  background-image: image-url("circulos-bokeh-peq.png");
   background-repeat: no-repeat;
   background-position: 60px 0;
 }
 
 .logo-top {
-  background-image: url("../images/new/redu-hi-vert.png");
+  background-image: image-url("redu-hi-vert.png");
   width: 225px;
   height: 196px;
   margin-left: -20px;
@@ -92,7 +92,7 @@
   content: "";
   width: 26px;
   height: 46px;
-  background-image: url("../images/new/icons-tos-privacy-contact.png");
+  background-image: image-url("icons-tos-privacy-contact.png");
   background-position: 0 -318px;
   float: right;
   margin-right: -26px;
@@ -119,7 +119,7 @@
 }
 
 .left-navigation li.term-of-service a:before {
-  background-image: url("../images/new/icons-tos-privacy-contact.png");
+  background-image: image-url("icons-tos-privacy-contact.png");
   background-position: -8px -4px;
 }
 
@@ -132,7 +132,7 @@
 }
 
 .left-navigation li.privacy-policy a:before {
-  background-image: url("../images/new/icons-tos-privacy-contact.png");
+  background-image: image-url("icons-tos-privacy-contact.png");
   background-position: -8px -84px;
 }
 
@@ -145,7 +145,7 @@
 }
 
 .left-navigation li.contact a:before {
-  background-image: url("../images/new/icons-tos-privacy-contact.png");
+  background-image: image-url("icons-tos-privacy-contact.png");
   background-position: -8px -164px;
 }
 
@@ -178,17 +178,17 @@
 }
 
 .content-title.term-of-service:after {
-  background-image: url("../images/new/icons-tos-privacy-contact.png");
+  background-image: image-url("icons-tos-privacy-contact.png");
   background-position: 0 -241px;
 }
 
 .content-title.privacy-policy:after {
-  background-image: url("../images/new/icons-tos-privacy-contact.png");
+  background-image: image-url("icons-tos-privacy-contact.png");
   background-position: 160px -241px;
 }
 
 .content-title.contact:after {
-  background-image: url("../images/new/icons-tos-privacy-contact.png");
+  background-image: image-url("icons-tos-privacy-contact.png");
   background-position: 80px -241px;
 }
 
@@ -355,7 +355,7 @@ html, body {
 .footer .logo-bottom {
   width: 240px;
   height: 77px;
-  background-image: url("../images/new/redutech-low-horiz-a.png");
+  background-image: image-url("redutech-low-horiz-a.png");
   margin-left: -18px;
 }
 
@@ -378,7 +378,7 @@ html, body {
 .footer .our-address{
   margin-left: 60px;
   margin-right: 143px;
-  background-image: url("../images/new/icon-geolocal-white_12.png");
+  background-image: image-url("icon-geolocal-white_12.png");
   background-repeat: no-repeat;
   width: 187px;
   float: left;
