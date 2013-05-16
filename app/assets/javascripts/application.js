@@ -5,7 +5,6 @@
 //= require folders
 //= require exercises
 //= require lectures
-//= require jquery.iframe-transport
 //= require jquery.remotipart
 //= require lazy-load
 //= require jquery.fcbkcomplete.min
