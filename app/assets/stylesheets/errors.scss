@@ -1,6 +1,6 @@
 /* Páginas de erro */
 #error .logo-top a {
-  background-image: url("../images/new/redu-hi-vert.png");
+  background-image: image-url("redu-hi-vert.png");
   display: block;
   width: 255px;
   height: 196px;
@@ -17,7 +17,7 @@
 
 #error .alert:after {
   content: "";
-  background-image: url("../images/new/alerta.png");
+  background-image: image-url("alerta.png");
   background-repeat: no-repeat;
   height: 142px;
   width: 165px;
