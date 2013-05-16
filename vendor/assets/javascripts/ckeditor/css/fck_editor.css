@@ -65,7 +65,7 @@ body
 
 .TB_Start
 {
-    background-image: url(/javascripts/ckeditor/images/toolbar.start.gif);
+    background-image: url(/assets/ckeditor/images/toolbar.start.gif);
     margin: 4px;
     width: 3px;
     background-repeat: no-repeat;

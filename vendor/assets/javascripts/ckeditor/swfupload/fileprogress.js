@@ -97,7 +97,7 @@ var Button = new Class({
     var cell = row.insertCell(row.cells.length);
     
     image = document.createElement('img');
-    image.src = '/javascripts/ckeditor/images/' + this.image;
+    image.src = CKEDITOR_BASEPATH + '/images/' + this.image;
     image.className = 'TB_Button_Image';
     
     cell.appendChild(image);
@@ -109,7 +109,7 @@ var Button = new Class({
     
     var cell = row.insertCell(row.cells.length);
     image = document.createElement('img');
-    image.src = '/javascripts/ckeditor/images/spacer.gif';
+    image.src = CKEDITOR_BASEPATH + '/images/spacer.gif';
     image.className = 'TB_Button_Padding';
     cell.appendChild(image);
     
@@ -249,9 +249,9 @@ FileProgress.prototype.createThumbnail = function(serverData) {
   var cell = row.insertCell(row.cells.length);
   cell.setAttribute('align', 'center');
   cell.setAttribute('valign', 'middle');
-  
-  cell.innerHTML = "<img src='" + image_src + "' alt='" + image_alt + "' title='" + file_name + "' class='image' onerror=\"this.src='/javascripts/ckeditor/images/ckfnothumb.gif'\" />"
-  
+
+  cell.innerHTML = "<img src='" + image_src + "' alt='" + image_alt + "' title='" + file_name + "' class='image' onerror=\"this.src='" + CKEDITOR_BASEPATH + "/images/ckfnothumb.gif'\" />"
+
   var div_name = document.createElement('DIV');
   div_name.className = "FCKFileName";
   div_name.innerHTML = file_name;

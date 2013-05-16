@@ -18,10 +18,9 @@
     <%= render :partial => "shared/chat" %>
 
   <script type="text/javascript" language="javascript" charset="utf-8">
-  //<![CDATA[
-    <% asset_host =  Redu::Application.config.action_controller.asset_host || "" %>
-    var CKEDITOR_BASEPATH = "<%=  "#{asset_host}/javascripts/ckeditor/" %>";
-  //]]>
+	//<![CDATA[
+	  var CKEDITOR_BASEPATH = "<%=  asset_path("ckeditor") %>";
+	//]]>
   </script>
   <%= render :partial => "shared/typekit" %>
   <%= render :partial => "shared/analytics" %>
