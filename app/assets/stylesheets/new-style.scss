@@ -5327,7 +5327,7 @@ table.concave-invitation-table .cell-reinvite .reinvited {
 .admin-filter-form .concave-form .concave-loading:hover,
 #space-manage .concave-loading,
 #space-manage .concave-form .concave-loading:hover {
-  background: #f1f0f0 url("../images/new/spinner.gif") no-repeat center center;
+  background: #f1f0f0 image-url("spinner-new.gif") no-repeat center center;
   color: transparent;
 }
 
@@ -5661,7 +5661,7 @@ div.token-input-dropdown {
 }
 
 #admin-invitations .loading {
-  background-image: url("../images/new/spinner.gif");
+  background-image: image-url("spinner-new.gif");
   background-repeat: no-repeat;
   background-position: 310px 5px ;
 }
@@ -7005,7 +7005,7 @@ div.token-input-dropdown {
   * .form-loader input.bt-loading, /* para sobrepor a precedência de input.important */
   .form-loader input.bt-loading:hover,
   .form-common .bt-loading:hover {
-    background: #f1f0f0 url("../images/new/spinner.gif") no-repeat center center;
+    background: #f1f0f0 image-url("spinner-new.gif") no-repeat center center;
     border: 1px solid #cccbcb;
     color: transparent;
 }

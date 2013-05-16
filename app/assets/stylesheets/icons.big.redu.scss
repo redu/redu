@@ -1,12 +1,12 @@
 .icons-big {
-  background-image: url("../images/new/icons-big.png");
+  background-image: image-url("icons-big.png");
   background-repeat: no-repeat;
   background-position: 0 0;
 }
 
 .icons-big-after:after,
 .icons-big-before:before {
-  background-image: url("../images/new/icons-big.png");
+  background-image: image-url("icons-big.png");
   background-repeat: no-repeat;
   background-position: 0 0;
 }
