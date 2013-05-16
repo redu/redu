@@ -9,7 +9,7 @@ body {
 #header {
   margin-top: 10px;
 
-  background: url("../images/new/background-header.png") repeat-x;
+  background: image-url("background-header.png") repeat-x;
   height: 56px;
 
   -moz-border-radius: 12px;
@@ -23,7 +23,7 @@ body {
 
 #logotipo {
   float: left;
-  background: url("../images/new/logotipo.gif") no-repeat 10px center;
+  background: image-url("logotipo.gif") no-repeat 10px center;
   height: inherit;
 }
 
@@ -74,12 +74,7 @@ body {
   content: "▼";
 }
 
-#nav-account .hover {
-  background: url("../images/new/nav-account-background.png") no-repeat;
-}
-
 #nav-account ul {
-  background: url("../images/new/nav-account-background.png") no-repeat 0 -50px;
   position: absolute;
   top: 56px;
   z-index: 1000;
@@ -284,7 +279,7 @@ body {
   content: "";
   width: 150px;
   height: 17px;
-  background: url("../images/new/separators.png") -160px 0 no-repeat;
+  background: image-url("separators.png") -160px 0 no-repeat;
   float: left;
   margin-left: -3px;
   margin-top: 2px;
@@ -880,7 +875,7 @@ body {
 
 #hierarchy-header .start-subject .start {
   display: block;
-  background: url("../images/new/start-subject.png") no-repeat;
+  background: image-url("start-subject.png") no-repeat;
   width: 146px;
   height: 25px;
 }
@@ -1264,7 +1259,7 @@ body {
 
 #space-new .header,
 #course-spaces .header {
-  background: url("../images/new/icon-space-gray_32_32.png") no-repeat 20px center;
+  background: image-url("icon-space-gray_32_32.png") no-repeat 20px center;
 }
 
 #course-spaces .actions .waiting {
@@ -1287,7 +1282,7 @@ body {
 
 #space-materials .header {
   width: 415px;
-  background: url("../images/new/icon-material-gray_32_32.png") no-repeat 20px center;
+  background: image-url("icon-material-gray_32_32.png") no-repeat 20px center;
 }
 
 #subject-blocked {
@@ -1295,7 +1290,7 @@ body {
 }
 
 #subject-blocked .icon-blocked {
-  background: url("../images/new/icon-blocked-gray_48_48.png") no-repeat;
+  background: image-url("icon-blocked-gray_48_48.png") no-repeat;
   width: 48px;
   height: 75px;
   margin: 50px 343px 0 343px;
@@ -1499,7 +1494,7 @@ body {
 .hierarchy-listing .child .audience {
   width: 125px;
   margin-right: 20px;
-  background: url("../images/new/vertical-dots.png") repeat-y right;
+  background: image-url("vertical-dots.png") repeat-y right;
   padding: 10px 0;
 }
 
@@ -1967,7 +1962,7 @@ body {
   padding: 26px 10px 6px 10px;
   margin-top: 20px;
   margin-bottom: 10px;
-  background: url("../images/new/dots.png") repeat-x top;
+  background: image-url("dots.png") repeat-x top;
 }
 
 .endless a,
@@ -2000,7 +1995,7 @@ body {
 
 .sidebar-endless,
 .sec-sidebar-endless {
-  background: url("../images/new/dots.png") repeat-x top;
+  background: image-url("dots.png") repeat-x top;
   padding-top: 10px;
   margin-top: 10px;
   text-align: right;
@@ -2142,13 +2137,13 @@ body {
 }
 
 #footer {
-  background: url("../images/new/dots.png") repeat-x top;
+  background: image-url("dots.png") repeat-x top;
   padding: 10px 0 55px;
 }
 
 #logotipo-footer {
   float: left;
-  background: url("../images/new/logotipo-mono.png") no-repeat center left;
+  background: image-url("logotipo-mono.png") no-repeat center left;
   width: 35px;
   height: 33px;
   margin-right: 10px;
@@ -2189,7 +2184,7 @@ body {
 }
 
 #breadcrumbs li {
-  background: url("../images/new/breadcrumb-arrow.gif") no-repeat right center;
+  background: image-url("breadcrumb-arrow.gif") no-repeat right center;
   padding-right: 15px;
   padding-left: 10px;
   float: left;
@@ -2524,7 +2519,7 @@ body {
 }
 
 #home .logotipo {
-  background: url("../images/new/logotipo-big.png") no-repeat;
+  background: image-url("logotipo-big.png") no-repeat;
   width: 469px;
   height: 138px;
 }
@@ -2557,7 +2552,7 @@ body {
 #invitation .hall {
   border: 1px solid #B3B2B3;
   padding: 20px;
-  background: #F0F0F0 url("../images/new/login-gradient.png") repeat-x;
+  background: #F0F0F0 image-url("login-gradient.png") repeat-x;
 
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -2588,7 +2583,7 @@ body {
 
 .friends-requisitions,
 .courses-requisitions {
-  background: url("../images/new/dots.png") repeat-x bottom;
+  background: image-url("dots.png") repeat-x bottom;
   padding: 20px 0 20px 0;
 }
 
@@ -3669,7 +3664,7 @@ table.spaced tr td {
 }
 
 #teach-index {
-  background: url("../images/new/teach-background.png") no-repeat 0 235px;
+  background: image-url("teach-background.png") no-repeat 0 235px;
   min-height: 1050px;
   padding-top: 40px;
 }
@@ -3788,22 +3783,22 @@ table.spaced tr td {
 
 /* Devido a precedência do background do .concave-form .concave-label */
 #teach-index .concave-form .environment {
-  background: url("../images/new/icons-small.png") 0 0 no-repeat;
+  background: image-url("icons-small.png") 0 0 no-repeat;
 }
 
 /* Devido a precedência do background do .concave-form .concave-label */
 #teach-index .concave-form .environment.concave-label-focus {
-  background: url("../images/new/icons-small.png") -80px 0 no-repeat;
+  background: image-url("icons-small.png") -80px 0 no-repeat;
 }
 
 /* Devido a precedência do background do .concave-form .concave-label */
 #teach-index .concave-form .course {
-  background: url("../images/new/icons-small.png") 0 -80px no-repeat;
+  background: image-url("icons-small.png") 0 -80px no-repeat;
 }
 
 /* Devido a precedência do background do .concave-form .concave-label */
 #teach-index .concave-form .course.concave-label-focus {
-  background: url("../images/new/icons-small.png") -80px -80px no-repeat;
+  background: image-url("icons-small.png") -80px -80px no-repeat;
 }
 
 #teach-index .concave-form .tip {
@@ -3845,7 +3840,7 @@ table.spaced tr td {
 #breadcrumbs-wizard li {
   float: left;
   height: 18px;
-  background: url("../images/new/breadcrumb-arrow.png") no-repeat center right;
+  background: image-url("breadcrumb-arrow.png") no-repeat center right;
   margin-right: 12px;
   padding-right: 18px;
 }
@@ -4262,7 +4257,7 @@ table.spaced tr td {
   margin-top: -100px;
   margin-bottom: 50px;
 
-  background: url("../images/new/icons-checkout-confirmation.png") no-repeat 0 0;
+  background: image-url("icons-checkout-confirmation.png") no-repeat 0 0;
 }
 
 #checkout .course-fields:after {
@@ -4274,7 +4269,7 @@ table.spaced tr td {
   margin-top: -100px;
   margin-bottom: 50px;
 
-  background: url("../images/new/icons-checkout-confirmation.png") no-repeat 0 -172px;
+  background: image-url("icons-checkout-confirmation.png") no-repeat 0 -172px;
 }
 
 #checkout .confirmation table {
@@ -4284,7 +4279,7 @@ table.spaced tr td {
 }
 
 #checkout .confirmation tbody {
-  background: url("../images/new/dots.png") repeat-x top;
+  background: image-url("dots.png") repeat-x top;
   width: 560px;
   display: block;
   padding-top: 10px;
@@ -4316,7 +4311,7 @@ table.spaced tr td {
   float: right;
   margin-top: -80px;
   margin-right: -100px;
-  background: url("../images/new/icons-checkout-confirmation2.png") no-repeat 0 0;
+  background: image-url("icons-checkout-confirmation2.png") no-repeat 0 0;
   width: 66px;
   height: 67px;
 }
@@ -4327,7 +4322,7 @@ table.spaced tr td {
   float: right;
   margin-top: -60px;
   margin-right: -100px;
-  background: url("../images/new/icons-checkout-confirmation2.png") no-repeat 0 -118px;
+  background: image-url("icons-checkout-confirmation2.png") no-repeat 0 -118px;
   width: 66px;
   height: 67px;
 }
@@ -4371,11 +4366,11 @@ table.spaced tr td {
   height: 48px;
   width: 48px;
   margin: 10px 136px;
-  background: url("../images/new/icon-home-blue3_48_48.png") no-repeat center;
+  background: image-url("icon-home-blue3_48_48.png") no-repeat center;
 }
 
 #checkout.payment-confirmation .next-action .home-icon:hover {
-  background: url("../images/new/icon-home-blue4_48_48.png") no-repeat center;
+  background: image-url("icon-home-blue4_48_48.png") no-repeat center;
 }
 #checkout.payment-confirmation .next-action .home-button {
   display: block;
@@ -5839,11 +5834,11 @@ div.token-input-dropdown {
 }
 
 #global-courses .courses .preview .expand {
-  background: url("../images/new/arrow-down.png") no-repeat scroll 0 0 transparent;
+  background: image-url("arrow-down.png") no-repeat scroll 0 0 transparent;
 }
 
 #global-courses .courses .preview .unexpand {
-  background: url("../images/new/arrow-up.png") no-repeat scroll 0 0 transparent;
+  background: image-url("arrow-up.png") no-repeat scroll 0 0 transparent;
 }
 
 #global-courses .courses .avatar {
@@ -5944,7 +5939,7 @@ div.token-input-dropdown {
 #invitation .logotipo {
   width: 174px;
   height: 237px;
-  background: url("../images/new/logotipo-vertical.png") no-repeat;
+  background: image-url("logotipo-vertical.png") no-repeat;
 }
 
 #invitation {
@@ -5986,7 +5981,7 @@ div.token-input-dropdown {
 }
 
 #invitation .course .header {
-  background: url("../images/new/dots.png") repeat-x bottom;
+  background: image-url("dots.png") repeat-x bottom;
   padding-bottom: 20px;
 }
 
@@ -6004,7 +5999,7 @@ div.token-input-dropdown {
 
 #invitation .course .description {
   display: block;
-  background: url("../images/new/dots.png") repeat-x bottom;
+  background: image-url("dots.png") repeat-x bottom;
   padding: 20px 0;
   margin-bottom: 20px;
   font-size: 0.9em;
@@ -6071,7 +6066,7 @@ div.token-input-dropdown {
   width: 8px;
   height: 10px;
 
-  background: url("../images/new/icons-small.png") -240px -2800px no-repeat;
+  background: image-url("icons-small.png") -240px -2800px no-repeat;
   float: left;
   margin-right: 5px;
 }
@@ -6370,7 +6365,7 @@ div.token-input-dropdown {
 }
 
 #clean .instruction {
-  background: url("../images/new/gray-ballon.png") no-repeat;
+  background: image-url("gray-ballon.png") no-repeat;
   width: 210px;
   height: 32px;
   padding: 10px 10px 10px 20px;
@@ -6392,7 +6387,7 @@ div.token-input-dropdown {
 
 #messages table.common .unread {
   padding-left: 20px;
-  background: url("../images/new/icon-unread-green_8_8.png") no-repeat 0px center;
+  background: image-url("icon-unread-green_8_8.png") no-repeat 0px center;
   font-weight: bold;
 }
 
@@ -6443,7 +6438,7 @@ div.token-input-dropdown {
 #messages .respond {
   margin-left: 40px;
   margin-bottom: 10px;
-  background: #F0F0F0 url("../images/new/gray-nipple.png") no-repeat left top;
+  background: #F0F0F0 image-url("gray-nipple.png") no-repeat left top;
   padding: 10px 10px 10px 0;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -6841,7 +6836,7 @@ div.token-input-dropdown {
 
 #course-manage .plan-panel {
   height: 114px;
-  background: url("../images/new/circulos-peq-cinza.png");
+  background: image-url("circulos-peq-cinza.png");
   background-repeat: no-repeat;
   background-position: 90px 0px;
 }
@@ -7016,7 +7011,7 @@ a.link-loading,  /* para sobrepor a precedência de input.important */
 #space-manage .new-resource .resources-types li:hover .option.link-loading, /* para sobrepor a precedência */
 a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .link-loading:hover {
-  background-image:  url("../images/new/loading-horizontal.gif");
+  background-image:  image-url("loading-horizontal.gif");
   background-repeat: no-repeat;
   border: none;
   color: transparent;
@@ -7024,7 +7019,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 
 .status a.close.link-loading,
 .status a.close.link-loading:hover {
-  background: url("../images/new/spinner-blue-horiz.gif") no-repeat center center;
+  background: image-url("spinner-blue-horiz.gif") no-repeat center center;
   color: transparent;
 }
 
@@ -7303,7 +7298,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 #invoice-index .plan-panel .plan-use:before {
-  background-image: url("../images/new/circulos-peq-cinza.png");
+  background-image: image-url("circulos-peq-cinza.png");
   float: left;
   content: '';
   width: 51px;
@@ -7447,7 +7442,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 #content .explanation-sidebar .explanation .pag-seguro a {
-  background-image: url("../images/new/pagseguro-p.png");
+  background-image: image-url("pagseguro-p.png");
   text-indent: -9999px;
   display: block;
   overflow: hidden;
@@ -7758,7 +7753,7 @@ button[disabled=disabled] {
 /* Mensagem de mural privado. */
 
 .icon-private-gray_128_130 {
-  background-image: url("../images/new/private-gray_128_130.png");
+  background-image: image-url("private-gray_128_130.png");
   width: 128px;
   height: 130px;
 }
@@ -7783,7 +7778,7 @@ button[disabled=disabled] {
 }
 
 .icon-privacy-green_16_18 {
-  background-image: url("../images/new/icon-privacy-green_16_18.png");
+  background-image: image-url("icon-privacy-green_16_18.png");
   width: 16px;
   height: 18px;
 }
