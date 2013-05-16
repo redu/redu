@@ -52,7 +52,7 @@ html, body {
 }
 
 .footer .logo-footer a {
-  background-image: url("../images/new/redutech-low-horiz-b.png");
+  background-image: image-url("redutech-low-horiz-b.png");
   display: block;
   width: 240px;
   height: 70px;
@@ -124,7 +124,7 @@ html, body {
 }
 
 #clean .logotipo {
-  background: url("../images/new/logotipo-vertical.png") no-repeat;
+  background: image-url("logotipo-vertical.png") no-repeat;
 }
 
 #clean .logotipo a {
@@ -193,7 +193,7 @@ html, body {
 }
 
 #clean .instruction {
-  background: url("../images/new/gray-ballon.png") no-repeat;
+  background: image-url("gray-ballon.png") no-repeat;
   width: 210px;
   height: 32px;
   padding: 10px 10px 10px 20px;
