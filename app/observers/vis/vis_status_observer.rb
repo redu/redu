@@ -2,7 +2,7 @@ class VisStatusObserver < ActiveRecord::Observer
   observe :status
 
   def after_create(status)
-    unless status.is_a? CompoundLog || Log
+    unless is_a_log? status
       case status.statusable.class.to_s
       when "Lecture", "Space"
         VisClient.notify_delayed("/hierarchy_notifications.json",
@@ -18,7 +18,7 @@ class VisStatusObserver < ActiveRecord::Observer
   end
 
   def after_destroy(status)
-    unless status.is_a? CompoundLog || Log
+    unless is_a_log? status
       case status.statusable.class.to_s
       when "Lecture", "Space"
         VisClient.notify_delayed("/hierarchy_notifications.json",
@@ -32,5 +32,11 @@ class VisStatusObserver < ActiveRecord::Observer
         end
       end
     end
+  end
+
+  private
+
+  def is_a_log?(status)
+    (status.is_a? CompoundLog)  || (status.is_a? Log)
   end
 end
