@@ -61,7 +61,7 @@
 
 #chat-contacts .scroll .up,
 #chat-contacts .scroll .down {
-  background: url("../images/new/icons-chat.png") no-repeat;
+  background: image-url("icons-chat.png") no-repeat;
   width: 140px;
   height: 20px;
   margin: 5px 10px;
@@ -105,7 +105,7 @@
   overflow: hidden;
   width: 10px;
   height: 10px;
-  background: url("../images/new/icons-chat.png") -843px 0px;
+  background: image-url("icons-chat.png") -843px 0px;
   margin: 10px 0;
 }
 
@@ -149,7 +149,7 @@
   margin-right: 5px;
   text-indent: -9999px;
   overflow: hidden;
-  background: url("../images/new/icons-chat.png") -775px 0;
+  background: image-url("icons-chat.png") -775px 0;
 }
 
 #chat-contacts-bar {
@@ -161,7 +161,7 @@
   left: 4px;
   bottom: 0;
 
-  background: url("../images/new/icons-chat.png") -72px 0px;
+  background: image-url("icons-chat.png") -72px 0px;
 }
 
 #chat-contacts-bar.closed {
@@ -217,7 +217,7 @@
   width: 156px;
   height: 58px;
 
-  background: url("../images/new/icons-chat.png") -290px  0px;
+  background: image-url("icons-chat.png") -290px  0px;
 }
 
 #chat-windows-list .chat-window-bar .nodge,
@@ -233,16 +233,16 @@
 }
 
 #chat-windows-list .chat-window-bar .online {
-  background: url("../images/new/icons-chat.png") 0 0;
+  background: image-url("icons-chat.png") 0 0;
 }
 
 #chat-windows-list .chat-window-bar .nodge {
-  background: url("../images/new/chat-conv-online-new.gif") 0 0;
+  background: image-url("chat-conv-online-new.gif") 0 0;
   height: 8px;
 }
 
 #chat-windows-list .chat-window-bar .offline {
-  background: url("../images/new/icons-chat.png") -909px 0;
+  background: image-url("icons-chat.png") -909px 0;
 }
 
 #chat-windows-list .chat-window-bar .name {
@@ -259,7 +259,7 @@
   height: 40px;
   text-indent: -9999px;
   overflow: hidden;
-  background: url("../images/new/icons-chat.png") -509px  0px;
+  background: image-url("icons-chat.png") -509px  0px;
   margin-top: 20px;
   cursor: pointer;
 }
