@@ -1,6 +1,8 @@
 require 'representable/json/collection'
-module CourseEnrollmentsRepresenter
-  include Representable::JSON::Collection
+module Api
+  module CourseEnrollmentsRepresenter
+    include Representable::JSON::Collection
 
-  items :extend => CourseEnrollmentRepresenter
+    items :extend => CourseEnrollmentRepresenter
+  end
 end

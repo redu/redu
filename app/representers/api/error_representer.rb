@@ -1,6 +1,8 @@
-module ErrorRepresenter
-  include Roar::Representer::JSON
+module Api
+  module ErrorRepresenter
+    include Roar::Representer::JSON
 
-  property :error
+    property :error
 
+  end
 end

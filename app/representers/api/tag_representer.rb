@@ -1,6 +1,8 @@
-module TagRepresenter
-  include Roar::Representer::JSON
-  include Roar::Representer::Feature::Hypermedia
+module Api
+  module TagRepresenter
+    include Roar::Representer::JSON
+    include Roar::Representer::Feature::Hypermedia
 
-  property :name
+    property :name
+  end
 end

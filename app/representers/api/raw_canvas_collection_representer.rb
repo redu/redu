@@ -1,8 +1,10 @@
 require 'representable/json/collection'
 
-module RawCanvasCollectionRepresenter
-  include Representable::JSON::Collection
+module Api
+  module RawCanvasCollectionRepresenter
+    include Representable::JSON::Collection
 
-  items :extend => RawCanvasRepresenter
+    items :extend => RawCanvasRepresenter
+  end
 end
 
