@@ -78,6 +78,7 @@ group :assets do
   gem 'compass-rails'
   gem 'therubyracer', :platforms => :ruby
   gem 'uglifier', '~> 2'
+  gem 'asset_sync'
 end
 
 # Gems específicos de algum ambiente
