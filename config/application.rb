@@ -200,8 +200,8 @@ module Redu
     # Service objects
     config.autoload_paths << "#{config.root}/app/services"
 
-    # Vis Representers
-    config.autoload_paths << "#{config.root}/app/representers/vis"
+    # Representers
+    config.autoload_paths << "#{config.root}/app/representers/**/*"
 
     # Enumerators
     config.autoload_paths << "#{config.root}/app/enums"
