@@ -9,7 +9,7 @@ ul.holder li { float: left; list-style-type: none; margin: 0 5px 4px 0; white-sp
 ul.holder li.bit-box { -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; border: 1px solid #CAD8F3; background: #DEE7F8; padding: 1px 5px 2px; }
 ul.holder li.bit-box-focus { border-color: #598BEC; background: #598BEC; color: #fff; }
 ul.holder li.bit-input input { width: auto; overflow:visible; margin: 0; border: 0px; outline: 0; padding: 3px 0px 2px; } /* no left/right padding here please */
-ul.holder li.bit-input input:focus { border: none, -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none;
+ul.holder li.bit-input input:focus { border: none; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none;
  }
 ul.holder li.bit-input input.smallinput { width: 20px; }
 
