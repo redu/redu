@@ -4186,7 +4186,7 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
 
 .logo-redu-color_140_40, .logo-redu-gray_140_40:hover,
 .logo-redu-gray_140_40 {
-  background: url(<%= asset_path "logos.png" %>) no-repeat;
+  background: image-url("logos.png") no-repeat;
 }
 
 .logo-redu-color_140_40, .logo-redu-gray_140_40:hover {
@@ -6028,19 +6028,19 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
 .spinner-horizontal-blue,
 .spinner-horizontal-blue:hover,
 .spinner-horizontal-blue:visited {
-  background-image: url(<%= asset_path "spinner-blue-horiz.gif" %>) !important;
+  background-image: image-url("spinner-blue-horiz.gif") !important;
 }
 
 .spinner-circular-gray,
 .spinner-circular-gray:hover,
 .spinner-circular-gray:visited {
-  background-image: url(<%= asset_path "spinner-grey.gif" %>) !important;
+  background-image: image-url("spinner-grey.gif") !important;
 }
 
 .spinner-circular-blue,
 .spinner-circular-blue:hover,
 .spinner-circular-blue:visited {
-  background-image: url(<%= asset_path "spinner-blue.gif" %>) !important;
+  background-image: image-url("spinner-blue.gif") !important;
 }
 
 .header {
