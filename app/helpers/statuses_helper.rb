@@ -33,4 +33,19 @@ module StatusesHelper
     when "UserCourseAssociation" then "uca_compound"
     end
   end
+
+  # Retorna o nome da partial correta de um dado tipo de status
+  # que pode ser respondido.
+  def answerable_status_partial(item)
+    case item.statusable_type
+    when "Lecture"
+      if item.type == "Help"
+        "lecture_help"
+      else
+        "lecture"
+      end
+    when "Space" then "space"
+    else "friend"
+    end
+  end
 end
