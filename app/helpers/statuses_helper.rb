@@ -48,4 +48,21 @@ module StatusesHelper
     else "friend"
     end
   end
+
+  # Retorna o texto correto da ação de comentar no
+  # seu próprio mural ou no mural de um amigo.
+  def comment_self_or_friend_wall_action(item)
+    text = "comentou no "
+    if item.statusable.eql?(item.user)
+      text << "seu próprio "
+      text << link_to("Mural", show_mural_user_path(item.user))
+    else
+      text << link_to("Mural", show_mural_user_path(item.statusable))
+      text << " de "
+      text << link_to(item.statusable.display_name, user_path(item.statusable))
+    end
+    text << ":"
+
+    raw text
+  end
 end
