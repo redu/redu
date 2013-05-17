@@ -58,19 +58,6 @@ GIT
       activesupport (>= 3.0.0)
 
 GIT
-  remote: git@github.com:guiocavalcanti/roar-rails.git
-  revision: 9b46639e998b0c6dd170d3029f77a5ecae37a958
-  branch: fix-relation-and-infer
-  specs:
-    roar-rails (0.0.15)
-      actionpack
-      hooks
-      railties (>= 3.0.0)
-      representable (~> 1.4)
-      roar (~> 0.10)
-      test_xml
-
-GIT
   remote: git@github.com:jessicabarbalho/has_friends.git
   revision: bcb9026a9110732ea9d6e4de568cbb2d1e283d8f
   specs:
@@ -379,6 +366,13 @@ GEM
       nokogiri
     roar (0.11.17)
       representable (>= 1.5.0)
+    roar-rails (0.1.0)
+      actionpack
+      hooks
+      railties (>= 3.0.0)
+      representable (~> 1.4)
+      roar (~> 0.11.13)
+      test_xml (>= 0.1.6)
     route_translator (3.0.2)
     rscribd (1.3.0)
       mime-types
@@ -526,8 +520,7 @@ DEPENDENCIES
   rake (= 0.8.7)
   redu_analytics
   remotipart (~> 1.0)
-  roar
-  roar-rails!
+  roar-rails
   route_translator
   rspec-rails (~> 2.13)
   ruby-debug
