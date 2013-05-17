@@ -1,6 +1,10 @@
+<%#
+  Item da lista de compound log de usuários.
+
+  Variáveis:
+    compound_user: o usuário.
+%>
+
 <li>
-  <%= link_to user_path(compound_user), :rel => "nofollow", :title => compound_user.display_name do %>
-    <%= image_tag compound_user.avatar.url(:thumb_32),
-      :width => 32, :height => 32 %>
-  <% end %>
+  <%= render "statuses/user_image", :user => compound_user %>
 </li>

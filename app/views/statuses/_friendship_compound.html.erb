@@ -1,19 +1,25 @@
-<li id="status-<%= compound.id %>">
+<%#
+  Compound log de amizades.
+
+  Variáveis:
+    compound: o compound log de amizades.
+%>
+
+<%= content_tag :li, :id => "status-#{compound.id}" do %>
   <hr class="list-separator">
   <div class="status without-context">
     <div class="context">
-      <%= link_to user_path(compound.user), :rel => "nofollow", :title => "#{compound.statusable.first_name} #{compound.statusable.last_name}", :class => "author-thumbnail" do %>
-        <%= image_tag compound.statusable.avatar.url(:thumb_32), :width => 32, :height => 32 %>
-      <% end %>
-      <%= link_to "#{compound.statusable.first_name} #{compound.statusable.last_name}",
-          user_path(compound.statusable), :class => "link-name" %>
+      <%= render "statuses/user_image", :user => compound.user %>
+      <%= render "statuses/user_name", :user => compound.user %>
     </div>
     <div class="subject">
       <div class="subject-info">
-        <span class="action">
-          adicionou <%= compound.logs.count %> novas pessoas à sua rede de contatos
-        </span>
-        <span href="#" class="link-fake see-all link-secondary">+ ver todos</span>
+        <%= content_tag :span,
+          "adicionou #{compound.logs.count} novas pessoas à sua rede de contatos:",
+          :class => "action" %>
+        <% if compound.logs.count > 12 %>
+          <span class="link-fake see-all link-secondary">+ Ver todos</span>
+        <% end %>
       </div>
     </div>
     <div class="subject-content">
@@ -24,4 +30,4 @@
       </ul>
     </div>
   </div>
-</li>
+<% end %>

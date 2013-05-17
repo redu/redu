@@ -1,22 +1,39 @@
-<li id="status-<%= compound.id %>">
+<%#
+  Compound log de ingresso a curso.
+
+  Variáveis:
+    compound: o compound log de ingresso a curso.
+%>
+
+<%= content_tag :li, :id => "status-#{compound.id}" do %>
+  <hr class="list-separator">
   <div class="status log">
     <div class="context">
       <% if compound.statusable.environment.avatar_file_name %>
-      <%= link_to compound.statusable.name, environment_course_path(compound.statusable.environment, log.logeable) do %>
-        <%= image_tag compound.statusable.environment.avatar.url(:thumb_32),
-          :size => '32x32',
-         :class => 'author-thumbnail'
-        %>
-      <% end %>
+        <%= link_to environment_path(compound.statusable.environment),
+          :title => compound.statusable.environment.name do %>
+          <%= image_tag compound.statusable.environment.avatar.url(:thumb_32),
+            :size => "32x32",
+            :class => "author-thumbnail",
+            :alt => compound.statusable.environment.name %>
+        <% end %>
       <% else %>
-          <%= link_to compound.statusable.name, environment_course_path(compound.statusable.environment, compound.statusable), :class => "text-replacement context-icon icon-course-gray_32_34-before" %>
+        <%= link_to compound.statusable.name,
+          environment_course_path(compound.statusable.environment, compound.statusable),
+          :class => "text-replacement context-icon icon-course-gray_32_34-before" %>
       <% end %>
+      <%= content_tag :span, compound.statusable.environment.name, :class => "legend" %>
+      <%= link_to compound.statusable.name,
+        environment_course_path(compound.statusable.environment, compound.statusable) %>
     </div>
     <div class="subject">
       <div class="subject-info">
-        <span class="link-fake see-all link-secondary">+ ver todos</span>
-        <span class="icon-grouping-gray_!6_18-before action"> O curso possui <%= compound.logs.count %> novos membros
-        </span>
+        <%= content_tag :span,
+          "O curso possui #{compound.logs.count} novos Membros:",
+          :class => "icon-grouping-gray_16_18-before action" %>
+        <% if compound.logs.count > 12 %>
+          <span class="link-fake see-all link-secondary">+ Ver todos</span>
+        <% end %>
       </div>
     </div>
     <div class="subject-content">
@@ -25,9 +42,6 @@
           :collection => compound.logs.collect {|log| log.logeable.user },
           :as => :compound_user %>
       </ul>
-      <% unless compound.logs.count <= 11 %>
-        <a href="#" class="show-more">Ver mais </a>
-      <% end %>
     </div>
   </div>
-</li>
+<% end %>

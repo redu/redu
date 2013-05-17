@@ -23,4 +23,12 @@ module StatusesHelper
     when "CourseEnrollment" then "user_course_association"
     end
   end
+
+  # Retorna o nome da partial correta de um dado tipo de compound log.
+  def compound_log_partial(logeable_type)
+    case logeable_type
+    when "Friendship" then "friendship_compound"
+    when "UserCourseAssociation" then "uca_compound"
+    end
+  end
 end

@@ -8,11 +8,7 @@
 <% if item.type.eql? 'Log' %>
   <%= render "statuses/logs/#{log_partial(item.logeable_type)}", :log => item %>
 <% elsif item.type.eql? 'CompoundLog' %>
-    <% if item.logeable_type.eql? 'Friendship' %>
-      <%= render 'statuses/friendship_compound', :compound => item %>
-    <% elsif item.logeable_type.eql? 'UserCourseAssociation' %>
-      <%= render 'statuses/uca_compound', :compound => item %>
-    <% end %>
+  <%= render "statuses/#{compound_log_partial(item.logeable_type)}", :compound => item %>
 <% else %>
   <% if item.statusable_type.eql?('Lecture') && item.type == 'Help' %>
     <li id="status-<%= item.id %>">

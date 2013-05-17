@@ -2366,8 +2366,8 @@ $.fn.groupResponses = function(opts){
 }
 
 // Agrupa membros
-$.fn.groupMembers = function(opts){
-  return this.each(function(){
+$.fn.groupMembers = function(opts) {
+  return this.each(function() {
     var $this = $(this);
     var options = {
       elementWidth : 34,
@@ -2378,7 +2378,7 @@ $.fn.groupMembers = function(opts){
 
     var $elements = $this.find("li");
     var width = $this.width();
-    var newHeight = (Math.ceil((($elements.length * options.elementWidth) /  options.widthMax)) *  options.elementHeight);
+    var newHeight = Math.ceil((($elements.length * options.elementWidth) /  options.widthMax)) *  options.elementHeight;
 
     // Exibe os elementos agrupados
     $this.closest(".status").find(".link-fake.see-all").click(function(e) {
@@ -2387,14 +2387,14 @@ $.fn.groupMembers = function(opts){
       if ($this.hasClass("open")) {
         $this.animate({ height: options.elementHeight }, 150);
         $this.removeClass("open");
-        $(this).html("+ ver todos");
+        $(this).html("+ Ver todos");
       }
 
       // Esconde elementos para agrupar
       else {
         $this.addClass("open");
         $this.animate({ height: newHeight }, 150);
-        $(this).html("- esconder todos");
+        $(this).html("- Esconder todos");
       }
     });
   })
