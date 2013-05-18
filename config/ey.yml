@@ -1,11 +1,13 @@
 environments:
   production: &production
+    precompile_assets: true
     copy_exclude:
       - .git
     branch: master
     migrate: false
     migration_command: rake db:migrate --trace
   staging: &staging
+    precompile_assets: true
     copy_exclude:
       - .git
     branch: staging
