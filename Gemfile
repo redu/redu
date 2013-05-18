@@ -48,8 +48,7 @@ gem 'simple-navigation', :git => 'git://github.com/andi/simple-navigation.git'
 gem 'sunspot_rails'
 gem 'route_translator'
 gem 'useragent'
-gem 'vis_client', :git => 'git@github.com:redu/vis_client.git',
-  :branch => 'rails-3-2'
+gem 'vis_client', :git => 'git@github.com:redu/vis_client.git'
 gem 'whenever', :require => false
 gem 'zencoder'
 gem 'untied-publisher', '~> 0.0.7.pre1'
