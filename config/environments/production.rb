@@ -106,7 +106,7 @@ Redu::Application.configure do
 
   # Layout sem bootstrap
   config.assets.precompile += %w(ie.js chat.js outdated_browser.js ckeditor.js olark.js jquery.maskedinput.js canvas.js chart.js jwplayer.js webview.js clean.js)
-  config.assets.precompile += %w(ie.css icons.redu.css chat.css outdated_browser.css preview-course-old.css page.css cold.css clean.css print.css)
+  config.assets.precompile += %w(ie.css icons.redu.css chat.css outdated_browser.css preview-course-old.css page.css cold.css clean.css print.css email.css)
 
   # CKEditor
   config.assets.precompile += %w(ckeditor/*)
