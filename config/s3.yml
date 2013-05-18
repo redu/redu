@@ -18,6 +18,7 @@ production:
 
 development:
   <<: *defaults
+  assets_bucket: redu-assets-staging
 
 performance:
   <<: *defaults
