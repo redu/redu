@@ -101,12 +101,12 @@ Redu::Application.configure do
   config.assets.digest = true
 
   # Layout com bootstrap
-  config.assets.precompile += %w(new_application.js friend-invitation.js)
-  config.assets.precompile += %w(bootstrap-redu.min.css new_application.css)
+  config.assets.precompile += %w(new_application.js friend-invitation.js base.js)
+  config.assets.precompile += %w(bootstrap-redu.min.css new_application.css base.css)
 
   # Layout sem bootstrap
-  config.assets.precompile += %w(ie.js chat.js outdated_browser.js ckeditor.js olark.js jquery.maskedinput.js canvas.js chart.js jwplayer.js)
-  config.assets.precompile += %w(ie.css icons.redu.css chat.css outdated_browser.css preview-course-old.css page.css)
+  config.assets.precompile += %w(ie.js chat.js outdated_browser.js ckeditor.js olark.js jquery.maskedinput.js canvas.js chart.js jwplayer.js webview.js clean.js)
+  config.assets.precompile += %w(ie.css icons.redu.css chat.css outdated_browser.css preview-course-old.css page.css cold.css clean.css)
 
   # CKEditor
   config.assets.precompile += %w(ckeditor/*)
