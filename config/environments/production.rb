@@ -101,7 +101,7 @@ Redu::Application.configure do
   config.assets.digest = true
 
   # Layout com bootstrap
-  config.assets.precompile += %w(new_application.js friend-invitation.js base.js)
+  config.assets.precompile += %w(new_application.js friend-invitation.js base.js landing.js)
   config.assets.precompile += %w(bootstrap-redu.min.css new_application.css base.css)
 
   # Layout sem bootstrap
