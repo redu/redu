@@ -49,6 +49,7 @@ gem 'sunspot_rails'
 gem 'route_translator'
 gem 'useragent'
 gem 'vis_client', :git => 'git@github.com:redu/vis_client.git'
+gem 'chronic' # Necessário ao whenever
 gem 'whenever', :require => false
 gem 'zencoder'
 gem 'untied-publisher', '~> 0.0.7.pre1'
