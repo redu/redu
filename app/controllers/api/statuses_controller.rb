@@ -36,7 +36,7 @@ module Api
 
       statuses = statuses.page(params[:page])
 
-      respond_with(:api, statuses)
+      respond_with_statuses(statuses)
     end
 
     def destroy
@@ -62,10 +62,16 @@ module Api
       statuses = filter_by_type(statuses, params)
       statuses = statuses.page(params[:page])
 
-      respond_with(:api, statuses)
+      respond_with_statuses(statuses)
     end
 
     protected
+
+    def respond_with_statuses(statuses)
+      respond_with(:api, statuses) do |format|
+        format.json { render :json => statuses.extend(StatusesRepresenter) }
+      end
+    end
 
     def context(params)
       if params[:space_id]

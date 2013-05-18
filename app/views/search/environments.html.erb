@@ -28,7 +28,7 @@
         :locals => { :spaces => @spaces,
                      :query => @query } %>
       <% if @individual_page %>
-        <% if @entity_paginate.num_pages > 1 %>
+        <% if @entity_paginate.total_pages > 1 %>
           <hr class="list-separator">
         <% end %>
         <%= paginate @entity_paginate, :theme => "numbers",

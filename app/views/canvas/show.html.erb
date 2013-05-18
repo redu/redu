@@ -17,7 +17,7 @@
   <div class="body clearfix space-canvas space-canvas-body">
     <div class="iframe-canvas">
     </div>
-    <%= lazy_load(:canvas, :jammit => true, :clear => false) do %>
+    <%= lazy_load(:canvas) do %>
       $(document).ready(function(){
         var canvas = new Canvas({
         remote : "<%= @canvas_url.html_safe %>"

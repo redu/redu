@@ -121,12 +121,12 @@ describe Api::FriendshipsController do
   end
 
   context "PUT /connections/:id" do
-    it "should return code 201" do
+    it "should return code 204" do
       friend.be_friends_with(user)
       friendship = user.friendships.first
       put "api/connections/#{friendship.id}", params
 
-      response.code.should == "200"
+      response.code.should == "204"
     end
 
     it "should return code 404 when doesnt exist" do
@@ -145,14 +145,14 @@ describe Api::FriendshipsController do
   end
 
   context "DELETE /connections/:id" do
-    it "should return status 200" do
+    it "should return status 204" do
       user.be_friends_with(friend)
       friend.be_friends_with(user)
       friendship = user.friendships.first
 
       delete "/api/connections/#{friendship.id}", params
 
-      response.code.should == "200"
+      response.code.should == "204"
     end
 
     it "should return 404 when doesnt exist" do

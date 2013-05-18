@@ -3,9 +3,12 @@ require File.expand_path('../boot', __FILE__)
 require 'rails/all'
 require 'oauth/rack/oauth_filter'
 
-# If you have a Gemfile, require the gems listed there, including any gems
-# you've limited to :test, :development, or :production.
-Bundler.require(:default, :assets, Rails.env) if defined?(Bundler)
+if defined?(Bundler)
+  # If you precompile assets before deploying to production, use this line
+  Bundler.require *Rails.groups(:assets => %w(development test))
+  # If you want your assets lazily compiled in production, use this line
+  # Bundler.require(:default, :assets, Rails.env)
+end
 
 module Redu
   class Application < Rails::Application
@@ -72,7 +75,7 @@ module Redu
     config.description = "Rede Social Educacional"
     config.email = "contato@redu.com.br"
 
-    # Will paginate
+    # Paginação
     config.items_per_page = 10
 
     # Máximo de caracteres p/ descrição
@@ -197,8 +200,8 @@ module Redu
     # Service objects
     config.autoload_paths << "#{config.root}/app/services"
 
-    # Vis Representers
-    config.autoload_paths << "#{config.root}/app/representers/vis"
+    # Representers
+    config.autoload_paths << "#{config.root}/app/representers/**/*"
 
     # Enumerators
     config.autoload_paths << "#{config.root}/app/enums"
@@ -239,7 +242,6 @@ module Redu
                                         :solr_education_indexer_observer,
                                         :solr_hierarchy_indexer_observer,
                                         :vis_status_observer,
-                                        :vis_user_observer,
                                         :vis_lecture_observer,
                                         :vis_result_observer,
                                         :seminar_observer,
@@ -252,6 +254,9 @@ module Redu
 
     #Oauth
     config.middleware.use OAuth::Rack::OAuthFilter
+
+    # Seta as exceções da aplicação
+    config.exceptions_app = self.routes
 
     config.vis_data_authentication = {
       :password => "NyugAkSoP",
@@ -269,11 +274,17 @@ module Redu
     # Seta locale defaul para pt-br
     config.i18n.default_locale = :"pt-BR"
     I18n.locale = config.i18n.default_locale
+    I18n.available_locales = [config.i18n.default_locale]
 
     # Quantidade de resultados da busca exibidos por páginas
     config.search_results_per_page = 10
     config.search_preview_results_per_page = 4
     config.instant_search_results_per_page = 6
     config.instant_search_preview_results_per_page = 2
+
+    config.assets.enabled = true
+
+    # Caminho para os assets do CKEditor
+    config.assets.ckeditor_path = "#{config.assets.prefix}/ckeditor"
   end
 end

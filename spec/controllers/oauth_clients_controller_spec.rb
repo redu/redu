@@ -111,7 +111,7 @@ describe OauthClientsController do
       end
 
       it "redirects to the created client_application" do
-        response.should redirect_to(user_oauth_client_path(user, ClientApplication.last))
+        response.should redirect_to(controller.user_oauth_client_path(user, ClientApplication.last))
       end
 
       it "has a 302 (redirect) status code" do
@@ -156,7 +156,7 @@ describe OauthClientsController do
       end
 
       it "redirects to the client_application" do
-        response.should redirect_to(user_oauth_client_path(user,
+        response.should redirect_to(controller.user_oauth_client_path(user,
                                                            client_application))
       end
 
@@ -192,7 +192,7 @@ describe OauthClientsController do
 
     it "redirects to the client_applications list" do
       delete :destroy, {:id => client_application.to_param}.merge!(params)
-      response.should redirect_to(user_oauth_clients_url(user))
+      response.should redirect_to(controller.user_oauth_clients_url(user))
     end
   end
 end

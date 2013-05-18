@@ -88,7 +88,7 @@ describe ApplicationController do
 
     let(:view_paths) { @controller.view_paths }
     let(:mobile_views_path) do
-      ActionView::FileSystemResolver.new("app/views/mobile")
+      ActionView::OptimizedFileSystemResolver.new("app/views/mobile")
     end
 
     context "when accessed from a mobile device" do
@@ -98,7 +98,7 @@ describe ApplicationController do
 
       it "prepends mobile views path" do
         get :index, :locale => 'pt-BR'
-        view_paths.should include(mobile_views_path)
+        view_paths.paths.should include(mobile_views_path)
       end
     end
 
@@ -109,7 +109,7 @@ describe ApplicationController do
 
       it "does not prepend mobile views path" do
         get :index, :locale => 'pt-BR'
-        view_paths.should_not include(mobile_views_path)
+        view_paths.paths.should_not include(mobile_views_path)
       end
     end
   end

@@ -2,7 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-<%= stylesheet_link_tag "reset", "email" %>
+<% stylesheet = 'email' %>
+<% if Rails.env.development? %>
+  <style type="text/css" media="all">
+    <%= Rails.application.assets.find_asset(stylesheet).to_s %>
+  </style>
+<% else %>
+  <%= stylesheet_link_tag stylesheet %>
+<% end %>
 </head>
 <body>
 <table id="email">
@@ -31,7 +38,7 @@
       </div>
     </td>
     <td class="logo">
-      <%= image_tag "new/mail/logo.png", :size => "144x33" %>
+      <%= image_tag "mail/logo.png", :size => "144x33" %>
     </td>
   </tr>
 </table>

@@ -90,4 +90,24 @@ Redu::Application.configure do
     :user_name => 'AKIAINQ5Y2UPLZJQM3EA',
     :password => 'AqEmj6PTCT8HJCpUB9qmIXQb+G2SaKEFjKcWrR9MLUaF'
   }
+
+  # Compress JavaScripts and CSS
+  config.assets.compress = true
+
+  # Don't fallback to assets pipeline if a precompiled asset is missed
+  config.assets.compile = false
+
+  # Generate digests for assets URLs
+  config.assets.digest = true
+
+  # Layout com bootstrap
+  config.assets.precompile += %w(new_application.js friend-invitation.js)
+  config.assets.precompile += %w(bootstrap-redu.min.css new_application.css)
+
+  # Layout sem bootstrap
+  config.assets.precompile += %w(ie.js chat.js outdated_browser.js ckeditor.js olark.js jquery.maskedinput.js canvas.js chart.js jwplayer.js)
+  config.assets.precompile += %w(ie.css icons.redu.css chat.css outdated_browser.css preview-course-old.css page.css)
+
+  # CKEditor
+  config.assets.precompile += %w(ckeditor/*)
 end

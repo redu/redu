@@ -24,9 +24,7 @@ class LecturesController < BaseController
   end
 
   def rate
-    @lecture.rate(params[:stars], current_user, params[:dimension])
-    #TODO Esta linha abaixo é usada pra quê?
-    id = "ajaxful-rating-#{!params[:dimension].blank? ? "#{params[:dimension]}-" : ''}lecture-#{@lecture.id}"
+    @lecture.rate(params[:stars], current_user)
 
     respond_to do |format|
       format.js
@@ -44,9 +42,8 @@ class LecturesController < BaseController
     update_view_count(@lecture)
 
     @status = Status.new
-    @statuses = Status.from_hierarchy(@lecture).
-      paginate(:page => params[:page],:order => 'created_at DESC',
-               :per_page => Redu::Application.config.items_per_page)
+    @statuses = Status.from_hierarchy(@lecture).order('created_at DESC').
+      page(params[:page]).per(Redu::Application.config.items_per_page)
 
     @can_manage_lecture = can?(:manage, @lecture)
 

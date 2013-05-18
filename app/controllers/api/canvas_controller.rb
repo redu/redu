@@ -1,12 +1,14 @@
 module Api
   class CanvasController < Api::ApiController
+    represents :json, :collection => RawCanvasCollectionRepresenter,
+      :entity => RawCanvasRepresenter
 
     # GET /api/canvas/:id
     def show
       canvas = Canvas.find(params[:id])
       authorize! :read, canvas.container
 
-      respond_with(canvas, :represent_with => RawCanvasRepresenter)
+      respond_with(canvas)
     end
 
     # POST /api/spaces/:id/canvas
@@ -21,7 +23,7 @@ module Api
       end
 
       if canvas.valid?
-        respond_with(canvas, :represent_with => RawCanvasRepresenter)
+        respond_with(canvas)
       else
         respond_with(:api, canvas)
       end
@@ -34,7 +36,7 @@ module Api
 
       canvas.destroy
 
-      respond_with(canvas, :represent_with => RawCanvasRepresenter)
+      respond_with(canvas)
     end
 
     def index
@@ -42,7 +44,7 @@ module Api
       authorize! :read, space
 
       canvas = space.canvas
-      respond_with(canvas, :represent_with => RawCanvasRepresenter)
+      respond_with(canvas)
     end
   end
 end

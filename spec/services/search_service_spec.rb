@@ -53,7 +53,7 @@ describe SearchService do
 
     it "should paginate the filters" do
       subject.klass_results("SpaceSearch").should \
-        respond_to :paginate
+        respond_to :page
     end
   end
 
@@ -84,6 +84,6 @@ describe SearchService do
       subject.perform_results
     end
 
-    it { subject.result_paginate.should respond_to(:paginate) }
+    it { subject.result_paginate.should respond_to(:page) }
   end
 end

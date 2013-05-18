@@ -7,13 +7,11 @@ module Api
       collection :thumbnails
     end
 
-    module InstanceMethods
-      def thumbnails
-        self.avatar.styles.keys.collect do |thumb_size|
-          height = width = thumb_size.to_s.gsub('thumb_', '')
-          { :size => "#{width}x#{height}",
-            :href => self.avatar.url(thumb_size) }
-        end
+    def thumbnails
+      self.avatar.styles.keys.collect do |thumb_size|
+        height = width = thumb_size.to_s.gsub('thumb_', '')
+        { :size => "#{width}x#{height}",
+          :href => self.avatar.url(thumb_size) }
       end
     end
 

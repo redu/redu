@@ -7,7 +7,7 @@ class Invoice < ActiveRecord::Base
 
   scope :pending, where(:state => "pending")
   scope :overdue, where(:state => "overdue")
-  scope :open, where(:state => "open")
+  scope :to_calculate, where(:state => "open")
   scope :pending_payment, where("state LIKE ? OR state LIKE ?", 'pending',
                                 'overdue')
   # Retorna todos os invoices com period_end contido (intervalo fechado)

@@ -27,7 +27,7 @@ describe StatusesController do
 
       it "creates successfully" do
         expect {
-          request.env["HTTP_REFERER"] = user_url(@statusable)
+          request.env["HTTP_REFERER"] = controller.user_url(@statusable)
           post :create, @params
         }.to change(Status, :count).by(1)
       end
@@ -41,7 +41,7 @@ describe StatusesController do
 
         it "cannot create successfully" do
           expect {
-            request.env["HTTP_REFERER"] = user_url(@statusable)
+            request.env["HTTP_REFERER"] = controller.user_url(@statusable)
             post :create, @params
           }.to_not change(Activity, :count)
         end
@@ -60,7 +60,7 @@ describe StatusesController do
         end
 
         it "should create successfully" do
-          request.env["HTTP_REFERER"] = user_url(@statusable)
+          request.env["HTTP_REFERER"] = controller.user_url(@statusable)
           post :create, @params
           Status.last.status_resources.should_not be_empty
           Status.last.status_resources[0].provider.should eq(@resource.provider)
@@ -72,7 +72,7 @@ describe StatusesController do
           end
 
           it "should no create an status" do
-            request.env["HTTP_REFERER"] = user_url(@statusable)
+            request.env["HTTP_REFERER"] = controller.user_url(@statusable)
             expect {
               post :create, @params
             }.to_not change(Activity, :count)
@@ -98,7 +98,7 @@ describe StatusesController do
       it "creates successfully" do
         expect {
           request.env["HTTP_REFERER"] = \
-            space_subject_lecture_url(@space, @subject, @statusable)
+            controller.space_subject_lecture_url(@space, @subject, @statusable)
           post :create, @params
         }.to change(Help, :count).by(1)
       end
@@ -120,7 +120,7 @@ describe StatusesController do
 
       it "creates successfully" do
         expect {
-          request.env["HTTP_REFERER"] = user_url(@statusable)
+          request.env["HTTP_REFERER"] = controller.user_url(@statusable)
           post :respond, @params
         }.to change(subject.answers, :count).by(1)
 
@@ -149,7 +149,7 @@ describe StatusesController do
       it "creates successfully" do
         expect {
           request.env["HTTP_REFERER"] = \
-            space_subject_lecture_url(@space, @subject, @lecture)
+            controller.space_subject_lecture_url(@space, @subject, @lecture)
           post :respond, @params
         }.to change(@help.answers, :count).by(1)
       end

@@ -8,7 +8,7 @@
 <tr class="link-container">
   <td>
     <% css_class = "inbox-message-read" %>
-    <% css_class = "inbox-message-unread" if (mailbox == :inbox && !item.read?) %>
+    <% css_class = "inbox-message-unread" if (mailbox == :inbox && !item.message_read?) %>
     <%= link_to item.subject, user_message_path(user, item),
       :class => "link-target #{css_class} text-truncate message-list-subject", :title => item.subject %>
   </td>

@@ -1,8 +1,8 @@
 require 'mime/types'
 
 class Ckeditor::Asset < ActiveRecord::Base
-  set_table_name "ckeditor_assets"
-  
+  self.table_name = "ckeditor_assets"
+
   belongs_to :user
   belongs_to :assetable, :polymorphic => true
   

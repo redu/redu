@@ -118,12 +118,12 @@ describe Api::CoursesController do
   end
 
   context "put /courses/:id" do
-    it "should return code 201" do
+    it "should return code 204" do
       course = { :name => 'new_course_name' }
       put "/api/courses/#{subject.id}", :course => course,
         :oauth_token => @token, :format => 'json'
 
-      response.code.should == "200"
+      response.code.should == "204"
     end
 
     it "should return code 422 (unproccessable entity) when not valid" do
@@ -145,11 +145,11 @@ describe Api::CoursesController do
   end
 
   context "delete /courses/:id" do
-    it "should return status 200" do
+    it "should return status 204" do
       delete "/api/courses/#{subject.id}", :oauth_token => @token,
         :format => 'json'
 
-      response.status.should == 200
+      response.status.should == 204
     end
 
     it "should return 404 when doesnt exist" do

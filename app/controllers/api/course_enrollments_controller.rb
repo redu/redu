@@ -33,7 +33,7 @@ module Api
       decorated = course_enrollments.
         map { |e| Api::CourseEnrollmentDecorator.new(e) }
 
-      respond_with(decorated, :represent_with => CourseEnrollmentRepresenter)
+      respond_with(decorated, :represent_with => CourseEnrollmentsRepresenter)
     end
 
     def destroy

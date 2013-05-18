@@ -6,7 +6,7 @@
       <!-- thumbnail -->
       {{ if(obj.first_thumb) { }}
       <div class="thumbnail">
-        <%= image_tag "/images/new/overlay-85.png", :id => "thumbnail-0", :class => "preview-link" %>
+        <%= image_tag "overlay-85.png", :id => "thumbnail-0", :class => "preview-link" %>
         <ul class="buttons-thumbnail">
           <!-- multiplos thumbanails -->
           {{ if (obj.thumbnail_url instanceof Array) { }}

@@ -1,14 +1,16 @@
 class InvoicesController < BaseController
   respond_to :html, :js
 
-  load_and_authorize_resource :plan
+  load_and_authorize_resource :plan, :except => :index
   load_and_authorize_resource :invoice, :through => [:plan], :except => :index
-  load_and_authorize_resource :partner, :only => :index
 
   def index
+    @plan = load_and_authorize_if_param(Plan, params[:plan_id])
+    @partner = load_and_authorize_if_param(Partner, params[:partner_id])
+
     # Conflita com o caso que não há @partner, se carregado pelo CanCan
-    if params[:client_id]
-      @client = @partner.partner_environment_associations.find(params[:client_id])
+    if client_id = params[:client_id]
+      @client = @partner.partner_environment_associations.find(client_id)
     end
 
     if @plan
@@ -60,6 +62,16 @@ class InvoicesController < BaseController
 
     respond_with do |format|
       format.html { redirect_to plan_invoices_path(@invoice.plan) }
+    end
+  end
+
+  protected
+
+  def load_and_authorize_if_param(klass, id)
+    if id
+      instance = klass.find(id)
+      authorize! :manage, instance
+      instance
     end
   end
 end

@@ -133,7 +133,7 @@ describe LecturesController do
           :subject_id => @subject.id, :space_id => @space.id
 
         response.should redirect_to(
-          space_subject_lecture_path(@space, @subject, @lectures[0]))
+          controller.space_subject_lecture_path(@space, @subject, @lectures[0]))
       end
     end
 

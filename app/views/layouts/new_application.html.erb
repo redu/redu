@@ -5,10 +5,10 @@
     <meta charset="utf-8">
     <title><%= raw(page_title) %></title>
     <%= csrf_meta_tag %>
-    <%= stylesheet_link_tag "bootstrap-redu.min.css" %>
-    <%= include_stylesheets :new_application %>
+    <%= stylesheet_link_tag "bootstrap-redu.min" %>
+    <%= stylesheet_link_tag "new_application" %>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <%= include_javascripts :new_application %>
+    <%= javascript_include_tag "new_application" %>
     <%# É possível sobrescrever a inicialização do chat %>
     <% if content_for?(:chat_script) %>
       <%= content_for(:chat_script) %>

@@ -235,7 +235,7 @@ describe InvoicesController do
         end
 
         it "redirects to Invoices#index" do
-          response.should redirect_to(plan_invoices_path(@invoice.plan))
+          response.should redirect_to(controller.plan_invoices_path(@invoice.plan))
         end
       end
     end
