@@ -27,7 +27,7 @@ describe BaseController do
         get :site_index, :locale => 'pt-BR'
       end
 
-       it { should redirect_to home_user_path(user)}
+       it { should redirect_to controller.home_user_path(user)}
     end
   end
 end

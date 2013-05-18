@@ -17,7 +17,7 @@
         :placeholder => "Compartilhe algo com seus Amigos através de seu mural" %>
       <div id="statuses" class="status-list">
         <ol><%= render :partial => "statuses/item", :collection => @statuses %></ol>
-        <%= will_paginate @statuses, :renderer => EndlessRenderer %>
+        <%= paginate @statuses, :theme => 'endless' %>
       </div>
     </div>
     <%= render "users/breadcrumb_wall", :user => @user %>

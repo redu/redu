@@ -18,14 +18,12 @@ describe "Vis Api" do
   context "get /vis/spaces/:space_id/students_participation" do
     it "should send request to vis" do
       @params = {
-        :users_id => ["2", "3"],
         :date_start => "2012-02-10",
         :date_end => "2012-02-11",
         :oauth_token => @token,
         :format => 'json' }
 
-      param = { :users_id => @params[:users_id],
-                :date_start => @params[:date_start],
+      param = { :date_start => @params[:date_start],
                 :date_end => @params[:date_end],
                 :space_id => "#{@space.id}" }
 
@@ -88,21 +86,19 @@ describe "Vis Api" do
   end
 
   def test_request(url, param)
-    WebMock.disable_net_connect!(:allow_localhost => true)
-    @stub = stub_request(
-        :get, Redu::Application.config.vis[url]).
+    WebMock.disable_net_connect!
+    stub_request(:get, Redu::Application.config.vis[url]).
+        with(:query => param,
+             :headers => {'Authorization' => 'YXBpLXRlYW06Tnl1Z0FrU29Q',
+                          'Content-Type' => 'application/json'}).
+        to_return(:status => 200, :body => "", :headers => {})
+
+    get "/api/vis/spaces/#{@space.id}/#{url}", @params
+
+    a_request(:get, Redu::Application.config.vis[url]).
         with(:query => param,
              :headers => {'Authorization'=> 'YXBpLXRlYW06Tnl1Z0FrU29Q',
                           'Content-Type'=>'application/json'}).
-        to_return(:status => 200, :body => "",
-                  :headers => {})
-
-      get "/api/vis/spaces/#{@space.id}/#{url}", @params
-
-      a_request(:get, Redu::Application.config.vis[url]).
-      with(:query => param,
-           :headers => {'Authorization'=> 'YXBpLXRlYW06Tnl1Z0FrU29Q',
-                        'Content-Type'=>'application/json'}).
-      should have_been_made
+    should have_been_made
   end
 end

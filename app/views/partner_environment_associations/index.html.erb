@@ -18,11 +18,11 @@
       <% else %>
         <div class="box_notice">Nenhum ambiente foi criado</div>
       <% end %>
-      <%= will_paginate @partner_environment_associations,
+      <%= paginate @partner_environment_associations,
         :params => { :controller => :partner_environment_associations,
                      :partner_id => @partner.id,
                      :action => :index },
-        :renderer => EndlessRenderer %>
+        :theme => 'endless' %>
     </div>
   <% end %>
 </div>

@@ -31,8 +31,8 @@ class SpacesController < BaseController
 
   def admin_members
     @memberships = @space.user_space_associations.includes(:user).
-      paginate(:page => params[:page],:order => 'updated_at DESC',
-               :per_page => Redu::Application.config.items_per_page)
+      order('updated_at DESC').page(params[:page]).
+      per(Redu::Application.config.items_per_page)
 
     respond_to do |format|
       format.html { render 'spaces/admin/admin_members' }
@@ -57,8 +57,8 @@ class SpacesController < BaseController
     end
 
     if @space
-      @statuses = Status.from_hierarchy(@space).
-      paginate(:page => params[:page], :per_page => Redu::Application.config.items_per_page)
+      @statuses = Status.from_hierarchy(@space).page(params[:page]).
+        per(Redu::Application.config.items_per_page)
       @statusable = @space
     end
 
@@ -83,16 +83,15 @@ class SpacesController < BaseController
   # GET /spaces/1
   # GET /spaces/1.xml
   def show
-    if can? :manage, @space
-      @subjects = @space.subjects.includes([:lectures, :space]).
-        paginate(:page => params[:page], :order => 'updated_at ASC',
-                 :per_page => Redu::Application.config.items_per_page)
-    else
-      @subjects = @space.subjects.visible.includes([:lectures, :space]).
-        paginate(:page => params[:page],
-                 :order => 'updated_at ASC',
-                 :per_page => Redu::Application.config.items_per_page)
+    @subjects = @space.subjects.includes([:lectures, :space]).
+      order('updated_at ASC')
+
+    unless can? :manage, @space
+      @subjects = @subjects.visible
     end
+
+    @subjects = @subjects.page(params[:page]).
+      per(Redu::Application.config.items_per_page)
 
     respond_to do |format|
       format.html
@@ -151,7 +150,7 @@ class SpacesController < BaseController
   def update
     @plan = @space.course.plan || @space.course.environment.plan
     @billable = @plan.billable
-    @header_space = @space.clone
+    @header_space = @space.dup
     @header_space.id = @space.id
 
     respond_to do |format|

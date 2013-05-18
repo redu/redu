@@ -20,7 +20,7 @@ describe Environment do
   it { should validate_presence_of(:initials) }
   xit { should validate_uniqueness_of(:name) }
   xit { should validate_uniqueness_of(:path) }
-  it { should validate_format_of(:path).with("teste-medio1")}
+  it { should allow_value("teste-medio1").for(:path)}
   it { should ensure_length_of(:name).is_at_most 40 }
   it { should ensure_length_of(:initials).is_at_most(10)}
   it { should ensure_length_of(:description).is_at_most(400)}

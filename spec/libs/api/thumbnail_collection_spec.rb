@@ -1,7 +1,7 @@
 require 'api_spec_helper'
 
 describe "ThumbnailCollection" do
-  let(:representer) { UserRepresenter }
+  let(:representer) { Api::UserRepresenter }
   let(:model) { Factory.build(:user) }
   let(:representation) do
     model.extend(representer)

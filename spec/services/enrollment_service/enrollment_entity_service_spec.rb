@@ -112,7 +112,7 @@ module EnrollmentService
         calculator = mock('GradeCalculator')
 
         GradeCalculator.stub(:new).and_return(calculator)
-        calculator.should_receive(:calculate_grade).and_return([[11,11,"member"]])
+        calculator.should_receive(:calculate_grade).and_return([[11,11,true]])
 
         subject.update_grade
       end

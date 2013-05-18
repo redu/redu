@@ -18,7 +18,7 @@
       <%= link_to response.user.display_name, user_path(response.user), :class => "link-name" %>
     <% else %>
       <%= link_to user_path(response.user), :rel => "nofollow", :title => response.user.display_name, :class => 'author-thumbnail' do %>
-        <%= image_tag "/images/new/missing_users_thumb_32.png", :width => 32, :height => 32 %>
+        <%= image_tag "missing_users_thumb_32.png", :width => 32, :height => 32 %>
         <span class="username">[Usuário Removido]</span>
       <% end %>
     <% end %>

@@ -20,8 +20,7 @@
     <%# </ul> %><%# end .connections %>
     <hr class="separator"/>
     <ul class="connections con-endless clearfix">
-      <% @contacts = Kaminari::paginate_array(@user.friends_not_in_common_with(current_user)).
-        page(params[:page]).per(4) %>
+      <% @contacts = Kaminari::paginate_array(@user.friends_not_in_common_with(current_user)).page(params[:page]).per(4) %>
       <%= render :partial => 'users/item_medium_24',
         :collection => @contacts %>
     </ul><!-- end .connections -->

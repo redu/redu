@@ -1,0 +1,94 @@
+/* Página de recuperação de login e senha */
+
+.overlay {
+  background-image: image-url("circulos-bokeh-peq.png");
+  background-repeat: no-repeat;
+  background-position: 60px 0;
+}
+
+.user-data-recovery .logo-top a {
+  background-image: image-url("redu-hi-vert.png");
+  display: block;
+  width: 255px;
+  height: 196px;
+  margin-left: -20px;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  float: left;
+  text-indent: -9999px;
+}
+
+.user-data-recovery .forgot-title {
+  margin-top: 50px;
+  font-family: museo-sans, helvetica, arial, sans-serif;
+  font-weight: 100;
+  font-size: 47px;
+  color: rgb(115, 195, 230);
+  display: block;
+  letter-spacing: -2px;
+}
+
+.textshadow .user-data-recovery .forgot-title {
+  text-shadow: 0px 1px 0px rgb(255, 255, 255);
+}
+
+.user-data-recovery .forgot-title .forgotten-information {
+  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-weight: 900;
+  letter-spacing: -4px;
+}
+
+.user-data-recovery .call {
+  font-size: 11px;
+  color: rgb(179, 179, 179);
+  font-weight: normal;
+  margin-top: 10px;
+}
+
+.textshadow .user-data-recovery .call {
+  text-shadow: 0px 1px 0px rgb(255, 255, 255);
+}
+
+.user-data-recovery .concave-form .concave-button {
+  height: 30px;
+  padding: 0;
+  width: 70px;
+  margin: 10px 0 0 0;
+  clear: both;
+}
+
+.user-data-recovery .concave-form .ui-placeholder {
+  left: 10px;
+  top: 11px;
+}
+
+.user-data-recovery .concave-form .ui-placeholder-wrap {
+  float: right;
+}
+
+.user-data-recovery .forgot-title.forgot-password {
+  border-top: 1px  dotted;
+  border-top-color: rgb(214, 214, 214);
+  margin-top: 40px;
+  padding-top: 40px;
+}
+
+.user-data-recovery .concave-form .concave-label {
+  float: right;
+  width: 62px;
+  margin-top: 0px;
+}
+
+.user-data-recovery .concave-form .concave-label .icon-question-blue_12_12 {
+  margin-right: 10px;
+}
+
+.user-data-recovery .concave-form .errors_on_field {
+  margin-left: 170px;
+  clear: both;
+}
+
+.user-data-recovery .concave-form .concave-input {
+  width: 389px;
+  margin: 0px;
+}

@@ -1,7 +1,7 @@
 items = '<%= escape_javascript render(:partial => partial, :collection => collection, :locals => partial_locals) %>'
 $('<%= raw selector %>').append(items);
 
-endless = '<%= will_paginate collection, paginate_opts.merge(:renderer => EndlessRenderer) %>'
+endless = '<%= escape_javascript paginate(collection, paginate_opts.merge(:theme => 'endless')) %>'
 <% if paginate_opts.has_key? :id %>
   $('#<%= paginate_opts[:id] %>').replaceWith(endless);
 <% else %>

@@ -368,7 +368,7 @@ describe Exercise do
       end
 
       it "question with valid alternatives but blank statement should it is not valid" do
-        @exercise.questions.first.should_not be_valid
+        @exercise.questions.second.should_not be_valid
       end
     end
 

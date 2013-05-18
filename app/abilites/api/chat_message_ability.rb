@@ -2,12 +2,10 @@ module Api
   module ChatMessageAbility
     extend ActiveSupport::Concern
 
-    module InstanceMethods
-      def chat_message_abilities(user)
-        if user
-          can :read, ChatMessage, :user_id => user.id
-          can :read, ChatMessage, :contact_id => user.id
-        end
+    def chat_message_abilities(user)
+      if user
+        can :read, ChatMessage, :user_id => user.id
+        can :read, ChatMessage, :contact_id => user.id
       end
     end
   end

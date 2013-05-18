@@ -23,22 +23,14 @@ class EnvironmentsController < BaseController
   # GET /environments/1
   # GET /environments/1.xml
   def show
-    paginating_params = {
-      :page => params[:page],
-      :order => 'name ASC',
-      :limit => 4,
-      :per_page => Redu::Application.config.items_per_page
-    }
+    @courses = @environment.courses.includes(:environment, :tags)
 
-    if can? :manage, @environment
-      @courses = @environment.courses.
-        includes([:environment, :tags]).
-        paginate(paginating_params)
-    else
-      @courses = @environment.courses.
-        includes([:environment, :tags]).
-                 published.paginate(paginating_params)
+    unless can? :manage, @environment
+      @courses = @courses.published
     end
+
+    @courses = @courses.order('name ASC').page(params[:page]).
+      per(Redu::Application.config.items_per_page)
 
     respond_to do |format|
       format.html
@@ -172,14 +164,9 @@ class EnvironmentsController < BaseController
       redirect_to environment_path(@environment) and return
     end
 
-    paginating_params = {
-      :page => params[:page],
-      :order => 'name ASC',
-      :per_page => Redu::Application.config.items_per_page
-    }
-
     @courses = @environment.courses.includes(:user_course_associations).
-      includes(:spaces).published.paginate(paginating_params)
+      includes(:spaces).published.order('name ASC').page(params[:page]).
+      per(Redu::Application.config.items_per_page)
 
     respond_to do |format|
       format.html
@@ -189,8 +176,8 @@ class EnvironmentsController < BaseController
   end
 
   def admin_courses
-    @courses = @environment.courses.paginate(:page => params[:page],
-                                             :per_page => Redu::Application.config.items_per_page)
+    @courses = @environment.courses.page(params[:page]).
+      per(Redu::Application.config.items_per_page)
 
     respond_to do |format|
       format.html { render "environments/admin/admin_courses" }
@@ -201,12 +188,9 @@ class EnvironmentsController < BaseController
   end
 
   def admin_members
-    @memberships = @environment.user_environment_associations.
-      paginate(
-        :include => :user,
-        :page => params[:page],
-        :order => 'updated_at DESC',
-        :per_page => Redu::Application.config.items_per_page)
+    @memberships = @environment.user_environment_associations.includes(:user).
+      order('updated_at DESC').page(params[:page]).
+      per(Redu::Application.config.items_per_page)
 
     respond_to do |format|
       format.html { render "environments/admin/admin_members" }
@@ -244,9 +228,8 @@ class EnvironmentsController < BaseController
     @memberships = UserEnvironmentAssociation.with_roles(roles).
                    of_environment(@environment).with_keyword(keyword).
                    includes(:user => [{ :user_course_associations => :course }]).
-                   paginate(:page => params[:page],
-                    :order => 'user_environment_associations.updated_at DESC',
-                    :per_page => Redu::Application.config.items_per_page)
+                   order('user_environment_associations.updated_at DESC').
+                   page(params[:page]).per(Redu::Application.config.items_per_page)
 
     respond_to do |format|
       format.js { render "environments/admin/search_users_admin" }

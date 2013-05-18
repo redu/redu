@@ -64,9 +64,10 @@ describe "Documents API" do
     let(:url) { "/api/subjects/#{subj.id}/lectures"  }
     let(:mimetype) { "application/vnd.ms-powerpoint" }
     let(:lecture_params) do
+      path = "#{RSpec.configuration.fixture_path}/api/document_example.pptx"
       { :lecture => \
         { :name => 'Lorem', :type => 'Document',
-          :media => fixture_file_upload("/api/document_example.pptx", mimetype) }
+          :media => fixture_file_upload(path, mimetype) }
       }.merge(params)
     end
 

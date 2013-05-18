@@ -5,10 +5,6 @@ class UsersController < BaseController
     :recover_username, :recover_password, :resend_activation, :activate,
     :index],
     :find_by => :login
-  load_resource :environment, :only => [:index], :find_by => :path
-  load_resource :course, :only => [:index], :find_by => :path,
-    :through => :environment
-  load_resource :space, :only => [:index]
 
   rescue_from CanCan::AccessDenied, :with => :deny_access
 
@@ -256,7 +252,8 @@ class UsersController < BaseController
     if @recover_username.valid?
       @user = User.find_by_email(@recover_username.email)
       if @user
-        UserNotifier.delay(:queue => 'email').user_forgot_username(@user)
+        UserNotifier.delay(:queue => 'email', :priority => 1).
+          user_forgot_username(@user)
       else # Email não cadastrado no Redu
         @recover_username.mark_email_as_invalid!
       end
@@ -270,7 +267,7 @@ class UsersController < BaseController
       @user = User.find_by_email(@recover_password.email)
 
       if @user.try(:reset_password)
-        UserNotifier.delay(:queue => 'email').
+        UserNotifier.delay(:queue => 'email', :priority => 1).
           user_reseted_password(@user, @user.password)
         @user.save
 
@@ -315,13 +312,12 @@ class UsersController < BaseController
 
     respond_to do |format|
       format.html { render :layout => 'new_application' }
-      format.js { render_endless('statuses/item', @statuses, '#statuses > ol',
-                                 :template => 'shared/endless_kaminari') }
+      format.js { render_endless('statuses/item', @statuses, '#statuses > ol') }
     end
   end
 
   def my_wall
-    @statuses = @user.statuses.visible.paginate(:page => params[:page], :per_page => 10)
+    @statuses = @user.statuses.visible.page(params[:page]).per(10)
     @status = Status.new
 
     respond_to do |format|
@@ -364,8 +360,8 @@ class UsersController < BaseController
       redirect_to removed_page_path and return
     end
 
-    @statuses = @user.statuses.where(:compound => false).paginate(:page => params[:page],
-               :per_page => Redu::Application.config.items_per_page)
+    @statuses = @user.statuses.where(:compound => false).page(params[:page]).
+      per(Redu::Application.config.items_per_page)
     @statusable = @user
     @status = Status.new
 
@@ -378,6 +374,7 @@ class UsersController < BaseController
   end
 
   def index
+    load_hierarchy
     entity = @space || @course || @environment
     authorize! :preview, entity
 
@@ -395,8 +392,7 @@ class UsersController < BaseController
       end
     end
 
-    @users = @users.paginate(:page => params[:page], :order => 'first_name ASC',
-               :per_page => 18)
+    @users = @users.order('first_name ASC').page(params[:page]).per(18)
 
     respond_to do |format|
       format.html do
@@ -428,6 +424,21 @@ class UsersController < BaseController
                                                   @space.course)
     else
       super
+    end
+  end
+
+
+  def load_hierarchy
+    if environment_id = params[:environment_id]
+      @environment = Environment.find_by_path(environment_id)
+
+      if course_id = params[:course_id]
+        @course = Course.find_by_path(course_id)
+      end
+    end
+
+    if space_id = params[:space_id]
+      @space = Space.find(space_id)
     end
   end
 end

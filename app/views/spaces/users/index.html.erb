@@ -16,7 +16,7 @@
           :collection => @users, :locals => { :entity => @space } %>
         <% reset_cycle "users_cycle" %>
       </ul>
-      <%= will_paginate @users, :renderer => EndlessRenderer %>
+      <%= paginate @users, :theme => 'endless' %>
     <% end %>
   </div><!-- end #environment-courses -->
 

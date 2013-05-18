@@ -3,7 +3,7 @@
 <table class="meta">
   <% unless description.empty? %>
     <tr>
-      <td><%= image_tag "new/mail/icon-description-small.png", :class => "right-space", :size => "15x17" %></td>
+      <td><%= image_tag "mail/icon-description-small.png", :class => "right-space", :size => "15x17" %></td>
       <td class="description">
         <%= description %>
       </td>
@@ -12,14 +12,14 @@
   <% unless (description.empty? || tags.empty?) %>
     <tr>
       <td colspan="2">
-        <%= image_tag "new/mail/dots.gif", :class => "separator", :size => "448x22" %>
+        <%= image_tag "mail/dots.gif", :class => "separator", :size => "448x22" %>
       </td>
     </tr>
   <% end %>
   <% unless tags.empty? %>
     <tr>
       <td>
-        <%= image_tag "new/mail/icon-tags-small.png", :class => "right-space", :size => "17x10" %>
+        <%= image_tag "mail/icon-tags-small.png", :class => "right-space", :size => "17x10" %>
       </td>
       <td><%= tags.join(",") %></td>
     </tr>

@@ -1,0 +1,252 @@
+// TODO: Referente ao criar status do layout antigo.
+// Remover quando colocar o novo.
+
+.home-status {
+  padding: 10px 20px;
+  overflow: hidden;
+
+  .create-status.inform-my-status textarea { width: 495px; }
+
+  .concave-form .concave-label {
+    padding-top: 7px;
+  }
+
+  /* labels inativos */
+  .concave-form .concave-label {
+    display: block;
+    color: #b3b2b3;
+    font-weight: bold;
+    float: left;
+    text-align: right;
+    width: 150px;
+    margin: 20px 10px 0 0;
+    clear: left;
+    height: 23px;
+    font-size: 12px;
+  }
+
+  /* botoes */
+  .concave-remove,
+  .concave-button,
+  .concave-clean,
+  .concave-important,
+  .concave-important-font,
+  .concave-cancel {
+    padding: 5px 20px 6px 20px;
+    color: white;
+    display: inline-block;
+    line-height: 18px;
+    font-weight: bold;
+    font-size: 13px;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .concave-remove:hover,
+  .concave-button:hover,
+  .concave-important:hover,
+  .concave-important-font:hover,
+  .concave-cancel:hover {
+    color: white;
+  }
+
+  .concave-remove:visited,
+  .concave-button:visited,
+  .concave-important:visited,
+  .concave-important-font:visited,
+  .concave-cancel:visited {
+    color: white;
+  }
+
+  .concave-important,
+  .concave-important-font {
+    border: 1px solid rgb(75,192,128);
+    background-color: rgb(171, 227, 133);
+  }
+
+  .concave-important-font {
+    font-family: museo-slab, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .concave-clean {
+    color: rgb(77, 173, 214);
+    border: 1px solid rgb(204, 204, 204);
+    background: rgb(255,255,255); /* Old browsers */
+  }
+
+  .concave-button,
+  .concave-cancel {
+    border: 1px solid #4CACD5;
+    background-color: #73C3E6;
+  }
+
+  .concave-form .concave-button,
+  .concave-form .concave-important,
+  .concave-form .concave-important-font,
+  .concave-form .concave-cancel {
+    margin: 20px 20px 0 0;
+  }
+
+  .concave-remove {
+    border: 1px solid rgb(232, 59, 59);
+    color: white;
+    background-color: rgb(255, 109, 109);
+  }
+
+  .concave-form .concave-remove {
+    margin: 20px 0px 0px 20px;
+  }
+
+  .concave-form .concave-button,
+  .concave-form .concave-important,
+  .concave-form .concave-important-font,
+  .concave-form .concave-cancel {
+    float: right;
+  }
+
+  .concave-form .concave-remove {
+    float: left;
+  }
+
+  .concave-cancel {
+    border: 1px solid #E83B3B;
+  }
+
+  .concave-clean:hover,
+  .concave-remove:hover,
+  .concave-button:hover,
+  .concave-important:hover,
+  .concave-important-font:hover,
+  .concave-cancel:hover {
+    text-decoration: none;
+  }
+
+  .borderradius & .concave-clean,
+  .borderradius & .concave-remove,
+  .borderradius & .concave-button,
+  .borderradius & .concave-important,
+  .borderradius & .concave-important-font,
+  .borderradius & .concave-cancel {
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+  }
+
+  .cssgradients & .concave-important,
+  .cssgradients & .concave-important-font {
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(171, 227, 133)), to(rgb(95, 192, 128)));
+    background: -moz-linear-gradient(top, rgb(95, 192, 128), rgb(171, 227, 133));
+  }
+
+  .cssgradients & .concave-button {
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(115, 195, 230)), to(rgb(77, 173, 214))); /* webkit browsers */
+    background: -moz-linear-gradient(top, rgb(115, 195, 230), rgb(77, 172, 214)); /* firefox 3.6+ */
+  }
+
+  .cssgradients & .concave-cancel {
+    background: -webkit-gradient(linear, left top, left bottom, from(#FF6D6D), to(#E83B3B)); /* webkit browsers */
+    background: -moz-linear-gradient(top,  #FF6D6D,  #E83B3B); /* firefox 3.6+ */
+  }
+
+  .cssgradients & .concave-remove {
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(255, 109, 109)), to(rgb(232, 59, 59))); /* webkit browsers */
+    background: -moz-linear-gradient(top, rgb(255, 109, 109), rgb(232, 59, 59)); /* Firefox 3.6+ */
+  }
+
+  .cssgradients & .concave-clean {
+    background: -moz-linear-gradient(top, rgb(255,255,255) 0%, rgb(240,240,240) 97%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(255,255,255)), color-stop(97%,rgb(240,240,240))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 97%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 97%); /* Opera11.10+ */
+    background: -ms-linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 97%); /* IE10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f0f0f0',GradientType=0 ); /* IE6-9 */
+    background: linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 97%); /* W3C */
+  }
+
+  .textshadow & .concave-important-font,
+  .textshadow & .concave-important {
+     -moz-text-shadow: 0px -1px 0 rgb(97, 160, 128);
+     -webkit-text-shadow: 0px -1px 0 rgb(97, 160, 128);
+     text-shadow: 0px -1px 0 rgb(97, 160, 128);
+  }
+
+  .textshadow & .concave-button {
+     -moz-text-shadow: 0px -1px 0 rgb(21, 138, 196);
+     -webkit-text-shadow: 0px -1px 0 rgb(21, 138, 196);
+     text-shadow: 0px -1px 0 rgb(21, 138, 196);
+  }
+
+  .textshadow & .concave-cancel {
+     -moz-text-shadow: 0px -1px 0 #E83B3B;
+     -webkit-text-shadow: 0px -1px 0 #E83B3B;
+     text-shadow: 0px -1px 0 #E83B3B;
+  }
+
+  .textshadow & .concave-remove {
+    -moz-text-shadow: 0px -1px 0 rgb(193, 39, 45);
+    -webkit-text-shadow: 0px -1px 0 rgb(193, 39, 45);
+    text-shadow: 0px -1px 0px rgb(193, 39, 45);
+  }
+
+  .textshadow & .concave-clean {
+    text-shadow: 0px 1px 0px #ffffff;
+  }
+
+  .concave-important-font:hover,
+  .concave-important:hover {
+    border: 1px solid rgb(97,160,128);
+
+  }
+
+  .concave-button:hover {
+    border: 1px solid #1789C3;
+    background: #1789C3;
+  }
+
+  .concave-cancel:hover {
+    border: 1px solid #C1272D;
+    background: #FF6D6D;
+  }
+
+  .concave-remove:hover {
+    background: rgb(255, 109, 109);
+  }
+
+  .concave-clean:hover {
+    color: rgb(23, 137, 195);
+    border: 1px solid rgb(76, 172, 213);
+
+    background: rgb(255,255,255); /* Old browsers */
+  }
+
+  .cssgradients & .concave-important-font:hover,
+  .cssgradients & .concave-important:hover {
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(171,227,133)), to(rgb(97,160,128)));
+    background: -moz-linear-gradient(top,  rgb(171,227,133), rgb(97,160,128));
+  }
+
+  .cssgradients & .concave-cancel:hover {
+    background: -webkit-gradient(linear, left top, left bottom, from(#FF6D6D), to(#C1272D)); /* webkit browsers */
+    background: -moz-linear-gradient(top,  #FF6D6D,  #C1272D); /* firefox 3.6+ */
+  }
+
+  .cssgradients & .concave-button:hover {
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(115, 195, 230)), to(rgb(21, 138, 196))); /* webkit browsers */
+    background: -moz-linear-gradient(top,  rgb(115, 195, 230), rgb(21, 138, 196)); /* firefox 3.6+ */
+  }
+
+  .cssgradients & .concave-remove:hover {
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(255, 109, 109)), to(rgb(193, 39, 45))); /* webkit browsers */
+    background: -moz-linear-gradient(top, rgb(255, 109, 109), rgb(193, 39, 45)); /* Firefox 3.6+ */
+  }
+
+  .cssgradients & .concave-clean:hover {
+    background: -moz-linear-gradient(top, rgb(255,255,255) 0%, rgb(219,239,247) 97%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(255,255,255)), color-stop(97%,rgb(219,239,247))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, rgb(255,255,255) 0%,rgb(219,239,247) 97%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, rgb(255,255,255) 0%,rgb(219,239,247) 97%); /* Opera11.10+ */
+    background: -ms-linear-gradient(top, rgb(255,255,255) 0%,rgb(219,239,247) 97%); /* IE10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#dbeff7',GradientType=0 ); /* IE6-9 */
+    background: linear-gradient(top, rgb(255,255,255) 0%,rgb(219,239,247) 97%); /* W3C */
+  }
+}

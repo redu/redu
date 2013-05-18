@@ -26,7 +26,6 @@
             <h3 class="form-header">Não há convites pendentes no momento</h3>
           </div>
         <% end %>
-        <%#= will_paginate  @memberships, :renderer => EndlessRenderer %>
         <%= link_to "Sair", environment_course_path(@environment, @course),
         :class => "manage exit icon-manage-gray_8_10-before" %>
       <% end %>

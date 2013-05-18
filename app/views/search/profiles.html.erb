@@ -12,7 +12,7 @@
       <%= render :partial => "user_list",
         :locals => { :profiles => @profiles,
                      :query => @query } %>
-      <% if @profiles.num_pages > 1 %>
+      <% if @profiles.total_pages > 1 %>
         <hr class="list-separator">
       <% end %>
       <%= paginate @profiles, :theme => "numbers",

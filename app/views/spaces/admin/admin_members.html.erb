@@ -19,7 +19,7 @@
           :locals => {:memberships => @memberships}%>
       </div>
 
-      <%= will_paginate @memberships, :renderer => EndlessRenderer %>
+      <%= paginate @memberships, :theme => 'endless' %>
       <%= link_to "Sair", space_path(@space), :class => "manage exit icon-manage-gray_8_10-before" %>
     <% end %>
   </div><!-- end #space-manage -->

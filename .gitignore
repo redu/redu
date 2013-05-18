@@ -19,6 +19,7 @@ public/assets/*
 public/images/users/*
 public/images/myfiles/*
 config/initializers/rails_footnotes.rb
+.rails_footnotes
 .vagrant
 .rvmrc
 .ruby-version
@@ -28,3 +29,4 @@ chromedriver.log
 solr/data/*
 solr/pids/*
 config/sunspot.yml
+.sass-cache/

@@ -9,7 +9,7 @@
         <%= render :partial => 'statuses/item', :collection => @statuses %>
       </ol>
 
-      <%= will_paginate @statuses, :renderer => EndlessRenderer %>
+      <%= paginate @statuses, :theme => 'endless' %>
     </div><!-- end .statuses -->
   <% else %>
     <%= render "shared/empty_message", :icon_message => "Mural disponível apenas para Amigos",

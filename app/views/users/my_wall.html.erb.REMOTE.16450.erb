@@ -1,0 +1,19 @@
+<%= render :partial => 'users/home_sidebar' %>
+<div class="main grid_10" style="width: 580px;">
+  <ol id="breadcrumbs" class="clearfix">
+    <li>
+      <a href="#" class="replacement home icon-small icon-home-lightblue_16_18">Home</a>
+    </li>
+  </ol>
+  <%= render :partial => 'statuses/create_status',
+    :locals => { :statusable => current_user } %>
+   <div id="statuses" class="statuses">
+    <ol>
+      <%= render :partial => 'statuses/item', :collection => @statuses %>
+   </ol>
+
+   <%= paginate @statuses, :theme => 'endless' %>
+  </div><!-- end .statuses -->
+
+
+</div><!-- end .main -->

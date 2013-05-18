@@ -19,6 +19,6 @@
     <ul id="subjects_list" class="hierarchy-listing subjects main-content">
       <%= render :partial => 'subjects/item', :collection => @subjects %>
     </ul>
-    <%= will_paginate @subjects, :renderer => EndlessRenderer %>
+    <%= paginate @subjects, :theme => 'endless' %>
   </div><!-- end #environment-courses -->
 </div><!-- end .main -->

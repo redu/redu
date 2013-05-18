@@ -160,8 +160,7 @@ class Plan < ActiveRecord::Base
   def discharge_payment_need!
     if self.invoice.nil?
       0
-    elsif !(self.invoices.pending_payment +
-            self.invoices.open).empty?
+    elsif !(self.invoices.pending_payment + self.invoices.to_calculate).empty?
       self.invoice.refresh_amount!(Date.yesterday)
       # Necessário, pois a atualização da data,
       # feita na linha de cima, não estava sendo levada em
@@ -171,7 +170,7 @@ class Plan < ActiveRecord::Base
       # Fecha todos os invoices pendentes para adicionar
       # o valor ao novo invoice
       need_payment_invoices = self.invoices.pending_payment +
-        self.invoices.open
+        self.invoices.to_calculate
       pending_values = need_payment_invoices.collect do |inv|
         inv.close!
         inv.total

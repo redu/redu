@@ -194,7 +194,7 @@ describe UsersController do
       end
 
       it "redirects to edit_user_path" do
-        response.should redirect_to(edit_user_path(@user))
+        response.should redirect_to(controller.edit_user_path(@user))
       end
     end
 
@@ -279,7 +279,7 @@ describe UsersController do
       end
 
       it "redirects to account_user_path" do
-        response.should redirect_to(account_user_path(@user))
+        response.should redirect_to(controller.account_user_path(@user))
       end
     end
 
@@ -322,7 +322,7 @@ describe UsersController do
 
     it "redirects to site_index" do
         post :destroy, @post_params
-        response.should redirect_to(home_path)
+        response.should redirect_to(controller.home_path)
     end
   end
 
@@ -405,7 +405,7 @@ describe UsersController do
         end
 
         it "redirect to Courses#Preview" do
-          response.should redirect_to(preview_environment_course_path(@environment,
+          response.should redirect_to(controller.preview_environment_course_path(@environment,
                                                                       @course))
         end
       end
@@ -452,7 +452,7 @@ describe UsersController do
     it "when strange/contact access my_wall redirects to home" do
       @params = { :locale => "pt-BR", :id => @contact.login }
       get :my_wall, @params
-      response.should redirect_to(home_path)
+      response.should redirect_to(controller.home_path)
     end
 
     context "when exists compound logs" do
@@ -472,7 +472,7 @@ describe UsersController do
       end
 
       it "assigns correctly number of statuses." do
-        assigns[:statuses].should == @statuses
+        assigns[:statuses].to_set.should == @statuses.to_set
       end
     end
   end
@@ -534,7 +534,7 @@ describe UsersController do
       end
 
       it "assigns correctly number of statuses." do
-        assigns[:statuses].should == @statuses
+        assigns[:statuses].to_set.should == @statuses.to_set
       end
     end
   end
@@ -656,7 +656,7 @@ describe UsersController do
   context "context GET" do
     it "redirects to application_path" do
       get :new, :locale => 'pt-BR'
-      response.should redirect_to(application_path(:anchor => "modal-sign-up"))
+      response.should redirect_to(controller.application_path(:anchor => "modal-sign-up"))
     end
   end
 
