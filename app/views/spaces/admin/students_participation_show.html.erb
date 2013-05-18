@@ -1,4 +1,4 @@
-<%= include_stylesheets :print, :media => 'print' %>
+<%= stylesheet_link_tag :print, :media => 'print' %>
 
 <%= lazy_load(:chart, :jammit => true) do %>
   var treemap = new StudentsTreemap();
