@@ -64,6 +64,7 @@ gem 'dalli'
 gem 'simple-private-messages', '0.0.0', # A gem não possui .gemspec
   :git => 'git://github.com/jongilbraith/simple-private-messages.git'
 gem 'rails_autolink'
+gem 'rubyzip', :require => 'zip/zip'
 
 # Gems específicos para a API
 gem 'oauth-plugin', '~> 0.4.0'

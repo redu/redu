@@ -521,6 +521,7 @@ DEPENDENCIES
   rspec-rails (~> 2.13)
   ruby-debug
   ruby-prof
+  rubyzip
   sass-rails (~> 3.2)
   scribd_fu!
   shoulda-matchers (~> 1)
