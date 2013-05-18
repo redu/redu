@@ -1,6 +1,10 @@
 environments:
   production: &production
     precompile_assets: true
+    asset_roles:
+      - :app
+      - :app_master
+      - :util
     copy_exclude:
       - .git
     branch: master
@@ -8,6 +12,10 @@ environments:
     migration_command: rake db:migrate --trace
   staging: &staging
     precompile_assets: true
+    asset_roles:
+      - :app
+      - :app_master
+      - :util
     copy_exclude:
       - .git
     branch: staging
