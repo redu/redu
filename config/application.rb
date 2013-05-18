@@ -283,5 +283,8 @@ module Redu
     config.instant_search_preview_results_per_page = 2
 
     config.assets.enabled = true
+
+    # Caminho para os assets do CKEditor
+    config.assets.ckeditor_path = "#{config.assets.prefix}/ckeditor"
   end
 end

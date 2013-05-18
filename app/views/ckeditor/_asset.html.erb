@@ -3,7 +3,7 @@
     <tbody>
       <tr>
         <td align="center" valign="middle">
-          <%= image_tag(asset.url_thumb, :alt => asset.url_content, :title => asset.filename, :onerror=>"this.src='#{asset_path("ckeditor")}/images/ckfnothumb.gif'", :class=>'image') %>
+          <%= image_tag(asset.url_thumb, :alt => asset.url_content, :title => asset.filename, :onerror=>"this.src='#{Redu::Application.config.assets.prefix}/ckeditor/images/ckfnothumb.gif'", :class=>'image') %>
         </td>
        </tr>
      </tbody>

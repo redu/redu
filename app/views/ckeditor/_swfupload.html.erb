@@ -30,7 +30,7 @@
 				queue_complete_handler : queueComplete,	// Queue plugin event
 
 				// Button Settings
-                button_image_url : "<%= asset_path("ckeditor") %>/images/select_files.png",
+                button_image_url : "<%= Redu::Application.config.assets.ckeditor_path %>/images/select_files.png",
 				button_placeholder_id : "spanButtonPlaceholder",
 				button_width: 117,
 				button_height: 29,
@@ -38,7 +38,7 @@
 				button_cursor: SWFUpload.CURSOR.HAND,
 
 				// Flash Settings
-                flash_url : "<%= asset_path("ckeditor") %>/swfupload/swfupload.swf",
+                flash_url : "<%= Redu::Application.config.assets.ckeditor_path %>/swfupload/swfupload.swf",
 
 				custom_settings : {
 					progressTarget : "divFileProgressContainer"

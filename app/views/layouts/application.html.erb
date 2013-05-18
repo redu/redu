@@ -9,6 +9,12 @@
       <%= stylesheet_link_tag :ie %>
     <![endif]-->
     <link href='http://fonts.googleapis.com/css?family=Copse' rel='stylesheet' type='text/css' />
+
+  <script type="text/javascript" language="javascript" charset="utf-8">
+	//<![CDATA[
+      var CKEDITOR_BASEPATH = "<%= Redu::Application.config.assets.ckeditor_path %>/";
+	//]]>
+  </script>
     <%= javascript_include_tag :application %>
     <!--[if (gte IE 6)&(lte IE 8)]>
       <%= javascript_include_tag :ie %>
@@ -17,11 +23,6 @@
 
     <%= render :partial => "shared/chat" %>
 
-  <script type="text/javascript" language="javascript" charset="utf-8">
-	//<![CDATA[
-	  var CKEDITOR_BASEPATH = "<%=  asset_path("ckeditor") %>";
-	//]]>
-  </script>
   <%= render :partial => "shared/typekit" %>
   <%= render :partial => "shared/analytics" %>
   </head>
