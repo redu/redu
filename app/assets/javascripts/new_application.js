@@ -4,7 +4,6 @@
 //= require jquery.tokeninput-instant-search
 //= require home
 //= require statuses
-//= require jquery.timeago
 //= require timeago
 //= require jquery.fcbkcomplete.min.js
 //= require users

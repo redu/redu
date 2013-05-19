@@ -25,7 +25,6 @@
 //= require underscore
 //= require underscore-sharing-template.redu.jquery
 //= require embedly.redu.jquery
-//= require jquery.timeago
 //= require timeago
 // Somente para a nav global: início
 //= require bootstrap-redu-dropdown
