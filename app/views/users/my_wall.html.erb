@@ -13,12 +13,10 @@
           }
           ] %>
       </div>
-      <%= render "statuses/create_status", :status => @status, :statusable => @user,
-        :placeholder => "Compartilhe algo com seus Amigos através de seu mural" %>
-      <div id="statuses" class="status-list">
-        <ol><%= render :partial => "statuses/item", :collection => @statuses %></ol>
-        <%= paginate @statuses, :theme => 'endless' %>
-      </div>
+      <%# Status. %>
+      <%= render "statuses/wall", :status => @status, :statusable => @user,
+        :placeholder => "Compartilhe algo com seus Amigos através de seu mural",
+        :statuses => @statuses %>
     </div>
     <%= render "users/breadcrumb_wall", :user => @user %>
   </div>

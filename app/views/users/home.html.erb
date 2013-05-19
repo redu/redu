@@ -53,20 +53,9 @@
       <% end %>
 
       <%# Status. %>
-      <div class="home-status">
-        <%= render "statuses/create_status", :status => @status,
-          :statusable => @user,
-          :placeholder => "Compartilhe algo com seus Amigos através de seu mural" %>
-
-        <%# Mural com layout antigo %>
-        <div id="statuses" class="status-list">
-          <ol>
-            <%= render :partial => "statuses/item", :collection => @statuses %>
-          </ol>
-
-          <%= paginate @statuses, :theme => "endless" %>
-        </div>
-      </div>
+      <%= render "statuses/wall", :status => @status, :statusable => @user,
+        :placeholder => "Compartilhe algo com seus Amigos através de seu mural",
+        :statuses => @statuses %>
     </div>
     <%= render "users/breadcrumb_home", :user => @user %>
   </div>
