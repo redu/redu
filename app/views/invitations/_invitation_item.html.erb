@@ -17,6 +17,6 @@
       :class => "invitation-link-resend link-secondary",
       :title => "Reenviar convite" %>
     <span class="invitation-title text-truncate" title="<%= invitation_item.email %>"><%= invitation_item.email %></span>
-    <span class="invitation-legend legend">Convite enviado em <%= invitation_item.updated_at.strftime("%d %b, %Y, %kh%M") %></span>
+    <span class="invitation-legend legend">Convite enviado em <%= l invitation_item.updated_at, :format => :elegant %></span>
   </div>
 </li>

@@ -11,7 +11,6 @@ Redu::Application.configure do
 
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
-  config.action_view.debug_rjs             = true
   config.action_controller.perform_caching = false
 
   # Use Memcached as cache store, if caching is enabled
@@ -31,14 +30,14 @@ Redu::Application.configure do
   config.representer.default_url_options = {:host => "127.0.0.1:3000"}
 
   config.action_mailer.default_url_options = { :host => config.url }
-  config.action_mailer.asset_host = config.url
+  config.action_mailer.asset_host = "http://#{config.url}"
 
   # Armazena no sist. de arquivos
   config.paperclip = {
     :storage => :filesystem,
     :path => File.join(Rails.root.to_s, "public/images/:class/:attachment/:id/:style/:basename.:extension"),
     :url => "/images/:class/:attachment/:id/:style/:filename",
-    :default_url => "/images/new/missing_:class_:style.png"
+    :default_url => "/assets/missing_:class_:style.png"
   }
 
   config.paperclip_environment.merge!(config.paperclip)
@@ -91,6 +90,12 @@ Redu::Application.configure do
       Bullet.disable_browser_cache = true
     end
   end
+
+  # Do not compress assets
+  config.assets.compress = false
+
+  # Expands the lines which load the assets
+  config.assets.debug = true
 end
 
 

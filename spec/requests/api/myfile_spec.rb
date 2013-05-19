@@ -65,7 +65,8 @@ describe "File API" do
     context "without validation errors" do
       let(:mimetype) { "application/vnd.ms-powerpoint" }
       let(:file) do
-        fixture_file_upload("/api/document_example.pptx", mimetype)
+        path = "#{RSpec.configuration.fixture_path}/api/document_example.pptx"
+        fixture_file_upload(path, mimetype)
       end
       before do
         post "/api/folders/#{folder.id}/files", params.
@@ -104,9 +105,9 @@ describe "File API" do
   context "DELETE /api/files/:id" do
     subject { Factory(:myfile, :folder => folder, :user => course.owner) }
 
-    it "should return 200" do
+    it "should return 204" do
       delete "/api/files/#{subject.id}", params
-      response.code.should == "200"
+      response.code.should == "204"
     end
   end
 end

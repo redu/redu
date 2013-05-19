@@ -1,7 +1,5 @@
 module Api
   class CoursesController < ApiController
-    respond_to :js
-
     def index
       @environment = Environment.find(params[:environment_id])
       authorize! :read, @environment

@@ -1,0 +1,64 @@
+// ==========================================================================
+// Ícones.
+// ==========================================================================
+
+@import "compass/utilities/sprites/base";
+@import "bootstrap/mixins";
+
+$icon-layout: smart;
+$icon-sprite-dimensions: true;
+
+@import "nav-global/icon/*.png";
+@include all-icon-sprites;
+
+.nav-global [class*="icon-"][class*="-before"]:before { @include pseudo-before(5px, false); }
+
+.nav-global {
+  // Perfil.
+  .icon-profile-lightblue_16_18-before {
+    &:before { @extend .icon-profile-lightblue_16_18; }
+    &:hover:before { @extend .icon-profile-blue_16_18; }
+  }
+
+  // Mensagens.
+  .icon-message-lightblue_16_18-before {
+    &:before { @extend .icon-message-lightblue_16_18; }
+    &:hover:before { @extend .icon-message-blue_16_18; }
+  }
+
+  // Configuração / Gerenciamento.
+  .icon-manage-lightblue_16_18-before {
+    &:before { @extend .icon-manage-lightblue_16_18; }
+    &:hover:before { @extend .icon-manage-blue_16_18; }
+  }
+
+  // Parceiro.
+  .icon-partner-lightblue_16_18-before {
+    &:before { @extend .icon-partner-lightblue_16_18; }
+    &:hover:before  { @extend .icon-partner-blue_16_18; }
+  }
+
+  .icon-arrow-down-lightblue_8_10 {
+    .button-default:hover & { @extend .icon-arrow-down-blue_8_10; }
+    .open & { @extend .icon-arrow-up-lightblue_8_10; }
+    .open .button-default:hover & { @extend .icon-arrow-up-blue_8_10; }
+  }
+
+
+  // Filtros.
+
+  // Busca geral.
+  .icon-basic-guide-gray_16_18-before {
+    &:before { @extend .icon-basic-guide-gray_16_18; }
+  }
+
+  // Busca por ambiente.
+  .icon-environment-gray_16_18-before {
+    &:before { @extend .icon-environment-gray_16_18; }
+  }
+
+  // Busca por perfil.
+  .icon-profile-gray_16_18-before {
+    &:before { @extend .icon-profile-gray_16_18; }
+  }
+}

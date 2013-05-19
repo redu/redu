@@ -8,21 +8,16 @@
       :locals => { :user => @user } %>
     <div class="content-body">
       <div class="content-section">
-        <ul class="header-breadcrumb">
-          <li class="header-breadcrumb-item">
-            <%= link_to "Mensagens", user_messages_path(@user),
-              :class => "header-bradcrumb-link icon-sent-message-gray_32_34-before",
-              :title => "Mensagens" %>
-          </li>
-          <li class="header-breadcrumb-item">
-            <%= link_to index_sent_user_messages_path(@user),
-              :class => "header-bradcrumb-link",
-              :title => "Enviadas" do %>
-              Enviadas <%= content_tag(:span, parentize(@total_messages),
-              :class => "header-breadcrumb-item-light") %>
-            <% end %>
-          </li>
-        </ul>
+        <%= render "bootstrap/header_breadcrumb", :header_breadcrumb_items => [
+          { :name => "Mensagens",
+            :link => user_messages_path(@user),
+            :classes => "icon-sent-message-gray_32_34-before"
+          },
+          { :name => "Enviadas",
+            :link => index_sent_user_messages_path(@user),
+            :counter => @total_messages
+          }
+          ] %>
         <%= link_to "Nova Mensagem", new_user_message_path(@user),
           :remote => true,
           :class => "button-primary icon-message-new-white_blue_16_18-before pull-right" %>

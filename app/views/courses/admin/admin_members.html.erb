@@ -23,7 +23,7 @@
         <% else %>
           <div class="box_notice">Não há usuários no curso.</div>
         <% end %>
-        <%= will_paginate  @memberships, :renderer => EndlessRenderer %>
+        <%= paginate  @memberships, :theme => 'endless' %>
         <%= link_to "Sair", environment_course_path(@environment, @course), :class => "manage exit icon-manage-gray_8_10-before" %>
       <% end %>
     <% end %>

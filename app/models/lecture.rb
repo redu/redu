@@ -2,8 +2,7 @@ class Lecture < ActiveRecord::Base
   # Entidade polimórfica que representa o objeto de aprendizagem. Pode possuir
   # três especializações: Seminar, InteractiveClass e Page.
   include SimpleActsAsList::ModelAdditions
-
-  after_create :delay_create_asset_report
+  include EnrollmentService::LectureAdditions::ModelAdditions
 
   # ASSOCIATIONS
   has_many :statuses, :as => :statusable, :order => "updated_at DESC",
@@ -66,7 +65,7 @@ class Lecture < ActiveRecord::Base
       nested_attrs = { :questions => :alternatives }
     end
 
-    clone = self.clone :include => { :lectureable => nested_attrs },
+    clone = self.dup :include => { :lectureable => nested_attrs },
       :except => [:rating_average, :view_count, :position, :subject_id]
 
     if self.lectureable.is_a?(Seminar)
@@ -95,7 +94,7 @@ class Lecture < ActiveRecord::Base
     self.subject.finalized && self.subject.visible
   end
 
-  def build_lectureable(params)
+  def build_lectureable(params, options={})
     return if params[:_type].blank?
 
     begin
@@ -123,33 +122,7 @@ class Lecture < ActiveRecord::Base
     end
   end
 
-  # Cria AssetReport entre self e todos Enrolments de self.subject.
-  #
-  # Caso uma lista de Enrollment seja passada como parâmetro, apenas o
-  # AssetReport para este Enrollment é criado:
-  #
-  #   lecture.create_asset_report(:enrollments => [list, of, enrollments])
-  #
-  # Retorna a lista de Enrollment para os quais AssetReports foram criados.
-  def create_asset_report(opts={})
-    enrollments = opts[:enrollments] || self.subject.enrollments
-
-    reports = enrollments.collect do |enrollment|
-      AssetReport.new(:subject => self.subject, :enrollment => enrollment,
-                      :lecture => self)
-    end
-    AssetReport.import(reports, :validate => false,
-                       :on_duplicate_key_update => [:done])
-
-    enrollments.map(&:update_grade!)
+  def finalized?
+    self.persisted? && self.subject.finalized?
   end
-
-  protected
-
-  # ver app/jobs/create_asset_report_job.rb
-  def delay_create_asset_report
-    job = CreateAssetReportJob.new(:lecture_id => self.id)
-    Delayed::Job.enqueue(job, :queue => 'hierarchy-associations')
-  end
-
 end

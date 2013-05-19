@@ -71,10 +71,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def deny_access(exception)
+  def deny_access(exception, &block)
     session[:return_to] ||= request.fullpath
 
     flash[:error] = "Essa área só pode ser vista após você acessar o Redu com seu nome e senha."
+
+    yield if block_given?
 
     user_agent = UserAgent.parse(request.user_agent)
     if user_agent.mobile?

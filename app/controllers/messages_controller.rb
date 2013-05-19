@@ -40,7 +40,7 @@ class MessagesController < BaseController
 
   def show
     authorize! :manage, @user
-    @message = Message.read(params[:id], current_user)
+    @message = Message.read_message(params[:id], current_user)
     @reply = Message.new_reply(@user, @message, params)
 
     if @message.sender == @user
@@ -79,7 +79,7 @@ class MessagesController < BaseController
       @reply = Message.new(params[:message])
       @reply.save
       if @reply.valid?
-        @new_reply = @reply.clone
+        @new_reply = @reply.dup
         @new_reply.body = ""
       end
 

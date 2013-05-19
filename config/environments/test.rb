@@ -42,7 +42,7 @@ Redu::Application.configure do
   config.paperclip = {
     :path => File.join(Rails.root.to_s, "public/:class/:attachment/:id/:style/:basename.:extension"),
     :url => "/system/:class/:attachment/:id/:style/:basename.:extension",
-    :default_url => "/images/new/missing_:class_:style.png"
+    :default_url => "/assets/missing_:class_:style.png"
   }
 
   config.paperclip_environment.merge!(config.paperclip)
@@ -93,4 +93,7 @@ Redu::Application.configure do
     :students_participation => "http://localhost:4000/user_spaces/participation.json"
   }
 
+  # Configure static asset server for tests with Cache-Control for performance
+  config.serve_static_assets = true
+  config.static_cache_control = "public, max-age=3600"
 end

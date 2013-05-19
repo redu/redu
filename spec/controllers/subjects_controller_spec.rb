@@ -192,7 +192,7 @@ describe SubjectsController do
     it "redirects to index" do
       delete :destroy, :locale => "pt-BR", :id => @subject.id,
              :space_id => @space.id
-      response.should redirect_to(space_path(@subject.space))
+      response.should redirect_to(controller.space_path(@subject.space))
     end
   end
 

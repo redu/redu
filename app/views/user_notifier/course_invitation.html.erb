@@ -8,7 +8,7 @@
           <%= link_to @course.name, environment_course_url(@environment, @course), :class => "contact-name" %>
         </td>
         <td rowspan="3" class="acceptance-cell">
-          <%= image_tag "new/mail/icon-course-big.png", :size => "64x64" %>
+          <%= image_tag "mail/icon-course-big.png", :size => "64x64" %>
           <%= link_to "Aceitar ou recusar o pedido", home_user_url(@user), :class => "accept-contact" %>
         </td>
       </tr>
@@ -16,7 +16,7 @@
         <td class="statistics-cell">
           <table>
             <tr>
-              <td><%= image_tag "new/mail/icon-members-small.png", :class => "friendship-icon", :size => "16x16" %></td>
+              <td><%= image_tag "mail/icon-members-small.png", :class => "friendship-icon", :size => "16x16" %></td>
               <td><%= @course.approved_users.count %> membros</td>
             </tr>
           </table>
@@ -26,7 +26,7 @@
         <td>
           <table>
             <tr>
-              <td><%= image_tag "new/mail/icon-space-small.png", :class => "friendship-icon", :size => "16x18" %></td>
+              <td><%= image_tag "mail/icon-space-small.png", :class => "friendship-icon", :size => "16x18" %></td>
               <td><%= @course.spaces.published.count %> disciplinas</td>
             </tr>
           </table>
@@ -34,12 +34,12 @@
       </tr>
     </table>
     <% unless (@course.description.blank? || @course.tags.empty?) %>
-      <%= image_tag "new/mail/braces-big.png", :size => "556x16" %>
+      <%= image_tag "mail/braces-big.png", :size => "556x16" %>
     <% end %>
     <table class="meta">
       <% unless @course.description.blank? %>
         <tr>
-          <td><%= image_tag "new/mail/icon-description-small.png", :class => "right-space", :size => "15x17" %></td>
+          <td><%= image_tag "mail/icon-description-small.png", :class => "right-space", :size => "15x17" %></td>
           <td class="description">
             <%= @course.description %>
           </td>
@@ -48,14 +48,14 @@
       <% unless (@course.description.blank? || @course.tags.empty?) %>
         <tr>
           <td colspan="2">
-            <%= image_tag "new/mail/dots-big.gif", :class => "separator", :size => "490x22" %>
+            <%= image_tag "mail/dots-big.gif", :class => "separator", :size => "490x22" %>
           </td>
         </tr>
       <% end %>
       <% unless @course.tags.empty? %>
         <tr>
           <td>
-            <%= image_tag "new/mail/icon-tags-small.png", :class => "right-space", :size => "17x10" %>
+            <%= image_tag "mail/icon-tags-small.png", :class => "right-space", :size => "17x10" %>
           </td>
           <td><%= @course.tags.join(",") %></td>
         </tr>

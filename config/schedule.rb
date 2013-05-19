@@ -20,16 +20,11 @@
 # Learn more: http://github.com/javan/whenever
 
 set :output, "#{@path}/log/whenever.log"
-bin_folder = @environment.eql?('development') ? "bin" : "ey_bundler_binstubs"
 
 unless @environment.eql?('production')
   every 30.minute do
     runner "PackageInvoice.refresh_states!"
     runner "LicensedInvoice.refresh_states!"
-
-    # Comentado para evitar custos em staging
-    #command "cd #{@path} && #{bin_folder}/backup perform -t production_backup" \
-      #" -r backup"
   end
 else
   # 1am horário local
@@ -41,12 +36,6 @@ else
   # 4am horário local
   every :day, :at => '0am' do
     runner "Subject.destroy_subjects_unfinalized"
-  end
-
-  # 2am horário local
-  every :day, :at => '10pm' do
-    command "cd #{@path} && #{bin_folder}/backup perform -t production_backup" \
-      " -r backup"
   end
 
   # 3am horário local

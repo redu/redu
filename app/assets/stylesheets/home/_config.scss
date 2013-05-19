@@ -1,0 +1,208 @@
+// ==========================================================================
+// Configurações
+// ==========================================================================
+
+
+// Comum
+// ==========================================================================
+
+.form-config-fieldset { margin: 10px 0; }
+
+.form-config-legend {
+  font: 300 18px/18px $museo-sans;
+  letter-spacing: -1px;
+  color: $blue2;
+  margin: 0 0 20px 20px;
+
+  &[class*="icon-"][class*="-before"]:before { margin-right: 10px; }
+}
+
+
+// Perfil - Biografia
+// ==========================================================================
+
+.form-config-profile {
+  .list-separator +
+  & { margin-top: 10px; }
+
+  .control-group +
+  .list-separator { margin-top: 20px; }
+}
+
+.form-config-avatar { margin-top: 20px; }
+
+.form-config-social-networks {
+  margin: 0;
+  list-style: none;
+}
+
+.form-config-social-network {
+  input[type="hidden"] +
+  &,
+  & +
+  & { margin-top: 10px; }
+
+  .message-close { margin-top: 7px; }
+}
+
+.form-config-social-network-select { margin-left: 0; }
+
+.form-config-social-network-select +
+.form-config-social-network-url { margin-left: 5px; }
+
+
+// Perfil - Currículo
+// ==========================================================================
+
+.curriculum-container {
+  .experiences,
+  .educations { margin: 0; }
+
+  form {
+    .end-date { margin-top: 10px; }
+    .errors_on_field { text-align: left; }
+  }
+
+  .list-mix-item { padding: 0 20px; }
+
+  .form-education { margin-top: 20px; }
+
+  ul +
+  .form-horizontal { padding-top: 20px; }
+}
+
+.config-experience {
+  list-style: none;
+
+  .list-mix-inner { padding: 10px; }
+
+  .time,
+  .in-between { color: $gray5; }
+
+  .title { display: block; }
+
+  .description { color: $gray6; }
+
+  .title,
+  .description { padding-right: 40px; }
+
+  .edit-experience,
+  .edit-education {
+    float: right;
+    clear: right;
+    padding-top: 5px;
+  }
+
+  & +
+  & {
+    margin-top: 10px;
+
+    .form-horizontal { padding-top: 10px; }
+  }
+}
+
+.config-new-item {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.curriculum-title { color: $blue2; }
+
+.curriculum-buttons {
+  margin-top: 10px;
+  .add-item { margin-right: 20px; }
+  .cancel {
+    margin-right: 5px;
+    height: 35px;
+  }
+}
+
+
+// Conta
+// ==========================================================================
+
+.form-config-account {
+  // Um pouco de espaço para o contador de caracteres do controle perto do separador.
+  .control-group:last-child .controls { margin-bottom: 3px; }
+
+  .button-primary +
+  .button-danger { margin-right: 10px; }
+}
+
+// Planos
+// ==========================================================================
+
+.plan-status-no-pending { color: $green3 !important; }
+.plan-status-pending { color: $orange3 !important; }
+.plan-status-overdue { color: $red4 !important; }
+.plan-status-closed { color: $black !important; }
+.pag-seguro { padding-top: 20px; }
+.plans-sidebar {
+  p + p { margin-top: 15px; }
+}
+.plans-name {
+  font-weight: bold;
+  color: $gray6;
+}
+.plans-title {
+  color: $gray5;
+  font-weight: 300;
+
+  &.course {
+    color: $gray6;
+    margin-bottom: -5px;
+  }
+  &.teacher {
+    padding-top: 10px;
+  }
+}
+.plan-details {
+  margin-top: 20px;
+
+  li + li { margin-top: 10px; }
+
+  .list-mix-inner { padding: 10px; }
+  .list-mix-header {
+    padding-bottom: 10px;
+    overflow: hidden;
+    line-height: 18px;
+  }
+
+  .plan-name {
+    color: $green3;
+    float: left;
+  }
+
+  .plan-status {
+    display: block;
+    clear: left;
+  }
+
+  .plan-price {
+    color: $gray6;
+    font-weight: 300;
+  }
+
+  .quotas {
+    list-style-type: none;
+    li { padding-left: 43px; }
+    li + li {
+      margin-top: 0;
+      padding-top: 5px;
+    }
+    .plan-quota { color: $black; }
+    .icon {
+      float: left;
+      margin-right: 5px;
+    }
+    .quota-documents { padding-left: 0; }
+  }
+}
+.invoices-table {
+  margin-top: 40px;
+
+  tbody {
+    color: $gray6;
+    td:last-child { text-align: center; }
+  }
+}

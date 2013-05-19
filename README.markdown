@@ -165,6 +165,15 @@ O Redu (http://www.redu.com.br) funciona na infraestrutura da [Amazon](http://aw
 $ > ey deploy -a redu -r master --migrate
 ```
 
+#### Gems em repositórios privados
+
+Existem duas formas de utilizar Gems privados no Redu:
+
+A primeira é colocá-lo em um repositório privado e dar acesso ao usuário [tiago-redu](http://github.com/tiago-redu). Este usuário possui as credenciais da instância ``app_master``.
+
+A segunda é utilizar o servidor de Gem privado [The Shire](http://github.com/redu/the-shire).
+
+
 #### SSH
 
 Para realizar login na instância do Redu via SSH basta executar o seguinte comando:

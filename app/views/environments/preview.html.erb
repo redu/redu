@@ -6,18 +6,19 @@
         :locals => { :environment => @environment } %>
 
   <div id="environment-courses" class="body">
+
     <% if can?(:manage, @environment) %>
       <div class="admin-actions">
         <%= link_to 'Criar novo curso', new_environment_course_path(@environment), :class => "concave-button" %>
       </div>
     <% end %>
 
-    <% big_tabs :environments do %>
+    <%= big_tabs :environments do %>
       <ul id="courses_list" class="hierarchy-listing">
         <%= render :partial => 'courses/item_preview',
           :collection => @courses %>
       </ul>
-      <%= will_paginate @courses, :renderer => EndlessRenderer %>
+      <%= paginate @courses, :theme => 'endless' %>
     <% end %>
   </div><!-- end #environment-courses -->
 

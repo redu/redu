@@ -1,0 +1,13 @@
+// ==========================================================================
+// Convites de amizade e cursos.
+// ==========================================================================
+
+.requisitions {
+  margin: 0;
+  list-style-type: none;
+  color: $gray6;
+
+  .list-mix-inner { padding-right: 10px; }
+
+  .button-success { margin-left: 5px; }
+}

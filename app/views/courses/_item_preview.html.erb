@@ -1,9 +1,10 @@
 <li class="child clearfix">
-    <%= image_tag 'new/missing_courses_thumb_32.png', :alt => 'curso' %>
+    <%= image_tag 'missing_courses_thumb_32.png', :alt => 'curso' %>
   <div class="info">
     <%= link_to item_preview.name,
       environment_course_path(item_preview.environment, item_preview),
       :class => 'name' %>
+    <%= course_privacy_legend(item_preview) %>
     <% unless item_preview.workload.nil? %>
       <span class="workload"><%= item_preview.workload %> horas</span>
     <% end %>
@@ -17,7 +18,7 @@
     </ul>
   </div>
   <div class="statistics">
-    <span class="privacy icon-small icon-privacy-lightred_16_18 replacement">Curso fechado</span>
+    <%= render :partial => 'courses/privacy', :locals => { :course => item_preview } %>
     <ul class="numbers clearfix">
       <li>
         <span class="count"><%= item_preview.approved_users.length %></span>

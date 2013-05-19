@@ -1,5 +1,5 @@
 <% content_for :header_scripts_and_styles do %>
-  <%= include_javascripts :invite_friend %>
+  <%= javascript_include_tag 'friend-invitation' %>
 <% end %>
 
 <div class="span3">
@@ -10,23 +10,18 @@
     <%= render "friendships/breadcrumb", :user => @user %>
     <div class="content-body friend-invitation">
       <div class="content-section">
-        <ul class="header-breadcrumb">
-          <li class="header-breadcrumb-item">
-            <%= link_to "Meus Contatos", user_friendships_path(@user),
-              :class => "header-bradcrumb-link icon-connections-gray_32_34-before",
-              :title => "Meus Contatos" %>
-          </li>
-          <li class="header-breadcrumb-item">
-            <%= link_to "Amigos", user_friendships_path(@user),
-              :class => "header-bradcrumb-link",
-              :title => "Amigos" %>
-          </li>
-          <li class="header-breadcrumb-item">
-            <%= link_to "Convidar amigos", new_user_friendship_path(@user),
-              :class => "header-bradcrumb-link",
-              :title => "Convidar amigos" %>
-          </li>
-        </ul>
+        <%= render "bootstrap/header_breadcrumb", :header_breadcrumb_items => [
+          { :name => "Meus Contatos",
+            :link => user_friendships_path(@user),
+            :classes => "icon-connections-gray_32_34-before"
+          },
+          { :name => "Amigos",
+            :link => user_friendships_path(@user)
+          },
+          { :name => "Convidar amigos",
+            :link => new_user_friendship_path(@user)
+          }
+          ] %>
       </div>
       <%= new_tabs(:new_users) %>
       <%= render "friendships/friend_invitation", :user => @user %>

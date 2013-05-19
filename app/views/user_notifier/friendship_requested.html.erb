@@ -7,7 +7,7 @@
         <span class="call">deseja iniciar uma conexão com você</span>
       </td>
       <td rowspan="3" class="acceptance-cell">
-        <%= image_tag "new/mail/icon-friendship-big.png", :size => "64x64" %>
+        <%= image_tag "mail/icon-friendship-big.png", :size => "64x64" %>
         <%= link_to "Aceitar ou recusar o pedido", home_user_url(@friend), :class => "accept-contact" %>
       </td>
     </tr>
@@ -15,7 +15,7 @@
       <td class="statistics-cell">
         <table>
           <tr>
-            <td><%= image_tag "new/mail/icon-friendship-small.png", :class => "friendship-icon", :size => "16x16" %></td>
+            <td><%= image_tag "mail/icon-friendship-small.png", :class => "friendship-icon", :size => "16x16" %></td>
             <td><%= @contacts[:total] %> contatos (<%= @contacts[:in_common] %> em comum)</td>
           </tr>
         </table>
@@ -25,7 +25,7 @@
       <td>
         <table>
           <tr>
-            <td><%= image_tag "new/mail/icon-course-small.png", :class => "friendship-icon", :size => "16x16" %></td>
+            <td><%= image_tag "mail/icon-course-small.png", :class => "friendship-icon", :size => "16x16" %></td>
             <td><%= @courses[:total] %> cursos (professor em <%= @courses[:teacher] %>, tutor em <%= @courses[:tutor] %>)</td>
           </tr>
         </table>

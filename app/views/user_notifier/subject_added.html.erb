@@ -6,7 +6,7 @@
       </td>
       <td rowspan="2">
         <% unless @course.subscription_type.eql?(1) %>
-          <%= image_tag "new/mail/icon-lock-small.png", :class => "right-space", :size => "12x17" %>
+          <%= image_tag "mail/icon-lock-small.png", :class => "right-space", :size => "12x17" %>
         <% end %>
       </td>
       <td><%= @environment.initials_or_name %> &rsaquo; <%= @course.name %></td>
@@ -17,14 +17,14 @@
   </table>
   <table id="new-subject" class="action">
     <tr>
-      <td rowspan="3"> <%= image_tag "new/mail/icon-subject-medium.png", :class => "right-space", :size => "30x19" %></td>
+      <td rowspan="3"> <%= image_tag "mail/icon-subject-medium.png", :class => "right-space", :size => "30x19" %></td>
       <td>Um novo módulo da disciplina foi criado:</td>
     </tr>
     <tr>
       <td><%= link_to @subj.name, space_subject_url(@subj.space, @subj) %></td>
     </tr>
   </table>
-  <%= image_tag "new/mail/braces.png", :class => "braces", :size => "514x16" %>
+  <%= image_tag "mail/braces.png", :class => "braces", :size => "514x16" %>
   <%= render :partial => 'user_notifier/meta',
     :locals => { :description => @subj.description } %>
 </td>

@@ -1,22 +1,17 @@
-<%= include_stylesheets :print, :media => 'print' %>
+<%= stylesheet_link_tag :print, :media => 'print' %>
 
 <%= lazy_load(:chart, :jammit => true) do %>
   var treemap = new StudentsTreemap();
   treemap.print({ form: $("#graph-form"),
   renderTo: "treemap-chart",
-  url: "<%= api_space_users_path(@space.id, :oauth_token => @token, :role=>'member') %>" })
+  url: "<%= api_space_users_path(@space.id, :oauth_token => @token, :role=>'member', :partial => true) %>" })
 <% end %>
 
 <div id="space-manage" class="body management">
     <h3 class="form-header graph-header">Qual o desempenho dos alunos?</h3>
 
-    <%= form_tag Redu::Application.config.vis[:students_participation], :method => :get,
+    <%= form_tag api_vis_students_participation_path(@space.id), :method => :get,
       :remote => true, :class => "concave-form", :id => "graph-form" do %>
-      <% @space.students_id.each do |id| %>
-        <%= hidden_field_tag "users_id[]", id %>
-      <% end %>
-
-      <%= hidden_field_tag :space_id, @space.id %>
 
       <%= label_tag "date_start_fake", "Data inicial", :id => "form-problem" %>
       <%= field_set_tag nil, :class => "inline" do %>
@@ -33,6 +28,7 @@
         <%= text_field_tag :date_end, nil, :style => "display: none;" %>
       <% end %>
 
+      <%= hidden_field_tag :oauth_token, @token %>
       <%= submit_tag "Atualizar", :class=>"concave-submit" %>
     <% end %>
 </div>

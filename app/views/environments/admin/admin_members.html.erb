@@ -30,7 +30,7 @@
       <div class="box_notice">Não há usuários no ambiente.</div>
     <% end %>
 
-    <%= will_paginate @memberships, :renderer => EndlessRenderer %>
+    <%= paginate @memberships, :theme => 'endless' %>
     <%= link_to "Sair", environment_path(@environment), :class => "manage exit icon-manage-gray_8_10-before" %>
   <% end %>
 </div>

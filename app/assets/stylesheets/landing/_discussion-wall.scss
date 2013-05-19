@@ -1,0 +1,19 @@
+// ==========================================================================
+// Área do mural de discussão.
+// ==========================================================================
+
+.landing-discussion-wall {
+  @include box-sizing(border-box);
+  padding: 20px;
+  height: 230px;
+  background-color: $gray1;
+  background: image-url("landing/wall-background.png") no-repeat scroll right center $gray1;
+
+  .multiplebgs & {
+    background:
+      image-url("landing/icon-wall-gray_128_130.png") no-repeat scroll center center,
+      image-url("landing/wall-background.png") no-repeat scroll right center $gray1;
+  }
+}
+
+.landing-discussion-wall-content { width: 340px; }

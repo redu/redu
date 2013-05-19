@@ -69,7 +69,7 @@ describe ChoicesController do
       it "should redirect to results edit" do
         result = @exercise.start_for(@user)
         post :create, @params
-        response.body.should == "window.location = '#{ edit_exercise_result_path(@exercise, result) }'"
+        response.body.should == "window.location = '#{ controller.edit_exercise_result_path(@exercise, result) }'"
       end
     end
 

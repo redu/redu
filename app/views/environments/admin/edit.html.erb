@@ -32,7 +32,7 @@
         <div class="plan-panel">
           <div class="plan-use">
             <span class="plan-type"><%= @environment.plan.name %></span>
-            <%= render :partial => "invoices/quotas",
+            <%= render :partial => "invoices/quotas_old",
               :locals => { :quota_file => @environment.percentage_quota_file,
                            :plan => @environment.plan,
                            :quota_multimedia => @environment.percentage_quota_multimedia,
@@ -69,12 +69,12 @@
         <hr/>
 
         <%= f.submit "Salvar alterações" %>
-        <%= link_to "Remover ambiente", environment_path(@header_environment),
+        <%= link_to "Remover ambiente", environment_path(@header_environment || @environment),
           :confirm => "Você tem certeza que deseja remover este ambiente?",
           :method => :delete,
           :class => "concave-remove" %>
       <% end %>
-      <%= link_to "Sair", environment_path(@header_environment),
+      <%= link_to "Sair", environment_path(@header_environment || @environment),
         :class => "manage exit icon-manage-gray_8_10-before" %>
     <% end %>
   </div>

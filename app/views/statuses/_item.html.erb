@@ -110,7 +110,7 @@
     <li id="status-<%= item.id %>">
       <div class="status">
         <div class="status-text">
-          <%= image_tag (item.user ? item.user.avatar.url(:thumb_32) : "/images/new/missing_users_thumb_32.png"),
+          <%= image_tag (item.user ? item.user.avatar.url(:thumb_32) : "missing_users_thumb_32.png"),
             :class => "avatar", :width => 32, :height => 32 %>
           <% if item.user %>
             <%= link_to item.user.display_name, user_path(item.user), :class => "username" %>

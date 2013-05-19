@@ -8,7 +8,9 @@ describe User do
     it { should have_many attr }
     end
 
-  it { should have_many(:enrollments).dependent :destroy}
+  # Subject
+  it { should have_many(:enrollments).dependent(:destroy) }
+  it { should have_many(:asset_reports).through(:enrollments) }
 
   it { should have_one(:settings).dependent(:destroy) }
 
@@ -65,10 +67,8 @@ describe User do
   it { User.new.should respond_to(:cannot?) }
 
   [:first_name, :last_name].each do |attr|
-    it do
-      pending "Need fix on shoulda's translation problem" do
-        should validate_presence_of attr
-      end
+    it "Need fix on shoulda's translation problem" do
+      should validate_presence_of attr
     end
   end
 
@@ -81,12 +81,11 @@ describe User do
   end
 
   [:login, :email].each do |attr|
-    it do
-      pending "Need fix on shoulda's translation problem" do
-        should validate_uniqueness_of attr
-      end
+    it "Need fix on shoulda's translation problem" do
+      should validate_uniqueness_of attr
     end
   end
+
   it { should validate_acceptance_of :tos }
   it { should ensure_length_of(:first_name).is_at_most 25 }
   it { should ensure_length_of(:last_name).is_at_most 25 }
@@ -654,9 +653,8 @@ describe User do
       @last_compound = CompoundLog.where(:statusable_id => subject.id).last
 
       @statuses = @friends[0].overview.where(:compound => false).
-        paginate(:page => @page,
-                 :order => 'updated_at DESC',
-                 :per_page => Redu::Application.config.items_per_page)
+        order('updated_at DESC').page(@page).
+        per(Redu::Application.config.items_per_page)
     end
 
     it "assigns correctly number of statuses" do
@@ -788,7 +786,7 @@ describe User do
 
     subject_entity = Factory(:subject, :owner => subject,
                              :space => space, :finalized => true)
-    subject_entity.create_enrollment_associations
+    subject_entity.enroll
     subject.get_association_with(subject_entity).
       should == subject.enrollments.last
 

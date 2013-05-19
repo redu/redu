@@ -3,11 +3,11 @@
 # Recipe:: backup
 #
 
-ey_cloud_report "mongodb" do
-  message "configuring backup"
-end
-
 if @node[:instance_role] == 'db_master'
+  ey_cloud_report "mongodb" do
+    message "configuring backup"
+  end
+
   template "/usr/local/bin/mongo-backup" do
     source "mongo-backup.rb.erb"
     owner "root"

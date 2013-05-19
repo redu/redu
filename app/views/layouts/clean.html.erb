@@ -4,15 +4,15 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
     <title><%= raw(page_title) %></title>
     <%= csrf_meta_tag %>
-    <%= include_stylesheets :clean %>
+    <%= stylesheet_link_tag :clean %>
     <!--[if (gte IE 6)&(lte IE 8)]>
     <%= stylesheet_link_tag 'ie' %>
     <![endif]-->
     <%= javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js' %>
     <!--[if (gte IE 6)&(lte IE 8)]>
-    <%= include_javascripts :ie %>
+    <%= javascript_include_tag :ie %>
     <![endif]-->
-    <%= include_javascripts :clean %>
+    <%= javascript_include_tag :clean %>
 
     <%= render :partial => "shared/typekit" %>
     <%= render :partial => "shared/analytics" %>

@@ -1,0 +1,30 @@
+<%#
+  Cabeçalhos (Início)
+
+  Cabeçalho em estilo de breadcrumb para as páginas do Início.
+
+  Documentação:
+  http://developers.redu.com.br/ui-components/navigation.html#header-breadcrumb
+
+  Variáveis:
+    header_breadcrumb_items: um array de hashes com os itens do cabeçalho.
+      header_breadcrumb_item: um hash com informações do item.
+        name: texto do link.
+        link: link.
+        classes: classes adicionais, tais como o ícone.
+        counter: contador que fica entre parênteses.
+%>
+
+<ul class="header-breadcrumb">
+  <% header_breadcrumb_items.each do |header_breadcrumb_item| %>
+    <li class="header-breadcrumb-item">
+      <%= link_to header_breadcrumb_item[:link],
+        :title => header_breadcrumb_item[:name],
+        :class => "header-breadcrumb-link #{header_breadcrumb_item[:classes]}" do %>
+        <%= header_breadcrumb_item[:name] %>
+        <%= content_tag(:span, parentize(header_breadcrumb_item[:counter]),
+          :class => "header-breadcrumb-item-light") if header_breadcrumb_item[:counter] %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>

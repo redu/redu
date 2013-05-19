@@ -258,32 +258,25 @@ describe "Statuses" do
               :user => @current_user)
     end
 
-    it "should return status 200 when activity type" do
+    it "should return status 204 when activity type" do
       delete "/api/statuses/#{activity.id}", :oauth_token => @token,
        :format => 'json'
 
-      response.status.should == 200
+      response.status.should == 204
     end
 
-    it "should return status 200 when help type" do
+    it "should return status 204 when help type" do
       delete "/api/statuses/#{help.id}", :oauth_token => @token,
         :format => 'json'
 
-      response.status.should == 200
+      response.status.should == 204
     end
 
-    it "should return status 200 when log type" do
-      get "/api/statuses/#{log.id}", :oauth_token => @token,
-        :format => 'json'
-
-      response.status.should == 200
-    end
-
-    it "should return status 200 when answer type" do
+    it "should return status 204 when answer type" do
       delete "/api/statuses/#{answer.id}", :oauth_token => @token,
         :format => 'json'
 
-      response.status.should == 200
+      response.status.should == 204
     end
 
     it "should return status 404 when not found" do

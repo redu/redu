@@ -46,13 +46,13 @@ describe FriendshipsController do
     it "redirects to user profile, unsing HTML " do
       post :create, :locale => "pt-BR", :user_id => @user.login,
         :friend_id => @new_user.id
-      response.should redirect_to(user_path(@new_user))
+      response.should redirect_to(controller.user_path(@new_user))
     end
 
     it "redirects to user profile, unsing HTML with goto_home" do
       post :create, :locale => "pt-BR", :user_id => @user.login,
         :friend_id => @new_user.id, :goto_home => true
-      response.should redirect_to(home_user_path(@user))
+      response.should redirect_to(controller.home_user_path(@user))
     end
 
   end
@@ -82,13 +82,13 @@ describe FriendshipsController do
     it "redirects to user profile returning HTML" do
       post :destroy, :locale => "pt-BR", :user_id => @user.login,
         :id => @friendship.id
-      response.should redirect_to(user_path(@new_user))
+      response.should redirect_to(controller.user_path(@new_user))
     end
 
     it "redirects to user profile, returning HTML with goto_home" do
       post :destroy, :locale => "pt-BR", :user_id => @user.login,
         :id => @friendship.id, :goto_home => true
-      response.should redirect_to(home_user_path(@user))
+      response.should redirect_to(controller.home_user_path(@user))
     end
 
   end
@@ -121,15 +121,18 @@ describe FriendshipsController do
 
 
   context 'When resend invitation email' do
+    let(:friend) { @friends[0] }
+    let(:friendship_request) { @user.friendship_for(friend) }
     before do
-      controller.process_invites({'emails' => 'example1@email.com', 'friend_id' => @friends[0].id}, @user)
-      @friendship_request = @user.friendships.requested.first
-      @params = {:locale => "pt-BR", :id => @friendship_request.id, :user_id => @user.login, :format => 'js'}
-      post :resend_email, @params
+      controller.process_invites({'emails' => 'example1@email.com',
+                                  'friend_id' => friend.id }, @user)
+      @params = { :locale => "pt-BR", :id => friendship_request.id,
+                  :user_id => @user.login }
+      xhr :post, :resend_email, @params
     end
 
     it 'assigns invitation_id' do
-      assigns(:invitation_id).should == "request-#{@friendship_request.id}"
+      assigns(:invitation_id).should == "friendship-request-for-#{friend.id}"
     end
 
     it 'render js template' do

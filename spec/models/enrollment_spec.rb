@@ -36,47 +36,5 @@ describe Enrollment do
     end
   end
 
-  context "grade" do
-    let :lectures do
-      3.times.collect do
-        subject
-        Factory(:lecture, :subject => @sub, :owner => @sub.owner)
-      end
-    end
-
-    it "responds to update_grade!" do
-      should respond_to :update_grade!
-    end
-
-    it "updates grade successfully" do
-      lectures
-      subject.asset_reports[0..1].each { |a| a.done = true; a.save }
-      expect {
-        subject.update_grade!
-      }.to change(subject, :grade).by_at_most(66.6666666666667 + 10e-5).
-        by_at_least(66.6666666666667 - 10e-5) # Aproximação
-      subject.graduated.should be_false
-    end
-
-    it "marks as graduated when all grade is completed" do
-      lectures
-      subject.asset_reports.each { |a| a.done = true; a.save }
-      subject.update_grade!
-      subject.graduated.should be_true
-    end
-
-    it "changes to false when more lectures are added" do
-      lectures
-      subject.asset_reports.each { |a| a.done = true; a.save }
-      subject.update_grade!
-
-      expect {
-        Factory(:lecture, :subject => @sub, :owner => @sub.owner)
-        subject.reload
-        subject.update_grade!
-      }.to change(subject, :graduated).to(false)
-    end
-  end
-
   it_should_behave_like 'have unique index database'
 end

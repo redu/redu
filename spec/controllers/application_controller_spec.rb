@@ -88,7 +88,7 @@ describe ApplicationController do
 
     let(:view_paths) { @controller.view_paths }
     let(:mobile_views_path) do
-      ActionView::FileSystemResolver.new("app/views/mobile")
+      ActionView::OptimizedFileSystemResolver.new("app/views/mobile")
     end
 
     context "when accessed from a mobile device" do
@@ -98,7 +98,7 @@ describe ApplicationController do
 
       it "prepends mobile views path" do
         get :index, :locale => 'pt-BR'
-        view_paths.should include(mobile_views_path)
+        view_paths.paths.should include(mobile_views_path)
       end
     end
 
@@ -109,7 +109,7 @@ describe ApplicationController do
 
       it "does not prepend mobile views path" do
         get :index, :locale => 'pt-BR'
-        view_paths.should_not include(mobile_views_path)
+        view_paths.paths.should_not include(mobile_views_path)
       end
     end
   end
@@ -142,6 +142,31 @@ describe ApplicationController do
         get :index, :locale => 'pt-BR'
         # Hardcoded porque anonymous controller sobrescreve as rotas
         response.should redirect_to("/")
+      end
+    end
+
+    context "when accessing an ApplicationControllerSubclass" do
+      class ApplicationControllerSubclass < ApplicationController
+        rescue_from CanCan::AccessDenied, :with => :deny_access
+
+        private
+
+        def deny_access(exception, &block)
+          super(exception) do
+            flash.delete(:error)
+          end
+        end
+      end
+
+      controller(ApplicationControllerSubclass) do
+        def index
+          raise CanCan::AccessDenied
+        end
+      end
+
+      it "should accept a block" do
+        get :index, :locale => 'pt-BR'
+        flash[:error].should be_nil
       end
     end
   end

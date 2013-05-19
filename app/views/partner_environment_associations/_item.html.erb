@@ -16,7 +16,7 @@
   <% environment = item.plan_of_dead_environment.billable_audit %>
   <% if environment %>
     <li class="clearfix">
-      <%= image_tag 'new/missing_environments_thumb_32.png', :size => "32x32", :class => "avatar" %>
+      <%= image_tag 'missing_environments_thumb_32.png', :size => "32x32", :class => "avatar" %>
       <div class="environment-info">
         <%= content_tag :span, environment["name"], :class => "environment-name" %>
         <span class="date">Criado há <%= time_ago_in_words(item.created_at) %> por</span>

@@ -32,7 +32,7 @@ describe InvitationsController do
 
       it 'Redirect to user_home_path when user were logged' do
         get :show, @params
-        response.should redirect_to(home_user_path(@friend))
+        response.should redirect_to(controller.home_user_path(@friend))
       end
 
       context 'Invitation already accepted' do
@@ -42,7 +42,7 @@ describe InvitationsController do
         end
 
         it 'Redirect to home_path' do
-          response.should redirect_to(home_path)
+          response.should redirect_to(controller.home_path)
         end
       end
 
@@ -53,7 +53,7 @@ describe InvitationsController do
         end
 
         it 'Redirect to home_path' do
-          response.should redirect_to(home_path)
+          response.should redirect_to(controller.home_path)
         end
       end
     end
@@ -117,7 +117,7 @@ describe InvitationsController do
 
       it "Should be redirected to user user friendship with error message" do
         post :destroy_invitations, @params
-        response.should redirect_to(new_user_friendship_path(@user))
+        response.should redirect_to(controller.new_user_friendship_path(@user))
         flash[:error].should_not be_nil
         flash[:error].should == "Nenhum convite foi selecionado para remoção."
       end
@@ -127,7 +127,7 @@ describe InvitationsController do
         @params.store(:friendship_requests, @friendship_requests)
         post :destroy_invitations, @params
 
-        response.should redirect_to(new_user_friendship_path(@user))
+        response.should redirect_to(controller.new_user_friendship_path(@user))
         flash[:notice].should_not be_nil
         flash[:notice].should == "Os convites foram removidos com sucesso."
       end
@@ -194,7 +194,7 @@ describe InvitationsController do
     end
 
     it 'Should be redirected to user home' do
-      response.should redirect_to(home_user_path(@user))
+      response.should redirect_to(controller.home_user_path(@user))
     end
 
     context 'Invitations has already been destroyed' do
