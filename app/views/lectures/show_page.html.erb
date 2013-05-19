@@ -1,6 +1,6 @@
 <div class="span3">
   <div class="lecture-left-sidebar">
-    <%= image_tag "../images/home/thumbnail-missing-environment-160.png" %>
+    <%= image_tag "missing_environments_thumb_160.png", :size => "160x160" %>
      <ul class="breadcrumb-icons">
       <li class="breadcrumb-icon-item">
         <a class="breadcrumb-icon-link" title="Universidade Voluptat Metus" href="#">
@@ -147,7 +147,8 @@
       <div class="lecture-data">
         <div class="lecture-authoring">
           <a class="lecture-author-thumbnail" href="#" title="Nome Sobrenome">
-            <img src="/images/home/thumbnail-missing-profile-32.png" alt="Nome Sobrenome" title="Nome Sobrenome">
+            <%= image_tag "missing_users_thumb_32.png", :size => "32x32",
+              :alt => "Nome Sobrenome", :title => "Nome Sobrenome" %>
           </a>
           <div class="lecture-authoring-info">
             <span class="lecture-authoring-written-by legend">por</span>
