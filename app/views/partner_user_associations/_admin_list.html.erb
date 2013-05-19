@@ -3,11 +3,11 @@
     <%= render :partial => "partner_user_associations/item",
       :collection => partner_user_associations %>
   </ul>
-  <%= will_paginate partner_user_associations,
+  <%= paginate partner_user_associations,
     :params => { :controller => :partner_user_associations,
                  :partner_id => partner.id,
                  :action => :index },
-    :renderer => EndlessRenderer %>
+    :theme => 'endless' %>
 <% else %>
   <div class="box_notice">
     Nenhum colaborador foi adicionado

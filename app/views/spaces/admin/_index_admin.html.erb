@@ -8,7 +8,7 @@
     </thead>
     <%= render :partial => 'spaces/admin/item_admin', :collection => @spaces, :locals => { :member_count => member_count } %>
   </table>
-  <%= will_paginate @spaces, :renderer => EndlessRenderer %>
+  <%= paginate @spaces, :theme => 'endless' %>
 <% else %>
   <div class="box_notice">
     Não existe nenhuma disciplina.

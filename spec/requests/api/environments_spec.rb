@@ -94,13 +94,13 @@ describe "Environments API" do
   end
 
   context "put /api/environment/id" do
-    it "should return status 200" do
+    it "should return status 204" do
       updated_params = { :name => 'New name' }
 
       put "/api/environments/#{subject.id}", :environment => updated_params,
         :oauth_token => @token, :format => 'json'
 
-      response.status.should == 200
+      response.status.should == 204
     end
 
     it "should return 422 when invalid" do
@@ -132,11 +132,11 @@ describe "Environments API" do
   end
 
   context "delete /api/environments/id" do
-    it "should return status 200" do
+    it "should return status 204" do
       delete "/api/environments/#{subject.id}", :oauth_token => @token,
         :format => 'json'
 
-      response.status.should == 200
+      response.status.should == 204
     end
 
     it "should return status 404 when doesnt exist" do

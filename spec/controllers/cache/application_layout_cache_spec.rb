@@ -35,7 +35,7 @@ describe 'ApplicationLayoutCache' do
         it 'expires when recipient reads an unread message' do
           ActiveRecord::Observer.with_observers(:message_cache_observer) do
             performing_cache(cache_identifier) do |cache|
-              Message.read(message.id, user)
+              Message.read_message(message.id, user)
 
               cache.should_not exist(cache_identifier)
             end

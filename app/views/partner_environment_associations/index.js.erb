@@ -2,9 +2,9 @@ var $items = $("<%= escape_javascript( render :partial => "partner_environment_a
 $("#partner-environments-list").append($items);
 
 
-endless = '<%= will_paginate @partner_environment_associations,
+endless = '<%= paginate @partner_environment_associations,
   :params => { :controller => :partner_environment_associations,
     :partner_id => @partner.id,
     :action => :index },
-    :renderer => EndlessRenderer %>';
+    :theme => 'endless' %>';
 $('.endless').replaceWith(endless);

@@ -62,9 +62,11 @@ describe "Media API" do
     let(:mimetype) { 'video/mpeg' }
     let(:url) { "/api/subjects/#{sub.id}/lectures"  }
     let(:lecture_params) do
+      path = "#{RSpec.configuration.fixture_path}/api/video_example.avi"
+
       { :lecture => \
         { :name => 'Lorem', :type => 'Media',
-          :media => fixture_file_upload("/api/video_example.avi", mimetype) }
+          :media => fixture_file_upload(path, mimetype) }
       }.merge(base_params)
     end
 

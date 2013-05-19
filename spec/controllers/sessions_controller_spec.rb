@@ -32,7 +32,7 @@ describe SessionsController do
 
           it "should redirect to home_user_path" do
             post :create, @post_params
-            response.body.should == "window.location = '#{ home_user_path(@user) }'"
+            response.body.should == "window.location = '#{ controller.home_user_path(@user) }'"
           end
         end
 
@@ -54,7 +54,7 @@ describe SessionsController do
 
           it "should redirect to home_user_path" do
             post :create, @post_params
-            response.should redirect_to(home_user_path(@user))
+            response.should redirect_to(controller.home_user_path(@user))
           end
         end
      end
@@ -113,7 +113,7 @@ describe SessionsController do
         end
 
         it "should redirect do home-user-path" do
-          response.body.should == "window.location = '#{ home_user_path(@user) }'"
+          response.body.should == "window.location = '#{ controller.home_user_path(@user) }'"
         end
 
         it "friendship request should be created" do
@@ -137,7 +137,7 @@ describe SessionsController do
         end
 
         it "should redirect do home-user-path" do
-          response.should redirect_to(home_user_path(@user))
+          response.should redirect_to(controller.home_user_path(@user))
         end
 
         it "friendship request should be created" do
@@ -237,14 +237,14 @@ describe SessionsController do
       end
 
       it "redirects to home_path" do
-        response.should redirect_to(home_path)
+        response.should redirect_to(controller.home_path)
       end
     end
 
     context "when current_user is nil" do
       it "redirects to home_path" do
         get :destroy, { :locale => "pt-BR" }
-        response.should redirect_to(home_path)
+        response.should redirect_to(controller.home_path)
       end
     end
   end
@@ -272,7 +272,7 @@ describe SessionsController do
 
         it "should redirect to application_path" do
           get :new, :locale => 'pt-BR'
-          response.should redirect_to(application_path)
+          response.should redirect_to(controller.application_path)
         end
       end
     end
@@ -285,7 +285,7 @@ describe SessionsController do
       end
 
       it "redirects to home_user_path" do
-        response.should redirect_to(home_user_path(user))
+        response.should redirect_to(controller.home_user_path(user))
       end
     end
   end

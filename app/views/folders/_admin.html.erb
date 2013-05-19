@@ -1,5 +1,5 @@
 <div id="folder-admin" class="clearfix">
-  <% if current_user.can_manage? space %>
+  <% if can?(:upload_file, folder) %>
     <div style="position: relative;">
       <div class="new-folder">
         <a href="#" class="concave-clean" >Criar nova pasta</a>

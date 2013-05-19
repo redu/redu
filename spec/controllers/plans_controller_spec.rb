@@ -129,7 +129,7 @@ describe PlansController do
       it { should set_the_flash.to("O novo plano foi assinado, você pode ver a fatura abaixo.")}
 
       it "should redirect to new plan invoices index" do
-        response.should redirect_to(plan_invoices_path(assigns[:new_plan]))
+        response.should redirect_to(controller.plan_invoices_path(assigns[:new_plan]))
       end
     end
 
@@ -174,7 +174,7 @@ describe PlansController do
       it { should set_the_flash.to("O novo plano foi assinado, você pode ver a fatura abaixo.")}
 
       it "should redirect to new plan invoices index" do
-        response.should redirect_to(plan_invoices_path(assigns[:new_plan]))
+        response.should redirect_to(controller.plan_invoices_path(assigns[:new_plan]))
       end
     end
 
@@ -208,7 +208,7 @@ describe PlansController do
       end
 
       it "renders partner_environment_associations plans options" do
-        response.should redirect_to partner_client_plan_invoices_path(
+        response.should redirect_to controller.partner_client_plan_invoices_path(
           @partner_assoc.partner, @partner_assoc, assigns[:new_plan])
       end
 

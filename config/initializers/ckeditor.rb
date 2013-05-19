@@ -1,5 +1,6 @@
 # Use this hook to configure ckeditor
 if Object.const_defined?("Ckeditor")
+
   Ckeditor.setup do |config|
     # The file_post_name allows you to set the value name used to post the file.
     # This is not related to the file name. The default value is 'data'.

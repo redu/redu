@@ -125,7 +125,7 @@ describe EnvironmentsController do
         end
 
         it "redirects to confirmation page" do
-          should redirect_to(confirm_plan_path(assigns[:plan]))
+          should redirect_to(controller.confirm_plan_path(assigns[:plan]))
         end
       end
 
@@ -252,7 +252,7 @@ describe EnvironmentsController do
         end
 
         it "redirects to Environments#show" do
-          response.should redirect_to(environment_path(@environment))
+          response.should redirect_to(controller.environment_path(@environment))
         end
       end
 

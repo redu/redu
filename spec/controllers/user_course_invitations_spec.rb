@@ -23,7 +23,7 @@ describe UserCourseInvitationsController do
       end
 
       it "redirects to user's home" do
-        response.should redirect_to(home_user_path(@logged_user))
+        response.should redirect_to(controller.home_user_path(@logged_user))
       end
 
     end

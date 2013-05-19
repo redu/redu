@@ -1,0 +1,446 @@
+/*
+*= require reset
+*= require 960
+*= require new-fonts
+*= require utils
+*= require icons.redu
+*= require tipTip
+*= require form.redu
+*= require outdated-browser
+*= require clean
+*= require landing
+*= require fb-login
+*/
+
+/* Termos de Uso, Política de Privacidade e Fale Conosco */
+.overlay {
+  background-image: image-url("circulos-bokeh-peq.png");
+  background-repeat: no-repeat;
+  background-position: 60px 0;
+}
+
+.logo-top {
+  background-image: image-url("redu-hi-vert.png");
+  width: 225px;
+  height: 196px;
+  margin-left: -20px;
+  text-indent: -9999px;
+}
+
+.logo-top a {
+  display: block;
+  height: 196px;
+  width: 225px;
+}
+
+.left-navigation {
+  font-family: "Museo Sans", "Helvetica Neue", Arial, sans-serif;
+  font-size: 17px;
+  font-weight: 500;
+  color: rgb(179, 179, 179);
+  margin-top: 45px;
+  position: relative; /* Faz a aba sobrepor o bloco direito. */
+}
+
+.left-navigation li {
+  margin-bottom: 9px;
+}
+
+.left-navigation a,
+.about-redu a:hover,
+.politics-terms a:hover {
+  text-decoration: none;
+}
+
+.left-navigation li.active {
+  margin-right: -8px;
+  background-color: rgb(77, 173, 214);
+}
+
+.boxshadow .left-navigation li.active {
+  -webkit-box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+.borderradius .left-navigation li.active {
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 0px;
+  -moz-border-radius-bottomright: 0px;
+  -moz-border-radius-bottomleft: 5px;
+  -webkit-border-radius: 5px 0px 0px 5px;
+  border-radius: 5px 0px 0px 5px;
+}
+
+.left-navigation li.active:hover {
+  background-color: rgb(21, 138, 196);
+}
+
+.left-navigation a:hover {
+  color: rgb(21, 138, 196);
+}
+
+.left-navigation li.active a {
+  color: white;
+}
+
+.textshadow .left-navigation li.active a {
+  text-shadow: 0px -1px 0px rgb(21, 138, 196);
+}
+
+.left-navigation li.active a:after {
+  content: "";
+  width: 26px;
+  height: 46px;
+  background-image: image-url("icons-tos-privacy-contact.png");
+  background-position: 0 -318px;
+  float: right;
+  margin-right: -26px;
+  margin-top: -13px;
+}
+
+.left-navigation li.active:hover a:after {
+  background-position: -80px -318px;
+}
+
+.left-navigation a {
+  color: rgb(179, 179, 179);
+  display: block;
+  padding: 11px 0 12px 42px;
+}
+
+.left-navigation li a:before {
+  content: "";
+  width: 24px;
+  height: 32px;
+  float: left;
+  margin-left: -35px;
+  margin-top: -7px;
+}
+
+.left-navigation li.term-of-service a:before {
+  background-image: image-url("icons-tos-privacy-contact.png");
+  background-position: -8px -4px;
+}
+
+.left-navigation li.term-of-service a:hover:before {
+  background-position: -88px -4px;
+}
+
+.left-navigation li.active.term-of-service a:before {
+  background-position: -168px -4px;
+}
+
+.left-navigation li.privacy-policy a:before {
+  background-image: image-url("icons-tos-privacy-contact.png");
+  background-position: -8px -84px;
+}
+
+.left-navigation li.privacy-policy a:hover:before {
+  background-position: -88px -84px;
+}
+
+.left-navigation li.active.privacy-policy a:before {
+  background-position: -168px -84px;
+}
+
+.left-navigation li.contact a:before {
+  background-image: image-url("icons-tos-privacy-contact.png");
+  background-position: -8px -164px;
+}
+
+.left-navigation li.contact a:hover:before {
+  background-position: -88px -164px;
+}
+
+.left-navigation li.active.contact a:before {
+  background-position: -168px -164px;
+}
+
+.content-title {
+  margin-top: 40px;
+  margin-bottom: 50px;
+  padding-left: 40px;
+  font-family: museo-sans, "Helvetica Neue", Arial, sans-serif;
+  font-size: 47px;
+  font-weight: 100;
+  letter-spacing: -2px;
+  color: rgb(115, 195, 230);
+}
+
+.content-title:after {
+  content: "";
+  float: right;
+  height: 64px;
+  margin-right: 14px;
+  margin-top: -13px;
+  width: 56px;
+}
+
+.content-title.term-of-service:after {
+  background-image: image-url("icons-tos-privacy-contact.png");
+  background-position: 0 -241px;
+}
+
+.content-title.privacy-policy:after {
+  background-image: image-url("icons-tos-privacy-contact.png");
+  background-position: 160px -241px;
+}
+
+.content-title.contact:after {
+  background-image: image-url("icons-tos-privacy-contact.png");
+  background-position: 80px -241px;
+}
+
+.top-navigation {
+  margin-left: 40px;
+  margin-top: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  color: rgb(179, 179, 179);
+}
+
+.top-navigation li {
+  display: inline;
+}
+
+.top-navigation a,
+.content a {
+  color: rgb(77, 173, 214);
+}
+
+.top-navigation a:hover,
+.content a {
+  color: rgb(21, 138, 196);
+}
+
+.top-navigation a.active {
+  font-weight: bold;
+}
+
+.top-navigation .separator {
+  margin: 0 15px;
+}
+
+.textshadow .top-navigation,
+.textshadow .content-title,
+.textshadow .left-navigation {
+  text-shadow: 0px 1px 0px white;
+}
+
+.content {
+  padding: 40px;
+  margin-bottom: 60px;
+  border: 1px solid white;
+  background-color: white;
+  overflow: hidden;
+  min-height: 473px;
+}
+
+.borderradius .content {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+
+.boxshadow .content {
+  -webkit-box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.4);
+}
+
+.cssgradients .content {
+  background: -moz-linear-gradient(top,  rgb(240,240,240) 0%, rgb(255,255,255) 8%, rgb(255,255,255) 90%, rgb(240,240,240) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(240,240,240)), color-stop(8%,rgb(255,255,255)), color-stop(90%,rgb(255,255,255)), color-stop(100%,rgb(240,240,240))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgb(240,240,240) 0%,rgb(255,255,255) 8%,rgb(255,255,255) 90%,rgb(240,240,240) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgb(240,240,240) 0%,rgb(255,255,255) 8%,rgb(255,255,255) 90%,rgb(240,240,240) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgb(240,240,240) 0%,rgb(255,255,255) 8%,rgb(255,255,255) 90%,rgb(240,240,240) 100%); /* IE10+ */
+  background: linear-gradient(top,  rgb(240,240,240) 0%,rgb(255,255,255) 8%,rgb(255,255,255) 90%,rgb(240,240,240) 100%); /* W3C */
+}
+
+.textshadow .content {
+  text-shadow: 1px 1px 0px white;
+}
+
+.content p,
+.content ul,
+.content ol,
+.content .last-updated {
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  line-height: 17px;
+  color: rgb(109, 110, 111);
+  margin-bottom: 20px;
+}
+
+.content ol {
+  list-style-type: decimal;
+  list-style-position: inside;
+}
+
+.content ul {
+  list-style-type: disc;
+  list-style-position: inside;
+}
+
+.content .legend {
+  color: #b3b3b3;
+  font-size: 11px;
+  line-height: 11px;
+}
+
+.content .section {
+  font-family: "Museo Sans", "Helvetica Neue", Arial, sans-serif;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 17px;
+  color: black;
+}
+
+.content .standout {
+  color: black;
+  font-weight: bold;
+}
+
+.content .contact-form {
+  width: 572px; /* Pra alinhar o botão na direita... */
+}
+
+.content .contact-form textarea {
+  height: 145px;
+}
+
+/* Específico a tela de fale conosco após submissão do formulário. */
+
+.content .confirmation-msg {
+  margin-top: 110px;
+}
+
+/* Rodapé */
+html, body {
+  height: 100%;
+}
+
+.overlay {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -210px;
+}
+
+.push {
+  height: 210px;
+  clear: both;
+}
+
+.body {
+  height: 673px;
+}
+
+.footer {
+  border-top: 1px solid white;
+  height: 210px;
+  background-color: rgb(77,173,214);
+}
+
+.cssgradients .footer {
+  background: -moz-linear-gradient(top, rgb(115,195,230) 0%, rgb(23,137,195) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(115,195,230)), color-stop(100%,rgb(23,137,195))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgb(115,195,230) 0%,rgb(23,137,195) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgb(115,195,230) 0%,rgb(23,137,195) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgb(115,195,230) 0%,rgb(23,137,195) 100%); /* IE10+ */
+  background: linear-gradient(top, rgb(115,195,230) 0%,rgb(23,137,195) 100%);
+}
+
+.footer .logo-bottom {
+  width: 240px;
+  height: 77px;
+  background-image: image-url("redutech-low-horiz-a.png");
+  margin-left: -18px;
+}
+
+.footer .logo-bottom a {
+  height: 212px;
+  overflow: hidden;
+  display: block;
+}
+
+.footer .about {
+  font-family: arial, sans-serif;
+  height: 72px;
+  width: 290px;
+  font-size: 11px;
+  float: left;
+  color: white;
+  line-height: 15px;
+}
+
+.footer .our-address{
+  margin-left: 60px;
+  margin-right: 143px;
+  background-image: image-url("icon-geolocal-white_12.png");
+  background-repeat: no-repeat;
+  width: 187px;
+  float: left;
+  padding-top: 21px;
+  font-size: 11px;
+  color: white;
+}
+
+.textshadow .footer .about,
+.textshadow .footer .our-address {
+  text-shadow: 0 -1px 0 rgb(21, 138, 196);
+}
+
+.footer .menu {
+  width: 130px;
+  height: 62px;
+  float: left;
+  font-size: 13px;
+}
+
+.footer .politics-terms {
+  width: 150px;
+  height: 62px;
+  float: left;
+  font-size: 13px;
+}
+
+.footer li {
+  padding: 6px 5px 4px 5px;
+}
+
+.footer li a {
+  height: 62px;
+  font-size: 12px;
+  color: white;
+  font-family: arial, sans-serif;
+  padding: 6px 5px 4px 5px;
+}
+
+.textshadow .footer li a {
+  text-shadow: 0 1px 0 rgb(109, 110, 111);
+}
+
+.footer li a:hover {
+  padding: 6px 5px 4px 5px;
+  background-color: white;
+  color: rgb(21,138,196);
+  text-decoration: none;
+}
+
+.textshadow .footer li a:hover {
+  text-shadow: none;
+}
+
+.borderradius .footer li a:hover {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+.boxshadow .footer li a:hover {
+  -webkit-box-shadow: 0 1px 0 0 rgb(109, 110, 111);
+  -moz-box-shadow: 0 1px 0 0 rgb(109, 110, 111);
+  box-shadow: 0 1px 0 0 rgb(109, 110, 111);
+}

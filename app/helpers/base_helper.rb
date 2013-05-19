@@ -349,12 +349,13 @@ module AsyncJSHelper
   def lazy_load(package, options = {}, &block)
     opts = {
       :type => :js,
-      :jammit => false,
       :clear => true
     }.merge(options)
 
-    if opts[:jammit]
-      package = jammit(package, opts[:type])
+    package = if opts[:type] == :css
+      stylesheet_path(package)
+    else
+      javascript_path(package)
     end
     package = package.to_a.flatten
 
@@ -389,20 +390,7 @@ module AsyncJSHelper
     end.html_safe
   end
 
-  # Gera path ou lista de paths p/ um determinado asset (assets.yml)
-  def jammit(pack, type)
-    if should_package?
-      Redu::Application.config.action_controller.asset_host + Jammit.asset_url(pack, type)
-    else
-      Jammit.packager.individual_urls(pack.to_sym, type)
-    end
-  end
-
   private
-
-  def should_package?
-    Jammit.package_assets && !(Jammit.allow_debugging && params[:debug_assets])
-  end
 
   # Retorna um número dentro de parênteses caso ele seja maior que zero.
   def parentize(number)

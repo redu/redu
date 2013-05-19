@@ -1,0 +1,26 @@
+// ==========================================================================
+// Áreas de mensagens particulares, currículo e mobilidade.
+// ==========================================================================
+
+// Encapsulador.
+.landing-others {
+  padding: 50px 20px 20px;
+  background: transparent image-url("landing/plus.png") no-repeat center 10px;
+  overflow: hidden;
+}
+
+.landing-other {
+  width: 286px;
+  float: left;
+  position: relative;
+
+  & + & { margin-left: 20px; }
+
+  .label-doubts {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  [class*="icon-"][class*="-before"]:before { margin-right: 10px; }
+}

@@ -241,9 +241,9 @@ describe Lecture do
       context "when cloning questions" do
         it "generates a clone that contains all questions" do
           subject_q = attrs_except(subject.lectureable.questions,
-                                   ["id","exercise_id"])
+                                   ["id","exercise_id", "created_at", "updated_at"])
           new_lecture_q = attrs_except(@new_lecture.lectureable.questions,
-                                       ["id","exercise_id"])
+                                       ["id","exercise_id", "created_at", "updated_at"])
 
           subject_q.to_set.should == new_lecture_q.to_set
         end
@@ -251,11 +251,11 @@ describe Lecture do
         context "when cloning alternatives" do
           it "generates a clone that each question contain all alternatives" do
             subject_a = subject.lectureable.questions.collect do |q|
-              attrs_except(q.alternatives, ["id","question_id"])
+              attrs_except(q.alternatives, ["id","question_id", "created_at", "updated_at"])
             end
 
             new_lecture_a = @new_lecture.lectureable.questions.collect do |q|
-              attrs_except(q.alternatives, ["id","question_id"])
+              attrs_except(q.alternatives, ["id","question_id", "created_at", "updated_at"])
             end
 
             subject_a.to_set.should == new_lecture_a.to_set

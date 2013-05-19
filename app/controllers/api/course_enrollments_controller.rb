@@ -24,7 +24,8 @@ module Api
     # /api/courses/:course_id/enrollments
     def index
       @entity = find_and_authorize_entity
-      course_enrollments = @entity.course_enrollments
+      course_enrollments = @entity.course_enrollments.
+        includes({ :course => :environment }, :user)
       if params.has_key?(:user_id)
         course_enrollments = filter_by_course_id(course_enrollments)
       end
@@ -32,7 +33,7 @@ module Api
       decorated = course_enrollments.
         map { |e| Api::CourseEnrollmentDecorator.new(e) }
 
-      respond_with(decorated, :represent_with => CourseEnrollmentRepresenter)
+      respond_with(decorated, :represent_with => CourseEnrollmentsRepresenter)
     end
 
     def destroy

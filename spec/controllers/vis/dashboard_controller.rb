@@ -109,18 +109,17 @@ describe Vis::DashboardController do
         err.should eq("Não existem disciplinas no curso")
       end
 
-      it "should return any data if format is not json" do
+      it "should return status 406 if format is not json" do
         @params = { :course_id => @course.id,
                     :teacher_id => @course.teachers.first.id,
                     :date_start => "2012-03-01",
-                    :date_end => "2012-02-10",
+                    :date_end => "2012-03-10",
                     :spaces => [@space.id.to_s],
                     :format => :html,
                     :locale => "pt-BR" }
 
         get :teacher_participation_interaction, @params
-        ActiveSupport::JSON.decode(response.body).
-          should_not be_true
+        response.code.should == "406"
       end
 
       it "should return params correclty" do

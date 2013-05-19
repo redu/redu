@@ -3,8 +3,8 @@ require 'spec_helper'
 describe RecoveryEmail do
   subject { Factory.build(:recovery_email) }
 
-  it { should validate_format_of(:email).with("person@email.com") }
-  it { should validate_format_of(:email).with("person@email.com.br") }
+  it { should allow_value("person@email.com").for(:email) }
+  it { should allow_value("person@email.com.br").for(:email) }
 
   it "should mark email as invalid" do
     subject.should be_valid

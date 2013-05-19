@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   include Invitable::Base
   include Humanizer
   include UserSearchable
+  include VisService::UserAdditions::ModelAdditions
 
   # Valida a resposta ao captcha
   attr_writer :enable_humanizer
@@ -21,10 +22,9 @@ class User < ActiveRecord::Base
   after_create  :update_last_login
   before_validation :strip_whitespace
   after_commit :on => :create do
-    UserNotifier.delay(:queue => 'email', :priority => 1).user_signedup(self.id)
-
     environment = Environment.find_by_path('ava-redu')
     environment.courses.each { |c| c.join(self) } if environment
+    UserNotifier.delay(:queue => 'email', :priority => 1).user_signedup(self.id)
   end
 
   # ASSOCIATIONS
@@ -100,7 +100,7 @@ class User < ActiveRecord::Base
       "LOWER(last_name) LIKE :keyword OR " +\
       "CONCAT(TRIM(LOWER(first_name)), ' ', TRIM(LOWER(last_name))) LIKE :keyword OR " +\
       "LOWER(email) LIKE :keyword", { :keyword => "%#{keyword.to_s.downcase}%" }).
-      limit(10).select("users.id, users.first_name, users.last_name, users.login, users.email, users.avatar_file_name")
+      limit(10).select("users.id, users.first_name, users.last_name, users.login, users.email, users.avatar_file_name, users.avatar_updated_at")
   }
   scope :popular, lambda { |quantity|
     order('friends_count desc').limit(quantity)
@@ -565,19 +565,19 @@ class User < ActiveRecord::Base
       # Populares da rede exceto o próprio usuário e os usuários que ele,
       # requisitou/foi requisitada a amizade.
       users = User.select('users.id, users.login, users.avatar_file_name,' \
-                          ' users.first_name, users.last_name').
+                          ' users.first_name, users.last_name, users.avatar_updated_at').
                           without_ids(contacts_and_pending_ids << self).
                           popular(20) |
       # Professores populares da rede exceto o próprio usuário e os usuários,
       # que ele requisitou/foi requisitada a amizade.
         User.select('users.id, users.login, users.avatar_file_name,'\
-                    ' users.first_name, users.last_name').
+                    ' users.first_name, users.last_name, users.avatar_updated_at').
                     without_ids(contacts_and_pending_ids << self).
                     popular_teachers(20) |
       # Usuários com o mesmo domínio de email exceto o próprio usuário e os,
       # usuários que ele requisitou/foi requisitada a amizade.
         User.select('users.id, users.login, users.avatar_file_name,' \
-                    ' users.first_name, users.last_name').
+                    ' users.first_name, users.last_name, users.avatar_updated_at').
                     without_ids(contacts_and_pending_ids << self).
                     with_email_domain_like(self.email).limit(20)
     else
@@ -600,7 +600,7 @@ class User < ActiveRecord::Base
     contacts_ids = User.contacts_and_pending_contacts_ids.
       where("friendships.user_id = ?", self.id)
     User.select("DISTINCT users.id, users.login, users.avatar_file_name," \
-                " users.first_name, users.last_name").
+                " users.first_name, users.last_name, users.avatar_updated_at").
       joins("LEFT OUTER JOIN course_enrollments ON" \
             " course_enrollments.user_id = users.id AND" \
             " course_enrollments.type = 'UserCourseAssociation'").
@@ -615,7 +615,7 @@ class User < ActiveRecord::Base
     contacts_and_pending_ids = User.contacts_and_pending_contacts_ids.
       where("friendships.user_id = ?", self.id)
     User.select("DISTINCT users.id, users.login, users.avatar_file_name," \
-                " users.first_name, users.last_name").
+                " users.first_name, users.last_name, users.avatar_updated_at").
       joins("LEFT OUTER JOIN `friendships`" \
             " ON `friendships`.`friend_id` = `users`.`id`").
       where("friendships.status = 'accepted' AND friendships.user_id IN (?)" \

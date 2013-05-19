@@ -15,6 +15,10 @@ class EndlessRenderer < WillPaginate::ViewHelpers::LinkRenderer
     end
   end
 
+  def url(page)
+    "?page=#{page}"
+  end
+
   # Container da paginação
   def html_container(html)
     if @options[:class].eql? "pagination"

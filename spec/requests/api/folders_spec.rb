@@ -146,10 +146,10 @@ describe "Folders API" do
       Factory(:complete_folder, :space => space, :parent => space.root_folder)
     end
 
-    it "should return code 200" do
+    it "should return code 204" do
       put "/api/folders/#{subject.id}", params.
         merge({ :folder => { :name => 'Foobar' } })
-      response.code.should == "200"
+      response.code.should == "204"
     end
 
     context "with validation error" do
@@ -173,9 +173,9 @@ describe "Folders API" do
       Factory(:complete_folder, :space => space, :parent => space.root_folder)
     end
 
-    it "should return 200" do
+    it "should return 204" do
       delete "/api/folders/#{subject.id}", params
-      response.code.should == "200"
+      response.code.should == "204"
     end
   end
 end

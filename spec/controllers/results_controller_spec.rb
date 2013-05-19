@@ -33,7 +33,7 @@ describe ResultsController do
     it "redirects to the first question" do
       post :create, @params
       response.should \
-        redirect_to(exercise_question_path(@exercise, @exercise.questions.first))
+        redirect_to(controller.exercise_question_path(@exercise, @exercise.questions.first))
     end
 
     it "updates the Result when it exists" do
@@ -64,7 +64,7 @@ describe ResultsController do
     it "should redirect to lectures#show" do
       post :update, @params
       response.should redirect_to \
-        space_subject_lecture_path(@space, @subject, @lecture)
+        controller.space_subject_lecture_path(@space, @subject, @lecture)
     end
   end
 
