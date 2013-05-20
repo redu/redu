@@ -35,7 +35,7 @@ gem 'invitable', :git => 'git@github.com:redu/invitable.git'
 gem 'jquery-rails', '>= 1.0.12'
 gem 'kaminari', :git => 'git://github.com/amatsuda/kaminari.git'
 gem 'mime-types'
-gem "mysql2", "~> 0.3.11"
+gem "mysql2"
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'pusher'
