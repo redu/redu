@@ -842,3 +842,11 @@ ul, ol {
 }
 
 .course-waiting-approval-message { width: 310px; }
+
+/* Matrícula requisitada, no aguardo da confirmação do usuário. */
+.icon-invite-green3_64_66 {
+  background-image: image-url("icon-invite-green3_64_66.png");
+  width: 64px;
+  height: 66px;
+  display: inline-block;
+}

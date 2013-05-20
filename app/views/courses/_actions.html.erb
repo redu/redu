@@ -13,7 +13,6 @@
       <% if course.published == false %>
         <span class="join waiting"> O curso está despublicado, para maiores informações consulte o dono do curso.</span>
       <% elsif course.waiting_user_approval?(current_user) %>
-        <span class="join waiting">Você já foi convidado, aceite o convite no Início.</span>
       <% elsif course.waiting_approval?(current_user) %>
         <span class="join waiting">Aguardando os responsáveis pelo curso liberarem o seu acesso.</span>
       <% else %>
