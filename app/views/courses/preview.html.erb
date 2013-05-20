@@ -22,7 +22,7 @@
     <%= big_tabs :courses do %>
       <div class="course-preview-wrapper">
         <span class="course-preview-icon icon-privacy-lightred_58_62 text-replacement" title="Curso privado">Curso privado</span>
-        <p class="course-preview-message">Este Curso requer <%= link_to "o seu pedido de participação", "http://ajuda.redu.com.br/duvidas-frequentes/como-posso-participar-de-um-curso", :title => "Central de Ajuda", :target => "_blank" %>, ou seja, apenas quem faz parte dele consegue visualizar seu conteúdo. Você pode pedir acesso clicando no botão abaixo e esperar a sua aprovação.</p>
+        <p class="course-preview-message">Este Curso requer o seu pedido de participação, ou seja, apenas quem faz parte dele consegue visualizar seu conteúdo. Você pode pedir acesso clicando no botão abaixo e <strong>esperar a aprovação do responsável</strong>.</p>
         <%= render "enroll_button", :course => @course, :extra_classes => "button-big" %>
       </div>
     <% end %>
