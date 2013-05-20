@@ -30,7 +30,7 @@
             <p class="course-preview-message course-waiting-approval-message">Você já requisitou sua matrícula neste curso. Aguarde a confirmação do responsável.</p>
           <% end %>
         <% else %>
-          <span class="course-preview-icon icon-privacy-lightred_58_62 text-replacement" title="Curso privado">Curso privado</span>
+          <span class="course-preview-icon icon-closed-red2_64_66 text-replacement" title="Curso privado">Curso privado</span>
           <p class="course-preview-message">Este Curso requer o seu pedido de participação, ou seja, apenas quem faz parte dele consegue visualizar seu conteúdo. Você pode pedir acesso clicando no botão abaixo e <strong>esperar a aprovação do responsável</strong>.</p>
         <% end %>
         <%= render "enroll_button", :course => @course, :extra_classes => "button-big" %>
