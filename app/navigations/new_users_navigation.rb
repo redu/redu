@@ -94,7 +94,7 @@ module NewUsersNavigation
         apps_subtab.selected_class = 'tab-button-active'
         if @client_application && !@client_application.new_record?
           apps_subtab.item :about, "Sobre", user_oauth_client_path(@user, @client_application),
-            :highlights_on => action_matcher({ 'oauth_clients', 'show' }),
+            :highlights_on => action_matcher({ 'oauth_clients' => 'show' }),
             :class => 'tab-button tab-button-without-icon', :title => 'Sobre'
           apps_subtab.item :edit, "Editar", edit_user_oauth_client_path(@user, @client_application),
             :highlights_on => update_action_matcher('oauth_clients'),
