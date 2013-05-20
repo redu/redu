@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class ChangeOwnerToUserIdOnHierarchy < ActiveRecord::Migration
   def self.up
     rename_column :courses, :owner, :user_id

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Education < ActiveRecord::Base
   # Representa uma formação escolar/adadêmica do usuário, deste modo
   # faz parte do currículo do mesmo.

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CoursesController < BaseController
   respond_to :html, :js
 

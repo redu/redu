@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module OAuth
   module Helpers
     def generate_token(user=nil, application=nil)

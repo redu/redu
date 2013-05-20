@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class DestroyAudiencesSubjects < ActiveRecord::Migration
   def self.up
     drop_table :audiences_subjects

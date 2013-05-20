@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 FactoryGirl.define do
   factory :folder do |f|
     f.sequence(:name) {|n| "Folder #{n}" }

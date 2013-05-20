@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Document < ActiveRecord::Base
   CONTENT_TYPES = Redu::Application.config.mimetypes['documents'] +
     Redu::Application.config.mimetypes['image']

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Api
   module LogRepresenter
     include Roar::Representer::JSON

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RenameColumnPublishedToVisible < ActiveRecord::Migration
   def self.up
     rename_column :subjects, :published, :visible 

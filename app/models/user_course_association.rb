@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class UserCourseAssociation < CourseEnrollment
   belongs_to :user
   classy_enum_attr :role, :default => 'member'

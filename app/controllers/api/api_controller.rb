@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Api
   class ApiController < ActionController::Base
     include Roar::Rails::ControllerAdditions

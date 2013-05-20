@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 Factory.define :high_school do |h|
   h.sequence(:institution) { |n| "Institution #{n}" }
   h.end_year Date.today - 2.years

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateLazyAssets < ActiveRecord::Migration
   def self.up
     create_table :lazy_assets do |t|

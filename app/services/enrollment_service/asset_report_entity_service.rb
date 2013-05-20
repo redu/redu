@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module EnrollmentService
   class AssetReportEntityService
     attr_reader :lectures

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Space < ActiveRecord::Base
   include DestroySoon::ModelAdditions
   include SpaceSearchable

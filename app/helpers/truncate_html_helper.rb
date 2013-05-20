@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # Helper retirado de https://github.com/ianwhite/truncate_html.
 #
 # TODO: Trocar pela gem truncate_html (https://github.com/hgmnz/truncate_html),

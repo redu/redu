@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 FactoryGirl.define do
   factory :user do |u|
     u.sequence(:login) {|n| "usuario#{n}"}

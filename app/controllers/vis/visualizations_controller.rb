@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Vis
   class VisualizationsController < ActionController::Base
     respond_to :json

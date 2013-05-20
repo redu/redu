@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module NewUsersNavigation
   def new_users_navigation(sidebar)
     sidebar.dom_class = 'nav-local'

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 Factory.define :answer do |e|
   e.text "Lorem ipsum dolor sit amet, consectetur magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
   ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate

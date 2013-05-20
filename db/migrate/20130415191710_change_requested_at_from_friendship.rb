@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class ChangeRequestedAtFromFriendship < ActiveRecord::Migration
   def self.up
     change_column :friendships, :requested_at, :datetime, :null => false

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 Factory.define :experience do |e|
   e.sequence(:title) { |n| "Developer #{n}"}
   e.company "Company"

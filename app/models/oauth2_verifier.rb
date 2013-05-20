@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Oauth2Verifier < OauthToken
   validates_presence_of :user
   attr_accessor :state

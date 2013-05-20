@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 #--
 # MIME::Types for Ruby
 # Version 1.15

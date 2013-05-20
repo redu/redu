@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class StoredContentService
   # Responsável pela manipulação de entidades que atualizam as Quota do AVA.
   attr_reader :model

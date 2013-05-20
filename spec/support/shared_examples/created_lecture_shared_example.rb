@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 shared_examples_for "created lecture" do
   it "creates a lecture" do
     expect {

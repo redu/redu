@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateStatusUserAssociations < ActiveRecord::Migration
   def self.up
     create_table :status_user_associations do |t|

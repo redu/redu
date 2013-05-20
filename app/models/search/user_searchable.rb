@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module UserSearchable
   extend ActiveSupport::Concern
 

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class LogObserver < ActiveRecord::Observer
 
   def after_create(log)

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateSubjectFiles < ActiveRecord::Migration
   def self.up
     create_table :subject_files do |t|

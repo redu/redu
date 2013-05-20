@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module EnrollmentService
   # Responsvável por notificar Vis sobre a mudança de estado de
   # Enrollment#graduated.

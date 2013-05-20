@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Untied
   module UserRepresenter
     # Utilizado para serializar modelo de User enviado pelo Untied

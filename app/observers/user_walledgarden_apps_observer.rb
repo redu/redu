@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class UserWalledgardenAppsObserver < ActiveRecord::Observer
   # Observer responsável pela criação de OAuth2Tokens ClientApplications do
   # walledgarden.

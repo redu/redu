@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RenameAudiencesSpacesToAudiencesCourse < ActiveRecord::Migration
   def self.up
     rename_table :audiences_spaces, :audiences_courses

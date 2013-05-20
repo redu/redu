@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Api
   module ThumbnailCollection
     # Provê collection para o representer do modelo com todos os thumbnails.

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 shared_examples_for "user listing" do
   it "should return 200" do
     get "/api/#{entity_name}/#{subject.id}/users", :oauth_token => token,

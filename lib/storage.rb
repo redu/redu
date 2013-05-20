@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Storage
   # Responsável por contabilizar o espaço utilizado em todos os níveis da
   # hierarquia.

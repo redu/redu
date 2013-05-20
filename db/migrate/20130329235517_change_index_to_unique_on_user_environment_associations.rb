@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class ChangeIndexToUniqueOnUserEnvironmentAssociations < ActiveRecord::Migration
   def self.up
     remove_index :user_environment_associations,

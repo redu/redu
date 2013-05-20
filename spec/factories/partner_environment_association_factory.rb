@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 Factory.define(:partner_environment_association) do |i|
   i.association :environment, :factory => :environment
   i.association :partner, :factory => :partner

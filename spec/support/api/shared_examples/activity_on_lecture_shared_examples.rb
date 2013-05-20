@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 shared_examples_for "activity on lecture" do
   it "should be able to read if member" do
     space.course.join(user)

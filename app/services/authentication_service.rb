@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AuthenticationService
   attr_reader :omniauth, :authenticated_user, :name_service
 

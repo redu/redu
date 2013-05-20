@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 BREADCRUMB_MAPPINGS = {
   "User" => ['wall'],
   "Space" => %w(space course environment),

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class SolrHierarchyIndexerObserver < ActiveRecord::Observer
   # Observer responsável pela indexação de Environment, Course e Space
 

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Api
   class AnswersController < Api::ApiController
     def index

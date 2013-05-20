@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Message < ActiveRecord::Base
 
   after_create :notify_recipient

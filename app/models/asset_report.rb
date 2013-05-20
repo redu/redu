@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AssetReport < ActiveRecord::Base
   # Modelo intermediário que especifica que um User finalizou uma determinada
   # Lecture dentro de um subject.

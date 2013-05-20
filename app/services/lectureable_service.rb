@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class LectureableService
   # Implementa o padrão Template Method para a criação de lectureables. Filhos
   # de lectureable service precisam implementar o método #build. Caso a criação

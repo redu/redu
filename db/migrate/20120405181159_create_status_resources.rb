@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateStatusResources < ActiveRecord::Migration
   def self.up
     create_table :status_resources do |t|

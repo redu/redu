@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class UsersController < BaseController
   respond_to :html, :js
 

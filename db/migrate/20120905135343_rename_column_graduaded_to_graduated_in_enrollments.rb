@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RenameColumnGraduadedToGraduatedInEnrollments < ActiveRecord::Migration
   def self.up
     rename_column :enrollments, :graduaded, :graduated

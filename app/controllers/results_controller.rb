@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class ResultsController < BaseController
   before_filter :load_hierarchy, :only => [:index, :edit]
 

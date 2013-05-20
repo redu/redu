@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # O Untied é responsável por propagar os eventos definidos em
 # app/doorkeepers/base_doorkeeper.rb para outros serviços. É possível debugar
 # os eventos produzidos em produção tunnelando os eventos recebidos pelo

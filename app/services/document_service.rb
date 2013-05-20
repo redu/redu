@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class DocumentService < LectureableService
   def build(&block)
     media = attrs[:media]

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class PartnerContact
   include ActiveModel::Validations
   include ActiveModel::MassAssignmentSecurity

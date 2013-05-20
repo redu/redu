@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 FactoryGirl.define do
   factory :subject do
     sequence(:name){ |n| "Módulo #{n}" }

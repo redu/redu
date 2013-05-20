@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class UserSpaceAssociation < ActiveRecord::Base
   # Em alguns casos o enrollment é chamado utilizando o gem activerecord-import
   # por questões de otimização. Este gem desabilita qualquer tipo de callback

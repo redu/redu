@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # O Renderer List com a possibilidade de adicionar detalhes em cada <li>
 class ListDetailed < SimpleNavigation::Renderer::Base
 

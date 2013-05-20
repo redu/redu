@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 Factory.define :myfile do |m|
   m.sequence(:attachment_file_name) { |n| "File #{n}" }
   m.attachment_content_type "image/jpeg"

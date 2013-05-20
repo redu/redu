@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Api
   module ChatAbility
     extend ActiveSupport::Concern

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module AuthlogicSpecHelper
   def login_as(user)
     controller.stub(:current_user) { user }

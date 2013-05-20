@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module InstantSearch
   module SpaceRepresenter
     include Roar::Representer::JSON

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateSocialNetworks < ActiveRecord::Migration
   def self.up
     create_table :social_networks do |t|

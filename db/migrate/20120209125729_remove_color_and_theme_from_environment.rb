@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RemoveColorAndThemeFromEnvironment < ActiveRecord::Migration
   def self.up
     remove_column :environments, :color

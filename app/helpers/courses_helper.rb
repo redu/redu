@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module CoursesHelper
   # Retorna a legenda adequada para o tipo de privacidade de um curso.
   def course_privacy_legend(course)

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class InvitationsController < ApplicationController
   include InvitationsProcessor
 

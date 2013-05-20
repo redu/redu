@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateLicenses < ActiveRecord::Migration
   def self.up
     create_table :licenses do |t|

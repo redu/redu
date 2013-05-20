@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateAttrsStartTimeAndEndTimeInSubjects < ActiveRecord::Migration
   def self.up
     add_column :subjects, :start_time, :date

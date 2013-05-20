@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CommunityEngineSha1CryptoMethod
   def self.encrypt(*tokens)
     tokens = tokens.flatten

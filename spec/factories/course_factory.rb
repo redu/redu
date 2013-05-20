@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 FactoryGirl.define do
   factory :course do
     sequence(:name){ |n| "Curso #{n}" }

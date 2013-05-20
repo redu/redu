@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class InvoicesController < BaseController
   respond_to :html, :js
 

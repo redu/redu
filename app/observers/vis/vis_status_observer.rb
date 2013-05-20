@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class VisStatusObserver < ActiveRecord::Observer
   observe :status
 

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class ChangeRoleTypeOnLicense < ActiveRecord::Migration
   def self.up
     change_column :licenses, :role, :string

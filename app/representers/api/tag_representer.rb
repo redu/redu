@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Api
   module TagRepresenter
     include Roar::Representer::JSON

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateAssetReport < ActiveRecord::Migration
   def self.up
     create_table :asset_reports do |t|

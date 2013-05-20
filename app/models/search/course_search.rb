@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CourseSearch < Search
   def initialize
     super(Course)

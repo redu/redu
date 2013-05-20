@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddWalledgardenFlatToClientApplication < ActiveRecord::Migration
   def self.up
     add_column :client_applications, :walledgarden, :boolean, :default => false

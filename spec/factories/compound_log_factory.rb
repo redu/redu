@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 Factory.define :compound_log do |e|
   e.association :statusable, :factory => :user
   e.association :user, :factory => :user

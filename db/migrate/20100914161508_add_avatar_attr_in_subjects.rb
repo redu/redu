@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddAvatarAttrInSubjects < ActiveRecord::Migration
   def self.up
     add_column :subjects, :avatar_file_name, :string

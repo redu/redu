@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 FactoryGirl.define do
   factory :space do |s|
     s.sequence(:name) {|n| "Espaço #{n}"}

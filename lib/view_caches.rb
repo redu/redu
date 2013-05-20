@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # Este módulo contém todos os métodos necessários para expirar
 # caches de fragmentos.
 #

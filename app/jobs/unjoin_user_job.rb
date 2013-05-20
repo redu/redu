@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class UnjoinUserJob
   def initialize(opts)
     @course_id = opts[:course].try(:id)

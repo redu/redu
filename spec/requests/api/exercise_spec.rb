@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'api_spec_helper'
 
 describe "Media API" do

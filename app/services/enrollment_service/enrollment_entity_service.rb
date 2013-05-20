@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module EnrollmentService
   class EnrollmentEntityService
     attr_reader :subjects, :enrollments

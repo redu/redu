@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class ChangeDueAtToDateTimeInInvoice < ActiveRecord::Migration
   def self.up
     change_column :invoices, :due_at, :datetime

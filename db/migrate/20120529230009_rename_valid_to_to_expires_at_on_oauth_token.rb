@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RenameValidToToExpiresAtOnOauthToken < ActiveRecord::Migration
   def self.up
     rename_column :oauth_tokens, :valid_to, :expires_at

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 FactoryGirl.define do
   factory :environment do
     sequence(:name) { |n| "Ambiente #{n}" }

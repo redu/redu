@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 shared_examples_for "a billable" do
   it { should have_many(:plans) }
   it { should have_one(:quota).dependent(:destroy) }

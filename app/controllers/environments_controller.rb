@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class EnvironmentsController < BaseController
   load_and_authorize_resource :except => :index, :find_by => :path
 

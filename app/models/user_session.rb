@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class UserSession < Authlogic::Session::Base
 
   # Permite que o usuário efetue o log in tanto por login como por e-mail

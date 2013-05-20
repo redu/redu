@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class PartnerEnvironmentAssociation < ActiveRecord::Base
   belongs_to :partner
   belongs_to :environment, :dependent => :destroy

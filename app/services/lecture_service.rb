@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class LectureService
   # Implementa serviço de criação de Lecture e garante que as políticas definidas
   # em ability sejam checadas.
