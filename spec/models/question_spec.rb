@@ -200,7 +200,7 @@ describe Question do
       end
 
       it "alternative with blank text it is not valid" do
-        @question.alternatives.first.should_not be_valid
+        @question.alternatives.find { |a| a.text.blank? }.should_not be_valid
       end
     end
   end
