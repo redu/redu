@@ -101,8 +101,9 @@ describe InvitationsController do
         Invitation.destroy_all
         @friends = (1..5).collect { Factory(:user) }
         @emails = (1..@friends.count).collect { |i| "email#{i}@mail.com" }
-        @friends = @friends.collect { |f| "#{f.id},"}.to_s
-        @emails = @emails.collect{ |e| "#{e},"}.to_s
+
+        @friends = @friends.map(&:id).join(",")
+        @emails = @emails.join(",")
 
         # Params to create invitations
         @invitation_params = {'emails' => @emails,
@@ -110,8 +111,8 @@ describe InvitationsController do
         controller.process_invites(@invitation_params, @user)
 
         # Request params
-        @invitations = @user.invitations.collect{ |i| i.id }
-        @friendship_requests = @user.friendships.requested.collect { |f| f.id }
+        @invitations = @user.invitations.map(&:id).join(",")
+        @friendship_requests = @user.friendships.requested.map(&:id).join(",")
 
         @params = {:locale => 'pt-BR'}
       end

@@ -11,8 +11,8 @@ module InvitationsProcessor
   # @params => parâmetros da requisição (:friend_id | :emails)
   # @user => remetente do convite
   def process_invites(params, user)
-    friend_ids = params['friend_id'].to_s.gsub(',',' ').split
-    emails = params['emails'].to_s.gsub(',',' ').split
+    friend_ids = params['friend_id'].to_s.split(",")
+    emails = params['emails'].to_s.split(",")
 
     friend = process_friendships(friend_ids, user) unless friend_ids.empty?
     process_invitations(emails, user) unless emails.empty?

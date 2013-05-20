@@ -18,7 +18,7 @@ describe InvitationsProcessor do
   }
 
   it "requests with set of friends(redu users) should create set of frienship requests" do
-    @param['friend_id'] = @friends.collect{ |f| "#{f.id}," }.to_s
+    @param['friend_id'] = @friends.map(&:id).join(",")
     expect {
       subject.process_invites(@param, @user)
     }.to change{ @user.friendships.count }.by(5)
@@ -26,7 +26,7 @@ describe InvitationsProcessor do
   end
 
   it "requests with a set of emails should create a set of invitations" do
-    @param['emails'] = @email.collect { |e| "#{e},"}.to_s
+    @param['emails'] = @email.join(",")
     @user.invitations.count.should == 0
     expect {
       subject.process_invites(@param, @user)
@@ -35,8 +35,8 @@ describe InvitationsProcessor do
   end
 
   it "request with a set of emails and friends (redu users) should create a set of both invites types" do
-    @param['emails'] = @email.collect { |e| "#{e},"}.to_s
-    @param['friend_id'] = @friends.collect{ |f| "#{f.id}," }.to_s
+    @param['emails'] = @email.join(",")
+    @param['friend_id'] = @friends.map(&:id).join(",")
     expect {
       subject.process_invites(@param, @user)
     }.to change{ Invitation.all.count}.from(0).to(5)
@@ -53,8 +53,8 @@ describe InvitationsProcessor do
   end
 
   it "when email exists in redu database, a friendship should be created instead of a invitation" do
-    @param['emails'] = @email.collect { |e| "#{e},"}.to_s
-    @param['emails'] << @user.email
+    @param['emails'] = @email.join(",")
+    @param['emails'] << ",#{@user.email}"
     user = Factory(:user)
     expect {
       subject.process_invites(@param, user)
@@ -78,8 +78,8 @@ describe InvitationsProcessor do
 
   context "Destroy invitation in batch" do
     before do
-      @param['friend_id'] = @friends.collect{ |f| "#{f.id}," }.to_s
-      @param['emails'] = @email.collect { |e| "#{e},"}.to_s
+      @param['friend_id'] = @friends.map(&:id).join(",")
+      @param['emails'] = @email.join(",")
       subject.process_invites(@param, @user)
 
       @invitations = @user.invitations

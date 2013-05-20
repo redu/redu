@@ -610,7 +610,7 @@ describe CoursesController do
     context "when email_invitations is NOT empty" do
       before do
         @params[:email_invitations] = [@email_invitations[0].id,
-          @email_invitations[1].id]
+          @email_invitations[1].id].join(",")
         post :destroy_invitations, @params
       end
 
@@ -635,7 +635,7 @@ describe CoursesController do
     context "when user_invitations is NOT empty" do
       before do
         @params[:user_invitations] = [@user_invitations[0].id,
-          @user_invitations[1].id]
+          @user_invitations[1].id].join(",")
         post :destroy_invitations, @params
       end
 

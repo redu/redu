@@ -40,7 +40,7 @@ class InvitationsController < ApplicationController
   end
 
   def destroy_invitations
-    invitations = params[:invitations_ids] || ""
+    invitations = params[:invitations_ids].try(:split, ",") || []
     invitations = invitations.collect do |id|
       begin
         invitation = Invitation.find(id)
@@ -50,7 +50,7 @@ class InvitationsController < ApplicationController
       end
     end
 
-    friendship_requests = params[:friendship_requests] || ""
+    friendship_requests = params[:friendship_requests].try(:split, ",") || []
     friendship_requests = friendship_requests.collect do |id|
       begin
         friendship_request = Friendship.find(id)
