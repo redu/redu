@@ -42,7 +42,7 @@ gem 'pusher'
 gem 'pagseguro', '~> 0.1.10'
 gem 'paperclip', '~> 2.7.5'
 gem 'rails', '~> 3.2.13'
-gem 'rake', '0.8.7'
+gem "rake", "~> 10.0.4"
 gem 'remotipart', '~> 1.0'
 gem 'scribd_fu', :git => 'git://github.com/guiocavalcanti/scribd_fu.git',
   :branch => 'without-scape'
