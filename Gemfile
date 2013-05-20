@@ -30,7 +30,7 @@ gem 'em-http-request'
 gem 'eventmachine'
 gem 'exceptional'
 gem 'factory_girl_rails', '~> 1.7.0'
-gem 'has_friends', :git => 'git@github.com:jessicabarbalho/has_friends.git'
+gem "redu-has_friends", "~> 1.0"
 gem 'invitable', :git => 'git@github.com:redu/invitable.git'
 gem 'jquery-rails', '>= 1.0.12'
 gem 'kaminari', :git => 'git://github.com/amatsuda/kaminari.git'
@@ -50,12 +50,12 @@ gem 'simple-navigation', :git => 'git://github.com/andi/simple-navigation.git'
 gem 'sunspot_rails'
 gem 'route_translator'
 gem 'useragent'
-gem 'vis_client', :git => 'git@github.com:redu/vis_client.git'
+gem 'vis_client', :git => 'git@github.com:redu/vis_client.git',
+  :branch => 'ruby-1-9-3'
 gem 'chronic' # Necessário ao whenever
 gem 'whenever', :require => false
 gem 'zencoder'
 gem 'untied-publisher', '~> 0.0.7.pre1'
-gem 'system_timer'
 gem 'yajl-ruby'
 gem 'simple_acts_as_list'
 gem 'ey_config'
