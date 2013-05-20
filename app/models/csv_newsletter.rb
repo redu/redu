@@ -16,7 +16,7 @@ class CSVNewsletter < Newsletter
 
   def deliver(&block)
     CSV.open(@csv_path, 'r') do |row|
-      row.each do |email|
+      row.to_a.flatten.each do |email|
         block.call(email, {})
       end
     end
