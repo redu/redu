@@ -1,12 +1,21 @@
-<ol class="responses status-tab tab-left" style="display: none;">
-  <li class="show-responses">
-    <span class="legend last-responses">Visualizando as últimas respostas...</span>
-  </li>
-  <%= render :partial => "statuses/response", :collection => status.answers %>
-  <li class="show-responses">
-    <div class="show-more">
-      <hr>
-      <span class="see-more link-fake link-secondary">Mostrar todas as 12 respostas</span>
-    </div>
-  </li>
-</ol>
+<%#
+  Respostas de um status.
+
+  Variáveis:
+    status: o status.
+%>
+
+<% unless status.answers.empty? %>
+  <ol class="responses status-tab tab-left">
+    <li class="show-responses">
+      <span class="legend last-responses">Visualizando as últimas respostas...</span>
+    </li>
+    <%= render :partial => "statuses/response", :collection => status.answers %>
+    <li class="show-responses">
+      <div class="show-more">
+        <hr>
+        <span class="see-more link-fake link-secondary">Mostrar todas as respostas</span>
+      </div>
+    </li>
+  </ol>
+<% end %>

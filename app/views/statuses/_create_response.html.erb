@@ -1,21 +1,31 @@
-<%# Form de Status resposta %>
-<div class="status-tab tab-right create-response" style="display:none;">
-  <%= form_for :status,
-    :url => respond_status_path(in_response_to),
+<%#
+  Formulário de criação de respostas.
+
+  Variáveis:
+    in_response_to: o status que esta resposta se refere.
+%>
+
+<%# Formulário de resposta. %>
+<div class="status-tab tab-right create-response">
+  <%= form_for :status, :url => respond_status_path(in_response_to),
     :remote => true do |f| %>
-
-    <%= hidden_field :status, :in_response_to_id, :value => in_response_to.id %>
-    <%= hidden_field :status, :in_response_to_type, :value => in_response_to.class.to_s %>
-
+    <%= hidden_field :status, :in_response_to_id,
+      :value => in_response_to.id %>
+    <%= hidden_field :status, :in_response_to_type,
+      :value => in_response_to.class.to_s %>
     <%= f.error_messages %>
-    <%= field_set_tag do %>
-      <% random_number = get_random_number%>
-      <%= f.text_area :text, :rows => 6,
-        :placeholder => "Digite sua resposta ao comentário acima" %>
+    <%= f.text_area :text, :rows => 1,
+      :placeholder => "Digite sua resposta ao comentário acima",
+      :maxlength => 800 %>
+    <div class="clearfix">
       <ul class="status-buttons">
-        <li><%= link_to 'Cancelar', nil, :rel => "nofollow", :class => 'cancel button-default' %></li>
-        <li><%= f.submit 'Enviar', :class => "button-primary" %></li>
+        <li>
+          <input type="reset" class="button-default cancel" value="Cancelar">
+        </li>
+        <li>
+          <%= f.submit "Enviar", :class => "button-primary" %>
+        </li>
       </ul>
-    <% end %>
-<% end %>
+    </div>
+  <% end %>
 </div>
