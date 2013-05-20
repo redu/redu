@@ -12,11 +12,18 @@
     :locals => { :course => @course }%>
 
   <%= big_tabs :courses do %>
-    <ul id="spaces_list" class="hierarchy-listing spaces">
-      <%= render :partial => 'spaces/item', :collection => @spaces %>
-    </ul>
-    <%= paginate @spaces, :theme => 'endless' %>
-  <% end %>
+    <% if @spaces.empty? %>
+      <%= render "shared/empty_message",
+        :icon_message => "Nenhuma disciplina",
+        :icon_class => "icon-space-gray_128_130",
+        :message => "Ainda não há disciplinas criadas para este curso." %>
+    <% else %>
+      <ul id="spaces_list" class="hierarchy-listing spaces">
+        <%= render :partial => 'spaces/item', :collection => @spaces %>
+      </ul>
+      <%= paginate @spaces, :theme => 'endless' %>
+    <% end %>
+    <% end %>
 </div>
 
 </div><!-- end .main -->
