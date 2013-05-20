@@ -2,6 +2,8 @@ source 'http://rubygems.org'
 source 'http://gems.github.com'
 source 'http://reduadmin:pomp64bozos@the-shire.herokuapp.com/'
 
+ruby "1.9.3"
+
 gem 'aasm'
 gem 'premailer-rails'
 gem 'classy_enum'
@@ -87,7 +89,7 @@ group :development, :test do
   gem 'no_peeping_toms', :git => 'git://github.com/patmaddox/no-peeping-toms.git'
   gem 'rails3-generators'
   gem "rspec-rails", "~> 2.13"
-  gem 'ruby-debug'
+  gem 'debugger'
   gem 'sunspot_solr'
 end
 
