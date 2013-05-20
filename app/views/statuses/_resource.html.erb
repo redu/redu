@@ -1,23 +1,12 @@
+<%#
+  O conteúdo de um status.
+
+  Variáveis:
+    status: o status.
+%>
+
 <div class="status-content status-tab tab-left">
-  <p><%= status_message(status.text) %></p>
-
-  <% if status.status_resources.first %>
-    <div class="post-resource">
-      <% if status.status_resources.first.thumb_url %>
-        <div class="thumbnail">
-          <%= link_to status.status_resources.first.link, :target => "_blank", :rel => "nofollow" do %>
-            <%= image_tag(status.status_resources.first.thumb_url, :class => "preview-link") %>
-          <% end %>
-        </div>
-      <% end %>
-      <div class="post-text">
-        <h3><%= link_to status.status_resources.first.title, status.status_resources.first.link, :target => "_blank", :rel => "nofollow", :class => "title" %></h3>
-        <h4 class="source-site">
-          <%= status.status_resources.first.provider %>
-        </h4>
-        <p class="post-description"><%= status.status_resources.first.description %></p>
-      </div>
-    </div>
-  <% end %>
+  <%= content_tag :p, status_message(status.text) %>
+  <%= render "statuses/resource_preview",
+    :resource => status.status_resources %>
 </div>
-

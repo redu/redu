@@ -1,0 +1,30 @@
+<%#
+  O conteúdo de um preview de link.
+
+  Variáveis:
+    resource: o recurso.
+%>
+
+<% if resource.first %>
+  <div class="thumbnail">
+    <% if resource.first.thumb_url %>
+      <div class="preview">
+        <%= link_to resource.first.link, :target => "_blank",
+          :rel => "nofollow" do %>
+          <%= image_tag resource.first.thumb_url,
+            :class => "preview-link" %>
+        <% end %>
+      </div>
+    <% end %>
+    <div class="thumbnail-info">
+      <%= link_to resource.first.link,
+        :target => "_blank", :rel => "nofollow", :class => "title" do %>
+        <%= content_tag :strong, resource.first.title %>
+      <% end %>
+      <%= content_tag :p, resource.first.provider,
+        :class => "source-site" %>
+      <%= content_tag :p, resource.first.description,
+        :class => "post-description" %>
+    </div>
+  </div>
+<% end %>
