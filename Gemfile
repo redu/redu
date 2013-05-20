@@ -30,7 +30,7 @@ gem 'em-http-request'
 gem 'eventmachine'
 gem 'exceptional'
 gem 'factory_girl_rails', '~> 1.7.0'
-gem "redu-has_friends", "~> 1.0"
+gem "redu-has_friends", "~> 1.0", :require => "has_friends"
 gem 'invitable', :git => 'git@github.com:redu/invitable.git'
 gem 'jquery-rails', '>= 1.0.12'
 gem 'kaminari', :git => 'git://github.com/amatsuda/kaminari.git'
