@@ -4,8 +4,8 @@ require 'cancan/matchers'
 
 describe "Friendship abilities" do
   context "when user" do
-    let(:user) { Factory(:user) }
-    let(:friend) { Factory(:user) }
+    let(:user) { FactoryGirl.create(:user) }
+    let(:friend) { FactoryGirl.create(:user) }
     let(:friendship) { friend.be_friends_with(user);
                        user.be_friends_with(friend).first }
     subject { Api::Ability.new(user) }
@@ -17,15 +17,15 @@ describe "Friendship abilities" do
 
   context "when redu_admin" do
     subject { Api::Ability.new(user) }
-    let(:user) { Factory(:user, :role => Role[:admin]) }
+    let(:user) { FactoryGirl.create(:user, :role => Role[:admin]) }
     it "should be able to manage all" do
       subject.should be_able_to :manage, :all
     end
   end
 
   context "when friend" do
-    let(:user) { Factory(:user) }
-    let(:friend) { Factory(:user) }
+    let(:user) { FactoryGirl.create(:user) }
+    let(:friend) { FactoryGirl.create(:user) }
     let(:friendship) { friend.be_friends_with(user);
                        user.be_friends_with(friend).first }
     subject { Api::Ability.new(friend) }

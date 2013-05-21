@@ -4,28 +4,28 @@ require 'spec_helper'
 describe Presence do
 
   before do
-    @current_user = Factory(:user)
-    @friend1 = Factory(:user)
-    @friend2 = Factory(:user)
-    @friend3 = Factory(:user)
-    @user2 = Factory(:user)
-    @tutor2 = Factory(:user)
-    @tutor3 = Factory(:user)
-    @tutor1_and_2 = Factory(:user)
-    @teacher2_and_3 = Factory(:user)
-    @teacher3 = Factory(:user)
+    @current_user = FactoryGirl.create(:user)
+    @friend1 = FactoryGirl.create(:user)
+    @friend2 = FactoryGirl.create(:user)
+    @friend3 = FactoryGirl.create(:user)
+    @user2 = FactoryGirl.create(:user)
+    @tutor2 = FactoryGirl.create(:user)
+    @tutor3 = FactoryGirl.create(:user)
+    @tutor1_and_2 = FactoryGirl.create(:user)
+    @teacher2_and_3 = FactoryGirl.create(:user)
+    @teacher3 = FactoryGirl.create(:user)
 
     # primeiro curso
-    environment = Factory(:environment)
-    @course = Factory(:course, :owner => environment.owner,
+    environment = FactoryGirl.create(:environment)
+    @course = FactoryGirl.create(:course, :owner => environment.owner,
                       :environment => environment)
-    space = Factory(:space, :owner => environment.owner,
+    space = FactoryGirl.create(:space, :owner => environment.owner,
                     :course => @course)
 
     # segundo curso
-    @course2 = Factory(:course, :environment => environment,
+    @course2 = FactoryGirl.create(:course, :environment => environment,
                        :owner => environment.owner)
-    @course3 = Factory(:course)
+    @course3 = FactoryGirl.create(:course)
 
     @course.join(@friend1, Role[:teacher])
     @course2.join(@friend1, Role[:tutor])
@@ -94,13 +94,13 @@ describe Presence do
       @course.join(@current_user, Role[:teacher])
       @course2.join(@current_user)
 
-      @course_students = (1..3).collect { Factory(:user) }
+      @course_students = (1..3).collect { FactoryGirl.create(:user) }
       @course_students.each { |s| @course.join(s) }
 
-      @course2_students = (1..3).collect { Factory(:user) }
+      @course2_students = (1..3).collect { FactoryGirl.create(:user) }
       @course2_students.each { |s| @course2.join(s) }
 
-      @course3_students = (1..3).collect { Factory(:user) }
+      @course3_students = (1..3).collect { FactoryGirl.create(:user) }
       @course3_students.each { |s| @course3.join(s) }
 
       @presence = Presence.new(@current_user)
@@ -135,13 +135,13 @@ describe Presence do
       @course.join(@current_user, Role[:tutor])
       @course2.join(@current_user)
 
-      @course_students = (1..3).collect { Factory(:user) }
+      @course_students = (1..3).collect { FactoryGirl.create(:user) }
       @course_students.each { |s| @course.join(s) }
 
-      @course2_students = (1..3).collect { Factory(:user) }
+      @course2_students = (1..3).collect { FactoryGirl.create(:user) }
       @course2_students.each { |s| @course2.join(s) }
 
-      @course3_students = (1..3).collect { Factory(:user) }
+      @course3_students = (1..3).collect { FactoryGirl.create(:user) }
       @course3_students.each { |s| @course3.join(s) }
 
       @presence = Presence.new(@current_user)
@@ -179,13 +179,13 @@ describe Presence do
       @course2.join(@current_user, Role[:teacher])
       @course3.join(@current_user)
 
-      @course_students = (1..3).collect { Factory(:user) }
+      @course_students = (1..3).collect { FactoryGirl.create(:user) }
       @course_students.each { |s| @course.join(s) }
 
-      @course2_students = (1..3).collect { Factory(:user) }
+      @course2_students = (1..3).collect { FactoryGirl.create(:user) }
       @course2_students.each { |s| @course2.join(s) }
 
-      @course3_students = (1..3).collect { Factory(:user) }
+      @course3_students = (1..3).collect { FactoryGirl.create(:user) }
       @course3_students.each { |s| @course3.join(s) }
 
       @presence = Presence.new(@current_user)
@@ -233,7 +233,7 @@ describe Presence do
 
   context "when users are just friends" do
     before do
-      @just_friend = Factory(:user)
+      @just_friend = FactoryGirl.create(:user)
 
       @current_user.be_friends_with(@just_friend)
       @just_friend.be_friends_with(@current_user)

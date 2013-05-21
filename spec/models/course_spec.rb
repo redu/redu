@@ -4,11 +4,11 @@ require 'spec_helper'
 describe Course do
 
   before(:each) do
-    @environment_owner = Factory(:user)
-    @environment = Factory(:environment, :owner => @environment_owner)
+    @environment_owner = FactoryGirl.create(:user)
+    @environment = FactoryGirl.create(:environment, :owner => @environment_owner)
   end
 
-  subject { Factory(:course, :owner => @environment_owner,
+  subject { FactoryGirl.create(:course, :owner => @environment_owner,
                     :environment => @environment) }
 
   it { should belong_to :environment }
@@ -76,28 +76,28 @@ describe Course do
     end
 
     it "creates a course association with all environment admins if it already has an environment" do
-      e = Factory(:environment)
-      users = (1..4).collect { Factory(:user) }
+      e = FactoryGirl.create(:environment)
+      users = (1..4).collect { FactoryGirl.create(:user) }
       e.users << [users[0], users[1], users[2]]
 
       users[0].user_environment_associations.last.update_attribute(:role, Role[:environment_admin])
       users[1].user_environment_associations.last.update_attribute(:role, Role[:environment_admin])
 
-      c = Factory(:course, :owner => users[1], :environment => e)
+      c = FactoryGirl.create(:course, :owner => users[1], :environment => e)
       c.users.to_set.should == e.administrators.to_set
     end
 
     it "does NOT create a course association with all environment admins if it does NOT have an environment" do
       expect {
-        subject = Factory(:course, :environment => nil)
+        subject = FactoryGirl.create(:course, :environment => nil)
       }.to_not change(UserCourseAssociation, :count)
     end
   end
 
   context "finders" do
     it "retrieves all courses of an specified environment" do
-      course2 = Factory(:course, :environment => subject.environment)
-      course3 = Factory(:course)
+      course2 = FactoryGirl.create(:course, :environment => subject.environment)
+      course3 = FactoryGirl.create(:course)
 
       Course.of_environment(subject.environment).to_set.
         should == [course2, subject].to_set
@@ -108,7 +108,7 @@ describe Course do
     end
 
     it "retrieves all approved users" do
-      users = 5.times.inject([]) { |res, i| res << Factory(:user) }
+      users = 5.times.inject([]) { |res, i| res << FactoryGirl.create(:user) }
       subject.subscription_type = 2 # Com moderação
       subject.save
 
@@ -126,7 +126,7 @@ describe Course do
     end
 
     it "retrieves all pending users" do
-      users = 5.times.inject([]) { |res, i| res << Factory(:user) }
+      users = 5.times.inject([]) { |res, i| res << FactoryGirl.create(:user) }
       subject.subscription_type = 2 # Com moderação
       subject.save
 
@@ -142,7 +142,7 @@ describe Course do
     end
 
     it "retrieves all administrators" do
-      users = 5.times.inject([]) { |res, i| res << Factory(:user) }
+      users = 5.times.inject([]) { |res, i| res << FactoryGirl.create(:user) }
       subject.join(users[0], Role[:environment_admin])
       subject.join(users[1], Role[:environment_admin])
       subject.join(users[2], Role[:teacher])
@@ -153,16 +153,16 @@ describe Course do
     end
 
     it "retrieves all teachers" do
-      users = 5.times.inject([]) { |res, i| res << Factory(:user) }
-      Factory(:user_course_association, :user => users[0],
+      users = 5.times.inject([]) { |res, i| res << FactoryGirl.create(:user) }
+      FactoryGirl.create(:user_course_association, :user => users[0],
               :course => subject, :role => :environment_admin)
-      Factory(:user_course_association, :user => users[1],
+      FactoryGirl.create(:user_course_association, :user => users[1],
               :course => subject, :role => :teacher)
-      Factory(:user_course_association, :user => users[2],
+      FactoryGirl.create(:user_course_association, :user => users[2],
               :course => subject, :role => :teacher)
-      Factory(:user_course_association, :user => users[3],
+      FactoryGirl.create(:user_course_association, :user => users[3],
               :course => subject, :role => :tutor)
-      Factory(:user_course_association, :user => users[4],
+      FactoryGirl.create(:user_course_association, :user => users[4],
               :course => subject, :role => :member)
       subject.user_course_associations.waiting.each do |assoc|
         assoc.approve!
@@ -173,16 +173,16 @@ describe Course do
     end
 
     it "retrieves all tutors" do
-      users = 5.times.inject([]) { |res, i| res << Factory(:user) }
-      Factory(:user_course_association, :user => users[0],
+      users = 5.times.inject([]) { |res, i| res << FactoryGirl.create(:user) }
+      FactoryGirl.create(:user_course_association, :user => users[0],
               :course => subject, :role => :environment_admin)
-      Factory(:user_course_association, :user => users[1],
+      FactoryGirl.create(:user_course_association, :user => users[1],
               :course => subject, :role => :teacher)
-      Factory(:user_course_association, :user => users[2],
+      FactoryGirl.create(:user_course_association, :user => users[2],
               :course => subject, :role => :tutor)
-      Factory(:user_course_association, :user => users[3],
+      FactoryGirl.create(:user_course_association, :user => users[3],
               :course => subject, :role => :tutor)
-      Factory(:user_course_association, :user => users[4],
+      FactoryGirl.create(:user_course_association, :user => users[4],
               :course => subject, :role => :member)
       subject.user_course_associations.waiting.each do |assoc|
         assoc.approve!
@@ -193,16 +193,16 @@ describe Course do
     end
 
     it "retrieves all teachers and tutors" do
-      users = 5.times.inject([]) { |res, i| res << Factory(:user) }
-      Factory(:user_course_association, :user => users[0],
+      users = 5.times.inject([]) { |res, i| res << FactoryGirl.create(:user) }
+      FactoryGirl.create(:user_course_association, :user => users[0],
               :course => subject, :role => :environment_admin)
-      Factory(:user_course_association, :user => users[1],
+      FactoryGirl.create(:user_course_association, :user => users[1],
               :course => subject, :role => :teacher)
-      Factory(:user_course_association, :user => users[2],
+      FactoryGirl.create(:user_course_association, :user => users[2],
               :course => subject, :role => :tutor)
-      Factory(:user_course_association, :user => users[3],
+      FactoryGirl.create(:user_course_association, :user => users[3],
               :course => subject, :role => :tutor)
-      Factory(:user_course_association, :user => users[4],
+      FactoryGirl.create(:user_course_association, :user => users[4],
               :course => subject, :role => :member)
       subject.user_course_associations.waiting.each do |assoc|
         assoc.approve!
@@ -213,16 +213,16 @@ describe Course do
     end
 
     it "retrieves all students" do
-      users = 5.times.inject([]) { |res, i| res << Factory(:user) }
-      Factory(:user_course_association, :user => users[0],
+      users = 5.times.inject([]) { |res, i| res << FactoryGirl.create(:user) }
+      FactoryGirl.create(:user_course_association, :user => users[0],
               :course => subject, :role => :environment_admin)
-      Factory(:user_course_association, :user => users[1],
+      FactoryGirl.create(:user_course_association, :user => users[1],
               :course => subject, :role => :teacher)
-      Factory(:user_course_association, :user => users[2],
+      FactoryGirl.create(:user_course_association, :user => users[2],
               :course => subject, :role => :tutor)
-      Factory(:user_course_association, :user => users[3],
+      FactoryGirl.create(:user_course_association, :user => users[3],
               :course => subject, :role => :member)
-      Factory(:user_course_association, :user => users[4],
+      FactoryGirl.create(:user_course_association, :user => users[4],
               :course => subject, :role => :member)
       subject.user_course_associations.waiting.each do |assoc|
         assoc.approve!
@@ -233,21 +233,21 @@ describe Course do
     end
 
     it "retrieves new users from 1 week ago" do
-      users = 5.times.inject([]) { |res, i| res << Factory(:user) }
-      Factory(:user_course_association, :user => users[0],
+      users = 5.times.inject([]) { |res, i| res << FactoryGirl.create(:user) }
+      FactoryGirl.create(:user_course_association, :user => users[0],
               :course => subject, :role => :environment_admin,
               :created_at => 2.weeks.ago,
               :updated_at => 2.weeks.ago)
-      Factory(:user_course_association, :user => users[1],
+      FactoryGirl.create(:user_course_association, :user => users[1],
               :course => subject, :role => :teacher,
               :updated_at => 2.weeks.ago)
-      Factory(:user_course_association, :user => users[2],
+      FactoryGirl.create(:user_course_association, :user => users[2],
               :course => subject, :role => :tutor,
               :updated_at => 2.weeks.ago)
-      Factory(:user_course_association, :user => users[3],
+      FactoryGirl.create(:user_course_association, :user => users[3],
               :course => subject, :role => :member,
               :updated_at => 2.weeks.ago)
-      Factory(:user_course_association, :user => users[4],
+      FactoryGirl.create(:user_course_association, :user => users[4],
               :course => subject, :role => :member,
               :updated_at => 2.weeks.ago)
 
@@ -258,8 +258,8 @@ describe Course do
     end
 
     it "retrieves all courses in one of specified categories" do
-      audiences = (1..4).collect { Factory(:audience) }
-      courses = (1..4).collect { Factory(:course) }
+      audiences = (1..4).collect { FactoryGirl.create(:audience) }
+      courses = (1..4).collect { FactoryGirl.create(:course) }
 
       courses[0].audiences << audiences[0] << audiences[1] << audiences[2]
       courses[1].audiences << audiences[0]
@@ -272,8 +272,8 @@ describe Course do
 
     context "retrieves all courses where the specified user" do
       before do
-        @user = Factory(:user)
-        @courses = (0..6).collect { Factory(:course) }
+        @user = FactoryGirl.create(:user)
+        @courses = (0..6).collect { FactoryGirl.create(:course) }
         @courses[0].join @user
         @courses[1].join @user
         @courses[2].join @user, Role[:tutor]
@@ -284,10 +284,10 @@ describe Course do
           :role => Role[:member])
 
 
-        @courses[5].join Factory(:user)
-        @courses[5].join Factory(:user), Role[:tutor]
-        @courses[5].join Factory(:user), Role[:teacher]
-        @courses[5].join Factory(:user), Role[:environment_admin]
+        @courses[5].join FactoryGirl.create(:user)
+        @courses[5].join FactoryGirl.create(:user), Role[:tutor]
+        @courses[5].join FactoryGirl.create(:user), Role[:teacher]
+        @courses[5].join FactoryGirl.create(:user), Role[:environment_admin]
       end
 
       it "is a administrator" do
@@ -306,7 +306,7 @@ describe Course do
   end
 
   it "changes a user role" do
-    user = Factory(:user)
+    user = FactoryGirl.create(:user)
     subject.users << user
     subject.save
 
@@ -319,11 +319,11 @@ describe Course do
 
   context "when joining an user" do
     before do
-      @space = Factory(:space, :course => subject)
-      @subj = Factory(:subject, :space => @space,
+      @space = FactoryGirl.create(:space, :course => subject)
+      @subj = FactoryGirl.create(:subject, :space => @space,
                               :owner => subject.owner,
                               :finalized => true)
-      @user = Factory(:user)
+      @user = FactoryGirl.create(:user)
       subject.reload
     end
 
@@ -402,7 +402,7 @@ describe Course do
 
     context "when plan is licensed" do
       before do
-        @plan = Factory(:active_licensed_plan, :billable => @environment,
+        @plan = FactoryGirl.create(:active_licensed_plan, :billable => @environment,
                         :user => subject.owner)
         @plan.create_invoice_and_setup
         @environment.create_quota
@@ -410,7 +410,7 @@ describe Course do
       end
 
       it "should create a license" do
-        @user= Factory(:user)
+        @user= FactoryGirl.create(:user)
         expect {
           subject.join(@user)
         }.to change(License, :count).by(1)
@@ -419,7 +419,7 @@ describe Course do
 
     context "using VisClient" do
       it "should call VisClient.notify_delayed" do
-        enrollment = Factory(:enrollment, :subject => @subj,
+        enrollment = FactoryGirl.create(:enrollment, :subject => @subj,
                                    :user => @user)
         VisClient.should_receive(:notify_delayed).
           with("/hierarchy_notifications.json", "enrollment",
@@ -431,8 +431,8 @@ describe Course do
 
   context "when force joining a user" do
     before  do
-      @user = Factory(:user)
-      @moderated_course = Factory(:course,  :owner => @environment_owner,
+      @user = FactoryGirl.create(:user)
+      @moderated_course = FactoryGirl.create(:course,  :owner => @environment_owner,
         :environment => @environment, :subscription_type => 0)
     end
 
@@ -456,17 +456,17 @@ describe Course do
 
   context "removes a user (unjoin)" do
     before do
-      @plan = Factory(:active_licensed_plan, :billable => @environment)
+      @plan = FactoryGirl.create(:active_licensed_plan, :billable => @environment)
       @plan.create_invoice_and_setup
       @environment.create_quota
       @environment.reload
-      @space = Factory(:space, :course => subject)
-      @space_2 = Factory(:space, :course => subject)
-      @sub = Factory(:complete_subject, :space => @space,
+      @space = FactoryGirl.create(:space, :course => subject)
+      @space_2 = FactoryGirl.create(:space, :course => subject)
+      @sub = FactoryGirl.create(:complete_subject, :space => @space,
                      :owner => subject.owner)
-      @sub_2 = Factory(:complete_subject, :space => @space_2,
+      @sub_2 = FactoryGirl.create(:complete_subject, :space => @space_2,
                        :owner => subject.owner)
-      @user = Factory(:user)
+      @user = FactoryGirl.create(:user)
       subject.join @user
       subject.reload
     end
@@ -508,7 +508,7 @@ describe Course do
 
     context "when user is enrolled with more than one course" do
       before do
-        @other_course = Factory(:course, :environment => @environment)
+        @other_course = FactoryGirl.create(:course, :environment => @environment)
         @other_course.join @user
       end
 
@@ -522,7 +522,7 @@ describe Course do
 
     context 'when the user is with pending moderation' do
       before do
-        @user_pending = Factory(:user)
+        @user_pending = FactoryGirl.create(:user)
         subject.update_attribute(:subscription_type, 2) # Com Moderação
         subject.join @user_pending
       end
@@ -536,7 +536,7 @@ describe Course do
   end
 
   it "verifies if the user is waiting for approval" do
-    user = Factory(:user)
+    user = FactoryGirl.create(:user)
     subject.update_attribute(:subscription_type, 2)
     subject.join(user)
 
@@ -544,7 +544,7 @@ describe Course do
   end
 
   it "verifies if the user has been rejected" do
-    user = Factory(:user)
+    user = FactoryGirl.create(:user)
     subject.update_attribute(:subscription_type, 2)
     subject.join(user)
     user.user_course_associations.last.reject!
@@ -553,7 +553,7 @@ describe Course do
   end
 
   it "verifies if the course is waiting for user approval" do
-    user = Factory(:user)
+    user = FactoryGirl.create(:user)
     subject.update_attribute(:subscription_type, 2)
     subject.invite(user)
 
@@ -562,9 +562,9 @@ describe Course do
 
   context "when creating hierarchy associations" do
     before do
-      @space = Factory(:space, :course => subject)
+      @space = FactoryGirl.create(:space, :course => subject)
       subject.spaces << @space
-      @user = Factory(:user)
+      @user = FactoryGirl.create(:user)
     end
 
     it "creates hierarchy associations for a specified user" do
@@ -603,20 +603,20 @@ describe Course do
   context "when inviting an user" do
 
     it "returns the association" do
-      @incoming_user = Factory(:user)
+      @incoming_user = FactoryGirl.create(:user)
       assoc = subject.invite(@incoming_user)
       assoc.should == @incoming_user.get_association_with(subject)
     end
 
     it "sets up the member Role as default" do
-      @incoming_user = Factory(:user)
+      @incoming_user = FactoryGirl.create(:user)
       assoc = subject.invite(@incoming_user)
       assoc.role.should be_member
     end
 
     context "when the user is not associated at all" do
       before do
-        @incoming_user = Factory(:user)
+        @incoming_user = FactoryGirl.create(:user)
         subject.invite(@incoming_user)
       end
 
@@ -635,7 +635,7 @@ describe Course do
       before do
         subject.update_attribute(:subscription_type, 0)
 
-        @incoming_user = Factory(:user)
+        @incoming_user = FactoryGirl.create(:user)
         subject.join(@incoming_user)
       end
 
@@ -653,7 +653,7 @@ describe Course do
 
     context "when the user is already invited" do
       before do
-        @incoming_user = Factory(:user)
+        @incoming_user = FactoryGirl.create(:user)
         subject.invite(@incoming_user)
       end
 
@@ -666,7 +666,7 @@ describe Course do
 
     context "when the user is already approved" do
       before do
-        @already_member = Factory(:user)
+        @already_member = FactoryGirl.create(:user)
         subject.update_attribute(:subscription_type, 1)
         subject.join(@already_member)
       end
@@ -686,7 +686,7 @@ describe Course do
         UserNotifier.perform_deliveries = true
         UserNotifier.deliveries = []
 
-        @already_invited = Factory(:user)
+        @already_invited = FactoryGirl.create(:user)
         @invitation = subject.invite @already_invited
       end
 
@@ -721,7 +721,7 @@ describe Course do
         assoc = subject.invite_by_email(@not_registered_email)
         assoc.should == subject.user_course_invitations.reload.last
 
-        u = Factory(:user)
+        u = FactoryGirl.create(:user)
         assoc = subject.invite_by_email(u.email)
         assoc.should == subject.user_course_associations.reload.last
       end
@@ -748,7 +748,7 @@ describe Course do
 
       context "when the email is already registered on Redu" do
         before do
-          @registered_user = Factory(:user)
+          @registered_user = FactoryGirl.create(:user)
         end
 
         it "does NOT create an e-mail invitation" do
@@ -802,7 +802,7 @@ describe Course do
 
   context "when 3 or more people are enrolling to courses" do
     before do
-      @users = 3.times.collect { Factory(:user) }
+      @users = 3.times.collect { FactoryGirl.create(:user) }
 
       ActiveRecord::Observer.with_observers(
         :user_course_association_observer,
@@ -837,9 +837,9 @@ describe Course do
 
   context "behaves like a billable" do
     before do
-      users = 4.times.collect { Factory(:user) }
+      users = 4.times.collect { FactoryGirl.create(:user) }
 
-      Factory(:active_package_plan, :billable => subject, :user => subject.owner,
+      FactoryGirl.create(:active_package_plan, :billable => subject, :user => subject.owner,
               :members_limit => 10)
 
       subject.join(users[0], Role[:environment_admin])
@@ -856,7 +856,7 @@ describe Course do
       before do
         # Sem moderação
         subject.subscription_type = 1
-        (1..5).each { subject.join(Factory(:user)) }
+        (1..5).each { subject.join(FactoryGirl.create(:user)) }
       end
 
       context "and plan has members limit" do
@@ -872,7 +872,7 @@ describe Course do
         end
 
         it "should NOT permit entry" do
-          (1..15).each { subject.join(Factory(:user)) }
+          (1..15).each { subject.join(FactoryGirl.create(:user)) }
           subject.can_add_entry?.should be_false
         end
       end
@@ -889,18 +889,18 @@ describe Course do
         end
 
         it "should permit entry" do
-          (1..15).each { subject.join(Factory(:user)) }
+          (1..15).each { subject.join(FactoryGirl.create(:user)) }
           subject.can_add_entry?.should be_true
         end
       end
     end
 
     context "when destroying" do
-      let(:subject) { Factory(:course) }
+      let(:subject) { FactoryGirl.create(:course) }
       context "with an associated plan" do
         it "should persist environment attributes" do
           subject.plans = []
-          plan = Factory(:active_package_plan, :billable => subject)
+          plan = FactoryGirl.create(:active_package_plan, :billable => subject)
 
           subject.audit_billable_and_destroy
           plan.reload.billable_audit["name"].should == subject.name
@@ -921,7 +921,7 @@ describe Course do
   context "with a space marked for destruction" do
     it "should destroy associated space" do
       subject.spaces << \
-        Factory(:space, :owner => subject.owner, :course => subject,
+        FactoryGirl.create(:space, :owner => subject.owner, :course => subject,
                 :destroy_soon => true)
       subject.spaces.reload
       expect {

@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe UserCourseAssociation do
-  subject { Factory(:user_course_association) }
+  subject { FactoryGirl.create(:user_course_association) }
 
   it { should belong_to :user }
   it { should belong_to :course }
@@ -30,10 +30,10 @@ describe UserCourseAssociation do
       end
 
       it "should send a pending moderation request" do
-        user = Factory(:user)
-        course = Factory(:course, :subscription_type => 2, :owner => user)
+        user = FactoryGirl.create(:user)
+        course = FactoryGirl.create(:course, :subscription_type => 2, :owner => user)
         course.administrators.reload
-        uca = Factory(:user_course_association, :course => course)
+        uca = FactoryGirl.create(:user_course_association, :course => course)
         UserNotifier.deliveries.last.subject.should == "Moderação pendente em #{course.name}"
       end
     end
@@ -97,7 +97,7 @@ describe UserCourseAssociation do
 
       context "when it is a new record" do
         before do
-          @ass = Factory.build(:user_course_association, :state => "invited")
+          @ass = FactoryGirl.build(:user_course_association, :state => "invited")
         end
 
         it "should not call create hierarchy associations" do
@@ -124,7 +124,7 @@ describe UserCourseAssociation do
       end
 
       context "when it is a new record" do
-        let(:subject) { Factory.build(:user_course_association) }
+        let(:subject) { FactoryGirl.build(:user_course_association) }
 
         it "should not call create hierarchy associations" do
           subject.course.should_not_receive(:create_hierarchy_associations)
@@ -137,21 +137,21 @@ describe UserCourseAssociation do
   context "finder" do
 
     it "retrieves user course associations with specified roles" do
-      assoc = (1..3).collect { Factory(:user_course_association, :role => :tutor) }
-      assoc2 = (1..3).collect { Factory(:user_course_association, :role => :admin) }
-      t = Factory(:user_course_association, :role => :teacher)
+      assoc = (1..3).collect { FactoryGirl.create(:user_course_association, :role => :tutor) }
+      assoc2 = (1..3).collect { FactoryGirl.create(:user_course_association, :role => :admin) }
+      t = FactoryGirl.create(:user_course_association, :role => :teacher)
 
       UserCourseAssociation.with_roles([ Role[:admin], Role[:teacher] ]).
         should == (assoc2 << t)
     end
 
     it "retrieves user course associations with specified keyword" do
-      user = Factory(:user, :first_name => "Andrew")
-      assoc = Factory(:user_course_association, :user => user)
-      user2 = Factory(:user, :first_name => "Joe Andrew")
-      assoc2 = Factory(:user_course_association, :user => user2)
-      user3 = Factory(:user, :first_name => "Alice")
-      assoc3 = Factory(:user_course_association, :user => user3)
+      user = FactoryGirl.create(:user, :first_name => "Andrew")
+      assoc = FactoryGirl.create(:user_course_association, :user => user)
+      user2 = FactoryGirl.create(:user, :first_name => "Joe Andrew")
+      assoc2 = FactoryGirl.create(:user_course_association, :user => user2)
+      user3 = FactoryGirl.create(:user, :first_name => "Alice")
+      assoc3 = FactoryGirl.create(:user_course_association, :user => user3)
 
       UserCourseAssociation.with_keyword("Andrew").
         should == [user.user_course_associations.last,
@@ -159,18 +159,18 @@ describe UserCourseAssociation do
     end
 
     it "retrieves new user_course_associations from 1 week ago" do
-      @course = Factory(:course)
+      @course = FactoryGirl.create(:course)
       @uca = @course.user_course_associations.first
 
-      user = Factory(:user, :first_name => "Andrew")
-      assoc = Factory(:user_course_association, :user => user,
+      user = FactoryGirl.create(:user, :first_name => "Andrew")
+      assoc = FactoryGirl.create(:user_course_association, :user => user,
                       :course => @uca.course,
                       :created_at => 2.weeks.ago)
-      user2 = Factory(:user, :first_name => "Joe Andrew")
-      assoc2 = Factory(:user_course_association, :user => user2,
+      user2 = FactoryGirl.create(:user, :first_name => "Joe Andrew")
+      assoc2 = FactoryGirl.create(:user_course_association, :user => user2,
                        :course => @uca.course)
-      user3 = Factory(:user, :first_name => "Alice")
-      assoc3 = Factory(:user_course_association, :user => user3,
+      user3 = FactoryGirl.create(:user, :first_name => "Alice")
+      assoc3 = FactoryGirl.create(:user_course_association, :user => user3,
                        :course => @uca.course)
 
       @uca.course.user_course_associations.
@@ -178,28 +178,28 @@ describe UserCourseAssociation do
     end
 
     it "retrieves approved user course associations" do
-      course = Factory(:course)
+      course = FactoryGirl.create(:course)
       uca = course.user_course_associations.first
 
-      user = Factory(:user, :first_name => "Andrew")
-      assoc = Factory(:user_course_association, :user => user,
+      user = FactoryGirl.create(:user, :first_name => "Andrew")
+      assoc = FactoryGirl.create(:user_course_association, :user => user,
                       :course => uca.course,
                       :created_at => 2.weeks.ago)
       assoc.approve!
-      user2 = Factory(:user, :first_name => "Joe Andrew")
-      assoc2 = Factory(:user_course_association, :user => user2,
+      user2 = FactoryGirl.create(:user, :first_name => "Joe Andrew")
+      assoc2 = FactoryGirl.create(:user_course_association, :user => user2,
                        :course => uca.course)
       assoc2.approve!
-      user3 = Factory(:user, :first_name => "Alice")
-      assoc3 = Factory(:user_course_association, :user => user3,
+      user3 = FactoryGirl.create(:user, :first_name => "Alice")
+      assoc3 = FactoryGirl.create(:user_course_association, :user => user3,
                        :course => uca.course)
 
       UserCourseAssociation.approved.should == [uca, assoc, assoc2]
     end
 
     it "retrieves invited user_course_associations" do
-      course = Factory(:course)
-      @associations = (1..5).collect { course.invite(Factory(:user)) }
+      course = FactoryGirl.create(:course)
+      @associations = (1..5).collect { course.invite(FactoryGirl.create(:user)) }
       @associations[0..1].each { |a| a.accept! }
       @associations[2].deny!
 
@@ -207,9 +207,9 @@ describe UserCourseAssociation do
     end
 
     context "when retrieving last accessed" do
-      let(:user) { Factory(:user) }
+      let(:user) { FactoryGirl.create(:user) }
       let(:assocs) do
-        (1..5).collect { Factory(:user_course_association, :user => user) }
+        (1..5).collect { FactoryGirl.create(:user_course_association, :user => user) }
       end
 
       it "retrieves 3 last accessed" do
@@ -236,13 +236,13 @@ describe UserCourseAssociation do
       UserNotifier.perform_deliveries = true
       UserNotifier.deliveries = []
 
-      @course = Factory(:course)
+      @course = FactoryGirl.create(:course)
       @ucas = 3.times.collect {
-        Factory(:user_course_association, :course => @course,
+        FactoryGirl.create(:user_course_association, :course => @course,
                 :role => :environment_admin, :state => 'approved')
       }
 
-      @new_uca = Factory(:user_course_association, :course => @course, :role => :member)
+      @new_uca = FactoryGirl.create(:user_course_association, :course => @course, :role => :member)
     end
 
     it "should send email notifications" do

@@ -4,28 +4,28 @@ require 'spec_helper'
 describe UserWalledgardenAppsObserver do
   context "after_create" do
     before do
-      Factory(:client_application, :walledgarden => true)
+      FactoryGirl.create(:client_application, :walledgarden => true)
     end
 
     it "creates an OAuth2Token for the user" do
       with_observers do
-        expect { Factory(:user) }.to change(Oauth2Token, :count).by(1)
+        expect { FactoryGirl.create(:user) }.to change(Oauth2Token, :count).by(1)
       end
     end
 
     it "toches the user" do
       with_observers do
-        user = Factory.build(:user)
+        user = FactoryGirl.build(:user)
         user.should_receive(:update_attributes).once
         user.save
       end
     end
 
     it "touches the user once" do
-      Factory(:client_application, :walledgarden => true)
+      FactoryGirl.create(:client_application, :walledgarden => true)
 
       with_observers do
-        user = Factory.build(:user)
+        user = FactoryGirl.build(:user)
         user.should_receive(:update_attributes).once
         user.save
       end

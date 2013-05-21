@@ -6,10 +6,10 @@ require 'vis_application_additions'
 describe SpacesController do
   context "GET students_endless" do
     before do
-      environment = Factory(:environment, :published => true)
-      course = Factory(:course, :environment => environment)
-      space = Factory(:space, :course => course)
-      user = Factory(:user)
+      environment = FactoryGirl.create(:environment, :published => true)
+      course = FactoryGirl.create(:course, :environment => environment)
+      space = FactoryGirl.create(:space, :course => course)
+      user = FactoryGirl.create(:user)
       space.course.join user
 
       login_as user
@@ -31,10 +31,10 @@ describe SpacesController do
     include VisApplicationAdditions::Utils
 
     before do
-      environment = Factory(:environment)
-      course = Factory(:course, :environment => environment)
-      @space = Factory(:space, :course => course)
-      user = Factory(:user)
+      environment = FactoryGirl.create(:environment)
+      course = FactoryGirl.create(:course, :environment => environment)
+      @space = FactoryGirl.create(:space, :course => course)
+      user = FactoryGirl.create(:user)
       @space.course.join user, Role[:environment_admin]
 
       login_as user

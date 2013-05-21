@@ -6,7 +6,7 @@ module Api
     context "UserCourseAssociation" do
       context "#role" do
         subject do
-          Factory.build(:user_course_association).extend(CourseEnrollmentRepresenter)
+          FactoryGirl.build(:user_course_association).extend(CourseEnrollmentRepresenter)
         end
 
         %w(member teacher tutor environment_admin).each do |role|

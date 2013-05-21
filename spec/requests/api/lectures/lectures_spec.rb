@@ -2,7 +2,7 @@
 require 'api_spec_helper'
 
 describe "Lecture API" do
-  let(:environment) { Factory(:complete_environment) }
+  let(:environment) { FactoryGirl.create(:complete_environment) }
   let(:course) { environment.courses.first }
   let(:space) { course.spaces.first }
   let(:subj) { space.subjects.first }

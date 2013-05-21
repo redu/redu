@@ -3,17 +3,17 @@ require 'spec_helper'
 
 describe Subject do
   before do
-    environment = Factory(:environment)
-    @course = Factory(:course, :owner => environment.owner,
+    environment = FactoryGirl.create(:environment)
+    @course = FactoryGirl.create(:course, :owner => environment.owner,
                      :environment => environment)
-    @space = Factory(:space, :owner => environment.owner,
+    @space = FactoryGirl.create(:space, :owner => environment.owner,
                     :course => @course)
-    @user = Factory(:user)
+    @user = FactoryGirl.create(:user)
     @course.join(@user)
   end
 
 
-  subject { Factory(:subject, :owner => @user, :space => @space) }
+  subject { FactoryGirl.create(:subject, :owner => @user, :space => @space) }
 
   it { should belong_to :space }
   it { should belong_to :owner }
@@ -50,9 +50,9 @@ describe Subject do
     end
 
     it "does NOT create an Enrollment between the subject and the owner after create, if the owner is a Redu admin" do
-      redu_admin = Factory(:user, :role => Role[:admin])
+      redu_admin = FactoryGirl.create(:user, :role => Role[:admin])
       expect {
-        Factory(:subject, :owner => redu_admin, :space => @space)
+        FactoryGirl.create(:subject, :owner => redu_admin, :space => @space)
       }.to_not change(Enrollment, :count)
     end
 
@@ -60,23 +60,23 @@ describe Subject do
 
   context "finders" do
     it "retrieves visibles subjects" do
-      subjects = (1..3).collect { Factory(:subject, :owner => @user,
+      subjects = (1..3).collect { FactoryGirl.create(:subject, :owner => @user,
                                           :space => @space, :visible => false) }
-      visible_subjects = (1..3).collect { Factory(:subject, :owner => @user,
+      visible_subjects = (1..3).collect { FactoryGirl.create(:subject, :owner => @user,
                                                     :space => @space,
                                                     :visible => true) }
       Subject.visible.should == visible_subjects
     end
 
     it "retrieves recent subjects (created until 1 week ago)" do
-      subjects = (1..3).collect { |i| Factory(:subject, :owner => @user,
+      subjects = (1..3).collect { |i| FactoryGirl.create(:subject, :owner => @user,
                                               :space => @space,
                                               :created_at => (i*3).day.ago) }
       Subject.recent.should == subjects[0..1]
     end
 
     it "retrieves graduated members" do
-      users = (1..4).collect { Factory(:user) }
+      users = (1..4).collect { FactoryGirl.create(:user) }
       users.each { |u| subject.enroll(u) }
       users[0..1].each do |u|
         student_profile = u.enrollments.last
@@ -88,8 +88,8 @@ describe Subject do
     end
 
     it "retrieves teachers" do
-      users = (1..4).collect { Factory(:user) }
-      teachers = (1..4).collect { Factory(:user) }
+      users = (1..4).collect { FactoryGirl.create(:user) }
+      teachers = (1..4).collect { FactoryGirl.create(:user) }
       users.each { |u| subject.enroll(u) }
       teachers.each { |u| subject.enroll(u, :role => Role[:teacher]) }
 
@@ -116,7 +116,7 @@ describe Subject do
 
   context "lectures" do
     it "changes lectures order" do
-      lectures = (1..4).collect { Factory(:lecture, :subject => subject)}
+      lectures = (1..4).collect { FactoryGirl.create(:lecture, :subject => subject)}
       lectures_ordered = ["#{lectures[1].id}-lecture", "#{lectures[0].id}-lecture",
         "#{lectures[3].id}-lecture", "#{lectures[2].id}-lecture"]
       subject.change_lectures_order!(lectures_ordered)
@@ -126,8 +126,8 @@ describe Subject do
   end
 
   it "verifies if a user completed the subject" do
-    Factory(:lecture, :subject => subject, :owner => subject.owner)
-    graduated = Factory(:user)
+    FactoryGirl.create(:lecture, :subject => subject, :owner => subject.owner)
+    graduated = FactoryGirl.create(:user)
     subject.enroll(graduated)
     subject.lectures.each { |l| l.mark_as_done_for!(graduated, true) }
     e = graduated.get_association_with(subject)
@@ -137,19 +137,19 @@ describe Subject do
   end
 
   it "verifies if a user did not complete the subject" do
-    enrolled_user = Factory(:user)
+    enrolled_user = FactoryGirl.create(:user)
     subject.enroll(enrolled_user)
     subject.graduated?(enrolled_user).should be_false
   end
 
   it "verifies if a not enrolled user did not complete the subject" do
-    unenrolled_user = Factory(:user)
+    unenrolled_user = FactoryGirl.create(:user)
     subject.graduated?(unenrolled_user).should be_false
   end
 
   it "should remove subjects unfinalized that was created more then 1 days ago" do
     3.times do
-      Factory(:subject, :owner => @user, :space => @space,
+      FactoryGirl.create(:subject, :owner => @user, :space => @space,
               :visible => true, :created_at => 2.days.ago)
     end
     subject

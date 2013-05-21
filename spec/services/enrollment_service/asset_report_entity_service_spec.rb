@@ -5,10 +5,10 @@ module EnrollmentService
   module Jobs
     describe AssetReportEntityService do
       subject { AssetReportEntityService.new(:lecture => lectures) }
-      let(:subjects) { 2.times.map { Factory(:subject, :space => nil) } }
+      let(:subjects) { 2.times.map { FactoryGirl.create(:subject, :space => nil) } }
       let!(:lectures) do
         subjects.map do |subj|
-          3.times.map { Factory(:lecture, :subject => subj, :owner => subj.owner) }
+          3.times.map { FactoryGirl.create(:lecture, :subject => subj, :owner => subj.owner) }
         end.flatten
       end
 
@@ -65,7 +65,7 @@ module EnrollmentService
         let!(:asset_reports) do
           lectures.map do |l|
             l.subject.enrollments.map do |enrollment|
-              Factory(:asset_report, :enrollment => enrollment, :lecture => l)
+              FactoryGirl.create(:asset_report, :enrollment => enrollment, :lecture => l)
             end.flatten
           end.flatten
         end

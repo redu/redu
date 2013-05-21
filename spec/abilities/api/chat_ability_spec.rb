@@ -3,12 +3,12 @@ require 'api_spec_helper'
 require 'cancan/matchers'
 
 describe "Chat ability" do
-  let(:user) { Factory(:user) }
+  let(:user) { FactoryGirl.create(:user) }
   subject { Api::Ability.new(user) }
 
   context "when chat user" do
-    let(:own_chat) { Factory(:chat, :user => user) }
-    let(:other_chat) { Factory(:chat, :contact => user) }
+    let(:own_chat) { FactoryGirl.create(:chat, :user => user) }
+    let(:other_chat) { FactoryGirl.create(:chat, :contact => user) }
 
     it "should be able to manage his own chat" do
       subject.should be_able_to :manage, own_chat
@@ -16,7 +16,7 @@ describe "Chat ability" do
   end
 
   context "when chat contact" do
-    let(:own_chat) { Factory(:chat, :contact => user) }
+    let(:own_chat) { FactoryGirl.create(:chat, :contact => user) }
 
     it "should not be able to manage the chat he is contact" do
       subject.should_not be_able_to :manage, own_chat
@@ -24,7 +24,7 @@ describe "Chat ability" do
   end
 
   context "when strange" do
-    let(:stange_chat) { Factory(:chat) }
+    let(:stange_chat) { FactoryGirl.create(:chat) }
 
     it "should not be able to manage others chats" do
       subject.should_not be_able_to :manage, stange_chat

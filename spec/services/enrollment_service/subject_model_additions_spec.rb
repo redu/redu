@@ -3,8 +3,8 @@ require 'spec_helper'
 
 module EnrollmentService
   describe Subject do
-    subject { Factory(:subject, :space => nil) }
-    let(:user) { Factory(:user) }
+    subject { FactoryGirl.create(:subject, :space => nil) }
+    let(:user) { FactoryGirl.create(:user) }
     let(:facade) { mock("Facade") }
     let(:lectures) do
       subjects.each { |s| FactoryGirl.create(:lecture, :subject => s) }
@@ -122,7 +122,7 @@ module EnrollmentService
         let(:enrollments) do
           subjects.map do |s|
             users.map do |user|
-              Factory(:enrollment, :user => user, :subject => s)
+              FactoryGirl.create(:enrollment, :user => user, :subject => s)
             end.flatten
           end.flatten
         end

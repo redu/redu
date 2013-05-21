@@ -4,22 +4,22 @@ require 'authlogic/test_case'
 
 describe PartnersController do
   before do
-    @user = Factory(:user)
+    @user = FactoryGirl.create(:user)
     login_as @user
   end
 
   context "when viewing a partner" do
     before do
-      @partner = Factory(:partner)
+      @partner = FactoryGirl.create(:partner)
       @partner.add_collaborator(@user)
 
       @associations = 3.times.inject([]) do |acc,i|
-        acc << Factory(:partner_environment_association,
+        acc << FactoryGirl.create(:partner_environment_association,
                        :partner => @partner)
       end
 
       @users = 3.times.inject([]) do |acc,i|
-        user = Factory(:user)
+        user = FactoryGirl.create(:user)
         @partner.add_collaborator(user)
         acc << user
       end
@@ -42,7 +42,7 @@ describe PartnersController do
 
   context "when contacting a partner" do
     before do
-      @partner = Factory(:partner)
+      @partner = FactoryGirl.create(:partner)
       @environment_params = {:name => "Centro de Infromática",
                              :courses_attributes => {"0"=> {:name => "Ciência da Computação", :path => "ciencia-da-computacao" }},
                              :initials => "", :path => "centro-de-infromatica"}
@@ -69,8 +69,8 @@ describe PartnersController do
 
   context "when contacting a partner about migration" do
     before do
-      @partner = Factory(:partner)
-      @environment = Factory(:environment)
+      @partner = FactoryGirl.create(:partner)
+      @environment = FactoryGirl.create(:environment)
 
       @contact_params = {:category => "institution",
                          :details => "Mensagem",

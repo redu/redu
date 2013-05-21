@@ -3,7 +3,7 @@ require 'spec_helper'
 
 module EnrollmentService
   describe Lecture do
-    subject { Factory(:lecture, :subject => nil) }
+    subject { FactoryGirl.create(:lecture, :subject => nil) }
     let(:facade) { mock("Facade") }
 
     context "#create_asset_report" do
@@ -40,7 +40,7 @@ module EnrollmentService
     def add_subject_to(lecture)
       lectures = lecture.respond_to?(:map) ? lecture : [lecture]
       lectures.each do |l|
-        l.subject = Factory(:subject, :space => nil)
+        l.subject = FactoryGirl.create(:subject, :space => nil)
         l.save
       end
     end

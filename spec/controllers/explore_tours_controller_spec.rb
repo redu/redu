@@ -4,7 +4,7 @@ require 'spec_helper'
 describe ExploreToursController do
   describe 'POST create' do
     context 'when marking an id as visited' do
-      let(:user) { Factory(:user) }
+      let(:user) { FactoryGirl.create(:user) }
       before do
         login_as user
         xhr :post, :create, :id => 'learn-environments',

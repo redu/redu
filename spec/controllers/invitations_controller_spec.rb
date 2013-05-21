@@ -4,13 +4,13 @@ require 'authlogic/test_case'
 
 describe InvitationsController do
   before do
-    @user = Factory(:user)
+    @user = FactoryGirl.create(:user)
     @params = {:locale => "pt-BR"}
   end
 
   context "Friendship invitations - " do
     before do
-      @friend = Factory(:user)
+      @friend = FactoryGirl.create(:user)
       @invitation_params = {'emails' => 'example@email.com',
                             'friend_id' => @friend.id }
 
@@ -61,7 +61,7 @@ describe InvitationsController do
 
     context 'User not logged:' do
       before do
-        @user = Factory(:user)
+        @user = FactoryGirl.create(:user)
         controller.process_invites(@invitation_params, @user)
         @params = {:locale => "pt-BR",
                    :id => @invitation.id}
@@ -99,7 +99,7 @@ describe InvitationsController do
         login_as @user
         Friendship.destroy_all
         Invitation.destroy_all
-        @friends = (1..5).collect { Factory(:user) }
+        @friends = (1..5).collect { FactoryGirl.create(:user) }
         @emails = (1..@friends.count).collect { |i| "email#{i}@mail.com" }
 
         @friends = @friends.map(&:id).join(",")

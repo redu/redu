@@ -4,7 +4,7 @@ require 'spec_helper'
 describe UserCourseAssociationObserver do
   context "when UserCourseAssociation" do
     before do
-      @uca = Factory.build(:user_course_association)
+      @uca = FactoryGirl.build(:user_course_association)
     end
 
     xit "logs approval" do
@@ -37,8 +37,8 @@ describe UserCourseAssociationObserver do
     context "when on approval list" do
       # Colocar essa lógica no observer
       xit "delivers approval notification" do
-        course = Factory(:course, :subscription_type => 2)
-        user = Factory(:user)
+        course = FactoryGirl.create(:course, :subscription_type => 2)
+        user = FactoryGirl.create(:user)
 
         ActiveRecord::Observer.with_observers(:user_course_association_observer) do
           expect {
@@ -51,8 +51,8 @@ describe UserCourseAssociationObserver do
     context "when approving to an open course" do
       # Colocar essa lógia no observer
       xit "cant deliver any e-mail" do
-        course = Factory(:course)
-        user = Factory(:user)
+        course = FactoryGirl.create(:course)
+        user = FactoryGirl.create(:user)
 
         ActiveRecord::Observer.with_observers(:user_course_association_observer) do
           expect {
@@ -64,8 +64,8 @@ describe UserCourseAssociationObserver do
 
     context "when inviting member" do
       it "delivers notification" do
-        course = Factory(:course)
-        user = Factory(:user)
+        course = FactoryGirl.create(:course)
+        user = FactoryGirl.create(:user)
 
         ActiveRecord::Observer.with_observers(:user_course_association_observer) do
           expect {
@@ -76,8 +76,8 @@ describe UserCourseAssociationObserver do
 
       context "on a closed course" do
         it "delivers notification" do
-          course = Factory(:course, :subscription_type => 2)
-          user = Factory(:user)
+          course = FactoryGirl.create(:course, :subscription_type => 2)
+          user = FactoryGirl.create(:user)
 
           ActiveRecord::Observer.with_observers(:user_course_association_observer) do
             expect {

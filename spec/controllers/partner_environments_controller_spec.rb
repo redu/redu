@@ -4,13 +4,13 @@ require 'authlogic/test_case'
 
 describe PartnerEnvironmentAssociationsController do
   before do
-    @user = Factory(:user)
+    @user = FactoryGirl.create(:user)
     login_as @user
   end
 
   describe "when creating partner environment" do
     before do
-      @partner = Factory(:partner)
+      @partner = FactoryGirl.create(:partner)
       @partner.add_collaborator(@user)
 
       environment = { :name => "Faculdade mauricio de nassau",
@@ -64,7 +64,7 @@ describe PartnerEnvironmentAssociationsController do
     context "when there are other collaborators" do
       before do
         @users = 3.times.inject([]) do |acc, el|
-          u = Factory(:user)
+          u = FactoryGirl.create(:user)
           @partner.add_collaborator(u)
           acc << u
         end
@@ -80,11 +80,11 @@ describe PartnerEnvironmentAssociationsController do
 
     context "when listing partner environments" do
       before do
-        @partner = Factory(:partner)
+        @partner = FactoryGirl.create(:partner)
         @partner.add_collaborator(@user)
 
         3.times.inject([]) do |acc,i|
-          environment = Factory(:environment)
+          environment = FactoryGirl.create(:environment)
           @partner.add_environment(environment, "12.123.123/1234-12",
                                    "Cool Street", "Cool Inc.")
         end

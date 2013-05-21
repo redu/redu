@@ -10,42 +10,42 @@ describe Status do
 
   context "scopes" do
     before do
-      @environment = Factory(:environment)
-      @course = Factory(:course, :environment => @environment,
+      @environment = FactoryGirl.create(:environment)
+      @course = FactoryGirl.create(:course, :environment => @environment,
                         :owner => @environment.owner)
 
       @course.join(@environment.owner)
 
       @spaces = 3.times.inject([]) do |acc,i|
-        acc << Factory(:space, :owner => @course.owner, :course => @course)
+        acc << FactoryGirl.create(:space, :owner => @course.owner, :course => @course)
       end
 
       @lectures = 3.times.inject([]) do |acc,i|
-        sub = Factory(:subject, :owner => @spaces.first.owner,
+        sub = FactoryGirl.create(:subject, :owner => @spaces.first.owner,
                       :space => @spaces.first,
                       :finalized => true)
-        lect = Factory(:lecture, :owner => @spaces.first.owner,
-                       :lectureable => Factory(:page), :subject => sub)
+        lect = FactoryGirl.create(:lecture, :owner => @spaces.first.owner,
+                       :lectureable => FactoryGirl.create(:page), :subject => sub)
 
         acc << lect
       end
 
       @space_statuses = @spaces.collect do |e|
         3.times.inject([]) do |acc,i|
-          acc << Factory(:activity, :statusable => e, :user => @course.owner)
+          acc << FactoryGirl.create(:activity, :statusable => e, :user => @course.owner)
         end
       end.flatten
 
       @course_statuses = 3.times.inject([]) do |acc,i|
-        acc << Factory(:activity, :statusable => @course, :user => @course.owner)
+        acc << FactoryGirl.create(:activity, :statusable => @course, :user => @course.owner)
       end
 
        @lecture_statuses = @lectures.collect do |l|
          3.times.inject([]) do |acc,i|
-           acc << Factory(:activity, :statusable => l, :user => @course.owner)
+           acc << FactoryGirl.create(:activity, :statusable => l, :user => @course.owner)
          end + \
          3.times.inject([]) do |acc,i|
-           acc << Factory(:help, :statusable => l, :user => @course.owner)
+           acc << FactoryGirl.create(:help, :statusable => l, :user => @course.owner)
          end
        end.flatten
     end
@@ -81,12 +81,12 @@ describe Status do
     context "recent" do
       before do
         @old_space_statuses = (1..3).collect do
-          Factory(:activity, :statusable => @spaces.first, :user => @course.owner,
+          FactoryGirl.create(:activity, :statusable => @spaces.first, :user => @course.owner,
                   :created_at => 3.weeks.ago)
         end
 
         @recent_space_statuses = (1..3).collect do
-          Factory(:activity, :statusable => @spaces.first, :user => @course.owner,
+          FactoryGirl.create(:activity, :statusable => @spaces.first, :user => @course.owner,
                   :created_at => 5.days.ago)
         end
       end
@@ -100,12 +100,12 @@ describe Status do
 
     context "filtering" do
       before do
-        @user = Factory(:user)
+        @user = FactoryGirl.create(:user)
         @activity_statuses = (1..2).collect {
-          Factory(:activity, :user => @user,
+          FactoryGirl.create(:activity, :user => @user,
                   :statusable => @spaces.first) }
-        @activity_statuses << Factory(:activity, :statusable => @spaces.first)
-        @activity_statuses << Factory(:activity, :statusable => @spaces.first)
+        @activity_statuses << FactoryGirl.create(:activity, :statusable => @spaces.first)
+        @activity_statuses << FactoryGirl.create(:activity, :statusable => @spaces.first)
       end
 
       it "Activities by a specified user" do
@@ -114,8 +114,8 @@ describe Status do
       end
 
       it "Helps and Activities" do
-        @activity_statuses << Factory(:help, :statusable => @lectures.first, :user => @user)
-        @activity_statuses << Factory(:help, :statusable => @lectures.first, :user => @user)
+        @activity_statuses << FactoryGirl.create(:help, :statusable => @lectures.first, :user => @user)
+        @activity_statuses << FactoryGirl.create(:help, :statusable => @lectures.first, :user => @user)
 
         @lectures.first.statuses.helps_and_activities.count.should eq(8)
       end
@@ -135,8 +135,8 @@ describe Status do
       end
 
       it "by day" do
-        id = [Factory(:activity, :created_at => "2012-02-14".to_date).id]
-        id << Factory(:activity, :created_at => "2012-02-16".to_date).id
+        id = [FactoryGirl.create(:activity, :created_at => "2012-02-14".to_date).id]
+        id << FactoryGirl.create(:activity, :created_at => "2012-02-16".to_date).id
         activity = Status.by_id(id)
         activity.by_day("2012-02-14".to_date).should eq([activity.first])
       end
@@ -144,7 +144,7 @@ describe Status do
       it "answers id" do
         id = []
         3.times.collect do
-          a = Factory(:answer, :user => @user,
+          a = FactoryGirl.create(:answer, :user => @user,
                       :in_response_to => @activity_statuses.first)
           id << a.id
           @activity_statuses.first.answers << a

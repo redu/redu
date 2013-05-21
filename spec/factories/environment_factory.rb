@@ -9,8 +9,8 @@ FactoryGirl.define do
 
   factory :complete_environment, :parent => :environment do
     description "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-    after_create do |e|
-      e.courses << Factory(:complete_course, :environment => e, :owner => e.owner)
+    after(:create) do |e, _|
+      e.courses << FactoryGirl.create(:complete_course, :environment => e, :owner => e.owner)
     end
   end
 end

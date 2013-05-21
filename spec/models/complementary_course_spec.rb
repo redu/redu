@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe ComplementaryCourse do
-  subject { Factory(:complementary_course) }
+  subject { FactoryGirl.create(:complementary_course) }
 
   it { should validate_presence_of :course }
   it { should validate_presence_of :institution }

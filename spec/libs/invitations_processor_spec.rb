@@ -11,8 +11,8 @@ describe InvitationsProcessor do
   end
 
   before {
-    @user = Factory(:user)
-    @friends = (1..5).collect { Factory(:user) }
+    @user = FactoryGirl.create(:user)
+    @friends = (1..5).collect { FactoryGirl.create(:user) }
     @email = (1..@friends.count).collect { |i| "email#{i}@mail.com"}
     @param = {}
   }
@@ -55,7 +55,7 @@ describe InvitationsProcessor do
   it "when email exists in redu database, a friendship should be created instead of a invitation" do
     @param['emails'] = @email.join(",")
     @param['emails'] << ",#{@user.email}"
-    user = Factory(:user)
+    user = FactoryGirl.create(:user)
     expect {
       subject.process_invites(@param, user)
     }.to change(Invitation, :count).by(5)

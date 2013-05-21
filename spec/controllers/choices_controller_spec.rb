@@ -4,17 +4,17 @@ require 'authlogic/test_case'
 
 describe ChoicesController do
   before do
-    @space = Factory(:space)
+    @space = FactoryGirl.create(:space)
 
-    @subject = Factory(:subject, :owner => @space.owner,
+    @subject = FactoryGirl.create(:subject, :owner => @space.owner,
                        :space => @space, :finalized => true,
                        :visible => true)
-    @exercise = Factory(:complete_exercise)
+    @exercise = FactoryGirl.create(:complete_exercise)
     @questions = @exercise.questions
-    @lecture = Factory(:lecture,:subject => @subject, :lectureable => @exercise,
+    @lecture = FactoryGirl.create(:lecture,:subject => @subject, :lectureable => @exercise,
                        :owner => @space.owner)
 
-    @user = Factory(:user)
+    @user = FactoryGirl.create(:user)
     @space.course.join(@user)
     login_as @user
   end

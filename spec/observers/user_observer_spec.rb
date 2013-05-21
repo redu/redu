@@ -5,7 +5,7 @@ describe UserObserver do
   context "logger" do
     it "logs user update" do
       ActiveRecord::Observer.with_observers(:user_observer) do
-        user = Factory(:user)
+        user = FactoryGirl.create(:user)
         expect {
           user.first_name = "Guilherme"
           user.save
@@ -15,7 +15,7 @@ describe UserObserver do
 
     it "cannot log if it changes a non logable attribute" do
       ActiveRecord::Observer.with_observers(:user_observer) do
-        user = Factory(:user)
+        user = FactoryGirl.create(:user)
         expect {
           user.score = 10
           user.save

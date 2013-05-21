@@ -15,8 +15,8 @@ FactoryGirl.define do
   end
 
   factory :complete_folder, :parent => :folder do
-    after_create do |f|
-      f.myfiles << Factory(:myfile, :folder => f)
+    after(:create) do |f,_|
+      f.myfiles << FactoryGirl.create(:myfile, :folder => f)
     end
   end
 end

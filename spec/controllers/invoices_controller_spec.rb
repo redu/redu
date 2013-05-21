@@ -3,11 +3,11 @@ require 'spec_helper'
 require 'authlogic/test_case'
 
 describe InvoicesController do
-  subject { Factory(:package_invoice) }
+  subject { FactoryGirl.create(:package_invoice) }
 
   context "when PackageInvoice" do
     before do
-      @plan = Factory(:active_package_plan)
+      @plan = FactoryGirl.create(:active_package_plan)
       @invoices = []
 
 
@@ -15,7 +15,7 @@ describe InvoicesController do
         period_start = Date.today.advance(:days => (i+1) * -30)
         period_end = period_start.advance(:days => 30)
 
-        invoice = Factory(:package_invoice,
+        invoice = FactoryGirl.create(:package_invoice,
                           :plan => @plan,
                           :period_start => period_start,
                           :period_end => period_end)
@@ -50,18 +50,18 @@ describe InvoicesController do
   context "when LicensedInvoice" do
     context "when viewing a licensed invoice" do
       before do
-        @plan = Factory(:active_licensed_plan)
+        @plan = FactoryGirl.create(:active_licensed_plan)
 
         @invoices = (1..5).collect do |i|
           period_start = Date.new(2011, 01, 01).advance(:days => (i+1) * 30)
           period_end = period_start.advance(:days => 30)
 
 
-          invoice = Factory(:licensed_invoice,
+          invoice = FactoryGirl.create(:licensed_invoice,
                             :plan => @plan,
                             :period_start => period_start,
                             :period_end => period_end)
-          (1..5).each { Factory(:license, :invoice => invoice) }
+          (1..5).each { FactoryGirl.create(:license, :invoice => invoice) }
           invoice.pend!
           invoice
         end
@@ -82,12 +82,12 @@ describe InvoicesController do
 
     context "when involving partner" do
       before do
-        @user = Factory(:user)
+        @user = FactoryGirl.create(:user)
         login_as @user
 
-        @partner = Factory(:partner)
+        @partner = FactoryGirl.create(:partner)
         @environments = 3.times.collect do
-          Factory(:partner_environment_association, :partner => @partner).
+          FactoryGirl.create(:partner_environment_association, :partner => @partner).
             environment
         end
         @partner.add_collaborator(@user)
@@ -218,7 +218,7 @@ describe InvoicesController do
 
       context "when paying an invoice" do
         before do
-          login_as Factory(:user, :role => Role[:admin])
+          login_as FactoryGirl.create(:user, :role => Role[:admin])
 
           @invoice = @environments[0].plan.create_invoice
           @invoice.update_attribute(:state, "pending")

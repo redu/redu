@@ -3,7 +3,7 @@ require 'spec_helper'
 require 'authlogic/test_case'
 
 describe OauthClientsController do
-  let(:user) { Factory(:user) }
+  let(:user) { FactoryGirl.create(:user) }
   let(:client_application) do
     user.client_applications.create({ :name => "ReduClient",
                                       :url => "http://www.redu.com.br" })

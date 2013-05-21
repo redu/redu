@@ -3,7 +3,7 @@ require 'api_spec_helper'
 
 describe "Spaces API" do
   before do
-    @environment = Factory(:complete_environment)
+    @environment = FactoryGirl.create(:complete_environment)
     @course = @environment.courses.first
     @space = @course.spaces.first
     @application, @current_user, @token = generate_token(@course.owner)
@@ -45,7 +45,7 @@ describe "Spaces API" do
 
   context "get /course/:id/spaces" do
     before do
-      @teacher = Factory(:user)
+      @teacher = FactoryGirl.create(:user)
       @course.join(@teacher, Role[:teacher])
     end
 
@@ -66,7 +66,7 @@ describe "Spaces API" do
 
   context "get /users/:id/spaces" do
     before do
-      @new_env = Factory(:complete_environment)
+      @new_env = FactoryGirl.create(:complete_environment)
       @new_course = @new_env.courses.first
       @new_space = @new_course.spaces.first
       @user = @space.users.first

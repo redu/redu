@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe VisResultObserver do
-  subject { Factory(:result) }
+  subject { FactoryGirl.create(:result) }
 
   describe "before update" do
     before do

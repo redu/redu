@@ -2,7 +2,7 @@
 require 'api_spec_helper'
 
 describe "File API" do
-  let(:environment) { Factory(:complete_environment) }
+  let(:environment) { FactoryGirl.create(:complete_environment) }
   let(:course) { environment.courses.first }
   let(:space) { course.spaces.first }
   let(:folder) { space.root_folder }
@@ -10,7 +10,7 @@ describe "File API" do
   let(:params) { { :oauth_token => token, :format => 'json' } }
 
   context "when GET /api/files/:id" do
-    subject { Factory(:myfile, :folder => folder,
+    subject { FactoryGirl.create(:myfile, :folder => folder,
                       :user => course.owner) }
 
     before do
@@ -43,7 +43,7 @@ describe "File API" do
   end
 
   context "when GET /api/folders/:folder_id/files" do
-    let!(:files) { 3.times.map { Factory(:myfile, :folder => folder, :user => course.owner) } }
+    let!(:files) { 3.times.map { FactoryGirl.create(:myfile, :folder => folder, :user => course.owner) } }
 
     before do
       get "api/folders/#{folder.id}/files", params
@@ -104,7 +104,7 @@ describe "File API" do
   end
 
   context "DELETE /api/files/:id" do
-    subject { Factory(:myfile, :folder => folder, :user => course.owner) }
+    subject { FactoryGirl.create(:myfile, :folder => folder, :user => course.owner) }
 
     it "should return 204" do
       delete "/api/files/#{subject.id}", params

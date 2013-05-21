@@ -7,10 +7,10 @@ FactoryGirl.define do
 
   factory :complete_exercise, :parent => :exercise do
     maximum_grade 10
-    after_create do |e|
-      Factory(:complete_question, :exercise => e)
-      Factory(:complete_question, :exercise => e)
-      Factory(:complete_question, :exercise => e)
+    after(:create) do |e, _|
+      FactoryGirl.create(:complete_question, :exercise => e)
+      FactoryGirl.create(:complete_question, :exercise => e)
+      FactoryGirl.create(:complete_question, :exercise => e)
     end
   end
 end

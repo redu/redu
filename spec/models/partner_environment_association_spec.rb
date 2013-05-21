@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe PartnerEnvironmentAssociation do
-  subject { Factory(:partner_environment_association) }
+  subject { FactoryGirl.create(:partner_environment_association) }
 
   it { should belong_to :partner }
   it { should belong_to(:environment).dependent(:destroy) }
@@ -18,7 +18,7 @@ describe PartnerEnvironmentAssociation do
 
   context "when destroyed billable" do
     before do
-      @plan = Factory(:active_package_plan, :billable => subject.environment)
+      @plan = FactoryGirl.create(:active_package_plan, :billable => subject.environment)
       subject.environment.audit_billable_and_destroy
     end
 

@@ -223,10 +223,10 @@ GEM
     execjs (1.4.0)
       multi_json (~> 1.0)
     ey_config (0.0.6)
-    factory_girl (2.6.4)
-      activesupport (>= 2.3.9)
-    factory_girl_rails (1.7.0)
-      factory_girl (~> 2.6.0)
+    factory_girl (4.2.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.2.1)
+      factory_girl (~> 4.2.0)
       railties (>= 3.0.0)
     faraday (0.8.7)
       multipart-post (~> 1.1)
@@ -494,7 +494,7 @@ DEPENDENCIES
   eventmachine
   exceptional
   ey_config
-  factory_girl_rails (~> 1.7.0)
+  factory_girl_rails
   humanizer
   invitable!
   jasmine

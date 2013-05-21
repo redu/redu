@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe LicensedPlan do
-  subject { Factory(:active_licensed_plan) }
+  subject { FactoryGirl.create(:active_licensed_plan) }
 
   it "should have a infinity members limit" do
     infinity = 1.0/0
@@ -92,14 +92,14 @@ describe LicensedPlan do
 
   context "when setting up for migration" do
     before do
-      subject.invoice = Factory(:licensed_invoice)
+      subject.invoice = FactoryGirl.create(:licensed_invoice)
     end
 
     context "when billable is a course" do
       before do
-        subject.invoice = Factory(:licensed_invoice)
-        subject.billable = Factory(:course)
-        (1..20).each { subject.billable.join Factory(:user)}
+        subject.invoice = FactoryGirl.create(:licensed_invoice)
+        subject.billable = FactoryGirl.create(:course)
+        (1..20).each { subject.billable.join FactoryGirl.create(:user)}
       end
 
       it "should create licenses for all course users" do
@@ -124,11 +124,11 @@ describe LicensedPlan do
 
     context "when billable is a environment" do
       before do
-        subject.billable = Factory(:environment)
-        (1..3).each { Factory(:course, :environment => subject.billable) }
+        subject.billable = FactoryGirl.create(:environment)
+        (1..3).each { FactoryGirl.create(:course, :environment => subject.billable) }
         subject.billable.reload
         subject.billable.courses.each do |c|
-          (1..20).each { c.join Factory(:user)}
+          (1..20).each { c.join FactoryGirl.create(:user)}
         end
       end
 

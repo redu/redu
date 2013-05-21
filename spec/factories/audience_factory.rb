@@ -1,4 +1,6 @@
 # -*- encoding : utf-8 -*-
-Factory.define :audience do |a|
-  a.sequence(:name) {|n| "Audience-#{n}"}
+FactoryGirl.define do
+  factory :audience do |a|
+    a.sequence(:name) {|n| "Audience-#{n}"}
+  end
 end

@@ -3,7 +3,7 @@ require 'api_spec_helper'
 
 describe Api::CoursesController do
   subject do
-    environment = Factory(:complete_environment)
+    environment = FactoryGirl.create(:complete_environment)
     environment.courses.first
   end
   before do

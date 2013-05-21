@@ -7,7 +7,7 @@ describe Plan do
     UserNotifier.perform_deliveries = true
   end
 
-  subject { Factory(:plan) }
+  subject { FactoryGirl.create(:plan) }
 
   it { should belong_to :billable }
   it { should belong_to :user }
@@ -69,7 +69,7 @@ describe Plan do
 
     it "creates a plan from preset" do
       plan = Plan.from_preset(:professor_standard)
-      plan.user = Factory(:user)
+      plan.user = FactoryGirl.create(:user)
       plan.should be_valid
     end
   end
@@ -77,7 +77,7 @@ describe Plan do
   context "when pending payment" do
     before do
       invoices = 3.times.inject([]) do |res,i|
-        invoice = Factory(:package_invoice, :plan => subject)
+        invoice = FactoryGirl.create(:package_invoice, :plan => subject)
         invoice.pend!
         res << invoice
       end
@@ -96,7 +96,7 @@ describe Plan do
   context "when overdue payment" do
     before  do
       invoices = 3.times.inject([]) do |acc,i|
-        invoice = Factory(:package_invoice, :plan => subject)
+        invoice = FactoryGirl.create(:package_invoice, :plan => subject)
         invoice.overdue!
         acc << invoice
       end
@@ -113,7 +113,7 @@ describe Plan do
     end
 
     it "should initialize a valid plan" do
-      @plan.user = Factory(:user)
+      @plan.user = FactoryGirl.create(:user)
       @plan.should be_valid
     end
 
@@ -159,8 +159,8 @@ describe Plan do
     it { should respond_to(:invoice=) }
 
     it "should retrieve the current invoice" do
-      invoice1 = Factory(:invoice, :plan => subject, :current => false)
-      invoice2 = Factory(:invoice, :plan => subject)
+      invoice1 = FactoryGirl.create(:invoice, :plan => subject, :current => false)
+      invoice2 = FactoryGirl.create(:invoice, :plan => subject)
       subject.reload
 
       subject.invoice.should == invoice2
@@ -168,16 +168,16 @@ describe Plan do
 
     it "should store the invoice as current" do
       invoices = (1..2).collect do
-        Factory(:invoice, :plan => subject, :current => false)
+        FactoryGirl.create(:invoice, :plan => subject, :current => false)
       end
       subject.reload
 
-      invoice1 = Factory.build(:invoice)
+      invoice1 = FactoryGirl.build(:invoice)
       subject.invoice = invoice1
       subject.save
       subject.invoice.should == invoice1
 
-      invoice2 = Factory(:invoice)
+      invoice2 = FactoryGirl.create(:invoice)
       subject.invoice = invoice2
       subject.invoice.should == invoice2
 
@@ -186,11 +186,11 @@ describe Plan do
 
     it "should return nil as current" do
       invoices = (1..2).collect do
-        Factory(:invoice, :plan => subject, :current => false)
+        FactoryGirl.create(:invoice, :plan => subject, :current => false)
       end
       subject.reload
 
-      invoice1 = Factory(:invoice)
+      invoice1 = FactoryGirl.create(:invoice)
       subject.invoice = invoice1
 
       subject.invoice = nil
@@ -199,16 +199,16 @@ describe Plan do
   end
 
   context "when migrating to another plan" do
-    let(:subject) { Factory(:plan, :price => 15.90) }
+    let(:subject) { FactoryGirl.create(:plan, :price => 15.90) }
 
     context "when upgrading" do
       before do
-        subject.invoice = Factory(:package_invoice,
+        subject.invoice = FactoryGirl.create(:package_invoice,
                                   :period_start => Date.today - 15.days,
                                   :period_end => Date.today + 15.days)
         @billable = subject.billable
 
-        @new_plan = Factory.build(:active_package_plan, :price => 25.40)
+        @new_plan = FactoryGirl.build(:active_package_plan, :price => 25.40)
       end
 
       it "should change to migrated" do
@@ -252,12 +252,12 @@ describe Plan do
       context "when last invoice is open" do
         before do
           subject.update_attribute(:price, 2)
-          subject.invoice = Factory(:licensed_invoice, :state => "open",
+          subject.invoice = FactoryGirl.create(:licensed_invoice, :state => "open",
                                     :amount => nil,
                                     :previous_balance => -4,
                                     :period_start => Date.today - 15.days,
                                     :period_end => Date.today + 15.days)
-          (1..10).each { Factory(:license, :invoice => subject.invoice,
+          (1..10).each { FactoryGirl.create(:license, :invoice => subject.invoice,
                                  :period_start => Date.today - 15.days,
                                  :period_end => nil)}
         end
@@ -278,7 +278,7 @@ describe Plan do
       context "when last invoice is pending" do
         before do
           # Amount R$ 7.69
-          subject.invoice = Factory(:package_invoice, :state => "pending",
+          subject.invoice = FactoryGirl.create(:package_invoice, :state => "pending",
                                     :amount => 15.9, :previous_balance => 2,
                                     :period_start => Date.today - 15.days,
                                     :period_end => Date.today + 15.days)
@@ -301,7 +301,7 @@ describe Plan do
       context "when last invoice is paid" do
         before do
           # Amount R$ 4.84
-          subject.invoice = Factory(:package_invoice, :state => "paid",
+          subject.invoice = FactoryGirl.create(:package_invoice, :state => "paid",
                                     :amount => 10, :previous_balance => 3,
                                     :period_start => Date.today - 15.days,
                                     :period_end => Date.today + 15.days)
@@ -343,13 +343,13 @@ describe Plan do
     context "when downgrading" do
       before do
         # Invoice com 31 dias
-        subject.invoice = Factory(:package_invoice,
+        subject.invoice = FactoryGirl.create(:package_invoice,
                                   :amount => 40.55,
                                   :period_start => Date.today - 15.days,
                                   :period_end => Date.today + 15.days)
         @billable = subject.billable
 
-        @new_plan = Factory.build(:active_package_plan, :price => 10.70)
+        @new_plan = FactoryGirl.build(:active_package_plan, :price => 10.70)
       end
 
       it "should have an invoice with amount value of 5.52" do
@@ -361,11 +361,11 @@ describe Plan do
         before do
           subject.update_attribute(:price, 2)
           # Amount R$ 10.00
-          subject.invoice = Factory(:licensed_invoice, :state => "open",
+          subject.invoice = FactoryGirl.create(:licensed_invoice, :state => "open",
                                     :previous_balance => -100,
                                     :period_start => Date.today - 15.days,
                                     :period_end => Date.today + 15.days)
-          (1..10).each { Factory(:license, :role => Role[:member],
+          (1..10).each { FactoryGirl.create(:license, :role => Role[:member],
                                  :invoice => subject.invoice,
                                  :period_start => Date.today - 15.days,
                                  :period_end => nil)}
@@ -382,7 +382,7 @@ describe Plan do
       context "when last invoice is pending and total is less than zero" do
         before do
           # Amount R$ 21.77
-          subject.invoice = Factory(:package_invoice, :state => "pending",
+          subject.invoice = FactoryGirl.create(:package_invoice, :state => "pending",
                                     :amount => 45,
                                     :previous_balance => -200,
                                     :period_start => Date.today - 15.days,
@@ -400,7 +400,7 @@ describe Plan do
       context "when last invoice is paid and total is less than zero" do
         before do
           # Amount 21.77
-          subject.invoice = Factory(:package_invoice, :state => "paid",
+          subject.invoice = FactoryGirl.create(:package_invoice, :state => "paid",
                                     :amount => 45,
                                     :previous_balance => -200,
                                     :period_start => Date.today - 15.days,
@@ -418,17 +418,17 @@ describe Plan do
 
     context "when new plan is licensed" do
       before do
-        subject.invoice = Factory(:package_invoice,
+        subject.invoice = FactoryGirl.create(:package_invoice,
                                   :period_start => Date.today - 15.days,
                                   :period_end => Date.today + 15.days)
-        subject.billable = Factory(:environment, :owner => subject.user)
+        subject.billable = FactoryGirl.create(:environment, :owner => subject.user)
         (1..5).each do
-          c = Factory(:course, :environment => subject.billable)
-          (1..10).each { c.join Factory(:user) }
+          c = FactoryGirl.create(:course, :environment => subject.billable)
+          (1..10).each { c.join FactoryGirl.create(:user) }
         end
         subject.billable.reload
 
-        @new_plan = Factory.build(:active_licensed_plan, :price => 4.5,
+        @new_plan = FactoryGirl.build(:active_licensed_plan, :price => 4.5,
                                  :billable => nil)
         subject.migrate_to @new_plan
       end
@@ -454,31 +454,31 @@ describe Plan do
     context "when current plan is licensed" do
       before do
         subject.update_attribute(:price, 2.5)
-        subject.invoice = Factory(:licensed_invoice,
+        subject.invoice = FactoryGirl.create(:licensed_invoice,
                                   :state => "pending",
                                   :amount => 25.00,
                                   :period_start => Date.today - 45.days,
                                   :period_end => Date.today - 16.days)
         subject.invoice.licenses << 10.times.collect do
-          Factory.build(:license, :invoice => nil,
+          FactoryGirl.build(:license, :invoice => nil,
                         :period_start => Date.today - 45.days,
                         :period_end => nil)
         end
 
         # Amount 6.25
-        subject.invoice = Factory(:licensed_invoice,
+        subject.invoice = FactoryGirl.create(:licensed_invoice,
                                   :state => "open",
                                   :period_start => Date.today - 15.days,
                                   :period_end => Date.today + 15.days)
         subject.invoice.licenses << 5.times.collect do
-          Factory.build(:license, :invoice => nil,
+          FactoryGirl.build(:license, :invoice => nil,
                         :period_start => Date.today - 15.days,
                         :period_end => nil)
         end
 
-        subject.billable = Factory(:environment, :owner => subject.user)
+        subject.billable = FactoryGirl.create(:environment, :owner => subject.user)
 
-        @new_plan = Factory.build(:active_licensed_plan, :price => 4.5,
+        @new_plan = FactoryGirl.build(:active_licensed_plan, :price => 4.5,
                                  :billable => nil)
         subject.migrate_to @new_plan
       end
@@ -506,11 +506,11 @@ describe Plan do
 
   context "when a plan blocks all billable access" do
     context "when billable is a course" do
-      subject { Factory(:plan, :billable => Factory(:complete_course)) }
+      subject { FactoryGirl.create(:plan, :billable => FactoryGirl.create(:complete_course)) }
 
       before do
         @course = subject.billable
-        (1..3).each { @course.join! Factory(:user) }
+        (1..3).each { @course.join! FactoryGirl.create(:user) }
 
         subject.block_all_access!
       end
@@ -540,15 +540,15 @@ describe Plan do
     end
 
     context "when billable is a environment" do
-      subject { Factory(:plan, :billable => Factory(:complete_environment)) }
+      subject { FactoryGirl.create(:plan, :billable => FactoryGirl.create(:complete_environment)) }
 
       before do
         @environment = subject.billable
-        @environment.courses << Factory(:complete_course,
+        @environment.courses << FactoryGirl.create(:complete_course,
                                         :environment => @environment)
         @course1, @course2 = @environment.courses
-        (1..3).each { @course1.join! Factory(:user) }
-        (1..2).each { @course2.join! Factory(:user) }
+        (1..3).each { @course1.join! FactoryGirl.create(:user) }
+        (1..2).each { @course2.join! FactoryGirl.create(:user) }
 
         subject.block_all_access!
       end

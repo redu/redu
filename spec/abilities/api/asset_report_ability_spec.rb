@@ -3,11 +3,11 @@ require 'api_spec_helper'
 require 'cancan/matchers'
 
 describe "AssetReport Ability" do
-  let(:user) { Factory(:user) }
+  let(:user) { FactoryGirl.create(:user) }
   subject { Api::Ability.new(user) }
 
   context "when not related to the asset report" do
-    let(:asset_report) { Factory(:asset_report) }
+    let(:asset_report) { FactoryGirl.create(:asset_report) }
 
     it "should not be able to manage" do
       subject.should_not be_able_to :manage, asset_report
@@ -19,8 +19,8 @@ describe "AssetReport Ability" do
   end
 
   context "when related to the asset report" do
-    let(:enrollment) { Factory(:enrollment, :user => user) }
-    let(:asset_report) { Factory(:asset_report, :enrollment => enrollment) }
+    let(:enrollment) { FactoryGirl.create(:enrollment, :user => user) }
+    let(:asset_report) { FactoryGirl.create(:asset_report, :enrollment => enrollment) }
 
     it "should be able to manage" do
       subject.should be_able_to :manage, asset_report

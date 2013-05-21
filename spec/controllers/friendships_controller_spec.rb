@@ -5,7 +5,7 @@ require 'authlogic/test_case'
 describe FriendshipsController do
   before do
     User.maintain_sessions = false
-    users = (1..4).collect { Factory(:user) }
+    users = (1..4).collect { FactoryGirl.create(:user) }
     users[0].be_friends_with(users[1])
     users[0].be_friends_with(users[2])
     users[0].be_friends_with(users[3])
@@ -27,7 +27,7 @@ describe FriendshipsController do
 
   describe "POST 'create'" do
     before do
-      @new_user = Factory(:user)
+      @new_user = FactoryGirl.create(:user)
     end
 
     it "creates a friendship, returning HTML" do
@@ -60,7 +60,7 @@ describe FriendshipsController do
 
   describe "POST 'destroy'" do
     before do
-      @new_user = Factory(:user)
+      @new_user = FactoryGirl.create(:user)
       @user.be_friends_with(@new_user)
       @new_user.be_friends_with(@user)
       @friendship = @user.friendship_for @new_user

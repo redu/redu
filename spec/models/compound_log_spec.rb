@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe CompoundLog do
-  subject { Factory(:compound_log) }
+  subject { FactoryGirl.create(:compound_log) }
 
   it { should have_many :logs }
   it { CompoundLog.should respond_to(:current_compostable).with(2).arguments }
@@ -13,7 +13,7 @@ describe CompoundLog do
 
   context "when deleting compound log" do
     before do
-      @log = Factory(:log)
+      @log = FactoryGirl.create(:log)
       subject.logs << @log
       @log.compound = true
     end
@@ -62,8 +62,8 @@ describe CompoundLog do
   describe :current_compostable do
     context "when people are getting friends" do
       before do
-        @robert = Factory(:user, :login => 'robert_baratheon')
-        @ned = Factory(:user, :login=> 'eddard_stark')
+        @robert = FactoryGirl.create(:user, :login => 'robert_baratheon')
+        @ned = FactoryGirl.create(:user, :login=> 'eddard_stark')
       end
 
       context "and there aren't compound logs" do
@@ -82,7 +82,7 @@ describe CompoundLog do
 
       context "and a compound log already exists" do
         before do
-          @cercei = Factory(:user, :login => 'cercei_lannister')
+          @cercei = FactoryGirl.create(:user, :login => 'cercei_lannister')
 
           ActiveRecord::Observer.with_observers(:friendship_observer,
                                                 :log_observer,
@@ -126,8 +126,8 @@ describe CompoundLog do
 
         context "and it has the minimum number of logs (3) to being visible" do
           before do
-            @tyrion = Factory(:user, :login => 'tyrion_lannister')
-            @loras = Factory(:user, :login => 'loras_tyrel')
+            @tyrion = FactoryGirl.create(:user, :login => 'tyrion_lannister')
+            @loras = FactoryGirl.create(:user, :login => 'loras_tyrel')
 
             ActiveRecord::Observer.with_observers(:friendship_observer,
                                                   :log_observer,
@@ -169,8 +169,8 @@ describe CompoundLog do
 
     context "when people are enrolling to courses" do
       before do
-        @course = Factory(:course, :name => "Game of Thrones")
-        @pycelle = Factory(:user, :login => 'meistre_pycelle')
+        @course = FactoryGirl.create(:course, :name => "Game of Thrones")
+        @pycelle = FactoryGirl.create(:user, :login => 'meistre_pycelle')
       end
 
       context "and there aren't compound logs" do
@@ -209,7 +209,7 @@ describe CompoundLog do
         end
 
         it "should include new log into existing compound log" do
-          jaime = Factory(:user, :login => "jaime_lannister")
+          jaime = FactoryGirl.create(:user, :login => "jaime_lannister")
           ActiveRecord::Observer.with_observers(:user_course_association_observer,
                                                 :log_observer,
                                                 :status_observer) do
@@ -233,7 +233,7 @@ describe CompoundLog do
           end
 
           it "should create a new compound log for statusable" do
-            varys = Factory(:user, :login => 'spider_varys')
+            varys = FactoryGirl.create(:user, :login => 'spider_varys')
             ActiveRecord::Observer.with_observers(:user_course_association_observer,
                                                   :log_observer,
                                                   :status_observer) do
@@ -247,8 +247,8 @@ describe CompoundLog do
 
         context "and it has the minimum number of logs (3) to being visible" do
           before do
-            @be_one_dothraki = Factory(:course, :name => "Dothraki Lifestyle")
-            @users = 3.times.collect { Factory(:user) }
+            @be_one_dothraki = FactoryGirl.create(:course, :name => "Dothraki Lifestyle")
+            @users = 3.times.collect { FactoryGirl.create(:user) }
             ActiveRecord::Observer.with_observers(:user_course_association_observer,
                                                   :log_observer,
                                                   :status_observer) do

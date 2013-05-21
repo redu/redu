@@ -4,11 +4,11 @@ require 'authlogic/test_case'
 
 describe SubjectsController do
   before do
-    @user = Factory(:user)
-    environment = Factory(:environment, :owner => @user)
-    @course = Factory(:course, :environment => environment)
-    @space = Factory(:space, :owner => @user, :course => @course)
-    @subject_owner = Factory(:user)
+    @user = FactoryGirl.create(:user)
+    environment = FactoryGirl.create(:environment, :owner => @user)
+    @course = FactoryGirl.create(:course, :environment => environment)
+    @space = FactoryGirl.create(:space, :owner => @user, :course => @course)
+    @subject_owner = FactoryGirl.create(:user)
     @course.join(@subject_owner)
     login_as @user
   end
@@ -16,7 +16,7 @@ describe SubjectsController do
   context "GET 'new'" do
     context "when course have a plan" do
       before do
-        Factory(:active_package_plan, :billable => @course)
+        FactoryGirl.create(:active_package_plan, :billable => @course)
         @course.create_quota
         get :new, :locale => "pt-BR", :space_id => @space.id
       end
@@ -57,7 +57,7 @@ describe SubjectsController do
       before do
         @course.plans = []
         @course.quota = nil
-        Factory(:active_package_plan, :billable => @course.environment)
+        FactoryGirl.create(:active_package_plan, :billable => @course.environment)
         @course.environment.create_quota
         get :new, :locale => "pt-BR", :space_id => @space.id
       end
@@ -124,7 +124,7 @@ describe SubjectsController do
 
   context "GET 'edit'" do
     before do
-      @subject = Factory(:subject, :owner => @subject_owner,
+      @subject = FactoryGirl.create(:subject, :owner => @subject_owner,
                          :finalized => true, :space => @space)
     end
 
@@ -136,9 +136,9 @@ describe SubjectsController do
 
   context "PUT 'update'" do
     before do
-      @subject = Factory(:subject, :owner => @subject_owner,
+      @subject = FactoryGirl.create(:subject, :owner => @subject_owner,
                          :finalized => true, :space => @space)
-      lecture = Factory(:lecture, :owner => @user, :subject => @subject)
+      lecture = FactoryGirl.create(:lecture, :owner => @user, :subject => @subject)
     end
 
     context "when successful" do
@@ -179,9 +179,9 @@ describe SubjectsController do
 
   context "DELETE 'destroy'" do
     before do
-      @subject = Factory(:subject, :owner => @subject_owner,
+      @subject = FactoryGirl.create(:subject, :owner => @subject_owner,
                          :finalized => true ,:space => @space)
-      lecture = Factory(:lecture, :owner => @user, :subject => @subject)
+      lecture = FactoryGirl.create(:lecture, :owner => @user, :subject => @subject)
     end
 
     it "destroys the subject" do
@@ -200,7 +200,7 @@ describe SubjectsController do
   context "GET show" do
     before do
       @subjects  = (1..40).collect do
-        Factory(:subject, :owner => @subject_owner, :finalized => true,
+        FactoryGirl.create(:subject, :owner => @subject_owner, :finalized => true,
                 :space => @space)
       end
       @subject = @subjects[15]

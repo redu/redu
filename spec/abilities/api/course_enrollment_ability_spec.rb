@@ -5,9 +5,9 @@ require 'cancan/matchers'
 describe "Course enrollment abilities" do
   subject { Api::Ability.new(@user) }
   before do
-    @environment = Factory(:complete_environment)
+    @environment = FactoryGirl.create(:complete_environment)
     @course = @environment.courses.first
-    @user = Factory(:user)
+    @user = FactoryGirl.create(:user)
     @uca = @course.user_course_associations.first
   end
 

@@ -6,7 +6,7 @@ describe SearchController do
   let(:params) { { :q => 'Alex', :locale => 'pt-BR' } }
 
   before do
-    @user = Factory(:user)
+    @user = FactoryGirl.create(:user)
     login_as @user
   end
 

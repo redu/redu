@@ -11,8 +11,8 @@ shared_examples_for "a billable" do
     end
 
     it "should retrieve the current plan" do
-      plan1 = Factory(:plan, :billable => subject, :current => false)
-      plan2 = Factory(:plan, :billable => subject)
+      plan1 = FactoryGirl.create(:plan, :billable => subject, :current => false)
+      plan2 = FactoryGirl.create(:plan, :billable => subject)
       subject.reload
 
       subject.plan.should == plan2
@@ -20,16 +20,16 @@ shared_examples_for "a billable" do
 
     it "should store the plan as current" do
       plans = (1..2).collect do
-        Factory(:plan, :billable => subject, :current => false)
+        FactoryGirl.create(:plan, :billable => subject, :current => false)
       end
       subject.reload
 
-      plan1 = Factory.build(:plan)
+      plan1 = FactoryGirl.build(:plan)
       subject.plan = plan1
       subject.save
       subject.plan.should == plan1
 
-      plan2 = Factory(:plan)
+      plan2 = FactoryGirl.create(:plan)
       subject.plan = plan2
       subject.plan.should == plan2
 
@@ -38,11 +38,11 @@ shared_examples_for "a billable" do
 
     it "should return nil as current" do
       plans = (1..2).collect do
-        Factory(:plan, :billable => subject, :current => false)
+        FactoryGirl.create(:plan, :billable => subject, :current => false)
       end
       subject.reload
 
-      plan1 = Factory(:plan)
+      plan1 = FactoryGirl.create(:plan)
       subject.plan = plan1
 
       subject.plan = nil
@@ -51,7 +51,7 @@ shared_examples_for "a billable" do
   end
 
   it "should stores itself ond plan and self destroy" do
-    Factory(:plan, :billable => subject)
+    FactoryGirl.create(:plan, :billable => subject)
     subject.should_receive(:async_destroy)
     subject.audit_billable_and_destroy
     subject.plan.billable_audit.should_not be_nil

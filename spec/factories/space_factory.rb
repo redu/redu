@@ -5,12 +5,12 @@ FactoryGirl.define do
     s.description "Lorem ipsum dolor sit amet, consectetur magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation"
 
     s.association :owner, :factory => :user
-    s.course { |space| Factory(:course, :owner => space.owner) }
+    s.course { |space| FactoryGirl.create(:course, :owner => space.owner) }
   end
 
   factory :complete_space, :parent => :space do
-    after_create do |s|
-      s.subjects << Factory(:complete_subject, :owner => s.owner, :space => s)
+    after(:create) do |s,_|
+      s.subjects << FactoryGirl.create(:complete_subject, :owner => s.owner, :space => s)
     end
   end
 end

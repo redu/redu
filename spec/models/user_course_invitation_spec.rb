@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe UserCourseInvitation do
-  subject { Factory(:user_course_invitation) }
+  subject { FactoryGirl.create(:user_course_invitation) }
 
   it { should belong_to :course }
   it { should belong_to :user }
@@ -16,7 +16,7 @@ describe UserCourseInvitation do
 
   context "callbacks"  do
     it "generates token before validation on create" do
-      i = Factory(:user_course_invitation, :token => nil)
+      i = FactoryGirl.create(:user_course_invitation, :token => nil)
       i.token.should_not be_nil
     end
   end
@@ -31,13 +31,13 @@ describe UserCourseInvitation do
 
   context do
     before do
-      @invites = (1..5).collect { Factory(:user_course_invitation) }
+      @invites = (1..5).collect { FactoryGirl.create(:user_course_invitation) }
       @invites.each {|i| i.invite! }
     end
 
     it "retrieves invitations with state 'invited'" do
       @invites[0..2].each do |i|
-        i.user = Factory(:user)
+        i.user = FactoryGirl.create(:user)
         i.accept!
       end
       UserCourseInvitation.invited.should == @invites[3..4]
@@ -45,7 +45,7 @@ describe UserCourseInvitation do
 
     it "retrieves invitations with given email" do
       email = "same@example.com"
-      same_email_invites = (1..3).collect { Factory(:user_course_invitation,
+      same_email_invites = (1..3).collect { FactoryGirl.create(:user_course_invitation,
                                                      :email => email) }
 
       UserCourseInvitation.with_email(email).should == same_email_invites
@@ -91,7 +91,7 @@ describe UserCourseInvitation do
       end
 
       it "creates a user course association with state 'invited'" do
-        subject.user = Factory(:user)
+        subject.user = FactoryGirl.create(:user)
         expect {
           subject.accept!
         }.to change(UserCourseAssociation, :count).by(1)
@@ -102,7 +102,7 @@ describe UserCourseInvitation do
       end
 
       it "should destroy itself" do
-        subject.user = Factory(:user)
+        subject.user = FactoryGirl.create(:user)
         expect {
           subject.accept!
         }.to change(UserCourseInvitation, :count).by(-1)

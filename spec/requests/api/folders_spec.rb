@@ -2,14 +2,14 @@
 require 'api_spec_helper'
 
 describe "Folders API" do
-  let(:environment) { Factory(:complete_environment) }
+  let(:environment) { FactoryGirl.create(:complete_environment) }
   let(:course) { environment.courses.first }
   let(:space) { course.spaces.first }
   let(:token) { _, _, token = generate_token(course.owner); token }
   let(:params) { { :oauth_token => token, :format => 'json' } }
 
   context "when is the space's root folder" do
-    subject { Factory(:root_folder, :space => space) }
+    subject { FactoryGirl.create(:root_folder, :space => space) }
 
     context "when GET /api/folders/:id" do
       before do
@@ -29,7 +29,7 @@ describe "Folders API" do
   end
 
   context "when is a common folder" do
-    subject { Factory(:complete_folder, :space => space) }
+    subject { FactoryGirl.create(:complete_folder, :space => space) }
 
     context "when GET /api/folders/:id" do
       before do
@@ -59,7 +59,7 @@ describe "Folders API" do
 
     context "when GET /api/folders/:folder_id/folders" do
       let!(:folders) do
-        (1..4).collect { Factory(:folder, :parent => subject) }
+        (1..4).collect { FactoryGirl.create(:folder, :parent => subject) }
       end
 
       before do
@@ -82,7 +82,7 @@ describe "Folders API" do
 
     context "when GET /api/spaces/:space_id/folders" do
       let!(:folders) do
-        (1..4).collect { Factory(:folder, :space => space) }
+        (1..4).collect { FactoryGirl.create(:folder, :space => space) }
       end
 
       before do
@@ -144,7 +144,7 @@ describe "Folders API" do
 
   context "when PUT /api/folders/:id" do
     subject do
-      Factory(:complete_folder, :space => space, :parent => space.root_folder)
+      FactoryGirl.create(:complete_folder, :space => space, :parent => space.root_folder)
     end
 
     it "should return code 204" do
@@ -171,7 +171,7 @@ describe "Folders API" do
 
   context "DELETE /api/files/:id" do
     subject do
-      Factory(:complete_folder, :space => space, :parent => space.root_folder)
+      FactoryGirl.create(:complete_folder, :space => space, :parent => space.root_folder)
     end
 
     it "should return 204" do

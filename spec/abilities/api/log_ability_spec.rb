@@ -3,11 +3,11 @@ require 'api_spec_helper'
 require 'cancan/matchers'
 
 describe "Log ability" do
-  let(:user) { Factory(:user) }
+  let(:user) { FactoryGirl.create(:user) }
   subject { Api::Ability.new(user) }
 
   context "when owner" do
-    let(:log) { Factory(:log, :user => user) }
+    let(:log) { FactoryGirl.create(:log, :user => user) }
     it "should be able to read" do
       subject.should be_able_to :read, log
     end
@@ -18,8 +18,8 @@ describe "Log ability" do
   end
 
   context "when statusable is user" do
-    let(:strange) { Factory(:user) }
-    let(:log) { Factory(:log, :statusable => strange) }
+    let(:strange) { FactoryGirl.create(:user) }
+    let(:log) { FactoryGirl.create(:log, :statusable => strange) }
 
     it "should be able to read if friend" do
       user.be_friends_with(strange)
@@ -36,29 +36,29 @@ describe "Log ability" do
   context "when statusable is course" do
     it_should_behave_like "log on hierarchy" do # spec/support/api/log_on_hiera...
       let(:course) do
-        Factory(:complete_environment).courses.first
+        FactoryGirl.create(:complete_environment).courses.first
       end
-      let(:log) { Factory(:log, :statusable => course) }
+      let(:log) { FactoryGirl.create(:log, :statusable => course) }
     end
   end
 
   context "when statusable is space" do
     it_should_behave_like "log on hierarchy" do # spec/support/api/log_on_hiera...
-      let(:course) { Factory(:complete_environment).courses.first }
+      let(:course) { FactoryGirl.create(:complete_environment).courses.first }
       let(:space) { course.spaces.first }
-      let(:log) { Factory(:log, :statusable => space) }
+      let(:log) { FactoryGirl.create(:log, :statusable => space) }
     end
   end
 
   context "when statusable is lecture" do
     it_should_behave_like "log on hierarchy" do # spec/support/api/log_on_hiera...
-      let(:course) { Factory(:complete_environment).courses.first }
+      let(:course) { FactoryGirl.create(:complete_environment).courses.first }
       let(:space) { course.spaces.first }
       let(:lecture) do
-        s = Factory(:subject, :owner => space.owner, :space => space)
-        Factory(:lecture, :owner => s.owner, :subject => s)
+        s = FactoryGirl.create(:subject, :owner => space.owner, :space => space)
+        FactoryGirl.create(:lecture, :owner => s.owner, :subject => s)
       end
-      let(:log) { Factory(:log, :statusable => lecture) }
+      let(:log) { FactoryGirl.create(:log, :statusable => lecture) }
     end
   end
 end

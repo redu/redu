@@ -3,10 +3,10 @@ require 'spec_helper'
 
 module EnrollmentService
   describe EnrollmentEntityService do
-    let(:spaces) { 2.times.map { Factory(:space) } }
+    let(:spaces) { 2.times.map { FactoryGirl.create(:space) } }
     let(:subjects) do
       spaces.map do |space|
-        2.times.map { Factory(:subject, :space => space) }
+        2.times.map { FactoryGirl.create(:subject, :space => space) }
       end.flatten
     end
 
@@ -28,7 +28,7 @@ module EnrollmentService
       end
 
       it "should accept an optional list of [[user, role]]" do
-        users = 2.times.collect { Factory(:user) }
+        users = 2.times.collect { FactoryGirl.create(:user) }
         user_role_pairs = users.collect { |u| [u, Role[:member]] }
 
         records = []
@@ -71,7 +71,7 @@ module EnrollmentService
     context "#destroy" do
       let!(:enrollments) do
         subjects.map do |sub|
-          3.times.map { Factory(:enrollment, :subject => sub) }
+          3.times.map { FactoryGirl.create(:enrollment, :subject => sub) }
         end.flatten
       end
       let(:users) { enrollments.map(&:user) }
@@ -98,7 +98,7 @@ module EnrollmentService
 
     context "#update_grade" do
       let(:enrollment) do
-        Factory(:enrollment, :subject => nil)
+        FactoryGirl.create(:enrollment, :subject => nil)
       end
       let!(:asset_reports) do
         FactoryGirl.create_list(:asset_report, 3, :enrollment => enrollment)

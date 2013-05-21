@@ -2,10 +2,10 @@
 require 'api_spec_helper'
 
 describe "Documents API" do
-  let(:environment) { Factory(:complete_environment) }
+  let(:environment) { FactoryGirl.create(:complete_environment) }
   let(:course) { environment.courses.first }
   let(:space) { course.spaces.first }
-  let(:subj) { Factory(:subject, :owner => course.owner,
+  let(:subj) { FactoryGirl.create(:subject, :owner => course.owner,
                           :space => space, :finalized => true) }
   let(:token) { _, _, token = generate_token(course.owner); token }
   let(:params) { { :oauth_token => token, :format => 'json' } }
@@ -14,7 +14,7 @@ describe "Documents API" do
     context "with a document as attachment" do
       subject do
         mock_scribd_api
-        Factory(:lecture, :lectureable => Factory(:document),
+        FactoryGirl.create(:lecture, :lectureable => FactoryGirl.create(:document),
                 :subject => subj, :owner => subj.owner)
       end
 
@@ -37,7 +37,7 @@ describe "Documents API" do
 
     context "with an image as attachment" do
       subject do
-        Factory(:lecture, :lectureable => Factory(:document_with_image),
+        FactoryGirl.create(:lecture, :lectureable => FactoryGirl.create(:document_with_image),
                 :subject => subj, :owner => subj.owner)
       end
 

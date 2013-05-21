@@ -6,7 +6,7 @@ describe "Chat" do
     @application, @current_user, @token = generate_token(@user)
   end
   context "when GET /chats/:id" do
-    let(:chat) { Factory(:chat, :user => @current_user) }
+    let(:chat) { FactoryGirl.create(:chat, :user => @current_user) }
     it "should return status 200" do
       get "/api/chats/#{chat.id}", :oauth_token => @token, :format => 'json'
       response.code.should == "200"
@@ -36,7 +36,7 @@ describe "Chat" do
     end
 
     it "should return 403 when access denied" do
-      new_chat = Factory(:chat)
+      new_chat = FactoryGirl.create(:chat)
       get "/api/chats/#{new_chat.id}", :oauth_token => @token, :format => 'json'
       response.code.should == "401"
     end
@@ -44,7 +44,7 @@ describe "Chat" do
 
   context "when GET /users/:id/chats" do
     before do
-      Factory(:chat, :user => @current_user)
+      FactoryGirl.create(:chat, :user => @current_user)
     end
 
     it "should return code 200" do
@@ -62,7 +62,7 @@ describe "Chat" do
     end
 
     it "should return a list of chats where the user is the sender" do
-      2.times { Factory(:chat, :contact => @current_user) }
+      2.times { FactoryGirl.create(:chat, :contact => @current_user) }
 
       get "/api/users/#{@current_user.id}/chats", :oauth_token => @token,
         :format => 'json'

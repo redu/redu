@@ -3,9 +3,9 @@ require 'spec_helper'
 require 'authlogic/test_case'
 
 describe FoldersController do
-  let(:user) { Factory(:user) }
-  let(:space) { Factory(:space, :owner => user) }
-  let(:folder) { Factory(:folder, :space => space) }
+  let(:user) { FactoryGirl.create(:user) }
+  let(:space) { FactoryGirl.create(:space, :owner => user) }
+  let(:folder) { FactoryGirl.create(:folder, :space => space) }
   let(:base_params) do
     { :locale => 'pt-BR', :format => :js, :space_id => space.id }
   end
@@ -89,7 +89,7 @@ describe FoldersController do
       end
 
       before do
-        space.course.plan = Factory.build(:plan, :billable => nil)
+        space.course.plan = FactoryGirl.build(:plan, :billable => nil)
         Folder.any_instance.stub(:can_upload_file?) { true }
       end
 
@@ -110,7 +110,7 @@ describe FoldersController do
     end
 
     context "DELETE destroy_file" do
-      let(:myfile) { Factory(:myfile) }
+      let(:myfile) { FactoryGirl.create(:myfile) }
       let(:params) do
         base_params.merge(:space_id => space.to_param,
                           :id => folder.to_param, :file_id => myfile.to_param)

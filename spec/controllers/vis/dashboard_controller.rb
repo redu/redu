@@ -4,11 +4,11 @@ require 'authlogic/test_case'
 
 describe Vis::DashboardController do
   before do
-    @environment = Factory(:environment)
-    @course = Factory(:course, :environment => @environment,
+    @environment = FactoryGirl.create(:environment)
+    @course = FactoryGirl.create(:course, :environment => @environment,
                       :owner => @environment.owner)
     3.times.collect do
-      u = Factory(:user)
+      u = FactoryGirl.create(:user)
       @course.join(u, Role[:teacher])
     end
 
@@ -18,7 +18,7 @@ describe Vis::DashboardController do
   context "authorizing GET teacher_participation_interaction" do
     before do
       @environment.courses.reload
-      @space = Factory(:space, :owner => @environment.owner,
+      @space = FactoryGirl.create(:space, :owner => @environment.owner,
                        :course => @environment.courses.first)
       @course.spaces.reload
       @params = { :course_id => @course.id,
@@ -55,7 +55,7 @@ describe Vis::DashboardController do
     context "interacting" do
       before do
         @environment.courses.reload
-        @space = Factory(:space, :owner => @environment.owner,
+        @space = FactoryGirl.create(:space, :owner => @environment.owner,
                          :course => @environment.courses.first)
         @course.spaces.reload
 

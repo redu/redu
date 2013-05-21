@@ -6,8 +6,8 @@ describe "Environment abilities" do
   context "when not a member" do
     subject { Api::Ability.new(@user) }
     before do
-      @environment = Factory(:complete_environment)
-      @user = Factory(:user)
+      @environment = FactoryGirl.create(:complete_environment)
+      @user = FactoryGirl.create(:user)
       @application, @current_user, @token = generate_token(@user)
     end
 
@@ -23,8 +23,8 @@ describe "Environment abilities" do
   context "when member" do
     subject { Api::Ability.new(@user) }
     before do
-      @environment = Factory(:complete_environment)
-      @user = Factory(:user)
+      @environment = FactoryGirl.create(:complete_environment)
+      @user = FactoryGirl.create(:user)
       @environment.courses.first.join(@user)
       @application, @current_user, @token = generate_token(@user)
     end
@@ -41,8 +41,8 @@ describe "Environment abilities" do
   context "when teacher" do
     subject { Api::Ability.new(@user) }
     before do
-      @environment = Factory(:complete_environment)
-      @user = Factory(:user)
+      @environment = FactoryGirl.create(:complete_environment)
+      @user = FactoryGirl.create(:user)
       @environment.courses.first.join(@user, Role[:teacher])
       @application, @current_user, @token = generate_token(@user)
     end
@@ -59,8 +59,8 @@ describe "Environment abilities" do
   context "when teacher" do
     subject { Api::Ability.new(@user) }
     before do
-      @environment = Factory(:complete_environment)
-      @user = Factory(:user)
+      @environment = FactoryGirl.create(:complete_environment)
+      @user = FactoryGirl.create(:user)
       @environment.courses.first.join(@user, Role[:tutor])
       @application, @current_user, @token = generate_token(@user)
     end
@@ -77,7 +77,7 @@ describe "Environment abilities" do
   context "when admin" do
     subject { Api::Ability.new(@user) }
     before do
-      @environment = Factory(:complete_environment)
+      @environment = FactoryGirl.create(:complete_environment)
       @user = @environment.owner
       @application, @current_user, @token = generate_token(@user)
     end

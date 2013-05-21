@@ -3,19 +3,19 @@ require 'spec_helper'
 
 describe Lecture do
   before do
-    environment = Factory(:environment)
-    course = Factory(:course, :owner => environment.owner,
+    environment = FactoryGirl.create(:environment)
+    course = FactoryGirl.create(:course, :owner => environment.owner,
                      :environment => environment)
-    @space = Factory(:space, :owner => environment.owner,
+    @space = FactoryGirl.create(:space, :owner => environment.owner,
                      :course => course)
-    @user = Factory(:user)
+    @user = FactoryGirl.create(:user)
     course.join(@user)
-    @sub = Factory(:subject, :owner => @user, :space => @space,
+    @sub = FactoryGirl.create(:subject, :owner => @user, :space => @space,
                    :finalized => true)
     @sub.enroll
   end
 
-  subject { Factory(:lecture, :subject => @sub,
+  subject { FactoryGirl.create(:lecture, :subject => @sub,
                     :owner => @sub.owner) }
 
   it { should belong_to :owner }
@@ -51,9 +51,9 @@ describe Lecture do
   context "finders" do
     it "retrieves lectures that are seminars" do
       pending "Need seminar Factory" do
-        seminars = (1..2).collect { Factory(:lecture,:subject => @sub,
-                                            :lectureable => Factory(:seminar)) }
-        Factory(:lecture, :subject => @sub)
+        seminars = (1..2).collect { FactoryGirl.create(:lecture,:subject => @sub,
+                                            :lectureable => FactoryGirl.create(:seminar)) }
+        FactoryGirl.create(:lecture, :subject => @sub)
 
         Lecture.seminars.should == seminars
       end
@@ -61,54 +61,54 @@ describe Lecture do
 
     #FIXME não fazer teste com chamada a APIs externas
     xit "retrieves lectures that are pages" do
-        page = Factory(:lecture, :subject => @sub)
+        page = FactoryGirl.create(:lecture, :subject => @sub)
         documents = (1..2).collect {
-          Factory(:lecture, :subject => @sub,
-                  :lectureable => Factory(:document)) }
+          FactoryGirl.create(:lecture, :subject => @sub,
+                  :lectureable => FactoryGirl.create(:document)) }
         Lecture.pages.should == [page]
     end
 
     xit "retrieves lectures that are documents" do
-        page = Factory(:lecture, :subject => @sub)
+        page = FactoryGirl.create(:lecture, :subject => @sub)
         documents = (1..2).collect {
-          Factory(:lecture, :subject => @sub,
-                  :lectureable => Factory(:document)) }
+          FactoryGirl.create(:lecture, :subject => @sub,
+                  :lectureable => FactoryGirl.create(:document)) }
 
         Lecture.documents.should == documents
     end
 
     it "retrieves recent lectures (created until 1 week ago)" do
-      lectures = (1..3).collect { |i| Factory(:lecture,
+      lectures = (1..3).collect { |i| FactoryGirl.create(:lecture,
                                               :created_at => (i*3).day.ago) }
       Lecture.recent.should == lectures[0..1]
     end
 
     it "retrieves all editables exercises" do
-      exercise1 = Factory(:exercise)
-      lecture1 = Factory(:lecture, :subject => @sub,
+      exercise1 = FactoryGirl.create(:exercise)
+      lecture1 = FactoryGirl.create(:lecture, :subject => @sub,
                           :name => "Exercicio 1", :lectureable => exercise1)
-      exercise2 = Factory(:exercise)
-      lecture2 = Factory(:lecture, :subject => @sub,
+      exercise2 = FactoryGirl.create(:exercise)
+      lecture2 = FactoryGirl.create(:lecture, :subject => @sub,
                           :name => "Exercicio 2", :lectureable => exercise2)
-      result = Factory(:result, :exercise => exercise1)
+      result = FactoryGirl.create(:result, :exercise => exercise1)
 
       Lecture.exercises_editables.should == [lecture2]
     end
 
     it "retrieve lectures in the specified subjects" do
       subject.reload
-      lecture2 = Factory(:lecture, :subject => @sub, :owner => @user)
-      sub2 = Factory(:subject)
-      lecture3 = Factory(:lecture, :subject => sub2, :owner => @user)
+      lecture2 = FactoryGirl.create(:lecture, :subject => @sub, :owner => @user)
+      sub2 = FactoryGirl.create(:subject)
+      lecture3 = FactoryGirl.create(:lecture, :subject => sub2, :owner => @user)
 
       @user.lectures.by_subjects(@sub.id).to_set.should eq([subject, lecture2].to_set)
     end
 
     it "retrieves lectures by day" do
-      subj = Factory(:subject)
-      lec1 = Factory(:lecture, :subject => subj,
+      subj = FactoryGirl.create(:subject)
+      lec1 = FactoryGirl.create(:lecture, :subject => subj,
                      :created_at => "2012-02-14".to_date)
-      lec2 = Factory(:lecture, :subject => subj,
+      lec2 = FactoryGirl.create(:lecture, :subject => subj,
                      :created_at => "2012-02-16".to_date)
       lectures = Lecture.by_subjects(subj.id)
 
@@ -119,14 +119,14 @@ describe Lecture do
   context "being attended" do
     context "when done" do
       it "mark the current lecture as done" do
-        subject_owner = Factory(:user)
-        space = Factory(:space)
+        subject_owner = FactoryGirl.create(:user)
+        space = FactoryGirl.create(:space)
         space.course.join subject_owner
-        subject1 = Factory(:subject, :owner => subject_owner,
+        subject1 = FactoryGirl.create(:subject, :owner => subject_owner,
                            :space => space)
-        lectures = (1..3).collect { Factory(:lecture, :subject => subject1) }
+        lectures = (1..3).collect { FactoryGirl.create(:lecture, :subject => subject1) }
 
-        user = Factory(:user)
+        user = FactoryGirl.create(:user)
         subject1.enroll user
 
         lectures[0].mark_as_done_for!(user, true)
@@ -137,14 +137,14 @@ describe Lecture do
 
     context "when undone" do
       it "mark the current lecture as undone" do
-        subject_owner = Factory(:user)
-        space = Factory(:space)
+        subject_owner = FactoryGirl.create(:user)
+        space = FactoryGirl.create(:space)
         space.course.join subject_owner
-        subject1 = Factory(:subject, :owner => subject_owner,
+        subject1 = FactoryGirl.create(:subject, :owner => subject_owner,
                            :space => space)
-        lectures = (1..3).collect { Factory(:lecture, :subject => subject1) }
+        lectures = (1..3).collect { FactoryGirl.create(:lecture, :subject => subject1) }
 
-        user = Factory(:user)
+        user = FactoryGirl.create(:user)
         subject1.enroll user
 
         lectures[0].asset_reports.of_user(user).last.done = true
@@ -157,17 +157,17 @@ describe Lecture do
 
   context "when generating a clone of itself" do
     before do
-      subject_owner = Factory(:user)
-      space = Factory(:space)
+      subject_owner = FactoryGirl.create(:user)
+      space = FactoryGirl.create(:space)
       space.course.join subject_owner
-      @new_subject = Factory(:subject, :owner => subject_owner,
+      @new_subject = FactoryGirl.create(:subject, :owner => subject_owner,
                          :space => space)
     end
 
     context "and itself is a page" do
       let(:subject) do
-        Factory(:lecture, :subject => @sub, :owner => @sub.owner,
-                :lectureable => Factory(:page))
+        FactoryGirl.create(:lecture, :subject => @sub, :owner => @sub.owner,
+                :lectureable => FactoryGirl.create(:page))
       end
 
       before do
@@ -189,8 +189,8 @@ describe Lecture do
 
     context "and itself is a external seminar" do
       let(:subject) do
-        Factory(:lecture, :subject => @sub, :owner => @sub.owner,
-                :lectureable => Factory(:seminar_youtube))
+        FactoryGirl.create(:lecture, :subject => @sub, :owner => @sub.owner,
+                :lectureable => FactoryGirl.create(:seminar_youtube))
       end
 
       before do
@@ -219,8 +219,8 @@ describe Lecture do
 
     context "and itself is a exercise" do
       let(:subject) do
-        Factory(:lecture, :subject => @sub, :owner => @sub.owner,
-                :lectureable => Factory(:complete_exercise))
+        FactoryGirl.create(:lecture, :subject => @sub, :owner => @sub.owner,
+                :lectureable => FactoryGirl.create(:complete_exercise))
       end
 
       before do
@@ -268,7 +268,7 @@ describe Lecture do
 
 
   context "#refresh_students_profile" do
-    subject { Factory(:lecture, :subject => @sub, :owner => @sub.owner) }
+    subject { FactoryGirl.create(:lecture, :subject => @sub, :owner => @sub.owner) }
     let(:enrollments) do
       FactoryGirl.create_list(:enrollment, 2, :subject => @sub)
     end
@@ -300,14 +300,14 @@ describe Lecture do
   end
 
   it "verifies if a lecture was done by a user" do
-    subject_owner = Factory(:user)
-    space = Factory(:space)
+    subject_owner = FactoryGirl.create(:user)
+    space = FactoryGirl.create(:space)
     space.course.join subject_owner
-    subject1 = Factory(:subject, :owner => subject_owner,
+    subject1 = FactoryGirl.create(:subject, :owner => subject_owner,
                        :space => space)
-    lectures = (1..3).collect { Factory(:lecture, :subject => subject1) }
+    lectures = (1..3).collect { FactoryGirl.create(:lecture, :subject => subject1) }
 
-    user = Factory(:user)
+    user = FactoryGirl.create(:user)
     subject1.enroll user
 
     lectures[0].done?(user).should be_false
@@ -323,8 +323,8 @@ describe Lecture do
 
   context "nested lectureable" do
     before do
-      @owner = Factory(:user)
-      @sub = Factory(:subject)
+      @owner = FactoryGirl.create(:user)
+      @sub = FactoryGirl.create(:subject)
     end
     context "when valid" do
       before do
@@ -462,7 +462,7 @@ describe Lecture do
       end
 
       it "should not be finalized if it's a new record" do
-        subject = Factory.build(:lecture)
+        subject = FactoryGirl.build(:lecture)
         subject.should_not be_finalized
       end
 

@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe EventEducation do
-  subject { Factory(:event_education) }
+  subject { FactoryGirl.create(:event_education) }
 
   it { should validate_presence_of :name }
   it { should validate_presence_of :role }
@@ -14,13 +14,13 @@ describe EventEducation do
     context "validates if role is one of the permitted" do
       %w(participant speaker organizer).each do |r|
         it "validate true if role is #{r}" do
-          event = Factory.build(:event_education, :role => r)
+          event = FactoryGirl.build(:event_education, :role => r)
           event.should be_valid
         end
       end
 
       it "validate false if role is not an allowed value" do
-          event = Factory.build(:event_education, :role => "not_allowed")
+          event = FactoryGirl.build(:event_education, :role => "not_allowed")
           event.should_not be_valid
           event.errors[:role].should_not be_empty
       end

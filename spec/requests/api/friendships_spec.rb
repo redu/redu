@@ -2,8 +2,8 @@
 require 'api_spec_helper'
 
 describe Api::FriendshipsController do
-  let(:user) { Factory(:user) }
-  let(:friend) { Factory(:user) }
+  let(:user) { FactoryGirl.create(:user) }
+  let(:friend) { FactoryGirl.create(:user) }
   let(:token) { _, _, token = generate_token(user); token }
   let(:params) {{ :oauth_token => token, :format => 'json' }}
 
@@ -56,7 +56,7 @@ describe Api::FriendshipsController do
       friend.be_friends_with(user)
       user.be_friends_with(friend)
 
-      friend_2 = Factory(:user)
+      friend_2 = FactoryGirl.create(:user)
       friend_2.be_friends_with(user)
     end
 
@@ -84,7 +84,7 @@ describe Api::FriendshipsController do
     it_should_behave_like "pagination" do
       let(:entities) do
         4.times.collect do
-          contact = Factory(:user)
+          contact = FactoryGirl.create(:user)
           contact.be_friends_with(user)
           user.be_friends_with(contact)
         end

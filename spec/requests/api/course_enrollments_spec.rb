@@ -2,7 +2,7 @@
 require "api_spec_helper"
 
 describe Api::CourseEnrollmentsController do
-  let(:environment) { Factory(:complete_environment) }
+  let(:environment) { FactoryGirl.create(:complete_environment) }
   let(:course) { environment.courses.first }
   let(:user) { environment.owner }
   let(:token) { _, _, token = generate_token(environment.owner); token }
@@ -12,7 +12,7 @@ describe Api::CourseEnrollmentsController do
 
   context "the document returned" do
     before do
-      @enrollment = Factory(:user_course_invitation, :course => course)
+      @enrollment = FactoryGirl.create(:user_course_invitation, :course => course)
       @enrollment.invite!
     end
 
@@ -69,7 +69,7 @@ describe Api::CourseEnrollmentsController do
 
   context "when enrolling the user which IS registered" do
     before do
-      @user = Factory(:user)
+      @user = FactoryGirl.create(:user)
       @enrollment = { :email => @user.email }
       post "/api/courses/#{course.id}/enrollments",
         params.merge({:enrollment => @enrollment})
@@ -103,7 +103,7 @@ describe Api::CourseEnrollmentsController do
   context "when listing enrollments" do
     before do
       @enrollment1 = { :email => 'abc@def.gh' }
-      @user = Factory(:user)
+      @user = FactoryGirl.create(:user)
       @enrollment2 = { :email => @user.email }
       post "/api/courses/#{course.id}/enrollments",
         params.merge({:enrollment => @enrollment1})
@@ -127,7 +127,7 @@ describe Api::CourseEnrollmentsController do
   context "when listing user's enrollments" do
     before do
       # Associando @current_user a um novo curso
-      @environment2 = Factory(:complete_environment)
+      @environment2 = FactoryGirl.create(:complete_environment)
       @environment2.courses.first.join(user)
     end
 
@@ -164,7 +164,7 @@ describe Api::CourseEnrollmentsController do
 
   context "when DELETE enrollment" do
     before do
-      @external_user = Factory(:user)
+      @external_user = FactoryGirl.create(:user)
       course.join(@external_user)
 
       get "/api/enrollments/#{@external_user.get_association_with(course).id}",

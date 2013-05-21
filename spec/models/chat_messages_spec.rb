@@ -8,18 +8,18 @@ describe ChatMessage do
   it { should have_many(:chats).through(:chat_message_associations) }
 
   before do
-    @user = Factory(:user)
-    @contact1 = Factory(:user)
-    @contact2 = Factory(:user)
+    @user = FactoryGirl.create(:user)
+    @contact1 = FactoryGirl.create(:user)
+    @contact2 = FactoryGirl.create(:user)
 
 
-    @message1 = Factory(:chat_message, :user => @user, :contact => @contact1, :created_at => 2.days.ago)
-    @message2 = Factory(:chat_message, :user => @user, :contact => @contact1)
-    @message3 = Factory(:chat_message, :user => @contact1, :contact => @user)
-    @message4 = Factory(:chat_message, :user => @user, :contact => @contact1)
-    @message5 = Factory(:chat_message, :user => @user, :contact => @contact2)
-    @message6 = Factory(:chat_message, :user => @contact1, :contact => @contact2)
-    @message7 = Factory(:chat_message, :user => @contact2, :contact => @user)
+    @message1 = FactoryGirl.create(:chat_message, :user => @user, :contact => @contact1, :created_at => 2.days.ago)
+    @message2 = FactoryGirl.create(:chat_message, :user => @user, :contact => @contact1)
+    @message3 = FactoryGirl.create(:chat_message, :user => @contact1, :contact => @user)
+    @message4 = FactoryGirl.create(:chat_message, :user => @user, :contact => @contact1)
+    @message5 = FactoryGirl.create(:chat_message, :user => @user, :contact => @contact2)
+    @message6 = FactoryGirl.create(:chat_message, :user => @contact1, :contact => @contact2)
+    @message7 = FactoryGirl.create(:chat_message, :user => @contact2, :contact => @user)
   end
 
   it "should retrieve a log of a user" do
@@ -57,13 +57,13 @@ describe ChatMessage do
   end
 
   it "should retrieve the 3 LAST log messages" do
-    @more_recent_message1 = Factory(:chat_message, :user => @user,
+    @more_recent_message1 = FactoryGirl.create(:chat_message, :user => @user,
                                     :contact => @contact1,
                                     :created_at => @message2.created_at + 1.minutes)
-    @more_recent_message2 = Factory(:chat_message, :user => @user,
+    @more_recent_message2 = FactoryGirl.create(:chat_message, :user => @user,
                                     :contact => @contact1,
                                     :created_at => @message2.created_at + 2.minutes)
-    @more_recent_message3 = Factory(:chat_message, :user => @user,
+    @more_recent_message3 = FactoryGirl.create(:chat_message, :user => @user,
                                     :contact => @contact1,
                                     :created_at => @message2.created_at + 3.minutes)
     list_of_users = ChatMessage.log(@user, @contact1, 1.day.ago, 3)

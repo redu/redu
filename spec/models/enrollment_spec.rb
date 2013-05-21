@@ -4,13 +4,13 @@ require 'spec_helper'
 describe Enrollment do
 
   before do
-    subject_owner = Factory(:user)
-    @space = Factory(:space)
+    subject_owner = FactoryGirl.create(:user)
+    @space = FactoryGirl.create(:space)
     @space.course.join subject_owner
-    @sub = Factory(:subject, :owner => subject_owner,
+    @sub = FactoryGirl.create(:subject, :owner => subject_owner,
                        :space => @space)
   end
-  subject { Factory(:enrollment, :subject => @sub) }
+  subject { FactoryGirl.create(:enrollment, :subject => @sub) }
 
   it { should belong_to :user }
   it { should belong_to :subject }
@@ -26,8 +26,8 @@ describe Enrollment do
 
   context "callbacks" do
     it "creates all assets reports after create" do
-      lectures = (1..3).collect { Factory(:lecture, :subject => @sub) }
-      new_user = Factory(:user)
+      lectures = (1..3).collect { FactoryGirl.create(:lecture, :subject => @sub) }
+      new_user = FactoryGirl.create(:user)
       @sub.space.course.join(new_user)
       expect {
         @sub.enroll(new_user)

@@ -5,7 +5,7 @@ describe SpaceObserver do
   context "Logger" do
     it "logs creation" do
       ActiveRecord::Observer.with_observers(:space_observer) do
-        space = Factory.build(:space)
+        space = FactoryGirl.build(:space)
         expect {
           space.save
         }.to change(space.logs, :count).by(1)
@@ -21,16 +21,16 @@ describe SpaceObserver do
     end
 
     it "notifies creation" do
-      @course = Factory(:course)
+      @course = FactoryGirl.create(:course)
       users = 3.times.inject([]) do |acc,i|
-        u = Factory(:user)
+        u = FactoryGirl.create(:user)
         @course.join(u)
         acc << u
       end
 
       ActiveRecord::Observer.with_observers(:space_observer) do
         expect {
-          Factory(:space, :owner => @course.owner, :course => @course)
+          FactoryGirl.create(:space, :owner => @course.owner, :course => @course)
         }.to change(UserNotifier.deliveries, :count).by(4)
       end
     end

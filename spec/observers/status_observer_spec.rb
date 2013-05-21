@@ -12,9 +12,9 @@ describe StatusObserver do
     end
 
     context "when statusable is user" do
-      let(:activity) { Factory(:activity, :user => owner, :statusable => statusable) }
-      let(:statusable) { Factory(:user) }
-      let(:owner) { Factory(:user) }
+      let(:activity) { FactoryGirl.create(:activity, :user => owner, :statusable => statusable) }
+      let(:statusable) { FactoryGirl.create(:user) }
+      let(:owner) { FactoryGirl.create(:user) }
 
 
       def create_friendship(user1, user2)
@@ -67,26 +67,26 @@ describe StatusObserver do
 
     context "when statusable is Lecture" do
       before do
-        @environment = Factory(:environment)
-        @course = Factory(:course, :owner => @environment.owner,
+        @environment = FactoryGirl.create(:environment)
+        @course = FactoryGirl.create(:course, :owner => @environment.owner,
                           :environment => @environment)
-        @poster = Factory(:user)
+        @poster = FactoryGirl.create(:user)
         @course.join(@poster)
-        @space = Factory(:space, :owner => @environment.owner,
+        @space = FactoryGirl.create(:space, :owner => @environment.owner,
                          :course => @course)
-        @subject = Factory(:subject, :owner => @poster, :space => @space)
-        @lecture = Factory(:lecture, :subject => @subject,
+        @subject = FactoryGirl.create(:subject, :owner => @poster, :space => @space)
+        @lecture = FactoryGirl.create(:lecture, :subject => @subject,
                            :owner => @environment.owner)
 
         @poster_contacts = 5.times.inject([]) do |acc, i|
-          u = Factory(:user)
+          u = FactoryGirl.create(:user)
           u.be_friends_with(@poster)
           @poster.be_friends_with(u)
           acc << u
         end
 
         @students = 3.times.inject([]) do |acc, u|
-          user = Factory(:user)
+          user = FactoryGirl.create(:user)
           @course.join(user)
           acc << user
         end
@@ -97,7 +97,7 @@ describe StatusObserver do
 
         before do
           ActiveRecord::Observer.with_observers(:status_observer) do
-            @activity = Factory(:activity, :statusable => @lecture,
+            @activity = FactoryGirl.create(:activity, :statusable => @lecture,
                                 :user => @poster)
           end
         end
@@ -114,29 +114,29 @@ describe StatusObserver do
 
     context "when statusable is Space" do
       before do
-        @environment = Factory(:environment)
-        @course = Factory(:course, :owner => @environment.owner,
+        @environment = FactoryGirl.create(:environment)
+        @course = FactoryGirl.create(:course, :owner => @environment.owner,
                           :environment => @environment)
-        @poster = Factory(:user)
+        @poster = FactoryGirl.create(:user)
         @course.join(@poster)
-        @space = Factory(:space, :owner => @environment.owner,
+        @space = FactoryGirl.create(:space, :owner => @environment.owner,
                          :course => @course)
 
         @poster_contacts = 5.times.inject([]) do |acc, i|
-          u = Factory(:user)
+          u = FactoryGirl.create(:user)
           u.be_friends_with(@poster)
           @poster.be_friends_with(u)
           acc << u
         end
 
         @students = 3.times.inject([]) do |acc, u|
-          user = Factory(:user)
+          user = FactoryGirl.create(:user)
           @course.join(user)
           acc << user
         end
 
         ActiveRecord::Observer.with_observers(:status_observer) do
-          @activity = Factory(:activity, :statusable => @space,
+          @activity = FactoryGirl.create(:activity, :statusable => @space,
                               :user => @poster)
         end
       end
@@ -154,9 +154,9 @@ describe StatusObserver do
     context "when statusable is UserCourseAssociation" do
       before do
         ActiveRecord::Observer.with_observers(:status_observer) do
-          @uca = Factory(:user_course_association)
+          @uca = FactoryGirl.create(:user_course_association)
           @uca.approve!
-          3.times { @uca.course.join(Factory(:user)) }
+          3.times { @uca.course.join(FactoryGirl.create(:user)) }
           @log = Log.setup(@uca)
         end
       end
