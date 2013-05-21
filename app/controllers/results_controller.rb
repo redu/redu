@@ -42,8 +42,8 @@ class ResultsController < BaseController
 
   def index
     authorize! :manage, @lecture
-    @results = @exercise.results.finalized.includes(:user, :choices,
-                                                    :exercise => :questions)
+    @results = Result.finalized.where(:exercise_id => @exercise).
+      includes(:user, :choices, :exercise => :questions)
 
     respond_to do |format|
       format.html { render 'results/admin/index' }

@@ -64,16 +64,22 @@ class Result < ActiveRecord::Base
   end
 
   def misses
-    choices.count - choices.correct.count
+    total_choices - hits
   end
 
   def hits
-    choices.correct.count
+    @hits ||= choices.select(&:correct).length
   end
 
   def blanks
     return 0 unless exercise
-    exercise.questions.count - choices.count
+    exercise.questions.length - total_choices
+  end
+
+  private
+
+  def total_choices
+    @total_choices ||= choices.length
   end
 
 end
