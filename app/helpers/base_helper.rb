@@ -370,6 +370,7 @@ module AsyncJSHelper
         END
       else
         result << <<-END
+          $(document).ready(function(){
             LazyLoad.#{opts[:type].to_s}(#{package.to_json}
         END
       end
@@ -380,11 +381,9 @@ module AsyncJSHelper
         result << ", function(){ #{capture(&block)}});"
       end
 
-      if opts[:clear]
-        result << <<-END
+      result << <<-END
             });
-        END
-      end
+      END
 
       result.html_safe
     end.html_safe
