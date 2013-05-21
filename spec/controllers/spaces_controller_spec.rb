@@ -6,16 +6,16 @@ require 'vis_application_additions'
 describe SpacesController do
   context "GET students_endless" do
     before do
-      environment = FactoryGirl.create(:environment, :published => true)
-      course = FactoryGirl.create(:course, :environment => environment)
-      space = FactoryGirl.create(:space, :course => course)
+      environment = FactoryGirl.create(:environment, published: true)
+      course = FactoryGirl.create(:course, environment: environment)
+      space = FactoryGirl.create(:space, course: course)
       user = FactoryGirl.create(:user)
       space.course.join user
 
       login_as user
 
-      get :students_endless, :id => space.id, :locale => "pt-BR",
-        :format => "js"
+      get :students_endless, id: space.id, locale: "pt-BR",
+        format: "js"
     end
 
     it "should be_success" do
@@ -32,23 +32,23 @@ describe SpacesController do
 
     before do
       environment = FactoryGirl.create(:environment)
-      course = FactoryGirl.create(:course, :environment => environment)
-      @space = FactoryGirl.create(:space, :course => course)
+      course = FactoryGirl.create(:course, environment: environment)
+      @space = FactoryGirl.create(:space, course: course)
       user = FactoryGirl.create(:user)
       @space.course.join user, Role[:environment_admin]
 
       login_as user
 
-      application = ClientApplication.create(:name => "ReduVis",
-                                             :url => "http://www.redu.com.br",
-                                             :walledgarden => true)
+      application = ClientApplication.create(name: "ReduVis",
+                                             url: "http://www.redu.com.br",
+                                             walledgarden: true)
       create_token_for(user)
     end
 
     context "subject participation" do
       before do
-        get :subject_participation_report, :id => @space.id,
-          :locale => "pt-BR"
+        get :subject_participation_report, id: @space.id,
+          locale: "pt-BR"
       end
 
       it "when successful" do
@@ -63,8 +63,8 @@ describe SpacesController do
 
     context "lecture participation" do
       before do
-        get :lecture_participation_report, :id => @space.id,
-          :locale => "pt-BR"
+        get :lecture_participation_report, id: @space.id,
+          locale: "pt-BR"
       end
 
       it "when successful" do
@@ -79,8 +79,8 @@ describe SpacesController do
 
     context "students participation" do
       before do
-        get :students_participation_report, :id => @space.id,
-          :locale => "pt-BR"
+        get :students_participation_report, id: @space.id,
+          locale: "pt-BR"
       end
 
       it "when successful" do

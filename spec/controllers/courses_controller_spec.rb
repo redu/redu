@@ -8,18 +8,18 @@ describe CoursesController do
       @user = FactoryGirl.create(:user)
       login_as @user
 
-      @environment = FactoryGirl.create(:environment, :owner => @user)
+      @environment = FactoryGirl.create(:environment, owner: @user)
 
-      @params = {:course =>
-        { :name => "Redu", :workload => "12",
-          :tag_list => "minhas, tags, exemplo, aula, teste",
-          :path => "redu", :subscription_type => "1",
-          :description => "Lorem ipsum dolor sit amet, consectetur" \
+      @params = {course:
+        { name: "Redu", workload: "12",
+          tag_list: "minhas, tags, exemplo, aula, teste",
+          path: "redu", subscription_type: "1",
+          description: "Lorem ipsum dolor sit amet, consectetur" \
           "magna aliqua. Ut enim ad minim veniam, quis nostrud" \
           "ullamco laboris nisi ut aliquip ex ea commodo."},
-          :plan => "free",
-          :environment_id => @environment.path,
-          :locale => "pt-BR" }
+          plan: "free",
+          environment_id: @environment.path,
+          locale: "pt-BR" }
     end
 
     context "POST create" do
@@ -68,10 +68,10 @@ describe CoursesController do
         @user = FactoryGirl.create(:user)
         login_as @user
 
-        @environment = FactoryGirl.create(:environment, :owner => @user)
+        @environment = FactoryGirl.create(:environment, owner: @user)
 
-        @course = FactoryGirl.create(:course,:environment => @environment, :owner => @user,
-                          :subscription_type => 2)
+        @course = FactoryGirl.create(:course,environment: @environment, owner: @user,
+                          subscription_type: 2)
         @users = 5.times.inject([]) { |res, i| res << FactoryGirl.create(:user) }
         @course.join(@users[0])
         @course.join(@users[1])
@@ -79,9 +79,9 @@ describe CoursesController do
         @course.join(@users[3])
         @course.join(@users[4])
 
-        @params = {:course => { :subscription_type => "1" },
-          :id => @course.path,:environment_id => @course.environment.path,
-          :locale => "pt-BR"}
+        @params = {course: { subscription_type: "1" },
+          id: @course.path,environment_id: @course.environment.path,
+          locale: "pt-BR"}
         post :update, @params
       end
 
@@ -102,17 +102,17 @@ describe CoursesController do
       @user = FactoryGirl.create(:user)
       login_as @user
 
-      @environment = FactoryGirl.create(:environment, :owner => @user)
+      @environment = FactoryGirl.create(:environment, owner: @user)
 
-      @course = FactoryGirl.create(:course,:environment => @environment,
-                        :owner => @user,
-                        :subscription_type => 2)
+      @course = FactoryGirl.create(:course,environment: @environment,
+                        owner: @user,
+                        subscription_type: 2)
 
-      plan = FactoryGirl.create(:plan, :billable => @course,
-                     :user => @course.owner)
+      plan = FactoryGirl.create(:plan, billable: @course,
+                     user: @course.owner)
       @course.create_quota
 
-      @space = FactoryGirl.create(:space, :course => @course, :owner => @user)
+      @space = FactoryGirl.create(:space, course: @course, owner: @user)
       @users = 5.times.inject([]) { |res, i| res << FactoryGirl.create(:user) }
       @course.join(@users[0])
       @course.join(@users[1])
@@ -125,11 +125,11 @@ describe CoursesController do
 
     context "POST - rejecting members" do
       before do
-        @params = { :member => { @users[1].id.to_s => "reject",
+        @params = { member: { @users[1].id.to_s => "reject",
           @users[2].id.to_s => "reject",
           @users[3].id.to_s => "approve"},
-          :id => @course.path, :environment_id => @environment.path,
-          :locale => "pt-BR"}
+          id: @course.path, environment_id: @environment.path,
+          locale: "pt-BR"}
         post :moderate_members_requests, @params
       end
 
@@ -157,10 +157,10 @@ describe CoursesController do
 
     context "POST - accepting member" do
       before do
-        @params = { :member => { @users[1].id.to_s => "approve",
+        @params = { member: { @users[1].id.to_s => "approve",
           @users[2].id.to_s => "approve"},
-          :id => @course.path, :environment_id => @environment.path,
-          :locale => "pt-BR"}
+          id: @course.path, environment_id: @environment.path,
+          locale: "pt-BR"}
         post :moderate_members_requests, @params
       end
 
@@ -189,15 +189,15 @@ describe CoursesController do
       before do
         @course.plans = []
 
-        @plan = FactoryGirl.create(:active_licensed_plan, :billable => @course.environment,
-                       :user => @course.environment.owner)
+        @plan = FactoryGirl.create(:active_licensed_plan, billable: @course.environment,
+                       user: @course.environment.owner)
         @plan.create_invoice
 
 
-        @params = { :member => { @users[1].id.to_s => "approve",
+        @params = { member: { @users[1].id.to_s => "approve",
           @users[2].id.to_s => "approve"},
-          :id => @course.path, :environment_id => @environment.path,
-          :locale => "pt-BR"}
+          id: @course.path, environment_id: @environment.path,
+          locale: "pt-BR"}
       end
 
       it "should approve association" do
@@ -217,23 +217,23 @@ describe CoursesController do
     before do
       @owner = FactoryGirl.create(:user)
 
-      @environment = FactoryGirl.create(:environment, :owner => @owner)
+      @environment = FactoryGirl.create(:environment, owner: @owner)
 
-      @course = FactoryGirl.create(:course,:environment => @environment, :owner => @owner)
-      @spaces = (1..2).collect { FactoryGirl.create(:space, :course => @course,
-                                         :owner => @owner)}
+      @course = FactoryGirl.create(:course,environment: @environment, owner: @owner)
+      @spaces = (1..2).collect { FactoryGirl.create(:space, course: @course,
+                                         owner: @owner)}
       @subjects = []
       @spaces.each do |s|
-        @subjects << FactoryGirl.create(:subject, :space => s, :owner => @owner,
-                             :finalized => true)
+        @subjects << FactoryGirl.create(:subject, space: s, owner: @owner,
+                             finalized: true)
       end
 
       @user = FactoryGirl.create(:user)
       @subjects.each { |sub| sub.enroll @user }
       login_as @user
 
-      @params = { :locale => 'pt-BR', :environment_id => @environment.path,
-        :id => @course.path }
+      @params = { locale: 'pt-BR', environment_id: @environment.path,
+        id: @course.path }
     end
 
     context "and it's the unique course which user has joined" do
@@ -263,7 +263,7 @@ describe CoursesController do
 
     context "and it's not the unique course which user has joined" do
       before do
-        @course2 = FactoryGirl.create(:course, :environment => @environment, :owner => @owner)
+        @course2 = FactoryGirl.create(:course, environment: @environment, owner: @owner)
         @course2.join @user
         @course.join @user
         post :unjoin, @params
@@ -290,19 +290,19 @@ describe CoursesController do
   context "when responding a course invitation" do
     before do
       @owner = FactoryGirl.create(:user)
-      @environment = FactoryGirl.create(:environment, :owner => @owner)
-      @course = FactoryGirl.create(:course,:environment => @environment, :owner => @owner)
-      plan = FactoryGirl.create( :plan, :billable => @course,
-                     :user => @course.owner,
-                     :members_limit => 5)
+      @environment = FactoryGirl.create(:environment, owner: @owner)
+      @course = FactoryGirl.create(:course,environment: @environment, owner: @owner)
+      plan = FactoryGirl.create( :plan, billable: @course,
+                     user: @course.owner,
+                     members_limit: 5)
       @course.create_quota
 
       @invited_user = FactoryGirl.create(:user)
       login_as @invited_user
 
       @course.invite @invited_user
-      @params = { :locale => 'pt-BR', :environment_id => @environment.path,
-        :id => @course.path }
+      @params = { locale: 'pt-BR', environment_id: @environment.path,
+        id: @course.path }
     end
 
     context "and accepting" do
@@ -344,15 +344,15 @@ describe CoursesController do
     before do
       @owner = FactoryGirl.create(:user)
 
-      @environment = FactoryGirl.create(:environment, :owner => @owner)
+      @environment = FactoryGirl.create(:environment, owner: @owner)
 
-      @course = FactoryGirl.create(:course,:environment => @environment, :owner => @owner)
-      @spaces = (1..2).collect { FactoryGirl.create(:space, :course => @course,
-                                         :owner => @owner)}
+      @course = FactoryGirl.create(:course,environment: @environment, owner: @owner)
+      @spaces = (1..2).collect { FactoryGirl.create(:space, course: @course,
+                                         owner: @owner)}
       @subjects = []
       @spaces.each do |s|
-        @subjects << FactoryGirl.create(:subject, :space => s, :owner => @owner,
-                             :finalized => true)
+        @subjects << FactoryGirl.create(:subject, space: s, owner: @owner,
+                             finalized: true)
       end
 
       @users = 3.times.inject([]) { |acc,i| acc << FactoryGirl.create(:user) }
@@ -360,8 +360,8 @@ describe CoursesController do
 
       login_as @owner
 
-      @params = { :locale => 'pt-BR', :environment_id => @environment.path,
-                  :id => @course.path, "users" => @users.collect { |u| u.id } }
+      @params = { locale: 'pt-BR', environment_id: @environment.path,
+                  id: @course.path, "users" => @users.collect { |u| u.id } }
       post :destroy_members, @params
     end
 
@@ -399,14 +399,14 @@ describe CoursesController do
         "email3@example.com"]
 
       @environment = FactoryGirl.create(:environment)
-      @course = FactoryGirl.create(:course, :environment => @environment,
-                        :owner => @environment.owner)
+      @course = FactoryGirl.create(:course, environment: @environment,
+                        owner: @environment.owner)
 
       login_as @course.owner
 
-      @params = { :locale => 'pt-BR', :environment_id => @course.environment.path,
-        :id => @course.path, :users => @users.collect { |u| u.id }.join(","),
-        :emails => @emails.collect { |e| e }.join(",") }
+      @params = { locale: 'pt-BR', environment_id: @course.environment.path,
+        id: @course.path, users: @users.collect { |u| u.id }.join(","),
+        emails: @emails.collect { |e| e }.join(",") }
 
     end
 
@@ -434,26 +434,26 @@ describe CoursesController do
         @user = FactoryGirl.create(:user)
         login_as @user
 
-        @environment = FactoryGirl.create(:environment, :owner => @user)
+        @environment = FactoryGirl.create(:environment, owner: @user)
 
-        @course = FactoryGirl.create(:course,:environment => @environment,
-                          :owner => @user)
+        @course = FactoryGirl.create(:course,environment: @environment,
+                          owner: @user)
 
-        @plan = FactoryGirl.create(:active_licensed_plan, :billable => @environment,
-                       :user => @course.owner)
+        @plan = FactoryGirl.create(:active_licensed_plan, billable: @environment,
+                       user: @course.owner)
         @plan.create_invoice_and_setup
 
         @environment.create_quota
         @environment.reload
 
-        @space = FactoryGirl.create(:space, :course => @course)
-        @subject_space = FactoryGirl.create(:subject, :space => @space,
-                                 :owner => @course.owner,
-                                 :finalized => true)
+        @space = FactoryGirl.create(:space, course: @course)
+        @subject_space = FactoryGirl.create(:subject, space: @space,
+                                 owner: @course.owner,
+                                 finalized: true)
 
-        @params = { :locale => 'pt-BR',
-                    :environment_id => @environment.path,
-                    :id => @course.path }
+        @params = { locale: 'pt-BR',
+                    environment_id: @environment.path,
+                    id: @course.path }
 
         @new_user = FactoryGirl.create(:user)
         login_as @new_user
@@ -484,14 +484,14 @@ describe CoursesController do
       @user = FactoryGirl.create(:user)
       login_as @user
 
-      @environment = FactoryGirl.create(:environment, :owner => @user)
+      @environment = FactoryGirl.create(:environment, owner: @user)
 
-      @course = FactoryGirl.create(:course,:environment => @environment,
-                        :owner => @user)
+      @course = FactoryGirl.create(:course,environment: @environment,
+                        owner: @user)
 
-      plan = FactoryGirl.create( :plan, :billable => @course,
-                     :user => @course.owner,
-                     :members_limit => 5)
+      plan = FactoryGirl.create( :plan, billable: @course,
+                     user: @course.owner,
+                     members_limit: 5)
       @course.create_quota
 
       @users = 4.times.inject([]) { |res, i| res << FactoryGirl.create(:user) }
@@ -503,9 +503,9 @@ describe CoursesController do
 
     context "and course isn't moderated" do
       before do
-        @params = { :locale => 'pt-BR',
-          :environment_id => @environment.path,
-          :id => @course.path }
+        @params = { locale: 'pt-BR',
+          environment_id: @environment.path,
+          id: @course.path }
       end
 
       it "should not authorize more 1 user" do
@@ -523,9 +523,9 @@ describe CoursesController do
         @course.save
 
         @new_user = FactoryGirl.create(:user)
-        @params = { :locale => 'pt-BR',
-          :environment_id => @environment.path,
-          :id => @course.path }
+        @params = { locale: 'pt-BR',
+          environment_id: @environment.path,
+          id: @course.path }
       end
 
       context "POST accept" do
@@ -544,9 +544,9 @@ describe CoursesController do
         it "should not authorize more 1 user" do
           login_as @user
           @course.join(@new_user)
-          @params = { :member => { @new_user.id.to_s => "approve"},
-            :id => @course.path, :environment_id => @environment.path,
-            :locale => "pt-BR"}
+          @params = { member: { @new_user.id.to_s => "approve"},
+            id: @course.path, environment_id: @environment.path,
+            locale: "pt-BR"}
           expect {
             post :moderate_members_requests, @params
           }.to_not change(@course.approved_users, :count).by(1)
@@ -558,16 +558,16 @@ describe CoursesController do
   context "when viewing sent invitations (GET admin_manage_invitations)" do
     before do
       environment = FactoryGirl.create(:environment)
-      course = FactoryGirl.create(:course, :environment => environment,
-                       :owner => environment.owner)
+      course = FactoryGirl.create(:course, environment: environment,
+                       owner: environment.owner)
       login_as course.owner
       user_invitations = (1..3).collect { course.invite FactoryGirl.create(:user) }
       email_invitations = (1..3).collect do |i|
         course.invite_by_email "email#{i}@example.com"
       end
 
-      @params = { :locale => 'pt-BR', :environment_id => course.environment.path,
-        :id => course.path }
+      @params = { locale: 'pt-BR', environment_id: course.environment.path,
+        id: course.path }
       get :admin_manage_invitations, @params
     end
 
@@ -583,16 +583,16 @@ describe CoursesController do
   context "when removing invitations (POST destroy_invitations)" do
     before do
       @environment = FactoryGirl.create(:environment)
-      @course = FactoryGirl.create(:course, :environment => @environment,
-                        :owner => @environment.owner)
+      @course = FactoryGirl.create(:course, environment: @environment,
+                        owner: @environment.owner)
       login_as @course.owner
       @user_invitations = (1..4).collect { @course.invite FactoryGirl.create(:user) }
       @email_invitations = (1..4).collect do |i|
         @course.invite_by_email "email#{i}@example.com"
       end
 
-      @params = { :locale => 'pt-BR', :environment_id => @environment.path,
-        :id => @course.path }
+      @params = { locale: 'pt-BR', environment_id: @environment.path,
+        id: @course.path }
     end
 
     context "when email_invitations is empty" do
@@ -649,20 +649,20 @@ describe CoursesController do
   context "on management panel" do
     before  do
       @environment = FactoryGirl.create(:environment)
-      @course = FactoryGirl.create(:course, :environment => @environment)
+      @course = FactoryGirl.create(:course, environment: @environment)
       @user = FactoryGirl.create(:user)
-      UserEnvironmentAssociation.create(:environment => @environment,
-                                        :user => @user,
-                                        :role => Role[:environment_admin])
-      UserCourseAssociation.create(:course => @course,
-                                   :user => @user,
-                                   :role => Role[:environment_admin])
+      UserEnvironmentAssociation.create(environment: @environment,
+                                        user: @user,
+                                        role: Role[:environment_admin])
+      UserCourseAssociation.create(course: @course,
+                                   user: @user,
+                                   role: Role[:environment_admin])
       login_as @user
     end
 
     context "GET new" do
       before do
-        get :new, :locale => "pt-BR", :environment_id => @environment.path
+        get :new, locale: "pt-BR", environment_id: @environment.path
       end
 
       it "assigns environment" do
@@ -681,13 +681,13 @@ describe CoursesController do
     context "POST create" do
       context "when environment has plan" do
         before do
-          @post_params = {:course => { :name => "course", :workload => "",
-                                        :path => "course-path", :tag_list => "",
-                                        :description => "",
-                                        :subscription_type => "1" } }
+          @post_params = {course: { name: "course", workload: "",
+                                        path: "course-path", tag_list: "",
+                                        description: "",
+                                        subscription_type: "1" } }
           @post_params[:locale] = "pt-BR"
           @post_params[:environment_id] = @environment.path
-          FactoryGirl.create(:active_licensed_plan, :billable => @environment)
+          FactoryGirl.create(:active_licensed_plan, billable: @environment)
           @environment.reload
           post :create, @post_params
         end
@@ -704,11 +704,11 @@ describe CoursesController do
 
       context "when successful" do
         before do
-          @post_params = { :plan => "free",
-                           :course => { :name => "course", :workload => "",
-                                        :path => "course-path", :tag_list => "",
-                                        :description => "",
-                                        :subscription_type => "1" } }
+          @post_params = { plan: "free",
+                           course: { name: "course", workload: "",
+                                        path: "course-path", tag_list: "",
+                                        description: "",
+                                        subscription_type: "1" } }
           @post_params[:locale] = "pt-BR"
           @post_params[:environment_id] = @environment.path
         end
@@ -721,11 +721,11 @@ describe CoursesController do
 
       context "when failing" do
         before do
-          @post_params = { :plan => "free",
-                           :course => { :name => "", :workload => "",
-                                        :path => "", :tag_list => "",
-                                        :description => "",
-                                        :subscription_type => "1" } }
+          @post_params = { plan: "free",
+                           course: { name: "", workload: "",
+                                        path: "", tag_list: "",
+                                        description: "",
+                                        subscription_type: "1" } }
           @post_params[:locale] = "pt-BR"
           @post_params[:environment_id] = @environment.path
           post :create, @post_params
@@ -739,8 +739,8 @@ describe CoursesController do
 
     context "GET edit" do
       before do
-        get :edit, :locale => "pt-BR", :environment_id => @environment.path,
-          :id => @course.path
+        get :edit, locale: "pt-BR", environment_id: @environment.path,
+          id: @course.path
       end
 
       it "assigns environment" do
@@ -759,11 +759,11 @@ describe CoursesController do
     context "POST update" do
       context "when successful" do
         before do
-          @post_params = { :plan => "free",
-                           :course => { :name => "course", :workload => "",
-                                        :path => "course-path-changed",
-                                        :tag_list => "", :description => "",
-                                        :subscription_type => "1" } }
+          @post_params = { plan: "free",
+                           course: { name: "course", workload: "",
+                                        path: "course-path-changed",
+                                        tag_list: "", description: "",
+                                        subscription_type: "1" } }
           @post_params[:locale] = "pt-BR"
           @post_params[:environment_id] = @environment.path
           @post_params[:id] = @course.path
@@ -778,11 +778,11 @@ describe CoursesController do
 
       context "when failing" do
         before do
-          @post_params = { :plan => "free",
-                           :course => { :name => "course", :workload => "",
-                                        :path => "",
-                                        :tag_list => "", :description => "",
-                                        :subscription_type => "1" } }
+          @post_params = { plan: "free",
+                           course: { name: "course", workload: "",
+                                        path: "",
+                                        tag_list: "", description: "",
+                                        subscription_type: "1" } }
           @post_params[:locale] = "pt-BR"
           @post_params[:environment_id] = @environment.path
           @post_params[:id] = @course.path
@@ -797,8 +797,8 @@ describe CoursesController do
 
     context "GET reports" do
       before do
-        get :teacher_participation_report, :locale => "pt-BR",
-          :environment_id => @environment.path, :id => @course.path
+        get :teacher_participation_report, locale: "pt-BR",
+          environment_id: @environment.path, id: @course.path
       end
 
       it "when successful" do
@@ -809,13 +809,13 @@ describe CoursesController do
 
   context "when course is unpublished" do
     before do
-      @course = FactoryGirl.create(:course, :published => false)
+      @course = FactoryGirl.create(:course, published: false)
     end
 
     context "GET show" do
       before do
-        get :show, @params = { :locale => 'pt-BR', :environment_id => @course.environment.path,
-        :id => @course.path }
+        get :show, @params = { locale: 'pt-BR', environment_id: @course.environment.path,
+        id: @course.path }
       end
 
       it "should show the preview page" do
@@ -836,9 +836,9 @@ describe CoursesController do
         @course.join @user
         login_as @user
 
-        get :preview, :locale => "pt-BR",
-          :environment_id => @course.environment.to_param,
-          :id => @course.to_param
+        get :preview, locale: "pt-BR",
+          environment_id: @course.environment.to_param,
+          id: @course.to_param
       end
 
       it "redirects to #show" do
@@ -854,9 +854,9 @@ describe CoursesController do
         @course.join @env_admin, Role[:environment_admin]
         login_as @env_admin
 
-        get :preview, :locale => "pt-BR",
-          :environment_id => @course.environment.to_param,
-          :id => @course.to_param
+        get :preview, locale: "pt-BR",
+          environment_id: @course.environment.to_param,
+          id: @course.to_param
       end
 
       it "redirects to #show" do
@@ -867,9 +867,9 @@ describe CoursesController do
 
     context "when does NOT have permission to see the course" do
       before do
-        get :preview, :locale => "pt-BR",
-          :environment_id => @course.environment.to_param,
-          :id => @course.to_param
+        get :preview, locale: "pt-BR",
+          environment_id: @course.environment.to_param,
+          id: @course.to_param
       end
 
       it "renders preview" do
@@ -890,9 +890,9 @@ describe CoursesController do
 
       it "updates uca's last_accessed_at" do
         expect {
-          get :show, @params = { :locale => 'pt-BR',
-                                 :environment_id => course.environment.to_param,
-                                 :id => course.to_param }
+          get :show, @params = { locale: 'pt-BR',
+                                 environment_id: course.environment.to_param,
+                                 id: course.to_param }
         }.to change { user.user_course_associations.last.last_accessed_at }
       end
     end
@@ -906,8 +906,8 @@ describe CoursesController do
     before do
       login_as user
 
-      xhr :get, :search_users_admin, :locale => "pt-BR",
-        :environment_id => environment.to_param, :id => course.to_param
+      xhr :get, :search_users_admin, locale: "pt-BR",
+        environment_id: environment.to_param, id: course.to_param
     end
 
     it "assigns memberships" do

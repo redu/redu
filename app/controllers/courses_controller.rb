@@ -5,15 +5,15 @@ class CoursesController < BaseController
   before_filter Proc.new {
     @environment = Environment.find_by_path(params[:environment_id])
     @course = @environment.courses.find(:first,
-                                        :conditions => { :path => params[:id] },
-                                        :include => [:audiences])
-  }, :only => :edit
+                                        conditions: { path: params[:id] },
+                                        include: [:audiences])
+  }, only: :edit
 
-  after_filter :update_last_access, :only => [:show]
+  after_filter :update_last_access, only: [:show]
 
-  load_resource :environment, :find_by => :path
-  load_and_authorize_resource :course, :through => :environment,
-    :except => [:index], :find_by => :path
+  load_resource :environment, find_by: :path
+  load_and_authorize_resource :course, through: :environment,
+    except: [:index], find_by: :path
 
   rescue_from CanCan::AccessDenied do |exception|
     session[:return_to] = request.fullpath
@@ -71,8 +71,8 @@ class CoursesController < BaseController
         format.xml { head :ok }
       else
         format.html { render 'courses/admin/edit' }
-        format.xml  { render :xml => @course.errors,
-                      :status => :unprocessable_entity }
+        format.xml  { render xml: @course.errors,
+                      status: :unprocessable_entity }
       end
     end
   end
@@ -124,7 +124,7 @@ class CoursesController < BaseController
     @spaces = @course.spaces.order('name ASC').page(params[:page]).
       per(Redu::Application.config.items_per_page)
     respond_to do |format|
-      format.html { render :layout => 'new_application' }
+      format.html { render layout: 'new_application' }
       format.js do
         render_endless 'spaces/item_short', @spaces, '#course-preview > ul'
       end
@@ -173,9 +173,9 @@ class CoursesController < BaseController
 
       # Rejeitando
       rejected_ucas = @course.user_course_associations.waiting.
-        where(:user_id => rejected.keys)
+        where(user_id: rejected.keys)
       rejected_ucas.each do |uca|
-        UserNotifier.delay(:queue => 'email').reject_membership(uca.user, @course)
+        UserNotifier.delay(queue: 'email').reject_membership(uca.user, @course)
         uca.destroy
       end
 
@@ -198,10 +198,10 @@ class CoursesController < BaseController
 
         # Aprovando
         approved_ucas = @course.user_course_associations.waiting.
-          where(:user_id => approved.keys)
+          where(user_id: approved.keys)
         approved_ucas.each do |uca|
           uca.approve!
-          UserNotifier.delay(:queue => 'email').approve_membership(uca.user, @course)
+          UserNotifier.delay(queue: 'email').approve_membership(uca.user, @course)
         end
       elsif can?(:add_entry?, @course) and !rejected.to_hash.empty?
         # Avisa que os membros rejeitados foram moderados mesmo se não houver membros para serem aprovados
@@ -270,7 +270,7 @@ class CoursesController < BaseController
         format.html { render "courses/admin/admin_members" }
         format.js do
           render_endless 'courses/admin/user_item_admin', @memberships,
-            '#user_list_table', :partial_locals => { :spaces_count =>
+            '#user_list_table', partial_locals: { spaces_count:
                                                      @spaces_count }
         end
       end
@@ -285,12 +285,12 @@ class CoursesController < BaseController
     users_ids = params[:users].collect{|u| u.to_i} if params[:users]
 
     unless users_ids.empty?
-      User.select(:id).where(:id => users_ids).
-        find_in_batches(:batch_size => 100) do |users|
+      User.select(:id).where(id: users_ids).
+        find_in_batches(batch_size: 100) do |users|
 
         users.each do |u|
-          job = UnjoinUserJob.new(:user => u, :course => @course)
-          Delayed::Job.enqueue(job, :queue => 'general')
+          job = UnjoinUserJob.new(user: u, course: @course)
+          Delayed::Job.enqueue(job, queue: 'general')
         end
       end
 
@@ -298,7 +298,7 @@ class CoursesController < BaseController
     end
 
     respond_to do |format|
-      format.html { redirect_to :action => :admin_members }
+      format.html { redirect_to action: :admin_members }
     end
   end
 
@@ -309,7 +309,7 @@ class CoursesController < BaseController
 
     @memberships = @course.user_course_associations.approved.with_roles(roles)
     @memberships = @memberships.with_keyword(keyword).
-      includes(:user => {:user_space_associations => :space}).
+      includes(user: {user_space_associations: :space}).
       order('course_enrollments.updated_at DESC').page(params[:page]).
       per(Redu::Application.config.items_per_page)
     @spaces_count = @course.spaces.count
@@ -427,7 +427,7 @@ class CoursesController < BaseController
     end
 
     respond_to do |format|
-      format.html { redirect_to :action => :admin_manage_invitations }
+      format.html { redirect_to action: :admin_manage_invitations }
     end
   end
 

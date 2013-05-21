@@ -19,41 +19,41 @@ class Space < ActiveRecord::Base
   belongs_to :course
 
   # USERS
-  belongs_to :owner , :class_name => "User" , :foreign_key => "user_id"
-  has_many :user_space_associations, :dependent => :destroy
-  has_many :users, :through => :user_space_associations
+  belongs_to :owner , class_name: "User" , foreign_key: "user_id"
+  has_many :user_space_associations, dependent: :destroy
+  has_many :users, through: :user_space_associations
   # environment_admins
-  has_many :administrators, :through => :user_space_associations,
-    :source => :user, :conditions => ["user_space_associations.role = ?", :environment_admin]
+  has_many :administrators, through: :user_space_associations,
+    source: :user, conditions: ["user_space_associations.role = ?", :environment_admin]
   # teachers
-  has_many :teachers, :through => :user_space_associations,
-    :source => :user, :conditions => ["user_space_associations.role = ?", :teacher]
+  has_many :teachers, through: :user_space_associations,
+    source: :user, conditions: ["user_space_associations.role = ?", :teacher]
   # tutors
-  has_many :tutors, :through => :user_space_associations,
-    :source => :user, :conditions => [ "user_space_associations.role = ?", :tutor]
+  has_many :tutors, through: :user_space_associations,
+    source: :user, conditions: [ "user_space_associations.role = ?", :tutor]
   # students (member)
-  has_many :students, :through => :user_space_associations,
-    :source => :user, :conditions => [ "user_space_associations.role = ?", :member]
+  has_many :students, through: :user_space_associations,
+    source: :user, conditions: [ "user_space_associations.role = ?", :member]
 
  # new members (form 1 week ago)
-  has_many :new_members, :through => :user_space_associations,
-    :source => :user,
-    :conditions => ["user_space_associations.updated_at >= ?", 1.week.ago]
-  has_many :folders, :conditions => ["parent_id IS NULL"],
-    :dependent => :destroy
-  has_many :folders_and_subfolders, :class_name => "Folder",
-    :dependent => :destroy
-  has_many :subjects, :dependent => :destroy,
-    :conditions => { :finalized => true }
-  has_one :root_folder, :class_name => 'Folder', :foreign_key => 'space_id'
-  has_many :logs, :as => :logeable, :order => "created_at DESC",
-    :dependent => :destroy
-  has_many :statuses, :as => :statusable, :order => "updated_at DESC",
-    :dependent => :destroy
-  has_many :canvas, :as => :container, :class_name => 'Api::Canvas'
+  has_many :new_members, through: :user_space_associations,
+    source: :user,
+    conditions: ["user_space_associations.updated_at >= ?", 1.week.ago]
+  has_many :folders, conditions: ["parent_id IS NULL"],
+    dependent: :destroy
+  has_many :folders_and_subfolders, class_name: "Folder",
+    dependent: :destroy
+  has_many :subjects, dependent: :destroy,
+    conditions: { finalized: true }
+  has_one :root_folder, class_name: 'Folder', foreign_key: 'space_id'
+  has_many :logs, as: :logeable, order: "created_at DESC",
+    dependent: :destroy
+  has_many :statuses, as: :statusable, order: "updated_at DESC",
+    dependent: :destroy
+  has_many :canvas, as: :container, class_name: 'Api::Canvas'
 
-  scope :of_course, lambda { |course_id| where(:course_id => course_id) }
-  scope :published, where(:published => true)
+  scope :of_course, lambda { |course_id| where(course_id: course_id) }
+  scope :published, where(published: true)
   scope :teachers, joins(:user_space_associations).
     where("user_space_associations.role = ?", :teacher)
 
@@ -67,37 +67,37 @@ class Space < ActiveRecord::Base
 
   # VALIDATIONS
   validates_presence_of :name
-  validates_length_of :name, :maximum => 40
+  validates_length_of :name, maximum: 40
 
   def create_root_folder
-    @folder = self.folders.create(:name => "root")
+    @folder = self.folders.create(name: "root")
   end
 
   # Muda papeis neste ponto da hieararquia
   def change_role(user, role)
-    membership = self.user_space_associations.where(:user_id => user.id).first
-    membership.update_attributes({:role => role})
+    membership = self.user_space_associations.where(user_id: user.id).first
+    membership.update_attributes({role: role})
   end
 
   # Após a criação do space, todos os usuários do course ao qual
   # o space pertence tem que ser associados ao space
   def create_space_association_for_users_course
-    course_users = UserCourseAssociation.where(:state => 'approved',
-                                               :course_id => self.course).
+    course_users = UserCourseAssociation.where(state: 'approved',
+                                               course_id: self.course).
                                                includes(:user)
 
     usas = course_users.collect do |assoc|
-      UserSpaceAssociation.new(:user => assoc.user,
-                               :space => self,
-                               :role => assoc.role)
+      UserSpaceAssociation.new(user: assoc.user,
+                               space: self,
+                               role: assoc.role)
     end
-    UserSpaceAssociation.import(usas, :validate => false)
+    UserSpaceAssociation.import(usas, validate: false)
   end
 
   # ver app/jobs/create_user_space_association_job.rb
   def delay_create_space_association_for_users_course
-    job = CreateUserSpaceAssociationJob.new(:space_id => self.id)
-    Delayed::Job.enqueue(job, :queue => 'hierarchy-associations')
+    job = CreateUserSpaceAssociationJob.new(space_id: self.id)
+    Delayed::Job.enqueue(job, queue: 'hierarchy-associations')
   end
 
   def myfiles
@@ -112,15 +112,15 @@ class Space < ActiveRecord::Base
   def notify_space_added
     if self.notificable?
       self.course.approved_users.each do |u|
-        UserNotifier.delay(:queue => 'email').space_added(u, self)
+        UserNotifier.delay(queue: 'email').space_added(u, self)
       end
     end
   end
 
   # ver app/jobs/notify_space_added_job.rb
   def delay_notify_space_added
-    job = NotifySpaceAddedJob.new(:space_id => self.id)
-    Delayed::Job.enqueue(job, :queue => 'email')
+    job = NotifySpaceAddedJob.new(space_id: self.id)
+    Delayed::Job.enqueue(job, queue: 'email')
   end
 
   def lectures_count

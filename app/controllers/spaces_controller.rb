@@ -6,14 +6,14 @@ class SpacesController < BaseController
 
   # Necessário pois Space não é nested route de course
   before_filter :find_space_course_environment,
-    :except => [:cancel]
+    except: [:cancel]
 
   load_resource :environment,
-    :except => [:cancel], :find_by => :path
-  load_resource :course, :through => :environment,
-    :except => [:cancel], :find_by => :path
-  load_and_authorize_resource :space, :through => :course,
-    :except => [:cancel]
+    except: [:cancel], find_by: :path
+  load_resource :course, through: :environment,
+    except: [:cancel], find_by: :path
+  load_and_authorize_resource :space, through: :course,
+    except: [:cancel]
 
   Browser = Struct.new(:browser, :version)
   UNSUPPORTED_BROWSERS = [Browser.new("Internet Explorer")]
@@ -71,7 +71,7 @@ class SpacesController < BaseController
         format.js do
           render_endless 'statuses/item', @statuses, '#statuses > ol'
         end
-        format.xml  { render :xml => @space }
+        format.xml  { render xml: @space }
       else
         format.html {
           flash[:error] = "A disciplina \"" + params[:id] + "\" não existe ou não está cadastrada no Redu."
@@ -136,7 +136,7 @@ class SpacesController < BaseController
 
     respond_to do |format|
       if @space.new_record?
-        format.html { render :template => 'spaces/admin/new' }
+        format.html { render template: 'spaces/admin/new' }
       else
         format.html do
           flash[:notice] = "Disciplina criada!"
@@ -163,7 +163,7 @@ class SpacesController < BaseController
         format.html do
           render 'spaces/admin/edit'
         end
-        format.xml  { render :xml => @space.errors, :status => :unprocessable_entity }
+        format.xml  { render xml: @space.errors, status: :unprocessable_entity }
       end
     end
   end
