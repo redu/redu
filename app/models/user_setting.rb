@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class UserSetting < ActiveRecord::Base
   belongs_to :user
   classy_enum_attr :view_mural, :enum => 'Privacy', :default => 'friends'

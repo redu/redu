@@ -1,7 +1,8 @@
+# -*- encoding : utf-8 -*-
 require 'api_spec_helper'
 
 describe "Environments API" do
-  subject { Factory(:complete_environment) }
+  subject { FactoryGirl.create(:complete_environment) }
   before do
     @application, @current_user, @token = generate_token(subject.owner)
   end
@@ -54,7 +55,7 @@ describe "Environments API" do
 
   context "post /api/environments" do
     before do
-      @user = Factory(:user)
+      @user = FactoryGirl.create(:user)
       @params = { :name => 'New environment', :path => 'environment-path',
                   :initials => 'NE' }
     end
@@ -122,7 +123,7 @@ describe "Environments API" do
     end
 
     it "should return current user environments" do
-      2.times { Factory(:environment, :owner => @current_user) }
+      2.times { FactoryGirl.create(:environment, :owner => @current_user) }
       get '/api/environments', :oauth_token => @token,
         :format => 'json'
 

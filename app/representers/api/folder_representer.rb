@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Api
   module FolderRepresenter
     include Roar::Representer::JSON

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe AuthenticationService do
@@ -27,7 +28,7 @@ describe AuthenticationService do
 
       context 'when there is an authentication' do
         let!(:authentication) do
-          Factory(:authentication, :uid => omniauth[:uid],
+          FactoryGirl.create(:authentication, :uid => omniauth[:uid],
                   :provider => omniauth[:provider])
         end
         it 'should return it' do
@@ -144,7 +145,7 @@ describe AuthenticationService do
       end
 
       context 'when the user was already registered' do
-        let(:user){ Factory(:user) }
+        let(:user){ FactoryGirl.create(:user) }
         let(:omniauth) do
           OmniAuth.config.mock_auth[:some_provider].merge({
             :info => {
@@ -158,7 +159,7 @@ describe AuthenticationService do
 
         context 'with a provider' do
           let!(:authentication) do
-            Factory(:authentication, :user => user, :uid => omniauth[:uid],
+            FactoryGirl.create(:authentication, :user => user, :uid => omniauth[:uid],
                     :provider => omniauth[:provider])
           end
 

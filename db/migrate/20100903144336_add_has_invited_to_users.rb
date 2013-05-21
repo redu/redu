@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddHasInvitedToUsers < ActiveRecord::Migration
   def self.up
     add_column :users, :auto_status, :boolean, :default => true

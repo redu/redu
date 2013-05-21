@@ -1,11 +1,12 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 module EnrollmentService
   module Jobs
     describe CreateEnrollmentJob do
-      let(:users) { 2.times.map { Factory(:user) } }
+      let(:users) { 2.times.map { FactoryGirl.create(:user) } }
       let(:subjects) do
-        2.times.map { Factory(:subject, :space => nil, :owner => nil) }
+        2.times.map { FactoryGirl.create(:subject, :space => nil, :owner => nil) }
       end
 
       subject do

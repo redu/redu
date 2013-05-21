@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class NotifySpaceAddedJob
   # Notifica os membros do curso (previamente aprovados) que
   # a disciplina foi criada.

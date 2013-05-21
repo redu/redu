@@ -1,13 +1,14 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 require 'authlogic/test_case'
 
 describe PlansController do
   context "for User" do
     before do
-      @user = Factory(:user)
-      @course = Factory(:course, :owner => @user)
-      @plan = Factory(:plan, :user => @user, :billable => @course)
-      @plan_not_in_use = Factory(:plan, :user => @user, :billable => @course,
+      @user = FactoryGirl.create(:user)
+      @course = FactoryGirl.create(:course, :owner => @user)
+      @plan = FactoryGirl.create(:plan, :user => @user, :billable => @course)
+      @plan_not_in_use = FactoryGirl.create(:plan, :user => @user, :billable => @course,
                                  :current => false)
 
       login_as @user
@@ -33,7 +34,7 @@ describe PlansController do
   context "when seeing plan upgrade/downgrade option" do
     context "as a User" do
       before do
-        @plan = Factory(:plan)
+        @plan = FactoryGirl.create(:plan)
 
         login_as @plan.user
         get :options, :id => @plan.id, :locale => "pt-BR"
@@ -56,10 +57,10 @@ describe PlansController do
 
     context "as a partner" do
       before do
-        @admin = Factory(:user)
-        @partner_assoc = Factory(:partner_environment_association)
+        @admin = FactoryGirl.create(:user)
+        @partner_assoc = FactoryGirl.create(:partner_environment_association)
         @partner_assoc.partner.add_collaborator @admin
-        @plan = Factory(:plan, :billable => @partner_assoc.environment)
+        @plan = FactoryGirl.create(:plan, :billable => @partner_assoc.environment)
 
         login_as @admin
         get :options, :locale => "pt-BR", :partner_id => @partner_assoc.partner.id,
@@ -82,13 +83,13 @@ describe PlansController do
 
   context "when requesting an upgrade" do
     before do
-      @course = Factory(:course)
+      @course = FactoryGirl.create(:course)
       @environment = @course.environment
     end
 
     context "when a billable is a course" do
       before do
-        @course.plan = Factory.build(:active_package_plan)
+        @course.plan = FactoryGirl.build(:active_package_plan)
         @plan = @course.plan
 
         login_as @plan.user
@@ -135,7 +136,7 @@ describe PlansController do
 
     context "when a billable is a environment" do
       before do
-        @environment.plan = Factory.build(:active_package_plan)
+        @environment.plan = FactoryGirl.build(:active_package_plan)
         @plan = @environment.plan
 
         login_as @plan.user
@@ -180,11 +181,11 @@ describe PlansController do
 
     context "as a partner" do
       before do
-        @admin = Factory(:user)
-        @partner_assoc = Factory(:partner_environment_association,
+        @admin = FactoryGirl.create(:user)
+        @partner_assoc = FactoryGirl.create(:partner_environment_association,
                                  :environment => @environment)
         @partner_assoc.partner.add_collaborator @admin
-        @plan = Factory(:plan, :billable => @partner_assoc.environment)
+        @plan = FactoryGirl.create(:plan, :billable => @partner_assoc.environment)
 
         login_as @admin
 

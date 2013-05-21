@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 FactoryGirl.define do
   factory :plan do
     state "active"
@@ -14,7 +15,7 @@ FactoryGirl.define do
 
   factory :active_package_plan, :class => :package_plan do
     state "active"
-    sequence(:name) { "Package Plan #{n}" }
+    sequence(:name) { |n| "Package Plan #{n}" }
     video_storage_limit 1024
     members_limit 20
     file_storage_limit 1024
@@ -28,7 +29,7 @@ FactoryGirl.define do
 
   factory :active_licensed_plan, :class => :licensed_plan do
     state "active"
-    sequence(:name) { "Licensed Plan #{n}" }
+    sequence(:name) { |n| "Licensed Plan #{n}" }
     video_storage_limit 1024
     file_storage_limit 1024
     price 3.00

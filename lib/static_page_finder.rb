@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class StaticPageFinder
   # Infere nome do template e layout baseado no :page_id passado.
   #

@@ -1,7 +1,8 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe Education do
-  subject { Factory(:education) }
+  subject { FactoryGirl.create(:education) }
 
   it { should belong_to :user }
   it { should belong_to(:educationable).dependent(:destroy)}
@@ -14,8 +15,8 @@ describe Education do
 
   context "validations" do
     it "validates associated educationable" do
-      educ = Factory.build(:education,
-                           :educationable => Factory.build(:high_school,
+      educ = FactoryGirl.build(:education,
+                           :educationable => FactoryGirl.build(:high_school,
                                                            :institution => ""))
       educ.should_not be_valid
       educ.errors[:educationable].should_not be_empty
@@ -24,30 +25,30 @@ describe Education do
 
   context "finders" do
     before do
-      @user = Factory(:user)
-      @high_school1 = Factory(:education,
-                              :educationable => Factory(:high_school),
+      @user = FactoryGirl.create(:user)
+      @high_school1 = FactoryGirl.create(:education,
+                              :educationable => FactoryGirl.create(:high_school),
                               :user => @user)
-      @high_school2 = Factory(:education,
-                              :educationable => Factory(:high_school),
+      @high_school2 = FactoryGirl.create(:education,
+                              :educationable => FactoryGirl.create(:high_school),
                               :user => @user)
-      @higher1 = Factory(:education,
-                         :educationable => Factory(:higher_education),
+      @higher1 = FactoryGirl.create(:education,
+                         :educationable => FactoryGirl.create(:higher_education),
                          :user => @user)
-      @higher2 = Factory(:education,
-                         :educationable => Factory(:higher_education),
+      @higher2 = FactoryGirl.create(:education,
+                         :educationable => FactoryGirl.create(:higher_education),
                          :user => @user)
-      @comp_courses1 = Factory(:education,
-                               :educationable => Factory(:complementary_course),
+      @comp_courses1 = FactoryGirl.create(:education,
+                               :educationable => FactoryGirl.create(:complementary_course),
                                :user => @user)
-      @comp_courses2 = Factory(:education,
-                               :educationable => Factory(:complementary_course),
+      @comp_courses2 = FactoryGirl.create(:education,
+                               :educationable => FactoryGirl.create(:complementary_course),
                                :user => @user)
-      @event_edu1 = Factory(:education,
-                            :educationable => Factory(:event_education),
+      @event_edu1 = FactoryGirl.create(:education,
+                            :educationable => FactoryGirl.create(:event_education),
                             :user => @user)
-      @event_edu2 = Factory(:education,
-                            :educationable => Factory(:event_education),
+      @event_edu2 = FactoryGirl.create(:education,
+                            :educationable => FactoryGirl.create(:event_education),
                             :user => @user)
     end
 

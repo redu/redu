@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class SpacesController < BaseController
   include VisApplicationAdditions::Controller
 

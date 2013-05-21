@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 shared_examples_for "pagination" do
   before do
     per_page = entities.count / 2

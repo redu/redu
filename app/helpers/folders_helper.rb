@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # Helper methods for folder views
 module FoldersHelper
   # Creates a link in the folder list view. Clicking the link will order the contents of a folder

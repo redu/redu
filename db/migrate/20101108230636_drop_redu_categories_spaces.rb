@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class DropReduCategoriesSpaces < ActiveRecord::Migration
   
 	def self.up

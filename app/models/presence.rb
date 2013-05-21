@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Presence
   # Responsável pela autenticação no Pusher e carregamento da lista de contatos
 

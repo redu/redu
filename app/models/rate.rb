@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Rate < ActiveRecord::Base
 
   belongs_to :rater, :class_name => "User"

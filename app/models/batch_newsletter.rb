@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class BatchNewsletter < Newsletter
   # Envia e-mail em batch para os usuários passados na inicialização. Deve
   # ser inicializado com opção :users sendo uma instância de ARel.

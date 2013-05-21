@@ -1,9 +1,10 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 module Untied
   module Publisher
     describe PublishEventJob do
-      let(:model) { Factory(:social_network) }
+      let(:model) { FactoryGirl.create(:social_network) }
       subject do
         PublishEventJob.new(:after_create, model.class.to_s, model)
       end

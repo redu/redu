@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RemoveColorFromCourse < ActiveRecord::Migration
   def self.up
     remove_column :courses, :color

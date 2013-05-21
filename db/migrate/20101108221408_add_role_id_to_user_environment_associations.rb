@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddRoleIdToUserEnvironmentAssociations < ActiveRecord::Migration
   def self.up
     add_column :user_environment_associations, :role_id, :integer

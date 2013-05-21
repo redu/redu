@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class TeacherParticipation
   attr_reader :lectures_created, :posts, :answers, :days
   attr_accessor :end, :start, :spaces

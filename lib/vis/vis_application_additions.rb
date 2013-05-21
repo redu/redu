@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module VisApplicationAdditions
   # Métodos de apoio para a aplicação de visualização do Redu
 

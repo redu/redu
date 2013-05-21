@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RefactoringStudentProfileAndEnrollment < ActiveRecord::Migration
   def self.up
     change_table(:enrollments) do |t|

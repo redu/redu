@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class BaseMailer < ActionMailer::Base
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::SanitizeHelper

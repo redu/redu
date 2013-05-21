@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 shared_examples_for "log on hierarchy" do
   it "should be able to read if member" do
     course.join(user)

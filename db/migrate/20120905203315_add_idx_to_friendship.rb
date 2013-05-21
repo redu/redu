@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddIdxToFriendship < ActiveRecord::Migration
   def self.up
     add_index :friendships, [:user_id, :friend_id]

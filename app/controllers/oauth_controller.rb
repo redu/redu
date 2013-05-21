@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'oauth/controllers/provider_controller'
 require 'oauth/provider/authorizer'
 

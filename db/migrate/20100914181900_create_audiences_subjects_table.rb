@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateAudiencesSubjectsTable < ActiveRecord::Migration
   def self.up
     create_table :audiences_subjects,  :id => false do |t|

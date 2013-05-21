@@ -1,7 +1,8 @@
+# -*- encoding : utf-8 -*-
 require 'api_spec_helper'
 
 describe "AssetReports API" do
-  let(:subj) { Factory(:complete_subject) }
+  let(:subj) { FactoryGirl.create(:complete_subject) }
   let(:course) { subj.space.course }
   let(:token) { _, _, token = generate_token(user); token }
   let(:params) { { :oauth_token => token, :format => 'json' } }
@@ -69,7 +70,7 @@ describe "AssetReports API" do
 
     context "when GET /lectures/:lecture_id/progress" do
       let(:user) { user_joined_on_course(course, Role[:teacher]) }
-      let(:context) { Factory(:lecture, :subject => subj, :owner => user) }
+      let(:context) { FactoryGirl.create(:lecture, :subject => subj, :owner => user) }
 
 
       it_should_behave_like "asset reports listing without filter"
@@ -123,7 +124,7 @@ describe "AssetReports API" do
   protected
 
   def user_joined_on_course(course, role)
-    u = Factory(:user)
+    u = FactoryGirl.create(:user)
     course.join! u, role
     u
   end

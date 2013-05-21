@@ -1,8 +1,9 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe 'SearchTeacherssCache' do
-  let(:user) { Factory(:user) }
-  let(:course) { Factory(:course) }
+  let(:user) { FactoryGirl.create(:user) }
+  let(:course) { FactoryGirl.create(:course) }
 
   context "search_environment_administrators" do
     let(:cache_identifier) { "views/search_course_teachers/#{course.id}" }
@@ -25,7 +26,7 @@ describe 'SearchTeacherssCache' do
       it "expires when teacher user_course_association is created" do
         ActiveRecord::Observer.with_observers(:user_course_association_cache_observer) do
           performing_cache(cache_identifier) do |cache|
-            Factory(:user_course_association, :user => user,
+            FactoryGirl.create(:user_course_association, :user => user,
                     :course => course, :role => :teacher).approve!
 
             cache.should_not exist(cache_identifier)
@@ -34,7 +35,7 @@ describe 'SearchTeacherssCache' do
       end
 
       it "expires when user_course_association role is updated" do
-        Factory(:user_course_association, :user => user,
+        FactoryGirl.create(:user_course_association, :user => user,
                 :course => course, :role => :member).approve!
 
         ActiveRecord::Observer.with_observers(:user_course_association_cache_observer) do
@@ -47,7 +48,7 @@ describe 'SearchTeacherssCache' do
       end
 
       it "expires when teacher user_course_association is destroyed" do
-        Factory(:user_course_association, :user => user,
+        FactoryGirl.create(:user_course_association, :user => user,
                 :course => course, :role => :teacher).approve!
 
         ActiveRecord::Observer.with_observers(:user_course_association_cache_observer) do

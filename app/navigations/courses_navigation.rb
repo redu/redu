@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module CoursesNavigation
   def courses_navigation(sidebar)
     # A navegação de Course não possui sidebar, bloco apenas para manter o padrão

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RemovePublishedFromBulletin < ActiveRecord::Migration
   def self.up
     remove_column :bulletins, :published

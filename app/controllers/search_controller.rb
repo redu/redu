@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class SearchController < BaseController
   layout "new_application"
 

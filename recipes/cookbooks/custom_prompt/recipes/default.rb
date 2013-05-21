@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 template "/home/#{node[:owner_name]}/.bash_profile" do
   owner node[:owner_name]
   group node[:owner_name]

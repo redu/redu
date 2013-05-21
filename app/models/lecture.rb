@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Lecture < ActiveRecord::Base
   # Entidade polimórfica que representa o objeto de aprendizagem. Pode possuir
   # três especializações: Seminar, InteractiveClass e Page.

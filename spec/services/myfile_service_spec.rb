@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe MyfileService do
@@ -27,7 +28,7 @@ describe MyfileService do
 
       it "should accept a block" do
         myfile = subject.create do |myfile|
-          myfile.user = Factory(:user)
+          myfile.user = FactoryGirl.create(:user)
         end
 
         myfile.user.should_not be_nil
@@ -91,7 +92,7 @@ describe MyfileService do
     end
 
     describe "#destroy" do
-      let!(:myfile) { Factory(:myfile) }
+      let!(:myfile) { FactoryGirl.create(:myfile) }
       subject { MyfileService.new(params.merge(:model => myfile)) }
 
       it "should destroy Myfile" do

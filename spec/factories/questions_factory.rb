@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # Read about factories at http://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
@@ -6,10 +7,10 @@ FactoryGirl.define do
   end
 
   factory :complete_question, :parent => :question do
-    after_create do |q|
-      Factory(:alternative, :correct => true, :question => q)
-      Factory(:alternative, :correct => false, :question => q)
-      Factory(:alternative, :correct => false, :question => q)
+    after(:create) do |q, _|
+      FactoryGirl.create(:alternative, :correct => true, :question => q)
+      FactoryGirl.create(:alternative, :correct => false, :question => q)
+      FactoryGirl.create(:alternative, :correct => false, :question => q)
       q.alternatives.reload
     end
   end

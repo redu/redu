@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddFinalizedToSubject < ActiveRecord::Migration
   def self.up
     add_column :subjects, :finalized, :boolean, :default => false

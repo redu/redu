@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module UsersNavigation
   def users_navigation(sidebar)
     # Caso alguma view que não tenha uma relação direta com usuário

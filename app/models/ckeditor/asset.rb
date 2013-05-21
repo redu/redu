@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'mime/types'
 
 class Ckeditor::Asset < ActiveRecord::Base

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class SocialNetworkSite < ClassyEnum::Base
 end
 

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddBulletinableToBulletins < ActiveRecord::Migration
   def self.up
     add_column :bulletins, :bulletinable_id, :integer

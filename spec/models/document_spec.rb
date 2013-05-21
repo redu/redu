@@ -1,7 +1,8 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe Document do
-  subject { Factory.build(:document) }
+  subject { FactoryGirl.build(:document) }
 
   it { should have_attached_file(:attachment) }
 
@@ -55,7 +56,7 @@ describe Document do
   end
 
   context "when is a image" do
-    subject { Factory(:document_with_image) }
+    subject { FactoryGirl.create(:document_with_image) }
 
     context "#upload_to_scribd" do
       it "should not upload to scribd" do

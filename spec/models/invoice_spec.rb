@@ -1,8 +1,9 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 require 'set'
 
 describe Invoice do
-  subject { Factory(:invoice) }
+  subject { FactoryGirl.create(:invoice) }
 
   it { should belong_to(:plan) }
   [:period_start, :period_end].each do |attr|
@@ -13,11 +14,11 @@ describe Invoice do
 
   context "finder" do
     it "retrieves pending invoices" do
-      plan = Factory :plan
-      pending_invoices = (1..5).collect { Factory(:invoice,
+      plan = FactoryGirl.create(:plan)
+      pending_invoices = (1..5).collect { FactoryGirl.create(:invoice,
                                                   :plan => plan,
                                                   :state => "pending") }
-      overdue_invoices = (1..5).collect { Factory(:invoice,
+      overdue_invoices = (1..5).collect { FactoryGirl.create(:invoice,
                                                   :plan => plan,
                                                   :state => "overdue") }
 
@@ -27,19 +28,19 @@ describe Invoice do
     it "retrieves invoices of a period" do
       april_invoices = (1..5).collect do
         period_start = Date.new(2011, 04, 10)
-        Factory(:invoice, :period_start => period_start,
+        FactoryGirl.create(:invoice, :period_start => period_start,
                 :period_end => period_start.end_of_month)
       end
 
       feb_invoices = (1..5).collect do
         period_start = Date.new(2011, 02, 10)
-        Factory(:invoice, :period_start => period_start,
+        FactoryGirl.create(:invoice, :period_start => period_start,
                 :period_end => period_start.end_of_month)
       end
 
       last_year_invoices = (1..5).collect do
         period_start = Date.new(2010, 04, 10)
-        Factory(:invoice, :period_start => period_start,
+        FactoryGirl.create(:invoice, :period_start => period_start,
                 :period_end => period_start.end_of_month)
       end
 
@@ -54,13 +55,13 @@ describe Invoice do
 
     it "retrieves invoices of a billable" do
       plans = 2.times.collect do
-        Factory(:plan, :billable => Factory(:environment))
+        FactoryGirl.create(:plan, :billable => FactoryGirl.create(:environment))
       end
       invoices = 3.times.collect do
-        Factory(:invoice, :plan => plans[0])
+        FactoryGirl.create(:invoice, :plan => plans[0])
       end
       other_invoices = 3.times.collect do
-        Factory(:invoice, :plan => plans[1])
+        FactoryGirl.create(:invoice, :plan => plans[1])
       end
 
       Invoice.of_billable(plans[0].billable, plans[0].billable.class).to_set.
@@ -114,7 +115,7 @@ describe Invoice do
     context "when the billable has not been removed" do
       before do
         subject.update_attribute(:period_end, Date.today - 3.days)
-        subject.plan.billable = Factory(:environment)
+        subject.plan.billable = FactoryGirl.create(:environment)
       end
 
       it "can create next invoice" do

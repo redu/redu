@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddCourseIdToSpaces < ActiveRecord::Migration
   def self.up
     add_column :spaces, :course_id, :integer

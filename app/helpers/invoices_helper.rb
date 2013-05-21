@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module InvoicesHelper
 
   def total_amount_of(invoices)

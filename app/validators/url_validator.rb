@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class UrlValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     begin

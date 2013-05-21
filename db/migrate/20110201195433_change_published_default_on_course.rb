@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class ChangePublishedDefaultOnCourse < ActiveRecord::Migration
   def self.up
     change_column_default :courses, :published, true

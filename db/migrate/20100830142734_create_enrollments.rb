@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateEnrollments < ActiveRecord::Migration
   def self.up
     create_table :enrollments do |t|

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Api
   class SpacesController < Api::ApiController
     # GET /api/users/:user_id/spaces?course=1&role=member

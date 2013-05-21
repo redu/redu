@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class UserStatusesJob
   attr_accessor :user_id, :status_id
 

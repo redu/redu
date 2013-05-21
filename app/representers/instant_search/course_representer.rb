@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module InstantSearch
   module CourseRepresenter
     include Roar::Representer::JSON

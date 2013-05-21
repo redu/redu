@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Api
   module ClientApplicationRepresenter
     include Roar::Representer::JSON

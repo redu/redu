@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RemoveLazyAssets < ActiveRecord::Migration
   def self.up
     drop_table :lazy_assets

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateUserSpaceAssociationJob
   # Cria UserSpaceAssociation para todos os usuários que pertencem
   # ao curso (foram previamente aprovados)

@@ -1,7 +1,8 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe User do
-  subject { Factory(:user) }
+  subject { FactoryGirl.create(:user) }
 
   it { should have_many(:statuses) }
   [:lectures, :favorites, :statuses, :subjects].each do |attr|
@@ -100,24 +101,24 @@ describe User do
     context "email" do
       context "presence" do
         it "should not be valid if email is absent" do
-          u = Factory.build(:user, :email => "")
+          u = FactoryGirl.build(:user, :email => "")
           u.should_not be_valid
           u.errors[:email].should_not be_empty
         end
       end
 
       context "uniqueness" do
-        let!(:already_registered) { Factory(:user, :email => "first@mail.com") }
+        let!(:already_registered) { FactoryGirl.create(:user, :email => "first@mail.com") }
 
         it "should not be valid if already there is a user with same email" do
-          u = Factory.build(:user, :email => "first@mail.com")
+          u = FactoryGirl.build(:user, :email => "first@mail.com")
           u.should_not be_valid
           u.errors[:email].should_not be_empty
         end
 
         it "should not be valid if already there is a user with same email " \
           "case insensitive" do
-          u = Factory.build(:user, :email => "FIRST@MAIL.COM")
+          u = FactoryGirl.build(:user, :email => "FIRST@MAIL.COM")
           u.should_not be_valid
           u.errors[:email].should_not be_empty
         end
@@ -125,13 +126,13 @@ describe User do
 
       context "format" do
         it "should not be valid when e-mail does not have @" do
-          u = Factory.build(:user, :email => "invalid.inv")
+          u = FactoryGirl.build(:user, :email => "invalid.inv")
           u.should_not be_valid
           u.errors[:email].should_not be_empty
         end
 
         it "should not be valid when e-mail does not have dots" do
-          u = Factory.build(:user, :email => "invalid@inv")
+          u = FactoryGirl.build(:user, :email => "invalid@inv")
           u.should_not be_valid
           u.errors[:email].should_not be_empty
         end
@@ -139,13 +140,13 @@ describe User do
 
       context "length" do
         it "should not be valid when email has less than 3 caracters" do
-          u = Factory.build(:user, :email => "i@")
+          u = FactoryGirl.build(:user, :email => "i@")
           u.should_not be_valid
           u.errors[:email].should_not be_empty
         end
 
         it "should not be valid when email has more than 100 caracters" do
-          u = Factory.build(:user, :email => "#{SecureRandom.hex(92)}@mail.com")
+          u = FactoryGirl.build(:user, :email => "#{SecureRandom.hex(92)}@mail.com")
           u.should_not be_valid
           u.errors[:email].should_not be_empty
         end
@@ -154,7 +155,7 @@ describe User do
       context "confirmation" do
         it "should not be valid when email and email_confirmation are " \
           "different" do
-          u = Factory.build(:user, :email => "email@email.com",
+          u = FactoryGirl.build(:user, :email => "email@email.com",
                             :email_confirmation => "different@email.com")
           u.should_not be_valid
           u.errors[:email].should_not be_empty
@@ -163,7 +164,7 @@ describe User do
     end
 
     it "validates mobile phone format" do
-      u = Factory.build(:user, :mobile => "21312312")
+      u = FactoryGirl.build(:user, :mobile => "21312312")
       u.should_not be_valid
       u.errors[:mobile].should_not be_empty
       u.mobile = "+55 (81) 1231-2131"
@@ -175,24 +176,24 @@ describe User do
     context "login" do
       context "presence" do
         it "should not be valid if login is absent" do
-          u = Factory.build(:user, :login => "")
+          u = FactoryGirl.build(:user, :login => "")
           u.should_not be_valid
           u.errors[:login].should_not be_empty
         end
       end
 
       context "uniqueness" do
-        let!(:already_registered) { Factory(:user, :login => "first_here") }
+        let!(:already_registered) { FactoryGirl.create(:user, :login => "first_here") }
 
         it "should not be valid if already there is a user with same login" do
-          u = Factory.build(:user, :login => "first_here")
+          u = FactoryGirl.build(:user, :login => "first_here")
           u.should_not be_valid
           u.errors[:login].should_not be_empty
         end
 
         it "should not be valid if already there is a user with same login " \
           "case insensitive" do
-          u = Factory.build(:user, :login => "FIRST_HERE")
+          u = FactoryGirl.build(:user, :login => "FIRST_HERE")
           u.should_not be_valid
           u.errors[:login].should_not be_empty
         end
@@ -201,7 +202,7 @@ describe User do
       context "exclusion" do
         it "should not be valid when login is a reserved login" do
           login = Redu::Application.config.extras["reserved_logins"][1]
-          u = Factory.build(:user, :login => login)
+          u = FactoryGirl.build(:user, :login => login)
           u.should_not be_valid
           u.errors[:login].should_not be_empty
         end
@@ -209,13 +210,13 @@ describe User do
 
       context "length" do
         it "should not be valid when login has less than 5 letters" do
-          u = Factory.build(:user, :login => "nick")
+          u = FactoryGirl.build(:user, :login => "nick")
           u.should_not be_valid
           u.errors[:login].should_not be_empty
         end
 
         it "should not be valid when login has more than 20 letters" do
-          u = Factory.build(:user, :login => "my_super_giant_login_")
+          u = FactoryGirl.build(:user, :login => "my_super_giant_login_")
           u.should_not be_valid
           u.errors[:login].should_not be_empty
         end
@@ -223,56 +224,56 @@ describe User do
 
       context "format" do
         it "should not be valid when login has dots" do
-          u = Factory.build(:user, :login => "my.login")
+          u = FactoryGirl.build(:user, :login => "my.login")
           u.should_not be_valid
           u.errors[:login].should_not be_empty
         end
 
         it "should not be valid when login has spaces" do
-          u = Factory.build(:user, :login => "my login")
+          u = FactoryGirl.build(:user, :login => "my login")
           u.should_not be_valid
           u.errors[:login].should_not be_empty
         end
 
         it "should not be valid when login has only numbers" do
-          u = Factory.build(:user, :login => "123456")
+          u = FactoryGirl.build(:user, :login => "123456")
           u.should_not be_valid
           u.errors[:login].should_not be_empty
         end
 
         it "should not be valid when login has only underlines or hyphen" do
-          u = Factory.build(:user, :login => "_-_-_-_-")
+          u = FactoryGirl.build(:user, :login => "_-_-_-_-")
           u.should_not be_valid
           u.errors[:login].should_not be_empty
         end
 
         it "should be valid when login has numbers in the begin" do
-          u = Factory.build(:user, :login => "123mylogin")
+          u = FactoryGirl.build(:user, :login => "123mylogin")
           u.should be_valid
         end
 
         it "should be valid when login has numbers in the end" do
-          u = Factory.build(:user, :login => "mylogin123")
+          u = FactoryGirl.build(:user, :login => "mylogin123")
           u.should be_valid
         end
 
         it "should be valid when login has numbers in the middle" do
-          u = Factory.build(:user, :login => "my123login")
+          u = FactoryGirl.build(:user, :login => "my123login")
           u.should be_valid
         end
 
         it "should be valid when login has only letters" do
-          u = Factory.build(:user, :login => "mylogin")
+          u = FactoryGirl.build(:user, :login => "mylogin")
           u.should be_valid
         end
 
         it "should be valid when login has underline mixed with letters" do
-          u = Factory.build(:user, :login => "my_login")
+          u = FactoryGirl.build(:user, :login => "my_login")
           u.should be_valid
         end
 
         it "should be valid when login has hyphen mixed with letters" do
-          u = Factory.build(:user, :login => "my-login")
+          u = FactoryGirl.build(:user, :login => "my-login")
           u.should be_valid
         end
       end
@@ -286,14 +287,14 @@ describe User do
 
         context "length" do
           it "should not be valid when password has less than 6 letters" do
-            u = Factory.build(:user, :password => "passw",
+            u = FactoryGirl.build(:user, :password => "passw",
                               :password_confirmation => "passw")
             u.should_not be_valid
             u.errors[:password].should_not be_empty
           end
 
           it "should not be valid when password has more than 20 letters" do
-            u = Factory.build(:user, :password => "super_giant_password_",
+            u = FactoryGirl.build(:user, :password => "super_giant_password_",
                               :password_confirmation => "super_giant_password_")
             u.should_not be_valid
             u.errors[:password].should_not be_empty
@@ -308,13 +309,13 @@ describe User do
 
         context "length" do
           it "should be valid when password has less than 6 letters" do
-            u = Factory.build(:user, :password => "passw",
+            u = FactoryGirl.build(:user, :password => "passw",
                               :password_confirmation => "passw")
             u.should be_valid
           end
 
           it "should be valid when password has more than 20 letters" do
-            u = Factory.build(:user, :password => "super_giant_password_",
+            u = FactoryGirl.build(:user, :password => "super_giant_password_",
                               :password_confirmation => "super_giant_password_")
             u.should be_valid
           end
@@ -325,22 +326,22 @@ describe User do
     context "humanizer" do
       it "should not be valid when enabling humanizer (User#enable_humanizer)" do
         User.any_instance.stub(:enable_humanizer).and_return(true)
-        Factory.build(:user).should_not be_valid
+        FactoryGirl.build(:user).should_not be_valid
       end
     end
   end
 
   context "associations" do
     it "retrieves lectures that are not clones" do
-      environment = Factory(:environment, :owner => subject)
-      course = Factory(:course, :owner => environment.owner,
+      environment = FactoryGirl.create(:environment, :owner => subject)
+      course = FactoryGirl.create(:course, :owner => environment.owner,
                        :environment => environment)
-      @space = Factory(:space, :owner => environment.owner,
+      @space = FactoryGirl.create(:space, :owner => environment.owner,
                        :course => course)
-      @sub = Factory(:subject, :owner => subject, :space => @space)
-      lecture = Factory(:lecture, :subject => @sub,
+      @sub = FactoryGirl.create(:subject, :owner => subject, :space => @space)
+      lecture = FactoryGirl.create(:lecture, :subject => @sub,
                         :is_clone => false, :owner => subject)
-      lecture2 = Factory(:lecture, :subject => @sub,
+      lecture2 = FactoryGirl.create(:lecture, :subject => @sub,
                          :is_clone => true, :owner => subject)
       lecture.save
       lecture2.save
@@ -348,12 +349,12 @@ describe User do
     end
 
     it "retrieves subjects that are finalized" do
-      space = Factory(:space)
+      space = FactoryGirl.create(:space)
       space.course.join subject
-      subjects_finalized = (1..3).collect { Factory(:subject, :owner => subject,
+      subjects_finalized = (1..3).collect { FactoryGirl.create(:subject, :owner => subject,
                                                     :space => space,
                                                     :finalized => true) }
-      subjects = (1..3).collect { Factory(:subject, :owner => subject,
+      subjects = (1..3).collect { FactoryGirl.create(:subject, :owner => subject,
                                           :space => space) }
 
       subject.subjects.should == subjects_finalized
@@ -362,19 +363,19 @@ describe User do
 
   context "finders" do
     it "retrieves recent users" do
-      users = (1..3).collect { |n| Factory(:user, :created_at => n.hour.ago) }
+      users = (1..3).collect { |n| FactoryGirl.create(:user, :created_at => n.hour.ago) }
       User.recent.should == users
     end
 
     it "retrieves active users" do
-      active_users = (1..3).collect { |n| Factory(:user,
+      active_users = (1..3).collect { |n| FactoryGirl.create(:user,
                                                   :activated_at => 1.day.ago) }
-      users = (1..3).collect { |n| Factory(:user) }
+      users = (1..3).collect { |n| FactoryGirl.create(:user) }
       User.active.should == active_users
     end
 
     it "retrieves users tagged with specified tag" do
-      users = (1..2).collect { Factory(:user) }
+      users = (1..2).collect { FactoryGirl.create(:user) }
 
       subject.tag_list = "tag"
       subject.save
@@ -388,23 +389,23 @@ describe User do
     end
 
     it "retrieves users with specified ids" do
-      users = (1..4).collect { Factory(:user) }
+      users = (1..4).collect { FactoryGirl.create(:user) }
       User.with_ids([users[0].id, users[1].id]).should == [users[0], users[1]]
     end
 
     it "retrieves a user by his login slug" do
-      user = Factory(:user)
+      user = FactoryGirl.create(:user)
       User.find(subject.login).should == subject
     end
 
     it "retrieves a user by his login or email" do
-      user = Factory(:user)
+      user = FactoryGirl.create(:user)
       User.find_by_login_or_email(subject.login).should == subject
       User.find_by_login_or_email(subject.email).should == subject
     end
 
     it "retrieves course invitations" do
-      courses = (0..3).collect { Factory(:course) }
+      courses = (0..3).collect { FactoryGirl.create(:course) }
       courses[0].subscription_type = 2
       courses[0].join subject
       courses[1].subscription_type = 2
@@ -417,9 +418,9 @@ describe User do
 
     it "retrieves a user by name, login or email" do
       users = []
-      users << Factory(:user, :first_name => "Guilherme")
-      users << Factory(:user, :login => "guilherme")
-      users << Factory(:user, :email => "guiocavalcanti@redu.com.br")
+      users << FactoryGirl.create(:user, :first_name => "Guilherme")
+      users << FactoryGirl.create(:user, :login => "guilherme")
+      users << FactoryGirl.create(:user, :email => "guiocavalcanti@redu.com.br")
 
       User.with_keyword("guilherme").to_set.should == [users[0], users[1]].to_set
     end
@@ -427,7 +428,7 @@ describe User do
     context 'when a user has multiple spaces in the end of his name' do
       before do
         # Usuários old style
-        @tarci = Factory.build(:user, :first_name => "TARCISIO   ",
+        @tarci = FactoryGirl.build(:user, :first_name => "TARCISIO   ",
                               :last_name => "COUTINHO")
         @tarci.save(:validate => false)
       end
@@ -442,26 +443,26 @@ describe User do
     end
 
     it "should retrive a private channel name with a contact" do
-      @contact = Factory(:user)
+      @contact = FactoryGirl.create(:user)
       subject.private_channel_with(@contact).should ==
         "private-#{@contact.id}-#{subject.id}"
     end
 
     it "retrieves the 5 most popular users (more friends)" do
-      @popular = (1..3).collect { |i| Factory(:user, :friends_count => 20 + i) }
-      @less_popular = (1..3).collect {|i| Factory(:user, :friends_count => 10 - i) }
-      @not_popular = (1..5).collect {|i| Factory(:user, :friends_count => 3) }
+      @popular = (1..3).collect { |i| FactoryGirl.create(:user, :friends_count => 20 + i) }
+      @less_popular = (1..3).collect {|i| FactoryGirl.create(:user, :friends_count => 10 - i) }
+      @not_popular = (1..5).collect {|i| FactoryGirl.create(:user, :friends_count => 3) }
 
       User.popular(5).to_set.should == (@popular + @less_popular[0..1]).to_set
     end
 
     it "retrieves the 3 most popular teachers" do
-      @popular = (1..3).collect { |i| Factory(:user, :friends_count => 20 + i) }
-      @less_popular = (1..3).collect {|i| Factory(:user, :friends_count => 10 - i) }
-      @not_popular = (1..5).collect {|i| Factory(:user, :friends_count => 3) }
+      @popular = (1..3).collect { |i| FactoryGirl.create(:user, :friends_count => 20 + i) }
+      @less_popular = (1..3).collect {|i| FactoryGirl.create(:user, :friends_count => 10 - i) }
+      @not_popular = (1..5).collect {|i| FactoryGirl.create(:user, :friends_count => 3) }
 
-      @course = Factory(:course)
-      @course2 = Factory(:course)
+      @course = FactoryGirl.create(:course)
+      @course2 = FactoryGirl.create(:course)
 
       @course.join @popular[1], Role[:teacher]
       @course2.join @less_popular[1], Role[:teacher]
@@ -477,38 +478,38 @@ describe User do
 
     it "retrieves users with email domain like 'redu.com.br'" do
       @hotmail_users = (1..3).collect do |n|
-        Factory(:user, :email => "#{n}@hotmail.com")
+        FactoryGirl.create(:user, :email => "#{n}@hotmail.com")
       end
 
       @gmail_users =  (1..3).collect do |n|
-        Factory(:user, :email => "#{n}@gmail.com")
+        FactoryGirl.create(:user, :email => "#{n}@gmail.com")
       end
 
       @redu_users =  (1..3).collect do |n|
-        Factory(:user, :email => "#{n}@redu.com")
+        FactoryGirl.create(:user, :email => "#{n}@redu.com")
       end
 
       User.with_email_domain_like("administrator@redu.com").should == @redu_users
     end
 
     it "retrieves all users except the specified users" do
-      users = (1..10).collect { Factory(:user) }
+      users = (1..10).collect { FactoryGirl.create(:user) }
       User.without_ids(users[0..1]).should == users[2..10]
     end
 
     it "retrieves all colleagues (same course but not friends or pending friends)" do
-      user = Factory(:user)
-      owner = Factory(:user)
-      env = Factory(:environment, :owner => owner)
-      colleagues1 = (1..10).collect { Factory(:user) }
-      friends1 = (1..5).collect { Factory(:user) }
-      course1 = Factory(:course, :environment => env, :owner => owner)
+      user = FactoryGirl.create(:user)
+      owner = FactoryGirl.create(:user)
+      env = FactoryGirl.create(:environment, :owner => owner)
+      colleagues1 = (1..10).collect { FactoryGirl.create(:user) }
+      friends1 = (1..5).collect { FactoryGirl.create(:user) }
+      course1 = FactoryGirl.create(:course, :environment => env, :owner => owner)
 
-      colleagues2 = (1..10).collect { Factory(:user) }
-      friends2 = (1..5).collect { Factory(:user) }
-      course2 = Factory(:course, :environment => env, :owner => owner)
+      colleagues2 = (1..10).collect { FactoryGirl.create(:user) }
+      friends2 = (1..5).collect { FactoryGirl.create(:user) }
+      course2 = FactoryGirl.create(:course, :environment => env, :owner => owner)
 
-      pending_friends = (1..10).collect { Factory(:user) }
+      pending_friends = (1..10).collect { FactoryGirl.create(:user) }
 
       course1.join user
       course2.join user
@@ -539,11 +540,11 @@ describe User do
     end
 
     it "retrieves all friends of friends (exclude pending friends)" do
-      vader = Factory(:user, :login => "darth_vader")
-      luke = Factory(:user, :login => "luke_skywalker")
-      leia = Factory(:user, :login => "princess_leia")
-      han_solo = Factory(:user, :login => "han_solo")
-      yoda = Factory(:user, :login => "yodaaa")
+      vader = FactoryGirl.create(:user, :login => "darth_vader")
+      luke = FactoryGirl.create(:user, :login => "luke_skywalker")
+      leia = FactoryGirl.create(:user, :login => "princess_leia")
+      han_solo = FactoryGirl.create(:user, :login => "han_solo")
+      yoda = FactoryGirl.create(:user, :login => "yodaaa")
 
       create_friendship vader, luke
       create_friendship vader, leia
@@ -556,16 +557,16 @@ describe User do
     end
 
     it "should retrieves all recipients passing a set of reccipients ids " do
-      vader = Factory(:user, :login => "vaderr")
-      luke = Factory(:user, :login => "luke_skywalker")
-      leia = Factory(:user, :login => "princess_leia")
-      han_solo = Factory(:user, :login => "han_solo")
+      vader = FactoryGirl.create(:user, :login => "vaderr")
+      luke = FactoryGirl.create(:user, :login => "luke_skywalker")
+      leia = FactoryGirl.create(:user, :login => "princess_leia")
+      han_solo = FactoryGirl.create(:user, :login => "han_solo")
 
       User.message_recipients([vader.id, luke.id]).should == [vader, luke]
     end
 
     it "retrieves all subjects ids from your lectures" do
-      @lecture = Factory(:lecture, :owner => subject)
+      @lecture = FactoryGirl.create(:lecture, :owner => subject)
       subject.lectures << @lecture
 
       @id = @lecture.subject.id
@@ -594,7 +595,7 @@ describe User do
 
     context "when creating an user with empty whitespaces" do
       before do
-        @my_user = Factory.build(:user,
+        @my_user = FactoryGirl.build(:user,
           :login => "  vader   ", :email => " coisa@gmail.com",
           :first_name => " darth     ", :last_name => " vader da silva   ")
       end
@@ -611,20 +612,20 @@ describe User do
   context "when recommending friends" do
     context "when does not have friends" do
       it "retrieves five contacts" do
-        new_user = Factory(:user, :email => "user@example.com")
-        teachers = (1..10).collect { Factory(:user) }
-        populars = (1..20).collect { |n| Factory(:user, :friends_count => 23 + n) }
-        same_domain = Factory(:user, :email => "user2@example.com")
+        new_user = FactoryGirl.create(:user, :email => "user@example.com")
+        teachers = (1..10).collect { FactoryGirl.create(:user) }
+        populars = (1..20).collect { |n| FactoryGirl.create(:user, :friends_count => 23 + n) }
+        same_domain = FactoryGirl.create(:user, :email => "user2@example.com")
 
-        course = Factory(:course)
+        course = FactoryGirl.create(:course)
         teachers.each {|t| course.join(t, Role[:teacher])}
 
         new_user.recommended_contacts(5).length.should == 5
       end
 
       it "the user is not included" do
-        new_user = Factory(:user, :email => "user@example.com")
-        populars = (1..2).collect { |n| Factory(:user, :friends_count => 23 + n) }
+        new_user = FactoryGirl.create(:user, :email => "user@example.com")
+        populars = (1..2).collect { |n| FactoryGirl.create(:user, :friends_count => 23 + n) }
         new_user.recommended_contacts(5).should_not include(new_user)
       end
     end
@@ -638,7 +639,7 @@ describe User do
         :log_observer,
         :friendship_observer,
         :status_observer) do
-          @friends = 3.times.collect { Factory(:user) }
+          @friends = 3.times.collect { FactoryGirl.create(:user) }
           @friends[0].be_friends_with(subject)
           subject.be_friends_with(@friends[0])
           @friends[1].be_friends_with(subject)
@@ -682,7 +683,7 @@ describe User do
   end
 
   it "verifies if a profile is complete" do
-    subject = Factory(:user, :gender => 'M', :description => "Desc")
+    subject = FactoryGirl.create(:user, :gender => 'M', :description => "Desc")
     subject.tag_list = "one, two, three"
     subject.save
 
@@ -700,27 +701,27 @@ describe User do
   it "retrieves his posts made in current month"
   it "retrieves his posts made between last and current month"
   it "deactivates his account" do
-    subject = Factory(:user, :created_at => 40.days.ago,
+    subject = FactoryGirl.create(:user, :created_at => 40.days.ago,
                       :activated_at => 1.day.ago)
     subject.deactivate
     subject.should_not be_active
   end
 
   it "activates his account" do
-    subject = Factory(:user, :created_at => 40.days.ago,
+    subject = FactoryGirl.create(:user, :created_at => 40.days.ago,
                       :activated_at => 1.day.ago)
     subject.activate
     subject.should be_active
   end
 
   it "verifies if he can activate his account" do
-    subject = Factory(:user)
+    subject = FactoryGirl.create(:user)
     subject.can_activate?.should == true
 
-    subject = Factory(:user, :activated_at => 1.day.ago)
+    subject = FactoryGirl.create(:user, :activated_at => 1.day.ago)
     subject.can_activate?.should == false
 
-    subject = Factory(:user, :created_at => 31.days.ago,
+    subject = FactoryGirl.create(:user, :created_at => 31.days.ago,
                       :activated_at => nil)
     subject.can_activate?.should == false
   end
@@ -770,10 +771,10 @@ describe User do
 
   it "verifies if he can post on a space"
   it "retrieves his association with a thing" do
-    environment = Factory(:environment)
-    course = Factory(:course, :environment => environment,
+    environment = FactoryGirl.create(:environment)
+    course = FactoryGirl.create(:course, :environment => environment,
                      :owner => environment.owner)
-    space = Factory(:space, :owner => environment.owner,
+    space = FactoryGirl.create(:space, :owner => environment.owner,
                     :course => course)
     course.join(subject)
 
@@ -784,13 +785,13 @@ describe User do
     subject.get_association_with(space).
       should == subject.user_space_associations.last
 
-    subject_entity = Factory(:subject, :owner => subject,
+    subject_entity = FactoryGirl.create(:subject, :owner => subject,
                              :space => space, :finalized => true)
     subject_entity.enroll
     subject.get_association_with(subject_entity).
       should == subject.enrollments.last
 
-    lecture_entity = Factory(:lecture, :subject => subject_entity,
+    lecture_entity = FactoryGirl.create(:lecture, :subject => subject_entity,
                              :owner => subject)
     subject.get_association_with(lecture_entity).
       should == subject.enrollments.last
@@ -803,14 +804,14 @@ describe User do
   end
 
   it "verifies if he is environment admin of a thing" do
-    environment = Factory(:environment, :owner => subject)
-    environment2 = Factory(:environment)
+    environment = FactoryGirl.create(:environment, :owner => subject)
+    environment2 = FactoryGirl.create(:environment)
     subject.should be_environment_admin(environment)
     subject.should_not be_environment_admin(environment2)
   end
 
   it "verifies if he is teacher of a thing" do
-    space = Factory(:space)
+    space = FactoryGirl.create(:space)
     space.users << subject
     assoc = subject.user_space_associations.last
     assoc.role =  Role[:teacher]
@@ -818,7 +819,7 @@ describe User do
     subject.should be_teacher(space)
   end
   it "verifies if he is tutor of a thing" do
-    space = Factory(:space)
+    space = FactoryGirl.create(:space)
     space.users << subject
     assoc = subject.user_space_associations.last
     assoc.role =  Role[:tutor]
@@ -826,7 +827,7 @@ describe User do
     subject.should be_tutor(space)
   end
   it "verifies if he is member of a thing" do
-    environment = Factory(:environment)
+    environment = FactoryGirl.create(:environment)
     environment.users << subject
     assoc = subject.user_environment_associations.last
     assoc.role =  Role[:tutor]
@@ -851,20 +852,20 @@ describe User do
   end
 
   it "adds a thing as his favorite" do
-    space = Factory(:space)
+    space = FactoryGirl.create(:space)
     subject.add_favorite(space.class.to_s, space.id)
     subject.favorites.last.favoritable.should == space
   end
 
   it "removes a thing as his favorite" do
-    space = Factory(:space)
+    space = FactoryGirl.create(:space)
     subject.add_favorite(space.class.to_s, space.id)
     subject.rm_favorite(space.class.to_s, space.id)
     subject.favorites.should be_empty
   end
 
   it "verifies if a thing is one of his favorite things" do
-    space = Factory(:space)
+    space = FactoryGirl.create(:space)
     subject.add_favorite(space.class.to_s, space.id)
     subject.has_favorite(space)
   end
@@ -882,12 +883,12 @@ describe User do
   it "should retrieve educations most important \
     in order > higher_education > complementary_course > high_school" do
 
-    edu1 = Factory(:education, :user => subject,
-                   :educationable => Factory(:high_school))
-    edu2 = Factory(:education, :user => subject,
-                   :educationable => Factory(:higher_education))
-    edu3 = Factory(:education, :user => subject,
-                   :educationable => Factory(:complementary_course))
+    edu1 = FactoryGirl.create(:education, :user => subject,
+                   :educationable => FactoryGirl.create(:high_school))
+    edu2 = FactoryGirl.create(:education, :user => subject,
+                   :educationable => FactoryGirl.create(:higher_education))
+    edu3 = FactoryGirl.create(:education, :user => subject,
+                   :educationable => FactoryGirl.create(:complementary_course))
 
     subject.reload
     subject.most_important_education.should == [edu2, edu3, edu1]
@@ -899,7 +900,7 @@ describe User do
 
   context "when application validation fail" do
     it "should prevent duplicate logins" do
-      @duplicate = Factory.build(:user, :login => subject.login)
+      @duplicate = FactoryGirl.build(:user, :login => subject.login)
       expect {
         @duplicate.save(:validate => false)
       }.to raise_error(ActiveRecord::RecordNotUnique)
@@ -908,7 +909,7 @@ describe User do
 
   context "Authlogic" do
     context "when passwords are blank" do
-      let(:user) { Factory(:user) }
+      let(:user) { FactoryGirl.create(:user) }
 
       it "#password= should not update it to blank (ignore_blank_passwords)" do
         user.password = ""

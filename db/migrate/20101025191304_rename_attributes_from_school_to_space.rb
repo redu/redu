@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RenameAttributesFromSchoolToSpace < ActiveRecord::Migration
   def self.up
     rename_column :redu_categories_spaces, :school_id, :space_id

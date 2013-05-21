@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module PlansHelper
   # Define a classe (cor de texto) de acordo com o status de pagamento do plano.
   def plan_payment_status_class(plan)

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class PlansController < BaseController
 
   before_filter :find_course_environment, :except => [:index, :create]

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateEventEducations < ActiveRecord::Migration
   def self.up
     create_table :event_educations do |t|

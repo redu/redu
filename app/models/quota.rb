@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Quota < ActiveRecord::Base
   belongs_to :billable, :polymorphic => true
 

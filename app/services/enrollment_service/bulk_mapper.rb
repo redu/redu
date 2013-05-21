@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module EnrollmentService
   class BulkMapper
     attr_reader :klass, :columns, :default_options

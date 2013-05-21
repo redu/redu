@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class UserCacheObserver < ActiveRecord::Observer
   include ViewCaches
   observe User

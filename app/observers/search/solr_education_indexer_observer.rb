@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class SolrEducationIndexerObserver < ActiveRecord::Observer
   # Observer responsável pela indexação de User
   # após manipulação com os seus educations

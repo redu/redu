@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe License do
@@ -12,13 +13,13 @@ describe License do
 
   context "retrievers" do
     before do
-      @user = Factory(:user)
-      @environment = Factory(:environment, :owner => @user)
-      @course = Factory(:course, :environment => @environment,
+      @user = FactoryGirl.create(:user)
+      @environment = FactoryGirl.create(:environment, :owner => @user)
+      @course = FactoryGirl.create(:course, :environment => @environment,
                        :owner => @user)
-      @another_course = Factory(:course, :environment => @environment,
+      @another_course = FactoryGirl.create(:course, :environment => @environment,
                         :owner => @user)
-      @plan = Factory(:active_licensed_plan, :price => 3.00,
+      @plan = FactoryGirl.create(:active_licensed_plan, :price => 3.00,
                        :billable => @environment)
       from = Date.new(2010, 01, 10)
       @plan.create_invoice({:invoice => {
@@ -30,10 +31,10 @@ describe License do
     end
 
     it "retrieves in use licenses" do
-      @in_use = (1..10).collect { Factory(:license, :period_end => nil,
+      @in_use = (1..10).collect { FactoryGirl.create(:license, :period_end => nil,
                                           :course => @course,
                                           :invoice => @invoice) }
-      (1..10).collect { Factory(:license, :period_end => Date.yesterday,
+      (1..10).collect { FactoryGirl.create(:license, :period_end => Date.yesterday,
                                 :course => @course,
                                 :invoice => @invoice) }
 
@@ -41,11 +42,11 @@ describe License do
     end
 
     it "retrieves all licenses of a course" do
-      (1..10).collect { Factory(:license, :period_end => Date.yesterday,
+      (1..10).collect { FactoryGirl.create(:license, :period_end => Date.yesterday,
                                 :course => @course,
                                 :invoice => @invoice) }
       @licenses = (1..10).collect do
-        Factory(:license, :period_end => Date.yesterday,
+        FactoryGirl.create(:license, :period_end => Date.yesterday,
                 :course => @another_course, :invoice => @invoice)
       end
 
@@ -53,18 +54,18 @@ describe License do
     end
 
     it "retrieves all payable licenses" do
-      (1..3).collect { Factory(:license, :period_end => Date.yesterday,
+      (1..3).collect { FactoryGirl.create(:license, :period_end => Date.yesterday,
                                 :invoice => @invoice,
                                 :role => Role[:environment_admin]) }
-      (1..3).collect { Factory(:license, :period_end => Date.yesterday,
+      (1..3).collect { FactoryGirl.create(:license, :period_end => Date.yesterday,
                                 :invoice => @invoice,
                                 :role => Role[:tutor]) }
-      (1..3).collect { Factory(:license, :period_end => Date.yesterday,
+      (1..3).collect { FactoryGirl.create(:license, :period_end => Date.yesterday,
                                 :invoice => @invoice,
                                 :role => Role[:teacher]) }
 
       @licenses = (1..10).collect do
-        Factory(:license, :period_end => Date.yesterday,
+        FactoryGirl.create(:license, :period_end => Date.yesterday,
                  :invoice => @invoice, :role => Role[:member])
       end
 
@@ -72,10 +73,10 @@ describe License do
     end
 
     it "should retrive open license" do
-     (1..4).collect { Factory(:license, :period_end => Date.yesterday,
+     (1..4).collect { FactoryGirl.create(:license, :period_end => Date.yesterday,
                                :course => @course,
                                :invoice => @invoice) }
-     @another_user = Factory(:user)
+     @another_user = FactoryGirl.create(:user)
      @course.join(@another_user, Role[:member])
      License.get_open_license_with(@another_user, @course).should == @invoice.licenses.last
     end
@@ -83,13 +84,13 @@ describe License do
 
   context "when changing role license" do
     before do
-      @user = Factory(:user)
-      @environment = Factory(:environment, :owner => @user)
-      @course = Factory(:course, :environment => @environment,
+      @user = FactoryGirl.create(:user)
+      @environment = FactoryGirl.create(:environment, :owner => @user)
+      @course = FactoryGirl.create(:course, :environment => @environment,
                        :owner => @user)
-      @another_course = Factory(:course, :environment => @environment,
+      @another_course = FactoryGirl.create(:course, :environment => @environment,
                         :owner => @user)
-      @plan = Factory(:active_licensed_plan, :price => 3.00,
+      @plan = FactoryGirl.create(:active_licensed_plan, :price => 3.00,
                        :billable => @environment)
       from = Date.new(2010, 01, 10)
       @plan.create_invoice({:invoice => {
@@ -101,10 +102,10 @@ describe License do
     end
 
     it "should change the role" do
-      (1..4).collect { Factory(:license, :period_end => Date.yesterday,
+      (1..4).collect { FactoryGirl.create(:license, :period_end => Date.yesterday,
                                :course => @course,
                                :invoice => @invoice) }
-      @another_user = Factory(:user)
+      @another_user = FactoryGirl.create(:user)
       @course.join(@another_user, Role[:member])
       @course.change_role(@another_user, Role[:tutor])
       License.get_open_license_with(@another_user, @course).role == Role[:tutor]

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # Allow the metal piece to run in isolation
 require(File.dirname(__FILE__) + "/../../config/environment") unless defined?(Rails)
 

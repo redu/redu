@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RemoveDefaultSubmissionTypeFromSpace < ActiveRecord::Migration
   def self.up
     change_column_default :spaces, :submission_type, nil

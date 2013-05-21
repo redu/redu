@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 Redu::Application.routes.draw do
   localized do
     match '/oauth/token',         :to => 'oauth#token',         :as => :token

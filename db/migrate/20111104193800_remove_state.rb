@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RemoveState < ActiveRecord::Migration
   def self.up
     drop_table :states

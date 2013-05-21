@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module SearchNavigation
   def search_navigation(sidebar)
     # A navegação de Search não possui sidebar, bloco apenas para manter o padrão

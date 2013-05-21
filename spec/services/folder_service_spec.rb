@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe FolderService do
@@ -20,7 +21,7 @@ describe FolderService do
 
       it "should accept a block" do
         folder = subject.create do |folder|
-          folder.user = Factory(:user)
+          folder.user = FactoryGirl.create(:user)
         end
 
         folder.user.should_not be_nil
@@ -45,7 +46,7 @@ describe FolderService do
     end
 
     describe "#destroy" do
-      let!(:folder) { Factory(:folder) }
+      let!(:folder) { FactoryGirl.create(:folder) }
       subject { FolderService.new(params.merge(:model => folder)) }
 
       before do
@@ -69,8 +70,8 @@ describe FolderService do
     end
 
     describe "#update" do
-      let(:folder) { Factory(:folder) }
-      let(:user) { Factory(:user) }
+      let(:folder) { FactoryGirl.create(:folder) }
+      let(:user) { FactoryGirl.create(:user) }
       subject { FolderService.new(params.merge(:model => folder)) }
       let(:folder_params) { { :name => "Old" } }
 

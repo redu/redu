@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddPositionToAssets < ActiveRecord::Migration
   def self.up
     add_column :assets, :position, :integer

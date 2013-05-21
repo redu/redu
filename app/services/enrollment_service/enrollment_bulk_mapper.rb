@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module EnrollmentService
   class EnrollmentBulkMapper < BulkMapper
     def initialize

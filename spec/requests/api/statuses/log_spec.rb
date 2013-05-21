@@ -1,14 +1,15 @@
+# -*- encoding : utf-8 -*-
 require "api_spec_helper"
 
 describe "Log" do
-  let(:current_user) { Factory(:user) }
+  let(:current_user) { FactoryGirl.create(:user) }
   let(:token) { _, _, token = generate_token(current_user); token }
   let(:space) do
-    environment = Factory(:complete_environment, :owner => current_user)
+    environment = FactoryGirl.create(:complete_environment, :owner => current_user)
     environment.courses.first.spaces.first
   end
   let(:log) do
-    Factory(:log, :statusable => space, :user => current_user,
+    FactoryGirl.create(:log, :statusable => space, :user => current_user,
             :logeable => space)
   end
   let(:params) { { :oauth_token => token, :format => 'json'} }
@@ -46,7 +47,7 @@ describe "Log" do
     it_should_behave_like 'having breadcrumbs', "User" do
       let(:get_params) { params }
       let(:status) do
-        Factory(:log, :user => current_user, :statusable => current_user)
+        FactoryGirl.create(:log, :user => current_user, :statusable => current_user)
       end
     end
 
@@ -58,8 +59,8 @@ describe "Log" do
     it_should_behave_like 'having breadcrumbs', "Lecture" do
       let(:get_params) { params }
       let(:status) do
-        Factory(:log, :user => current_user,
-                :statusable => Factory(:lecture, :owner => current_user))
+        FactoryGirl.create(:log, :user => current_user,
+                :statusable => FactoryGirl.create(:lecture, :owner => current_user))
       end
     end
   end
@@ -67,11 +68,11 @@ describe "Log" do
   context "when GET /api/users/:id/statuses" do
     let!(:user_logs) do
       2.times.collect do
-        Factory(:log, :statusable => current_user, :logeable => current_user, :user => current_user)
+        FactoryGirl.create(:log, :statusable => current_user, :logeable => current_user, :user => current_user)
       end
     end
     let!(:space_logs) do
-      1.times.collect { Factory(:log, :statusable => current_user, :logeable => space, :user => current_user) }
+      1.times.collect { FactoryGirl.create(:log, :statusable => current_user, :logeable => space, :user => current_user) }
     end
 
     it "should filter Logs by logeable_type" do

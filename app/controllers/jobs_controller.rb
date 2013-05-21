@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class JobsController < BaseController
   require 'open-uri'
   before_filter :authenticate

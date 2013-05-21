@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RecoveryEmail
   include ActiveModel::Validations
   include ActiveModel::Conversion

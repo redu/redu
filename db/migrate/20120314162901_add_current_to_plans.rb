@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddCurrentToPlans < ActiveRecord::Migration
   def self.up
     add_column :plans, :current, :boolean

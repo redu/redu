@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddUniqueIndexToSpaces < ActiveRecord::Migration
   def self.up
     add_index :user_space_associations, [:user_id, :space_id], :unique => true

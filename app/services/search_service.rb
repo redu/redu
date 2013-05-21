@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class SearchService
   # Serviço para busca.
   # Métodos auxiliares que lidam com os parametros da requisição

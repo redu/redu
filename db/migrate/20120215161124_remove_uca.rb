@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RemoveUca < ActiveRecord::Migration
   def self.up
     drop_table :user_course_associations

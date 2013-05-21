@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module QuestionsHelper
   def pagination(current)
     inf = 1.0/0

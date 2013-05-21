@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateSubjects < ActiveRecord::Migration
   def self.up
     create_table :subjects do |t|

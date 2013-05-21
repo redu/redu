@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddAttachmentsAttachmentToSubjectFile < ActiveRecord::Migration
   def self.up
     add_column :subject_files, :name, :string

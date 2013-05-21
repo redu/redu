@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Untied
   module HasAttachmentRepresenter
     # Este representa adiciona um property :avatar_url que retorna a URL completa

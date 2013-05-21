@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RemoveReduCategory < ActiveRecord::Migration
   def self.up
   	drop_table :redu_categories

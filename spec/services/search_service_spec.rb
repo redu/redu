@@ -1,10 +1,11 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe SearchService do
   let(:params) {{ :q => 'Alex', :f => ["disciplinas"],
                   :action => "environments", :locale => 'pt-BR' }}
   let(:per_page) { 10 }
-  let(:user) { Factory(:user) }
+  let(:user) { FactoryGirl.create(:user) }
 
   subject { SearchService.new(:params => params,
                               :ability => Ability.new(user),
@@ -31,13 +32,13 @@ describe SearchService do
 
   context "filters" do
     before do
-      my_course = Factory(:course)
-      course = Factory(:course)
+      my_course = FactoryGirl.create(:course)
+      course = FactoryGirl.create(:course)
       my_course.join(user)
 
       @spaces = []
-      space = Factory(:space, :course => course)
-      @my_space = Factory(:space, :course => my_course)
+      space = FactoryGirl.create(:space, :course => course)
+      @my_space = FactoryGirl.create(:space, :course => my_course)
 
       @spaces << space
       @spaces << @my_space

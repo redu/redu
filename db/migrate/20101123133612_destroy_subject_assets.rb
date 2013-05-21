@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class DestroySubjectAssets < ActiveRecord::Migration
   def self.up
     drop_table :subject_assets

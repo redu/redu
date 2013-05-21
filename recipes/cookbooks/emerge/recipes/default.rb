@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 #############################################
 # Sample recipe for emerging packages
 # 

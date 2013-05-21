@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Exercise < ActiveRecord::Base
   # Exercícios de multipla escolha. É um lectureable.
   #

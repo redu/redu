@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class PartnersController < BaseController
   load_and_authorize_resource
 

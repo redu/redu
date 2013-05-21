@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class QuestionsController < BaseController
   before_filter :load_hierarchy
 

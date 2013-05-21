@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RemoveGroupAndGroupPermission < ActiveRecord::Migration
   def self.up
     drop_table :group_permissions

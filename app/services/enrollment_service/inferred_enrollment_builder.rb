@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module EnrollmentService
   class InferredEnrollmentBuilder < Struct.new(:subjects)
     # Define estratégia para construir uma matriz do tipo

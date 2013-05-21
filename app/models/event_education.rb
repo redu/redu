@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class EventEducation < ActiveRecord::Base
   # Representa um evento escolar/acadêmico que o usuário participou
   # É uma especialização de Education

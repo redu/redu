@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddSpaceIdToForum < ActiveRecord::Migration
   def self.up
     add_column :forums, :space_id, :integer

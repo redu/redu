@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 shared_examples_for "asset reports listing without filter" do
   let!(:entity_name) { context.class.to_s.tableize }
 

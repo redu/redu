@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 shared_examples_for "a Sunspot::Search performer" do
 
   it { should be_a_kind_of(Search) }

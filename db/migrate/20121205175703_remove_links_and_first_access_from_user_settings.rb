@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RemoveLinksAndFirstAccessFromUserSettings < ActiveRecord::Migration
   def self.up
     remove_column :user_settings, :first_access

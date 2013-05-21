@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RemovePriceFromExam < ActiveRecord::Migration
   def self.up
     remove_column :exams, :price

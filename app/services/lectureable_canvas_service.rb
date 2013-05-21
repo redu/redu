@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # Serviço responsável por instanciar e criar canvas
 class LectureableCanvasService < LectureableService
   # Parâmetros:

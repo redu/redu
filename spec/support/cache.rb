@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module CacheSpecHelper
   def performing_cache(*initial_caches)
     ActionController::Base.perform_caching = true

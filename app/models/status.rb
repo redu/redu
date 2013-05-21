@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Status < ActiveRecord::Base
   belongs_to :statusable, :polymorphic => true
   belongs_to :logeable, :polymorphic => true

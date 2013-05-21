@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddInitialsToEnvironment < ActiveRecord::Migration
   def self.up
     add_column :environments, :initials, :string

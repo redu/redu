@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddStudentProfileToEnrollment < ActiveRecord::Migration
   def self.up
     add_column :student_profiles, :enrollment_id, :integer

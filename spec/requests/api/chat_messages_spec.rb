@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'api_spec_helper'
 
 describe "Chat message" do
@@ -6,7 +7,7 @@ describe "Chat message" do
   end
   context "when GET /chat_messages/:id" do
     let(:chat_message) do
-      message = Factory(:chat_message, :user => @current_user)
+      message = FactoryGirl.create(:chat_message, :user => @current_user)
       Chat.find_or_create_and_append(message)
       message
     end
@@ -40,7 +41,7 @@ describe "Chat message" do
   end
 
   context "when GET /chats/:chat_id/chat_messages" do
-    let(:chat_message) { Factory(:chat_message, :user => @current_user) }
+    let(:chat_message) { FactoryGirl.create(:chat_message, :user => @current_user) }
     let(:chats) { Chat.find_or_create_and_append(chat_message) }
 
     it "should return code 200" do

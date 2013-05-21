@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class ExploreToursController < BaseController
   def create
     user = User.find(params[:user_id])

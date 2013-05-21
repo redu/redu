@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateExperiences < ActiveRecord::Migration
   def self.up
     create_table :experiences do |t|

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module EnrollmentService
   class VisAdapter
     attr_reader :vis_client, :url

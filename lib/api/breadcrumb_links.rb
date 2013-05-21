@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Api
   module BreadcrumbLinks
     # Provê links para possibilitar a criação de breadcrumbs

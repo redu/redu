@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 FactoryGirl.define do
   factory :client_application do
     sequence(:name) { |n| "My ximbica app No #{n}" }

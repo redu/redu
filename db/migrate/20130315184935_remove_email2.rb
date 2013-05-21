@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RemoveEmail2 < ActiveRecord::Migration
   def self.up
     drop_table :emails

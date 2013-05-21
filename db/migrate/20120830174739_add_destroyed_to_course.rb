@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddDestroyedToCourse < ActiveRecord::Migration
   def self.up
     add_column :courses, :destroy_soon, :boolean, :default => false

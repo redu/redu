@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddUniqueIndexToCourseEnrollments < ActiveRecord::Migration
   def self.up
     add_index :course_enrollments, [:user_id, :course_id, :type],

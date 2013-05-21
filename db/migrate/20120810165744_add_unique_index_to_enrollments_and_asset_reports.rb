@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddUniqueIndexToEnrollmentsAndAssetReports < ActiveRecord::Migration
   def self.up
     add_index :status_user_associations, [:user_id, :status_id],

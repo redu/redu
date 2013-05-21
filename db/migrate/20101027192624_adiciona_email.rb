@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AdicionaEmail < ActiveRecord::Migration
   def self.up
     create_table "emails", :force => true do |t|

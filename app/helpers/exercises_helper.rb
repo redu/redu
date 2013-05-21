@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module ExercisesHelper
   def period_of_time(ms)
     distance_in_seconds = ms.round

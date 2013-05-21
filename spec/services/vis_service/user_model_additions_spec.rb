@@ -1,8 +1,9 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 module VisService
   describe User do
-    subject { Factory(:user) }
+    subject { FactoryGirl.create(:user) }
 
     context "when are enrollments" do
       let!(:enrollments) do

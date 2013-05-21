@@ -2,6 +2,8 @@ source 'http://rubygems.org'
 source 'http://gems.github.com'
 source 'http://reduadmin:pomp64bozos@the-shire.herokuapp.com/'
 
+ruby "1.9.3"
+
 gem 'aasm'
 gem 'premailer-rails'
 gem 'classy_enum'
@@ -27,20 +29,20 @@ gem 'dynamic_form'
 gem 'em-http-request'
 gem 'eventmachine'
 gem 'exceptional'
-gem 'factory_girl_rails', '~> 1.7.0'
-gem 'has_friends', :git => 'git@github.com:jessicabarbalho/has_friends.git'
+gem 'factory_girl_rails'
+gem "redu-has_friends", "~> 1.0", :require => "has_friends"
 gem 'invitable', :git => 'git@github.com:redu/invitable.git'
 gem 'jquery-rails', '>= 1.0.12'
 gem 'kaminari', :git => 'git://github.com/amatsuda/kaminari.git'
 gem 'mime-types'
-gem "mysql2", "~> 0.3.11"
+gem "mysql2"
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'pusher'
 gem 'pagseguro', '~> 0.1.10'
 gem 'paperclip', '~> 2.7.5'
 gem 'rails', '~> 3.2.13'
-gem 'rake', '0.8.7'
+gem "rake", "~> 10.0.4"
 gem 'remotipart', '~> 1.0'
 gem 'scribd_fu', :git => 'git://github.com/guiocavalcanti/scribd_fu.git',
   :branch => 'without-scape'
@@ -48,17 +50,17 @@ gem 'simple-navigation', :git => 'git://github.com/andi/simple-navigation.git'
 gem 'sunspot_rails'
 gem 'route_translator'
 gem 'useragent'
-gem 'vis_client', :git => 'git@github.com:redu/vis_client.git'
+gem 'vis_client', :git => 'git@github.com:redu/vis_client.git',
+  :branch => 'ruby-1-9-3'
 gem 'chronic' # Necessário ao whenever
 gem 'whenever', :require => false
 gem 'zencoder'
 gem 'untied-publisher', '~> 0.0.7.pre1'
-gem 'system_timer'
 gem 'yajl-ruby'
 gem 'simple_acts_as_list'
 gem 'ey_config'
 gem 'destroy_soon'
-gem 'redu_analytics'
+gem 'redu_analytics', :git => 'git@github.com:redu/analytics.git'
 gem 'humanizer'
 gem 'valium'
 gem 'dalli'
@@ -87,7 +89,7 @@ group :development, :test do
   gem 'no_peeping_toms', :git => 'git://github.com/patmaddox/no-peeping-toms.git'
   gem 'rails3-generators'
   gem "rspec-rails", "~> 2.13"
-  gem 'ruby-debug'
+  gem 'debugger'
   gem 'sunspot_solr'
 end
 

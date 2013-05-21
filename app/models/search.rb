@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Search
   #
   # A classe Search abstrai a lógica de execução de buscas do Sunspot, possibilitando
