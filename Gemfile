@@ -96,7 +96,7 @@ end
 
 group :test do
   gem 'shoulda-matchers', "~> 1"
-  gem 'webmock', :git => 'git://github.com/fltiago/webmock'
+  gem 'webmock'
   gem 'ruby-prof'
 end
 
