@@ -14,7 +14,7 @@
       <h3 class="form-header">
         <%= @course.spaces.count %> disciplina(s)
       </h3>
-      <%= render 'spaces/admin/index_admin', :member_count => @member_count %>
+      <%= render 'spaces/admin/index_admin' %>
       <%= link_to "Sair", environment_course_path(@environment, @course), :class => "manage exit icon-manage-gray_8_10-before" %>
     <% end %>
   </div>

@@ -240,4 +240,22 @@ describe Space do
       subject.lectures_count.should == @lectures.size
     end
   end
+
+  context "#member_count" do
+    subject do
+      space = FactoryGirl.build_stubbed(:space)
+      space.stub(:users).and_return 2.times.map { mock_model('User') }
+      space
+    end
+
+    it "should count the related members" do
+      subject.member_count.should == subject.users.length
+    end
+
+    it "should return #member_count if injected" do
+      injected_count = subject.users.length + 1
+      subject.member_count = injected_count
+      subject.member_count.should == injected_count
+    end
+  end
 end

@@ -2,6 +2,7 @@
 class Space < ActiveRecord::Base
   include DestroySoon::ModelAdditions
   include SpaceSearchable
+  attr_writer :member_count
 
   # Representa uma disciplina de ensino. O objetivo principal do Space é agrupar
   # objetos de ensino (Lecture e Subject) e promover a interação de muitos
@@ -126,6 +127,10 @@ class Space < ActiveRecord::Base
     unless self.subjects.empty?
       Lecture.by_subjects(self.subjects).count
     end
+  end
+
+  def member_count
+    @member_count || self.users.length
   end
 
   def subjects_id

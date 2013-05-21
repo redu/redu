@@ -137,7 +137,8 @@ class CoursesController < BaseController
       page(params[:page]).per(Redu::Application.config.items_per_page)
     # Para evitar diversas consultas, a conta de membros é feita apenas
     # uma vez
-    @member_count = @spaces.first.users.count if @spaces.first
+    users_count = @spaces.first.users.count
+    @spaces.map { |s| s.member_count = users_count }
 
     respond_to do |format|
       format.html { render "courses/admin/admin_spaces" }
