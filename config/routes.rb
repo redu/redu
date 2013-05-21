@@ -48,7 +48,6 @@ Redu::Application.routes.draw do
 
     get '/recover_username_password' => 'users#recover_username_password',
       :as => :recover_username_password
-    post '/recover_username' => 'users#recover_username', :as => :recover_username
     post '/recover_password' => 'users#recover_password', :as => :recover_password
 
     match '/resend_activation' => 'users#resend_activation',
