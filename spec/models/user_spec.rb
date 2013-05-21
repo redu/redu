@@ -30,8 +30,9 @@ describe User do
   it { should have_many(:user_environment_associations).dependent(:destroy) }
   it { should have_many(:environments_owned) }
 
-  # ChatMessages
+  # Chat
   it { should have_many(:chat_messages) }
+  it { should have_many(:chats).dependent(:destroy) }
 
   # Plan
   it { should have_many(:plans) }

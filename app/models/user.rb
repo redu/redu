@@ -30,6 +30,7 @@ class User < ActiveRecord::Base
 
   # ASSOCIATIONS
   has_many :chat_messages
+  has_many :chats, dependent: :destroy
   # Space
   has_many :spaces, :through => :user_space_associations,
     :conditions => ["spaces.destroy_soon = ?", false]
