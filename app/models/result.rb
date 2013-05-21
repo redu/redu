@@ -4,7 +4,7 @@ class Result < ActiveRecord::Base
 
   belongs_to :exercise
   belongs_to :user
-  has_many :choices, :dependent => :destroy
+  has_many :choices, dependent: :destroy
 
   scope :n_recents, lambda { |n|
     order('finalized_at DESC').limit(n)
@@ -18,25 +18,25 @@ class Result < ActiveRecord::Base
   aasm_initial_state :waiting
 
   aasm_state :waiting
-  aasm_state :started, :enter => lambda { |r|
-    r.update_attributes({:started_at => Time.zone.now })
+  aasm_state :started, enter: lambda { |r|
+    r.update_attributes({started_at: Time.zone.now })
   }
-  aasm_state :finalized, :enter => lambda { |r|
-    r.update_attributes({:finalized_at => Time.zone.now})
+  aasm_state :finalized, enter: lambda { |r|
+    r.update_attributes({finalized_at: Time.zone.now})
     r.assign_dangling_choices
-    r.update_attributes({ :grade => r.calculate_grade,
-                          :duration => r.calculate_duration })
+    r.update_attributes({ grade: r.calculate_grade,
+                          duration: r.calculate_duration })
   }
 
   aasm_event :start do
-    transitions :to => :started, :from => :waiting
+    transitions to: :started, from: :waiting
   end
 
   aasm_event :finalize do
-    transitions :to => :finalized, :from => :started
+    transitions to: :finalized, from: :started
   end
 
-  validates_uniqueness_of :user_id, :scope => :exercise_id
+  validates_uniqueness_of :user_id, scope: :exercise_id
 
   # Calcula noda baseada no número de acertos e peso por questão no exercício
   # associado
@@ -59,8 +59,8 @@ class Result < ActiveRecord::Base
   end
 
   def to_report
-    { :hits => hits, :misses => misses, :blanks => blanks,
-      :duration => duration, :grade => grade }
+    { hits: hits, misses: misses, blanks: blanks,
+      duration: duration, grade: grade }
   end
 
   def misses
