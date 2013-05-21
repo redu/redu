@@ -282,7 +282,7 @@ GEM
     net-scp (1.1.1)
       net-ssh (>= 2.6.5)
     net-ssh (2.6.7)
-    newrelic_rpm (3.0.1)
+    newrelic_rpm (3.6.2.96)
     nokogiri (1.5.9)
     oauth (0.4.7)
     oauth-plugin (0.4.1)
@@ -498,7 +498,7 @@ DEPENDENCIES
   kaminari!
   mime-types
   mysql2
-  newrelic_rpm (= 3.0.1)
+  newrelic_rpm
   no_peeping_toms!
   oauth-plugin (~> 0.4.0)
   omniauth
