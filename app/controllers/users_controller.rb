@@ -3,7 +3,7 @@ class UsersController < BaseController
   respond_to :html, :js
 
   load_and_authorize_resource :except => [:recover_username_password,
-    :recover_username, :recover_password, :resend_activation, :activate,
+    :recover_password, :resend_activation, :activate,
     :index],
     :find_by => :login
 
@@ -242,23 +242,9 @@ class UsersController < BaseController
   end
 
   def recover_username_password
-    @recover_username = RecoveryEmail.new
     @recover_password = RecoveryEmail.new
 
     render :layout => 'cold'
-  end
-
-  def recover_username
-    @recover_username = RecoveryEmail.new(params[:recovery_email])
-    if @recover_username.valid?
-      @user = User.find_by_email(@recover_username.email)
-      if @user
-        UserNotifier.delay(:queue => 'email', :priority => 1).
-          user_forgot_username(@user)
-      else # Email não cadastrado no Redu
-        @recover_username.mark_email_as_invalid!
-      end
-    end
   end
 
   def recover_password

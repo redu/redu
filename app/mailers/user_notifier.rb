@@ -247,16 +247,6 @@ class UserNotifier < BaseMailer
      end
   end
 
-  # Lembre de username
-  def user_forgot_username(user)
-    @user = user
-    email_subject = "Lembrete de login do #{Redu::Application.config.name}"
-
-    mail(:to => user.email, :subject => email_subject) do |format|
-      format.html
-    end
-  end
-
   # Redefinição de senha
   def user_reseted_password(user, new_password)
     @user = user
