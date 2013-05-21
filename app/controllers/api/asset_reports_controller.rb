@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Api
   class AssetReportsController < Api::ApiController
     def show

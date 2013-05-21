@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class LecturesController < BaseController
   require 'viewable'
   respond_to :html, :js

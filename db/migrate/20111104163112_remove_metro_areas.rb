@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RemoveMetroAreas < ActiveRecord::Migration
   def self.up
     drop_table :metro_areas

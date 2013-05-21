@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RemoveBackgroundrb < ActiveRecord::Migration
   def self.up
     drop_table :bdrb_job_queues

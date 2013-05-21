@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateUserEnvironmentAssociations < ActiveRecord::Migration
   def self.up
     create_table :user_environment_associations do |t|

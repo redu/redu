@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Api
   class CanvasController < Api::ApiController
     represents :json, :collection => RawCanvasCollectionRepresenter,

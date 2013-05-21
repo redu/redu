@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 #execute "testing" do
 #  command %Q{
 #    echo "i ran at #{Time.now}" >> /root/cheftime

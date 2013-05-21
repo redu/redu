@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class ChoicesController < BaseController
   respond_to :js
 

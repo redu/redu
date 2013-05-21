@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class PartnerCacheObserver < ActiveRecord::Observer
   include ViewCaches
   observe Partner

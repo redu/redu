@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class SolrProfileIndexerObserver < ActiveRecord::Observer
   # Observer responsável pela indexação de User
 

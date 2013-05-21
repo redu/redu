@@ -1,7 +1,8 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe Log do
-  subject { Factory(:log) }
+  subject { FactoryGirl.create(:log) }
 
   it { should validate_presence_of :action }
   it { should belong_to(:logeable) }
@@ -13,7 +14,7 @@ describe Log do
 
   context "when setting up courses" do
     before do
-      @course = Factory(:course)
+      @course = FactoryGirl.create(:course)
     end
 
     it "logs creation" do
@@ -25,7 +26,7 @@ describe Log do
     end
 
     it "accepts extra options" do
-      log = Log.setup(Factory(:course), :action => :update, :save => false)
+      log = Log.setup(FactoryGirl.create(:course), :action => :update, :save => false)
       log.should_not be_nil
       log.should be_new_record
       log.action.should == :update
@@ -34,13 +35,13 @@ describe Log do
 
   context "when setting up UserCourseAssociation" do
     it "cannot log if is waiting" do
-      uca = Factory(:user_course_association)
+      uca = FactoryGirl.create(:user_course_association)
       log = Log.setup(uca)
       log.should be_nil
     end
 
     it "accepts extra options" do
-      uca = Factory(:user_course_association)
+      uca = FactoryGirl.create(:user_course_association)
       uca.approve!
       log = Log.setup(uca, :save => false)
       log.should_not be_nil
@@ -50,7 +51,7 @@ describe Log do
 
     context "when is approved" do
       before do
-        @uca = Factory(:user_course_association)
+        @uca = FactoryGirl.create(:user_course_association)
         @uca.approve!
         @log = Log.setup(@uca)
       end
@@ -72,7 +73,7 @@ describe Log do
 
   context "when setting up Space" do
     it "accepts extra options" do
-      space = Factory(:space)
+      space = FactoryGirl.create(:space)
       log = Log.setup(space, :save => false, :action => :update)
 
       log.should_not be_nil
@@ -82,7 +83,7 @@ describe Log do
 
     context "with no options" do
       before do
-        @space = Factory(:space)
+        @space = FactoryGirl.create(:space)
         @log = Log.setup(@space)
       end
 
@@ -104,13 +105,13 @@ describe Log do
 
   context "when setting up Subject" do
     it "cannot log creation if unfinalized (default)" do
-      @subject = Factory(:subject)
+      @subject = FactoryGirl.create(:subject)
       log = Log.setup(@subject)
       log.should be_nil
     end
 
     it "accepts extra options" do
-      @subject = Factory(:subject, :visible => true)
+      @subject = FactoryGirl.create(:subject, :visible => true)
       @subject.finalized = true
       @subject.save
       log = Log.setup(@subject, :save => false)
@@ -120,7 +121,7 @@ describe Log do
 
     context "when finalized and public" do
       before do
-        @subject = Factory(:subject, :visible => true)
+        @subject = FactoryGirl.create(:subject, :visible => true)
         @subject.finalized = true
         @subject.save
 
@@ -154,16 +155,16 @@ describe Log do
 
   context "when setting up Lecture" do
     it "cannot log creation if the subject invisible or unfinalized" do
-      sub = Factory(:subject)
-      @lecture = Factory(:lecture, :subject => sub,
+      sub = FactoryGirl.create(:subject)
+      @lecture = FactoryGirl.create(:lecture, :subject => sub,
                          :owner => sub.owner)
       log = Log.setup(@lecture)
       log.should be_nil
     end
 
     it "accepts extra options" do
-      sub = Factory(:subject, :visible => true)
-      @lecture = Factory(:lecture, :subject => sub,
+      sub = FactoryGirl.create(:subject, :visible => true)
+      @lecture = FactoryGirl.create(:lecture, :subject => sub,
                          :owner => sub.owner)
       @lecture.subject.finalized = true
       @lecture.subject.save
@@ -174,21 +175,21 @@ describe Log do
 
     context "when public avaliable and finilized" do
       before do
-        environment = Factory(:environment)
-        course = Factory(:course, :owner => environment.owner,
+        environment = FactoryGirl.create(:environment)
+        course = FactoryGirl.create(:course, :owner => environment.owner,
                          :environment => environment)
-        @space = Factory(:space, :owner => environment.owner,
+        @space = FactoryGirl.create(:space, :owner => environment.owner,
                         :course => course)
-        user = Factory(:user)
+        user = FactoryGirl.create(:user)
         course.join(user)
-        sub = Factory(:subject, :owner => user, :space => @space,
+        sub = FactoryGirl.create(:subject, :owner => user, :space => @space,
                       :visible => true)
         sub.enroll
-        @lecture = Factory(:lecture, :subject => sub,
+        @lecture = FactoryGirl.create(:lecture, :subject => sub,
                          :owner => sub.owner)
         @lecture.subject.finalized = true
         @lecture.subject.save
-        @seminar = Factory(:seminar_youtube, :lecture => @lecture)
+        @seminar = FactoryGirl.create(:seminar_youtube, :lecture => @lecture)
         @log = Log.setup(@lecture)
       end
 
@@ -213,7 +214,7 @@ describe Log do
 
   context "when updating User" do
     before do
-      @user = Factory(:user)
+      @user = FactoryGirl.create(:user)
       @user.first_name = "New name"
       @log = Log.setup(@user, :action => :update)
     end
@@ -236,7 +237,7 @@ describe Log do
 
   context "when updating Experience" do
     before do
-      @exp = Factory(:experience)
+      @exp = FactoryGirl.create(:experience)
       @log = Log.setup(@exp, :action => :update)
     end
 
@@ -256,7 +257,7 @@ describe Log do
 
   context "when creating Education" do
     before do
-      @education = Factory(:education)
+      @education = FactoryGirl.create(:education)
       @log = Log.setup(@education, :action => :update)
     end
 
@@ -278,8 +279,8 @@ describe Log do
   context "when updating Frienship" do
 
     it "cannot log if is unapproved" do
-      @user1 = Factory(:user)
-      @user2 = Factory(:user)
+      @user1 = FactoryGirl.create(:user)
+      @user2 = FactoryGirl.create(:user)
       @user1.be_friends_with(@user2)
 
       friendship = @user1.friendships.first
@@ -289,8 +290,8 @@ describe Log do
 
     context "when approved" do
       before do
-        @user1 = Factory(:user)
-        @user2 = Factory(:user)
+        @user1 = FactoryGirl.create(:user)
+        @user2 = FactoryGirl.create(:user)
         @user1.be_friends_with(@user2)
         @user2.be_friends_with(@user1)
 
@@ -312,9 +313,9 @@ describe Log do
       context "when compound logs are processed" do
         context "and log type is friendship" do
           before do
-            @robert = Factory(:user, :login => 'robert_baratheon')
-            @ned = Factory(:user, :login => 'eddard_stark')
-            @jhon = Factory(:user, :login => 'jhon_arryn')
+            @robert = FactoryGirl.create(:user, :login => 'robert_baratheon')
+            @ned = FactoryGirl.create(:user, :login => 'eddard_stark')
+            @jhon = FactoryGirl.create(:user, :login => 'jhon_arryn')
           end
 
           context "and compound log already exists" do
@@ -360,8 +361,8 @@ describe Log do
 
         context "and log type is user course association" do
           before do
-            @aemon = Factory(:user, :login => 'aemon_targaryen')
-            @users = 3.times.collect { Factory(:user) }
+            @aemon = FactoryGirl.create(:user, :login => 'aemon_targaryen')
+            @users = 3.times.collect { FactoryGirl.create(:user) }
           end
 
           context "and compound log already exists" do
@@ -370,7 +371,7 @@ describe Log do
                 :user_course_association_observer,
                 :status_observer,
                 :log_observer) do
-                  @course = Factory(:course)
+                  @course = FactoryGirl.create(:course)
                   @course.join(@aemon)
               end
             end
@@ -396,7 +397,7 @@ describe Log do
                 :status_observer,
                 :log_observer) do
                   expect {
-                    @course = Factory(:course)
+                    @course = FactoryGirl.create(:course)
                     @course.join(@aemon)
                   }.to change(CompoundLog, :count).by(1)
               end

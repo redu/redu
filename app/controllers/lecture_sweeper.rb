@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class LectureSweeper < ActionController::Caching::Sweeper
   observe Lecture
 

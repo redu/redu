@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Viewable
   protected
   def update_view_count(viewable)     

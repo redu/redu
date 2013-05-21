@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Api
   module FriendshipRepresenter
     include Roar::Representer::JSON

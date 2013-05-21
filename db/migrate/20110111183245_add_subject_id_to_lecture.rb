@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddSubjectIdToLecture < ActiveRecord::Migration
   def self.up
     add_column :lectures, :subject_id, :integer

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 #
 # Put this in spec/support/
 # Will use a sunspot stub session as default in all tests.

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 RSpec::Matchers.define :accept_nested_attributes_for do |association_name|
   match do |actual|
     actual.methods.include?("#{association_name}_attributes=")

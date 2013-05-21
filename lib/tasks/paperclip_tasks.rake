@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 def obtain_class
   class_name = ENV['CLASS'] || ENV['class']
   raise "Must specify CLASS" unless class_name

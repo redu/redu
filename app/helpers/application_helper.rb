@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module ApplicationHelper
   # Helpers usados pelo gem de navegação (simple-navigation)
   CREATE_ACTIONS = ['new', 'create']

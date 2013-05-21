@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddIndexToUserCourseAssociation < ActiveRecord::Migration
   def self.up
     add_index :user_course_associations, ["state"]

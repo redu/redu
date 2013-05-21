@@ -7,6 +7,8 @@
     <div class="nav-local-separator"></div>
     <p class="legend">O pagamento das faturas é feito via PagSeguro, uma empresa da UOL.</p>
     <p class="legend">Ao clicar em Pagar, você será redirecionado para a tela de pagamento. É necessário possuir uma conta no sistema do PagSeguro para concluir a transação.</p>
-    <%= link_to image_tag ("pagseguro-p.png"), "https://pagseguro.uol.com.br/para_voce/como_funciona.jhtml", :class => "pag-seguro", :width => 150, :height => 50 %>
+    <%= link_to "https://pagseguro.uol.com.br/para_voce/como_funciona.jhtml", :class => "pag-seguro", :width => 150, :height => 50 do %>
+      <%= image_tag ("pagseguro-p.png") %>
+    <% end %>
   </div>
 </div>

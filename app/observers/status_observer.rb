@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class StatusObserver < ActiveRecord::Observer
 
   def after_create(status)

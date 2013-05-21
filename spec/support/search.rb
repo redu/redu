@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module SearchSpecHelper
   def mock_search_perform(collection, klass)
     # Necessário para a chamada da paginação na view

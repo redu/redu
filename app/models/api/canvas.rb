@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Api
   class Canvas < ActiveRecord::Base
     belongs_to :user

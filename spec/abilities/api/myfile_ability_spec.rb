@@ -1,15 +1,16 @@
+# -*- encoding : utf-8 -*-
 require 'api_spec_helper'
 require 'cancan/matchers'
 
 describe "Myfile ability" do
-  let(:user) { Factory(:user) }
+  let(:user) { FactoryGirl.create(:user) }
   subject { Api::Ability.new(user) }
 
-  let(:environment) { Factory(:complete_environment) }
+  let(:environment) { FactoryGirl.create(:complete_environment) }
   let(:course) { environment.courses.first }
   let(:space) { course.spaces.first }
-  let(:folder) { Factory(:folder, :space => space) }
-  let(:myfile) { Factory(:myfile, :folder => folder) }
+  let(:folder) { FactoryGirl.create(:folder, :space => space) }
+  let(:myfile) { FactoryGirl.create(:myfile, :folder => folder) }
 
   context "when not a member" do
     it "should not be able to manage" do

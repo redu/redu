@@ -1,7 +1,8 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe 'UsersHomeCache' do
-  let(:user) { Factory(:user) }
+  let(:user) { FactoryGirl.create(:user) }
 
   context 'home_friends_requisitions' do
     def friends_requisitions_identifier(user)
@@ -18,7 +19,7 @@ describe 'UsersHomeCache' do
     end
 
     context 'expiration' do
-      let(:friend) { Factory(:user) }
+      let(:friend) { FactoryGirl.create(:user) }
 
       it 'expires when a new friendship request is made' do
         ActiveRecord::Observer.with_observers(:friendship_cache_observer) do
@@ -103,16 +104,16 @@ describe 'UsersHomeCache' do
     end
 
     context 'expiration' do
-      let(:course) { Factory(:course) }
+      let(:course) { FactoryGirl.create(:course) }
       let(:invited_users) do
-        (1..3).collect { course.invite(Factory(:user)).user }
+        (1..3).collect { course.invite(FactoryGirl.create(:user)).user }
       end
       let(:pending_identifiers) do
         invited_users.collect { |u| courses_requisitions_identifier(u) }
       end
 
       before do
-        (1..3).each { course.join Factory(:user) }
+        (1..3).each { course.join FactoryGirl.create(:user) }
       end
 
       it 'expires when a course invitation is made' do

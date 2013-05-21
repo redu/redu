@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # Adds logic for the Globalite plugin.
 
 module LocalizedApplication

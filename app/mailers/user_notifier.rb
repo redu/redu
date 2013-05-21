@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class UserNotifier < BaseMailer
   # Enviado ao aprovar a participação de um usuário num Course
   def approve_membership(user, course)

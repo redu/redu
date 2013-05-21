@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Ckeditor::AttachmentFile < Ckeditor::Asset
   has_attached_file :data,
                     Redu::Application.config.paperclip

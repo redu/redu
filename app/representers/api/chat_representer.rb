@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Api
   module ChatRepresenter
     include Roar::Representer::JSON

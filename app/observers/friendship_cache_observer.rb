@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class FriendshipCacheObserver < ActiveRecord::Observer
   include ViewCaches
   observe Friendship

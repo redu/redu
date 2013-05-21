@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Newsletter
   # Classe abstrata que lida com o envio de newsletter utilizando o
   # NewsletterMailer.

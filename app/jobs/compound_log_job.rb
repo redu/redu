@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CompoundLogJob
   attr_accessor :compound_log_id
 

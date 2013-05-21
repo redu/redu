@@ -1,9 +1,10 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe Authentication do
 
   before do
-    Factory.create(:authentication) # Necessário para a validação de unicidade
+    FactoryGirl.create(:authentication) # Necessário para a validação de unicidade
   end
 
   it { should belong_to(:user) }
@@ -33,10 +34,10 @@ describe Authentication do
   describe "#handle_invitation_token" do
 
     context "when state is a course invitation token" do
-      let(:user) { Factory(:user) }
-      let(:course) { Factory(:course) }
+      let(:user) { FactoryGirl.create(:user) }
+      let(:course) { FactoryGirl.create(:course) }
       let(:invite) do
-        Factory(:user_course_invitation, :course => course, :email => user.email)
+        FactoryGirl.create(:user_course_invitation, :course => course, :email => user.email)
       end
 
       before do
@@ -59,9 +60,9 @@ describe Authentication do
       end
 
       before do
-        @host = Factory(:user)
+        @host = FactoryGirl.create(:user)
         state = { :friendship_invitation_token => invitation.token }.to_json
-        @user = Factory(:user, :email => email)
+        @user = FactoryGirl.create(:user, :email => email)
         Authentication.handle_invitation_token(state, @user)
       end
 

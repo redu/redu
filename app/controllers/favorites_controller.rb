@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class FavoritesController < BaseController
   def favorite
     if (params[:id].to_i != 0) &&

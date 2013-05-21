@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddCurrentUrlToCanvas < ActiveRecord::Migration
   def self.up
     add_column :canvas, :url, :string

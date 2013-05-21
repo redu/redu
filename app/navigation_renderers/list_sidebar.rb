@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # O Renderer List com <div> em volta do <a> para satisfazer
 # o layout definido.
 class ListSidebar < SimpleNavigation::Renderer::Base

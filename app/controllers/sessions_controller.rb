@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class SessionsController < BaseController
   respond_to :html, :js
 

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddSubectIdToAssetReport < ActiveRecord::Migration
   def self.up
     add_column :asset_reports, :subject_id, :integer

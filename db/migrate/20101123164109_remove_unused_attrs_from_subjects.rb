@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RemoveUnusedAttrsFromSubjects < ActiveRecord::Migration
   def self.up
     remove_column :subjects, :simple_category_id

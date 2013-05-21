@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateEnvironments < ActiveRecord::Migration
   def self.up
     create_table :environments do |t|

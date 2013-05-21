@@ -1,7 +1,8 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe Partner do
-  subject { Factory(:partner) }
+  subject { FactoryGirl.create(:partner) }
 
   it { should validate_presence_of :name }
   it { should validate_presence_of :email }
@@ -14,12 +15,12 @@ describe Partner do
   context "when adding new collaborators" do
     before do
       3.times do
-        course = Factory(:course)
-        Factory(:partner_environment_association, :partner => subject,
+        course = FactoryGirl.create(:course)
+        FactoryGirl.create(:partner_environment_association, :partner => subject,
                 :environment => course.environment)
       end
 
-      @collaborator = Factory(:user)
+      @collaborator = FactoryGirl.create(:user)
       subject.add_collaborator(@collaborator)
     end
 
@@ -69,10 +70,10 @@ describe Partner do
 
   context "when adding existing environments" do
     before do
-      @environment = Factory(:environment)
+      @environment = FactoryGirl.create(:environment)
 
       @users = 3.times.inject([]) do |acc,i|
-        user = Factory(:user)
+        user = FactoryGirl.create(:user)
         subject.add_collaborator(user)
         acc << user
       end
@@ -89,7 +90,7 @@ describe Partner do
   context "when dealing with invoices" do
     before do
       @invoices = 2.times.collect do
-        env = Factory(:partner_environment_association,
+        env = FactoryGirl.create(:partner_environment_association,
                       :partner => subject).environment
         plan = Plan.from_preset(:instituicao_superior, "LicensedPlan")
         plan.user = env.owner
@@ -113,9 +114,9 @@ describe Partner do
   context "when joining hierarchy" do
     before do
       @environments = 3.times.collect do
-        course = Factory(:course)
+        course = FactoryGirl.create(:course)
         environment = course.environment
-        Factory(:partner_environment_association, :partner => subject,
+        FactoryGirl.create(:partner_environment_association, :partner => subject,
                 :environment => course.environment)
 
         plan = Plan.from_preset(:instituicao_superior, "LicensedPlan")
@@ -125,7 +126,7 @@ describe Partner do
         environment
       end
 
-      @collaborator = Factory(:user)
+      @collaborator = FactoryGirl.create(:user)
     end
 
     it "creates three UserEnvironmentAssociation" do

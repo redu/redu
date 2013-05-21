@@ -1,9 +1,10 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 module EnrollmentService
   describe VisAdapter do
     let(:vis_adapter) { VisAdapter.new }
-    let(:enrollments) { 2.times.map { Factory(:enrollment, :subject => nil) } }
+    let(:enrollments) { 2.times.map { FactoryGirl.create(:enrollment, :subject => nil) } }
     let(:enrollments_arel) { Enrollment.limit(2) }
 
     describe ".initialize" do

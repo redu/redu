@@ -790,10 +790,10 @@ ul, ol {
 
 /* Novo design do botão de matricular-se no curso. */
 
-.icon-privacy-lightred_58_62 {
-  background-image: image-url("icon-privacy-lightred_58_62.png");
-  width: 58px;
-  height: 62px;
+.icon-closed-red2_64_66 {
+  background-image: image-url("icon-closed-red2_64_66.png");
+  width: 64px;
+  height: 66px;
   display: inline-block;
 }
 
@@ -831,4 +831,30 @@ ul, ol {
   width: 16px!important;
   height: 18px!important;
   background: image-url("icons-small.png") -560px -800px no-repeat;
+}
+
+/* Matrícula requisitada, no aguardo da confirmação do responsável. */
+.icon-moderated-green3_64_66 {
+  background-image: image-url("icon-moderated-green3_64_66.png");
+  width: 64px;
+  height: 66px;
+  display: inline-block;
+}
+
+.course-waiting-approval-message { width: 310px; }
+
+/* Matrícula requisitada, no aguardo da confirmação do usuário. */
+.icon-invite-green3_64_66 {
+  background-image: image-url("icon-invite-green3_64_66.png");
+  width: 64px;
+  height: 66px;
+  display: inline-block;
+}
+
+/* Curso aberto. */
+.icon-open-green3_64_66 {
+  background-image: image-url("icon-open-green3_64_66.png");
+  width: 64px;
+  height: 66px;
+  display: inline-block;
 }

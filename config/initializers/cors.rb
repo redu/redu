@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 Rails.application.config.middleware.use Rack::Cors do
   allow do
     origins '*'

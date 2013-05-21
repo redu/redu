@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class ChangeFilesAndMultimediaFromQuotas < ActiveRecord::Migration
   def self.up
     change_column :quotas, :files, :integer, :default => 0 

@@ -1,9 +1,10 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 require 'set'
 
 describe PackageInvoice do
 
-  subject { Factory(:package_invoice) }
+  subject { FactoryGirl.create(:package_invoice) }
 
   it { should respond_to :threshold_date }
   it { should respond_to :description }
@@ -29,13 +30,13 @@ describe PackageInvoice do
       # pending
       @invoices = 3.times.inject([]) do |acc,i|
         if i % 2 == 0
-          invoice = Factory(:package_invoice,
+          invoice = FactoryGirl.create(:package_invoice,
                          :period_start => @period_start,
                          :period_end => @period_end)
           invoice.pend!
           acc << invoice
         else
-          invoice = Factory(:package_invoice)
+          invoice = FactoryGirl.create(:package_invoice)
           invoice.pend!
           acc << invoice
         end
@@ -56,7 +57,7 @@ describe PackageInvoice do
 
     it "should not raise error if a plan is already blocked" do
       PackageInvoice.refresh_states!
-      inv = Factory(:package_invoice, :plan => Plan.blocked.last,
+      inv = FactoryGirl.create(:package_invoice, :plan => Plan.blocked.last,
                     :period_start => @period_start)
       inv.pend!
 
@@ -66,7 +67,7 @@ describe PackageInvoice do
     end
 
     it "should generate next invoice" do
-      inv = Factory(:package_invoice, :period_start => Date.today - 20.days,
+      inv = FactoryGirl.create(:package_invoice, :period_start => Date.today - 20.days,
                     :period_end => Date.today - 1.day)
       inv.pend!
       inv.pay!
@@ -79,7 +80,7 @@ describe PackageInvoice do
 
     context "when the billable was destroyed" do
       before do
-        @inv = Factory(:package_invoice, :period_start => Date.today - 20.days,
+        @inv = FactoryGirl.create(:package_invoice, :period_start => Date.today - 20.days,
                       :period_end => Date.today - 1.day)
         @inv.pend!
         @inv.plan.billable.destroy
@@ -101,7 +102,7 @@ describe PackageInvoice do
           :period_start => Date.today - 60.days,
           :period_end => Date.today - 35.days
         }
-        invoice = Factory(:package_invoice)
+        invoice = FactoryGirl.create(:package_invoice)
         invoice.update_attributes(attrs)
         invoice.pend!
         invoice.pay!
@@ -292,7 +293,7 @@ describe PackageInvoice do
   context "when creating next invoice" do
     before do
       subject.update_attributes(:amount => 50,
-                                :plan => Factory(:active_package_plan))
+                                :plan => FactoryGirl.create(:active_package_plan))
       subject.create_next_invoice
       @new_invoice = subject.plan.invoices.last
     end

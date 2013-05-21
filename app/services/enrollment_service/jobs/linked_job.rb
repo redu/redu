@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module EnrollmentService
   module Jobs
     # Permite a criação de Jobs ligados ligados entre sí.

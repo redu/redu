@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CrateIsCloneInCourse < ActiveRecord::Migration
   def self.up
      add_column :courses, :is_clone, :boolean,  :default => false

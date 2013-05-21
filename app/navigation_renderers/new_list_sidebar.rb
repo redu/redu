@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # O Renderer List sem a class_selected no <a> para satisfazer
 # o layout definido.
 class NewListSidebar < SimpleNavigation::Renderer::Base

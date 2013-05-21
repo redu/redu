@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class BaseController < ApplicationController
   layout :choose_layout, :except => [:basic]
   # Work around (ver método self.login_required_base)

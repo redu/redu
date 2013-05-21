@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module EnvironmentsAdminNavigation
   def environments_admin_navigation(sidebar)
     # A navegação de Environment não possui sidebar, bloco apenas para manter o padrão

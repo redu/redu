@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RemoveBetaCandidates < ActiveRecord::Migration
   def self.up
     drop_table :beta_candidates

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 require 'authlogic/test_case'
 
@@ -5,24 +6,24 @@ describe PresenceController do
   render_views
 
   before do
-    @current_user = Factory(:user)
-    @friend1 = Factory(:user)
-    @friend2 = Factory(:user)
-    @friend3 = Factory(:user)
-    @user2 = Factory(:user)
-    @user3 = Factory(:user)
+    @current_user = FactoryGirl.create(:user)
+    @friend1 = FactoryGirl.create(:user)
+    @friend2 = FactoryGirl.create(:user)
+    @friend3 = FactoryGirl.create(:user)
+    @user2 = FactoryGirl.create(:user)
+    @user3 = FactoryGirl.create(:user)
 
     # primeiro curso
-    environment = Factory(:environment)
-    course = Factory(:course, :owner => environment.owner,
+    environment = FactoryGirl.create(:environment)
+    course = FactoryGirl.create(:course, :owner => environment.owner,
                      :environment => environment)
-    space = Factory(:space, :owner => environment.owner,
+    space = FactoryGirl.create(:space, :owner => environment.owner,
                     :course => course)
 
     # segundo curso
-    course2 = Factory(:course, :environment => environment,
+    course2 = FactoryGirl.create(:course, :environment => environment,
                       :owner => environment.owner)
-    course3 = Factory(:course)
+    course3 = FactoryGirl.create(:course)
 
     course.join(@current_user)
     course2.join(@current_user)
@@ -133,7 +134,7 @@ describe PresenceController do
       context "on private -" do
 
         it "should not be success" do
-          strange = Factory(:user)
+          strange = FactoryGirl.create(:user)
           post :auth, :locale => "pt-BR",
             :channel_name => "private-#{@friend1.id}-#{strange.id}",
             :socket_id => "123.13865", :user_id => @current_user.id
@@ -142,7 +143,7 @@ describe PresenceController do
         end
 
         it "should not be success" do
-          strange = Factory(:user)
+          strange = FactoryGirl.create(:user)
           post :auth, :locale => "pt-BR",
             :channel_name => "private-#{@friend1.id}-#{@friend2.id}",
             :socket_id => "123.13865", :user_id => @current_user.id
@@ -151,7 +152,7 @@ describe PresenceController do
         end
 
         it "should not be success" do
-          strange = Factory(:user)
+          strange = FactoryGirl.create(:user)
           post :auth, :locale => "pt-BR",
             :channel_name => "private-#{@current_user.id}-#{strange.id}",
             :socket_id => "123.13865", :user_id => @current_user.id
@@ -193,8 +194,8 @@ describe PresenceController do
 
   context "POST send_chat_message" do
     before do
-      @user = Factory(:user)
-      @contact = Factory(:user)
+      @user = FactoryGirl.create(:user)
+      @contact = FactoryGirl.create(:user)
       @user.be_friends_with(@contact)
       @contact.be_friends_with(@user)
       login_as @user
@@ -240,24 +241,24 @@ describe PresenceController do
 
   context "GET last_messages_with" do
     before do
-      @user = Factory(:user)
-      @contact1 = Factory(:user)
-      @contact2 = Factory(:user)
+      @user = FactoryGirl.create(:user)
+      @contact1 = FactoryGirl.create(:user)
+      @contact2 = FactoryGirl.create(:user)
       @user.be_friends_with(@contact1)
       @contact1.be_friends_with(@user)
       @user.be_friends_with(@contact2)
       @contact2.be_friends_with(@user)
       login_as @user
 
-      @message1 = Factory(:chat_message, :user => @user, :contact => @contact1, :created_at => 2.days.ago)
-      @message2 = Factory(:chat_message, :user => @user, :contact => @contact1)
-      @message5 = Factory(:chat_message, :user => @user, :contact => @contact2)
-      @message3 = Factory(:chat_message, :user => @contact1, :contact => @user)
-      @message6 = Factory(:chat_message, :user => @contact1, :contact => @contact2)
-      @message4 = Factory(:chat_message, :user => @user, :contact => @contact1)
-      @message7 = Factory(:chat_message, :user => @contact2, :contact => @user)
+      @message1 = FactoryGirl.create(:chat_message, :user => @user, :contact => @contact1, :created_at => 2.days.ago)
+      @message2 = FactoryGirl.create(:chat_message, :user => @user, :contact => @contact1)
+      @message5 = FactoryGirl.create(:chat_message, :user => @user, :contact => @contact2)
+      @message3 = FactoryGirl.create(:chat_message, :user => @contact1, :contact => @user)
+      @message6 = FactoryGirl.create(:chat_message, :user => @contact1, :contact => @contact2)
+      @message4 = FactoryGirl.create(:chat_message, :user => @user, :contact => @contact1)
+      @message7 = FactoryGirl.create(:chat_message, :user => @contact2, :contact => @user)
 
-      Factory(:chat_message, :message => "Hooray! old",
+      FactoryGirl.create(:chat_message, :message => "Hooray! old",
               :user => @user, :contact => @contact1, :created_at => 2.days.ago)
       get :last_messages_with, :locale => "pt-BR", :contact_id => @contact1.id
     end

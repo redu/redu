@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CoursesController < BaseController
   respond_to :html, :js
 
@@ -402,11 +403,11 @@ class CoursesController < BaseController
   end
 
   def destroy_invitations
-    email_invitations = params[:email_invitations] || ""
-    email_invitations = email_invitations.collect{ |i| i.to_i }
+    email_invitations = params[:email_invitations].try(:split, ",") || []
+    user_invitations = params[:user_invitations].try(:split, ",") || []
 
-    user_invitations = params[:user_invitations] || ""
-    user_invitations = user_invitations.collect{ |i| i.to_i }
+    email_invitations = email_invitations.map(&:to_i)
+    user_invitations = user_invitations.map(&:to_i)
 
     email_invitations.each do |i|
       invitation = UserCourseInvitation.find(i)

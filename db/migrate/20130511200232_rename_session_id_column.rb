@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RenameSessionIdColumn < ActiveRecord::Migration
   def change
     remove_index :sessions, :sessid

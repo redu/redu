@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class PresenceController < BaseController
   authorize_resource :user
 

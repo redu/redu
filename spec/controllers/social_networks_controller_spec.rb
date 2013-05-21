@@ -1,12 +1,13 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 require 'authlogic/test_case'
 
 describe SocialNetworksController do
   context "POST destroy" do
     before do
-      @user = Factory(:user)
+      @user = FactoryGirl.create(:user)
       login_as @user
-      @social_network = Factory(:social_network, :user => @user)
+      @social_network = FactoryGirl.create(:social_network, :user => @user)
     end
 
     it "should load social network" do

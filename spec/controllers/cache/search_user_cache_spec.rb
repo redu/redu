@@ -1,8 +1,9 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe 'SearchUserCache' do
-  let(:user) { Factory(:user) } # current_user
-  let(:other_user) { Factory(:user) }
+  let(:user) { FactoryGirl.create(:user) } # current_user
+  let(:other_user) { FactoryGirl.create(:user) }
 
   context 'search_user_courses_count' do
     # A cache é feita pelo usuário que será mostrado
@@ -23,7 +24,7 @@ describe 'SearchUserCache' do
 
     context "expiration" do
       before do
-        @course = Factory(:course)
+        @course = FactoryGirl.create(:course)
       end
 
       it "expires when user_course_association is created" do

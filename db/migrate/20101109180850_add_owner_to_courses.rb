@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddOwnerToCourses < ActiveRecord::Migration
   def self.up
     add_column :courses, :owner, :integer

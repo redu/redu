@@ -1,18 +1,19 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 require 'authlogic/test_case'
 
 describe LecturesController do
   before do
-    @space = Factory(:space)
-    @subject_owner = Factory(:user)
+    @space = FactoryGirl.create(:space)
+    @subject_owner = FactoryGirl.create(:user)
     @space.course.join @subject_owner, Role[:teacher]
 
-    @subject = Factory(:subject, :owner => @subject_owner,
+    @subject = FactoryGirl.create(:subject, :owner => @subject_owner,
                        :space => @space, :finalized => true,
                        :visible => true)
-    @lectures = (1..3).collect { Factory(:lecture,:subject => @subject ,
+    @lectures = (1..3).collect { FactoryGirl.create(:lecture,:subject => @subject ,
                                          :owner => @subject_owner) }
-    @enrolled_user = Factory(:user)
+    @enrolled_user = FactoryGirl.create(:user)
     @space.course.join @enrolled_user
     @subject.enroll @enrolled_user
     login_as @enrolled_user
@@ -33,7 +34,7 @@ describe LecturesController do
     context "when Seminar" do
       before do
         lectureable = @lectures[0].lectureable
-        #lectureable = Factory(:seminar)
+        #lectureable = FactoryGirl.create(:seminar)
         lectureable.save
         post :show, :locale => "pt-BR", :id => @lectures[0].id,
           :subject_id => @subject.id, :space_id => @space.id
@@ -47,7 +48,7 @@ describe LecturesController do
 
     context "when Document" do
       before do
-        @lectures[0].lectureable = Factory(:document)
+        @lectures[0].lectureable = FactoryGirl.create(:document)
         @lectures[0].save
         post :show, :locale => "pt-BR", :id => @lectures[0].id,
           :subject_id => @subject.id, :space_id => @space.id
@@ -62,7 +63,7 @@ describe LecturesController do
 
     context "when Exercise" do
       before do
-        @exercise = Factory(:complete_exercise)
+        @exercise = FactoryGirl.create(:complete_exercise)
         @lectures[0].lectureable = @exercise
         @lectures[0].save
 
@@ -290,8 +291,8 @@ describe LecturesController do
     end
 
     context "POST update (Exercise)" do
-      subject { Factory(:lecture,
-                        :lectureable => Factory(:complete_exercise),
+      subject { FactoryGirl.create(:lecture,
+                        :lectureable => FactoryGirl.create(:complete_exercise),
                         :subject => @subject ) }
 
       before do
@@ -329,8 +330,8 @@ describe LecturesController do
     end
 
     context "POST update (Exercise) invalid" do
-      subject { Factory(:lecture,
-                        :lectureable => Factory(:complete_exercise),
+      subject { FactoryGirl.create(:lecture,
+                        :lectureable => FactoryGirl.create(:complete_exercise),
                         :subject => @subject ) }
 
       before do

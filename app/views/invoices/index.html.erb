@@ -40,7 +40,7 @@
                     <% if @plan.invoice.overdue? %>
                       <span class="plan-status legend">Fatura em aberto, plano bloqueado</span>
                     <% else %>
-                      <%= content_tag(:span, "Fatura em aberto. #{@plan.invoice.threshold_date - Date.today} dias restantes.", :class => "plan-status legend") %>
+                      <%= content_tag(:span, "Fatura em aberto. #{(@plan.invoice.threshold_date - Date.today).to_i} dias restantes.", :class => "plan-status legend") %>
                     <% end %>
                   <% else %>
                     <span class="plan-status legend">Sem pendências</span>

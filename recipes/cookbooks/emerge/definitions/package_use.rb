@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 define :package_use, :flags => nil do
   name = params[:name]
   flags = params[:flags]

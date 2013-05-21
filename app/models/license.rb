@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class License < ActiveRecord::Base
   belongs_to :invoice
   belongs_to :course

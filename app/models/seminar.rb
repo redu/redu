@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Seminar < ActiveRecord::Base
   attr_accessor :external_resource_url
 

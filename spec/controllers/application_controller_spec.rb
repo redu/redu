@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe ApplicationController do
@@ -9,7 +10,7 @@ describe ApplicationController do
 
   describe 'Check tour exploration' do
     context 'when logged in' do
-      let(:user) { Factory(:user) }
+      let(:user) { FactoryGirl.create(:user) }
       before do
         login_as user
       end

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module EnrollmentService
   module EnrollmentAdditions
     module ModelAdditions

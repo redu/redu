@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Api
   class CourseEnrollmentDecorator
     delegate :id, :to_param, :model_name, :course, :user, :token, :email,

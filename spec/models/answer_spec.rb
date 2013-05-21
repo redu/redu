@@ -1,7 +1,8 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe Answer do
-  subject { Factory(:answer) }
+  subject { FactoryGirl.create(:answer) }
 
   it { should belong_to :in_response_to }
   it { should validate_presence_of :text }

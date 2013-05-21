@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module EnrollmentService
   class UsersAndRolesEnrollmentBuilder < Struct.new(:subjects, :user_role_pairs)
     # Define estratégia para construir uma matriz do tipo

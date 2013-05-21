@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class UserEnvironmentAssociationCacheObserver < ActiveRecord::Observer
   include ViewCaches
   observe UserEnvironmentAssociation

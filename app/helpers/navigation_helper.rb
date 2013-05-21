@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # Módulo para renderização dinâmica das navegações.
 #
 # Aqui o contexto no qual a navegação será renderizada é

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AllMigrations < ActiveRecord::Migration
   def self.up
 

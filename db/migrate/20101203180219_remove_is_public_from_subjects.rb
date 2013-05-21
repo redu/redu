@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RemoveIsPublicFromSubjects < ActiveRecord::Migration
   def self.up
     remove_column :subjects, :is_public

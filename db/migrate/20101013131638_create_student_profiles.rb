@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateStudentProfiles < ActiveRecord::Migration
   def self.up
     create_table :student_profiles do |t|

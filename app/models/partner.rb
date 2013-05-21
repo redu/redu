@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Partner < ActiveRecord::Base
   has_many :partner_environment_associations,
     :order => "partner_environment_associations.created_at DESC",

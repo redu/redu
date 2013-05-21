@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class PaymentGatewayController < BaseController
   layout "application"
 

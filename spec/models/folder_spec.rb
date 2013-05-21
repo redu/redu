@@ -1,7 +1,8 @@
+# -*- encoding : utf-8 -*-
 require "spec_helper"
 
 describe Folder do
-  subject { Factory(:folder) }
+  subject { FactoryGirl.create(:folder) }
 
   it { should belong_to(:user) }
   it { should belong_to(:space) }

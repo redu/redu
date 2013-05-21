@@ -1,14 +1,15 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 require 'authlogic/test_case'
 
 describe StatusesController do
-  subject { Factory(:activity) }
+  subject { FactoryGirl.create(:activity) }
 
   describe "POST create" do
     context "when creating new activity" do
       before do
-        @statusable = Factory(:user)
-        @author = Factory(:user)
+        @statusable = FactoryGirl.create(:user)
+        @author = FactoryGirl.create(:user)
         @statusable.be_friends_with(@author)
         @author.be_friends_with(@statusable)
 
@@ -49,7 +50,7 @@ describe StatusesController do
 
       context "with an associated resource" do
         before do
-          @resource = Factory.build(:status_resource)
+          @resource = FactoryGirl.build(:status_resource)
           @params[:status][:status_resources_attributes] = [{
             :provider => @resource.provider,
             :thumb_url => @resource.thumb_url,
@@ -83,11 +84,11 @@ describe StatusesController do
 
     context "when creating new help request" do
       before do
-        @space = Factory(:space)
-        @author = Factory(:user)
-        @subject = Factory(:subject, :owner => @author,
+        @space = FactoryGirl.create(:space)
+        @author = FactoryGirl.create(:user)
+        @subject = FactoryGirl.create(:subject, :owner => @author,
                            :space => @space, :finalized => true, :visible => true)
-        @statusable = Factory(:lecture, :owner => @author, :subject => @subject)
+        @statusable = FactoryGirl.create(:lecture, :owner => @author, :subject => @subject)
         @space.course.join(@author, Role[:teacher])
 
         login_as @author
@@ -108,8 +109,8 @@ describe StatusesController do
   describe "POST respond" do
     context "when responding an activity" do
       before do
-        @statusable = Factory(:user)
-        @author = Factory(:user)
+        @statusable = FactoryGirl.create(:user)
+        @author = FactoryGirl.create(:user)
         @statusable.be_friends_with(@author)
         @author.be_friends_with(@statusable)
 
@@ -129,12 +130,12 @@ describe StatusesController do
 
     context "when responding a help request" do
       before do
-        @space = Factory(:space)
-        @author = Factory(:user)
-        @subject = Factory(:subject, :owner => @author,
+        @space = FactoryGirl.create(:space)
+        @author = FactoryGirl.create(:user)
+        @subject = FactoryGirl.create(:subject, :owner => @author,
                            :space => @space, :finalized => true, :visible => true)
-        @lecture = Factory(:lecture, :owner => @author, :subject => @subject)
-        @help = Factory(:help, :statusable => @lecture)
+        @lecture = FactoryGirl.create(:lecture, :owner => @author, :subject => @subject)
+        @help = FactoryGirl.create(:help, :statusable => @lecture)
         @space.course.join(@author, Role[:teacher])
 
         login_as @author
@@ -173,7 +174,7 @@ describe StatusesController do
       context "that has an associated resource" do
         before do
           subject.type = "Activity"
-          subject.status_resources << Factory(:status_resource, :status => subject)
+          subject.status_resources << FactoryGirl.create(:status_resource, :status => subject)
           @params = {:id => subject.id, :format => "js", :locale => "pt-BR"}
         end
 

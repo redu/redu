@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
@@ -98,9 +99,7 @@ module Redu
 
     config.paperclip_environment = config.paperclip.merge({
       :styles => { :thumb_32 => "32x32#",
-                   :thumb_48 => "48x48#",
                    :thumb_90 => "90x90#",
-                   :thumb_96 => "96x96#",
                    :thumb_140 => "140x140#" }
     })
 
@@ -110,7 +109,6 @@ module Redu
                    :thumb_48 => "48x48#",
                    :thumb_64 => "64x64#",
                    :thumb_90 => "90x90#",
-                   :thumb_96 => "96x96#",
                    :thumb_110 => "110x110#",
                    :thumb_160 => "160x160#" }
     })

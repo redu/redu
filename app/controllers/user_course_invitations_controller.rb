@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class UserCourseInvitationsController < BaseController
   layout "clean"
 

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddLinksAndFirstAccessToUserSettings < ActiveRecord::Migration
   def self.up
     add_column :user_settings, :first_access, :boolean, :default => true

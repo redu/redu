@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class MessageCacheObserver < ActiveRecord::Observer
   include ViewCaches
   observe Message

@@ -1,8 +1,9 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe LicensedInvoice do
-  subject { Factory(:licensed_invoice,
-                    :plan => Factory(:active_licensed_plan)) }
+  subject { FactoryGirl.create(:licensed_invoice,
+                    :plan => FactoryGirl.create(:active_licensed_plan)) }
 
   it { should belong_to :plan }
   it { should have_many :licenses }
@@ -28,7 +29,7 @@ describe LicensedInvoice do
     context "when open" do
       before do
         UserNotifier.deliveries = []
-        (1..5).collect { Factory(:license, :period_end => nil,
+        (1..5).collect { FactoryGirl.create(:license, :period_end => nil,
                                  :invoice => subject) }
       end
 
@@ -96,7 +97,7 @@ describe LicensedInvoice do
       before do
         subject.update_attributes(:amount => 50,
                                   :previous_balance => -100,
-                                  :plan => Factory(:active_licensed_plan))
+                                  :plan => FactoryGirl.create(:active_licensed_plan))
         subject.pend!
       end
 
@@ -107,7 +108,7 @@ describe LicensedInvoice do
 
     context "when pending" do
       before do
-        (1..5).collect { Factory(:license, :period_end => nil,
+        (1..5).collect { FactoryGirl.create(:license, :period_end => nil,
                                  :invoice => subject) }
         subject.update_attribute(:state, "pending")
       end
@@ -245,7 +246,7 @@ describe LicensedInvoice do
   context "description" do
     before do
       @plan = Plan.from_preset(PackagePlan::PLANS[:empresa_plus], "PackagePlan")
-      @plan.user = Factory(:user)
+      @plan.user = FactoryGirl.create(:user)
       subject.plan = @plan
       subject.save
       subject.reload
@@ -259,18 +260,18 @@ describe LicensedInvoice do
 
   context "retrivers" do
     it "should retrieve all licensed invoices within certain month and year" do
-      os1 = Factory(:licensed_invoice, :period_start => "2011-10-01", :period_end => "2011-10-31")
-      os2 = Factory(:licensed_invoice, :period_start => "2011-12-01", :period_end => "2011-12-31")
-      os3 = Factory(:licensed_invoice, :period_start => "2012-01-01", :period_end => "2012-01-15")
-      os4 = Factory(:licensed_invoice, :period_start => "2012-01-16", :period_end => "2012-01-31")
+      os1 = FactoryGirl.create(:licensed_invoice, :period_start => "2011-10-01", :period_end => "2011-10-31")
+      os2 = FactoryGirl.create(:licensed_invoice, :period_start => "2011-12-01", :period_end => "2011-12-31")
+      os3 = FactoryGirl.create(:licensed_invoice, :period_start => "2012-01-01", :period_end => "2012-01-15")
+      os4 = FactoryGirl.create(:licensed_invoice, :period_start => "2012-01-16", :period_end => "2012-01-31")
 
       LicensedInvoice.retrieve_by_month_year(1, 2012).to_set.should == [os3, os4].to_set
     end
 
     it "should retrieve actual licensed invoice" do
-      os1 = Factory(:licensed_invoice, :period_start => "2011-12-01", :period_end => "2011-12-31")
-      os2 = Factory(:licensed_invoice, :period_start => "2012-01-01", :period_end => "2012-01-15")
-      os3 = Factory(:licensed_invoice, :period_start => "2012-01-16", :period_end => "2012-01-31")
+      os1 = FactoryGirl.create(:licensed_invoice, :period_start => "2011-12-01", :period_end => "2011-12-31")
+      os2 = FactoryGirl.create(:licensed_invoice, :period_start => "2012-01-01", :period_end => "2012-01-15")
+      os3 = FactoryGirl.create(:licensed_invoice, :period_start => "2012-01-16", :period_end => "2012-01-31")
 
       LicensedInvoice.actual.should == [os3]
     end
@@ -282,12 +283,12 @@ describe LicensedInvoice do
 
   context "when verifying protected methods" do
     before do
-      user = Factory(:user)
-      environment = Factory(:environment, :owner => user)
-      course = Factory(:course, :environment => environment,
+      user = FactoryGirl.create(:user)
+      environment = FactoryGirl.create(:environment, :owner => user)
+      course = FactoryGirl.create(:course, :environment => environment,
                        :owner => user)
 
-      @plan = Factory(:active_licensed_plan, :price => 3.00,
+      @plan = FactoryGirl.create(:active_licensed_plan, :price => 3.00,
                       :billable => environment)
       from = Date.new(2010, 01, 15)
       @plan.create_invoice({:invoice => {
@@ -296,25 +297,25 @@ describe LicensedInvoice do
       }) # 17 dias
       @invoice = @plan.invoices.last
       (1..5).collect do
-        Factory(:license, :invoice => @invoice, :course => course,
+        FactoryGirl.create(:license, :invoice => @invoice, :course => course,
                 :role => Role[:member], :period_start => from,
                 :period_end => from.end_of_month - 5.days) # 12 dias
       end
       (1..5).collect do
-        Factory(:license, :invoice => @invoice, :course => course,
+        FactoryGirl.create(:license, :invoice => @invoice, :course => course,
                 :role => Role[:member], :period_start => from,
                 :period_end => from.end_of_month - 10.days) # 7 dias
       end
       (1..3).collect do
-        Factory(:license, :invoice => @invoice, :course => course,
+        FactoryGirl.create(:license, :invoice => @invoice, :course => course,
                 :role => Role[:teacher])
-        Factory(:license, :invoice => @invoice, :course => course,
+        FactoryGirl.create(:license, :invoice => @invoice, :course => course,
                 :role => Role[:tutor])
-        Factory(:license, :invoice => @invoice, :course => course,
+        FactoryGirl.create(:license, :invoice => @invoice, :course => course,
                 :role => Role[:environment_admin])
       end
       @in_use_licenses = (1..10).collect do
-        Factory(:license, :invoice => @invoice, :period_start => from,
+        FactoryGirl.create(:license, :invoice => @invoice, :period_start => from,
                 :period_end => nil, :course => course,
                 :role => Role[:member]) # 17 dias
       end
@@ -352,15 +353,15 @@ describe LicensedInvoice do
 
   context "when refreshing open licensed invoices" do
     before do
-      user = Factory(:user)
-      environment = Factory(:environment, :owner => user)
-      course = Factory(:course, :environment => environment,
+      user = FactoryGirl.create(:user)
+      environment = FactoryGirl.create(:environment, :owner => user)
+      course = FactoryGirl.create(:course, :environment => environment,
                        :owner => user)
 
-      @plan1 = Factory(:active_licensed_plan, :price => 3.00,
+      @plan1 = FactoryGirl.create(:active_licensed_plan, :price => 3.00,
                        :billable => environment)
 
-      plan2 = Factory(:active_licensed_plan, :price => 4.00)
+      plan2 = FactoryGirl.create(:active_licensed_plan, :price => 4.00)
 
       from = Date.new(2010, 01, 10)
       @to = Date.new(2010, 01, 20)
@@ -373,11 +374,11 @@ describe LicensedInvoice do
       @invoice1 = @plan1.invoices.last
 
       @in_use_licenses = (1..10).collect do
-        Factory(:license, :invoice => @invoice1, :period_start => from,
+        FactoryGirl.create(:license, :invoice => @invoice1, :period_start => from,
                 :period_end => nil, :course => course)
       end
       @not_in_use_licenses = (1..20).collect do
-        Factory(:license, :invoice => @invoice1, :period_start => from,
+        FactoryGirl.create(:license, :invoice => @invoice1, :period_start => from,
                 :period_end => from + 9.days, :course => course)
       end
 
@@ -387,7 +388,7 @@ describe LicensedInvoice do
       })
       @invoice2 = plan2.invoices.last
 
-      (1..20).collect { Factory(:license, :invoice => @invoice2,
+      (1..20).collect { FactoryGirl.create(:license, :invoice => @invoice2,
                                 :course => course) }
 
       Date.stub(:today) { @to + 1.day }
@@ -468,8 +469,8 @@ describe LicensedInvoice do
 
     context "when a plan is already blocked" do
       before do
-        plan = Factory(:active_licensed_plan)
-        invoice = Factory(:licensed_invoice, :plan => plan,
+        plan = FactoryGirl.create(:active_licensed_plan)
+        invoice = FactoryGirl.create(:licensed_invoice, :plan => plan,
                           :period_end => Date.today - Invoice::OVERDUE_DAYS - 1)
         invoice.pend!
         plan.block!
@@ -491,13 +492,13 @@ describe LicensedInvoice do
 
   context "when creating a license" do
     before do
-      @user = Factory(:user)
-      @environment = Factory(:environment, :owner => @user)
-      @course = Factory(:course, :environment => @environment,
+      @user = FactoryGirl.create(:user)
+      @environment = FactoryGirl.create(:environment, :owner => @user)
+      @course = FactoryGirl.create(:course, :environment => @environment,
                         :owner => @user)
     end
     it "should create a license" do
-      @user= Factory(:user)
+      @user= FactoryGirl.create(:user)
       expect {
         subject.create_license(@user, Role[:member], @course)
       }.to change(License, :count).by(1)
@@ -522,7 +523,7 @@ describe LicensedInvoice do
 
   context "when billable was destroyed" do
     before do
-      @plan = Factory(:active_licensed_plan)
+      @plan = FactoryGirl.create(:active_licensed_plan)
       @plan.create_invoice({:invoice => {
         :period_start => Date.today - 1.month}
       })
@@ -539,9 +540,9 @@ describe LicensedInvoice do
   context "when verifying protected methods" do
     context "when removing duplicated licenses" do
       before do
-        @course = Factory(:course)
+        @course = FactoryGirl.create(:course)
         @licenses = (1..3).collect do |i|
-          Factory(:license, :invoice => subject, :course => @course,
+          FactoryGirl.create(:license, :invoice => subject, :course => @course,
                   :login => "same-user-#{i}")
         end
 
@@ -551,7 +552,7 @@ describe LicensedInvoice do
         end
 
         @licenses << (1..5).collect do
-          Factory(:license, :invoice => subject, :course => @course)
+          FactoryGirl.create(:license, :invoice => subject, :course => @course)
         end
         @licenses.flatten!
 

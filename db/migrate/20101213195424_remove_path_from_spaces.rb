@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RemovePathFromSpaces < ActiveRecord::Migration
   def self.up
     remove_column :spaces, :path

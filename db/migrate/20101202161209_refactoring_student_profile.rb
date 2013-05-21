@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RefactoringStudentProfile < ActiveRecord::Migration
   def self.up
     change_table :student_profiles do |t|

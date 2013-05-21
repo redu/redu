@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module EnrollmentService
   class UntiedAdapter
     def notify_after_create(enrollments)

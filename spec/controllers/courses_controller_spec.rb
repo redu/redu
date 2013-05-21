@@ -1,13 +1,14 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 require 'authlogic/test_case'
 
 describe CoursesController do
   context "when creating a course for an existing environment" do
     before do
-      @user = Factory(:user)
+      @user = FactoryGirl.create(:user)
       login_as @user
 
-      @environment = Factory(:environment, :owner => @user)
+      @environment = FactoryGirl.create(:environment, :owner => @user)
 
       @params = {:course =>
         { :name => "Redu", :workload => "12",
@@ -64,14 +65,14 @@ describe CoursesController do
   context "when updating a couse" do
     context "POST update - updating a subscription_type to 1" do
       before do
-        @user = Factory(:user)
+        @user = FactoryGirl.create(:user)
         login_as @user
 
-        @environment = Factory(:environment, :owner => @user)
+        @environment = FactoryGirl.create(:environment, :owner => @user)
 
-        @course = Factory(:course,:environment => @environment, :owner => @user,
+        @course = FactoryGirl.create(:course,:environment => @environment, :owner => @user,
                           :subscription_type => 2)
-        @users = 5.times.inject([]) { |res, i| res << Factory(:user) }
+        @users = 5.times.inject([]) { |res, i| res << FactoryGirl.create(:user) }
         @course.join(@users[0])
         @course.join(@users[1])
         @course.join(@users[2])
@@ -98,21 +99,21 @@ describe CoursesController do
 
   context "when moderating a course" do
     before do
-      @user = Factory(:user)
+      @user = FactoryGirl.create(:user)
       login_as @user
 
-      @environment = Factory(:environment, :owner => @user)
+      @environment = FactoryGirl.create(:environment, :owner => @user)
 
-      @course = Factory(:course,:environment => @environment,
+      @course = FactoryGirl.create(:course,:environment => @environment,
                         :owner => @user,
                         :subscription_type => 2)
 
-      plan = Factory(:plan, :billable => @course,
+      plan = FactoryGirl.create(:plan, :billable => @course,
                      :user => @course.owner)
       @course.create_quota
 
-      @space = Factory(:space, :course => @course, :owner => @user)
-      @users = 5.times.inject([]) { |res, i| res << Factory(:user) }
+      @space = FactoryGirl.create(:space, :course => @course, :owner => @user)
+      @users = 5.times.inject([]) { |res, i| res << FactoryGirl.create(:user) }
       @course.join(@users[0])
       @course.join(@users[1])
       @course.join(@users[2])
@@ -188,7 +189,7 @@ describe CoursesController do
       before do
         @course.plans = []
 
-        @plan = Factory(:active_licensed_plan, :billable => @course.environment,
+        @plan = FactoryGirl.create(:active_licensed_plan, :billable => @course.environment,
                        :user => @course.environment.owner)
         @plan.create_invoice
 
@@ -214,20 +215,20 @@ describe CoursesController do
 
   context "when unjoin from a course (POST unjoin)" do
     before do
-      @owner = Factory(:user)
+      @owner = FactoryGirl.create(:user)
 
-      @environment = Factory(:environment, :owner => @owner)
+      @environment = FactoryGirl.create(:environment, :owner => @owner)
 
-      @course = Factory(:course,:environment => @environment, :owner => @owner)
-      @spaces = (1..2).collect { Factory(:space, :course => @course,
+      @course = FactoryGirl.create(:course,:environment => @environment, :owner => @owner)
+      @spaces = (1..2).collect { FactoryGirl.create(:space, :course => @course,
                                          :owner => @owner)}
       @subjects = []
       @spaces.each do |s|
-        @subjects << Factory(:subject, :space => s, :owner => @owner,
+        @subjects << FactoryGirl.create(:subject, :space => s, :owner => @owner,
                              :finalized => true)
       end
 
-      @user = Factory(:user)
+      @user = FactoryGirl.create(:user)
       @subjects.each { |sub| sub.enroll @user }
       login_as @user
 
@@ -262,7 +263,7 @@ describe CoursesController do
 
     context "and it's not the unique course which user has joined" do
       before do
-        @course2 = Factory(:course, :environment => @environment, :owner => @owner)
+        @course2 = FactoryGirl.create(:course, :environment => @environment, :owner => @owner)
         @course2.join @user
         @course.join @user
         post :unjoin, @params
@@ -288,15 +289,15 @@ describe CoursesController do
 
   context "when responding a course invitation" do
     before do
-      @owner = Factory(:user)
-      @environment = Factory(:environment, :owner => @owner)
-      @course = Factory(:course,:environment => @environment, :owner => @owner)
-      plan = Factory( :plan, :billable => @course,
+      @owner = FactoryGirl.create(:user)
+      @environment = FactoryGirl.create(:environment, :owner => @owner)
+      @course = FactoryGirl.create(:course,:environment => @environment, :owner => @owner)
+      plan = FactoryGirl.create( :plan, :billable => @course,
                      :user => @course.owner,
                      :members_limit => 5)
       @course.create_quota
 
-      @invited_user = Factory(:user)
+      @invited_user = FactoryGirl.create(:user)
       login_as @invited_user
 
       @course.invite @invited_user
@@ -341,20 +342,20 @@ describe CoursesController do
 
   context "when destroying members" do
     before do
-      @owner = Factory(:user)
+      @owner = FactoryGirl.create(:user)
 
-      @environment = Factory(:environment, :owner => @owner)
+      @environment = FactoryGirl.create(:environment, :owner => @owner)
 
-      @course = Factory(:course,:environment => @environment, :owner => @owner)
-      @spaces = (1..2).collect { Factory(:space, :course => @course,
+      @course = FactoryGirl.create(:course,:environment => @environment, :owner => @owner)
+      @spaces = (1..2).collect { FactoryGirl.create(:space, :course => @course,
                                          :owner => @owner)}
       @subjects = []
       @spaces.each do |s|
-        @subjects << Factory(:subject, :space => s, :owner => @owner,
+        @subjects << FactoryGirl.create(:subject, :space => s, :owner => @owner,
                              :finalized => true)
       end
 
-      @users = 3.times.inject([]) { |acc,i| acc << Factory(:user) }
+      @users = 3.times.inject([]) { |acc,i| acc << FactoryGirl.create(:user) }
       @users.each { |u| @course.join u }
 
       login_as @owner
@@ -392,13 +393,13 @@ describe CoursesController do
   context "when inviting users (POST invite_members)" do
     before do
       @users = 3.times.inject([]) do |acc,e|
-        acc << Factory(:user)
+        acc << FactoryGirl.create(:user)
       end
       @emails = ["email@example.com", "email2@example.com",
         "email3@example.com"]
 
-      @environment = Factory(:environment)
-      @course = Factory(:course, :environment => @environment,
+      @environment = FactoryGirl.create(:environment)
+      @course = FactoryGirl.create(:course, :environment => @environment,
                         :owner => @environment.owner)
 
       login_as @course.owner
@@ -430,23 +431,23 @@ describe CoursesController do
 
     context "when course is open" do
       before do
-        @user = Factory(:user)
+        @user = FactoryGirl.create(:user)
         login_as @user
 
-        @environment = Factory(:environment, :owner => @user)
+        @environment = FactoryGirl.create(:environment, :owner => @user)
 
-        @course = Factory(:course,:environment => @environment,
+        @course = FactoryGirl.create(:course,:environment => @environment,
                           :owner => @user)
 
-        @plan = Factory(:active_licensed_plan, :billable => @environment,
+        @plan = FactoryGirl.create(:active_licensed_plan, :billable => @environment,
                        :user => @course.owner)
         @plan.create_invoice_and_setup
 
         @environment.create_quota
         @environment.reload
 
-        @space = Factory(:space, :course => @course)
-        @subject_space = Factory(:subject, :space => @space,
+        @space = FactoryGirl.create(:space, :course => @course)
+        @subject_space = FactoryGirl.create(:subject, :space => @space,
                                  :owner => @course.owner,
                                  :finalized => true)
 
@@ -454,7 +455,7 @@ describe CoursesController do
                     :environment_id => @environment.path,
                     :id => @course.path }
 
-        @new_user = Factory(:user)
+        @new_user = FactoryGirl.create(:user)
         login_as @new_user
       end
 
@@ -480,20 +481,20 @@ describe CoursesController do
 
   context "when the limit of members is full" do
     before do
-      @user = Factory(:user)
+      @user = FactoryGirl.create(:user)
       login_as @user
 
-      @environment = Factory(:environment, :owner => @user)
+      @environment = FactoryGirl.create(:environment, :owner => @user)
 
-      @course = Factory(:course,:environment => @environment,
+      @course = FactoryGirl.create(:course,:environment => @environment,
                         :owner => @user)
 
-      plan = Factory( :plan, :billable => @course,
+      plan = FactoryGirl.create( :plan, :billable => @course,
                      :user => @course.owner,
                      :members_limit => 5)
       @course.create_quota
 
-      @users = 4.times.inject([]) { |res, i| res << Factory(:user) }
+      @users = 4.times.inject([]) { |res, i| res << FactoryGirl.create(:user) }
       @course.join(@users[0])
       @course.join(@users[1])
       @course.join(@users[2])
@@ -508,7 +509,7 @@ describe CoursesController do
       end
 
       it "should not authorize more 1 user" do
-        @new_user = Factory(:user)
+        @new_user = FactoryGirl.create(:user)
         login_as  @new_user
         expect {
           post :join, @params
@@ -521,7 +522,7 @@ describe CoursesController do
         @course.subscription_type = 2
         @course.save
 
-        @new_user = Factory(:user)
+        @new_user = FactoryGirl.create(:user)
         @params = { :locale => 'pt-BR',
           :environment_id => @environment.path,
           :id => @course.path }
@@ -556,11 +557,11 @@ describe CoursesController do
 
   context "when viewing sent invitations (GET admin_manage_invitations)" do
     before do
-      environment = Factory(:environment)
-      course = Factory(:course, :environment => environment,
+      environment = FactoryGirl.create(:environment)
+      course = FactoryGirl.create(:course, :environment => environment,
                        :owner => environment.owner)
       login_as course.owner
-      user_invitations = (1..3).collect { course.invite Factory(:user) }
+      user_invitations = (1..3).collect { course.invite FactoryGirl.create(:user) }
       email_invitations = (1..3).collect do |i|
         course.invite_by_email "email#{i}@example.com"
       end
@@ -581,11 +582,11 @@ describe CoursesController do
 
   context "when removing invitations (POST destroy_invitations)" do
     before do
-      @environment = Factory(:environment)
-      @course = Factory(:course, :environment => @environment,
+      @environment = FactoryGirl.create(:environment)
+      @course = FactoryGirl.create(:course, :environment => @environment,
                         :owner => @environment.owner)
       login_as @course.owner
-      @user_invitations = (1..4).collect { @course.invite Factory(:user) }
+      @user_invitations = (1..4).collect { @course.invite FactoryGirl.create(:user) }
       @email_invitations = (1..4).collect do |i|
         @course.invite_by_email "email#{i}@example.com"
       end
@@ -609,7 +610,7 @@ describe CoursesController do
     context "when email_invitations is NOT empty" do
       before do
         @params[:email_invitations] = [@email_invitations[0].id,
-          @email_invitations[1].id]
+          @email_invitations[1].id].join(",")
         post :destroy_invitations, @params
       end
 
@@ -634,7 +635,7 @@ describe CoursesController do
     context "when user_invitations is NOT empty" do
       before do
         @params[:user_invitations] = [@user_invitations[0].id,
-          @user_invitations[1].id]
+          @user_invitations[1].id].join(",")
         post :destroy_invitations, @params
       end
 
@@ -647,9 +648,9 @@ describe CoursesController do
   # admin actions (management panel)
   context "on management panel" do
     before  do
-      @environment = Factory(:environment)
-      @course = Factory(:course, :environment => @environment)
-      @user = Factory(:user)
+      @environment = FactoryGirl.create(:environment)
+      @course = FactoryGirl.create(:course, :environment => @environment)
+      @user = FactoryGirl.create(:user)
       UserEnvironmentAssociation.create(:environment => @environment,
                                         :user => @user,
                                         :role => Role[:environment_admin])
@@ -686,7 +687,7 @@ describe CoursesController do
                                         :subscription_type => "1" } }
           @post_params[:locale] = "pt-BR"
           @post_params[:environment_id] = @environment.path
-          Factory(:active_licensed_plan, :billable => @environment)
+          FactoryGirl.create(:active_licensed_plan, :billable => @environment)
           @environment.reload
           post :create, @post_params
         end
@@ -808,7 +809,7 @@ describe CoursesController do
 
   context "when course is unpublished" do
     before do
-      @course = Factory(:course, :published => false)
+      @course = FactoryGirl.create(:course, :published => false)
     end
 
     context "GET show" do
@@ -826,12 +827,12 @@ describe CoursesController do
 
   context "GET preview" do
     before do
-      @course = Factory(:course)
+      @course = FactoryGirl.create(:course)
     end
 
     context "when have permission to see the course" do
       before do
-        @user = Factory(:user)
+        @user = FactoryGirl.create(:user)
         @course.join @user
         login_as @user
 
@@ -849,7 +850,7 @@ describe CoursesController do
 
     context "when is course's admin" do
       before do
-        @env_admin = Factory(:user)
+        @env_admin = FactoryGirl.create(:user)
         @course.join @env_admin, Role[:environment_admin]
         login_as @env_admin
 
@@ -878,8 +879,8 @@ describe CoursesController do
   end
 
   context "when visiting a course" do
-    let(:course) { Factory(:course) }
-    let(:user) { Factory(:user) }
+    let(:course) { FactoryGirl.create(:course) }
+    let(:user) { FactoryGirl.create(:user) }
 
     context "as a course's member" do
       before do
@@ -898,7 +899,7 @@ describe CoursesController do
   end
 
   context "GET search_users_admin" do
-    let(:course) { Factory(:course) }
+    let(:course) { FactoryGirl.create(:course) }
     let(:environment) { course.environment }
     let(:user) { course.owner }
 

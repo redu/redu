@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AssetReportCacheObserver < ActiveRecord::Observer
   include ViewCaches
   observe AssetReport

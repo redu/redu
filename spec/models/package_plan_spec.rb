@@ -1,7 +1,8 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe PackagePlan do
-  subject { Factory(:active_package_plan) }
+  subject { FactoryGirl.create(:active_package_plan) }
 
   [:members_limit, :yearly_price].each do |attr|
     it { should validate_presence_of attr }
@@ -48,7 +49,7 @@ describe PackagePlan do
 
       # Criando instância para o caso de existir algum callback que modifique o
       # modelo
-      memo = Factory.build(:invoice, attrs)
+      memo = FactoryGirl.build(:invoice, attrs)
 
       invoice.description.should == memo.description
       invoice.period_start.should == memo.period_start
@@ -158,7 +159,7 @@ describe PackagePlan do
     context "the order" do
       before do
         invoices = 3.times.inject([]) { |res,i|
-          invoice = Factory(:package_invoice, :plan => subject)
+          invoice = FactoryGirl.create(:package_invoice, :plan => subject)
           invoice.pend!
           res << invoice
         }

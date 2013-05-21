@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 define :sysctl, :action => :add do
   case params[:action]
   when :add

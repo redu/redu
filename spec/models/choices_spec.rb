@@ -1,7 +1,8 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe Choice do
-  subject { Factory(:choice) }
+  subject { FactoryGirl.create(:choice) }
 
   it { should belong_to(:alternative) }
   it { should belong_to(:user) }

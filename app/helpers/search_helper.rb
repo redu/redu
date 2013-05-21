@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module SearchHelper
   # Define o papel do usuário no Ambiente
   def user_environment_role(environment, user)

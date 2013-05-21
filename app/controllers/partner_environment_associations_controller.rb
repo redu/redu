@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class PartnerEnvironmentAssociationsController < BaseController
   load_and_authorize_resource :partner
   load_and_authorize_resource :partner_environment_association,

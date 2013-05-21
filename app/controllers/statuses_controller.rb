@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class StatusesController < BaseController
 
   load_and_authorize_resource :status, :except => [:index]

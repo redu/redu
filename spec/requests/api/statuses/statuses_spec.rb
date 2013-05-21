@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require "api_spec_helper"
 
 describe "Statuses" do
@@ -7,25 +8,25 @@ describe "Statuses" do
 
   context "when listing User statuses" do
     let(:space) do
-      environment = Factory(:complete_environment, :owner => @current_user)
+      environment = FactoryGirl.create(:complete_environment, :owner => @current_user)
       environment.courses.first.spaces.first
     end
     let(:lecture) do
-      s = Factory(:subject, :owner => space.owner, :space => space)
-      Factory(:lecture, :owner => s.owner, :subject => s)
+      s = FactoryGirl.create(:subject, :owner => space.owner, :space => space)
+      FactoryGirl.create(:lecture, :owner => s.owner, :subject => s)
     end
     before do
       @user_statuses = [
-        Factory(:help, :user => @current_user, :statusable => lecture),
-        Factory(:activity, :user => @current_user, :statusable => lecture),
-        Factory(:log, :user => @current_user, :statusable => space,
+        FactoryGirl.create(:help, :user => @current_user, :statusable => lecture),
+        FactoryGirl.create(:activity, :user => @current_user, :statusable => lecture),
+        FactoryGirl.create(:log, :user => @current_user, :statusable => space,
                 :logeable => lecture)
       ]
 
       # Um pouco de ruído
-      Factory(:help, :statusable => lecture)
-      Factory(:log, :statusable => space, :logeable => lecture)
-      Factory(:activity, :statusable => lecture)
+      FactoryGirl.create(:help, :statusable => lecture)
+      FactoryGirl.create(:log, :statusable => space, :logeable => lecture)
+      FactoryGirl.create(:activity, :statusable => lecture)
     end
 
     it "should return code 200" do
@@ -64,7 +65,7 @@ describe "Statuses" do
     it_should_behave_like "pagination" do
       let(:entities) do
         4.times.collect do
-          Factory(:activity, :user => @current_user, :statusable => @current_user)
+          FactoryGirl.create(:activity, :user => @current_user, :statusable => @current_user)
         end
       end
       let(:params) do
@@ -76,23 +77,23 @@ describe "Statuses" do
 
   context "when listing on Space" do
     let(:space) do
-      environment = Factory(:complete_environment, :owner => @current_user)
+      environment = FactoryGirl.create(:complete_environment, :owner => @current_user)
       environment.courses.first.spaces.first
     end
     let(:lecture) do
-      s = Factory(:subject, :owner => space.owner, :space => space)
-      Factory(:lecture, :owner => s.owner, :subject => s)
+      s = FactoryGirl.create(:subject, :owner => space.owner, :space => space)
+      FactoryGirl.create(:lecture, :owner => s.owner, :subject => s)
     end
     before do
       @space_statuses = [
-        Factory(:activity, :statusable => space, :user => @current_user),
-        Factory(:log, :statusable => space, :logeable => space,
+        FactoryGirl.create(:activity, :statusable => space, :user => @current_user),
+        FactoryGirl.create(:log, :statusable => space, :logeable => space,
                 :user => @current_user)
       ]
 
       # Um pouco de ruído
-      Factory(:help, :statusable => lecture, :user => @current_user)
-      Factory(:activity, :statusable => lecture, :user => @current_user)
+      FactoryGirl.create(:help, :statusable => lecture, :user => @current_user)
+      FactoryGirl.create(:activity, :statusable => lecture, :user => @current_user)
     end
 
     it "should return code 200" do
@@ -130,25 +131,25 @@ describe "Statuses" do
 
   context "when listing on Lecture" do
     let(:space) do
-      environment = Factory(:complete_environment, :owner => @current_user)
+      environment = FactoryGirl.create(:complete_environment, :owner => @current_user)
       environment.courses.first.spaces.first
     end
     let(:lecture) do
-      s = Factory(:subject, :owner => space.owner, :space => space)
-      Factory(:lecture, :owner => s.owner, :subject => s)
+      s = FactoryGirl.create(:subject, :owner => space.owner, :space => space)
+      FactoryGirl.create(:lecture, :owner => s.owner, :subject => s)
     end
 
     before do
       @lecture_statuses = [
-        Factory(:help, :statusable => lecture, :user => @current_user),
-        Factory(:activity, :statusable => lecture, :user => @current_user),
+        FactoryGirl.create(:help, :statusable => lecture, :user => @current_user),
+        FactoryGirl.create(:activity, :statusable => lecture, :user => @current_user),
       ]
 
       # Um pouco de ruído
-      Factory(:help, :statusable => Factory(:lecture), :user => @current_user)
-      Factory(:log, :statusable => Factory(:lecture), :logeable => lecture,
+      FactoryGirl.create(:help, :statusable => FactoryGirl.create(:lecture), :user => @current_user)
+      FactoryGirl.create(:log, :statusable => FactoryGirl.create(:lecture), :logeable => lecture,
               :user => @current_user)
-      Factory(:activity, :statusable => Factory(:lecture), :user => @current_user)
+      FactoryGirl.create(:activity, :statusable => FactoryGirl.create(:lecture), :user => @current_user)
     end
 
     it "should return code 200" do
@@ -236,25 +237,25 @@ describe "Statuses" do
 
   context "when deleting status" do
     let(:space) do
-      environment = Factory(:complete_environment, :owner => @current_user)
+      environment = FactoryGirl.create(:complete_environment, :owner => @current_user)
       environment.courses.first.spaces.first
     end
     let(:lecture) do
-      s = Factory(:subject, :owner => space.owner, :space => space)
-      Factory(:lecture, :owner => s.owner, :subject => s)
+      s = FactoryGirl.create(:subject, :owner => space.owner, :space => space)
+      FactoryGirl.create(:lecture, :owner => s.owner, :subject => s)
     end
     let(:activity) do
-      Factory(:activity, :statusable => @current_user, :user => @current_user)
+      FactoryGirl.create(:activity, :statusable => @current_user, :user => @current_user)
     end
     let(:help) do
-      Factory(:help, :statusable => lecture, :user => @current_user)
+      FactoryGirl.create(:help, :statusable => lecture, :user => @current_user)
     end
     let(:log) do
-      Factory(:log, :statusable => space, :user => @current_user,
+      FactoryGirl.create(:log, :statusable => space, :user => @current_user,
               :logeable => space)
     end
     let(:answer) do
-      Factory(:answer, :statusable => activity, :in_response_to => activity,
+      FactoryGirl.create(:answer, :statusable => activity, :in_response_to => activity,
               :user => @current_user)
     end
 
@@ -297,7 +298,7 @@ describe "Statuses" do
 
   context "when creating status on space" do
     let(:space) do
-      environment = Factory(:complete_environment, :owner => @current_user)
+      environment = FactoryGirl.create(:complete_environment, :owner => @current_user)
       environment.courses.first.spaces.first
     end
     let(:params) do
@@ -349,13 +350,13 @@ describe "Statuses" do
 
   context "when creating status (type Activity) on Lecture" do
     let(:space) do
-      environment = Factory(:complete_environment, :owner => @current_user)
+      environment = FactoryGirl.create(:complete_environment, :owner => @current_user)
       environment.courses.first.spaces.first
     end
     let(:lecture) do
-      s = Factory(:subject, :owner => space.owner, :space => space)
-      c = Factory(:canvas, :user => s.owner)
-      Factory(:lecture, :owner => s.owner, :subject => s,
+      s = FactoryGirl.create(:subject, :owner => space.owner, :space => space)
+      c = FactoryGirl.create(:canvas, :user => s.owner)
+      FactoryGirl.create(:lecture, :owner => s.owner, :subject => s,
               :lectureable => c)
     end
     let(:params) do
@@ -404,13 +405,13 @@ describe "Statuses" do
 
   context "when creating status (type Help) on Lecture" do
     let(:space) do
-      environment = Factory(:complete_environment, :owner => @current_user)
+      environment = FactoryGirl.create(:complete_environment, :owner => @current_user)
       environment.courses.first.spaces.first
     end
     let(:lecture) do
-      s = Factory(:subject, :owner => space.owner, :space => space)
-      c = Factory(:canvas, :user => s.owner)
-      Factory(:lecture, :owner => s.owner, :subject => s,
+      s = FactoryGirl.create(:subject, :owner => space.owner, :space => space)
+      c = FactoryGirl.create(:canvas, :user => s.owner)
+      FactoryGirl.create(:lecture, :owner => s.owner, :subject => s,
               :lectureable => c)
     end
     let(:params) do
@@ -449,18 +450,18 @@ describe "Statuses" do
 
   context "when creating an Answer" do
     let(:space) do
-      environment = Factory(:complete_environment, :owner => @current_user)
+      environment = FactoryGirl.create(:complete_environment, :owner => @current_user)
       environment.courses.first.spaces.first
     end
     let(:lecture) do
-      s = Factory(:subject, :owner => space.owner, :space => space)
-      Factory(:lecture, :owner => s.owner, :subject => s)
+      s = FactoryGirl.create(:subject, :owner => space.owner, :space => space)
+      FactoryGirl.create(:lecture, :owner => s.owner, :subject => s)
     end
     let(:activity) do
-      Factory(:activity, :user => @current_user, :statusable => @current_user)
+      FactoryGirl.create(:activity, :user => @current_user, :statusable => @current_user)
     end
     let(:help) do
-      Factory(:help, :user => @current_user, :statusable => lecture)
+      FactoryGirl.create(:help, :user => @current_user, :statusable => lecture)
     end
     let(:params) do
       { :status => {:text => "Ximbica Answer Test" },
@@ -499,7 +500,7 @@ describe "Statuses" do
     end
 
     xit "should return 422 when invalid type" do
-      @log = Factory(:log) # tipo inválido
+      @log = FactoryGirl.create(:log) # tipo inválido
       post "/api/statuses/#{@log.id}/answers", @params
       # Deve ser atualizado com authorize
       response.code.should == "422"
@@ -540,7 +541,7 @@ describe "Statuses" do
 
   context "when listing Answers" do
     let(:activity) do
-      Factory(:activity, :statusable => @current_user, :user => @current_user)
+      FactoryGirl.create(:activity, :statusable => @current_user, :user => @current_user)
     end
     let(:params) do
       { :status => {:text => "Ximbica Answer Test" },
@@ -565,7 +566,7 @@ describe "Statuses" do
        :oauth_token => @token, :format => 'json' }
     end
     let(:space) do
-      environment = Factory(:complete_environment, :owner => @current_user)
+      environment = FactoryGirl.create(:complete_environment, :owner => @current_user)
       environment.courses.first.spaces.first
     end
 
@@ -577,7 +578,7 @@ describe "Statuses" do
 
   context "when listing overview on Space" do
     let(:space) do
-      environment = Factory(:complete_environment, :owner => @current_user)
+      environment = FactoryGirl.create(:complete_environment, :owner => @current_user)
       environment.courses.first.spaces.first
     end
 
@@ -611,13 +612,13 @@ describe "Statuses" do
 
   context "when listing overview on Space" do
     let(:environment) do
-      Factory(:complete_environment, :owner => @current_user)
+      FactoryGirl.create(:complete_environment, :owner => @current_user)
     end
     let(:space) { environment.courses.first.spaces.first }
 
     before do
       4.times do
-        Factory(:activity, :statusable => space, :user => @current_user)
+        FactoryGirl.create(:activity, :statusable => space, :user => @current_user)
       end
     end
 
@@ -633,7 +634,7 @@ describe "Statuses" do
 
   context "when listing User overview" do
     let(:environment) do
-      Factory(:complete_environment, :owner => @current_user)
+      FactoryGirl.create(:complete_environment, :owner => @current_user)
     end
     let(:space) { environment.courses.first.spaces.first }
     before do
@@ -667,12 +668,12 @@ describe "Statuses" do
       { :oauth_token => @token, :format => 'json' }
     end
     let(:space) do
-      environment = Factory(:complete_environment, :owner => @current_user)
+      environment = FactoryGirl.create(:complete_environment, :owner => @current_user)
       environment.courses.first.spaces.first
     end
     let(:lecture) do
-      s = Factory(:subject, :owner => space.owner, :space => space)
-      Factory(:lecture, :owner => s.owner, :subject => s)
+      s = FactoryGirl.create(:subject, :owner => space.owner, :space => space)
+      FactoryGirl.create(:lecture, :owner => s.owner, :subject => s)
     end
 
     before do
@@ -684,9 +685,9 @@ describe "Statuses" do
         @activity = parse(response.body)
 
         @user_statuses = [
-        Factory(:help, :user => @current_user, :statusable => lecture),
-        Factory(:activity, :user => @current_user, :statusable => lecture),
-        Factory(:log, :user => @current_user, :statusable => space,
+        FactoryGirl.create(:help, :user => @current_user, :statusable => lecture),
+        FactoryGirl.create(:activity, :user => @current_user, :statusable => lecture),
+        FactoryGirl.create(:log, :user => @current_user, :statusable => space,
                 :logeable => lecture)
       ]
       end
@@ -718,7 +719,7 @@ describe "Statuses" do
     end
 
     it "should return code 404 when not found" do
-      @lecture = Factory(:lecture)
+      @lecture = FactoryGirl.create(:lecture)
       get "/api/users/212/statuses/timeline", params
       response.code.should == "404"
     end
@@ -778,7 +779,7 @@ describe "Statuses" do
   end
 
   context "when there are Compound Logs" do
-    let(:compound) { Factory(:compound_log, :user => @current_user) }
+    let(:compound) { FactoryGirl.create(:compound_log, :user => @current_user) }
     let(:params) { { :oauth_token => @token, :format => 'json' } }
     before do
       compound.statusable = @current_user

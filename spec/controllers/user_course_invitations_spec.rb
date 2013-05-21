@@ -1,10 +1,11 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 require 'authlogic/test_case'
 
 describe UserCourseInvitationsController do
   context "GET show" do
     before do
-      @course = Factory(:course)
+      @course = FactoryGirl.create(:course)
       @invite = @course.invite_by_email("email@example.com")
       @params = {:locale => 'pt-BR', :environment_id => @course.environment.path,
         :course_id => @course.path, :id => @invite.id }
@@ -12,7 +13,7 @@ describe UserCourseInvitationsController do
 
     context "when the user is logged in" do
       before do
-        @logged_user = Factory(:user)
+        @logged_user = FactoryGirl.create(:user)
         login_as @logged_user
         get :show, @params
       end

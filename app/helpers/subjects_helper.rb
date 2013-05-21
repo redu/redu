@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module SubjectsHelper
   def item_expander(item, subject)
     if item.eql?(subject)
