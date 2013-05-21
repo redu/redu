@@ -1,17 +1,18 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe 'SpacesShowCache' do
   render_views
-  let(:user) { Factory(:user) }
-  let(:space) { Factory(:space) }
+  let(:user) { FactoryGirl.create(:user) }
+  let(:space) { FactoryGirl.create(:space) }
 
   before do
     @controller = SpacesController.new
     @controller.stub(:current_user) { user }
-    sub = Factory(:subject, :space => space, :owner => space.owner,
+    sub = FactoryGirl.create(:subject, :space => space, :owner => space.owner,
                  :finalized => true)
 
-    @lecture = Factory(:lecture, :subject => sub,
+    @lecture = FactoryGirl.create(:lecture, :subject => sub,
                       :owner => sub.owner)
 
     space.course.join(user)

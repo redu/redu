@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 FactoryGirl.define do
   factory :seminar_youtube, :class => :seminar do
     external_resource_url 'http://www.youtube.com/watch?v=LADHwoN2LMM'

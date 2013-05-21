@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class UserNotifierObserver
   def self.delivered_email(message)
     html = message.html_part

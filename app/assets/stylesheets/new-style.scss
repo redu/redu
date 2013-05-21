@@ -7782,3 +7782,13 @@ button[disabled=disabled] {
   width: 16px;
   height: 18px;
 }
+
+/* Mensagem de curso sem disciplinas. */
+
+.icon-space-gray_128_130 {
+  background-image: image-url("space-gray_128_130.png");
+  width: 128px;
+  height: 130px;
+}
+
+#course-spaces .empty-message { margin-top: 0; }

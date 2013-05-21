@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module SpacesAdminNavigation
   def spaces_admin_navigation(sidebar)
     sidebar.dom_class = 'local-nav'

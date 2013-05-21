@@ -1,8 +1,9 @@
+# -*- encoding : utf-8 -*-
 require 'api_spec_helper'
 
 describe "ThumbnailCollection" do
   let(:representer) { Api::UserRepresenter }
-  let(:model) { Factory.build(:user) }
+  let(:model) { FactoryGirl.build(:user) }
   let(:representation) do
     model.extend(representer)
     model.to_hash

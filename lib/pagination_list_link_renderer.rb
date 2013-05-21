@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class PaginationListLinkRenderer < WillPaginate::LinkRenderer
 
   def to_html

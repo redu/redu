@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class ChangeEnumColumnTypes < ActiveRecord::Migration
   def self.up
     %w(course_enrollments enrollments users user_environment_associations user_space_associations).each do |table|

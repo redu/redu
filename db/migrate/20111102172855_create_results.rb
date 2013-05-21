@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateResults < ActiveRecord::Migration
   def self.up
     create_table :results do |t|

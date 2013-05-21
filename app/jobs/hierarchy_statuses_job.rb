@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class HierarchyStatusesJob
   attr_accessor :status_id, :course_id
 

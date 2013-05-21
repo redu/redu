@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddOriginalMediaToSeminar < ActiveRecord::Migration
   def self.up
     add_column :seminars, :original_file_name,    :string

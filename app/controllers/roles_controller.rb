@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RolesController < BaseController
   load_resource :environment, :find_by => :path
   load_resource :user, :through => :environment, :find_by => :login

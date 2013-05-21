@@ -1,15 +1,16 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 require 'authlogic/test_case'
 
 describe PartnerUserAssociationsController do
   context "when listing collaborators from a partner" do
     before do
-      @user = Factory(:user)
+      @user = FactoryGirl.create(:user)
       login_as @user
 
-      @partner = Factory(:partner)
-      environment = Factory(:environment)
-      Factory(:partner_environment_association,
+      @partner = FactoryGirl.create(:partner)
+      environment = FactoryGirl.create(:environment)
+      FactoryGirl.create(:partner_environment_association,
               :environment => environment,
               :partner => @partner)
       @partner.add_collaborator(@user)

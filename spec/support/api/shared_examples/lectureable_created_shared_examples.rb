@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 shared_examples_for "a lecture created" do
   before { post url, lecture_params }
 

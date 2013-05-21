@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module UsersHelper
   # criação de novos campos para social_network através do fields_for
   def new_social_network(f, association)

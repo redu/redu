@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # Be sure to restart your server when you modify this file.
 
 # Use the database for sessions instead of the cookie-based default,

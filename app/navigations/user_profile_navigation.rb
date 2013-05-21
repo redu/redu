@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module UserProfileNavigation
   def user_profile_navigation(sidebar)
     sidebar.dom_class = 'local-nav'

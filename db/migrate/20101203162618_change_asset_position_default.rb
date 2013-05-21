@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class ChangeAssetPositionDefault < ActiveRecord::Migration
   def self.up
     change_column :assets, :position, :integer, :default => 0

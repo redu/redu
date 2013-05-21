@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'zip/zipfilesystem'
 
 # Files in the database are represented by Myfile.

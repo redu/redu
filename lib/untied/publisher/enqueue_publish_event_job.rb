@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Untied
   module Publisher
     class EnqueuePublishEventJob < Struct.new(:event_name, :class_name, :ids)

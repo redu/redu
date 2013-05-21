@@ -2,7 +2,7 @@
   jQuery(function(){
     $(".sortable-resources").sortable({
       stop: function(event, ui) {
-      var lectures_ordered = $(this).sortable('toArray');
+        var lectures_ordered = $(this).sortable('toArray');
         $('.lectures-order').val(lectures_ordered);
         $("#space-manage #resources_list").refreshResourcesNumbering();
       }

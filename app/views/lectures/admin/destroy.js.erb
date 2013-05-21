@@ -4,6 +4,8 @@ $('#<%= @lecture.id %>-item').remove();
   $('#<%= @lecture.id %>-item-edition').remove();
 <% end %>
 
+<%= render 'lectures/admin/update_lecture_order' %>
+
 $("#space-manage #resources_list").refreshResourcesNumbering();
 
 <%# Atualiza quotas %>

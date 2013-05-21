@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 FactoryGirl.define do
   factory :folder do |f|
     f.sequence(:name) {|n| "Folder #{n}" }
@@ -14,8 +15,8 @@ FactoryGirl.define do
   end
 
   factory :complete_folder, :parent => :folder do
-    after_create do |f|
-      f.myfiles << Factory(:myfile, :folder => f)
+    after(:create) do |f,_|
+      f.myfiles << FactoryGirl.create(:myfile, :folder => f)
     end
   end
 end

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class NotifySubjectAddedJob
   def initialize(opts)
     @subject_id = opts[:subject_id]

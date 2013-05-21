@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddCompoundAndCompoundLogIdAndCompoundVisibleAtToStatuses < ActiveRecord::Migration
   def self.up
     add_column :statuses, :compound, :boolean, :default => false

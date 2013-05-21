@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 require 'support/api/oauth'
 require 'support/api/base'
@@ -6,7 +7,7 @@ describe Untied::EnvironmentRepresenter do
   include Api::Helpers
 
   let(:environment) do
-    Factory(:environment).extend(Untied::EnvironmentRepresenter)
+    FactoryGirl.create(:environment).extend(Untied::EnvironmentRepresenter)
   end
   let(:subject) do
     parse(environment.to_json).fetch('environment', {})

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateCanvas < ActiveRecord::Migration
   def self.up
     create_table :canvas do |t|

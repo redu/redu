@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # Monkeypatch necessário para utilizar a versão 3.4.2.pre do
 # ckeditor gem com o Rails 3.2.
 module Ckeditor

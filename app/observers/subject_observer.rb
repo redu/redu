@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class SubjectObserver < ActiveRecord::Observer
   def after_update(model)
     # model.notify_subject_added

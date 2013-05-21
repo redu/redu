@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class NameService
   attr_accessor :min_length ,:max_length
 

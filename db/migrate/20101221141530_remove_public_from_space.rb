@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RemovePublicFromSpace < ActiveRecord::Migration
   def self.up
     remove_column :spaces, :public

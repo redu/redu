@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddJobIdToSeminar < ActiveRecord::Migration
   def self.up
     add_column :seminars, :job, :integer

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class SpaceSearch < Search
   def initialize
     super(Space)

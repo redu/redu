@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Untied
   module Publisher
     class QueueProxy

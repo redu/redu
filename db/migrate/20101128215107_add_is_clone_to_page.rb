@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddIsCloneToPage < ActiveRecord::Migration
   def self.up
     add_column :pages, :is_clone, :boolean, :default => true

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 require 'authlogic/test_case'
 
@@ -5,7 +6,7 @@ describe EnvironmentsController do
   context "when creating a paid Environment" do
     before do
       User.maintain_sessions = false
-      @user = Factory(:user)
+      @user = FactoryGirl.create(:user)
       login_as @user
 
       @params = {:step => "1",
@@ -206,8 +207,8 @@ describe EnvironmentsController do
 
   context "GET preview" do
     before do
-      environment = Factory(:environment)
-      courses = (1..5).collect { Factory(:course, :environment => environment) }
+      environment = FactoryGirl.create(:environment)
+      courses = (1..5).collect { FactoryGirl.create(:course, :environment => environment) }
 
       get :preview, :id => environment.path, :locale => "pt-BR"
     end
@@ -220,9 +221,9 @@ describe EnvironmentsController do
   # admin actions (management panel)
   context "on management panel" do
     before  do
-      @environment = Factory(:environment)
-      @courses = (1..3).collect { Factory(:course, :environment => @environment) }
-      @user = Factory(:user)
+      @environment = FactoryGirl.create(:environment)
+      @courses = (1..3).collect { FactoryGirl.create(:course, :environment => @environment) }
+      @user = FactoryGirl.create(:user)
       @courses.each {|c| c.join @user, :environment_admin }
       login_as @user
     end
@@ -273,7 +274,7 @@ describe EnvironmentsController do
 
     context "POST destroy" do
       before do
-        @plan = Factory(:active_package_plan, :billable => @environment)
+        @plan = FactoryGirl.create(:active_package_plan, :billable => @environment)
         @post_params = { :locale => "pt-BR" }
         @post_params[:id] = @environment.path
         post :destroy, @post_params
@@ -287,11 +288,11 @@ describe EnvironmentsController do
     context "POST destroy_members" do
       before do
         @courses.each do |c|
-          (1..2).each { Factory(:space, :course => c) }
+          (1..2).each { FactoryGirl.create(:space, :course => c) }
           c.spaces.reload
         end
 
-        @users = (1..3).collect { Factory(:user) }
+        @users = (1..3).collect { FactoryGirl.create(:user) }
         @courses[0].join @users[0]
         @courses[0].join @users[1]
         @courses[0].join @users[2]
@@ -315,11 +316,11 @@ describe EnvironmentsController do
   end
 
   context 'GET index' do
-    let(:user) { Factory(:user) }
+    let(:user) { FactoryGirl.create(:user) }
 
     before do
-      (1..3).collect { Factory(:environment) }
-      @user_environments = (1..3).collect { Factory(:environment) }
+      (1..3).collect { FactoryGirl.create(:environment) }
+      @user_environments = (1..3).collect { FactoryGirl.create(:environment) }
       @user_environments.each { |e| user.environments << e }
 
       login_as user

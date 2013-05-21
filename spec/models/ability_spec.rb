@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 require 'cancan/matchers'
 
@@ -5,32 +6,32 @@ describe Ability do
 
   context "on hierarchy" do
     before do
-      @env_admin = Factory(:user)
-      @member = Factory(:user)
-      @teacher = Factory(:user)
-      @tutor = Factory(:user)
-      @redu_admin = Factory(:user, :role => :admin)
+      @env_admin = FactoryGirl.create(:user)
+      @member = FactoryGirl.create(:user)
+      @teacher = FactoryGirl.create(:user)
+      @tutor = FactoryGirl.create(:user)
+      @redu_admin = FactoryGirl.create(:user, :role => :admin)
     end
 
     context "on environment -" do
 
       before do
-        @environment = Factory(:environment, :owner => @env_admin)
+        @environment = FactoryGirl.create(:environment, :owner => @env_admin)
       end
 
       context "member" do
         before do
-          Factory(:user_environment_association, :environment => @environment,
+          FactoryGirl.create(:user_environment_association, :environment => @environment,
                   :user => @member, :role => :member)
           @ability = Ability.new(@member)
         end
         it "creates a environment" do
-          env = Factory.build(:environment, :owner => @member)
+          env = FactoryGirl.build(:environment, :owner => @member)
           @ability.should be_able_to(:create, env)
         end
 
         it "destroys his own environment" do
-          @ability.should be_able_to(:destroy, Factory(:environment, :owner => @member))
+          @ability.should be_able_to(:destroy, FactoryGirl.create(:environment, :owner => @member))
         end
         it "cannot destroy a strange environment" do
           @ability.should_not be_able_to(:destroy, @environment)
@@ -47,7 +48,7 @@ describe Ability do
         end
         #FIXME aparentemente um usuário pode criar um ambiente em que o owner seja outro usuário
         it "creates a environment" do
-          @ability.should be_able_to(:create, Factory.build(:environment,
+          @ability.should be_able_to(:create, FactoryGirl.build(:environment,
                                                             :owner => @env_admin))
         end
         it "destroy his own environment" do
@@ -56,7 +57,7 @@ describe Ability do
 
         it "cannot destroy a strange environment" do
           @ability.should_not be_able_to(:destroy,
-                                         Factory.build(:environment,
+                                         FactoryGirl.build(:environment,
                                                        :owner => @redu_admin))
         end
 
@@ -65,7 +66,7 @@ describe Ability do
         end
 
         it "can preview a environment" do
-          Factory(:user_environment_association, :environment => @environment,
+          FactoryGirl.create(:user_environment_association, :environment => @environment,
                   :user => @member, :role => :member)
           @ability.should be_able_to(:preview, @environment)
         end
@@ -73,19 +74,19 @@ describe Ability do
 
       context "teacher" do
         before do
-          Factory(:user_environment_association, :environment => @environment,
+          FactoryGirl.create(:user_environment_association, :environment => @environment,
                   :user => @teacher, :role => :teacher)
           @ability = Ability.new(@teacher)
         end
 
         it "creates a environment" do
           @ability.should be_able_to(:create,
-                                     Factory.build(:environment,
+                                     FactoryGirl.build(:environment,
                                                    :owner => @teacher))
         end
         it "destroy his own environment" do
           @ability.should be_able_to(:destroy,
-                                     Factory(:environment,
+                                     FactoryGirl.create(:environment,
                                              :owner => @teacher))
         end
         it "cannot destroy a strange environment" do
@@ -99,17 +100,17 @@ describe Ability do
 
       context "tutor" do
         before do
-          Factory(:user_environment_association, :environment => @environment,
+          FactoryGirl.create(:user_environment_association, :environment => @environment,
                   :user => @tutor, :role => :teacher)
           @ability = Ability.new(@tutor)
         end
         it "creates a environment" do
-          @ability.should be_able_to(:create, Factory.build(:environment,
+          @ability.should be_able_to(:create, FactoryGirl.build(:environment,
                                                             :owner => @tutor))
         end
 
         it "destroy his own environment" do
-          @ability.should be_able_to(:destroy, Factory(:environment,
+          @ability.should be_able_to(:destroy, FactoryGirl.create(:environment,
                                                        :owner => @tutor))
         end
 
@@ -128,12 +129,12 @@ describe Ability do
         end
         it "creates a environment" do
           @ability.should be_able_to(:create,
-                                     Factory.build(:environment,
+                                     FactoryGirl.build(:environment,
                                                    :owner => @redu_admin))
         end
 
         it "destroy his own environment" do
-          @ability.should be_able_to(:destroy, Factory(:environment,
+          @ability.should be_able_to(:destroy, FactoryGirl.create(:environment,
                                                        :owner => @redu_admin))
         end
         it "can destroy a strange environment" do
@@ -147,7 +148,7 @@ describe Ability do
 
       context "strange" do
         before do
-          @strange = Factory(:user)
+          @strange = FactoryGirl.create(:user)
           @ability = Ability.new(@strange)
         end
 
@@ -163,20 +164,20 @@ describe Ability do
 
     context "on course -" do
       before do
-        @environment = Factory(:environment, :owner => @env_admin)
+        @environment = FactoryGirl.create(:environment, :owner => @env_admin)
       end
 
       context "member" do
         before do
           @ability = Ability.new(@member)
-          Factory(:user_environment_association, :environment => @environment,
+          FactoryGirl.create(:user_environment_association, :environment => @environment,
                   :user => @member, :role => :member)
         end
 
         it "cannot create a course" do
-          course = Factory.build(:course,:owner => @environment.owner,
+          course = FactoryGirl.build(:course,:owner => @environment.owner,
                                  :environment => @environment)
-          Factory(:user_course_association, :course => course,
+          FactoryGirl.create(:user_course_association, :course => course,
                   :user => @member, :role => :member,
                   :state => "approved")
 
@@ -184,9 +185,9 @@ describe Ability do
         end
 
         it "cannot destroy a course" do
-          course = Factory.build(:course,:owner => @environment.owner,
+          course = FactoryGirl.build(:course,:owner => @environment.owner,
                                  :environment => @environment)
-          Factory(:user_course_association, :course => course,
+          FactoryGirl.create(:user_course_association, :course => course,
                   :user => @member, :role => :member,
                   :state => "approved")
 
@@ -194,29 +195,29 @@ describe Ability do
         end
 
         it "accepts a course invitation" do
-          course = Factory(:course, :owner => @env_admin,
+          course = FactoryGirl.create(:course, :owner => @env_admin,
                            :environment => @environment)
           course.invite(@member)
           @ability.should be_able_to(:accept, course)
         end
 
         it "denies a course invitation" do
-          course = Factory(:course, :owner => @env_admin,
+          course = FactoryGirl.create(:course, :owner => @env_admin,
                            :environment => @environment)
           course.invite(@member)
           @ability.should be_able_to(:deny, course)
         end
 
         it "cannot invite users" do
-          course = Factory.build(:course,:owner => @environment.owner,
+          course = FactoryGirl.build(:course,:owner => @environment.owner,
                                  :environment => @environment)
 
           @ability.should_not be_able_to(:invite_members, course)
         end
 
         it "can preview a course" do
-          course = Factory(:course, :environment => @environment)
-          Factory(:user_course_association, :course => course,
+          course = FactoryGirl.create(:course, :environment => @environment)
+          FactoryGirl.create(:user_course_association, :course => course,
                   :user => @member, :role => :member)
           @ability.should be_able_to(:preview, course)
         end
@@ -235,7 +236,7 @@ describe Ability do
       context "environment admin" do
         before  do
           @ability = Ability.new(@env_admin)
-          @course = Factory.build(:course, :owner => @env_admin,
+          @course = FactoryGirl.build(:course, :owner => @env_admin,
                                  :environment => @environment)
         end
 
@@ -248,37 +249,37 @@ describe Ability do
         end
 
         it "destroys a strange course when he is a environment admin" do
-          cur_user = Factory(:user)
-          Factory(:user_environment_association, :environment => @environment,
+          cur_user = FactoryGirl.create(:user)
+          FactoryGirl.create(:user_environment_association, :environment => @environment,
                   :user => cur_user, :role => :environment_admin)
-          course = Factory.build(:course, :owner => cur_user,
+          course = FactoryGirl.build(:course, :owner => cur_user,
                                  :environment => @environment)
           @ability.should be_able_to(:destroy, course)
         end
 
         it "cannot destroy a course when he isn't a environment admin" do
-          cur_user = Factory(:user)
-          environment_out = Factory(:environment, :owner => cur_user)
-          course = Factory.build(:course, :owner => cur_user,
+          cur_user = FactoryGirl.create(:user)
+          environment_out = FactoryGirl.create(:environment, :owner => cur_user)
+          course = FactoryGirl.build(:course, :owner => cur_user,
                                  :environment => environment_out)
           @ability.should_not be_able_to(:destroy, course)
         end
 
         context "if plan is blocked" do
           before do
-            @course = Factory(:course,:owner => @env_admin,
+            @course = FactoryGirl.create(:course,:owner => @env_admin,
                               :environment => @environment)
-            @plan = Factory(:active_package_plan, :billable => @course)
+            @plan = FactoryGirl.create(:active_package_plan, :billable => @course)
             @plan.block!
-            @space = Factory(:space, :owner => @env_admin, :course => @course)
-            @sub = Factory(:subject, :owner => @env_admin, :space => @space)
+            @space = FactoryGirl.create(:space, :owner => @env_admin, :course => @course)
+            @sub = FactoryGirl.create(:subject, :owner => @env_admin, :space => @space)
           end
 
           # Sorry, but Document #1 could not be uploaded to Scribd
           pending do
             it "can NOT upload document" do
-              document = Factory(:document)
-              lecture = Factory(:lecture, :owner => @env_admin,
+              document = FactoryGirl.create(:document)
+              lecture = FactoryGirl.create(:lecture, :owner => @env_admin,
                                 :subject => @sub,
                                 :lectureable => document)
               @ability.should_not be_able_to(:upload_document, document)
@@ -289,8 +290,8 @@ describe Ability do
           it "can NOT upload multimedia"
 
           it "can create a Youtube seminar" do
-            youtube = Factory.build(:seminar_youtube)
-            lecture = Factory(:lecture, :owner => @env_admin,
+            youtube = FactoryGirl.build(:seminar_youtube)
+            lecture = FactoryGirl.create(:lecture, :owner => @env_admin,
                               :subject => @sub,
                               :lectureable => youtube)
             @ability.should be_able_to(:upload_multimedia, youtube)
@@ -326,11 +327,11 @@ describe Ability do
       context "teacher" do
         before do
           @ability = Ability.new(@teacher)
-          Factory(:user_environment_association, :environment => @environment,
+          FactoryGirl.create(:user_environment_association, :environment => @environment,
                   :user => @teacher, :role => :teacher)
-          @course = Factory(:course,:owner => @environment.owner,
+          @course = FactoryGirl.create(:course,:owner => @environment.owner,
                                  :environment => @environment)
-          Factory(:user_course_association, :course => @course,
+          FactoryGirl.create(:user_course_association, :course => @course,
                   :user => @teacher, :role => :teacher,
                   :state => "approved")
         end
@@ -372,11 +373,11 @@ describe Ability do
       context "tutor" do
         before do
           @ability = Ability.new(@tutor)
-          Factory(:user_environment_association, :environment => @environment,
+          FactoryGirl.create(:user_environment_association, :environment => @environment,
                   :user => @tutor, :role => :tutor)
-          @course = Factory(:course,:owner => @environment.owner,
+          @course = FactoryGirl.create(:course,:owner => @environment.owner,
                                  :environment => @environment)
-          Factory(:user_course_association, :course => @course,
+          FactoryGirl.create(:user_course_association, :course => @course,
                   :user => @tutor, :role => :tutor,
                   :state => "approved")
         end
@@ -407,30 +408,30 @@ describe Ability do
           @ability = Ability.new(@redu_admin)
         end
         it "creates a course"  do
-          course = Factory.build(:course, :owner => @redu_admin,
+          course = FactoryGirl.build(:course, :owner => @redu_admin,
                                  :environment => @environment)
           @ability.should be_able_to(:create, course)
         end
         it "destroys his course" do
-          course = Factory.build(:course, :owner => @redu_admin,
+          course = FactoryGirl.build(:course, :owner => @redu_admin,
                                  :environment => @environment)
           @ability.should be_able_to(:destroy, course)
         end
         it "destroys any course" do
-          course = Factory.build(:course,
+          course = FactoryGirl.build(:course,
                                  :environment => @environment)
           @ability.should be_able_to(:destroy, course)
         end
 
         it "can see reports" do
-          course = Factory.build(:course,
+          course = FactoryGirl.build(:course,
                                  :environment => @environment)
           @ability.should be_able_to(:teacher_participation_report,
                                      course)
         end
 
         it "can access JSON reports" do
-          course = Factory.build(:course,
+          course = FactoryGirl.build(:course,
                                  :environment => @environment)
           @ability.should be_able_to(:teacher_participation_interaction,
                                      course)
@@ -439,12 +440,12 @@ describe Ability do
 
       context "strange" do
         before do
-          @strange = Factory(:user)
+          @strange = FactoryGirl.create(:user)
           @ability = Ability.new(@strange)
         end
 
         it "can preview a course" do
-          course = Factory(:course, :environment => @environment)
+          course = FactoryGirl.create(:course, :environment => @environment)
           @ability.should be_able_to(:preview, course)
         end
       end
@@ -452,30 +453,30 @@ describe Ability do
 
     context "on space -" do
       before do
-        @environment = Factory(:environment, :owner => @env_admin)
-        @course = Factory(:course, :owner => @env_admin,
+        @environment = FactoryGirl.create(:environment, :owner => @env_admin)
+        @course = FactoryGirl.create(:course, :owner => @env_admin,
                           :environment => @environment)
-        @space = Factory(:space, :course => @course)
+        @space = FactoryGirl.create(:space, :course => @course)
       end
       context "member" do
         before do
-          Factory(:user_environment_association, :environment => @environment,
+          FactoryGirl.create(:user_environment_association, :environment => @environment,
                   :user => @member, :role => :member)
-          Factory(:user_course_association, :course => @course,
+          FactoryGirl.create(:user_course_association, :course => @course,
                   :user => @member, :role => :member)
-          Factory(:user_space_association, :space => @space,
+          FactoryGirl.create(:user_space_association, :space => @space,
                   :user => @member, :role => :member)
           @ability = Ability.new(@member)
         end
 
         it "cannot create a space" do
-          @ability.should_not be_able_to(:create, Factory(:space,
+          @ability.should_not be_able_to(:create, FactoryGirl.create(:space,
                                                           :owner => @member,
                                                           :course => @course))
         end
 
         it "cannot destroy a space" do
-          @ability.should_not be_able_to(:destroy, Factory(:space,
+          @ability.should_not be_able_to(:destroy, FactoryGirl.create(:space,
                                                            :owner => @member,
                                                            :course => @course))
         end
@@ -511,17 +512,17 @@ describe Ability do
 
         context "member posts on wall" do
           before do
-            @activity = Factory(:activity,
+            @activity = FactoryGirl.create(:activity,
                                 :user => @member,
                                 :statusable => @space)
 
-            @answer_activity = Factory(:answer,
+            @answer_activity = FactoryGirl.create(:answer,
                                        :statusable => @activity,
                                        :in_response_to => @activity)
 
-            @strange_activity = Factory(:activity, :statusable => @space)
+            @strange_activity = FactoryGirl.create(:activity, :statusable => @space)
 
-            @strange_answer = Factory(:answer,
+            @strange_answer = FactoryGirl.create(:answer,
                                       :statusable => @strange_activity,
                                       :in_response_to => @strange_activity)
           end
@@ -550,11 +551,11 @@ describe Ability do
 
       context "teacher" do
         before do
-          Factory(:user_environment_association, :environment => @environment,
+          FactoryGirl.create(:user_environment_association, :environment => @environment,
                   :user => @teacher, :role => :teacher)
-          Factory(:user_course_association, :course => @course,
+          FactoryGirl.create(:user_course_association, :course => @course,
                   :user => @teacher, :role => :teacher)
-          @space = Factory(:space, :owner => @teacher,
+          @space = FactoryGirl.create(:space, :owner => @teacher,
                            :course => @course)
           @ability = Ability.new(@teacher)
         end
@@ -565,10 +566,10 @@ describe Ability do
           @ability.should be_able_to(:destroy, @space)
         end
         it "cannot destroy a strange space where he is a teacher" do
-          environment1 = Factory(:environment)
-          course1 = Factory.build(:course, :owner => environment1.owner,
+          environment1 = FactoryGirl.create(:environment)
+          course1 = FactoryGirl.build(:course, :owner => environment1.owner,
                                   :environment => environment1)
-          space1 = Factory.build(:space, :owner => @teacher,
+          space1 = FactoryGirl.build(:space, :owner => @teacher,
                                  :course => course1)
           @ability.should_not be_able_to(:destroy, space1)
         end
@@ -590,11 +591,11 @@ describe Ability do
 
         context "manage posts" do
           before do
-            @activity = Factory(:activity,
+            @activity = FactoryGirl.create(:activity,
                                 :user => @member,
                                 :statusable => @space)
 
-            @answer = Factory(:answer,
+            @answer = FactoryGirl.create(:answer,
                               :statusable => @activity,
                               :in_response_to => @activity)
           end
@@ -619,20 +620,20 @@ describe Ability do
 
       context "tutor" do
         before do
-          Factory(:user_environment_association, :environment => @environment,
+          FactoryGirl.create(:user_environment_association, :environment => @environment,
                   :user => @tutor, :role => :member)
-          Factory(:user_course_association, :course => @course,
+          FactoryGirl.create(:user_course_association, :course => @course,
                   :user => @tutor, :role => :member)
           @ability = Ability.new(@tutor)
         end
 
         it "cannot create a space" do
-          @ability.should_not be_able_to(:create, Factory(:space,
+          @ability.should_not be_able_to(:create, FactoryGirl.create(:space,
                                                           :owner => @tutor,
                                                           :course => @course))
         end
         it "cannot destroy a space" do
-          @ability.should_not be_able_to(:destroy, Factory(:space,
+          @ability.should_not be_able_to(:destroy, FactoryGirl.create(:space,
                                                            :owner => @tutor,
                                                            :course => @course))
         end
@@ -664,7 +665,7 @@ describe Ability do
       context "environment admin" do
         before do
           @ability = Ability.new(@env_admin)
-          @space = Factory(:space, :owner => @env_admin,
+          @space = FactoryGirl.create(:space, :owner => @env_admin,
                           :course => @course)
         end
 
@@ -692,11 +693,11 @@ describe Ability do
 
         context "manage posts" do
           before do
-            @activity = Factory(:activity,
+            @activity = FactoryGirl.create(:activity,
                                 :user => @env_admin,
                                 :statusable => @space)
 
-            @answer = Factory(:answer,
+            @answer = FactoryGirl.create(:answer,
                               :statusable => @activity,
                               :in_response_to => @activity)
           end
@@ -721,7 +722,7 @@ describe Ability do
       context "redu admin" do
         before do
           @ability = Ability.new(@redu_admin)
-          @space = Factory(:space, :owner => @env_admin,
+          @space = FactoryGirl.create(:space, :owner => @env_admin,
                           :course => @course)
         end
 
@@ -734,7 +735,7 @@ describe Ability do
         end
 
         it "creates a space" do
-          space = Factory(:space, :owner => @redu_admin,
+          space = FactoryGirl.create(:space, :owner => @redu_admin,
                           :course => @course)
           @ability.should be_able_to(:create, space)
         end
@@ -768,12 +769,12 @@ describe Ability do
 
       context "strange" do
         before do
-          @strange = Factory(:user)
+          @strange = FactoryGirl.create(:user)
           @ability = Ability.new(@strange)
         end
 
         it "can NOT preview a space" do
-          space = Factory(:space, :course => @course)
+          space = FactoryGirl.create(:space, :course => @course)
           @ability.should_not be_able_to(:preview, space)
         end
       end
@@ -781,23 +782,23 @@ describe Ability do
 
     context "on subject" do
       before do
-        @environment = Factory(:environment, :owner => @env_admin)
-        @course = Factory(:course, :owner => @env_admin,
+        @environment = FactoryGirl.create(:environment, :owner => @env_admin)
+        @course = FactoryGirl.create(:course, :owner => @env_admin,
                           :environment => @environment)
-        @space = Factory(:space, :owner => @env_admin, :course => @course)
-        @subject = Factory(:subject, :owner => @env_admin, :space => @space)
+        @space = FactoryGirl.create(:space, :owner => @env_admin, :course => @course)
+        @subject = FactoryGirl.create(:subject, :owner => @env_admin, :space => @space)
 
-        @lecture_page = Factory(:lecture, :subject => @subject,
-                                :lectureable => Factory(:page))
-        @lecture_canvas = Factory(:lecture, :subject => @subject,
-                                :lectureable => Factory(:canvas))
-        @lecture_exercise = Factory(:lecture, :subject => @subject,
-                                    :lectureable => Factory(:complete_exercise))
-        @lecture_seminar = Factory(:lecture, :subject => @subject,
-                                   :lectureable => Factory(:seminar_youtube))
+        @lecture_page = FactoryGirl.create(:lecture, :subject => @subject,
+                                :lectureable => FactoryGirl.create(:page))
+        @lecture_canvas = FactoryGirl.create(:lecture, :subject => @subject,
+                                :lectureable => FactoryGirl.create(:canvas))
+        @lecture_exercise = FactoryGirl.create(:lecture, :subject => @subject,
+                                    :lectureable => FactoryGirl.create(:complete_exercise))
+        @lecture_seminar = FactoryGirl.create(:lecture, :subject => @subject,
+                                   :lectureable => FactoryGirl.create(:seminar_youtube))
         mock_scribd_api
-        @lecture_document = Factory(:lecture, :subject => @subject,
-                                    :lectureable => Factory(:document))
+        @lecture_document = FactoryGirl.create(:lecture, :subject => @subject,
+                                    :lectureable => FactoryGirl.create(:document))
 
         @course.join @teacher, Role[:teacher]
         @course.join @tutor, Role[:tutor]
@@ -836,11 +837,11 @@ describe Ability do
 
         context "can manage posts" do
           before do
-            @activity = Factory(:activity,
+            @activity = FactoryGirl.create(:activity,
                                 :user => @member,
                                 :statusable => @lecture_page)
 
-            @answer = Factory(:answer,
+            @answer = FactoryGirl.create(:answer,
                               :statusable => @activity,
                               :in_response_to => @activity)
           end
@@ -865,7 +866,7 @@ describe Ability do
           end
 
           it "(exercise) with that was already answered" do
-            Factory(:finalized_result, :exercise => @lecture_exercise.lectureable)
+            FactoryGirl.create(:finalized_result, :exercise => @lecture_exercise.lectureable)
             @lecture_exercise.lectureable.reload
             @ability.should_not be_able_to(:update, @lecture_exercise)
           end
@@ -913,11 +914,11 @@ describe Ability do
 
         context "can manage posts" do
           before do
-            @activity = Factory(:activity,
+            @activity = FactoryGirl.create(:activity,
                                 :user => @member,
                                 :statusable => @lecture_page)
 
-            @answer = Factory(:answer,
+            @answer = FactoryGirl.create(:answer,
                               :statusable => @activity,
                               :in_response_to => @activity)
           end
@@ -999,30 +1000,30 @@ describe Ability do
 
         context "member posts on wall" do
           before do
-            @activity = Factory(:activity,
+            @activity = FactoryGirl.create(:activity,
                                 :user => @member,
                                 :statusable => @lecture_document)
 
-            @help = Factory(:help,
+            @help = FactoryGirl.create(:help,
                             :user => @member,
                             :statusable => @lecture_document)
 
-            @answer_activity = Factory(:answer,
+            @answer_activity = FactoryGirl.create(:answer,
                                        :statusable => @activity,
                                        :in_response_to => @activity)
 
-            @answer_help = Factory(:answer,
+            @answer_help = FactoryGirl.create(:answer,
                                    :statusable => @help,
                                    :in_response_to => @help)
 
 
-            @strange_activity = Factory(:activity,
+            @strange_activity = FactoryGirl.create(:activity,
                                         :statusable => @lecture_document)
 
-            @strange_help = Factory(:help,
+            @strange_help = FactoryGirl.create(:help,
                                     :statusable => @lecture_document)
 
-            @strange_answer = Factory(:answer,
+            @strange_answer = FactoryGirl.create(:answer,
                                       :statusable => @strange_activity,
                                       :in_response_to => @strange_activity)
           end
@@ -1072,7 +1073,7 @@ describe Ability do
     context "on plans" do
       context "on any plan" do
         before do
-          @plan = Factory(:plan)
+          @plan = FactoryGirl.create(:plan)
           @ability = Ability.new(@plan.user)
         end
 
@@ -1099,8 +1100,8 @@ describe Ability do
 
       context "on package_plan" do
         before do
-          @package_plan = Factory(:active_package_plan)
-          @invoice = Factory(:package_invoice, :plan => @package_plan)
+          @package_plan = FactoryGirl.create(:active_package_plan)
+          @invoice = FactoryGirl.create(:package_invoice, :plan => @package_plan)
         end
 
         context "the owner" do
@@ -1140,7 +1141,7 @@ describe Ability do
 
         context "the strange" do
           before do
-            strange = Factory(:user)
+            strange = FactoryGirl.create(:user)
             @ability = Ability.new(strange)
           end
 
@@ -1168,8 +1169,8 @@ describe Ability do
 
       context "on licensed_plan" do
         before do
-          @licensed_plan = Factory(:active_licensed_plan)
-          @invoice = Factory(:licensed_invoice, :plan => @licensed_plan)
+          @licensed_plan = FactoryGirl.create(:active_licensed_plan)
+          @invoice = FactoryGirl.create(:licensed_invoice, :plan => @licensed_plan)
           @invoice.update_attribute(:state, "pending")
         end
 
@@ -1205,7 +1206,7 @@ describe Ability do
 
         context "the strange" do
           before do
-            strange = Factory(:user)
+            strange = FactoryGirl.create(:user)
             @ability = Ability.new(strange)
           end
 
@@ -1232,17 +1233,17 @@ describe Ability do
 
         context "the partner admin" do
           before do
-            partner_env_assoc = Factory(:partner_environment_association)
+            partner_env_assoc = FactoryGirl.create(:partner_environment_association)
             partner = partner_env_assoc.partner
             environment = partner_env_assoc.environment
 
-            partner_admin = Factory(:user)
+            partner_admin = FactoryGirl.create(:user)
             partner.add_collaborator partner_admin
             @ability = Ability.new(partner_admin)
 
-            @licensed_plan = Factory(:active_licensed_plan,
+            @licensed_plan = FactoryGirl.create(:active_licensed_plan,
                                      :billable => environment)
-            @invoice = Factory(:licensed_invoice, :plan => @licensed_plan)
+            @invoice = FactoryGirl.create(:licensed_invoice, :plan => @licensed_plan)
             @invoice.pend!
           end
 
@@ -1278,7 +1279,7 @@ describe Ability do
 
         context "the redu admin" do
           before do
-            redu_admin = Factory(:user, :role => Role[:admin])
+            redu_admin = FactoryGirl.create(:user, :role => Role[:admin])
             @ability = Ability.new(redu_admin)
           end
 
@@ -1302,7 +1303,7 @@ describe Ability do
           end
 
           it "can migrate a blocked or migrated plan" do
-            @plan = Factory(:plan)
+            @plan = FactoryGirl.create(:plan)
             @plan.update_attribute(:state, "blocked")
             @ability.should be_able_to(:migrate, @plan)
 
@@ -1317,14 +1318,14 @@ describe Ability do
 
   context "on user -" do
     before do
-      @user = Factory(:user)
+      @user = FactoryGirl.create(:user)
       @user_ability = Ability.new(@user)
     end
 
     context "pusher channels" do
       before do
-        @stranger = Factory(:user)
-        @friend = Factory(:user)
+        @stranger = FactoryGirl.create(:user)
+        @friend = FactoryGirl.create(:user)
 
         friendship, status = @user.be_friends_with(@friend)
         friendship.accept!
@@ -1348,9 +1349,9 @@ describe Ability do
 
       context "when chatting" do
         before do
-          course = Factory(:course)
-          @colleague = Factory(:user)
-          @teacher = Factory(:user)
+          course = FactoryGirl.create(:course)
+          @colleague = FactoryGirl.create(:user)
+          @teacher = FactoryGirl.create(:user)
           course.join(@user)
           course.join(@colleague)
           course.join(@teacher, Role[:teacher])
@@ -1375,9 +1376,9 @@ describe Ability do
 
       context "when requesting last chat messages" do
         before do
-          course = Factory(:course)
-          @colleague = Factory(:user)
-          @teacher = Factory(:user)
+          course = FactoryGirl.create(:course)
+          @colleague = FactoryGirl.create(:user)
+          @teacher = FactoryGirl.create(:user)
           course.join(@user)
           course.join(@colleague)
           course.join(@teacher, Role[:teacher])
@@ -1399,7 +1400,7 @@ describe Ability do
 
     context "when friends" do
       before do
-        @my_friend = Factory(:user)
+        @my_friend = FactoryGirl.create(:user)
         @my_friend_ability = Ability.new(@my_friend)
 
         friendship, status = @user.be_friends_with(@my_friend)
@@ -1425,7 +1426,7 @@ describe Ability do
 
         context "and they are friends," do
           before do
-            @my_friend = Factory(:user)
+            @my_friend = FactoryGirl.create(:user)
             @my_friend_ability = Ability.new(@my_friend)
 
             friendship, status = @user.be_friends_with(@my_friend)
@@ -1439,7 +1440,7 @@ describe Ability do
 
         context "and they are NOT friends," do
           before do
-            @someone = Factory(:user)
+            @someone = FactoryGirl.create(:user)
             @someone_ability = Ability.new(@someone)
           end
 
@@ -1456,7 +1457,7 @@ describe Ability do
 
         context "and they are friends," do
           before do
-            @my_friend = Factory(:user)
+            @my_friend = FactoryGirl.create(:user)
             @my_friend_ability = Ability.new(@my_friend)
 
             friendship, status = @user.be_friends_with(@my_friend)
@@ -1470,7 +1471,7 @@ describe Ability do
 
         context "and they are NOT friends," do
           before do
-            @someone = Factory(:user)
+            @someone = FactoryGirl.create(:user)
             @someone_ability = Ability.new(@someone)
           end
 
@@ -1483,8 +1484,8 @@ describe Ability do
 
     context "when experiences" do
       before do
-        @user_experience = Factory(:experience, :user => @user)
-        @other_experience = Factory(:experience)
+        @user_experience = FactoryGirl.create(:experience, :user => @user)
+        @other_experience = FactoryGirl.create(:experience)
       end
       it "manages its own experiences" do
         @user_ability.should be_able_to(:manage, @user_experience)
@@ -1497,8 +1498,8 @@ describe Ability do
 
     context "when educations" do
       before do
-        @user_education = Factory(:education, :user => @user)
-        @other_education = Factory(:education)
+        @user_education = FactoryGirl.create(:education, :user => @user)
+        @other_education = FactoryGirl.create(:education)
       end
       it "manages its own educations" do
         @user_ability.should be_able_to(:manage, @user_education)
@@ -1515,24 +1516,24 @@ describe Ability do
 
     context "manages its own statuses" do
       it "when activy" do
-        status = Factory(:activity, :user => @user)
+        status = FactoryGirl.create(:activity, :user => @user)
         @user_ability.should be_able_to(:manage, status)
       end
 
       it "when answer" do
-        status = Factory(:answer, :user => @user)
+        status = FactoryGirl.create(:answer, :user => @user)
         @user_ability.should be_able_to(:manage, status)
       end
 
       it "when help" do
-        status = Factory(:help, :user => @user)
+        status = FactoryGirl.create(:help, :user => @user)
         @user_ability.should be_able_to(:manage, status)
       end
     end
 
     context "when destroying user" do
       before do
-        @other = Factory(:user)
+        @other = FactoryGirl.create(:user)
       end
       it "can NOT destroy others user" do
         @user_ability.should_not be_able_to(:destroy, @other)
@@ -1545,7 +1546,7 @@ describe Ability do
 
     context "when seeing my wall" do
       before do
-        @other = Factory(:user)
+        @other = FactoryGirl.create(:user)
       end
 
       it "others can NOT access my wall" do
@@ -1559,7 +1560,7 @@ describe Ability do
 
     context "when manage invitations" do
       before do
-        @bastard = Factory(:user,
+        @bastard = FactoryGirl.create(:user,
                            :first_name => 'Jhon',
                            :last_name => 'Snow')
         @bastard_ability = Ability.new(@bastard)
@@ -1588,11 +1589,11 @@ describe Ability do
 
   context "on PartnerEnvironmentAssociation" do
     before do
-      @partner = Factory(:partner)
+      @partner = FactoryGirl.create(:partner)
 
       3.times do
-        course = Factory(:course)
-        Factory(:partner_environment_association,
+        course = FactoryGirl.create(:course)
+        FactoryGirl.create(:partner_environment_association,
                 :environment => course.environment,
                 :partner => @partner)
       end
@@ -1602,7 +1603,7 @@ describe Ability do
 
     context "the collaborator" do
       before do
-        @collaborator = Factory(:user)
+        @collaborator = FactoryGirl.create(:user)
         @user_ability = Ability.new(@collaborator)
         @partner.add_collaborator(@collaborator)
       end
@@ -1616,12 +1617,12 @@ describe Ability do
 
     context "the collaborator of other partner" do
       before do
-        @collaborator = Factory(:user)
+        @collaborator = FactoryGirl.create(:user)
         @user_ability = Ability.new(@collaborator)
-        @another = Factory(:partner)
+        @another = FactoryGirl.create(:partner)
         3.times do
-          course = Factory(:course)
-          Factory(:partner_environment_association,
+          course = FactoryGirl.create(:course)
+          FactoryGirl.create(:partner_environment_association,
                   :environment => course.environment,
                   :partner => @another)
         end
@@ -1643,7 +1644,7 @@ describe Ability do
 
     context "the outsider" do
       before do
-        @user = Factory(:user)
+        @user = FactoryGirl.create(:user)
         @user_ability = Ability.new(@user)
       end
 
@@ -1657,11 +1658,11 @@ describe Ability do
 
   context "on Partner" do
     before do
-      @partner = Factory(:partner)
+      @partner = FactoryGirl.create(:partner)
     end
     context "all common users" do
       before do
-        @user = Factory(:user)
+        @user = FactoryGirl.create(:user)
         @user_ability = Ability.new(@user)
       end
 
@@ -1684,7 +1685,7 @@ describe Ability do
 
     context "the collbarator" do
       before do
-        @user = Factory(:user)
+        @user = FactoryGirl.create(:user)
         @partner.add_collaborator(@user)
 
         @user_ability = Ability.new(@user)
@@ -1705,7 +1706,7 @@ describe Ability do
 
     context "the redu admin" do
       before do
-        @redu_admin = Factory(:user, :role => Role[:admin])
+        @redu_admin = FactoryGirl.create(:user, :role => Role[:admin])
         @redu_admin_ability = Ability.new(@redu_admin)
       end
 
@@ -1725,19 +1726,19 @@ describe Ability do
 
   context "on Result" do
     before do
-      @space = Factory(:space)
-      @subject = Factory(:subject, :owner => @space.owner,
+      @space = FactoryGirl.create(:space)
+      @subject = FactoryGirl.create(:subject, :owner => @space.owner,
                          :space => @space, :finalized => true,
                          :visible => true)
-      @lecture = Factory(:lecture, :subject => @subject, :owner => @space.owner,
-                         :lectureable => Factory(:complete_exercise))
+      @lecture = FactoryGirl.create(:lecture, :subject => @subject, :owner => @space.owner,
+                         :lectureable => FactoryGirl.create(:complete_exercise))
       @exercise = @lecture.lectureable
 
-      @member = Factory(:user)
-      @other_member = Factory(:user)
-      @teacher = Factory(:user)
-      @tutor = Factory(:user)
-      @external = Factory(:user)
+      @member = FactoryGirl.create(:user)
+      @other_member = FactoryGirl.create(:user)
+      @teacher = FactoryGirl.create(:user)
+      @tutor = FactoryGirl.create(:user)
+      @external = FactoryGirl.create(:user)
 
       @space.course.join(@member)
       @space.course.join(@other_member)
@@ -1754,12 +1755,12 @@ describe Ability do
       end
 
       it "should not be able to manage results from another space" do
-        space = Factory(:space)
-        subj = Factory(:subject, :owner => space.owner,
+        space = FactoryGirl.create(:space)
+        subj = FactoryGirl.create(:subject, :owner => space.owner,
                        :space => space, :finalized => true,
                        :visible => true)
-        lecture = Factory(:lecture, :subject => subj, :owner => space.owner,
-                          :lectureable => Factory(:complete_exercise))
+        lecture = FactoryGirl.create(:lecture, :subject => subj, :owner => space.owner,
+                          :lectureable => FactoryGirl.create(:complete_exercise))
         exercise = lecture.lectureable
         space.course.join(@member)
         new_result = exercise.start_for(@member)
@@ -1816,20 +1817,20 @@ describe Ability do
 
   context "on Question" do
    before do
-      @space = Factory(:space)
-      @subject = Factory(:subject, :owner => @space.owner,
+      @space = FactoryGirl.create(:space)
+      @subject = FactoryGirl.create(:subject, :owner => @space.owner,
                          :space => @space, :finalized => true,
                          :visible => true)
-      @lecture = Factory(:lecture, :subject => @subject, :owner => @space.owner,
-                         :lectureable => Factory(:complete_exercise))
+      @lecture = FactoryGirl.create(:lecture, :subject => @subject, :owner => @space.owner,
+                         :lectureable => FactoryGirl.create(:complete_exercise))
       @exercise = @lecture.lectureable
       @questions = @exercise.questions
 
-      @member = Factory(:user)
-      @other_member = Factory(:user)
-      @teacher = Factory(:user)
-      @tutor = Factory(:user)
-      @external = Factory(:user)
+      @member = FactoryGirl.create(:user)
+      @other_member = FactoryGirl.create(:user)
+      @teacher = FactoryGirl.create(:user)
+      @tutor = FactoryGirl.create(:user)
+      @external = FactoryGirl.create(:user)
 
       @space.course.join(@member)
       @space.course.join(@other_member)
@@ -1862,20 +1863,20 @@ describe Ability do
 
   context "on Exercise" do
    before do
-      @space = Factory(:space)
-      @subject = Factory(:subject, :owner => @space.owner,
+      @space = FactoryGirl.create(:space)
+      @subject = FactoryGirl.create(:subject, :owner => @space.owner,
                          :space => @space, :finalized => true,
                          :visible => true)
-      @lecture = Factory(:lecture, :subject => @subject, :owner => @space.owner,
-                         :lectureable => Factory(:complete_exercise))
+      @lecture = FactoryGirl.create(:lecture, :subject => @subject, :owner => @space.owner,
+                         :lectureable => FactoryGirl.create(:complete_exercise))
       @exercise = @lecture.lectureable
       @questions = @exercise.questions
 
-      @member = Factory(:user)
-      @other_member = Factory(:user)
-      @teacher = Factory(:user)
-      @tutor = Factory(:user)
-      @external = Factory(:user)
+      @member = FactoryGirl.create(:user)
+      @other_member = FactoryGirl.create(:user)
+      @teacher = FactoryGirl.create(:user)
+      @tutor = FactoryGirl.create(:user)
+      @external = FactoryGirl.create(:user)
 
       @space.course.join(@member)
       @space.course.join(@other_member)
@@ -1904,19 +1905,19 @@ describe Ability do
 
   context "on Canvas" do
     before do
-      env = Factory(:complete_environment)
+      env = FactoryGirl.create(:complete_environment)
       @course = env.courses.first
       space = @course.spaces.first
-      sub = Factory(:subject, :owner => space.owner,
+      sub = FactoryGirl.create(:subject, :owner => space.owner,
                     :space => space, :finalized => true,
                     :visible => true)
 
-      @canvas = Factory(:canvas, :user => @course.owner)
-      Factory(:lecture, :subject => sub,
+      @canvas = FactoryGirl.create(:canvas, :user => @course.owner)
+      FactoryGirl.create(:lecture, :subject => sub,
               :owner => space.owner, :lectureable => @canvas)
     end
 
-    let(:user) { Factory(:user) }
+    let(:user) { FactoryGirl.create(:user) }
     let(:ability) { Ability.new(user) }
 
     context "when member" do
@@ -1937,10 +1938,10 @@ describe Ability do
   end
 
   context "client applications" do
-    let(:user) { Factory(:user) }
+    let(:user) { FactoryGirl.create(:user) }
     let(:client_application) { ClientApplication.new }
     let(:ability) { Ability.new(user) }
-    let(:redu_admin) {Factory(:user, :role => :admin)}
+    let(:redu_admin) {FactoryGirl.create(:user, :role => :admin)}
     let(:admin_abilty) {Ability.new(redu_admin)}
 
     context "when application owner" do
@@ -1966,17 +1967,17 @@ describe Ability do
 
   context "a user with a blocked association" do
     before do
-      @user = Factory(:user)
+      @user = FactoryGirl.create(:user)
       @ability = Ability.new(@user)
 
-      @admin = Factory(:user, :role => :admin)
+      @admin = FactoryGirl.create(:user, :role => :admin)
       @ability_admin = Ability.new(@admin)
     end
 
     context 'in an environment' do
       before do
-        @environment = Factory(:environment, :blocked => true)
-        Factory(:user_environment_association, :environment => @environment,
+        @environment = FactoryGirl.create(:environment, :blocked => true)
+        FactoryGirl.create(:user_environment_association, :environment => @environment,
                 :user => @user)
       end
 
@@ -1986,7 +1987,7 @@ describe Ability do
 
       context "as redu admin" do
         before do
-          Factory(:user_environment_association, :environment => @environment,
+          FactoryGirl.create(:user_environment_association, :environment => @environment,
                   :user => @admin)
         end
 
@@ -2002,8 +2003,8 @@ describe Ability do
 
     context 'in a course' do
       before do
-        @course = Factory(:course, :blocked => true)
-        Factory(:user_course_association, :course => @course, :user => @user).
+        @course = FactoryGirl.create(:course, :blocked => true)
+        FactoryGirl.create(:user_course_association, :course => @course, :user => @user).
           approve!
       end
 
@@ -2013,7 +2014,7 @@ describe Ability do
 
       context "as redu admin" do
         before do
-          Factory(:user_course_association, :course => @course, :user => @admin).
+          FactoryGirl.create(:user_course_association, :course => @course, :user => @admin).
             approve!
         end
 
@@ -2029,8 +2030,8 @@ describe Ability do
 
     context 'in a space' do
       before do
-        @space = Factory(:space, :blocked => true)
-        Factory(:user_space_association, :space => @space, :user => @user)
+        @space = FactoryGirl.create(:space, :blocked => true)
+        FactoryGirl.create(:user_space_association, :space => @space, :user => @user)
       end
 
       it 'can not read the space' do
@@ -2039,7 +2040,7 @@ describe Ability do
 
       context "as redu admin" do
         before do
-          Factory(:user_space_association, :space => @space, :user => @admin)
+          FactoryGirl.create(:user_space_association, :space => @space, :user => @admin)
         end
 
         it "can read the space" do
@@ -2054,8 +2055,8 @@ describe Ability do
 
     context 'in a subject' do
       before do
-        @subject = Factory(:subject, :blocked => true)
-        Factory(:enrollment, :subject => @subject, :user => @user)
+        @subject = FactoryGirl.create(:subject, :blocked => true)
+        FactoryGirl.create(:enrollment, :subject => @subject, :user => @user)
       end
 
       it 'can not read the subject' do
@@ -2064,7 +2065,7 @@ describe Ability do
 
       context "as redu admin" do
         before do
-          Factory(:enrollment, :subject => @subject, :user => @admin)
+          FactoryGirl.create(:enrollment, :subject => @subject, :user => @admin)
         end
 
         it "can read the subject" do
@@ -2079,8 +2080,8 @@ describe Ability do
 
     context 'in a lecture' do
       before do
-        @lecture = Factory(:lecture, :blocked => true)
-        Factory(:enrollment, :subject => @lecture.subject, :user => @user)
+        @lecture = FactoryGirl.create(:lecture, :blocked => true)
+        FactoryGirl.create(:enrollment, :subject => @lecture.subject, :user => @user)
       end
 
       it 'can not read the lecture' do
@@ -2089,7 +2090,7 @@ describe Ability do
 
       context "as redu admin" do
         before do
-          Factory(:enrollment, :subject => @lecture.subject, :user => @admin)
+          FactoryGirl.create(:enrollment, :subject => @lecture.subject, :user => @admin)
         end
 
         it "can read the lecture" do
@@ -2105,7 +2106,7 @@ describe Ability do
 
   context "when searching" do
     context "logged user" do
-      let(:user) { Factory(:user) }
+      let(:user) { FactoryGirl.create(:user) }
 
       it "should be able to perform searches" do
         Ability.new(user).should be_able_to :search, :all

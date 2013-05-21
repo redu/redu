@@ -1,10 +1,11 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe CourseObserver do
   context "Logger" do
     it "logs the creation" do
       ActiveRecord::Observer.with_observers(:course_observer) do
-        course = Factory.build(:course)
+        course = FactoryGirl.build(:course)
 
         expect {
           course.save
@@ -16,7 +17,7 @@ describe CourseObserver do
   context "when destroying" do
     context "with an associated plan" do
       it "should persist course attributes" do
-        subject = Factory(:plan)
+        subject = FactoryGirl.create(:plan)
         course = subject.billable
 
         ActiveRecord::Observer.with_observers :course_observer do
@@ -29,7 +30,7 @@ describe CourseObserver do
 
     context "withdout an associated plan" do
       it "should fail silently" do
-        subject = Factory(:course)
+        subject = FactoryGirl.create(:course)
 
         ActiveRecord::Observer.with_observers :course_observer do
           expect {

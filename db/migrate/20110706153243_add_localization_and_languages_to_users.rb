@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddLocalizationAndLanguagesToUsers < ActiveRecord::Migration
   def self.up
     add_column :users, :birth_localization, :string

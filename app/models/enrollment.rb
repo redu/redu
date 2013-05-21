@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Enrollment < ActiveRecord::Base
   include EnrollmentService::EnrollmentAdditions::ModelAdditions
 

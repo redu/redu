@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # A folder is a place where files can be stored.
 # Folders can also have sub-folders.
 # Via groups it is determined which actions the logged-in User can perform.

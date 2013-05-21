@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RenameSpaceAssetToSubjectAsset < ActiveRecord::Migration
   def self.up
 		rename_table :space_assets, :subject_assets

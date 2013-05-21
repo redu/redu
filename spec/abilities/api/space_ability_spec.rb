@@ -1,13 +1,14 @@
+# -*- encoding : utf-8 -*-
 require 'api_spec_helper'
 require 'cancan/matchers'
 
 describe "Space abilities" do
   subject { Api::Ability.new(@user) }
   before do
-    @environment = Factory(:complete_environment)
+    @environment = FactoryGirl.create(:complete_environment)
     @course = @environment.courses.first
     @space = @course.spaces.first
-    @user = Factory(:user)
+    @user = FactoryGirl.create(:user)
     @application, @current_user, @token = generate_token(@user)
   end
 

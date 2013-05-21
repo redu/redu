@@ -1,7 +1,8 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe SocialNetwork do
-  subject { Factory(:social_network) }
+  subject { FactoryGirl.create(:social_network) }
 
   it { should belong_to :user }
 

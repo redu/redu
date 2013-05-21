@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module VisService
   module UserAdditions
     module ModelAdditions

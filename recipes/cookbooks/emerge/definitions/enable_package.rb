@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 define :enable_package, :version => nil do
   name = params[:name]
   version = params[:version]

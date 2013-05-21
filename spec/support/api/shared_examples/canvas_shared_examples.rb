@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 shared_examples_for "a canvas" do
   %w(current_url name created_at updated_at id links container_type).each do |attr|
     it "should have #{attr} property" do

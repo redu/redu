@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddUniqueIndexToEnrollments < ActiveRecord::Migration
   def self.up
     add_index :enrollments, [:user_id, :subject_id], :unique => true

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddDestroySoonToEnvironment < ActiveRecord::Migration
   def self.up
     add_column :environments, :destroy_soon, :boolean, :default => false

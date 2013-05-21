@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 namespace :bootstrap do
 
   desc "Insert test administrator"

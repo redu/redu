@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateStatusesSti < ActiveRecord::Migration
   def self.up
     change_table(:statuses) do |t|

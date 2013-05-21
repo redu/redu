@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 Redu::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
@@ -101,8 +102,8 @@ Redu::Application.configure do
   config.assets.digest = true
 
   # Layout com bootstrap
-  config.assets.precompile += %w(new_application.js friend-invitation.js basic.js landing.js)
-  config.assets.precompile += %w(bootstrap-redu.min.css new_application.css basic.css)
+  config.assets.precompile += %w(new_application.js friend-invitation.js basic.js landing.js mobile.js)
+  config.assets.precompile += %w(bootstrap-redu.min.css new_application.css basic.css mobile.css)
 
   # Layout sem bootstrap
   config.assets.precompile += %w(ie.js chat.js outdated_browser.js ckeditor.js olark.js jquery.maskedinput.js canvas.js chart.js jwplayer.js webview.js clean.js)

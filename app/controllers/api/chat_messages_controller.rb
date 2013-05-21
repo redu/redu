@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Api
   class ChatMessagesController < Api::ApiController
     def show

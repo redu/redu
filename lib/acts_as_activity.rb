@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module ActsAsActivity
   extend ActiveSupport::Concern
   included do

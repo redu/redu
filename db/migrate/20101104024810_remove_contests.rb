@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RemoveContests < ActiveRecord::Migration
   def self.up
     drop_table :contests

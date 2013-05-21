@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class UniqueTruthValidator < ActiveModel::EachValidator
   def validate_each(record,attribute,value)
     alts = record.alternatives

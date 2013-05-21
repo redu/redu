@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class NewsletterMailer < BaseMailer
   # Envia newsletter para o e-mail passado.
   #

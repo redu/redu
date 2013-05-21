@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RemoveAcquisition < ActiveRecord::Migration
   def self.up
   	drop_table :acquisitions

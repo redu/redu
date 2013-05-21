@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddCurrentToInvoices < ActiveRecord::Migration
   def self.up
     add_column :invoices, :current, :boolean

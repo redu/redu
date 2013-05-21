@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe ExperienceObserver do
@@ -5,7 +6,7 @@ describe ExperienceObserver do
     it "logs creation" do
       ActiveRecord::Observer.with_observers(:experience_observer) do
         expect {
-          Factory(:experience)
+          FactoryGirl.create(:experience)
         }.to change(Log, :count).by(1)
       end
     end

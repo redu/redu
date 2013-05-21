@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Chef
   class Recipe
     def run_for_app(*apps, &block)

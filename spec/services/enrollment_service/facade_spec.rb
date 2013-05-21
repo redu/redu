@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require "spec_helper"
 
 module EnrollmentService
@@ -6,9 +7,9 @@ module EnrollmentService
     let(:vis_adapter) { mock("VisAdapter") }
     let(:enrollment_service) { mock('EnrollmentEntityService') }
     let(:asset_report_service) { mock('AssetReportEntityService') }
-    let(:subj) { Factory(:subject, :space => nil) }
+    let(:subj) { FactoryGirl.create(:subject, :space => nil) }
     let(:users) { FactoryGirl.create_list(:user, 3) }
-    let(:user) { Factory(:user) }
+    let(:user) { FactoryGirl.create(:user) }
     let(:subjects) { FactoryGirl.create_list(:subject, 3, :space => nil) }
 
     before do
@@ -300,7 +301,7 @@ module EnrollmentService
       subjects = subj.respond_to?(:map) ? subj : [subj]
 
       subjects.each do |s|
-        Factory(:lecture, :owner => s.owner, :subject => s)
+        FactoryGirl.create(:lecture, :owner => s.owner, :subject => s)
       end
     end
 
@@ -308,7 +309,7 @@ module EnrollmentService
       subjects = subj.respond_to?(:map) ? subj : [subj]
 
       subjects.each do |s|
-        s.space = Factory(:space, :owner => s.owner)
+        s.space = FactoryGirl.create(:space, :owner => s.owner)
         s.save
       end
     end

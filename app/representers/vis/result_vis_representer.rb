@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Vis
   module ResultVisRepresenter
     include Roar::Representer::JSON

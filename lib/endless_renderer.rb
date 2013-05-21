@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # Renderer do WillPaginate responsável por renderizar
 # a paginação no formato de Endless.
 class EndlessRenderer < WillPaginate::ViewHelpers::LinkRenderer

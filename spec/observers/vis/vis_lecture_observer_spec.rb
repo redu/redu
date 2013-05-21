@@ -1,9 +1,10 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe VisLectureObserver do
   describe "before destroy" do
     context "when lectureable is not an Exercise" do
-      subject { Factory(:lecture, :lectureable => Factory(:page)) }
+      subject { FactoryGirl.create(:lecture, :lectureable => FactoryGirl.create(:page)) }
 
       it "should not raise error" do
         ActiveRecord::Observer.with_observers(:vis_lecture_observer) do
@@ -24,15 +25,15 @@ describe VisLectureObserver do
     end
 
     context "when lectureable is an Exercise" do
-      subject { Factory(:lecture, :lectureable => Factory(:exercise)) }
+      subject { FactoryGirl.create(:lecture, :lectureable => FactoryGirl.create(:exercise)) }
       let(:exercise) { subject.lectureable }
       let(:finalized_results) do
         (1..3).collect do
-          Factory(:finalized_result, :exercise => exercise)
+          FactoryGirl.create(:finalized_result, :exercise => exercise)
         end
       end
       let!(:unfinalized_results) do
-        (1..3).collect { Factory(:result, :exercise => exercise) }
+        (1..3).collect { FactoryGirl.create(:result, :exercise => exercise) }
       end
 
       it "should call VisClient.notify_delayed with finalized results" do

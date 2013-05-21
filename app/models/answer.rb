@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Answer < Status
   belongs_to :in_response_to, :polymorphic => true
 

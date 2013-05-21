@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Api
   class StatusesController < Api::ApiController
     ALLOWED_LOGEABLE_TYPE = %w(Course Subject Lecture Space User CourseEnrollment)

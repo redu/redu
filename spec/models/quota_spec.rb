@@ -1,7 +1,8 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe Quota do
-  subject { Factory(:quota) }
+  subject { FactoryGirl.create(:quota) }
 
   it { should belong_to(:billable) }
 
@@ -13,10 +14,10 @@ describe Quota do
 
     context "updates quotas successfully" do
       before do
-        @environment = Factory(:environment)
+        @environment = FactoryGirl.create(:environment)
         @courses = (1..3).collect do
-          c = Factory(:course, :environment => @environment)
-          (1..3).each { Factory(:space, :course => c) }
+          c = FactoryGirl.create(:course, :environment => @environment)
+          (1..3).each { FactoryGirl.create(:space, :course => c) }
           c.reload
         end
         @environment.reload
@@ -24,17 +25,17 @@ describe Quota do
 
       def create_uploadable_objects_in(spaces)
           files = spaces.collect do |s|
-            Factory(:myfile, :folder => s.folders.first,
+            FactoryGirl.create(:myfile, :folder => s.folders.first,
                     :attachment_file_size => 2.megabytes)
           end
 
           seminars = spaces.collect do |s|
-            sub = Factory(:subject, :space => s, :finalized => true)
+            sub = FactoryGirl.create(:subject, :space => s, :finalized => true)
 
             (1..3).collect do
-              seminar = Factory(:seminar_upload,
+              seminar = FactoryGirl.create(:seminar_upload,
                                 :original_file_size => 3.megabytes)
-              Factory(:lecture, :subject => sub, :lectureable => seminar)
+              FactoryGirl.create(:lecture, :subject => sub, :lectureable => seminar)
               seminar
             end
           end
@@ -42,25 +43,25 @@ describe Quota do
           mock_scribd_api
 
           documents = spaces.collect do |s|
-            sub = Factory(:subject, :space => s, :finalized => true)
+            sub = FactoryGirl.create(:subject, :space => s, :finalized => true)
 
             (1..3).collect do
-              doc = Factory(:document, :attachment_file_size => 1.megabytes)
-              Factory(:lecture, :subject => sub, :lectureable => doc)
+              doc = FactoryGirl.create(:document, :attachment_file_size => 1.megabytes)
+              FactoryGirl.create(:lecture, :subject => sub, :lectureable => doc)
               doc
             end
           end
           documents.flatten!
 
           spaces.collect do |s|
-            sub = Factory(:subject, :space => s)
+            sub = FactoryGirl.create(:subject, :space => s)
 
-            seminar = Factory(:seminar_upload,
+            seminar = FactoryGirl.create(:seminar_upload,
                               :original_file_size => 3.megabytes)
-            doc = Factory(:document, :attachment_file_size => 1.megabytes)
+            doc = FactoryGirl.create(:document, :attachment_file_size => 1.megabytes)
 
-            Factory(:lecture, :subject => sub, :lectureable => seminar)
-            Factory(:lecture, :subject => sub, :lectureable => doc)
+            FactoryGirl.create(:lecture, :subject => sub, :lectureable => seminar)
+            FactoryGirl.create(:lecture, :subject => sub, :lectureable => doc)
           end
 
           { :files => files.collect(&:attachment_file_size).sum,
@@ -69,7 +70,7 @@ describe Quota do
       end
 
       context "when billable is a course" do
-        let(:subject) { Factory(:unused_quota, :billable => @courses.first) }
+        let(:subject) { FactoryGirl.create(:unused_quota, :billable => @courses.first) }
 
         before do
           @spaces = @courses.first.spaces
@@ -112,7 +113,7 @@ describe Quota do
       end
 
       context "when billable is a environment" do
-        let(:subject) { Factory(:unused_quota, :billable => @environment) }
+        let(:subject) { FactoryGirl.create(:unused_quota, :billable => @environment) }
 
         before do
           @courses = @environment.courses

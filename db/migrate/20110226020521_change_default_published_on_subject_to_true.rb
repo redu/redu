@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class ChangeDefaultPublishedOnSubjectToTrue < ActiveRecord::Migration
   def self.up
     change_column_default :subjects, :published, true

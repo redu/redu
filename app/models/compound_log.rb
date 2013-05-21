@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CompoundLog < Status
   has_many :logs
 

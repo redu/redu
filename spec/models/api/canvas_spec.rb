@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe Api::Canvas do
@@ -7,8 +8,7 @@ describe Api::Canvas do
 
   context "validations" do
     subject do
-      Api::Canvas.
-        create(:client_application => Factory.create(:client_application))
+      Api::Canvas.create(:client_application => FactoryGirl.create(:client_application))
     end
     it { should validate_presence_of :client_application }
     it { should_not allow_value("not a URL").for(:url).with_message /não é uma URL/ }
@@ -18,8 +18,7 @@ describe Api::Canvas do
 
   context "#current_url" do
     subject do
-      Api::Canvas.
-        create(:client_application => Factory.create(:client_application))
+      Api::Canvas.create(:client_application => FactoryGirl.create(:client_application))
     end
     it "should fallback to client_application URL unless #curent_url" do
       subject.current_url.should == subject.client_application.url
@@ -57,12 +56,12 @@ describe Api::Canvas do
 
   context "#current_name" do
     it "should return client application name if there is no self.name" do
-      subject = Factory(:canvas, :name => nil)
+      subject = FactoryGirl.create(:canvas, :name => nil)
       subject.current_name.should == subject.client_application.name
     end
 
     it "should return #name by default" do
-      subject = Factory(:canvas, :name => "Guila's canvas")
+      subject = FactoryGirl.create(:canvas, :name => "Guila's canvas")
       subject.current_name.should == subject.name
 
     end

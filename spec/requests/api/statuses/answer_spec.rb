@@ -1,13 +1,14 @@
+# -*- encoding : utf-8 -*-
 require "api_spec_helper"
 
 describe "Answer" do
-  let(:current_user) { Factory(:user) }
+  let(:current_user) { FactoryGirl.create(:user) }
   let(:token) { _, _, token = generate_token(current_user); token }
   let(:activity) do
-    Factory(:activity, :user => current_user, :statusable => current_user)
+    FactoryGirl.create(:activity, :user => current_user, :statusable => current_user)
   end
   let(:answer) do
-    Factory(:answer, :statusable => current_user,
+    FactoryGirl.create(:answer, :statusable => current_user,
             :user => current_user, :in_response_to => activity)
   end
   let(:params) { { :oauth_token => token, :format => 'json'} }

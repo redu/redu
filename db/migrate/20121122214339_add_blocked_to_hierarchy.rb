@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddBlockedToHierarchy < ActiveRecord::Migration
   def self.up
     add_column :environments, :blocked, :boolean, :default => false

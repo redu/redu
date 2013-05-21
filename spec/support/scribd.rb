@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module ScribdSpecHelper
   def mock_scribd_api
     @scribd_user = mock("scribd_user")

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module UrlUpload
   def data_from_url(uri)
     io = (open(URI.parse(uri)) rescue return nil)

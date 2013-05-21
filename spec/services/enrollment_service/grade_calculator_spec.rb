@@ -1,9 +1,10 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 module EnrollmentService
   describe GradeCalculator do
     context "#calculate_grade" do
-      let(:enrollment) { Factory(:enrollment, :subject => nil) }
+      let(:enrollment) { FactoryGirl.create(:enrollment, :subject => nil) }
       let(:asset_reports) do
         FactoryGirl.create_list(:asset_report, 3, :enrollment => enrollment)
       end

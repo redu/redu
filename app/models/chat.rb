@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Chat < ActiveRecord::Base
   # Representa um chat entre 2 usuários. É comumente criado no ChatMessageObserver
   # quando a primeira conversa entre dois usuários acontece.

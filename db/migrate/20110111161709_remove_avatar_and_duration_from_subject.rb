@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RemoveAvatarAndDurationFromSubject < ActiveRecord::Migration
   def self.up
     remove_column :subjects, :avatar_file_name

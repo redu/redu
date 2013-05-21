@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CourseCacheObserver < ActiveRecord::Observer
   include ViewCaches
   observe Course

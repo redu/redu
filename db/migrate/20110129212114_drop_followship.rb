@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class DropFollowship < ActiveRecord::Migration
   def self.up
     drop_table :followship

@@ -1,7 +1,8 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe 'ApplicationLayoutCache' do
-  let(:user) { Factory(:user) }
+  let(:user) { FactoryGirl.create(:user) }
 
   context 'nav_global_dropdown_menu' do
     def nav_global_dropdown_menu_identifier(user)
@@ -9,7 +10,7 @@ describe 'ApplicationLayoutCache' do
     end
 
     let(:cache_identifier) { nav_global_dropdown_menu_identifier(user) }
-    let(:environment) { Factory(:environment) }
+    let(:environment) { FactoryGirl.create(:environment) }
 
     context 'writing' do
       it_should_behave_like 'cache writing' do # spec/support/cache_writing...
@@ -22,7 +23,7 @@ describe 'ApplicationLayoutCache' do
       it 'expires when a user receives a message' do
         ActiveRecord::Observer.with_observers(:message_cache_observer) do
           performing_cache(cache_identifier) do |cache|
-            Factory(:message, :recipient => user)
+            FactoryGirl.create(:message, :recipient => user)
 
             cache.should_not exist(cache_identifier)
           end
@@ -30,7 +31,7 @@ describe 'ApplicationLayoutCache' do
       end
 
       context 'when user receives a message' do
-        let(:message) { Factory(:message, :recipient => user) }
+        let(:message) { FactoryGirl.create(:message, :recipient => user) }
 
         it 'expires when recipient reads an unread message' do
           ActiveRecord::Observer.with_observers(:message_cache_observer) do
@@ -98,8 +99,8 @@ describe 'ApplicationLayoutCache' do
       end
 
       context 'when a partner there is a partner with admins' do
-        let(:partner) { Factory(:partner) }
-        let(:admins) { (1..5).collect { Factory(:user) } }
+        let(:partner) { FactoryGirl.create(:partner) }
+        let(:admins) { (1..5).collect { FactoryGirl.create(:user) } }
 
         before do
           admins.each do |u|

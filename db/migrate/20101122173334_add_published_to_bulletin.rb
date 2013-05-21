@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddPublishedToBulletin < ActiveRecord::Migration
   def self.up
     add_column :bulletins, :published, :boolean, :default => true

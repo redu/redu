@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RemoveOwnerIdFromForums < ActiveRecord::Migration
   def self.up
     remove_column :forums, :owner_id

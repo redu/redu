@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe Chat do
@@ -6,9 +7,9 @@ describe Chat do
   it { should have_many(:chat_messages).through(:chat_message_associations) }
 
   context "#create_for" do
-    let(:user) { Factory(:user) }
-    let(:contact) { Factory(:contact) }
-    let(:chat_message) { Factory(:chat_message) }
+    let(:user) { FactoryGirl.create(:user) }
+    let(:contact) { FactoryGirl.create(:contact) }
+    let(:chat_message) { FactoryGirl.create(:chat_message) }
 
     it "should respond to #create_for" do
       Chat.should respond_to :create_for
@@ -50,9 +51,9 @@ describe Chat do
   end
 
   context ".find_or_create_and_append" do
-    let(:user) { Factory(:user) }
-    let(:contact) { Factory(:contact) }
-    let(:chat_message) { Factory(:chat_message) }
+    let(:user) { FactoryGirl.create(:user) }
+    let(:contact) { FactoryGirl.create(:contact) }
+    let(:chat_message) { FactoryGirl.create(:chat_message) }
 
     it "should assing the chat_message for the first chat" do
       c, c2 = Chat.find_or_create_and_append(chat_message)
@@ -66,7 +67,7 @@ describe Chat do
 
     it "should append to a existing  first chat" do
       Chat.find_or_create_and_append(chat_message)
-      new_message = Factory(:chat_message, :user => chat_message.user,
+      new_message = FactoryGirl.create(:chat_message, :user => chat_message.user,
                             :contact => chat_message.contact)
       c1, c2 = Chat.find_or_create_and_append(new_message)
       c1.chat_messages.length.should == 2
@@ -74,7 +75,7 @@ describe Chat do
 
     it "should append to a existing second chat" do
       Chat.find_or_create_and_append(chat_message)
-      new_message = Factory(:chat_message, :user => chat_message.user,
+      new_message = FactoryGirl.create(:chat_message, :user => chat_message.user,
                             :contact => chat_message.contact)
       c1, c2 = Chat.find_or_create_and_append(new_message)
       c2.chat_messages.length.should == 2

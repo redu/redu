@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Log < Status
   # Atributos:
   #   - logeable: objecto que foi sujeito a uma determinada acao

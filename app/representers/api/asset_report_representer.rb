@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Api
   module AssetReportRepresenter
     include Roar::Representer::JSON

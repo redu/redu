@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe BaseController do
@@ -20,7 +21,7 @@ describe BaseController do
     end
 
     context 'when there is a signed in user' do
-      let(:user) { Factory(:user) }
+      let(:user) { FactoryGirl.create(:user) }
 
       before do
         login_as user

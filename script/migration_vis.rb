@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 #!/usr/bin/env ruby
 # Script para alimentação do banco da aplicação de vis do Redu
 

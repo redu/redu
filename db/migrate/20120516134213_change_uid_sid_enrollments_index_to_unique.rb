@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class ChangeUidSidEnrollmentsIndexToUnique < ActiveRecord::Migration
   def self.up
     remove_index :enrollments, :name => "idx_enrollments_u_id_and_sid"

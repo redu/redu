@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'representable/json/collection'
 
 module Api

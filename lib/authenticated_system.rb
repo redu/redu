@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module AuthenticatedSystem
   def login_by_token
   end

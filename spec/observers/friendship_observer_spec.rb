@@ -1,11 +1,12 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe FriendshipObserver do
   context "logger" do
     it "logs firendship" do
       ActiveRecord::Observer.with_observers(:friendship_observer) do
-        @user1 = Factory(:user)
-        @user2 = Factory(:user)
+        @user1 = FactoryGirl.create(:user)
+        @user2 = FactoryGirl.create(:user)
 
         expect {
           @user1.be_friends_with(@user2)
@@ -23,12 +24,12 @@ describe FriendshipObserver do
     end
 
     it "notifies the request" do
-      neo = Factory(:user)
+      neo = FactoryGirl.create(:user)
       2.times do
-        e = Factory(:environment, :owner => neo)
-        Factory(:course, :environment => e, :owner => neo)
+        e = FactoryGirl.create(:environment, :owner => neo)
+        FactoryGirl.create(:course, :environment => e, :owner => neo)
       end
-      smith = Factory(:user)
+      smith = FactoryGirl.create(:user)
 
       ActionMailer::Base.register_observer(UserNotifierObserver)
       ActiveRecord::Observer.with_observers(:friendship_observer) do

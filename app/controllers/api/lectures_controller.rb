@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Api
   class LecturesController < Api::ApiController
     include Api::RepresenterInflector

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RemovePublicFromLectures < ActiveRecord::Migration
   def self.up
     remove_column :lectures, :public

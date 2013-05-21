@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class VisResultObserver < ActiveRecord::Observer
   observe :result
 

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddIndexToAssetReports < ActiveRecord::Migration
   def self.up
     add_index :asset_reports, :enrollment_id

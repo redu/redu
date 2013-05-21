@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class HigherEducation < ActiveRecord::Base
   # Representa uma formação do usuário no Ensino Superior
   # É uma especialização de Education

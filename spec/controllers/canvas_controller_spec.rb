@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 require 'authlogic/test_case'
 
@@ -5,13 +6,13 @@ describe CanvasController do
   include Authlogic::TestCase
 
   describe "GET 'show'" do
-    let(:current_user) { Factory(:user) }
+    let(:current_user) { FactoryGirl.create(:user) }
     let(:space) do
-      environment = Factory(:complete_environment, :owner => current_user)
+      environment = FactoryGirl.create(:complete_environment, :owner => current_user)
       environment.courses.first.spaces.first
     end
     let(:canvas) do
-      Factory(:canvas, :user => current_user, :container => space)
+      FactoryGirl.create(:canvas, :user => current_user, :container => space)
     end
 
     before do

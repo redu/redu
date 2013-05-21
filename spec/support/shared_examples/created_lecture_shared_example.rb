@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 shared_examples_for "created lecture" do
   it "creates a lecture" do
     expect {
@@ -47,7 +48,7 @@ shared_examples_for "created lecture" do
   end
 
   def mock_lecture_initialize
-    lecture = Factory(:lecture)
+    lecture = FactoryGirl.create(:lecture)
     Lecture.stub(:new).and_return(lecture)
     lecture
   end

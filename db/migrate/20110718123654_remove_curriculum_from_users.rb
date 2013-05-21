@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RemoveCurriculumFromUsers < ActiveRecord::Migration
   def self.up
     remove_column :users, :curriculum_file_name

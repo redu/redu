@@ -1,8 +1,9 @@
+# -*- encoding : utf-8 -*-
 require "api_spec_helper"
 
 describe "User" do
   before do
-    @user = Factory(:user, :mobile => "+55 (81) 9194-5317",
+    @user = FactoryGirl.create(:user, :mobile => "+55 (81) 9194-5317",
                     :localization => "Recife", :birth_localization => "Recife",
                     :description => "Descrição usuário",
                     :favorite_quotation => "rede social educacional")
@@ -11,7 +12,7 @@ describe "User" do
 
   context "when GET /user/:id" do
     let(:social_networks) do
-      2.times.collect { Factory(:social_network, :user => @current_user) }
+      2.times.collect { FactoryGirl.create(:social_network, :user => @current_user) }
     end
 
     let(:tags) { "educação, informática" }
@@ -84,12 +85,12 @@ describe "User" do
 
   context "when listing users" do
     before do
-      @environment = Factory(:complete_environment, :owner => @current_user)
+      @environment = FactoryGirl.create(:complete_environment, :owner => @current_user)
       @course = @environment.courses.first
       @space = @course.spaces.first
 
       @members = 3.times.collect do
-        user = Factory(:user)
+        user = FactoryGirl.create(:user)
         @course.join(user)
         user
       end
@@ -125,7 +126,7 @@ describe "User" do
   end
 
   context "when listing contacts" do
-    let(:friend) { Factory(:user) }
+    let(:friend) { FactoryGirl.create(:user) }
     before do
       @current_user.be_friends_with(friend)
       friend.be_friends_with(@current_user)

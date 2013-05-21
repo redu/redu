@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 shared_examples_for 'cache writing' do
   render_views
 

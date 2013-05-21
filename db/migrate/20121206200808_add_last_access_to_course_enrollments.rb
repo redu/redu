@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddLastAccessToCourseEnrollments < ActiveRecord::Migration
   def self.up
     add_column :course_enrollments, :last_accessed_at, :datetime

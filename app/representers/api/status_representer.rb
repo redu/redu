@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Api
   module StatusRepresenter
     include Roar::Representer::JSON

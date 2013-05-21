@@ -1,7 +1,8 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe RecoveryEmail do
-  subject { Factory.build(:recovery_email) }
+  subject { FactoryGirl.build(:recovery_email) }
 
   it { should allow_value("person@email.com").for(:email) }
   it { should allow_value("person@email.com.br").for(:email) }

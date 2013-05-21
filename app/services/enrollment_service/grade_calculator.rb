@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module EnrollmentService
   class GradeCalculator < Struct.new(:enrollments)
     # asset_reports_id_and_done [[enrollment_id, done]]
