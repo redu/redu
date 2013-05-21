@@ -17,6 +17,8 @@ class PartnersController < BaseController
   end
 
   def contact
+    # Indica se usa o formulário antigo (Ensine) ou novo (Planos > Detalhes > Upgrade).
+    @new_layout = params[:new_layout]
     @partner_contact = PartnerContact.new(params[:partner_contact])
 
     unless @partner_contact.migration

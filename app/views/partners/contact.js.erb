@@ -7,6 +7,11 @@ var $form = $("#partner-contact-form");
     window.location = "<%= success_partner_path(@partner) %>";
   <% end %>
 <% else %>
-  <% partial = (render :partial => 'partners/partner_contacts/new', :locals => { :environment => @environment, :migration => @partner_contact.migration, :billable_url => @partner_contact.billable_url }) %>
+  <% partial = "new_old" %>
+  <% if @new_layout == "true" %>
+    <% partial = "new" %>
+  <% end %>
+
+  <% partial = (render :partial => "partners/partner_contacts/#{partial}", :locals => { :environment => @environment, :migration => @partner_contact.migration, :billable_url => @partner_contact.billable_url }) %>
   $form.replaceWith("<%= escape_javascript(partial) %>");
 <% end %>
