@@ -304,7 +304,7 @@ class CoursesController < BaseController
 
   def search_users_admin
     roles = []
-    roles = params[:role_filter].collect {|r| r.to_i} if params[:role_filter]
+    roles = params[:role_filter].collect {|r| r.to_s} if params[:role_filter]
     keyword = params[:search_user] || []
 
     @memberships = @course.user_course_associations.approved.with_roles(roles)

@@ -903,11 +903,15 @@ describe CoursesController do
     let(:environment) { course.environment }
     let(:user) { course.owner }
 
+    def search_memberships(params={})
+      merged_params = { environment_id: environment.to_param,
+                        id: course.to_param, locale: "pt-BR" }.merge(params)
+      xhr :get, :search_users_admin, merged_params
+    end
+
     before do
       login_as user
-
-      xhr :get, :search_users_admin, locale: "pt-BR",
-        environment_id: environment.to_param, id: course.to_param
+      search_memberships
     end
 
     it "assigns memberships" do
@@ -920,6 +924,20 @@ describe CoursesController do
 
     it "renders admin/search_users_admin" do
       response.should render_template "courses/admin/search_users_admin"
+    end
+
+    context "with roles" do
+      let(:role) { ['tutor'] }
+      before do
+        login_as user
+        course.join(FactoryGirl.create(:user), Role[:tutor])
+
+        search_memberships(role_filter: role)
+      end
+
+      it "assings the administrator memberships" do
+        assigns[:memberships].map(&:role).map(&:to_s).should =~ role
+      end
     end
   end
 end
