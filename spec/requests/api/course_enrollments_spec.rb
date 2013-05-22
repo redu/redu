@@ -7,12 +7,12 @@ describe Api::CourseEnrollmentsController do
   let(:user) { environment.owner }
   let(:token) { _, _, token = generate_token(environment.owner); token }
   let(:params) do
-    { :oauth_token => token, :format => 'json' }
+    { oauth_token: token, format: 'json' }
   end
 
   context "the document returned" do
     before do
-      @enrollment = FactoryGirl.create(:user_course_invitation, :course => course)
+      @enrollment = FactoryGirl.create(:user_course_invitation, course: course)
       @enrollment.invite!
     end
 
@@ -29,9 +29,9 @@ describe Api::CourseEnrollmentsController do
 
   context "when enrolling the user which isnt registered yet" do
     before do
-      @enrollment = { :email => 'abc@def.gh' }
+      @enrollment = { email: 'abc@def.gh' }
       post "/api/courses/#{course.id}/enrollments",
-        params.merge({ :enrollment => @enrollment })
+        params.merge({ enrollment: @enrollment })
       @entity = parse(response.body)
     end
 
@@ -70,9 +70,9 @@ describe Api::CourseEnrollmentsController do
   context "when enrolling the user which IS registered" do
     before do
       @user = FactoryGirl.create(:user)
-      @enrollment = { :email => @user.email }
+      @enrollment = { email: @user.email }
       post "/api/courses/#{course.id}/enrollments",
-        params.merge({:enrollment => @enrollment})
+        params.merge({enrollment: @enrollment})
       @entity = parse(response.body)
     end
 
@@ -102,13 +102,13 @@ describe Api::CourseEnrollmentsController do
 
   context "when listing enrollments" do
     before do
-      @enrollment1 = { :email => 'abc@def.gh' }
+      @enrollment1 = { email: 'abc@def.gh' }
       @user = FactoryGirl.create(:user)
-      @enrollment2 = { :email => @user.email }
+      @enrollment2 = { email: @user.email }
       post "/api/courses/#{course.id}/enrollments",
-        params.merge({:enrollment => @enrollment1})
+        params.merge({enrollment: @enrollment1})
       post "/api/courses/#{course.id}/enrollments",
-        params.merge({:enrollment => @enrollment2})
+        params.merge({enrollment: @enrollment2})
     end
 
     it "should return code 200 (ok)" do
@@ -142,22 +142,22 @@ describe Api::CourseEnrollmentsController do
     end
 
     it "should be able to filter by one courses_ids" do
-      filter = { :courses_ids => @environment2.courses.map(&:id) }
+      filter = { courses_ids: @environment2.courses.map(&:id) }
       get "/api/users/#{user.id}/enrollments", params.merge(filter)
 
       expected = user.course_enrollments.
-        where(:course_id => filter[:courses_ids]).value_of(:id)
+        where(course_id: filter[:courses_ids]).value_of(:id)
       parse(response.body).map { |c| c["id"] }.should == expected
     end
 
     it "should be able to filter by multiple courses_ids" do
-      filter = { :courses_ids => @environment2.courses.map(&:id) }
+      filter = { courses_ids: @environment2.courses.map(&:id) }
       filter[:courses_ids] = environment.courses.first.id
 
       get "/api/users/#{user.id}/enrollments", params.merge(filter)
 
       expected = user.course_enrollments.
-        where(:course_id => filter[:courses_ids]).value_of(:id)
+        where(course_id: filter[:courses_ids]).value_of(:id)
       parse(response.body).map { |c| c["id"] }.should == expected
     end
   end
@@ -187,7 +187,7 @@ describe Api::CourseEnrollmentsController do
     context "when the user isnt registered" do
       it "should remove the enrollment" do
         post "/api/courses/#{course.id}/enrollments",
-          params.merge({:enrollment => { :email => 'abc@def.gh' }})
+          params.merge({enrollment: { email: 'abc@def.gh' }})
 
         id = parse(response.body)['id']
         delete "/api/enrollments/#{id}", params

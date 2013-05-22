@@ -21,7 +21,7 @@ module Api
       authorize! :manage, answer
 
       if answer.save
-        respond_with(:api, answer, :location => api_status_url(answer))
+        respond_with(:api, answer, location: api_status_url(answer))
       else
         respond_with(:api, answer)
       end

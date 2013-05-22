@@ -28,7 +28,7 @@ module Api
       authorize! :manage, context
 
       asset_reports = context.asset_reports.includes(:lecture, :subject,
-                                                     { :enrollment => :user })
+                                                     { enrollment: :user })
 
       asset_reports = filter_by_users(asset_reports, params[:users_ids])
       asset_reports = filter_by(:lecture, asset_reports, params[:lectures_ids])
@@ -54,7 +54,7 @@ module Api
         asset_reports
       else
         asset_reports.includes(:enrollment).
-          where(:enrollments => { :user_id => users_ids })
+          where(enrollments: { user_id: users_ids })
       end
     end
 

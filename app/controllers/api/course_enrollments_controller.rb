@@ -8,8 +8,8 @@ module Api
       decorated = Api::CourseEnrollmentDecorator.new(@enrollment)
 
       respond_with(:api, @course, decorated,
-                   :location => api_enrollment_url(@course, @enrollment),
-                   :represent_with => CourseEnrollmentRepresenter)
+                   location: api_enrollment_url(@course, @enrollment),
+                   represent_with: CourseEnrollmentRepresenter)
     end
 
     def show
@@ -17,7 +17,7 @@ module Api
       authorize! :read, @enrollment
       decorated = Api::CourseEnrollmentDecorator.new(@enrollment)
 
-      respond_with(decorated, :represent_with => CourseEnrollmentRepresenter)
+      respond_with(decorated, represent_with: CourseEnrollmentRepresenter)
     end
 
 
@@ -26,7 +26,7 @@ module Api
     def index
       @entity = find_and_authorize_entity
       course_enrollments = @entity.course_enrollments.
-        includes({ :course => :environment }, :user)
+        includes({ course: :environment }, :user)
       if params.has_key?(:user_id)
         course_enrollments = filter_by_course_id(course_enrollments)
       end
@@ -34,7 +34,7 @@ module Api
       decorated = course_enrollments.
         map { |e| Api::CourseEnrollmentDecorator.new(e) }
 
-      respond_with(decorated, :represent_with => CourseEnrollmentsRepresenter)
+      respond_with(decorated, represent_with: CourseEnrollmentsRepresenter)
     end
 
     def destroy
@@ -50,7 +50,7 @@ module Api
 
     def filter_by_course_id(arel)
       if ids = params[:courses_ids]
-        arel.where(:course_id => ids)
+        arel.where(course_id: ids)
       else
         arel
       end

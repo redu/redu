@@ -5,13 +5,13 @@ describe "Subjects API" do
   before do
     @application, @current_user, @token = generate_token
     @environment = FactoryGirl.create(:complete_environment,
-                           :owner => @current_user)
+                           owner: @current_user)
     @space = @environment.courses.first.spaces.first
     @subject = @space.subjects.first
 
     other_user = FactoryGirl.create(:user)
     @environment.courses.first.join(other_user, :member)
-    @params = {:oauth_token => @token, :format => "json"}
+    @params = {oauth_token: @token, format: "json"}
   end
 
   context "the document returned" do
@@ -116,7 +116,7 @@ describe "Subjects API" do
 
   context "post /spaces/:space_id/subjects" do
     let(:correct_params) do
-      @params[:subject] = { :name => "My new subject" }
+      @params[:subject] = { name: "My new subject" }
     end
 
     it "should return code 201 (created)" do
@@ -141,13 +141,13 @@ describe "Subjects API" do
     end
 
     it "should return code 422 (unproccessable entity) when not valid" do
-      @params[:subject] = { :name => "" }
+      @params[:subject] = { name: "" }
       post "/api/spaces/#{@space.id}/subjects", @params
       response.code.should == "422"
     end
 
     it "should return the error explanation" do
-      @params[:subject] = { :name => "" }
+      @params[:subject] = { name: "" }
       post "/api/spaces/#{@space.id}/subjects", @params
       parse(response.body).should have_key 'name'
     end

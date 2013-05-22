@@ -3,29 +3,29 @@ require "api_spec_helper"
 
 describe "User" do
   before do
-    @user = FactoryGirl.create(:user, :mobile => "+55 (81) 9194-5317",
-                    :localization => "Recife", :birth_localization => "Recife",
-                    :description => "Descrição usuário",
-                    :favorite_quotation => "rede social educacional")
+    @user = FactoryGirl.create(:user, mobile: "+55 (81) 9194-5317",
+                    localization: "Recife", birth_localization: "Recife",
+                    description: "Descrição usuário",
+                    favorite_quotation: "rede social educacional")
     @application, @current_user, @token = generate_token(@user)
   end
 
   context "when GET /user/:id" do
     let(:social_networks) do
-      2.times.collect { FactoryGirl.create(:social_network, :user => @current_user) }
+      2.times.collect { FactoryGirl.create(:social_network, user: @current_user) }
     end
 
     let(:tags) { "educação, informática" }
 
     it "should return status 200 (ok)" do
-      get "/api/users/#{@user.id}", :oauth_token => @token, :format => 'json'
+      get "/api/users/#{@user.id}", oauth_token: @token, format: 'json'
       response.code.should == "200"
     end
 
     it "should have login, id, links, email, first_name, last_name," + \
        " birthday, friends_count, created_at updated_at, mobile, localization," + \
        " birth_localization, social_networks interested_areas thumbnails" do
-      get "/api/users/#{@user.id}", :oauth_token => @token, :format => 'json'
+      get "/api/users/#{@user.id}", oauth_token: @token, format: 'json'
 
       %w(login id links email first_name last_name description favorite_quotation birthday friends_count created_at updated_at mobile localization birth_localization social_networks interested_areas thumbnails).each do |attr|
         parse(response.body).should have_key attr
@@ -34,14 +34,14 @@ describe "User" do
 
     it "should hold user social networks" do
       @current_user.social_networks << social_networks
-      get "/api/users/#{@user.id}", :oauth_token => @token, :format => 'json'
+      get "/api/users/#{@user.id}", oauth_token: @token, format: 'json'
 
       parse(response.body)['social_networks'].count.should == 2
     end
 
     it "should hold the correct social network" do
       @current_user.social_networks << social_networks
-      get "/api/users/#{@user.id}", :oauth_token => @token, :format => 'json'
+      get "/api/users/#{@user.id}", oauth_token: @token, format: 'json'
 
       sn = parse(response.body)['social_networks'].first
       sn['profile'].should == social_networks.first.url
@@ -51,7 +51,7 @@ describe "User" do
       before do
         @user.tag_list = tags
         @user.save
-        get "/api/users/#{@user.id}", :oauth_token => @token, :format => 'json'
+        get "/api/users/#{@user.id}", oauth_token: @token, format: 'json'
       end
 
       it "should hold user interested areas" do
@@ -66,10 +66,10 @@ describe "User" do
 
     %w(self enrollments statuses timeline contacts chats connections).each do |rel|
       it "should link to #{rel}" do
-        get "/api/users/#{@user.id}", :oauth_token => @token, :format => 'json'
+        get "/api/users/#{@user.id}", oauth_token: @token, format: 'json'
         link = href_to(rel, parse(response.body))
 
-        get link, :oauth_token => @token, :format => 'json'
+        get link, oauth_token: @token, format: 'json'
         response.code.should == '200'
       end
     end
@@ -77,7 +77,7 @@ describe "User" do
 
   context "when GET /me" do
     it "should show current_user info" do
-      get "/api/me", :oauth_token => @token, :format => 'json'
+      get "/api/me", oauth_token: @token, format: 'json'
 
       parse(response.body)['id'].should == @current_user.id
     end
@@ -85,7 +85,7 @@ describe "User" do
 
   context "when listing users" do
     before do
-      @environment = FactoryGirl.create(:complete_environment, :owner => @current_user)
+      @environment = FactoryGirl.create(:complete_environment, owner: @current_user)
       @course = @environment.courses.first
       @space = @course.spaces.first
 
@@ -133,8 +133,8 @@ describe "User" do
     end
 
     it "should return the correct number of contacts" do
-      get "/api/users/#{@current_user.id}/contacts", :oauth_token => @token,
-        :format => 'json'
+      get "/api/users/#{@current_user.id}/contacts", oauth_token: @token,
+        format: 'json'
 
       parse(response.body).length.should == 1
     end
@@ -142,8 +142,8 @@ describe "User" do
 
   context "when GET /space/:space_id/users to a non-existent space" do
     it "should return code 404 (not existent)" do
-      get "/api/spaces/2198219/users", :oauth_token => @token,
-        :format => 'json'
+      get "/api/spaces/2198219/users", oauth_token: @token,
+        format: 'json'
 
       response.code.should == '404'
     end
@@ -152,8 +152,8 @@ describe "User" do
 
   context "when GET /space/:space_id/user to a non-existent space" do
     it "should return code 404 (not existent)" do
-      get "/api/courses/2198219/users", :oauth_token => @token,
-        :format => 'json'
+      get "/api/courses/2198219/users", oauth_token: @token,
+        format: 'json'
 
       response.code.should == '404'
     end

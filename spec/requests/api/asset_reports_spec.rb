@@ -5,7 +5,7 @@ describe "AssetReports API" do
   let(:subj) { FactoryGirl.create(:complete_subject) }
   let(:course) { subj.space.course }
   let(:token) { _, _, token = generate_token(user); token }
-  let(:params) { { :oauth_token => token, :format => 'json' } }
+  let(:params) { { oauth_token: token, format: 'json' } }
 
   context "when GET /progress/:id" do
     let(:user) { user_joined_on_course(course, Role[:member]) }
@@ -44,7 +44,7 @@ describe "AssetReports API" do
     let(:user) { user_joined_on_course(course, Role[:member]) }
     let(:asset_report) { user.enrollments.first.asset_reports.first }
 
-    let(:put_params) { params.merge(:progress => { :finalized => "true" }) }
+    let(:put_params) { params.merge(progress: { finalized: "true" }) }
 
     it "should return status 204" do
       put "/api/progress/#{asset_report.id}", put_params
@@ -70,7 +70,7 @@ describe "AssetReports API" do
 
     context "when GET /lectures/:lecture_id/progress" do
       let(:user) { user_joined_on_course(course, Role[:teacher]) }
-      let(:context) { FactoryGirl.create(:lecture, :subject => subj, :owner => user) }
+      let(:context) { FactoryGirl.create(:lecture, subject: subj, owner: user) }
 
 
       it_should_behave_like "asset reports listing without filter"
@@ -97,7 +97,7 @@ describe "AssetReports API" do
         let(:filtered_asset_reports) do
           asset_reports.select { |a| lectures_ids.include? a.lecture_id }
         end
-        let(:params_with_filter) { params.merge(:lectures_ids => lectures_ids) }
+        let(:params_with_filter) { params.merge(lectures_ids: lectures_ids) }
       end
 
       context "with many subjects" do
@@ -114,7 +114,7 @@ describe "AssetReports API" do
             asset_reports.select { |a| subjects_ids.include? a.subject_id }
           end
           let(:params_with_filter) do
-            params.merge(:subjects_ids => subjects_ids)
+            params.merge(subjects_ids: subjects_ids)
           end
         end
       end

@@ -9,7 +9,7 @@ module Api
 
       # Filtra resultados
       if params.has_key?(:status)
-        friendships = friendships.where(:status => params[:status].to_s)
+        friendships = friendships.where(status: params[:status].to_s)
       end
 
       friendships = friendships.page(params[:page])
@@ -34,11 +34,11 @@ module Api
       # Cria uma nova amizade
       if friendship.nil?
         friendship = user.be_friends_with(friend).first
-        opts = { :location => api_friendship_url(friendship) }
+        opts = { location: api_friendship_url(friendship) }
       else
-        opts = { :status => :see_other,
-                 :location => { :url => api_friendship_url(friendship),
-                                :method => :put } }
+        opts = { status: :see_other,
+                 location: { url: api_friendship_url(friendship),
+                                method: :put } }
       end
 
       respond_with(:api, friendship, opts)
@@ -51,17 +51,17 @@ module Api
       # Aceita pedido de amizade
       if friendship.pending?
         friendship = friendship.user.be_friends_with(friendship.friend).first
-        opts = { :location => api_friendship_url(friendship),
-                 :status => :no_content }
+        opts = { location: api_friendship_url(friendship),
+                 status: :no_content }
       else
-        opts = { :status => :see_other,
-                 :location => { :url => api_friendship_url(friendship),
-                                :method => :put } }
+        opts = { status: :see_other,
+                 location: { url: api_friendship_url(friendship),
+                                method: :put } }
       end
 
       # See https://github.com/rails/rails/issues/9069
       respond_to do |format|
-        format.json { render opts.merge(:json => friendship) }
+        format.json { render opts.merge(json: friendship) }
       end
     end
 

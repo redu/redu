@@ -1,8 +1,8 @@
 # -*- encoding : utf-8 -*-
 module Api
   class CanvasController < Api::ApiController
-    represents :json, :collection => RawCanvasCollectionRepresenter,
-      :entity => RawCanvasRepresenter
+    represents :json, collection: RawCanvasCollectionRepresenter,
+      entity: RawCanvasRepresenter
 
     # GET /api/canvas/:id
     def show
@@ -18,7 +18,7 @@ module Api
 
       authorize! :manage, space
 
-      canvas_builder = CanvasService.new(:access_token => current_access_token)
+      canvas_builder = CanvasService.new(access_token: current_access_token)
       canvas = canvas_builder.create(params[:canvas]) do |c|
         c.container = space
       end

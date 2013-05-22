@@ -6,10 +6,10 @@ describe "Folders API" do
   let(:course) { environment.courses.first }
   let(:space) { course.spaces.first }
   let(:token) { _, _, token = generate_token(course.owner); token }
-  let(:params) { { :oauth_token => token, :format => 'json' } }
+  let(:params) { { oauth_token: token, format: 'json' } }
 
   context "when is the space's root folder" do
-    subject { FactoryGirl.create(:root_folder, :space => space) }
+    subject { FactoryGirl.create(:root_folder, space: space) }
 
     context "when GET /api/folders/:id" do
       before do
@@ -29,7 +29,7 @@ describe "Folders API" do
   end
 
   context "when is a common folder" do
-    subject { FactoryGirl.create(:complete_folder, :space => space) }
+    subject { FactoryGirl.create(:complete_folder, space: space) }
 
     context "when GET /api/folders/:id" do
       before do
@@ -59,7 +59,7 @@ describe "Folders API" do
 
     context "when GET /api/folders/:folder_id/folders" do
       let!(:folders) do
-        (1..4).collect { FactoryGirl.create(:folder, :parent => subject) }
+        (1..4).collect { FactoryGirl.create(:folder, parent: subject) }
       end
 
       before do
@@ -82,7 +82,7 @@ describe "Folders API" do
 
     context "when GET /api/spaces/:space_id/folders" do
       let!(:folders) do
-        (1..4).collect { FactoryGirl.create(:folder, :space => space) }
+        (1..4).collect { FactoryGirl.create(:folder, space: space) }
       end
 
       before do
@@ -109,7 +109,7 @@ describe "Folders API" do
 
     context "without validation error" do
       let(:folder_params) do
-        { :folder => { :name => "Guila's folder" } }
+        { folder: { name: "Guila's folder" } }
       end
       before do
         post "/api/folders/#{root.id}/folders", params.merge(folder_params)
@@ -126,7 +126,7 @@ describe "Folders API" do
 
     context "with validation error" do
       let(:folder_params) do
-        { :folder => { :name => nil } }
+        { folder: { name: nil } }
       end
       before do
         post "/api/folders/#{root.id}/folders", params.merge(folder_params)
@@ -144,19 +144,19 @@ describe "Folders API" do
 
   context "when PUT /api/folders/:id" do
     subject do
-      FactoryGirl.create(:complete_folder, :space => space, :parent => space.root_folder)
+      FactoryGirl.create(:complete_folder, space: space, parent: space.root_folder)
     end
 
     it "should return code 204" do
       put "/api/folders/#{subject.id}", params.
-        merge({ :folder => { :name => 'Foobar' } })
+        merge({ folder: { name: 'Foobar' } })
       response.code.should == "204"
     end
 
     context "with validation error" do
       before do
         put "/api/folders/#{subject.id}", params.
-          merge({ :folder => { :name => nil } })
+          merge({ folder: { name: nil } })
       end
 
       it "should return 422 code" do
@@ -171,7 +171,7 @@ describe "Folders API" do
 
   context "DELETE /api/files/:id" do
     subject do
-      FactoryGirl.create(:complete_folder, :space => space, :parent => space.root_folder)
+      FactoryGirl.create(:complete_folder, space: space, parent: space.root_folder)
     end
 
     it "should return 204" do

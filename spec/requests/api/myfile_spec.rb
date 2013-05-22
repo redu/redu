@@ -7,11 +7,11 @@ describe "File API" do
   let(:space) { course.spaces.first }
   let(:folder) { space.root_folder }
   let(:token) { _, _, token = generate_token(course.owner); token }
-  let(:params) { { :oauth_token => token, :format => 'json' } }
+  let(:params) { { oauth_token: token, format: 'json' } }
 
   context "when GET /api/files/:id" do
-    subject { FactoryGirl.create(:myfile, :folder => folder,
-                      :user => course.owner) }
+    subject { FactoryGirl.create(:myfile, folder: folder,
+                      user: course.owner) }
 
     before do
       get "api/files/#{subject.id}", params
@@ -43,7 +43,7 @@ describe "File API" do
   end
 
   context "when GET /api/folders/:folder_id/files" do
-    let!(:files) { 3.times.map { FactoryGirl.create(:myfile, :folder => folder, :user => course.owner) } }
+    let!(:files) { 3.times.map { FactoryGirl.create(:myfile, folder: folder, user: course.owner) } }
 
     before do
       get "api/folders/#{folder.id}/files", params
@@ -71,7 +71,7 @@ describe "File API" do
       end
       before do
         post "/api/folders/#{folder.id}/files", params.
-        merge({ :file => { :content => file } })
+        merge({ file: { content: file } })
       end
 
       it "should return code 201" do
@@ -90,7 +90,7 @@ describe "File API" do
     context "with validation error" do
       before do
         post "/api/folders/#{folder.id}/files", params.
-         merge({ :file => { :content => nil } })
+         merge({ file: { content: nil } })
       end
 
       it "should return code 422" do
@@ -104,7 +104,7 @@ describe "File API" do
   end
 
   context "DELETE /api/files/:id" do
-    subject { FactoryGirl.create(:myfile, :folder => folder, :user => course.owner) }
+    subject { FactoryGirl.create(:myfile, folder: folder, user: course.owner) }
 
     it "should return 204" do
       delete "/api/files/#{subject.id}", params
