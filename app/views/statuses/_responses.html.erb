@@ -14,7 +14,8 @@
     <li class="show-responses">
       <div class="show-more">
         <hr>
-        <span class="see-more link-fake link-secondary">Mostrar todas as respostas</span>
+        <%= content_tag :span, "Mostrar todas as #{status.answers.size} respostas",
+          :class => "see-more link-fake link-secondary" %>
       </div>
     </li>
   </ol>

@@ -1,8 +1,12 @@
-$("#status-<%= @status.id %>").slideUp(function(){
-  $countAtt = $(this).closest(".responses");
-  if ($(this).siblings("li").length == 2) {
-    $(this).parents(".responses").hide();
-  };
-  $(this).remove();
-  $countAtt.countComments().groupResponses();
+$("#status-<%= @status.id %>").slideUp(150, "swing", function() {
+  var $status = $(this);
+  var $responses = $status.closest(".responses");
+
+  $status.remove();
+
+  <% if @status.in_response_to_type == "Status" && @status.in_response_to.answers.empty? %>
+    $responses.remove();
+  <% else %>
+    $responses.countComments();
+  <% end %>
 });
