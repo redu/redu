@@ -45,19 +45,10 @@ describe "Statuses" do
       parse(response.body).count.should == activity_or_help.length
     end
 
-    %w(Help help Log log  Activity activity).each do |filter|
-      it "should filter by statatus type #{filter}" do
-        get "/api/users/#{@current_user.id}/statuses", :type => filter,
-        :oauth_token => @token, :format => 'json'
-        parse(response.body).all? { |s| s["type"] == filter.classify }.should be
-      end
-
-      it "should return correct number of statuses #{filter}" do
-        get "/api/users/#{@current_user.id}/statuses", :type => filter,
-        :oauth_token => @token, :format => 'json'
-        stats = @user_statuses.select {|i| i[:type] == filter.classify}
-        parse(response.body).count.should == stats.length
-      end
+    it_should_behave_like "status filter" do
+      let(:url) { "/api/users/#{@current_user.id}/statuses" }
+      let(:token) { @token }
+      let(:statuses) { @user_statuses }
     end
   end
 
@@ -108,24 +99,10 @@ describe "Statuses" do
         parse(response.body).count.should ==  @space_statuses.length
     end
 
-    it "should filter by status type (help)" do
-      get "/api/spaces/#{space.id}/statuses", :type => 'help',
-        :oauth_token => @token, :format => 'json'
-
-      parse(response.body).all? { |s| s["type"] == "Help" }.should be
-    end
-
-    it "should filter by status type (log)" do
-      get "/api/spaces/#{space.id}/statuses", :type => 'log',
-        :oauth_token => @token, :format => 'json'
-
-      parse(response.body).all? { |s| s["type"] == "Log" }.should be
-    end
-
-    it "should filter by status type (activity)" do
-      get "/api/spaces/#{space.id}/statuses", :type => 'activity',
-        :oauth_token => @token, :format => 'json'
-      parse(response.body).all? { |s| s["type"] == "Activity" }.should be
+    it_should_behave_like "status filter" do
+      let(:url) { "/api/spaces/#{space.id}/statuses" }
+      let(:token) { @token }
+      let(:statuses) { @space_statuses }
     end
   end
 
@@ -165,23 +142,10 @@ describe "Statuses" do
         @lecture_statuses.select {|i| i[:type] == "Activity" or i[:type] == "Help" }.length
     end
 
-    it "should filter by status type (help)" do
-      get "/api/lectures/#{lecture.id}/statuses", :type => 'help' ,
-        :oauth_token => @token, :format => 'json'
-      parse(response.body).all? { |s| s["type"] == "Help" }.should be
-    end
-
-    it "should filter by status type (log)" do
-      get "/api/lectures/#{lecture.id}/statuses", :type => 'log' ,
-        :oauth_token => @token, :format => 'json'
-      parse(response.body).all? { |s| s["type"] == "Log" }.should be
-    end
-
-    it "should filter by status type (activity)" do
-      get "/api/lectures/#{lecture.id}/statuses", :type => 'activity',
-        :oauth_token => @token, :format => 'json'
-
-      parse(response.body).all? { |s| s["type"] == "Activity" }.should be
+    it_should_behave_like "status filter" do
+      let(:url) { "/api/lectures/#{lecture.id}/statuses" }
+      let(:token) { @token }
+      let(:statuses) { @lecture_statuses }
     end
   end
 

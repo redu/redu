@@ -2,6 +2,7 @@
 module Api
   class StatusesController < Api::ApiController
     ALLOWED_LOGEABLE_TYPE = %w(Course Subject Lecture Space User CourseEnrollment)
+    ALLOWED_STATUS_TYPE = %w(Log Help Activity)
 
     def show
       status = Status.includes(:user => :social_networks).find(params[:id])
@@ -108,16 +109,12 @@ module Api
     end
 
     def filter_by_type(statuses, params)
-      case params.fetch(:type, "").downcase
-      when 'help'
-        statuses.where(:type => 'Help')
-      when 'log'
-        statuses.where(:type => 'Log')
-      when 'activity'
-        statuses.where(:type => 'Activity')
-      else
-        statuses.where(:type => ['Help', 'Activity', 'Log'])
-      end
+      types = params[:type] || params[:types] || []
+      types = types.respond_to?(:map) ? types : [types]
+      types = types.map(&:classify) & ALLOWED_STATUS_TYPE
+
+      return statuses if types.empty?
+      statuses.where(:type => types)
     end
   end
 end
