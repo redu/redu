@@ -83,9 +83,12 @@ describe "Canvas API" do
     end
 
   context "when GET /lectures/:id" do
+    let(:canvas) { FactoryGirl.create(:canvas, :container => space) }
     subject do
-      FactoryGirl.create(:lecture, :lectureable => FactoryGirl.create(:canvas, :container => space),
-              :subject => subj, :owner => subj.owner)
+      FactoryGirl.create(:lecture,
+                         :lectureable => canvas,
+                         :subject => subj,
+                         :owner => subj.owner)
     end
 
     before do
