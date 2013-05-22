@@ -7017,13 +7017,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   color: transparent;
 }
 
-.status a.close.link-loading,
-.status a.close.link-loading:hover {
-  background: image-url("spinner-blue-horiz.gif") no-repeat center center;
-  color: transparent;
-}
-
-
 .textshadow .link-loading,
 .textshadow a.link-loading,  /* para sobrepor a precedência de input.important */
 .textshadow #space-manage .new-resource .resources-types li a.link-loading, /* para sobrepor a precedência */
@@ -7719,29 +7712,7 @@ button[disabled=disabled] {
   cursor: default;
 }
 
-.create-status .concave-form .char-limit,
-.create-status .concave-form .errorMessageField { margin-left: 20px; }
-
-.status .create-response textarea {
-  width: 458px;
-  padding: 7px 10px;
-}
-
-.status-log .create-status textarea,
-.status-log .create-response textarea { width: 420px; }
-
-.create-status  [class*="icon-"] {
-  float: left;
-  margin-top: 7px;
-}
-
-.create-response .status-buttons { margin-top: 0; }
-
 .button-default { padding: 6px 10px; }
-
-.create-status.inform-my-status textarea { width: 515px; }
-
-.status-large .concave-form .concave-input { margin-top: 0; }
 
 .text-truncate {
   white-space: nowrap;

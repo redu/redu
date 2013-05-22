@@ -4,7 +4,6 @@
 *= require new-fonts
 *= require token-input
 *= require utils
-*= require wall
 *= require new-style
 *= require tipTip
 *= require ajaxful_rating
@@ -23,4 +22,3 @@
 *= require nav-global-icons
 *= require search
 */
-
