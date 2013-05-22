@@ -7,31 +7,31 @@
     item: o status.
 %>
 
-<%= content_tag :li, :id => "status-#{item.id}" do %>
+<%= content_tag :li, id: "status-#{item.id}" do %>
   <hr class="list-separator">
   <div class="status without-context">
     <div class="subject">
-      <%= render "statuses/user_image", :user => item.user %>
+      <%= render "statuses/user_image", user: item.user %>
       <div class="subject-info">
         <% if can? :manage, item %>
           <%= link_to "Fechar",
             status_path(item),
-            :method => :delete,
-            :remote => true,
-            :class => "icon-close icon-close-gray_16_18 text-replacement",
-            :confirm => "Ao remover este comentário, as respostas também serão excluídas. Deseja removê-lo?" %>
+            method: :delete,
+            remote: true,
+            class: "icon-close icon-close-gray_16_18 text-replacement",
+            confirm: "Ao remover este comentário, as respostas também serão excluídas. Deseja removê-lo?" %>
         <% end %>
-        <%= render "statuses/user_name", :user => item.user %>
+        <%= render "statuses/user_name", user: item.user %>
         <%= content_tag :span, comment_self_or_friend_wall_action(item),
-          :class => "action" %>
-        <%= render "statuses/timeago", :timestamp => item.created_at %>
+          class: "action" %>
+        <%= render "statuses/timeago", timestamp: item.created_at %>
       </div>
     </div>
     <div class="subject-content">
-      <%= render "statuses/resource", :status => item %>
-      <%= render "statuses/responses", :status => item %>
-      <%= render "statuses/actions", :status => item %>
-      <%= render "statuses/create_response", :in_response_to => item %>
+      <%= render "statuses/resource", status: item %>
+      <%= render "statuses/responses", status: item %>
+      <%= render "statuses/actions", status: item %>
+      <%= render "statuses/create_response", in_response_to: item %>
     </div>
   </div>
 <% end %>

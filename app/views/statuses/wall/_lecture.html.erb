@@ -7,43 +7,43 @@
     item: o status.
 %>
 
-<%= content_tag :li, :id => "status-#{item.id}" do %>
+<%= content_tag :li, id: "status-#{item.id}" do %>
   <hr class="list-separator">
   <div class="status">
     <div class="context">
       <%= link_to item.statusable.name,
         space_subject_lecture_path(item.statusable.subject.space, item.statusable.subject, item.statusable),
-        :class => "text-replacement context-icon icon-subject-gray_32_34-before" %>
+        class: "text-replacement context-icon icon-subject-gray_32_34-before" %>
       <%= content_tag :span,
         "#{item.statusable.subject.space.course.environment.name} > #{item.statusable.subject.space.course.name} > #{item.statusable.subject.space.name}",
-        :class => "legend" %>
+        class: "legend" %>
       <%= link_to item.statusable.name,
         space_subject_lecture_path(item.statusable.subject.space, item.statusable.subject, item.statusable) %>
     </div>
     <div class="subject">
-      <%= render "statuses/user_image", :user => item.user %>
+      <%= render "statuses/user_image", user: item.user %>
       <div class="subject-info">
         <% if can? :manage, item %>
           <%= link_to "Fechar",
             status_path(item),
-            :method => :delete,
-            :remote => true,
-            :class => "icon-close icon-close-gray_16_18 text-replacement",
-            :confirm => "Ao remover o comentário, todas as respostas serão apagadas. Deseja removê-lo?" %>
+            method: :delete,
+            remote: true,
+            class: "icon-close icon-close-gray_16_18 text-replacement",
+            confirm: "Ao remover o comentário, todas as respostas serão apagadas. Deseja removê-lo?" %>
         <% end %>
-        <%= render "statuses/user_name", :user => item.user,
-          :classes => "icon-#{role_icon(role_at(item.user, item.statusable)).first}-gray_16_18-before" %>
+        <%= render "statuses/user_name", user: item.user,
+          classes: "icon-#{role_icon(role_at(item.user, item.statusable)).first}-gray_16_18-before" %>
         <%= content_tag :span,
-          raw("comentou na Aula #{link_to(item.statusable.name, space_subject_lecture_path(item.statusable.subject.space, item.statusable.subject, item.statusable), :class => "icon-subject-gray_16_18-before")}"),
-          :class => "action" %>
-        <%= render "statuses/timeago", :timestamp => item.created_at %>
+          raw("comentou na Aula #{link_to(item.statusable.name, space_subject_lecture_path(item.statusable.subject.space, item.statusable.subject, item.statusable), class: "icon-subject-gray_16_18-before")}"),
+          class: "action" %>
+        <%= render "statuses/timeago", timestamp: item.created_at %>
       </div>
     </div>
     <div class="subject-content">
-    <%= render "statuses/resource", :status => item %>
-    <%= render "statuses/responses", :status => item %>
-    <%= render "statuses/actions", :status => item %>
-    <%= render "statuses/create_response", :in_response_to => item %>
+    <%= render "statuses/resource", status: item %>
+    <%= render "statuses/responses", status: item %>
+    <%= render "statuses/actions", status: item %>
+    <%= render "statuses/create_response", in_response_to: item %>
     </div>
   </div>
 <% end %>

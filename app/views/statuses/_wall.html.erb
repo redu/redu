@@ -12,11 +12,11 @@
 <%= render "statuses/template_preview" %>
 
 <div class="content-section">
-  <%= render "statuses/create_status", :status => status,
-    :statusable => statusable,
-    :placeholder => placeholder %>
+  <%= render "statuses/create_status", status: status,
+    statusable: statusable,
+    placeholder: placeholder %>
 </div>
 <ol id="statuses" class="status-list">
-  <%= render :partial => "statuses/item", :collection => statuses %>
+  <%= render partial: "statuses/item", collection: statuses %>
 </ol>
-<%= paginate statuses, :theme => "new_endless" %>
+<%= paginate statuses, theme: "new_endless" %>
