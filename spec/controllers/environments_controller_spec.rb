@@ -351,6 +351,26 @@ describe EnvironmentsController do
     end
   end
 
+  context "GET search_users_admin" do
+    let(:environment) { FactoryGirl.create(:complete_environment) }
+    let(:course) {  environment.courses.first }
+    let(:role) { ['teacher'] }
+    let(:params) do
+      { id: environment.to_param, role_filter: role, search_user: "",
+        locale: "pt-BR" }
+    end
+
+    before do
+      login_as environment.owner
+      course.join(FactoryGirl.create(:user), Role[:teacher])
+      xhr :get, :search_users_admin, params
+    end
+
+    it "assings the teacher memberships" do
+      assigns[:memberships].map(&:role).map(&:to_s).should =~ role
+    end
+  end
+
   def post_destroy_members(environment, users)
     post :destroy_members, :locale => 'pt-BR',
       :id => environment.to_param,
