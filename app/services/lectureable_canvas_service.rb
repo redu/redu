@@ -11,8 +11,12 @@ class LectureableCanvasService < LectureableService
   end
 
   # Instancia canvas baseado nos atributos
-  def build(&block)
-    @canvas_service.build(attrs, &block)
+  def build(lecture, &block)
+    block_given = block_given?
+    @canvas_service.build(attrs) do |canvas|
+      canvas.container = lecture
+      block.call if block_given
+    end
   end
 
   def access_token
