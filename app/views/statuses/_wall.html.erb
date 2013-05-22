@@ -8,6 +8,9 @@
     statuses: a coleção de status.
 %>
 
+<%# Preview de links externos. %>
+<%= render "statuses/template_preview" %>
+
 <div class="content-section">
   <%= render "statuses/create_status", :status => status,
     :statusable => statusable,

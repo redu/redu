@@ -1,3 +1,8 @@
+<% content_for :header_scripts_and_styles do %>
+  <%= stylesheet_link_tag :new_wall %>
+  <%= javascript_include_tag :new_wall %>
+<% end %>
+
 <%= render :partial => 'lectures/javascripts' %>
 <%= render :partial => 'subjects/sidebar' %>
 <div class="main space grid_12 omega big-col">
@@ -22,7 +27,8 @@
       </div>
     </div>
 
-    <%= render 'lectures/create_statuses', :lecture => @lecture, :statuses => @statuses %>
+    <%= render "lectures/create_statuses", :lecture => @lecture,
+      :statuses => @statuses, :status => @status %>
   </div><!-- end #resource -->
 
 </div><!-- end .main -->
