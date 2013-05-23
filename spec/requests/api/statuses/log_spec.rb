@@ -46,21 +46,46 @@ describe "Log" do
 
     it_should_behave_like 'having breadcrumbs', "User" do
       let(:get_params) { params }
+      let(:logeable) { current_user }
       let(:status) do
-        FactoryGirl.create(:log, :user => current_user, :statusable => current_user)
+        FactoryGirl.create(:log, :user => current_user,
+                           :statusable => current_user, :logeable => logeable)
       end
     end
 
-    it_should_behave_like 'having breadcrumbs', "Space" do
+    it_should_behave_like 'having breadcrumbs', "Course" do
       let(:get_params) { params }
-      let(:status) { log }
+      let(:logeable) { FactoryGirl.create(:course) }
+      let(:status) do
+        FactoryGirl.create(:log, :user => current_user,
+                           :statusable => current_user, :logeable => logeable)
+      end
     end
 
     it_should_behave_like 'having breadcrumbs', "Lecture" do
       let(:get_params) { params }
+      let(:logeable) { FactoryGirl.create(:lecture, :owner => current_user) }
+      let(:status) do
+        FactoryGirl.create(:log, :user => current_user, :statusable => space,
+                           :logeable => logeable)
+      end
+    end
+
+    it_should_behave_like 'having breadcrumbs', "Subject" do
+      let(:get_params) { params }
+      let(:logeable) { FactoryGirl.create(:subject, :owner => current_user) }
+      let(:status) do
+        FactoryGirl.create(:log, :user => current_user, :statusable => space,
+                           :logeable => logeable)
+      end
+    end
+
+    it_should_behave_like 'having breadcrumbs', "CourseEnrollment" do
+      let(:get_params) { params }
+      let(:logeable) { FactoryGirl.create(:user_course_association) }
       let(:status) do
         FactoryGirl.create(:log, :user => current_user,
-                :statusable => FactoryGirl.create(:lecture, :owner => current_user))
+                           :statusable => space.course, :logeable => logeable)
       end
     end
   end
