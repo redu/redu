@@ -1,9 +1,16 @@
 <%#
   Inclui os assets necessários para o novo mural sem o bootstrap.
+
+  Variáveis:
+    in_lecture: deve indicar se é o mural de uma aula (default false).
 %>
+
+<% in_lecture = false unless local_assigns.has_key? :in_lecture %>
 
 <% content_for :header_scripts_and_styles do %>
   <%= stylesheet_link_tag "new_wall" %>
   <%= javascript_include_tag "new_wall" %>
-  <%= javascript_include_tag "new_wall/lecture-toggle-comment-or-help" %>
+  <% if in_lecture %>
+    <%= javascript_include_tag "new_wall/lecture-toggle-comment-or-help" %>
+  <% end %>
 <% end %>

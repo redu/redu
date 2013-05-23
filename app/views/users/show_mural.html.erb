@@ -1,23 +1,17 @@
-<% content_for :header_scripts_and_styles do %>
-  <%= stylesheet_link_tag "new_wall" %>
-  <%= javascript_include_tag "new_wall" %>
-<% end %>
+<%= render "lectures/new_wall_assets" %>
 
-<%= render partial: 'users/profile_sidebar' %>
+<%= render "users/profile_sidebar" %>
 
 <div class="main grid_10 omega" style="width: 580px;">
   <% if (can? :manage, @user) or (can? :view_mural, @user) %>
-    <%# Status. %>
     <%= render "statuses/wall", status: @status, statusable: @user,
-      placeholder: "",
-      statuses: @statuses %>
+      placeholder: "", statuses: @statuses %>
   <% else %>
     <%= render "shared/empty_message", icon_message: "Mural disponível apenas para Amigos",
       icon_class: "icon-private-gray_128_130",
       message: "Este mural está disponível disponível apenas para Amigos." %>
   <% end %>
-
 </div>
 
-<%= render 'users/secondary_sidebar',
+<%= render "users/secondary_sidebar",
   subscribed_courses_count: @subscribed_courses_count %>
