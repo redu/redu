@@ -629,4 +629,9 @@ textarea::-webkit-input-placeholder { color: $gray4; }
   .tab-left:before { margin-left: 210px; }
 
   .tab-right:before { margin-right: 200px; }
+
+  .create-status {
+    display: none;
+    margin-top: 10px;
+  }
 }
