@@ -1,6 +1,10 @@
 defaults:
   precompile_assets: true
   assets_strategy: cleaning
+  asset_dependencies:
+    - app/assets
+    - vendor/assets
+    - lib/assets
   copy_exclude:
     - .git
   migrate: false
