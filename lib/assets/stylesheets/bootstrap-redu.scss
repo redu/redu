@@ -427,8 +427,8 @@ body {
   overflow: hidden;
 }
 
-.sprite, .sprite-light-logo, .sprite-light-talk-to-us, .sprite-logo-redu-tech-footer, .sprite-logo, .sprite-social-facebook, .sprite-social-twitter, .sprite-talk-to-us, .header-logo-wrapper:hover, .footer-logo-link:hover, .footer-contact:hover, .footer-contact:hover .footer-talk-to-us-balloons {
-  background: image-url('sprite-sfd2bf123f9.png') no-repeat;
+.sprite, .sprite-light-logo, .sprite-light-talk-to-us, .sprite-logo-redu-tech-footer, .sprite-logo, .sprite-social-facebook, .sprite-social-twitter, .sprite-talk-to-us, .footer-logo-link:hover, .footer-contact:hover, .footer-contact:hover .footer-talk-to-us-balloons {
+  background: image-url('sprite-sf93f1e8b67.png') no-repeat;
 }
 
 .sprite-light-logo {
@@ -438,42 +438,42 @@ body {
 }
 
 .sprite-light-talk-to-us {
-  background-position: 0 -258px;
+  background-position: -115px -168px;
   height: 100px;
   width: 160px;
 }
 
 .sprite-logo-redu-tech-footer {
-  background-position: 0 -168px;
+  background-position: 0 0;
   height: 90px;
   width: 160px;
 }
 
 .sprite-logo {
-  background-position: 0 0;
-  height: 55px;
-  width: 193px;
+  background-position: -64px -168px;
+  height: 64px;
+  width: 51px;
 }
 
 .sprite-social-facebook {
-  background-position: -160px -168px;
+  background-position: 0 -168px;
   height: 32px;
   width: 32px;
 }
 
 .sprite-social-twitter {
-  background-position: -192px -168px;
+  background-position: -32px -168px;
   height: 32px;
   width: 32px;
 }
 
 .sprite-talk-to-us {
-  background-position: -193px 0;
+  background-position: -160px 0;
   height: 98px;
   width: 48px;
 }
 .sprite-talk-to-us:hover, .sprite-talk-to-us.talk-to-us_hover, .sprite-talk-to-us.talk-to-us-hover {
-  background-position: -241px 0;
+  background-position: -208px 0;
 }
 
 .sprite-before:before {
@@ -490,14 +490,8 @@ body {
   margin-left: 5px;
 }
 
-.sprite, .sprite-light-logo, .sprite-light-talk-to-us, .sprite-logo-redu-tech-footer, .sprite-logo, .sprite-social-facebook, .sprite-social-twitter, .sprite-talk-to-us, .header-logo-wrapper:hover, .footer-logo-link:hover, .footer-contact:hover, .footer-contact:hover .footer-talk-to-us-balloons {
+.sprite, .sprite-light-logo, .sprite-light-talk-to-us, .sprite-logo-redu-tech-footer, .sprite-logo, .sprite-social-facebook, .sprite-social-twitter, .sprite-talk-to-us, .footer-logo-link:hover, .footer-contact:hover, .footer-contact:hover .footer-talk-to-us-balloons {
   display: inline-block;
-}
-
-.header-logo-wrapper:hover {
-  background-position: 0 -98px;
-  height: 70px;
-  width: 300px;
 }
 
 .footer-logo-link:hover {
@@ -507,12 +501,12 @@ body {
 }
 
 .footer-contact:hover {
-  background-position: 0 -258px;
+  background-position: -115px -168px;
   height: 100px;
   width: 160px;
 }
 .footer-contact:hover .footer-talk-to-us-balloons {
-  background-position: -241px 0;
+  background-position: -208px 0;
   height: 98px;
   width: 48px;
 }
@@ -654,7 +648,23 @@ strong {
   font-weight: bold;
 }
 
-blockquote, q, .legend {
+blockquote {
+  -webkit-box-shadow: 1px 0 white inset;
+  -moz-box-shadow: 1px 0 white inset;
+  box-shadow: 1px 0 white inset;
+  border-left: 4px solid #cccccc;
+  padding: 10px;
+  margin: 0 0 18px;
+}
+
+.quote-source {
+  color: #b3b3b3;
+}
+.quote-source:before {
+  content: '\2014 \00A0';
+}
+
+.legend {
   color: #b3b3b3;
 }
 
@@ -1672,35 +1682,64 @@ textarea:-moz-placeholder {
 }
 
 .header-not-logged-in {
-  -webkit-box-shadow: 0 -1px 0 white inset, 0 1px 0 white inset, 0 1px 0 #b2b2b2;
-  -moz-box-shadow: 0 -1px 0 white inset, 0 1px 0 white inset, 0 1px 0 #b2b2b2;
-  box-shadow: 0 -1px 0 white inset, 0 1px 0 white inset, 0 1px 0 #b2b2b2;
+  -webkit-box-shadow: 0 -1px 0 white inset, 0 1px 0 white inset, 0 2px 4px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 -1px 0 white inset, 0 1px 0 white inset, 0 2px 4px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 -1px 0 white inset, 0 1px 0 white inset, 0 2px 4px rgba(0, 0, 0, 0.5);
   height: 85px;
   background-color: #e6e6e6;
+  position: relative;
+  border-bottom: 1px solid #6d6e6f;
+}
+.cssgradients .header-not-logged-in {
+  background-image: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #e6e6e6), color-stop(100%, #ffffff));
+  background-image: -webkit-linear-gradient(bottom, #e6e6e6, #ffffff);
+  background-image: -moz-linear-gradient(bottom, #e6e6e6, #ffffff);
+  background-image: -o-linear-gradient(bottom, #e6e6e6, #ffffff);
+  background-image: linear-gradient(bottom, #e6e6e6, #ffffff);
+}
+.no-cssgradients.gt-ie8 .header-not-logged-in {
+  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlNmU2ZTYiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
 }
 
 .header-logo-wrapper {
-  width: 300px;
-  height: 70px;
   float: left;
-  position: relative;
-  margin-left: -112px;
+  padding-top: 11px;
 }
 
 .header-logo {
-  position: absolute;
-  right: -3px;
-  bottom: 0;
+  float: left;
+}
+
+.header-logo-title-wrapper {
+  float: left;
+}
+.header-logo +
+.header-logo-title-wrapper {
+  margin: 10px 0 0 10px;
+}
+
+.header-logo-title {
+  font: 500 18px/18px museo-sans, "Helvetica Neue", Arial, sans-serif;
+  letter-spacing: -1px;
+  max-width: 215px;
+}
+
+.header-logo-legend {
+  color: #6d6e6f;
 }
 
 .header-buttons {
   float: right;
   margin-top: 20px;
 }
+.header-buttons .button-big {
+  padding-left: 6px;
+  padding-right: 6px;
+}
 
 .header-button-sign-up +
 .header-button-sign-in {
-  margin-left: 40px;
+  margin-left: 20px;
 }
 
 .header-button-sign-up,
@@ -1709,7 +1748,7 @@ textarea:-moz-placeholder {
 }
 .header-button-sign-up > [class*="icon-"],
 .header-button-sign-in > [class*="icon-"] {
-  margin: 5px 10px 0 0;
+  margin: 5px 5px 0 0;
   float: left;
 }
 
