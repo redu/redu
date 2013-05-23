@@ -9,6 +9,9 @@
   <div class="content-area">
     <%= render "users/breadcrumb_home", :user => @user %>
     <div class="content-body">
+      <%# Filtros de participação. %>
+      <%= render "users/participation_filters", user: @user %>
+
       <%# Mensagem de boas-vindas ao Redu. %>
       <%= render "users/welcome_greeting", :user => @user %>
 

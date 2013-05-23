@@ -316,3 +316,27 @@
     position: absolute;
   }
 }
+
+
+// Filtros de participação.
+// ==========================================================================
+
+.participation-filters { margin: -($content-body-border-radius + 1) -1px 0; }
+
+.participation-filter {
+  @include box-sizing;
+  width: 50%;
+  padding: 16px 20px;
+
+  &:first-child {
+    @include border-top-left-radius($content-body-border-radius);
+    @include border-bottom-left-radius(0);
+    float: left;
+  }
+
+  &:last-child {
+    @include border-top-right-radius($content-body-border-radius);
+    @include border-bottom-right-radius(0);
+    float: right;
+  }
+}

@@ -1,0 +1,20 @@
+<%#
+  Exibe os filtros de participações.
+
+  Variáveis:
+    user: o usuário.
+%>
+
+<% if user.settings.visited?(home_user_path(user)) %>
+  <div class="participation-filters clearfix">
+    <%# TODO: Back-end, o filtro ativo no momento deve ter .filter-active. %>
+    <%= link_to home_user_path(user),
+      class: "participation-filter filter filter-active" do %>
+      <strong>Todas as participações</strong>
+    <% end %>
+    <%= link_to home_user_path(user, filter: "my-participations"),
+      class: "participation-filter filter" do %>
+      <strong>Minhas participações</strong>
+    <% end %>
+  </div>
+<% end %>
