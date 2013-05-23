@@ -1,8 +1,14 @@
 <div class="header-not-logged-in">
   <div class="container">
-    <%= link_to home_path, :title => "Redu", :class => "header-logo-wrapper" do %>
-      <h1 class="header-logo sprite-logo text-replacement" title="Redu">Redu</h1>
-    <% end %>
+    <div class="header-logo-wrapper">
+      <%= link_to home_path, :title => "Redu", :class => "header-logo sprite-logo" do %>
+        <h1 class="text-replacement" title="Redu">Redu</h1>
+      <% end %>
+      <div class="header-logo-title-wrapper">
+        <h2 class="header-logo-title">Você ainda não se identificou no Redu.</h2>
+        <span class="header-logo-legend legend">Entre com sua conta para acessar seus cursos, aulas e amigos.</span>
+      </div>
+    </div>
     <div class="header-buttons">
       <div class="header-button-sign-up">
         <span class="icon-add-friend-darkgray_32_34 text-replacement">Cadastrar</span>
