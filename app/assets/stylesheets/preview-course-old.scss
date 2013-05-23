@@ -1,3 +1,10 @@
+@import "compass/css3/images";
+
+// UI-components.
+@import "bootstrap/variables";
+@import "bootstrap/mixins";
+
+
 ul, ol {
   list-style: none;
   margin: 0;
@@ -857,4 +864,26 @@ ul, ol {
   width: 64px;
   height: 66px;
   display: inline-block;
+}
+
+/* Lista de responsáveis por curso. */
+
+.course-owners {
+  clear: left;
+  color: $gray5;
+  margin-bottom: 10px;
+}
+
+.course-resposibles {
+  display: inline-block;
+  list-style: disc;
+}
+
+.course-resposible {
+  float: left;
+
+  & +
+  & { margin-left: 25px; }
+
+  &:first-child { list-style: none; }
 }
