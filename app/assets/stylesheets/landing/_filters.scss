@@ -19,7 +19,8 @@
   position: fixed;
   top: 0; // Se estiver logado, o top é de 42px.
   z-index: 999;
-  width: 939px;
+  $content-body-border-width: 1px;
+  width: $grid-row-width - (2 * $content-body-border-width);
 
   .cssgradients & { @include redu-gradient(rgba(255, 255, 255, 0), $white, 0.1); }
 

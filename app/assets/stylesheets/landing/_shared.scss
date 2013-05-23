@@ -5,26 +5,15 @@
 
 // Títulos da área de navegação.
 .landing-navigation-title {
-  $color: $gray3;
-  color: $color;
-  display: block;
   font: 500 60px/56px $museo-sans-rounded;
   letter-spacing: -3px;
-
-  &:hover {
-    text-decoration: none;
-    color: $color;
-  }
+  display: block;
+  color: $gray3;
 
   .textshadow & { text-shadow: 0 1px 0 $gray-drop-shadow; }
 }
 
-.landing-navigation-subtitle {
-  font-size: 36px;
-  letter-spacing: -2px;
-  line-height: 36px;
-  font-weight: 500;
-}
+.landing-navigation-subtitle { @include heading(2); }
 
 // Usado pelas modais de planos, termos de uso e política de privacidade.
 .modal-landing {

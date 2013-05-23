@@ -3,17 +3,27 @@
 // ==========================================================================
 
 .landing-discussion-wall {
-  @include box-sizing(border-box);
+  @include box-sizing;
   padding: 20px;
-  height: 230px;
+  height: sprite-sprite-height(background-wall);
   background-color: $gray1;
-  background: image-url("landing/wall-background.png") no-repeat scroll right center $gray1;
-
-  .multiplebgs & {
-    background:
-      image-url("landing/icon-wall-gray_128_130.png") no-repeat scroll center center,
-      image-url("landing/wall-background.png") no-repeat scroll right center $gray1;
-  }
+  position: relative;
 }
 
-.landing-discussion-wall-content { width: 340px; }
+.landing-discussion-wall-content { width: $landing-content-width; }
+
+.landing-discussion-wall-icon,
+.landing-discussion-wall-background { position: absolute; }
+
+.landing-discussion-wall-icon {
+  $width: sprite-sprite-width(icon-wall);
+  $height: sprite-sprite-height(icon-wall);
+  @include calc("left", "50% - (#{$width} / 2)", 43%);
+  @include calc("top", "50% - (#{$height} / 2)", 25%);
+  z-index: 1;
+}
+
+.landing-discussion-wall-background {
+  top: 0;
+  right: 0;
+}
