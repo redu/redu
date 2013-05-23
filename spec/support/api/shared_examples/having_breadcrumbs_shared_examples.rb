@@ -1,19 +1,22 @@
 # -*- encoding : utf-8 -*-
 BREADCRUMB_MAPPINGS = {
   "User" => ['wall'],
+  "Course" => %w(course environment),
+  "CourseEnrollment" => %w(course environment),
   "Space" => %w(space course environment),
-  "Lecture" => %w(lecture subject space course environment)
+  "Subject" => %w(subject space course environment),
+  "Lecture" => %w(lecture subject space)
 }
 
-shared_examples_for "having breadcrumbs" do |statusable_type|
+shared_examples_for "having breadcrumbs" do |entity_type|
   before  do
     get "/api/statuses/#{status.id}", get_params
   end
 
   let(:representation) { parse(response.body) }
 
-  context "when statusable is a #{statusable_type}" do
-    BREADCRUMB_MAPPINGS[statusable_type].each do |breadcrumb_link|
+  context "when entity is a #{entity_type}" do
+    BREADCRUMB_MAPPINGS[entity_type].each do |breadcrumb_link|
       include_examples 'breadcrumb link', breadcrumb_link
     end
   end
