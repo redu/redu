@@ -1,0 +1,48 @@
+// Copiado do bootstrap com modificações.
+
+
+@import "compass/utilities/sprites/base";
+
+$icon-layout: smart;
+$icon-sprite-dimensions: true;
+
+@import "new-wall/icon/*.png";
+@include all-icon-sprites;
+
+.status-list {
+  // Responder status.
+  .icon-reply-gray_8_10-before {
+    &:before { @extend .icon-reply-gray_8_10;  }
+    &:hover:before { @extend .icon-reply-blue_8_10; }
+  }
+
+  .icon-environment-gray_32_34-before {
+    &:before { @extend .icon-environment-gray_32_34; }
+    &:hover:before { @extend .icon-environment-blue_32_34; }
+  }
+
+  .icon-course-gray_32_34-before {
+    &:before { @extend .icon-course-gray_32_34; }
+    &:hover:before { @extend .icon-course-blue_32_34; }
+  }
+
+  .icon-space-gray_32_34-before {
+    &:before { @extend .icon-space-gray_32_34; }
+    &:hover:before { @extend .icon-space-blue_32_34; }
+  }
+
+  .icon-subject-gray_32_34-before {
+    &:before { @extend .icon-subject-gray_32_34; }
+    &:hover:before { @extend .icon-subject-blue_32_34; }
+  }
+
+  [class*="icon-"][class*="-before"]:before { @include pseudo-before(5px, false); }
+}
+
+.icon-close-gray_16_18 {
+  &:hover { @extend .icon-close-red_16_18; }
+}
+
+.icon-close-lightblue_8_10 {
+  &:hover { @extend .icon-close-red_8_10; }
+}

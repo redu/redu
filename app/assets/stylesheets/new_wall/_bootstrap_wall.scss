@@ -1,0 +1,276 @@
+// Copiado do bootstrap com algumas modificações.
+
+
+// Alinha cada div de status separadamente
+.status-list .status {
+  overflow: hidden;
+  margin: 20px;
+}
+
+.status-list .subject a .author-thumbnail { float: left; }
+
+.subject-info {
+  margin-top: 10px;
+  overflow: hidden;
+}
+
+// Aba para área de status, criação de status e comentários.
+.status-tab {
+  position: relative;
+
+  &:before {
+    border-color: $gray2 $white;
+    border-style: solid;
+    border-width: 0 10px 10px;
+    content: " ";
+    position: absolute;
+    top: -10px;
+    width: 0;
+  }
+  // Aba à direita
+  &.tab-right:before { right: 39px; }
+
+  // Aba à esquerda
+  &.tab-left:before { left: 20px; }
+}
+
+// Estilização dos formulários para criar respostas e status
+.create-response,
+.create-status {
+  padding: 10px;
+  background-color: $gray2;
+  @include border-radius;
+  @include clear-fix;
+
+  .status-buttons {
+    float: right;
+    margin: 5px 0 0;
+
+    li { display: inline; }
+  }
+}
+
+// Alinhar status
+.subject,
+.subject-content {
+  margin-left: 42px;
+
+  .see-all { float: right; }
+}
+
+// Remove margens à esquerda quando status não tem contexto
+.status.without-context { //Adição da classe without-context para remover margens à direita de elementos sem contexto, sem a necessidade do seletor '+'
+  .subject {
+    margin-left: 0;
+    overflow: hidden;
+  }
+
+  .subject-content {
+    margin: 5px 0 0 42px;
+  }
+
+  .subject-info { margin-top: 0; }
+
+  .status-content,
+  .responses,
+  .create-response { margin-left: 0; }
+}
+
+// Aplica estilos gerais a todos status
+.status-list {
+  margin: 0;
+
+  li { list-style: none; }
+
+  .author-thumbnail {
+    width: 32px;
+    height: 34px;
+    float: left;
+    margin-right: 10px;
+
+  }
+
+  .grouping-elements .author-thumbnail {
+    @include square(auto);
+    float: none;
+    margin-right: 0;
+  }
+
+  .date { display: block; }
+
+  .actions {
+    overflow: hidden;
+
+    li {
+      margin-top: 10px;
+      float: right;
+      margin-right: 20px;
+
+      &[class*="icon-"]:before { vertical-align: middle; }
+    }
+  }
+
+  .icon-close {
+    float: right;
+    cursor: pointer;
+  }
+
+  .status-content,
+  .responses {
+    margin-left: 42px;
+    background-color: $gray2;
+    @include border-radius;
+
+    .show-responses { display: none; }
+  }
+
+  .status-content {
+    margin-top: 10px;
+    padding: 10px;
+
+    p { @include text-shadow(none); }
+  }
+
+  .action { color: $gray6; }
+
+  .help { color: $orange3; }
+
+  .responses {
+    margin-top: 15px;
+
+    .last-responses,
+    .see-more {
+      display: block;
+      text-align: center;
+      padding: 10px;
+    }
+
+    .response {
+      padding: 10px;
+
+      .status-content {
+        margin-left: 42px;
+        padding: 0;
+        margin-top: 0;
+      }
+    }
+  }
+
+  .subject-content {
+    // Estilizar Agrupamento
+    .grouping-elements {
+      margin-right: 20px;
+      height: 40px;
+
+      li {
+        display: inline;
+
+        img { margin: 8px 3px 0 0; }
+      }
+    }
+
+    // Posiciona ícone do status de agrupamento de membros
+    .subject-info .action {
+      &[class*="icon-"]:before {
+        position: absolute;
+        margin-left: -35px;
+      }
+    }
+ }
+
+  // Aplica estilos aos status com log
+  .log {
+    .subject { margin-top: 5px; }
+
+    // Posiciona ícone do status de pedido de ajuda
+    .subject-info[class*="icon-"]:before {
+      position: absolute;
+      margin-left: -75px;
+    }
+  }
+
+  .status .context {
+    margin-bottom: 5px;
+
+    .context-icon {
+      float: left;
+      width: 32px;
+      margin-right: 10px;
+
+      &[class*="icon-"]:before { float: left; }
+    }
+
+    a {
+      display: block;
+      line-height: 11px;
+    }
+  }
+
+  .create-response {
+    margin-top: 10px;
+    margin-left: 42px;
+    display: none;
+  }
+}
+
+.context-link-hover {
+  color: rgb(21, 138, 196) !important;
+  text-decoration: underline;
+}
+
+.thumbnail-separator { margin: 0; }
+
+.post-resource { margin-top: 20px; }
+
+.thumbnail {
+  overflow: hidden;
+  padding: 10px 0;
+
+  .preview { float: left; }
+
+  .preview-link {
+    max-width: 100px;
+    max-height: 75px;
+  }
+
+  .buttons {
+    margin: 10px 0 0;
+
+    .button-default {
+      padding: 0;
+
+      & > [class*="icon-"] {
+        margin: 6px 10px;
+      }
+
+      &.button-disabled {
+        border-color: rgb(204, 204, 204);
+      }
+    }
+  }
+
+  img {
+    max-width: 100px;
+    width: 100%;
+    min-height: 34px;
+    margin-right: 10px;
+  }
+
+  .thumbnail-info {
+    p { @include text-shadow(0 1px 0 $white); }
+
+    .post-description { color: $gray6 }
+
+    .source-site { color: $gray4; }
+  }
+}
+
+.status-tab {
+  .character-counter {
+    position: static;
+    margin-top: 5px;
+    float: left;
+  }
+
+  .status-buttons { display: none; }
+}
