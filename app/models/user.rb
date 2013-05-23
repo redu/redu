@@ -3,7 +3,6 @@ class User < ActiveRecord::Base
   include Invitable::Base
   include Humanizer
   include UserSearchable
-  include VisService::UserAdditions::ModelAdditions
 
   # Valida a resposta ao captcha
   attr_writer :enable_humanizer
