@@ -35,7 +35,7 @@ module Api
       folder = Folder.find(params[:id])
       authorize! :manage, folder
 
-      service = FolderService.new(:model => folder)
+      service = FolderService.new(model: folder)
       service.update(params[:folder])
 
       respond_with(:api, service.model)
@@ -45,7 +45,7 @@ module Api
       folder = Folder.find(params[:id])
       authorize! :manage, folder
 
-      service = FolderService.new(:model => folder)
+      service = FolderService.new(model: folder)
       service.destroy
 
       respond_with(:api, service.model)

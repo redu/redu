@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 class SeminarService < LectureableService
-  def build(&block)
+  def build(lecture=nil, &block)
     media = attrs[:media]
     Seminar.new do |s|
       if media =~ /youtube.com.*(?:\/|v=)([^&$]+)/

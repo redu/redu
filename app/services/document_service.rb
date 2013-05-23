@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 class DocumentService < LectureableService
-  def build(&block)
+  def build(lecture=nil, &block)
     media = attrs[:media]
     Document.new do |d|
       d.attachment = media

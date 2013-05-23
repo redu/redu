@@ -6,7 +6,7 @@
     <thead style="display: none;">
       <th>Nome</th><th>Gerenciar</th><th>Remover</th>
     </thead>
-    <%= render :partial => 'spaces/admin/item_admin', :collection => @spaces, :locals => { :member_count => member_count } %>
+    <%= render :partial => 'spaces/admin/item_admin', :collection => @spaces %>
   </table>
   <%= paginate @spaces, :theme => 'endless' %>
 <% else %>

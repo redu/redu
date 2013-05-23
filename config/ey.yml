@@ -1,25 +1,20 @@
+defaults:
+  precompile_assets: true
+  assets_strategy: cleaning
+  asset_dependencies:
+    - app/assets
+    - vendor/assets
+    - lib/assets
+  copy_exclude:
+    - .git
+  migrate: false
+  migration_command: rake db:migrate --trace
+  asset_roles:
+    - :app
+    - :app_master
+    - :util
 environments:
-  production: &production
-    precompile_assets: true
-    asset_roles:
-      - :app
-      - :app_master
-      - :util
-    copy_exclude:
-      - .git
+  env_production: &production
     branch: master
-    migrate: false
-    migration_command: rake db:migrate --trace
-  staging: &staging
-    precompile_assets: true
-    asset_roles:
-      - :app
-      - :app_master
-      - :util
-    copy_exclude:
-      - .git
+  env_staging: &staging
     branch: staging
-    migrate: false
-    migration_command: rake db:migrate --trace
-  staging_rails3:
-    <<: *staging

@@ -10,10 +10,10 @@ module Api
       if params[:user_id]
         if params[:role]
           role = Role[params[:role].to_sym]
-          @spaces = @spaces.where(:user_space_associations => { :role => role })
+          @spaces = @spaces.where(user_space_associations: { role: role })
         end
         if course_id = params[:course]
-          @spaces = @spaces.where(:course_id => course_id)
+          @spaces = @spaces.where(course_id: course_id)
         end
       end
 

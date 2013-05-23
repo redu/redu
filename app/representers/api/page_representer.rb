@@ -18,7 +18,7 @@ module Api
     end
 
     def raw
-      ActionView::Base.full_sanitizer.sanitize(self.lectureable.body)
+      PageSanitizer.new(content).sanitize
     end
   end
 end

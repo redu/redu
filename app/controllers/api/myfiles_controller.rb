@@ -22,7 +22,7 @@ module Api
       folder = Folder.find(params[:folder_id])
       authorize! :manage, folder
 
-      options = { :attachment => params[:file][:content] }
+      options = { attachment: params[:file][:content] }
       service = MyfileService.new(options)
       file = service.create do |myfile|
         myfile.folder = folder
@@ -34,7 +34,7 @@ module Api
 
     def destroy
       file = Myfile.find(params[:id])
-      service = MyfileService.new(:model => file)
+      service = MyfileService.new(model: file)
 
       authorize! :manage, file
 

@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-module Api
+module Vis
   module TeacherParticipationRepresenter
     include Roar::Representer::JSON
 

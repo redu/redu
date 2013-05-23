@@ -83,13 +83,17 @@ describe "Canvas API" do
     end
 
   context "when GET /lectures/:id" do
-    subject do
-      FactoryGirl.create(:lecture, :lectureable => FactoryGirl.create(:canvas, :container => space),
-              :subject => subj, :owner => subj.owner)
+    let(:url) { "/api/subjects/#{subj.id}/lectures"  }
+    let(:lecture_params) do
+      { :lecture => \
+        { :name => 'Lorem', :type => 'Canvas', :current_url => "http://foo.bar.com" }
+      }
     end
 
     before do
-      get "/api/lectures/#{subject.id}", base_params
+      create_canvas(url, lecture_params)
+      lecture_id = parse(response.body)["id"]
+      get "/api/lectures/#{lecture_id}", base_params
     end
 
     it_should_behave_like "a lecture"
@@ -98,5 +102,13 @@ describe "Canvas API" do
     it "should have property mimetype" do
       parse(response.body).should have_key 'mimetype'
     end
+
+    it "should have the correct container_type" do
+      parse(response.body)["container_type"].should == "Lecture"
+    end
+  end
+
+  def create_canvas(url, params)
+    post url, params.merge(base_params)
   end
 end

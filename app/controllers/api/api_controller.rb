@@ -2,13 +2,13 @@
 module Api
   class ApiController < ActionController::Base
     include Roar::Rails::ControllerAdditions
-    represents :json, :collection => CollectionRepresenter
+    represents :json, collection: CollectionRepresenter
 
     check_authorization
 
-    rescue_from ActiveRecord::RecordNotFound, :with => :not_found
-    rescue_from ActiveModel::MissingAttributeError, :with => :bad_request
-    rescue_from CanCan::AccessDenied, :with => :not_authorized
+    rescue_from ActiveRecord::RecordNotFound, with: :not_found
+    rescue_from ActiveModel::MissingAttributeError, with: :bad_request
+    rescue_from CanCan::AccessDenied, with: :not_authorized
 
     def routing_error; bad_request end
 
@@ -20,9 +20,9 @@ module Api
 
     def not_authorized
       authorize! :read, :error
-      error = { :message => 'not authorized', :action => params[:action] }
+      error = { message: 'not authorized', action: params[:action] }
       respond_to do |format|
-        format.json { render :json => error, :status => :unauthorized }
+        format.json { render json: error, status: :unauthorized }
       end
     end
 
@@ -30,14 +30,14 @@ module Api
       authorize! :read, :error
 
       respond_to do |format|
-        format.json { render :nothing => true, :status => :not_found }
+        format.json { render nothing: true, status: :not_found }
       end
     end
 
     def bad_request
       authorize! :read, :error
       respond_to do |format|
-        format.json { render :nothing => true, :status => :bad_request }
+        format.json { render nothing: true, status: :bad_request }
       end
     end
 

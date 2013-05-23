@@ -44,7 +44,7 @@ describe Result do
       end
 
       it "should calculate the grade" do
-        subject.choices << 3.times.collect { FactoryGirl.create(:choice, :correct => true )}
+        subject.choices << 3.times.collect { FactoryGirl.create(:choice, correct: true )}
         subject.exercise.stub(:question_weight) { BigDecimal.new("1.0") }
         subject.start!
 
@@ -65,19 +65,19 @@ describe Result do
 
   context "calculations" do
     it "should have a grade even when is not finalized" do
-      subject.choices << 3.times.collect { FactoryGirl.create(:choice, :correct => true )}
+      subject.choices << 3.times.collect { FactoryGirl.create(:choice, correct: true )}
       subject.exercise.stub(:question_weight) { BigDecimal.new("1.0") }
       subject.calculate_grade.should == BigDecimal.new("3.0")
     end
 
     context "when finalized" do
       before do
-        subject.exercise = FactoryGirl.create(:exercise, :maximum_grade => 10)
+        subject.exercise = FactoryGirl.create(:exercise, maximum_grade: 10)
         subject.user = FactoryGirl.create(:user)
 
         subject.start!
 
-        subject.choices << 3.times.collect { FactoryGirl.create(:choice, :correct => true )}
+        subject.choices << 3.times.collect { FactoryGirl.create(:choice, correct: true )}
         subject.exercise.stub(:question_weight) { BigDecimal.new("1.0") }
       end
 
@@ -90,7 +90,7 @@ describe Result do
       it "should calculate correct choices number" do
         subject.finalize!
         # Um pouco de ruído
-        subject.choices << 3.times.collect { FactoryGirl.create(:choice, :correct => false )}
+        subject.choices << 3.times.collect { FactoryGirl.create(:choice, correct: false )}
         subject.choices.correct.count.should == 3
       end
 
@@ -104,7 +104,7 @@ describe Result do
 
   context "duration" do
     before do
-      subject.exercise = FactoryGirl.create(:exercise, :maximum_grade => 10)
+      subject.exercise = FactoryGirl.create(:exercise, maximum_grade: 10)
       subject.user = FactoryGirl.create(:user)
     end
 
@@ -113,8 +113,8 @@ describe Result do
 
       started_at  = Time.zone.now
       finalized_at = started_at + 1.day
-      subject.update_attributes({ :started_at => started_at })
-      subject.update_attributes({ :finalized_at => finalized_at })
+      subject.update_attributes({ started_at: started_at })
+      subject.update_attributes({ finalized_at: finalized_at })
 
       subject.calculate_duration.should == (finalized_at - started_at)
     end
@@ -142,7 +142,7 @@ describe Result do
       subject.update_attribute(:grade, 5)
 
       results = 3.times.collect do |i|
-        result = FactoryGirl.create(:result, :grade => 10)
+        result = FactoryGirl.create(:result, grade: 10)
         result.start! && result.finalize!
       end
 
@@ -153,11 +153,11 @@ describe Result do
   context "when generating report" do
     before do
       subject.start!
-      subject.exercise = FactoryGirl.create(:exercise, :maximum_grade => 10)
+      subject.exercise = FactoryGirl.create(:exercise, maximum_grade: 10)
       20.times { subject.exercise.questions << FactoryGirl.create(:question) }
       10.times.collect do  |i|
         response = (i % 2 == 0) ? true : false
-        subject.choices << FactoryGirl.create(:choice, :correct => response)
+        subject.choices << FactoryGirl.create(:choice, correct: response)
       end
       subject.finalize!
     end

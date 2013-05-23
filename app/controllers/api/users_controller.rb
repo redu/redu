@@ -24,7 +24,7 @@ module Api
 
       if params[:partial]
         respond_with(users) do |format|
-          format.json { render :json => users.to_json(:only => [:id, :first_name, :last_name]) }
+          format.json { render json: users.to_json(only: [:id, :first_name, :last_name]) }
         end
       else
         users = users.includes(:social_networks, :tags)
@@ -49,11 +49,11 @@ module Api
     def filter_by_role(context, users, role)
       case context
       when Space
-        users.where(:user_space_associations => { :role => Role[role.to_sym] })
+        users.where(user_space_associations: { role: Role[role.to_sym] })
       when Environment
-        users.where(:user_environment_associations => { :role => Role[role.to_sym] })
+        users.where(user_environment_associations: { role: Role[role.to_sym] })
       when Course
-        users.where(:course_enrollments => { :role => Role[role.to_sym] })
+        users.where(course_enrollments: { role: Role[role.to_sym] })
       else
         users
       end

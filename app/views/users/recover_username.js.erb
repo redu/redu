@@ -1,8 +1,0 @@
-var $form = $("#recover-username-form");
-<% if @user %>
-  var $confirmation_box = $("<%= escape_javascript render 'shared/confirmation_message', :message => %(Um e-mail com o login esquecido foi enviado para a sua caixa de entrada (<span class="client-email">#{@user.email}</span>)) %>");
-  $form.replaceWith($confirmation_box);
-<% else %>
-  var $newForm = $("<%= escape_javascript render 'recover_username_form', :recover_username => @recover_username %>");
-  $form.replaceWith($newForm);
-<% end %>

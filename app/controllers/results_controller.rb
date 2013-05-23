@@ -1,9 +1,9 @@
 # -*- encoding : utf-8 -*-
 class ResultsController < BaseController
-  before_filter :load_hierarchy, :only => [:index, :edit]
+  before_filter :load_hierarchy, only: [:index, :edit]
 
   load_resource :exercise
-  load_and_authorize_resource :result, :except => :create
+  load_and_authorize_resource :result, except: :create
 
   def create
     authorize! :read, @exercise.lecture
@@ -31,7 +31,7 @@ class ResultsController < BaseController
 
   def edit
     @first_question = @exercise.questions.
-      first(:conditions => { :position => 1})
+      first(conditions: { position: 1})
     @last_question = @first_question.last_item
     @result = @exercise.result_for(current_user, false)
 
@@ -42,8 +42,8 @@ class ResultsController < BaseController
 
   def index
     authorize! :manage, @lecture
-    @results = @exercise.results.finalized.includes(:user, :choices,
-                                                    :exercise => :questions)
+    @results = Result.finalized.where(exercise_id: @exercise).
+      includes(:user, :choices, exercise: :questions)
 
     respond_to do |format|
       format.html { render 'results/admin/index' }

@@ -55,7 +55,7 @@ gem 'vis_client', :git => 'git@github.com:redu/vis_client.git',
 gem 'chronic' # Necessário ao whenever
 gem 'whenever', :require => false
 gem 'zencoder'
-gem 'untied-publisher', '~> 0.0.7.pre1'
+gem 'untied-publisher', '~> 0.0.7.pre2'
 gem 'yajl-ruby'
 gem 'simple_acts_as_list'
 gem 'ey_config'
@@ -96,7 +96,7 @@ end
 
 group :test do
   gem 'shoulda-matchers', "~> 1"
-  gem 'webmock', :git => 'git://github.com/fltiago/webmock'
+  gem 'webmock'
   gem 'ruby-prof'
 end
 
@@ -110,5 +110,5 @@ group :development do
 end
 
 group :production do
-  gem 'newrelic_rpm', '3.0.1'
+  gem 'newrelic_rpm'
 end

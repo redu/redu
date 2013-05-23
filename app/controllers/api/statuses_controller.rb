@@ -2,9 +2,10 @@
 module Api
   class StatusesController < Api::ApiController
     ALLOWED_LOGEABLE_TYPE = %w(Course Subject Lecture Space User CourseEnrollment)
+    ALLOWED_STATUS_TYPE = %w(Log Help Activity)
 
     def show
-      status = Status.includes(:user => :social_networks).find(params[:id])
+      status = Status.includes(user: :social_networks).find(params[:id])
       authorize! :read, status
 
       respond_with(:api, status)
@@ -22,7 +23,7 @@ module Api
       # Transformando numa instancia do filho do sti
       status = status.becomes(status.type.constantize)
       if status.save
-        respond_with(:api, status, :location => api_status_url(status))
+        respond_with(:api, status, location: api_status_url(status))
       else
         respond_with(:api, status)
       end
@@ -70,7 +71,7 @@ module Api
 
     def respond_with_statuses(statuses)
       respond_with(:api, statuses) do |format|
-        format.json { render :json => statuses.extend(StatusesRepresenter) }
+        format.json { render json: statuses.extend(StatusesRepresenter) }
       end
     end
 
@@ -86,10 +87,10 @@ module Api
 
     def statuses(context)
       statuses = if context.is_a? User
-        Status.where(:user_id => context)
+        Status.where(user_id: context)
       else
-        Status.where(:statusable_id => context,
-                     :statusable_type => context.class.to_s)
+        Status.where(statusable_id: context,
+                     statusable_type: context.class.to_s)
       end
       filter_and_includes(statuses)
     end
@@ -104,20 +105,16 @@ module Api
                    end
       statuses = statuses.
         where("statuses.logeable_type IN (?) OR statuses.logeable_type IS NULL", log_filter)
-      statuses = statuses.includes(:user => :social_networks)
+      statuses = statuses.includes(user: :social_networks)
     end
 
     def filter_by_type(statuses, params)
-      case params.fetch(:type, "").downcase
-      when 'help'
-        statuses.where(:type => 'Help')
-      when 'log'
-        statuses.where(:type => 'Log')
-      when 'activity'
-        statuses.where(:type => 'Activity')
-      else
-        statuses.where(:type => ['Help', 'Activity', 'Log'])
-      end
+      types = params[:type] || params[:types] || []
+      types = types.respond_to?(:map) ? types : [types]
+      types = types.map(&:classify) & ALLOWED_STATUS_TYPE
+
+      return statuses if types.empty?
+      statuses.where(type: types)
     end
   end
 end

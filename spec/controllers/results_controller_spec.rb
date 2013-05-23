@@ -8,12 +8,12 @@ describe ResultsController do
     @course = @space.course
     @owner = @space.owner
 
-    @subject = FactoryGirl.create(:subject, :owner => @space.owner,
-                       :space => @space, :finalized => true,
-                       :visible => true)
+    @subject = FactoryGirl.create(:subject, owner: @space.owner,
+                       space: @space, finalized: true,
+                       visible: true)
     @exercise = FactoryGirl.create(:complete_exercise)
-    @lecture = FactoryGirl.create(:lecture,:subject => @subject, :lectureable => @exercise,
-                       :owner => @space.owner)
+    @lecture = FactoryGirl.create(:lecture,subject: @subject, lectureable: @exercise,
+                       owner: @space.owner)
 
     @user = FactoryGirl.create(:user)
     @space.course.join(@user)
@@ -22,8 +22,8 @@ describe ResultsController do
 
   context "POST create" do
     before do
-      @params = { :locale => 'pt-BR', :format => :html }
-      @params.merge!( :exercise_id => @exercise.id )
+      @params = { locale: 'pt-BR', format: :html }
+      @params.merge!( exercise_id: @exercise.id )
     end
 
     it "creates the Result when does not exists" do
@@ -48,8 +48,8 @@ describe ResultsController do
   context "POST update" do
     before do
       @result = @exercise.start_for(@user)
-      @params = { :locale => 'pt-BR', :format => :html }
-      @params.merge!({:exercise_id => @exercise.id, :id => @result.id})
+      @params = { locale: 'pt-BR', format: :html }
+      @params.merge!({exercise_id: @exercise.id, id: @result.id})
     end
 
     it "should call finalize for" do
@@ -73,14 +73,14 @@ describe ResultsController do
     before do
       @course.change_role(@user, Role[:teacher])
       @results = 5.times.collect {
-        FactoryGirl.create(:result, :exercise => @exercise, :state => 'finalized',
-                :grade => 10, :started_at => Time.zone.now,
-                :finalized_at => Time.zone.now.advance(:minutes => 30),
-                :duration => 30 * 60 * 60)
+        FactoryGirl.create(:result, exercise: @exercise, state: 'finalized',
+                grade: 10, started_at: Time.zone.now,
+                finalized_at: Time.zone.now.advance(minutes: 30),
+                duration: 30 * 60 * 60)
       }
 
-      @params = { :locale => 'pt-BR', :format => :html }
-      @params.merge!({ :exercise_id => @exercise.id })
+      @params = { locale: 'pt-BR', format: :html }
+      @params.merge!({ exercise_id: @exercise.id })
     end
 
     it "should load the resulst" do
@@ -97,8 +97,8 @@ describe ResultsController do
   context "GET edit" do
     before do
       @result = @exercise.start_for(@user)
-      @params = { :locale => 'pt-BR', :format => :html}
-      @params.merge!({ :exercise_id => @exercise.id, :id => @result.id })
+      @params = { locale: 'pt-BR', format: :html}
+      @params.merge!({ exercise_id: @exercise.id, id: @result.id })
     end
 
     it "should load exercise" do

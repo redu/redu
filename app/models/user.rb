@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
 
   # Valida a resposta ao captcha
   attr_writer :enable_humanizer
-  require_human_on :create, :if => :enable_humanizer
+  require_human_on :create, if: :enable_humanizer
 
   require 'community_engine_sha1_crypto_method'
   require 'paperclip'
@@ -22,76 +22,77 @@ class User < ActiveRecord::Base
   before_create :make_activation_code
   after_create  :update_last_login
   before_validation :strip_whitespace
-  after_commit :on => :create do
+  after_commit on: :create do
     environment = Environment.find_by_path('ava-redu')
     environment.courses.each { |c| c.join(self) } if environment
-    UserNotifier.delay(:queue => 'email', :priority => 1).user_signedup(self.id)
+    UserNotifier.delay(queue: 'email', priority: 1).user_signedup(self.id)
   end
 
   # ASSOCIATIONS
   has_many :chat_messages
+  has_many :chats, dependent: :destroy
   # Space
-  has_many :spaces, :through => :user_space_associations,
-    :conditions => ["spaces.destroy_soon = ?", false]
-  has_many :user_space_associations, :dependent => :destroy
-  has_many :spaces_owned, :class_name => "Space" , :foreign_key => "user_id"
+  has_many :spaces, through: :user_space_associations,
+    conditions: ["spaces.destroy_soon = ?", false]
+  has_many :user_space_associations, dependent: :destroy
+  has_many :spaces_owned, class_name: "Space" , foreign_key: "user_id"
   # Environment
-  has_many :user_environment_associations, :dependent => :destroy
-  has_many :environments, :through => :user_environment_associations,
-    :conditions => ["environments.destroy_soon = ?", false]
-  has_many :user_course_associations, :dependent => :destroy
-  has_many :course_enrollments, :dependent => :destroy
-  has_many :environments_owned, :class_name => "Environment",
-    :foreign_key => "user_id"
+  has_many :user_environment_associations, dependent: :destroy
+  has_many :environments, through: :user_environment_associations,
+    conditions: ["environments.destroy_soon = ?", false]
+  has_many :user_course_associations, dependent: :destroy
+  has_many :course_enrollments, dependent: :destroy
+  has_many :environments_owned, class_name: "Environment",
+    foreign_key: "user_id"
   # Course
-  has_many :courses, :through => :user_course_associations,
-    :conditions => ["courses.destroy_soon = ? AND
+  has_many :courses, through: :user_course_associations,
+    conditions: ["courses.destroy_soon = ? AND
                     course_enrollments.state = ?", false, 'approved']
   # Authentication
-  has_many :authentications, :dependent => :destroy
-  has_many :chats, :dependent => :destroy
+  has_many :authentications, dependent: :destroy
+  has_many :chats, dependent: :destroy
 
   #COURSES
-  has_many :lectures, :foreign_key => "user_id",
-    :conditions => {:is_clone => false}
-  has_many :courses_owned, :class_name => "Course",
-    :foreign_key => "user_id"
-  has_many :favorites, :order => "created_at desc", :dependent => :destroy
-  classy_enum_attr :role, :default => 'member'
-  has_many :enrollments, :dependent => :destroy
-  has_many :asset_reports, :through => :enrollments
+  has_many :lectures, foreign_key: "user_id",
+    conditions: {is_clone: false}
+  has_many :courses_owned, class_name: "Course",
+    foreign_key: "user_id"
+  has_many :favorites, order: "created_at desc", dependent: :destroy
+  classy_enum_attr :role, default: 'member'
+  has_many :enrollments, dependent: :destroy
+  has_many :asset_reports, through: :enrollments
 
   #subject
-  has_many :subjects, :order => 'name ASC',
-    :conditions => { :finalized => true }
+  has_many :subjects, order: 'name ASC',
+    conditions: { finalized: true }
 
   has_many :plans
-  has_many :course_invitations, :class_name => "UserCourseAssociation",
-    :conditions => ["state LIKE 'invited'"]
-  has_many :experiences, :dependent => :destroy
-  has_many :educations, :dependent => :destroy
-  has_one :settings, :class_name => "UserSetting", :dependent => :destroy
-  has_many :partners, :through => :partner_user_associations
-  has_many :partner_user_associations, :dependent => :destroy
+  has_many :course_invitations, class_name: "UserCourseAssociation",
+    conditions: ["state LIKE 'invited'"]
+  has_many :experiences, dependent: :destroy
+  has_many :educations, dependent: :destroy
+  has_one :settings, class_name: "UserSetting", dependent: :destroy
+  has_many :partners, through: :partner_user_associations
+  has_many :partner_user_associations, dependent: :destroy
 
-  has_many :social_networks, :dependent => :destroy
+  has_many :social_networks, dependent: :destroy
 
-  has_many :logs, :as => :logeable, :order => "created_at DESC",
-    :dependent => :destroy
-  has_many :statuses, :as => :statusable, :order => "updated_at DESC",
-    :dependent => :destroy
-  has_many :overview, :through => :status_user_associations, :source => :status,
-    :include => [:user, :answers], :order => "updated_at DESC"
-  has_many :status_user_associations, :dependent => :destroy
+  has_many :logs, as: :logeable, order: "created_at DESC",
+    dependent: :destroy
+  has_many :statuses, as: :statusable, order: "updated_at DESC",
+    dependent: :destroy
+  has_many :overview, through: :status_user_associations, source: :status,
+    include: [:user, :answers], order: "updated_at DESC"
+  has_many :status_user_associations, dependent: :destroy
 
   has_many :client_applications
-  has_many :tokens, :class_name => "OauthToken", :order => "authorized_at desc", :include => [:client_application]
-  has_many :results, :dependent => :destroy
+  has_many :tokens, class_name: "OauthToken", order: "authorized_at desc", include: [:client_application]
+  has_many :results, dependent: :destroy
 
   # Named scopes
   scope :recent, order('users.created_at DESC')
   scope :active, where("users.activated_at IS NOT NULL")
-  scope :with_ids, lambda { |ids| where(:id => ids) }
+  scope :with_ids, lambda { |ids| where(id: ids) }
   scope :without_ids, lambda {|ids|
     where("users.id NOT IN (?)", ids)
   }
@@ -100,7 +101,7 @@ class User < ActiveRecord::Base
       "LOWER(first_name) LIKE :keyword OR " + \
       "LOWER(last_name) LIKE :keyword OR " +\
       "CONCAT(TRIM(LOWER(first_name)), ' ', TRIM(LOWER(last_name))) LIKE :keyword OR " +\
-      "LOWER(email) LIKE :keyword", { :keyword => "%#{keyword.to_s.downcase}%" }).
+      "LOWER(email) LIKE :keyword", { keyword: "%#{keyword.to_s.downcase}%" }).
       limit(10).select("users.id, users.first_name, users.last_name, users.login, users.email, users.avatar_file_name, users.avatar_updated_at")
   }
   scope :popular, lambda { |quantity|
@@ -131,9 +132,9 @@ class User < ActiveRecord::Base
 
   accepts_nested_attributes_for :settings
   accepts_nested_attributes_for :social_networks,
-    :reject_if => proc { |attributes| attributes['url'].blank? or
+    reject_if: proc { |attributes| attributes['url'].blank? or
       attributes['name'].blank? },
-    :allow_destroy => true
+    allow_destroy: true
 
   # PLUGINS
   acts_as_authentic do |c|
@@ -153,32 +154,32 @@ class User < ActiveRecord::Base
 
   # VALIDATIONS
   validates_presence_of :first_name, :last_name
-  validates :birthday, :allow_nil => true,
-            :date => { :before => Proc.new { 13.years.ago } }
+  validates :birthday, allow_nil: true,
+            date: { before: Proc.new { 13.years.ago } }
   validates_acceptance_of :tos
   validates_format_of :mobile,
-                      :with => /^\+\d{2}\s\(\d{2}\)\s\d{4}-\d{4}$/,
-                      :allow_blank => true
-  validates_format_of :first_name, :with => /^\S(\S|\s)*\S$/
-  validates_format_of :last_name, :with => /^\S(\S|\s)*\S$/
-  validates_length_of :first_name, :maximum => 25
-  validates_length_of :last_name, :maximum => 25
+                      with: /^\+\d{2}\s\(\d{2}\)\s\d{4}-\d{4}$/,
+                      allow_blank: true
+  validates_format_of :first_name, with: /^\S(\S|\s)*\S$/
+  validates_format_of :last_name, with: /^\S(\S|\s)*\S$/
+  validates_length_of :first_name, maximum: 25
+  validates_length_of :last_name, maximum: 25
   validates :password,
-    :length => { :minimum => 6, :maximum => 20 },
-    :confirmation => true,
-    :if => :password_required?
+    length: { minimum: 6, maximum: 20 },
+    confirmation: true,
+    if: :password_required?
   validates :login,
-    :exclusion => { :in => Redu::Application.config.extras["reserved_logins"] },
-    :format => { :with => /^[A-Za-z0-9_-]*[A-Za-z]+[A-Za-z0-9_-]*$/ },
-    :length => { :minimum => MIN_LOGIN_LENGTH, :maximum => MAX_LOGIN_LENGTH }
-  validates_uniqueness_of :login, :case_sensitive => false
+    exclusion: { in: Redu::Application.config.extras["reserved_logins"] },
+    format: { with: /^[A-Za-z0-9_-]*[A-Za-z]+[A-Za-z0-9_-]*$/ },
+    length: { minimum: MIN_LOGIN_LENGTH, maximum: MAX_LOGIN_LENGTH }
+  validates_uniqueness_of :login, case_sensitive: false
   validates :email,
-    :format => { :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/ },
-    :length => { :minimum => 3, :maximum => 100 },
-    :confirmation => true
-  validates_uniqueness_of :email, :case_sensitive => false
+    format: { with: /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/ },
+    length: { minimum: 3, maximum: 100 },
+    confirmation: true
+  validates_uniqueness_of :email, case_sensitive: false
 
-  delegate :can?, :cannot?, :to => :ability
+  delegate :can?, :cannot?, to: :ability
 
   class << self
     # override activerecord's find to allow us to find by name or id transparently
@@ -255,7 +256,7 @@ class User < ActiveRecord::Base
         # Caso em que billable foi destruído
         self.can_manage?(
           # Não levanta RecordNotFound
-          Partner.where( :id => entity.billable_audit.
+          Partner.where( id: entity.billable_audit.
                         try(:[], :partner_environment_association).
                         try(:[],"partner_id")).first
       )
@@ -359,12 +360,12 @@ class User < ActiveRecord::Base
   def deactivate
     return if admin? #don't allow admin deactivation
     @activated = false
-    update_attributes(:activated_at => nil, :activation_code => make_activation_code)
+    update_attributes(activated_at: nil, activation_code: make_activation_code)
   end
 
   def activate
     @activated = true
-    update_attributes(:activated_at => Time.now.utc, :activation_code => nil)
+    update_attributes(activated_at: Time.now.utc, activation_code: nil)
   end
 
   # Indica se o usuário ainda pode utilizar o Redu sem ter ativado a conta
@@ -421,7 +422,7 @@ class User < ActiveRecord::Base
   # Cria associação do agrupamento de amizade do usuário para seus amigos
   # e para o pŕoprio usuário (home_activity)
   def notify(compound_log)
-    self.status_user_associations.create(:status => compound_log)
+    self.status_user_associations.create(status: compound_log)
     Status.associate_with(compound_log, self.friends.select('users.id'))
   end
 
@@ -432,19 +433,19 @@ class User < ActiveRecord::Base
     association = case entity.class.to_s
     when 'Space'
       self.user_space_associations.
-        find(:first, :conditions => { :space_id => entity.id })
+        find(:first, conditions: { space_id: entity.id })
     when 'Course'
       self.user_course_associations.
-        find(:first, :conditions => { :course_id => entity.id })
+        find(:first, conditions: { course_id: entity.id })
     when 'Environment'
       self.user_environment_associations.
-        find(:first, :conditions => { :environment_id => entity.id })
+        find(:first, conditions: { environment_id: entity.id })
     when 'Subject'
       self.enrollments.
-        find(:first, :conditions => { :subject_id => entity.id })
+        find(:first, conditions: { subject_id: entity.id })
     when 'Lecture'
       self.enrollments.
-        find(:first, :conditions => { :subject_id => entity.subject.id })
+        find(:first, conditions: { subject_id: entity.subject.id })
     end
   end
 
@@ -484,22 +485,22 @@ class User < ActiveRecord::Base
   end
 
   def home_activity(page = 1)
-    associateds = [:status_resources, { :answers => [:user, :status_resources] },
+    associateds = [:status_resources, { answers: [:user, :status_resources] },
                    :user, :logeable, :statusable]
-    overview.where(:compound => false).includes(associateds).
+    overview.where(compound: false).includes(associateds).
       page(page).per(Redu::Application.config.items_per_page)
   end
 
   def add_favorite(favoritable_type, favoritable_id)
-    Favorite.create(:favoritable_type => favoritable_type.to_s,
-                    :favoritable_id => favoritable_id,
-                    :user_id => self.id)
+    Favorite.create(favoritable_type: favoritable_type.to_s,
+                    favoritable_id: favoritable_id,
+                    user_id: self.id)
   end
 
   def rm_favorite(favoritable_type, favoritable_id)
-    fav = Favorite.where(:favoritable_type => favoritable_type.to_s,
-                           :favoritable_id => favoritable_id,
-                           :user_id => self.id).first
+    fav = Favorite.where(favoritable_type: favoritable_type.to_s,
+                           favoritable_id: favoritable_id,
+                           user_id: self.id).first
     fav.destroy
   end
 
@@ -509,7 +510,7 @@ class User < ActiveRecord::Base
   end
 
   def profile_for(subject)
-    self.enrollments.where(:subject_id => subject)
+    self.enrollments.where(subject_id: subject)
   end
 
   def completeness
@@ -536,7 +537,7 @@ class User < ActiveRecord::Base
   end
 
   def create_settings!
-    self.settings = UserSetting.create(:view_mural => Privacy[:friends])
+    self.settings = UserSetting.create(view_mural: Privacy[:friends])
   end
 
   def presence_channel

@@ -12,8 +12,8 @@ describe Api::CoursesController do
 
   context "the document returned" do
     before do
-      get "/api/courses/#{subject.id}", :oauth_token => @token,
-        :format => 'json'
+      get "/api/courses/#{subject.id}", oauth_token: @token,
+        format: 'json'
     end
 
     it "should have the correct keys" do
@@ -33,14 +33,14 @@ describe Api::CoursesController do
 
     it "should return valid relationships" do
       parse(response.body)['links'].each do |rel|
-        get rel['href'], :format => 'json', :oauth_token => @token
+        get rel['href'], format: 'json', oauth_token: @token
         response.code.should == "200"
       end
     end
 
     it "shold be return code 200 passing both ID and path" do
-      get "/api/courses/#{subject.path}", :oauth_token => @token,
-        :format => 'json'
+      get "/api/courses/#{subject.path}", oauth_token: @token,
+        format: 'json'
 
       response.status.should == 200
     end
@@ -48,14 +48,14 @@ describe Api::CoursesController do
 
   context "get /courses/:id" do
     it "should return status 200" do
-      get "/api/courses/#{subject.id}", :oauth_token => @token,
-        :format => 'json'
+      get "/api/courses/#{subject.id}", oauth_token: @token,
+        format: 'json'
       response.code.should == "200"
     end
 
     it "should return 404 when doesnt exists" do
-      get '/api/courses/1212121',  :oauth_token => @token,
-        :format => 'json'
+      get '/api/courses/1212121',  oauth_token: @token,
+        format: 'json'
       response.code.should == "404"
     end
   end
@@ -63,13 +63,13 @@ describe Api::CoursesController do
   context "get /environment/:id/courses" do
     it "should return code 200" do
       get "/api/environments/#{subject.environment.id}/courses",
-        :oauth_token => @token, :format => 'json'
+        oauth_token: @token, format: 'json'
       response.code.should == "200"
     end
 
     it "should represent the courses" do
       get "/api/environments/#{subject.environment.id}/courses",
-        :oauth_token => @token, :format => 'json'
+        oauth_token: @token, format: 'json'
 
       parse(response.body).should be_kind_of Array
       parse(response.body).first['name'].should == subject.name
@@ -78,41 +78,41 @@ describe Api::CoursesController do
 
   context "post /environment/:id/courses" do
     it "should return code 201 (created)" do
-      course = { :name => 'My new course', :path => 'my_new_course' }
+      course = { name: 'My new course', path: 'my_new_course' }
       post "/api/environments/#{subject.environment.id}/courses",
-        :course => course, :oauth_token => @token, :format => 'json'
+        course: course, oauth_token: @token, format: 'json'
 
       response.code.should == '201'
     end
 
     it "should return the entity" do
-      course = { :name => 'My new course', :path => 'my_new_course' }
+      course = { name: 'My new course', path: 'my_new_course' }
       post "/api/environments/#{subject.environment.id}/courses",
-        :course => course, :oauth_token => @token, :format => 'json'
+        course: course, oauth_token: @token, format: 'json'
 
       parse(response.body).should have_key('name')
     end
 
     it "should return code 422 (unproccessable entity) when not valid" do
-      course = { :path => 'my_new_course' }
+      course = { path: 'my_new_course' }
       post "/api/environments/#{subject.environment.id}/courses",
-        :course => course, :oauth_token => @token, :format => 'json'
+        course: course, oauth_token: @token, format: 'json'
 
       response.code.should == "422"
     end
 
     it "should return the error explanation when there are errors" do
-      course = { :path => 'my_new_course' }
+      course = { path: 'my_new_course' }
       post "/api/environments/#{subject.environment.id}/courses",
-        :course => course, :oauth_token => @token, :format => 'json'
+        course: course, oauth_token: @token, format: 'json'
 
       parse(response.body).should have_key 'name'
     end
 
     it "should not create the course without an environment" do
-      course = { :name => 'My new course', :path => 'my_new_course' }
+      course = { name: 'My new course', path: 'my_new_course' }
       post "/api/environments/1212121/courses",
-        :course => course, :oauth_token => @token, :format => 'json'
+        course: course, oauth_token: @token, format: 'json'
 
       response.code.should == '404'
     end
@@ -120,25 +120,25 @@ describe Api::CoursesController do
 
   context "put /courses/:id" do
     it "should return code 204" do
-      course = { :name => 'new_course_name' }
-      put "/api/courses/#{subject.id}", :course => course,
-        :oauth_token => @token, :format => 'json'
+      course = { name: 'new_course_name' }
+      put "/api/courses/#{subject.id}", course: course,
+        oauth_token: @token, format: 'json'
 
       response.code.should == "204"
     end
 
     it "should return code 422 (unproccessable entity) when not valid" do
-      course = { :path => 'my_new_cou//rse' } # path inválido
-      put "/api/courses/#{subject.id}", :course => course,
-        :oauth_token => @token, :format => 'json'
+      course = { path: 'my_new_cou//rse' } # path inválido
+      put "/api/courses/#{subject.id}", course: course,
+        oauth_token: @token, format: 'json'
 
       response.code.should == "422"
     end
 
     it "should return the error explanation" do
-      course = { :path => 'my_new_cou//rse' } # path inválido
-      put "/api/courses/#{subject.id}", :course => course,
-        :oauth_token => @token, :format => 'json'
+      course = { path: 'my_new_cou//rse' } # path inválido
+      put "/api/courses/#{subject.id}", course: course,
+        oauth_token: @token, format: 'json'
 
       parse(response.body).should have_key 'path'
     end
@@ -147,15 +147,15 @@ describe Api::CoursesController do
 
   context "delete /courses/:id" do
     it "should return status 204" do
-      delete "/api/courses/#{subject.id}", :oauth_token => @token,
-        :format => 'json'
+      delete "/api/courses/#{subject.id}", oauth_token: @token,
+        format: 'json'
 
       response.status.should == 204
     end
 
     it "should return 404 when doesnt exist" do
-      delete "/api/courses/09202", :oauth_token => @token,
-        :format => 'json'
+      delete "/api/courses/09202", oauth_token: @token,
+        format: 'json'
 
       response.status.should == 404
     end

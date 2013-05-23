@@ -5,7 +5,7 @@ describe Api::FriendshipsController do
   let(:user) { FactoryGirl.create(:user) }
   let(:friend) { FactoryGirl.create(:user) }
   let(:token) { _, _, token = generate_token(user); token }
-  let(:params) {{ :oauth_token => token, :format => 'json' }}
+  let(:params) {{ oauth_token: token, format: 'json' }}
 
   context "GET /connections/:id" do
     before do
@@ -91,7 +91,7 @@ describe Api::FriendshipsController do
       end
       let(:params) do
         ["/api/users/#{user.id}/connections",
-         { :oauth_token => token, :format => 'json' }]
+         { oauth_token: token, format: 'json' }]
       end
     end
   end
@@ -99,7 +99,7 @@ describe Api::FriendshipsController do
   context "POST /users/:user_id/connections" do
     context "when created" do
       before do
-        params[:connection] = { :contact_id => friend.id }
+        params[:connection] = { contact_id: friend.id }
         post "/api/users/#{user.id}/connections", params
       end
 
@@ -114,7 +114,7 @@ describe Api::FriendshipsController do
 
     it "should not create when not valid" do
       user.be_friends_with(friend)
-      params[:connection] = { :contact_id => friend.id }
+      params[:connection] = { contact_id: friend.id }
       post "/api/users/#{user.id}/connections", params
 
       response.code.should == "303"

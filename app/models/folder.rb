@@ -49,24 +49,9 @@ class Folder < ActiveRecord::Base
     return files
   end
 
-  # Use this method to determine if a user is permitted to create in the given folder
-  def can_be_created_by(user, space)
-    user.can_manage? space
-  end
-
   # Use this method to determine if a user is permitted to read in the given folder
   def can_be_read_by(user)
     true
-  end
-
-  # Use this method to determine if a user is permitted to update in the given folder
-  def can_be_updated_by(user, space)
-    user.can_manage? space
-  end
-
-  # Use this method to determine if a user is permitted to delete in the given folder
-  def can_be_deleted_by(user, space)
-    user.can_manage? space
   end
 
   def is_root

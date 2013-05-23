@@ -13,7 +13,7 @@ class LectureableService
   #
   #   Lecture.new(@attrs)
   #
-  def build(&block)
+  def build(lecture=nil, &block)
     raise NotImplementedError.new("You need to override build method")
   end
 
@@ -32,7 +32,7 @@ class LectureableService
   def process!; end
 
   def create(lecture, &block)
-    @lectureable = build(&block)
+    @lectureable = build(lecture, &block)
     lecture.lectureable = @lectureable
 
     if @lectureable.valid?
