@@ -7,15 +7,15 @@
     log: o log de amizade.
 %>
 
-<%= content_tag :li, :id => "status-#{log.id}" do %>
+<%= content_tag :li, id: "status-#{log.id}" do %>
   <hr class="list-separator">
   <div class="status without-context">
     <div class="subject">
-      <%= render "statuses/user_detail", :log => log %>
+      <%= render "statuses/user_detail", log: log %>
     </div>
     <div class="subject-content">
-      <%= render "statuses/user_image", :user => log.logeable.friend %>
-      <%= render "statuses/user_name", :user => log.logeable.friend %>
+      <%= render "statuses/user_image", user: log.logeable.friend %>
+      <%= render "statuses/user_name", user: log.logeable.friend %>
     </div>
   </div>
 <% end %>

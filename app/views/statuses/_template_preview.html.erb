@@ -9,8 +9,8 @@
       {{ if (obj.first_thumb) { }}
       <div class="preview">
         <a href="#" target="_blank" rel="nofollow" class="title">
-          <%= image_tag "overlay-85.png", :id => "thumbnail-0",
-            :class => "preview-link", :width => 100 %>
+          <%= image_tag "overlay-85.png", id: "thumbnail-0",
+            class: "preview-link", width: 100 %>
         </a>
         <ul class="buttons">
           {{ if (obj.thumbnail_url instanceof Array) { }}

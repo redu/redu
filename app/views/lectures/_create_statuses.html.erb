@@ -15,16 +15,16 @@
       <li>
         <button class="button-primary button-big reply-status button-help">Pedir ajuda</button>
       </li>
-      <%= render "statuses/create_status", :status => status,
-        :statusable => lecture %>
-      <%= render "statuses/create_status", :status => status,
-        :statusable => lecture,
-        :extra_classes => "tab-right",
-        :status_type => "Help" %>
+      <%= render "statuses/create_status", status: status,
+        statusable: lecture %>
+      <%= render "statuses/create_status", status: status,
+        statusable: lecture,
+        extra_classes: "tab-right",
+        status_type: "Help" %>
     </ul>
   </div>
 </div>
 <ol id="statuses" class="status-list">
-  <%= render :partial => "statuses/item", :collection => statuses %>
+  <%= render partial: "statuses/item", collection: statuses %>
 </ol>
-<%= paginate statuses, :theme => "new_endless" %>
+<%= paginate statuses, theme: "new_endless" %>

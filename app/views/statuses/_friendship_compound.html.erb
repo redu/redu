@@ -5,18 +5,18 @@
     compound: o compound log de amizades.
 %>
 
-<%= content_tag :li, :id => "status-#{compound.id}" do %>
+<%= content_tag :li, id: "status-#{compound.id}" do %>
   <hr class="list-separator">
   <div class="status without-context">
     <div class="context">
-      <%= render "statuses/user_image", :user => compound.user %>
-      <%= render "statuses/user_name", :user => compound.user %>
+      <%= render "statuses/user_image", user: compound.user %>
+      <%= render "statuses/user_name", user: compound.user %>
     </div>
     <div class="subject">
       <div class="subject-info">
         <%= content_tag :span,
           "adicionou #{compound.logs.count} novas pessoas à sua rede de contatos:",
-          :class => "action" %>
+          class: "action" %>
         <% if compound.logs.count > 12 %>
           <span class="link-fake see-all link-secondary">+ Ver todos</span>
         <% end %>
@@ -24,9 +24,9 @@
     </div>
     <div class="subject-content">
       <ul class="grouping-elements">
-        <%= render :partial => "statuses/compound_item",
-          :collection => compound.logs.collect {|log| log.logeable.friend },
-          :as => :compound_user %>
+        <%= render partial: "statuses/compound_item",
+          collection: compound.logs.collect {|log| log.logeable.friend },
+          as: :compound_user %>
       </ul>
     </div>
   </div>

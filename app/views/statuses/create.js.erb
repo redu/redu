@@ -1,4 +1,4 @@
-$newStatus = $('<%= escape_javascript render "statuses/item", :item => @status, :statusable => @status.statusable %>')
+$newStatus = $('<%= escape_javascript render "statuses/item", item: @status, statusable: @status.statusable %>')
   .hide()
   .prependTo($("#statuses"))
   .slideDown(150, "swing")

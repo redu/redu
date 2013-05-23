@@ -5,5 +5,5 @@
     timestamp: detalhe da data e horário.
 %>
 
-<%= content_tag :time, l(timestamp, :format => :time_ago),
-  :class => "date legend", :datetime => timestamp.to_time.iso8601 %>
+<%= content_tag :time, l(timestamp, format: :time_ago),
+  class: "date legend", datetime: timestamp.to_time.iso8601 %>

@@ -5,11 +5,11 @@
     log: o log de usuário.
 %>
 
-<%= content_tag :li, :id => "status-#{log.id}" do %>
+<%= content_tag :li, id: "status-#{log.id}" do %>
   <hr class="list-separator">
   <div class="status without-context">
     <div class="subject">
-      <%= render "statuses/user_detail", :log => log %>
+      <%= render "statuses/user_detail", log: log %>
     </div>
   </div>
 <% end %>

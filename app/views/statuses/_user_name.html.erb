@@ -8,4 +8,4 @@
 
 <% classes = nil unless local_assigns.has_key? :classes %>
 
-<%= link_to user.display_name, user_path(user), :class => "link-name #{classes}" %>
+<%= link_to user.display_name, user_path(user), class: "link-name #{classes}" %>

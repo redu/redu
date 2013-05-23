@@ -5,9 +5,9 @@
     log: o log do usuário.
 %>
 
-<%= render "statuses/user_image", :user => log.user %>
+<%= render "statuses/user_image", user: log.user %>
 <div class="subject-info">
-  <%= render "statuses/user_name", :user => log.user %>
-  <%= content_tag :span, raw(auto_link(log.action_text)), :class => "action" %>
-  <%= render "statuses/timeago", :timestamp => log.created_at %>
+  <%= render "statuses/user_name", user: log.user %>
+  <%= content_tag :span, raw(auto_link(log.action_text)), class: "action" %>
+  <%= render "statuses/timeago", timestamp: log.created_at %>
 </div>

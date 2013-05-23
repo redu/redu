@@ -5,24 +5,24 @@
     compound: o compound log de ingresso a curso.
 %>
 
-<%= content_tag :li, :id => "status-#{compound.id}" do %>
+<%= content_tag :li, id: "status-#{compound.id}" do %>
   <hr class="list-separator">
   <div class="status log">
     <div class="context">
       <% if compound.statusable.environment.avatar_file_name %>
         <%= link_to environment_path(compound.statusable.environment),
-          :title => compound.statusable.environment.name do %>
+          title: compound.statusable.environment.name do %>
           <%= image_tag compound.statusable.environment.avatar.url(:thumb_32),
-            :size => "32x32",
-            :class => "author-thumbnail",
-            :alt => compound.statusable.environment.name %>
+            size: "32x32",
+            class: "author-thumbnail",
+            alt: compound.statusable.environment.name %>
         <% end %>
       <% else %>
         <%= link_to compound.statusable.name,
           environment_course_path(compound.statusable.environment, compound.statusable),
-          :class => "text-replacement context-icon icon-course-gray_32_34-before" %>
+          class: "text-replacement context-icon icon-course-gray_32_34-before" %>
       <% end %>
-      <%= content_tag :span, compound.statusable.environment.name, :class => "legend" %>
+      <%= content_tag :span, compound.statusable.environment.name, class: "legend" %>
       <%= link_to compound.statusable.name,
         environment_course_path(compound.statusable.environment, compound.statusable) %>
     </div>
@@ -30,7 +30,7 @@
       <div class="subject-info">
         <%= content_tag :span,
           "O curso possui #{compound.logs.count} novos Membros:",
-          :class => "icon-grouping-gray_16_18-before action" %>
+          class: "icon-grouping-gray_16_18-before action" %>
         <% if compound.logs.count > 12 %>
           <span class="link-fake see-all link-secondary">+ Ver todos</span>
         <% end %>
@@ -38,9 +38,9 @@
     </div>
     <div class="subject-content">
       <ul class="grouping-elements">
-        <%= render :partial => "statuses/compound_item",
-          :collection => compound.logs.collect {|log| log.logeable.user },
-          :as => :compound_user %>
+        <%= render partial: "statuses/compound_item",
+          collection: compound.logs.collect {|log| log.logeable.user },
+          as: :compound_user %>
       </ul>
     </div>
   </div>

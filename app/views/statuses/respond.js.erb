@@ -5,12 +5,12 @@
   <%# Se a lista de respostas não existir. %>
   if ($responses.length === 0) {
     <%# Adiciona a lista com a resposta. %>
-    $responses = $("<%= escape_javascript render 'statuses/responses', :status => @answer.in_response_to %>");
+    $responses = $("<%= escape_javascript render 'statuses/responses', status: @answer.in_response_to %>");
     $responses.insertAfter($status.find(".status-content"));
 
   <%# Adiciona a resposta no final. %>
   } else {
-    var $response = $("<%= escape_javascript render 'statuses/response', :response => @answer %>");
+    var $response = $("<%= escape_javascript render 'statuses/response', response: @answer %>");
     $responses.children().last().before($response);
     $responses.countComments();
   }

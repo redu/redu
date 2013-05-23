@@ -7,23 +7,23 @@
 
 <%# Formulário de resposta. %>
 <div class="status-tab tab-right create-response">
-  <%= form_for :status, :url => respond_status_path(in_response_to),
-    :remote => true do |f| %>
+  <%= form_for :status, url: respond_status_path(in_response_to),
+    remote: true do |f| %>
     <%= hidden_field :status, :in_response_to_id,
-      :value => in_response_to.id %>
+      value: in_response_to.id %>
     <%= hidden_field :status, :in_response_to_type,
-      :value => in_response_to.class.to_s %>
+      value: in_response_to.class.to_s %>
     <%= f.error_messages %>
-    <%= f.text_area :text, :rows => 1,
-      :placeholder => "Digite sua resposta ao comentário acima",
-      :maxlength => 800 %>
+    <%= f.text_area :text, rows: 1,
+      placeholder: "Digite sua resposta ao comentário acima",
+      maxlength: 800 %>
     <div class="clearfix">
       <ul class="status-buttons">
         <li>
           <input type="reset" class="button-default cancel" value="Cancelar">
         </li>
         <li>
-          <%= f.submit "Enviar", :class => "button-primary" %>
+          <%= f.submit "Enviar", class: "button-primary" %>
         </li>
       </ul>
     </div>

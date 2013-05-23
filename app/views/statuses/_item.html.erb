@@ -6,9 +6,9 @@
 %>
 
 <% if item.type.eql? 'Log' %>
-  <%= render "statuses/logs/#{log_partial(item.logeable_type)}", :log => item %>
+  <%= render "statuses/logs/#{log_partial(item.logeable_type)}", log: item %>
 <% elsif item.type.eql? 'CompoundLog' %>
-  <%= render "statuses/#{compound_log_partial(item.logeable_type)}", :compound => item %>
+  <%= render "statuses/#{compound_log_partial(item.logeable_type)}", compound: item %>
 <% else %>
-  <%= render "statuses/wall/#{answerable_status_partial(item)}", :item => item %>
+  <%= render "statuses/wall/#{answerable_status_partial(item)}", item: item %>
 <% end %>

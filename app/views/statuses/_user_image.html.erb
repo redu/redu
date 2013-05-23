@@ -5,8 +5,8 @@
     user: o usuário.
 %>
 
-<%= link_to user_path(user), :class => "author-thumbnail",
-  :title => user.display_name do %>
-  <%= image_tag user.avatar.url(:thumb_32), :alt => user.display_name,
-    :size => "32x32" %>
+<%= link_to user_path(user), class: "author-thumbnail",
+  title: user.display_name do %>
+  <%= image_tag user.avatar.url(:thumb_32), alt: user.display_name,
+    size: "32x32" %>
 <% end %>

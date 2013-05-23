@@ -14,23 +14,23 @@
 <% status_type = "Activity" unless local_assigns.has_key? :status_type %>
 
 <%# Formulário de status. %>
-<%= form_for status, :remote => true,
-  :html => { :class => "create-status status-tab status-list #{extra_classes}" } do |f| %>
+<%= form_for status, remote: true,
+  html: { class: "create-status status-tab status-list #{extra_classes}" } do |f| %>
   <%= flash[:statuses_errors] %>
   <%= hidden_field_tag "return", request.url %>
-  <%= hidden_field :status, :statusable_id, :value => statusable.id %>
-  <%= hidden_field :status, :statusable_type, :value => statusable.class.to_s %>
+  <%= hidden_field :status, :statusable_id, value: statusable.id %>
+  <%= hidden_field :status, :statusable_type, value: statusable.class.to_s %>
   <%= hidden_field_tag "status[type]", status_type %>
   <%= f.error_messages %>
-  <%= f.text_area :text, :rows => 1, :placeholder => placeholder,
-    :maxlength => 800 %>
+  <%= f.text_area :text, rows: 1, placeholder: placeholder,
+    maxlength: 800 %>
   <div class="clearfix">
     <ul class="status-buttons">
       <li>
         <input type="reset" class="button-default cancel" value="Cancelar">
       </li>
       <li>
-        <%= f.submit "Enviar", :class => "button-primary" %>
+        <%= f.submit "Enviar", class: "button-primary" %>
       </li>
     </ul>
   </div>

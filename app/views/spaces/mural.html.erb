@@ -1,13 +1,13 @@
 <% content_for :header_scripts_and_styles do %>
-  <%= stylesheet_link_tag :new_wall %>
-  <%= javascript_include_tag :new_wall %>
+  <%= stylesheet_link_tag "new_wall" %>
+  <%= javascript_include_tag "new_wall" %>
 <% end %>
 
-<%= render :partial => 'spaces/sidebar', :locals => { :space => @space } %>
+<%= render partial: 'spaces/sidebar', locals: { space: @space } %>
 <div class="main space grid_12 omega big-col">
-  <%= render :partial => 'spaces/breadcrumbs', :locals => { :space => @space } %>
-  <%= render :partial => 'spaces/header',
-    :locals => { :space => @space }%>
+  <%= render partial: 'spaces/breadcrumbs', locals: { space: @space } %>
+  <%= render partial: 'spaces/header',
+    locals: { space: @space }%>
 
   <div id="space-statuses" class="body clearfix">
     <div class="header clearfix">
@@ -16,8 +16,8 @@
 
     <div class="status-large" style="clear: both;">
       <%# Status. %>
-      <%= render "statuses/wall", :status => @status, :statusable => @space,
-        :statuses => @statuses %>
+      <%= render "statuses/wall", status: @status, statusable: @space,
+        statuses: @statuses %>
     </div><!-- end .statuses -->
   </div><!-- end #environment-courses -->
 

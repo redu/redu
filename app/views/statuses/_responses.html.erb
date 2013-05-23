@@ -10,12 +10,12 @@
     <li class="show-responses">
       <span class="legend last-responses">Visualizando as últimas respostas...</span>
     </li>
-    <%= render :partial => "statuses/response", :collection => status.answers %>
+    <%= render partial: "statuses/response", collection: status.answers %>
     <li class="show-responses">
       <div class="show-more">
         <hr>
         <%= content_tag :span, "Mostrar todas as #{status.answers.size} respostas",
-          :class => "see-more link-fake link-secondary" %>
+          class: "see-more link-fake link-secondary" %>
       </div>
     </li>
   </ol>

@@ -7,37 +7,37 @@
     log: o log de ingresso a curso.
 %>
 
-<%= content_tag :li, :id => "status-#{log.id}" do %>
+<%= content_tag :li, id: "status-#{log.id}" do %>
   <hr class="list-separator">
   <div class="status">
     <div class="context">
       <% if log.logeable.course.environment.avatar_file_name %>
         <%= link_to environment_path(log.logeable.course.environment),
-          :title => log.logeable.course.environment.name do %>
+          title: log.logeable.course.environment.name do %>
           <%= image_tag log.logeable.course.environment.avatar.url(:thumb_32),
-            :size => "32x32",
-            :class => "author-thumbnail",
-            :alt => log.logeable.course.environment.name %>
+            size: "32x32",
+            class: "author-thumbnail",
+            alt: log.logeable.course.environment.name %>
         <% end %>
       <% else %>
         <%= link_to log.logeable.course.name,
           environment_course_path(log.logeable.course.environment,log.logeable),
-          :class => "text-replacement context-icon icon-course-gray_32_34-before" %>
+          class: "text-replacement context-icon icon-course-gray_32_34-before" %>
       <% end %>
-      <%= content_tag :span, log.logeable.course.environment.name, :class => "legend" %>
+      <%= content_tag :span, log.logeable.course.environment.name, class: "legend" %>
       <%= link_to log.logeable.course.name,
         environment_course_path(log.logeable.course.environment, log.logeable.course) %>
     </div>
     <div class="subject">
-      <%= render "statuses/user_image", :user => log.user %>
+      <%= render "statuses/user_image", user: log.user %>
       <div class="subject-info">
-        <%= render "statuses/user_name", :user => log.user,
-          :classes => "icon-member-gray_16_18-before" %>
-        <%= content_tag :span, raw(log.text), :class => "action" %>
+        <%= render "statuses/user_name", user: log.user,
+          classes: "icon-member-gray_16_18-before" %>
+        <%= content_tag :span, raw(log.text), class: "action" %>
         <%= link_to log.logeable.course.name,
           environment_course_path(log.logeable.course.environment, log.logeable.course),
-          :class => "target icon-course-gray_16_18-before" %>
-        <%= render "statuses/timeago", :timestamp => log.created_at %>
+          class: "target icon-course-gray_16_18-before" %>
+        <%= render "statuses/timeago", timestamp: log.created_at %>
       </div>
     </div>
   </div>

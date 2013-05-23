@@ -5,25 +5,25 @@
     response: a resposta de um status.
 %>
 
-<%= content_tag :li, :id => "status-#{response.id}" do %>
+<%= content_tag :li, id: "status-#{response.id}" do %>
   <hr>
   <div class="response">
     <% if can? :manage, response %>
         <%= link_to "Remover",
           status_path(response),
-          :method => :delete,
-          :remote => true,
-          :class => "icon-close icon-close-gray_16_18 text-replacement",
-          :confirm => "Deseja remover esta resposta?"%>
+          method: :delete,
+          remote: true,
+          class: "icon-close icon-close-gray_16_18 text-replacement",
+          confirm: "Deseja remover esta resposta?"%>
     <% end %>
-    <%= render "statuses/user_image", :user => response.user %>
-    <%= render "statuses/user_name", :user => response.user %>
+    <%= render "statuses/user_image", user: response.user %>
+    <%= render "statuses/user_name", user: response.user %>
     <span class="action">respondeu:</span>
-    <%= render "statuses/timeago", :timestamp => response.created_at %>
+    <%= render "statuses/timeago", timestamp: response.created_at %>
     <div class="status-content">
       <%= content_tag :p, status_message(response.text) %>
       <%= render "statuses/resource_preview",
-        :resource => response.status_resources %>
+        resource: response.status_resources %>
     </div>
   </div>
 <% end %>
