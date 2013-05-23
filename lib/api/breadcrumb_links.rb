@@ -12,9 +12,9 @@ module Api
           instance = self.send(attr)
 
           if instance
-            { :name => instance.name,
-              :href => polymorphic_url([:api, instance]),
-              :permalink => self.entity_permalink(instance) }
+            { name: instance.name,
+              href: polymorphic_url([:api, instance]),
+              permalink: self.entity_permalink(instance) }
           end
         end
       end
@@ -22,9 +22,9 @@ module Api
       # O attributo passa a ser wall, pois "user" é o criador do status
       link :wall do
         if self.statusable.is_a? User
-          { :name => self.statusable.display_name,
-            :href => polymorphic_url([:api, self.statusable]),
-            :permalink => user_url(self.statusable) }
+          { name: self.statusable.display_name,
+            href: polymorphic_url([:api, self.statusable]),
+            permalink: user_url(self.statusable) }
         end
       end
     end
