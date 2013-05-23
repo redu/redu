@@ -15,7 +15,7 @@
 
 <%# Formulário de status. %>
 <%= form_for status, :remote => true,
-  :html => { :class => "create-response status-tab status-list #{extra_classes}" } do |f| %>
+  :html => { :class => "create-status status-tab status-list #{extra_classes}" } do |f| %>
   <%= flash[:statuses_errors] %>
   <%= hidden_field_tag "return", request.url %>
   <%= hidden_field :status, :statusable_id, :value => statusable.id %>
