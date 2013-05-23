@@ -13,8 +13,8 @@ defaults:
     - :app
     - :app_master
     - :util
-environments :
-  production: &production
+environments:
+  env_production: &production
     branch: master
-  staging: &staging
+  env_staging: &staging
     branch: staging
