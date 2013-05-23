@@ -7753,7 +7753,7 @@ hr {
 }
 
 .post-resource {
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .thumbnail {
@@ -7763,8 +7763,12 @@ hr {
 .thumbnail .preview {
   float: left;
 }
+.thumbnail .preview-link {
+  max-width: 100px;
+  max-height: 75px;
+}
 .thumbnail .buttons {
-  margin-top: 10px;
+  margin: 10px 0 0;
 }
 .thumbnail .buttons .button-default, .thumbnail .buttons .filter {
   padding: 0;

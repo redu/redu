@@ -95,10 +95,6 @@ $icon-sprite-dimensions: true;
   &:hover { @extend .icon-close-red_8_10; }
 }
 
-.icon-close-gray_8_10 {
-  &:hover { @extend .icon-close-red_8_10; }
-}
-
 .status-list .icon-environment-gray_32_34-before {
   &:before { @extend .icon-environment-gray_32_34; }
   &:hover:before { @extend .icon-environment-blue_32_34; }
@@ -339,7 +335,7 @@ $icon-sprite-dimensions: true;
 
 .thumbnail-separator { margin: 0; }
 
-.post-resource { margin-top: 10px; }
+.post-resource { margin-top: 20px; }
 
 .thumbnail {
   overflow: hidden;
@@ -347,8 +343,13 @@ $icon-sprite-dimensions: true;
 
   .preview { float: left; }
 
+  .preview-link {
+    max-width: 100px;
+    max-height: 75px;
+  }
+
   .buttons {
-    margin-top: 10px;
+    margin: 10px 0 0;
 
     .button-default {
       padding: 0;
@@ -397,16 +398,14 @@ $icon-sprite-dimensions: true;
 
 // Separador de respostas.
 
-.status hr {
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
+.status-tab hr {
+  @include box-shadow(none);
   clear: both;
   margin: 0;
   border-left: none;
   border-right: none;
-  border-top: 1px solid rgb(204, 204, 204);
-  border-bottom: 1px solid rgb(255, 255, 255);
+  border-top: 1px solid $gray4;
+  border-bottom: 1px solid $white;
 }
 
 // Comum.

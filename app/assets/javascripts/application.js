@@ -16,15 +16,13 @@
 //= require users
 //= require ytpreview.jquery
 //= require subjects
-//= require statuses
 //= require admin
 //= require partner
 //= require jquery.nested-fields
 //= require boring-browser
 //= require jquery.noisy
 //= require underscore
-//= require underscore-sharing-template.redu.jquery
-//= require embedly.redu.jquery
+//= require embedly
 //= require timeago
 // Somente para a nav global: início
 //= require bootstrap-redu-dropdown
@@ -38,8 +36,6 @@
 jQuery(function(){
 
     $.refreshSubtabs();
-
-    $.refreshEmbeddedSharing();
 
     $.refreshDOMEffects();
 
@@ -166,7 +162,6 @@ jQuery(function(){
 
     $(document).ajaxComplete(function(){
         $.refreshSubtabs();
-        $.refreshEmbeddedSharing();
         $.refreshDOMEffects();
     });
 });
@@ -212,11 +207,6 @@ $.refreshSubtabs = function() {
   var subtabsNav = $(".subtabs .ui-tabs-nav");
   subtabsNav.css("width", subtabsNav.find("li").length * 120);
 };
-
-// Permite ao usuário compartilhar recursos embutidos em suas postagens
-$.refreshEmbeddedSharing = function() {
-  $('.create-status').enableEmbedding();
-}
 
 // Efeitos na DOM que ocorrem após o carregamento da página
 $.refreshDOMEffects = function(){
