@@ -2,22 +2,29 @@
 // Mensagem de bem vindo.
 // ==========================================================================
 
+
 // Wrapper de tudo.
 .landing-welcome {
   @include box-sizing;
-  height: 470px;
-  padding-top: 60px;
-  background: transparent image-url('landing/illustration.png') no-repeat center;
+  padding-top: 80px;
+  $background-image-height: 480px;
+  height: $background-image-height;
+  background: transparent image-url('landing/background-welcome.jpg') no-repeat center;
+  text-align: center;
+}
+
+// Luz de fundo.
+.landing-welcome-light {
+  @include box-sizing;
+  padding-top: 25px;
 }
 
 // Título.
 .landing-welcome-title {
+  @include text-shadow(1px 2px 5px rgba(0, 0, 0, 0.5));
   font: 500 60px/56px $museo-sans-rounded;
   color: $white;
   letter-spacing: -3px;
-  margin-left: -3px;
-
-  .textshadow & { text-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5); }
 }
 
 .landing-welcome-title +
@@ -27,10 +34,4 @@
 .landing-welcome-message {
   font: 700 21px/28px $museo-sans-rounded;
   letter-spacing: -1px;
-  max-width: 280px;
-  background-image: image-url('landing/light-welcome.png');
-  background-repeat: no-repeat;
-  background-position: center center;
-
-  .textshadow & { text-shadow: 1px 1px 0 $white; }
 }
