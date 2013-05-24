@@ -1,6 +1,6 @@
 <%# Status e suas respostas  %>
 
-<% if item.logeable || item.statusable %>
+<% if can_render_status?(item)  %>
   <% if item.type.eql? 'Log' %>
     <%= render "statuses/log", :log => item %>
   <% elsif item.type.eql? 'CompoundLog' %>
