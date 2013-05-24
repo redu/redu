@@ -13,7 +13,7 @@ module StatusesHelper
   end
 
   def can_render_status?(status)
-    is_a_log = true if %w(Log CompoundLog).include? status.logeable_type
+    is_a_log = true if status.logeable_type
 
     status.statusable && (is_a_log ? status.logeable : true)
   end
