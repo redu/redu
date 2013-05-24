@@ -23,10 +23,6 @@ module EnrollmentService
 
         enrollment_service.destroy_enrollment(subjects, self)
       end
-
-      def enrollment_service
-        Facade.instance
-      end
     end
   end
 end
