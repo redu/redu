@@ -65,8 +65,8 @@ module EnrollmentService
                                          :user_id => users)
           lectures = Lecture.where(:subject_id => subjects)
 
-          service_facade.destroy_asset_report(lectures, enrollments)
-          service_facade.destroy_enrollment(subjects, users)
+          enrollment_service.destroy_asset_report(lectures, enrollments)
+          enrollment_service.destroy_enrollment(subjects, users)
         end
 
         private
@@ -81,7 +81,7 @@ module EnrollmentService
           Delayed::Job.enqueue(job, :queue => "hierarchy-associations")
         end
 
-        def service_facade
+        def enrollment_service
           EnrollmentService::Facade.instance
         end
       end

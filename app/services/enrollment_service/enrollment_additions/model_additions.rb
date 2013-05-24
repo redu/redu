@@ -5,12 +5,12 @@ module EnrollmentService
       extend ActiveSupport::Concern
 
       def update_grade!
-        service_facade.update_grade(self)
+        enrollment_service.update_grade(self)
       end
 
       private
 
-      def service_facade
+      def enrollment_service
         EnrollmentService::Facade.instance
       end
     end
