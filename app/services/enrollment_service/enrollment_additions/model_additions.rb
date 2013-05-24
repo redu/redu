@@ -7,12 +7,6 @@ module EnrollmentService
       def update_grade!
         enrollment_service.update_grade(self)
       end
-
-      private
-
-      def enrollment_service
-        EnrollmentService::Facade.instance
-      end
     end
   end
 end

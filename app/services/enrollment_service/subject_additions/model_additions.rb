@@ -80,10 +80,6 @@ module EnrollmentService
         def enqueue(job)
           Delayed::Job.enqueue(job, :queue => "hierarchy-associations")
         end
-
-        def enrollment_service
-          EnrollmentService::Facade.instance
-        end
       end
     end
   end
