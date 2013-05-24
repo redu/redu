@@ -13,7 +13,7 @@ module EnrollmentService
       def enroll(users=nil, opts = {})
         options = {}
         if users
-          options = { :role => Role[:member] }.merge(opts)
+          options = { role: Role[:member] }.merge(opts)
           options[:users] = (users.respond_to?(:map) ? users : [users])
         end
 
@@ -61,9 +61,9 @@ module EnrollmentService
           users = user_or_users.respond_to?(:map) ? user_or_users :
             [user_or_users]
 
-          enrollments = Enrollment.where(:subject_id => subjects,
-                                         :user_id => users)
-          lectures = Lecture.where(:subject_id => subjects)
+          enrollments = Enrollment.where(subject_id: subjects,
+                                         user_id: users)
+          lectures = Lecture.where(subject_id: subjects)
 
           enrollment_service.destroy_asset_report(lectures, enrollments)
           enrollment_service.destroy_enrollment(subjects, users)
@@ -73,12 +73,12 @@ module EnrollmentService
 
         def delayed_enroll(subjects, users, role)
           job = Jobs::CreateEnrollmentJob.
-            new(:subject => subjects, :user => users, :role => role.to_sym)
+            new(subject: subjects, user: users, role: role.to_sym)
           enqueue(job)
         end
 
         def enqueue(job)
-          Delayed::Job.enqueue(job, :queue => "hierarchy-associations")
+          Delayed::Job.enqueue(job, queue: "hierarchy-associations")
         end
       end
     end

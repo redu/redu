@@ -28,7 +28,7 @@ module EnrollmentService
     end
 
     def asset_reports
-      @asset_reports ||= AssetReport.where(:enrollment_id => enrollment_ids)
+      @asset_reports ||= AssetReport.where(enrollment_id: enrollment_ids)
     end
 
     def enrollment_ids

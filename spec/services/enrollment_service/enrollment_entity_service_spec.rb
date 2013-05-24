@@ -6,11 +6,11 @@ module EnrollmentService
     let(:spaces) { 2.times.map { FactoryGirl.create(:space) } }
     let(:subjects) do
       spaces.map do |space|
-        2.times.map { FactoryGirl.create(:subject, :space => space) }
+        2.times.map { FactoryGirl.create(:subject, space: space) }
       end.flatten
     end
 
-    subject { EnrollmentEntityService.new(:subject => subjects) }
+    subject { EnrollmentEntityService.new(subject: subjects) }
 
     context "#create" do
       it "should delegate to insert with correct arguments" do
@@ -40,7 +40,7 @@ module EnrollmentService
 
         subject.importer.should_receive(:insert).with(records)
 
-        subject.create(:users_and_roles => user_role_pairs)
+        subject.create(users_and_roles: user_role_pairs)
       end
 
       it "should accept optional users and role" do
@@ -54,13 +54,13 @@ module EnrollmentService
 
         subject.importer.should_receive(:insert).with(records)
 
-        subject.create(:users => users, :role => role)
+        subject.create(users: users, role: role)
       end
 
       it "should return created enrollments" do
         users = FactoryGirl.create_list(:user, 2)
 
-        enrollments = subject.create(:users => users)
+        enrollments = subject.create(users: users)
 
         created_enrollments = Enrollment.all.reverse[0..(subjects.length *
                                                           users.length)]
@@ -71,7 +71,7 @@ module EnrollmentService
     context "#destroy" do
       let!(:enrollments) do
         subjects.map do |sub|
-          3.times.map { FactoryGirl.create(:enrollment, :subject => sub) }
+          3.times.map { FactoryGirl.create(:enrollment, subject: sub) }
         end.flatten
       end
       let(:users) { enrollments.map(&:user) }
@@ -98,12 +98,12 @@ module EnrollmentService
 
     context "#update_grade" do
       let(:enrollment) do
-        FactoryGirl.create(:enrollment, :subject => nil)
+        FactoryGirl.create(:enrollment, subject: nil)
       end
       let!(:asset_reports) do
-        FactoryGirl.create_list(:asset_report, 3, :enrollment => enrollment)
+        FactoryGirl.create_list(:asset_report, 3, enrollment: enrollment)
       end
-      subject { EnrollmentEntityService.new(:enrollment => enrollment) }
+      subject { EnrollmentEntityService.new(enrollment: enrollment) }
 
       it "should wrap enrollments" do
         subject.enrollments.should =~ [enrollment]
@@ -121,10 +121,10 @@ module EnrollmentService
 
     describe "#get_enrollments_for" do
       let(:enrollments) do
-        subjects.map { |s| FactoryGirl.create(:enrollment, :subject => s) }
+        subjects.map { |s| FactoryGirl.create(:enrollment, subject: s) }
       end
       let!(:extra_enrollments) do
-        subjects.map { |s| FactoryGirl.create(:enrollment, :subject => s) }
+        subjects.map { |s| FactoryGirl.create(:enrollment, subject: s) }
       end
       let(:users) { enrollments.map(&:user).flatten }
 

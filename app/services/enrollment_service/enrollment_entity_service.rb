@@ -32,12 +32,12 @@ module EnrollmentService
 
       users_and_roles ||= users.map { |u| [u, role.to_s] }
 
-      builder = infer_builder_from_arguments(:users_and_roles => users_and_roles)
+      builder = infer_builder_from_arguments(users_and_roles: users_and_roles)
       values = builder.to_a
       importer.insert(values)
 
       users_ids = values.map(&:first)
-      get_enrollments_for(User.where(:id => users_ids))
+      get_enrollments_for(User.where(id: users_ids))
     end
 
     def importer
@@ -50,7 +50,7 @@ module EnrollmentService
     #
     # Atenção: Não invoca callbacks (nem remove associações :dependent).
     def destroy(users)
-      enrollments = Enrollment.where(:subject_id => subjects, :user_id => users)
+      enrollments = Enrollment.where(subject_id: subjects, user_id: users)
 
       Enrollment.delete_all(["id IN (?)", enrollments.values_of(:id)])
     end
@@ -64,7 +64,7 @@ module EnrollmentService
     end
 
     def get_enrollments_for(users)
-      Enrollment.where(:subject_id => subjects, :user_id => users)
+      Enrollment.where(subject_id: subjects, user_id: users)
     end
 
     private
@@ -76,8 +76,8 @@ module EnrollmentService
 
     def update_enrollments(values)
       opts = {
-        :on_duplicate_key_update => [:grade, :graduated],
-        :columns => [:id, :grade, :graduated]
+        on_duplicate_key_update: [:grade, :graduated],
+        columns: [:id, :grade, :graduated]
       }
       importer.insert(values, opts)
     end

@@ -38,7 +38,7 @@ module EnrollmentService
       space_ids = subject_space_pairs.map(&:last).uniq
 
       UserSpaceAssociation.
-        where(:space_id => space_ids).values_of(:user_id, :space_id, :role)
+        where(space_id: space_ids).values_of(:user_id, :space_id, :role)
     end
 
     # Contrói uma Lista de pares do tipo [subject_id, space_id] para os Subjects
