@@ -1,23 +1,16 @@
 <div class="landing-functionality landing-management-support">
   <div class="row">
     <div class="span6 offset3">
-      <div class="landing-social-management-content">
-        <span class="icon-129px-configuracoes text-replacement" title="Rede Social">Rede Social</span>
-        <h3 class="landing-navigation-subtitle">Gerenciamento</h3>
-        <h4>Adeque o Redu às práticas de ensino de sua Instituição.</h4>
-        <p>Configure as informações, cursos e disciplinas, membros, planos e as métricas importantes ao pleno funcionamento de sua Instituição com a plataforma.</p>
-      </div>
+      <span class="landing-management-icon sprite-icon-management text-replacement" title="Gerenciamento">Gerenciamento</span>
+      <h3 class="landing-navigation-subtitle">Gerenciamento</h3>
+      <h4>Adeque o Redu às práticas de ensino de sua Instituição.</h4>
+      <p>Configure as informações, cursos e disciplinas, membros, planos e as métricas importantes ao pleno funcionamento de sua Instituição com a plataforma.</p>
     </div>
-    <div class="landing-support-content">
-      <div class="row">
-        <div class="offset2 span3">
-          <h3 class="landing-navigation-subtitle">Suporte</h3>
-          <h4>Sinta-se apoiado!</h4>
-          <p>Conte com nosso atendimento e use a <%= link_to "Central de Ajuda",
-              Redu::Application.config.redu_services[:help_center][:url],
-              :title => "Central de Ajuda", :target => "_blank" %> para tirar suas dúvidas.</p>
-        </div>
-      </div>
+    <span class="landing-support-background sprite-background-management text-replacement" title="Suporte">Suporte</span>
+    <div class="landing-support-area offset2 span3">
+      <h3 class="landing-navigation-subtitle">Suporte</h3>
+      <h4>Sinta-se apoiado!</h4>
+      <p>Conte com nosso atendimento e use a <%= link_to "Central de Ajuda", Redu::Application.config.redu_services[:help_center][:url], title: "Central de Ajuda", target: "_blank" %> para tirar suas dúvidas.</p>
     </div>
   </div>
 </div>

@@ -3,7 +3,7 @@
 // ==========================================================================
 
 .line-gray3 {
-  @include box-sizing(border-box);
+  @include box-sizing;
   background-color: $gray3;
   height: 3px;
   margin: 0;
