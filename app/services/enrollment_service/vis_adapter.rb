@@ -33,7 +33,7 @@ module EnrollmentService
 
     def includes_relationships_if_arel(enrollments)
       if enrollments.is_a? ActiveRecord::Relation
-        enrollments.includes(:subject => [:space => :course])
+        enrollments.includes(subject: [space: :course])
       else
         enrollments
       end

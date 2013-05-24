@@ -4,7 +4,7 @@ require 'spec_helper'
 module EnrollmentService
   describe VisAdapter do
     let(:vis_adapter) { VisAdapter.new }
-    let(:enrollments) { 2.times.map { FactoryGirl.create(:enrollment, :subject => nil) } }
+    let(:enrollments) { 2.times.map { FactoryGirl.create(:enrollment, subject: nil) } }
     let(:enrollments_arel) { Enrollment.limit(2) }
 
     describe ".initialize" do
@@ -22,7 +22,7 @@ module EnrollmentService
 
       context "with vis_client and url arguments" do
         let(:vis_adapter) do
-          VisAdapter.new(:vis_client => Enrollment, :url => "/new_url.json")
+          VisAdapter.new(vis_client: Enrollment, url: "/new_url.json")
         end
 
         it "should set vis_client" do

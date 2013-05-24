@@ -13,8 +13,8 @@ module EnrollmentService
         end
 
         it "should invoke #build_next_job with the return value of #execute" do
-          subject.stub(:execute).and_return({ :working => :holiday })
-          subject.should_receive(:build_next_job).with({ :working => :holiday })
+          subject.stub(:execute).and_return({ working: :holiday })
+          subject.should_receive(:build_next_job).with({ working: :holiday })
 
           subject.perform
         end

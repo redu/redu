@@ -3,7 +3,7 @@ require 'spec_helper'
 
 module EnrollmentService
   describe Enrollment do
-    subject! { FactoryGirl.create(:enrollment, :grade => 0, :graduated => false) }
+    subject! { FactoryGirl.create(:enrollment, grade: 0, graduated: false) }
     let(:facade) { mock('Facade') }
     before { Facade.stub(:instance).and_return(facade) }
 

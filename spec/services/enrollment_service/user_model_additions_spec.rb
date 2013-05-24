@@ -20,7 +20,7 @@ module EnrollmentService
 
     describe "private destroy methods" do
       let!(:enrollments) do
-        FactoryGirl.create_list(:enrollment, 2, :user => subject)
+        FactoryGirl.create_list(:enrollment, 2, user: subject)
       end
 
       before do
@@ -30,7 +30,7 @@ module EnrollmentService
       describe "#destroy_asset_reports" do
         let(:lectures) do
           enrollments.map do |e|
-            FactoryGirl.create(:lecture, :subject => e.subject)
+            FactoryGirl.create(:lecture, subject: e.subject)
           end
         end
 

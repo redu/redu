@@ -17,13 +17,13 @@ module EnrollmentService
 
         enrollments = facade.create_enrollment(subjects, users, opts) || []
 
-        { :enrollments => enrollments }
+        { enrollments: enrollments }
       end
 
       def build_next_job(env)
-        lectures = Lecture.where(:subject_id => subject_ids)
-        CreateAssetReportJob.new(:lecture => lectures,
-                                 :enrollment => env[:enrollments])
+        lectures = Lecture.where(subject_id: subject_ids)
+        CreateAssetReportJob.new(lecture: lectures,
+                                 enrollment: env[:enrollments])
       end
 
       def user_ids

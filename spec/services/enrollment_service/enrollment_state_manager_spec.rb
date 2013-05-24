@@ -7,7 +7,7 @@ module EnrollmentService
     let(:facade) { mock('Facade') }
     let(:enrollments) do
       FactoryGirl.
-        create_list(:enrollment, 3, :graduated => false, :subject => nil)
+        create_list(:enrollment, 3, graduated: false, subject: nil)
     end
 
     context "#enrollments" do
