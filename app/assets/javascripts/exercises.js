@@ -216,4 +216,8 @@ $(function(){
       loadingQuestion(false);
     });
   });
+
+  $(document).on("click", ".concave-clean[disabled]", function(e) {
+    e.preventDefault();
+  });
 });
