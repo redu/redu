@@ -55,3 +55,7 @@ $gray-drop-shadow:  rgb(178, 178, 178) !default;
 $base-font-family:    "Helvetica Neue", Arial, sans-serif !default;
 $museo-sans:          museo-sans, $base-font-family;
 $museo-sans-rounded:  museo-sans-rounded, $museo-sans;
+
+
+// Largura do conteúdo.
+$landing-content-width: grid-width(6);

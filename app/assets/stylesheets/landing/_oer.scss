@@ -11,7 +11,7 @@ $landing-oer-background-color: rgb(28, 117, 187);
 
 // Gradiente.
 .landing-oer-outer-wrapper {
-  @include box-sizing(border-box);
+  @include box-sizing;
   height: 190px;
   padding: 20px 0;
   background-color: $landing-oer-background-color;
@@ -28,17 +28,11 @@ $landing-oer-background-color: rgb(28, 117, 187);
 
 // Título.
 .landing-oer-title {
-  position: relative;
-
-  .label-doubts { position: absolute; }
-
   h3 {
     text-align: right;
     color: $white;
 
-    a {
-      color: $white;
-    }
+    a { color: $white; }
   }
 }
 
