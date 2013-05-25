@@ -2,7 +2,9 @@
 // Área de rede social & chat.
 // ==========================================================================
 
-.landing-social-network-n-chat { margin-bottom: 20px; }
+
+.landing-social-network-n-chat +
+.landing-functionalities-separator { margin-top: 20px; }
 
 // Posicionamento das imagens de fundo.
 
@@ -28,5 +30,5 @@
 .landing-chat-wrapper {
   text-align: left;
 
-  h4 { width: 280px; }
+  .landing-navigation-legend { width: 280px; }
 }
