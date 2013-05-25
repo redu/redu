@@ -2,8 +2,16 @@
 // Área das aulas multimídia.
 // ==========================================================================
 
-// Placeholders.
-// ==========================================================================
+
+// Padding horizontal padrão.
+$landing-multimedia-horizontal-padding: 20px;
+
+
+// Encapsulador.
+.landing-multimedia {
+  padding: $landing-multimedia-horizontal-padding;
+  position: relative;
+}
 
 // Comum aos sprites de tipos de aula.
 .landing-multimedia-type {
@@ -15,17 +23,11 @@
 }
 
 
-// Encapsulador.
-.landing-multimedia-outer-wrapper { padding: 20px; }
-
-// Fundo.
-.landing-multimedia-inner-wrapper { position: relative; }
-
 .landing-multimedia-icon {
   position: absolute;
   $height: sprite-sprite-height(icon-exercise);
   @include calc("top", "50% - (#{$height} / 2)", 25%);
-  right: 0;
+  right: $landing-multimedia-horizontal-padding;
 }
 
 // Descrição.
@@ -51,7 +53,7 @@
   display: none;
   border: 1px solid $white;
 
-  .landing-multimedia-outer-wrapper:hover & { display: block; }
+  .landing-multimedia:hover & { display: block; }
 
   &:hover { border-width: 5px; }
 }
@@ -82,7 +84,7 @@
     left: -10px;
   }
 
-  h4 {
+  .landing-navigation-legend {
     margin-left: 55px;
     color: $black;
   }
@@ -94,6 +96,6 @@
     & { margin-top: 10px; }
   }
 
-  h4 +
+  .landing-navigation-legend +
   p { margin-top: 13px; }
 }

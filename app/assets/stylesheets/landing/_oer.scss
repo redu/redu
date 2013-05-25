@@ -2,6 +2,7 @@
 // Área de Recursos Educacionais Abertos.
 // ==========================================================================
 
+
 // Variáveis.
 // ==========================================================================
 
@@ -12,11 +13,10 @@ $landing-oer-background-color: rgb(28, 117, 187);
 // Gradiente.
 .landing-oer-outer-wrapper {
   @include box-sizing;
+  @include text-shadow(0 1px 0 $black);
   height: 190px;
   padding: 20px 0;
   background-color: $landing-oer-background-color;
-
-  .textshadow & { text-shadow: 0 1px 0 $black; }
 
   .cssgradients & { @include background-image(linear-gradient(rgba(0, 0, 0, 0.4), $landing-oer-background-color 5%, $landing-oer-background-color 95%, rgba(0, 0, 0, 0.4) 100%)); }
 
@@ -28,23 +28,17 @@ $landing-oer-background-color: rgb(28, 117, 187);
 
 // Título.
 .landing-oer-title {
-  h3 {
-    text-align: right;
-    color: $white;
+  text-align: right;
+  color: $white;
 
-    a { color: $white; }
-  }
+  a { color: $white; }
 }
 
 // Descrição.
 .landing-oer-description {
   padding-top: 10px;
 
-  h4 { color: $gray2; }
+  .landing-navigation-legend { color: $gray2; }
 
-  p {
-    color: $white;
-
-    .landing-functionality:hover & { color: $white; }
-  }
+  .landing-navigation-message { color: $white; }
 }

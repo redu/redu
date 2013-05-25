@@ -2,7 +2,17 @@
 // Funcionalidades.
 // ==========================================================================
 
-.line-gray3 {
+
+.landing-functionalities {
+  .landing-navigation-title { margin: 20px; }
+
+  .landing-navigation-subtitle +
+  .landing-navigation-legend,
+  .landing-navigation-legend +
+  .landing-navigation-message { margin-top: 20px; }
+}
+
+.landing-functionalities-separator {
   @include box-sizing;
   background-color: $gray3;
   height: 3px;
@@ -10,16 +20,3 @@
   border-color: $white;
   border-right-width: 0;
 }
-
-.landing-functionalities {
-  .landing-navigation-title { margin: 20px; }
-
-  p { color: $gray-drop-shadow; }
-
-  h3 + h4,
-  h4 + p { margin-top: 20px; }
-
-  hr { @extend .line-gray3; }
-}
-
-.landing-functionality:hover p { color: $gray6; }

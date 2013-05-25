@@ -30,7 +30,7 @@
 
   &:hover { border-color: $blue2; }
 
-  a {
+  .link-fake {
     position: absolute;
     bottom: 0;
     left: 40px;
@@ -42,7 +42,7 @@
 .landing-api-icon {
   position: absolute;
   $width: sprite-sprite-width(icon-developer);
-  @include calc("left", "50% - (#{$width} / 2)", 43%);
+  @include calc("left", "50% - (#{$width} / 2) - 5px", 43%);
   top: 10px;
 }
 

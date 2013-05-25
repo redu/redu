@@ -3,29 +3,15 @@
 // ==========================================================================
 
 
-// Títulos da área de navegação.
-.landing-navigation-title {
-  font: 500 60px/56px $museo-sans-rounded;
-  letter-spacing: -3px;
-  display: block;
-  color: $gray3;
-
-  .textshadow & { text-shadow: 0 1px 0 $gray-drop-shadow; }
-}
-
-.landing-navigation-subtitle { @include heading(2); }
-
 // Usado pelas modais de planos, termos de uso e política de privacidade.
 .modal-landing {
-  p + p { margin-top: 20px; }
+  p +
+  p { margin-top: 20px; }
 
   .modal-header .sprite-before:before { vertical-align: middle; }
 
   .modal-body { padding: 20px 40px 20px 60px; }
 }
-
-// Coluna dos planos.
-.landing-plan-column { width: 76px;}
 
 .reactivate-account {
   .button-danger {
