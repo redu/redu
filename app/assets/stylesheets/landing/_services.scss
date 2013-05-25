@@ -1,0 +1,65 @@
+// ==========================================================================
+// Estilos da área de "Mais Serviços".
+// ==========================================================================
+
+
+$landing-service-border: 1px solid $blue2;
+
+
+// Lista.
+.landing-services-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow: hidden;
+}
+
+// Item da lista.
+.landing-service {
+  @include box-sizing;
+  @include border-radius(10px);
+  border: $landing-service-border;
+  background-color: $gray1;
+  text-align: center;
+  $margin-left: 20px;
+  $columns: 4;
+  $expression: "(100% - #{$margin-left} * (#{$columns} - 1)) / #{$columns}";
+  @include calc("width", $expression, 22%);
+  float: left;
+
+  & +
+  & { margin-left: $margin-left; }
+}
+
+// Cabeçalho.
+.landing-service-header {
+  @include box-sizing;
+  padding: 15px 10px 10px;
+
+  .landing-service-icon +
+  .landing-navigation-legend { margin-top: 5px; }
+
+  .landing-navigation-legend {
+    color: $black;
+    vertical-align: middle;
+    padding: 0 10px;
+  }
+
+  // Centraliza na altura de 2 linhas.
+  .landing-navigation-legend-centralize {
+    $line-height: 21px;
+    $lines: 2;
+    line-height: $line-height * $lines;
+  }
+}
+
+// Ícone.
+.landing-service-icon { margin: 0 auto; }
+
+// Corpo.
+.landing-service-body {
+  @include box-sizing;
+  padding: 20px 10px 10px;
+  min-height: 156px;
+  border-top: $landing-service-border;
+}
