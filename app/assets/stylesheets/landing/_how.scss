@@ -1,0 +1,55 @@
+// ==========================================================================
+// Estilos da área de "Como Funciona?".
+// ==========================================================================
+
+
+.landing-how {
+  .landing-navigation-message { width: 400px; }
+}
+
+// Como Funciona?
+.landing-how-section {
+  padding: 20px;
+
+  .landing-navigation-title +
+  .landing-navigation-legend { margin-top: 20px; }
+
+  .landing-navigation-legend { font-weight: 100; }
+}
+
+// Ambiente de Aprendizagem.
+.landing-how-explaination { width: 100%; }
+
+.landing-how-environment {
+  padding: 20px 0 0 205px;
+
+  .landing-navigation-subtitle { width: 240px; }
+
+  .landing-navigation-subtitle +
+  .landing-navigation-message { margin: 10px 0 0 20px; }
+}
+
+// Cursos.
+.landing-how-environment-title-course { padding: 80px 0 0 535px; }
+
+.landing-how-courses-types { padding: 10px 20px 20px; }
+
+// Cursos Abertos.
+.landing-how-course-public {
+  text-align: right;
+
+  .landing-how-course-icon +
+  & { margin-right: 10px; }
+
+  .landing-navigation-legend { color: $green3; }
+}
+
+// Cursos Privados.
+.landing-how-course-private {
+  text-align: left;
+
+  .landing-how-course-icon +
+  & { margin-left: 10px; }
+
+  .landing-navigation-legend { color: $red2; }
+}
