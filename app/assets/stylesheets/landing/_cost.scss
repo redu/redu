@@ -1,0 +1,42 @@
+// ==========================================================================
+// Estilos da área de "Quanto Custa?".
+// ==========================================================================
+
+
+// Encapsulador.
+.landing-cost { padding: 20px 20px 30px; }
+
+// Pagamento.
+
+.landing-cost-payment {
+  padding-top: 10px;
+
+  .landing-navigation-message {
+    font-size: 10px;
+    width: 310px;
+    text-align: right;
+  }
+}
+
+.landing-cost-payment-pagseguro +
+.landing-navigation-message { margin-right: 10px; }
+
+// Tabela.
+
+.landing-cost-header +
+.landing-cost-table { margin-top: 30px; }
+
+
+.landing-cost-table-main-row { font-weight: normal; }
+
+// Curso Aberto.
+.landing-cost-course-public { color: $green3; }
+
+// Curso Fechado.
+.landing-cost-course-private { color: $red2; }
+
+// Primeira coluna.
+.landing-cost-table-main-column { color: $gray6; }
+
+// Armazenamento em GB.
+.landing-cost-storage-gb { color: $gray5; }

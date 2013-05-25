@@ -1,0 +1,43 @@
+<%#
+  Quanto Custa?
+%>
+
+<div class="landing-cost">
+  <div class="landing-cost-header clearfix">
+    <h2 class="landing-navigation-title pull-left">Quanto Custa?</h2>
+    <div class="landing-cost-payment pull-right clearfix">
+      <span class="landing-cost-payment-pagseguro sprite-pagseguro text-replacement pull-right">PagSeguro</span>
+      <p class="landing-navigation-message legend pull-right">Os custos são apenas para os criadores dos Ambientes. Utilizamos o PagSeguro para os pagamentos. <%= link_to "Saiba como pagar.", "#", target: "_blank" %></p>
+    </div>
+  </div>
+  <table class="landing-cost-table table-without-borderradius">
+    <thead>
+      <tr>
+        <th></th>
+        <th class="landing-cost-table-main-row landing-cost-course-public"><strong>Curso Aberto</strong> <span class="sprite-icon-course-public-green3_16_18 text-replacement">(Ícone)</span></th>
+        <th class="landing-cost-table-main-row landing-cost-course-private"><strong>Curso Privado</strong> (pessoa física) <span class="sprite-icon-course-private-red2_16_18 text-replacement">(Ícone)</span></th>
+        <th class="landing-cost-table-main-row landing-cost-course-private"><strong>Curso Privado</strong> (pessoa jurídica) <span class="sprite-icon-course-private-red2_16_18 text-replacement">(Ícone)</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="landing-cost-table-main-column">Valor por aluno</td>
+        <td><span class="label-online">GRÁTIS</span></td>
+        <td>R$ 0,20 por aluno / mês</td>
+        <td>R$ 0,99 por aluno / mês</td>
+      </tr>
+      <tr>
+        <td class="landing-cost-table-main-column">Armazenamento</td>
+        <td>15 MB</td>
+        <td>4.000 MB <span class="landing-cost-storage-gb">(4 GB)</span></td>
+        <td>8.000 MB <span class="landing-cost-storage-gb">(8 GB)</span></td>
+      </tr>
+      <tr>
+        <td class="landing-cost-table-main-column">Acesso aos materiais</td>
+        <td>Todos podem acessar</td>
+        <td>Apenas convidados</td>
+        <td>Apenas convidados</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
