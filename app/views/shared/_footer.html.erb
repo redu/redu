@@ -70,7 +70,7 @@
           </li>
           <li>
             <%= link_to "Desenvolvedores",
-              "http://developers.redu.com.br/",
+              Redu::Application.config.redu_services[:dev][:url],
               :title => "Desenvolvedores"
             %>
           </li>

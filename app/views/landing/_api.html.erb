@@ -6,7 +6,7 @@
   </div><!--
    --><div class="landing-api-link">
     <span class="landing-api-icon text-replacement sprite-icon-developer" title="Conheça a Documentação da API">Conheça a Documentação da API</span>
-    <%= link_to "Conheça a Documentação da API", "http://developers.redu.com.br/" %>
+    <%= link_to "Conheça a Documentação da API", Redu::Application.config.redu_services[:dev][:url] %>
   </div><!--
    --><span class="landing-api-illustration text-replacement sprite-keko-playing">Keko</span>
 </div>
