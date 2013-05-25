@@ -43,8 +43,16 @@ class UsersController < BaseController
     end
 
     @subscribed_courses_count = @user.user_course_associations.approved.count
+
+    if current_user == @user
+      @contacts = @user.friends.page(params[:page]).per(8)
+    else
+      @contacts = Kaminari::paginate_array(@user.friends_not_in_common_with(current_user)).
+        page(params[:page]).per(4)
+    end
+
     respond_to do |format|
-      format.html
+      format.html { render layout: 'new_application' }
     end
   end
 
@@ -57,8 +65,9 @@ class UsersController < BaseController
     end
 
     respond_to do |format|
-      format.js { render_sidebar_endless 'users/item_medium_24', @contacts,
-        '.con-endless', "Mostrando os <X> últimos contatos de #{@user.first_name}" }
+      format.js { render_new_sidebar_endless 'users/item_medium_24_new', @contacts,
+        '.connections', "Mostrando os <X> últimos contatos de #{@user.first_name}",
+        'connections-endless' }
     end
   end
 

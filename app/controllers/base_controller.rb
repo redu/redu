@@ -102,4 +102,18 @@ class BaseController < ApplicationController
     }
       render :template => 'shared/sidebar_endless', :locals => locals
   end
+
+  # Renderiza a resposta do endless de acordo com os parâmetros passados
+  def render_new_sidebar_endless(partial, collection, selector, text, html_class=nil,
+                             partial_locals={})
+    locals = {
+      partial: partial, # Partial do itens a serem renderizados
+      collection: collection, # Coleção em questão
+      selector: selector, # Seletor do HTML que receberá os itens
+      html_class: html_class, # Classe customizada do endless
+      text: text, # Texto que aparece abaixo do endless
+      partial_locals: partial_locals # Locals necessários no partial do item
+    }
+      render template: 'shared/new_sidebar_endless', locals: locals
+  end
 end

@@ -1,0 +1,10 @@
+<%#
+  Próxima página da paginação endless do sidebar.
+%>
+
+<%= link_to_unless current_page.last?, raw(t "views.pagination.sidebar_endless"),
+  url, rel: "next", remote: true, class: "link-secondary" %>
+<% if defined? text %>
+  <%= content_tag :span, text.gsub(/<X>/, (current_page.to_i * per_page).to_s),
+    class: "legend" %>
+<% end %>

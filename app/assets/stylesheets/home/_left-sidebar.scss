@@ -6,6 +6,7 @@
 // Wrapper
 .home-left-sidebar {
   padding-top: 17px;
+  padding-bottom: 20px;
 
   a {
     &:visited { color: $blue3; }
@@ -39,4 +40,36 @@
 
 .nav-local-general-course {
   span { padding-left: 21px; }
+}
+
+
+// Últimos contatos.
+// ==========================================================================
+
+// Lista.
+.connections {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+
+  .nav-local +
+  & { margin-top: 10px; }
+}
+
+// Item.
+.connection {
+  & +
+  & { margin-top: 5px; }
+}
+
+// Endless.
+.connections-endless {
+  text-align: right;
+
+  .link-secondary { display: block; }
+
+  .legend {
+    float: right;
+    width: 120px;
+  }
 }

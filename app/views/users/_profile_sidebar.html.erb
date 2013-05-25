@@ -1,32 +1,29 @@
-<div class="sidebar">
-  <div class="image-user">
-    <%= image_tag @user.avatar.url(:thumb_110), :alt => 'user', :size => "110x110" %>
+<%#
+  Barra lateral esquerda do perfil do usuário.
+
+  Variáveis:
+    user: o usuário.
+    contacts: contatos a serem mostrados.
+%>
+
+<div class="home-left-sidebar">
+  <div class="home-profile-area">
+    <%= image_tag user.avatar.url(:thumb_160),
+      alt: user.display_name, title: user.display_name,
+      size: "160x160",
+      class: "home-profile-area-photo" %>
   </div>
 
-  <%= local_nav :user_profile %>
-  <% if current_user == @user %>
-    <ul class="connections con-endless clearfix">
-      <% @contacts = @user.friends.page(params[:page]).per(8) %>
-      <%= render :partial => 'users/item_medium_24',
-        :collection => @contacts %>
-    </ul><!-- end .connections -->
-  <% else %>
-    <%# TODO: Descomentar quando os amigos em comum estiver funcionado novamente. %>
-    <%# @friends_in_common = @user.friends_in_common_with(current_user).shuffle %>
-    <%# <span class="call icon-contacts-gray_16_18-before">Em comum: <span class="count"> %><%# @friends_in_common.count %><%# </span></span> %>
-    <%# <ul class="connections clearfix"> %>
-      <%# render :partial => 'users/item_medium_24',
-        :collection => @friends_in_common[0..3] %>
-    <%# </ul> %><%# end .connections %>
-    <hr class="separator"/>
-    <ul class="connections con-endless clearfix">
-      <% @contacts = Kaminari::paginate_array(@user.friends_not_in_common_with(current_user)).page(params[:page]).per(4) %>
-      <%= render :partial => 'users/item_medium_24',
-        :collection => @contacts %>
-    </ul><!-- end .connections -->
+  <%= new_local_nav :user_profile %>
+
+  <% unless contacts.empty? %>
+    <ul class="connections">
+      <%= render partial: 'users/item_medium_24_new',
+        collection: contacts %>
+    </ul>
+    <%= paginate contacts, theme: 'new_sidebar_endless',
+      params: { controller: 'users', action: 'contacts_endless', id: user.login },
+      text: "Mostrando os <X> últimos contatos de #{user.first_name}",
+      html_class: "connections-endless" %>
   <% end %>
-  <%= paginate @contacts, :theme => 'sidebar_endless',
-    :params => { :controller => 'users', :action => 'contacts_endless',
-                 :id  => @user.login },
-                 :text => "Mostrando os <X> últimos contatos de #{@user.first_name}" %>
 </div>
