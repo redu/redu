@@ -8,22 +8,25 @@ class FriendshipsController < BaseController
   def index
     @profile = params[:profile] if params.has_key? :profile
 
-    # Diferencia a nova tela de meus contatos com a tela de contatos de outros usuários.
+    # Diferencia a tela de meus contatos com a tela de contatos do perfil.
     if @profile
-      @friends = @user.friends.order('first_name ASC').page(params[:page]).
-        per(16)
-    else
-      @total_friends = @user.friends.count
-      @friends = @user.friends.order(('first_name ASC')).
-        includes(:friends, :experiences).page(params[:page]).per(20)
+      if current_user == @user
+        @contacts = @user.friends.page(params[:page]).per(8)
+      else
+        @contacts = Kaminari::paginate_array(@user.friends_not_in_common_with(current_user)).
+          page(params[:page]).per(4)
+      end
+
+      @environments = @user.environments.page(params[:page]).per(4)
+      @subscribed_courses_count = @user.user_course_associations.approved.count
     end
 
+    @total_friends = @user.friends.count
+    @friends = @user.friends.order(('first_name ASC')).
+      includes(:friends, :experiences).page(params[:page]).per(20)
+
     respond_to do |format|
-      format.html do
-        unless @profile
-          render :layout => 'new_application'
-        end
-      end
+      format.html { render layout: 'new_application' }
       format.js { render_endless 'users/item_medium', @friends, '#contacts > ul' }
     end
   end
