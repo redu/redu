@@ -364,9 +364,17 @@ class UsersController < BaseController
     @status = Status.new
 
     @subscribed_courses_count = @user.user_course_associations.approved.count
+    @environments = @user.environments.page(params[:page]).per(4)
+
+    if current_user == @user
+      @contacts = @user.friends.page(params[:page]).per(8)
+    else
+      @contacts = Kaminari::paginate_array(@user.friends_not_in_common_with(current_user)).
+        page(params[:page]).per(4)
+    end
 
     respond_to do |format|
-      format.html
+      format.html { render layout: 'new_application' }
       format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
     end
   end
