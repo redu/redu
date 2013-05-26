@@ -1,65 +1,79 @@
-<div class="secondary-sidebar profile-sidebar">
-  <div class="actions">
-    <% # Usuários = current_user e o perfil visitado %>
-    <% # Se os usuários forem amigos, existe a opção de acabar com a amizade %>
-    <% if is_friend?(@user) %>
-      <%= link_to 'Remover contato',
-        user_friendship_path(current_user, current_friendship(current_user, @user).id),
-        :remote => true,
-        :method => :delete,
-        :class => "disconnect icon-delete-gray_8_10-before"%>
-    <% end %>
+<%#
+  Barra lateral direita do perfil do usuário.
 
-    <% # Se o perfil for o do current user %>
-    <% if can? :manage, @user %>
-      <%= render :partial => 'users/completeness_bar' %>
-    <% end %>
+  Variáveis:
+    user: o usuário.
+    subscribed_courses_count: a quantidade de cursos inscritos.
+    environments: os ambientes a serem mostrados.
+%>
 
-    <% # Se os usuários não forem amigos ainda %>
-    <% if !is_friend?(@user) %>
-      <% # Se existe requisição pendente %>
-      <% if current_friendship(@user) %>
-        <% # Se current_user já enviou requisição de amizade %>
-        <% if current_friendship(@user).status == 'pending' %>
-          <a class="waiting">Aguardando aceitação</a>
-        <% # Se o usuario do perfil enviou requisiçnao de amizade %>
-        <% else %>
-          <%= link_to 'Aceitar pedido de conexão',
-            user_friendships_path(current_user,
-                                  :friend_id => @user.id),
-                                  :method => :post,
-                                  :class => "waiting",
-                                  :id => "follow_link" %>
+<div class="home-left-sidebar">
+  <%# Se o perfil for o do current user %>
+  <% if can? :manage, user %>
+    <%= render "users/profile_status", user: user %>
+  <% end %>
+
+  <div class="right-sidebar-area">
+    <ul class="profile-actions">
+      <%# Se os usuários forem amigos, existe a opção de acabar com a amizade. %>
+      <% if is_friend?(user) %>
+        <li class="profile-action profile-action-remove-contact">
+          <%# TODO: Gerar ícone close lightblue > hover > red. %>
+          <%= link_to 'Remover contato',
+            user_friendship_path(current_user, current_friendship(current_user, user).id),
+            remote: true,
+            method: :delete,
+            class: "icon-close-lightblue_16_18-before"%>
+        </li>
+      <% end %>
+
+      <%# Se os usuários não forem amigos ainda. %>
+      <% if !is_friend?(user) %>
+        <%# Se existe requisição pendente. %>
+        <% if current_friendship(user) %>
+          <%# Se current_user já enviou requisição de amizade. %>
+          <% if current_friendship(user).status == 'pending' %>
+            <%= render "friendships/button_waiting" %>
+          <%# Se o usuario do perfil enviou requisiçnao de amizade. %>
+          <% else %>
+            <li class="profile-action">
+              <%# TODO: Hover/visited azul ao invés de branco. %>
+              <%= link_to 'Aceitar conexão',
+                user_friendships_path(current_user, friend_id: user.id),
+                method: :post,
+                class: "button-success icon-invite-white_green_16_18-before" %>
+            </li>
+          <% end %>
+        <%# Se não houver requisição de amizade eles não podem ser a mesma pessoa. %>
+        <% elsif !user.is?(current_user) %>
+          <%= render 'friendships/form', user: current_user, friend: user %>
         <% end %>
-      <% # Se não houver requisição de amizade eles não podem ser a mesma pessoa %>
-      <% elsif !@user.is?(current_user) %>
-        <%= render :partial => 'friendships/form', :locals => {
-          :user => current_user, :friend => @user } %>
       <% end %>
-    <% end %>
 
-    <% # Se os usuário forem amigos, opção para escrever mensagem %>
-    <% if is_friend?(@user) %>
-      <%= link_to(user_messages_path(current_user),
-                  :class => 'send-message') do %>
-        <span class="write-message icon-add_message-lightblue_16_18-before">Escrever Mensagem</span>
+      <%# Se os usuário forem amigos, opção para escrever mensagem. %>
+      <% if is_friend?(user) %>
+        <li class="profile-action profile-action-remove-contact">
+          <%# TODO: Ícone. %>
+          <%= link_to "Escrever Mensagem", user_messages_path(current_user),
+            class: 'icon-message-new-lightblue_16_18-before' %>
+        </li>
       <% end %>
-    <% end %>
-</div>
-
-  <div class="environments">
-    <div class="call">
-      <span class="icon-environment-white-green_16_18-before">Cursos inscritos: <%= subscribed_courses_count %></span>
-    </div>
-    <ul>
-      <% @environments = @user.environments.page(params[:page]).per(4) %>
-      <%= render :partial => 'environments/item_medium',
-        :collection => @environments %>
     </ul>
-    <%= paginate @environments, :theme => 'sidebar_endless',
-      :params => { :controller => 'users', :action => 'environments_endless' },
-      :text => "Mostrando os <X> últimos ambientes de #{@user.first_name}",
-      :html_class => "sec-sidebar-endless"
-    %>
   </div>
-</div><!-- end .offering -->
+
+  <% unless environments.empty? %>
+    <div class="right-sidebar-area">
+      <%= content_tag :h6, "Cursos inscritos: #{subscribed_courses_count}",
+        class: "right-sidebar-area-title" %>
+      <div class="nav-local-separator"></div>
+      <ul class="profile-enrolled-environments">
+        <%= render partial: 'environments/item_medium',
+          collection: environments, locals: { user: user } %>
+      </ul>
+      <%= paginate environments, theme: 'new_sidebar_endless',
+        params: { controller: 'users', action: 'environments_endless' },
+        text: "Mostrando os <X> últimos ambientes de #{user.first_name}",
+        html_class: "profile-enrolled-environments-endless" %>
+    </div>
+  <% end %>
+</div>

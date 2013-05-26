@@ -42,6 +42,7 @@ class UsersController < BaseController
       redirect_to removed_page_path and return
     end
 
+    @environments = @user.environments.page(params[:page]).per(4)
     @subscribed_courses_count = @user.user_course_associations.approved.count
 
     if current_user == @user
@@ -75,10 +76,10 @@ class UsersController < BaseController
     @environments = @user.environments.page(params[:page]).per(4)
 
     respond_to do |format|
-      format.js { render_sidebar_endless 'environments/item_medium',
-        @environments, '.environments > ul',
+      format.js { render_new_sidebar_endless 'environments/item_medium',
+        @environments, '.profile-enrolled-environments',
         "Mostrando os <X> últimos ambientes de #{@user.first_name}",
-        "sec-sidebar-endless" }
+        "profile-enrolled-environments-endless", user: @user }
     end
   end
 

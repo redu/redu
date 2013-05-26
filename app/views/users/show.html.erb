@@ -130,6 +130,7 @@
   </div>
 </div>
 <div class="span3">
-  <%= render 'users/secondary_sidebar',
-    subscribed_courses_count: @subscribed_courses_count %>
+  <%= render "users/secondary_sidebar", user: @user,
+    subscribed_courses_count: @subscribed_courses_count,
+    environments: @environments %>
 </div>

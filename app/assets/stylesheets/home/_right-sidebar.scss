@@ -55,3 +55,28 @@
 .members-to-add-link { margin-top: 5px; }
 
 .members-to-add-link { display: inline-block; }
+
+
+// Ações possíveis no perfil.
+// ==========================================================================
+
+.profile-actions,
+.profile-enrolled-environments,
+.profile-enrolled-courses {
+  margin: 0;
+  list-style-type: none;
+}
+
+.profile-action,
+.profile-enrolled-course {
+  & +
+  & { margin-top: 5px; }
+}
+
+.profile-enrolled-environment {
+  & +
+  & { margin-top: 20px; }
+}
+
+.profile-enrolled-environment-info +
+.profile-enrolled-courses { margin-top: 5px; }
