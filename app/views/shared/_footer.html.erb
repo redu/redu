@@ -11,49 +11,37 @@
         </div>
       </div>
       <div class="span3">
-        <ul class="footer-navigation">
-          <li>
-            <%= link_to "Sobre o Redu",
-              home_path(:anchor => ""),
-              :title => "Sobre o Redu"
-            %>
-          </li>
-          <li>
-            <%= link_to "Segmentos",
-              home_path(:anchor => "segmentos"),
-              :title => "Segmentos",
-              :class => "landing-scroll"
-            %>
-          </li>
-          <li>
-            <%= link_to "Vantagens",
-              home_path(:anchor => "vantagens"),
-              :title => "Vantagens",
-              :class => "landing-scroll"
-            %>
-          </li>
-          <li>
-            <%= link_to "Funcionalidades",
-              home_path(:anchor => "funcionalidades"),
-              :title => "Funcionalidades",
-              :class => "landing-scroll"
-            %>
-          </li>
-          <li>
-            <%= link_to "Planos",
-              home_path(:anchor => "planos"),
-              :title => "Planos",
-              :class => "landing-scroll"
-            %>
-          </li>
-          <li>
-            <%= link_to "Parceiros",
-              home_path(:anchor => "parceiros"),
-              :title => "Parceiros",
-              :class => "landing-scroll"
-            %>
-          </li>
-        </ul>
+        <%# Esconde os links para a landing quando o usuário está logado,
+          pois o mesmo não consegue ir para lá. Remover quando for possível. %>
+        <% unless current_user %>
+          <ul class="footer-navigation">
+            <li>
+              <%= link_to "Sobre o Redu", home_path(anchor: "") %>
+            </li>
+            <li>
+              <%= link_to "Segmentos", home_path(anchor: "segmentos"),
+                class: "landing-scroll" %>
+            </li>
+            <li>
+              <%= link_to "Vantagens", home_path(anchor: "vantagens"),
+                class: "landing-scroll" %>
+            </li>
+            <li>
+              <%= link_to "Funcionalidades", home_path(anchor: "funcionalidades"),
+                class: "landing-scroll" %>
+            </li>
+            <li>
+              <%= link_to "Planos", home_path(anchor: "planos"),
+                class: "landing-scroll" %>
+            </li>
+            <li>
+              <%= link_to "Parceiros", home_path(anchor: "parceiros"),
+                class: "landing-scroll" %>
+            </li>
+          </ul>
+        <% else %>
+          &nbsp;
+        <% end %>
       </div>
       <div class="span3">
         <ul class="footer-navigation">
