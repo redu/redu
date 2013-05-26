@@ -18,7 +18,6 @@
       <%# Se os usuários forem amigos, existe a opção de acabar com a amizade. %>
       <% if is_friend?(user) %>
         <li class="profile-action profile-action-remove-contact">
-          <%# TODO: Gerar ícone close lightblue > hover > red. %>
           <%= link_to 'Remover contato',
             user_friendship_path(current_user, current_friendship(current_user, user).id),
             remote: true,
@@ -53,7 +52,6 @@
       <%# Se os usuário forem amigos, opção para escrever mensagem. %>
       <% if is_friend?(user) %>
         <li class="profile-action profile-action-remove-contact">
-          <%# TODO: Ícone. %>
           <%= link_to "Escrever Mensagem", user_messages_path(current_user),
             class: 'icon-message-new-lightblue_16_18-before' %>
         </li>

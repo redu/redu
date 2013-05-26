@@ -71,8 +71,7 @@
         @user.mobile.blank? and @user.social_networks.empty? %>
         <hr class="list-separator"/>
         <div class="content-section">
-          <%# TODO: Ícone. %>
-          <span class="icon-curriculum-professional-lightblue_32_34 text-replacement pull-right">Experiência profissional</span>
+          <span class="icon-biography-lightblue_32_34 text-replacement pull-right">Biografia</span>
           <% unless @user.description.blank? %>
             <div class="profile-bio-wrapper general-list-item-body">
               <div class="profile-bio-label general-list-item-column">
