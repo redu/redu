@@ -12,6 +12,8 @@
     &:visited { color: $blue3; }
     &:hover { color: $blue4; }
   }
+
+  .nav-local-link { max-width: 87%; }
 }
 
 .home-hello-user +

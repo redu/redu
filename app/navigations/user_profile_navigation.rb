@@ -7,7 +7,7 @@ module UserProfileNavigation
     # TODO: Ajeitar os ícones.
     sidebar.item :user, "#{@user.display_name}", user_path(@user),
       class: 'icon-profile-lightblue_16_18-before nav-local-item',
-      link: { class: 'nav-local-link' }
+      link: { class: 'nav-local-link text-truncate', title: @user.display_name }
     sidebar.item :wall, 'Mural', show_mural_user_path(@user),
       class: 'icon-wall-lightblue_16_18-before nav-local-item',
       link: { class: 'nav-local-link' }
