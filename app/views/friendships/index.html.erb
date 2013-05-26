@@ -63,11 +63,7 @@
   </div>
 </div>
 <div class="span3">
-  <% if @profile %>
-    <%= render "users/secondary_sidebar", user: @user,
-      subscribed_courses_count: @subscribed_courses_count,
-      environments: @environments %>
-  <% else %>
+  <% unless @profile %>
     <%= render "users/right_sidebar", :user => @user %>
   <% end %>
 </div>

@@ -16,18 +16,15 @@ class FriendshipsController < BaseController
         @contacts = Kaminari::paginate_array(@user.friends_not_in_common_with(current_user)).
           page(params[:page]).per(4)
       end
-
-      @environments = @user.environments.page(params[:page]).per(4)
-      @subscribed_courses_count = @user.user_course_associations.approved.count
+    else
+      @total_friends = @user.friends.count
     end
 
-    @total_friends = @user.friends.count
     @friends = @user.friends.order(('first_name ASC')).
       includes(:friends, :experiences).page(params[:page]).per(20)
 
     respond_to do |format|
       format.html { render layout: 'new_application' }
-      format.js { render_endless 'users/item_medium', @friends, '#contacts > ul' }
     end
   end
 
