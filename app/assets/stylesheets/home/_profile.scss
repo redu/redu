@@ -1,0 +1,52 @@
+// ==========================================================================
+// Perfil.
+// ==========================================================================
+
+
+.profile-name { color: $blue3; }
+
+.profile-name +
+.profile-summary { margin-top: 20px; }
+
+.profile-summary {
+  margin: 0;
+  list-style-type: none;
+  color: $gray5;
+  font-size: 11px;
+  line-height: 14px;
+}
+
+.profile-summary-items { list-style-type: none; }
+
+.profile-summary-item {
+  display: block;
+  margin-left: 17px;
+
+  &:first-child {
+    margin-left: 0;
+    display: inline-block;
+  }
+}
+
+.profile-summary-bio { color: $gray6; }
+
+.profile-bio-wrapper {
+  & +
+  & { margin-top: 20px; }
+}
+
+.profile-bio-label {
+  color: $gray5;
+  text-align: right;
+  width: 90px;
+}
+
+.profile-bio-label +
+.profile-bio-content { margin-left: 10px; }
+
+.profile-social-networks {
+  margin: 0;
+  list-style-type: none;
+}
+
+.profile-curriculum { margin: 0; }
