@@ -13,7 +13,7 @@
 // Descrição.
 .landing-api-description {
   display: inline-block;
-  width: 340px;
+  width: $landing-content-width;
 }
 
 .landing-api-description +
@@ -22,23 +22,28 @@
 // Link.
 .landing-api-link {
   @include square(225px);
-  @include box-sizing(border-box);
+  @include box-sizing;
+  @include border-radius(130px);
   display: inline-block;
   border: 10px solid $blue1;
-  background: transparent image-url("landing/icon-api-gray_128_130.png") no-repeat 30px 20px;
   position: relative;
 
   &:hover { border-color: $blue2; }
 
-  .borderradius & { @include border-radius(130px); }
-
-  a {
+  .link-fake {
     position: absolute;
     bottom: 0;
     left: 40px;
     width: 128px;
     text-align: center;
   }
+}
+
+.landing-api-icon {
+  position: absolute;
+  $width: sprite-sprite-width(icon-developer);
+  @include calc("left", "50% - (#{$width} / 2) - 5px", 43%);
+  top: 10px;
 }
 
 .landing-api-link +

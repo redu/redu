@@ -8,4 +8,6 @@ describe Choice do
   it { should belong_to(:user) }
   it { should belong_to(:question) }
   it { should validate_uniqueness_of(:user_id).scoped_to(:question_id) }
+
+  it_should_behave_like 'have unique index database'
 end

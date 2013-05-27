@@ -2,33 +2,33 @@
 // Área da navegação.
 // ==========================================================================
 
+
 .landing-navigation {
-  @include box-sizing(border-box);
-  margin: -70px 0 40px;
-  background-color: $white;
-  border: 1px solid $gray1;
-  list-style: none;
-
-  .borderradius & { @include border-radius(10px); }
-
-  .boxshadow & { @include box-shadow(0 1px 10px 1px rgba(0, 0, 0, 0.5)); }
-
-  h4 { color: $gray6; }
+  @include box-shadow(0 1px 10px 1px rgba(0, 0, 0, 0.5));
+  margin: -90px 0 40px;
 }
 
-.landing-navigation-item {
+// Títulos da área de navegação.
+.landing-navigation-title {
+  @include text-shadow(0 1px 0 $landing-gray);
+  @include heading(1);
+  font-weight: 500;
+  display: block;
+  color: $gray3;
+}
 
-  .boxshadow &:first-child { @include box-shadow(0 -1px 0 $white inset); }
+// Sub-títulos da área de navegação.
+.landing-navigation-subtitle { @include heading(2); }
 
-  & + & {
-    border-top: 1px solid $gray3;
+// Legendas da área de navegação.
+.landing-navigation-legend {
+  @include heading(4);
+  color: $gray6;
+}
 
-    $box-shadow:
-      0 1px 0 $white inset
-    , 0 -1px 0 $white inset;
-    .boxshadow & { @include box-shadow($box-shadow); }
-  }
+// Parágrafos da área de navegação.
+.landing-navigation-message {
+  color: $landing-gray;
 
-  .boxshadow &:last-child { @include box-shadow(0 1px 0 $white inset); }
-
+  .landing-navigation-message-hover:hover & { color: $gray6; }
 }

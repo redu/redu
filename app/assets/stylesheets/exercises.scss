@@ -1,3 +1,6 @@
+@import "bootstrap/variables";
+
+
 /* Navegação de exercícios */
 #resource .exercise-nav {
   height: 70px;
@@ -83,6 +86,14 @@
   color: rgb(77, 173, 214);
   border: 1px solid rgb(204, 204, 204);
   font-size: 1em;
+
+  &[disabled],
+  &[disabled]:hover {
+    color: $gray5;
+    border-color: $gray3;
+    background: $gray2;
+    cursor: not-allowed;
+  }
 }
 
 #resource .exercise .concave-clean:hover {

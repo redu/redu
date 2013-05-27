@@ -2,19 +2,19 @@ defaults:
   precompile_assets: true
   assets_strategy: cleaning
   asset_dependencies:
-    - app/assets
-    - vendor/assets
-    - lib/assets
+  - app/assets
+  - vendor/assets
+  - lib/assets
   copy_exclude:
-    - .git
+  - .git
   migrate: false
   migration_command: rake db:migrate --trace
   asset_roles:
-    - :app
-    - :app_master
-    - :util
+  - :app
+  - :app_master
+  - :util
 environments:
-  env_production: &production
+  production:
     branch: master
-  env_staging: &staging
+  staging:
     branch: staging

@@ -1,92 +1,72 @@
 // ==========================================================================
-// VANTAGENS
+// Estilos da área de "Vantagens".
 // ==========================================================================
-.landing-advantages {
-  width: 100%;
-  display: inline-block;
 
-  .landing-navigation-title { margin: 20px; }
 
-  .type-user {
-    display: block;
-    float: left;
-    max-width: 200px;
+// Lista.
+.landing-advantages-list {
+  margin: 0;
+  padding: 0 20px 20px;
+  list-style: none;
+  overflow: hidden;
+}
 
-    .call + .call { margin: 20px 0; }
+// Item da lista.
+.landing-advantage {
+  text-align: center;
+  $margin-left: 35px;
+  $columns: 4;
+  $expression: "(100% - #{$margin-left} * (#{$columns} - 1)) / #{$columns}";
+  @include calc("width", $expression, 22%);
+  float: left;
 
-    .call {
-      text-align: center;
-      font-size: 13px;
-      line-height: 18px;
-      width: 200px;
-      font-family: arial;
-    }
+  & +
+  & { margin-left: $margin-left; }
 
-    &.teacher {
-      margin: 0 39px;
-      .call { color: rgb(255, 124, 53); }
-
-      .button-user {
-        h3 { margin-left: 65px; }
-
-        .legend {
-          margin-left: 79px;
-
-          .textshadow & { text-shadow: 0 -1px 0 rgb(242, 74, 0); }
-        }
-      }
-    }
-
-    &.gestor {
-      margin: 0 39px 0 0 ;
-
-      .call { color: rgb(21, 138, 196); }
-
-      .button-user h3 { margin-left: 48px; }
-    }
-
-     &.developer {
-      margin-right: 10px;
-
-      .call { color: rgb(255, 109, 109); }
-
-      .button-user {
-        h3 { margin-left: 70px; }
-
-        .legend {
-          margin-left: 68px;
-
-          .textshadow & { text-shadow: 0 -1px 0 rgb(192, 39, 45); }
-        }
-      }
-    }
-
-    &.student {
-      margin-left: 10px;
-      float: left;
-
-      .call { color: rgb(97, 160, 128); }
-    }
-
-    .button-user {
-      h3 {
-        color: white;
-        position: absolute;
-        margin-top: -85px;
-        margin-left: 56px;
-        font-size: 36px;
-
-        .textshadow & { text-shadow: 0 1px 3px $black; }
-      }
-
-      .legend {
-        font-size: 10px;
-        font-family: arial, sans-serif;
-        position: absolute;
-        color: white;
-        margin-top: -58px;
-        letter-spacing: 0;
-      }
-    }
+  .landing-navigation-subtitle {
+    @include text-shadow(0 1px 3px $black);
+    color: $white;
   }
+}
+
+// Legenda.
+.landing-advantage-legend {
+  font-size: 10px;
+  color: $white;
+}
+
+// Mensagens.
+.landing-advantage-message {
+  & +
+  & { margin-top: 20px; }
+}
+
+// Ícones.
+.landing-advantage-icon {
+  @include box-sizing;
+  padding-top: 110px;
+}
+
+// Aluno.
+.landing-advantage-student {
+  .landing-advantage-message { color: $green4; }
+}
+
+// Professor.
+.landing-advantage-teacher {
+  .landing-advantage-legend { @include text-shadow(0 -1px 0 $orange6); }
+
+  .landing-advantage-message { color: $orange4; }
+}
+
+// Gestor.
+.landing-advantage-manager {
+  .landing-advantage-message { color: $blue4; }
+}
+
+// Desenvolvedor.
+.landing-advantage-developer {
+  .landing-advantage-legend { @include text-shadow(0 -1px 0 $red5); }
+
+  .landing-advantage-message { color: $red2; }
 }
