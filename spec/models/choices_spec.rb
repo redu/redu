@@ -12,11 +12,20 @@ describe Choice do
   it_should_behave_like 'have unique index database'
 
   context "scopes" do
+    let(:exercise) { FactoryGirl.create(:exercise) }
+    let(:question) { subject.question }
 
     it "should return all correct choices" do
       correct_choices = FactoryGirl.create_list(:choice, 2, correct: true)
       FactoryGirl.create_list(:choice, 2, correct: false)
       Choice.correct.to_set.should == correct_choices.to_set
+    end
+
+    it "should return all choices of an exercise" do
+      question2 = FactoryGirl.create(:question, exercise: exercise)
+      result = FactoryGirl.create_list(:choice, 2, question: question2)
+
+      Choice.by_exercise(exercise).to_set.should == result.to_set
     end
   end
 end
