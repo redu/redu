@@ -6,6 +6,17 @@ class BaseController < ApplicationController
   rescue_from ActiveRecord::RecordNotUnique,
     :with => Proc.new { redirect_to application_path }
 
+
+  # TODO: Remover. Somente para teste.
+  def new_status_answer
+    @user = User.first
+    @friend = User.last
+
+    respond_to do |format|
+      format.html { render layout: 'user_notifier' }
+    end
+  end
+
   def teach_index
     authorize! :teach_index, :base
 
