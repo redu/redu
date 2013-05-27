@@ -3,6 +3,12 @@ class StatusesController < BaseController
 
   load_and_authorize_resource :status, :except => [:index]
 
+  def show
+    respond_to do |format|
+      format.html { render layout: 'new_application' }
+    end
+  end
+
   def create
     @status = Status.new(params[:status]) do |s|
       s.user = current_user
