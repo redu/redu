@@ -765,4 +765,13 @@ describe CoursesController do
       end
     end
   end
+
+  context "GET admin_spaces" do
+    context "with no spaces" do
+      before { login_as user }
+      it "should not raise error" do
+        expect { get :admin_spaces, nested_course_params }.to_not raise_error
+      end
+    end
+  end
 end

@@ -135,10 +135,12 @@ class CoursesController < BaseController
   def admin_spaces
     @spaces = @course.spaces.includes(:subjects).order('updated_at DESC').
       page(params[:page]).per(Redu::Application.config.items_per_page)
-    # Para evitar diversas consultas, a conta de membros é feita apenas
-    # uma vez
-    users_count = @spaces.first.users.count
-    @spaces.map { |s| s.member_count = users_count }
+
+    # Para evitar diversas consultas, a contagem de membros é feita apenas uma vez
+    unless @spaces.empty?
+      users_count = @spaces.first.users.count
+      @spaces.map { |s| s.member_count = users_count }
+    end
 
     respond_to do |format|
       format.html { render "courses/admin/admin_spaces" }
