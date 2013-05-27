@@ -7629,6 +7629,9 @@ hr {
 .status-list .date {
   display: block;
 }
+.status-list .date:visited, .status-list .date:hover {
+  color: #b3b3b3;
+}
 .status-list .actions {
   overflow: hidden;
 }
