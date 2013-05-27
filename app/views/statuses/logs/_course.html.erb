@@ -37,7 +37,7 @@
         <%= link_to log.logeable.name,
           environment_course_path(log.logeable.environment, log.logeable),
           class: "icon-course-gray_16_18-before" %>
-        <%= render "statuses/timeago", timestamp: log.created_at %>
+        <%= render "statuses/timeago", status: log, timestamp: log.created_at %>
       </div>
     </div>
   </div>
