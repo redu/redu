@@ -10,10 +10,10 @@ describe StatusesController do
 
   describe "POST create" do
     let(:params) do
-      base_params.merge(:status => {:statusable_type => "User",
-                                    :text => "Lorem ipsum dolor sit amet, ",
-                                    :statusable_id => statusable.id,
-                                    :type => "Activity" })
+      base_params.
+        merge(status: {statusable_type: "User", text: "Lorem ipsum dolor",
+                                    statusable_id: statusable.id,
+                                    type: "Activity" })
     end
     before do
       callback_address(controller.user_url(statusable))
@@ -47,11 +47,11 @@ describe StatusesController do
         let(:resource) { FactoryGirl.build(:status_resource) }
         let(:params_with_resource) do
           params[:status][:status_resources_attributes] = [{
-            :provider => resource.provider,
-            :thumb_url => resource.thumb_url,
-            :title => resource.title,
-            :description => resource.description,
-            :link => resource.link
+            provider: resource.provider,
+            thumb_url: resource.thumb_url,
+            title: resource.title,
+            description: resource.description,
+            link: resource.link
           }]
           params
         end
@@ -73,15 +73,18 @@ describe StatusesController do
     end
 
     context "when creating new help request" do
-      let(:statusable) { FactoryGirl.create(:lecture, :owner => author, :subject => subj) }
-      let(:subj) { FactoryGirl.create(:subject, :owner => author, :space => space, :finalized => true, :visible => true) }
+      let(:statusable) { FactoryGirl.create(:lecture, owner: author, subject: subj) }
+      let(:subj) do
+        FactoryGirl.create(:subject, owner: author, space: space,
+                           finalized: true, visible: true)
+      end
       let(:author) { FactoryGirl.create(:user) }
       let(:space) { FactoryGirl.create(:space) }
       let(:status_attrs) do
-        {"statusable_type"=>"Lecture", "text"=>"Lorem ipsum dolor sit amet,",
-         "statusable_id"=> statusable.id, "type" => "Help" }
+        {statusable_type: "Lecture", text: "Lorem ipsum dolor sit amet,",
+         statusable_id: statusable.id, type: "Help" }
       end
-      let(:params) { base_params.merge({"status" => status_attrs}) }
+      let(:params) { base_params.merge({status: status_attrs}) }
 
       before do
         space.course.join(author, Role[:teacher])
@@ -99,11 +102,11 @@ describe StatusesController do
 
   describe "POST respond" do
     let(:params) do
-      {:id => subject.id,
-       "status" => { "in_response_to_type"=>"Activity",
-                     "text"=>"Lorem ipsum dolor sit amet",
-                     "in_response_to_id"=> subject.id,
-                     "type"=>"Answer" } }.merge(base_params)
+      {id: subject.id,
+       status: { in_response_to_type: "Activity",
+                     text: "Lorem ipsum dolor sit amet",
+                     in_response_to_id: subject.id,
+                     type: "Answer" } }.merge(base_params)
     end
     before { login_as(author) }
 
@@ -121,9 +124,9 @@ describe StatusesController do
     end
 
     context "when responding a help request" do
-      let(:help) { FactoryGirl.create(:help, :statusable => lecture) }
-      let(:lecture) { FactoryGirl.create(:lecture, :owner => author, :subject => subj) }
-      let(:subj) { FactoryGirl.create(:subject, :owner => author, :space => space, :finalized => true, :visible => true) }
+      let(:help) { FactoryGirl.create(:help, statusable: lecture) }
+      let(:lecture) { FactoryGirl.create(:lecture, owner: author, subject: subj) }
+      let(:subj) { FactoryGirl.create(:subject, owner: author, space: space, finalized: true, visible: true) }
       let(:author) { FactoryGirl.create(:user) }
       let(:space) { FactoryGirl.create(:space) }
       let(:response_params) do
@@ -144,7 +147,7 @@ describe StatusesController do
   end
 
   describe "DELETE destroy" do
-    let(:params) { base_params.merge(:id => subject.id, :format => "js") }
+    let(:params) { base_params.merge(id: subject.id, format: "js") }
     context "when destroying a status" do
       before do
         login_as subject.user
@@ -159,7 +162,7 @@ describe StatusesController do
       context "that has an associated resource" do
         before do
           subject.type = "Activity"
-          subject.status_resources << FactoryGirl.create(:status_resource, :status => subject)
+          subject.status_resources << FactoryGirl.create(:status_resource, status: subject)
         end
 
         it "should destroys the status successfully" do
