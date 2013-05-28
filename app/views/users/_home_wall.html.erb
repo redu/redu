@@ -6,17 +6,15 @@
     statuses: os status.
 %>
 
-<% if user.settings.visited?(home_user_path(user)) %>
-  <div class="home-status">
-    <%= render "statuses/create_status", statusable: user %>
+<div class="home-status">
+  <%= render "statuses/create_status", statusable: user %>
 
-    <%# Mural com layout antigo %>
-    <div id="statuses" class="statuses">
-      <ol>
-        <%= render partial: "statuses/item", collection: statuses %>
-      </ol>
+  <%# Mural com layout antigo %>
+  <div id="statuses" class="statuses">
+    <ol>
+      <%= render partial: "statuses/item", collection: statuses %>
+    </ol>
 
-      <%= paginate statuses, theme: "endless" %>
-    </div>
+    <%= paginate statuses, theme: "endless" %>
   </div>
-<% end %>
+</div>
