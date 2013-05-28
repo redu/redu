@@ -1,10 +1,9 @@
-# -*- encoding : utf-8 -*-
+ #-*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe User do
   subject { FactoryGirl.create(:user) }
 
-  it { should have_many(:statuses) }
   [:lectures, :favorites, :statuses, :subjects].each do |attr|
     it { should have_many attr }
     end

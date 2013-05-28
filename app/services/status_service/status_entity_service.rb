@@ -11,6 +11,10 @@ module StatusService
       Status.where(:id => statuses_ids).delete_all
     end
 
+    def statuses
+      statusable.statuses
+    end
+
     private
 
     def statuses_ids

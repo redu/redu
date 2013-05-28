@@ -23,21 +23,32 @@ module StatusService
           status_entity_service.stub(:destroy)
         end
 
-        it "should invoke StatusEntityService#new with statusable" do
+        it "should invoke StatusEntityService.new with statusable" do
+          status_entity_service.stub(:statuses)
+
           StatusEntityService.should_receive(:new).
             with({ statusable: statusable })
           subject.destroy_status(statusable)
         end
 
-        it "should invoke StatusDependenciesEntityService#new with" \
-          " statusable" do
+        it "should invoke StatusEntityService#statuses with statusable" do
+          status_entity_service.should_receive(:statuses).with(no_args())
+          subject.destroy_status(statusable)
+        end
+
+        it "should invoke StatusDependenciesEntityService.new with" \
+          " StatusEntityService#statuses return" do
+          statuses = FactoryGirl.create_list(:activity, 2)
+          status_entity_service.stub(:statuses).and_return(statuses)
+
           StatusDependenciesEntityService.should_receive(:new).
-            with({ statusable: statusable })
+            with({ statuses: statuses })
           subject.destroy_status(statusable)
         end
       end
 
       it "should invoke StatusEntityService#destroy without args" do
+        status_entity_service.stub(:statuses)
         status_dependencies_entity_service.stub(:destroy)
 
         status_entity_service.should_receive(:destroy).with(no_args())
@@ -46,6 +57,7 @@ module StatusService
 
 
       it "should invoke StatusDependenciesEntityService#destroy without args" do
+        status_entity_service.stub(:statuses)
         status_entity_service.stub(:destroy)
 
         status_dependencies_entity_service.should_receive(:destroy).
