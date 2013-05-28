@@ -5,7 +5,20 @@ module ResultsHelper
       if choices_count == questions_count
         "Parabéns você respondeu #{content_tag(:strong, "todas", class: "exercise-full")} as questões do exercício!".html_safe
       else
-        "Você só respondeu #{choices_count} de #{pluralize questions_count, "questão", "questões"}"
+        "Você só respondeu #{ choices_count } de #{ pluralize questions_count, 'questão', 'questões' }"
+      end
+    end
+  end
+
+  def submit_button(choices_count, questions_count)
+    options = {class: "concave-button"}
+    if choices_count != questions_count
+      options[:data] = { confirm: "Você só respondeu #{ choices_count } de #{ pluralize questions_count, 'questão', 'questões' }, tem certeza que deseja submeter?"}
+    end
+
+    button_tag(options, class: "concave-button") do
+      content_tag(:span, class: "do-exercise icon-exercise-white_16_19-before")  do
+        "Submeter"
       end
     end
   end
