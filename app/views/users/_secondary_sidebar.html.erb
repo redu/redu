@@ -7,7 +7,7 @@
     environments: os ambientes a serem mostrados.
 %>
 
-<div class="home-left-sidebar">
+<div class="home-right-sidebar">
   <%# Se o perfil for o do current user %>
   <% if can? :manage, user %>
     <%= render "users/profile_status", user: user %>

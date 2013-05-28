@@ -1,201 +1,205 @@
-<div class="span3">
-  <%= render "users/profile_sidebar", user: @user, contacts: @contacts %>
-</div>
-<div class="span10">
-  <div class="content-area">
-    <div class="content-body">
-      <div class="content-section">
-        <% if can? :manage, @user %>
-          <%= link_to 'Editar', edit_user_path(@user),
-            class: 'icon-manage-lightblue_16_18-before pull-right' %>
-        <% end %>
+<div class="breadcrumbless-wrapper clearfix">
+  <div class="span3">
+    <%= render "users/profile_sidebar", user: @user, contacts: @contacts %>
+  </div>
+  <div class="span10">
+    <div class="content-area">
+      <div class="content-body">
+        <div class="content-section">
+          <%= content_tag :h2, @user.display_name, class: "profile-name" %>
 
-        <%= content_tag :h2, @user.display_name, class: "profile-name" %>
-
-        <% unless @user.has_no_visible_profile_information %>
-          <ul class="profile-summary">
-            <li>
-              <% unless @user.experiences.actual_jobs.empty? %>
-                <ul class="profile-summary-items icon-curriculum-professional-gray_8_10-before">
-                  <% @user.experiences.actual_jobs.each do |experience| %>
-                    <li class="profile-summary-item">
-                      <%= content_tag :span, experience.title, class: "profile-summary-bio" %> em <%= content_tag :span, experience.company, class: "profile-summary-bio" %>
-                    </li>
+          <div class="profile-actions-n-summary clearfix">
+            <% if can? :manage, @user %>
+              <%= link_to 'Editar', edit_user_path(@user),
+                class: 'link-secondary icon-manage-lightblue
+                  _8_10-before pull-right' %>
+            <% end %>
+            <% unless @user.has_no_visible_profile_information %>
+              <ul class="profile-summary">
+                <li>
+                  <% unless @user.experiences.actual_jobs.empty? %>
+                    <ul class="profile-summary-items icon-curriculum-professional-gray_8_10-before">
+                      <% @user.experiences.actual_jobs.each do |experience| %>
+                        <li class="profile-summary-item">
+                          <%= content_tag :span, experience.title, class: "profile-summary-bio" %> em <%= content_tag :span, experience.company, class: "profile-summary-bio" %>
+                        </li>
+                      <% end %>
+                    </ul>
                   <% end %>
-                </ul>
-              <% end %>
-            </li>
-            <% unless @user.educations.empty? %>
-              <ul class="profile-summary-items icon-curriculum-academic-gray_8_10-before">
-                <%= render partial: "important_education",
-                  collection: @user.most_important_education,
-                  as: :education %>
+                </li>
+                <% unless @user.educations.empty? %>
+                  <ul class="profile-summary-items icon-curriculum-academic-gray_8_10-before">
+                    <%= render partial: "important_education",
+                      collection: @user.most_important_education,
+                      as: :education %>
+                  </ul>
+                <% end %>
+                <li>
+                  <ul class="profile-summary-items icon-biography-gray_8_10-before">
+                    <% if @user.birthday %>
+                      <li class="profile-summary-item">
+                        <%= content_tag :span, @user.age,
+                          class: "profile-summary-bio" %> anos
+                      </li>
+                    <% end %>
+                    <% unless @user.languages.blank? %>
+                      <li class="profile-summary-item">
+                        Fala
+                        <%= content_tag :span, @user.languages,
+                          class: "profile-summary-bio" %>
+                      </li>
+                    <% end %>
+                    <% unless @user.birth_localization.blank? %>
+                      <li class="profile-summary-item">
+                        Natural de
+                        <%= content_tag :span, @user.birth_localization,
+                          class: "profile-summary-bio" %>
+                      </li>
+                    <% end %>
+                    <% unless @user.localization.blank? %>
+                      <li class="profile-summary-item">
+                        Vive em
+                        <%= content_tag :span, @user.localization,
+                          class: "profile-summary-bio" %>
+                      </li>
+                    <% end %>
+                  </ul>
+                </li>
               </ul>
             <% end %>
-            <li>
-              <ul class="profile-summary-items icon-biography-gray_8_10-before">
-                <% if @user.birthday %>
-                  <li class="profile-summary-item">
-                    <%= content_tag :span, @user.age,
-                      class: "profile-summary-bio" %> anos
-                  </li>
-                <% end %>
-                <% unless @user.languages.blank? %>
-                  <li class="profile-summary-item">
-                    Fala
-                    <%= content_tag :span, @user.languages,
-                      class: "profile-summary-bio" %>
-                  </li>
-                <% end %>
-                <% unless @user.birth_localization.blank? %>
-                  <li class="profile-summary-item">
-                    Natural de
-                    <%= content_tag :span, @user.birth_localization,
-                      class: "profile-summary-bio" %>
-                  </li>
-                <% end %>
-                <% unless @user.localization.blank? %>
-                  <li class="profile-summary-item">
-                    Vive em
-                    <%= content_tag :span, @user.localization,
-                      class: "profile-summary-bio" %>
-                  </li>
-                <% end %>
-              </ul>
-            </li>
-          </ul>
-        <% end %>
-      </div>
-
-      <% unless @user.description.blank? and @user.tag_list.empty? and
-        @user.mobile.blank? and @user.social_networks.empty? %>
-        <hr class="list-separator"/>
-        <div class="content-section">
-          <span class="icon-biography-lightblue_32_34 text-replacement pull-right">Biografia</span>
-          <% unless @user.description.blank? %>
-            <div class="profile-bio-wrapper general-list-item-body">
-              <div class="profile-bio-label general-list-item-column">
-                <strong>Sobre mim:</strong>
-              </div>
-              <div class="profile-bio-content general-list-item-column"><%= @user.description %></div>
-            </div>
-          <% end %>
-          <% unless @user.tag_list.empty? %>
-            <div class="profile-bio-wrapper general-list-item-body">
-              <div class="profile-bio-label general-list-item-column">
-                <strong>Interesses:</strong>
-              </div>
-              <div class="profile-bio-content general-list-item-column"><%= @user.tag_list.join(", ") %></div>
-            </div>
-          <% end %>
-          <% unless @user.mobile.blank? %>
-            <div class="profile-bio-wrapper general-list-item-body">
-              <div class="profile-bio-label general-list-item-column">
-                <strong>Celular:</strong>
-              </div>
-              <div class="profile-bio-content general-list-item-column"><%= @user.mobile %></div>
-            </div>
-          <% end %>
-          <% unless @user.social_networks.empty? %>
-            <div class="profile-bio-wrapper general-list-item-body">
-              <div class="profile-bio-label general-list-item-column">&nbsp;</div>
-              <div class="profile-bio-content general-list-item-column">
-                <ul class="profile-social-networks">
-                  <%# TODO: Ícones. %>
-                  <%= render partial: "users/social_network", collection: @user.social_networks %>
-                </ul>
-              </div>
-            </div>
-          <% end %>
-        </div>
-      <% end %>
-
-      <% unless @user.experiences.empty? %>
-        <hr class="list-separator"/>
-        <div class="content-section">
-          <span class="icon-curriculum-professional-lightblue_32_34 text-replacement pull-right">Experiência profissional</span>
-          <div class="profile-bio-wrapper general-list-item-body">
-            <div class="profile-bio-label general-list-item-column">
-              <strong>Experiência:</strong>
-            </div>
-            <div class="profile-bio-content general-list-item-column">
-              <ul class="profile-curriculum">
-                <% @user.experiences.each do |experience| %>
-                  <li class="config-experience">
-                    <%= render "experiences/item_detail", item: experience %>
-                  </li>
-                <% end %>
-              </ul>
-            </div>
           </div>
         </div>
-      <% end %>
 
-      <% unless @user.educations.empty? %>
-        <hr class="list-separator"/>
-        <div class="content-section">
-          <span class="icon-curriculum-academic-lightblue_32_34 text-replacement pull-right">Experiência acadêmica</span>
-          <% unless @user.educations.higher_educations.empty? and
-                @user.educations.high_schools.empty? %>
+        <% unless @user.description.blank? and @user.tag_list.empty? and
+          @user.mobile.blank? and @user.social_networks.empty? %>
+          <hr class="list-separator"/>
+          <div class="content-section">
+            <span class="icon-biography-lightblue_32_34 text-replacement pull-right">Biografia</span>
+            <% unless @user.description.blank? %>
+              <div class="profile-bio-wrapper general-list-item-body">
+                <div class="profile-bio-label general-list-item-column">
+                  <strong>Sobre mim:</strong>
+                </div>
+                <div class="profile-bio-content general-list-item-column"><%= @user.description %></div>
+              </div>
+            <% end %>
+            <% unless @user.tag_list.empty? %>
+              <div class="profile-bio-wrapper general-list-item-body">
+                <div class="profile-bio-label general-list-item-column">
+                  <strong>Interesses:</strong>
+                </div>
+                <div class="profile-bio-content general-list-item-column"><%= @user.tag_list.join(", ") %></div>
+              </div>
+            <% end %>
+            <% unless @user.mobile.blank? %>
+              <div class="profile-bio-wrapper general-list-item-body">
+                <div class="profile-bio-label general-list-item-column">
+                  <strong>Celular:</strong>
+                </div>
+                <div class="profile-bio-content general-list-item-column"><%= @user.mobile %></div>
+              </div>
+            <% end %>
+            <% unless @user.social_networks.empty? %>
+              <div class="profile-bio-wrapper general-list-item-body">
+                <div class="profile-bio-label general-list-item-column">&nbsp;</div>
+                <div class="profile-bio-content general-list-item-column">
+                  <ul class="profile-social-networks">
+                    <%# TODO: Ícones. %>
+                    <%= render partial: "users/social_network", collection: @user.social_networks %>
+                  </ul>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+
+        <% unless @user.experiences.empty? %>
+          <hr class="list-separator"/>
+          <div class="content-section">
+            <span class="icon-curriculum-professional-lightblue_32_34 text-replacement pull-right">Experiência profissional</span>
             <div class="profile-bio-wrapper general-list-item-body">
               <div class="profile-bio-label general-list-item-column">
-                <strong>Educação:</strong>
+                <strong>Experiência:</strong>
               </div>
               <div class="profile-bio-content general-list-item-column">
                 <ul class="profile-curriculum">
-                  <% @user.educations.higher_educations.each do |higher| %>
+                  <% @user.experiences.each do |experience| %>
                     <li class="config-experience">
-                      <%= render "educations/higher_education_detail", item: higher %>
-                    </li>
-                  <% end %>
-                  <% @user.educations.high_schools.each do |high| %>
-                    <li class="config-experience">
-                      <%= render "educations/high_school_detail", item: high %>
+                      <%= render "experiences/item_detail", item: experience %>
                     </li>
                   <% end %>
                 </ul>
               </div>
             </div>
-          <% end %>
-          <% unless @user.educations.complementary_courses.empty? %>
-            <div class="profile-bio-wrapper general-list-item-body">
-              <div class="profile-bio-label general-list-item-column">
-                <strong>Complemento:</strong>
+          </div>
+        <% end %>
+
+        <% unless @user.educations.empty? %>
+          <hr class="list-separator"/>
+          <div class="content-section">
+            <span class="icon-curriculum-academic-lightblue_32_34 text-replacement pull-right">Experiência acadêmica</span>
+            <% unless @user.educations.higher_educations.empty? and
+                  @user.educations.high_schools.empty? %>
+              <div class="profile-bio-wrapper general-list-item-body">
+                <div class="profile-bio-label general-list-item-column">
+                  <strong>Educação:</strong>
+                </div>
+                <div class="profile-bio-content general-list-item-column">
+                  <ul class="profile-curriculum">
+                    <% @user.educations.higher_educations.each do |higher| %>
+                      <li class="config-experience">
+                        <%= render "educations/higher_education_detail", item: higher %>
+                      </li>
+                    <% end %>
+                    <% @user.educations.high_schools.each do |high| %>
+                      <li class="config-experience">
+                        <%= render "educations/high_school_detail", item: high %>
+                      </li>
+                    <% end %>
+                  </ul>
+                </div>
               </div>
-              <div class="profile-bio-content general-list-item-column">
-                <ul class="profile-curriculum">
-                  <% @user.educations.complementary_courses.each do |compl_course| %>
-                    <li class="config-experience">
-                      <%= render "educations/complementary_course_detail", item: compl_course %>
-                    </li>
-                  <% end %>
-                </ul>
+            <% end %>
+            <% unless @user.educations.complementary_courses.empty? %>
+              <div class="profile-bio-wrapper general-list-item-body">
+                <div class="profile-bio-label general-list-item-column">
+                  <strong>Complemento:</strong>
+                </div>
+                <div class="profile-bio-content general-list-item-column">
+                  <ul class="profile-curriculum">
+                    <% @user.educations.complementary_courses.each do |compl_course| %>
+                      <li class="config-experience">
+                        <%= render "educations/complementary_course_detail", item: compl_course %>
+                      </li>
+                    <% end %>
+                  </ul>
+                </div>
               </div>
-            </div>
-          <% end %>
-          <% unless @user.educations.event_educations.empty? %>
-            <div class="profile-bio-wrapper general-list-item-body">
-              <div class="profile-bio-label general-list-item-column">
-                <strong>Evento:</strong>
+            <% end %>
+            <% unless @user.educations.event_educations.empty? %>
+              <div class="profile-bio-wrapper general-list-item-body">
+                <div class="profile-bio-label general-list-item-column">
+                  <strong>Evento:</strong>
+                </div>
+                <div class="profile-bio-content general-list-item-column">
+                  <ul class="profile-curriculum">
+                    <% @user.educations.event_educations.each do |event| %>
+                      <li class="config-experience">
+                        <%= render "educations/event_education_detail", item: event %>
+                      </li>
+                    <% end %>
+                  </ul>
+                </div>
               </div>
-              <div class="profile-bio-content general-list-item-column">
-                <ul class="profile-curriculum">
-                  <% @user.educations.event_educations.each do |event| %>
-                    <li class="config-experience">
-                      <%= render "educations/event_education_detail", item: event %>
-                    </li>
-                  <% end %>
-                </ul>
-              </div>
-            </div>
-          <% end %>
-        </div>
-      <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
-</div>
-<div class="span3">
-  <%= render "users/secondary_sidebar", user: @user,
-    subscribed_courses_count: @subscribed_courses_count,
-    environments: @environments %>
+  <div class="span3">
+    <%= render "users/secondary_sidebar", user: @user,
+      subscribed_courses_count: @subscribed_courses_count,
+      environments: @environments %>
+  </div>
 </div>

@@ -54,4 +54,9 @@
   list-style-type: none;
 }
 
+.profile-social-network {
+  & +
+  & { margin-top: 5px; }
+}
+
 .profile-curriculum { margin: 0; }

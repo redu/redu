@@ -19,3 +19,14 @@ body { height: 100%; }
 }
 
 .footer-pusher { height: $footer-height; }
+
+.breadcrumbless-wrapper {
+  padding-top: 20px;
+
+  .home-left-sidebar,
+  .content-area { padding-top: 0; }
+
+  .home-right-sidebar { padding-top: 20px; }
+}
+
+.content-body .content-section:last-child { padding-bottom: 20px; }

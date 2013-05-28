@@ -3,26 +3,28 @@
   <%= stylesheet_link_tag "icons.redu" %>
 <% end %>
 
-<div class="span3">
-  <%= render "users/profile_sidebar", user: @user, contacts: @contacts %>
-</div>
-<div class="span10">
-  <div class="content-area">
-    <div class="content-body">
-      <% if (can? :manage, @user) or (can? :view_mural, @user) %>
-        <%# Mural. %>
-        <%= render "users/home_wall", user: @user, statuses: @statuses %>
-      <% else %>
-        <%= render "shared/empty_message",
-          icon_message: "Mural disponível apenas para Amigos",
-          icon_class: "icon-private-gray_128_130",
-          message: "Este mural está disponível disponível apenas para Amigos." %>
-      <% end %>
+<div class="breadcrumbless-wrapper clearfix">
+  <div class="span3">
+    <%= render "users/profile_sidebar", user: @user, contacts: @contacts %>
+  </div>
+  <div class="span10">
+    <div class="content-area">
+      <div class="content-body">
+        <% if (can? :manage, @user) or (can? :view_mural, @user) %>
+          <%# Mural. %>
+          <%= render "users/home_wall", user: @user, statuses: @statuses %>
+        <% else %>
+          <%= render "shared/empty_message",
+            icon_message: "Mural disponível apenas para Amigos",
+            icon_class: "icon-private-gray_128_130",
+            message: "Este mural está disponível disponível apenas para Amigos." %>
+        <% end %>
+      </div>
     </div>
   </div>
-</div>
-<div class="span3">
-  <%= render "users/secondary_sidebar", user: @user,
-    subscribed_courses_count: @subscribed_courses_count,
-    environments: @environments %>
+  <div class="span3">
+    <%= render "users/secondary_sidebar", user: @user,
+      subscribed_courses_count: @subscribed_courses_count,
+      environments: @environments %>
+  </div>
 </div>

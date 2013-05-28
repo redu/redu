@@ -1,3 +1,6 @@
+<% if @profile %>
+  <div class="breadcrumbless-wrapper clearfix">
+<% end %>
 <div class="span3">
   <% if @profile %>
     <%= render "users/profile_sidebar", user: @user, contacts: @contacts %>
@@ -67,3 +70,6 @@
     <%= render "users/right_sidebar", :user => @user %>
   <% end %>
 </div>
+<% if @profile %>
+  </div>
+<% end %>
