@@ -84,7 +84,10 @@ class LecturesController < BaseController
           render :show_exercise
         end
       end
-      format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
+      format.js do
+        render_endless 'statuses/item', @statuses, '#statuses',
+          :template => 'shared/new_endless_kaminari'
+      end
       format.html
       format.xml  { render :xml => @lecture }
     end

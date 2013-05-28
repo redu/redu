@@ -362,7 +362,10 @@ class UsersController < BaseController
 
     respond_to do |format|
       format.html
-      format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
+      format.js do
+        render_endless 'statuses/item', @statuses, '#statuses',
+          :template => 'shared/new_endless_kaminari'
+      end
     end
   end
 
