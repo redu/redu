@@ -1,0 +1,22 @@
+// ==========================================================================
+// Sprites.
+// ==========================================================================
+
+
+@import "compass/utilities/sprites/base";
+
+$sprites: sprite-map("sprites/social-networks/*.png", $layout: smart);
+
+.sprite-social-networks,
+.sprite-social-networks-before:before { background-image: sprite-url($sprites); }
+
+.sprite-social-networks { display: inline-block; }
+
+@each $sprite in sprite-names($sprites) {
+  .social-networks-#{$sprite},
+  .social-networks-#{$sprite}-before:before {
+    background-position: sprite-position($sprites, $sprite);
+    height: image-height(sprite-file($sprites, $sprite));
+    width: image-width(sprite-file($sprites, $sprite));
+  }
+}
