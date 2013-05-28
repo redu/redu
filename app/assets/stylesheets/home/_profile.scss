@@ -3,7 +3,10 @@
 // ==========================================================================
 
 
-.profile-name { color: $blue3; }
+.profile-name {
+  @include heading(1);
+  color: $blue3;
+}
 
 .profile-name +
 .profile-summary { margin-top: 20px; }
