@@ -11,8 +11,7 @@
           <div class="profile-actions-n-summary clearfix">
             <% if can? :manage, @user %>
               <%= link_to 'Editar', edit_user_path(@user),
-                class: 'link-secondary icon-manage-lightblue
-                  _8_10-before pull-right' %>
+                class: 'link-secondary icon-manage-lightblue_8_10-before pull-right' %>
             <% end %>
             <% unless @user.has_no_visible_profile_information %>
               <ul class="profile-summary">

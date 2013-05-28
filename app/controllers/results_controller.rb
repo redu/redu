@@ -34,9 +34,11 @@ class ResultsController < BaseController
       first(conditions: { position: 1})
     @last_question = @first_question.last_item
     @result = @exercise.result_for(current_user, false)
+    @choices_count = current_user.choices.by_exercise(@exercise).count
+    @questions_count = @exercise.questions.count
 
     respond_to do |format|
-      format.html { render 'questions/show' }
+      format.html { render 'results/admin/edit' }
     end
   end
 
