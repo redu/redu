@@ -5,6 +5,9 @@ describe Chat do
   it { should belong_to :user }
   it { should belong_to :contact }
   it { should have_many(:chat_messages).through(:chat_message_associations) }
+  it { should have_many(:chat_message_associations).dependent(:delete_all) }
+  it { should have_many(:chat_messages).through(:chat_message_associations).
+       dependent(:delete_all) }
 
   context "#create_for" do
     let(:user) { FactoryGirl.create(:user) }
