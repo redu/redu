@@ -4,9 +4,9 @@ require 'spec_helper'
 describe Status do
   it { should belong_to(:statusable) }
   it { should have_many(:users).through(:status_user_associations) }
-  it { should have_many(:status_user_associations).dependent(:destroy) }
-  it { should have_many(:status_resources).dependent(:destroy) }
-  it { should have_many(:answers).dependent(:destroy) }
+  it { should have_many(:status_user_associations).dependent(:delete_all) }
+  it { should have_many(:status_resources).dependent(:delete_all) }
+  it { should have_many(:answers).dependent(:delete_all) }
 
   context "scopes" do
     before do
