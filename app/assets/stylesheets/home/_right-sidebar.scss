@@ -6,11 +6,6 @@
 .home-right-sidebar {
   padding-top: 40px;
 
-  a {
-    &:visited { color: $blue3; }
-    &:hover { color: $blue4; }
-  }
-
   .nav-local-separator { margin: 0 0 10px 0; }
 
   li { list-style: none; }
