@@ -36,7 +36,6 @@
           <%# Se o usuario do perfil enviou requisiçnao de amizade. %>
           <% else %>
             <li class="profile-action">
-              <%# TODO: Hover/visited azul ao invés de branco. %>
               <%= link_to 'Aceitar conexão',
                 user_friendships_path(current_user, friend_id: user.id),
                 method: :post,
