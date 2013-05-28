@@ -61,7 +61,7 @@ describe User do
   it { should have_many(:logs) }
   it { should have_many(:overview).through(:status_user_associations) }
   it { should have_many(:statuses) }
-  it { should have_many(:status_user_associations).dependent(:destroy) }
+  it { should have_many(:status_user_associations).dependent(:delete_all) }
   it { should have_many(:results).dependent(:destroy) }
   it { should have_many(:choices).dependent(:delete_all) }
 

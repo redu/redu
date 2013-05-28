@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
   include UserSearchable
   include EnrollmentService::BaseModelAdditions
   include EnrollmentService::UserAdditions::ModelAdditions
+  include StatusService::BaseModelAdditions
+  include StatusService::UserAdditions::ModelAdditions
 
   # Valida a resposta ao captcha
   attr_writer :enable_humanizer
@@ -84,7 +86,7 @@ class User < ActiveRecord::Base
     dependent: :destroy
   has_many :overview, through: :status_user_associations, source: :status,
     include: [:user, :answers], order: "updated_at DESC"
-  has_many :status_user_associations, dependent: :destroy
+  has_many :status_user_associations, dependent: :delete_all
 
   has_many :client_applications
   has_many :tokens, class_name: "OauthToken", order: "authorized_at desc", include: [:client_application]
