@@ -182,11 +182,21 @@ $(function(){
     };
   };
 
+  var disableQuestionNavButtons = function (disable) {
+    var lectureButtons = $(".actions-buttons .lecture-buttons a, actions-buttons button");
+    if (disable) {
+      lectureButtons.attr("disabled", "disabled");
+    } else {
+      lectureButtons.removeAttr("disabled");
+    }
+  }
+
   // Ao clicar no radio button, submete o form de choice
   $.fn.saveQuestion = function(){
     return this.each(function(){
       $(this).on("click", function(e){
         showLoadingMessage(true);
+        disableQuestionNavButtons(true);
         $("#form-choice").submit();
       });
     });
@@ -213,6 +223,7 @@ $(function(){
       $("#resources-edition .exercise").refreshQuestionsAppearance();
       $(".exercise-nav .actual").addClass("question-answered");
       showLoadingMessage(false);
+      disableQuestionNavButtons(false);
     });
   });
 
