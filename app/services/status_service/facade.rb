@@ -4,11 +4,12 @@ module StatusService
     include Singleton
 
     def destroy_status(statusable)
+      status_service = StatusEntityService.new(statusable: statusable)
+
       status_dependencies_service = StatusDependenciesEntityService.
-        new(statusable: statusable)
+        new(statuses: status_service.statuses)
       status_dependencies_service.destroy
 
-      status_service = StatusEntityService.new(statusable: statusable)
       status_service.destroy
     end
   end
