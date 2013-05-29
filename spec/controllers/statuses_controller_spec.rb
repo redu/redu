@@ -199,8 +199,9 @@ describe StatusesController do
       context "when status is a Answer" do
         subject { FactoryGirl.create(:answer) }
 
-        it "should redirect to status page" do
-          path = controller.status_path(subject.in_response_to)
+        it "should redirect to status page with an anchor" do
+          path = controller.
+            status_path(subject.in_response_to, anchor: "answer_#{subject.id}")
           response.should redirect_to path
         end
       end
