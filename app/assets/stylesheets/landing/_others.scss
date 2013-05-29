@@ -2,19 +2,31 @@
 // Áreas de mensagens particulares, currículo e mobilidade.
 // ==========================================================================
 
+
 // Encapsulador.
 .landing-others {
   padding: 50px 20px 20px;
-  background: transparent image-url("landing/plus.png") no-repeat center 10px;
   overflow: hidden;
+  position: relative;
+}
+
+.landing-others-icon {
+  position: absolute;
+  $width: sprite-sprite-width(plus);
+  @include calc("left", "50% - (#{$width} / 2)", 49%);
+  top: 10px;
 }
 
 .landing-other {
-  width: 286px;
+  $margin-left: 20px;
+  $columns: 3;
+  $expression: "(100% - #{$margin-left} * (#{$columns} - 1)) / #{$columns}";
+  @include calc("width", $expression, 31%);
   float: left;
   position: relative;
 
-  & + & { margin-left: 20px; }
+  & +
+  & { margin-left: $margin-left; }
 
   .label-doubts {
     position: absolute;

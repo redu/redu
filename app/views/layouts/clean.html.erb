@@ -34,7 +34,7 @@
         <address class="our-address">Av. Barbosa Lima, 149, sala 413<br/>Recife, Brasil<br/>CNPJ: 12.359.885/0001-07</address>
         <ul class="menu">
           <li><%= link_to "Página Inicial", application_path %></li>
-          <li><%= link_to "Visite nosso Blog", "http://blog.redu.com.br" %></li>
+          <li><%= link_to "Visite nosso Blog", Redu::Application.config.redu_services[:blog][:url] %></li>
         </ul>
         <ul class="politics-terms">
           <li><%= link_to "Política de Privacidade", page_path("privacy") %></li>

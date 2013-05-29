@@ -268,6 +268,12 @@ module Redu
     config.redu_services[:help_center] = {
       :url => "http://ajuda.redu.com.br/"
     }
+    config.redu_services[:dev] = {
+      :url => "http://developers.redu.com.br/"
+    }
+    config.redu_services[:blog] = {
+      :url => "http://blog.redu.com.br/"
+    }
 
     # Seta locale defaul para pt-br
     config.i18n.default_locale = :"pt-BR"

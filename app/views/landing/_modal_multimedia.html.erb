@@ -1,18 +1,22 @@
 <%#
-  Modal dos tipos de aula
+  Modal dos tipos de aula.
+
   Variáveis:
-    type => o tipo de aula [video|presentation|documen|exercise]
-    title => o título da janela
-    image => a imagem
+    type: o tipo de aula [video|apresentacao|documento|exercicio].
+    title: o título da janela.
+    image: a imagem.
+    size: o tamanho da imagem.
 %>
-<div class="modal hide modal-grids-14 modal-fill-height" id="modal-landing-multimedia-<%= type %>">
+
+<%= content_tag :div, id: "aula-#{type}",
+  class: "modal hide modal-grids-14 modal-fill-height modal-multimedia" do %>
   <div class="modal-header">
-    <h3 class="modal-title"><%= title %></h3>
+    <%= content_tag :h3, title, class: "modal-title" %>
   </div>
-  <div class="modal-body">
-    <%= image_tag(image) %>
-  </div>
+  <%= content_tag :div,
+    image_tag("lazyload_grey.gif", "data-original" => asset_path(image), class: "lazy", size: size),
+    class: "modal-body" %>
   <div class="modal-footer">
     <button class="button-default" data-dismiss="modal">Voltar</button>
   </div>
-</div>
+<% end %>

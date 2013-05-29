@@ -1,18 +1,22 @@
+<%#
+  Funcionalidades.
+%>
+
 <div class="landing-functionalities">
   <h2 class="landing-navigation-title">Funcionalidades</h2>
-  <%= render :partial => "landing/social_network_n_chat" %>
-  <hr>
-  <%= render :partial => "landing/discussion_wall" %>
-  <hr>
-  <%= render :partial => "landing/multimedia_classes" %>
-  <hr>
-  <%= render :partial => "landing/basic_reports" %>
-  <hr>
-  <%= render :partial => "landing/management_n_support" %>
-  <hr>
-  <%= render :partial => "landing/oer" %>
-  <hr>
-  <%= render :partial => "landing/api" %>
-  <hr>
-  <%= render :partial => "landing/others" %>
+  <%= render "landing/social_network_n_chat" %>
+  <hr class="landing-functionalities-separator">
+  <%= render "landing/discussion_wall" %>
+  <hr class="landing-functionalities-separator">
+  <%= render "landing/multimedia_classes" %>
+  <hr class="landing-functionalities-separator">
+  <%= render "landing/basic_reports" %>
+  <hr class="landing-functionalities-separator">
+  <%= render "landing/management_n_support" %>
+  <hr class="landing-functionalities-separator">
+  <%= render "landing/oer" %>
+  <hr class="landing-functionalities-separator">
+  <%= render "landing/api" %>
+  <hr class="landing-functionalities-separator">
+  <%= render "landing/others" %>
 </div>

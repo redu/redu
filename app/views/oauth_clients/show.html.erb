@@ -14,7 +14,7 @@
       </div>
       <div class="content-section my-app">
         <h3 class="my-app-name"><%=@client_application.name %></h3>
-        <p>Para realizar a autenticação utilizamos o protocolo <%= link_to "OAuth 2.0", "http://oauth.net/2/" %>. Para mais informações visite nosso <%= link_to "guia de desenvolvedores", "http://developers.redu.com.br" %>.</p>
+        <p>Para realizar a autenticação utilizamos o protocolo <%= link_to "OAuth 2.0", "http://oauth.net/2/" %>. Para mais informações visite nosso <%= link_to "guia de desenvolvedores", Redu::Application.config.redu_services[:dev][:url] %>.</p>
 
         <ul class="my-app-infos">
           <li>
