@@ -180,6 +180,33 @@ describe StatusesController do
     end
   end
 
+  context "GET show" do
+    let(:params) { base_params.merge(id: subject.id) }
+    context "when status is accessible" do
+      before do
+        login_as(subject.user)
+        get :show, params
+      end
+
+      it "should assign the status" do
+        assigns[:status].should == subject
+      end
+
+      it "should use the correct layout" do
+        response.should render_template 'new_application'
+      end
+
+      context "when status is a Answer" do
+        subject { FactoryGirl.create(:answer) }
+
+        it "should redirect to status page" do
+          path = controller.status_path(subject.in_response_to)
+          response.should redirect_to path
+        end
+      end
+    end
+  end
+
   def create_friendship(user, friend)
     user.be_friends_with(friend)
     friend.be_friends_with(user)

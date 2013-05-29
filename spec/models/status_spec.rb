@@ -160,4 +160,20 @@ describe Status do
       end
     end
   end # context scope
+
+  context ".find_and_include_related" do
+    it "should delegate to .find with proper options" do
+      included = [{ answers: [:user, :status_resources] }, :status_resources]
+      Status.should_receive(:find).with(12, include: included)
+
+      Status.find_and_include_related(12)
+    end
+
+    it "should allow options override" do
+      Status.should_receive(:find).with(12, include: [])
+
+      Status.find_and_include_related(12, include: [])
+    end
+
+  end
 end

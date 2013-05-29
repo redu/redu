@@ -39,6 +39,15 @@ class Status < ActiveRecord::Base
   # Retorna apenas status visíveis
   scope :visible, where(:compound => false)
 
+  class << self
+    def find_and_include_related(*args)
+      included = { include: \
+                   [{ answers: [:user, :status_resources] }, :status_resources]}
+
+      options = included.merge(args.extract_options!)
+      find(args.first, options)
+    end
+  end
   # Constrói as condições de busca de status dentro da hierarquia. Aceita
   # Course, Space e Lecture como raiz
   def self.build_conditions(entity)

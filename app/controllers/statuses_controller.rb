@@ -1,11 +1,21 @@
 # -*- encoding : utf-8 -*-
 class StatusesController < BaseController
 
-  load_and_authorize_resource :status, :except => [:index]
+  load_and_authorize_resource :status, :except => [:index, :show]
 
   def show
+    @status = Status.find_and_include_related(params[:id].to_i)
+
+    authorize! :read, @status
+
     respond_to do |format|
-      format.html { render layout: 'new_application' }
+      format.html do
+        if @status.respond_to?(:in_response_to)
+          redirect_to status_path(@status.in_response_to) and return
+        else
+          render layout: 'new_application'
+        end
+      end
     end
   end
 
