@@ -2,7 +2,10 @@
 require 'spec_helper'
 
 describe Choice do
-  subject { FactoryGirl.create(:choice) }
+  subject do
+    FactoryGirl.create(:choice,
+                       :question => FactoryGirl.create(:question))
+  end
 
   it { should belong_to(:alternative) }
   it { should belong_to(:user) }
