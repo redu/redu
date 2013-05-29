@@ -58,8 +58,6 @@ Redu::Application.routes.draw do
     # site routes
     match '/about' => 'base#about', :as => :about
     match 'contact' => 'base#contact', :as => :contact
-    # TODO: Remover. Somente para teste.
-    match '/new_status_answer' => 'base#new_status_answer', :as => :new_status_answer
 
     # Space
     resources :spaces, :except => [:index] do
