@@ -45,24 +45,17 @@ class UsersController < BaseController
     @environments = @user.environments.page(params[:page]).per(4)
     @subscribed_courses_count = @user.user_course_associations.approved.count
 
-    if current_user == @user
-      @contacts = @user.friends.page(params[:page]).per(8)
-    else
-      @contacts = Kaminari::paginate_array(@user.friends_not_in_common_with(current_user)).
-        page(params[:page]).per(4)
-    end
-
     respond_to do |format|
       format.html { render layout: 'new_application' }
     end
   end
 
   def contacts_endless
+    # Replicado de users_helper#last_contacts.
     @contacts = if current_user == @user
-      Kaminari::paginate_array(@user.friends).page(params[:page]).per(8)
+      @user.friends.page(params[:page]).per(8)
     else
-      Kaminari::paginate_array(@user.friends_not_in_common_with(current_user)).
-        page(params[:page]).per(4)
+      @user.friends_not_in_common_with(current_user).page(params[:page]).per(4)
     end
 
     respond_to do |format|
@@ -365,13 +358,6 @@ class UsersController < BaseController
 
     @subscribed_courses_count = @user.user_course_associations.approved.count
     @environments = @user.environments.page(params[:page]).per(4)
-
-    if current_user == @user
-      @contacts = @user.friends.page(params[:page]).per(8)
-    else
-      @contacts = Kaminari::paginate_array(@user.friends_not_in_common_with(current_user)).
-        page(params[:page]).per(4)
-    end
 
     respond_to do |format|
       format.html { render layout: 'new_application' }

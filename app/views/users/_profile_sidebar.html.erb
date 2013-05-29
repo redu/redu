@@ -3,7 +3,6 @@
 
   Variáveis:
     user: o usuário.
-    contacts: contatos a serem mostrados.
 %>
 
 <div class="home-left-sidebar">
@@ -16,6 +15,8 @@
 
   <%= new_local_nav :user_profile %>
 
+  <%# Últimos contatos adicionados. %>
+  <% contacts = last_contacts(user) %>
   <% unless contacts.empty? %>
     <ul class="connections">
       <%= render partial: 'users/item_medium_24_new',

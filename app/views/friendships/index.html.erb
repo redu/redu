@@ -3,7 +3,7 @@
 <% end %>
 <div class="span3">
   <% if @profile %>
-    <%= render "users/profile_sidebar", user: @user, contacts: @contacts %>
+    <%= render "users/profile_sidebar", user: @user %>
   <% else %>
     <%= render "users/left_sidebar", :user => @user %>
   <% end %>

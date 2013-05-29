@@ -8,15 +8,7 @@ class FriendshipsController < BaseController
   def index
     @profile = params[:profile] if params.has_key? :profile
 
-    # Diferencia a tela de meus contatos com a tela de contatos do perfil.
-    if @profile
-      if current_user == @user
-        @contacts = @user.friends.page(params[:page]).per(8)
-      else
-        @contacts = Kaminari::paginate_array(@user.friends_not_in_common_with(current_user)).
-          page(params[:page]).per(4)
-      end
-    else
+    unless @profile
       @total_friends = @user.friends.count
     end
 
