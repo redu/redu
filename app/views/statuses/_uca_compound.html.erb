@@ -22,9 +22,7 @@
           environment_course_path(compound.statusable.environment, compound.statusable),
           class: "text-replacement context-icon icon-course-gray_32_34-before" %>
       <% end %>
-      <%= content_tag :span, compound.statusable.environment.name, class: "legend" %>
-      <%= link_to compound.statusable.name,
-        environment_course_path(compound.statusable.environment, compound.statusable) %>
+      <%= content_tag :span, raw(context_path(compound.statusable)), class: "legend" %>
     </div>
     <div class="subject">
       <div class="subject-info">

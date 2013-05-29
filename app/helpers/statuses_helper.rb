@@ -72,4 +72,52 @@ module StatusesHelper
 
     status.statusable && (is_a_log ? status.logeable : true)
   end
+
+  # Retorna o caminho da hierarquia até o elemento dado com links.
+  def context_path(item)
+    lecture = ''
+    subject = ''
+    space = ''
+    course = ''
+    environment = ''
+
+    if defined? item.subject
+      lecture = item
+      subject = lecture.subject
+      space = subject.space
+      course = space.course
+    end
+
+    if defined? item.space
+      subject = item
+      space = subject.space
+      course = space.course
+    end
+
+    if defined? item.course
+      space = item
+      course = space.course
+    end
+
+    if defined? item.environment
+      course = item
+    end
+
+    environment = course.environment
+    environment_link = link_to(environment.name, environment_path(environment))
+
+    unless lecture.blank?
+      lecture_link = link_to(lecture.name, space_subject_lecture_path(space, subject, lecture))
+    end
+
+    unless space.blank?
+      space_link = link_to(space.name, space_path(space))
+    end
+
+    unless course.blank?
+      course_link = link_to(course.name, environment_course_path(environment, course))
+    end
+
+    [environment_link, course_link, space_link, lecture_link].compact.join(' > ')
+  end
 end

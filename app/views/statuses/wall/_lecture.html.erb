@@ -14,11 +14,7 @@
       <%= link_to item.statusable.name,
         space_subject_lecture_path(item.statusable.subject.space, item.statusable.subject, item.statusable),
         class: "text-replacement context-icon icon-subject-gray_32_34-before" %>
-      <%= content_tag :span,
-        "#{item.statusable.subject.space.course.environment.name} > #{item.statusable.subject.space.course.name} > #{item.statusable.subject.space.name}",
-        class: "legend" %>
-      <%= link_to item.statusable.name,
-        space_subject_lecture_path(item.statusable.subject.space, item.statusable.subject, item.statusable) %>
+      <%= content_tag :span, raw(context_path(item.statusable)), class: "legend" %>
     </div>
     <div class="subject">
       <%= render "statuses/user_image", user: item.user %>
