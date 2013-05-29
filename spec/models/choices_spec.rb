@@ -18,7 +18,7 @@ describe Choice do
     it "should return all correct choices" do
       correct_choices = FactoryGirl.create_list(:choice, 2, correct: true)
       FactoryGirl.create_list(:choice, 2, correct: false)
-      Choice.correct.to_set.should == correct_choices.to_set
+      Choice.correct.should =~ correct_choices
     end
 
     it "should return all choices of an exercise" do
