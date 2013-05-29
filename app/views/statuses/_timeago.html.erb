@@ -15,7 +15,7 @@
 <% end %>
 
 <% if status %>
-  <%= link_to time, status_path(status), class: "date" %>
+  <%= link_to time, status_or_answer_path(status), class: "date" %>
 <% else %>
   <%= time %>
 <% end %>
