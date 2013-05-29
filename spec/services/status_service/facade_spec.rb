@@ -10,7 +10,7 @@ module StatusService
     end
 
     describe "#destroy_status" do
-      let(:statusable) { FactoryGirl.create(:user) }
+      let(:statusable) { FactoryGirl.build_stubbed(:user) }
 
       before do
         mock_status_entity_service(status_entity_service)
@@ -38,7 +38,7 @@ module StatusService
 
         it "should invoke StatusDependenciesEntityService.new with" \
           " StatusEntityService#statuses return" do
-          statuses = FactoryGirl.create_list(:activity, 2)
+          statuses = FactoryGirl.build_stubbed_list(:activity, 2)
           status_entity_service.stub(:statuses).and_return(statuses)
 
           StatusDependenciesEntityService.should_receive(:new).

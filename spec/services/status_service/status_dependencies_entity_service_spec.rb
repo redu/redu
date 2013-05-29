@@ -4,7 +4,7 @@ require 'spec_helper'
 module StatusService
   describe StatusDependenciesEntityService do
     subject { StatusDependenciesEntityService.new(statuses: statuses) }
-    let(:statuses) { FactoryGirl.create_list(:activity, 2) }
+    let(:statuses) { FactoryGirl.build_stubbed_list(:activity, 2) }
 
     describe "#destroy" do
       it 'should invoke self#destroy_dependency with Answer' do
