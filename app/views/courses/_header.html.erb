@@ -9,17 +9,20 @@
   <% end %>
   <h3 class="call name"><%= link_to course.name, environment_course_path(course.environment, course) %></h3>
   <%# TODO: Back-end com a lista de responsáveis e seus papéis. %>
-  <% responsibles = course.teachers %>
-  <% unless responsibles.empty? %>
+  <% if responsibles_associations.empty? %>
+    <div class="course-owners cleafix">
+      <span class="pull-left">Esse curso não possui administradores e professores.</span>
+    </div>
+  <% else %>
     <div class="course-owners clearfix">
       <%= content_tag :span,
-        "#{t('classy_enum.role.teacher', :count => responsibles.length)}:",
+        "#{ pluralize responsibles_associations.length, 'Responsável', 'Responsáveis'}:",
         class: "pull-left" %>
       <ol class="course-resposibles clearfix pull-left">
-        <% responsibles.each do |responsible| %>
+        <% responsibles_associations.each do |responsible| %>
           <li class="course-resposible">
-             <%= link_to responsible.display_name, user_path(responsible),
-              class: "icon-#{responsible.role}-gray_16_18-before" %>
+            <%= link_to responsible.user.display_name, user_path(responsible.user),
+              class: "icon-#{ role_icon(responsible.role).first }-gray_16_18-before" %>
           </li>
         <% end %>
       </ol>
