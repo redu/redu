@@ -42,7 +42,6 @@ class UsersController < BaseController
       redirect_to removed_page_path and return
     end
 
-    @environments = @user.environments.page(params[:page]).per(4)
     @subscribed_courses_count = @user.user_course_associations.approved.count
 
     respond_to do |format|
@@ -357,7 +356,6 @@ class UsersController < BaseController
     @status = Status.new
 
     @subscribed_courses_count = @user.user_course_associations.approved.count
-    @environments = @user.environments.page(params[:page]).per(4)
 
     respond_to do |format|
       format.html { render layout: 'new_application' }

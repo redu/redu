@@ -4,7 +4,6 @@
   Variáveis:
     user: o usuário.
     subscribed_courses_count: a quantidade de cursos inscritos.
-    environments: os ambientes a serem mostrados.
 %>
 
 <div class="home-right-sidebar">
@@ -58,6 +57,7 @@
     </ul>
   </div>
 
+  <% environments = user.environments.page(params[:page]).per(4) %>
   <% unless environments.empty? %>
     <div class="right-sidebar-area">
       <%= content_tag :h6, "Cursos inscritos: #{subscribed_courses_count}",

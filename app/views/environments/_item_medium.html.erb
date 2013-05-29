@@ -3,6 +3,7 @@
 
   Variáveis:
     item_medium: o ambiente.
+    user: o usuario.
 %>
 
 <li class="profile-enrolled-environment">
@@ -20,16 +21,8 @@
     </div>
   </div>
   <ul class="profile-enrolled-courses">
-    <% user.courses.of_environment(item_medium).each do |course| %>
-      <li class="profile-enrolled-course">
-        <%= link_to course.name,
-          environment_course_path(item_medium, course),
-          class: "text-truncate",
-          title: course.name %>
-        <% role = user.get_association_with(course).role %>
-        <%= content_tag :span, t("classy_enum.role.#{role}", count: 1),
-          class: "legend icon-#{role_icon(role).first}-gray_16_18-before" %>
-      </li>
-    <% end %>
+    <%= render partial: "courses/item_user_role",
+      collection: user.courses.of_environment(item_medium),
+      locals: { user: user } %>
   </ul>
 </li>
