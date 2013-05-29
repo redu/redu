@@ -920,6 +920,10 @@ describe User do
 
   it_should_behave_like 'have unique index database'
 
+  it "should respond to async_destroy" do
+    subject.should respond_to(:async_destroy)
+  end
+
   private
   def create_friendship(user1, user2)
     user1.be_friends_with(user2)
