@@ -16,7 +16,14 @@ class FriendshipsController < BaseController
       includes(:friends, :experiences).page(params[:page]).per(20)
 
     respond_to do |format|
-      format.html { render layout: 'new_application' }
+      format.html do
+        # TODO: Adicionar testes.
+        if @profile
+          render 'index_profile', layout: 'new_application'
+        else
+          render layout: 'new_application'
+        end
+      end
     end
   end
 
