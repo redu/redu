@@ -20,16 +20,6 @@ module SearchHelper
     uca.try(:role)
   end
 
-  # Define o ícone a ser usado dependendo do papel.
-  def role_icon(role)
-    case role
-    when Role[:environment_admin] then "manager"
-    when Role[:teacher] then "teacher"
-    when Role[:tutor] then "tutor"
-    when Role[:member] then "member"
-    end
-  end
-
   # Define a formatação da lista de administradores
   def show_administrators_list(collection)
     links = collection.collect do |admin|
