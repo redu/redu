@@ -10,14 +10,8 @@
       <div class="content-section">
         <%# Cabeçalho %>
         <%= render "bootstrap/header_breadcrumb", :header_breadcrumb_items => [
-          { :name => "Configurações",
-            :link => edit_user_path(@user),
-            :classes => "icon-manage-gray_32_34-before"
-          },
-          { :name => "Planos",
-            :link => user_plans_path(@user)
-          }
-          ] %>
+          { :name => "Configurações", :link => edit_user_path(@user), :classes => "icon-manage-gray_32_34-before" },
+          { :name => "Planos", :link => user_plans_path(@user) } ] %>
       </div>
       <%# Abas e sub-abas %>
       <%= new_tabs(:new_users) %>

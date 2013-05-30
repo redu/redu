@@ -7,15 +7,8 @@
     <div class="content-body">
       <div class="content-section">
         <%= render "bootstrap/header_breadcrumb", header_breadcrumb_items: [
-          { name: "Meus Contatos",
-            link: user_friendships_path(@user),
-            classes: "icon-connections-gray_32_34-before"
-          },
-          { name: "Amigos",
-            link: user_friendships_path(@user),
-            counter: @total_friends
-          }
-          ] %>
+          { name: "Meus Contatos", link: user_friendships_path(@user), classes: "icon-connections-gray_32_34-before" },
+          { name: "Amigos", link: user_friendships_path(@user), counter: @total_friends } ] %>
         <%= link_to "Convidar amigos", new_user_friendship_path(@user), class: "button-primary icon-invite-white_blue_16_18-before pull-right" %>
       </div>
       <%= new_tabs(:new_users) %>
