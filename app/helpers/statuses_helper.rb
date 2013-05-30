@@ -18,7 +18,7 @@ module StatusesHelper
     if logeable_type == "Experience" || logeable_type == "Education"
       "user"
     else
-      logeable_type.underscore.downcase
+      logeable_type.underscore
     end
   end
 

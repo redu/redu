@@ -8,7 +8,7 @@
   <% if item.type.eql? 'Log' %>
     <%= render "statuses/logs/#{log_partial_name(item)}", log: item %>
   <% elsif item.type.eql? 'CompoundLog' %>
-    <%= render "statuses/compound/#{item.logeable_type.underscore.downcase}", compound: item %>
+    <%= render "statuses/compound/#{item.logeable_type.underscore}", compound: item %>
   <% else %>
     <%= render "statuses/wall/#{comment_partial_name(item)}", item: item %>
   <% end %>
