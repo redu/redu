@@ -14,8 +14,9 @@
 
   <div class="right-sidebar-area">
     <ul class="profile-actions">
+      <% is_friend = is_friend?(user) %>
       <%# Se os usuários forem amigos, existe a opção de acabar com a amizade. %>
-      <% if is_friend?(user) %>
+      <% if is_friend %>
         <li class="profile-action profile-action-remove-contact">
           <%= link_to 'Remover contato',
             user_friendship_path(current_user, current_friendship(current_user, user).id),
@@ -26,7 +27,7 @@
       <% end %>
 
       <%# Se os usuários não forem amigos ainda. %>
-      <% if !is_friend?(user) %>
+      <% if is_friend %>
         <%# Se existe requisição pendente. %>
         <% if current_friendship(user) %>
           <%# Se current_user já enviou requisição de amizade. %>
@@ -48,7 +49,7 @@
       <% end %>
 
       <%# Se os usuário forem amigos, opção para escrever mensagem. %>
-      <% if is_friend?(user) %>
+      <% if is_friend %>
         <li class="profile-action profile-action-remove-contact">
           <%= link_to "Escrever Mensagem", new_user_message_path(current_user),
             remote: true,
