@@ -5,7 +5,6 @@
     item: o status.
 %>
 
-<% if can_render_status? item %>
   <% if item.type.eql? 'Log' %>
     <%= render "statuses/logs/#{log_partial(item.logeable_type)}", log: item %>
   <% elsif item.type.eql? 'CompoundLog' %>
@@ -13,4 +12,3 @@
   <% else %>
     <%= render "statuses/wall/#{answerable_status_partial(item)}", item: item %>
   <% end %>
-<% end %>
