@@ -10,10 +10,10 @@ module ResultsHelper
     end
   end
 
-  def submit_button(choices_count, questions_count)
+  def exercise_submit_button(choices_count, questions_count)
     options = {class: "concave-button"}
     if choices_count != questions_count
-      options[:data] = { confirm: "Você só respondeu #{ choices_count } de #{ pluralize questions_count, 'questão', 'questões' }, tem certeza que deseja submeter?"}
+      options[:data] = { confirm: "Você só respondeu #{choices_count} de #{pluralize questions_count, 'questão', 'questões'}, tem certeza que deseja submeter?"}
     end
 
     button_tag(options, class: "concave-button") do
