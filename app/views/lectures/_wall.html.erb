@@ -1,9 +1,10 @@
 <%#
-  Formulário de criação de status na aula.
+  Mural da aula.
 
   Variáveis:
     status: o status (normalmente um novo).
-    statusable: o item statusable.
+    statusable: a aula.
+    statuses: a coleção de status.
 %>
 
 <div class="content-section">
@@ -16,9 +17,9 @@
         <button class="button-primary button-big reply-status button-help">Pedir ajuda</button>
       </li>
       <%= render "statuses/create_status", status: status,
-        statusable: lecture %>
+        statusable: statusable %>
       <%= render "statuses/create_status", status: status,
-        statusable: lecture,
+        statusable: statusable,
         extra_classes: "tab-right",
         status_type: "Help" %>
     </ul>
