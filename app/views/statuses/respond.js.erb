@@ -15,6 +15,11 @@
     $responses.countComments();
   }
 
-  $status.find(".create-response").slideUp(150, "swing");
+  var $form = $status.find(".create-response");
+  $form.slideUp(150, "swing");
   $status.find("textarea").val("");
+
+  // Remove os erros se existirem.
+  $form.removeClass("control-error");
+  $form.find(".control-errors").remove();
 <% end %>
