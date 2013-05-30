@@ -27,7 +27,7 @@
     <div class="subject">
       <div class="subject-info">
         <%= content_tag :span,
-          "O curso possui #{compound.logs.count} novos Membros:",
+          "O curso possui #{compound.logs.length} novos Membros:",
           class: "icon-grouping-gray_16_18-before action" %>
         <% if compound.logs.count > 12 %>
           <span class="link-fake see-all link-secondary">+ Ver todos</span>
