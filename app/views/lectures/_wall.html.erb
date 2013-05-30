@@ -16,12 +16,10 @@
       <li>
         <button class="button-primary button-big reply-status button-help">Pedir ajuda</button>
       </li>
-      <%= render "statuses/create_status", status: status,
-        statusable: statusable %>
-      <%= render "statuses/create_status", status: status,
-        statusable: statusable,
-        extra_classes: "tab-right",
-        status_type: "Help" %>
+      <%= render "statuses/create_status", status: status, statusable: statusable,
+        placeholder: "Comente nesta aula." %>
+      <%= render "statuses/create_status", status: status, statusable: statusable,
+        extra_classes: "tab-right", status_type: "Help", placeholder: "Peça ajuda nesta aula." %>
     </ul>
   </div>
 </div>
