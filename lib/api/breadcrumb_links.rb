@@ -12,9 +12,9 @@ module Api
           instance = self.send(attr)
 
           if instance
-            { :name => instance.name,
-              :href => polymorphic_url([:api, instance]),
-              :permalink => self.entity_permalink(instance) }
+            { name: instance.name,
+              href: polymorphic_url([:api, instance]),
+              permalink: self.entity_permalink(instance) }
           end
         end
       end
@@ -22,9 +22,9 @@ module Api
       # O attributo passa a ser wall, pois "user" é o criador do status
       link :wall do
         if self.statusable.is_a? User
-          { :name => self.statusable.display_name,
-            :href => polymorphic_url([:api, self.statusable]),
-            :permalink => user_url(self.statusable) }
+          { name: self.statusable.display_name,
+            href: polymorphic_url([:api, self.statusable]),
+            permalink: user_url(self.statusable) }
         end
       end
     end
@@ -36,16 +36,27 @@ module Api
     # Atribui as variáveis necessárias aos breadcrumbs de acordo com
     # o statusable
     def assign_vars
-      case self.statusable.class.to_s
+      entity = self.logeable || self.statusable
+
+      case entity.class.to_s
+      when "Course"
+        @course||= entity
+        @environment ||= course.environment
       when "Space"
-        @space ||= self.statusable
+        @space ||= entity
+        @course ||= space.course
+        @environment ||= course.environment
+      when "Subject"
+        @subject ||= entity
+        @space ||= subject.space
         @course ||= space.course
         @environment ||= course.environment
       when "Lecture"
-        @lecture ||= self.statusable
+        @lecture ||= entity
         @subject ||= lecture.subject
         @space ||= subject.space
-        @course ||= space.course
+      when "UserCourseAssociation"
+        @course = entity.course
         @environment ||= course.environment
       end
     end

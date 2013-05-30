@@ -4,7 +4,7 @@
 
 // Wrapper de tudo.
 .landing-welcome {
-  @include box-sizing(border-box);
+  @include box-sizing;
   height: 470px;
   padding-top: 60px;
   background: transparent image-url('landing/illustration.png') no-repeat center;

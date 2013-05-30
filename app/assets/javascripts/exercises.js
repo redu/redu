@@ -173,7 +173,7 @@ $(function(){
   };
 
   // Mostra mensagem de carregando enquanto a questão está sendo salva
-  var loadingQuestion = function (show) {
+  var showLoadingMessage = function (show) {
     var loading = $("#loading-message");
     if (show) {
       loading.show();
@@ -182,12 +182,29 @@ $(function(){
     };
   };
 
+  var disableQuestionNavButtons = function (disable) {
+    var lectureButtons = $(".actions-buttons .lecture-buttons a, actions-buttons button");
+    var $links = $(".exercise-nav a");
+
+    if (disable) {
+      lectureButtons.attr("disabled", "disabled");
+      $links.addClass("link-disabled");
+    } else {
+      lectureButtons.removeAttr("disabled");
+      $links.removeClass("link-disabled");
+    }
+  }
+
+  $(document).on("click", "a.link-disabled", function(e) {
+    e.preventDefault();
+  });
+
   // Ao clicar no radio button, submete o form de choice
   $.fn.saveQuestion = function(){
     return this.each(function(){
       $(this).on("click", function(e){
-        var loading = $("#loading-message");
-        loading.show();
+        showLoadingMessage(true);
+        disableQuestionNavButtons(true);
         $("#form-choice").submit();
       });
     });
@@ -213,7 +230,12 @@ $(function(){
       $(document).refreshNestedFieldsEdition();
       $("#resources-edition .exercise").refreshQuestionsAppearance();
       $(".exercise-nav .actual").addClass("question-answered");
-      loadingQuestion(false);
+      showLoadingMessage(false);
+      disableQuestionNavButtons(false);
     });
+  });
+
+  $(document).on("click", ".concave-clean[disabled]", function(e) {
+    e.preventDefault();
   });
 });

@@ -233,6 +233,8 @@ $(document).ready(function(){
           $.post(url, { id : identifier });
 
           if (dataTour === "search-courses") {
+            $("#modal-what-is-missing").modal("hide");
+
             setTimeout(function() {
               $(".form-search-filters-dropdown input[value=ambientes]:radio")
                 .change()

@@ -1,3 +1,6 @@
+@import "bootstrap/variables";
+
+
 /* Navegação de exercícios */
 #resource .exercise-nav {
   height: 70px;
@@ -83,6 +86,14 @@
   color: rgb(77, 173, 214);
   border: 1px solid rgb(204, 204, 204);
   font-size: 1em;
+
+  &[disabled],
+  &[disabled]:hover {
+    color: $gray5;
+    border-color: $gray3;
+    background: $gray2;
+    cursor: not-allowed;
+  }
 }
 
 #resource .exercise .concave-clean:hover {
@@ -435,6 +446,9 @@
   font-weight: 500;
   display: block;
   text-align: center;
+}
+#resource .exercise-call .exercise-full {
+  color: rgb(77, 173, 214);
 }
 
 #resource .exercise-overview .exercise-name.undone {
@@ -1049,4 +1063,15 @@
 .cssgradients #space-manage .edit-resource .alternative-item .tip,
 .cssgradients #space-manage .edit-resource .alternative-item .errors_on_field {
   margin-left: 118px;
+}
+
+#resource .exercise-nav li a.link-disabled,
+#resource .exercise a.link-disabled {
+  &,
+  &:hover,
+  &:visited {
+    color: $gray5;
+    text-decoration: none;
+    cursor: not-allowed;
+  }
 }

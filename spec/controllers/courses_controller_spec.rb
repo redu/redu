@@ -3,28 +3,40 @@ require 'spec_helper'
 require 'authlogic/test_case'
 
 describe CoursesController do
+  let(:user) { FactoryGirl.create(:user) }
+  let(:environment) { FactoryGirl.create(:environment, owner: user) }
+  let(:course) do
+    FactoryGirl.create(:course, environment: environment, owner: user)
+  end
+  let(:space) { FactoryGirl.create(:space, course: course, owner: user) }
+  let(:spaces) do
+    FactoryGirl.create_list(:space, 2, course: course, owner: user)
+  end
+  let(:subjects) do
+    spaces.map do |s|
+      FactoryGirl.create_list(:subject, 2, space: s, owner: user, finalized: true)
+    end.flatten
+  end
+  let(:users) { FactoryGirl.create_list(:user, 5).map { |u| course.join(u); u } }
+  let(:locale_params) { { locale: "pt-BR" } }
+  let(:course_params) { locale_params.merge(id: course.path) }
+  let(:nested_course_params) do
+    course_params.merge(environment_id: environment.path)
+  end
+
   context "when creating a course for an existing environment" do
-    before do
-      @user = FactoryGirl.create(:user)
-      login_as @user
-
-      @environment = FactoryGirl.create(:environment, owner: @user)
-
-      @params = {course:
-        { name: "Redu", workload: "12",
-          tag_list: "minhas, tags, exemplo, aula, teste",
-          path: "redu", subscription_type: "1",
-          description: "Lorem ipsum dolor sit amet, consectetur" \
-          "magna aliqua. Ut enim ad minim veniam, quis nostrud" \
-          "ullamco laboris nisi ut aliquip ex ea commodo."},
-          plan: "free",
-          environment_id: @environment.path,
-          locale: "pt-BR" }
+    let(:environment_params) { locale_params.merge(environment_id: environment.path) }
+    let(:params) do
+      environment_params.
+        merge({ course: { name: "Redu", path: "redu", subscription_type: "1" },
+                plan: "free" })
     end
+
+    before { login_as user }
 
     context "POST create" do
       before do
-        post :create, @params
+        post :create, params
       end
 
       it "should create the course" do
@@ -37,7 +49,7 @@ describe CoursesController do
       end
 
       it "should assign the plan user to current_user" do
-        assigns[:course].plan.user.should == @user
+        assigns[:course].plan.user.should == user
       end
 
       it "should create the quota and computes it" do
@@ -47,90 +59,69 @@ describe CoursesController do
 
     context "POST create" do
       it "should be a professor_lite plan" do
-        @params[:plan] = "professor_lite"
-        post :create, @params
+        params[:plan] = "professor_lite"
+        post :create, params
         assigns[:plan].name.should == "Professor Lite"
       end
 
       it "should not generate invoice for free plans" do
-        @params[:plan] = "free"
+        params[:plan] = "free"
 
         expect {
-          post :create, @params
+          post :create, params
         }.to_not change(Invoice, :count)
       end
     end
   end
 
   context "when updating a couse" do
+    let(:params) do
+      nested_course_params.merge({ course: { subscription_type: "1" }})
+    end
+
+    before do
+      course.update_attribute(:subscription_type, 2)
+      login_as user
+    end
+
+    it "should update a course" do
+      post :update, params
+      assigns[:course].should_not be_nil
+      assigns[:course].should be_valid
+    end
+
     context "POST update - updating a subscription_type to 1" do
-      before do
-        @user = FactoryGirl.create(:user)
-        login_as @user
-
-        @environment = FactoryGirl.create(:environment, owner: @user)
-
-        @course = FactoryGirl.create(:course,environment: @environment, owner: @user,
-                          subscription_type: 2)
-        @users = 5.times.inject([]) { |res, i| res << FactoryGirl.create(:user) }
-        @course.join(@users[0])
-        @course.join(@users[1])
-        @course.join(@users[2])
-        @course.join(@users[3])
-        @course.join(@users[4])
-
-        @params = {course: { subscription_type: "1" },
-          id: @course.path,environment_id: @course.environment.path,
-          locale: "pt-BR"}
-        post :update, @params
-      end
-
-      it "should update a course" do
-        assigns[:course].should_not be_nil
-        assigns[:course].should be_valid
+      let!(:users) do
+        FactoryGirl.create_list(:user, 5).map { |u| course.join(u); u }
       end
 
       it "should create associations with all members that are waiting" do
-        @course.approved_users.to_set.should == (@users << @user).to_set
-        @course.pending_users.should == []
+        post :update, params
+        course.approved_users.to_set.should == (users << user).to_set
+        course.pending_users.should == []
       end
     end
   end
 
   context "when moderating a course" do
+    let!(:plan) { FactoryGirl.create(:plan, billable: course, user: course.owner) }
+
     before do
-      @user = FactoryGirl.create(:user)
-      login_as @user
-
-      @environment = FactoryGirl.create(:environment, owner: @user)
-
-      @course = FactoryGirl.create(:course,environment: @environment,
-                        owner: @user,
-                        subscription_type: 2)
-
-      plan = FactoryGirl.create(:plan, billable: @course,
-                     user: @course.owner)
-      @course.create_quota
-
-      @space = FactoryGirl.create(:space, course: @course, owner: @user)
-      @users = 5.times.inject([]) { |res, i| res << FactoryGirl.create(:user) }
-      @course.join(@users[0])
-      @course.join(@users[1])
-      @course.join(@users[2])
-      @course.join(@users[3])
-      @course.join(@users[4])
-
-      login_as @user
+      course.update_attribute(:subscription_type, 2)
+      course.create_quota
+      login_as user
     end
 
     context "POST - rejecting members" do
+      let(:params) do
+        nested_course_params.
+          merge({ member: { users[1].id.to_s => "reject",
+                            users[2].id.to_s => "reject",
+                            users[3].id.to_s => "approve"}})
+      end
+
       before do
-        @params = { member: { @users[1].id.to_s => "reject",
-          @users[2].id.to_s => "reject",
-          @users[3].id.to_s => "approve"},
-          id: @course.path, environment_id: @environment.path,
-          locale: "pt-BR"}
-        post :moderate_members_requests, @params
+        post :moderate_members_requests, params
       end
 
       it "should assign course" do
@@ -139,29 +130,30 @@ describe CoursesController do
       end
 
       it "should destroy association" do
-        @users[1].get_association_with(@course).should be_nil
-        @users[2].get_association_with(@course).should be_nil
-        @users[1].get_association_with(@course.environment).should be_nil
-        @users[2].get_association_with(@course.environment).should be_nil
-        @users[1].get_association_with(@space).should be_nil
-        @users[2].get_association_with(@space).should be_nil
-        @course.approved_users.to_set.should == [@user, @users[3]].to_set
+        users[1].get_association_with(course).should be_nil
+        users[2].get_association_with(course).should be_nil
+        users[1].get_association_with(course.environment).should be_nil
+        users[2].get_association_with(course.environment).should be_nil
+        users[1].get_association_with(space).should be_nil
+        users[2].get_association_with(space).should be_nil
+        course.approved_users.should =~ [user, users[3]]
       end
 
       it "should not raise error when moderating again" do
         expect {
-          post :moderate_members_requests, @params
+          post :moderate_members_requests, params
         }.to_not raise_error(AASM::InvalidTransition)
       end
     end
 
     context "POST - accepting member" do
+      let(:params) do
+        nested_course_params.merge({ member: { users[1].id.to_s => "approve",
+                                      users[2].id.to_s => "approve"}})
+      end
+
       before do
-        @params = { member: { @users[1].id.to_s => "approve",
-          @users[2].id.to_s => "approve"},
-          id: @course.path, environment_id: @environment.path,
-          locale: "pt-BR"}
-        post :moderate_members_requests, @params
+        post :moderate_members_requests, params
       end
 
       it "should assign course" do
@@ -170,144 +162,123 @@ describe CoursesController do
       end
 
       it "should approve association" do
-        @course.approved_users.to_set.should == [@users[1], @users[2], @user].to_set
+        course.approved_users.should =~ [users[1], users[2], user]
       end
 
       it "should create environment and space associations" do
-        @course.environment.users.to_set.should == [@users[1], @users[2], @user].to_set
-        @space.users.to_set.should == [@users[1], @users[2], @user].to_set
+        environment.users.should =~ [users[1], users[2], user]
+        space.users.should =~ [users[1], users[2], user]
       end
 
       it "should not raise error when moderating again" do
         expect {
-          post :moderate_members_requests, @params
+          post :moderate_members_requests, params
         }.to_not raise_error(AASM::InvalidTransition)
       end
     end
 
     context "when course does not have a plan" do
+      let(:params) do
+        nested_course_params.merge({ member: { users[1].id.to_s => "approve",
+                                      users[2].id.to_s => "approve"} })
+      end
+
       before do
-        @course.plans = []
-
-        @plan = FactoryGirl.create(:active_licensed_plan, billable: @course.environment,
-                       user: @course.environment.owner)
-        @plan.create_invoice
-
-
-        @params = { member: { @users[1].id.to_s => "approve",
-          @users[2].id.to_s => "approve"},
-          id: @course.path, environment_id: @environment.path,
-          locale: "pt-BR"}
+        course.plans = []
+        FactoryGirl.
+          create(:active_licensed_plan, billable: course.environment,
+                 user: course.environment.owner).create_invoice
       end
 
       it "should approve association" do
-        post :moderate_members_requests, @params
-        @course.approved_users.to_set.should == [@users[1], @users[2], @user].to_set
+        post :moderate_members_requests, params
+        course.approved_users.should =~ [users[1], users[2], user]
       end
 
       it "should create only two licenses" do
         expect{
-          post :moderate_members_requests, @params
+          post :moderate_members_requests, params
         }.to change(License, :count).from(0).to(2)
       end
     end
   end
 
   context "when unjoin from a course (POST unjoin)" do
+    let!(:plan) { FactoryGirl.create(:plan, billable: course, user: course.owner) }
+
     before do
-      @owner = FactoryGirl.create(:user)
-
-      @environment = FactoryGirl.create(:environment, owner: @owner)
-
-      @course = FactoryGirl.create(:course,environment: @environment, owner: @owner)
-      @spaces = (1..2).collect { FactoryGirl.create(:space, course: @course,
-                                         owner: @owner)}
-      @subjects = []
-      @spaces.each do |s|
-        @subjects << FactoryGirl.create(:subject, space: s, owner: @owner,
-                             finalized: true)
-      end
-
-      @user = FactoryGirl.create(:user)
-      @subjects.each { |sub| sub.enroll @user }
-      login_as @user
-
-      @params = { locale: 'pt-BR', environment_id: @environment.path,
-        id: @course.path }
+      course.join(user)
+      login_as user
     end
 
     context "and it's the unique course which user has joined" do
       before do
-        @course.join @user
-        post :unjoin, @params
+        course.join user
+        post :unjoin, nested_course_params
       end
 
-      it "assigns course"
-
       it "removes the user from itself" do
-        @course.users.should_not include(@user)
+        course.users.should_not include(user)
       end
 
       it "removes the user from all spaces" do
-        @spaces.collect { |s| s.users.should_not include(@user) }
+        spaces.collect { |s| s.users.should_not include(user) }
       end
 
       it "removes the user from all enrolled subjects" do
-        @subjects.collect { |s| s.members.should_not include(@user) }
+        subjects.collect { |s| s.members.should_not include(user) }
       end
 
       it "should remove user from environment" do
-        @environment.users.should_not include(@user)
+        environment.users.should_not include(user)
       end
     end # context "and it's the unique course which user has joined"
 
     context "and it's not the unique course which user has joined" do
+      let(:other_course) { FactoryGirl.create(:course, environment: environment) }
       before do
-        @course2 = FactoryGirl.create(:course, environment: @environment, owner: @owner)
-        @course2.join @user
-        @course.join @user
-        post :unjoin, @params
+        other_course.join(user)
+        post :unjoin, nested_course_params
       end
 
       it "should remove the user from itself" do
-        @course.users.should_not include(@user)
+        course.users.should_not include(user)
       end
+
       it "should remove the user from all spaces" do
-        @spaces.collect { |s| s.users.should_not include(@user) }
+        expect(spaces.map(&:users).flatten).to_not include(user)
       end
+
       it "should remove the user from all enrolled subjects" do
-        @subjects.collect { |s| s.members.should_not include(@user) }
+        expect(subjects.map(&:members).flatten).to_not include(user)
       end
+
       it "should not remove user from others courses" do
-        @course2.users.should include(@user)
+        other_course.users.should include(user)
       end
+
       it "should not remove user from environment" do
-        @environment.users.should include(@user)
+        environment.users.should include(user)
       end
     end # context "and it's not the unique course which user has joined"
   end # context "when unjoin from a course (POST unjoin)"
 
   context "when responding a course invitation" do
+    let!(:plan) do
+      FactoryGirl.
+        create(:plan, billable: course, user: course.owner, members_limit: 5)
+    end
+    let(:visitor) { FactoryGirl.create(:user) }
+
     before do
-      @owner = FactoryGirl.create(:user)
-      @environment = FactoryGirl.create(:environment, owner: @owner)
-      @course = FactoryGirl.create(:course,environment: @environment, owner: @owner)
-      plan = FactoryGirl.create( :plan, billable: @course,
-                     user: @course.owner,
-                     members_limit: 5)
-      @course.create_quota
-
-      @invited_user = FactoryGirl.create(:user)
-      login_as @invited_user
-
-      @course.invite @invited_user
-      @params = { locale: 'pt-BR', environment_id: @environment.path,
-        id: @course.path }
+      course.create_quota
+      login_as visitor
+      course.invite visitor
     end
 
     context "and accepting" do
       before do
-        post :accept, @params
+        post :accept, nested_course_params
       end
 
       it "assigns course" do
@@ -315,74 +286,58 @@ describe CoursesController do
       end
 
       it "accepts the invitation" do
-        @invited_user.get_association_with(@course).state.
-          should == "approved"
-        @course.approved_users.should include(@invited_user)
+        user.get_association_with(course).state.should == "approved"
+        course.approved_users.should include(user)
       end
     end
 
     context "and denying" do
       it "assigns course" do
-        post :deny, @params
+        post :deny, nested_course_params
         assigns[:course].should_not be_nil
       end
 
       it "denies the invitation" do
-        post :deny, @params
-        @course.approved_users.should_not include(@invited_user)
+        post :deny, nested_course_params
+        course.approved_users.should_not include(visitor)
       end
 
       it "detroys the UCA" do
         expect {
-          post :deny, @params
+          post :deny, nested_course_params
         }.to change(UserCourseAssociation, :count).by(-1)
       end
     end
   end
 
   context "when destroying members" do
+    let(:params) do
+      nested_course_params.merge({"users" => users.collect { |u| u.id } })
+    end
+
     before do
-      @owner = FactoryGirl.create(:user)
-
-      @environment = FactoryGirl.create(:environment, owner: @owner)
-
-      @course = FactoryGirl.create(:course,environment: @environment, owner: @owner)
-      @spaces = (1..2).collect { FactoryGirl.create(:space, course: @course,
-                                         owner: @owner)}
-      @subjects = []
-      @spaces.each do |s|
-        @subjects << FactoryGirl.create(:subject, space: s, owner: @owner,
-                             finalized: true)
-      end
-
-      @users = 3.times.inject([]) { |acc,i| acc << FactoryGirl.create(:user) }
-      @users.each { |u| @course.join u }
-
-      login_as @owner
-
-      @params = { locale: 'pt-BR', environment_id: @environment.path,
-                  id: @course.path, "users" => @users.collect { |u| u.id } }
-      post :destroy_members, @params
+      login_as(user)
+      post :destroy_members, params
     end
 
     it "destroys UCA" do
-      @users.each do |u|
-        u.get_association_with(@course).should be_nil
+      users.each do |u|
+        u.get_association_with(course).should be_nil
       end
     end
 
     it "destroys USA" do
-      usas = @spaces.collect do |s|
-        @users.collect { |u| u.get_association_with(s) }
+      usas = spaces.collect do |s|
+        users.collect { |u| u.get_association_with(s) }
       end.flatten
 
       usas.inject(true) { |acc,i| acc && (i.nil?) }.should be_true
     end
 
     it "destroys enrollments" do
-      enrollments = @spaces.collect do |s|
+      enrollments = spaces.collect do |s|
         s.subjects.collect do |subj|
-          @users.collect { |u| u.get_association_with(subj) }
+          users.collect { |u| u.get_association_with(subj) }
         end
       end.flatten
 
@@ -391,87 +346,65 @@ describe CoursesController do
   end
 
   context "when inviting users (POST invite_members)" do
+    let(:params) do
+      nested_course_params.
+        merge(users: users.map(&:id).join(","), emails: emails.join(','))
+    end
+    let(:emails) { ["email@example.com", "email2@example.com", "email3@example.com"] }
+    let(:users) { FactoryGirl.create_list(:user, 3) }
     before do
-      @users = 3.times.inject([]) do |acc,e|
-        acc << FactoryGirl.create(:user)
-      end
-      @emails = ["email@example.com", "email2@example.com",
-        "email3@example.com"]
-
-      @environment = FactoryGirl.create(:environment)
-      @course = FactoryGirl.create(:course, environment: @environment,
-                        owner: @environment.owner)
-
-      login_as @course.owner
-
-      @params = { locale: 'pt-BR', environment_id: @course.environment.path,
-        id: @course.path, users: @users.collect { |u| u.id }.join(","),
-        emails: @emails.collect { |e| e }.join(",") }
-
+      login_as user
     end
 
     it "creates invitations" do
-      post :invite_members, @params
+      post :invite_members, params
 
-      @users.each do |u|
-        @course.user_course_associations.reload
+      users.each do |u|
+        course.user_course_associations.reload
         u.reload
-        @course.waiting_user_approval?(u).should be_true
+        course.waiting_user_approval?(u).should be_true
       end
 
-      @emails.each do |e|
+      emails.each do |e|
         u = User.find_by_email(e)
         u.should be_nil
-        @course.invited?(e).should be_true
+        course.invited?(e).should be_true
       end
     end
   end
 
   context "POST join" do
-
     context "when course is open" do
+      let!(:subj) do
+        FactoryGirl.
+          create(:subject, space: space, owner: course.owner, finalized: true)
+      end
+      let(:visitor) { FactoryGirl.create(:user) }
+
       before do
-        @user = FactoryGirl.create(:user)
-        login_as @user
-
-        @environment = FactoryGirl.create(:environment, owner: @user)
-
-        @course = FactoryGirl.create(:course,environment: @environment,
-                          owner: @user)
-
-        @plan = FactoryGirl.create(:active_licensed_plan, billable: @environment,
-                       user: @course.owner)
+        @plan = FactoryGirl.
+          create(:active_licensed_plan, billable: environment, user: course.owner)
         @plan.create_invoice_and_setup
 
-        @environment.create_quota
-        @environment.reload
+        environment.create_quota
+        environment.reload
 
-        @space = FactoryGirl.create(:space, course: @course)
-        @subject_space = FactoryGirl.create(:subject, space: @space,
-                                 owner: @course.owner,
-                                 finalized: true)
-
-        @params = { locale: 'pt-BR',
-                    environment_id: @environment.path,
-                    id: @course.path }
-
-        @new_user = FactoryGirl.create(:user)
-        login_as @new_user
+        login_as(visitor)
       end
 
       it "should create all hieararchy" do
-        post :join, @params
+        post :join, nested_course_params
 
-        @course.users.should include(@new_user)
-        @space.users.should include(@new_user)
-        @subject_space.members.should include(@new_user)
-        @course.environment.users.should include(@new_user)
+        course.users.should include(visitor)
+        space.users.should include(visitor)
+        subj.members.should include(visitor)
+        course.environment.users.should include(visitor)
       end
 
       context "and plan is licensed" do
         it "should create license on respective invoice" do
           expect {
-            post :join, @params
+            post :join, nested_course_params
           }.to change(License, :count).by(1)
         end
       end
@@ -480,76 +413,50 @@ describe CoursesController do
   end
 
   context "when the limit of members is full" do
+    let(:visitor) { FactoryGirl.create(:user) }
     before do
-      @user = FactoryGirl.create(:user)
-      login_as @user
-
-      @environment = FactoryGirl.create(:environment, owner: @user)
-
-      @course = FactoryGirl.create(:course,environment: @environment,
-                        owner: @user)
-
-      plan = FactoryGirl.create( :plan, billable: @course,
-                     user: @course.owner,
-                     members_limit: 5)
-      @course.create_quota
-
-      @users = 4.times.inject([]) { |res, i| res << FactoryGirl.create(:user) }
-      @course.join(@users[0])
-      @course.join(@users[1])
-      @course.join(@users[2])
-      @course.join(@users[3])
+      plan = FactoryGirl.
+        create( :plan, billable: course, user: course.owner, members_limit: 5)
+      course.create_quota
+      users
     end
 
     context "and course isn't moderated" do
-      before do
-        @params = { locale: 'pt-BR',
-          environment_id: @environment.path,
-          id: @course.path }
-      end
-
       it "should not authorize more 1 user" do
-        @new_user = FactoryGirl.create(:user)
-        login_as  @new_user
+        login_as  visitor
         expect {
-          post :join, @params
+          post :join, nested_course_params
         }.to_not change(UserCourseAssociation, :count).by(1)
       end
     end
 
     context "and course is moderated" do
       before do
-        @course.subscription_type = 2
-        @course.save
-
-        @new_user = FactoryGirl.create(:user)
-        @params = { locale: 'pt-BR',
-          environment_id: @environment.path,
-          id: @course.path }
+        course.update_attribute(:subscription_type, 2)
       end
 
       context "POST accept" do
         it "should not authorize more 1 user" do
-          login_as @user
-          @course.invite(@new_user)
+          login_as user
+          course.invite(visitor)
 
-          login_as @new_user
+          login_as visitor
           expect {
-            post :accept, @params
-          }.to_not change(@course.approved_users, :count).by(1)
+            post :accept, nested_course_params
+          }.to_not change(course.approved_users, :count).by(1)
         end
       end
 
       context "POST moderate_members" do
         it "should not authorize more 1 user" do
-          login_as @user
-          @course.join(@new_user)
-          @params = { member: { @new_user.id.to_s => "approve"},
-            id: @course.path, environment_id: @environment.path,
-            locale: "pt-BR"}
+          login_as user
+          course.join(visitor)
+
+          @params = nested_course_params.merge( member: { visitor.id.to_s => "approve"})
+
           expect {
             post :moderate_members_requests, @params
-          }.to_not change(@course.approved_users, :count).by(1)
+          }.to_not change(course.approved_users, :count).by(1)
         end
       end
     end
@@ -557,18 +464,11 @@ describe CoursesController do
 
   context "when viewing sent invitations (GET admin_manage_invitations)" do
     before do
-      environment = FactoryGirl.create(:environment)
-      course = FactoryGirl.create(:course, environment: environment,
-                       owner: environment.owner)
-      login_as course.owner
-      user_invitations = (1..3).collect { course.invite FactoryGirl.create(:user) }
-      email_invitations = (1..3).collect do |i|
-        course.invite_by_email "email#{i}@example.com"
-      end
+      login_as user
+      course.invite FactoryGirl.create(:user)
+      course.invite_by_email "email2121@example.com"
 
-      @params = { locale: 'pt-BR', environment_id: course.environment.path,
-        id: course.path }
-      get :admin_manage_invitations, @params
+      get :admin_manage_invitations, nested_course_params
     end
 
     it "assigns user_invitations" do
@@ -581,88 +481,78 @@ describe CoursesController do
   end
 
   context "when removing invitations (POST destroy_invitations)" do
-    before do
-      @environment = FactoryGirl.create(:environment)
-      @course = FactoryGirl.create(:course, environment: @environment,
-                        owner: @environment.owner)
-      login_as @course.owner
-      @user_invitations = (1..4).collect { @course.invite FactoryGirl.create(:user) }
-      @email_invitations = (1..4).collect do |i|
-        @course.invite_by_email "email#{i}@example.com"
-      end
+    let(:email_invitations) do
+      4.times.map { |i| course.invite_by_email "email#{i}@example.com" }
+    end
+    let(:user_invitations) do
+      4.times.map { course.invite FactoryGirl.create(:user) }
+    end
 
-      @params = { locale: 'pt-BR', environment_id: @environment.path,
-        id: @course.path }
+    before do
+      login_as user
     end
 
     context "when email_invitations is empty" do
       before do
-        @params[:email_invitations] = ""
-        post :destroy_invitations, @params
+        nested_course_params[:email_invitations] = ""
+        post :destroy_invitations, nested_course_params
       end
 
       it "does NOT destroy email invitations" do
-        @course.user_course_invitations.invited.should == @email_invitations
+        course.user_course_invitations.invited.should == email_invitations
       end
     end
 
 
     context "when email_invitations is NOT empty" do
       before do
-        @params[:email_invitations] = [@email_invitations[0].id,
-          @email_invitations[1].id].join(",")
-        post :destroy_invitations, @params
+        nested_course_params[:email_invitations] = email_invitations[0..1].map(&:id).join(",")
+        post :destroy_invitations, nested_course_params
       end
 
       it "destroys specified email invitations" do
-        @course.user_course_invitations.invited.should == @email_invitations[2..3]
+        course.user_course_invitations.invited.should == email_invitations[2..3]
       end
     end
-
 
     context "when user_invitations is empty" do
       before do
-        @params[:user_invitations] = ""
-        post :destroy_invitations, @params
+        nested_course_params[:user_invitations] = ""
+        post :destroy_invitations, nested_course_params
       end
 
       it "does NOT destroy user invitations" do
-        @course.user_course_associations.invited.should == @user_invitations
+        course.user_course_associations.invited.should == user_invitations
       end
     end
 
-
     context "when user_invitations is NOT empty" do
       before do
-        @params[:user_invitations] = [@user_invitations[0].id,
-          @user_invitations[1].id].join(",")
-        post :destroy_invitations, @params
+        nested_course_params[:user_invitations] = user_invitations[0..1].map(&:id).join(",")
+        post :destroy_invitations, nested_course_params
       end
 
       it "destroys specified user invitations" do
-        @course.user_course_associations.invited.should == @user_invitations[2..3]
+        course.user_course_associations.invited.should == user_invitations[2..3]
       end
     end
   end
 
   # admin actions (management panel)
   context "on management panel" do
+    let(:course_attrs) do
+      { name: "course", workload: "", path: "course-path", tag_list: "", description: "", subscription_type: "1" }
+    end
+    let(:base_params) do
+      nested_course_params.merge(course: course_attrs)
+    end
     before  do
-      @environment = FactoryGirl.create(:environment)
-      @course = FactoryGirl.create(:course, environment: @environment)
-      @user = FactoryGirl.create(:user)
-      UserEnvironmentAssociation.create(environment: @environment,
-                                        user: @user,
-                                        role: Role[:environment_admin])
-      UserCourseAssociation.create(course: @course,
-                                   user: @user,
-                                   role: Role[:environment_admin])
-      login_as @user
+      login_as user
     end
 
     context "GET new" do
       before do
-        get :new, locale: "pt-BR", environment_id: @environment.path
+        get :new, base_params
       end
 
       it "assigns environment" do
@@ -681,15 +571,9 @@ describe CoursesController do
     context "POST create" do
       context "when environment has plan" do
         before do
-          @post_params = {course: { name: "course", workload: "",
-                                        path: "course-path", tag_list: "",
-                                        description: "",
-                                        subscription_type: "1" } }
-          @post_params[:locale] = "pt-BR"
-          @post_params[:environment_id] = @environment.path
-          FactoryGirl.create(:active_licensed_plan, billable: @environment)
-          @environment.reload
-          post :create, @post_params
+          FactoryGirl.create(:active_licensed_plan, billable: environment)
+          environment.reload
+          post :create, base_params
         end
 
         it "should not create the plan" do
@@ -699,36 +583,24 @@ describe CoursesController do
         it "should not create the quota and computes it" do
           assigns[:course].quota.should be_nil
         end
-
       end
 
       context "when successful" do
         before do
-          @post_params = { plan: "free",
-                           course: { name: "course", workload: "",
-                                        path: "course-path", tag_list: "",
-                                        description: "",
-                                        subscription_type: "1" } }
-          @post_params[:locale] = "pt-BR"
-          @post_params[:environment_id] = @environment.path
+          base_params.merge!(plan: :free)
         end
 
         it "redirects to Courses#show" do
-          post :create, @post_params
-          response.should redirect_to(controller.environment_course_path(@environment, Course.last))
+          post :create, base_params
+          response.should redirect_to(controller.environment_course_path(environment, Course.last))
         end
       end
 
       context "when failing" do
         before do
-          @post_params = { plan: "free",
-                           course: { name: "", workload: "",
-                                        path: "", tag_list: "",
-                                        description: "",
-                                        subscription_type: "1" } }
-          @post_params[:locale] = "pt-BR"
-          @post_params[:environment_id] = @environment.path
-          post :create, @post_params
+          course_attrs.merge!(name: "", path: "")
+          base_params.merge!(plan: :free)
+          post :create, base_params
         end
 
         it "re-renders course/admin/new" do
@@ -739,8 +611,7 @@ describe CoursesController do
 
     context "GET edit" do
       before do
-        get :edit, locale: "pt-BR", environment_id: @environment.path,
-          id: @course.path
+        get :edit, locale: "pt-BR", environment_id: environment.path, id: course.path
       end
 
       it "assigns environment" do
@@ -759,34 +630,20 @@ describe CoursesController do
     context "POST update" do
       context "when successful" do
         before do
-          @post_params = { plan: "free",
-                           course: { name: "course", workload: "",
-                                        path: "course-path-changed",
-                                        tag_list: "", description: "",
-                                        subscription_type: "1" } }
-          @post_params[:locale] = "pt-BR"
-          @post_params[:environment_id] = @environment.path
-          @post_params[:id] = @course.path
-          post :update, @post_params
+          base_params.merge!(plan: :free, id: course.path)
+          post :update, base_params
         end
 
         it "redirects to Environments#show" do
-          response.should redirect_to(controller.environment_course_path(@environment,
-                                                              @course.reload))
+          response.should \
+            redirect_to(controller.environment_course_path(environment, course.reload))
         end
       end
 
       context "when failing" do
         before do
-          @post_params = { plan: "free",
-                           course: { name: "course", workload: "",
-                                        path: "",
-                                        tag_list: "", description: "",
-                                        subscription_type: "1" } }
-          @post_params[:locale] = "pt-BR"
-          @post_params[:environment_id] = @environment.path
-          @post_params[:id] = @course.path
-          post :update, @post_params
+          course_attrs.merge!(path: "")
+          post :update, base_params.merge!(plan: :free, id: course.path)
         end
 
         it "re-renders courses/admin/edit" do
@@ -797,8 +654,7 @@ describe CoursesController do
 
     context "GET reports" do
       before do
-        get :teacher_participation_report, locale: "pt-BR",
-          environment_id: @environment.path, id: @course.path
+        get :teacher_participation_report, base_params.merge(id: course.path)
       end
 
       it "when successful" do
@@ -808,68 +664,46 @@ describe CoursesController do
   end
 
   context "when course is unpublished" do
-    before do
-      @course = FactoryGirl.create(:course, published: false)
-    end
-
     context "GET show" do
       before do
-        get :show, @params = { locale: 'pt-BR', environment_id: @course.environment.path,
-        id: @course.path }
+        get :show, nested_course_params
       end
 
       it "should show the preview page" do
-        response.should redirect_to(controller.preview_environment_course_path(@course.environment,
-                                                                    @course))
+        path = controller.preview_environment_course_path(course.environment, course)
+        response.should redirect_to(path)
       end
     end
   end
 
   context "GET preview" do
-    before do
-      @course = FactoryGirl.create(:course)
-    end
-
     context "when have permission to see the course" do
       before do
-        @user = FactoryGirl.create(:user)
-        @course.join @user
-        login_as @user
-
-        get :preview, locale: "pt-BR",
-          environment_id: @course.environment.to_param,
-          id: @course.to_param
+        login_as user
+        get :preview, nested_course_params
       end
 
       it "redirects to #show" do
-        response.should redirect_to(controller.environment_course_path(@course.environment,
-                                                            @course))
+        response.should redirect_to(controller.environment_course_path(environment, course))
       end
     end
 
 
     context "when is course's admin" do
       before do
-        @env_admin = FactoryGirl.create(:user)
-        @course.join @env_admin, Role[:environment_admin]
-        login_as @env_admin
+        login_as user
 
-        get :preview, locale: "pt-BR",
-          environment_id: @course.environment.to_param,
-          id: @course.to_param
+        get :preview, nested_course_params
       end
 
       it "redirects to #show" do
-        response.should redirect_to(controller.environment_course_path(@course.environment,
-                                                            @course))
+        response.should redirect_to(controller.environment_course_path(environment, course))
       end
     end
 
     context "when does NOT have permission to see the course" do
       before do
-        get :preview, locale: "pt-BR",
-          environment_id: @course.environment.to_param,
-          id: @course.to_param
+        get :preview, nested_course_params
       end
 
       it "renders preview" do
@@ -879,34 +713,25 @@ describe CoursesController do
   end
 
   context "when visiting a course" do
-    let(:course) { FactoryGirl.create(:course) }
-    let(:user) { FactoryGirl.create(:user) }
+    let(:visitor) { FactoryGirl.create(:user) }
 
     context "as a course's member" do
       before do
         login_as user
-        course.join! user
+        course.join! visitor
       end
 
       it "updates uca's last_accessed_at" do
         expect {
-          get :show, @params = { locale: 'pt-BR',
-                                 environment_id: course.environment.to_param,
-                                 id: course.to_param }
+          get :show, nested_course_params
         }.to change { user.user_course_associations.last.last_accessed_at }
       end
     end
   end
 
   context "GET search_users_admin" do
-    let(:course) { FactoryGirl.create(:course) }
-    let(:environment) { course.environment }
-    let(:user) { course.owner }
-
     def search_memberships(params={})
-      merged_params = { environment_id: environment.to_param,
-                        id: course.to_param, locale: "pt-BR" }.merge(params)
-      xhr :get, :search_users_admin, merged_params
+      xhr :get, :search_users_admin, nested_course_params.merge(params)
     end
 
     before do
@@ -937,6 +762,15 @@ describe CoursesController do
 
       it "assings the administrator memberships" do
         assigns[:memberships].map(&:role).map(&:to_s).should =~ role
+      end
+    end
+  end
+
+  context "GET admin_spaces" do
+    context "with no spaces" do
+      before { login_as user }
+      it "should not raise error" do
+        expect { get :admin_spaces, nested_course_params }.to_not raise_error
       end
     end
   end

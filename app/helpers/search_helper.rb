@@ -7,7 +7,7 @@ module SearchHelper
     end
     uea = assocs.first
 
-    role_icon(uea.try(:role))
+    uea.try(:role)
   end
 
   # Define o papel do usuário no Curso
@@ -17,7 +17,7 @@ module SearchHelper
     end
     uca = assocs.first
 
-    role_icon(uca.try(:role))
+    uca.try(:role)
   end
 
   # Define a formatação da lista de administradores

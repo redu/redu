@@ -540,7 +540,7 @@ body {
 }
 
 #hierarchy-header {
-  margin: 20px 20px 0;
+  margin: 20px;
 }
 
 #hierarchy-header .parent {
@@ -2875,6 +2875,7 @@ body {
 }
 
 #folder-admin .new-folder input[type=text] {
+  margin-top: 5px;
   border: 1px solid #B3B2B3;
   padding: 9px 5px;
   float: left;

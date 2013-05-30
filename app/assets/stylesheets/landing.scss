@@ -26,30 +26,30 @@
 @import "landing/segments";
 // Estilos da área de vantagens.
 @import "landing/advantages";
-// Estilos da área de planos.
-@import "landing/plans";
 // Estilos da área de funcionalidades.
 @import "landing/functionalities";
 // Estilos da área de rede social & chat.
-@import "landing/social-network-&-chat";
+@import "landing/social-network-n-chat";
 // Estilos da área de mural de discussão.
 @import "landing/discussion-wall";
 // Estilos da área de aulas multimídia.
 @import "landing/multimedia-classes";
+// Estilos da área de Relatórios Básicos.
+@import "landing/basic-reports";
+// Estilos da área de gerenciamento e suporte.
+@import "landing/management-support";
 // Estilos da área de Recursos Educacionais Abertos.
 @import "landing/oer";
 // Estilos da área de serviços e aplicações integradas.
 @import "landing/api";
 // Estilos da área de mensagens particulares, currículo e mobilidade.
 @import "landing/others";
+// Estilos da área de planos.
+@import "landing/plans";
 // Estilos da área de parceiros.
 @import "landing/partners";
 // Estilos da área de Visual Class.
 @import "landing/visual-class";
-// Estilos da área de Relatórios Básicos.
-@import "landing/basic-reports";
-// Estilos da área de gerenciamento e suporte.
-@import "landing/management-support";
 
 // TODO: Remover depois de resolver a issue ui-compnents#15.
 .textshadow .olrk-noquirks { text-shadow: none; }

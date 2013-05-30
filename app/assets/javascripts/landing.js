@@ -1,6 +1,17 @@
 //= require bootstrap-scrollspy
 
 
+// Carrega a imagem da modal do tipo de aula quando ela é aberta.
+$(document).on("shown", ".modal-multimedia", function(e) {
+  var $modal = $(this);
+  var $image = $modal.find("img.lazy");
+
+  if (!$image.data("loaded")) {
+    $image.attr("src", $image.data("original"));
+    $image.data("loaded", true);
+  }
+});
+
 // Deixa o menu dos filtros fixos
 $(function() {
 

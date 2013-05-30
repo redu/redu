@@ -2,32 +2,38 @@
 // Área do mural de gerenciamento e suporte
 // ==========================================================================
 
+
+// Variáveis
+// ==========================================================================
+
+// O z-index da área de suporte.
+$landing-support-area-z-index: 2;
+
+
 .landing-management-support {
-  // @include box-sizing(border-box);
-  overflow: hidden;
-  height: 210px;
-  background-color: $white;
-
-  h3 {
-    margin-top: 20px;
-  }
+  @include box-sizing;
+  padding: 20px;
+  height: sprite-sprite-height(background-management);
+  position: relative;
 }
 
-.icon-129px-configuracoes, .bkg-suporte {
-  position: absolute;
-  display: block;
+.landing-management-icon,
+.landing-support-background { position: absolute; }
+
+.landing-management-icon {
+  $height: sprite-sprite-height(icon-management);
+  @include calc("top", "50% - (#{$height} / 2)", 25%);
+  left: 25px;
+  z-index: 1;
 }
 
-.icon-129px-configuracoes {
-  @include size(128px, 130px);
-  background-image: image-url("landing/icon-129px-configuracoes.png");
-  margin-left: -160px;
+.landing-support-area {
+  position: relative;
+  z-index: $landing-support-area-z-index;
 }
 
-.landing-support-content {
-  @include size(395px, 120px);
-  background: image-url("landing/bkg-suporte.png");
-  height: 210px;
-  float: right;
+.landing-support-background {
+  z-index: $landing-support-area-z-index - 1;
+  top: 0;
+  right: 0;
 }
-
