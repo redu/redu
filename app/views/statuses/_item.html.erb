@@ -5,6 +5,7 @@
     item: o status.
 %>
 
+<% if can_render_status? item %>
   <% if item.type.eql? 'Log' %>
     <%= render "statuses/logs/#{log_partial_name(item)}", log: item %>
   <% elsif item.type.eql? 'CompoundLog' %>
@@ -12,3 +13,4 @@
   <% else %>
     <%= render "statuses/wall/#{comment_partial_name(item)}", item: item %>
   <% end %>
+<% end %>
