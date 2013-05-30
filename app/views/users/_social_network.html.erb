@@ -1,6 +1,10 @@
-<li class="<%= "icon-#{social_network.name.text.downcase}_16_18-before" %>">
+<%#
+  Item com o link para a rede social do usuário.
+%>
 
-  <span class="bio">
-    <%= link_to social_network.url, generate_url(social_network.url) %>
-  </span>
+<li class="profile-social-network">
+  <%= link_to social_network.url, generate_url(social_network.url),
+    class: "sprite-social-networks-before sprite-before social-networks-#{social_network.name.text.downcase}_16-before",
+    target: "_blank",
+    title: social_network.name.text %>
 </li>

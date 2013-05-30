@@ -1,11 +1,20 @@
-<li>
+<%#
+  Item com a experiência acadêmica mais importante.
+%>
+
+<li class="profile-summary-item">
   <% if education.educationable.class == HighSchool %>
-    <span class="bio"><%= t :high_school %></span> em
+    <%= content_tag :span, t(:high_school), class: "profile-summary-bio" %> em
   <% elsif education.educationable.class == HigherEducation %>
-    <span class="bio"><%= t education.educationable.kind %></span> em
-    <span class="bio"><%= education.educationable.course == "" ? education.educationable.research_area : education.educationable.course %></span> pela
+    <%= content_tag :span, t(education.educationable.kind),
+      class: "profile-summary-bio" %> em
+    <%= content_tag :span,
+      (education.educationable.course == "" ? education.educationable.research_area : education.educationable.course),
+      class: "profile-summary-bio" %> pela
   <% elsif education.educationable.class == ComplementaryCourse %>
-    <span class='bio'><%= education.educationable.course %></span> pela
+    <%= content_tag :span, education.educationable.course,
+      class: "profile-summary-bio" %> pela
   <% end %>
-  <span class="bio"><%= education.educationable.institution %></span>
+  <%= content_tag :span, education.educationable.institution,
+    class: "profile-summary-bio" %>
 </li>
