@@ -8,6 +8,8 @@
     statuses: a coleção de status.
 %>
 
+<% placeholder = nil unless local_assigns.has_key? :placeholder %>
+
 <%# Preview de links externos. %>
 <%= render "statuses/template_preview" %>
 
