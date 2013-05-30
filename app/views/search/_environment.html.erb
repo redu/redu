@@ -14,9 +14,12 @@
             :size => "90x90" %>
         <% end %>
         <div class="general-list-item-column">
-          <% role_icon, role_text = user_environment_role(environment, current_user) %>
-          <% unless role_icon.nil? %>
-            <span class="icon-<%= role_icon %>-lightblue_16_18 show text-replacement pull-right" rel="tooltip" title="<%= role_text %>"><%= role_text %></span>
+          <% role = user_environment_role(environment, current_user) %>
+          <% role_text = t("classy_enum.role.#{role}") %>
+          <% unless role.nil? %>
+            <%= content_tag :span, role_text,
+              class: "icon-#{role_icon(role)}-lightblue_16_18 show text-replacement pull-right",
+              rel: "tooltip", title: role_text %>
           <% end %>
           <h4 class="general-list-item-title">
             <%= link_to environment.name, environment_path(environment),
