@@ -407,6 +407,16 @@ module AsyncJSHelper
     when :error then ["warning", "Opa!"]
     end
   end
+
+  # Define o ícone a ser usado dependendo do papel.
+  def role_icon(role)
+    case role
+    when Role[:environment_admin] then "manager"
+    when Role[:teacher] then "teacher"
+    when Role[:tutor] then "tutor"
+    when Role[:member] then "member"
+    end
+  end
 end
 
 ActionView::Base.send(:include, AsyncJSHelper)
