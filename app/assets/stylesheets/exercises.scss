@@ -1064,3 +1064,14 @@
 .cssgradients #space-manage .edit-resource .alternative-item .errors_on_field {
   margin-left: 118px;
 }
+
+#resource .exercise-nav li a.link-disabled,
+#resource .exercise a.link-disabled {
+  &,
+  &:hover,
+  &:visited {
+    color: $gray5;
+    text-decoration: none;
+    cursor: not-allowed;
+  }
+}

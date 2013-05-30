@@ -184,12 +184,20 @@ $(function(){
 
   var disableQuestionNavButtons = function (disable) {
     var lectureButtons = $(".actions-buttons .lecture-buttons a, actions-buttons button");
+    var $links = $(".exercise-nav a");
+
     if (disable) {
       lectureButtons.attr("disabled", "disabled");
+      $links.addClass("link-disabled");
     } else {
       lectureButtons.removeAttr("disabled");
+      $links.removeClass("link-disabled");
     }
   }
+
+  $(document).on("click", "a.link-disabled", function(e) {
+    e.preventDefault();
+  });
 
   // Ao clicar no radio button, submete o form de choice
   $.fn.saveQuestion = function(){
