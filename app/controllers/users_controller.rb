@@ -366,6 +366,11 @@ class UsersController < BaseController
     entity = @space || @course || @environment
     authorize! :preview, entity
 
+    if @course
+     @responsibles_associations = @course.user_course_associations.
+      with_roles([Role[:teacher], Role[:environment_admin]]).includes(:user)
+    end
+
     @users = if params[:role].eql? "teachers"
       entity.teachers
     elsif params[:role].eql? "tutors"
