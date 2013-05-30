@@ -405,9 +405,10 @@ class CoursesController < BaseController
     end
   end
 
+
   def destroy_invitations
-    email_invitations = params[:email_invitations].try(:split, ",") || []
-    user_invitations = params[:user_invitations].try(:split, ",") || []
+    email_invitations = to_array(params[:email_invitations])
+    user_invitations = to_array(params[:user_invitations])
 
     email_invitations = email_invitations.map(&:to_i)
     user_invitations = user_invitations.map(&:to_i)
@@ -444,5 +445,9 @@ class CoursesController < BaseController
   def update_last_access
     uca = current_user.get_association_with(@course)
     uca.touch(:last_accessed_at) if uca
+  end
+
+  def to_array(parameter)
+    parameter.blank? ? [] : parameter
   end
 end
