@@ -26,12 +26,12 @@ module EnrollmentService
 
       unless finalized.empty?
         service_facade.
-          notify_subject_finalized(Enrollment.where(:id => finalized))
+          notify_subject_finalized(Enrollment.where(id: finalized))
       end
 
       unless unfinalized.empty?
         service_facade.
-          notify_remove_subject_finalized(Enrollment.where(:id => unfinalized))
+          notify_remove_subject_finalized(Enrollment.where(id: unfinalized))
       end
     end
 
@@ -64,7 +64,7 @@ module EnrollmentService
 
     def reload!
       ids = pluck_columns(:id)
-      @enrollments = Enrollment.where(:id => ids)
+      @enrollments = Enrollment.where(id: ids)
     end
 
     def service_facade

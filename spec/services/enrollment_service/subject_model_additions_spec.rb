@@ -3,12 +3,12 @@ require 'spec_helper'
 
 module EnrollmentService
   describe Subject do
-    subject { FactoryGirl.create(:subject, :space => nil) }
+    subject { FactoryGirl.create(:subject, space: nil) }
     let(:user) { FactoryGirl.create(:user) }
     let(:facade) { mock("Facade") }
     let(:lectures) do
-      subjects.each { |s| FactoryGirl.create(:lecture, :subject => s) }
-      Lecture.where(:subject_id => subjects)
+      subjects.each { |s| FactoryGirl.create(:lecture, subject: s) }
+      Lecture.where(subject_id: subjects)
     end
 
     context ".enroll" do
@@ -28,8 +28,8 @@ module EnrollmentService
         facade.stub(:update_grade)
 
         facade.should_receive(:create_enrollment).with(subjects, users,
-                                                       :role => Role[:member])
-        Subject.enroll(subjects, :users => users)
+                                                       role: Role[:member])
+        Subject.enroll(subjects, users: users)
       end
 
       it "should invoke Facade#create_asset_report with correct arguments" do
@@ -43,7 +43,7 @@ module EnrollmentService
           args[:enrollments].should =~ enrollments
         end
 
-        Subject.enroll(subjects, :users => users)
+        Subject.enroll(subjects, users: users)
       end
 
       it "should invoke Facade#update_grade" do
@@ -53,7 +53,7 @@ module EnrollmentService
 
         facade.should_receive(:update_grade)
 
-        Subject.enroll(subjects, :users => users)
+        Subject.enroll(subjects, users: users)
       end
 
       it "should create a Jobs::CreateEnrollmentJob" do
@@ -65,10 +65,10 @@ module EnrollmentService
         job_mock.stub(:perform)
 
         Jobs::CreateEnrollmentJob.should_receive(:new).
-          with(:subject => subjects, :user => users, :role => :member).
+          with(subject: subjects, user: users, role: :member).
           and_return(job_mock)
 
-        Subject.enroll(subjects, :users => users)
+        Subject.enroll(subjects, users: users)
       end
     end
 
@@ -86,16 +86,16 @@ module EnrollmentService
 
         it "should delegate to .enroll with self and :users" do
           Subject.should_receive(:enroll).
-            with(subject, :users => users, :role => Role[:member])
+            with(subject, users: users, role: Role[:member])
 
           subject.enroll(users)
         end
 
         it "should accept the :role" do
           Subject.should_receive(:enroll).
-            with(subject, :users => users, :role => Role[:environment_admin])
+            with(subject, users: users, role: Role[:environment_admin])
 
-          subject.enroll(users, :role => Role[:environment_admin])
+          subject.enroll(users, role: Role[:environment_admin])
         end
       end
     end
@@ -117,12 +117,12 @@ module EnrollmentService
       context do
         let(:users) { FactoryGirl.create_list(:user, 3) }
         let(:subjects) do
-          FactoryGirl.create_list(:subject, 3, :space => nil)
+          FactoryGirl.create_list(:subject, 3, space: nil)
         end
         let(:enrollments) do
           subjects.map do |s|
             users.map do |user|
-              FactoryGirl.create(:enrollment, :user => user, :subject => s)
+              FactoryGirl.create(:enrollment, user: user, subject: s)
             end.flatten
           end.flatten
         end

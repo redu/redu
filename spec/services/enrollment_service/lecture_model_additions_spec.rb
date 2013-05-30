@@ -3,7 +3,7 @@ require 'spec_helper'
 
 module EnrollmentService
   describe Lecture do
-    subject { FactoryGirl.create(:lecture, :subject => nil) }
+    subject { FactoryGirl.create(:lecture, subject: nil) }
     let(:facade) { mock("Facade") }
 
     context "#create_asset_report" do
@@ -12,14 +12,14 @@ module EnrollmentService
       end
 
       let(:enrollments) do
-        FactoryGirl.create_list(:enrollment, 2, :subject => subject.subject)
+        FactoryGirl.create_list(:enrollment, 2, subject: subject.subject)
       end
 
       it "should invoke Facade#create_asset_report with self" do
         facade.stub(:update_grade)
         mock_facade(facade)
         facade.should_receive(:create_asset_report).
-          with(:lectures => [subject], :enrollments => [])
+          with(lectures: [subject], enrollments: [])
         subject.create_asset_report
       end
 
@@ -40,7 +40,7 @@ module EnrollmentService
     def add_subject_to(lecture)
       lectures = lecture.respond_to?(:map) ? lecture : [lecture]
       lectures.each do |l|
-        l.subject = FactoryGirl.create(:subject, :space => nil)
+        l.subject = FactoryGirl.create(:subject, space: nil)
         l.save
       end
     end

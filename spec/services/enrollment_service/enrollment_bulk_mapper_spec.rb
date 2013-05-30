@@ -28,7 +28,7 @@ module EnrollmentService
       Enrollment.should_receive(:import).
         with(columns, records, subject.default_options)
 
-      subject.insert(records, :columns => columns)
+      subject.insert(records, columns: columns)
     end
   end
 end

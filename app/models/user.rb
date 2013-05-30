@@ -3,7 +3,11 @@ class User < ActiveRecord::Base
   include Invitable::Base
   include Humanizer
   include UserSearchable
-  include VisService::UserAdditions::ModelAdditions
+  include EnrollmentService::BaseModelAdditions
+  include EnrollmentService::UserAdditions::ModelAdditions
+  include StatusService::BaseModelAdditions
+  include StatusService::UserAdditions::ModelAdditions
+  include DestroySoon::ModelAdditions
 
   # Valida a resposta ao captcha
   attr_writer :enable_humanizer
@@ -59,7 +63,7 @@ class User < ActiveRecord::Base
     foreign_key: "user_id"
   has_many :favorites, order: "created_at desc", dependent: :destroy
   classy_enum_attr :role, default: 'member'
-  has_many :enrollments, dependent: :destroy
+  has_many :enrollments
   has_many :asset_reports, through: :enrollments
 
   #subject
@@ -79,11 +83,10 @@ class User < ActiveRecord::Base
 
   has_many :logs, as: :logeable, order: "created_at DESC",
     dependent: :destroy
-  has_many :statuses, as: :statusable, order: "updated_at DESC",
-    dependent: :destroy
+  has_many :statuses, as: :statusable, order: "updated_at DESC"
   has_many :overview, through: :status_user_associations, source: :status,
     include: [:user, :answers], order: "updated_at DESC"
-  has_many :status_user_associations, dependent: :destroy
+  has_many :status_user_associations
 
   has_many :client_applications
   has_many :tokens, class_name: "OauthToken", order: "authorized_at desc", include: [:client_application]
