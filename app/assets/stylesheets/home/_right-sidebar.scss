@@ -6,11 +6,6 @@
 .home-right-sidebar {
   padding-top: 40px;
 
-  a {
-    &:visited { color: $blue3; }
-    &:hover { color: $blue4; }
-  }
-
   .nav-local-separator { margin: 0 0 10px 0; }
 
   li { list-style: none; }
@@ -55,3 +50,32 @@
 .members-to-add-link { margin-top: 5px; }
 
 .members-to-add-link { display: inline-block; }
+
+
+// Ações possíveis no perfil.
+// ==========================================================================
+
+.profile-actions {
+  margin-top: 20px;
+  list-style-type: none;
+}
+
+.profile-enrolled-environments,
+.profile-enrolled-courses {
+  margin: 0;
+  list-style-type: none;
+}
+
+.profile-action,
+.profile-enrolled-course {
+  & +
+  & { margin-top: 5px; }
+}
+
+.profile-enrolled-environment {
+  & +
+  & { margin-top: 20px; }
+}
+
+.profile-enrolled-environment-info +
+.profile-enrolled-courses { margin-top: 5px; }

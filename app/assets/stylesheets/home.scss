@@ -15,6 +15,9 @@
 // Layout
 @import "home/layout";
 
+// Sprites.
+@import "home/sprites";
+
 // Barra lateral esquerda
 @import "home/left-sidebar";
 
@@ -47,3 +50,6 @@
 
 // Aplicativos
 @import "home/oauth_clients";
+
+// Perfil.
+@import "home/profile";

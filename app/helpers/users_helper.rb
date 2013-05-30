@@ -99,4 +99,15 @@ module UsersHelper
   def current_experiences(user)
     Experience.current_jobs(user.experiences).map{ |exp| exp.title.strip }.join(", ")
   end
+
+  # Retorna os últimos contatos do usuário.
+  def last_contacts(user)
+    if current_user == user
+      contacts = user.friends.page(params[:page]).per(8)
+    else
+      contacts = user.friends_not_in_common_with(current_user).page(params[:page]).per(4)
+    end
+
+    contacts
+  end
 end

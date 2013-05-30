@@ -1,0 +1,18 @@
+<%#
+  Item de lista com link para o perfil do usuário e thumbnail 24x24.
+
+  Variáveis:
+    item_medium_24_new: um usuário.
+%>
+
+<li class="connection general-list-item-body">
+  <%= link_to item_medium_24_new, title: item_medium_24_new.display_name,
+    alt: item_medium_24_new.display_name,
+    class: "general-list-item-column" do %>
+    <%= image_tag item_medium_24_new.avatar.url(:thumb_24), size: "24x24" %>
+  <% end %>
+  <div class="general-list-item-column">
+    <%= link_to item_medium_24_new.display_name, user_path(item_medium_24_new),
+      class: "text-truncate", title: item_medium_24_new.display_name %>
+  </div>
+</li>
