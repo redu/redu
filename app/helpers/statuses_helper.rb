@@ -14,16 +14,10 @@ module StatusesHelper
 
   # Retorna o nome da partial correta de um dado tipo de log.
   def log_partial(logeable_type)
-    case logeable_type
-    when "User" then "user"
-    when "Education" then "user"
-    when "Experience" then "user"
-    when "Friendship" then "friendship"
-    when "Course" then "course"
-    when "Space" then "space"
-    when "Subject" then "subject"
-    when "Lecture" then "lecture"
-    when "CourseEnrollment" then "user_course_association"
+    if logeable_type == "Experience" || logeable_type == "Education"
+      "user"
+    else
+      logeable_type.underscore.downcase
     end
   end
 
