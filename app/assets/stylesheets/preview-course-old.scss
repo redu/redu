@@ -1,3 +1,10 @@
+@import "compass/css3/images";
+
+// UI-components.
+@import "bootstrap/variables";
+@import "bootstrap/mixins";
+
+
 ul, ol {
   list-style: none;
   margin: 0;
@@ -858,3 +865,5 @@ ul, ol {
   height: 66px;
   display: inline-block;
 }
+
+@import "course_responsibles";
