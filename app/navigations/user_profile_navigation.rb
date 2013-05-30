@@ -1,4 +1,4 @@
-# -*- encoding : utf-8 -*-
+  # -*- encoding : utf-8 -*-
 module UserProfileNavigation
   def user_profile_navigation(sidebar)
     sidebar.dom_class = 'nav-local'
@@ -11,7 +11,7 @@ module UserProfileNavigation
       class: 'icon-wall_16_18-before nav-local-item',
       link: { class: 'nav-local-link' }
     sidebar.item :members, "Contatos: #{@user.friends.count}",
-      user_friendships_path(@user, profile: true),
+      user_friendships_path(@user, profile: true, page: params[:page]),
       class: 'icon-contacts_16_18-before nav-local-item',
       link: { class: 'nav-local-link' }
   end
