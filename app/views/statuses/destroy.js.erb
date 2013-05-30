@@ -4,7 +4,7 @@ $("#status-<%= @status.id %>").slideUp(150, "swing", function() {
 
   $status.remove();
 
-  <% if @status.in_response_to_type == "Status" && @status.in_response_to.answers.empty? %>
+  <% if @status.is_a?(Answer) && @status.in_response_to.answers.empty? %>
     $responses.remove();
   <% else %>
     $responses.countComments();
