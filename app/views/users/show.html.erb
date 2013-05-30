@@ -17,7 +17,7 @@
               <ul class="profile-summary">
                 <li>
                   <% unless @user.experiences.actual_jobs.empty? %>
-                    <ul class="profile-summary-items icon-curriculum-professional-gray_8_10-before">
+                    <ul class="icon-curriculum-professional-gray_8_10-before">
                       <% @user.experiences.actual_jobs.each do |experience| %>
                         <li class="profile-summary-item">
                           <%= content_tag :span, experience.title, class: "profile-summary-bio" %> em <%= content_tag :span, experience.company, class: "profile-summary-bio" %>
@@ -27,14 +27,14 @@
                   <% end %>
                 </li>
                 <% unless @user.educations.empty? %>
-                  <ul class="profile-summary-items icon-curriculum-academic-gray_8_10-before">
+                  <ul class="icon-curriculum-academic-gray_8_10-before">
                     <%= render partial: "important_education",
                       collection: @user.most_important_education,
                       as: :education %>
                   </ul>
                 <% end %>
                 <li>
-                  <ul class="profile-summary-items icon-biography-gray_8_10-before">
+                  <ul class="icon-biography-gray_8_10-before">
                     <% if @user.birthday %>
                       <li class="profile-summary-item">
                         <%= content_tag :span, @user.age,
