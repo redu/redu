@@ -866,24 +866,4 @@ ul, ol {
   display: inline-block;
 }
 
-/* Lista de responsáveis por curso. */
-
-.course-owners {
-  clear: left;
-  color: $gray5;
-  margin-bottom: 10px;
-}
-
-.course-resposibles {
-  display: inline-block;
-  list-style: disc;
-}
-
-.course-resposible {
-  float: left;
-
-  & +
-  & { margin-left: 25px; }
-
-  &:first-child { list-style: none; }
-}
+@import "course_responsibles";

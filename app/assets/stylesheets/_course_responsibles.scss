@@ -1,0 +1,28 @@
+// ==========================================================================
+// Estilos da lista de responsáveis pelo curso.
+// ==========================================================================
+
+
+// UI-components.
+@import "bootstrap/variables";
+
+
+.course-owners {
+  clear: left;
+  color: $gray5;
+  margin-bottom: 10px;
+}
+
+.course-responsibles {
+  display: inline-block;
+  list-style: disc;
+}
+
+.course-responsible {
+  float: left;
+
+  & +
+  & { margin-left: 25px; }
+
+  &:first-child { list-style: none; }
+}
