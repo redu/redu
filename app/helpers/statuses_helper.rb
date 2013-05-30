@@ -13,7 +13,8 @@ module StatusesHelper
   end
 
   # Retorna o nome da partial correta de um dado tipo de log.
-  def log_partial(logeable_type)
+  def log_partial_name(item)
+    logeable_type = item.logeable_type
     if logeable_type == "Experience" || logeable_type == "Education"
       "user"
     else
@@ -21,17 +22,9 @@ module StatusesHelper
     end
   end
 
-  # Retorna o nome da partial correta de um dado tipo de compound log.
-  def compound_log_partial(logeable_type)
-    case logeable_type
-    when "Friendship" then "friendship_compound"
-    when "UserCourseAssociation" then "uca_compound"
-    end
-  end
-
   # Retorna o nome da partial correta de um dado tipo de status
   # que pode ser respondido.
-  def answerable_status_partial(item)
+  def comment_partial_name(item)
     case item.statusable_type
     when "Lecture"
       if item.type == "Help"
