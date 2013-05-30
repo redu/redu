@@ -35,14 +35,21 @@
   $("#requisition-<%= @friend.id %>").slideUp(150, "swing");
 <% end %>
 
+<%# Se o convite de amizade foi feito na página de perfil. %>
+var $buttonAddContact = $('.profile-action-new-friendship');
+
 <% if current_user.friends? @friend %>
   if (chat) {
     chat.subscribePresence("<%= @friend.presence_channel %>");
     chat.subscribePrivate("<%= current_user.private_channel_with(@friend) %>");
   }
 <% else %>
-  var link = "<%= escape_javascript( link_to 'Aguardando aceitação', nil, :class => 'waiting' ) %>"
-  $('.new-friendship').after(link);
+  var $buttonWaiting = $('<%= escape_javascript render "friendships/button_waiting" %>');
+  $buttonWaiting.hide();
+  $buttonAddContact.after($buttonWaiting);
+  $buttonWaiting.slideDown(150, "swing");
 <% end %>
 
-$('.new-friendship').remove();
+$buttonAddContact.slideUp(150, "swing", function() {
+  $buttonAddContact.remove();
+});

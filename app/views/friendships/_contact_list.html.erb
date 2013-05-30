@@ -1,0 +1,36 @@
+<%#
+  Lista de contatos.
+
+  Variáveis:
+    friends: os contatos.
+%>
+
+<div class="content-section">
+  <% if friends.empty? %>
+    <script>
+      $(function() {
+        // Foca no campo de busca e troca o filtro para perfis.
+        $("body").on("click", ".focus-search-users", function() {
+          setTimeout(function() {
+            var $searchProfiles = $('.form-search-filters input[value="perfil"]:radio');
+
+            $searchProfiles.change().prop("checked", true);
+            $("#token-input-q").focus();
+          }, 100);
+        });
+      });
+    </script>
+    <%= render "shared/empty_message", icon_message: "Nenhum contato",
+      icon_class: "icon-invite-empty_128_130",
+      message: raw('Adicione amigos e crie sua rede social educacional. Você pode conversar, ajudar e tirar dúvidas com seus amigos. <span class="focus-search-users link-fake" title="Procure por usuários no Redu">Que tal procurar?</span>') %>
+  <% else %>
+    <ul class="list-2-columns list-columns-separator clearfix">
+      <%= render partial: "users/item_medium_new", collection: friends %>
+    </ul>
+  <% end %>
+</div>
+<% if friends.total_pages > 1 %>
+  <hr class="list-separator">
+<% end %>
+<%= paginate friends, theme: "numbers",
+  outer_window: 1, inner_window: 4 %>

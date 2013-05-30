@@ -1,0 +1,17 @@
+<%#
+  Item de cursos inscritos pelo usuário.
+
+  Variáveis:
+    item_user_role: o curso.
+    user: o usuario.
+%>
+
+<li class="profile-enrolled-course">
+  <%= link_to item_user_role.name,
+    environment_course_path(item_user_role.environment, item_user_role),
+    class: "text-truncate",
+    title: item_user_role.name %>
+  <% role = user.get_association_with(item_user_role).role %>
+  <%= content_tag :span, t("classy_enum.role.#{role}", count: 1),
+    class: "legend icon-#{role_icon(role)}-gray_16_18-before" %>
+</li>

@@ -8,23 +8,22 @@ class FriendshipsController < BaseController
   def index
     @profile = params[:profile] if params.has_key? :profile
 
-    # Diferencia a nova tela de meus contatos com a tela de contatos de outros usuários.
-    if @profile
-      @friends = @user.friends.order('first_name ASC').page(params[:page]).
-        per(16)
-    else
+    unless @profile
       @total_friends = @user.friends.count
-      @friends = @user.friends.order(('first_name ASC')).
-        includes(:friends, :experiences).page(params[:page]).per(20)
     end
+
+    @friends = @user.friends.order(('first_name ASC')).
+      includes(:friends, :experiences).page(params[:page]).per(20)
 
     respond_to do |format|
       format.html do
-        unless @profile
-          render :layout => 'new_application'
+        # TODO: Adicionar testes.
+        if @profile
+          render 'index_profile', layout: 'new_application'
+        else
+          render layout: 'new_application'
         end
       end
-      format.js { render_endless 'users/item_medium', @friends, '#contacts > ul' }
     end
   end
 

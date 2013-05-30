@@ -2,10 +2,14 @@
 $("#requisition-<%= @friend.id %>").slideUp(150, "swing");
 
 <%# Caso em que a requisição é aceita no perfil do usuário. %>
-$(".secondary-sidebar .disconnect").remove();
-var addFriend = "<%= escape_javascript render :partial => "friendships/form",
-  :locals => { :user => current_user, :friend => @friend } %>"
-$(".secondary-sidebar .actions").append(addFriend);
+$(".profile-action-remove-contact").slideUp(150, "swing", function() {
+  $(this).remove();
+});
+
+var $addFriend = $('<%= escape_javascript render "friendships/form", :user => current_user, :friend => @friend %>');
+$addFriend.hide();
+$(".profile-actions").append($addFriend);
+$addFriend.slideDown(150, "swing");
 
 <%# Remove contato da lista de contatos do Chat. %>
 if (chat) {

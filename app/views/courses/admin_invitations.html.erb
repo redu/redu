@@ -60,7 +60,7 @@
   <%= render :partial => 'courses/breadcrumbs',
     :locals => { :course => @course } %>
   <%= render :partial => 'courses/header',
-    :locals => { :course => @course } %>
+    :locals => { :course => @course, responsibles_associations: @responsibles_associations } %>
 
   <div id="admin-invitations" class="body">
     <%= big_tabs :courses do %>

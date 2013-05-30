@@ -1,8 +1,14 @@
-<%= form_for [user, Friendship.new],
-  :remote => true, :html => { :method => :post, :class => 'form-loader new-friendship' } do %>
-  <%= hidden_field_tag "friend_id", friend.id %>
-  <%= hidden_field_tag "show_user", true %>
-  <button class='add-as-friend concave-button' >
-    <span class="add-contact icon-add-contact-white-blue_16_18-before">Adicionar contato</span>
-  </button>
-<% end %>
+<%#
+  Botão de adicionar contato usado no perfil.
+
+  Variáveis:
+    user: o usuário.
+%>
+
+<li class="profile-action profile-action-new-friendship">
+  <%= form_for [user, Friendship.new], remote: true, html: { method: :post } do %>
+    <%= hidden_field_tag "friend_id", friend.id %>
+    <%= hidden_field_tag "show_user", true %>
+    <button type="submit" class="button-primary icon-invite-white_blue_16_18-before">Adicionar contato</button>
+  <% end %>
+</li>
