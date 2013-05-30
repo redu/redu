@@ -13,5 +13,5 @@
     title: item_user_role.name %>
   <% role = user.get_association_with(item_user_role).role %>
   <%= content_tag :span, t("classy_enum.role.#{role}", count: 1),
-    class: "legend icon-#{role_icon(role).first}-gray_16_18-before" %>
+    class: "legend icon-#{role_icon(role)}-gray_16_18-before" %>
 </li>
