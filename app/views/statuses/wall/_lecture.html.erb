@@ -28,7 +28,7 @@
             confirm: "Ao remover o comentário, todas as respostas serão apagadas. Deseja removê-lo?" %>
         <% end %>
         <%= render "statuses/user_name", user: item.user,
-          classes: "icon-#{role_icon(role_at(item.user, item.statusable)).first}-gray_16_18-before" %>
+          classes: "icon-#{role_icon(role_at(item.user, item.statusable))}-gray_16_18-before" %>
         <%= content_tag :span,
           raw("comentou na Aula #{link_to(item.statusable.name, space_subject_lecture_path(item.statusable.subject.space, item.statusable.subject, item.statusable), class: "icon-subject-gray_16_18-before")}"),
           class: "action" %>
