@@ -75,6 +75,7 @@ module StatusService
     end
 
     context "#answer_status" do
+      let(:notification_service) { AnswerService::AnswerNotificationService }
       let(:entity_service) { mock('AnswerEntityService') }
       let(:activity) { FactoryGirl.build_stubbed(:activity) }
       let(:attributes) { FactoryGirl.attributes_for(:answer) }
@@ -83,6 +84,28 @@ module StatusService
       it "should invole AnswerEntityService with correct arguments" do
         entity_service.should_receive(:create).with(activity, attributes)
         subject.answer_status(activity, attributes)
+      end
+
+      it "should return an Answer" do
+        answer = mock_model('Answer')
+
+        entity_service.stub(:create).and_return(answer)
+        notification_service.stub_chain(:new, :deliver)
+
+        subject.answer_status(mock_model('Activity'), {}).should == answer
+      end
+
+      it "should invoke AnswerNotificationService" do
+        answer = mock_model('Answer')
+        entity_service.stub(:create).and_return(answer)
+
+        notification_service.should_receive(:new).
+          with(answer).and_call_original
+        notification_service.any_instance.should_receive(:deliver)
+
+        subject.answer_status(activity, attributes) do |a|
+          a.user = FactoryGirl.build_stubbed(:user)
+        end
       end
     end
   end

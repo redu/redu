@@ -1,28 +1,29 @@
-<%# TODO: Mover para user_notifier/ quando estiver integrado. %>
-<td colspan="2">
-  <table class="status-answer">
-    <tr>
-      <td rowspan="3" class="avatar-cell">
-        <%= image_tag @friend.avatar(:thumb_32), size: "32x32",
-          class: "contact-avatar" %>
-      </td>
-      <td rowspan="3" class="content-cell">
-        <span class="status-action">
-          <%= link_to @friend.display_name, user_path(@friend) %> respondeu ao seu comentário em:
-        </span>
-        <span class="hiearchy-path">
-          UFPE > Curso Lorem Ipsum > Lorem Ispum Sit Dolor Amet
-        </span>
-        <%= link_to "Clique aqui para ver a resposta.", "#", class: "status-link" %>
-        <span class="status-action">Seu comentário:</span>
-        <blockquote class="status-content">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis felis augue, vitae dignissim nibh. Duis in leo risus. Cras tincidunt leo nec justo blandit porta. Suspendisse id felis id nunc ultricies elementum. Nunc odio est, congue non metus
-        </blockquote>
-      </td>
-      <td rowspan="3" class="icon-cell">
-        <%= image_tag "mail/icon-friendship-big.png", size: "64x64",
-          class: "icon-friendship" %>
-      </td>
-    </tr>
-  </table>
-</td>
+<%= @presenter.context(self) do |presenter| %>
+  <td colspan="2">
+    <table class="status-answer">
+      <tr>
+        <td rowspan="3" class="avatar-cell">
+          <%= image_tag presenter.author_avatar(:thumb_32), size: "32x32",
+            class: "contact-avatar" %>
+        </td>
+        <td rowspan="3" class="content-cell">
+          <span class="status-action">
+            <%= presenter.author_link %> <%= presenter.action %>
+          </span>
+          <span class="hiearchy-path">
+            <%= presenter.hierarchy_breadcrumbs %>
+          </span>
+          <%= presenter.answer_link %>
+          <span class="status-action">Comentário:</span>
+          <blockquote class="status-content">
+            <%= presenter.answer_text %>
+          </blockquote>
+        </td>
+        <td rowspan="3" class="icon-cell">
+          <%= image_tag "mail/icon-friendship-big.png", size: "64x64",
+            class: "icon-friendship" %>
+        </td>
+      </tr>
+    </table>
+  </td>
+<% end %>
