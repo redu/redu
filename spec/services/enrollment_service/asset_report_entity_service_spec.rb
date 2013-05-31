@@ -4,17 +4,17 @@ require 'spec_helper'
 module EnrollmentService
   module Jobs
     describe AssetReportEntityService do
-      subject { AssetReportEntityService.new(:lecture => lectures) }
-      let(:subjects) { 2.times.map { FactoryGirl.create(:subject, :space => nil) } }
+      subject { AssetReportEntityService.new(lecture: lectures) }
+      let(:subjects) { 2.times.map { FactoryGirl.create(:subject, space: nil) } }
       let!(:lectures) do
         subjects.map do |subj|
-          3.times.map { FactoryGirl.create(:lecture, :subject => subj, :owner => subj.owner) }
+          3.times.map { FactoryGirl.create(:lecture, subject: subj, owner: subj.owner) }
         end.flatten
       end
 
       before do
-        EnrollmentEntityService.new(:subject => subjects).
-          create(:users => FactoryGirl.create_list(:user, 3))
+        EnrollmentEntityService.new(subject: subjects).
+          create(users: FactoryGirl.create_list(:user, 3))
       end
 
       it "should wrap a collection of lectures" do
@@ -65,7 +65,7 @@ module EnrollmentService
         let!(:asset_reports) do
           lectures.map do |l|
             l.subject.enrollments.map do |enrollment|
-              FactoryGirl.create(:asset_report, :enrollment => enrollment, :lecture => l)
+              FactoryGirl.create(:asset_report, enrollment: enrollment, lecture: l)
             end.flatten
           end.flatten
         end
@@ -92,10 +92,10 @@ module EnrollmentService
 
       describe "#get_asset_reports_for" do
         let(:asset_reports) do
-          lectures.map { |l| FactoryGirl.create(:asset_report, :lecture => l) }
+          lectures.map { |l| FactoryGirl.create(:asset_report, lecture: l) }
         end
         let!(:extra_asset_reports) do
-          lectures.map { |l| FactoryGirl.create(:asset_report, :lecture => l) }
+          lectures.map { |l| FactoryGirl.create(:asset_report, lecture: l) }
         end
         let(:enrollments) { asset_reports.map(&:enrollment).flatten }
 

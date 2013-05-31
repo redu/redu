@@ -1,4 +1,4 @@
 # -*- encoding : utf-8 -*-
 class Activity < Status
-  include ActsAsActivity
+  include StatusService::ActivityAdditions::ActsAsActivity
 end

@@ -25,7 +25,7 @@
         <%= link_to log.logeable.name,
           space_subject_lecture_path(log.logeable.subject.space, log.logeable.subject, log.logeable),
           class: "icon-subject-gray_16_18-before" %>
-        <%= render "statuses/timeago", timestamp: log.created_at %>
+        <%= render "statuses/timeago", status: log, timestamp: log.created_at %>
       </div>
     </div>
   </div>

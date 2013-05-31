@@ -9,5 +9,5 @@
 <div class="subject-info">
   <%= render "statuses/user_name", user: log.user %>
   <%= content_tag :span, raw(auto_link(log.action_text)), class: "action" %>
-  <%= render "statuses/timeago", timestamp: log.created_at %>
+  <%= render "statuses/timeago", status: log, timestamp: log.created_at %>
 </div>

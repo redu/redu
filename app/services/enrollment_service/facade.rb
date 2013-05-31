@@ -15,7 +15,7 @@ module EnrollmentService
       lectures = opts[:lectures]
       enrollments = opts[:enrollments]
 
-      asset_reports = AssetReportEntityService.new(:lecture => lectures)
+      asset_reports = AssetReportEntityService.new(lecture: lectures)
       asset_reports.create(enrollments)
     end
 
@@ -30,8 +30,8 @@ module EnrollmentService
     #
     #   Retorna os enrollments criados.
     def create_enrollment(subjects, users=nil, opts={})
-      service = EnrollmentEntityService.new(:subject => subjects)
-      enrollments = service.create(:users => users, :role => opts[:role])
+      service = EnrollmentEntityService.new(subject: subjects)
+      enrollments = service.create(users: users, role: opts[:role])
 
       untied_adapter.notify_after_create(enrollments)
       vis_adapter.notify_enrollment_creation(enrollments)
@@ -44,7 +44,7 @@ module EnrollmentService
     #   subjects: Subjects que os Users serão desmatriculados
     #   users: Users que serão desmatriculados
     def destroy_enrollment(subjects, users)
-      enrollment_service = EnrollmentEntityService.new(:subject => subjects)
+      enrollment_service = EnrollmentEntityService.new(subject: subjects)
 
       enrollments = enrollment_service.get_enrollments_for(users)
       untied_adapter.notify_after_destroy(enrollments)
@@ -58,13 +58,13 @@ module EnrollmentService
     #   lectures: Lectures que possuem os asset reports
     #   enrollments: Enrollments que terão os asset reports removidos
     def destroy_asset_report(lectures, enrollments)
-      asset_report_service = AssetReportEntityService.new(:lecture => lectures)
+      asset_report_service = AssetReportEntityService.new(lecture: lectures)
       asset_report_service.destroy(enrollments)
     end
 
     # Atualiza os campos #grade e #graduated dos Enrollments passados.
     def update_grade(enrollments)
-      service = EnrollmentEntityService.new(:enrollment => enrollments)
+      service = EnrollmentEntityService.new(enrollment: enrollments)
       state_manager = EnrollmentStateManager.new(enrollments)
 
       state_manager.notify_vis_if_enrollment_change do
@@ -93,7 +93,7 @@ module EnrollmentService
     end
 
     def notify_enrollment_removal(enrollments)
-      graduated_enrollments = enrollments.where(:graduated => true)
+      graduated_enrollments = enrollments.where(graduated: true)
       vis_adapter.notify_remove_subject_finalized(graduated_enrollments)
 
       vis_adapter.notify_enrollment_removal(enrollments)

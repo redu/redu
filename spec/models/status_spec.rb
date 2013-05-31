@@ -4,9 +4,9 @@ require 'spec_helper'
 describe Status do
   it { should belong_to(:statusable) }
   it { should have_many(:users).through(:status_user_associations) }
-  it { should have_many(:status_user_associations).dependent(:destroy) }
-  it { should have_many(:status_resources).dependent(:destroy) }
-  it { should have_many(:answers).dependent(:destroy) }
+  it { should have_many(:status_user_associations).dependent(:delete_all) }
+  it { should have_many(:status_resources).dependent(:delete_all) }
+  it { should have_many(:answers).dependent(:delete_all) }
 
   context "scopes" do
     before do
@@ -160,4 +160,20 @@ describe Status do
       end
     end
   end # context scope
+
+  context ".find_and_include_related" do
+    it "should delegate to .find with proper options" do
+      included = [{ answers: [:user, :status_resources] }, :status_resources]
+      Status.should_receive(:find).with(12, include: included)
+
+      Status.find_and_include_related(12)
+    end
+
+    it "should allow options override" do
+      Status.should_receive(:find).with(12, include: [])
+
+      Status.find_and_include_related(12, include: [])
+    end
+
+  end
 end

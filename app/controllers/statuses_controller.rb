@@ -1,7 +1,23 @@
 # -*- encoding : utf-8 -*-
 class StatusesController < BaseController
 
-  load_and_authorize_resource :status, :except => [:index]
+  load_and_authorize_resource :status, :except => [:index, :show]
+
+  def show
+    @status = Status.find_and_include_related(params[:id].to_i)
+
+    authorize! :read, @status
+
+    respond_to do |format|
+      format.html do
+        if @status.respond_to?(:in_response_to)
+          redirect_to_original_status and return
+        else
+          render layout: 'new_application'
+        end
+      end
+    end
+  end
 
   def create
     @status = Status.new(params[:status]) do |s|
@@ -61,4 +77,9 @@ class StatusesController < BaseController
     end
   end
 
+  private
+
+  def redirect_to_original_status
+    redirect_to status_path(@status.in_response_to, anchor: "answer_#{@status.id}")
+  end
 end

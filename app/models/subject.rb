@@ -1,5 +1,6 @@
 # -*- encoding : utf-8 -*-
 class Subject < ActiveRecord::Base
+  include EnrollmentService::BaseModelAdditions
   include EnrollmentService::SubjectAdditions::ModelAdditions
 
   belongs_to :space

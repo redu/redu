@@ -13,9 +13,9 @@ class Chat < ActiveRecord::Base
   # => #<User id: 5>
   belongs_to :user
   belongs_to :contact, :class_name => 'User', :foreign_key => 'contact_id'
-  has_many :chat_message_associations
+  has_many :chat_message_associations, :dependent => :delete_all
   has_many :chat_messages, :through => :chat_message_associations,
-    :dependent => :destroy
+    :dependent => :delete_all
 
   validates_uniqueness_of :user_id, :scope => [:contact_id]
 

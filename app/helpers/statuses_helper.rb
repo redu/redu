@@ -60,6 +60,18 @@ module StatusesHelper
     status.statusable && (is_a_log ? status.logeable : true)
   end
 
+  # Retorna o caminho individual para um status e no caso de ser uma resposta,
+  # adiciona âncora.
+  def status_or_answer_path(status)
+    path = status_path(status)
+
+    if status.is_a? Answer
+      path = status_path(status.in_response_to, anchor: "answer_#{status.id}")
+    end
+
+    path
+  end
+
   # Retorna o caminho da hierarquia até o elemento dado com links.
   def context_path(item)
     lecture = ''

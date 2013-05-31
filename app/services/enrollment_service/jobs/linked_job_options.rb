@@ -26,7 +26,7 @@ module EnrollmentService
         klass = constantize(singular_model_name)
         ids = ids(singular_model_name)
 
-        klass.where(:id => ids)
+        klass.where(id: ids)
       end
 
       private

@@ -30,7 +30,7 @@
         <%= render "statuses/user_name", user: item.user,
           classes: "icon-#{role_icon(role_at(item.user, item.statusable))}-gray_16_18-before" %>
         <span class="action">pediu <span class="help">ajuda</span> na Aula <%= link_to item.statusable.name, space_subject_lecture_path(item.statusable.subject.space, item.statusable.subject, item.statusable), class: "icon-subject-gray_16_18-before" %></span>
-        <%= render "statuses/timeago", timestamp: item.created_at %>
+        <%= render "statuses/timeago", status: item, timestamp: item.created_at %>
       </div>
     </div>
     <div class="subject-content">

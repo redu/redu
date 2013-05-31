@@ -4,12 +4,12 @@ class Status < ActiveRecord::Base
   belongs_to :logeable, :polymorphic => true
   belongs_to :user
   has_many :answers, :as => :in_response_to,
-    :dependent => :destroy,
+    :dependent => :delete_all,
     :order => "created_at ASC",
     :include => [:user]
   has_many :users, :through => :status_user_associations
-  has_many :status_user_associations, :dependent => :destroy
-  has_many :status_resources, :dependent => :destroy
+  has_many :status_user_associations, :dependent => :delete_all
+  has_many :status_resources, :dependent => :delete_all
 
   accepts_nested_attributes_for :status_resources
   validates_associated :status_resources
@@ -39,6 +39,15 @@ class Status < ActiveRecord::Base
   # Retorna apenas status visíveis
   scope :visible, where(:compound => false)
 
+  class << self
+    def find_and_include_related(*args)
+      included = { include: \
+                   [{ answers: [:user, :status_resources] }, :status_resources]}
+
+      options = included.merge(args.extract_options!)
+      find(args.first, options)
+    end
+  end
   # Constrói as condições de busca de status dentro da hierarquia. Aceita
   # Course, Space e Lecture como raiz
   def self.build_conditions(entity)
