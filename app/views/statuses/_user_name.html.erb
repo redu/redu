@@ -3,9 +3,21 @@
 
   Variáveis:
     user: o usuário.
-    classes: classes extras.
+    entity: a entidade que o usuário faz parte. Caso usada,
+            adiciona o ícone ao nome do usuário. (opcional)
 %>
 
-<% classes = nil unless local_assigns.has_key? :classes %>
+<% entity = nil unless local_assigns.has_key? :entity %>
 
-<%= link_to user.display_name, user_path(user), class: "link-name #{classes}" %>
+<% if user %>
+  <% link_name_class = "link-name" %>
+
+  <% if entity %>
+    <%= link_to user.display_name, user_path(user),
+      class: "#{link_name_class} icon-#{role_icon(role_at(user, entity))}-gray_16_18-before" %>
+  <% else %>
+    <%= link_to user.display_name, user_path(user), class: link_name_class %>
+  <% end %>
+<% else %>
+  [Usuário removido]
+<% end %>

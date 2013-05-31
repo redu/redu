@@ -5,8 +5,17 @@
     user: o usuário.
 %>
 
-<%= link_to user_path(user), class: "author-thumbnail",
-  title: user.display_name do %>
-  <%= image_tag user.avatar.url(:thumb_32), alt: user.display_name,
-    size: "32x32" %>
+<% thumbnail_class = "author-thumbnail" %>
+<% thumbnail_size = "32x32" %>
+
+<% if user %>
+  <%= link_to user_path(user), class: thumbnail_class,
+    title: user.display_name do %>
+    <%= image_tag user.avatar.url(:thumb_32), alt: user.display_name,
+      size: thumbnail_size %>
+  <% end %>
+<% else %>
+  <% removed_user = "Usuário removido" %>
+  <%= image_tag "missing_users_thumb_32.png", alt: removed_user,
+      title: removed_user, size: thumbnail_size, class: thumbnail_class %>
 <% end %>
