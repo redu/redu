@@ -91,7 +91,7 @@ module StatusesHelper
   end
 
   # Retorna o caminho da hierarquia até o elemento dado com links.
-  def context_path(entity)
+  def entity_hierarchy_breacrumb_links(entity)
     hierarchy = entity_hierachy(entity)
 
     unless hierarchy[:lecture].blank?
