@@ -70,18 +70,23 @@ module StatusesHelper
       hierarchy[:subject] = entity.subject
       hierarchy[:space] = hierarchy[:subject].space
       hierarchy[:course] = hierarchy[:space].course
+      hierarchy[:environment] = hierarchy[:course].environment
     when "Subject"
       hierarchy[:subject] = entity
       hierarchy[:space] = entity.space
       hierarchy[:course] = hierarchy[:space].course
+      hierarchy[:environment] = hierarchy[:course].environment
     when "Space"
       hierarchy[:space] = entity
       hierarchy[:course] = entity.course
+      hierarchy[:environment] = hierarchy[:course].environment
     when "Course"
       hierarchy[:course] = entity
+      hierarchy[:environment] = hierarchy[:course].environment
+    when "Environment"
+      hierarchy[:environment] = entity
     end
 
-    hierarchy[:environment] = hierarchy[:course].environment
     hierarchy
   end
 
@@ -90,23 +95,33 @@ module StatusesHelper
     hierarchy = entity_hierachy(entity)
 
     unless hierarchy[:lecture].blank?
-      lecture_link = link_to(hierarchy[:lecture].name, space_subject_lecture_path(hierarchy[:space], hierarchy[:subject], hierarchy[:lecture]))
+      lecture_link = link_to(hierarchy[:lecture].name,
+                             space_subject_lecture_path(hierarchy[:space],
+                                                        hierarchy[:subject],
+                                                        hierarchy[:lecture]))
     end
 
     unless hierarchy[:subject].blank?
-      subject_link = link_to(hierarchy[:subject].name, space_subject_path(hierarchy[:space], hierarchy[:subject]))
+      subject_link = link_to(hierarchy[:subject].name,
+                             space_subject_path(hierarchy[:space],
+                                                hierarchy[:subject]))
     end
 
     unless hierarchy[:space].blank?
-      space_link = link_to(hierarchy[:space].name, space_path(hierarchy[:space]))
+      space_link = link_to(hierarchy[:space].name,
+                           space_path(hierarchy[:space]))
     end
 
     unless hierarchy[:course].blank?
-      course_link = link_to(hierarchy[:course].name, environment_course_path(hierarchy[:environment], hierarchy[:course]))
+      course_link = link_to(hierarchy[:course].name,
+                            environment_course_path(hierarchy[:environment],
+                                                    hierarchy[:course]))
     end
 
-    environment_link = link_to(hierarchy[:environment].name, environment_path(hierarchy[:environment]))
+    environment_link = link_to(hierarchy[:environment].name,
+                               environment_path(hierarchy[:environment]))
 
-    raw [environment_link, course_link, space_link, subject_link, lecture_link].compact.join(' > ')
+    raw [environment_link, course_link, space_link, subject_link, lecture_link].
+      compact.join(' > ')
   end
 end
