@@ -366,7 +366,7 @@ GEM
       representable (~> 1.4)
       roar (~> 0.11.13)
       test_xml (>= 0.1.6)
-    route_translator (3.0.2)
+    route_translator (3.1.0)
     rscribd (1.3.0)
       mime-types
     rsolr (1.0.9)
