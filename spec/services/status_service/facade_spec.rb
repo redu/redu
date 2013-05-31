@@ -81,7 +81,7 @@ module StatusService
       let(:attributes) { FactoryGirl.attributes_for(:answer) }
       before { subject.stub(:answer_service).and_return entity_service }
 
-      it "should invole AnswerEntityService with correct arguments" do
+      it "should invoke AnswerEntityService with correct arguments" do
         entity_service.should_receive(:create).with(activity, attributes)
         subject.answer_status(activity, attributes)
       end
