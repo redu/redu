@@ -1,6 +1,7 @@
 pt-BR:
   routes:
     about: "sobre"
+    preview: "preview"
     administrator: "administracao"
     activate: "ativar"
     admin_members: "admin_membros"
