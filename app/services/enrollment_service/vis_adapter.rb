@@ -1,13 +1,6 @@
 # -*- encoding : utf-8 -*-
 module EnrollmentService
-  class VisAdapter
-    attr_reader :vis_client, :url
-
-    def initialize(opts={})
-      @vis_client = opts[:vis_client] || VisClient
-      @url = opts[:url] || "/hierarchy_notifications.json"
-    end
-
+  class VisAdapter < ::VisAdapter
     def notify_enrollment_creation(enrollments)
       notify(:enrollment, enrollments)
     end

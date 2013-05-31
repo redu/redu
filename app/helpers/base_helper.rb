@@ -343,7 +343,6 @@ module AsyncJSHelper
   # Carrega asset de forma lazy.
   # Opções:
   #   type: pode ser js (default) ou css
-  #   jammit: true se o package utuliza a infraestrutura do jammit (defalt false)
   #   clear: caso o arquivo já tenha sido incluido, tenta remover antes de
   #    adicionar novamente. Default frue
   def lazy_load(package, options = {}, &block)

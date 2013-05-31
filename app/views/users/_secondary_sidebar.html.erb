@@ -27,7 +27,7 @@
       <% end %>
 
       <%# Se os usuários não forem amigos ainda. %>
-      <% if is_friend %>
+      <% if !is_friend %>
         <%# Se existe requisição pendente. %>
         <% if current_friendship(user) %>
           <%# Se current_user já enviou requisição de amizade. %>

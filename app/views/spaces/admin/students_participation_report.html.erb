@@ -61,7 +61,7 @@
             </p>
           </div>
 
-          <%= lazy_load(:chart, :jammit => true) do %>
+          <%= lazy_load(:chart) do %>
             var treemap = new StudentsTreemap();
             treemap.load({ form: $("#graph-form"),
             renderTo: "treemap-chart",

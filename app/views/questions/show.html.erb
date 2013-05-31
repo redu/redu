@@ -21,9 +21,8 @@
           <% # Forms para submissão do choice da questão %>
           <%= render partial: "questions/choice_form",
               locals: { exercise: @exercise, question: @question,
-                           first: @first_question,
-                           last: @last_question, review: @review,
-                           choice: @choice, result: @result } %>
+                        first: @first_question, last: @last_question,
+                        review: @review, choice: @choice, result: @result } %>
       </div>
 
     </div>

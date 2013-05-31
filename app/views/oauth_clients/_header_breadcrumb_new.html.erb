@@ -1,11 +1,5 @@
 <div class="content-section">
   <%= render "bootstrap/header_breadcrumb", :header_breadcrumb_items => [
-    { :name => "Aplicativos",
-      :link => user_oauth_clients_path(user),
-      :classes => "icon-app-gray_32_34-before"
-    },
-    { :name => "Novo Aplicativo",
-      :link => new_user_oauth_client_path(user)
-    }
-    ] %>
+    { :name => "Aplicativos", :link => user_oauth_clients_path(user), :classes => "icon-app-gray_32_34-before" },
+    { :name => "Novo Aplicativo", :link => new_user_oauth_client_path(user) } ] %>
 </div>

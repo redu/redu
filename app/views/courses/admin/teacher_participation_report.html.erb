@@ -32,7 +32,7 @@
         </div>
       <% else %>
         <h3 class="form-header graph-header">Qual a participação do professor nas disciplinas?</h3>
-          <%= lazy_load(:chart, :jammit => true) do %>
+          <%= lazy_load(:chart) do %>
               var graph = new TeacherParticipationGraph();
               graph.load({ chart: { renderTo: "teacher-participation-chart" }  ,
                            form: $("#graph-form") });

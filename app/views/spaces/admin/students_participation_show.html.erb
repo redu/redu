@@ -1,6 +1,6 @@
 <%= stylesheet_link_tag :print, :media => 'print' %>
 
-<%= lazy_load(:chart, :jammit => true) do %>
+<%= lazy_load(:chart) do %>
   var treemap = new StudentsTreemap();
   treemap.print({ form: $("#graph-form"),
   renderTo: "treemap-chart",

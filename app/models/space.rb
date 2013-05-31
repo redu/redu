@@ -13,7 +13,7 @@ class Space < ActiveRecord::Base
 
   # CALLBACKS
   after_create :create_root_folder
-  after_create :delay_create_space_association_for_users_course
+  after_commit :delay_create_space_association_for_users_course, on: :create
 
   # ASSOCIATIONS
   belongs_to :course

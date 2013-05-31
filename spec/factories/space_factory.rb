@@ -6,6 +6,8 @@ FactoryGirl.define do
 
     s.association :owner, :factory => :user
     s.course { |space| FactoryGirl.create(:course, :owner => space.owner) }
+
+    after(:create) { |s| s.create_space_association_for_users_course }
   end
 
   factory :complete_space, :parent => :space do

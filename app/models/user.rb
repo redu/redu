@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   include EnrollmentService::UserAdditions::ModelAdditions
   include StatusService::BaseModelAdditions
   include StatusService::UserAdditions::ModelAdditions
+  include DestroySoon::ModelAdditions
 
   # Valida a resposta ao captcha
   attr_writer :enable_humanizer

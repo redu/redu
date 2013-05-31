@@ -204,6 +204,9 @@ module Redu
     # Enumerators
     config.autoload_paths << "#{config.root}/app/enums"
 
+    # Adapters
+    config.autoload_paths << "#{config.root}/app/adapters"
+
     # Configurações do Pusher (redu app)
     config.pusher = {
       :app_id => '4577',
