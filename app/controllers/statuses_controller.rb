@@ -11,7 +11,7 @@ class StatusesController < BaseController
     respond_to do |format|
       format.html do
         if @status.respond_to?(:in_response_to)
-          redirect_to_original_status and return
+          redirect_to original_status_path and return
         else
           render layout: 'new_application'
         end
@@ -78,7 +78,7 @@ class StatusesController < BaseController
 
   private
 
-  def redirect_to_original_status
-    redirect_to status_path(@status.in_response_to, anchor: "answer_#{@status.id}")
+  def original_status_path
+    status_path(@status.in_response_to, anchor: "answer_#{@status.id}")
   end
 end
