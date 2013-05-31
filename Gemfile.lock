@@ -238,7 +238,7 @@ GEM
     hash-deep-merge (0.1.1)
     hashie (2.0.4)
     hike (1.2.2)
-    hooks (0.2.2)
+    hooks (0.3.1)
     htmlentities (4.3.1)
     http_parser.rb (0.5.3)
     httpauth (0.2.0)
@@ -357,8 +357,8 @@ GEM
     representable (1.5.3)
       multi_json
       nokogiri
-    roar (0.11.17)
-      representable (>= 1.5.0)
+    roar (0.11.18)
+      representable (>= 1.5.2)
     roar-rails (0.1.0)
       actionpack
       hooks
