@@ -22,7 +22,7 @@ $landing-visual-background-color: $gray1;
   padding: 20px 0;
   background-color: $landing-visual-background-color;
 
-  .cssgradients & { @include background-image(linear-gradient(rgba(0, 0, 0, 0.4), $landing-visual-background-color 5%, $landing-visual-background-color 95%, rgba(0, 0, 0, 0.4) 100%)); }
+  .cssgradients & { @include background-image(linear-gradient(rgba(0, 0, 0, 0.2), $landing-visual-background-color 5%, $landing-visual-background-color 95%, rgba(0, 0, 0, 0.2) 100%)); }
 
   .no-cssgradients.gt-ie8 & {
     // http://www.colorzilla.com/gradient-editor/#000000+0,1c75bb+5,1c75bb+95,000000+100;Custom

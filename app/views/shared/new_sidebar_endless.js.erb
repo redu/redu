@@ -1,0 +1,10 @@
+var items = '<%= escape_javascript render partial: partial, collection: collection, locals: partial_locals %>';
+$('<%= raw selector %>').append(items);
+
+<% if html_class %>
+  var endless = '<%= escape_javascript paginate collection, theme: "new_sidebar_endless", text: text, html_class: html_class %>';
+  $(".<%= html_class %>").replaceWith(endless);
+<% else %>
+  var endless = '<%= escape_javascript paginate collection, theme: "new_sidebar_endless", text: text %>';
+  $('.sidebar-endless').replaceWith(endless);
+<% end %>

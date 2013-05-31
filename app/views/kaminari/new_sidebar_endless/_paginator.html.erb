@@ -1,0 +1,16 @@
+<%#
+  Paginação endless do sidebar.
+%>
+
+<%= paginator.render do %>
+  <% unless current_page.last? %>
+    <% if defined? html_class %>
+      <nav class="<%= html_class %>">
+    <% else %>
+      <nav class="sidebar-endless">
+    <% end %>
+    <div class="nav-local-separator"></div>
+    <%= next_page_tag %>
+    </nav>
+  <% end %>
+<% end %>

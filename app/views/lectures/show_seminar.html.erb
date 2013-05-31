@@ -1,4 +1,4 @@
-<%= render "lectures/new_wall_assets", in_lecture: true %>
+<%= render "shared/new_wall_assets", in_lecture: true %>
 
 <%= render partial: 'lectures/javascripts' %>
 <%= render partial: 'subjects/sidebar' %>
@@ -24,7 +24,7 @@
       </div>
     </div>
 
-    <%= render "lectures/create_statuses", lecture: @lecture,
+    <%= render "lectures/wall", statusable: @lecture,
       statuses: @statuses, status: @status %>
   </div><!-- end #resource -->
 

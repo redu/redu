@@ -4,4 +4,9 @@ $newStatus = $('<%= escape_javascript render "statuses/item", item: @status, sta
   .slideDown(150, "swing")
   .find("textarea").val("");
 
+// Remove os erros se existirem.
+var $createStatus = $(".create-status");
+$createStatus.removeClass("control-error");
+$createStatus.find(".control-errors").remove();
+
 $("#status_text").val("");

@@ -1,22 +1,28 @@
-<li>
-  <%= image_tag item_medium.avatar.url(:thumb_32), :class => 'avatar' %>
-  <%= link_to item_medium.initials, environment_path(item_medium),
-    :class => 'initials' %>
-  <%= link_to item_medium.name, environment_path(item_medium),
-    :class => 'environment' %>
+<%#
+  Item de lista de ambientes e cursos inscritos.
 
-  <ul class="courses">
-    <% @user.courses.of_environment(item_medium).each do |course| %>
-    <li>
-      <%= link_to course.name,
-        environment_course_path(item_medium, course),
-        :class => 'course' %>
-      <% role = @user.get_association_with(course).role %>
-        <span class="role icon-<%= role %>-gray_16_18-before">
-        <%= t("classy_enum.role.#{role}", :count => 1) %>
-      </span>
-    </li>
+  Variáveis:
+    item_medium: o ambiente.
+    user: o usuario.
+%>
+
+<li class="profile-enrolled-environment">
+  <div class="profile-enrolled-environment-info general-list-item-body">
+    <%= link_to environment_path(item_medium), title: item_medium.name,
+      alt: item_medium.name,
+      class: "general-list-item-column" do %>
+      <%= image_tag item_medium.avatar.url(:thumb_32), size: "32x32" %>
     <% end %>
+    <div class="general-list-item-column">
+      <%= link_to item_medium.initials, environment_path(item_medium),
+        class: "text-truncate", title: item_medium.initials %>
+      <%= content_tag :span, item_medium.name, class: "legend text-truncate",
+        title: item_medium.name %>
+    </div>
+  </div>
+  <ul class="profile-enrolled-courses">
+    <%= render partial: "courses/item_user_role",
+      collection: user.courses.of_environment(item_medium),
+      locals: { user: user } %>
   </ul>
 </li>
-<hr class="separator"/>

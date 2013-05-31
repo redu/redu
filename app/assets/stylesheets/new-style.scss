@@ -1131,7 +1131,7 @@ body {
 
 .hierarchy-listing-wrapper .admin-actions,
 .body .admin-actions,
-.body .actions {
+.body .actions.clearfix {
   float: right;
   margin-right: 20px;
   margin-bottom: -25px;
@@ -7720,14 +7720,6 @@ button[disabled=disabled] {
   overflow: hidden;
   text-overflow: ellipsis;
   width: 100%;
-}
-
-/* Mensagem de mural privado. */
-
-.icon-private-gray_128_130 {
-  background-image: image-url("private-gray_128_130.png");
-  width: 128px;
-  height: 130px;
 }
 
 .empty-message {

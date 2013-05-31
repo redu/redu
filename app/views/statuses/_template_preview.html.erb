@@ -14,13 +14,13 @@
         </a>
         <ul class="buttons">
           {{ if (obj.thumbnail_url instanceof Array) { }}
-          <li class="last button-default"><span class="text-replacement icon-arrow-left-lightblue_8_10 show">A</span></li>
-          <li class="next button-default"><span class="text-replacement icon-arrow-right-lightblue_8_10 show">P</span></li>
+          <li class="last button-default"><span class="text-replacement icon-arrow-left-lightblue_8_10 show">Anterior</span></li>
+          <li class="next button-default"><span class="text-replacement icon-arrow-right-lightblue_8_10 show">Próximo</span></li>
           {{ } else { }}
-          <li class="button-default button-disabled"><span class="text-replacement icon-arrow-left-gray_8_10 show">A</span></li>
-          <li class="button-default button-disabled"><span class="text-replacement icon-arrow-right-gray_8_10 show">P</span></li>
+          <li class="button-default button-disabled"><span class="text-replacement icon-arrow-left-gray_8_10 show">Anterior</span></li>
+          <li class="button-default button-disabled"><span class="text-replacement icon-arrow-right-gray_8_10 show">Próximo</span></li>
           {{ } }}
-          <li class="remove button-default"><span class="text-replacement icon-close-lightblue_8_10 show">R</span></li>
+          <li class="remove button-default"><span class="text-replacement icon-close-lightblue_8_10 show">Remover</span></li>
         </ul>
       </div>
       {{ } }}

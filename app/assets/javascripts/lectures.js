@@ -50,9 +50,13 @@ $(function(){
     // Ao clicar em Comentar ir direto para criar status
     $(".student-actions .action-comment").live("click", function(){
       $('html,body').animate({
-          scrollTop: $(".create-status textarea.textarea").offset().top
+          scrollTop: $(".lecture-wall-actions").offset().top - 50
         }, "slow");
-      $(".create-status textarea.textarea").focus();
+      var $commentButton = $(".button-comment");
+
+      if (!$commentButton.parent().hasClass("open")) {
+        $commentButton.click();
+      }
     });
 
     $("#resource .status-type .type-item").live("click", function(e){

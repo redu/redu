@@ -506,7 +506,7 @@ describe CoursesController do
 
     context "when email_invitations is NOT empty" do
       before do
-        nested_course_params[:email_invitations] = email_invitations[0..1].map(&:id).join(",")
+        nested_course_params[:email_invitations] = email_invitations[0..1].map(&:id)
         post :destroy_invitations, nested_course_params
       end
 
@@ -528,7 +528,7 @@ describe CoursesController do
 
     context "when user_invitations is NOT empty" do
       before do
-        nested_course_params[:user_invitations] = user_invitations[0..1].map(&:id).join(",")
+        nested_course_params[:user_invitations] = user_invitations[0..1].map(&:id)
         post :destroy_invitations, nested_course_params
       end
 

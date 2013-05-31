@@ -13,31 +13,18 @@ module StatusesHelper
   end
 
   # Retorna o nome da partial correta de um dado tipo de log.
-  def log_partial(logeable_type)
-    case logeable_type
-    when "User" then "user"
-    when "Education" then "user"
-    when "Experience" then "user"
-    when "Friendship" then "friendship"
-    when "Course" then "course"
-    when "Space" then "space"
-    when "Subject" then "subject"
-    when "Lecture" then "lecture"
-    when "CourseEnrollment" then "user_course_association"
-    end
-  end
-
-  # Retorna o nome da partial correta de um dado tipo de compound log.
-  def compound_log_partial(logeable_type)
-    case logeable_type
-    when "Friendship" then "friendship_compound"
-    when "UserCourseAssociation" then "uca_compound"
+  def log_partial_name(item)
+    logeable_type = item.logeable_type
+    if logeable_type == "Experience" || logeable_type == "Education"
+      "user"
+    else
+      logeable_type.underscore
     end
   end
 
   # Retorna o nome da partial correta de um dado tipo de status
   # que pode ser respondido.
-  def answerable_status_partial(item)
+  def comment_partial_name(item)
     case item.statusable_type
     when "Lecture"
       if item.type == "Help"
@@ -83,5 +70,53 @@ module StatusesHelper
     end
 
     path
+  end
+
+  # Retorna o caminho da hierarquia até o elemento dado com links.
+  def context_path(item)
+    lecture = ''
+    subject = ''
+    space = ''
+    course = ''
+    environment = ''
+
+    if defined? item.subject
+      lecture = item
+      subject = lecture.subject
+      space = subject.space
+      course = space.course
+    end
+
+    if defined? item.space
+      subject = item
+      space = subject.space
+      course = space.course
+    end
+
+    if defined? item.course
+      space = item
+      course = space.course
+    end
+
+    if defined? item.environment
+      course = item
+    end
+
+    environment = course.environment
+    environment_link = link_to(environment.name, environment_path(environment))
+
+    unless lecture.blank?
+      lecture_link = link_to(lecture.name, space_subject_lecture_path(space, subject, lecture))
+    end
+
+    unless space.blank?
+      space_link = link_to(space.name, space_path(space))
+    end
+
+    unless course.blank?
+      course_link = link_to(course.name, environment_course_path(environment, course))
+    end
+
+    [environment_link, course_link, space_link, lecture_link].compact.join(' > ')
   end
 end

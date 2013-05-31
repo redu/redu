@@ -69,7 +69,8 @@ class SpacesController < BaseController
 
         format.html
         format.js do
-          render_endless 'statuses/item', @statuses, '#statuses > ol'
+          render_endless 'statuses/item', @statuses, '#statuses',
+            :template => 'shared/new_endless_kaminari'
         end
         format.xml  { render xml: @space }
       else

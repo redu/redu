@@ -7,11 +7,7 @@
     <div class="content-body">
       <div class="content-section">
         <%= render "bootstrap/header_breadcrumb", header_breadcrumb_items: [
-          { name: "Meu Mural",
-            link: my_wall_user_path(@user),
-            classes: "icon-wall-gray_32_34-before"
-          }
-          ] %>
+          { name: "Meu Mural", link: my_wall_user_path(@user), classes: "icon-wall-gray_32_34-before" } ] %>
       </div>
       <%= render "statuses/wall", status: @status, statusable: @user,
         placeholder: "Compartilhe algo com seus Amigos através de seu mural",

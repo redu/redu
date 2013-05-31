@@ -53,7 +53,9 @@
       <% end %>
 
       <%# Mural. %>
-      <%= render "users/home_wall", status: @status, user: @user, statuses: @statuses %>
+      <%= render "statuses/wall", status: @status, statusable: @user,
+        placeholder: "Compartilhe algo com seus Amigos através de seu mural",
+        statuses: @statuses %>
     </div>
     <%= render "users/breadcrumb_home", user: @user %>
   </div>

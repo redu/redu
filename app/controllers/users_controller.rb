@@ -43,22 +43,24 @@ class UsersController < BaseController
     end
 
     @subscribed_courses_count = @user.user_course_associations.approved.count
+
     respond_to do |format|
-      format.html
+      format.html { render layout: 'new_application' }
     end
   end
 
   def contacts_endless
+    # Replicado de users_helper#last_contacts.
     @contacts = if current_user == @user
-      Kaminari::paginate_array(@user.friends).page(params[:page]).per(8)
+      @user.friends.page(params[:page]).per(8)
     else
-      Kaminari::paginate_array(@user.friends_not_in_common_with(current_user)).
-        page(params[:page]).per(4)
+      @user.friends_not_in_common_with(current_user).page(params[:page]).per(4)
     end
 
     respond_to do |format|
-      format.js { render_sidebar_endless 'users/item_medium_24', @contacts,
-        '.con-endless', "Mostrando os <X> últimos contatos de #{@user.first_name}" }
+      format.js { render_new_sidebar_endless 'users/item_medium_24_new', @contacts,
+        '.connections', "Mostrando os <X> últimos contatos de #{@user.first_name}",
+        'connections-endless' }
     end
   end
 
@@ -66,10 +68,10 @@ class UsersController < BaseController
     @environments = @user.environments.page(params[:page]).per(4)
 
     respond_to do |format|
-      format.js { render_sidebar_endless 'environments/item_medium',
-        @environments, '.environments > ul',
+      format.js { render_new_sidebar_endless 'environments/item_medium',
+        @environments, '.profile-enrolled-environments',
         "Mostrando os <X> últimos ambientes de #{@user.first_name}",
-        "sec-sidebar-endless" }
+        "profile-enrolled-environments-endless", user: @user }
     end
   end
 
@@ -361,8 +363,11 @@ class UsersController < BaseController
     @subscribed_courses_count = @user.user_course_associations.approved.count
 
     respond_to do |format|
-      format.html
-      format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
+      format.html { render layout: 'new_application' }
+      format.js do
+        render_endless 'statuses/item', @statuses, '#statuses',
+          :template => 'shared/new_endless_kaminari'
+      end
     end
   end
 
@@ -370,6 +375,11 @@ class UsersController < BaseController
     load_hierarchy
     entity = @space || @course || @environment
     authorize! :preview, entity
+
+    if @course
+     @responsibles_associations = @course.user_course_associations.
+      with_roles([Role[:teacher], Role[:environment_admin]]).includes(:user)
+    end
 
     @users = if params[:role].eql? "teachers"
       entity.teachers

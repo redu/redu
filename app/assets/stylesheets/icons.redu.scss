@@ -1777,3 +1777,19 @@
 .icon-close-gray_16_16:hover {
   background: image-url("icon-close-red_16_16.png") no-repeat !important;
 }
+
+.course-responsible {
+  .icon-manager-gray_16_18-before:before {
+    content: "";
+    width: 16px !important;
+    height: 18px !important;
+    background: image-url("icons-small.png") 0 -800px no-repeat;
+  }
+
+  .icon-manager-gray_16_18-before:before,
+  .icon-teacher-gray_16_18-before:before {
+    display: inline-block;
+    margin-right: 5px;
+    vertical-align: middle;
+  }
+}
