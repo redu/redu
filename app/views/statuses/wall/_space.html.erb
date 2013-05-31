@@ -13,7 +13,7 @@
     <div class="context">
       <%= link_to item.statusable.name, space_path(item.statusable),
         class: "text-replacement context-icon icon-space-gray_32_34-before" %>
-      <%= content_tag :span, raw(context_path(item.statusable)), class: "legend" %>
+      <%= content_tag :span, context_path(item.statusable), class: "legend" %>
     </div>
     <div class="subject">
       <%= render "statuses/user_image", user: item.user %>

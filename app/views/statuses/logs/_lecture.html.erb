@@ -14,7 +14,7 @@
       <%= link_to log.logeable.name,
         space_subject_lecture_path(log.logeable.subject.space, log.logeable.subject, log.logeable),
         class: "text-replacement context-icon icon-subject-gray_32_34-before" %>
-      <%= content_tag :span, raw(context_path(log.logeable)), class: "legend" %>
+      <%= content_tag :span, context_path(log.logeable), class: "legend" %>
     </div>
     <div class="subject">
       <%= render "statuses/user_image", user: log.user %>

@@ -24,7 +24,7 @@
           environment_course_path(log.logeable.course.environment,log.logeable),
           class: "text-replacement context-icon icon-course-gray_32_34-before" %>
       <% end %>
-      <%= content_tag :span, raw(context_path(log.logeable.course)), class: "legend" %>
+      <%= content_tag :span, context_path(log.logeable.course), class: "legend" %>
     </div>
     <div class="subject">
       <%= render "statuses/user_image", user: log.user %>
