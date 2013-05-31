@@ -26,27 +26,45 @@ module StatusService
         subject.answer_link.should =~ /href=\"#{view.status_path(answer)}\"/
       end
 
-      context "#action" do
-        context "when AnswerNotification#user is the author" do
-          let(:notification) do
-            AnswerNotification.new(user: author, answer: answer)
-          end
-          let(:status) { FactoryGirl.build_stubbed(:activity, user: author) }
+      context "when AnswerNotification#user is the author" do
+        let(:notification) do
+          AnswerNotification.new(user: author, answer: answer)
+        end
+        let(:status) { FactoryGirl.build_stubbed(:activity, user: author) }
 
+        context "#action" do
           it "should generate the correct message" do
             subject.action.should =~ \
-              /respondeu ao seu comentário em:/
+              /respondeu ao seu comentário em/
           end
         end
 
-        context "whem AnswerNotification#user is not the author" do
-          let(:notification) { AnswerNotification.new(user: user, answer: answer) }
+        context "#subject" do
+          it "should generate the correct message" do
+            subject.subject.should =~ \
+              /#{answer.user.display_name} respondeu ao seu comentário em/
+          end
+        end
+      end
 
+      context "whem AnswerNotification#user is not the author" do
+        let(:notification) { AnswerNotification.new(user: user, answer: answer) }
+
+        context "#action" do
           it "should generate the correct message" do
             msg = "também respondeu ao comentário " + \
-              "original de #{status.user.display_name}:"
+              "original de #{status.user.display_name}"
 
             subject.action.should == msg
+          end
+        end
+
+        context "#subject" do
+          it "should generate the correct message" do
+            msg = "#{answer.user.display_name} também respondeu ao comentário " + \
+                  "original de #{status.user.display_name}"
+
+            subject.subject.should == msg
           end
         end
       end

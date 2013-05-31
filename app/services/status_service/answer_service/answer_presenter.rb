@@ -22,12 +22,19 @@ module StatusService
         render_link(text, url, class: "status-link")
       end
 
-      def action
-        if user == original_author
-          "respondeu ao seu comentário em:"
-        else
-          "também respondeu ao comentário original de #{original_author.display_name}:"
-        end
+      def action(&block)
+        message = if user_is_original_author?
+                    "respondeu ao seu comentário em"
+                  else
+                    "também respondeu ao comentário original de " + \
+                    "#{original_author.display_name}"
+                  end
+
+        block_given? ? yield(message) : message
+      end
+
+      def subject
+        action { |msg| "#{author_name} #{msg}"}
       end
 
       def context(context_template, &block)
@@ -53,6 +60,10 @@ module StatusService
 
       def render_link(text, path, opts={}, &block)
         template.link_to(text, path, opts, &block)
+      end
+
+      def user_is_original_author?
+        user == original_author
       end
     end
   end

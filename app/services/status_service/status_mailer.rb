@@ -7,7 +7,7 @@ module StatusService
       # Necessário por causa do layout
       @user = notification.user
 
-      mail(to: notification.user.email, subject: "") do |format|
+      mail(to: notification.user.email, subject: @presenter.subject) do |format|
         format.html
       end
     end
