@@ -52,7 +52,6 @@ class StatusesController < BaseController
 
   def respond
     @answer = @status.respond(params[:status], current_user)
-    @status.answers << @answer # Sem isso o teste não passa
 
     respond_to do |format|
       unless @answer.new_record?
