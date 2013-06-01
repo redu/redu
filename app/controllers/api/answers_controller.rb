@@ -12,13 +12,10 @@ module Api
     def create
       status = Status.find(params[:status_id])
       authorize! :read, status
-      answer = status.answers.new(params[:status]) do |e|
-        e.statusable = status
-        e.in_response_to = status
-        e.user = current_user
-      end
 
-      authorize! :manage, answer
+      answer = status.respond(params[:status], current_user) do |a|
+        authorize! :manage, a
+      end
 
       if answer.save
         respond_with(:api, answer, location: api_status_url(answer))
