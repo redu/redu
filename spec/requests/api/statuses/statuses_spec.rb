@@ -473,33 +473,25 @@ describe "Statuses" do
     it "should return correct statusable" do
       post "/api/statuses/#{activity.id}/answers", params
 
-      get href_to("statusable", parse(response.body)), :oauth_token => @token,
-        :format => 'json'
+      get href_to("statusable", parse(response.body)), params
       response.code.should == "200"
     end
 
     it "should return corret in_response_to" do
       post "/api/statuses/#{activity.id}/answers", params
 
-      get href_to("in_response_to", parse(response.body)), :oauth_token => @token,
-        :format => 'json'
+      get href_to("in_response_to", parse(response.body)), params
       response.code.should == "200"
     end
 
-    it "should return correct in_response_to type (Activity)" do
-      post "/api/statuses/#{activity.id}/answers", params
+    %w(Activity Help).each do |type|
+      it "should return correct in_response_to type (Activity)" do
+        id = send(type.downcase).try(:id)
+        post "/api/statuses/#{id}/answers", params
 
-      get href_to("in_response_to", parse(response.body)), :oauth_token => @token,
-        :format => 'json'
-      parse(response.body)["type"].should == "Activity"
-    end
-
-    it "should return correct in_response_to type (Help)" do
-      post "/api/statuses/#{help.id}/answers", params
-
-      get href_to("in_response_to", parse(response.body)), :oauth_token => @token,
-        :format => 'json'
-      parse(response.body)["type"].should == "Help"
+        get href_to("in_response_to", parse(response.body)), params
+        parse(response.body)["type"].should == type
+      end
     end
   end
 
