@@ -143,13 +143,6 @@ Redu::Application.routes.draw do
         end
       end
 
-      resources :favorites, :only => [] do
-        member do
-          post :favorite
-          post :not_favorite
-        end
-      end
-
       resources :messages, :except => [:destroy, :edit, :update] do
         collection do
           get :index_sent
