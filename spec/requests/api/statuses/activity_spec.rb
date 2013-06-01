@@ -5,9 +5,9 @@ describe "Activity" do
   let(:current_user) { FactoryGirl.create(:user) }
   let(:token) { _, _, token = generate_token(current_user); token }
   let(:activity) do
-    FactoryGirl.create(:activity, :user => current_user, :statusable => current_user)
+    FactoryGirl.create(:activity, user: current_user, statusable: current_user)
   end
-  let(:params) { { :oauth_token => token, :format => 'json'} }
+  let(:params) { { oauth_token: token, format: 'json'} }
 
   before do
     get "/api/statuses/#{activity.id}", params
@@ -50,16 +50,16 @@ describe "Activity" do
   it_should_behave_like 'having breadcrumbs', "Space" do
     let(:get_params) { params }
     let(:status) do
-      FactoryGirl.create(:activity, :user => current_user,
-              :statusable => FactoryGirl.create(:space, :owner => current_user))
+      FactoryGirl.create(:activity, user: current_user,
+              statusable: FactoryGirl.create(:space, owner: current_user))
     end
   end
 
   it_should_behave_like 'having breadcrumbs', "Lecture" do
     let(:get_params) { params }
     let(:status) do
-      FactoryGirl.create(:activity, :user => current_user,
-              :statusable => FactoryGirl.create(:lecture, :owner => current_user))
+      FactoryGirl.create(:activity, user: current_user,
+              statusable: FactoryGirl.create(:lecture, owner: current_user))
     end
   end
 end

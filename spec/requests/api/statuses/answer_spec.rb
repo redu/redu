@@ -5,13 +5,13 @@ describe "Answer" do
   let(:current_user) { FactoryGirl.create(:user) }
   let(:token) { _, _, token = generate_token(current_user); token }
   let(:activity) do
-    FactoryGirl.create(:activity, :user => current_user, :statusable => current_user)
+    FactoryGirl.create(:activity, user: current_user, statusable: current_user)
   end
   let(:answer) do
-    FactoryGirl.create(:answer, :statusable => current_user,
-            :user => current_user, :in_response_to => activity)
+    FactoryGirl.create(:answer, statusable: current_user,
+            user: current_user, in_response_to: activity)
   end
-  let(:params) { { :oauth_token => token, :format => 'json'} }
+  let(:params) { { oauth_token: token, format: 'json'} }
 
   before do
     get "/api/statuses/#{answer.id}", params
@@ -43,23 +43,23 @@ describe "Answer" do
 
   context "when creating an Answer" do
     let(:space) do
-      environment = FactoryGirl.create(:complete_environment, :owner => current_user)
+      environment = FactoryGirl.create(:complete_environment, owner: current_user)
       environment.courses.first.spaces.first
     end
     let(:lecture) do
-      s = FactoryGirl.create(:subject, :owner => space.owner, :space => space)
-      FactoryGirl.create(:lecture, :owner => s.owner, :subject => s)
+      s = FactoryGirl.create(:subject, owner: space.owner, space: space)
+      FactoryGirl.create(:lecture, owner: s.owner, subject: s)
     end
     let(:activity) do
       FactoryGirl.
-        create(:activity, :user => current_user, :statusable => current_user)
+        create(:activity, user: current_user, statusable: current_user)
     end
     let(:help) do
-      FactoryGirl.create(:help, :user => current_user, :statusable => lecture)
+      FactoryGirl.create(:help, user: current_user, statusable: lecture)
     end
     let(:params) do
-      { :status => {:text => "Ximbica Answer Test" },
-        :oauth_token => token, :format => 'json' }
+      { status: {text: "Ximbica Answer Test" },
+        oauth_token: token, format: 'json' }
     end
 
     it "should return status 201 when activity type" do
@@ -128,11 +128,11 @@ describe "Answer" do
   context "when listing Answers" do
     let(:activity) do
       FactoryGirl.
-        create(:activity, :statusable => current_user, :user => current_user)
+        create(:activity, statusable: current_user, user: current_user)
     end
     let(:params) do
-      { :status => {:text => "Ximbica Answer Test" },
-        :oauth_token => token, :format => 'json' }
+      { status: {text: "Ximbica Answer Test" },
+        oauth_token: token, format: 'json' }
     end
     before do
       2.times do
@@ -141,8 +141,8 @@ describe "Answer" do
     end
 
     it "should return code 200" do
-      get "/api/statuses/#{activity.id}/answers", :oauth_token => token,
-        :format => 'json'
+      get "/api/statuses/#{activity.id}/answers", oauth_token: token,
+        format: 'json'
       response.code.should == "200"
     end
   end

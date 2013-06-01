@@ -5,19 +5,19 @@ describe "Help" do
   let(:current_user) { FactoryGirl.create(:user) }
   let(:token) { _, _, token = generate_token(current_user); token }
   let(:space) do
-    environment = FactoryGirl.create(:complete_environment, :owner => current_user)
+    environment = FactoryGirl.create(:complete_environment, owner: current_user)
     environment.courses.first.spaces.first
   end
   let(:lecture) do
-    s = FactoryGirl.create(:subject, :owner => space.owner, :space => space)
-    c = FactoryGirl.create(:canvas, :user => s.owner)
-    FactoryGirl.create(:lecture, :owner => s.owner, :subject => s,
-            :lectureable => c)
+    s = FactoryGirl.create(:subject, owner: space.owner, space: space)
+    c = FactoryGirl.create(:canvas, user: s.owner)
+    FactoryGirl.create(:lecture, owner: s.owner, subject: s,
+            lectureable: c)
   end
   let(:help) do
-    FactoryGirl.create(:help, :user => lecture.owner, :statusable => lecture)
+    FactoryGirl.create(:help, user: lecture.owner, statusable: lecture)
   end
-  let(:params) { { :oauth_token => token, :format => 'json'} }
+  let(:params) { { oauth_token: token, format: 'json'} }
 
   context "when GET /api/statuses/:id (type help)" do
     before do
