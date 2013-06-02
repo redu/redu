@@ -72,51 +72,68 @@ module StatusesHelper
     path
   end
 
+  # Dada uma entidade, retorna um hash com toda sua hiearquia.
+  def entity_hierachy(entity)
+    hierarchy = { lecture: nil, subject: nil, space: nil, course: nil, environment: nil}
+
+    case entity.class.to_s
+    when "Lecture"
+      hierarchy[:lecture] = entity
+      hierarchy[:subject] = entity.subject
+      hierarchy[:space] = hierarchy[:subject].space
+      hierarchy[:course] = hierarchy[:space].course
+      hierarchy[:environment] = hierarchy[:course].environment
+    when "Subject"
+      hierarchy[:subject] = entity
+      hierarchy[:space] = entity.space
+      hierarchy[:course] = hierarchy[:space].course
+      hierarchy[:environment] = hierarchy[:course].environment
+    when "Space"
+      hierarchy[:space] = entity
+      hierarchy[:course] = entity.course
+      hierarchy[:environment] = hierarchy[:course].environment
+    when "Course"
+      hierarchy[:course] = entity
+      hierarchy[:environment] = hierarchy[:course].environment
+    when "Environment"
+      hierarchy[:environment] = entity
+    end
+
+    hierarchy
+  end
+
   # Retorna o caminho da hierarquia até o elemento dado com links.
-  def context_path(item)
-    lecture = ''
-    subject = ''
-    space = ''
-    course = ''
-    environment = ''
+  def entity_hierarchy_breacrumb_links(entity)
+    hierarchy = entity_hierachy(entity)
 
-    if defined? item.subject
-      lecture = item
-      subject = lecture.subject
-      space = subject.space
-      course = space.course
+    unless hierarchy[:lecture].blank?
+      lecture_link = link_to(hierarchy[:lecture].name,
+                             space_subject_lecture_path(hierarchy[:space],
+                                                        hierarchy[:subject],
+                                                        hierarchy[:lecture]))
     end
 
-    if defined? item.space
-      subject = item
-      space = subject.space
-      course = space.course
+    unless hierarchy[:subject].blank?
+      subject_link = link_to(hierarchy[:subject].name,
+                             space_subject_path(hierarchy[:space],
+                                                hierarchy[:subject]))
     end
 
-    if defined? item.course
-      space = item
-      course = space.course
+    unless hierarchy[:space].blank?
+      space_link = link_to(hierarchy[:space].name,
+                           space_path(hierarchy[:space]))
     end
 
-    if defined? item.environment
-      course = item
+    unless hierarchy[:course].blank?
+      course_link = link_to(hierarchy[:course].name,
+                            environment_course_path(hierarchy[:environment],
+                                                    hierarchy[:course]))
     end
 
-    environment = course.environment
-    environment_link = link_to(environment.name, environment_path(environment))
+    environment_link = link_to(hierarchy[:environment].name,
+                               environment_path(hierarchy[:environment]))
 
-    unless lecture.blank?
-      lecture_link = link_to(lecture.name, space_subject_lecture_path(space, subject, lecture))
-    end
-
-    unless space.blank?
-      space_link = link_to(space.name, space_path(space))
-    end
-
-    unless course.blank?
-      course_link = link_to(course.name, environment_course_path(environment, course))
-    end
-
-    [environment_link, course_link, space_link, lecture_link].compact.join(' > ')
+    raw [environment_link, course_link, space_link, subject_link, lecture_link].
+      compact.join(' > ')
   end
 end

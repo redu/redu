@@ -50,28 +50,40 @@
   .create-status { margin-top: 10px; }
 }
 
+.lecture-wall-wrapper {
+  .create-status {
+    display: none;
 
-.lecture-wall-actions {
-  .button-big {
-    line-height: 34px;
-    padding-top: 3px;
-    padding-bottom: 3px;
+    &.tab-left:before {
+      left: 300px;
+    }
 
-    &[class*="icon-"][class*="-before"]:before { margin-right: 10px; }
+    &.tab-right:before {
+      right: 295px;
+    }
+  }
+}
+
+.lecture-wall-actions { margin: 0; }
+
+.lecture-wall-action { float: left; }
+
+.lecture-wall-button {
+  margin: 0;
+
+  .lecture-wall-action:first-child & {
+    @include border-top-right-radius(0);
+    @include border-bottom-right-radius(0);
   }
 
-  .create-response { margin-top: 13px; }
-
-  .reply-buttons-list {
-    text-align: center;
-    margin: 0;
-
-    li { display: inline; }
+  .lecture-wall-action:last-child & {
+    @include border-top-left-radius(0);
+    @include border-bottom-left-radius(0);
   }
+}
 
-  .tab-left:before { margin-left: 210px; }
+.centralize {
+  text-align: center;
 
-  .tab-right:before { margin-right: 200px; }
-
-  .create-status { display: none; }
+  > * { display: inline-block; }
 }

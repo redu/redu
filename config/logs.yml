@@ -11,17 +11,17 @@ config:
       create: "adicionou uma nova experiência no currículo"
   course:
     messages:
-      create: "criou o curso"
+      create: "criou o Curso"
   friendship:
     messages:
       update: "adicionou a sua rede de contatos"
   lecture:
     messages:
-      create: "publicou a aula"
+      create: "publicou a Aula"
   subject:
     messages:
-      update: "publicou o módulo"
+      update: "publicou o Módulo"
   space:
     messages:
-      create: "criou a disciplina"
+      create: "criou a Disciplina"
 

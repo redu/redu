@@ -4,7 +4,7 @@ require 'spec_helper'
 describe User do
   subject { FactoryGirl.create(:user) }
 
-  [:lectures, :favorites, :statuses, :subjects].each do |attr|
+  [:lectures,:statuses, :subjects].each do |attr|
     it { should have_many attr }
     end
 
@@ -850,25 +850,6 @@ describe User do
 
     subject.gender = 'M'
     subject.should_not be_female
-  end
-
-  it "adds a thing as his favorite" do
-    space = FactoryGirl.create(:space)
-    subject.add_favorite(space.class.to_s, space.id)
-    subject.favorites.last.favoritable.should == space
-  end
-
-  it "removes a thing as his favorite" do
-    space = FactoryGirl.create(:space)
-    subject.add_favorite(space.class.to_s, space.id)
-    subject.rm_favorite(space.class.to_s, space.id)
-    subject.favorites.should be_empty
-  end
-
-  it "verifies if a thing is one of his favorite things" do
-    space = FactoryGirl.create(:space)
-    subject.add_favorite(space.class.to_s, space.id)
-    subject.has_favorite(space)
   end
 
   it "retrieves completeness percentage of profile" do

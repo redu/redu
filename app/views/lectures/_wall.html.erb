@@ -8,19 +8,20 @@
 %>
 
 <div class="content-section">
-  <div class="lecture-wall-actions reply-buttons">
-    <ul class="reply-buttons-list">
-      <li>
-        <button class="button-primary button-big reply-status button-comment">Comentar</button>
-      </li>
-      <li>
-        <button class="button-primary button-big reply-status button-help">Pedir ajuda</button>
-      </li>
-      <%= render "statuses/create_status", status: status, statusable: statusable,
-        placeholder: "Comente nesta aula." %>
-      <%= render "statuses/create_status", status: status, statusable: statusable,
-        extra_classes: "tab-right", status_type: "Help", placeholder: "Peça ajuda nesta aula." %>
-    </ul>
+  <%= render "statuses/template_preview" %>
+  <div class="lecture-wall-wrapper">
+    <div class="centralize">
+      <ul class="lecture-wall-actions clearfix">
+        <li class="lecture-wall-action">
+          <button class="button-primary button-big lecture-wall-button button-comment icon-comment-white_blue_32_34-before">Comentar</button>
+        </li>
+        <li class="lecture-wall-action">
+          <button class="button-primary button-big lecture-wall-button button-help icon-request-help-white_blue_32_34-before">Pedir ajuda</button>
+        </li>
+      </ul>
+    </div>
+    <%= render "statuses/create_status", status: status, statusable: statusable,
+      placeholder: "Comente nesta aula." %>
   </div>
 </div>
 <ol id="statuses" class="status-list">

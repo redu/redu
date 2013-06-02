@@ -1,5 +1,26 @@
 // Copiado do bootstrap somente o que envolvia textareas.
 
+// Lista de erros do campo.
+.control-errors {
+  margin: 5px 0 0;
+  list-style: none;
+  color: rgb(255, 109, 109);
+  font-size: 11px;
+
+  li +
+  li { margin-top: 5px; }
+}
+
+// Fonte dos formulários.
+.status-tab {
+  input,
+  button,
+  textarea {
+    @include font-shorthand;
+    font-family: $base-font-family;
+    font-weight: 300;
+  }
+}
 
 // Fonte dos formulários.
 textarea {

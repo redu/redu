@@ -61,7 +61,6 @@ class User < ActiveRecord::Base
     conditions: {is_clone: false}
   has_many :courses_owned, class_name: "Course",
     foreign_key: "user_id"
-  has_many :favorites, order: "created_at desc", dependent: :destroy
   classy_enum_attr :role, default: 'member'
   has_many :enrollments
   has_many :asset_reports, through: :enrollments
@@ -493,24 +492,6 @@ class User < ActiveRecord::Base
                    :user, :logeable, :statusable]
     overview.where(compound: false).includes(associateds).
       page(page).per(Redu::Application.config.items_per_page)
-  end
-
-  def add_favorite(favoritable_type, favoritable_id)
-    Favorite.create(favoritable_type: favoritable_type.to_s,
-                    favoritable_id: favoritable_id,
-                    user_id: self.id)
-  end
-
-  def rm_favorite(favoritable_type, favoritable_id)
-    fav = Favorite.where(favoritable_type: favoritable_type.to_s,
-                           favoritable_id: favoritable_id,
-                           user_id: self.id).first
-    fav.destroy
-  end
-
-  def has_favorite(favoritable)
-    Favorite.where("favoritable_id = ? AND favoritable_type = ? AND user_id = ?",
-                     favoritable.id, favoritable.class.to_s,self.id).first
   end
 
   def profile_for(subject)
