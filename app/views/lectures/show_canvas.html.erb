@@ -20,7 +20,7 @@
         locals: { lecture: @lecture} %>
       <div class="stage page-content content iframe-canvas">
       </div>
-      <%= lazy_load(:canvas, :clear => false) do %>
+      <%= lazy_load(:canvas, clear: false) do %>
         $(document).ready(function(){
           var canvas = new Canvas({
             remote : "<%= @canvas_url.html_safe %>"

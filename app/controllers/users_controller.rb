@@ -300,10 +300,10 @@ class UsersController < BaseController
     @status = Status.new
 
     respond_to do |format|
-      format.html { render :layout => 'new_application' }
+      format.html { render layout: 'new_application' }
       format.js do
         render_endless 'statuses/item', @statuses, '#statuses',
-          :template => 'shared/new_endless_kaminari'
+          template: 'shared/new_endless_kaminari'
       end
     end
   end
@@ -313,10 +313,10 @@ class UsersController < BaseController
     @status = Status.new
 
     respond_to do |format|
-      format.html { render :layout => 'new_application' }
+      format.html { render layout: 'new_application' }
       format.js do
         render_endless 'statuses/item', @statuses, '#statuses',
-          :template => 'shared/new_endless_kaminari'
+          template: 'shared/new_endless_kaminari'
       end
     end
   end
