@@ -9,15 +9,8 @@
     <div class="content-body">
       <div class="content-section">
         <%= render "bootstrap/header_breadcrumb", :header_breadcrumb_items => [
-          { :name => "Mensagens",
-            :link => user_messages_path(@user),
-            :classes => "icon-message-gray_32_34-before"
-          },
-          { :name => "Recebidas",
-            :link => user_messages_path(@user),
-            :counter => @total_messages
-          }
-          ] %>
+          { :name => "Mensagens", :link => user_messages_path(@user), :classes => "icon-message-gray_32_34-before" },
+          { :name => "Recebidas", :link => user_messages_path(@user), :counter => @total_messages } ] %>
         <%= link_to "Nova Mensagem", new_user_message_path(@user),
           :remote => true,
           :class => "button-primary icon-message-new-white_blue_16_18-before pull-right" %>

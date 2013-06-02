@@ -28,7 +28,7 @@
           <span class="exercise-call">Exercício finalizado.</span>
           <%= completude_message(@choices_count, @questions_count) %>
           <span class="exercise-call">Você pode revisar as questões ou submeter a aula. </span>
-          <%= submit_button(@choices_count, @questions_count) %>
+          <%= exercise_submit_button(@choices_count, @questions_count) %>
         <% end %>
       </div>
     </div>

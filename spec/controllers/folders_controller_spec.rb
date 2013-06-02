@@ -11,6 +11,7 @@ describe FoldersController do
   end
 
   before do
+    Folder.any_instance.stub(:can_upload_file?).and_return(true)
     login_as user
   end
 

@@ -1,13 +1,6 @@
 # -*- encoding : utf-8 -*-
 module EnrollmentService
-  class VisAdapter
-    attr_reader :vis_client, :url
-
-    def initialize(opts={})
-      @vis_client = opts[:vis_client] || VisClient
-      @url = opts[:url] || "/hierarchy_notifications.json"
-    end
-
+  class VisAdapter < ::VisAdapter
     def notify_enrollment_creation(enrollments)
       notify(:enrollment, enrollments)
     end
@@ -33,7 +26,7 @@ module EnrollmentService
 
     def includes_relationships_if_arel(enrollments)
       if enrollments.is_a? ActiveRecord::Relation
-        enrollments.includes(:subject => [:space => :course])
+        enrollments.includes(subject: [space: :course])
       else
         enrollments
       end

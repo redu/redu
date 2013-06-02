@@ -1,6 +1,7 @@
 pt-BR:
   routes:
     about: "sobre"
+    preview: "preview"
     administrator: "administracao"
     activate: "ativar"
     admin_members: "admin_membros"
@@ -13,7 +14,6 @@ pt-BR:
     enroll: "inscrever"
     events: "eventos"
     exams: "exames"
-    favorites: "favoritos"
     folders: "arquivos"
     invite: "convidar"
     environment_invitations: "convite"
@@ -32,7 +32,6 @@ pt-BR:
     choices: "escolhas"
     spaces: "espacos"
     courses: "cursos"
-    show_favorites: "favoritos"
     signup: "registrar"
     subjects: "modulos"
     #submissions : "submissões"

@@ -3,7 +3,11 @@ class User < ActiveRecord::Base
   include Invitable::Base
   include Humanizer
   include UserSearchable
-  include VisService::UserAdditions::ModelAdditions
+  include EnrollmentService::BaseModelAdditions
+  include EnrollmentService::UserAdditions::ModelAdditions
+  include StatusService::BaseModelAdditions
+  include StatusService::UserAdditions::ModelAdditions
+  include DestroySoon::ModelAdditions
 
   # Valida a resposta ao captcha
   attr_writer :enable_humanizer
@@ -57,9 +61,8 @@ class User < ActiveRecord::Base
     conditions: {is_clone: false}
   has_many :courses_owned, class_name: "Course",
     foreign_key: "user_id"
-  has_many :favorites, order: "created_at desc", dependent: :destroy
   classy_enum_attr :role, default: 'member'
-  has_many :enrollments, dependent: :destroy
+  has_many :enrollments
   has_many :asset_reports, through: :enrollments
 
   #subject
@@ -79,11 +82,10 @@ class User < ActiveRecord::Base
 
   has_many :logs, as: :logeable, order: "created_at DESC",
     dependent: :destroy
-  has_many :statuses, as: :statusable, order: "updated_at DESC",
-    dependent: :destroy
+  has_many :statuses, as: :statusable, order: "updated_at DESC"
   has_many :overview, through: :status_user_associations, source: :status,
     include: [:user, :answers], order: "updated_at DESC"
-  has_many :status_user_associations, dependent: :destroy
+  has_many :status_user_associations
 
   has_many :client_applications
   has_many :tokens, class_name: "OauthToken", order: "authorized_at desc", include: [:client_application]
@@ -490,24 +492,6 @@ class User < ActiveRecord::Base
                    :user, :logeable, :statusable]
     overview.where(compound: false).includes(associateds).
       page(page).per(Redu::Application.config.items_per_page)
-  end
-
-  def add_favorite(favoritable_type, favoritable_id)
-    Favorite.create(favoritable_type: favoritable_type.to_s,
-                    favoritable_id: favoritable_id,
-                    user_id: self.id)
-  end
-
-  def rm_favorite(favoritable_type, favoritable_id)
-    fav = Favorite.where(favoritable_type: favoritable_type.to_s,
-                           favoritable_id: favoritable_id,
-                           user_id: self.id).first
-    fav.destroy
-  end
-
-  def has_favorite(favoritable)
-    Favorite.where("favoritable_id = ? AND favoritable_type = ? AND user_id = ?",
-                     favoritable.id, favoritable.class.to_s,self.id).first
   end
 
   def profile_for(subject)

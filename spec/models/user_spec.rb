@@ -1,16 +1,15 @@
-# -*- encoding : utf-8 -*-
+ #-*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe User do
   subject { FactoryGirl.create(:user) }
 
-  it { should have_many(:statuses) }
-  [:lectures, :favorites, :statuses, :subjects].each do |attr|
+  [:lectures,:statuses, :subjects].each do |attr|
     it { should have_many attr }
     end
 
   # Subject
-  it { should have_many(:enrollments).dependent(:destroy) }
+  it { should have_many(:enrollments) }
   it { should have_many(:asset_reports).through(:enrollments) }
 
   it { should have_one(:settings).dependent(:destroy) }
@@ -61,7 +60,7 @@ describe User do
   it { should have_many(:logs) }
   it { should have_many(:overview).through(:status_user_associations) }
   it { should have_many(:statuses) }
-  it { should have_many(:status_user_associations).dependent(:destroy) }
+  it { should have_many(:status_user_associations) }
   it { should have_many(:results).dependent(:destroy) }
   it { should have_many(:choices).dependent(:delete_all) }
 
@@ -853,25 +852,6 @@ describe User do
     subject.should_not be_female
   end
 
-  it "adds a thing as his favorite" do
-    space = FactoryGirl.create(:space)
-    subject.add_favorite(space.class.to_s, space.id)
-    subject.favorites.last.favoritable.should == space
-  end
-
-  it "removes a thing as his favorite" do
-    space = FactoryGirl.create(:space)
-    subject.add_favorite(space.class.to_s, space.id)
-    subject.rm_favorite(space.class.to_s, space.id)
-    subject.favorites.should be_empty
-  end
-
-  it "verifies if a thing is one of his favorite things" do
-    space = FactoryGirl.create(:space)
-    subject.add_favorite(space.class.to_s, space.id)
-    subject.has_favorite(space)
-  end
-
   it "retrieves completeness percentage of profile" do
     subject.completeness.should == 31
   end
@@ -921,6 +901,10 @@ describe User do
   end
 
   it_should_behave_like 'have unique index database'
+
+  it "should respond to async_destroy" do
+    subject.should respond_to(:async_destroy)
+  end
 
   private
   def create_friendship(user1, user2)

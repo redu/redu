@@ -18,7 +18,7 @@
         <% else %>
           <h3 class="form-header graph-header">Qual a participação dos alunos nas aulas?</h3>
 
-          <%= lazy_load(:chart, :jammit => true) do %>
+          <%= lazy_load(:chart) do %>
             var graph = new LectureParticipationGraph();
             graph.load({ chart:{ renderTo: "lecture-participation-chart" } ,
             form: $("#graph-form") });

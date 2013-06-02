@@ -413,7 +413,6 @@ class CoursesController < BaseController
     end
   end
 
-
   def destroy_invitations
     email_invitations = to_array(params[:email_invitations])
     user_invitations = to_array(params[:user_invitations])

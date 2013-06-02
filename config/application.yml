@@ -56,7 +56,6 @@ reserved_logins: [
   'events',
   'exams',
   'exames',
-  'favorites',
   'faq',
   'featured',
   'forums',

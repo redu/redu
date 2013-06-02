@@ -11,17 +11,9 @@
     <div class="content-body friend-invitation">
       <div class="content-section">
         <%= render "bootstrap/header_breadcrumb", :header_breadcrumb_items => [
-          { :name => "Meus Contatos",
-            :link => user_friendships_path(@user),
-            :classes => "icon-connections-gray_32_34-before"
-          },
-          { :name => "Amigos",
-            :link => user_friendships_path(@user)
-          },
-          { :name => "Convidar amigos",
-            :link => new_user_friendship_path(@user)
-          }
-          ] %>
+          { :name => "Meus Contatos", :link => user_friendships_path(@user), :classes => "icon-connections-gray_32_34-before" },
+          { :name => "Amigos", :link => user_friendships_path(@user) },
+          { :name => "Convidar amigos", :link => new_user_friendship_path(@user) } ] %>
       </div>
       <%= new_tabs(:new_users) %>
       <%= render "friendships/friend_invitation", :user => @user %>

@@ -223,7 +223,7 @@ class UsersController < BaseController
   end
 
   def destroy
-    @user.destroy
+    @user.async_destroy
     flash[:notice] = t :the_user_was_deleted
     redirect_to home_path and return
   end

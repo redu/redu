@@ -11,8 +11,6 @@ class Lecture < ActiveRecord::Base
   has_many :logs, :as => :logeable, :order => "created_at DESC",
     :dependent => :destroy
 
-  #FIXME Falta testar
-  has_many :favorites, :as => :favoritable, :dependent => :destroy
   has_many :asset_reports, :dependent => :destroy
   belongs_to :owner , :class_name => "User" , :foreign_key => "user_id"
   belongs_to :lectureable, :polymorphic => true, :dependent => :destroy

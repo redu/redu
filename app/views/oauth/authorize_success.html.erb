@@ -8,14 +8,8 @@
   <div class="content-body">
     <div class="content-section">
       <%= render "bootstrap/header_breadcrumb", :header_breadcrumb_items => [
-        { :name => "Aplicativos",
-          :link => user_oauth_clients_path(@user),
-          :classes => "icon-app-gray_32_34-before"
-        },
-        { :name => "Autorização",
-          :link => "#"
-        }
-        ] %>
+        { :name => "Aplicativos", :link => user_oauth_clients_path(@user), :classes => "icon-app-gray_32_34-before" },
+        { :name => "Autorização", :link => "#" } ] %>
     </div>
     <div class="content-section">
       <h3>Você autorizou essa aplicação com sucesso.</h3>

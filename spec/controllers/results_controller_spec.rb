@@ -123,7 +123,7 @@ describe ResultsController do
 
     it "should render questions#show" do
       get :edit, @params
-      response.should render_template('questions/show')
+      response.should render_template('results/admin/edit')
     end
   end
 end

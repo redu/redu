@@ -6,12 +6,7 @@
   <div class="content-body">
     <div class="content-section">
       <%= render "bootstrap/header_breadcrumb", :header_breadcrumb_items => [
-        { :name => "Ambientes de que Participo",
-          :link => environments_index_path,
-          :classes => "icon-environment-round-gray_32_34-before",
-          :counter => @total_environments
-        }
-        ] %>
+        { :name => "Ambientes de que Participo", :link => environments_index_path, :classes => "icon-environment-round-gray_32_34-before", :counter => @total_environments } ] %>
     </div>
     <% if @environments.empty? %>
       <hr class="list-separator">

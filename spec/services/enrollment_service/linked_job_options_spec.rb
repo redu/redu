@@ -5,7 +5,7 @@ module EnrollmentService
   module Jobs
     describe LinkedJobOptions do
       let!(:social_networks) do
-        FactoryGirl.create_list(:social_network, 2, :user => nil)
+        FactoryGirl.create_list(:social_network, 2, user: nil)
       end
 
       subject { LinkedJobOptions.new }

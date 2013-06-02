@@ -12,13 +12,13 @@ module EnrollmentService
         enrollments = options.arel_of(:enrollment)
 
         facade.
-          create_asset_report(:lectures => lectures, :enrollments => enrollments)
+          create_asset_report(lectures: lectures, enrollments: enrollments)
 
-        { :enrollments => enrollments }
+        { enrollments: enrollments }
       end
 
       def build_next_job(env)
-        UpdateGradeJob.new(:enrollment => env[:enrollments])
+        UpdateGradeJob.new(enrollment: env[:enrollments])
       end
     end
   end
