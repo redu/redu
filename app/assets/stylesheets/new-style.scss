@@ -4776,8 +4776,12 @@ table.concave-invitation-table tr td {
   vertical-align: 0px;
 }
 
+table.concave-invitation-table .cell-checkbox {
+  vertical-align: middle;
+}
+
 table.concave-invitation-table .cell-checkbox input {
-  margin: 25px 5px 0px 10px;
+  margin: 0 10px 0 15px;
 }
 
 table.concave-invitation-table .cell-user-info img {
