@@ -4,7 +4,7 @@
 // Alinha cada div de status separadamente
 .status-list .status {
   overflow: hidden;
-  margin: 20px;
+  margin: 10px 20px;
 }
 
 .status-list .subject a .author-thumbnail { float: left; }
@@ -87,7 +87,6 @@
     height: 34px;
     float: left;
     margin-right: 10px;
-
   }
 
   .grouping-elements .author-thumbnail {
@@ -96,7 +95,12 @@
     margin-right: 0;
   }
 
-  .date { display: block; }
+  .date {
+    display: block;
+
+    &:visited,
+    &:hover { color: $gray5; }
+  }
 
   .actions {
     overflow: hidden;
@@ -154,6 +158,8 @@
         margin-top: 0;
       }
     }
+
+    hr { margin: 0; }
   }
 
   .subject-content {
@@ -186,6 +192,7 @@
     .subject-info[class*="icon-"]:before {
       position: absolute;
       margin-left: -75px;
+      margin-top: 5px;
     }
   }
 
@@ -200,9 +207,12 @@
       &[class*="icon-"]:before { float: left; }
     }
 
-    a {
+    a { line-height: 11px; }
+
+    .legend {
       display: block;
-      line-height: 11px;
+
+      a { color: $gray5; }
     }
   }
 
@@ -269,7 +279,7 @@
   .character-counter {
     position: static;
     margin-top: 5px;
-    float: left;
+    display: block;
   }
 
   .status-buttons { display: none; }

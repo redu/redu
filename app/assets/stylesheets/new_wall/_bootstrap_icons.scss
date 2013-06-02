@@ -55,3 +55,11 @@ $icon-sprite-dimensions: true;
   &:before { @extend .icon-arrow-down-pagination-gray_16_18; }
   &:hover:before { @extend .icon-arrow-down-pagination-blue_16_18; }
 }
+
+.icon-comment-white_blue_32_34-before {
+  &:before { @extend .icon-comment-white_blue_32_34; }
+}
+
+.icon-request-help-white_blue_32_34-before {
+  &:before { @extend .icon-request-help-white_blue_32_34; }
+}
