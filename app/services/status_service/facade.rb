@@ -12,5 +12,18 @@ module StatusService
 
       status_service.destroy
     end
+
+    def answer_status(status, attributes, &block)
+      answer = answer_service.create(status, attributes, &block)
+      AnswerService::AnswerNotificationService.new(answer).deliver if answer
+
+      answer
+    end
+
+    private
+
+    def answer_service
+      AnswerService::AnswerEntityService.new
+    end
   end
 end

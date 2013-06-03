@@ -60,6 +60,18 @@ module StatusesHelper
     status.statusable && (is_a_log ? status.logeable : true)
   end
 
+  # Retorna o caminho individual para um status e no caso de ser uma resposta,
+  # adiciona âncora.
+  def status_or_answer_path(status)
+    path = status_path(status)
+
+    if status.is_a? Answer
+      path = status_path(status.in_response_to, anchor: "answer_#{status.id}")
+    end
+
+    path
+  end
+
   # Dada uma entidade, retorna um hash com toda sua hiearquia.
   def entity_hierachy(entity)
     hierarchy = { lecture: nil, subject: nil, space: nil, course: nil, environment: nil}

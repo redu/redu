@@ -4,192 +4,216 @@ require 'authlogic/test_case'
 
 describe StatusesController do
   subject { FactoryGirl.create(:activity) }
+  let(:base_params) { { locale: "pt-BR" } }
+  let(:author) { FactoryGirl.create(:user) }
+  let(:statusable) { FactoryGirl.create(:user) }
 
   describe "POST create" do
+    let(:params) do
+      base_params.
+        merge(status: {statusable_type: "User", text: "Lorem ipsum dolor",
+                                    statusable_id: statusable.id,
+                                    type: "Activity" })
+    end
+    before do
+      callback_address(controller.user_url(statusable))
+    end
+
+    context "without proper authorization" do
+      before do
+        statusable.settings.update_attribute(:view_mural, Privacy[:friends])
+      end
+
+      it "cannot create successfully" do
+        expect {
+          post :create, params
+        }.to_not change(Activity, :count)
+      end
+    end
+
     context "when creating new activity" do
       before do
-        @statusable = FactoryGirl.create(:user)
-        @author = FactoryGirl.create(:user)
-        @statusable.be_friends_with(@author)
-        @author.be_friends_with(@statusable)
-
-        login_as @author
-
-        @params = {
-          :status => {:statusable_type => "User",
-                      :text => "Lorem ipsum dolor sit amet, consectetur" +
-                               "magna aliqua. Ut enim ad minim veniam," +
-                               "quis nostrud exercitation",
-                      :statusable_id => @statusable.id,
-                      :type => "Activity" },
-          :locale => "pt-BR"
-        }
+        create_friendship(statusable, author)
+        login_as author
       end
 
       it "creates successfully" do
         expect {
-          request.env["HTTP_REFERER"] = controller.user_url(@statusable)
-          post :create, @params
+          post :create, params
         }.to change(Status, :count).by(1)
       end
 
-      context "without proper authorization" do
-        before do
-          @author.destroy_friendship_with(@statusable)
-          @statusable.settings.view_mural = Privacy[:friends]
-          @statusable.settings.save
-        end
-
-        it "cannot create successfully" do
-          expect {
-            request.env["HTTP_REFERER"] = controller.user_url(@statusable)
-            post :create, @params
-          }.to_not change(Activity, :count)
-        end
-      end
-
       context "with an associated resource" do
-        before do
-          @resource = FactoryGirl.build(:status_resource)
-          @params[:status][:status_resources_attributes] = [{
-            :provider => @resource.provider,
-            :thumb_url => @resource.thumb_url,
-            :title => @resource.title,
-            :description => @resource.description,
-            :link => @resource.link
+        let(:resource) { FactoryGirl.build(:status_resource) }
+        let(:params_with_resource) do
+          params[:status][:status_resources_attributes] = [{
+            provider: resource.provider,
+            thumb_url: resource.thumb_url,
+            title: resource.title,
+            description: resource.description,
+            link: resource.link
           }]
+          params
         end
 
         it "should create successfully" do
-          request.env["HTTP_REFERER"] = controller.user_url(@statusable)
-          post :create, @params
+          post :create, params_with_resource
           Status.last.status_resources.should_not be_empty
-          Status.last.status_resources[0].provider.should eq(@resource.provider)
+          Status.last.status_resources[0].provider.should eq(resource.provider)
         end
 
-        context "and status resource is invalid" do
-          before do
-            @params[:status][:status_resources_attributes].first.store(:link, nil)
-          end
-
-          it "should no create an status" do
-            request.env["HTTP_REFERER"] = controller.user_url(@statusable)
-            expect {
-              post :create, @params
-            }.to_not change(Activity, :count)
-          end
+        it "should no create an status when resource is invalid" do
+          params_with_resource[:status][:status_resources_attributes].
+            first.store(:link, nil)
+          expect {
+            post :create, params_with_resource
+          }.to_not change(Activity, :count)
         end
       end
     end
 
     context "when creating new help request" do
+      let(:statusable) { FactoryGirl.create(:lecture, owner: author, subject: subj) }
+      let(:subj) do
+        FactoryGirl.create(:subject, owner: author, space: space,
+                           finalized: true, visible: true)
+      end
+      let(:author) { FactoryGirl.create(:user) }
+      let(:space) { FactoryGirl.create(:space) }
+      let(:status_attrs) do
+        {statusable_type: "Lecture", text: "Lorem ipsum dolor sit amet,",
+         statusable_id: statusable.id, type: "Help" }
+      end
+      let(:params) { base_params.merge({status: status_attrs}) }
+
       before do
-        @space = FactoryGirl.create(:space)
-        @author = FactoryGirl.create(:user)
-        @subject = FactoryGirl.create(:subject, :owner => @author,
-                           :space => @space, :finalized => true, :visible => true)
-        @statusable = FactoryGirl.create(:lecture, :owner => @author, :subject => @subject)
-        @space.course.join(@author, Role[:teacher])
-
-        login_as @author
-
-        @params = {"status" => {"statusable_type"=>"Lecture", "text"=>"Lorem ipsum dolor sit amet, consectetur magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation", "statusable_id"=> @statusable.id, "type" => "Help" }, "locale" => "pt-BR"}
+        space.course.join(author, Role[:teacher])
+        login_as author
       end
 
       it "creates successfully" do
         expect {
-          request.env["HTTP_REFERER"] = \
-            controller.space_subject_lecture_url(@space, @subject, @statusable)
-          post :create, @params
+          callback_address(controller.space_subject_lecture_url(space, subj, statusable))
+          post :create, params
         }.to change(Help, :count).by(1)
       end
     end
   end
 
   describe "POST respond" do
+    let(:params) do
+      {id: subject.id,
+       status: { in_response_to_type: "Activity",
+                     text: "Lorem ipsum dolor sit amet",
+                     in_response_to_id: subject.id,
+                     type: "Answer" } }.merge(base_params)
+    end
+    before { login_as(author) }
+
     context "when responding an activity" do
       before do
-        @statusable = FactoryGirl.create(:user)
-        @author = FactoryGirl.create(:user)
-        @statusable.be_friends_with(@author)
-        @author.be_friends_with(@statusable)
-
-        login_as @author
-
-        @params = {:id => subject.id, "status" => { "in_response_to_type"=>"Activity", "text"=>"Lorem ipsum dolor sit amet, consectetur magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation", "in_response_to_id"=> subject.id, "type"=>"Answer" }, "locale" => "pt-BR"}
+        create_friendship(statusable, author)
       end
 
       it "creates successfully" do
         expect {
-          request.env["HTTP_REFERER"] = controller.user_url(@statusable)
-          post :respond, @params
+          callback_address(controller.user_url(statusable))
+          post :respond, params
         }.to change(subject.answers, :count).by(1)
-
       end
     end
 
     context "when responding a help request" do
+      let(:help) { FactoryGirl.create(:help, statusable: lecture) }
+      let(:lecture) { FactoryGirl.create(:lecture, owner: author, subject: subj) }
+      let(:subj) { FactoryGirl.create(:subject, owner: author, space: space, finalized: true, visible: true) }
+      let(:author) { FactoryGirl.create(:user) }
+      let(:space) { FactoryGirl.create(:space) }
+      let(:response_params) do
+        params.merge(id: help.id, "in_response_to_type"=>"Status" ,"in_response_to_id"=> help.id)
+      end
+
       before do
-        @space = FactoryGirl.create(:space)
-        @author = FactoryGirl.create(:user)
-        @subject = FactoryGirl.create(:subject, :owner => @author,
-                           :space => @space, :finalized => true, :visible => true)
-        @lecture = FactoryGirl.create(:lecture, :owner => @author, :subject => @subject)
-        @help = FactoryGirl.create(:help, :statusable => @lecture)
-        @space.course.join(@author, Role[:teacher])
-
-        login_as @author
-
-        @params = {:id => @help.id,
-                   "status" => { "in_response_to_type"=>"Status",
-                                 "text"=>"Lorem ipsum dolor sit amet, ",
-                                 "in_response_to_id"=> @help.id,
-                                 "type"=>"Answer" }, "locale" => "pt-BR"}
+        space.course.join(author, Role[:teacher])
       end
 
       it "creates successfully" do
         expect {
-          request.env["HTTP_REFERER"] = \
-            controller.space_subject_lecture_url(@space, @subject, @lecture)
-          post :respond, @params
-        }.to change(@help.answers, :count).by(1)
+          callback_address(controller.space_subject_lecture_url(space, subj, lecture))
+          post :respond, response_params
+        }.to change(help.answers, :count).by(1)
       end
     end
   end
 
   describe "DELETE destroy" do
+    let(:params) { base_params.merge(id: subject.id, format: "js") }
     context "when destroying a status" do
       before do
         login_as subject.user
-
-        @params = {:id => subject.id, :format => "js", :locale => "pt-BR"}
       end
 
       it "destroys successfully" do
         expect {
-          delete :destroy, @params
+          delete :destroy, params
         }.to change(Activity, :count).by(-1)
       end
 
       context "that has an associated resource" do
         before do
           subject.type = "Activity"
-          subject.status_resources << FactoryGirl.create(:status_resource, :status => subject)
-          @params = {:id => subject.id, :format => "js", :locale => "pt-BR"}
+          subject.status_resources << FactoryGirl.create(:status_resource, status: subject)
         end
 
         it "should destroys the status successfully" do
           expect {
-            delete :destroy, @params
+            delete :destroy, params
           }.to change(Status, :count).by(-1)
         end
 
         it "should destroys the status resource successfully" do
           expect {
-            delete :destroy, @params
+            delete :destroy, params
           }.to change(StatusResource, :count).by(-1)
         end
       end
     end
+  end
+
+  context "GET show" do
+    let(:params) { base_params.merge(id: subject.id) }
+    context "when status is accessible" do
+      before do
+        login_as(subject.user)
+        get :show, params
+      end
+
+      it "should assign the status" do
+        assigns[:status].should == subject
+      end
+
+      it "should use the correct layout" do
+        response.should render_template 'new_application'
+      end
+
+      context "when status is a Answer" do
+        subject { FactoryGirl.create(:answer) }
+
+        it "should redirect to status page with an anchor" do
+          path = controller.
+            status_path(subject.in_response_to, anchor: "answer_#{subject.id}")
+          response.should redirect_to path
+        end
+      end
+    end
+  end
+
+  def create_friendship(user, friend)
+    user.be_friends_with(friend)
+    friend.be_friends_with(user)
+  end
+
+  def callback_address(url)
+    request.env["HTTP_REFERER"] = url
   end
 end
