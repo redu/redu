@@ -81,4 +81,16 @@ class StatusesController < BaseController
   def original_status_path
     status_path(@status.in_response_to, anchor: "status-#{@status.id}")
   end
+
+  def deny_access(exception, &block)
+    flash_error = "O comentário que você está tentando acessar não está aberto a visualizações de terceiros "
+
+    # Redirect home_path -> home_user_path perde o flash message
+    if current_user
+      flash[:error] = flash_error
+      redirect_to home_user_path(current_user) and return
+    else
+      super(exception) { flash[:error] = flash_error }
+    end
+  end
 end

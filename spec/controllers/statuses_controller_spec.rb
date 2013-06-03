@@ -206,6 +206,23 @@ describe StatusesController do
         end
       end
     end
+
+    context "when the status is not accessible" do
+      let(:strange) { FactoryGirl.create(:user) }
+
+      it "should redirect to home_path when not logged in" do
+        get :show, params
+        response.should redirect_to controller.home_path
+        flash[:error].should =~ /O comentário que você está tentando acessar não está aberto a visualizações de terceiros/
+      end
+
+      it "should redirect to user_home_path when logged in" do
+        login_as(strange)
+        get :show, params
+        response.should redirect_to(response.location)
+        flash[:error].should =~ /O comentário que você está tentando acessar não está aberto a visualizações de terceiros/
+      end
+    end
   end
 
   def create_friendship(user, friend)
