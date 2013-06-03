@@ -1,7 +1,23 @@
 # -*- encoding : utf-8 -*-
 class StatusesController < BaseController
 
-  load_and_authorize_resource :status, :except => [:index]
+  load_and_authorize_resource :status, except: [:index, :show]
+
+  def show
+    @status = Status.find_and_include_related(params[:id].to_i)
+
+    authorize! :read, @status
+
+    respond_to do |format|
+      format.html do
+        if @status.respond_to?(:in_response_to)
+          redirect_to original_status_path and return
+        else
+          render layout: 'new_application'
+        end
+      end
+    end
+  end
 
   def create
     @status = Status.new(params[:status]) do |s|
@@ -18,17 +34,17 @@ class StatusesController < BaseController
     respond_to do |format|
       if @status.save
         format.html { redirect_to :back }
-        format.xml { render :xml => @status.to_xml }
+        format.xml { render xml: @status.to_xml }
         format.js
       else
         format.html {
           flash[:statuses_errors] = @status.errors.full_messages.to_sentence
           redirect_to :back
         }
-        format.xml { render :xml => @status.errors.to_xml }
+        format.xml { render xml: @status.errors.to_xml }
         format.js do
-          render :template => 'statuses/errors',
-            :locals => { :status => @status }
+          render template: 'statuses/errors',
+            locals: { status: @status }
         end
       end
     end
@@ -36,7 +52,6 @@ class StatusesController < BaseController
 
   def respond
     @answer = @status.respond(params[:status], current_user)
-    @status.answers << @answer # Sem isso o teste não passa
 
     respond_to do |format|
       unless @answer.new_record?
@@ -48,7 +63,7 @@ class StatusesController < BaseController
           redirect_to :back
         }
         format.js do
-          render :template => 'statuses/errors', :locals => { :status => @answer }
+          render template: 'statuses/errors', locals: { status: @answer }
         end
       end
     end
@@ -61,4 +76,9 @@ class StatusesController < BaseController
     end
   end
 
+  private
+
+  def original_status_path
+    status_path(@status.in_response_to, anchor: "answer_#{@status.id}")
+  end
 end

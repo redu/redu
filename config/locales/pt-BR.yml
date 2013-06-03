@@ -1,6 +1,9 @@
 pt-BR:
   routes:
     about: "sobre"
+    statuses: "comentarios"
+    status: "comentario"
+    respond: "responder"
     preview: "preview"
     administrator: "administracao"
     activate: "ativar"
