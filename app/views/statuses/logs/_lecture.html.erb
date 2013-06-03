@@ -1,20 +1,33 @@
-<li id="status-<%= log.id %>">
-  <div class="status icons-big-after icon-document-lightblue_64_66-after">
-    <div class="status-context">
-      <span class="status-subject icon-small icon-space-lightblue_32_34">
-      </span>
-      <%= link_to log.logeable.subject.space.name, space_path(log.logeable.subject.space), :class => "status-main" %>
-      <%= link_to log.logeable.subject.name, space_subject_lecture_path(log.logeable.subject.space, log.logeable.subject, log.logeable), :class => "status-secondary icon-expand-gray_8_10-before" %>
+<%#
+  Log da aula.
+
+  Exemplo: "X publicou a aula Y".
+
+  Variáveis:
+    log: o log da aula.
+%>
+
+<%= content_tag :li, id: "status-#{log.id}" do %>
+  <hr class="list-separator">
+  <div class="status">
+    <div class="context">
+      <%= link_to log.logeable.name,
+        space_subject_lecture_path(log.logeable.subject.space, log.logeable.subject, log.logeable),
+        class: "text-replacement context-icon icon-subject-gray_32_34-before" %>
+      <%= content_tag :span,
+        entity_hierarchy_breacrumb_links(log.logeable.subject),
+        class: "legend" %>
     </div>
-    <div class="status-log">
-      <%= render "statuses/user_image", :item => log %>
-      <div class="status-icon icon-<%= log.user ? role_at(log.user, log.logeable) : "member" %>-gray_16_18-before">
-        <%= render "statuses/user_name", :item => log %>
-        <span class="status-info"><%= raw log.action_text %></span>
-        <%= link_to log.logeable.name, space_subject_lecture_path(log.logeable.subject.space, log.logeable.subject, log.logeable) %>
-        <%= render :partial => 'statuses/timeago', :locals => { :item => log } %>
+    <div class="subject">
+      <%= render "statuses/user_image", user: log.user %>
+      <div class="subject-info">
+        <%= render "statuses/user_name", user: log.user, entity: log.logeable %>
+        <%= content_tag :span, raw(auto_link(log.action_text)), class: "action" %>
+        <%= link_to log.logeable.name,
+          space_subject_lecture_path(log.logeable.subject.space, log.logeable.subject, log.logeable),
+          class: "icon-subject-gray_16_18-before" %>
+        <%= render "statuses/timeago", status: log, timestamp: log.created_at %>
       </div>
     </div>
   </div>
-</li>
-
+<% end %>

@@ -1,0 +1,24 @@
+<%#
+  Área com criação de status, mural e paginação.
+
+  Variáveis:
+    status: o status (normalmente um novo).
+    statusable: o item statusable.
+    placeholder: placeholder da área de texto (o valor default é nil).
+    statuses: a coleção de status.
+%>
+
+<% placeholder = nil unless local_assigns.has_key? :placeholder %>
+
+<%# Preview de links externos. %>
+<%= render "statuses/template_preview" %>
+
+<div class="content-section">
+  <%= render "statuses/create_status", status: status,
+    statusable: statusable,
+    placeholder: placeholder %>
+</div>
+<ol id="statuses" class="status-list">
+  <%= render partial: "statuses/item", collection: statuses %>
+</ol>
+<%= paginate statuses, theme: "new_endless" %>

@@ -29,7 +29,7 @@ Redu::Application.routes.draw do
     get "vis/dashboard/teacher_participation_interaction"
 
     match '/jobs/notify' => 'jobs#notify', :as => :notify
-    resources :statuses, :only => [:create, :destroy] do
+    resources :statuses, :only => [:show, :create, :destroy] do
       member do
         post :respond
       end

@@ -1,0 +1,9 @@
+// ==========================================================================
+// Mural.
+// ==========================================================================
+
+
+.status-show .status-list {
+  // Esconde o 1o separador quando a lista possui somente 1 status.
+  li:first-child .list-separator:first-child { display: none; }
+}

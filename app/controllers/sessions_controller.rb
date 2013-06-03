@@ -80,8 +80,7 @@ class SessionsController < BaseController
     if current_user
       redirect_to home_user_path(current_user)
     else
-      user_agent = UserAgent.parse(request.user_agent)
-      if user_agent.mobile?
+      if current_user_agent.mobile?
         @user_session = UserSession.new
       else
         redirect_to application_path

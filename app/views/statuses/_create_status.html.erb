@@ -1,26 +1,37 @@
-<%# Preview de links externos %>
-<%= render 'statuses/template_preview' %>
+<%#
+  Formulário de criação de status.
 
-<%# Form de status  %>
-<% random_number = get_random_number%>
-<div class="create-status inform-my-status">
-  <%= form_for @status, :remote => true, :html => { :class => "form-loader concave-form" } do |f| %>
-    <%= flash[:statuses_errors] %>
-    <%= hidden_field_tag "return", request.url %>
-    <%= hidden_field :status, :statusable_id, :value => statusable.id %>
-    <%= hidden_field :status, :statusable_type, :value => statusable.class.to_s %>
-    <%= hidden_field_tag "status[type]", 'Activity' %>
-    <div class="distance-top"></div>
-    <%= f.error_messages %>
-    <%= field_set_tag do %>
-      <%= f.label :text, "Seu mural",
-        :class => "status-icon replacement"%>
-      <%= f.text_area :text, :rows => 1, :class => "status textarea status-#{random_number}" %>
-      <%= render 'shared/limit_char_field', :class_textarea => "status-#{random_number}", :limit => 800 %>
-      <div class="status-buttons">
-        <%= f.submit 'Postar' %>
-        <%= link_to 'Cancelar', nil, :rel => "nofollow", :class => 'cancel concave-clean' %>
-      </div>
-  <% end %>
+  Variáveis:
+    status: o status (normalmente um novo).
+    statusable: o item statusable.
+    placeholder: placeholder da área de texto (o valor default é nil).
+    extra_classes: classes extras para o formulário.
+    status_type: o tipo de status.
+%>
+
+<% placeholder = nil unless local_assigns.has_key? :placeholder %>
+<% extra_classes = "tab-left" unless local_assigns.has_key? :extra_classes %>
+<% status_type = "Activity" unless local_assigns.has_key? :status_type %>
+
+<%# Formulário de status. %>
+<%= form_for status, remote: true,
+  html: { class: "create-status status-tab status-list #{extra_classes}" } do |f| %>
+  <%= flash[:statuses_errors] %>
+  <%= hidden_field_tag "return", request.url %>
+  <%= hidden_field :status, :statusable_id, value: statusable.id %>
+  <%= hidden_field :status, :statusable_type, value: statusable.class.to_s %>
+  <%= hidden_field_tag "status[type]", status_type %>
+  <%= f.error_messages %>
+  <%= f.text_area :text, rows: 1, placeholder: placeholder,
+    maxlength: 800 %>
+  <div class="clearfix">
+    <ul class="status-buttons">
+      <li>
+        <input type="reset" class="button-default cancel" value="Cancelar">
+      </li>
+      <li>
+        <%= f.submit "Enviar", class: "button-primary" %>
+      </li>
+    </ul>
+  </div>
 <% end %>
-</div>

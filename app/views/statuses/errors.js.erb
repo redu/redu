@@ -1,11 +1,17 @@
 <% if @answer %>
-  var $text = $("textarea:visible", "#status-<%= @answer.in_response_to.id %>");
+  var $form = $("#status-<%= @status.id %>").find(".create-response");
 <% else %>
-  var $text = $(".textarea:visible");
+  var $form = $(".create-status");
 <% end %>
-var $errors = $("<div/>", { "class" : 'fieldWithErrors' });
-var $message = $("<p/>", { "class" : "errorMessageField" }).html("<%= status.errors.full_messages.to_sentence %>");
 
-$('.errorMessageField').remove();
-$text.wrap($errors);
-$text.after($message);
+if (!$form.hasClass("control-error")) {
+  $form.addClass("control-error");
+}
+
+var $errors = $form.find(".control-errors");
+if ($errors.length === 0) {
+  $errors = $("</p>").addClass("control-errors");
+  $form.find("textarea").after($errors);
+}
+
+$errors.html("<%= status.errors.full_messages.to_sentence %>");

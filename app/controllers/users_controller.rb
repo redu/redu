@@ -281,8 +281,7 @@ class UsersController < BaseController
       flash[:notice] = t :activation_email_resent_message
       UserNotifier.delay(:queue => 'email').user_signedup(@user.id)
 
-      user_agent = UserAgent.parse(request.user_agent)
-      if user_agent.mobile?
+      if current_user_agent.mobile?
         redirect_to login_path and return
       else
         redirect_to application_path and return
@@ -300,19 +299,24 @@ class UsersController < BaseController
     @status = Status.new
 
     respond_to do |format|
-      format.html { render :layout => 'new_application' }
-      format.js { render_endless('statuses/item', @statuses, '#statuses > ol') }
+      format.html { render layout: 'new_application' }
+      format.js do
+        render_endless 'statuses/item', @statuses, '#statuses',
+          template: 'shared/new_endless_kaminari'
+      end
     end
   end
 
   def my_wall
-    @friends = @user.friends.page(1).per(9)
     @statuses = @user.statuses.visible.page(params[:page]).per(10)
     @status = Status.new
 
     respond_to do |format|
-      format.html
-      format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
+      format.html { render layout: 'new_application' }
+      format.js do
+        render_endless 'statuses/item', @statuses, '#statuses',
+          template: 'shared/new_endless_kaminari'
+      end
     end
   end
 
@@ -359,7 +363,10 @@ class UsersController < BaseController
 
     respond_to do |format|
       format.html { render layout: 'new_application' }
-      format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
+      format.js do
+        render_endless 'statuses/item', @statuses, '#statuses',
+          :template => 'shared/new_endless_kaminari'
+      end
     end
   end
 

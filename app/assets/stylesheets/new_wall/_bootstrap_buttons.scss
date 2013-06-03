@@ -1,0 +1,109 @@
+// Copiado do bootstrap sem modificações.
+
+
+// Comum.
+%button {
+  @include border-radius(4px);
+  display: inline-block;
+  padding: 7px 10px;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  border-width: 1px;
+  border-style: solid;
+  line-height: 16px;
+  font-weight: 300;
+
+  &:hover { text-decoration: none; }
+
+  .open > &,
+  .open > &:hover,
+  &:active {
+    @include box-shadow(0 1px 4px 1px rgba(0, 0, 0, 0.5) inset);
+    background-image: none;
+
+    .cssgradients & { background-image: none; }
+  }
+}
+
+// Botão grande.
+.button-big {
+  font-size: 16px;
+  line-height: 20px;
+  padding: 10px 12px;
+}
+
+// Botão padrão.
+.button-default {
+  @extend %button;
+
+  .cssgradients & {
+    @include redu-gradient($gray3, $gray1, 0.2);
+
+    &:hover { @include redu-gradient($blue1, $gray1); }
+  }
+
+  .no-cssgradients.gt-ie8 & {
+    // http://www.colorzilla.com/gradient-editor/#f7f7f7+60,e6e6e6+100;Custom
+    background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSI2MCUiIHN0b3AtY29sb3I9IiNmN2Y3ZjciIHN0b3Atb3BhY2l0eT0iMSIvPgogICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZTZlNmU2IiBzdG9wLW9wYWNpdHk9IjEiLz4KICA8L2xpbmVhckdyYWRpZW50PgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZ3JhZC11Y2dnLWdlbmVyYXRlZCkiIC8+Cjwvc3ZnPg==);
+
+    &:hover {
+      // http://www.colorzilla.com/gradient-editor/#f7f7f7+0,dbeff7+100;Custom
+      background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2Y3ZjdmNyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNkYmVmZjciIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+    }
+  }
+
+  $color: $blue3;
+  $border-color: $gray4;
+  $box-shadow-color: $white;
+  $background-color: $gray1;
+  $hover-color: $blue4;
+  $hover-border-color: $blue2;
+  $hover-background-color: $blue1;
+  $active-border-color: $blue3;
+  $active-background-color: $blue1;
+  $hover-active-color: $blue4;
+  $hover-active-border-color: $blue4;
+  $disabled-color: $gray5;
+  $disabled-border-color: $gray3;
+  $disabled-background-color: $gray2;
+  @include redu-button($color, $border-color, $box-shadow-color, $background-color, $hover-color, $hover-border-color, $hover-background-color, $active-border-color, $active-background-color, $hover-active-color, $hover-active-border-color, $disabled-color, $disabled-border-color, $disabled-background-color);
+}
+
+// Botão primário.
+.button-primary {
+  @extend %button;
+  @include text-shadow(0 -1px 0 $blue4);
+
+  .cssgradients & {
+    @include redu-gradient($blue4, $blue2, 0.3);
+
+    &:hover { @include redu-gradient($blue4, $blue2); }
+  }
+
+  .no-cssgradients.gt-ie8 & {
+    // http://www.colorzilla.com/gradient-editor/#73c3e6+1,158ac4+41;Custom
+    background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIxJSIgc3RvcC1jb2xvcj0iIzczYzNlNiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjQxJSIgc3RvcC1jb2xvcj0iIzE1OGFjNCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
+
+    &:hover {
+      // http://www.colorzilla.com/gradient-editor/#73c3e6+0,158ac4+50,158ac4+50;Custom
+      background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzczYzNlNiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzE1OGFjNCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzE1OGFjNCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
+    }
+  }
+
+  $color: $white;
+  $border-color: $blue2;
+  $box-shadow-color: $blue1;
+  $background-color: $blue2;
+  $hover-color: $white;
+  $hover-border-color: $blue4;
+  $hover-background-color: $blue4;
+  $active-border-color: $blue4;
+  $active-background-color: $blue4;
+  $hover-active-color: $blue1;
+  $hover-active-border-color: $blue4;
+  $disabled-color: $gray3;
+  $disabled-border-color: $blue2;
+  $disabled-background-color: $blue2;
+  @include redu-button($color, $border-color, $box-shadow-color, $background-color, $hover-color, $hover-border-color, $hover-background-color, $active-border-color, $active-background-color, $hover-active-color, $hover-active-border-color, $disabled-color, $disabled-border-color, $disabled-background-color);
+}

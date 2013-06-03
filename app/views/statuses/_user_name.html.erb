@@ -1,5 +1,23 @@
-<% if item.user %>
-  <%= link_to item.user.display_name, user_path(item.user), :class => "username" %>
+<%#
+  Link com o nome completo do usuário para o seu perfil.
+
+  Variáveis:
+    user: o usuário.
+    entity: a entidade que o usuário faz parte. Caso usada,
+            adiciona o ícone ao nome do usuário. (opcional)
+%>
+
+<% entity = nil unless local_assigns.has_key? :entity %>
+
+<% if user %>
+  <% link_name_class = "link-name" %>
+
+  <% if entity %>
+    <%= link_to user.display_name, user_path(user),
+      class: "#{link_name_class} icon-#{role_icon(role_at(user, entity))}-gray_16_18-before" %>
+  <% else %>
+    <%= link_to user.display_name, user_path(user), class: link_name_class %>
+  <% end %>
 <% else %>
-  <span class="username">[Usuário Removido]</span>
+  [Usuário removido]
 <% end %>

@@ -1,7 +1,14 @@
-<ul class="actions clearfix">
+<%#
+  Lista de ações possíveis para um comentário.
+
+  Variáveis:
+    status: o status.
+%>
+
+<ul class="actions">
   <% if can? :respond, status %>
-    <li>
-      <a href="#" class="icon-response-gray_8_10-before reply-status">Responder</a>
+    <li class="reply-status icon-reply-gray_8_10-before">
+      <span class="link-fake link-secondary">Responder</span>
     </li>
   <% end %>
 </ul>

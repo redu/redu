@@ -1,8 +1,12 @@
-newStatus = "<%= escape_javascript (render :partial =>"statuses/item", :locals => {:item => @status, :statusable => @status.statusable}) %>";
+$newStatus = $('<%= escape_javascript render "statuses/item", item: @status, statusable: @status.statusable %>')
+  .hide()
+  .prependTo($("#statuses"))
+  .slideDown(150, "swing")
+  .find("textarea").val("");
 
-$("#statuses > ol").prepend(newStatus);
-$("#statuses > ol > li:first .responses").hide();
-$('#status_text').val('');
-$('.answer').val('');
-$('textarea.status:visible').parents('div.fieldWithErrors:first').removeClass('fieldWithErrors');
-$('.errorMessageField').remove();
+// Remove os erros se existirem.
+var $createStatus = $(".create-status");
+$createStatus.removeClass("control-error");
+$createStatus.find(".control-errors").remove();
+
+$("#status_text").val("");

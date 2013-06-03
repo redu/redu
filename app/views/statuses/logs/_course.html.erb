@@ -1,28 +1,43 @@
-<li id="status-<%= log.id %>">
-  <div class="status icons-big-after icon-course-lightblue_64_66-after">
-    <div class="status-context">
+<%#
+  Log de curso.
+
+  Exemplo: "X criou o curso Y".
+
+  Variáveis:
+    log: o log de curso.
+%>
+
+<%= content_tag :li, id: "status-#{log.id}" do %>
+  <hr class="list-separator">
+  <div class="status">
+    <div class="context">
       <% if log.logeable.environment.avatar_file_name %>
-        <%= image_tag log.logeable.environment.avatar.url(:thumb_32),
-          :size => '32x32',
-          :class => 'avatar'
-        %>
+        <%= link_to environment_path(log.logeable.environment),
+          title: log.logeable.environment.name do %>
+          <%= image_tag log.logeable.environment.avatar.url(:thumb_32),
+            size: "32x32",
+            class: "author-thumbnail",
+            alt: log.logeable.environment.name %>
+        <% end %>
       <% else %>
-        <span class="status-subject icon-small icon-environment-lightblue_32_34">
-        </span>
+        <%= link_to log.logeable.name,
+          environment_course_path(log.logeable.environment, log.logeable),
+          class: "text-replacement context-icon icon-course-gray_32_34-before" %>
       <% end %>
-      <%= link_to log.logeable.environment.name, environment_path(log.logeable.environment), :class => "status-main" %>
-      <%= link_to log.logeable.name, environment_course_path(log.logeable.environment, log.logeable), :class => "status-secondary icon-expand-gray_8_10-before" %>
+      <%= content_tag :span,
+        entity_hierarchy_breacrumb_links(log.logeable.environment),
+        class: "legend" %>
     </div>
-    <div class="status-log">
-      <%= render "statuses/user_image", :item => log %>
-      <div class="status-icon icon-<%= log.user ? role_at(log.user, log.logeable) : "member" %>-gray_16_18-before">
-        <%= render "statuses/user_name", :item => log %>
-        <span class="status-info"> <%= raw auto_link(log.action_text) %></span>
-        <%= link_to log.logeable.name, environment_course_path(log.logeable.environment, log.logeable),
-          :class => "status-secondary icon-expand-gray_16_18-before" %>
-        <%= render :partial => 'statuses/timeago', :locals => { :item => log } %>
+    <div class="subject">
+      <%= render "statuses/user_image", user: log.user %>
+      <div class="subject-info">
+        <%= render "statuses/user_name", user: log.user, entity: log.logeable %>
+        <%= content_tag :span, raw(auto_link(log.action_text)), class: "action" %>
+        <%= link_to log.logeable.name,
+          environment_course_path(log.logeable.environment, log.logeable),
+          class: "icon-course-gray_16_18-before" %>
+        <%= render "statuses/timeago", status: log, timestamp: log.created_at %>
       </div>
     </div>
   </div>
-</li>
-
+<% end %>
