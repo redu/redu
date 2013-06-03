@@ -83,7 +83,7 @@ class StatusesController < BaseController
   end
 
   def deny_access(exception, &block)
-    flash_error = "O comentário que você está tentando acessar não está aberto a visualizações de terceiros "
+    flash_error = "Você não tem permissão para ver esse comentário."
 
     # Redirect home_path -> home_user_path perde o flash message
     if current_user

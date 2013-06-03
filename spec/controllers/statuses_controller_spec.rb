@@ -215,14 +215,14 @@ describe StatusesController do
       it "should redirect to home_path when not logged in" do
         get :show, params
         response.should redirect_to controller.home_path
-        flash[:error].should =~ /O comentário que você está tentando acessar não está aberto a visualizações de terceiros/
+        flash[:error].should =~ /Você não tem permissão para ver esse comentário./
       end
 
       it "should redirect to user_home_path when logged in" do
         login_as(strange)
         get :show, params
         response.should redirect_to(response.location)
-        flash[:error].should =~ /O comentário que você está tentando acessar não está aberto a visualizações de terceiros/
+        flash[:error].should =~ /Você não tem permissão para ver esse comentário./
       end
     end
   end
