@@ -5,7 +5,7 @@ BREADCRUMB_MAPPINGS = {
   "CourseEnrollment" => %w(course environment),
   "Space" => %w(space course environment),
   "Subject" => %w(subject space course environment),
-  "Lecture" => %w(lecture subject space)
+  "Lecture" => %w(lecture subject space course environment)
 }
 
 shared_examples_for "having breadcrumbs" do |entity_type|

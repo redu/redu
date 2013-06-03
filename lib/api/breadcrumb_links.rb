@@ -55,6 +55,8 @@ module Api
         @lecture ||= entity
         @subject ||= lecture.subject
         @space ||= subject.space
+        @course ||= space.course
+        @environment ||= course.environment
       when "UserCourseAssociation"
         @course = entity.course
         @environment ||= course.environment
