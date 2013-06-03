@@ -1,13 +1,25 @@
-<% status_id = @answer.in_response_to.id.to_s %>
 <% if @answer.valid? %>
-  response = "<%=  escape_javascript (render :partial => 'statuses/response', :locals => { :response => @answer }) %>";
-  $status = $("#status-<%= status_id %>");
+  var $status = $("#status-<%= @answer.in_response_to.id.to_s %>");
+  var $responses = $status.find(".responses");
 
-  $status.find(".responses").show();
-  $status.find(".create-status").slideUp();
-  $status.find(".toggle-statuses .qty").text($status.find(".responses > ol > li").length);
-  $status.find("form textarea").val('');
-  $status.find(".responses ol").append(response);
-  $status.find(".responses > ol > li").last().hide();
-  $status.find(".responses > ol > li").last().slideDown();
+  <%# Se a lista de respostas não existir. %>
+  if ($responses.length === 0) {
+    <%# Adiciona a lista com a resposta. %>
+    $responses = $("<%= escape_javascript render 'statuses/responses', status: @answer.in_response_to %>");
+    $responses.insertAfter($status.find(".status-content"));
+
+  <%# Adiciona a resposta no final. %>
+  } else {
+    var $response = $("<%= escape_javascript render 'statuses/response', response: @answer %>");
+    $responses.children().last().before($response);
+    $responses.countComments();
+  }
+
+  var $form = $status.find(".create-response");
+  $form.slideUp(150, "swing");
+  $status.find("textarea").val("");
+
+  // Remove os erros se existirem.
+  $form.removeClass("control-error");
+  $form.find(".control-errors").remove();
 <% end %>

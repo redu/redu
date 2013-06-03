@@ -1,24 +1,20 @@
-<% content_for :header_scripts_and_styles do %>
-  <%= stylesheet_link_tag "icons.redu" %>
-<% end %>
-
 <div class="span3">
-  <%= render "users/left_sidebar", :user => @user %>
+  <%= render "users/left_sidebar", user: @user %>
 </div>
 <div class="span10">
   <div class="content-area">
-    <%= render "users/breadcrumb_home", :user => @user %>
+    <%= render "users/breadcrumb_home", user: @user %>
     <div class="content-body">
       <%# Mensagem de boas-vindas ao Redu. %>
-      <%= render "users/welcome_greeting", :user => @user %>
+      <%= render "users/welcome_greeting", user: @user %>
 
       <%# Convites de amizades. %>
       <% cache ["home_friends_requisitions", @user.id] do %>
         <% unless @friends_requisitions.empty? %>
           <div class="content-section">
             <ul class="requisitions">
-              <%= render :partial => "friendships/friend_requisition",
-                :collection => @friends_requisitions, :as => :friendship %>
+              <%= render partial: "friendships/friend_requisition",
+                collection: @friends_requisitions, as: :friendship %>
             </ul>
           </div>
           <hr class="list-separator">
@@ -30,8 +26,8 @@
         <% unless @course_invitations.empty? %>
           <div class="content-section">
             <ul class="requisitions">
-              <%= render :partial => "courses/item_invitation",
-                :collection => @course_invitations %>
+              <%= render partial: "courses/item_invitation",
+                collection: @course_invitations %>
             </ul>
           </div>
           <hr class="list-separator">
@@ -39,17 +35,17 @@
       <% end %>
 
       <%# Explore o Redu. %>
-      <%= content_tag :div, :id => "what-is-missing-box",
-        :style => "display: #{what_is_missing_box_display(@user)}" do %>
+      <%= content_tag :div, id: "what-is-missing-box",
+        style: "display: #{what_is_missing_box_display(@user)}" do %>
         <div class="content-section">
-          <%= render "users/explore_redu", :user => @user %>
+          <%= render "users/explore_redu", user: @user %>
         </div>
         <hr class="list-separator">
       <% end %>
 
       <%# Explicação de AVA. %>
-      <%= content_tag :div, :id => "learn-environments-box",
-        :style => "display: #{learn_environments_display(@user)}" do %>
+      <%= content_tag :div, id: "learn-environments-box",
+        style: "display: #{learn_environments_display(@user)}" do %>
         <div class="content-section">
           <%= render "users/learn_environments" %>
         </div>
@@ -57,11 +53,13 @@
       <% end %>
 
       <%# Mural. %>
-      <%= render "users/home_wall", user: @user, statuses: @statuses %>
+      <%= render "statuses/wall", status: @status, statusable: @user,
+        placeholder: "Compartilhe algo com seus Amigos através de seu mural",
+        statuses: @statuses %>
     </div>
-    <%= render "users/breadcrumb_home", :user => @user %>
+    <%= render "users/breadcrumb_home", user: @user %>
   </div>
 </div>
 <div class="span3">
-  <%= render "users/right_sidebar", :user => @user %>
+  <%= render "users/right_sidebar", user: @user %>
 </div>

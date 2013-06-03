@@ -1,8 +1,10 @@
-<%= render :partial => 'spaces/sidebar', :locals => { :space => @space } %>
+<%= render "shared/new_wall_assets" %>
+
+<%= render partial: 'spaces/sidebar', locals: { space: @space } %>
 <div class="main space grid_12 omega big-col">
-  <%= render :partial => 'spaces/breadcrumbs', :locals => { :space => @space } %>
-  <%= render :partial => 'spaces/header',
-    :locals => { :space => @space }%>
+  <%= render partial: 'spaces/breadcrumbs', locals: { space: @space } %>
+  <%= render partial: 'spaces/header',
+    locals: { space: @space }%>
 
   <div id="space-statuses" class="body clearfix">
     <div class="header clearfix">
@@ -10,15 +12,9 @@
     </div>
 
     <div class="status-large" style="clear: both;">
-    <%= render :partial => 'statuses/create_status',
-      :locals => { :statusable => @space } %>
-    <div id="statuses" class="statuses">
-      <ol>
-        <%= render :partial => 'statuses/item', :collection => @statuses %>
-      </ol>
-
-      <%= paginate @statuses, :theme => 'endless' %>
-    </div>
+      <%# Status. %>
+      <%= render "statuses/wall", status: @status, statusable: @space,
+        statuses: @statuses, placeholder: "Comente nesta disciplina." %>
     </div><!-- end .statuses -->
   </div><!-- end #environment-courses -->
 

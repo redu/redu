@@ -1,49 +1,29 @@
-<%# Status resposta %>
-<li id="status-<%= response.id %>">
-  <hr class="border-post"/>
-  <div class="re-status">
-    <% if can? :manage, response %>
-        <%= link_to 'Fechar',
-          status_path(response),
-          :method => :delete,
-          :remote => true,
-          :class => 'close icon-small icon-close-gray_16_16 replacement',
-          :confirm => 'Deseja remover esta resposta?'%>
-    <% end %>
-    <div class="status-text">
-      <% if response.user %>
-        <%= image_tag response.user.avatar.url(:thumb_32), :width => 32,
-          :height => 32, :class => 'avatar'%>
-        <%= link_to response.user.display_name, user_path(response.user),
-          { :class => 'username' } %>
-      <% else %>
-        <%= image_tag "missing_users_thumb_32.png", :width => 32, :height => 32,
-          :class => 'friend-avatar'%>
-        <span class="username">[Usuário Removido]</span>
-      <% end %>
-      <%= render :partial => 'statuses/timeago', :locals => { :item => response } %>
-    </div>
-    <p class="status-message"><%= status_message(response.text) %></p>
-    <% if response.status_resources.first %>
-      <% if response.status_resources.first.thumb_url %>
-        <div class="post-resource">
-        <div class="thumbnail">
-          <%= link_to response.status_resources.first.link, :target => "_blank", :rel => "nofollow" do %>
-            <%= image_tag(response.status_resources.first.thumb_url, :class => "preview-link") %>
-          <% end %>
-        </div>
-      <% else %>
-        <div class="post-resource">
-      <% end %>
-        <div class="post-text">
+<%#
+  Resposta de um status.
 
-          <h3><%= link_to response.status_resources.first.title, response.status_resources.first.link, :target => "_blank", :rel => "nofollow", :class => "title" %></h3>
-          <h4 class="source-site">
-            <%= response.status_resources.first.provider %>
-          </h4>
-          <p class="post-description"><%= response.status_resources.first.description %></p>
-        </div>
-      </div>
+  Variáveis:
+    response: a resposta de um status.
+%>
+
+<%= content_tag :li, id: "status-#{response.id}" do %>
+  <hr>
+  <div class="response">
+    <% if can? :manage, response %>
+        <%= link_to "Remover",
+          status_path(response),
+          method: :delete,
+          remote: true,
+          class: "icon-close icon-close-gray_16_18 text-replacement",
+          confirm: "Deseja remover esta resposta?"%>
     <% end %>
+    <%= render "statuses/user_image", user: response.user %>
+    <%= render "statuses/user_name", user: response.user %>
+    <span class="action">respondeu:</span>
+    <%= render "statuses/timeago", status: response, timestamp: response.created_at %>
+    <div class="status-content">
+      <%= content_tag :p, status_message(response.text) %>
+      <%= render "statuses/resource_preview",
+        resource: response.status_resources %>
+    </div>
   </div>
-</li>
+<% end %>

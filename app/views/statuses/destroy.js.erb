@@ -1,6 +1,12 @@
-$("#status-<%= @status.id %>").slideUp(function(){
-  if ($(this).siblings("li").length == 0) {
-    $(this).parents(".responses").hide();
-  };
-  $(this).remove();
+$("#status-<%= @status.id %>").slideUp(150, "swing", function() {
+  var $status = $(this);
+  var $responses = $status.closest(".responses");
+
+  $status.remove();
+
+  <% if @status.is_a?(Answer) && @status.in_response_to.answers.empty? %>
+    $responses.remove();
+  <% else %>
+    $responses.countComments();
+  <% end %>
 });

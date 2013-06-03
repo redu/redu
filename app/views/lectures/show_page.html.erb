@@ -1,28 +1,31 @@
-<%= render :partial => 'lectures/javascripts' %>
-<%= render :partial => 'subjects/sidebar' %>
+<%= render "shared/new_wall_assets", in_lecture: true %>
+
+<%= render partial: 'lectures/javascripts' %>
+<%= render partial: 'subjects/sidebar' %>
 <div class="main space grid_12 omega big-col">
-  <%= render :partial => "subjects/breadcrumbs", :locals => { :subject => @subject } %>
-  <%= render :partial => 'subjects/header',
-    :locals => { :subject => @subject, :space => @space } %>
+  <%= render partial: "subjects/breadcrumbs", locals: { subject: @subject } %>
+  <%= render partial: 'subjects/header',
+    locals: { subject: @subject, space: @space } %>
 
   <div id="resource" class="hierarchy-listing-wrapper">
     <div class="resource-head">
-      <%= render :partial => 'lectures/info',
-        :locals => { :lecture => @lecture } %>
-      <%= render :partial => 'lectures/context',
-        :locals => { :student_grade => @student_grade, :done => @done } %>
+      <%= render partial: 'lectures/info',
+        locals: { lecture: @lecture } %>
+      <%= render partial: 'lectures/context',
+        locals: { student_grade: @student_grade, done: @done } %>
     </div>
 
     <div class="resource-content clearfix">
-      <%= render :partial => 'lectures/details',
-        :locals => { :lecture => @lecture} %>
+      <%= render partial: 'lectures/details',
+        locals: { lecture: @lecture} %>
       <div class="stage page-content content">
         <iframe id="page-iframe" width="100%" src="<%= page_content_space_subject_lecture_path(@space, @subject, @lecture) %>">
         </iframe>
      </div>
     </div>
 
-    <%= render 'lectures/create_statuses', :lecture => @lecture, :statuses => @statuses %>
+    <%= render "lectures/wall", statusable: @lecture,
+      statuses: @statuses, status: @status %>
   </div><!-- end #resource -->
 
 </div><!-- end .main -->

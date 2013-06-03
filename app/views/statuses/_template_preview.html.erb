@@ -1,50 +1,39 @@
-<div id="template-preview" style="display: none">
+<%#
+  Template para o preview de links.
+%>
+
+<div id="template-preview" class="hide">
   <div class="post-resource">
-    <hr class="border-post concave-separator"/>
-    <span class="close icon-small icon-delete-gray_8_10 replacement">Fechar</span>
-    <div class="clearfix">
-      <!-- thumbnail -->
-      {{ if(obj.first_thumb) { }}
-      <div class="thumbnail">
-        <%= image_tag "overlay-85.png", :id => "thumbnail-0", :class => "preview-link" %>
-        <ul class="buttons-thumbnail">
-          <!-- multiplos thumbanails -->
+    <hr class="thumbnail-separator">
+    <div class="thumbnail">
+      {{ if (obj.first_thumb) { }}
+      <div class="preview">
+        <a href="#" target="_blank" rel="nofollow" class="title">
+          <%= image_tag "overlay-85.png", id: "thumbnail-0",
+            class: "preview-link", width: 100 %>
+        </a>
+        <ul class="buttons">
           {{ if (obj.thumbnail_url instanceof Array) { }}
-          <li class="replacement last control">
-            Anterior
-            <span class="arrow">A</span>
-          </li>
-          <li class="replacement next control">
-            Próximo
-            <span class="arrow">P</span>
-          </li>
+          <li class="last button-default"><span class="text-replacement icon-arrow-left-lightblue_8_10 show">Anterior</span></li>
+          <li class="next button-default"><span class="text-replacement icon-arrow-right-lightblue_8_10 show">Próximo</span></li>
           {{ } else { }}
-          <!-- end multiplos thumbnails -->
-          <li class="replacement last control desactivated">
-            Anterior
-            <span class="arrow">A</span>
-          </li>
-          <li class="replacement next control desactivated">
-            Próximo
-            <span class="arrow">P</span>
-          </li>
+          <li class="button-default button-disabled"><span class="text-replacement icon-arrow-left-gray_8_10 show">Anterior</span></li>
+          <li class="button-default button-disabled"><span class="text-replacement icon-arrow-right-gray_8_10 show">Próximo</span></li>
           {{ } }}
-          <li class="replacement remove control">
-            Remover
-            <span class="arrow">R</span>
-          </li>
+          <li class="remove button-default"><span class="text-replacement icon-close-lightblue_8_10 show">Remover</span></li>
         </ul>
       </div>
       {{ } }}
-      <!-- end thumbnail -->
-
-      <div class="post-text">
-        <h3><a href="#" target="_blank" rel="nofollow" class="title">
+      <div class="thumbnail-info">
+        <span class="icon-close icon-close-gray_16_18 text-replacement close">Excluir</span>
+        <a href="#" target="_blank" rel="nofollow" class="title">
+          <strong>
             {{ if(obj.title) { }}
             {{= title }}
             {{ } }}
-        </a></h3>
-        <h4 class="source-site">{{= provider_url }}</h4>
+          </strong>
+        </a>
+        <p class="source-site">{{= provider_url }}</p>
         <p class="post-description">
           {{ if(obj.description) { }}
           {{= description }}
@@ -52,6 +41,6 @@
         </p>
       </div>
     </div>
-    <hr class="border-post concave-separator"/>
+    <hr class="thumbnail-separator">
   </div>
 </div>

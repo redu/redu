@@ -1778,12 +1778,19 @@
   background: image-url("icon-close-red_16_16.png") no-repeat !important;
 }
 
-.course-responsible {
-  .icon-manager-gray_16_18-before:before {
-    content: "";
-    width: 16px !important;
-    height: 18px !important;
-    background: image-url("icons-small.png") 0 -800px no-repeat;
+.course-responsible,
+.status {
+  .icon-manager-gray_16_18-before {
+    &:before {
+      background-image: image-url("icons-small.png");
+      content: "";
+      width: 16px;
+      height: 18px;
+      background-repeat: no-repeat;
+      background-position: 0 -800px;
+    }
+
+    &:hover:before { background-position: -160px -800px; }
   }
 
   .icon-manager-gray_16_18-before:before,
@@ -1792,4 +1799,10 @@
     margin-right: 5px;
     vertical-align: middle;
   }
+
+  .icon-subject-gray_16_18-before:hover:before { background-position: -160px -320px; }
+  .icon-space-gray_16_18-before:hover:before { background-position: -160px -160px; }
+  .icon-member-gray_16_18-before:hover:before { background-position: -160px -1040px; }
+  .icon-tutor-gray_16_18-before:hover:before { background-position: -160px -960px; }
+  .icon-teacher-gray_16_18-before:hover:before { background-position: -160px -880px; }
 }

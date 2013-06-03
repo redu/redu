@@ -69,7 +69,8 @@ class SpacesController < BaseController
 
         format.html
         format.js do
-          render_endless 'statuses/item', @statuses, '#statuses > ol'
+          render_endless 'statuses/item', @statuses, '#statuses',
+            template: 'shared/new_endless_kaminari'
         end
         format.xml  { render xml: @space }
       else
@@ -241,8 +242,7 @@ class SpacesController < BaseController
   end
 
   def is_browser_unsupported?
-    user_agent = UserAgent.parse(request.user_agent)
-    current_browser = Browser.new(user_agent.browser, user_agent.version)
+    current_browser = Browser.new(current_user_agent.browser, current_user_agent.version)
     browser = UNSUPPORTED_BROWSERS[0].browser
 
     if current_browser.browser == browser

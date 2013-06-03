@@ -1,3 +1,21 @@
-<time class="date" datetime="<%= item.created_at.to_time.iso8601 %>">
-  <%= l(item.created_at, :format => :time_ago) %>
-</time>
+<%#
+  Detalhe da data e horário.
+
+  Variáveis:
+    status: o status relacionado (opcional).
+    timestamp: detalhe da data e horário.
+%>
+
+<%# Torna a passagem de status opcional. %>
+<% status = nil unless local_assigns.has_key? :status %>
+
+<% time = capture do %>
+  <%= content_tag :time, l(timestamp, format: :time_ago),
+    class: "date legend", datetime: timestamp.to_time.iso8601 %>
+<% end %>
+
+<% if status %>
+  <%= link_to time, status_or_answer_path(status), class: "date" %>
+<% else %>
+  <%= time %>
+<% end %>

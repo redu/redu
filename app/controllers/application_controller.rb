@@ -66,8 +66,7 @@ class ApplicationController < ActionController::Base
   end
 
   def detect_mobile
-    user_agent = UserAgent.parse(request.user_agent)
-    if user_agent.mobile?
+    if current_user_agent.mobile?
       prepend_view_path "app/views/mobile"
     end
   end
@@ -79,11 +78,14 @@ class ApplicationController < ActionController::Base
 
     yield if block_given?
 
-    user_agent = UserAgent.parse(request.user_agent)
-    if user_agent.mobile?
+    if current_user_agent.mobile?
       redirect_to login_path
     else
       redirect_to home_path
     end
+  end
+
+  def current_user_agent
+    @current_user_agent ||= UserAgent.parse(request.user_agent)
   end
 end

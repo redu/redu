@@ -1,0 +1,44 @@
+<%#
+  Status de comentar no mural de uma aula.
+
+  Exemplo: "X comentou na aula Y".
+
+  Variáveis:
+    item: o status.
+%>
+
+<%= content_tag :li, id: "status-#{item.id}" do %>
+  <hr class="list-separator">
+  <div class="status">
+    <div class="context">
+      <%= link_to item.statusable.name,
+        space_subject_lecture_path(item.statusable.subject.space, item.statusable.subject, item.statusable),
+        class: "text-replacement context-icon icon-subject-gray_32_34-before" %>
+      <%= content_tag :span,
+        entity_hierarchy_breacrumb_links(item.statusable.subject),
+        class: "legend" %>
+    </div>
+    <div class="subject">
+      <%= render "statuses/user_image", user: item.user %>
+      <div class="subject-info">
+        <% if can? :manage, item %>
+          <%= link_to "Fechar",
+            status_path(item),
+            method: :delete,
+            remote: true,
+            class: "icon-close icon-close-gray_16_18 text-replacement",
+            confirm: "Ao remover o comentário, todas as respostas serão apagadas. Deseja removê-lo?" %>
+        <% end %>
+        <%= render "statuses/user_name", user: item.user, entity: item.statusable %>
+        <span class="action">comentou na Aula <%= link_to item.statusable.name, space_subject_lecture_path(item.statusable.subject.space, item.statusable.subject, item.statusable), class: "icon-subject-gray_16_18-before" %></span>
+        <%= render "statuses/timeago", status: item, timestamp: item.created_at %>
+      </div>
+    </div>
+    <div class="subject-content">
+    <%= render "statuses/resource", status: item %>
+    <%= render "statuses/responses", status: item %>
+    <%= render "statuses/actions", status: item %>
+    <%= render "statuses/create_response", in_response_to: item %>
+    </div>
+  </div>
+<% end %>
