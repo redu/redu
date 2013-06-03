@@ -73,7 +73,9 @@ describe StatusesController do
     end
 
     context "when creating new help request" do
-      let(:statusable) { FactoryGirl.create(:lecture, owner: author, subject: subj) }
+      let(:statusable) do
+        FactoryGirl.create(:lecture, owner: author, subject: subj)
+      end
       let(:subj) do
         FactoryGirl.create(:subject, owner: author, space: space,
                            finalized: true, visible: true)
