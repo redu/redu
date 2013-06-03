@@ -11,7 +11,7 @@ module StatusService
       private
 
       def build_and_deliver(notification)
-        mailer.new_answer(notification).deliver
+        mailer.delay(queue: :email).new_answer(notification)
       end
 
       def original_status
