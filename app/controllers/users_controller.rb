@@ -281,8 +281,7 @@ class UsersController < BaseController
       flash[:notice] = t :activation_email_resent_message
       UserNotifier.delay(:queue => 'email').user_signedup(@user.id)
 
-      user_agent = UserAgent.parse(request.user_agent)
-      if user_agent.mobile?
+      if current_user_agent.mobile?
         redirect_to login_path and return
       else
         redirect_to application_path and return
