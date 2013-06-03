@@ -9,8 +9,10 @@
     <%= render :partial => 'subjects/admin/item_admin', :collection => subjects, :locals => { :space => space } %>
   </table>
 <% else %>
+  <div class="management-actions">
+    <%= link_to 'Criar novo módulo', new_space_subject_path(space), :class => 'concave-button' %>
+  </div>
   <div class="box_notice">
     Não existe nenhum módulo.
-    <%= link_to "Criar novo módulo", new_space_subject_path(space) %>
   </div>
 <% end %>
