@@ -13,6 +13,7 @@ require_recipe "rabbitmq_ssh_tunnel"
 require_recipe "delayed_job"
 require_recipe "custom_prompt"
 require_recipe "mongodb::backup"
+require_recipe "mongodb::configure"
 require_recipe "sunspot"
 require_recipe "le"
 
