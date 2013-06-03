@@ -449,6 +449,9 @@ class User < ActiveRecord::Base
     when 'Lecture'
       self.enrollments.
         find(:first, conditions: { subject_id: entity.subject.id })
+    when 'Activity', 'Help', 'Status', 'Log'
+      self.status_user_associations.
+        find(:first, conditions: { status_id: entity.id })
     end
   end
 

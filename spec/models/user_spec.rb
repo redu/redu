@@ -771,31 +771,40 @@ describe User do
   end
 
   it "verifies if he can post on a space"
-  it "retrieves his association with a thing" do
-    environment = FactoryGirl.create(:environment)
-    course = FactoryGirl.create(:course, environment: environment,
-                     owner: environment.owner)
-    space = FactoryGirl.create(:space, owner: environment.owner,
-                    course: course)
-    course.join(subject)
+  context "#get_association_with" do
+    it "retrieves his association with a thing" do
+      environment = FactoryGirl.create(:environment)
+      course = FactoryGirl.create(:course, environment: environment,
+                                  owner: environment.owner)
+      space = FactoryGirl.create(:space, owner: environment.owner,
+                                 course: course)
+      course.join(subject)
 
-    subject.get_association_with(environment).
-      should == subject.user_environment_associations.last
-    subject.get_association_with(course).
-      should == subject.user_course_associations.last
-    subject.get_association_with(space).
-      should == subject.user_space_associations.last
+      subject.get_association_with(environment).
+        should == subject.user_environment_associations.last
+      subject.get_association_with(course).
+        should == subject.user_course_associations.last
+      subject.get_association_with(space).
+        should == subject.user_space_associations.last
 
-    subject_entity = FactoryGirl.create(:subject, owner: subject,
-                             space: space, finalized: true)
-    subject_entity.enroll
-    subject.get_association_with(subject_entity).
-      should == subject.enrollments.last
+      subject_entity = FactoryGirl.create(:subject, owner: subject,
+                                          space: space, finalized: true)
+      subject_entity.enroll
+      subject.get_association_with(subject_entity).
+        should == subject.enrollments.last
 
-    lecture_entity = FactoryGirl.create(:lecture, subject: subject_entity,
-                             owner: subject)
-    subject.get_association_with(lecture_entity).
-      should == subject.enrollments.last
+      lecture_entity = FactoryGirl.create(:lecture, subject: subject_entity,
+                                          owner: subject)
+      subject.get_association_with(lecture_entity).
+        should == subject.enrollments.last
+    end
+
+    it "should retrieve the association with a Status" do
+      status = FactoryGirl.create(:activity)
+      Status.associate_with(status, [subject])
+
+      subject.get_association_with(status).should == StatusUserAssociation.last
+    end
   end
 
   it "verifies if he is redu admin" do
