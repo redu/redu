@@ -11,22 +11,7 @@
   <hr class="list-separator">
   <div class="status">
     <div class="context">
-      <% if log.logeable.course.environment.avatar_file_name %>
-        <%= link_to environment_path(log.logeable.course.environment),
-          title: log.logeable.course.environment.name do %>
-          <%= image_tag log.logeable.course.environment.avatar.url(:thumb_32),
-            size: "32x32",
-            class: "author-thumbnail",
-            alt: log.logeable.course.environment.name %>
-        <% end %>
-      <% else %>
-        <%= link_to log.logeable.course.name,
-          environment_course_path(log.logeable.course.environment,log.logeable),
-          class: "text-replacement context-icon icon-course-gray_32_34-before" %>
-      <% end %>
-      <%= content_tag :span,
-        entity_hierarchy_breacrumb_links(log.logeable.course.environment),
-        class: "legend" %>
+      <%= render "statuses/context_environment", course: log.logeable.course %>
     </div>
     <div class="subject">
       <%= render "statuses/user_image", user: log.user %>

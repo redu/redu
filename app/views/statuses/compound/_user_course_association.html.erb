@@ -9,22 +9,7 @@
   <hr class="list-separator">
   <div class="status log">
     <div class="context">
-      <% if compound.statusable.environment.avatar_file_name %>
-        <%= link_to environment_path(compound.statusable.environment),
-          title: compound.statusable.environment.name do %>
-          <%= image_tag compound.statusable.environment.avatar.url(:thumb_32),
-            size: "32x32",
-            class: "author-thumbnail",
-            alt: compound.statusable.environment.name %>
-        <% end %>
-      <% else %>
-        <%= link_to compound.statusable.name,
-          environment_course_path(compound.statusable.environment, compound.statusable),
-          class: "text-replacement context-icon icon-course-gray_32_34-before" %>
-      <% end %>
-      <%= content_tag :span,
-        entity_hierarchy_breacrumb_links(compound.statusable.environment),
-        class: "legend" %>
+      <%= render "statuses/context_environment", course: compound.statusable %>
     </div>
     <div class="subject">
       <div class="subject-info">
