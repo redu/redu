@@ -9,7 +9,7 @@ module StatusService
       end
 
       def author_name
-        answer.user.display_name
+        author.display_name
       end
 
       def author_avatar(size)
