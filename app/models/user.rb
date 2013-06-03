@@ -456,6 +456,7 @@ class User < ActiveRecord::Base
   end
 
   def environment_admin?(entity)
+    return false if entity.is_a? Status
     association = get_association_with entity
     association && association.role && association.role.environment_admin?
   end

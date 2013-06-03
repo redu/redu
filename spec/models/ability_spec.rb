@@ -1529,6 +1529,20 @@ describe Ability do
         status = FactoryGirl.create(:help, :user => @user)
         @user_ability.should be_able_to(:manage, status)
       end
+
+      it "should be able to manage even when there is UserStatusAssociation" do
+        status = FactoryGirl.create(:help, :user => @user)
+        Status.associate_with(status, [@user])
+        @user_ability.should be_able_to(:manage, status)
+      end
+    end
+
+    context "reading statuses" do
+      it "should be able to read if has UserStatusAssociation" do
+        status = FactoryGirl.create(:activity)
+        Status.associate_with(status, [@user])
+        @user_ability.should be_able_to(:read, status)
+      end
     end
 
     context "when destroying user" do
