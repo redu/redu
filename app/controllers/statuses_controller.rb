@@ -79,6 +79,6 @@ class StatusesController < BaseController
   private
 
   def original_status_path
-    status_path(@status.in_response_to, anchor: "answer_#{@status.id}")
+    status_path(@status.in_response_to, anchor: "status-#{@status.id}")
   end
 end

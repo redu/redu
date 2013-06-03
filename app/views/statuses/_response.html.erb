@@ -5,7 +5,7 @@
     response: a resposta de um status.
 %>
 
-<%= content_tag :li, id: "answer_#{response.id}" do %>
+<%= content_tag :li, id: "status-#{response.id}" do %>
   <hr>
   <div class="response">
     <% if can? :manage, response %>

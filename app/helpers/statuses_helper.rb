@@ -66,7 +66,7 @@ module StatusesHelper
     path = status_path(status)
 
     if status.is_a? Answer
-      path = status_path(status.in_response_to, anchor: "answer_#{status.id}")
+      path = status_path(status.in_response_to, anchor: "status-#{status.id}")
     end
 
     path

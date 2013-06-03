@@ -201,7 +201,7 @@ describe StatusesController do
 
         it "should redirect to status page with an anchor" do
           path = controller.
-            status_path(subject.in_response_to, anchor: "answer_#{subject.id}")
+            status_path(subject.in_response_to, anchor: "status-#{subject.id}")
           response.should redirect_to path
         end
       end
