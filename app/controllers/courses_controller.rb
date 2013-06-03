@@ -30,9 +30,7 @@ class CoursesController < BaseController
   end
 
   def show
-    @responsibles_associations = @course.user_course_associations.
-      with_roles([Role[:teacher], Role[:environment_admin]]).includes(:user)
-
+    @responsibles_associations = responsibles_associations_of(@course)
     @spaces = @course.spaces.published.order('created_at ASC').
       page(params[:page]).per(Redu::Application.config.items_per_page)
 
@@ -124,8 +122,7 @@ class CoursesController < BaseController
     # confundí-lo
     session[:return_to] = request.fullpath
 
-    @responsibles_associations = @course.user_course_associations.
-      with_roles([Role[:teacher], Role[:environment_admin]]).includes(:user)
+    @responsibles_associations = responsibles_associations_of(@course)
     @spaces = @course.spaces.order('name ASC').page(params[:page]).
       per(Redu::Application.config.items_per_page)
     respond_to do |format|
@@ -395,8 +392,7 @@ class CoursesController < BaseController
 
   # Página para convidar usuários para o curso
   def admin_invitations
-    @responsibles_associations = @course.user_course_associations.
-      with_roles([Role[:teacher], Role[:environment_admin]]).includes(:user)
+    @responsibles_associations = responsibles_associations_of(@course)
 
     respond_to do |format|
       format.html
@@ -456,5 +452,10 @@ class CoursesController < BaseController
 
   def to_array(parameter)
     parameter.blank? ? [] : parameter
+  end
+
+  def responsibles_associations_of(course)
+    course.user_course_associations.
+      with_roles([Role[:teacher], Role[:environment_admin]]).includes(:user)
   end
 end

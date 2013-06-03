@@ -709,6 +709,10 @@ describe CoursesController do
       it "renders preview" do
         response.should  render_template("courses/preview")
       end
+
+      it "should assign responsibles_associations" do
+        assigns[:responsibles_associations].should_not be_nil
+      end
     end
   end
 
@@ -725,6 +729,11 @@ describe CoursesController do
         expect {
           get :show, nested_course_params
         }.to change { user.user_course_associations.last.last_accessed_at }
+      end
+
+      it "should assign responsibles_associations" do
+        get :show, nested_course_params
+        assigns[:responsibles_associations].should_not be_nil
       end
     end
   end
@@ -772,6 +781,15 @@ describe CoursesController do
       it "should not raise error" do
         expect { get :admin_spaces, nested_course_params }.to_not raise_error
       end
+    end
+  end
+
+  context "GET admin_invitations" do
+    before { login_as user }
+
+    it "should assigns the responsible associations" do
+      get :admin_invitations, nested_course_params
+      assigns[:responsibles_associations].should_not be_nil
     end
   end
 end
