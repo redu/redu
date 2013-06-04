@@ -279,7 +279,12 @@
   .character-counter {
     position: static;
     margin-top: 5px;
-    display: block;
+    float: left;
+  }
+
+  .control-errors {
+    position: absolute;
+    bottom: 15px;
   }
 
   .status-buttons { display: none; }

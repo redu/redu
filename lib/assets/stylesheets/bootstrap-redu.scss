@@ -7777,7 +7777,11 @@ hr {
 .status-tab .character-counter {
   position: static;
   margin-top: 5px;
-  display: block;
+  float: left;
+}
+.status-tab .control-errors {
+  position: absolute;
+  bottom: 15px;
 }
 .status-tab .status-buttons {
   display: none;
