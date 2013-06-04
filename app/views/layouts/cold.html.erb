@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" class="no-js">
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-    <title><%= raw(page_title) %></title>
+    <%= content_tag :title, raw(page_title) %>
     <%= csrf_meta_tag %>
     <%= stylesheet_link_tag :cold %>
     <!--[if (gte IE 6)&(lte IE 8)]>
@@ -24,15 +24,15 @@
           }).css("background-color", "#e6e6e6");
       });
     </script>
-    <%= render :partial => "shared/typekit" %>
+    <%= render "shared/typekit" %>
     <%= yield :header_scripts_and_styles %>
   </head>
   <body>
-    <div class="<%= yield :wrapper_class %>">
-      <%= render :partial => 'shared/flash_message' %>
+    <%= content tag :div, class: yield(:wrapper_class} %>
+      <%= render 'shared/flash_message' %>
       <%= yield %>
       <div class="push"></div>
-    </div>
+    <% end %>
     <div class="footer">
       <div class="container_16">
         <h1 class="logo-footer"><%= link_to "Redu", home_path %></h1>
@@ -47,6 +47,6 @@
       </div>
     </div>
     <%= yield :footer_scripts_and_styles %>
-    <%= render :partial => "shared/olark" %>
+    <%= render "shared/olark" %>
   </body>
 </html>

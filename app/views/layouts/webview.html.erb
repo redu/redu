@@ -2,11 +2,11 @@
 <html lang="pt-br">
   <head>
     <meta charset="utf-8">
-    <title><%= raw(page_title) %></title>
+    <%= content_tag :title, raw(page_title) %>
     <%= csrf_meta_tag %>
     <%= stylesheet_link_tag "bootstrap-redu.min" %>
     <%= javascript_include_tag :webview %>
-    <%= render "shared/typekit", :badge_position => "right" %>
+    <%= render "shared/typekit", badge_position: "right" %>
   </head>
   <body>
     <%= yield %>

@@ -2,44 +2,41 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" class="no-js">
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-    <title><%= raw(page_title) %></title>
+    <%= content_tag :title, raw(page_title) %>
     <%= csrf_meta_tag %>
     <%= stylesheet_link_tag :application %>
     <!--[if (gte IE 6)&(lte IE 9)]>
       <%= stylesheet_link_tag :ie %>
     <![endif]-->
     <link href='http://fonts.googleapis.com/css?family=Copse' rel='stylesheet' type='text/css' />
-
-  <script type="text/javascript" language="javascript" charset="utf-8">
-	//<![CDATA[
-      var CKEDITOR_BASEPATH = "<%= Redu::Application.config.assets.ckeditor_path %>/";
-	//]]>
-  </script>
+    <script type="text/javascript" language="javascript" charset="utf-8">
+  	//<![CDATA[
+        var CKEDITOR_BASEPATH = "<%= Redu::Application.config.assets.ckeditor_path %>/";
+  	//]]>
+    </script>
     <%= javascript_include_tag :application %>
     <!--[if (gte IE 6)&(lte IE 8)]>
       <%= javascript_include_tag :ie %>
     <![endif]-->
     <%= yield :header_scripts_and_styles %>
-
-    <%= render :partial => "shared/chat" %>
-
-  <%= render :partial => "shared/typekit" %>
-  <%= render :partial => "shared/analytics" %>
+    <%= render "shared/chat" %>
+    <%= render "shared/typekit" %>
+    <%= render "shared/analytics" %>
   </head>
    <body>
       <div id="pjax-container">
         <div class="main-wrapper-old">
-          <%= render :partial => 'shared/outdated_browser' %>
-          <%= render :partial => 'shared/header' %>
-          <%= render :partial => 'shared/flash_message' %>
+          <%= render 'shared/outdated_browser' %>
+          <%= render 'shared/header' %>
+          <%= render 'shared/flash_message' %>
 
           <div id="content" class="container_16 clearfix">
            <%= yield :layout %>
-          </div><!-- end #content -->
+          </div>
 
-          <%= render :partial => "shared/footer_old" %>
+          <%= render "shared/footer_old" %>
           <%= yield :footer_scripts_and_styles %>
-          <%= render :partial => "shared/olark" %>
+          <%= render "shared/olark" %>
         </div>
       </div>
   </body>

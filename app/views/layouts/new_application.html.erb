@@ -3,55 +3,32 @@
 <!--[if gt IE 8]><!--><html lang="pt-br"><!--<![endif]-->
   <head>
     <meta charset="utf-8">
-    <title><%= raw(page_title) %></title>
+    <%= content_tag :title, raw(page_title) %>
     <%= csrf_meta_tag %>
     <%= stylesheet_link_tag "bootstrap-redu.min" %>
     <%= stylesheet_link_tag "new_application" %>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <%= javascript_include_tag "new_application" %>
-    <%# É possível sobrescrever a inicialização do chat %>
-    <% if content_for?(:chat_script) %>
-      <%= content_for(:chat_script) %>
-    <% else %>
-      <%= render :partial => "shared/chat" %>
-    <% end %>
-    <%= render :partial => "shared/typekit" %>
-    <%= render :partial => "shared/analytics" %>
+    <%= content_for?(:chat_script) ? content_for(:chat_script) : render("shared/chat") %>
+    <%= render "shared/typekit" %>
+    <%= render "shared/analytics" %>
     <%= yield :header_scripts_and_styles %>
   </head>
   <body>
-    <%# Torna possível sobrescrever a navegação global nas views que utilizam este layout %>
-    <% if content_for?(:nav_global) %>
-      <%= content_for(:nav_global) %>
-    <% else %>
-      <%= render(:partial => "shared/nav_global") %>
-    <% end %>
+    <%= content_for?(:nav_global) ? content_for(:nav_global) : render("shared/nav_global") %>
     <div class="main-wrapper">
-      <% if content_for?(:outdated_browser) %>
-        <%= content_for(:outdated_browser) %>
-      <% else %>
-        <%= render :partial => "shared/outdated_browser_new" %>
-      <% end %>
-      <%= render :partial => "shared/system_flash_message" %>
-      <div class="container <%= content_for(:container_class) %>">
+      <%= content_for?(:outdated_browser) ? content_for(:outdated_browser) : render("shared/outdated_browser_new") %>
+      <%= render "shared/system_flash_message" %>
+      <%= content_tag :div, class: "container #{ content_for(:container_class) }" do %>
         <div class="row">
           <%= yield %>
         </div>
-      </div>
-      <% unless content_for?(:footer) %>
+      <% end %>
+      <% unless content_for? :footer %>
         <div class="footer-pusher"></div>
       <% end %>
     </div>
-    <% if content_for?(:footer) %>
-      <%= content_for(:footer) %>
-    <% else %>
-      <%= render :partial => "shared/footer" %>
-    <% end %>
-    <%# É possível sobrescrever a inicialização do olark %>
-    <% if content_for?(:olark_script) %>
-      <%= content_for(:olar_script) %>
-    <% else %>
-      <%= render :partial => "shared/olark" %>
-    <% end %>
+    <%= content_for?(:footer) ? content_for(:footer) : render("shared/footer") %>
+    <%= content_for?(:olark_script) ? content_for(:olark_script) : render("shared/olark") %>
   </body>
 </html>

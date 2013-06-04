@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" class="no-js">
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-    <title><%= raw(page_title) %></title>
+    <%= content_tag :title, raw(page_title) %>
     <%= csrf_meta_tag %>
     <%= stylesheet_link_tag :clean %>
     <!--[if (gte IE 6)&(lte IE 8)]>
@@ -14,18 +14,18 @@
     <![endif]-->
     <%= javascript_include_tag :clean %>
 
-    <%= render :partial => "shared/typekit" %>
-    <%= render :partial => "shared/analytics" %>
+    <%= render "shared/typekit" %>
+    <%= render "shared/analytics" %>
     <%= yield :header_scripts_and_styles %>
   </head>
   <body>
-    <%= render :partial => 'shared/outdated_browser' %>
+    <%= render 'shared/outdated_browser' %>
 
-    <div class="<%= yield :wrapper_class %>">
-      <%= render :partial => 'shared/flash_message' %>
+    <%= content tag :div, class: yield(:wrapper_class} %>
+      <%= render 'shared/flash_message' %>
       <%= yield %>
       <div class="push"></div>
-    </div>
+    <% end %>
 
     <div class="footer">
       <div class="container_16">
@@ -44,6 +44,6 @@
       </div>
     </div>
     <%= yield :footer_scripts_and_styles %>
-    <%= render :partial => "shared/olark" %>
+    <%= render "shared/olark" %>
   </body>
 </html>
