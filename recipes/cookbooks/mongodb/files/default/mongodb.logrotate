@@ -1,4 +1,4 @@
-/var/mongodb/log/mongodb.log {
+/var/log/mongodb/mongodb.log {
   monthly
   rotate 10
   size 10M
