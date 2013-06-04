@@ -10,7 +10,7 @@
     <%# Substitui o botão com o do estado desabilitado. %>
     var $newButton = $("<%= escape_javascript render :partial => 'search/button_invite_disabled' %>");
     $button.replaceWith($newButton);
-    $message = $("<%= escape_javascript render :partial => 'shared/system_message', :locals => { :type => 'info', :message => ('Seu convite de amizade foi enviado para ' + @friend.display_name) } %>");
+    $message = $('<%= escape_javascript render "bootstrap/system_message", type: "info", message: "Seu convite de amizade foi enviado para #{ @friend.display_name }" %>');
 
   <%# Um convite foi aceito. %>
   <% elsif @in_search_accept %>
@@ -18,7 +18,7 @@
     var $iconIsFriend = $("<%= escape_javascript render :partial => 'search/icon_is_friend' %>");
     $iconIsFriend.prependTo($friendSearchResult.find(".general-list-item-column:last-child"));
     $button.remove();
-    $message = $("<%= escape_javascript render :partial => 'shared/system_message', :locals => { :type => 'success', :message => ('Você aceitou o convite de amizado enviado por ' + @friend.display_name) } %>");
+    $message = $('<%= escape_javascript render "bootstrap/system_message", type: "success", message: "Você aceitou o convite de amizado enviado por #{ @friend.display_name }" %>');
   <% end %>
 
   $message.prependTo("body");

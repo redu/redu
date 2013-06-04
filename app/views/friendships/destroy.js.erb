@@ -36,7 +36,6 @@ $removedInvitation.slideUp(150, "swing", function() {
     $sentInvitationsArea.html($emptyInvitations);
   }
 
-  var $systemMessage = $('<%= escape_javascript render :partial => "shared/system_message", :locals => { :message => "O convite para <strong>#{@friend.display_name}</strong> foi removido com sucesso.", :type => "success" } %>');
+  var $systemMessage = $('<%= escape_javascript render "bootstrap/system_message", message: "O convite para <strong>#{@friend.display_name}</strong> foi removido com sucesso.", type: "success" %>');
   $("body").append($systemMessage);
-  $systemMessage.delay(3000).fadeOut(1000, "linear");
 });

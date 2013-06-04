@@ -1,20 +1,21 @@
+<%#
+  Mensagem do sistema com o flash.
+
+  Variáveis:
+    flash: flash message.
+%>
+
 <% if flash[:info] %>
-  <div class="system-message message-info fade in">
-    <span data-dismiss="alert" class="message-close">×</span>
-    <p><strong>Aviso.</strong> <%= h(flash[:info]) %></p>
-  </div>
+  <%= render "bootstrap/system_message", type: "info",
+    message: "<p><strong>Aviso.</strong> #{ raw(flash[:info]) }</p>" %>
 <% end %>
 
 <% if flash[:notice] %>
-  <div class="system-message message-success fade in">
-    <span data-dismiss="alert" class="message-close">×</span>
-    <p><strong>Muito bem!</strong> <%= h(flash[:notice]) %></p>
-  </div>
+  <%= render "bootstrap/system_message", type: "success",
+    message: "<p><strong>Muito bem!</strong> #{ raw(flash[:notice]) }</p>" %>
 <% end %>
 
 <% if flash[:error] %>
-  <div class="system-message message-warning fade in">
-    <span data-dismiss="alert" class="message-close">×</span>
-    <p><strong>Opa!</strong> <%= h(flash[:error]) %></p>
-  </div>
+  <%= render "bootstrap/system_message", type: "warning",
+    message: "<p><strong>Opa!</strong> #{ raw(flash[:error]) }</p>" %>
 <% end %>

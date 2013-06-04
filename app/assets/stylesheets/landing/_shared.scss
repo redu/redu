@@ -13,8 +13,7 @@
   .modal-body { padding: 20px 40px 20px 60px; }
 }
 
-.reactivate-account {
-  .button-danger {
-    margin-top: 10px;
-  }
+.system-message-reactivate-account {
+  p +
+  .button-danger { margin-top: 10px; }
 }

@@ -1,0 +1,31 @@
+<%#
+  Mensagem do sistema.
+
+  Variáveis:
+    message: mensagem a ser mostrada.
+    type: tipo (warning|success|info|busy).
+    close: se deve exibir ou não o botão de fechar (default true).
+    extra_classes: adiciona classes extras para estilos diferenciados (opcional).
+%>
+
+<% close = true unless local_assigns.has_key? :close %>
+<% extra_classes = nil unless local_assigns.has_key? :extra_classes %>
+
+<div class="system-message-wrapper">
+  <%= content_tag :div, class: "fade in system-message message-#{ type } #{ extra_classes }" do %>
+    <%= content_tag(:span, "×", class: "message-close", data: { dismiss: "alert" }) if close %>
+    <%= raw message %>
+  <% end %>
+
+  <script>
+    $(function() {
+      // Esconde as mensagens do sistema depois de 6 segundos.
+      var $systemMessages = $(".system-message-wrapper");
+      if ($systemMessages.length != 0) {
+        $systemMessages.delay(6000).fadeOut(150, "swing", function() {
+          $(this).remove();
+        });
+      }
+    });
+  </script>
+</div>

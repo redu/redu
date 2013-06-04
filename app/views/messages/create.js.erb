@@ -5,7 +5,7 @@
     <%# filter() necessário porque a tag script está dentro do partial %>
     $modal.filter(".modal").modal("hide");
 
-    var $successNotice = $("<%= escape_javascript render 'messages/notice_message_created', :message => @message, :user => @user %>");
+    var $successNotice = $('<%= escape_javascript render "bootstrap/system_message", message: "<p><strong>Muito bem</strong>! Sua mensagem foi enviada. Para visualizá-la #{ link_to "clique aqui", user_message_path(@user, @message) }.</p>", type: "success" %>');
     $successNotice.appendTo("body").show();
   <% else %>
     var $newModal = $("<%= escape_javascript render 'messages/modal_new', :message => @message, :user => @user %>");
