@@ -3,18 +3,19 @@
 <div class="span3">
   <%= render "environments/sidebar_new", environment: @environment %>
 </div>
-<div class="span10">
-  <%= render :partial => 'environments/breadcrumbs',
-    :locals => { :environment => @environment } %>
-  <%= render :partial => 'environments/header',
-        :locals => { :environment => @environment } %>
+<div class="span13">
+  <%= render "environments/breadcrumbs_new", environment: @environment %>
+  <div class="entity-list-intergation content-body">
+    <%= render "environments/header", environment: @environment %>
 
-  <div id="environment-courses" class="body">
-    <% if can?(:manage, @environment) %>
-      <div class="admin-actions">
-        <%= link_to 'Criar novo curso', new_environment_course_path(@environment), :class => "concave-button" %>
-      </div>
-    <% end %>
+    <div class="entity-actions">
+      <% if can?(:manage, @environment) %>
+        <%= link_to "Criar novo curso", new_environment_course_path(@environment),
+          class: "entity-action button-primary" %>
+      <% end %>
+    </div>
+
+    <%= new_tabs :environments %>
 
     <% if @courses.empty? %>
       <%= render "shared/empty_message",
@@ -26,7 +27,7 @@
         <%= render partial: "bootstrap/list_course_item",
           collection: @courses %>
       </ul>
-      <%= paginate @courses, :theme => 'endless' %>
+      <%= paginate @courses, theme: "new_endless" %>
     <% end %>
-  </div><!-- end #environment-courses -->
+  </div>
 </div>
