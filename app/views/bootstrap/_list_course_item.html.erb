@@ -1,0 +1,76 @@
+<%#
+  Item da lista de cursos.
+
+  Variáveis:
+    list_course_item: o curso.
+%>
+
+<li class="list-course-space-item">
+  <div class="list-course-space-gradient-top"></div>
+  <div class="list-course-space-header clearfix">
+    <%# Ícone de privacidade. %>
+    <%= render "courses/privacy_icon", course: list_course_item,
+      extra_classes: "list-course-private" %>
+
+    <%# Ações de gerenciamento. %>
+    <% if can?(:manage, list_course_item) %>
+      <%= link_to "Editar",
+        edit_environment_course_path(list_course_item.environment, list_course_item),
+        class: "link-secondary icon-manage-lightblue_8_10-before pull-right" %>
+    <% end %>
+
+    <div class="list-course-space-authoring">
+      <%# Nome do curso. %>
+      <h3>
+        <%= link_to list_course_item.name,
+          environment_course_path(list_course_item.environment, list_course_item),
+          class: "list-course-space-link icon-course-lightblue_32_34-before" %>
+      </h3>
+
+      <%# Explicação da privacidade. %>
+      <%= content_tag :span, course_privacy_legend(list_course_item),
+        class: "list-course-privacy" %>
+
+      <%# Carga horária. %>
+      <% unless list_course_item.workload.nil? %>
+        <%= content_tag :h6, pluralize(list_course_item.workload, "hora"),
+          class: "list-course-hours" %>
+      <% end %>
+
+      <%# Criador. %>
+      <span class="legend">autor:</span>
+      <%= link_to list_course_item.owner.display_name, user_path(list_course_item.owner),
+        class: "link-name icon-teacher-gray_16_18-before" %>
+    </div>
+  </div>
+  <div class="list-course-space-stats">
+    <%# Quantidade de disciplinas, professores, tutores e alunos. %>
+    <%= cache ["course_members_count", list_course_item.id] do %>
+      <%= content_tag :span,
+        "#{ list_course_item.spaces.count } #{ t("hierarchy.space", count: list_course_item.spaces.count).downcase }",
+        class: "list-course-stat icon-space-gray_16_18-before" %>
+      <%= content_tag :span,
+        "#{ list_course_item.teachers.count } #{ t("classy_enum.role.teacher", count: list_course_item.teachers.count).downcase }",
+        class: "list-course-stat icon-teacher-gray_16_18-before" %>
+      <%= content_tag :span,
+        "#{ list_course_item.tutors.count } #{ t("classy_enum.role.tutor", count: list_course_item.tutors.count).downcase }",
+        class: "list-course-stat icon-tutor-gray_16_18-before" %>
+      <%= content_tag :span,
+        "#{ list_course_item.students.count } #{ t("classy_enum.role.student", count: list_course_item.students.count).downcase }",
+        class: "list-course-stat icon-member-gray_16_18-before" %>
+    <% end %>
+  </div>
+
+  <%# Descrição. %>
+  <% unless list_course_item.description.blank? %>
+    <%= content_tag :p, list_course_item.description,
+      class: "list-course-space-description icon-description-gray_16_18-before" %>
+  <% end %>
+
+  <%# Tags. %>
+  <% unless list_course_item.tags.empty? %>
+    <%= content_tag :p, list_course_item.tags.join(", "),
+      class: "list-course-space-tags icon-tag-gray_16_18-before" %>
+  <% end %>
+  <div class="list-course-space-gradient-bottom"></div>
+</li>

@@ -35,8 +35,11 @@ class EnvironmentsController < BaseController
 
     respond_to do |format|
       format.html { render layout: 'new_application' }
-      format.js { render_endless 'courses/item', @courses,
-                  '#courses_list' }
+      format.js do
+        render_endless('bootstrap/list_course_item', @courses,
+                       '.list-course',
+                       template: 'shared/new_endless_kaminari')
+      end
       format.xml  { render :xml => @environment }
     end
   end
