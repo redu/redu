@@ -1,24 +1,25 @@
-<%= render :partial => 'environments/sidebar',
-  :locals => { :environment => @environment } %>
+<% content_for :container_class do "entity-wrapper" end %>
 
-<div class="main grid_12 omega big-col">
-  <%= render :partial => "environments/breadcrumbs",
-      :locals => { :environment => @environment } %>
+<div class="span3">
+  <%= render "environments/sidebar_new", environment: @environment %>
+</div>
+<div class="span13">
+  <%= render "environments/breadcrumbs_new", environment: @environment %>
+  <div class="content-body">
+    <%= render "environments/header", environment: @environment %>
 
-  <%= render :partial => 'environments/header',
-    :locals => { :environment => @environment } %>
+    <%= new_tabs :environments %>
 
-  <div id="environment-users" class="body">
-    <%= big_tabs :environments do %>
-      <%= subtabs :environments do %>
-        <ul id="users-list" class="members clearfix">
-          <%= render :partial => 'users/item',
-            :collection => @users, :locals => { :entity => @environment } %>
-          <% reset_cycle "users_cycle" %>
-        </ul>
-        <%= paginate @users, :theme => 'endless' %>
-      <% end %>
-    <% end %>
-  </div><!-- end #environment-courses -->
+    <div class="content-section centralize">
+      <%= new_subtabs :environments %>
+    </div>
 
-</div><!-- end .main -->
+    <div class="content-section">
+      <ul class="entity-member-list list-3-columns clearfix">
+        <%= render partial: 'bootstrap/member_list_item',
+          collection: @users, locals: { entity: @environment } %>
+      </ul>
+    </div>
+    <%= paginate @users, theme: 'new_endless' %>
+  </div>
+</div>

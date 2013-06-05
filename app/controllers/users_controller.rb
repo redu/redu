@@ -398,11 +398,13 @@ class UsersController < BaseController
 
     respond_to do |format|
       format.html do
-        render "#{entity.class.to_s.downcase.pluralize}/users/index"
+        render "#{entity.class.to_s.downcase.pluralize}/users/index",
+          layout: "new_application"
       end
       format.js do
-          render_endless 'users/item', @users, '#users-list',
-            :partial_locals => { :entity => entity }
+        render_endless 'bootstrap/member_list_item', @users, '.entity-member-list',
+          template: 'shared/new_endless_kaminari',
+          partial_locals: { entity: entity }
       end
     end
   end
