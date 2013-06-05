@@ -1,0 +1,11 @@
+<%#
+  Renderiza o breadcrumb da página de Curso.
+
+  Variáveis:
+    course: o curso.
+%>
+
+<%= render "bootstrap/breadcrumb_mini", breadcrumb_mini_items: [
+  { name: "Início", link: home_path, classes: "icon-home-lightblue_16_18-before text-replacement" },
+  { name: course.environment.name, link: course.environment, classes: "icon-environment-lightblue_16_18-before" },
+  { name: course.name, link: environment_course_path(course.environment, course), classes: "icon-course-lightblue_16_18-before" } ] %>

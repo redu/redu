@@ -1,0 +1,10 @@
+<%#
+  Renderiza o breadcrumb da página de Ambiente de Aprendizagem.
+
+  Variáveis:
+    environment: o ambiente.
+%>
+
+<%= render "bootstrap/breadcrumb_mini", breadcrumb_mini_items: [
+  { name: "Início", link: home_path, classes: "icon-home-lightblue_16_18-before text-replacement" },
+  { name: environment.name, link: environment, classes: "icon-environment-lightblue_16_18-before" } ] %>
