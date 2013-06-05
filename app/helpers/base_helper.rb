@@ -416,6 +416,48 @@ module AsyncJSHelper
     when Role[:member] then "member"
     end
   end
+
+  # Dada uma entidade, retorna um hash com toda sua hiearquia.
+  def entity_hierachy(entity)
+    hierarchy = { environment: nil, course: nil, space: nil, subject: nil, lecture: nil }
+
+    case entity.class.to_s
+    when "Lecture"
+      hierarchy[:lecture] = entity
+      hierarchy[:subject] = entity.subject
+      hierarchy[:space] = hierarchy[:subject].space
+      hierarchy[:course] = hierarchy[:space].course
+      hierarchy[:environment] = hierarchy[:course].environment
+    when "Subject"
+      hierarchy[:subject] = entity
+      hierarchy[:space] = entity.space
+      hierarchy[:course] = hierarchy[:space].course
+      hierarchy[:environment] = hierarchy[:course].environment
+    when "Space"
+      hierarchy[:space] = entity
+      hierarchy[:course] = entity.course
+      hierarchy[:environment] = hierarchy[:course].environment
+    when "Course"
+      hierarchy[:course] = entity
+      hierarchy[:environment] = hierarchy[:course].environment
+    when "Environment"
+      hierarchy[:environment] = entity
+    end
+
+    hierarchy
+  end
+
+  # Dada uma entidade, retorna seu path.
+  def entity_hierachy_link(entity)
+    case entity.class.to_s
+    when "Lecture"
+      space_subject_lecture_path(entity.subject.space, entity.subject, entity)
+    when "Subject" then space_subject_path(entity.space, entity)
+    when "Space" then space_path(entity)
+    when "Course" then environment_course_path(entity.environment, entity)
+    when "Environment" then environment_path(entity)
+    end
+  end
 end
 
 ActionView::Base.send(:include, AsyncJSHelper)

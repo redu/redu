@@ -1,0 +1,26 @@
+<%#
+  Breacrumb de ícones da hierarquia de AVA.
+
+  Variáveis:
+    entity: a entidade da hierarquia.
+%>
+
+<% hierarchy = entity_hierachy(entity) %>
+
+<ul class="breadcrumb-icons">
+  <% hierarchy.except(:lecture).each do |key, value| %>
+    <%= content_tag :li, class: "breadcrumb-icon-item #{ "breadcrumb-icon-active" if entity_is_active?(entity, key) }" do %>
+      <% breadcrumb_icon_classes = "breadcrumb-icon text-replacement" %>
+      <% if value.nil? %>
+        <% content = t("hierarchy.#{ key.to_s }", count: 1) %>
+        <%= content_tag :span, content, title: content,
+          class: "#{ breadcrumb_icon_classes } icon-#{ key.to_s }-lightgray_32_34-before" %>
+      <% else %>
+        <%= link_to entity_hierachy_link(hierarchy[key]), class: "breadcrumb-icon-link" do %>
+          <%= content_tag :span, hierarchy[key].name, title: hierarchy[key].name,
+            class: "#{ breadcrumb_icon_classes } icon-#{ key.to_s }-#{ entity_is_active?(entity, key) ? "lightblue" : "gray" }_32_34-before" %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+</ul>
