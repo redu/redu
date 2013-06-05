@@ -1,0 +1,134 @@
+// ==========================================================================
+// Layout.
+// ==========================================================================
+
+
+// Encapsulador.
+.entity-wrapper { padding: 14px 0 20px; }
+
+
+// Barra lateral.
+// ==========================================================================
+
+// Encapsulador.
+.entity-sidebar {
+  $breadcrumb-mini-height: 18px;
+  $breadcrumb-mini-n-content-body-margin: 10px;
+  $padding-top: $breadcrumb-mini-height + $breadcrumb-mini-n-content-body-margin;
+  padding: $padding-top 0 20px;
+  color: $gray5;
+}
+
+// Quadro com ambiente e sub-entidade.
+.entity-frame {
+  @include square(160px);
+  @include box-shadow(0 1px 0 $white);
+  @include border-radius;
+  background-color: $gray2;
+  position: relative;
+
+  .environment-thumbnail {
+    @include border-radius;
+    @include box-shadow(0 0 5px $black);
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 1;
+  }
+}
+
+.entity-frame-mask {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+.entity-frame +
+.breadcrumb-icons { margin-top: 20px; }
+
+.breadcrumb-icons +
+.entity-members-counter-wrapper { margin-top: 20px; }
+
+// Contador de membros.
+.entity-members-counter-wrapper { text-align: center; }
+
+.entity-members-counter {
+  @include heading(3);
+  display: block;
+}
+
+.entity-members-counter-wrapper +
+.entity-sidebar-separator,
+.nav-local-general-stat +
+.entity-sidebar-separator { margin-top: 10px; }
+
+.entity-sidebar-separator +
+.entity-members-list { margin-top: 10px; }
+
+// Lista de membros.
+.entity-members-list {
+  list-style-type: none;
+  margin: 0;
+}
+
+.entity-member {
+  // Número de items por linha.
+  $n: 4;
+  float: left;
+
+  & +
+  & { margin-left: 10px; }
+
+  &:nth-child(#{$n}n+1) { margin-left: 0; }
+
+  &:nth-child(n+#{$n + 1}) { margin-top: 10px; }
+}
+
+
+// Cabeçalho.
+// ==========================================================================
+
+.entity-header { color: $gray5; }
+
+// Nome.
+.entity-header-title { @include heading(1); }
+
+.entity-header-title +
+.entity-header-info { margin-top: 20px; }
+
+// Descrição e tags.
+.entity-header-info {
+  & +
+  & { margin-top: 20px; }
+}
+
+// Ações.
+.entity-actions {
+  float: right;
+  padding-right: 20px;
+}
+
+.entity-action {
+  float: right;
+
+  & +
+  & { margin-right: 20px; }
+}
+
+.entity-action-link { margin-top: 8px; }
+
+.entity-list-intergation {
+  // Integra a aba, lista de curso/disciplina e paginação.
+  .list-course,
+  .list-space { margin-top: -11px; }
+
+  .list-course-space-item:first-child { border-top: 1px solid $gray4; }
+
+  .tabs-big .tab-active .tab-title { height: 29px; }
+
+  .pagination {
+    margin-top: -11px;
+
+    .list-separator:before { background-image: none; }
+  }
+}

@@ -1,0 +1,15 @@
+<%#
+  Item genérico linkável.
+
+  Variáveis:
+    classes: classes para o item da lista.
+    name: a propriedade do item que retorna seu nome.
+    size: o tamanho do thumbnail.
+%>
+
+<%= content_tag :li, class: classes do %>
+  <%= link_to item_linkable, title: item_linkable.send(name) do %>
+    <%= image_tag item_linkable.avatar.url("thumb_#{size}"),
+      size: "#{size}x#{size}", alt: item_linkable.send(name) %>
+  <% end %>
+<% end %>

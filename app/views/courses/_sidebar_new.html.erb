@@ -1,0 +1,56 @@
+<%#
+  Barra lateral de cursos.
+
+  Variáveis:
+    course: o curso.
+%>
+
+<div class="entity-sidebar">
+  <div class="entity-frame">
+    <%= link_to course.environment do %>
+      <%= image_tag course.environment.avatar.url(:thumb_90), size: "90x90",
+        alt: course.environment.name, title: course.environment.name,
+        class: "environment-thumbnail" %>
+    <% end %>
+    <%= content_tag :span, course.name, title: course.name,
+      class: "entity-frame-mask icon-course-white_64 text-replacement show" %>
+  </div>
+
+  <%= render "bootstrap/breadcrumb_icons", entity: course %>
+
+  <div class="entity-members-counter-wrapper">
+    <%= content_tag :span, course.approved_users.count,
+      class: "entity-members-counter" %>
+    <%= "membro".pluralize(course.approved_users.count) %>
+  </div>
+
+  <span class="nav-local-general-stat icon-teacher-gray_16_18-before">
+    <%= t("classy_enum.role.teacher", count: course.teachers.count) %>:
+    <%= link_to course.teachers.count,
+      environment_course_users_path(course.environment, course,
+      role: "teachers"),
+      class: "nav-local-general-stat-link" %>
+  </span>
+  <span class="nav-local-general-stat icon-tutor-gray_16_18-before">
+    <%= t("classy_enum.role.tutor", count: course.tutors.count) %>:
+    <%= link_to course.tutors.count,
+      environment_course_users_path(course.environment, course,
+      role: "tutors"),
+      class: "nav-local-general-stat-link" %>
+  </span>
+  <span class="nav-local-general-stat icon-member-gray_16_18-before">
+    <%= t("classy_enum.role.student", count: course.students.count) %>:
+    <%= link_to course.students.count,
+      environment_course_users_path(course.environment, course,
+      role: "students"),
+      class: "nav-local-general-stat-link" %>
+  </span>
+
+  <span class="entity-sidebar-separator icon-arrow-up-curly-gray show text-replacement">-</span>
+
+  <ul class="entity-members-list clearfix">
+    <%= render partial: "shared/item_linkable",
+      collection: course.users.limit(16),
+      locals: { classes: "entity-member", size: 32, name: "display_name" } %>
+  </ul>
+</div>

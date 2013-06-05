@@ -1,5 +1,9 @@
-<%= render :partial => 'environments/sidebar', :locals => { :environment => @environment } %>
-<div class="main grid_12 omega big-col">
+<% content_for :container_class do "entity-wrapper" end %>
+
+<div class="span3">
+  <%= render "environments/sidebar_new", environment: @environment %>
+</div>
+<div class="span10">
   <%= render :partial => 'environments/breadcrumbs',
     :locals => { :environment => @environment } %>
   <%= render :partial => 'environments/header',
@@ -20,5 +24,4 @@
       <%= paginate @courses, :theme => 'endless' %>
     <% end %>
   </div><!-- end #environment-courses -->
-
-</div><!-- end .main -->
+</div>
