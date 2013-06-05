@@ -1,0 +1,53 @@
+<%#
+  Cabeçalhos.
+
+  Variáveis:
+    entity: a entidade da hierarquia.
+%>
+
+<% hierarchy = entity_hierachy(entity) %>
+
+<ul class="header">
+  <% hierarchy.except(:lecture, :subject).each do |key, value| %>
+    <% unless value.nil? %>
+      <li class="header-item">
+        <%= link_to hierarchy[key].name, entity_hierachy_link(hierarchy[key]),
+          class: "header-link icon-#{ key.to_s }-#{ entity_is_active?(entity, key) ? "lightblue" : "gray" }_16_18-before" %>
+        <div class="pull-right">
+          <%# Descrição. %>
+          <% unless hierarchy[key].description.blank? %>
+            <%= content_tag :span, hierarchy[key].description, rel: "popover",
+              data: { content: hierarchy[key].description },
+              class: "header-info text-replacement icon-description-gray_16_18" %>
+          <% end %>
+
+          <%# Tags. %>
+          <% unless hierarchy[key].tags.empty? %>
+            <%= content_tag :span, hierarchy[key].tags.join(", "), rel: "popover",
+              data: { content: hierarchy[key].tags.join(", ") },
+              class: "header-info text-replacement icon-tag-gray_16_18" %>
+          <% end %>
+
+          <%# Privacidade do curso. %>
+          <% if key == :course %>
+            <% course = hierarchy[key] %>
+            <% course_pending_users = course.pending_users.count %>
+
+            <%# Ícones. %>
+            <%= render "courses/privacy_icon", course: course,
+              extra_classes: "header-info" %>
+
+            <%# Convites pendentes. %>
+            <% if can?(:manage, course) && course.subscription_type.eql?(2) &&
+              course_pending_users > 0 %>
+              <%= link_to course_pending_users,
+                admin_members_requests_environment_course_path(hierarchy[:environment], course),
+                class: "header-info label-online", rel: "tooltip",
+                title: "#{ pluralize(course_pending_users, "convite") } #{ "pendente".pluralize(course_pending_users) }" %>
+            <% end %>
+          <% end %>
+        </div>
+      </li>
+    <% end %>
+  <% end %>
+</ul>

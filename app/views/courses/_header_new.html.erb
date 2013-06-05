@@ -1,0 +1,51 @@
+<%#
+  Renderiza o cabeçalho da página de Curso.
+
+  Variáveis:
+    course: o curso.
+    responsibles_associations: os responsáveis pelo curso.
+%>
+
+<div class="content-body-fix-top">
+  <%= render "bootstrap/header", entity: course %>
+</div>
+
+<div class="entity-header content-section clearfix">
+  <% if can?(:manage, course) %>
+    <%= link_to "Gerenciar curso",
+      edit_environment_course_path(course.environment, course),
+      class: "link-secondary icon-manage-lightblue_8_10-before pull-right" %>
+  <% end %>
+
+  <h2 class="entity-header-title">
+    <%= link_to course.name, environment_course_path(course.environment, course) %>
+  </h2>
+
+  <div class="course-owners cleafix">
+    <% if responsibles_associations.empty? %>
+      Esse curso não possui administradores e professores.
+    <% else %>
+      <%= content_tag :span,
+        "#{ pluralize responsibles_associations.length, 'Responsável', 'Responsáveis' }:",
+        class: "pull-left" %>
+      <ol class="course-responsibles clearfix">
+        <% responsibles_associations.each do |responsible| %>
+          <li class="course-responsible">
+            <%= link_to responsible.user.display_name, user_path(responsible.user),
+              class: "icon-#{ role_icon(responsible.role) }-gray_16_18-before" %>
+          </li>
+        <% end %>
+      </ol>
+    <% end %>
+  </div>
+
+  <% unless course.description.blank? %>
+    <%= content_tag :p, course.description,
+      class: "entity-header-info icon-description-gray_16_18-before" %>
+  <% end %>
+
+  <% unless course.tags.empty? %>
+    <%= content_tag :p, course.tags.join(", "),
+      class: "entity-header-info icon-tag-gray_16_18-before" %>
+  <% end %>
+</div>
