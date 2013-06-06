@@ -18,12 +18,12 @@ module StatusService
 
       it "should degine author_link" do
         notification.stub(:answer).and_return(answer)
-        subject.author_link.should =~ /href=\"#{view.user_path(author)}\"/
+        subject.author_link.should =~ /href=\"#{view.user_url(author)}\"/
       end
 
       it "should define answer_link" do
         notification.stub(:answer).and_return(answer)
-        subject.answer_link.should =~ /href=\"#{view.status_path(answer)}\"/
+        subject.answer_link.should =~ /href=\"#{view.status_url(answer)}\"/
       end
 
       context "when AnswerNotification#user is the author" do

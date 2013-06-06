@@ -13,12 +13,12 @@ module StatusService
 
       def author_link
         author = notification.author
-        render_link(notification.author_name, template.user_path(author))
+        render_link(notification.author_name, template.user_url(author))
       end
 
       def answer_link
         text = "Clique aqui para ver a resposta."
-        url = template.status_path(notification.answer)
+        url = template.status_url(notification.answer)
         render_link(text, url, class: "status-link")
       end
 
