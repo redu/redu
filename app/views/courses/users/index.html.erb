@@ -1,26 +1,34 @@
-<%= render :partial => 'courses/sidebar',
-  :locals => { :course => @course }  %>
+<% content_for :container_class do "entity-wrapper" end %>
 
-<div class="main grid_12 omega big-col">
-  <%= render :partial => 'courses/breadcrumbs',
-    :locals => { :course => @course }%>
-  <%= render :partial => 'courses/header',
-    :locals => { :course => @course, responsibles_associations: @responsibles_associations }%>
-  <div id="course-users" class="body">
-    <div class="actions clearfix">
+<div class="span3">
+  <%= render "courses/sidebar_new", course: @course %>
+</div>
+<div class="span13">
+  <%= render "courses/breadcrumbs_new", course: @course %>
+  <div class="content-body">
+    <%= render "courses/header_new", course: @course,
+      responsibles_associations: @responsibles_associations %>
+
     <% if can? :invite_members, @course %>
-      <%= link_to "Convidar membros", admin_invitations_environment_course_path(@environment, @course), :class => "concave-button" %>
+      <div class="entity-actions clearfix">
+        <%= link_to "Convidar membros",
+          admin_invitations_environment_course_path(@course.environment, @course),
+          class: "entity-action button-primary" %>
+      </div>
     <% end %>
+
+    <%= new_tabs :courses %>
+
+    <div class="content-section centralize">
+      <%= new_subtabs :courses %>
     </div>
-    <%= big_tabs :courses do %>
-      <%= subtabs :courses do %>
-        <ul id="users-list" class="members clearfix">
-          <%= render :partial => 'users/item',
-            :collection => @users, :locals => { :entity => @course } %>
-          <% reset_cycle "users_cycle" %>
-        </ul>
-        <%= paginate @users, :theme => 'endless' %>
-      <% end %>
-    <% end %>
-  </div><!-- end #environment-courses -->
-</div><!-- end .main -->
+
+    <div class="content-section">
+      <ul class="entity-member-list list-3-columns clearfix">
+        <%= render partial: 'bootstrap/member_list_item',
+          collection: @users, locals: { entity: @course } %>
+      </ul>
+    </div>
+    <%= paginate @users, theme: 'new_endless' %>
+  </div>
+</div>

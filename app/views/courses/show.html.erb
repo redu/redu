@@ -1,29 +1,29 @@
-<%= render :partial => 'courses/sidebar',
-  :locals => { :course => @course }  %>
+<% content_for :container_class do "entity-wrapper" end %>
 
-<div class="main grid_12 omega big-col">
-  <%= render :partial => 'courses/breadcrumbs',
-    :locals => { :course => @course } %>
-  <%= render :partial => 'courses/header',
-    :locals => { :course => @course, responsibles_associations: @responsibles_associations } %>
+<div class="span3">
+  <%= render "courses/sidebar_new", course: @course %>
+</div>
+<div class="span13">
+  <%= render "courses/breadcrumbs_new", course: @course %>
+  <div class="entity-list-intergation content-body">
+    <%= render "courses/header_new", course: @course,
+      responsibles_associations: @responsibles_associations %>
 
-<div id="course-spaces" class="body clearfix">
-  <%= render :partial => 'courses/actions',
-    :locals => { :course => @course }%>
+    <%= render "courses/actions", course: @course %>
 
-  <%= big_tabs :courses do %>
+    <%= new_tabs :courses %>
+
     <% if @spaces.empty? %>
       <%= render "shared/empty_message",
-        :icon_message => "Nenhuma disciplina",
-        :icon_class => "icon-space-gray_128_130",
-        :message => "Ainda não há disciplinas criadas para este curso." %>
+        icon_message: "Nenhum curso.",
+        icon_class: "icon-space-gray_128_130",
+        message: "Ainda não há Disciplinas criadas para este Curso." %>
     <% else %>
-      <ul id="spaces_list" class="hierarchy-listing spaces">
-        <%= render :partial => 'spaces/item', :collection => @spaces %>
+      <ul class="list-space">
+        <%= render partial: "bootstrap/list_space_item",
+          collection: @spaces %>
       </ul>
-      <%= paginate @spaces, :theme => 'endless' %>
+      <%= paginate @spaces, theme: "new_endless" %>
     <% end %>
-  <% end %>
+  </div>
 </div>
-
-</div><!-- end .main -->
