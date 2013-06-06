@@ -21,11 +21,11 @@
   <body>
     <%= render 'shared/outdated_browser' %>
 
-    <%= content tag :div, class: yield(:wrapper_class} %>
+    <div class="<%= yield :wrapper_class %>">
       <%= render 'shared/flash_message' %>
       <%= yield %>
       <div class="push"></div>
-    <% end %>
+    </div>
 
     <div class="footer">
       <div class="container_16">

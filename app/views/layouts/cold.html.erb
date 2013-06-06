@@ -28,11 +28,11 @@
     <%= yield :header_scripts_and_styles %>
   </head>
   <body>
-    <%= content tag :div, class: yield(:wrapper_class} %>
+    <div class="<%= yield :wrapper_class %>">
       <%= render 'shared/flash_message' %>
       <%= yield %>
       <div class="push"></div>
-    <% end %>
+    </div>
     <div class="footer">
       <div class="container_16">
         <h1 class="logo-footer"><%= link_to "Redu", home_path %></h1>
