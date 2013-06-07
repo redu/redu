@@ -3,8 +3,7 @@ module StatusService
   module AnswerService
     class AnswerPresenter
       delegate :author_name, :author_avatar, :answer_text, :hierarchy_breadcrumbs,
-        :original_author, :user,
-        :author, to: :notification
+        :original_author, :user, :place, :author, to: :notification
 
       def initialize(options={})
         @notification = options.delete(:notification)
@@ -34,7 +33,7 @@ module StatusService
       end
 
       def subject
-        action { |msg| "#{author_name} #{msg}"}
+        "#{author_name(short: true)} participou da discussão #{place}"
       end
 
       def context(context_template, &block)

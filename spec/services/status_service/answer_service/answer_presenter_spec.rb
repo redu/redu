@@ -26,7 +26,7 @@ module StatusService
         subject.answer_link.should =~ /href=\"#{view.status_url(answer)}\"/
       end
 
-      context "when AnswerNotification#user is the original author" do
+      context "when status#statusable is User" do
         let(:notification) do
           AnswerNotification.new(user: user, answer: answer)
         end
@@ -42,30 +42,38 @@ module StatusService
         context "#subject" do
           it "should generate the correct message" do
             subject.subject.should =~ \
-              /#{answer.user.display_name} respondeu ao seu comentário em/
+              /#{author.first_name} participou da discussão no Mural de #{status.statusable.first_name}/
           end
         end
       end
 
-      context "whem AnswerNotification#user is not the original author" do
-        let(:notification) { AnswerNotification.new(user: user, answer: answer) }
-
-        context "#action" do
-          it "should generate the correct message" do
-            msg = "também respondeu ao comentário " + \
-              "original de #{status.user.display_name}"
-
-            subject.action.should == msg
-          end
+      context "when status#statusable is Lecture" do
+        let(:notification) do
+          AnswerNotification.new(user: user, answer: answer)
+        end
+        let(:lecture) { FactoryGirl.build_stubbed(:lecture) }
+        let(:status) do
+          FactoryGirl.build_stubbed(:activity, user: user, statusable: lecture)
         end
 
-        context "#subject" do
-          it "should generate the correct message" do
-            msg = "#{answer.user.display_name} também respondeu ao comentário " + \
-                  "original de #{status.user.display_name}"
+        it "should generate correct #subject" do
+          subject.subject.should =~ \
+            /#{author.first_name} participou da discussão em: #{lecture.name}/
+        end
+      end
 
-            subject.subject.should == msg
-          end
+      context "when status#statusable is Space" do
+        let(:notification) do
+          AnswerNotification.new(user: user, answer: answer)
+        end
+        let(:space) { FactoryGirl.build_stubbed(:space) }
+        let(:status) do
+          FactoryGirl.build_stubbed(:activity, user: user, statusable: space)
+        end
+
+        it "should generate correct #subject" do
+          subject.subject.should =~ \
+            /#{answer.user.first_name} participou da discussão em: #{space.name}/
         end
       end
 

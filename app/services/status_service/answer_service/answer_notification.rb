@@ -8,7 +8,8 @@ module StatusService
         @answer = options.delete(:answer)
       end
 
-      def author_name
+      def author_name(options={})
+        return author.first_name if options[:short]
         author.display_name
       end
 
@@ -35,15 +36,18 @@ module StatusService
       def hierarchy_breadcrumbs
         BreadcrumbPresenter.new(in_response_to).to_s
       end
+
+      def place
+        PlacePresenter.new(in_response_to).to_s
+      end
     end
 
-    class BreadcrumbPresenter < Struct.new(:status)
+    class PlacePresenter < Struct.new(:status)
       def to_s
         case statusable_class
-        when 'Lecture' then "#{statusable.subject.name} > #{statusable.name}"
-        when 'Space' then "#{statusable.course.name} > #{statusable.name}"
-        when 'User' then "#{statusable.display_name}"
-        else ''
+        when 'User' then "no Mural de #{statusable.first_name}"
+        else
+          "em: #{statusable.name}"
         end
       end
 
@@ -55,6 +59,18 @@ module StatusService
 
       def statusable
         @statusable ||= status.statusable
+      end
+
+    end
+
+    class BreadcrumbPresenter < PlacePresenter
+      def to_s
+        case statusable_class
+        when 'Lecture' then "#{statusable.subject.name} > #{statusable.name}"
+        when 'Space' then "#{statusable.course.name} > #{statusable.name}"
+        when 'User' then "#{statusable.display_name}"
+        else ''
+        end
       end
     end
   end
