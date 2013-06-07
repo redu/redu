@@ -74,7 +74,7 @@ class User < ActiveRecord::Base
     conditions: ["state LIKE 'invited'"]
   has_many :experiences, dependent: :destroy
   has_many :educations, dependent: :destroy
-  has_one :settings, class_name: "UserSetting", dependent: :destroy
+  has_one :settings, class_name: "TourSetting", dependent: :destroy
   has_many :partners, through: :partner_user_associations
   has_many :partner_user_associations, dependent: :destroy
 
@@ -526,7 +526,7 @@ class User < ActiveRecord::Base
   end
 
   def create_settings!
-    self.settings = UserSetting.create(view_mural: Privacy[:friends])
+    self.settings = TourSetting.create(view_mural: Privacy[:friends])
   end
 
   def presence_channel
