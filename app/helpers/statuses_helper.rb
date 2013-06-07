@@ -55,9 +55,7 @@ module StatusesHelper
   end
 
   def can_render_status?(status)
-    is_a_log = true if status.logeable_type
-
-    status.statusable && (is_a_log ? status.logeable : true)
+    status.statusable && (status.is_a?(Log) ? status.logeable : true)
   end
 
   # Retorna o caminho individual para um status e no caso de ser uma resposta,
