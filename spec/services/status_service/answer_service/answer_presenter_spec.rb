@@ -26,11 +26,11 @@ module StatusService
         subject.answer_link.should =~ /href=\"#{view.status_url(answer)}\"/
       end
 
-      context "when AnswerNotification#user is the author" do
+      context "when AnswerNotification#user is the original author" do
         let(:notification) do
-          AnswerNotification.new(user: author, answer: answer)
+          AnswerNotification.new(user: user, answer: answer)
         end
-        let(:status) { FactoryGirl.build_stubbed(:activity, user: author) }
+        let(:status) { FactoryGirl.build_stubbed(:activity, user: user) }
 
         context "#action" do
           it "should generate the correct message" do
@@ -47,7 +47,7 @@ module StatusService
         end
       end
 
-      context "whem AnswerNotification#user is not the author" do
+      context "whem AnswerNotification#user is not the original author" do
         let(:notification) { AnswerNotification.new(user: user, answer: answer) }
 
         context "#action" do
