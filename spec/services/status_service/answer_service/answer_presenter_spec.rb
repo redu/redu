@@ -26,54 +26,49 @@ module StatusService
         subject.answer_link.should =~ /href=\"#{view.status_url(answer)}\"/
       end
 
-      context "when status#statusable is User" do
+      shared_examples_for "email notification" do
         let(:notification) do
           AnswerNotification.new(user: user, answer: answer)
         end
-        let(:status) { FactoryGirl.build_stubbed(:activity, user: user) }
-
-        context "#action" do
-          it "should generate the correct message" do
-            subject.action.should =~ \
-              /respondeu ao seu comentário em/
-          end
+        it "should generate the correct #action" do
+          subject.action.should =~ message
         end
 
-        context "#subject" do
-          it "should generate the correct message" do
-            subject.subject.should =~ \
-              /#{author.first_name} participou da discussão no Mural de #{status.statusable.first_name}/
+        it "should generate the correct #subject" do
+          subject.subject.should =~ /#{author.first_name} #{message}/
+        end
+      end
+
+      context "when status#statusable is User" do
+        it_should_behave_like "email notification" do
+          let(:status) { FactoryGirl.build_stubbed(:activity, user: user) }
+          let(:message) do
+            /participou da discussão no Mural de #{status.statusable.first_name}/
           end
         end
       end
 
       context "when status#statusable is Lecture" do
-        let(:notification) do
-          AnswerNotification.new(user: user, answer: answer)
-        end
-        let(:lecture) { FactoryGirl.build_stubbed(:lecture) }
-        let(:status) do
-          FactoryGirl.build_stubbed(:activity, user: user, statusable: lecture)
-        end
-
-        it "should generate correct #subject" do
-          subject.subject.should =~ \
-            /#{author.first_name} participou da discussão em: #{lecture.name}/
+        it_should_behave_like "email notification" do
+          let(:lecture) { FactoryGirl.build_stubbed(:lecture) }
+          let(:status) do
+            FactoryGirl.build_stubbed(:activity, user: user, statusable: lecture)
+          end
+          let(:message) do
+            /participou da discussão em: #{lecture.name}/
+          end
         end
       end
 
       context "when status#statusable is Space" do
-        let(:notification) do
-          AnswerNotification.new(user: user, answer: answer)
-        end
-        let(:space) { FactoryGirl.build_stubbed(:space) }
-        let(:status) do
-          FactoryGirl.build_stubbed(:activity, user: user, statusable: space)
-        end
-
-        it "should generate correct #subject" do
-          subject.subject.should =~ \
-            /#{answer.user.first_name} participou da discussão em: #{space.name}/
+        it_should_behave_like "email notification" do
+          let(:space) { FactoryGirl.build_stubbed(:space) }
+          let(:status) do
+            FactoryGirl.build_stubbed(:activity, user: user, statusable: space)
+          end
+          let(:message) do
+            /participou da discussão em: #{space.name}/
+          end
         end
       end
 

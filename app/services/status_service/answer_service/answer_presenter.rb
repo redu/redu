@@ -22,18 +22,13 @@ module StatusService
       end
 
       def action(&block)
-        message = if user_is_original_author?
-                    "respondeu ao seu comentário em"
-                  else
-                    "também respondeu ao comentário original de " + \
-                    "#{original_author.display_name}"
-                  end
-
-        block_given? ? yield(message) : message
+        message = "participou da discussão #{place}"
+        message = yield(message) if block_given?
+        message
       end
 
       def subject
-        "#{author_name(short: true)} participou da discussão #{place}"
+        action { |message| "#{author_name(short: true)} #{message}" }
       end
 
       def context(context_template, &block)
