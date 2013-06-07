@@ -20,7 +20,8 @@ module StatusService
 
         it "should not send duplicated notification" do
           user = FactoryGirl.create(:user)
-          FactoryGirl.create_list(:answer, 2, in_response_to: status, statusable: status, user: user)
+          FactoryGirl.create_list(:answer, 2, in_response_to: status,
+                                  statusable: status, user: user)
 
           StatusMailer.should_receive(:new_answer).
             with(an_instance_of(AnswerNotification)).twice.and_call_original

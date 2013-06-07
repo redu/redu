@@ -19,7 +19,8 @@ module StatusService
       end
 
       def involved_users(&block)
-        user_ids = Answer.where(in_response_to_id: original_status).value_of(:user_id)
+        user_ids = Answer.where(in_response_to_id: original_status).
+          value_of(:user_id)
         user_ids << original_status.user_id
         user_ids.delete(answer.user_id)
 
