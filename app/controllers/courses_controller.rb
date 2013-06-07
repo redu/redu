@@ -130,8 +130,10 @@ class CoursesController < BaseController
     @responsibles_associations = responsibles_associations_of(@course)
     @spaces = @course.spaces.order('name ASC').page(params[:page]).
       per(Redu::Application.config.items_per_page)
+    @preview = true
+
     respond_to do |format|
-      format.html { render layout: 'new_application' }
+      format.html { render 'show', layout: 'new_application' }
       format.js do
         render_endless 'spaces/item_short', @spaces, '#course-preview > ul'
       end
