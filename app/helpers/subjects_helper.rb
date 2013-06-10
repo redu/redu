@@ -10,4 +10,24 @@ module SubjectsHelper
     end
     [display_css, expand_css]
   end
+
+  # Retorna o ícone da visibilidade do módulo.
+  def icon_visiblity_class(subject)
+    if subject.visible?
+      "visible"
+    else
+      "invisible"
+    end
+  end
+
+  # Retorna o texto usado no tooltip do ícone de visibilidade do módulo.
+  def icon_visibility_text(subject)
+    visibility = if subject.visible?
+      "visível"
+    else
+      "invisível"
+    end
+
+    "Módulo #{visibility} para os alunos"
+  end
 end

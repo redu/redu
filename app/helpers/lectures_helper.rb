@@ -58,4 +58,14 @@ module LecturesHelper
       body
     end
   end
+
+  # Retorna a classe de ícone dependendo do tipo da aula.
+  def lecture_type_class(lecture)
+    case lecture.lectureable_type.to_s.downcase
+    when "document" then "presentation"
+    when "page" then "text-page"
+    when "seminar" then "video"
+    else lecture.lectureable_type.to_s.downcase
+    end
+  end
 end

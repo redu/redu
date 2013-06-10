@@ -1,0 +1,53 @@
+<%#
+  Barra lateral da disciplina.
+
+  Variáveis:
+    space: a disciplina.
+    user: o usuário.
+%>
+
+<div class="entity-sidebar">
+  <div class="entity-frame">
+    <%= link_to space.course.environment do %>
+      <%= image_tag space.course.environment.avatar.url(:thumb_90), size: "90x90",
+        alt: space.course.environment.name, title: space.course.environment.name,
+        class: "environment-thumbnail" %>
+    <% end %>
+    <%= content_tag :span, space.name, title: space.name,
+      class: "entity-frame-mask icon-space-white_64 text-replacement show" %>
+  </div>
+
+  <%= render "bootstrap/breadcrumb_icons", entity: space %>
+
+  <%= new_local_nav :spaces_new %>
+
+  <div class="nav-local-balloon">
+    <span class="nav-local-balloon-arrow icon-arrow-up-balloon-gray_20_8"></span>
+    <span class="nav-local-balloon-title">Você na disciplina:</span>
+    <%# TODO: Calcular todas as aulas finalizadas na disciplina. %>
+    <% done_lectures = 0 %>
+    <% percentage = 0 %>
+    <% total_lectures = 0 %>
+    <% unless space.lectures_count.nil? %>
+      <%# TODO: Filtrar as aulas que estão nos módulos invisíveis. %>
+      <% total_lectures = space.lectures_count %>
+    <% end %>
+    <% if total_lectures > 0 %>
+      <% percentage = (done_lectures * 100 / total_lectures) %>
+    <% end %>
+    <%= content_tag :span,
+      "#{ t("hierarchy.lecture", count: total_lectures) }: #{ done_lectures } / #{ total_lectures }",
+      class: "nav-local-balloon-item icon-subject-gray_16_18-before" %>
+    <span class="nav-local-balloon-item">
+      <%= render "bootstrap/progress_bar", percentage: percentage, size: "medium",
+        thickness: "thick", show_percentage: true %>
+    </span>
+    <div class="nav-local-separator"></div>
+    <% user_comments = Status.from_hierarchy(space).where(user_id: user.id, type: "Activity").count %>
+    <%= content_tag :span, "Comentários: #{ user_comments }",
+      class: "nav-local-balloon-item icon-comment-gray_16_18-before" %>
+    <% user_help_requests = Status.from_hierarchy(space).where(user_id: user.id, type: "Help").count %>
+    <%= content_tag :span, "Dúvidas: #{ user_help_requests }",
+      class: "nav-local-balloon-item icon-request-help-gray_16_18-before" %>
+  </div>
+</div>

@@ -5,7 +5,7 @@
 </div>
 <div class="span13">
   <%= render "environments/breadcrumbs_new", environment: @environment %>
-  <div class="entity-list-intergation content-body">
+  <div class="content-body">
     <%= render "environments/header", environment: @environment %>
 
     <div class="entity-actions">
@@ -23,6 +23,7 @@
         icon_class: "icon-course-gray_128_130",
         message: "Este Ambiente não possui nenhum Curso." %>
     <% else %>
+      <% content_for :container_class do " entity-list-intergation" end %>
       <ul class="list-course">
         <%= render partial: "bootstrap/list_course_item",
           collection: @courses %>

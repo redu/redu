@@ -18,6 +18,7 @@ module NavigationHelper
   include PartnersNavigation
   include NewUsersNavigation
   include SearchNavigation
+  include SpacesNewNavigation
 
   # Renderiza navegação global
   def render_dynamic_navigation(opts = { :level => 1, :renderer => :list })

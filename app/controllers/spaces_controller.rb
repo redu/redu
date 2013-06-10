@@ -96,8 +96,12 @@ class SpacesController < BaseController
       per(Redu::Application.config.items_per_page)
 
     respond_to do |format|
-      format.html
-      format.js { render_endless 'subjects/item', @subjects, '#subjects_list' }
+      format.html { render layout: 'new_application' }
+      format.js do
+        render_endless('bootstrap/list_subject_item', @subjects,
+                       '.list-subject',
+                       template: 'shared/new_endless_kaminari')
+      end
     end
   end
 
