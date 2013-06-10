@@ -301,28 +301,26 @@ class User < ActiveRecord::Base
         return true
       end
     else
-      case entity.class.to_s
-      when 'Folder'
+      case entity
+      when Folder
         self.get_association_with(entity.space).nil? ? false : true
-      when 'Status'
-        unless entity.statusable.is_a? User
-          self.has_access_to? entity.statusable
-        else
+      when Status
+        if entity.statusable.is_a? User
           self.friends?(entity.statusable) || self == entity.statusable
+        else
+          self.has_access_to? entity.statusable
         end
-      when 'Help'
+      when Help
         has_access_to?(entity.statusable)
-      when 'Lecture'
+      when Lecture
         self.has_access_to? entity.subject
-      when 'Exam'
-        self.has_access_to? entity.subject
-      when 'PartnerEnvironmentAssociation'
+      when PartnerEnvironmentAssociation
         self.has_access_to? entity.partner
-      when 'Partner'
+      when Partner
         entity.users.exists?(self)
-      when 'Result'
+      when Result
         entity.user == self
-      when 'Question'
+      when Question
         has_access_to? entity.exercise.lecture
       else
         return false

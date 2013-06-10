@@ -1545,6 +1545,17 @@ describe Ability do
       end
     end
 
+    context "reading status answer" do
+      it "should be able to read a answer when its status is readab;e" do
+        status = FactoryGirl.create(:activity)
+        Status.associate_with(status, [@user])
+        someone = FactoryGirl.create(:user)
+        answer = status.respond(FactoryGirl.attributes_for(:answer), someone)
+
+        @user_ability.should be_able_to(:read, answer)
+      end
+    end
+
     context "when destroying user" do
       before do
         @other = FactoryGirl.create(:user)
