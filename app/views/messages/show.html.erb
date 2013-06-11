@@ -1,35 +1,34 @@
 <div class="span3">
-  <%= render :partial => "users/left_sidebar",
-    :locals => { :user => @user } %>
+  <%= render "users/left_sidebar", user: @user %>
 </div>
 <div class="span10">
   <div class="content-area">
-    <%= render :partial => "messages/breadcrumb", :locals => { :user => @user } %>
+    <%= render "messages/breadcrumb", user: @user %>
     <div class="content-body">
       <div class="content-section">
         <ul class="header-breadcrumb">
           <li class="header-breadcrumb-item">
             <%= link_to "Mensagens", user_messages_path(@user),
-              :class => "header-breadcrumb-link icon-message-gray_32_34-before",
-              :title => "Mensagens" %>
+              class: "header-breadcrumb-link icon-message-gray_32_34-before",
+              title: "Mensagens" %>
           </li>
           <li class="header-breadcrumb-item">
             <% if defined? @total_received_messages %>
             <%= link_to user_messages_path(@user),
-              :class => "header-breadcrumb-link",
-              :title => "Recebidas" do %>
-              Recebidas <%= content_tag(:span, parentize(@total_received_messages), :class => "header-breadcrumb-item-light") %>
+              class: "header-breadcrumb-link",
+              title: "Recebidas" do %>
+              Recebidas <%= content_tag(:span, parentize(@total_received_messages), class: "header-breadcrumb-item-light") %>
             <% end %>
           <% else %>
             <%= link_to index_sent_user_messages_path(@user),
-              :class => "header-breadcrumb-link",
-              :title => "Recebidas" do %>
-              Enviadas <%= content_tag(:span, parentize(@total_sent_messages), :class => "header-breadcrumb-item-light") %>
+              class: "header-breadcrumb-link",
+              title: "Recebidas" do %>
+              Enviadas <%= content_tag(:span, parentize(@total_sent_messages), class: "header-breadcrumb-item-light") %>
             <% end %>
           <% end %>
           </li>
         </ul>
-        <%= link_to "Nova Mensagem", new_user_message_path(@user), :remote => true, :class => "button-primary icon-message-new-white_blue_16_18-before pull-right" %>
+        <%= link_to "Nova Mensagem", new_user_message_path(@user), remote: true, class: "button-primary icon-message-new-white_blue_16_18-before pull-right" %>
       </div>
       <%= new_tabs(:new_users) %>
       <div class="content-section">
@@ -62,11 +61,9 @@
         </li>
       </ol>
     </div>
-    <%= render :partial => "messages/breadcrumb",
-       :locals => { :user => @user } %>
+    <%= render "messages/breadcrumb", user: @user %>
   </div>
 </div>
 <div class="span3">
-  <%= render :partial => "users/right_sidebar",
-    :locals => { :user => @user } %>
+  <%= render "users/right_sidebar", user: @user %>
 </div>

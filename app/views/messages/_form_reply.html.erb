@@ -1,11 +1,11 @@
-<%= form_for [@user, @new_reply || @reply], :remote => true,
+<%= form_for [@user, @new_reply || @reply], remote: true,
   html: { class: "create-status status-tab" } do |f| %>
-  <%= f.hidden_field :recipient_id, :value => @reply.to || @reply.recipient_id %>
-  <%= f.hidden_field :sender_id, :value => @user.id %>
-  <%= f.hidden_field :reply_to, :value => @reply.reply_to %>
+  <%= f.hidden_field :recipient_id, value: @reply.to || @reply.recipient_id %>
+  <%= f.hidden_field :sender_id, value: @user.id %>
+  <%= f.hidden_field :reply_to, value: @reply.reply_to %>
 
-  <%= f.text_field :subject, :style => 'display: none;' %>
-  <%= label_tag :body, t(:message), :style => 'display: none' %>
+  <%= f.text_field :subject, style: 'display: none;' %>
+  <%= label_tag :body, t(:message), style: 'display: none' %>
   <%= f.text_area :body, rows: 6 %>
   <%= concave_errors_for f.object, :body %>
   <div class="clearfix">
