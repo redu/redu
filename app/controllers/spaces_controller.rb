@@ -67,7 +67,7 @@ class SpacesController < BaseController
       if @space
         @status = Status.new
 
-        format.html
+        format.html { render layout: 'new_application' }
         format.js do
           render_endless 'statuses/item', @statuses, '#statuses',
             template: 'shared/new_endless_kaminari'

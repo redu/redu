@@ -1,21 +1,22 @@
-<%= render "shared/new_wall_assets" %>
+<% content_for :container_class do "entity-wrapper" end %>
 
-<%= render partial: 'spaces/sidebar', locals: { space: @space } %>
-<div class="main space grid_12 omega big-col">
-  <%= render partial: 'spaces/breadcrumbs', locals: { space: @space } %>
-  <%= render partial: 'spaces/header',
-    locals: { space: @space }%>
+<div class="span3">
+  <%= render "spaces/sidebar_new", space: @space, user: current_user %>
+</div>
+<div class="span13">
+  <%= render "spaces/breadcrumbs_new", space: @space %>
+  <div class="content-body">
+    <%= render "spaces/header_new", space: @space %>
 
-  <div id="space-statuses" class="body clearfix">
-    <div class="header clearfix">
-      <h4 class="title">Mural</h4>
+    <div class="content-section">
+      <ul class="header-breadcrumb-big">
+        <li class="header-breadcrumb-big-item">
+          <a class="header-breadcrumb-big-link" href="#" title="Mural">Mural</a>
+        </li>
+      </ul>
     </div>
 
-    <div class="status-large" style="clear: both;">
-      <%# Status. %>
-      <%= render "statuses/wall", status: @status, statusable: @space,
-        statuses: @statuses, placeholder: "Comente nesta disciplina." %>
-    </div><!-- end .statuses -->
-  </div><!-- end #environment-courses -->
-
-</div><!-- end .main -->
+    <%= render "statuses/wall", status: @status, statusable: @space,
+      statuses: @statuses, placeholder: "Comente nesta disciplina." %>
+  </div>
+</div>

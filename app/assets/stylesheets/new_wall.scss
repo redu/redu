@@ -23,22 +23,6 @@
 @import "new_wall/bootstrap_wall";
 
 
-// Mural da disciplina.
-#content .main {
-  padding: 10px 0;
-
-  &.space {
-    padding: 0;
-
-    .body {
-      margin: 25px 0 60px;
-
-      .header { margin-left: 20px; }
-    }
-  }
-}
-
-
 // Mural da aula.
 #resource {
   .status .context {
