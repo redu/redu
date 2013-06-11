@@ -1,23 +1,31 @@
-<%= render :partial => 'spaces/sidebar', :locals => { :space => @space } %>
+<% content_for :container_class do "entity-wrapper" end %>
 
-<div class="main space grid_12 omega big-col">
-  <%= render :partial => 'spaces/breadcrumbs', :locals => { :space => @space } %>
-  <%= render :partial => 'spaces/header',
-    :locals => { :space => @space }%>
+<div class="span3">
+  <%= render "spaces/sidebar_new", space: @space, user: current_user %>
+</div>
+<div class="span13">
+  <%= render "spaces/breadcrumbs_new", space: @space %>
+  <div class="content-body">
+    <%= render "spaces/header_new", space: @space %>
 
-  <div id="space-users" class="body">
-    <div class="header clearfix">
-      <h4 class="title">Membros da disciplina</h4>
-      <span class="detail">(<%= pluralize @space.subjects.visible.count, "módulo" %> , <%= pluralize @space.lectures_count, "aula" %>)</span>
-    </div>
-    <%= subtabs :spaces do %>
-      <ul id="users-list" class="members clearfix">
-        <%= render :partial => 'users/item',
-          :collection => @users, :locals => { :entity => @space } %>
-        <% reset_cycle "users_cycle" %>
+    <div class="content-section">
+      <ul class="header-breadcrumb-big">
+        <li class="header-breadcrumb-big-item">
+          <a class="header-breadcrumb-big-link" href="#" title="Membros">Membros</a>
+        </li>
       </ul>
-      <%= paginate @users, :theme => 'endless' %>
-    <% end %>
-  </div><!-- end #environment-courses -->
+    </div>
 
-</div><!-- end .main -->
+    <div class="content-section centralize">
+      <%= new_subtabs :spaces_new %>
+    </div>
+
+    <div class="content-section">
+      <ul class="entity-member-list list-3-columns clearfix">
+        <%= render partial: 'bootstrap/member_list_item',
+          collection: @users, locals: { entity: @space } %>
+      </ul>
+    </div>
+    <%= paginate @users, theme: 'new_endless' %>
+  </div>
+</div>
