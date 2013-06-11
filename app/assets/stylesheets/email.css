@@ -305,21 +305,11 @@ a {
 }
 #email .status-answer .avatar-cell {
   width: 42px;
-  position: relative;
-}
-#email .status-answer .contact-avatar {
-  position: absolute;
-  top: 0;
-  left: 0;
+  vertical-align: top;
 }
 #email .status-answer .icon-cell {
   width: 84px;
-  position: relative;
-}
-#email .status-answer .icon-friendship {
-  position: absolute;
-  top: 0;
-  right: 0;
+  vertical-align: top;
 }
 #email .status-answer .content-cell {
   width: 436px;

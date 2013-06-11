@@ -312,31 +312,17 @@ a {
     $avatar-cell: 32px + 10px;
     .avatar-cell {
       width: $avatar-cell;
-      position: relative;
-    }
-
-    .contact-avatar {
-      position: absolute;
-      top: 0;
-      left: 0;
+      vertical-align: top;
     }
 
     $icon-cell: 20px + 64px;
     .icon-cell {
       width: $icon-cell;
-      position: relative;
-    }
-
-    .icon-friendship {
-      position: absolute;
-      top: 0;
-      right: 0;
+      vertical-align: top;
     }
 
     $content-cell: $width - $avatar-cell - $icon-cell;
-    .content-cell {
-      width: $content-cell;
-    }
+    .content-cell { width: $content-cell; }
 
     .status-action { display: block; }
 
