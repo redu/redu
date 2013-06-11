@@ -34,35 +34,33 @@
       <%= new_tabs(:new_users) %>
       <div class="content-section">
         <h3> <%= @message.subject %> </h3>
-        <div class="statuses">
-          <ol>
-            <li>
-              <div class="status">
-                <% showed_user = @message.sender == @user ?
-                  @message.recipient : @message.sender %>
-                <div class="status-text">
-                  <%= image_tag showed_user.avatar.url(:thumb_32),
-                    :class => 'avatar' %>
-                  <%= link_to showed_user.display_name,
-                    user_path(showed_user), :class => 'username' %>
-                  <span class="date">
-                    <%= l @message.created_at, :format => :elegant %>
-                  </span>
-                </div>
-                <div class="status-contents">
-                  <div class="distance-top"></div>
-                  <p class="status-message"><%= raw auto_link simple_format(@message.body) %></p>
-                </div>
-              </div>
-            </li>
-          </ol>
-        </div>
-        <% if @message.recipient == @user %>
-          <div class="create-status inform-my-status message">
-            <%= render :partial => 'messages/form_reply' %>
-          </div>
-        <% end %>
       </div>
+      <ol class="status-list">
+        <li>
+          <div class="status without-context">
+            <div class="subject">
+              <% showed_user = @message.sender == @user ?
+                @message.recipient : @message.sender %>
+              <%= render "statuses/user_image", user: showed_user %>
+              <div class="subject-info">
+                <%= render "statuses/user_name", user: showed_user %>
+                <%= render "statuses/timeago", timestamp: @message.created_at %>
+              </div>
+            </div>
+            <div class="subject-content">
+              <div class="status-content status-tab tab-left">
+                <%= content_tag :p,
+                  raw(auto_link(simple_format(@message.body))) %>
+              </div>
+              <% if @message.recipient == @user %>
+                <div class="messages-reply-form">
+                  <%= render 'messages/form_reply' %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </li>
+      </ol>
     </div>
     <%= render :partial => "messages/breadcrumb",
        :locals => { :user => @user } %>
