@@ -2,7 +2,7 @@
   <% if can?(:upload_file, folder) %>
     <div style="position: relative;">
       <div class="new-folder">
-        <a href="#" class="concave-clean" >Criar nova pasta</a>
+        <button class="button-default">Criar nova pasta</button>
         <div class="new-folder-inner holder" style="display:none;">
           <% @new_folder = Folder.new %>
           <%= form_for [space, @new_folder],
@@ -10,14 +10,14 @@
             <%= f.text_field :name %>
             <%= f.hidden_field :space_id, :value => space.id %>
             <%= f.hidden_field :parent_id, :value => folder.id %>
-            <%= f.submit 'Ok', :class => "concave-button"%>
+            <%= f.submit 'Ok', :class => "button-primary"%>
             <%= image_tag 'spinner.gif', :id => 'new-folder-spinner', :class => "spinner", :style => 'display: none' %>
           <% end %>
         </div>
       </div>
 
       <div class="new-file">
-        <a href="#" class="concave-button upload-button">Upload de arquivo</a>
+        <button class="button-primary upload-button">Upload de arquivo</button>
         <div class="new-file-inner holder" style="display:none;">
           <%= form_for(myfile,
                        :url => do_the_upload_space_folder_path(space.id,
@@ -26,11 +26,10 @@
                                           :class => 'form-loader' }) do |f| %>
             <div class="file-wrapper clearfix">
               <%= f.file_field :attachment %>
-            <%= link_to "Buscar", "#", :class => "browse concave-clean" %>
             </div>
             <%= f.hidden_field :folder_id, :value => folder.id %>
             <%= hidden_field_tag :space_id,  space.id %>
-            <%= submit_tag 'Ok', :class => "concave-button" %>
+            <%= submit_tag 'Ok', :class => "button-primary" %>
           <% end %>
         </div>
       </div>

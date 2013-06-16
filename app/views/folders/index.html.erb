@@ -1,19 +1,27 @@
-<%= render :partial => 'spaces/sidebar', :locals => { :space => @space } %>
-<div class="main space grid_12 omega big-col">
-  <%= render :partial => 'spaces/breadcrumbs', :locals => { :space => @space } %>
-  <%= render :partial => 'spaces/header',
-    :locals => { :space => @space }%>
+<% content_for :container_class do "entity-wrapper" end %>
 
-  <div id="space-subjects" class="body clearfix">
-    <div class="header clearfix">
-      <h4 class="title">Arquivos de Apoio</h4>
-      <span class="detail">(<%= pluralize @files_count, "arquivo" %>)</span>
-    </div>
-    <%= render :partial => 'folders/admin',
-      :locals => { :space => @space, :folder => @folder, :myfile => @myfile } %>
-    <div id="materials" class="main-content">
-      <%= render :partial => 'folders/list' %>
-    </div>
-  </div><!-- end #environment-courses -->
+<div class="span3">
+  <%= render "spaces/sidebar_new", space: @space, user: current_user %>
+</div>
+<div class="span13">
+  <%= render "spaces/breadcrumbs_new", space: @space %>
+  <div class="content-body">
+    <%= render "spaces/header_new", space: @space %>
 
-</div><!-- end main -->
+    <div class="content-section">
+      <ul class="header-breadcrumb-big">
+        <li class="header-breadcrumb-big-item">
+          <a class="header-breadcrumb-big-link" href="#" title="Arquivos de Apoio">Arquivos de Apoio</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="content-section clearfix">
+      <%= render 'folders/admin', :space => @space, :folder => @folder,
+        :myfile => @myfile %>
+    </div>
+    <div class="content-section">
+      <%= render 'folders/list' %>
+    </div>
+  </div>
+</div>

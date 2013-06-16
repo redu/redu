@@ -6,7 +6,7 @@ $(function(){
           $val = $this.val(),
           valArray = $val.split('\\'),
           newVal = valArray[valArray.length-1],
-          $button = $this.siblings('.concave-button, .concave-clean, .upload-button'),
+          $button = $this.siblings('.button-primary, .button-default, .upload-button'),
           $fakeFile = $this.siblings('.file-holder');
 
       if(newVal !== '') {
@@ -43,7 +43,7 @@ $(function(){
     utils.setup();
 
     // Criar diretorio
-    $(".new-folder .concave-clean").live("click", function(e){
+    $(".new-folder .button-default").live("click", function(e){
         $(".new-file-inner:visible", "#folder-admin").slideUp("fast");
         $(this).next(".holder").slideToggle("fast");
 
@@ -58,7 +58,7 @@ $(function(){
     });
 
     // Fake input
-    $("#folder-admin .new-file .file-wrapper input[type=file]").live('change focus click', utils.fileInputs);
+    // $("#folder-admin .new-file .file-wrapper input[type=file]").live('change focus click', utils.fileInputs);
 
     // Rename
     $(".rename, .rename-folder .cancel").live("click", function(e){

@@ -2,10 +2,8 @@
 //= require rails
 //= require modernizr
 //= require jquery.tipTip.minified
-//= require folders
 //= require exercises
 //= require lectures
-//= require jquery.remotipart
 //= require lazy-load
 //= require jquery.fcbkcomplete.min
 //= require jquery.tokeninput-instant-search

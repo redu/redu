@@ -75,7 +75,7 @@ class FoldersController < BaseController
     list(params[:id])
 
     respond_to do |format|
-      format.html
+      format.html { render layout: 'new_application' }
       format.js { render :partial => "folders/index" }
     end
   end

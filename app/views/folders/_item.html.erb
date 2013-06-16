@@ -5,7 +5,7 @@
     link_to h(item.name),
       space_folders_path(space, :id => item.id),
       :remote => true,
-      :class => "folder-name icon-hierarchy_elem-gray_8_10-before"
+      :class => "folder-name icon-arrow-right-squared-gray_16_18-before"
     %>
   <div class="rename-folder" style="display:none;">
     <%= form_for item, :as => :folder,
@@ -25,13 +25,13 @@
         :confirm => "Todos os arquivos e subpastas serão removidos.\nDeseja continuar?",
         :method => :delete,
         :remote => true,
-        :class => "delete icon-delete-gray_8_10-before"
+        :class => "delete icon-close-gray_8_10-before"
       %>
   <% end %>
 
   <% if can_update %>
     <%= link_to "Renomear", '#',
-      :class => "rename manage icon-manage-gray_8_10-before",
+      :class => "rename manage icon-manage-lightblue_8_10-before",
       :id => "#{item.id}" %>
   <% end %>
 </li>

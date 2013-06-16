@@ -9,13 +9,13 @@
     <td class="delete" colspan="2">
       <% if can_delete %>
           <%=
-            link_to "Remover",
+            link_to "",
               destroy_file_space_folder_path(space, folder,
                                              :file_id => item_file.id),
               :confirm => 'Tem certeza?',
               :method => :delete,
               :remote => true,
-              :class => "delete replacement icon-small icon-delete-gray_16_18"
+              :class => "delete icon-close-gray_8_10-before"
             %>
       <% end %>
     </td>
