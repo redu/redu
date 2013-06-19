@@ -7,7 +7,7 @@
 
 <%= content_tag :li, id: "status-#{compound.id}" do %>
   <hr class="list-separator">
-  <div class="status without-context">
+  <div class="status">
     <div class="context">
       <%= render "statuses/user_image", user: compound.user %>
       <%= render "statuses/user_name", user: compound.user %>
