@@ -130,8 +130,8 @@ class Course < ActiveRecord::Base
     License.change_role(user, self, role)
 
     user.user_space_associations.where(:space_id => self.spaces).
-      includes(:space).each do |membership|
-        membership.space.change_role(user, role)
+      includes(:space).each do |usa|
+        usa.space.change_role(user, role)
       end
   end
 
@@ -190,7 +190,6 @@ class Course < ActiveRecord::Base
   #
   # * Pode ser chamado mesmo se o usuário estiver sob moderação
   def unjoin(user)
-    enrollments = []
     course_association = user.get_association_with(self)
     course_association.try(:destroy)
 
