@@ -102,8 +102,8 @@ class User < ActiveRecord::Base
   scope :with_keyword, lambda { |keyword|
     where("LOWER(login) LIKE :keyword OR " + \
       "LOWER(first_name) LIKE :keyword OR " + \
-      "LOWER(last_name) LIKE :keyword OR " +\
-      "CONCAT(TRIM(LOWER(first_name)), ' ', TRIM(LOWER(last_name))) LIKE :keyword OR " +\
+      "LOWER(last_name) LIKE :keyword OR " + \
+      "CONCAT(TRIM(LOWER(first_name)), ' ', TRIM(LOWER(last_name))) LIKE :keyword OR " + \
       "LOWER(email) LIKE :keyword", { keyword: "%#{keyword.to_s.downcase}%" }).
       limit(10).select("users.id, users.first_name, users.last_name, users.login, users.email, users.avatar_file_name, users.avatar_updated_at")
   }
@@ -204,7 +204,7 @@ class User < ActiveRecord::Base
   end
 
   def process_invitation!(invitee, invitation)
-    friendship_invitation = self.be_friends_with(invitee)
+    self.be_friends_with(invitee)
     invitation.delete
   end
 
@@ -431,7 +431,7 @@ class User < ActiveRecord::Base
   def get_association_with(entity)
     return false unless entity
 
-    association = case entity.class.to_s
+    case entity.class.to_s
     when 'Space'
       self.user_space_associations.
         find(:first, conditions: { space_id: entity.id })
