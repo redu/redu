@@ -5,7 +5,7 @@
 </div>
 <div class="span13">
   <%= render "courses/breadcrumbs_new", course: @course %>
-  <div class="entity-list-intergation content-body">
+  <div class="content-body">
     <%= render "courses/header_new", course: @course,
       responsibles_associations: @responsibles_associations %>
 
@@ -38,9 +38,10 @@
       <% if @spaces.empty? %>
         <%= render "shared/empty_message",
           icon_message: "Nenhum curso.",
-          icon_class: "icon-space-lightgray_128_130",
+          icon_class: "icon-space-empty_128_130",
           message: "Ainda não há Disciplinas criadas para este Curso." %>
       <% else %>
+        <% content_for :container_class do " entity-list-intergation" end %>
         <ul class="list-space">
           <%= render partial: "bootstrap/list_space_item",
             collection: @spaces %>
