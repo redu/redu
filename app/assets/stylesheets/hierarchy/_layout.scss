@@ -91,10 +91,16 @@
 // Cabeçalho.
 // ==========================================================================
 
-.entity-header { color: $gray5; }
+.entity-header {
+  color: $gray5;
+  padding: 20px;
+}
 
 // Nome.
-.entity-header-title { @include heading(1); }
+.entity-header-title {
+  @include heading(1);
+  max-width: 84%; // Para não invadir o 'Gerenciar disciplina'.
+}
 
 .entity-header-title +
 .entity-header-info { margin-top: 20px; }
