@@ -10,6 +10,9 @@
   <hr class="list-separator">
   <div class="list-environment-course-space-item">
     <div class="list-environment-course-space-header">
+      <% if environment.path == "ava-redu" %>
+        <span class="label-online pull-right">Ambiente de boas vindas ao Redu</span>
+      <% end %>
       <%= link_to environment_path(environment),
                   :class => "list-environment-course-space-image-link" do %>
         <%= image_tag environment.avatar(:thumb_32), :size => "32x32",

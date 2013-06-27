@@ -1,6 +1,7 @@
 <%#
   Cabeçalho o index de ambientes.
 %>
+
 <div class="portal-header clearfix">
   <h2 class="portal-title icon-environment-circle-gray_48_50-before pull-left">
     <%= link_to "Ambientes de que Participo", environments_index_path,
@@ -8,8 +9,8 @@
       :title => "Ambientes de que Participo" %>
   </h2>
 
-  <%= render :partial => "breadcrumb_mini" %>
-
-  <p class="portal-header-message legend">Ambientes de Aprendizagem são espaços que agrupam seus Cursos e Disciplinas. Caso deseje buscar por novos, use o menu de Busca acima.</p>
+  <p class="portal-header-message legend">
+    Ambientes de Aprendizagem são espaços que agrupam seus Cursos e Disciplinas.
+    <span class="link-fake my-environments-explaination-link">Clique aqui para entender sua hierarquia.</span>
+  </p>
 </div>
-

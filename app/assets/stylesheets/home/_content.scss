@@ -34,45 +34,75 @@
   }
 }
 
+
+// Diagrama com a explicação do que são Ambientes de Aprendizagem.
+// ==========================================================================
+
+
+.learning-environments-close {
+  position: relative;
+  z-index: 1;
+}
+
 .learning-environments {
-  width: 538px;
-  color: $gray6;
+  @include size(538px, 571px);
+  // Cor principal do texto.
+  $learning-environments-color: $gray6;
+  color: $learning-environments-color;
   background-image: image-url('home/graphic-environments-hierarchy.png');
   background-repeat: no-repeat;
-  padding-bottom: 10px;
-  overflow: hidden;
+  position: relative;
 
-  .legend { line-height: 14px; }
-
-  .big {
-    width: 404px;
-    padding-top: 1px;
-    padding-left: 108px;
-    padding-bottom: 61px;
-  }
-
-  .small {
-    width: 284px;
-    float: right;
-
-    &.institution {
-      padding-right: 146px;
-      padding-bottom: 23px;
-    }
-
-    &.space {
-      padding-top: 127px;
-      padding-right: 168px;
-    }
-
-    &.right { text-align: right; }
-  }
-
-  h3, h4 {
-    font-weight: lighter;
-    padding-bottom: 5px;
+  .legend {
+    line-height: 14px;
+    color: $learning-environments-color;
   }
 }
+
+.learning-environments-title +
+.learning-environments-message { margin-top: 5px; }
+
+.learning-environments-what {
+  position: absolute;
+  top: 1px;
+  left: 108px;
+  color: $black;
+  width: 430px;
+}
+
+.learning-environments-institution {
+  position: absolute;
+  top: 147px;
+  left: 108px;
+  width: 404px;
+}
+
+.learning-environments-course {
+  position: absolute;
+  top: 235px;
+  left: 254px;
+  width: 284px;
+}
+
+.learning-environments-space {
+  position: absolute;
+  top: 427px;
+  left: 0px;
+  width: 370px;
+  text-align: right;
+}
+
+.learning-environments-subject {
+  position: absolute;
+  top: 506px;
+  right: 0px;
+  width: 464px;
+  text-align: right;
+}
+
+
+// Tour.
+// ==========================================================================
 
 .tour {
   width: 338px;
