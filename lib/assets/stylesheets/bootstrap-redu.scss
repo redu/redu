@@ -154,6 +154,13 @@ textarea {
   max-width: 100%;
 }
 
+.centralize {
+  text-align: center;
+}
+.centralize > * {
+  display: inline-block;
+}
+
 .area-fix {
   position: relative;
 }
@@ -243,6 +250,10 @@ body {
 }
 .no-cssgradients.gt-ie8 .content-body:after {
   background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmNmY2ZjYiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+}
+
+.content-body-fix-top {
+  margin: -11px -1px 0;
 }
 
 .content-section {
@@ -588,7 +599,6 @@ h5 strong {
   font-size: 11px;
   line-height: 11px;
   padding: 3px 5px 2px 5px;
-  text-transform: uppercase;
 }
 .inl-label + .inl-label, .label-news + .inl-label, .label-notify-me + .inl-label, .label-online + .inl-label, .label-doubts + .inl-label, .inl-label + .label-news, .label-news + .label-news, .label-notify-me + .label-news, .label-online + .label-news, .label-doubts + .label-news, .inl-label + .label-notify-me, .label-news + .label-notify-me, .label-notify-me + .label-notify-me, .label-online + .label-notify-me, .label-doubts + .label-notify-me, .inl-label + .label-online, .label-news + .label-online, .label-notify-me + .label-online, .label-online + .label-online, .label-doubts + .label-online, .inl-label + .label-doubts, .label-news + .label-doubts, .label-notify-me + .label-doubts, .label-online + .label-doubts, .label-doubts + .label-doubts {
   margin-left: 5px;
@@ -685,10 +695,6 @@ a,
   display: inline-block;
   color: #4dadd6;
   text-decoration: none;
-}
-a:visited,
-.link-fake:visited {
-  color: #73c3e6;
 }
 a:hover,
 .link-fake:hover {
@@ -2015,13 +2021,13 @@ a:hover .icon-course-lightblue_32_34-before:before,
 .button-default:hover .icon-course-gray_32_34,
 .button-default:hover .icon-course-gray_32_34-before:before,
 .button-default:hover .icon-course-lightblue_32_34,
-.button-default:hover .icon-course-lightblue_32_34-before:before, .icon-course-gray_16_18, .icon-course-gray_16_18-before:before, .icon-course-gray_32_34, .icon-course-gray_32_34-before:before, .icon-course-lightblue_16_18, .icon-course-lightblue_16_18-before:before, .icon-course-lightblue_32_34, .icon-course-lightblue_32_34-before:before, .icon-course-lightgray_32_34, .icon-course-lightgray_32_34-before:before, .icon-curriculum-academic-gray_8_10, .icon-curriculum-academic-gray_8_10-before:before, .icon-curriculum-academic-lightblue_32_34, .icon-curriculum-academic-lightblue_32_34-before:before, .icon-curriculum-blue_16_18, .icon-curriculum-lightblue_16_18-before:hover:before, .list-button li:hover .icon-curriculum-lightblue_16_18-before:before, .tab-buttons .icon-curriculum_16_18-before:hover:before, .icon-curriculum-darkgray_32_34, .icon-curriculum-darkgray_32_34-before:before, .icon-curriculum-gray_16_18, .icon-curriculum-gray_16_18-before:before, .icon-curriculum-lightblue_16_18, .icon-curriculum-lightblue_16_18-before:before, .tab-buttons .icon-curriculum_16_18-before:before, .icon-curriculum-professional-gray_8_10, .icon-curriculum-professional-gray_8_10-before:before, .icon-curriculum-professional-lightblue_32_34, .icon-curriculum-professional-lightblue_32_34-before:before, .icon-curriculum-white_blue_16_18, .icon-curriculum-white_blue_16_18-before:before, .tab-buttons .icon-curriculum_16_18-before.tab-button-active:before, .icon-description-blue_16_18, .icon-description-gray_16_18:hover,
+.button-default:hover .icon-course-lightblue_32_34-before:before, .icon-course-empty_128_130, .icon-course-gray_16_18, .icon-course-gray_16_18-before:before, .icon-course-gray_32_34, .icon-course-gray_32_34-before:before, .icon-course-lightblue_16_18, .icon-course-lightblue_16_18-before:before, .icon-course-lightblue_32_34, .icon-course-lightblue_32_34-before:before, .icon-course-lightgray_32_34, .icon-course-lightgray_32_34-before:before, .icon-course-white_64, .icon-curriculum-academic-gray_8_10, .icon-curriculum-academic-gray_8_10-before:before, .icon-curriculum-academic-lightblue_32_34, .icon-curriculum-academic-lightblue_32_34-before:before, .icon-curriculum-blue_16_18, .icon-curriculum-lightblue_16_18-before:hover:before, .list-button li:hover .icon-curriculum-lightblue_16_18-before:before, .tab-buttons .icon-curriculum_16_18-before:hover:before, .icon-curriculum-darkgray_32_34, .icon-curriculum-darkgray_32_34-before:before, .icon-curriculum-gray_16_18, .icon-curriculum-gray_16_18-before:before, .icon-curriculum-lightblue_16_18, .icon-curriculum-lightblue_16_18-before:before, .tab-buttons .icon-curriculum_16_18-before:before, .icon-curriculum-professional-gray_8_10, .icon-curriculum-professional-gray_8_10-before:before, .icon-curriculum-professional-lightblue_32_34, .icon-curriculum-professional-lightblue_32_34-before:before, .icon-curriculum-white_blue_16_18, .icon-curriculum-white_blue_16_18-before:before, .tab-buttons .icon-curriculum_16_18-before.tab-button-active:before, .icon-description-blue_16_18, .icon-description-gray_16_18:hover,
 .icon-description-lightblue_16_18:hover, .icon-description-gray_16_18, .icon-description-lightblue_16_18, .icon-doubt-topic-blue_16_18, .icon-doubt-topic-lightblue_16_18-before:hover:before, .icon-doubt-topic-gray_16_18, .icon-doubt-topic-gray_16_18-before:before, .icon-doubt-topic-lightblue_16_18, .icon-doubt-topic-lightblue_16_18-before:before, .icon-environment-black_16_18, .icon-environment-black_16_18-before:before, .icon-environment-blue_16_18, .icon-environment-lightblue_16_18-before:hover:before,
 .header-list .icon-environment-gray_16_18-before:hover:before, .header-item:hover .icon-environment-gray_16_18-before:before,
 .header-item:hover .icon-environment-lightblue_16_18-before:before, a:hover .icon-environment-gray_16_18,
 .filter:hover .icon-environment-gray_16_18,
 .button-default:hover .icon-environment-gray_16_18, .nav-local-item.icon-environment_16_18-before:hover:before, .icon-environment-blue_32_34, .icon-environment-lightblue_32_34-before:hover:before,
-.breadcrumb-icon-link .icon-environment-gray_32_34-before:hover:before, .icon-environment-breadcrumb-blue_16_18, .icon-environment-breadcrumb-lightblue_16_18-before:hover:before, .icon-environment-breadcrumb-lightblue_16_18, .icon-environment-breadcrumb-lightblue_16_18-before:before, .icon-environment-circle-blue_16_18, .icon-environment-circle-lightblue_16_18-before:hover:before, .icon-environment-circle-blue_32_34, .icon-environment-circle-blue_48_50, .icon-environment-circle-gray_48_50-before:hover:before, .icon-environment-circle-gray_32_34, .icon-environment-circle-gray_48_50, .icon-environment-circle-gray_48_50-before:before, .icon-environment-circle-lightblue_16_18, .icon-environment-circle-lightblue_16_18-before:before, .icon-environment-empty_128_130, .icon-environment-gray_16_18, .icon-environment-gray_32_34, .icon-environment-gray_32_34-before:before, .icon-environment-lightblue_16_18, .icon-environment-lightblue_16_18-before:before, .open .icon-environment-gray_16_18, .icon-environment-round-lightblue_16_18-before:before, .nav-local-item.icon-environment_16_18-before:before, .icon-environment-lightblue_32_34, .icon-environment-lightblue_32_34-before:before, .list-mix li.icon-environment-gray_32_34-before:hover:before, .icon-environment-lightgray_32_34, .icon-environment-lightgray_32_34-before:before, .icon-environment-round-black_16_18, .icon-environment-round-blue_16_18, .icon-environment-round-lightblue_16_18-before:hover:before, .icon-environment-round-blue_32_34, .icon-environment-round-gray_32_34-before:hover:before, .icon-environment-round-gray_32_34, .icon-environment-round-gray_32_34-before:before, .icon-environment-round-lightblue_16_18, .icon-environment-white_blue_16_18, .icon-environment-white_blue_16_18-before:before, .nav-local-item.icon-environment_16_18-before.nav-local-item-active:before, .icon-exercise-blue_16_18, .list-button li:hover .icon-exercise-lightblue_16_18-before:before, .icon-exercise-gray_16_18, .icon-exercise-gray_16_18-before:before, .icon-exercise-lightblue_16_18, .icon-exercise-lightblue_16_18-before:before, .icon-favorite-blue_16_18, .icon-favorite-lightblue_16_18-before:hover:before, .icon-favorite-blue_32_34, .icon-favorite-blue_32_34-before:before, .icon-favorite-delete-blue_16_18, .icon-favorite-delete-lightblue_16_18-before:hover:before, .icon-favorite-delete-lightblue_16_18, .icon-favorite-delete-lightblue_16_18-before:before, .icon-favorite-gray_16_18, .icon-favorite-gray_16_18-before:before, .icon-favorite-gray_32_34, .icon-favorite-gray_32_34-before:before, .icon-favorite-lightblue_16_18, .icon-favorite-lightblue_16_18-before:before, .icon-favorite-white_blue_16_18, .icon-feel-supported-gray_32_34, .icon-feel-supported-gray_32_34-before:before, .icon-file-blue_16_18, .icon-file-lightblue_16_18-before:hover:before, .icon-file-gray_16_18, .icon-file-gray_16_18-before:before, .icon-file-lightblue_16_18, .icon-file-lightblue_16_18-before:before, .icon-file-white_blue_16_18, .icon-file-white_blue_16_18-before:before, .icon-frequent-questions-blue_16_18, .icon-frequent-questions-lightblue_16_18-before:hover:before, .list-button li:hover .icon-frequent-questions-lightblue_16_18-before:before, .icon-frequent-questions-blue_32_34, .icon-frequent-questions-gray_32_34-before:hover:before, .icon-frequent-questions-lightblue_32_34-before:hover:before, .icon-frequent-questions-blue_32_34-before:before, .icon-frequent-questions-gray_32_34, .icon-frequent-questions-gray_32_34-before:before, .icon-frequent-questions-lightblue_16_18, .icon-frequent-questions-lightblue_16_18-before:before, .icon-frequent-questions-lightblue_32_34, .icon-frequent-questions-lightblue_32_34-before:before, .icon-frequent-questions-lightgray_32_34, .icon-frequent-questions-lightgray_32_34-before:before, .icon-frequent-questions-white_16_18, .icon-frequent-questions-white_16_18-before:before, .icon-frequent-questions-lightblue_16_18-before.nav-local-item-active:before, .icon-grouping-gray_16_18, .icon-grouping-gray_16_18-before:before, .icon-guide-topic-gray_16_18, .icon-guide-topic-gray_16_18-before:before, .icon-help-central-blue_16_18, .icon-help-central-lightblue_16_18-before:hover:before, .icon-help-central-blue_66, .icon-help-central-gray_66-before:hover:before, .icon-help-central-empty_128, .icon-help-central-empty_128-before:before, .icon-help-central-gray_66, .icon-help-central-gray_66-before:before, .icon-help-central-lightblue_16_18, .icon-help-central-lightblue_16_18-before:before, .icon-help-central-lightgray_32_34, .icon-help-central-lightgray_32_34-before:before, .icon-home-black_16_18, .icon-home-black_16_18-before:before, .icon-home-blue_16_18, .icon-home-lightblue_16_18-before:hover:before, .nav-local-item.icon-home_16_18-before:hover:before, .icon-home-gray_16_18, .icon-home-gray_16_18-before:before, .icon-home-lightblue_16_18, .icon-home-lightblue_16_18-before:before, .nav-local-item.icon-home_16_18-before:before, .icon-home-white_blue_16_18, .icon-home-white_blue_16_18-before:before, .nav-local-item.icon-home_16_18-before.nav-local-item-active:before, .icon-institution-blue_32_34, .icon-institution-gray_32_34:hover, .icon-institution-gray_32_34:before, .icon-institution-gray_32_34, .icon-invite-blue_16_18, .icon-invite-lightblue_16_18-before:hover:before, .icon-invite-lightblue_16_18:hover, .icon-invite-empty_128_130, .icon-invite-gray_16_18, .icon-invite-gray_16_18-before:before, .icon-invite-lightblue_16_18, .icon-invite-lightblue_16_18-before:before, .icon-invite-white_blue_16_18, .icon-invite-white_blue_16_18-before:before, .icon-invite-white_green_16_18, .icon-invite-white_green_16_18-before:before, .icon-lights-blue_16_18, .icon-lights-lightblue_16_18-before:hover:before, a:hover .icon-lights-lightblue_16_18, a:hover .icon-lights-lightblue_16_18-before:before,
+.breadcrumb-icon-link .icon-environment-gray_32_34-before:hover:before, .icon-environment-breadcrumb-blue_16_18, .icon-environment-breadcrumb-lightblue_16_18-before:hover:before, .icon-environment-breadcrumb-lightblue_16_18, .icon-environment-breadcrumb-lightblue_16_18-before:before, .icon-environment-circle-blue_16_18, .icon-environment-circle-lightblue_16_18-before:hover:before, .icon-environment-circle-blue_32_34, .icon-environment-circle-blue_48_50, .icon-environment-circle-gray_48_50-before:hover:before, .icon-environment-circle-gray_32_34, .icon-environment-circle-gray_48_50, .icon-environment-circle-gray_48_50-before:before, .icon-environment-circle-lightblue_16_18, .icon-environment-circle-lightblue_16_18-before:before, .icon-environment-empty_128_130, .icon-environment-gray_16_18, .icon-environment-gray_32_34, .icon-environment-gray_32_34-before:before, .icon-environment-lightblue_16_18, .icon-environment-lightblue_16_18-before:before, .open .icon-environment-gray_16_18, .icon-environment-round-lightblue_16_18-before:before, .nav-local-item.icon-environment_16_18-before:before, .icon-environment-lightblue_32_34, .icon-environment-lightblue_32_34-before:before, .list-mix li.icon-environment-gray_32_34-before:hover:before, .icon-environment-lightgray_32_34, .icon-environment-lightgray_32_34-before:before, .icon-environment-round-black_16_18, .icon-environment-round-blue_16_18, .icon-environment-round-lightblue_16_18-before:hover:before, .icon-environment-round-blue_32_34, .icon-environment-round-gray_32_34-before:hover:before, .icon-environment-round-gray_32_34, .icon-environment-round-gray_32_34-before:before, .icon-environment-round-lightblue_16_18, .icon-environment-white_blue_16_18, .icon-environment-white_blue_16_18-before:before, .nav-local-item.icon-environment_16_18-before.nav-local-item-active:before, .icon-exercise-blue_16_18, .list-button li:hover .icon-exercise-lightblue_16_18-before:before, .icon-exercise-gray_16_18, .icon-exercise-gray_16_18-before:before, .icon-exercise-lightblue_16_18, .icon-exercise-lightblue_16_18-before:before, .icon-favorite-blue_16_18, .icon-favorite-lightblue_16_18-before:hover:before, .icon-favorite-blue_32_34, .icon-favorite-blue_32_34-before:before, .icon-favorite-delete-blue_16_18, .icon-favorite-delete-lightblue_16_18-before:hover:before, .icon-favorite-delete-lightblue_16_18, .icon-favorite-delete-lightblue_16_18-before:before, .icon-favorite-gray_16_18, .icon-favorite-gray_16_18-before:before, .icon-favorite-gray_32_34, .icon-favorite-gray_32_34-before:before, .icon-favorite-lightblue_16_18, .icon-favorite-lightblue_16_18-before:before, .icon-favorite-white_blue_16_18, .icon-feel-supported-gray_32_34, .icon-feel-supported-gray_32_34-before:before, .icon-file-blue_16_18, .icon-file-lightblue_16_18-before:hover:before, .nav-local-item.icon-file_16_18-before:hover:before, .icon-file-gray_16_18, .icon-file-gray_16_18-before:before, .icon-file-lightblue_16_18, .icon-file-lightblue_16_18-before:before, .nav-local-item.icon-file_16_18-before:before, .icon-file-white_blue_16_18, .icon-file-white_blue_16_18-before:before, .nav-local-item.icon-file_16_18-before.nav-local-item-active:before, .icon-frequent-questions-blue_16_18, .icon-frequent-questions-lightblue_16_18-before:hover:before, .list-button li:hover .icon-frequent-questions-lightblue_16_18-before:before, .icon-frequent-questions-blue_32_34, .icon-frequent-questions-gray_32_34-before:hover:before, .icon-frequent-questions-lightblue_32_34-before:hover:before, .icon-frequent-questions-blue_32_34-before:before, .icon-frequent-questions-gray_32_34, .icon-frequent-questions-gray_32_34-before:before, .icon-frequent-questions-lightblue_16_18, .icon-frequent-questions-lightblue_16_18-before:before, .icon-frequent-questions-lightblue_32_34, .icon-frequent-questions-lightblue_32_34-before:before, .icon-frequent-questions-lightgray_32_34, .icon-frequent-questions-lightgray_32_34-before:before, .icon-frequent-questions-white_16_18, .icon-frequent-questions-white_16_18-before:before, .icon-frequent-questions-lightblue_16_18-before.nav-local-item-active:before, .icon-grouping-gray_16_18, .icon-grouping-gray_16_18-before:before, .icon-guide-topic-gray_16_18, .icon-guide-topic-gray_16_18-before:before, .icon-help-central-blue_16_18, .icon-help-central-lightblue_16_18-before:hover:before, .icon-help-central-blue_66, .icon-help-central-gray_66-before:hover:before, .icon-help-central-empty_128, .icon-help-central-empty_128-before:before, .icon-help-central-gray_66, .icon-help-central-gray_66-before:before, .icon-help-central-lightblue_16_18, .icon-help-central-lightblue_16_18-before:before, .icon-help-central-lightgray_32_34, .icon-help-central-lightgray_32_34-before:before, .icon-home-black_16_18, .icon-home-black_16_18-before:before, .icon-home-blue_16_18, .icon-home-lightblue_16_18-before:hover:before, .nav-local-item.icon-home_16_18-before:hover:before, .icon-home-gray_16_18, .icon-home-gray_16_18-before:before, .icon-home-lightblue_16_18, .icon-home-lightblue_16_18-before:before, .nav-local-item.icon-home_16_18-before:before, .icon-home-white_blue_16_18, .icon-home-white_blue_16_18-before:before, .nav-local-item.icon-home_16_18-before.nav-local-item-active:before, .icon-institution-blue_32_34, .icon-institution-gray_32_34:hover, .icon-institution-gray_32_34:before, .icon-institution-gray_32_34, .icon-invisible-lightgray_16_18, .icon-invite-blue_16_18, .icon-invite-lightblue_16_18-before:hover:before, .icon-invite-lightblue_16_18:hover, .icon-invite-empty_128_130, .icon-invite-gray_16_18, .icon-invite-gray_16_18-before:before, .icon-invite-green3_64_66, .icon-invite-lightblue_16_18, .icon-invite-lightblue_16_18-before:before, .icon-invite-white_blue_16_18, .icon-invite-white_blue_16_18-before:before, .icon-invite-white_green_16_18, .icon-invite-white_green_16_18-before:before, .icon-lecture-white_64, .icon-lights-blue_16_18, .icon-lights-lightblue_16_18-before:hover:before, a:hover .icon-lights-lightblue_16_18, a:hover .icon-lights-lightblue_16_18-before:before,
 .filter:hover .icon-lights-lightblue_16_18,
 .filter:hover .icon-lights-lightblue_16_18-before:before,
 .button-default:hover .icon-lights-lightblue_16_18,
@@ -2033,8 +2039,8 @@ a:hover .icon-magnifier-lightblue_16_18-before:before,
 .filter:hover .icon-magnifier-lightblue_16_18-before:before,
 .button-default:hover .icon-magnifier-gray_16_18,
 .button-default:hover .icon-magnifier-lightblue_16_18,
-.button-default:hover .icon-magnifier-lightblue_16_18-before:before, .icon-magnifier-gray_16_18, .icon-magnifier-lightblue_16_18, .icon-magnifier-lightblue_16_18-before:before, .icon-manage-blue_16_18, .icon-manage-lightblue_16_18-before:hover:before, .list-button li:hover .icon-manage-lightblue_16_18-before:before, .nav-local-item.icon-manage_16_18-before:hover:before, .icon-manage-blue_32_34, .header-breadcrumb:hover .icon-manage-gray_32_34-before:before, .icon-manage-blue_8_10, .icon-manage-lightblue_8_10-before:hover:before, .icon-manage-gray_16_18, .icon-manage-gray_16_18-before:before, .icon-manage-gray_32_34, .icon-manage-gray_32_34-before:before, .icon-manage-lightblue_16_18, .icon-manage-lightblue_16_18-before:before, .nav-local-item.icon-manage_16_18-before:before, .icon-manage-lightblue_8_10, .icon-manage-lightblue_8_10-before:before, .icon-manage-white_blue_16_18, .icon-manage-white_blue_16_18-before:before, .nav-local-item.icon-manage_16_18-before.nav-local-item-active:before, .icon-manager-blue_16_18, .icon-manager-gray_16_18-before:hover:before, .icon-manager-lightblue_16_18-before:hover:before, .icon-manager-blue_16_18-before:before, .icon-manager-blue_32_34, .icon-manager-lightblue_32_34-before:hover:before, .icon-manager-gray_32_34-before:hover:before, .icon-manager-blue_32_34-before:before, .guides-list-item:hover .icon-manager-lightblue_32_34-before:before, .icon-manager-gray_16_18, .icon-manager-gray_16_18-before:before, .icon-manager-gray_32_34, .icon-manager-gray_32_34-before:before, .icon-manager-lightblue_16_18, .icon-manager-lightblue_16_18-before:before, .icon-manager-lightblue_32_34, .icon-manager-lightblue_32_34-before:before, .icon-manager-white_16_18, .icon-manager-white_16_18-before:before, .icon-manager-lightblue_16_18-before.nav-local-item-active:before, .icon-member-blue_16_18, .icon-member-lightblue_16_18-before:hover:before, .icon-member-gray_16_18-before:hover:before, .icon-member-blue_32_34, .icon-member-lightblue_32_34-before:hover:before, .icon-member-gray_32_34-before:hover:before, .guides-list-item:hover .icon-member-lightblue_32_34-before:before, .icon-member-gray_16_18, .icon-member-gray_16_18-before:before, .icon-member-gray_32_34, .icon-member-gray_32_34-before:before, .icon-member-lightblue_16_18, .icon-member-lightblue_16_18-before:before, .icon-member-lightblue_32_34, .icon-member-lightblue_32_34-before:before, .icon-member-white_blue_16_18, .icon-member-lightblue_16_18-before.nav-local-item-active:before, .icon-members-blue_16_18, .icon-members-lightblue_16_18-before:hover:before, .icon-members-gray_16_18-before:hover:before, .icon-members-gray_16_18, .icon-members-gray_16_18-before:before, .icon-members-lightblue_16_18, .icon-members-lightblue_16_18-before:before, .icon-members-white_blue_16_18, .icon-members-white_blue_16_18-before:before, .icon-message-blue_16_18, .icon-message-lightblue_16_18-before:hover:before, .list-button li:hover .icon-message-lightblue_16_18-before:before, .nav-local-item.icon-message_16_18-before:hover:before, .tabs .icon-message_16_18-before:hover:before, .icon-message-blue_32_34, .header-breadcrumb:hover .icon-message-gray_32_34-before:before, .icon-message-darkgray_32_34, .icon-message-darkgray_32_34-before:before, .icon-message-empty_128_130, .icon-message-gray_16_18, .icon-message-gray_16_18-before:before, .icon-message-gray_32_34, .icon-message-gray_32_34-before:before, .icon-message-lightblue_16_18, .icon-message-lightblue_16_18-before:before, .nav-local-item.icon-message_16_18-before:before, .tabs .icon-message_16_18-before:before, .icon-message-new-blue_16_18, .icon-message-new-lightblue_16_18-before:hover:before, .icon-message-new-lightblue_16_18, .icon-message-new-lightblue_16_18-before:before, .icon-message-new-white_blue_16_18, .icon-message-new-white_blue_16_18-before:before, .icon-message-white_blue_16_18, .icon-message-white_blue_16_18-before:before, .nav-local-item.icon-message_16_18-before.nav-local-item-active:before, .icon-mobile-blue_16_18, .list-button li:hover .icon-mobile-lightblue_16_18-before:before, .icon-mobile-darkgray_32_34, .icon-mobile-darkgray_32_34-before:before, .icon-mobile-lightblue_16_18, .icon-mobile-lightblue_16_18-before:before, .icon-notification-blue_16_18, .icon-notification-lightblue_16_18-before:hover:before, .icon-notification-gray_16_18, .icon-notification-gray_16_18-before:before, .icon-notification-lightblue_16_18, .icon-notification-lightblue_16_18-before:before, .icon-oer-blue_16_18, .icon-oer-lightblue_16_18-before:hover:before, .list-button li:hover .icon-oer-lightblue_16_18-before:before, .icon-oer-gray_16_18, .icon-oer-gray_16_18-before:before, .icon-oer-lightblue_16_18, .icon-oer-lightblue_16_18-before:before, .icon-partner-blue_16_18, .icon-partner-lightblue_16_18-before:hover:before, .icon-partner-lightblue_16_18, .icon-partner-lightblue_16_18-before:before, .icon-plan-blue_16_18, .icon-plan-lightblue_16_18-before:hover:before, .tabs .icon-plan_16_18-before:hover:before, .icon-plan-gray_16_18, .icon-plan-gray_16_18-before:before, .icon-plan-lightblue_16_18, .icon-plan-lightblue_16_18-before:before, .tabs .icon-plan_16_18-before:before, .icon-plans-empty_128_130, .icon-presentation-blue_16_18, .list-button li:hover .icon-presentation-lightblue_16_18-before:before, .icon-presentation-gray_16_18, .icon-presentation-lightblue_16_18, .icon-presentation-lightblue_16_18-before:before, .icon-privacy-policy-darkgray_32_34, .icon-privacy-policy-darkgray_32_34-before:before, .icon-private-blue_16_18, .icon-private-gray_16_18:hover,
-.icon-private-lightblue_16_18:hover, .icon-private-gray_16_18, .icon-private-lightblue_16_18, .icon-profile-2-blue_16_18, .icon-profile-2-lightblue_16_18-before:hover:before, .icon-profile-2-gray_16_18, .icon-profile-2-lightblue_16_18, .icon-profile-2-lightblue_16_18-before:before, .icon-profile-blue_16_18, .icon-profile-lightblue_16_18-before:hover:before, a:hover .icon-profile-gray_16_18,
+.button-default:hover .icon-magnifier-lightblue_16_18-before:before, .icon-magnifier-gray_16_18, .icon-magnifier-lightblue_16_18, .icon-magnifier-lightblue_16_18-before:before, .icon-manage-blue_16_18, .icon-manage-lightblue_16_18-before:hover:before, .list-button li:hover .icon-manage-lightblue_16_18-before:before, .nav-local-item.icon-manage_16_18-before:hover:before, .icon-manage-blue_32_34, .header-breadcrumb:hover .icon-manage-gray_32_34-before:before, .icon-manage-blue_8_10, .icon-manage-lightblue_8_10-before:hover:before, .icon-manage-gray_16_18, .icon-manage-gray_16_18-before:before, .icon-manage-gray_32_34, .icon-manage-gray_32_34-before:before, .icon-manage-lightblue_16_18, .icon-manage-lightblue_16_18-before:before, .nav-local-item.icon-manage_16_18-before:before, .icon-manage-lightblue_8_10, .icon-manage-lightblue_8_10-before:before, .icon-manage-white_blue_16_18, .icon-manage-white_blue_16_18-before:before, .nav-local-item.icon-manage_16_18-before.nav-local-item-active:before, .icon-manager-blue_16_18, .icon-manager-gray_16_18-before:hover:before, .icon-manager-lightblue_16_18-before:hover:before, .icon-manager-blue_16_18-before:before, .icon-manager-blue_32_34, .icon-manager-lightblue_32_34-before:hover:before, .icon-manager-gray_32_34-before:hover:before, .icon-manager-blue_32_34-before:before, .guides-list-item:hover .icon-manager-lightblue_32_34-before:before, .icon-manager-gray_16_18, .icon-manager-gray_16_18-before:before, .icon-manager-gray_32_34, .icon-manager-gray_32_34-before:before, .icon-manager-lightblue_16_18, .icon-manager-lightblue_16_18-before:before, .icon-manager-lightblue_32_34, .icon-manager-lightblue_32_34-before:before, .icon-manager-white_16_18, .icon-manager-white_16_18-before:before, .icon-manager-lightblue_16_18-before.nav-local-item-active:before, .icon-member-blue_16_18, .icon-member-lightblue_16_18-before:hover:before, .icon-member-gray_16_18-before:hover:before, .icon-member-blue_32_34, .icon-member-lightblue_32_34-before:hover:before, .icon-member-gray_32_34-before:hover:before, .guides-list-item:hover .icon-member-lightblue_32_34-before:before, .icon-member-empty_128_130, .icon-member-gray_16_18, .icon-member-gray_16_18-before:before, .icon-member-gray_32_34, .icon-member-gray_32_34-before:before, .icon-member-lightblue_16_18, .icon-member-lightblue_16_18-before:before, .icon-member-lightblue_32_34, .icon-member-lightblue_32_34-before:before, .icon-member-white_blue_16_18, .icon-member-lightblue_16_18-before.nav-local-item-active:before, .icon-members-blue_16_18, .icon-members-lightblue_16_18-before:hover:before, .icon-members-gray_16_18-before:hover:before, .nav-local-item.icon-members_16_18-before:hover:before, .icon-members-gray_16_18, .icon-members-gray_16_18-before:before, .icon-members-lightblue_16_18, .icon-members-lightblue_16_18-before:before, .nav-local-item.icon-members_16_18-before:before, .icon-members-white_blue_16_18, .icon-members-white_blue_16_18-before:before, .nav-local-item.icon-members_16_18-before.nav-local-item-active:before, .icon-message-blue_16_18, .icon-message-lightblue_16_18-before:hover:before, .list-button li:hover .icon-message-lightblue_16_18-before:before, .nav-local-item.icon-message_16_18-before:hover:before, .tabs .icon-message_16_18-before:hover:before, .icon-message-blue_32_34, .header-breadcrumb:hover .icon-message-gray_32_34-before:before, .icon-message-darkgray_32_34, .icon-message-darkgray_32_34-before:before, .icon-message-empty_128_130, .icon-message-gray_16_18, .icon-message-gray_16_18-before:before, .icon-message-gray_32_34, .icon-message-gray_32_34-before:before, .icon-message-lightblue_16_18, .icon-message-lightblue_16_18-before:before, .nav-local-item.icon-message_16_18-before:before, .tabs .icon-message_16_18-before:before, .icon-message-new-blue_16_18, .icon-message-new-lightblue_16_18-before:hover:before, .icon-message-new-lightblue_16_18, .icon-message-new-lightblue_16_18-before:before, .icon-message-new-white_blue_16_18, .icon-message-new-white_blue_16_18-before:before, .icon-message-white_blue_16_18, .icon-message-white_blue_16_18-before:before, .nav-local-item.icon-message_16_18-before.nav-local-item-active:before, .icon-mobile-blue_16_18, .list-button li:hover .icon-mobile-lightblue_16_18-before:before, .icon-mobile-darkgray_32_34, .icon-mobile-darkgray_32_34-before:before, .icon-mobile-lightblue_16_18, .icon-mobile-lightblue_16_18-before:before, .icon-moderated-green3_64_66, .icon-notification-blue_16_18, .icon-notification-lightblue_16_18-before:hover:before, .icon-notification-gray_16_18, .icon-notification-gray_16_18-before:before, .icon-notification-lightblue_16_18, .icon-notification-lightblue_16_18-before:before, .icon-oer-blue_16_18, .icon-oer-lightblue_16_18-before:hover:before, .list-button li:hover .icon-oer-lightblue_16_18-before:before, .icon-oer-gray_16_18, .icon-oer-gray_16_18-before:before, .icon-oer-lightblue_16_18, .icon-oer-lightblue_16_18-before:before, .icon-open-green3_64_66, .icon-partner-blue_16_18, .icon-partner-lightblue_16_18-before:hover:before, .icon-partner-lightblue_16_18, .icon-partner-lightblue_16_18-before:before, .icon-plan-blue_16_18, .icon-plan-lightblue_16_18-before:hover:before, .tabs .icon-plan_16_18-before:hover:before, .icon-plan-gray_16_18, .icon-plan-gray_16_18-before:before, .icon-plan-lightblue_16_18, .icon-plan-lightblue_16_18-before:before, .tabs .icon-plan_16_18-before:before, .icon-plans-empty_128_130, .icon-presentation-blue_16_18, .list-button li:hover .icon-presentation-lightblue_16_18-before:before, .icon-presentation-gray_16_18, .icon-presentation-lightblue_16_18, .icon-presentation-lightblue_16_18-before:before, .icon-privacy-policy-darkgray_32_34, .icon-privacy-policy-darkgray_32_34-before:before, .icon-private-blue_16_18, .icon-private-gray_16_18:hover,
+.icon-private-lightblue_16_18:hover, .icon-private-gray_16_18, .icon-private-green_16_18, .icon-private-lightblue_16_18, .icon-private-lightgray_128_130, .icon-private-red2_16_18, .icon-private-red2_64_66, .icon-profile-2-blue_16_18, .icon-profile-2-lightblue_16_18-before:hover:before, .icon-profile-2-gray_16_18, .icon-profile-2-lightblue_16_18, .icon-profile-2-lightblue_16_18-before:before, .icon-profile-blue_16_18, .icon-profile-lightblue_16_18-before:hover:before, a:hover .icon-profile-gray_16_18,
 .filter:hover .icon-profile-gray_16_18,
 .button-default:hover .icon-profile-gray_16_18, .nav-local-item.icon-profile_16_18-before:hover:before, .tabs .icon-profile_16_18-before:hover:before, .icon-profile-darkgray_32_34, .icon-profile-darkgray_32_34-before:before, .icon-profile-gray_16_18, .icon-profile-lightblue_16_18, .icon-profile-lightblue_16_18-before:before, .open .icon-profile-gray_16_18, .nav-local-item.icon-profile_16_18-before:before, .tabs .icon-profile_16_18-before:before, .icon-profile-white_blue_16_18, .nav-local-item.icon-profile_16_18-before.nav-local-item-active:before, .icon-redu-areas-gray_16_18, .icon-redu-areas-gray_16_18-before:before, .icon-reply-blue_8_10, .icon-reply-gray_8_10-before:hover:before, .icon-reply-gray_16_18, .icon-reply-gray_16_18-before:before, .icon-reply-gray_8_10, .icon-reply-gray_8_10-before:before, .icon-reply-lightblue_16_18, .icon-reply-gray_16_18-before:hover:before, .icon-reply-lightblue_16_18-before:before, .icon-reports-blue_16_18, .icon-reports-lightblue_16_18-before:hover:before, .list-button li:hover .icon-reports-lightblue_16_18-before:before, .icon-reports-gray_16_18, .icon-reports-gray_16_18-before:before, .icon-reports-lightblue_16_18, .icon-reports-lightblue_16_18-before:before, .icon-request-help-blue_16_18, .icon-request-help-lightblue_16_18-before:hover:before, a:hover .icon-request-help-lightblue_16_18, a:hover .icon-request-help-lightblue_16_18-before:before,
 .filter:hover .icon-request-help-lightblue_16_18,
@@ -2052,7 +2058,7 @@ a:hover .icon-space-lightblue_32_34-before:before,
 .button-default:hover .icon-space-gray_32_34,
 .button-default:hover .icon-space-gray_32_34-before:before,
 .button-default:hover .icon-space-lightblue_32_34,
-.button-default:hover .icon-space-lightblue_32_34-before:before, .icon-space-gray_16_18, .icon-space-gray_16_18-before:before, .icon-space-gray_32_34, .icon-space-gray_32_34-before:before, .icon-space-lightblue_16_18, .icon-space-lightblue_16_18-before:before, .icon-space-lightblue_32_34, .icon-space-lightblue_32_34-before:before, .icon-space-lightgray_32_34, .icon-space-lightgray_32_34-before:before, .icon-specialist-gray_16_18, .icon-specialist-gray_16_18-before:before, .icon-specialist-gray_32_34, .icon-specialist-gray_32_34-before:before, .icon-specialist-white_blue_32_34, .icon-specialist-white_blue_32_34-before:before, .icon-star-empty-gray_16_18, .icon-star-empty-gray_16_18-before:before, .icon-star-empty-gray_8_10, .icon-star-full-blue_16_18, .icon-star-full-gray_16_18, .icon-star-full-gray_8_10, .icon-star-full-lightblue_16_18, .icon-star-full-lightgray_16_18, .icon-subject-blue_16_18, .filter:hover .icon-subject-lightblue_16_18-before:before, .icon-subject-lightblue_16_18-before:hover:before, .list-button li:hover .icon-subject-lightblue_16_18-before:before, .icon-subject-blue_32_34, .icon-subject-gray_32_34-before:hover:before,
+.button-default:hover .icon-space-lightblue_32_34-before:before, .icon-space-empty_128_130, .icon-space-gray_16_18, .icon-space-gray_16_18-before:before, .icon-space-gray_32_34, .icon-space-gray_32_34-before:before, .icon-space-lightblue_16_18, .icon-space-lightblue_16_18-before:before, .icon-space-lightblue_32_34, .icon-space-lightblue_32_34-before:before, .icon-space-lightgray_32_34, .icon-space-lightgray_32_34-before:before, .icon-space-white_64, .icon-specialist-gray_16_18, .icon-specialist-gray_16_18-before:before, .icon-specialist-gray_32_34, .icon-specialist-gray_32_34-before:before, .icon-specialist-white_blue_32_34, .icon-specialist-white_blue_32_34-before:before, .icon-star-empty-gray_16_18, .icon-star-empty-gray_16_18-before:before, .icon-star-empty-gray_8_10, .icon-star-full-blue_16_18, .icon-star-full-gray_16_18, .icon-star-full-gray_8_10, .icon-star-full-lightblue_16_18, .icon-star-full-lightgray_16_18, .icon-subject-blue_16_18, .filter:hover .icon-subject-lightblue_16_18-before:before, .icon-subject-lightblue_16_18-before:hover:before, .list-button li:hover .icon-subject-lightblue_16_18-before:before, .nav-local-item.icon-subject_16_18-before:hover:before, .icon-subject-blue_32_34, .icon-subject-gray_32_34-before:hover:before,
 .icon-subject-lightblue_32_34-before:hover:before, .icon-subject-blue_32_34-before, a:hover .icon-subject-gray_32_34, a:hover .icon-subject-gray_32_34-before:before,
 a:hover .icon-subject-lightblue_32_34,
 a:hover .icon-subject-lightblue_32_34-before:before,
@@ -2063,9 +2069,9 @@ a:hover .icon-subject-lightblue_32_34-before:before,
 .button-default:hover .icon-subject-gray_32_34,
 .button-default:hover .icon-subject-gray_32_34-before:before,
 .button-default:hover .icon-subject-lightblue_32_34,
-.button-default:hover .icon-subject-lightblue_32_34-before:before, .icon-subject-gray_16_18, .icon-subject-gray_16_18-before:before, .icon-subject-gray_32_34, .icon-subject-gray_32_34-before:before, .icon-subject-lightblue_16_18, .icon-subject-lightblue_16_18-before:before, .icon-subject-lightblue_32_34, .icon-subject-lightblue_32_34-before:before, .icon-subject-lightgray_32_34, .icon-subject-lightgray_32_34-before:before, .icon-subject-white_blue_16_18, .icon-subject-white_blue_16_18-before:before, .icon-support-blue_16_18, .icon-support-lightblue_16_18-before:hover:before, .list-button li:hover .icon-support-lightblue_16_18-before:before, .icon-support-lightblue_16_18, .icon-support-lightblue_16_18-before:before, .icon-tag-blue_16_18, .icon-tag-gray_16_18:hover,
-.icon-tag-lightblue_16_18:hover, .icon-tag-gray_16_18, .icon-tag-lightblue_16_18, .icon-talk-to-us-green_48_50, .icon-talk-to-us-green_48_50-before:before, .icon-teacher-blue_16_18, .icon-teacher-lightblue_16_18-before:hover:before, .icon-teacher-gray_16_18-before:hover:before, .icon-teacher-blue_32_34, .icon-teacher-lightblue_32_34-before:hover:before, .icon-teacher-gray_32_34-before:hover:before, .guides-list-item:hover .icon-teacher-lightblue_32_34-before:before, .icon-teacher-gray_16_18, .icon-teacher-gray_16_18-before:before, .icon-teacher-gray_32_34, .icon-teacher-gray_32_34-before:before, .icon-teacher-lightblue_16_18, .icon-teacher-lightblue_16_18-before:before, .icon-teacher-lightblue_32_34, .icon-teacher-lightblue_32_34-before:before, .icon-teacher-white_16_18, .icon-teacher-white_16_18-before:before, .icon-teacher-lightblue_16_18-before.nav-local-item-active:before, .icon-terms-of-service-darkgray_32_34, .icon-terms-of-service-darkgray_32_34-before:before, .icon-text-page-blue_16_18, .list-button li:hover .icon-text-page-lightblue_16_18-before:before, .icon-text-page-gray_16_18, .icon-text-page-lightblue_16_18, .icon-text-page-lightblue_16_18-before:before, .icon-tour-blue_16_18, .icon-tour-lightblue_16_18-before:hover:before, .icon-tour-lightblue_16_18, .icon-tour-lightblue_16_18-before:before, .icon-tour-white_16_18, .icon-tour-white_16_18-before:before, .icon-tutor-blue_16_18, .icon-tutor-lightblue_16_18-before:hover:before, .icon-tutor-gray_16_18, .icon-tutor-gray_16_18-before:before, .icon-tutor-lightblue_16_18, .icon-tutor-lightblue_16_18-before:before, .icon-video-blue_16_18, .list-button li:hover .icon-video-lightblue_16_18-before:before, .icon-video-gray_16_18-before:hover:before, .icon-video-gray_16_18, .icon-video-gray_16_18-before:before, .icon-video-lightblue_16_18, .icon-video-lightblue_16_18-before:before, .icon-wall-blue_16_18, .filter:hover .icon-wall-lightblue_16_18-before:before, .icon-wall-gray_16_18-before:hover:before, .icon-wall-lightblue_16_18-before:hover:before, .list-button li:hover .icon-wall-lightblue_16_18-before:before, .nav-local-item.icon-wall_16_18-before:hover:before, .icon-wall-blue_32_34, .icon-wall-gray_32_34-before:hover:before, .icon-wall-gray_16_18, .icon-wall-gray_16_18-before:before, .icon-wall-gray_32_34, .icon-wall-gray_32_34-before:before, .icon-wall-lightblue_16_18, .icon-wall-lightblue_16_18-before:before, .nav-local-item.icon-wall_16_18-before:before, .icon-wall-white_blue_16_18, .icon-wall-white_blue_16_18-before:before, .nav-local-item.icon-wall_16_18-before.nav-local-item-active:before, .icon-wiki-blue_16_18, .icon-wiki-lightblue_16_18-before:hover:before, .icon-wiki-lightblue_16_18, .icon-wiki-lightblue_16_18-before:before, .icon-wiki-white_blue_16_18, .icon-wiki-white_blue_16_18-before:before, .icon-environment-gray_16_18-before:before, .icon-profile-gray_16_18-before:before, .icon-description-gray_16_18-before:before, .icon-tag-gray_16_18-before:before, .button-disabled .icon-close-gray_8_10:hover, .button-disabled .icon-close-gray_8_10-before:hover:before, .icon-favorite-gray_32_34-before:hover:before, .icon-basic-guide-gray_16_18-before:before {
-  background-image: image-url('icon-s2a1bc3e499.png');
+.button-default:hover .icon-subject-lightblue_32_34-before:before, .icon-subject-empty_128_130, .icon-subject-gray_16_18, .icon-subject-gray_16_18-before:before, .icon-subject-gray_32_34, .icon-subject-gray_32_34-before:before, .icon-subject-lightblue_16_18, .icon-subject-lightblue_16_18-before:before, .nav-local-item.icon-subject_16_18-before:before, .icon-subject-lightblue_32_34, .icon-subject-lightblue_32_34-before:before, .icon-subject-lightgray_32_34, .icon-subject-lightgray_32_34-before:before, .icon-subject-white_blue_16_18, .icon-subject-white_blue_16_18-before:before, .nav-local-item.icon-subject_16_18-before.nav-local-item-active:before, .icon-support-blue_16_18, .icon-support-lightblue_16_18-before:hover:before, .list-button li:hover .icon-support-lightblue_16_18-before:before, .icon-support-lightblue_16_18, .icon-support-lightblue_16_18-before:before, .icon-tag-blue_16_18, .icon-tag-gray_16_18:hover,
+.icon-tag-lightblue_16_18:hover, .icon-tag-gray_16_18, .icon-tag-lightblue_16_18, .icon-talk-to-us-green_48_50, .icon-talk-to-us-green_48_50-before:before, .icon-teacher-blue_16_18, .icon-teacher-lightblue_16_18-before:hover:before, .icon-teacher-gray_16_18-before:hover:before, .icon-teacher-blue_32_34, .icon-teacher-lightblue_32_34-before:hover:before, .icon-teacher-gray_32_34-before:hover:before, .guides-list-item:hover .icon-teacher-lightblue_32_34-before:before, .icon-teacher-empty_128_130, .icon-teacher-gray_16_18, .icon-teacher-gray_16_18-before:before, .icon-teacher-gray_32_34, .icon-teacher-gray_32_34-before:before, .icon-teacher-lightblue_16_18, .icon-teacher-lightblue_16_18-before:before, .icon-teacher-lightblue_32_34, .icon-teacher-lightblue_32_34-before:before, .icon-teacher-white_16_18, .icon-teacher-white_16_18-before:before, .icon-teacher-lightblue_16_18-before.nav-local-item-active:before, .icon-terms-of-service-darkgray_32_34, .icon-terms-of-service-darkgray_32_34-before:before, .icon-text-page-blue_16_18, .list-button li:hover .icon-text-page-lightblue_16_18-before:before, .icon-text-page-gray_16_18, .icon-text-page-lightblue_16_18, .icon-text-page-lightblue_16_18-before:before, .icon-tour-blue_16_18, .icon-tour-lightblue_16_18-before:hover:before, .icon-tour-lightblue_16_18, .icon-tour-lightblue_16_18-before:before, .icon-tour-white_16_18, .icon-tour-white_16_18-before:before, .icon-tutor-blue_16_18, .icon-tutor-lightblue_16_18-before:hover:before, .icon-tutor-empty_128_130, .icon-tutor-gray_16_18, .icon-tutor-gray_16_18-before:before, .icon-tutor-lightblue_16_18, .icon-tutor-lightblue_16_18-before:before, .icon-video-blue_16_18, .list-button li:hover .icon-video-lightblue_16_18-before:before, .icon-video-gray_16_18-before:hover:before, .icon-video-gray_16_18, .icon-video-gray_16_18-before:before, .icon-video-lightblue_16_18, .icon-video-lightblue_16_18-before:before, .icon-visible-lightgray_16_18, .icon-wall-blue_16_18, .filter:hover .icon-wall-lightblue_16_18-before:before, .icon-wall-gray_16_18-before:hover:before, .icon-wall-lightblue_16_18-before:hover:before, .list-button li:hover .icon-wall-lightblue_16_18-before:before, .nav-local-item.icon-wall_16_18-before:hover:before, .icon-wall-blue_32_34, .icon-wall-gray_32_34-before:hover:before, .icon-wall-gray_16_18, .icon-wall-gray_16_18-before:before, .icon-wall-gray_32_34, .icon-wall-gray_32_34-before:before, .icon-wall-lightblue_16_18, .icon-wall-lightblue_16_18-before:before, .nav-local-item.icon-wall_16_18-before:before, .icon-wall-white_blue_16_18, .icon-wall-white_blue_16_18-before:before, .nav-local-item.icon-wall_16_18-before.nav-local-item-active:before, .icon-wiki-blue_16_18, .icon-wiki-lightblue_16_18-before:hover:before, .icon-wiki-lightblue_16_18, .icon-wiki-lightblue_16_18-before:before, .icon-wiki-white_blue_16_18, .icon-wiki-white_blue_16_18-before:before, .icon-environment-gray_16_18-before:before, .icon-profile-gray_16_18-before:before, .icon-description-gray_16_18-before:before, .icon-tag-gray_16_18-before:before, .button-disabled .icon-close-gray_8_10:hover, .button-disabled .icon-close-gray_8_10-before:hover:before, .icon-favorite-gray_32_34-before:hover:before, .icon-basic-guide-gray_16_18-before:before {
+  background-image: image-url('icon-s95d94da2ba.png');
   background-repeat: no-repeat;
 }
 
@@ -2076,55 +2082,55 @@ a:hover .icon-subject-lightblue_32_34-before:before,
 }
 
 .icon-account-gray_16_18, .icon-account-gray_16_18-before:before {
-  background-position: -16px -387px;
+  background-position: -80px -351px;
   height: 18px;
   width: 16px;
 }
 
 .icon-account-lightblue_16_18, .icon-account-lightblue_16_18-before:before, .tabs .icon-account_16_18-before:before {
-  background-position: -128px -333px;
+  background-position: -96px -333px;
   height: 18px;
   width: 16px;
 }
 
 .icon-add-friend-darkgray_32_34 {
-  background-position: -32px -831px;
+  background-position: -32px -625px;
   height: 34px;
   width: 32px;
 }
 
 .icon-add-friend-green_32_34, .icon-add-friend-green_32_34-before:before {
-  background-position: -64px -491px;
+  background-position: 0 -795px;
   height: 34px;
   width: 32px;
 }
 
 .icon-app-black_16_18, .icon-app-black_16_18-before:before {
-  background-position: -64px -225px;
+  background-position: -32px -225px;
   height: 18px;
   width: 16px;
 }
 
 .icon-app-blue_16_18, .icon-app-lightblue_16_18-before:hover:before, .list-button li:hover .icon-app-lightblue_16_18-before:before {
-  background-position: -112px -207px;
+  background-position: -96px -207px;
   height: 18px;
   width: 16px;
 }
 
 .icon-app-blue_32_34, .icon-app-lightblue_32_34-before:hover:before, .icon-app-gray_32_34-before:hover:before, .guides-list-item:hover .icon-app-lightblue_32_34-before:before {
-  background-position: 0 -525px;
+  background-position: -43px -489px;
   height: 34px;
   width: 32px;
 }
 
 .icon-app-gray_16_18, .icon-app-gray_16_18-before:before {
-  background-position: -48px -171px;
+  background-position: 0 -153px;
   height: 18px;
   width: 16px;
 }
 
 .icon-app-gray_32_34, .icon-app-gray_32_34-before:before {
-  background-position: -96px -525px;
+  background-position: 0 -455px;
   height: 34px;
   width: 32px;
 }
@@ -2136,7 +2142,7 @@ a:hover .icon-subject-lightblue_32_34-before:before,
 }
 
 .icon-app-lightblue_32_34, .icon-app-lightblue_32_34-before:before {
-  background-position: -128px -525px;
+  background-position: -32px -455px;
   height: 34px;
   width: 32px;
 }
@@ -2154,13 +2160,13 @@ a:hover .icon-subject-lightblue_32_34-before:before,
 }
 
 .icon-apps-portal-blue_48_50, .icon-apps-portal-gray_48_50-before:hover:before {
-  background-position: 0 -1099px;
+  background-position: -48px -1031px;
   height: 50px;
   width: 48px;
 }
 
 .icon-apps-portal-gray_48_50, .icon-apps-portal-gray_48_50-before:before {
-  background-position: 0 -1033px;
+  background-position: 0 -1031px;
   height: 50px;
   width: 48px;
 }
@@ -2252,7 +2258,7 @@ a:hover .icon-arrow-down-gray_8_10,
 .filter:hover .icon-arrow-right-lightblue_16_18-before:before,
 .button-default:hover .icon-arrow-right-lightblue_16_18,
 .button-default:hover .icon-arrow-right-lightblue_16_18-before:before {
-  background-position: 0 -387px;
+  background-position: 0 -369px;
   height: 18px;
   width: 16px;
 }
@@ -2286,13 +2292,13 @@ a:hover .icon-arrow-down-gray_8_10,
 }
 
 .icon-arrow-right-nav-local-blue_11_32, .icon-arrow-right-nav-local-lightblue_11_32-after:hover:after {
-  background-position: -80px -423px;
+  background-position: -144px -423px;
   height: 32px;
   width: 11px;
 }
 
 .icon-arrow-right-nav-local-lightblue_11_32, .icon-arrow-right-nav-local-lightblue_11_32-after:after {
-  background-position: -91px -423px;
+  background-position: 0 -489px;
   height: 32px;
   width: 11px;
 }
@@ -2365,19 +2371,19 @@ a:hover .icon-arrow-down-gray_8_10,
 .icon-basic-guide-blue_16_18, a:hover .icon-basic-guide-gray_16_18,
 .filter:hover .icon-basic-guide-gray_16_18,
 .button-default:hover .icon-basic-guide-gray_16_18, .icon-basic-guide-lightblue_16_18-before:hover:before, .icon-basic-guide-blue_16_18-before:before {
-  background-position: -96px -45px;
+  background-position: -128px -423px;
   height: 18px;
   width: 16px;
 }
 
 .icon-basic-guide-blue_32_34, .icon-basic-guide-lightblue_32_34-before:hover:before, .icon-basic-guide-gray_32_34-before:hover:before {
-  background-position: -96px -593px;
+  background-position: -64px -625px;
   height: 34px;
   width: 32px;
 }
 
 .icon-basic-guide-dark_green_32_34, .icon-basic-guide-dark_green_32_34-before:before, .guides-list-item:hover .icon-basic-guide-green_32_34-before:before {
-  background-position: -128px -593px;
+  background-position: -96px -591px;
   height: 34px;
   width: 32px;
 }
@@ -2389,13 +2395,13 @@ a:hover .icon-arrow-down-gray_8_10,
 }
 
 .icon-basic-guide-gray_32_34, .icon-basic-guide-gray_32_34-before:before {
-  background-position: -128px -729px;
+  background-position: -128px -591px;
   height: 34px;
   width: 32px;
 }
 
 .icon-basic-guide-green_32_34, .icon-basic-guide-green_32_34-before:before {
-  background-position: -128px -763px;
+  background-position: -96px -625px;
   height: 34px;
   width: 32px;
 }
@@ -2407,7 +2413,7 @@ a:hover .icon-arrow-down-gray_8_10,
 }
 
 .icon-basic-guide-lightblue_32_34, .icon-basic-guide-lightblue_32_34-before:before {
-  background-position: 0 -797px;
+  background-position: -128px -625px;
   height: 34px;
   width: 32px;
 }
@@ -2443,7 +2449,7 @@ a:hover .icon-arrow-down-gray_8_10,
 }
 
 .icon-biography-lightblue_32_34 {
-  background-position: -96px -831px;
+  background-position: 0 -693px;
   height: 34px;
   width: 32px;
 }
@@ -2551,19 +2557,19 @@ a:hover .icon-arrow-down-gray_8_10,
 }
 
 .icon-comment-white_blue_32_34, .icon-comment-white_blue_32_34-before:before {
-  background-position: -32px -865px;
+  background-position: -64px -693px;
   height: 34px;
   width: 32px;
 }
 
 .icon-connections-blue_32_34, .icon-connections-gray_32_34:hover, .icon-connections-gray_32_34-before:hover:before {
-  background-position: -128px -899px;
+  background-position: -64px -659px;
   height: 34px;
   width: 32px;
 }
 
 .icon-connections-gray_32_34, .icon-connections-gray_32_34-before:before {
-  background-position: -96px -899px;
+  background-position: -96px -659px;
   height: 34px;
   width: 32px;
 }
@@ -2660,39 +2666,51 @@ a:hover .icon-course-lightblue_32_34-before:before,
 .button-default:hover .icon-course-gray_32_34-before:before,
 .button-default:hover .icon-course-lightblue_32_34,
 .button-default:hover .icon-course-lightblue_32_34-before:before {
-  background-position: -128px -865px;
+  background-position: 0 -761px;
   height: 34px;
   width: 32px;
 }
 
+.icon-course-empty_128_130 {
+  background-position: 0 -2983px;
+  height: 130px;
+  width: 128px;
+}
+
 .icon-course-gray_16_18, .icon-course-gray_16_18-before:before {
-  background-position: -128px -135px;
+  background-position: -144px -135px;
   height: 18px;
   width: 16px;
 }
 
 .icon-course-gray_32_34, .icon-course-gray_32_34-before:before {
-  background-position: -64px -865px;
+  background-position: -128px -795px;
   height: 34px;
   width: 32px;
 }
 
 .icon-course-lightblue_16_18, .icon-course-lightblue_16_18-before:before {
-  background-position: 0 -171px;
+  background-position: -16px -171px;
   height: 18px;
   width: 16px;
 }
 
 .icon-course-lightblue_32_34, .icon-course-lightblue_32_34-before:before {
-  background-position: 0 -865px;
+  background-position: -64px -981px;
   height: 34px;
   width: 32px;
 }
 
 .icon-course-lightgray_32_34, .icon-course-lightgray_32_34-before:before {
-  background-position: -32px -899px;
+  background-position: -32px -981px;
   height: 34px;
   width: 32px;
+}
+
+.icon-course-white_64 {
+  background-position: 0 -1225px;
+  height: 64px;
+  width: 64px;
 }
 
 .icon-curriculum-academic-gray_8_10, .icon-curriculum-academic-gray_8_10-before:before {
@@ -2702,31 +2720,31 @@ a:hover .icon-course-lightblue_32_34-before:before,
 }
 
 .icon-curriculum-academic-lightblue_32_34, .icon-curriculum-academic-lightblue_32_34-before:before {
-  background-position: -128px -831px;
+  background-position: 0 -981px;
   height: 34px;
   width: 32px;
 }
 
 .icon-curriculum-blue_16_18, .icon-curriculum-lightblue_16_18-before:hover:before, .list-button li:hover .icon-curriculum-lightblue_16_18-before:before, .tab-buttons .icon-curriculum_16_18-before:hover:before {
-  background-position: 0 -153px;
-  height: 18px;
-  width: 16px;
-}
-
-.icon-curriculum-darkgray_32_34, .icon-curriculum-darkgray_32_34-before:before {
-  background-position: -128px -797px;
-  height: 34px;
-  width: 32px;
-}
-
-.icon-curriculum-gray_16_18, .icon-curriculum-gray_16_18-before:before {
   background-position: -32px -153px;
   height: 18px;
   width: 16px;
 }
 
+.icon-curriculum-darkgray_32_34, .icon-curriculum-darkgray_32_34-before:before {
+  background-position: -128px -897px;
+  height: 34px;
+  width: 32px;
+}
+
+.icon-curriculum-gray_16_18, .icon-curriculum-gray_16_18-before:before {
+  background-position: -64px -153px;
+  height: 18px;
+  width: 16px;
+}
+
 .icon-curriculum-lightblue_16_18, .icon-curriculum-lightblue_16_18-before:before, .tab-buttons .icon-curriculum_16_18-before:before {
-  background-position: -48px -153px;
+  background-position: -80px -153px;
   height: 18px;
   width: 16px;
 }
@@ -2738,56 +2756,56 @@ a:hover .icon-course-lightblue_32_34-before:before,
 }
 
 .icon-curriculum-professional-lightblue_32_34, .icon-curriculum-professional-lightblue_32_34-before:before {
-  background-position: -96px -797px;
+  background-position: -96px -897px;
   height: 34px;
   width: 32px;
 }
 
 .icon-curriculum-white_blue_16_18, .icon-curriculum-white_blue_16_18-before:before, .tab-buttons .icon-curriculum_16_18-before.tab-button-active:before, .tab-buttons .icon-curriculum_16_18-before.tab-button-active:hover:before {
-  background-position: -96px -153px;
+  background-position: -128px -153px;
   height: 18px;
   width: 16px;
 }
 
 .icon-description-blue_16_18, .icon-description-gray_16_18:hover,
 .icon-description-lightblue_16_18:hover {
-  background-position: -112px -153px;
-  height: 18px;
-  width: 16px;
-}
-
-.icon-description-gray_16_18 {
-  background-position: -128px -153px;
-  height: 18px;
-  width: 16px;
-}
-
-.icon-description-lightblue_16_18 {
   background-position: -144px -153px;
   height: 18px;
   width: 16px;
 }
 
-.icon-doubt-topic-blue_16_18, .icon-doubt-topic-lightblue_16_18-before:hover:before {
+.icon-description-gray_16_18 {
   background-position: -80px -171px;
   height: 18px;
   width: 16px;
 }
 
-.icon-doubt-topic-gray_16_18, .icon-doubt-topic-gray_16_18-before:before {
+.icon-description-lightblue_16_18 {
   background-position: -96px -171px;
   height: 18px;
   width: 16px;
 }
 
-.icon-doubt-topic-lightblue_16_18, .icon-doubt-topic-lightblue_16_18-before:before {
+.icon-doubt-topic-blue_16_18, .icon-doubt-topic-lightblue_16_18-before:hover:before {
   background-position: -112px -171px;
   height: 18px;
   width: 16px;
 }
 
-.icon-environment-black_16_18, .icon-environment-black_16_18-before:before {
+.icon-doubt-topic-gray_16_18, .icon-doubt-topic-gray_16_18-before:before {
   background-position: -128px -171px;
+  height: 18px;
+  width: 16px;
+}
+
+.icon-doubt-topic-lightblue_16_18, .icon-doubt-topic-lightblue_16_18-before:before {
+  background-position: -144px -171px;
+  height: 18px;
+  width: 16px;
+}
+
+.icon-environment-black_16_18, .icon-environment-black_16_18-before:before {
+  background-position: 0 -207px;
   height: 18px;
   width: 16px;
 }
@@ -2797,400 +2815,418 @@ a:hover .icon-course-lightblue_32_34-before:before,
 .header-item:hover .icon-environment-lightblue_16_18-before:before, a:hover .icon-environment-gray_16_18,
 .filter:hover .icon-environment-gray_16_18,
 .button-default:hover .icon-environment-gray_16_18, .nav-local-item.icon-environment_16_18-before:hover:before {
-  background-position: -144px -171px;
+  background-position: -16px -207px;
   height: 18px;
   width: 16px;
 }
 
 .icon-environment-blue_32_34, .icon-environment-lightblue_32_34-before:hover:before,
 .breadcrumb-icon-link .icon-environment-gray_32_34-before:hover:before {
-  background-position: -64px -797px;
+  background-position: -128px -863px;
   height: 34px;
   width: 32px;
 }
 
 .icon-environment-breadcrumb-blue_16_18, .icon-environment-breadcrumb-lightblue_16_18-before:hover:before {
-  background-position: -16px -207px;
-  height: 18px;
-  width: 16px;
-}
-
-.icon-environment-breadcrumb-lightblue_16_18, .icon-environment-breadcrumb-lightblue_16_18-before:before {
-  background-position: -32px -207px;
-  height: 18px;
-  width: 16px;
-}
-
-.icon-environment-circle-blue_16_18, .icon-environment-circle-lightblue_16_18-before:hover:before {
   background-position: -48px -207px;
   height: 18px;
   width: 16px;
 }
 
+.icon-environment-breadcrumb-lightblue_16_18, .icon-environment-breadcrumb-lightblue_16_18-before:before {
+  background-position: -64px -207px;
+  height: 18px;
+  width: 16px;
+}
+
+.icon-environment-circle-blue_16_18, .icon-environment-circle-lightblue_16_18-before:hover:before {
+  background-position: 0 -189px;
+  height: 18px;
+  width: 16px;
+}
+
 .icon-environment-circle-blue_32_34 {
-  background-position: -32px -797px;
+  background-position: -96px -863px;
   height: 34px;
   width: 32px;
 }
 
 .icon-environment-circle-blue_48_50, .icon-environment-circle-gray_48_50-before:hover:before {
-  background-position: 0 -933px;
+  background-position: -96px -981px;
   height: 50px;
   width: 48px;
 }
 
 .icon-environment-circle-gray_32_34 {
-  background-position: -64px -831px;
+  background-position: -64px -897px;
   height: 34px;
   width: 32px;
 }
 
 .icon-environment-circle-gray_48_50, .icon-environment-circle-gray_48_50-before:before {
-  background-position: -48px -933px;
+  background-position: 0 -1095px;
   height: 50px;
   width: 48px;
 }
 
 .icon-environment-circle-lightblue_16_18, .icon-environment-circle-lightblue_16_18-before:before {
-  background-position: -48px -189px;
-  height: 18px;
-  width: 16px;
-}
-
-.icon-environment-empty_128_130 {
-  background-position: 0 -1605px;
-  height: 130px;
-  width: 128px;
-}
-
-.icon-environment-gray_16_18 {
   background-position: -80px -189px;
   height: 18px;
   width: 16px;
 }
 
-.icon-environment-gray_32_34, .icon-environment-gray_32_34-before:before {
-  background-position: -64px -729px;
-  height: 34px;
-  width: 32px;
+.icon-environment-empty_128_130 {
+  background-position: 0 -2593px;
+  height: 130px;
+  width: 128px;
 }
 
-.icon-environment-lightblue_16_18, .icon-environment-lightblue_16_18-before:before, .open .icon-environment-gray_16_18, .icon-environment-round-lightblue_16_18-before:before, .nav-local-item.icon-environment_16_18-before:before {
+.icon-environment-gray_16_18 {
   background-position: -112px -189px;
   height: 18px;
   width: 16px;
 }
 
+.icon-environment-gray_32_34, .icon-environment-gray_32_34-before:before {
+  background-position: -96px -795px;
+  height: 34px;
+  width: 32px;
+}
+
+.icon-environment-lightblue_16_18, .icon-environment-lightblue_16_18-before:before, .open .icon-environment-gray_16_18, .icon-environment-round-lightblue_16_18-before:before, .nav-local-item.icon-environment_16_18-before:before {
+  background-position: -144px -189px;
+  height: 18px;
+  width: 16px;
+}
+
 .icon-environment-lightblue_32_34, .icon-environment-lightblue_32_34-before:before, .list-mix li.icon-environment-gray_32_34-before:hover:before {
-  background-position: -32px -729px;
+  background-position: -64px -795px;
   height: 34px;
   width: 32px;
 }
 
 .icon-environment-lightgray_32_34, .icon-environment-lightgray_32_34-before:before {
-  background-position: 0 -729px;
+  background-position: -32px -795px;
   height: 34px;
   width: 32px;
 }
 
 .icon-environment-round-black_16_18 {
-  background-position: -80px -207px;
+  background-position: -112px -207px;
   height: 18px;
   width: 16px;
 }
 
 .icon-environment-round-blue_16_18, .icon-environment-round-lightblue_16_18-before:hover:before {
-  background-position: -96px -207px;
+  background-position: -128px -207px;
   height: 18px;
   width: 16px;
 }
 
 .icon-environment-round-blue_32_34, .icon-environment-round-gray_32_34-before:hover:before {
-  background-position: -64px -763px;
+  background-position: -11px -489px;
   height: 34px;
   width: 32px;
 }
 
 .icon-environment-round-gray_32_34, .icon-environment-round-gray_32_34-before:before {
-  background-position: -32px -763px;
+  background-position: -64px -829px;
   height: 34px;
   width: 32px;
 }
 
 .icon-environment-round-lightblue_16_18 {
-  background-position: -144px -207px;
-  height: 18px;
-  width: 16px;
-}
-
-.icon-environment-white_blue_16_18, .icon-environment-white_blue_16_18-before:before, .nav-local-item.icon-environment_16_18-before.nav-local-item-active:before {
-  background-position: 0 -243px;
-  height: 18px;
-  width: 16px;
-}
-
-.icon-exercise-blue_16_18, .list-button li:hover .icon-exercise-lightblue_16_18-before:before {
   background-position: -16px -243px;
   height: 18px;
   width: 16px;
 }
 
-.icon-exercise-gray_16_18, .icon-exercise-gray_16_18-before:before {
+.icon-environment-white_blue_16_18, .icon-environment-white_blue_16_18-before:before, .nav-local-item.icon-environment_16_18-before.nav-local-item-active:before {
   background-position: -32px -243px;
   height: 18px;
   width: 16px;
 }
 
-.icon-exercise-lightblue_16_18, .icon-exercise-lightblue_16_18-before:before {
+.icon-exercise-blue_16_18, .list-button li:hover .icon-exercise-lightblue_16_18-before:before {
   background-position: -48px -243px;
   height: 18px;
   width: 16px;
 }
 
-.icon-favorite-blue_16_18, .icon-favorite-lightblue_16_18-before:hover:before {
+.icon-exercise-gray_16_18, .icon-exercise-gray_16_18-before:before {
   background-position: -64px -243px;
   height: 18px;
   width: 16px;
 }
 
-.icon-favorite-blue_32_34, .icon-favorite-blue_32_34-before:before {
-  background-position: 0 -763px;
-  height: 34px;
-  width: 32px;
+.icon-exercise-lightblue_16_18, .icon-exercise-lightblue_16_18-before:before {
+  background-position: 0 -225px;
+  height: 18px;
+  width: 16px;
 }
 
-.icon-favorite-delete-blue_16_18, .icon-favorite-delete-lightblue_16_18-before:hover:before {
+.icon-favorite-blue_16_18, .icon-favorite-lightblue_16_18-before:hover:before {
   background-position: -16px -225px;
   height: 18px;
   width: 16px;
 }
 
-.icon-favorite-delete-lightblue_16_18, .icon-favorite-delete-lightblue_16_18-before:before {
-  background-position: -32px -225px;
-  height: 18px;
-  width: 16px;
+.icon-favorite-blue_32_34, .icon-favorite-blue_32_34-before:before {
+  background-position: -32px -829px;
+  height: 34px;
+  width: 32px;
 }
 
-.icon-favorite-gray_16_18, .icon-favorite-gray_16_18-before:before {
+.icon-favorite-delete-blue_16_18, .icon-favorite-delete-lightblue_16_18-before:hover:before {
   background-position: -48px -225px;
   height: 18px;
   width: 16px;
 }
 
-.icon-favorite-gray_32_34, .icon-favorite-gray_32_34-before:before {
-  background-position: -128px -695px;
-  height: 34px;
-  width: 32px;
+.icon-favorite-delete-lightblue_16_18, .icon-favorite-delete-lightblue_16_18-before:before {
+  background-position: -64px -225px;
+  height: 18px;
+  width: 16px;
 }
 
-.icon-favorite-lightblue_16_18, .icon-favorite-lightblue_16_18-before:before {
+.icon-favorite-gray_16_18, .icon-favorite-gray_16_18-before:before {
   background-position: -80px -225px;
   height: 18px;
   width: 16px;
 }
 
-.icon-favorite-white_blue_16_18 {
-  background-position: -96px -225px;
-  height: 18px;
-  width: 16px;
-}
-
-.icon-feel-supported-gray_32_34, .icon-feel-supported-gray_32_34-before:before {
-  background-position: -96px -695px;
+.icon-favorite-gray_32_34, .icon-favorite-gray_32_34-before:before {
+  background-position: 0 -829px;
   height: 34px;
   width: 32px;
 }
 
-.icon-file-blue_16_18, .icon-file-lightblue_16_18-before:hover:before {
+.icon-favorite-lightblue_16_18, .icon-favorite-lightblue_16_18-before:before {
+  background-position: -112px -225px;
+  height: 18px;
+  width: 16px;
+}
+
+.icon-favorite-white_blue_16_18 {
   background-position: -128px -225px;
   height: 18px;
   width: 16px;
 }
 
-.icon-file-gray_16_18, .icon-file-gray_16_18-before:before {
-  background-position: -144px -225px;
-  height: 18px;
-  width: 16px;
+.icon-feel-supported-gray_32_34, .icon-feel-supported-gray_32_34-before:before {
+  background-position: -128px -727px;
+  height: 34px;
+  width: 32px;
 }
 
-.icon-file-lightblue_16_18, .icon-file-lightblue_16_18-before:before {
+.icon-file-blue_16_18, .icon-file-lightblue_16_18-before:hover:before, .nav-local-item.icon-file_16_18-before:hover:before {
   background-position: -80px -243px;
   height: 18px;
   width: 16px;
 }
 
-.icon-file-white_blue_16_18, .icon-file-white_blue_16_18-before:before {
+.icon-file-gray_16_18, .icon-file-gray_16_18-before:before {
   background-position: -96px -243px;
   height: 18px;
   width: 16px;
 }
 
-.icon-frequent-questions-blue_16_18, .icon-frequent-questions-lightblue_16_18-before:hover:before, .list-button li:hover .icon-frequent-questions-lightblue_16_18-before:before {
+.icon-file-lightblue_16_18, .icon-file-lightblue_16_18-before:before, .nav-local-item.icon-file_16_18-before:before {
   background-position: -112px -243px;
   height: 18px;
   width: 16px;
 }
 
+.icon-file-white_blue_16_18, .icon-file-white_blue_16_18-before:before, .nav-local-item.icon-file_16_18-before.nav-local-item-active:before {
+  background-position: -128px -243px;
+  height: 18px;
+  width: 16px;
+}
+
+.icon-frequent-questions-blue_16_18, .icon-frequent-questions-lightblue_16_18-before:hover:before, .list-button li:hover .icon-frequent-questions-lightblue_16_18-before:before {
+  background-position: -144px -243px;
+  height: 18px;
+  width: 16px;
+}
+
 .icon-frequent-questions-blue_32_34, .icon-frequent-questions-gray_32_34-before:hover:before, .icon-frequent-questions-lightblue_32_34-before:hover:before, .icon-frequent-questions-blue_32_34-before:before {
-  background-position: -64px -661px;
+  background-position: 0 -727px;
   height: 34px;
   width: 32px;
 }
 
 .icon-frequent-questions-gray_32_34, .icon-frequent-questions-gray_32_34-before:before {
-  background-position: -64px -695px;
+  background-position: -32px -761px;
   height: 34px;
   width: 32px;
 }
 
 .icon-frequent-questions-lightblue_16_18, .icon-frequent-questions-lightblue_16_18-before:before {
-  background-position: 0 -279px;
+  background-position: -32px -279px;
   height: 18px;
   width: 16px;
 }
 
 .icon-frequent-questions-lightblue_32_34, .icon-frequent-questions-lightblue_32_34-before:before {
-  background-position: 0 -695px;
+  background-position: -96px -693px;
   height: 34px;
   width: 32px;
 }
 
 .icon-frequent-questions-lightgray_32_34, .icon-frequent-questions-lightgray_32_34-before:before {
-  background-position: -96px -627px;
+  background-position: -128px -659px;
   height: 34px;
   width: 32px;
 }
 
 .icon-frequent-questions-white_16_18, .icon-frequent-questions-white_16_18-before:before, .icon-frequent-questions-lightblue_16_18-before.nav-local-item-active:before {
-  background-position: -48px -279px;
-  height: 18px;
-  width: 16px;
-}
-
-.icon-grouping-gray_16_18, .icon-grouping-gray_16_18-before:before {
-  background-position: -64px -279px;
-  height: 18px;
-  width: 16px;
-}
-
-.icon-guide-topic-gray_16_18, .icon-guide-topic-gray_16_18-before:before {
   background-position: 0 -261px;
   height: 18px;
   width: 16px;
 }
 
-.icon-help-central-blue_16_18, .icon-help-central-lightblue_16_18-before:hover:before {
+.icon-grouping-gray_16_18, .icon-grouping-gray_16_18-before:before {
   background-position: -16px -261px;
   height: 18px;
   width: 16px;
 }
 
+.icon-guide-topic-gray_16_18, .icon-guide-topic-gray_16_18-before:before {
+  background-position: -32px -261px;
+  height: 18px;
+  width: 16px;
+}
+
+.icon-help-central-blue_16_18, .icon-help-central-lightblue_16_18-before:hover:before {
+  background-position: -48px -261px;
+  height: 18px;
+  width: 16px;
+}
+
 .icon-help-central-blue_66, .icon-help-central-gray_66-before:hover:before {
-  background-position: -48px -1099px;
+  background-position: 0 -1159px;
   height: 66px;
   width: 66px;
 }
 
 .icon-help-central-empty_128, .icon-help-central-empty_128-before:before {
-  background-position: 0 -1215px;
+  background-position: 0 -1943px;
   height: 130px;
   width: 128px;
 }
 
 .icon-help-central-gray_66, .icon-help-central-gray_66-before:before {
-  background-position: -48px -1033px;
+  background-position: -66px -1159px;
   height: 66px;
   width: 66px;
 }
 
 .icon-help-central-lightblue_16_18, .icon-help-central-lightblue_16_18-before:before {
-  background-position: -80px -261px;
-  height: 18px;
-  width: 16px;
-}
-
-.icon-help-central-lightgray_32_34, .icon-help-central-lightgray_32_34-before:before {
-  background-position: -64px -627px;
-  height: 34px;
-  width: 32px;
-}
-
-.icon-home-black_16_18, .icon-home-black_16_18-before:before {
   background-position: -112px -261px;
   height: 18px;
   width: 16px;
 }
 
-.icon-home-blue_16_18, .icon-home-lightblue_16_18-before:hover:before, .nav-local-item.icon-home_16_18-before:hover:before {
-  background-position: -128px -261px;
-  height: 18px;
-  width: 16px;
+.icon-help-central-lightgray_32_34, .icon-help-central-lightgray_32_34-before:before {
+  background-position: -32px -693px;
+  height: 34px;
+  width: 32px;
 }
 
-.icon-home-gray_16_18, .icon-home-gray_16_18-before:before {
+.icon-home-black_16_18, .icon-home-black_16_18-before:before {
   background-position: -144px -261px;
   height: 18px;
   width: 16px;
 }
 
-.icon-home-lightblue_16_18, .icon-home-lightblue_16_18-before:before, .nav-local-item.icon-home_16_18-before:before {
+.icon-home-blue_16_18, .icon-home-lightblue_16_18-before:hover:before, .nav-local-item.icon-home_16_18-before:hover:before {
   background-position: -80px -279px;
   height: 18px;
   width: 16px;
 }
 
-.icon-home-white_blue_16_18, .icon-home-white_blue_16_18-before:before, .nav-local-item.icon-home_16_18-before.nav-local-item-active:before {
+.icon-home-gray_16_18, .icon-home-gray_16_18-before:before {
   background-position: -96px -279px;
   height: 18px;
   width: 16px;
 }
 
+.icon-home-lightblue_16_18, .icon-home-lightblue_16_18-before:before, .nav-local-item.icon-home_16_18-before:before {
+  background-position: -112px -279px;
+  height: 18px;
+  width: 16px;
+}
+
+.icon-home-white_blue_16_18, .icon-home-white_blue_16_18-before:before, .nav-local-item.icon-home_16_18-before.nav-local-item-active:before {
+  background-position: -128px -279px;
+  height: 18px;
+  width: 16px;
+}
+
 .icon-institution-blue_32_34, .icon-institution-gray_32_34:hover, .icon-institution-gray_32_34:before {
-  background-position: -32px -627px;
+  background-position: -32px -591px;
   height: 34px;
   width: 32px;
 }
 
 .icon-institution-gray_32_34 {
-  background-position: -32px -525px;
+  background-position: 0 -591px;
   height: 34px;
   width: 32px;
 }
 
-.icon-invite-blue_16_18, .icon-invite-lightblue_16_18-before:hover:before, .icon-invite-lightblue_16_18:hover {
-  background-position: -144px -279px;
-  height: 18px;
-  width: 16px;
-}
-
-.icon-invite-empty_128_130 {
-  background-position: 0 -1735px;
-  height: 130px;
-  width: 128px;
-}
-
-.icon-invite-gray_16_18, .icon-invite-gray_16_18-before:before {
+.icon-invisible-lightgray_16_18 {
   background-position: -16px -315px;
   height: 18px;
   width: 16px;
 }
 
-.icon-invite-lightblue_16_18, .icon-invite-lightblue_16_18-before:before {
+.icon-invite-blue_16_18, .icon-invite-lightblue_16_18-before:hover:before, .icon-invite-lightblue_16_18:hover {
   background-position: -32px -315px;
   height: 18px;
   width: 16px;
 }
 
+.icon-invite-empty_128_130 {
+  background-position: 0 -1683px;
+  height: 130px;
+  width: 128px;
+}
+
+.icon-invite-gray_16_18, .icon-invite-gray_16_18-before:before {
+  background-position: -64px -315px;
+  height: 18px;
+  width: 16px;
+}
+
+.icon-invite-green3_64_66 {
+  background-position: -64px -1291px;
+  height: 66px;
+  width: 64px;
+}
+
+.icon-invite-lightblue_16_18, .icon-invite-lightblue_16_18-before:before {
+  background-position: -16px -297px;
+  height: 18px;
+  width: 16px;
+}
+
 .icon-invite-white_blue_16_18, .icon-invite-white_blue_16_18-before:before {
-  background-position: -48px -315px;
+  background-position: -32px -297px;
   height: 18px;
   width: 16px;
 }
 
 .icon-invite-white_green_16_18, .icon-invite-white_green_16_18-before:before {
-  background-position: -64px -315px;
+  background-position: -48px -297px;
   height: 18px;
   width: 16px;
+}
+
+.icon-lecture-white_64 {
+  background-position: -96px -1095px;
+  height: 64px;
+  width: 64px;
 }
 
 .icon-lights-blue_16_18, .icon-lights-lightblue_16_18-before:hover:before, a:hover .icon-lights-lightblue_16_18, a:hover .icon-lights-lightblue_16_18-before:before,
@@ -3198,31 +3234,31 @@ a:hover .icon-course-lightblue_32_34-before:before,
 .filter:hover .icon-lights-lightblue_16_18-before:before,
 .button-default:hover .icon-lights-lightblue_16_18,
 .button-default:hover .icon-lights-lightblue_16_18-before:before {
-  background-position: 0 -297px;
+  background-position: -80px -297px;
   height: 18px;
   width: 16px;
 }
 
 .icon-lights-lightblue_16_18, .icon-lights-lightblue_16_18-before:before {
-  background-position: -16px -297px;
+  background-position: -96px -297px;
   height: 18px;
   width: 16px;
 }
 
 .icon-list-blue_16_18, .icon-list-lightblue_16_18-before:hover:before {
-  background-position: -32px -297px;
+  background-position: -112px -297px;
   height: 18px;
   width: 16px;
 }
 
 .icon-list-lightblue_16_18, .icon-list-lightblue_16_18-before:before {
-  background-position: -48px -297px;
+  background-position: -128px -297px;
   height: 18px;
   width: 16px;
 }
 
 .icon-list-white_16_18, .icon-list-white_16_18-before:before, .icon-list-lightblue_16_18-before.nav-local-item-active:before {
-  background-position: -64px -297px;
+  background-position: -144px -297px;
   height: 18px;
   width: 16px;
 }
@@ -3236,31 +3272,31 @@ a:hover .icon-magnifier-lightblue_16_18-before:before,
 .button-default:hover .icon-magnifier-gray_16_18,
 .button-default:hover .icon-magnifier-lightblue_16_18,
 .button-default:hover .icon-magnifier-lightblue_16_18-before:before {
-  background-position: -80px -297px;
+  background-position: -80px -315px;
   height: 18px;
   width: 16px;
 }
 
 .icon-magnifier-gray_16_18 {
-  background-position: -96px -297px;
+  background-position: -96px -315px;
   height: 18px;
   width: 16px;
 }
 
 .icon-magnifier-lightblue_16_18, .icon-magnifier-lightblue_16_18-before:before {
-  background-position: -112px -297px;
+  background-position: -112px -315px;
   height: 18px;
   width: 16px;
 }
 
 .icon-manage-blue_16_18, .icon-manage-lightblue_16_18-before:hover:before, .list-button li:hover .icon-manage-lightblue_16_18-before:before, .nav-local-item.icon-manage_16_18-before:hover:before {
-  background-position: -128px -297px;
+  background-position: -128px -315px;
   height: 18px;
   width: 16px;
 }
 
 .icon-manage-blue_32_34, .header-breadcrumb:hover .icon-manage-gray_32_34-before:before {
-  background-position: -64px -559px;
+  background-position: -128px -557px;
   height: 34px;
   width: 32px;
 }
@@ -3272,19 +3308,19 @@ a:hover .icon-magnifier-lightblue_16_18-before:before,
 }
 
 .icon-manage-gray_16_18, .icon-manage-gray_16_18-before:before {
-  background-position: -96px -315px;
+  background-position: -16px -351px;
   height: 18px;
   width: 16px;
 }
 
 .icon-manage-gray_32_34, .icon-manage-gray_32_34-before:before {
-  background-position: -32px -559px;
+  background-position: -96px -557px;
   height: 34px;
   width: 32px;
 }
 
 .icon-manage-lightblue_16_18, .icon-manage-lightblue_16_18-before:before, .nav-local-item.icon-manage_16_18-before:before {
-  background-position: -128px -315px;
+  background-position: -48px -351px;
   height: 18px;
   width: 16px;
 }
@@ -3296,332 +3332,374 @@ a:hover .icon-magnifier-lightblue_16_18-before:before,
 }
 
 .icon-manage-white_blue_16_18, .icon-manage-white_blue_16_18-before:before, .nav-local-item.icon-manage_16_18-before.nav-local-item-active:before {
-  background-position: 0 -351px;
-  height: 18px;
-  width: 16px;
-}
-
-.icon-manager-blue_16_18, .icon-manager-gray_16_18-before:hover:before, .icon-manager-lightblue_16_18-before:hover:before, .icon-manager-blue_16_18-before:before {
-  background-position: -16px -351px;
-  height: 18px;
-  width: 16px;
-}
-
-.icon-manager-blue_32_34, .icon-manager-lightblue_32_34-before:hover:before, .icon-manager-gray_32_34-before:hover:before, .icon-manager-blue_32_34-before:before, .guides-list-item:hover .icon-manager-lightblue_32_34-before:before {
-  background-position: 0 -559px;
-  height: 34px;
-  width: 32px;
-}
-
-.icon-manager-gray_16_18, .icon-manager-gray_16_18-before:before {
-  background-position: -48px -351px;
-  height: 18px;
-  width: 16px;
-}
-
-.icon-manager-gray_32_34, .icon-manager-gray_32_34-before:before {
-  background-position: -128px -491px;
-  height: 34px;
-  width: 32px;
-}
-
-.icon-manager-lightblue_16_18, .icon-manager-lightblue_16_18-before:before {
   background-position: 0 -333px;
   height: 18px;
   width: 16px;
 }
 
-.icon-manager-lightblue_32_34, .icon-manager-lightblue_32_34-before:before {
-  background-position: -96px -491px;
-  height: 34px;
-  width: 32px;
-}
-
-.icon-manager-white_16_18, .icon-manager-white_16_18-before:before, .icon-manager-lightblue_16_18-before.nav-local-item-active:before {
-  background-position: -32px -333px;
+.icon-manager-blue_16_18, .icon-manager-gray_16_18-before:hover:before, .icon-manager-lightblue_16_18-before:hover:before, .icon-manager-blue_16_18-before:before {
+  background-position: -16px -333px;
   height: 18px;
   width: 16px;
 }
 
-.icon-member-blue_16_18, .icon-member-lightblue_16_18-before:hover:before, .icon-member-gray_16_18-before:hover:before {
+.icon-manager-blue_32_34, .icon-manager-lightblue_32_34-before:hover:before, .icon-manager-gray_32_34-before:hover:before, .icon-manager-blue_32_34-before:before, .guides-list-item:hover .icon-manager-lightblue_32_34-before:before {
+  background-position: -128px -523px;
+  height: 34px;
+  width: 32px;
+}
+
+.icon-manager-gray_16_18, .icon-manager-gray_16_18-before:before {
   background-position: -48px -333px;
   height: 18px;
   width: 16px;
 }
 
-.icon-member-blue_32_34, .icon-member-lightblue_32_34-before:hover:before, .icon-member-gray_32_34-before:hover:before, .guides-list-item:hover .icon-member-lightblue_32_34-before:before {
-  background-position: -128px -457px;
+.icon-manager-gray_32_34, .icon-manager-gray_32_34-before:before {
+  background-position: -96px -523px;
   height: 34px;
   width: 32px;
 }
 
-.icon-member-gray_16_18, .icon-member-gray_16_18-before:before {
+.icon-manager-lightblue_16_18, .icon-manager-lightblue_16_18-before:before {
   background-position: -80px -333px;
   height: 18px;
   width: 16px;
 }
 
-.icon-member-gray_32_34, .icon-member-gray_32_34-before:before {
-  background-position: -96px -457px;
+.icon-manager-lightblue_32_34, .icon-manager-lightblue_32_34-before:before {
+  background-position: -64px -523px;
   height: 34px;
   width: 32px;
 }
 
-.icon-member-lightblue_16_18, .icon-member-lightblue_16_18-before:before {
+.icon-manager-white_16_18, .icon-manager-white_16_18-before:before, .icon-manager-lightblue_16_18-before.nav-local-item-active:before {
   background-position: -112px -333px;
   height: 18px;
   width: 16px;
 }
 
-.icon-member-lightblue_32_34, .icon-member-lightblue_32_34-before:before {
-  background-position: -64px -457px;
+.icon-member-blue_16_18, .icon-member-lightblue_16_18-before:hover:before, .icon-member-gray_16_18-before:hover:before {
+  background-position: -128px -333px;
+  height: 18px;
+  width: 16px;
+}
+
+.icon-member-blue_32_34, .icon-member-lightblue_32_34-before:hover:before, .icon-member-gray_32_34-before:hover:before, .guides-list-item:hover .icon-member-lightblue_32_34-before:before {
+  background-position: -32px -523px;
   height: 34px;
   width: 32px;
 }
 
-.icon-member-white_blue_16_18, .icon-member-lightblue_16_18-before.nav-local-item-active:before {
-  background-position: -144px -333px;
-  height: 18px;
-  width: 16px;
+.icon-member-empty_128_130 {
+  background-position: 0 -2203px;
+  height: 130px;
+  width: 128px;
 }
 
-.icon-members-blue_16_18, .icon-members-lightblue_16_18-before:hover:before, .icon-members-gray_16_18-before:hover:before {
-  background-position: -80px -351px;
-  height: 18px;
-  width: 16px;
-}
-
-.icon-members-gray_16_18, .icon-members-gray_16_18-before:before {
+.icon-member-gray_16_18, .icon-member-gray_16_18-before:before {
   background-position: -96px -351px;
   height: 18px;
   width: 16px;
 }
 
-.icon-members-lightblue_16_18, .icon-members-lightblue_16_18-before:before {
-  background-position: -112px -351px;
-  height: 18px;
-  width: 16px;
+.icon-member-gray_32_34, .icon-member-gray_32_34-before:before {
+  background-position: -64px -557px;
+  height: 34px;
+  width: 32px;
 }
 
-.icon-members-white_blue_16_18, .icon-members-white_blue_16_18-before:before {
+.icon-member-lightblue_16_18, .icon-member-lightblue_16_18-before:before {
   background-position: -128px -351px;
   height: 18px;
   width: 16px;
 }
 
-.icon-message-blue_16_18, .icon-message-lightblue_16_18-before:hover:before, .list-button li:hover .icon-message-lightblue_16_18-before:before, .nav-local-item.icon-message_16_18-before:hover:before, .tabs .icon-message_16_18-before:hover:before {
-  background-position: -144px -351px;
+.icon-member-lightblue_32_34, .icon-member-lightblue_32_34-before:before {
+  background-position: -32px -557px;
+  height: 34px;
+  width: 32px;
+}
+
+.icon-member-white_blue_16_18, .icon-member-lightblue_16_18-before.nav-local-item-active:before {
+  background-position: 0 -387px;
   height: 18px;
   width: 16px;
 }
 
-.icon-message-blue_32_34, .header-breadcrumb:hover .icon-message-gray_32_34-before:before {
-  background-position: -32px -457px;
-  height: 34px;
-  width: 32px;
+.icon-members-blue_16_18, .icon-members-lightblue_16_18-before:hover:before, .icon-members-gray_16_18-before:hover:before, .nav-local-item.icon-members_16_18-before:hover:before {
+  background-position: -16px -387px;
+  height: 18px;
+  width: 16px;
 }
 
-.icon-message-darkgray_32_34, .icon-message-darkgray_32_34-before:before {
-  background-position: 0 -457px;
-  height: 34px;
-  width: 32px;
+.icon-members-gray_16_18, .icon-members-gray_16_18-before:before {
+  background-position: -32px -387px;
+  height: 18px;
+  width: 16px;
 }
 
-.icon-message-empty_128_130 {
-  background-position: 0 -1475px;
-  height: 130px;
-  width: 128px;
-}
-
-.icon-message-gray_16_18, .icon-message-gray_16_18-before:before {
+.icon-members-lightblue_16_18, .icon-members-lightblue_16_18-before:before, .nav-local-item.icon-members_16_18-before:before {
   background-position: -48px -387px;
   height: 18px;
   width: 16px;
 }
 
-.icon-message-gray_32_34, .icon-message-gray_32_34-before:before {
-  background-position: -32px -491px;
+.icon-members-white_blue_16_18, .icon-members-white_blue_16_18-before:before, .nav-local-item.icon-members_16_18-before.nav-local-item-active:before {
+  background-position: -64px -387px;
+  height: 18px;
+  width: 16px;
+}
+
+.icon-message-blue_16_18, .icon-message-lightblue_16_18-before:hover:before, .list-button li:hover .icon-message-lightblue_16_18-before:before, .nav-local-item.icon-message_16_18-before:hover:before, .tabs .icon-message_16_18-before:hover:before {
+  background-position: -80px 0;
+  height: 18px;
+  width: 16px;
+}
+
+.icon-message-blue_32_34, .header-breadcrumb:hover .icon-message-gray_32_34-before:before {
+  background-position: 0 -557px;
   height: 34px;
   width: 32px;
 }
 
-.icon-message-lightblue_16_18, .icon-message-lightblue_16_18-before:before, .nav-local-item.icon-message_16_18-before:before, .tabs .icon-message_16_18-before:before {
-  background-position: 0 -369px;
-  height: 18px;
-  width: 16px;
+.icon-message-darkgray_32_34, .icon-message-darkgray_32_34-before:before {
+  background-position: -107px -489px;
+  height: 34px;
+  width: 32px;
 }
 
-.icon-message-new-blue_16_18, .icon-message-new-lightblue_16_18-before:hover:before {
-  background-position: -16px -369px;
-  height: 18px;
-  width: 16px;
+.icon-message-empty_128_130 {
+  background-position: 0 -2463px;
+  height: 130px;
+  width: 128px;
 }
 
-.icon-message-new-lightblue_16_18, .icon-message-new-lightblue_16_18-before:before {
-  background-position: -32px -369px;
-  height: 18px;
-  width: 16px;
-}
-
-.icon-message-new-white_blue_16_18, .icon-message-new-white_blue_16_18-before:before {
-  background-position: -48px -369px;
-  height: 18px;
-  width: 16px;
-}
-
-.icon-message-white_blue_16_18, .icon-message-white_blue_16_18-before:before, .nav-local-item.icon-message_16_18-before.nav-local-item-active:before {
+.icon-message-gray_16_18, .icon-message-gray_16_18-before:before {
   background-position: -64px -369px;
   height: 18px;
   width: 16px;
 }
 
-.icon-mobile-blue_16_18, .list-button li:hover .icon-mobile-lightblue_16_18-before:before {
-  background-position: -80px -369px;
-  height: 18px;
-  width: 16px;
-}
-
-.icon-mobile-darkgray_32_34, .icon-mobile-darkgray_32_34-before:before {
-  background-position: 0 -491px;
+.icon-message-gray_32_34, .icon-message-gray_32_34-before:before {
+  background-position: -96px -455px;
   height: 34px;
   width: 32px;
 }
 
-.icon-mobile-lightblue_16_18, .icon-mobile-lightblue_16_18-before:before {
+.icon-message-lightblue_16_18, .icon-message-lightblue_16_18-before:before, .nav-local-item.icon-message_16_18-before:before, .tabs .icon-message_16_18-before:before {
+  background-position: -96px -369px;
+  height: 18px;
+  width: 16px;
+}
+
+.icon-message-new-blue_16_18, .icon-message-new-lightblue_16_18-before:hover:before {
   background-position: -112px -369px;
   height: 18px;
   width: 16px;
 }
 
-.icon-notification-blue_16_18, .icon-notification-lightblue_16_18-before:hover:before {
+.icon-message-new-lightblue_16_18, .icon-message-new-lightblue_16_18-before:before {
   background-position: -128px -369px;
   height: 18px;
   width: 16px;
 }
 
-.icon-notification-gray_16_18, .icon-notification-gray_16_18-before:before {
+.icon-message-new-white_blue_16_18, .icon-message-new-white_blue_16_18-before:before {
   background-position: -144px -369px;
   height: 18px;
   width: 16px;
 }
 
-.icon-notification-lightblue_16_18, .icon-notification-lightblue_16_18-before:before {
+.icon-message-white_blue_16_18, .icon-message-white_blue_16_18-before:before, .nav-local-item.icon-message_16_18-before.nav-local-item-active:before {
   background-position: -80px -387px;
   height: 18px;
   width: 16px;
 }
 
-.icon-oer-blue_16_18, .icon-oer-lightblue_16_18-before:hover:before, .list-button li:hover .icon-oer-lightblue_16_18-before:before {
+.icon-mobile-blue_16_18, .list-button li:hover .icon-mobile-lightblue_16_18-before:before {
   background-position: -96px -387px;
   height: 18px;
   width: 16px;
 }
 
-.icon-oer-gray_16_18, .icon-oer-gray_16_18-before:before {
-  background-position: -112px -387px;
-  height: 18px;
-  width: 16px;
+.icon-mobile-darkgray_32_34, .icon-mobile-darkgray_32_34-before:before {
+  background-position: -64px -455px;
+  height: 34px;
+  width: 32px;
 }
 
-.icon-oer-lightblue_16_18, .icon-oer-lightblue_16_18-before:before {
+.icon-mobile-lightblue_16_18, .icon-mobile-lightblue_16_18-before:before {
   background-position: -128px -387px;
   height: 18px;
   width: 16px;
 }
 
-.icon-partner-blue_16_18, .icon-partner-lightblue_16_18-before:hover:before {
-  background-position: -144px -387px;
-  height: 18px;
-  width: 16px;
+.icon-moderated-green3_64_66 {
+  background-position: 0 -1357px;
+  height: 66px;
+  width: 64px;
 }
 
-.icon-partner-lightblue_16_18, .icon-partner-lightblue_16_18-before:before {
+.icon-notification-blue_16_18, .icon-notification-lightblue_16_18-before:hover:before {
   background-position: 0 -423px;
   height: 18px;
   width: 16px;
 }
 
-.icon-plan-blue_16_18, .icon-plan-lightblue_16_18-before:hover:before, .tabs .icon-plan_16_18-before:hover:before {
+.icon-notification-gray_16_18, .icon-notification-gray_16_18-before:before {
   background-position: -16px -423px;
   height: 18px;
   width: 16px;
 }
 
-.icon-plan-gray_16_18, .icon-plan-gray_16_18-before:before {
+.icon-notification-lightblue_16_18, .icon-notification-lightblue_16_18-before:before {
   background-position: -32px -423px;
   height: 18px;
   width: 16px;
 }
 
-.icon-plan-lightblue_16_18, .icon-plan-lightblue_16_18-before:before, .tabs .icon-plan_16_18-before:before {
+.icon-oer-blue_16_18, .icon-oer-lightblue_16_18-before:hover:before, .list-button li:hover .icon-oer-lightblue_16_18-before:before {
   background-position: -48px -423px;
   height: 18px;
   width: 16px;
 }
 
-.icon-plans-empty_128_130 {
-  background-position: 0 -1865px;
-  height: 130px;
-  width: 128px;
+.icon-oer-gray_16_18, .icon-oer-gray_16_18-before:before {
+  background-position: -64px -423px;
+  height: 18px;
+  width: 16px;
 }
 
-.icon-presentation-blue_16_18, .list-button li:hover .icon-presentation-lightblue_16_18-before:before {
+.icon-oer-lightblue_16_18, .icon-oer-lightblue_16_18-before:before {
   background-position: 0 -405px;
   height: 18px;
   width: 16px;
 }
 
-.icon-presentation-gray_16_18 {
-  background-position: -16px -405px;
-  height: 18px;
-  width: 16px;
+.icon-open-green3_64_66 {
+  background-position: 0 -1291px;
+  height: 66px;
+  width: 64px;
 }
 
-.icon-presentation-lightblue_16_18, .icon-presentation-lightblue_16_18-before:before {
+.icon-partner-blue_16_18, .icon-partner-lightblue_16_18-before:hover:before {
   background-position: -32px -405px;
   height: 18px;
   width: 16px;
 }
 
+.icon-partner-lightblue_16_18, .icon-partner-lightblue_16_18-before:before {
+  background-position: -48px -405px;
+  height: 18px;
+  width: 16px;
+}
+
+.icon-plan-blue_16_18, .icon-plan-lightblue_16_18-before:hover:before, .tabs .icon-plan_16_18-before:hover:before {
+  background-position: -64px -405px;
+  height: 18px;
+  width: 16px;
+}
+
+.icon-plan-gray_16_18, .icon-plan-gray_16_18-before:before {
+  background-position: -80px -405px;
+  height: 18px;
+  width: 16px;
+}
+
+.icon-plan-lightblue_16_18, .icon-plan-lightblue_16_18-before:before, .tabs .icon-plan_16_18-before:before {
+  background-position: -96px -405px;
+  height: 18px;
+  width: 16px;
+}
+
+.icon-plans-empty_128_130 {
+  background-position: 0 -1553px;
+  height: 130px;
+  width: 128px;
+}
+
+.icon-presentation-blue_16_18, .list-button li:hover .icon-presentation-lightblue_16_18-before:before {
+  background-position: -128px -405px;
+  height: 18px;
+  width: 16px;
+}
+
+.icon-presentation-gray_16_18 {
+  background-position: -144px -405px;
+  height: 18px;
+  width: 16px;
+}
+
+.icon-presentation-lightblue_16_18, .icon-presentation-lightblue_16_18-before:before {
+  background-position: -80px -423px;
+  height: 18px;
+  width: 16px;
+}
+
 .icon-privacy-policy-darkgray_32_34, .icon-privacy-policy-darkgray_32_34-before:before {
-  background-position: 0 -627px;
+  background-position: 0 -625px;
   height: 34px;
   width: 32px;
 }
 
 .icon-private-blue_16_18, .icon-private-gray_16_18:hover,
 .icon-private-lightblue_16_18:hover {
-  background-position: -64px -405px;
+  background-position: -112px -423px;
   height: 18px;
   width: 16px;
 }
 
 .icon-private-gray_16_18 {
-  background-position: -80px -405px;
+  background-position: -96px -45px;
+  height: 18px;
+  width: 16px;
+}
+
+.icon-private-green_16_18 {
+  background-position: -96px -423px;
   height: 18px;
   width: 16px;
 }
 
 .icon-private-lightblue_16_18 {
-  background-position: -96px -405px;
-  height: 18px;
-  width: 16px;
-}
-
-.icon-profile-2-blue_16_18, .icon-profile-2-lightblue_16_18-before:hover:before {
   background-position: -112px -405px;
   height: 18px;
   width: 16px;
 }
 
+.icon-private-lightgray_128_130 {
+  background-position: 0 -2333px;
+  height: 130px;
+  width: 128px;
+}
+
+.icon-private-red2_16_18 {
+  background-position: -16px -405px;
+  height: 18px;
+  width: 16px;
+}
+
+.icon-private-red2_64_66 {
+  background-position: -64px -1225px;
+  height: 66px;
+  width: 64px;
+}
+
+.icon-profile-2-blue_16_18, .icon-profile-2-lightblue_16_18-before:hover:before {
+  background-position: -144px -387px;
+  height: 18px;
+  width: 16px;
+}
+
 .icon-profile-2-gray_16_18 {
-  background-position: -128px -405px;
+  background-position: -112px -387px;
   height: 18px;
   width: 16px;
 }
 
 .icon-profile-2-lightblue_16_18, .icon-profile-2-lightblue_16_18-before:before {
-  background-position: -128px -189px;
+  background-position: -80px -369px;
   height: 18px;
   width: 16px;
 }
@@ -3629,37 +3707,37 @@ a:hover .icon-magnifier-lightblue_16_18-before:before,
 .icon-profile-blue_16_18, .icon-profile-lightblue_16_18-before:hover:before, a:hover .icon-profile-gray_16_18,
 .filter:hover .icon-profile-gray_16_18,
 .button-default:hover .icon-profile-gray_16_18, .nav-local-item.icon-profile_16_18-before:hover:before, .tabs .icon-profile_16_18-before:hover:before {
-  background-position: -48px -405px;
+  background-position: -48px -369px;
   height: 18px;
   width: 16px;
 }
 
 .icon-profile-darkgray_32_34, .icon-profile-darkgray_32_34-before:before, .icon-profile-darkgray_32_34-before:hover:before {
-  background-position: -64px -593px;
+  background-position: -75px -489px;
   height: 34px;
   width: 32px;
 }
 
 .icon-profile-gray_16_18 {
-  background-position: -64px -423px;
+  background-position: -32px -369px;
   height: 18px;
   width: 16px;
 }
 
 .icon-profile-lightblue_16_18, .icon-profile-lightblue_16_18-before:before, .open .icon-profile-gray_16_18, .nav-local-item.icon-profile_16_18-before:before, .tabs .icon-profile_16_18-before:before {
-  background-position: -96px -369px;
+  background-position: -16px -369px;
   height: 18px;
   width: 16px;
 }
 
 .icon-profile-white_blue_16_18, .nav-local-item.icon-profile_16_18-before.nav-local-item-active:before {
-  background-position: -64px -387px;
+  background-position: -144px -351px;
   height: 18px;
   width: 16px;
 }
 
 .icon-redu-areas-gray_16_18, .icon-redu-areas-gray_16_18-before:before {
-  background-position: -32px -387px;
+  background-position: -112px -351px;
   height: 18px;
   width: 16px;
 }
@@ -3671,7 +3749,7 @@ a:hover .icon-magnifier-lightblue_16_18-before:before,
 }
 
 .icon-reply-gray_16_18, .icon-reply-gray_16_18-before:before {
-  background-position: -80px 0;
+  background-position: -144px -333px;
   height: 18px;
   width: 16px;
 }
@@ -3683,25 +3761,25 @@ a:hover .icon-magnifier-lightblue_16_18-before:before,
 }
 
 .icon-reply-lightblue_16_18, .icon-reply-gray_16_18-before:hover:before, .icon-reply-lightblue_16_18-before:before {
-  background-position: -96px -333px;
-  height: 18px;
-  width: 16px;
-}
-
-.icon-reports-blue_16_18, .icon-reports-lightblue_16_18-before:hover:before, .list-button li:hover .icon-reports-lightblue_16_18-before:before {
   background-position: -64px -333px;
   height: 18px;
   width: 16px;
 }
 
+.icon-reports-blue_16_18, .icon-reports-lightblue_16_18-before:hover:before, .list-button li:hover .icon-reports-lightblue_16_18-before:before {
+  background-position: -32px -333px;
+  height: 18px;
+  width: 16px;
+}
+
 .icon-reports-gray_16_18, .icon-reports-gray_16_18-before:before {
-  background-position: -16px -333px;
+  background-position: -32px -351px;
   height: 18px;
   width: 16px;
 }
 
 .icon-reports-lightblue_16_18, .icon-reports-lightblue_16_18-before:before {
-  background-position: -64px -351px;
+  background-position: -144px -315px;
   height: 18px;
   width: 16px;
 }
@@ -3711,19 +3789,19 @@ a:hover .icon-magnifier-lightblue_16_18-before:before,
 .filter:hover .icon-request-help-lightblue_16_18-before:before,
 .button-default:hover .icon-request-help-lightblue_16_18,
 .button-default:hover .icon-request-help-lightblue_16_18-before:before {
-  background-position: -32px -351px;
+  background-position: -64px -297px;
   height: 18px;
   width: 16px;
 }
 
 .icon-request-help-gray_16_18, .icon-request-help-gray_16_18-before:before {
-  background-position: -112px -315px;
+  background-position: 0 -297px;
   height: 18px;
   width: 16px;
 }
 
 .icon-request-help-lightblue_16_18, .icon-request-help-lightblue_16_18-before:before {
-  background-position: -144px -297px;
+  background-position: -48px -315px;
   height: 18px;
   width: 16px;
 }
@@ -3735,49 +3813,49 @@ a:hover .icon-magnifier-lightblue_16_18-before:before,
 }
 
 .icon-request-help-orange_16_18, .icon-request-help-orange_16_18-before:before, .request-help-stats-new.icon-request-help-lightorange_16_18-before:hover:before {
-  background-position: -128px -279px;
+  background-position: -144px -279px;
   height: 18px;
   width: 16px;
 }
 
 .icon-request-help-white_blue_32_34, .icon-request-help-white_blue_32_34-before:before {
-  background-position: -64px -525px;
+  background-position: -64px -591px;
   height: 34px;
   width: 32px;
 }
 
 .icon-say-hi-green_48_50, .icon-say-hi-green_48_50-before:before {
-  background-position: -96px -933px;
+  background-position: -48px -931px;
   height: 50px;
   width: 48px;
 }
 
 .icon-search-background_160 {
-  background-position: 0 -1995px;
+  background-position: 0 -3113px;
   height: 160px;
   width: 160px;
 }
 
 .icon-search-blue_48_50, .icon-search-gray_48_50-before:hover:before {
-  background-position: -80px -983px;
+  background-position: 0 -931px;
   height: 50px;
   width: 48px;
 }
 
 .icon-search-empty_128_130 {
-  background-position: 0 -1345px;
+  background-position: 0 -1813px;
   height: 130px;
   width: 128px;
 }
 
 .icon-search-gray_48_50, .icon-search-gray_48_50-before:before {
-  background-position: 0 -1165px;
+  background-position: -48px -1095px;
   height: 50px;
   width: 48px;
 }
 
 .icon-seen-gray_16_18, .icon-seen-gray_16_18-before:before {
-  background-position: -112px -279px;
+  background-position: -128px -261px;
   height: 18px;
   width: 16px;
 }
@@ -3789,38 +3867,38 @@ a:hover .icon-magnifier-lightblue_16_18-before:before,
 }
 
 .icon-sent-message-blue_32_34, .header-breadcrumb:hover .icon-sent-message-gray_32_34-before:before {
-  background-position: 0 -593px;
+  background-position: 0 -659px;
   height: 34px;
   width: 32px;
 }
 
 .icon-sent-message-gray_32_34, .icon-sent-message-gray_32_34-before:before {
-  background-position: -32px -593px;
+  background-position: -32px -659px;
   height: 34px;
   width: 32px;
 }
 
 .icon-sent-message-lightblue_16_18, .tabs .icon-message-sent_16_18-before:before {
-  background-position: -64px -261px;
+  background-position: -80px -261px;
   height: 18px;
   width: 16px;
 }
 
 .icon-social-networks-blue_16_18, .icon-social-networks-lightblue_16_18-before:hover:before, .list-button li:hover .icon-social-networks-lightblue_16_18-before:before {
-  background-position: -48px -261px;
+  background-position: -64px -261px;
   height: 18px;
   width: 16px;
 }
 
 .icon-social-networks-lightblue_16_18, .icon-social-networks-lightblue_16_18-before:before {
-  background-position: -32px -261px;
+  background-position: -64px -279px;
   height: 18px;
   width: 16px;
 }
 
 .icon-space-blue_16_18, .icon-space-gray_16_18-before:hover:before, .icon-space-lightblue_16_18-before:hover:before, .header-item:hover .icon-space-gray_16_18-before:before,
 .header-item:hover .icon-space-lightblue_16_18-before:before {
-  background-position: -32px -279px;
+  background-position: -48px -279px;
   height: 18px;
   width: 16px;
 }
@@ -3837,9 +3915,15 @@ a:hover .icon-space-lightblue_32_34-before:before,
 .button-default:hover .icon-space-gray_32_34-before:before,
 .button-default:hover .icon-space-lightblue_32_34,
 .button-default:hover .icon-space-lightblue_32_34-before:before {
-  background-position: -128px -627px;
+  background-position: -128px -693px;
   height: 34px;
   width: 32px;
+}
+
+.icon-space-empty_128_130 {
+  background-position: 0 -2073px;
+  height: 130px;
+  width: 128px;
 }
 
 .icon-space-gray_16_18, .icon-space-gray_16_18-before:before {
@@ -3849,49 +3933,55 @@ a:hover .icon-space-lightblue_32_34-before:before,
 }
 
 .icon-space-gray_32_34, .icon-space-gray_32_34-before:before {
-  background-position: -32px -695px;
+  background-position: -64px -761px;
   height: 34px;
   width: 32px;
 }
 
 .icon-space-lightblue_16_18, .icon-space-lightblue_16_18-before:before {
-  background-position: -144px -243px;
+  background-position: 0 -279px;
   height: 18px;
   width: 16px;
 }
 
 .icon-space-lightblue_32_34, .icon-space-lightblue_32_34-before:before {
-  background-position: 0 -661px;
+  background-position: -32px -727px;
   height: 34px;
   width: 32px;
 }
 
 .icon-space-lightgray_32_34, .icon-space-lightgray_32_34-before:before {
-  background-position: -32px -661px;
+  background-position: -64px -727px;
   height: 34px;
   width: 32px;
 }
 
+.icon-space-white_64 {
+  background-position: -96px -1031px;
+  height: 64px;
+  width: 64px;
+}
+
 .icon-specialist-gray_16_18, .icon-specialist-gray_16_18-before:before {
-  background-position: -128px -243px;
+  background-position: -144px -225px;
   height: 18px;
   width: 16px;
 }
 
 .icon-specialist-gray_32_34, .icon-specialist-gray_32_34-before:before {
-  background-position: -96px -661px;
+  background-position: -96px -761px;
   height: 34px;
   width: 32px;
 }
 
 .icon-specialist-white_blue_32_34, .icon-specialist-white_blue_32_34-before:before {
-  background-position: -128px -661px;
+  background-position: -128px -761px;
   height: 34px;
   width: 32px;
 }
 
 .icon-star-empty-gray_16_18, .icon-star-empty-gray_16_18-before:before {
-  background-position: -112px -225px;
+  background-position: -96px -225px;
   height: 18px;
   width: 16px;
 }
@@ -3903,13 +3993,13 @@ a:hover .icon-space-lightblue_32_34-before:before,
 }
 
 .icon-star-full-blue_16_18 {
-  background-position: 0 -225px;
+  background-position: 0 -243px;
   height: 18px;
   width: 16px;
 }
 
 .icon-star-full-gray_16_18 {
-  background-position: -128px -207px;
+  background-position: -144px -207px;
   height: 18px;
   width: 16px;
 }
@@ -3921,18 +4011,18 @@ a:hover .icon-space-lightblue_32_34-before:before,
 }
 
 .icon-star-full-lightblue_16_18 {
-  background-position: -144px -189px;
+  background-position: -80px -207px;
   height: 18px;
   width: 16px;
 }
 
 .icon-star-full-lightgray_16_18 {
-  background-position: -144px -405px;
+  background-position: -128px -189px;
   height: 18px;
   width: 16px;
 }
 
-.icon-subject-blue_16_18, .filter:hover .icon-subject-lightblue_16_18-before:before, .icon-subject-lightblue_16_18-before:hover:before, .list-button li:hover .icon-subject-lightblue_16_18-before:before {
+.icon-subject-blue_16_18, .filter:hover .icon-subject-lightblue_16_18-before:before, .icon-subject-lightblue_16_18-before:hover:before, .list-button li:hover .icon-subject-lightblue_16_18-before:before, .nav-local-item.icon-subject_16_18-before:hover:before {
   background-position: -96px -189px;
   height: 18px;
   width: 16px;
@@ -3950,9 +4040,15 @@ a:hover .icon-subject-lightblue_32_34-before:before,
 .button-default:hover .icon-subject-gray_32_34-before:before,
 .button-default:hover .icon-subject-lightblue_32_34,
 .button-default:hover .icon-subject-lightblue_32_34-before:before {
-  background-position: -96px -729px;
+  background-position: -96px -829px;
   height: 34px;
   width: 32px;
+}
+
+.icon-subject-empty_128_130 {
+  background-position: 0 -2723px;
+  height: 130px;
+  width: 128px;
 }
 
 .icon-subject-gray_16_18, .icon-subject-gray_16_18-before:before {
@@ -3962,56 +4058,56 @@ a:hover .icon-subject-lightblue_32_34-before:before,
 }
 
 .icon-subject-gray_32_34, .icon-subject-gray_32_34-before:before {
-  background-position: -96px -763px;
+  background-position: -32px -897px;
   height: 34px;
   width: 32px;
 }
 
-.icon-subject-lightblue_16_18, .icon-subject-lightblue_16_18-before:before {
-  background-position: -32px -189px;
+.icon-subject-lightblue_16_18, .icon-subject-lightblue_16_18-before:before, .nav-local-item.icon-subject_16_18-before:before {
+  background-position: -48px -189px;
   height: 18px;
   width: 16px;
 }
 
 .icon-subject-lightblue_32_34, .icon-subject-lightblue_32_34-before:before {
-  background-position: 0 -831px;
+  background-position: 0 -863px;
   height: 34px;
   width: 32px;
 }
 
 .icon-subject-lightgray_32_34, .icon-subject-lightgray_32_34-before:before {
-  background-position: -102px -423px;
+  background-position: -32px -863px;
   height: 34px;
   width: 32px;
 }
 
-.icon-subject-white_blue_16_18, .icon-subject-white_blue_16_18-before:before {
-  background-position: -16px -189px;
+.icon-subject-white_blue_16_18, .icon-subject-white_blue_16_18-before:before, .nav-local-item.icon-subject_16_18-before.nav-local-item-active:before {
+  background-position: -32px -189px;
   height: 18px;
   width: 16px;
 }
 
 .icon-support-blue_16_18, .icon-support-lightblue_16_18-before:hover:before, .list-button li:hover .icon-support-lightblue_16_18-before:before {
-  background-position: 0 -189px;
+  background-position: -16px -189px;
   height: 18px;
   width: 16px;
 }
 
 .icon-support-lightblue_16_18, .icon-support-lightblue_16_18-before:before {
-  background-position: -64px -207px;
+  background-position: -32px -207px;
   height: 18px;
   width: 16px;
 }
 
 .icon-tag-blue_16_18, .icon-tag-gray_16_18:hover,
 .icon-tag-lightblue_16_18:hover {
-  background-position: 0 -207px;
+  background-position: -112px -153px;
   height: 18px;
   width: 16px;
 }
 
 .icon-tag-gray_16_18 {
-  background-position: -80px -153px;
+  background-position: -48px -153px;
   height: 18px;
   width: 16px;
 }
@@ -4023,7 +4119,7 @@ a:hover .icon-subject-lightblue_32_34-before:before,
 }
 
 .icon-talk-to-us-green_48_50, .icon-talk-to-us-green_48_50-before:before {
-  background-position: -32px -983px;
+  background-position: -96px -931px;
   height: 50px;
   width: 48px;
 }
@@ -4036,114 +4132,132 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
 }
 
 .icon-teacher-blue_32_34, .icon-teacher-lightblue_32_34-before:hover:before, .icon-teacher-gray_32_34-before:hover:before, .guides-list-item:hover .icon-teacher-lightblue_32_34-before:before {
-  background-position: 0 -899px;
+  background-position: 0 -897px;
   height: 34px;
   width: 32px;
 }
 
+.icon-teacher-empty_128_130 {
+  background-position: 0 -2853px;
+  height: 130px;
+  width: 128px;
+}
+
 .icon-teacher-gray_16_18, .icon-teacher-gray_16_18-before:before {
-  background-position: -32px -171px;
+  background-position: -48px -171px;
   height: 18px;
   width: 16px;
 }
 
 .icon-teacher-gray_32_34, .icon-teacher-gray_32_34-before:before {
-  background-position: -64px -899px;
+  background-position: -64px -863px;
   height: 34px;
   width: 32px;
 }
 
 .icon-teacher-lightblue_16_18, .icon-teacher-lightblue_16_18-before:before {
-  background-position: -16px -171px;
+  background-position: -32px -171px;
   height: 18px;
   width: 16px;
 }
 
 .icon-teacher-lightblue_32_34, .icon-teacher-lightblue_32_34-before:before {
-  background-position: 0 -983px;
+  background-position: -128px -829px;
   height: 34px;
   width: 32px;
 }
 
 .icon-teacher-white_16_18, .icon-teacher-white_16_18-before:before, .icon-teacher-lightblue_16_18-before.nav-local-item-active:before {
-  background-position: -144px -135px;
+  background-position: 0 -171px;
   height: 18px;
   width: 16px;
 }
 
 .icon-terms-of-service-darkgray_32_34, .icon-terms-of-service-darkgray_32_34-before:before {
-  background-position: -96px -865px;
+  background-position: -96px -727px;
   height: 34px;
   width: 32px;
 }
 
 .icon-text-page-blue_16_18, .list-button li:hover .icon-text-page-lightblue_16_18-before:before {
-  background-position: -112px -135px;
+  background-position: -128px -135px;
   height: 18px;
   width: 16px;
 }
 
 .icon-text-page-gray_16_18 {
-  background-position: -48px -135px;
+  background-position: -112px -135px;
   height: 18px;
   width: 16px;
 }
 
 .icon-text-page-lightblue_16_18, .icon-text-page-lightblue_16_18-before:before {
-  background-position: -32px -135px;
+  background-position: -48px -135px;
   height: 18px;
   width: 16px;
 }
 
 .icon-tour-blue_16_18, .icon-tour-lightblue_16_18-before:hover:before {
-  background-position: -16px -135px;
+  background-position: -32px -135px;
   height: 18px;
   width: 16px;
 }
 
 .icon-tour-lightblue_16_18, .icon-tour-lightblue_16_18-before:before {
-  background-position: -64px -99px;
+  background-position: -16px -135px;
   height: 18px;
   width: 16px;
 }
 
 .icon-tour-white_16_18, .icon-tour-white_16_18-before:before {
-  background-position: -128px -63px;
+  background-position: -64px -99px;
   height: 18px;
   width: 16px;
 }
 
 .icon-tutor-blue_16_18, .icon-tutor-lightblue_16_18-before:hover:before {
+  background-position: -128px -63px;
+  height: 18px;
+  width: 16px;
+}
+
+.icon-tutor-empty_128_130 {
+  background-position: 0 -1423px;
+  height: 130px;
+  width: 128px;
+}
+
+.icon-tutor-gray_16_18, .icon-tutor-gray_16_18-before:before {
   background-position: -96px -63px;
   height: 18px;
   width: 16px;
 }
 
-.icon-tutor-gray_16_18, .icon-tutor-gray_16_18-before:before {
+.icon-tutor-lightblue_16_18, .icon-tutor-lightblue_16_18-before:before {
   background-position: -80px -63px;
   height: 18px;
   width: 16px;
 }
 
-.icon-tutor-lightblue_16_18, .icon-tutor-lightblue_16_18-before:before {
+.icon-video-blue_16_18, .list-button li:hover .icon-video-lightblue_16_18-before:before, .icon-video-gray_16_18-before:hover:before {
   background-position: -128px -45px;
   height: 18px;
   width: 16px;
 }
 
-.icon-video-blue_16_18, .list-button li:hover .icon-video-lightblue_16_18-before:before, .icon-video-gray_16_18-before:hover:before {
+.icon-video-gray_16_18, .icon-video-gray_16_18-before:before {
   background-position: -112px -45px;
   height: 18px;
   width: 16px;
 }
 
-.icon-video-gray_16_18, .icon-video-gray_16_18-before:before {
+.icon-video-lightblue_16_18, .icon-video-lightblue_16_18-before:before {
   background-position: 0 -63px;
   height: 18px;
   width: 16px;
 }
 
-.icon-video-lightblue_16_18, .icon-video-lightblue_16_18-before:before {
+.icon-visible-lightgray_16_18 {
   background-position: -144px 0;
   height: 18px;
   width: 16px;
@@ -4156,7 +4270,7 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
 }
 
 .icon-wall-blue_32_34, .icon-wall-gray_32_34-before:hover:before {
-  background-position: -128px -559px;
+  background-position: 0 -523px;
   height: 34px;
   width: 32px;
 }
@@ -4168,7 +4282,7 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
 }
 
 .icon-wall-gray_32_34, .icon-wall-gray_32_34-before:before {
-  background-position: -96px -559px;
+  background-position: -128px -455px;
   height: 34px;
   width: 32px;
 }
@@ -4186,26 +4300,26 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
 }
 
 .icon-wiki-blue_16_18, .icon-wiki-lightblue_16_18-before:hover:before {
-  background-position: -64px -153px;
+  background-position: -96px -153px;
   height: 18px;
   width: 16px;
 }
 
 .icon-wiki-lightblue_16_18, .icon-wiki-lightblue_16_18-before:before {
-  background-position: -80px -315px;
+  background-position: 0 -351px;
   height: 18px;
   width: 16px;
 }
 
 .icon-wiki-white_blue_16_18, .icon-wiki-white_blue_16_18-before:before {
-  background-position: -144px -315px;
+  background-position: -64px -351px;
   height: 18px;
   width: 16px;
 }
 
 .logo-redu-color_140_40, .logo-redu-gray_140_40:hover,
 .logo-redu-gray_140_40 {
-  background: image-url("logos.png") no-repeat;
+  background: image-url('logos.png') no-repeat;
 }
 
 .logo-redu-color_140_40, .logo-redu-gray_140_40:hover {
@@ -4235,25 +4349,25 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
 }
 
 .icon-environment-gray_16_18-before:before {
-  background-position: -80px -189px;
+  background-position: -112px -189px;
   height: 18px;
   width: 16px;
 }
 
 .icon-profile-gray_16_18-before:before {
-  background-position: -64px -423px;
+  background-position: -32px -369px;
   height: 18px;
   width: 16px;
 }
 
 .icon-description-gray_16_18-before:before {
-  background-position: -128px -153px;
+  background-position: -80px -171px;
   height: 18px;
   width: 16px;
 }
 
 .icon-tag-gray_16_18-before:before {
-  background-position: -80px -153px;
+  background-position: -48px -153px;
   height: 18px;
   width: 16px;
 }
@@ -4265,7 +4379,7 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
 }
 
 .icon-favorite-gray_32_34-before:hover:before {
-  background-position: 0 -763px;
+  background-position: -32px -829px;
   height: 34px;
   width: 32px;
 }
@@ -5601,6 +5715,10 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
   margin-top: 5px;
 }
 
+.nav-local-general-stat-link, .nav-local-general-stat-link:hover {
+  color: #b3b3b3;
+}
+
 .nav-local-separator {
   height: 1px;
   background: #e6e6e6;
@@ -6027,24 +6145,24 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
 .spinner-horizontal-blue,
 .spinner-horizontal-blue:hover,
 .spinner-horizontal-blue:visited {
-  background-image: image-url("spinner-blue-horiz.gif") !important;
+  background-image: image-url('spinner-blue-horiz.gif') !important;
 }
 
 .spinner-circular-gray,
 .spinner-circular-gray:hover,
 .spinner-circular-gray:visited {
-  background-image: image-url("spinner-grey.gif") !important;
+  background-image: image-url('spinner-grey.gif') !important;
 }
 
 .spinner-circular-blue,
 .spinner-circular-blue:hover,
 .spinner-circular-blue:visited {
-  background-image: image-url("spinner-blue.gif") !important;
+  background-image: image-url('spinner-blue.gif') !important;
 }
 
 .header {
   list-style: none;
-  margin: 0 0 20px;
+  margin: 0;
 }
 
 .header-link {
@@ -6171,6 +6289,11 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
 .header-breadcrumb-item:last-child .header-breadcrumb-link:hover, .header-breadcrumb-link:hover {
   color: #158ac4;
   text-decoration: none;
+}
+
+.header +
+.header-breadcrumb-big {
+  padding: 20px;
 }
 
 .header-breadcrumb-big {
@@ -6451,7 +6574,8 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
 
 .list-course-space-item {
   position: relative;
-  border: 1px solid #e6e6e6;
+  border-top: 1px solid #e6e6e6;
+  border-bottom: 1px solid #e6e6e6;
 }
 .list-course-space-item + .list-course-space-item {
   margin-top: -1px;
@@ -6499,6 +6623,11 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
 }
 .list-course .list-course-space-item:hover .list-course-hours {
   color: #b3b3b3;
+}
+
+.list-course-privacy {
+  color: #b3b3b3;
+  display: block;
 }
 
 .list-course-stat + .list-course-stat {
@@ -6647,10 +6776,6 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
   border: 1px solid #f0f0f0;
   padding: 11px 20px 10px;
 }
-.list-subject-body .list-subject-description +
-.list-button {
-  margin-top: 20px;
-}
 .list-subject-body .list-button {
   list-style: none;
   counter-reset: item;
@@ -6661,6 +6786,29 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
 }
 .list-subject-body .list-button-link {
   margin-left: 10px;
+}
+
+.list-subject-visibility {
+  float: right;
+}
+
+.list-subject-edit {
+  float: right;
+  margin-top: 3px;
+}
+
+.list-subject-edit +
+.list-subject-visibility {
+  margin-right: 5px;
+}
+
+.list-subject-description {
+  max-width: 90%;
+}
+
+.list-subject-info +
+.list-button {
+  margin-top: 20px;
 }
 
 .list-lecture-info {
@@ -6877,13 +7025,13 @@ hr {
   border-bottom: 1px solid #e6e6e6;
 }
 .cssgradients .list-separator:before {
-  background-image: -webkit-linear-gradient(bottom, #f7f7f7, #ffffff);
-  background-image: -moz-linear-gradient(bottom, #f7f7f7, #ffffff);
-  background-image: -o-linear-gradient(bottom, #f7f7f7, #ffffff);
-  background-image: linear-gradient(to top, #f7f7f7, #ffffff);
+  background-image: -webkit-linear-gradient(bottom, #f7f7f7, rgba(255, 255, 255, 0));
+  background-image: -moz-linear-gradient(bottom, #f7f7f7, rgba(255, 255, 255, 0));
+  background-image: -o-linear-gradient(bottom, #f7f7f7, rgba(255, 255, 255, 0));
+  background-image: linear-gradient(to top, #f7f7f7, rgba(255, 255, 255, 0));
 }
 .no-cssgradients.gt-ie8 .list-separator:before {
-  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmN2Y3ZjciIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIwLjAxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmN2Y3ZjciIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
 }
 .list-separator:after {
   content: "";
@@ -6894,13 +7042,13 @@ hr {
   border-top: 1px solid white;
 }
 .cssgradients .list-separator:after {
-  background-image: -webkit-linear-gradient(bottom, #ffffff, #f7f7f7);
-  background-image: -moz-linear-gradient(bottom, #ffffff, #f7f7f7);
-  background-image: -o-linear-gradient(bottom, #ffffff, #f7f7f7);
-  background-image: linear-gradient(to top, #ffffff, #f7f7f7);
+  background-image: -webkit-linear-gradient(bottom, rgba(255, 255, 255, 0), #f7f7f7);
+  background-image: -moz-linear-gradient(bottom, rgba(255, 255, 255, 0), #f7f7f7);
+  background-image: -o-linear-gradient(bottom, rgba(255, 255, 255, 0), #f7f7f7);
+  background-image: linear-gradient(to top, rgba(255, 255, 255, 0), #f7f7f7);
 }
 .no-cssgradients.gt-ie8 .list-separator:after {
-  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2Y3ZjdmNyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2Y3ZjdmNyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiIHN0b3Atb3BhY2l0eT0iMCIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
 }
 
 .list-1-columns {
