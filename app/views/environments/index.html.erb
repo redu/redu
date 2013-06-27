@@ -5,12 +5,12 @@
 <% end %>
 
 <div class="span16">
-  <%= render :partial => "index_header" %>
+  <%= render partial: "index_header" %>
 
   <div class="content-body">
     <div class="content-section">
-      <%= render "bootstrap/header_breadcrumb", :header_breadcrumb_items => [
-        { :name => "Ambientes de que Participo", :link => environments_index_path, :classes => "icon-environment-round-gray_32_34-before", :counter => @total_environments } ] %>
+      <%= render "bootstrap/header_breadcrumb", header_breadcrumb_items: [
+        { name: "Ambientes de que Participo", link: environments_index_path, classes: "icon-environment-round-gray_32_34-before", counter: @total_environments } ] %>
       <%# TODO: Futura modal de criar ambiente e curso. %>
       <button class="button-success pull-right">Criar Ambiente de Aprendizagem + Curso</button>
     </div>
@@ -26,17 +26,17 @@
 
     <% if @environments.empty? %>
       <hr class="list-separator">
-      <%= render "shared/empty_message", :icon_message => "Nenhum ambiente",
-        :icon_class => "icon-environment-empty_128_130",
-        :message => "Você ainda não participa de um Ambiente de Aprendizagem." %>
+      <%= render "shared/empty_message", icon_message: "Nenhum ambiente",
+        icon_class: "icon-environment-empty_128_130",
+        message: "Você ainda não participa de um Ambiente de Aprendizagem." %>
     <% else %>
       <ul id="my-environments" class="list-environment-course-space">
-        <%= render :partial => "users/environments/environment",
-          :collection => @environments, :locals => { :user => @user } %>
+        <%= render partial: "users/environments/environment",
+          collection: @environments, locals: { user: @user } %>
       </ul>
     <% end %>
-    <%= paginate @environments, :theme => 'new_endless' %>
+    <%= paginate @environments, theme: 'new_endless' %>
   </div>
 
-  <%= render :partial => "breadcrumb_mini" %>
+  <%= render partial: "breadcrumb_mini" %>
 </div>
