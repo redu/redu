@@ -100,7 +100,8 @@ class SpacesController < BaseController
       format.js do
         render_endless('bootstrap/list_subject_item', @subjects,
                        '.list-subject',
-                       template: 'shared/new_endless_kaminari')
+                       template: 'shared/new_endless_kaminari',
+                       partial_locals: { user: current_user } )
       end
     end
   end
