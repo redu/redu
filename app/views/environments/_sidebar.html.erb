@@ -1,23 +1,107 @@
-<div class="concave-sidebar alpha grid_3">
-  <div class="image-frame">
-    <%= link_to(environment) do %>
-      <%= image_tag environment.avatar.url(:thumb_140),
-        :size => "140x140",
-        :alt => 'profile',
-        :class => "environment-avatar" %>
-    <% end %>
-  </div>
+<%#
+  Barra lateral de ambientes.
 
-  <% cache ['environment_sidebar_connections_with_count', @environment.id] do %>
-    <div class="total-count">
-      <span class="count"><%= environment.users.count %></span>
-      <span class="members">membros</span>
+  Variáveis:
+    environment: o ambiente.
+    management: se está sendo mostrada nas telas de gerenciamento (default false).
+%>
+
+<% management = false unless local_assigns.has_key? :management %>
+
+<div class="entity-sidebar">
+  <%# Thumbnail. %>
+  <%= link_to environment, class: "environment-thumbnail" do %>
+    <%= image_tag environment.avatar.url(:thumb_160), size: "160x160",
+      alt: environment.name, title: environment.name,
+      class: "environment-thumbnail" %>
+  <% end %>
+
+  <%# Gerenciamento. %>
+  <% if management %>
+
+    <%# Quantidade de membros e convidar. %>
+    <div class="entity-sidebar-widget content-body">
+      <div class="entity-sidebar-widget-section">
+        <span class="entity-sidebar-widget-icon icon-environment-gray_16_18 show text-replacement">Ambiente</span>
+        <%= content_tag :span, environment.name, class: "entity-sidebar-widget-name" %>
+      </div>
+      <hr class="entity-sidebar-widget-separator">
+      <div class="entity-sidebar-widget-section">
+        <span class="entity-sidebar-widget-legend icon-manager-gray_16_18-before">Admins.:</span>
+        <%= environment.administrators.count %>
+      </div>
+      <hr class="entity-sidebar-widget-separator">
+      <div class="entity-sidebar-widget-section">
+        <span class="entity-sidebar-widget-legend icon-members-gray_16_18-before">Total de <br/>Membros:</span>
+        <%= environment.users.count %>
+      </div>
+      <hr class="entity-sidebar-widget-separator">
+      <div class="entity-sidebar-widget-section centralize">
+        <%# TODO: Modal de convidar membros. %>
+        <%= link_to "Convide Membros", "#", class: "link-secondary" %>
+      </div>
     </div>
 
-    <ul class="connections clearfix">
-      <%= render :partial => 'users/item_short',
-        :collection => environment.users.limit(16) %>
-    </ul><!-- end .connections -->
+    <%# Licenças e faturas. %>
+    <% if environment.plan %>
+      <div class="entity-sidebar-widget content-body">
+        <%# TODO: Back-end. %>
+        <div class="entity-sidebar-widget-section">
+          <span class="entity-sidebar-widget-title icon-plan-lightblue_16_18-before" rel="tooltip" title="As licenças são apenas contabilizadas quando você convida alguém para participar de um um Curso Privado.">Licenças</span>
+        </div>
+        <hr class="entity-sidebar-widget-separator">
+        <div class="entity-sidebar-widget-section">
+          <span class="entity-sidebar-widget-legend">Licenças em uso:</span>
+          20
+        </div>
+        <hr class="entity-sidebar-widget-separator">
+        <div class="entity-sidebar-widget-section">
+          <span class="entity-sidebar-widget-legend show">Valor previsto:</span>
+          R$12,00
+        </div>
+        <hr class="list-separator">
+        <div class="entity-sidebar-widget-section">
+          <span class="entity-sidebar-widget-title icon-plan-lightblue_16_18-before" rel="tooltip" title="A fatura estará sempre associada ao seu Ambiente de Aprendizagem, independente da quantidade de Cursos e Disciplinas.">Faturas</span>
+        </div>
+        <hr class="entity-sidebar-widget-separator">
+        <div class="entity-sidebar-widget-section">
+          <span class="entity-sidebar-widget-legend">Valor:</span>
+          <%= content_tag :span, "R$11,00", class: plan_payment_status_class(environment.plan) %>
+        </div>
+        <hr class="entity-sidebar-widget-separator">
+        <div class="entity-sidebar-widget-section">
+          <span class="entity-sidebar-widget-legend show">Vencimento:</span>
+          01/04/2013
+        </div>
+        <hr class="entity-sidebar-widget-separator">
+        <div class="entity-sidebar-widget-section entity-sidebar-widget-section-button centralize">
+          <%= link_to "Pagar", "#", class: "button-success", rel: "tooltip",
+            title: "O Redu utiliza a solução mais completa para pagamento online, o PagSeguro, com total sigilo dos seus dados financeiros." %>
+        </div>
+      </div>
+    <% end %>
+
+  <%# Normal. %>
+  <% else %>
+
+    <%# Breadcrumb de ícones. %>
+    <%= render "bootstrap/breadcrumb_icons", entity: environment %>
+
+    <%# Membros. %>
+    <% cache ["environment_sidebar_connections_with_count", environment.id] do %>
+      <div class="entity-members-counter-wrapper">
+        <%= content_tag :span, environment.users.count,
+          class: "entity-members-counter" %>
+        <%= "membro".pluralize(environment.users.count) %>
+      </div>
+
+      <span class="entity-sidebar-separator icon-arrow-up-curly-gray show text-replacement">-</span>
+
+      <ul class="entity-members-list clearfix">
+        <%= render partial: "shared/item_linkable",
+          collection: environment.users.limit(16),
+          locals: { classes: "entity-member", size: 32, name: "display_name" } %>
+      </ul>
+    <% end %>
   <% end %>
 </div>
-

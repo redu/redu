@@ -87,6 +87,65 @@
   &:nth-child(n+#{$n + 1}) { margin-top: 10px; }
 }
 
+// Widgets da área de gerenciamento.
+
+.entity-sidebar-widget {
+  color: $gray6;
+  min-height: 0;
+
+  .environment-thumbnail +
+  &,
+  & +
+  & { margin-top: 20px; }
+
+  .list-separator {
+    $padding-vertical: 4px;
+    padding-top: $padding-vertical;
+    padding-bottom: $padding-vertical;
+  }
+}
+
+.entity-sidebar-widget-icon { margin: 0 auto; }
+
+.entity-sidebar-widget-icon +
+.entity-sidebar-widget-name { margin-top: 5px; }
+
+.entity-sidebar-widget-name {
+  text-align: center;
+  color: $black;
+  display: block;
+}
+
+// Padding horizontal.
+$entity-sidebar-widget-section-padding-horizontal: 10px;
+
+.entity-sidebar-widget-section {
+  padding: 5px $entity-sidebar-widget-section-padding-horizontal;
+
+  &:first-child {
+    padding-top: 0;
+    padding-bottom: $entity-sidebar-widget-section-padding-horizontal;
+  }
+
+  &:last-child { padding-bottom: 0; }
+}
+
+// Caso especial do padding quando há um botão.
+.entity-sidebar-widget-section-button { padding-top: $entity-sidebar-widget-section-padding-horizontal; }
+
+.entity-sidebar-widget-separator {
+  border-bottom: 1px solid $gray2;
+  border-top: 0;
+  margin: 0;
+}
+
+.entity-sidebar-widget-legend { color: $gray5; }
+
+.entity-sidebar-widget-title {
+  color: $blue3;
+  display: block;
+}
+
 
 // Cabeçalho.
 // ==========================================================================

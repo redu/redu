@@ -56,7 +56,7 @@ class EnvironmentsController < BaseController
   # GET /environments/1/edit
   def edit
     respond_to do |format|
-      format.html { render 'environments/admin/edit' }
+      format.html { render 'environments/admin/edit', layout: 'new_application' }
     end
   end
 
