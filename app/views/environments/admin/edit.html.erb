@@ -4,3 +4,7 @@
   <%= render "environments/sidebar", environment: @environment,
     management: true %>
 </div>
+<div class="span13">
+  <%= render "environments/breadcrumb",
+    environment: @header_environment || @environment %>
+</div>
