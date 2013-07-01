@@ -74,14 +74,4 @@ module NavigationHelper
       :environments
     end
   end
-
-  # Renderiza um item do tipo canvas na navegação local.
-  def render_local_nav_canvas(canvas)
-    content = content_tag(:span, canvas.current_name,
-                          :title => canvas.current_name,
-                          :class => "local-nav-item-canvas text-truncate")
-    content << content_tag(:span, "por: #{canvas.user.display_name}",
-                           :title => canvas.user.display_name,
-                           :class => "local-nav-item-canvas-author text-truncate")
-  end
 end
