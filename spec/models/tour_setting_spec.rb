@@ -1,8 +1,8 @@
 # -*- encoding : utf-8 -*-
 require 'spec_helper'
 
-describe UserSetting do
-  subject { FactoryGirl.create(:user_setting) }
+describe TourSetting do
+  subject { FactoryGirl.create(:tour_setting) }
   it { should_not allow_mass_assignment_of :explored }
 
   describe 'keep explored tour parts' do

@@ -5,6 +5,8 @@
     compound: o compound log de ingresso a curso.
 %>
 
+<% course = compound.statusable %>
+
 <%= content_tag :li, id: "status-#{compound.id}" do %>
   <hr class="list-separator">
   <div class="status log">
@@ -13,9 +15,9 @@
     </div>
     <div class="subject">
       <div class="subject-info">
-        <%= content_tag :span,
-          "O curso possui #{compound.logs.length} novos Membros:",
-          class: "icon-grouping-gray_16_18-before action" %>
+        <%= content_tag :span, class: "icon-grouping-gray_16_18-before action" do %>
+          <%= link_to course.name, environment_course_path(course.environment, course) %> possui <%= compound.logs.length %> novos Membros:
+        <% end %>
         <% if compound.logs.count > 12 %>
           <span class="link-fake see-all link-secondary">+ Ver todos</span>
         <% end %>

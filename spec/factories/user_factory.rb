@@ -10,7 +10,7 @@ FactoryGirl.define do
     u.tos "1"
     u.sequence(:birthday) {|n| 13.years.ago - n}
     u.role :member
-    u.association :settings, :factory => :user_setting
+    u.association :settings, :factory => :tour_setting
   end
 
   factory :partner_user, :parent => :user do

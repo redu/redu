@@ -44,8 +44,7 @@ class CompoundLog < Status
   def self.current_compostable(log, interval=24)
     compound_logs = CompoundLog.where(:statusable_id => log.statusable,
                                       :logeable_type => log.logeable.class.to_s)
-
-    compound_log = compound_logs.order("created_at ASC").limit(1).last
+    compound_log = compound_logs.last
 
     # Cria novo compound_log se o último estiver expirado.
     compound_log = nil if (compound_log and compound_log.expired?(interval))

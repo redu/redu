@@ -74,7 +74,7 @@ class User < ActiveRecord::Base
     conditions: ["state LIKE 'invited'"]
   has_many :experiences, dependent: :destroy
   has_many :educations, dependent: :destroy
-  has_one :settings, class_name: "UserSetting", dependent: :destroy
+  has_one :settings, class_name: "TourSetting", dependent: :destroy
   has_many :partners, through: :partner_user_associations
   has_many :partner_user_associations, dependent: :destroy
 
@@ -102,8 +102,8 @@ class User < ActiveRecord::Base
   scope :with_keyword, lambda { |keyword|
     where("LOWER(login) LIKE :keyword OR " + \
       "LOWER(first_name) LIKE :keyword OR " + \
-      "LOWER(last_name) LIKE :keyword OR " +\
-      "CONCAT(TRIM(LOWER(first_name)), ' ', TRIM(LOWER(last_name))) LIKE :keyword OR " +\
+      "LOWER(last_name) LIKE :keyword OR " + \
+      "CONCAT(TRIM(LOWER(first_name)), ' ', TRIM(LOWER(last_name))) LIKE :keyword OR " + \
       "LOWER(email) LIKE :keyword", { keyword: "%#{keyword.to_s.downcase}%" }).
       limit(10).select("users.id, users.first_name, users.last_name, users.login, users.email, users.avatar_file_name, users.avatar_updated_at")
   }
@@ -204,7 +204,7 @@ class User < ActiveRecord::Base
   end
 
   def process_invitation!(invitee, invitation)
-    friendship_invitation = self.be_friends_with(invitee)
+    self.be_friends_with(invitee)
     invitation.delete
   end
 
@@ -301,28 +301,26 @@ class User < ActiveRecord::Base
         return true
       end
     else
-      case entity.class.to_s
-      when 'Folder'
+      case entity
+      when Folder
         self.get_association_with(entity.space).nil? ? false : true
-      when 'Status'
-        unless entity.statusable.is_a? User
-          self.has_access_to? entity.statusable
-        else
+      when Status
+        if entity.statusable.is_a? User
           self.friends?(entity.statusable) || self == entity.statusable
+        else
+          self.has_access_to? entity.statusable
         end
-      when 'Help'
+      when Help
         has_access_to?(entity.statusable)
-      when 'Lecture'
+      when Lecture
         self.has_access_to? entity.subject
-      when 'Exam'
-        self.has_access_to? entity.subject
-      when 'PartnerEnvironmentAssociation'
+      when PartnerEnvironmentAssociation
         self.has_access_to? entity.partner
-      when 'Partner'
+      when Partner
         entity.users.exists?(self)
-      when 'Result'
+      when Result
         entity.user == self
-      when 'Question'
+      when Question
         has_access_to? entity.exercise.lecture
       else
         return false
@@ -433,7 +431,7 @@ class User < ActiveRecord::Base
   def get_association_with(entity)
     return false unless entity
 
-    association = case entity.class.to_s
+    case entity.class.to_s
     when 'Space'
       self.user_space_associations.
         find(:first, conditions: { space_id: entity.id })
@@ -526,7 +524,7 @@ class User < ActiveRecord::Base
   end
 
   def create_settings!
-    self.settings = UserSetting.create(view_mural: Privacy[:friends])
+    self.settings = TourSetting.create(view_mural: Privacy[:friends])
   end
 
   def presence_channel

@@ -55,7 +55,7 @@ describe ApplicationController do
         end
 
         it 'does not call visit!' do
-          UserSetting.any_instance.should_not_receive(:visit!)
+          TourSetting.any_instance.should_not_receive(:visit!)
           get :show, :id => 'anyid', :exploring_tour => "true"
         end
       end
@@ -70,7 +70,7 @@ describe ApplicationController do
         end
 
         it 'does not call visit!' do
-          UserSetting.any_instance.should_not_receive(:visit!)
+          TourSetting.any_instance.should_not_receive(:visit!)
           get :show, :id => 'anyid', :exploring_tour => "true"
         end
       end

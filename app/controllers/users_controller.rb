@@ -438,7 +438,7 @@ class UsersController < BaseController
       @environment = Environment.find_by_path(environment_id)
 
       if course_id = params[:course_id]
-        @course = Course.find_by_path(course_id)
+        @course = @environment.courses.find_by_path(course_id)
       end
     end
 

@@ -3,8 +3,7 @@ module StatusService
   module AnswerService
     class AnswerPresenter
       delegate :author_name, :author_avatar, :answer_text, :hierarchy_breadcrumbs,
-        :original_author, :user,
-        :author, to: :notification
+        :original_author, :user, :place, :author, to: :notification
 
       def initialize(options={})
         @notification = options.delete(:notification)
@@ -13,28 +12,23 @@ module StatusService
 
       def author_link
         author = notification.author
-        render_link(notification.author_name, template.user_path(author))
+        render_link(notification.author_name, template.user_url(author))
       end
 
       def answer_link
         text = "Clique aqui para ver a resposta."
-        url = template.status_path(notification.answer)
+        url = template.status_url(notification.answer)
         render_link(text, url, class: "status-link")
       end
 
       def action(&block)
-        message = if user_is_original_author?
-                    "respondeu ao seu comentário em"
-                  else
-                    "também respondeu ao comentário original de " + \
-                    "#{original_author.display_name}"
-                  end
-
-        block_given? ? yield(message) : message
+        message = "participou da discussão #{place}"
+        message = yield(message) if block_given?
+        message
       end
 
       def subject
-        action { |msg| "#{author_name} #{msg}"}
+        action { |message| "#{author_name(short: true)} #{message}" }
       end
 
       def context(context_template, &block)

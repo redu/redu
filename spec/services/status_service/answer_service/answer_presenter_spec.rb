@@ -18,53 +18,56 @@ module StatusService
 
       it "should degine author_link" do
         notification.stub(:answer).and_return(answer)
-        subject.author_link.should =~ /href=\"#{view.user_path(author)}\"/
+        subject.author_link.should =~ /href=\"#{view.user_url(author)}\"/
       end
 
       it "should define answer_link" do
         notification.stub(:answer).and_return(answer)
-        subject.answer_link.should =~ /href=\"#{view.status_path(answer)}\"/
+        subject.answer_link.should =~ /href=\"#{view.status_url(answer)}\"/
       end
 
-      context "when AnswerNotification#user is the author" do
+      shared_examples_for "email notification" do
         let(:notification) do
-          AnswerNotification.new(user: author, answer: answer)
+          AnswerNotification.new(user: user, answer: answer)
         end
-        let(:status) { FactoryGirl.build_stubbed(:activity, user: author) }
-
-        context "#action" do
-          it "should generate the correct message" do
-            subject.action.should =~ \
-              /respondeu ao seu comentário em/
-          end
+        it "should generate the correct #action" do
+          subject.action.should =~ message
         end
 
-        context "#subject" do
-          it "should generate the correct message" do
-            subject.subject.should =~ \
-              /#{answer.user.display_name} respondeu ao seu comentário em/
+        it "should generate the correct #subject" do
+          subject.subject.should =~ /#{author.first_name} #{message}/
+        end
+      end
+
+      context "when status#statusable is User" do
+        it_should_behave_like "email notification" do
+          let(:status) { FactoryGirl.build_stubbed(:activity, user: user) }
+          let(:message) do
+            /participou da discussão no Mural de #{status.statusable.first_name}/
           end
         end
       end
 
-      context "whem AnswerNotification#user is not the author" do
-        let(:notification) { AnswerNotification.new(user: user, answer: answer) }
-
-        context "#action" do
-          it "should generate the correct message" do
-            msg = "também respondeu ao comentário " + \
-              "original de #{status.user.display_name}"
-
-            subject.action.should == msg
+      context "when status#statusable is Lecture" do
+        it_should_behave_like "email notification" do
+          let(:lecture) { FactoryGirl.build_stubbed(:lecture) }
+          let(:status) do
+            FactoryGirl.build_stubbed(:activity, user: user, statusable: lecture)
+          end
+          let(:message) do
+            /participou da discussão em: #{lecture.name}/
           end
         end
+      end
 
-        context "#subject" do
-          it "should generate the correct message" do
-            msg = "#{answer.user.display_name} também respondeu ao comentário " + \
-                  "original de #{status.user.display_name}"
-
-            subject.subject.should == msg
+      context "when status#statusable is Space" do
+        it_should_behave_like "email notification" do
+          let(:space) { FactoryGirl.build_stubbed(:space) }
+          let(:status) do
+            FactoryGirl.build_stubbed(:activity, user: user, statusable: space)
+          end
+          let(:message) do
+            /participou da discussão em: #{space.name}/
           end
         end
       end

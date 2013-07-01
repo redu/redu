@@ -17,7 +17,7 @@
   $("#new_message").replaceWith($newForm);
 
   <% if @reply.errors.empty? %>
-    var $successNotice = $("<%= escape_javascript render 'messages/notice_message_created', :message => @reply, :user => @user %>");
+    var $successNotice = $('<%= escape_javascript render "bootstrap/system_message", message: "<p><strong>Muito bem</strong>! Sua mensagem foi enviada. Para visualizá-la #{ link_to "clique aqui", user_message_path(@user, @reply) }.</p>", type: "success" %>');
     $successNotice.appendTo("body").show();
   <% else %>
   <% end %>

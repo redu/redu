@@ -1,5 +1,10 @@
 // Copiado do bootstrap somente o que envolvia textareas.
 
+
+.status-tab input[type="submit"] { @include box-sizing; }
+
+// Do bootstrap:
+
 // Lista de erros do campo.
 .control-errors {
   margin: 5px 0 0;

@@ -9,6 +9,10 @@ if @node[:instance_role] == 'db_master'
     message "configuring backup"
   end
 
+  gem_package 'aws-s3' do
+    action :install
+  end
+
   template "/usr/local/bin/mongo-backup" do
     source "mongo-backup.rb.erb"
     owner "root"

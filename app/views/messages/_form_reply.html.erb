@@ -1,17 +1,24 @@
-<%= form_for [@user, @new_reply || @reply], :remote => true do |f| %>
-  <div class="distance-top"></div>
-  <fieldset class="concave-fieldset">
-    <%= f.hidden_field :recipient_id, :value => @reply.to || @reply.recipient_id %>
-    <%= f.hidden_field :sender_id, :value => @user.id %>
-    <%= f.hidden_field :reply_to, :value => @reply.reply_to %>
+<%= form_for [@user, @new_reply || @reply], remote: true,
+  html: { class: "create-status status-tab" } do |f| %>
+  <%= f.hidden_field :recipient_id, value: @reply.to || @reply.recipient_id %>
+  <%= f.hidden_field :sender_id, value: @user.id %>
+  <%= f.hidden_field :reply_to, value: @reply.reply_to %>
 
-    <%= f.text_field :subject, :style => 'display: none;' %>
-    <%= label_tag :body, t(:message), :style => 'display: none' %>
-    <%= f.text_area :body, :size => "73x1" %>
-    <%= concave_errors_for f.object, :body %>
-    <hr>
-    <div class="status-buttons">
-      <%= f.submit t(:send), :class => 'button-primary' %>
-    </div>
-  </fieldset>
+  <%= f.text_field :subject, style: 'display: none;' %>
+  <%= label_tag :body, t(:message), style: 'display: none' %>
+  <%= f.text_area :body, rows: 6 %>
+  <%= concave_errors_for f.object, :body %>
+  <div class="clearfix">
+    <ul class="status-buttons">
+      <li>
+        <%= f.submit t(:send), class: "button-primary" %>
+      </li>
+    </ul>
+  </div>
 <% end %>
+
+<script>
+  $(function() {
+    $(".messages-reply-form").find("textarea").focus();
+  });
+</script>
