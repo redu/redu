@@ -18,8 +18,8 @@
       <% end %>
 
       <%# Barra de progresso. %>
-      <% percentage = user.get_association_with(list_subject_item).grade.to_i %>
-      <%= render "bootstrap/progress_bar", percentage: percentage %>
+      <%= render "bootstrap/progress_bar",
+        percentage: subject_completeness(list_subject_item, user) %>
     </div>
   </div>
   <div class="list-subject-body">
