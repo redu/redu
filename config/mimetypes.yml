@@ -70,4 +70,4 @@ video:
     'video/pointer',
     'video/raw',
     'video/rtx' ]
-audio: ['audio/mpeg', 'audio/mp3']
+audio: ['audio/mpeg', 'audio/mp3', 'audio/amr']
