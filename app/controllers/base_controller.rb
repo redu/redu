@@ -29,28 +29,6 @@ class BaseController < ApplicationController
     end
   end
 
-  def contact
-    if request.get?
-      @contact = Contact.new
-    else
-      @contact = Contact.create(params[:contact])
-      if @contact.valid?
-        if @contact.about_an_error?
-          @contact.body << "\n\n Stacktrace: \n"
-          @contact.body << `tail -n 1500 #{Redu::Application.root}/log/#{Rails.env}.log | grep -C 300 "Completed 500"`
-        end
-
-        @contact.deliver
-        @boxed = true # CSS style
-        flash[:notice] = 'Seu e-mail foi enviado, aguarde o nosso contato. Obrigado!' unless request.xhr?
-      end
-    end
-    respond_to do |format|
-      format.html { render :layout => 'clean' }
-      format.js
-    end
-  end
-
   def about
     redirect_to "http://tech.redu.com.br"
   end

@@ -4,7 +4,7 @@ var $form = $("#contact-form");
   $form.replaceWith($confirmationBox);
 <% else %>
   var formClasses = $form.attr('class');
-  var contactForm = "<%= escape_javascript render :partial => 'base/contact_form', :locals => { :remote => true, :css_class => 'concave-form', :id => 'contact-form', :kind => !@contact.about_an_error? } %>"
+  var contactForm = "<%= escape_javascript render :partial => 'contact_form', :locals => { :remote => true, :css_class => 'concave-form', :id => 'contact-form', :kind => !@contact.about_an_error? } %>"
   console.log(formClasses)
   $form.replaceWith(contactForm);
   $("#contact-form").attr('class', formClasses);

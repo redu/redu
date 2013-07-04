@@ -57,7 +57,8 @@ Redu::Application.routes.draw do
 
     # site routes
     match '/about' => 'base#about', :as => :about
-    match 'contact' => 'base#contact', :as => :contact
+    resources :contacts, only: [:new, :create]
+    get 'contact' => 'contacts#new' # Good URL don't change
 
     # Space
     resources :spaces, :except => [:index] do
@@ -163,7 +164,6 @@ Redu::Application.routes.draw do
     match 'users/activate/:id' => 'users#activate', :as => :activate
 
     # Indexes
-    match 'contact' => "base#contact", :as => :contact
     match '/teach' => 'base#teach_index', :as => :teach_index
     get '/environments' => 'environments#index', :as => :environments_index
 

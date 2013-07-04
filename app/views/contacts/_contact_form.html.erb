@@ -1,4 +1,4 @@
-<%= form_for @contact, :remote => remote ||= false, :html => {:class => css_class ||= 'concave-form omega', :id => id ||= ''}, :url => contact_path do |f| %>
+<%= form_for @contact, :remote => remote ||= false, :html => {:class => css_class ||= 'concave-form omega', :id => id ||= ''}, :url => contacts_path do |f| %>
   <fieldset>
     <%= concave_error_messages_for f.object %>
     <%= f.label :name, 'Nome:' %>
