@@ -86,10 +86,9 @@ end
 
 # Gems específicos de algum ambiente
 group :development, :test do
-  gem 'jasmine'
   gem 'no_peeping_toms', git: 'git://github.com/patmaddox/no-peeping-toms.git'
   gem 'rails3-generators'
-  gem "rspec-rails", "~> 2.13"
+  gem "rspec-rails", "~> 2.14.0.rc1"
   gem 'debugger'
   gem 'sunspot_solr'
 end
