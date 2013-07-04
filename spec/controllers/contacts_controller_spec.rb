@@ -11,7 +11,7 @@ describe ContactsController do
   end
 
   describe "POST 'create'" do
-    it "should delive contact" do
+    it "should deliver contact" do
       attrs = { name: "Guila", email: "foo@bar.com", kind: "Dúvida",
                 body: "hello" }
       expect {
