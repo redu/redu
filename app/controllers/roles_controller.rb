@@ -1,19 +1,19 @@
 # -*- encoding : utf-8 -*-
 class RolesController < BaseController
-  load_resource :environment, :find_by => :path
-  load_resource :user, :through => :environment, :find_by => :login
+  load_resource :environment, find_by: :path
+  load_resource :user, through: :environment, find_by: :login
 
   def index
     authorize! :manage, @environment
 
     @courses_memberships = @user.user_course_associations.
-      where(:course_id => @environment.courses.select('id')).includes(:course)
+      where(course_id: @environment.courses.select('id')).includes(:course)
     @environment_membership = @user.user_environment_associations.
-      where(:environment_id => @environment.id).includes(:user).first
+      where(environment_id: @environment.id).includes(:user).first
 
     respond_to do |format|
       format.html do
-        render :template => "roles/show"
+        render template: "roles/show"
       end
     end
   end
@@ -40,7 +40,7 @@ class RolesController < BaseController
     respond_to do |format|
       format.html { redirect_to environment_user_roles_path(@environment) }
       format.js do
-        render :js => "window.location = '#{environment_user_roles_path(@environment)}'"
+        render js: "window.location = '#{environment_user_roles_path(@environment)}'"
       end
     end
   end
