@@ -22,7 +22,7 @@ class RolesController < BaseController
     authorize! :manage, @environment
 
     if course_id = params[:course_id]
-      @course = Course.find_by_path(course_id)
+      @course = @environment.courses.find_by_path(course_id)
       authorize! :manage, @course
     end
 

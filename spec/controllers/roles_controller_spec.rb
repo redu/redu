@@ -6,9 +6,12 @@ describe RolesController do
   before do
     @environment = FactoryGirl.create(:environment)
     @owner = @environment.owner
-    @courses = 2.times.collect do
-      c = FactoryGirl.create(:course, :environment => @environment, :owner => @owner)
-    end
+    FactoryGirl.create(:course, path: "path")
+    @courses = []
+    @courses << FactoryGirl.create(:course, :environment => @environment,
+                             :owner => @owner, path: "path")
+    @courses << FactoryGirl.create(:course, :environment => @environment,
+                             :owner => @owner)
     @spaces = 2.times.collect do
       FactoryGirl.create(:space, :course => @course, :owner => @owner )
     end
@@ -53,6 +56,7 @@ describe RolesController do
   end
 
   context "on Course" do
+
     it "should turn member into teacher" do
       put :update, :environment_id => @environment.path,
         :course_id => @courses.first.path, :user_id => @member.login,
