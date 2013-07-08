@@ -1975,12 +1975,14 @@ p {
   display: block;
 }
 
-.icon-sprite, .icon-account-blue_16_18, .icon-account-lightblue_16_18-before:hover:before, .tabs .icon-account_16_18-before:hover:before, .icon-account-gray_16_18, .icon-account-gray_16_18-before:before, .icon-account-lightblue_16_18, .icon-account-lightblue_16_18-before:before, .tabs .icon-account_16_18-before:before, .icon-add-friend-darkgray_32_34, .icon-add-friend-green_32_34, .icon-add-friend-green_32_34-before:before, .icon-app-black_16_18, .icon-app-black_16_18-before:before, .icon-app-blue_16_18, .icon-app-lightblue_16_18-before:hover:before, .list-button li:hover .icon-app-lightblue_16_18-before:before, .icon-app-blue_32_34, .icon-app-lightblue_32_34-before:hover:before, .icon-app-gray_32_34-before:hover:before, .guides-list-item:hover .icon-app-lightblue_32_34-before:before, .icon-app-gray_16_18, .icon-app-gray_16_18-before:before, .icon-app-gray_32_34, .icon-app-gray_32_34-before:before, .icon-app-lightblue_16_18, .icon-app-lightblue_16_18-before:before, .icon-app-lightblue_32_34, .icon-app-lightblue_32_34-before:before, .icon-app-white_16_18, .icon-app-white_16_18-before:before, .icon-app-lightblue_16_18-before.nav-local-item-active:before, .icon-apps-portal-blue_16_18, .icon-apps-portal-lightblue_16_18-before:hover:before, .icon-apps-portal-blue_48_50, .icon-apps-portal-gray_48_50-before:hover:before, .icon-apps-portal-gray_48_50, .icon-apps-portal-gray_48_50-before:before, .icon-apps-portal-lightblue_16_18, .icon-apps-portal-lightblue_16_18-before:before, .icon-arrow-down-blue_8_10, a:hover .icon-arrow-down-lightblue_8_10,
+.icon-sprite, .icon-account-blue_16_18, .icon-account-lightblue_16_18-before:hover:before, .tabs .icon-account_16_18-before:hover:before, .icon-account-gray_16_18, .icon-account-gray_16_18-before:before, .icon-account-lightblue_16_18, .icon-account-lightblue_16_18-before:before, .tabs .icon-account_16_18-before:before, .icon-add-friend-darkgray_32_34, .icon-add-friend-green_32_34, .icon-add-friend-green_32_34-before:before, .icon-app-black_16_18, .icon-app-black_16_18-before:before, .icon-app-blue_16_18, .icon-app-lightblue_16_18-before:hover:before, .list-button li:hover .icon-app-lightblue_16_18-before:before, .icon-app-blue_32_34, .icon-app-lightblue_32_34-before:hover:before, .icon-app-gray_32_34-before:hover:before, .guides-list-item:hover .icon-app-lightblue_32_34-before:before, .icon-app-gray_16_18, .icon-app-gray_16_18-before:before, .icon-app-gray_32_34, .icon-app-gray_32_34-before:before, .icon-app-lightblue_16_18, .icon-app-lightblue_16_18-before:before, .icon-app-lightblue_32_34, .icon-app-lightblue_32_34-before:before, .icon-app-white_16_18, .icon-app-white_16_18-before:before, .icon-app-lightblue_16_18-before.nav-local-item-active:before, .icon-apps-portal-blue_16_18, .icon-apps-portal-lightblue_16_18-before:hover:before, .icon-apps-portal-blue_48_50, .icon-apps-portal-gray_48_50-before:hover:before, .icon-apps-portal-gray_48_50, .icon-apps-portal-gray_48_50-before:before, .icon-apps-portal-lightblue_16_18, .icon-apps-portal-lightblue_16_18-before:before, .icon-arrow-down-blue_8_10, .icon-arrow-down-lightblue_8_10-after:hover:after, a:hover .icon-arrow-down-lightblue_8_10, a:hover .icon-arrow-down-lightblue_8_10-after:after,
 a:hover .icon-arrow-down-gray_8_10,
 .filter:hover .icon-arrow-down-lightblue_8_10,
+.filter:hover .icon-arrow-down-lightblue_8_10-after:after,
 .filter:hover .icon-arrow-down-gray_8_10,
 .button-default:hover .icon-arrow-down-lightblue_8_10,
-.button-default:hover .icon-arrow-down-gray_8_10, .icon-arrow-down-gray_8_10, .button-disabled .icon-arrow-down-lightblue_8_10, .icon-arrow-down-lightblue_8_10, .icon-arrow-down-pagination-blue_16_18, .icon-arrow-down-pagination-gray_16_18-before:hover:before, .icon-arrow-down-pagination-gray_16_18, .icon-arrow-down-pagination-gray_16_18-before:before, .icon-arrow-left-blue_16_18, .icon-arrow-left-lightblue_16_18-before:hover:before, a:hover .icon-arrow-left-lightblue_16_18, a:hover .icon-arrow-left-lightblue_16_18-before:before,
+.button-default:hover .icon-arrow-down-lightblue_8_10-after:after,
+.button-default:hover .icon-arrow-down-gray_8_10, .icon-arrow-down-gray_8_10, .button-disabled .icon-arrow-down-lightblue_8_10, .button-disabled .icon-arrow-down-lightblue_8_10-after:after, .icon-arrow-down-lightblue_8_10, .icon-arrow-down-lightblue_8_10-after:after, .icon-arrow-down-pagination-blue_16_18, .icon-arrow-down-pagination-gray_16_18-before:hover:before, .icon-arrow-down-pagination-gray_16_18, .icon-arrow-down-pagination-gray_16_18-before:before, .icon-arrow-left-blue_16_18, .icon-arrow-left-lightblue_16_18-before:hover:before, a:hover .icon-arrow-left-lightblue_16_18, a:hover .icon-arrow-left-lightblue_16_18-before:before,
 .filter:hover .icon-arrow-left-lightblue_16_18,
 .filter:hover .icon-arrow-left-lightblue_16_18-before:before,
 .button-default:hover .icon-arrow-left-lightblue_16_18,
@@ -1996,12 +1998,14 @@ a:hover .icon-arrow-down-gray_8_10,
 .filter:hover .icon-arrow-right-lightblue_8_10,
 .filter:hover .icon-arrow-right-lightblue_8_10-before:before,
 .button-default:hover .icon-arrow-right-lightblue_8_10,
-.button-default:hover .icon-arrow-right-lightblue_8_10-before:before, .icon-arrow-right-gray_8_10, .icon-arrow-right-lightblue_16_18, .icon-arrow-right-lightblue_16_18-before:before, .icon-arrow-right-lightblue_8_10, .icon-arrow-right-lightblue_8_10-before:before, .icon-arrow-right-nav-local-blue_11_32, .icon-arrow-right-nav-local-lightblue_11_32-after:hover:after, .icon-arrow-right-nav-local-lightblue_11_32, .icon-arrow-right-nav-local-lightblue_11_32-after:after, .icon-arrow-right-separator-gray_16_18, .icon-arrow-right-separator-gray_16_18-after:after, .icon-arrow-right-squared-gray_16_18, .icon-arrow-right-squared-gray_16_18-before:before, .icon-arrow-up-balloon-gray_20_8, .icon-arrow-up-blue_8_10, .open a:hover .icon-arrow-down-gray_8_10, .open a:hover .icon-arrow-down-lightblue_8_10, .open
+.button-default:hover .icon-arrow-right-lightblue_8_10-before:before, .icon-arrow-right-gray_8_10, .icon-arrow-right-lightblue_16_18, .icon-arrow-right-lightblue_16_18-before:before, .icon-arrow-right-lightblue_8_10, .icon-arrow-right-lightblue_8_10-before:before, .icon-arrow-right-nav-local-blue_11_32, .icon-arrow-right-nav-local-lightblue_11_32-after:hover:after, .icon-arrow-right-nav-local-lightblue_11_32, .icon-arrow-right-nav-local-lightblue_11_32-after:after, .icon-arrow-right-separator-gray_16_18, .icon-arrow-right-separator-gray_16_18-after:after, .icon-arrow-right-squared-gray_16_18, .icon-arrow-right-squared-gray_16_18-before:before, .icon-arrow-up-balloon-gray_20_8, .icon-arrow-up-blue_8_10, .icon-arrow-up-lightblue_8_10-after:hover:after, .open a:hover .icon-arrow-down-gray_8_10, .open a:hover .icon-arrow-down-lightblue_8_10, .open a:hover .icon-arrow-down-lightblue_8_10-after:after, .open
 .filter:hover .icon-arrow-down-gray_8_10, .open
 .filter:hover .icon-arrow-down-lightblue_8_10, .open
+.filter:hover .icon-arrow-down-lightblue_8_10-after:after, .open
 .button-default:hover .icon-arrow-down-gray_8_10, .open
-.button-default:hover .icon-arrow-down-lightblue_8_10, .icon-arrow-up-curly-gray, .icon-arrow-up-dropdown-lightblue_20_8, .icon-arrow-up-lightblue_8_10, .open .icon-arrow-down-lightblue_8_10, .open
-.icon-arrow-down-gray_8_10, .icon-ask-blue_16_18, .icon-ask-lightblue_16_18-before:hover:before, .icon-ask-gray_16_18, .icon-ask-lightblue_16_18, .icon-ask-lightblue_16_18-before:before, .icon-basic-guide-blue_16_18, a:hover .icon-basic-guide-gray_16_18,
+.button-default:hover .icon-arrow-down-lightblue_8_10, .open
+.button-default:hover .icon-arrow-down-lightblue_8_10-after:after, .icon-arrow-up-curly-gray, .icon-arrow-up-dropdown-lightblue_20_8, .icon-arrow-up-lightblue_8_10, .open .icon-arrow-down-lightblue_8_10, .open .icon-arrow-down-lightblue_8_10-after:after, .open
+.icon-arrow-down-gray_8_10, .icon-arrow-up-lightblue_8_10-after:after, .icon-ask-blue_16_18, .icon-ask-lightblue_16_18-before:hover:before, .icon-ask-gray_16_18, .icon-ask-lightblue_16_18, .icon-ask-lightblue_16_18-before:before, .icon-basic-guide-blue_16_18, a:hover .icon-basic-guide-gray_16_18,
 .filter:hover .icon-basic-guide-gray_16_18,
 .button-default:hover .icon-basic-guide-gray_16_18, .icon-basic-guide-lightblue_16_18-before:hover:before, .icon-basic-guide-blue_16_18-before:before, .icon-basic-guide-blue_32_34, .icon-basic-guide-lightblue_32_34-before:hover:before, .icon-basic-guide-gray_32_34-before:hover:before, .icon-basic-guide-dark_green_32_34, .icon-basic-guide-dark_green_32_34-before:before, .guides-list-item:hover .icon-basic-guide-green_32_34-before:before, .icon-basic-guide-gray_16_18, .icon-basic-guide-gray_32_34, .icon-basic-guide-gray_32_34-before:before, .icon-basic-guide-green_32_34, .icon-basic-guide-green_32_34-before:before, .icon-basic-guide-lightblue_16_18, .icon-basic-guide-lightblue_16_18-before:before, .open .icon-basic-guide-gray_16_18, .icon-basic-guide-lightblue_32_34, .icon-basic-guide-lightblue_32_34-before:before, .icon-basic-guide-white_16_18, .icon-basic-guide-white_16_18-before:before, .icon-basic-guide-lightblue_16_18-before.nav-local-item-active:before, .icon-biography-blue_16_18, .icon-biography-lightblue_16_18-before:hover:before, .tab-buttons .icon-biography_16_18-before:hover:before, .icon-biography-gray_16_18, .icon-biography-gray_16_18-before:before, .icon-biography-gray_8_10, .icon-biography-gray_8_10-before:before, .icon-biography-lightblue_16_18, .icon-biography-lightblue_16_18-before:before, .tab-buttons .icon-biography_16_18-before:before, .icon-biography-lightblue_32_34, .icon-biography-white_blue_16_18, .icon-biography-white_blue_16_18-before:before, .tab-buttons .icon-biography_16_18-before.tab-button-active:before, .icon-chat-blue_16_18, .icon-chat-lightblue_16_18-before:hover:before, .list-button li:hover .icon-chat-lightblue_16_18-before:before, .icon-chat-lightblue_16_18, .icon-chat-lightblue_16_18-before:before, .icon-classmates-gray_16_18, .icon-classmates-gray_16_18-before:before, .icon-close-big-gray_16_18, .icon-close-big-red_16_18, .icon-close-big-gray_16_18:hover, .icon-close-blue_8_10, .icon-close-gray_8_10-before:hover:before, .icon-close-gray_16_18, .icon-close-gray_8_10, .icon-close-gray_8_10-before:before, .icon-close-lightblue_16_18, .icon-close-lightblue_16_18-before:before, .icon-close-lightblue_8_10, .icon-close-red_16_18, .icon-close-gray_16_18:hover, .icon-close-lightblue_16_18-before:hover:before, .icon-close-red_8_10, .icon-close-gray_8_10:hover, a:hover .icon-close-lightblue_8_10,
 .filter:hover .icon-close-lightblue_8_10,
@@ -2177,25 +2181,27 @@ a:hover .icon-subject-lightblue_32_34-before:before,
   width: 16px;
 }
 
-.icon-arrow-down-blue_8_10, a:hover .icon-arrow-down-lightblue_8_10,
+.icon-arrow-down-blue_8_10, .icon-arrow-down-lightblue_8_10-after:hover:after, a:hover .icon-arrow-down-lightblue_8_10, a:hover .icon-arrow-down-lightblue_8_10-after:after,
 a:hover .icon-arrow-down-gray_8_10,
 .filter:hover .icon-arrow-down-lightblue_8_10,
+.filter:hover .icon-arrow-down-lightblue_8_10-after:after,
 .filter:hover .icon-arrow-down-gray_8_10,
 .button-default:hover .icon-arrow-down-lightblue_8_10,
+.button-default:hover .icon-arrow-down-lightblue_8_10-after:after,
 .button-default:hover .icon-arrow-down-gray_8_10 {
   background-position: -152px -18px;
   height: 10px;
   width: 8px;
 }
 
-.icon-arrow-down-gray_8_10, .button-disabled .icon-arrow-down-lightblue_8_10,
+.icon-arrow-down-gray_8_10, .button-disabled .icon-arrow-down-lightblue_8_10, .button-disabled .icon-arrow-down-lightblue_8_10-after:after,
 .button-disabled:hover .icon-arrow-down-lightblue_8_10 {
   background-position: -8px 0;
   height: 10px;
   width: 8px;
 }
 
-.icon-arrow-down-lightblue_8_10 {
+.icon-arrow-down-lightblue_8_10, .icon-arrow-down-lightblue_8_10-after:after {
   background-position: -16px 0;
   height: 10px;
   width: 8px;
@@ -2321,11 +2327,13 @@ a:hover .icon-arrow-down-gray_8_10,
   width: 20px;
 }
 
-.icon-arrow-up-blue_8_10, .open a:hover .icon-arrow-down-gray_8_10, .open a:hover .icon-arrow-down-lightblue_8_10, .open
+.icon-arrow-up-blue_8_10, .icon-arrow-up-lightblue_8_10-after:hover:after, .open a:hover .icon-arrow-down-gray_8_10, .open a:hover .icon-arrow-down-lightblue_8_10, .open a:hover .icon-arrow-down-lightblue_8_10-after:after, .open
 .filter:hover .icon-arrow-down-gray_8_10, .open
 .filter:hover .icon-arrow-down-lightblue_8_10, .open
+.filter:hover .icon-arrow-down-lightblue_8_10-after:after, .open
 .button-default:hover .icon-arrow-down-gray_8_10, .open
-.button-default:hover .icon-arrow-down-lightblue_8_10 {
+.button-default:hover .icon-arrow-down-lightblue_8_10, .open
+.button-default:hover .icon-arrow-down-lightblue_8_10-after:after {
   background-position: -24px 0;
   height: 10px;
   width: 8px;
@@ -2343,8 +2351,8 @@ a:hover .icon-arrow-down-gray_8_10,
   width: 20px;
 }
 
-.icon-arrow-up-lightblue_8_10, .open .icon-arrow-down-lightblue_8_10, .open
-.icon-arrow-down-gray_8_10 {
+.icon-arrow-up-lightblue_8_10, .open .icon-arrow-down-lightblue_8_10, .open .icon-arrow-down-lightblue_8_10-after:after, .open
+.icon-arrow-down-gray_8_10, .icon-arrow-up-lightblue_8_10-after:after {
   background-position: -72px 0;
   height: 10px;
   width: 8px;

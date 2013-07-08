@@ -3,6 +3,9 @@
 // ==========================================================================
 
 
+@import "compass/css3/images";
+
+
 // Utilidade
 // ==========================================================================
 
@@ -46,7 +49,7 @@
 @mixin pseudo-before($marginRight: 5px, $float: true) {
   content: "";
   display: inline-block;
-  vertical-align: middle;
+  vertical-align: top;
   margin-right: $marginRight;
 
   @if ($float) { float: left; }
@@ -58,7 +61,7 @@
 @mixin pseudo-after($marginLeft: 5px, $float: true) {
   content: "";
   display: inline-block;
-  vertical-align: middle;
+  vertical-align: top;
   margin-left: $marginLeft;
 
   @if ($float) { float: right; }
