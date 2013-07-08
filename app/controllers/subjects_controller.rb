@@ -10,9 +10,9 @@ class SubjectsController < BaseController
 
   rescue_from CanCan::AccessDenied do |exception|
     if current_user.nil?
-      flash[:notice] = "Essa área só pode ser vista após você acessar o Redu com seu nome e senha."
+      flash[:info] = "Essa área só pode ser vista após você acessar o Redu com seu nome e senha."
     else
-      flash[:notice] = "Você não tem acesso a essa página"
+      flash[:info] = "Você não tem acesso a essa página"
     end
 
     redirect_to preview_environment_course_path(@space.course.environment,
