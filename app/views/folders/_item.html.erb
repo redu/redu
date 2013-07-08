@@ -1,37 +1,34 @@
-<%= image_tag("loadingAnimation.gif", :id => "loading-files", :style =>"display: none;" ) %>
-<li id="folder_<%= item.id %>" class="clearfix">
-  <span class="directory ext_folder"></span>
-  <%=
-    link_to h(item.name),
-      space_folders_path(space, :id => item.id),
-      :remote => true,
-      :class => "folder-name icon-arrow-right-squared-gray_16_18-before"
-    %>
-  <div class="rename-folder" style="display:none;">
-    <%= form_for item, :as => :folder,
-      :url => space_folder_path(space, item),
-      :remote => true, :html => { :method => :put, :class => 'form-loader' } do |f| %>
-      <%= f.text_field :name %>
-      <%= f.submit 'Ok' %>
-      <%= link_to "Cancelar", "#", :class => "cancel" %>
-      <%= image_tag 'spinner.gif', :id => "rename-folder-spinner_#{item.id}", :style => 'display: none' %><BR>
+<%#
+  Um pasta da lista.
+
+  Variáveis:
+    space: a disciplina.
+    can_update: se pode editar.
+    can_delete: se pode remover.
+%>
+
+<%= content_tag :li, class: "folder-item clearfix icon-arrow-right-squared-gray_16_18-before" do %>
+  <%= link_to h(item.name), space_folders_path(space, id: item.id), remote: true,
+      class: "folder-name sprite-file-ext-before file-ext-folder" %>
+  <div class="rename-folder">
+    <%= form_for item, as: :folder,
+      url: space_folder_path(space, item),
+      remote: true, html: { method: :put } do |f| %>
+      <%= f.text_field :name, class: "folder-rename-field" %>
+      <%= f.submit "Ok", class: "button-primary" %>
+      <button type="button" class="button-default toggle-edit">Cancelar</button>
     <% end %>
   </div>
 
   <% if can_delete %>
-    <%=
-      link_to "Excluir",
-        destroy_folder_space_folder_path(space, item),
-        :confirm => "Todos os arquivos e subpastas serão removidos.\nDeseja continuar?",
-        :method => :delete,
-        :remote => true,
-        :class => "delete icon-close-gray_8_10-before"
-      %>
+    <%= link_to "Excluir", destroy_folder_space_folder_path(space, item),
+        confirm: "Todos os arquivos e subpastas serão removidos.\nDeseja continuar?",
+        method: :delete, remote: true,
+        class: "folder-actions icon-close-gray_8_10-before link-secondary" %>
   <% end %>
 
   <% if can_update %>
-    <%= link_to "Renomear", '#',
-      :class => "rename manage icon-manage-lightblue_8_10-before",
-      :id => "#{item.id}" %>
+    <%= content_tag :span, "Renomear",
+      class: "folder-actions toggle-edit icon-manage-lightblue_8_10-before link-secondary link-fake" %>
   <% end %>
-</li>
+<% end %>

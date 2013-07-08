@@ -1,0 +1,34 @@
+// ==========================================================================
+// Sprites.
+// ==========================================================================
+
+
+@import "compass/utilities/sprites/base";
+
+
+// Sprites das extensões dos arquivos.
+// ==========================================================================
+
+$sprites: sprite-map("ext/*.png", $layout: smart);
+$sprites-class: "file-ext";
+
+.sprite-#{ $sprites-class },
+.sprite-#{ $sprites-class }-before:before { background-image: sprite-url($sprites); }
+
+.sprite-#{ $sprites-class }-before:before { @include pseudo-before(5px, false); }
+
+.sprite-#{ $sprites-class } { display: inline-block; }
+
+@each $sprite in sprite-names($sprites) {
+  .sprite-#{ $sprites-class }.#{ $sprites-class }-#{ $sprite } {
+    background-position: sprite-position($sprites, $sprite);
+    height: image-height(sprite-file($sprites, $sprite));
+    width: image-width(sprite-file($sprites, $sprite));
+  }
+
+  .sprite-#{ $sprites-class }-before.#{ $sprites-class }-#{ $sprite }:before {
+    background-position: sprite-position($sprites, $sprite);
+    height: image-height(sprite-file($sprites, $sprite));
+    width: image-width(sprite-file($sprites, $sprite));
+  }
+}

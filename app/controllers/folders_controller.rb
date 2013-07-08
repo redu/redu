@@ -28,7 +28,9 @@ class FoldersController < BaseController
       end
       format.js do
         list
-        render :partial => 'folders/index'
+        render partial: 'index', locals: { space: @space, folder: @folder,
+                folders: @folders, can_update: @can_update, can_delete: @can_delete,
+                myfiles: @myfiles, myfile: @myfile }
       end
     end
   end
@@ -76,7 +78,9 @@ class FoldersController < BaseController
 
     respond_to do |format|
       format.html { render layout: 'new_application' }
-      format.js { render :partial => "folders/index" }
+      format.js { render partial: 'index', locals: { space: @space, folder: @folder,
+        folders: @folders, can_update: @can_update, can_delete: @can_delete,
+        myfiles: @myfiles, myfile: @myfile } }
     end
   end
 

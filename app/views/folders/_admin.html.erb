@@ -1,38 +1,48 @@
-<div id="folder-admin" class="clearfix">
-  <% if can?(:upload_file, folder) %>
-    <div style="position: relative;">
+<%#
+  Ações de gerenciamento dos arquivos.
+
+  Variáveis:
+    space: a disciplina.
+    folder: a pasta atual.
+    myfile: os arquivos.
+%>
+
+<% if can?(:upload_file, folder) %>
+  <div class="content-section clearfix">
+    <div id="folder-admin" class="folder-admin">
       <div class="new-folder">
-        <button class="button-default">Criar nova pasta</button>
-        <div class="new-folder-inner holder" style="display:none;">
+        <button class="toggle-dropdown button-create-folder button-default">Criar nova pasta</button>
+        <div class="new-folder-inner dropdown-menu">
+          <span class="dropdown-arrow icon-arrow-up-dropdown-lightblue_20_8 text-replacement">Seta</span>
           <% @new_folder = Folder.new %>
-          <%= form_for [space, @new_folder],
-            :remote => true, :method => :post, :html => { :class => 'form-loader concave-form' } do |f| %>
-            <%= f.text_field :name %>
-            <%= f.hidden_field :space_id, :value => space.id %>
-            <%= f.hidden_field :parent_id, :value => folder.id %>
-            <%= f.submit 'Ok', :class => "button-primary"%>
-            <%= image_tag 'spinner.gif', :id => 'new-folder-spinner', :class => "spinner", :style => 'display: none' %>
+          <%= form_for [space, @new_folder], remote: true,
+            method: :post do |f| %>
+            <%= f.text_field :name, placeholder: "Nome da nova pasta",
+              class: "new-folder-input" %>
+            <%= f.hidden_field :space_id, value: space.id %>
+            <%= f.hidden_field :parent_id, value: folder.id %>
+            <%= f.submit "Ok", class: "button-primary pull-right" %>
           <% end %>
         </div>
       </div>
 
       <div class="new-file">
-        <button class="button-primary upload-button">Upload de arquivo</button>
-        <div class="new-file-inner holder" style="display:none;">
+        <button class="toggle-dropdown button-primary">Upload de arquivo</button>
+        <div class="new-file-inner dropdown-menu">
+          <span class="dropdown-arrow icon-arrow-up-dropdown-lightblue_20_8 text-replacement">Seta</span>
           <%= form_for(myfile,
-                       :url => do_the_upload_space_folder_path(space.id,
+                       url: do_the_upload_space_folder_path(space.id,
                        folder.id),
-                       :remote => true, :html => { :multipart => true,
-                                          :class => 'form-loader' }) do |f| %>
+                       remote: true, html: { multipart: true }) do |f| %>
             <div class="file-wrapper clearfix">
               <%= f.file_field :attachment %>
             </div>
-            <%= f.hidden_field :folder_id, :value => folder.id %>
+            <%= f.hidden_field :folder_id, value: folder.id %>
             <%= hidden_field_tag :space_id,  space.id %>
-            <%= submit_tag 'Ok', :class => "button-primary" %>
+            <%= submit_tag "Ok", class: "button-primary pull-right" %>
           <% end %>
         </div>
       </div>
     </div>
-  <% end %>
-</div>
+  </div>
+<% end %>

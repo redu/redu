@@ -12,12 +12,12 @@
       <h3 class="header-breadcrumb-big icon-file-gray_32_34-before">Arquivos de Apoio</h3>
     </div>
 
-    <div class="content-section clearfix">
-      <%= render 'folders/admin', :space => @space, :folder => @folder,
-        :myfile => @myfile %>
-    </div>
+    <%= render "admin", space: @space, folder: @folder, myfile: @myfile %>
+
     <div class="content-section">
-      <%= render 'folders/list' %>
+      <%= render "list", space: @space, folder: @folder,
+        folders: @folders, can_update: @can_update, can_delete: @can_delete,
+        myfiles: @myfiles %>
     </div>
   </div>
 </div>
