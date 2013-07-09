@@ -93,7 +93,7 @@
 
 .entity-header {
   color: $gray5;
-  padding: 20px;
+  padding: 20px 20px 0;
 }
 
 // Nome.
@@ -108,7 +108,7 @@
 // Descrição e tags.
 .entity-header-info {
   & +
-  & { margin-top: 20px; }
+  & { margin-top: 5px; }
 }
 
 // Ações.

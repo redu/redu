@@ -9,7 +9,7 @@
   <%= render "bootstrap/header", current_entity: space %>
 </div>
 
-<div class="entity-header content-section clearfix">
+<div class="entity-header clearfix">
   <% if can?(:manage, space) %>
     <%= link_to "Gerenciar disciplina",
       edit_space_path(space),

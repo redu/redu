@@ -9,7 +9,7 @@
   <%= render "bootstrap/header", current_entity: environment %>
 </div>
 
-<div class="entity-header content-section clearfix">
+<div class="entity-header clearfix">
   <% if can?(:manage, environment) %>
     <%= link_to "Gerenciar ambiente", edit_environment_path(environment),
       class: "link-secondary icon-manage-lightblue_8_10-before pull-right" %>
