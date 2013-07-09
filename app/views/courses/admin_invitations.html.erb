@@ -1,100 +1,67 @@
-  <script type="text/javascript">
-    jQuery(function(){
-      $("#invite_email").live("click", function(){
-        var $this = $(this);
-        var $form = $this.parents('#invite-members');
-        var $textField = $form.find("input[autocomplete=off]");
+<% content_for :container_class do "entity-wrapper" end %>
 
-        var email = $.trim($textField.val());
-        $form.find("#emails").val($form.find("#emails").val() + "," + email);
-        $textField.val("")
+<% content_for :header_scripts_and_styles do %>
+  <%= javascript_include_tag "friend-invitation" %>
+<% end %>
 
-        var item = "<li class=\"token-input-token email\"><p class=\"invited-mail\" title=\"" + email + "\">" + email + "</p><span class=\"invite-to-redu\">(Convidar para o Redu)</span><span class=\"token-input-delete-token-email\">x</span></li>"
-        $(".token-input-input-token").before(item);
-        $this.hide();
-        return false;
-      });
+<div class="span3">
+  <%= render "sidebar_new", course: @course %>
+</div>
+<div class="span13">
+  <%= render "breadcrumbs_new", course: @course %>
+  <div class="content-body">
+    <%= render "header_new", course: @course,
+      responsibles_associations: @responsibles_associations %>
 
-      $(".token-input-delete-token-email").live("click", function(){
-          var $this = $(this);
-          var $emailsField = $this.parents("#invite-members").find("#emails");
+    <%= new_tabs :courses %>
 
-          $this.parent().remove();
-          var emails = $emailsField.val();
-          var deleted_email = $this.siblings('.invited-mail')[0].getAttribute("title");
-          var emails = emails.replace(deleted_email, "");
-          $emailsField.val(emails);
-      });
-
-      $(".form-common").ajaxComplete(function(){
-        var $this = $(this);
-        if ($(".token-input-dropdown li").length == 0) {
-          var emailRegex = /^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/;
-          var entered_value = $.trim($this.find("input[autocomplete=off]").val());
-          if (emailRegex.test(entered_value)) {
-            $("#invite_email").show();
-            $(".token-input-dropdown").hide();
-          }else{
-              $("#invite_email").hide();
-          }
-        }else{
-          $("#invite_email").hide();
-        }
-      });
-
-      $("#users").tokenInput("<%= auto_complete_users_path(:format => :js) %>", {
-        crossDomain: false,
-        hintText: "",
-        noResultsText: "Sem resultados",
-        searchingText: "Buscando...",
-      });
-
-      $("#invite-members").on("submit", function(e) {
-        $(this).find(":submit").prop("disabled", "disabled");
-      });
-    });
-  </script>
-<%= render :partial => 'courses/sidebar',
-  :locals => { :course => @course } %>
-<div class="main grid_12 omega big-col">
-  <%= render :partial => 'courses/breadcrumbs',
-    :locals => { :course => @course } %>
-  <%= render :partial => 'courses/header',
-    :locals => { :course => @course, responsibles_associations: @responsibles_associations } %>
-
-  <div id="admin-invitations" class="body">
-    <%= big_tabs :courses do %>
-      <div class="invite-header icons-big-before icon-contact-blue_100_66-before">
-        <h3 class="invite-title">Convide membros para seu <span class="course">curso</span></h3>
-        <span class="invite-description">Amplie sua base de membros. Procure pelo nome ou endereço de email; caso a pessoa não seja cadastrada no Redu, enviaremos um convite - que terá validade apenas para este curso. </span>
+    <div class="content-section">
+      <div class="course-invite">
+        <h3 class="course-invite-title">Convide membros para seu <span class="course-invite-title-highlight">curso</span></h3>
+        <p class="course-invite-description">Amplie sua base de membros. Procure pelo nome ou endereço de email; caso a pessoa não seja cadastrada no Redu, enviaremos um convite - que terá validade apenas para este curso. </p>
       </div>
+    </div>
 
-      <% unless can? :add_entry, @course %>
-        <div class="flash-message info">
-          <span>O limite de vagas foi atingido, seus convites não poderão ser aceitos. Faça o upgrade do seu curso, e aumente a capacidade de usuários.</span>
+    <% unless can? :add_entry, @course %>
+      <div class="content-section">
+        <p class="message-block message-busy">
+          O limite de vagas foi atingido, seus convites não poderão ser aceitos. Faça o upgrade do seu curso, e aumente a capacidade de usuários.
+        </p>
+      </div>
+    <% end %>
+
+    <div class="content-section">
+      <div class="row">
+        <div class="span9">
+          <%= form_tag invite_members_environment_course_path(@environment, @course),
+            class: "invite-friend-form friend-invitation clearfix" do %>
+            <div class="control-group">
+              <div class="control-label">
+                <label for="token-input-user-invitation">Digite um nome e/ou endereço de e-mail para convidar</label>
+              </div>
+              <div class="controls">
+                <input type="text" name="users" id="user-invitation" class="user-invitation" placeholder="Convide Amigos pelo nome ou e-mail">
+              </div>
+            </div>
+            <%= hidden_field_tag "emails", "" %>
+            <%= submit_tag "Convidar", class: "button-success pull-right",
+              disabled: true, title: "Adicione pelo menos uma pessoa para ativá-lo" %>
+          <% end %>
         </div>
-      <% end %>
-      <%= form_tag invite_members_environment_course_path(@environment, @course),
-        :class => 'form-common', :id => "invite-members" do %>
-        <%= label_tag "name", "Nome ou e-mail:" %>
-        <%= text_field_tag "users", nil, :placeholder => "Digite o nome e sobrenome ou e-mail" %>
-        <%= hidden_field_tag "emails", "" %>
-        <div class="clearfix">
-          <%= submit_tag "Enviar convites", :class => "concave-button" %>
-          <div id="invite_email_button" class="clearfix" >
-           <%= link_to "Clique aqui para convidar este e-mail", "#",
-            :class => 'concave-clean', :id => 'invite_email', :style => 'display: none;' %>
+        <div class="span3">
+          <strong class="course-invite-counter-title icon-members-gray_16_18-before">Membro(s):</strong>
+          <div class="course-invite-counter">
+            <%= content_tag :span, @course.users.count,
+              class: "course-invite-title-highlight" %> / <%= @course.plan.try(:members_limit) || @course.environment.plan.try(:members_limit) %> (<%= number_to_percentage(@course.plan ? @course.percentage_quota_members : @course.environment.percentage_quota_members, precision: 0) %>)
+          </div>
+
+          <strong class="course-invite-counter-title icon-invite-gray_16_18-before">Convite(s):</strong>
+          <div class="course-invite-counter">
+            <%= content_tag :span, @course.user_course_invitations.count + @course.user_course_associations.invited.count,
+              class: "course-invite-title-highlight" %>
           </div>
         </div>
-      <% end %>
-      <div class="course-info">
-        <span class="info-title icon-members-gray_16_18-before">Membro(s):</span>
-        <span class="info-qty">
-          <span class="info-qty-members"><%= @course.users.count %></span> / <%= @course.plan.try(:members_limit) || @course.environment.plan.try(:members_limit) %> (<%= number_to_percentage(@course.plan ? @course.percentage_quota_members : @course.environment.percentage_quota_members, :precision => 0) %>)
-        </span>
-        <span class="info-title icon-add-contact-gray_16_18-before">Convite(s):</span>
-        <span class="info-qty"><span class="info-qty-members"><%= @course.user_course_invitations.count + @course.user_course_associations.invited.count %></span></span>
       </div>
-    </div><!-- end admin-invitations -->
-  <% end %>
+    </div>
+  </div>
 </div>
