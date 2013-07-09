@@ -20,6 +20,7 @@ module SpacesNewNavigation
       sidebar.item :canvas, canvas.current_name, space_canvas_path(@space, canvas),
         class: 'icon-app-lightblue_16_18-before nav-local-item',
         link: { class: 'nav-local-link text-truncate', rel: "tooltip",
+          data: { placement: "right" },
           title: "#{canvas.current_name} por #{canvas.user.display_name}" }
     end
     sidebar.item :members, 'Membros',
