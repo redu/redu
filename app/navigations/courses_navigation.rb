@@ -6,7 +6,7 @@ module CoursesNavigation
     sidebar.selected_class = 'ui-state-active'
     sidebar.item :sidebar, 'Sidebar', home_path do |tabs|
       # Abas
-      tabs.dom_class = 'tabs tabs-big'
+      tabs.dom_class = 'tabs'
       tabs.selected_class = 'tab-active'
       tabs.item :spaces, 'Disciplinas',
         environment_course_path(@course.environment, @course),

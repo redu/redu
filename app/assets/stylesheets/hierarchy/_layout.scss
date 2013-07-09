@@ -113,8 +113,9 @@
 
 // Ações.
 .entity-actions {
-  float: right;
+  overflow: hidden;
   padding-right: 20px;
+  margin-bottom: -12px;
 }
 
 .entity-action {
@@ -133,7 +134,7 @@
 
   .list-course-space-item:first-child { border-top: 1px solid $gray4; }
 
-  .tabs-big .tab-active .tab-title { height: 29px; }
+  .tab-active .tab-title { height: 20px; }
 
   .pagination {
     margin-top: -11px;
