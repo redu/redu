@@ -6,8 +6,8 @@ module EnvironmentsHelper
   end
 
   # Retorna se uma entidade está "ativa".
-  def entity_is_active?(entity, key)
-    # key varia entre todos os tipos de entidade.
-    entity.class.to_s.downcase == key.to_s
+  def bootstrap_entity_is_active?(current_entity, type)
+    # type varia entre todos os tipos de entidade.
+    current_entity.class.to_s.downcase == type.to_s
   end
 end

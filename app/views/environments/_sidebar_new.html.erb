@@ -13,7 +13,7 @@
       class: "environment-thumbnail" %>
   <% end %>
 
-  <%= render "bootstrap/breadcrumb_icons", entity: environment %>
+  <%= render "bootstrap/breadcrumb_icons", current_entity: environment %>
 
   <% cache ["environment_sidebar_connections_with_count", environment.id] do %>
     <div class="entity-members-counter-wrapper">

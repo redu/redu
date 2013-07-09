@@ -16,7 +16,7 @@
       class: "entity-frame-mask icon-course-white_64 text-replacement show" %>
   </div>
 
-  <%= render "bootstrap/breadcrumb_icons", entity: course %>
+  <%= render "bootstrap/breadcrumb_icons", current_entity: course %>
 
   <div class="entity-members-counter-wrapper">
     <%= content_tag :span, course.approved_users.count,
