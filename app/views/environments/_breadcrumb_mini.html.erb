@@ -1,11 +1,11 @@
 <%#
   Breadcrumb-mini para index de Ambientes
 %>
+
 <div class="breadcrumb-mini-wrapper">
-  <%= render "bootstrap/breadcrumb_mini", :breadcrumb_mini_items => [
-    { :name => "Ambientes de que Participo",
-      :link => environments_index_path,
-      :classes => "icon-environment-breadcrumb-lightblue_16_18-before"
+  <%= render "bootstrap/breadcrumb_mini", breadcrumb_mini_items: [
+    { name: "Ambientes de que Participo",
+      classes: "icon-environment-gray_16_18-before"
     }
     ] %>
 </div>

@@ -206,7 +206,7 @@ body {
   background-color: white;
   position: relative;
   padding-bottom: 10px;
-  min-height: 500px;
+  min-height: 600px;
 }
 .content-body:before {
   -webkit-border-radius: 10px 10px 0 0;
@@ -538,8 +538,8 @@ h7 {
 }
 
 h1 {
-  font: 300 60px/56px museo-sans-rounded, museo-sans, "Helvetica Neue", Arial, sans-serif;
-  letter-spacing: -3px;
+  font: 100 60px/56px museo-sans-rounded, museo-sans, "Helvetica Neue", Arial, sans-serif;
+  letter-spacing: -4px;
 }
 
 h2 {
@@ -998,7 +998,6 @@ textarea {
   font-weight: normal;
   line-height: 18px;
   font-family: "Helvetica Neue", Arial, sans-serif;
-  font-weight: 300;
 }
 
 select,
@@ -1230,7 +1229,6 @@ input[type="checkbox"]:focus {
 .control-big select,
 .control-big .placeholder {
   font-size: 16px;
-  font-weight: 300;
   height: 42px;
 }
 .control-big .placeholder {
@@ -2013,8 +2011,7 @@ a:hover .icon-arrow-down-gray_8_10,
 .filter:hover .icon-comment-lightblue_16_18,
 .filter:hover .icon-comment-lightblue_16_18-before:before,
 .button-default:hover .icon-comment-lightblue_16_18,
-.button-default:hover .icon-comment-lightblue_16_18-before:before, .icon-comment-gray_16_18, .icon-comment-gray_16_18-before:before, .icon-comment-lightblue_16_18, .icon-comment-lightblue_16_18-before:before, .icon-comment-white_blue_32_34, .icon-comment-white_blue_32_34-before:before, .icon-connections-blue_32_34, .icon-connections-gray_32_34:hover, .icon-connections-gray_32_34-before:hover:before, .icon-connections-gray_32_34, .icon-connections-gray_32_34-before:before, .icon-contacts-blue_16_18, .icon-contacts-lightblue_16_18-before:hover:before, .filter:hover .icon-contacts-lightblue_16_18-before:before, .icon-contacts-gray_16_18-before:hover:before, .nav-local-item.icon-contacts_16_18-before:hover:before, .icon-contacts-gray_16_18, .icon-contacts-gray_16_18-before:before, .icon-contacts-green_16_18, .icon-contacts-green_16_18-before:before, .icon-contacts-lightblue_16_18, .icon-contacts-lightblue_16_18-before:before, .nav-local-item.icon-contacts_16_18-before:before, .icon-contacts-white_blue_16_18, .icon-contacts-white_blue_16_18-before:before, .nav-local-item.icon-contacts_16_18-before.nav-local-item-active:before, .icon-contacts-white_green_16_18, .icon-content-blue_16_18, .icon-content-lightblue_16_18-before:hover:before, .icon-content-gray_16_18, .icon-content-gray_16_18-before:before, .icon-content-lightblue_16_18, .icon-content-lightblue_16_18-before:before, .icon-correct-gray_16_18, .icon-correct-gray_16_18-before:before, .icon-correct-green_16_18, .icon-correct-green_16_18-after:after, .icon-correct-green_8_10, .icon-course-blue_16_18, .filter:hover .icon-course-lightblue_16_18-before:before, .icon-course-gray_16_18-before:hover:before, .icon-course-lightblue_16_18-before:hover:before, .header-item:hover .icon-course-gray_16_18-before:before,
-.header-item:hover .icon-course-lightblue_16_18-before:before, .icon-course-blue_32_34, .breadcrumb-icon-link .icon-course-gray_32_34-before:hover:before,
+.button-default:hover .icon-comment-lightblue_16_18-before:before, .icon-comment-gray_16_18, .icon-comment-gray_16_18-before:before, .icon-comment-lightblue_16_18, .icon-comment-lightblue_16_18-before:before, .icon-comment-white_blue_32_34, .icon-comment-white_blue_32_34-before:before, .icon-connections-blue_32_34, .icon-connections-gray_32_34:hover, .icon-connections-gray_32_34-before:hover:before, .icon-connections-gray_32_34, .icon-connections-gray_32_34-before:before, .icon-contacts-blue_16_18, .icon-contacts-lightblue_16_18-before:hover:before, .filter:hover .icon-contacts-lightblue_16_18-before:before, .icon-contacts-gray_16_18-before:hover:before, .nav-local-item.icon-contacts_16_18-before:hover:before, .icon-contacts-gray_16_18, .icon-contacts-gray_16_18-before:before, .icon-contacts-green_16_18, .icon-contacts-green_16_18-before:before, .icon-contacts-lightblue_16_18, .icon-contacts-lightblue_16_18-before:before, .nav-local-item.icon-contacts_16_18-before:before, .icon-contacts-white_blue_16_18, .icon-contacts-white_blue_16_18-before:before, .nav-local-item.icon-contacts_16_18-before.nav-local-item-active:before, .icon-contacts-white_green_16_18, .icon-content-blue_16_18, .icon-content-lightblue_16_18-before:hover:before, .icon-content-gray_16_18, .icon-content-gray_16_18-before:before, .icon-content-lightblue_16_18, .icon-content-lightblue_16_18-before:before, .icon-correct-gray_16_18, .icon-correct-gray_16_18-before:before, .icon-correct-green_16_18, .icon-correct-green_16_18-after:after, .icon-correct-green_8_10, .icon-course-blue_16_18, .filter:hover .icon-course-lightblue_16_18-before:before, .icon-course-gray_16_18-before:hover:before, .icon-course-lightblue_16_18-before:hover:before, .header-item:hover .icon-course-lightblue_16_18-before:before, .icon-course-blue_32_34, .breadcrumb-icon-link .icon-course-gray_32_34-before:hover:before,
 .icon-course-lightblue_32_34-before:hover:before, .icon-course-blue_32_34-before, .list-mix .icon-course-lightgray_32_34-before:hover:before, a:hover .icon-course-gray_32_34, a:hover .icon-course-gray_32_34-before:before,
 a:hover .icon-course-lightblue_32_34,
 a:hover .icon-course-lightblue_32_34-before:before,
@@ -2027,8 +2024,7 @@ a:hover .icon-course-lightblue_32_34-before:before,
 .button-default:hover .icon-course-lightblue_32_34,
 .button-default:hover .icon-course-lightblue_32_34-before:before, .icon-course-empty_128_130, .icon-course-gray_16_18, .icon-course-gray_16_18-before:before, .icon-course-gray_32_34, .icon-course-gray_32_34-before:before, .icon-course-lightblue_16_18, .icon-course-lightblue_16_18-before:before, .icon-course-lightblue_32_34, .icon-course-lightblue_32_34-before:before, .icon-course-lightgray_32_34, .icon-course-lightgray_32_34-before:before, .icon-course-white_64, .icon-curriculum-academic-gray_8_10, .icon-curriculum-academic-gray_8_10-before:before, .icon-curriculum-academic-lightblue_32_34, .icon-curriculum-academic-lightblue_32_34-before:before, .icon-curriculum-blue_16_18, .icon-curriculum-lightblue_16_18-before:hover:before, .list-button li:hover .icon-curriculum-lightblue_16_18-before:before, .tab-buttons .icon-curriculum_16_18-before:hover:before, .icon-curriculum-darkgray_32_34, .icon-curriculum-darkgray_32_34-before:before, .icon-curriculum-gray_16_18, .icon-curriculum-gray_16_18-before:before, .icon-curriculum-lightblue_16_18, .icon-curriculum-lightblue_16_18-before:before, .tab-buttons .icon-curriculum_16_18-before:before, .icon-curriculum-professional-gray_8_10, .icon-curriculum-professional-gray_8_10-before:before, .icon-curriculum-professional-lightblue_32_34, .icon-curriculum-professional-lightblue_32_34-before:before, .icon-curriculum-white_blue_16_18, .icon-curriculum-white_blue_16_18-before:before, .tab-buttons .icon-curriculum_16_18-before.tab-button-active:before, .icon-description-blue_16_18, .icon-description-gray_16_18:hover,
 .icon-description-lightblue_16_18:hover, .icon-description-gray_16_18, .icon-description-lightblue_16_18, .icon-doubt-topic-blue_16_18, .icon-doubt-topic-lightblue_16_18-before:hover:before, .icon-doubt-topic-gray_16_18, .icon-doubt-topic-gray_16_18-before:before, .icon-doubt-topic-lightblue_16_18, .icon-doubt-topic-lightblue_16_18-before:before, .icon-environment-black_16_18, .icon-environment-black_16_18-before:before, .icon-environment-blue_16_18, .icon-environment-lightblue_16_18-before:hover:before,
-.header-list .icon-environment-gray_16_18-before:hover:before, .header-item:hover .icon-environment-gray_16_18-before:before,
-.header-item:hover .icon-environment-lightblue_16_18-before:before, a:hover .icon-environment-gray_16_18,
+.header-list .icon-environment-gray_16_18-before:hover:before, .header-item:hover .icon-environment-lightblue_16_18-before:before, a:hover .icon-environment-gray_16_18,
 .filter:hover .icon-environment-gray_16_18,
 .button-default:hover .icon-environment-gray_16_18, .nav-local-item.icon-environment_16_18-before:hover:before, .icon-environment-blue_32_34, .icon-environment-lightblue_32_34-before:hover:before,
 .breadcrumb-icon-link .icon-environment-gray_32_34-before:hover:before, .icon-environment-breadcrumb-blue_16_18, .icon-environment-breadcrumb-lightblue_16_18-before:hover:before, .icon-environment-breadcrumb-lightblue_16_18, .icon-environment-breadcrumb-lightblue_16_18-before:before, .icon-environment-circle-blue_16_18, .icon-environment-circle-lightblue_16_18-before:hover:before, .icon-environment-circle-blue_32_34, .icon-environment-circle-blue_48_50, .icon-environment-circle-gray_48_50-before:hover:before, .icon-environment-circle-gray_32_34, .icon-environment-circle-gray_48_50, .icon-environment-circle-gray_48_50-before:before, .icon-environment-circle-lightblue_16_18, .icon-environment-circle-lightblue_16_18-before:before, .icon-environment-empty_128_130, .icon-environment-gray_16_18, .icon-environment-gray_32_34, .icon-environment-gray_32_34-before:before, .icon-environment-lightblue_16_18, .icon-environment-lightblue_16_18-before:before, .open .icon-environment-gray_16_18, .icon-environment-round-lightblue_16_18-before:before, .nav-local-item.icon-environment_16_18-before:before, .icon-environment-lightblue_32_34, .icon-environment-lightblue_32_34-before:before, .list-mix li.icon-environment-gray_32_34-before:hover:before, .icon-environment-lightgray_32_34, .icon-environment-lightgray_32_34-before:before, .icon-environment-round-black_16_18, .icon-environment-round-blue_16_18, .icon-environment-round-lightblue_16_18-before:hover:before, .icon-environment-round-blue_32_34, .icon-environment-round-gray_32_34-before:hover:before, .icon-environment-round-gray_32_34, .icon-environment-round-gray_32_34-before:before, .icon-environment-round-lightblue_16_18, .icon-environment-white_blue_16_18, .icon-environment-white_blue_16_18-before:before, .nav-local-item.icon-environment_16_18-before.nav-local-item-active:before, .icon-exercise-blue_16_18, .list-button li:hover .icon-exercise-lightblue_16_18-before:before, .icon-exercise-gray_16_18, .icon-exercise-gray_16_18-before:before, .icon-exercise-lightblue_16_18, .icon-exercise-lightblue_16_18-before:before, .icon-favorite-blue_16_18, .icon-favorite-lightblue_16_18-before:hover:before, .icon-favorite-blue_32_34, .icon-favorite-blue_32_34-before:before, .icon-favorite-delete-blue_16_18, .icon-favorite-delete-lightblue_16_18-before:hover:before, .icon-favorite-delete-lightblue_16_18, .icon-favorite-delete-lightblue_16_18-before:before, .icon-favorite-gray_16_18, .icon-favorite-gray_16_18-before:before, .icon-favorite-gray_32_34, .icon-favorite-gray_32_34-before:before, .icon-favorite-lightblue_16_18, .icon-favorite-lightblue_16_18-before:before, .icon-favorite-white_blue_16_18, .icon-feel-supported-gray_32_34, .icon-feel-supported-gray_32_34-before:before, .icon-file-blue_16_18, .icon-file-lightblue_16_18-before:hover:before, .nav-local-item.icon-file_16_18-before:hover:before, .icon-file-gray_16_18, .icon-file-gray_16_18-before:before, .icon-file-gray_32_34, .icon-file-gray_32_34-before:before, .icon-file-lightblue_16_18, .icon-file-lightblue_16_18-before:before, .nav-local-item.icon-file_16_18-before:before, .icon-file-white_blue_16_18, .icon-file-white_blue_16_18-before:before, .nav-local-item.icon-file_16_18-before.nav-local-item-active:before, .icon-frequent-questions-blue_16_18, .icon-frequent-questions-lightblue_16_18-before:hover:before, .list-button li:hover .icon-frequent-questions-lightblue_16_18-before:before, .icon-frequent-questions-blue_32_34, .icon-frequent-questions-gray_32_34-before:hover:before, .icon-frequent-questions-lightblue_32_34-before:hover:before, .icon-frequent-questions-blue_32_34-before:before, .icon-frequent-questions-gray_32_34, .icon-frequent-questions-gray_32_34-before:before, .icon-frequent-questions-lightblue_16_18, .icon-frequent-questions-lightblue_16_18-before:before, .icon-frequent-questions-lightblue_32_34, .icon-frequent-questions-lightblue_32_34-before:before, .icon-frequent-questions-lightgray_32_34, .icon-frequent-questions-lightgray_32_34-before:before, .icon-frequent-questions-white_16_18, .icon-frequent-questions-white_16_18-before:before, .icon-frequent-questions-lightblue_16_18-before.nav-local-item-active:before, .icon-grouping-gray_16_18, .icon-grouping-gray_16_18-before:before, .icon-guide-topic-gray_16_18, .icon-guide-topic-gray_16_18-before:before, .icon-help-central-blue_16_18, .icon-help-central-lightblue_16_18-before:hover:before, .icon-help-central-blue_66, .icon-help-central-gray_66-before:hover:before, .icon-help-central-empty_128, .icon-help-central-empty_128-before:before, .icon-help-central-gray_66, .icon-help-central-gray_66-before:before, .icon-help-central-lightblue_16_18, .icon-help-central-lightblue_16_18-before:before, .icon-help-central-lightgray_32_34, .icon-help-central-lightgray_32_34-before:before, .icon-home-black_16_18, .icon-home-black_16_18-before:before, .icon-home-blue_16_18, .icon-home-lightblue_16_18-before:hover:before, .nav-local-item.icon-home_16_18-before:hover:before, .icon-home-gray_16_18, .icon-home-gray_16_18-before:before, .icon-home-lightblue_16_18, .icon-home-lightblue_16_18-before:before, .nav-local-item.icon-home_16_18-before:before, .icon-home-white_blue_16_18, .icon-home-white_blue_16_18-before:before, .nav-local-item.icon-home_16_18-before.nav-local-item-active:before, .icon-institution-blue_32_34, .icon-institution-gray_32_34:hover, .icon-institution-gray_32_34:before, .icon-institution-gray_32_34, .icon-invisible-lightgray_16_18, .icon-invite-blue_16_18, .icon-invite-lightblue_16_18-before:hover:before, .icon-invite-lightblue_16_18:hover, .icon-invite-empty_128_130, .icon-invite-gray_16_18, .icon-invite-gray_16_18-before:before, .icon-invite-green3_64_66, .icon-invite-lightblue_16_18, .icon-invite-lightblue_16_18-before:before, .icon-invite-white_blue_16_18, .icon-invite-white_blue_16_18-before:before, .icon-invite-white_green_16_18, .icon-invite-white_green_16_18-before:before, .icon-lecture-white_64, .icon-lights-blue_16_18, .icon-lights-lightblue_16_18-before:hover:before, a:hover .icon-lights-lightblue_16_18, a:hover .icon-lights-lightblue_16_18-before:before,
@@ -2050,8 +2046,7 @@ a:hover .icon-magnifier-lightblue_16_18-before:before,
 .filter:hover .icon-request-help-lightblue_16_18,
 .filter:hover .icon-request-help-lightblue_16_18-before:before,
 .button-default:hover .icon-request-help-lightblue_16_18,
-.button-default:hover .icon-request-help-lightblue_16_18-before:before, .icon-request-help-gray_16_18, .icon-request-help-gray_16_18-before:before, .icon-request-help-lightblue_16_18, .icon-request-help-lightblue_16_18-before:before, .icon-request-help-lightorange_16_18, .icon-request-help-lightorange_16_18-before:before, .icon-request-help-orange_16_18, .icon-request-help-orange_16_18-before:before, .request-help-stats-new.icon-request-help-lightorange_16_18-before:hover:before, .icon-request-help-white_blue_32_34, .icon-request-help-white_blue_32_34-before:before, .icon-say-hi-green_48_50, .icon-say-hi-green_48_50-before:before, .icon-search-background_160, .icon-search-blue_48_50, .icon-search-gray_48_50-before:hover:before, .icon-search-empty_128_130, .icon-search-gray_48_50, .icon-search-gray_48_50-before:before, .icon-seen-gray_16_18, .icon-seen-gray_16_18-before:before, .icon-sent-message-blue_16_18, .tabs .icon-message-sent_16_18-before:hover:before, .icon-sent-message-blue_32_34, .header-breadcrumb:hover .icon-sent-message-gray_32_34-before:before, .icon-sent-message-gray_32_34, .icon-sent-message-gray_32_34-before:before, .icon-sent-message-lightblue_16_18, .tabs .icon-message-sent_16_18-before:before, .icon-social-networks-blue_16_18, .icon-social-networks-lightblue_16_18-before:hover:before, .list-button li:hover .icon-social-networks-lightblue_16_18-before:before, .icon-social-networks-lightblue_16_18, .icon-social-networks-lightblue_16_18-before:before, .icon-space-blue_16_18, .icon-space-gray_16_18-before:hover:before, .icon-space-lightblue_16_18-before:hover:before, .header-item:hover .icon-space-gray_16_18-before:before,
-.header-item:hover .icon-space-lightblue_16_18-before:before, .icon-space-blue_32_34, .breadcrumb-icon-link .icon-space-gray_32_34-before:hover:before,
+.button-default:hover .icon-request-help-lightblue_16_18-before:before, .icon-request-help-gray_16_18, .icon-request-help-gray_16_18-before:before, .icon-request-help-lightblue_16_18, .icon-request-help-lightblue_16_18-before:before, .icon-request-help-lightorange_16_18, .icon-request-help-lightorange_16_18-before:before, .icon-request-help-orange_16_18, .icon-request-help-orange_16_18-before:before, .request-help-stats-new.icon-request-help-lightorange_16_18-before:hover:before, .icon-request-help-white_blue_32_34, .icon-request-help-white_blue_32_34-before:before, .icon-say-hi-green_48_50, .icon-say-hi-green_48_50-before:before, .icon-search-background_160, .icon-search-blue_48_50, .icon-search-gray_48_50-before:hover:before, .icon-search-empty_128_130, .icon-search-gray_48_50, .icon-search-gray_48_50-before:before, .icon-seen-gray_16_18, .icon-seen-gray_16_18-before:before, .icon-sent-message-blue_16_18, .tabs .icon-message-sent_16_18-before:hover:before, .icon-sent-message-blue_32_34, .header-breadcrumb:hover .icon-sent-message-gray_32_34-before:before, .icon-sent-message-gray_32_34, .icon-sent-message-gray_32_34-before:before, .icon-sent-message-lightblue_16_18, .tabs .icon-message-sent_16_18-before:before, .icon-social-networks-blue_16_18, .icon-social-networks-lightblue_16_18-before:hover:before, .list-button li:hover .icon-social-networks-lightblue_16_18-before:before, .icon-social-networks-lightblue_16_18, .icon-social-networks-lightblue_16_18-before:before, .icon-space-blue_16_18, .icon-space-gray_16_18-before:hover:before, .icon-space-lightblue_16_18-before:hover:before, .header-item:hover .icon-space-lightblue_16_18-before:before, .icon-space-blue_32_34, .breadcrumb-icon-link .icon-space-gray_32_34-before:hover:before,
 .icon-space-lightblue_32_34-before:hover:before, .icon-space-blue_32_34-before, a:hover .icon-space-gray_32_34, a:hover .icon-space-gray_32_34-before:before,
 a:hover .icon-space-lightblue_32_34,
 a:hover .icon-space-lightblue_32_34-before:before,
@@ -2655,8 +2650,7 @@ a:hover .icon-arrow-down-gray_8_10,
 }
 
 .icon-course-blue_16_18, .filter:hover .icon-course-lightblue_16_18-before:before, .icon-course-gray_16_18-before:hover:before, .icon-course-lightblue_16_18-before:hover:before,
-.header-list .icon-course-gray_16_18-before:hover:before, .header-item:hover .icon-course-gray_16_18-before:before,
-.header-item:hover .icon-course-lightblue_16_18-before:before {
+.header-list .icon-course-gray_16_18-before:hover:before, .header-item:hover .icon-course-lightblue_16_18-before:before {
   background-position: -96px -135px;
   height: 18px;
   width: 16px;
@@ -2819,8 +2813,7 @@ a:hover .icon-course-lightblue_32_34-before:before,
 }
 
 .icon-environment-blue_16_18, .icon-environment-lightblue_16_18-before:hover:before,
-.header-list .icon-environment-gray_16_18-before:hover:before, .header-item:hover .icon-environment-gray_16_18-before:before,
-.header-item:hover .icon-environment-lightblue_16_18-before:before, a:hover .icon-environment-gray_16_18,
+.header-list .icon-environment-gray_16_18-before:hover:before, .header-item:hover .icon-environment-lightblue_16_18-before:before, a:hover .icon-environment-gray_16_18,
 .filter:hover .icon-environment-gray_16_18,
 .button-default:hover .icon-environment-gray_16_18, .nav-local-item.icon-environment_16_18-before:hover:before {
   background-position: -16px -207px;
@@ -3916,8 +3909,7 @@ a:hover .icon-magnifier-lightblue_16_18-before:before,
   width: 16px;
 }
 
-.icon-space-blue_16_18, .icon-space-gray_16_18-before:hover:before, .icon-space-lightblue_16_18-before:hover:before, .header-item:hover .icon-space-gray_16_18-before:before,
-.header-item:hover .icon-space-lightblue_16_18-before:before {
+.icon-space-blue_16_18, .icon-space-gray_16_18-before:hover:before, .icon-space-lightblue_16_18-before:hover:before, .header-item:hover .icon-space-lightblue_16_18-before:before {
   background-position: -32px -279px;
   height: 18px;
   width: 16px;
@@ -4530,7 +4522,6 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
   border-width: 1px;
   border-style: solid;
   line-height: 16px;
-  font-weight: 300;
 }
 .button-default:hover, .filter:hover, .button-primary:hover, .button-success:hover, .button-danger:hover {
   text-decoration: none;
@@ -5291,6 +5282,9 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
 .breadcrumb-mini-link.text-replacement:before {
   margin-right: 0;
 }
+.breadcrumb-mini-item:last-child .breadcrumb-mini-link {
+  color: #b3b3b3;
+}
 
 .breadcrumb-icons {
   list-style: none;
@@ -5890,7 +5884,6 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
 .tabs-big .tab-title {
   font-size: 16px;
   line-height: 28px;
-  font-weight: 300;
   padding: 10px 20px 12px 7px;
 }
 .tabs-big .tab-title:before {
@@ -6186,23 +6179,13 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
 }
 
 .header-link {
-  color: #b3b3b3;
   font-weight: bold;
-}
-.header-link:visited {
-  color: #b3b3b3;
 }
 .header-link:hover {
   text-decoration: none;
 }
-.header-item:last-child .header-link {
-  color: #4dadd6;
-}
-.header-item:hover .header-link, .header-item:last-child .header-link:hover, .header-item-subject.header-item:last-child:hover .header-link {
+.header-item:hover .header-link {
   color: #158ac4;
-}
-.header-item-subject.header-item:last-child .header-link {
-  color: #b3b3b3;
 }
 
 .header-info {
@@ -6785,12 +6768,12 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
 }
 
 .list-subject-description {
-  max-width: 90%;
+  max-width: 87%;
 }
 
 .list-subject-info +
 .list-button {
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .list-lecture-info {
@@ -6821,12 +6804,16 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
   margin-left: 10px;
 }
 
-.stars,
-.star {
+.stars {
   display: inline-block;
+  overflow: hidden;
 }
 
-.star + .star {
+.star {
+  float: left;
+}
+.star +
+.star {
   margin-left: 2px;
 }
 
