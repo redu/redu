@@ -17,11 +17,19 @@
 %>
 
 <ul class="breadcrumb-mini">
-  <% breadcrumb_mini_items.each do |breadcrumb_mini_item| %>
+  <% last = breadcrumb_mini_items.length - 1 %>
+  <% breadcrumb_mini_items.each_with_index do |breadcrumb_mini_item, i| %>
     <li class="breadcrumb-mini-item icon-arrow-right-separator-gray_16_18-after">
-      <%= link_to breadcrumb_mini_item[:name], breadcrumb_mini_item[:link],
-        :title => breadcrumb_mini_item[:name],
-        :class => "breadcrumb-mini-link #{breadcrumb_mini_item[:classes]}" %>
+      <% classes = "breadcrumb-mini-link #{breadcrumb_mini_item[:classes]}" %>
+      <% if i == last %>
+        <%= content_tag :span, breadcrumb_mini_item[:name],
+          title: breadcrumb_mini_item[:name],
+          class: classes %>
+      <% else %>
+        <%= link_to breadcrumb_mini_item[:name], breadcrumb_mini_item[:link],
+          title: breadcrumb_mini_item[:name],
+          class: classes %>
+      <% end %>
     </li>
   <% end %>
 </ul>

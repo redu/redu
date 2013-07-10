@@ -5,13 +5,12 @@
     user: o usuário.
 %>
 
-<%= render "bootstrap/breadcrumb_mini", :breadcrumb_mini_items => [
-  { :name => "Visão Geral",
-    :link => home_user_path(user),
-    :classes => "icon-home-lightblue_16_18-before text-replacement"
+<%= render "bootstrap/breadcrumb_mini", breadcrumb_mini_items: [
+  { name: "Visão Geral",
+    link: home_user_path(user),
+    classes: "icon-home-lightblue_16_18-before text-replacement"
   },
-  { :name => "Meus Contatos",
-    :link => user_friendships_path(user),
-    :classes => "icon-contacts-lightblue_16_18-before"
+  { name: "Meus Contatos",
+    classes: "icon-contacts-gray_16_18-before"
   }
   ] %>
