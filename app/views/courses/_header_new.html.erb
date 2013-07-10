@@ -41,9 +41,3 @@
       class: "entity-header-info icon-tag-gray_16_18-before" %>
   <% end %>
 </div>
-
-<% if can?(:manage, course) %>
-  <%= link_to "Gerenciar curso",
-    edit_environment_course_path(course.environment, course),
-    class: "course-manage-button button-default icon-manage-lightblue_16_18-before" %>
-<% end %>

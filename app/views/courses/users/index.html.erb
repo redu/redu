@@ -14,6 +14,11 @@
         <%= link_to "Convidar membros",
           admin_invitations_environment_course_path(@course.environment, @course),
           class: "entity-action button-primary icon-invite-white_blue_16_18-before" %>
+        <% if can?(:manage, @course) %>
+          <%= link_to "Gerenciar curso",
+            edit_environment_course_path(@course.environment, @course),
+            class: "entity-action button-default icon-manage-lightblue_16_18-before" %>
+        <% end %>
       </div>
     <% end %>
 

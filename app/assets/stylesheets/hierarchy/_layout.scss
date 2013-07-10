@@ -91,6 +91,9 @@
 // Cabeçalho.
 // ==========================================================================
 
+.content-body-fix-top +
+.entity-header { padding-top: 20px; }
+
 .entity-header { color: $gray5; }
 
 // Nome.
@@ -119,7 +122,7 @@
   float: right;
 
   & +
-  & { margin-right: 20px; }
+  & { margin-right: 5px; }
 }
 
 .entity-action-link { margin-top: 8px; }

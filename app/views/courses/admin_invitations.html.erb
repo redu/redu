@@ -13,6 +13,14 @@
     <%= render "header_new", course: @course,
       responsibles_associations: @responsibles_associations %>
 
+    <% if can? :entity, @course %>
+      <div class="entity-actions clearfix">
+        <%= link_to "Gerenciar curso",
+          edit_environment_course_path(@course.environment, @course),
+          class: "entity-action button-default icon-manage-lightblue_16_18-before" %>
+      </div>
+    <% end %>
+
     <%= new_tabs :courses %>
 
     <div class="content-section">

@@ -18,6 +18,13 @@
   <div class="entity-actions clearfix">
     <%= link_to "Criar nova disciplina", new_space_path(course_id: course.id),
       class: "entity-action button-primary" %>
+
+    <% if can?(:manage, course) %>
+      <%= link_to "Gerenciar curso",
+        edit_environment_course_path(course.environment, course),
+        class: "entity-action button-default icon-manage-lightblue_16_18-before" %>
+    <% end %>
+
     <% if user.teacher?(course) %>
       <%= abandon_course %>
     <% end %>

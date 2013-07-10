@@ -26,11 +26,11 @@
 
 <% if can?(:manage, space) %>
   <div class="entity-actions">
+    <%= link_to "Criar novo módulo", new_space_subject_path(space),
+      class: "entity-action button-primary" %>
     <%= link_to "Gerenciar disciplina",
       edit_space_path(space),
       class: "entity-action button-default icon-manage-lightblue_16_18-before" %>
-    <%= link_to "Criar novo módulo", new_space_subject_path(@space),
-      class: "entity-action button-primary" %>
   </div>
 <% end %>
 

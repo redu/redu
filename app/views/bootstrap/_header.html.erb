@@ -12,7 +12,7 @@
     <% unless entity.nil? %>
       <li class="header-item">
         <%= link_to entity.name, entity_hierachy_link(entity),
-          class: "header-link icon-#{ type.to_s }-#{ bootstrap_entity_is_active?(current_entity, type) ? "lightblue" : "gray" }_16_18-before" %>
+          class: "header-link icon-#{ type.to_s }-lightblue_16_18-before" %>
         <div class="pull-right">
           <%# Descrição. %>
           <% unless entity.description.blank? %>
