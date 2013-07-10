@@ -8,14 +8,7 @@
   <div class="content-body">
     <%= render "spaces/header_new", space: @space %>
 
-    <div class="entity-actions clearfix">
-      <% if can? :manage, @space %>
-        <%= link_to "Criar novo módulo", new_space_subject_path(@space),
-          class: "entity-action button-primary" %>
-      <% end %>
-    </div>
-
-    <div class="space-sub-header content-section">
+    <div class="content-section">
       <h3 class="header-breadcrumb-big icon-subject-gray_32_34-before">Aulas</h3>
     </div>
 

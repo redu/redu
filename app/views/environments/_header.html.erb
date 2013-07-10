@@ -5,19 +5,8 @@
     environment: o ambiente.
 %>
 
-<div class="content-body-fix-top">
-  <%= render "bootstrap/header", current_entity: environment %>
-</div>
-
-<div class="entity-header clearfix">
-  <% if can?(:manage, environment) %>
-    <%= link_to "Gerenciar ambiente", edit_environment_path(environment),
-      class: "link-secondary icon-manage-lightblue_8_10-before pull-right" %>
-  <% end %>
-
-  <h2 class="entity-header-title">
-    <%= link_to environment.name, environment %>
-  </h2>
+<div class="entity-header content-section">
+  <%= content_tag :h2, environment.name, class: "entity-header-title" %>
 
   <% unless environment.description.blank? %>
     <%= content_tag :p, environment.description,
@@ -29,3 +18,14 @@
       class: "entity-header-info icon-tag-gray_16_18-before" %>
   <% end %>
 </div>
+
+<% if can?(:manage, environment) %>
+  <div class="entity-actions">
+    <%= link_to "Gerenciar ambiente", edit_environment_path(environment),
+      class: "entity-action button-default icon-manage-lightblue_16_18-before" %>
+    <%= link_to "Criar novo curso", new_environment_course_path(environment),
+      class: "entity-action button-primary" %>
+  </div>
+<% end %>
+
+<%= new_tabs :environments %>

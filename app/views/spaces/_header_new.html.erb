@@ -6,19 +6,12 @@
 %>
 
 <div class="content-body-fix-top">
-  <%= render "bootstrap/header", current_entity: space %>
+  <%= render "bootstrap/header", current_entity: space.course %>
 </div>
 
-<div class="entity-header clearfix">
-  <% if can?(:manage, space) %>
-    <%= link_to "Gerenciar disciplina",
-      edit_space_path(space),
-      class: "link-secondary icon-manage-lightblue_8_10-before pull-right" %>
-  <% end %>
+<div class="entity-header content-section">
 
-  <h2 class="entity-header-title">
-    <%= link_to space.name, space %>
-  </h2>
+  <%= content_tag :h2, space.name, class: "entity-header-title" %>
 
   <% unless space.description.blank? %>
     <%= content_tag :p, space.description,
@@ -30,3 +23,15 @@
       class: "entity-header-info icon-tag-gray_16_18-before" %>
   <% end %>
 </div>
+
+<% if can?(:manage, space) %>
+  <div class="entity-actions">
+    <%= link_to "Gerenciar disciplina",
+      edit_space_path(space),
+      class: "entity-action button-default icon-manage-lightblue_16_18-before" %>
+    <%= link_to "Criar novo módulo", new_space_subject_path(@space),
+      class: "entity-action button-primary" %>
+  </div>
+<% end %>
+
+<hr class="space-header-separator list-separator">

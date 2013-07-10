@@ -7,19 +7,11 @@
 %>
 
 <div class="content-body-fix-top">
-  <%= render "bootstrap/header", current_entity: course %>
+  <%= render "bootstrap/header", current_entity: course.environment %>
 </div>
 
-<div class="entity-header clearfix">
-  <% if can?(:manage, course) %>
-    <%= link_to "Gerenciar curso",
-      edit_environment_course_path(course.environment, course),
-      class: "link-secondary icon-manage-lightblue_8_10-before pull-right" %>
-  <% end %>
-
-  <h2 class="entity-header-title">
-    <%= link_to course.name, environment_course_path(course.environment, course) %>
-  </h2>
+<div class="entity-header content-section">
+  <%= content_tag :h2, course.name, class: "entity-header-title" %>
 
   <div class="course-owners cleafix">
     <% if responsibles_associations.empty? %>
@@ -49,3 +41,9 @@
       class: "entity-header-info icon-tag-gray_16_18-before" %>
   <% end %>
 </div>
+
+<% if can?(:manage, course) %>
+  <%= link_to "Gerenciar curso",
+    edit_environment_course_path(course.environment, course),
+    class: "course-manage-button button-default icon-manage-lightblue_16_18-before" %>
+<% end %>

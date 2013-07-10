@@ -3,32 +3,33 @@
 
   Variáveis:
     course: o curso.
+    user: o usuário.
 %>
 
 <% abandon_course = capture do %>
-  <%= link_to 'Abandonar curso',
+  <%= link_to "Abandonar curso",
     unjoin_environment_course_path(course.environment, course),
     method: :post,
-    confirm: 'Você perderá o vínculo e o acesso a este curso e isso não poderá ser desfeito. Tem certeza?',
-    class: 'entity-action entity-action-link icon-close-lightblue_16_18-before' %>
+    confirm: "Você perderá o vínculo e o acesso a este curso e isso não poderá ser desfeito. Tem certeza?",
+    class: "entity-action entity-action-link icon-close-lightblue_16_18-before" %>
 <% end %>
 
 <% if can?(:teach, course) %>
   <div class="entity-actions clearfix">
-    <%= link_to 'Criar nova disciplina', new_space_path(course_id: course.id),
+    <%= link_to "Criar nova disciplina", new_space_path(course_id: course.id),
       class: "entity-action button-primary" %>
-    <% if current_user.teacher?(course) %>
+    <% if user.teacher?(course) %>
       <%= abandon_course %>
     <% end %>
   </div>
 <% else %>
-  <% if course.users.include?(current_user) %>
+  <% if course.users.include?(user) %>
     <% if course.published == false %>
     <div class="content-section">
       <div class="message-block message-info">O curso está despublicado, para maiores informações consulte o dono do curso.</div>
     </div>
-    <% elsif course.waiting_user_approval?(current_user) %>
-    <% elsif course.waiting_approval?(current_user) %>
+    <% elsif course.waiting_user_approval?(user) %>
+    <% elsif course.waiting_approval?(user) %>
       <div class="content-section">
         <div class="message-block message-info">Aguardando os responsáveis pelo curso liberarem o seu acesso.</div>
       </div>
@@ -39,7 +40,8 @@
     <% end %>
   <% else %>
     <div class="entity-actions clearfix">
-      <%= render "enroll_button", course: course %>
+      <%= render "enroll_button", course: course, user: user,
+        extra_classes: "entity-action" %>
     </div>
   <% end %>
 <% end %>
