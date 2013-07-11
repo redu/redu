@@ -1,21 +1,12 @@
 <% content_for :container_class do "entity-wrapper" end %>
 
 <div class="span3">
-  <%= render "environments/sidebar", environment: @environment %>
+  <%= render "sidebar", environment: @environment %>
 </div>
 <div class="span13">
-  <%= render "environments/breadcrumb", environment: @environment %>
+  <%= render "breadcrumb", environment: @environment %>
   <div class="content-body">
-    <%= render "environments/header", environment: @environment %>
-
-    <div class="entity-actions">
-      <% if can?(:manage, @environment) %>
-        <%= link_to "Criar novo curso", new_environment_course_path(@environment),
-          class: "entity-action button-primary" %>
-      <% end %>
-    </div>
-
-    <%= new_tabs :environments %>
+    <%= render "header", environment: @environment %>
 
     <% if @courses.empty? %>
       <%= render "shared/empty_message",
@@ -31,4 +22,5 @@
       <%= paginate @courses, theme: "new_endless" %>
     <% end %>
   </div>
+  <%= render "breadcrumb", environment: @environment %>
 </div>

@@ -85,7 +85,7 @@
   <% else %>
 
     <%# Breadcrumb de ícones. %>
-    <%= render "bootstrap/breadcrumb_icons", entity: environment %>
+    <%= render "bootstrap/breadcrumb_icons", current_entity: environment %>
 
     <%# Membros. %>
     <% cache ["environment_sidebar_connections_with_count", environment.id] do %>

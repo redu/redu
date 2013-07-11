@@ -1,26 +1,15 @@
 <% content_for :container_class do "entity-wrapper" end %>
 
 <div class="span3">
-  <%= render "spaces/sidebar_new", space: @space, user: current_user %>
+  <%= render "sidebar_new", space: @space, user: current_user %>
 </div>
 <div class="span13">
-  <%= render "spaces/breadcrumbs_new", space: @space %>
+  <%= render "breadcrumbs_new", space: @space %>
   <div class="content-body">
-    <%= render "spaces/header_new", space: @space %>
-
-    <div class="entity-actions clearfix">
-      <% if can? :manage, @space %>
-        <%= link_to "Criar novo módulo", new_space_subject_path(@space),
-          class: "entity-action button-primary" %>
-      <% end %>
-    </div>
+    <%= render "header_new", space: @space %>
 
     <div class="content-section">
-      <ul class="header-breadcrumb-big">
-        <li class="header-breadcrumb-big-item">
-          <a class="header-breadcrumb-big-link icon-subject-gray_32_34-before" href="#" title="Aulas">Aulas</a>
-        </li>
-      </ul>
+      <h3 class="header-breadcrumb-big icon-subject-gray_32_34-before">Aulas</h3>
     </div>
 
     <% if @subjects.empty? %>
@@ -29,11 +18,14 @@
         icon_class: "icon-subject-empty_128_130",
         message: "Ainda não há Módulos criados para esta Disciplina." %>
     <% else %>
-      <ul class="list-subject" style="clear: both;">
-        <%= render partial: "bootstrap/list_subject_item",
-          collection: @subjects, locals: { user: current_user } %>
-      </ul>
+      <div class="content-section">
+        <ul class="list-subject" style="clear: both;">
+          <%= render partial: "bootstrap/list_subject_item",
+            collection: @subjects, locals: { user: current_user } %>
+        </ul>
+      </div>
       <%= paginate @subjects, theme: "new_endless" %>
     <% end %>
   </div>
+  <%= render "breadcrumbs_new", space: @space %>
 </div>

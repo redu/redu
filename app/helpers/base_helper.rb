@@ -90,15 +90,18 @@ module BaseHelper
     content_tag(:ul, errors, :class => 'errors_on_field control-errors') unless object.errors.empty?
   end
 
-  def type_class(resource)
-    icons = ['3gp', 'bat', 'bmp', 'doc', 'css', 'exe', 'gif', 'jpg', 'jpeg', 'jar','zip',
-             'mp3', 'mp4', 'avi', 'mpeg', 'mov', 'm4p', 'ogg', 'pdf', 'png', 'psd', 'ppt', 'txt', 'swf', 'wmv', 'xls', 'xml', 'zip']
+  # Retorna a extensão do arquivo que será usado para determinar a classe do ícone.
+  def file_type_class(resource)
+    icons = ['3gp', 'bat', 'bmp', 'doc', 'css', 'exe', 'gif', 'jpg', 'jpeg',
+             'jar','zip', 'mp3', 'mp4', 'avi', 'mpeg', 'mov', 'm4p', 'ogg',
+             'pdf', 'png', 'psd', 'ppt', 'txt', 'swf', 'wmv', 'xls', 'xml',
+             'zip']
 
     file_ext = resource.attachment_file_name.split('.').last if resource.attachment_file_name.split('.').length > 0
     if file_ext and icons.include? file_ext
-      'ext_'+ file_ext
+      file_ext
     else
-      'ext_blank'
+      'blank'
     end
   end
 

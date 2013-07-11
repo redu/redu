@@ -1,29 +1,30 @@
-<%= render :partial => 'spaces/sidebar', :locals => { :space => @space } %>
-<div class="main space grid_12 omega big-col">
-  <div class="expander open">
-    <a href="#">&#9654;</a>
-  </div>
-  <%= render :partial => 'spaces/breadcrumbs', :locals => { :space => @space } %>
-  <%= render :partial => 'spaces/header',
-    :locals => { :space => @space }%>
+<% content_for :container_class do "entity-wrapper" end %>
 
-  <div class="body clearfix space-canvas space-canvas-header">
-    <div class="header clearfix">
-      <h4 class="title"><%= @client_application.name %></h4>
-      <span class="detail">plataforma de aplicativos</span>
+<div class="span3">
+  <%= render "spaces/sidebar_new", space: @space, user: current_user %>
+</div>
+<div class="span13">
+  <%= render "spaces/breadcrumbs_new", space: @space %>
+  <div class="content-body">
+    <%= render "spaces/header_new", space: @space %>
+
+    <div class="content-section">
+      <%= content_tag :h3, @client_application.name, class: "header-breadcrumb-big icon-app-gray_32_34-before" %>
     </div>
-  </div>
-  <hr class="list-separator">
-  <div class="body clearfix space-canvas space-canvas-body">
-    <div class="iframe-canvas">
-    </div>
-    <%= lazy_load(:canvas) do %>
-      $(document).ready(function(){
-        var canvas = new Canvas({
-        remote : "<%= @canvas_url.html_safe %>"
+
+    <hr class="list-separator">
+
+    <div class="content-section">
+      <div class="iframe-canvas">
+      </div>
+      <%= lazy_load(:canvas) do %>
+        $(document).ready(function(){
+          var canvas = new Canvas({
+          remote : "<%= @canvas_url.html_safe %>"
+          });
         });
-      });
-    <% end %>
-  </div><!-- end #environment-courses -->
-
-</div><!-- end main -->
+      <% end %>
+    </div>
+  </div>
+  <%= render "spaces/breadcrumbs_new", space: @space %>
+</div>

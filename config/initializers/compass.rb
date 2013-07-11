@@ -1,0 +1,2 @@
+# Adiciona o asset pipeline load path ao sprite_load_path do Compass.
+Compass.add_configuration({ sprite_load_path: Compass.configuration.sprite_load_path + Rails.application.config.assets.paths }, 'sprites')

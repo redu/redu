@@ -4,7 +4,7 @@ module EnvironmentsNavigation
     # A navegação de Environment não possui sidebar, bloco apenas para manter o padrão
     sidebar.item :sidebar, 'Sidebar', home_path do |tabs|
       # Abas
-      tabs.dom_class = 'tabs tabs-big'
+      tabs.dom_class = 'tabs'
       tabs.selected_class = 'tab-active'
       tabs.item :courses, 'Cursos', environment_path(@environment),
         :highlights_on => action_matcher({'environments' => ['show', 'preview']}),

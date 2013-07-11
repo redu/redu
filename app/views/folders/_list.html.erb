@@ -1,41 +1,57 @@
-<div id="folder-index" class="clearfix">
-  <% if flash[:folder_error] %>
-    <div id="error"><%= flash[:folder_error] %></div>
-  <% end %>
+<%#
+  Ações de gerenciamento dos arquivos.
+
+  Variáveis:
+    space: a disciplina.
+    folder: a pasta atual.
+    folders: as pastas.
+    can_update: se pode editar.
+    can_delete: se pode remover.
+    myfiles: os arquivos.
+%>
+
+<div id="folder-index">
+  <%= render "shared/system_flash_message" %>
 
   <div class="folder">
-    <span class="title">Pastas</span>
+    <span class="folder-title sprite-file-ext-before file-ext-folder">Pastas</span>
     <div id="folder-context" class="context">
-      <%= render :partial => 'folders/context', :locals => { :folder => @folder } %>
+      <%= render "context", folder: folder %>
     </div>
 
-    <%= image_tag("loadingAnimation.gif", :id => "loading-files", :style =>"display: none;" ) %>
-    <ul class="folder_list child-folders">
-      <%= render :partial => "folders/item", :collection => @folders,
-        :locals => { :space => @space, :can_update => @can_update,
-          :can_delete => @can_delete } %>
+    <ul class="folder-list">
+      <%= render partial: "folders/item", collection: folders,
+        locals: { space: space, can_update: can_update,
+          can_delete: can_delete } %>
     </ul>
   </div>
 
-  <div id="file_list" >
-    <span class="quota">Usando <%= number_to_human_size(@space.course.quota.try(:files) || @space.course.environment.quota.try(:files), :precision => 0) %></span>
-    <% unless  @myfiles.empty? %>
-      <span class="title">Arquivos</span>
-      <table class="common files">
-        <thead style="display: none;">
-          <tr>
-            <th style="width: 20px;"></th>
-            <th style="width: 350px;"><%= link_order 'Nome', 'name' %></th>
-            <th style="width: 100px;"><%= link_order 'Tamanho', 'filesize' %></th>
-            <th style="width: 165px;"><%= link_order 'Modificado', 'date_modified' %></th>
-            <th style="width: 20px;"></th>
-          </tr>
-        </thead>
-        <%= render :partial => "folders/item_file", :collection => @myfiles,
-          :locals => { :space => @space, :folder => @folder,
-            :can_delete => @can_delete } %>
-      </table>
-      <span class="quota">Usando <%= number_to_human_size(@space.course.quota.try(:files) || @space.course.environment.quota.try(:files), :precision => 0) %></span>
-    <% end %>
-  </div>
+  <% quota = capture do %>
+    <%= content_tag :span, "Usando #{ number_to_human_size(space.course.quota.try(:files) || space.course.environment.quota.try(:files), precision: 0) }",
+      class: "file-list-quota legend" %>
+  <% end %>
+  <%= quota %>
+  <% unless myfiles.empty? %>
+    <span class="files-list-title sprite-file-ext-before file-ext-blank">Arquivos</span>
+    <table class="table-without-borderradius">
+      <thead>
+        <tr>
+          <th class="files-list-table-column-icon"></th>
+          <th>
+            <%= link_order "Nome", "name" %>
+          </th>
+          <th class="files-list-table-column-size">
+            <%= link_order "Tamanho", "filesize" %>
+          </th>
+          <th class="files-list-table-column-updated-at">
+            <%= link_order "Modificado", "date_modified" %>
+          </th>
+          <th class="files-list-table-column-icon"></th>
+        </tr>
+      </thead>
+      <%= render partial: "item_file", collection: myfiles,
+        locals: { space: space, folder: folder, can_delete: can_delete } %>
+    </table>
+    <%= quota %>
+  <% end %>
 </div>

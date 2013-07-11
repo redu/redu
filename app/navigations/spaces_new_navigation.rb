@@ -17,10 +17,11 @@ module SpacesNewNavigation
       class: 'icon-file_16_18-before nav-local-item',
       link: { class: 'nav-local-link' }
     @space.canvas.each do |canvas|
-      sidebar.item :canvas, render_local_nav_canvas(canvas),
-        space_canvas_path(@space, canvas),
-        class: 'icon-canvas_16_18-before nav-local-item',
-        link: { class: 'nav-local-link' }
+      sidebar.item :canvas, canvas.current_name, space_canvas_path(@space, canvas),
+        class: 'icon-app-lightblue_16_18-before nav-local-item',
+        link: { class: 'nav-local-link text-truncate', rel: "tooltip",
+          data: { placement: "right" },
+          title: "#{canvas.current_name} por #{canvas.user.display_name}" }
     end
     sidebar.item :members, 'Membros',
       space_users_path(@space),

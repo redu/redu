@@ -8,8 +8,6 @@
   <div class="content-body">
     <%= render "environments/header", environment: @environment %>
 
-    <%= new_tabs :environments %>
-
     <div class="content-section centralize">
       <%= new_subtabs :environments %>
     </div>
@@ -17,4 +15,5 @@
     <%= render "shared/entity_members_list", role: @role, users: @users,
       entity: @environment %>
   </div>
+  <%= render "environments/breadcrumbs_new", environment: @environment %>
 </div>

@@ -1,7 +1,26 @@
-$('#folder-index').html("<%= escape_javascript (
-  render :partial => "folders/list") %>")
-$('#folder-context').html("<%= escape_javascript (
-  render :partial => "folders/context", :locals => { :folder => @folder }) %>")
-$('#folder-admin').html("<%= escape_javascript (
-  render :partial => "folders/admin",
-  :locals => { :folder => @folder, :myfile => @myfile, :space => @space }) %>")
+<%#
+  Atualiza o índice dos arquivos.
+
+  Variáveis:
+    space: a disciplina.
+    folder: a pasta atual.
+    folders: as pastas.
+    can_update: se pode editar.
+    can_delete: se pode remover.
+    myfile: o arquivo atual.
+    myfiles: os arquivos.
+%>
+
+$("#folder-admin").html('<%= escape_javascript (
+  render "admin", folder: folder, myfile: myfile, space: space) %>');
+
+<%# Re-estiliza o campo de arquivo com o bootstrap. %>
+$("#myfile_attachment").reduForm("styleInputFile");
+
+$("#folder-context").html('<%= escape_javascript(
+  render "context", folder: folder) %>');
+
+$("#folder-index").html('<%= escape_javascript(
+  render "list", space: space, folder: folder,
+         folders: folders, can_update: can_update, can_delete: can_delete,
+         myfiles: myfiles) %>');

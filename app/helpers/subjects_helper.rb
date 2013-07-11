@@ -30,4 +30,15 @@ module SubjectsHelper
 
     "Módulo #{visibility} para os alunos"
   end
+
+  # Retorna o valor completado de um módulo pelo usuário.
+  def subject_completeness(subject, user)
+    user_association_item = user.get_association_with(subject)
+    # Caso do usuário admin sem associação com o módulo.
+    percentage = 0
+
+    unless user_association_item.nil?
+      percentage = user_association_item.grade.to_i
+    end
+  end
 end

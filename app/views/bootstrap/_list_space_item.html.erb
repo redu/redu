@@ -50,8 +50,7 @@
         <span class="list-space-stat icon-request-help-lightorange_16_18-before">
           <%= "#{ pluralize(Status.from_hierarchy(list_space_item).where(type: "Help").count, "pedido")} de ajuda" %>
 
-          <%# TODO: Novos pedidos de ajuda. %>
-          <% new_help_requests = 0 %>
+          <% new_help_requests = Status.recent_from_hierarchy(list_space_item).where(type: "Help").count %>
           <% if new_help_requests > 0 %>
             <%= content_tag :span,
               "(+#{ new_help_requests })",
@@ -76,13 +75,25 @@
             title: "#{ new_comments } #{ "novo".pluralize(new_comments) } #{ "comentário".pluralize(new_comments) }",
             class: "list-space-stats-blue" %>
         <% end %>
-
-        <%# TODO: Total e novas respostas. %>
       </span>
-      <span class="list-space-stat icon-reply-lightblue_16_18-before">
-        <%= pluralize(Status.from_hierarchy(list_space_item).where(type: "Answer").count, "resposta") %>
 
-      </span>
+      <%# TODO: Total e novas respostas, os métodos tentados
+          abaixo estão sempre retornando 0. %>
+      <% answers = Status.from_hierarchy(list_space_item).where(type: "Answer").count %>
+      <% if answers > 0 %>
+        <span class="list-space-stat icon-reply-lightblue_16_18-before">
+          <%# Não está adicionando o "s" no final no plural como costume, tive que explicitá-lo. %>
+          <%= pluralize(answers, "resposta", "respostas") %>
+        </span>
+
+        <%# Novas respostas. %>
+        <% new_answers = Status.recent_from_hierarchy(list_space_item).where(type: "Answer").count %>
+        <% if new_answers > 0 %>
+          <%= content_tag :span, "(+#{ new_answers })", rel: "tooltip",
+            title: "#{ new_answers } #{ "nova".pluralize(new_answers) } #{ "resposta".pluralize(new_answers) }",
+            class: "list-space-stats-blue" %>
+        <% end %>
+      <% end %>
     </div>
 
     <%# Arquivos de apoio. %>
@@ -93,6 +104,12 @@
         <%= pluralize list_space_item.myfiles.count, "arquivo" %>
 
         <%# TODO: Novos arquivos. %>
+        <% new_files = 0 # Não funfa: list_space_item.myfiles.recent.count %>
+        <% if new_files > 0 %>
+          <%= content_tag :span, "(+#{ new_files })", rel: "tooltip",
+            title: "#{ new_files } #{ "novo".pluralize(new_files) } #{ "arquivo".pluralize(new_files) }",
+            class: "list-space-stats-blue" %>
+        <% end %>
       </div>
     </div>
   </div>

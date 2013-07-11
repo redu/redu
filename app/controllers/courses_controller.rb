@@ -402,7 +402,7 @@ class CoursesController < BaseController
     @responsibles_associations = responsibles_associations_of(@course)
 
     respond_to do |format|
-      format.html
+      format.html { render layout: 'new_application' }
     end
   end
 

@@ -1,2 +1,9 @@
-<span class="label"> Você está em: </span>
-<span class="current"> <%= raw folder_path(folder) %></span> /
+<%#
+  Contexto da pasta atual.
+
+  Variáveis:
+    folder: a pasta atual.
+%>
+
+Você está em:
+<%= content_tag :span, raw(folder_path(folder)), class: "current" %> /

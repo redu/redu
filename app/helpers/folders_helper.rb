@@ -9,21 +9,23 @@ module FoldersHelper
 
   def link_order(name, order_by)
     if params[:order] == nil and params[:order_by] == order_by
-      link_to(name, space_folders_path(:space_id => params[:space_id],
-                                       :id => params[:id],
-                                       :order_by => order_by,
-                                       :order => 'DESC'),
-             :remote => true) + image_tag('asc.png')
+      link_to(name, space_folders_path(space_id: params[:space_id],
+                                       id: params[:id],
+                                       order_by: order_by,
+                                       order: 'DESC'),
+             remote: true,
+             class: "files-list-ordering icon-arrow-down-lightblue_8_10-after")
     elsif params[:order] and params[:order_by] == order_by
-      link_to(name, space_folders_path(:id => params[:id],
-                                      :space_id => params[:space_id],
-                                      :order_by => order_by),
-             :remote => true) + image_tag('desc.png')
+      link_to(name, space_folders_path(id: params[:id],
+                                      space_id: params[:space_id],
+                                      order_by: order_by),
+             remote: true,
+             class: "files-list-ordering icon-arrow-up-lightblue_8_10-after")
     else
-      link_to(name, space_folders_path(:id => params[:id],
-                                      :space_id => params[:space_id],
-                                      :order_by => order_by),
-             :remote => true)
+      link_to(name, space_folders_path(id: params[:id],
+                                      space_id: params[:space_id],
+                                      order_by: order_by),
+             remote: true)
     end
   end
 
@@ -37,9 +39,9 @@ module FoldersHelper
     until folder.parent == nil
       folder = folder.parent
       path = link_to(h(folder.name),
-                            space_folders_path(folder.space, :id => folder.id),
-                            :remote => true,
-                            :method => :get ) + ' > ' + path
+                            space_folders_path(folder.space, id: folder.id),
+                            remote: true,
+                            method: :get ) + ' > ' + path
     end
 
     return path.sub("root", "Arquivos de Apoio")

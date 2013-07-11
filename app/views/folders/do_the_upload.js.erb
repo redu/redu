@@ -1,14 +1,11 @@
 <%= remotipart_response do %>
   $('.errorMessageField').remove();
-  $('.file-holder').hide();
-  $('.spinner').hide();
-  $("input[type=file], input[type=text]", "#folder-admin").val('');
 
   <% if @myfile.valid? %>
-    $(".new-file-inner:visible, .new-folder-inner:visible", "#folder-admin").hide();
-    <%= render :partial => 'folders/index' %>
+    <%= render partial: "index", locals: { space: @space, folder: @folder,
+        folders: @folders, can_update: @can_update, can_delete: @can_delete,
+        myfiles: @myfiles, myfile: @myfile } %>
   <% else %>
-    $(".new-file-inner .concave-clean").text("Buscar");
     var $error = $("<div class='errorMessageField'>");
     <% if !@myfile.errors[:attachment_file_name].empty? %>
       $error.html("Já existe um arquivo com este nome.");

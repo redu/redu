@@ -3,6 +3,9 @@
 // ==========================================================================
 
 
+@import "compass/css3/images";
+
+
 // Utilidade
 // ==========================================================================
 
@@ -46,7 +49,7 @@
 @mixin pseudo-before($marginRight: 5px, $float: true) {
   content: "";
   display: inline-block;
-  vertical-align: middle;
+  vertical-align: top;
   margin-right: $marginRight;
 
   @if ($float) { float: left; }
@@ -58,7 +61,7 @@
 @mixin pseudo-after($marginLeft: 5px, $float: true) {
   content: "";
   display: inline-block;
-  vertical-align: middle;
+  vertical-align: top;
   margin-left: $marginLeft;
 
   @if ($float) { float: right; }
@@ -566,8 +569,8 @@
 //  $n - o número do heading.
 @mixin heading($n: 3) {
   @if $n == 1 {
-    font: 300 60px/56px $museo-sans-rounded;
-    letter-spacing: -3px;
+    font: 100 60px/56px $museo-sans-rounded;
+    letter-spacing: -4px;
 
   } @else if $n == 2 {
     font: 500 36px/36px $museo-sans;

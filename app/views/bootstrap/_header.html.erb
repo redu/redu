@@ -2,35 +2,35 @@
   Cabeçalhos.
 
   Variáveis:
-    entity: a entidade da hierarquia.
+    current_entity: a entidade da hierarquia.
 %>
 
-<% hierarchy = entity_hierachy(entity) %>
+<% hierarchy = entity_hierachy(current_entity) %>
 
 <ul class="header">
-  <% hierarchy.except(:lecture, :subject).each do |key, value| %>
-    <% unless value.nil? %>
+  <% hierarchy.except(:lecture, :subject).each do |type, entity| %>
+    <% unless entity.nil? %>
       <li class="header-item">
-        <%= link_to hierarchy[key].name, entity_hierachy_link(hierarchy[key]),
-          class: "header-link icon-#{ key.to_s }-#{ entity_is_active?(entity, key) ? "lightblue" : "gray" }_16_18-before" %>
+        <%= link_to entity.name, entity_hierachy_link(entity),
+          class: "header-link icon-#{ type.to_s }-lightblue_16_18-before" %>
         <div class="pull-right">
           <%# Descrição. %>
-          <% unless hierarchy[key].description.blank? %>
-            <%= content_tag :span, hierarchy[key].description, rel: "popover",
-              data: { content: hierarchy[key].description },
+          <% unless entity.description.blank? %>
+            <%= content_tag :span, entity.description, rel: "popover",
+              data: { content: entity.description },
               class: "header-info text-replacement icon-description-gray_16_18" %>
           <% end %>
 
           <%# Tags. %>
-          <% unless hierarchy[key].tags.empty? %>
-            <%= content_tag :span, hierarchy[key].tags.join(", "), rel: "popover",
-              data: { content: hierarchy[key].tags.join(", ") },
+          <% unless entity.tags.empty? %>
+            <% tags = entity.tags.join(", ") %>
+            <%= content_tag :span, tags, rel: "popover", data: { content: tags },
               class: "header-info text-replacement icon-tag-gray_16_18" %>
           <% end %>
 
           <%# Privacidade do curso. %>
-          <% if key == :course %>
-            <% course = hierarchy[key] %>
+          <% if type == :course %>
+            <% course = entity %>
             <% course_pending_users = course.pending_users.count %>
 
             <%# Ícones. %>

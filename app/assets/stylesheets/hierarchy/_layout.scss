@@ -150,15 +150,15 @@ $entity-sidebar-widget-section-padding-horizontal: 10px;
 // Cabeçalho.
 // ==========================================================================
 
-.entity-header {
-  color: $gray5;
-  padding: 20px;
-}
+.content-body-fix-top +
+.entity-header { padding-top: 20px; }
+
+.entity-header { color: $gray5; }
 
 // Nome.
 .entity-header-title {
   @include heading(1);
-  max-width: 84%; // Para não invadir o 'Gerenciar disciplina'.
+  color: $black;
 }
 
 .entity-header-title +
@@ -167,20 +167,21 @@ $entity-sidebar-widget-section-padding-horizontal: 10px;
 // Descrição e tags.
 .entity-header-info {
   & +
-  & { margin-top: 20px; }
+  & { margin-top: 5px; }
 }
 
 // Ações.
 .entity-actions {
-  float: right;
+  overflow: hidden;
   padding-right: 20px;
+  margin-bottom: -12px;
 }
 
 .entity-action {
   float: right;
 
   & +
-  & { margin-right: 20px; }
+  & { margin-right: 5px; }
 }
 
 .entity-action-link { margin-top: 8px; }
@@ -192,11 +193,21 @@ $entity-sidebar-widget-section-padding-horizontal: 10px;
 
   .list-course-space-item:first-child { border-top: 1px solid $gray4; }
 
-  .tabs-big .tab-active .tab-title { height: 29px; }
+  .tab-active .tab-title { height: 20px; }
 
   .pagination {
     margin-top: -11px;
 
     .list-separator:before { background-image: none; }
+  }
+
+  .content-body { padding-bottom: 20px; }
+}
+
+// Lista vazia.
+.empty-message {
+  .entity-wrapper & {
+    margin: 0;
+    padding: 20px 0;
   }
 }
