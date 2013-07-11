@@ -11,7 +11,8 @@
 <div class="entity-sidebar">
   <%# Thumbnail. %>
   <%= link_to environment, class: "environment-thumbnail" do %>
-    <%= image_tag environment.avatar.url(:thumb_160), size: "160x160",
+    <%# TODO: Usar 160x160 quando estiver gerado. %>
+    <%= image_tag environment.avatar.url(:thumb_140), size: "160x160",
       alt: environment.name, title: environment.name,
       class: "environment-thumbnail" %>
   <% end %>
