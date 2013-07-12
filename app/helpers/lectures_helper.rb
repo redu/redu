@@ -65,6 +65,7 @@ module LecturesHelper
     when "document" then "presentation"
     when "page" then "text-page"
     when "seminar" then "video"
+    when "api::canvas" then "app"
     else lecture.lectureable_type.to_s.downcase
     end
   end
