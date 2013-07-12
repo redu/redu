@@ -9,7 +9,8 @@
 
 <ul class="breadcrumb-icons">
   <% hierarchy.except(:lecture).each do |type, entity| %>
-    <%= content_tag :li, class: "breadcrumb-icon-item #{ "breadcrumb-icon-active" if bootstrap_entity_is_active?(current_entity, type) }" do %>
+    <% current_entity_iteration = (current_entity == entity) %>
+    <%= content_tag :li, class: "breadcrumb-icon-item #{ "breadcrumb-icon-active" if current_entity_iteration }" do %>
       <% breadcrumb_icon_classes = "breadcrumb-icon text-replacement" %>
       <% if entity.nil? %>
         <% content = t("hierarchy.#{ type.to_s }", count: 1) %>
@@ -18,7 +19,7 @@
       <% else %>
         <%= link_to entity_hierachy_link(entity), class: "breadcrumb-icon-link" do %>
           <%= content_tag :span, entity.name, title: entity.name,
-            class: "#{ breadcrumb_icon_classes } icon-#{ type.to_s }-#{ bootstrap_entity_is_active?(current_entity, type) ? "lightblue" : "gray" }_32_34-before" %>
+            class: "#{ breadcrumb_icon_classes } icon-#{ type.to_s }-#{ current_entity_iteration ? "lightblue" : "gray" }_32_34-before" %>
         <% end %>
       <% end %>
     <% end %>
