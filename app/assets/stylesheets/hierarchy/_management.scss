@@ -1,0 +1,31 @@
+// ==========================================================================
+// Gerenciamento.
+// ==========================================================================
+
+
+.entity-management-header { padding: 10px 20px 20px; }
+
+.form-fieldset-section { padding: 10px 0; }
+
+// Prefixo a um campo de texto com o endereço do Redu.
+.input-prefix-redu {
+  $form-control-horizontal-padding: 10px;
+  @include area-prefix($form-control-horizontal-padding, 132px);
+
+  .area-prefix {
+    @include border-top-right-radius(0);
+    @include border-bottom-right-radius(0);
+
+    &,
+    &:hover {
+      $form-control-border-width: 1px;
+      border: $form-control-border-width solid $gray4;
+    }
+  }
+}
+
+// Ícone de informação com tooltip para labels.
+.label-tooltip-icon {
+  float: left;
+  margin-right: 5px;
+}
