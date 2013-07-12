@@ -18,12 +18,19 @@
 <ul class="header-breadcrumb">
   <% header_breadcrumb_items.each do |header_breadcrumb_item| %>
     <li class="header-breadcrumb-item">
-      <%= link_to header_breadcrumb_item[:link],
-        :title => header_breadcrumb_item[:name],
-        :class => "header-breadcrumb-link #{header_breadcrumb_item[:classes]}" do %>
+      <% classes = "header-breadcrumb-link #{ header_breadcrumb_item[:classes] }" %>
+      <% content = capture do %>
         <%= header_breadcrumb_item[:name] %>
-        <%= content_tag(:span, parentize(header_breadcrumb_item[:counter]),
-          :class => "header-breadcrumb-item-light") if header_breadcrumb_item[:counter] %>
+        <% if header_breadcrumb_item[:counter] %>
+          <%= content_tag :span, parentize(header_breadcrumb_item[:counter]),
+            class: "header-breadcrumb-item-light" %>
+        <% end %>
+      <% end %>
+
+      <% if header_breadcrumb_item[:link] %>
+        <%= link_to content, header_breadcrumb_item[:link], class: classes %>
+      <% else %>
+        <%= content_tag :span, content, class: classes %>
       <% end %>
     </li>
   <% end %>
