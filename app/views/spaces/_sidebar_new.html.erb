@@ -27,11 +27,7 @@
     <%# TODO: Calcular todas as aulas finalizadas na disciplina. %>
     <% done_lectures = 0 %>
     <% percentage = 0 %>
-    <% total_lectures = 0 %>
-    <% unless space.lectures_count.nil? %>
-      <%# TODO: Filtrar as aulas que estão nos módulos invisíveis. %>
-      <% total_lectures = space.lectures_count %>
-    <% end %>
+    <% total_lectures = space.lectures.count %>
     <% if total_lectures > 0 %>
       <% percentage = (done_lectures * 100 / total_lectures) %>
     <% end %>
