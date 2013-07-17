@@ -37,8 +37,7 @@
             list_space_item, class: "icon-subject-lightblue_16_18-before" %>
           <%= list_space_item.lectures.count %>
 
-          <%# TODO: Novas aulas. %>
-          <% new_lectures = 0 %>
+          <% new_lectures = list_space_item.lectures.recent.count %>
           <% if new_lectures > 0 %>
             <%= content_tag :span,
               "(+#{ new_lectures })",
