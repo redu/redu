@@ -22,28 +22,23 @@ class Course < ActiveRecord::Base
   has_many :pending_users, :through => :user_course_associations,
     :source => :user, :conditions => [ "course_enrollments.state = ?",
                                        'waiting' ]
-  # environment_admins
   has_many :administrators, :through => :user_course_associations,
     :source => :user,
     :conditions => [ "course_enrollments.role = ? AND course_enrollments.state = ?",
                       :environment_admin, 'approved' ]
-  # teachers
   has_many :teachers, :through => :user_course_associations,
     :source => :user,
     :conditions => [ "course_enrollments.role = ? AND course_enrollments.state = ?",
                       :teacher, 'approved' ]
-  # tutors
   has_many :tutors, :through => :user_course_associations,
     :source => :user,
     :conditions => [ "course_enrollments.role = ? AND course_enrollments.state = ?",
                       :tutor, 'approved' ]
-  # students (member)
   has_many :students, :through => :user_course_associations,
     :source => :user,
     :conditions => [ "course_enrollments.role = ? AND course_enrollments.state = ?",
                       :member, 'approved' ]
 
-  # new members (form 1 week ago)
   has_many :new_members, :through => :user_course_associations,
     :source => :user,
     :conditions => [ "course_enrollments.state = ? AND course_enrollments.updated_at >= ?", 'approved', 1.week.ago]

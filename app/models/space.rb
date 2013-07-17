@@ -11,31 +11,23 @@ class Space < ActiveRecord::Base
   # Além disso, o Space fornece mecanismos para compartilhamento de arquivos
   # (MyFile).
 
-  # CALLBACKS
   after_create :create_root_folder
   after_commit :delay_create_space_association_for_users_course, on: :create
 
-  # ASSOCIATIONS
   belongs_to :course
 
-  # USERS
   belongs_to :owner , class_name: "User" , foreign_key: "user_id"
   has_many :user_space_associations, dependent: :destroy
   has_many :users, through: :user_space_associations
-  # environment_admins
   has_many :administrators, through: :user_space_associations,
     source: :user, conditions: ["user_space_associations.role = ?", :environment_admin]
-  # teachers
   has_many :teachers, through: :user_space_associations,
     source: :user, conditions: ["user_space_associations.role = ?", :teacher]
-  # tutors
   has_many :tutors, through: :user_space_associations,
     source: :user, conditions: [ "user_space_associations.role = ?", :tutor]
-  # students (member)
   has_many :students, through: :user_space_associations,
     source: :user, conditions: [ "user_space_associations.role = ?", :member]
 
- # new members (form 1 week ago)
   has_many :new_members, through: :user_space_associations,
     source: :user,
     conditions: ["user_space_associations.updated_at >= ?", 1.week.ago]
@@ -57,14 +49,11 @@ class Space < ActiveRecord::Base
   scope :teachers, joins(:user_space_associations).
     where("user_space_associations.role = ?", :teacher)
 
-  # ACCESSORS
   attr_protected :owner, :removed, :members_count, :course_id, :published
 
-  # PLUGINS
   acts_as_taggable
   has_attached_file :avatar, Redu::Application.config.paperclip
 
-  # VALIDATIONS
   validates_presence_of :name
   validates_length_of :name, maximum: 40
 

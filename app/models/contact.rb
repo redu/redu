@@ -4,10 +4,8 @@ class Contact
   include ActiveModel::Conversion
   extend ActiveModel::Naming
 
-  # ACCESSORS
   attr_accessor :name, :email, :kind, :subject, :body
 
-  # VALIDATIONS
   validates_presence_of :name, :message => "Seu nome é necessário."
   validates_presence_of :email, :message => "Seu e-mail é necessário."
   validates_presence_of :body, :message => "A mensagem é necessária."

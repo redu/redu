@@ -16,20 +16,16 @@ class Environment < ActiveRecord::Base
   has_many :user_environment_associations, :dependent => :destroy
   belongs_to :owner, :class_name => "User", :foreign_key => "user_id"
   has_many :users, :through => :user_environment_associations
-  # environment_admins
   has_many :administrators, :through => :user_environment_associations,
     :source => :user,
     :conditions => [ "user_environment_associations.role = ?", :environment_Admin ]
-  # teachers
   has_many :teachers, :through => :user_environment_associations,
     :source => :user,
     :conditions => [ "user_environment_associations.role = ?", :teacher ]
-  # tutors
   has_many :tutors, :through => :user_environment_associations,
     :source => :user,
     :conditions => [ "user_environment_associations.role = ?", :tutor ]
 
-  # students (role member)
   has_many :students, :through => :user_environment_associations,
     :source => :user,
     :conditions => [ "user_environment_associations.role = ?", :member ]
