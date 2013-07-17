@@ -102,8 +102,7 @@
           class: "icon-file-lightblue_16_18-before" %>
         <%= pluralize list_space_item.myfiles.count, "arquivo" %>
 
-        <%# TODO: Novos arquivos. %>
-        <% new_files = 0 # Não funfa: list_space_item.myfiles.recent.count %>
+        <% new_files = list_space_item.myfiles.recent.count %>
         <% if new_files > 0 %>
           <%= content_tag :span, "(+#{ new_files })", rel: "tooltip",
             title: "#{ new_files } #{ "novo".pluralize(new_files) } #{ "arquivo".pluralize(new_files) }",

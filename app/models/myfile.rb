@@ -14,6 +14,8 @@ class Myfile < ActiveRecord::Base
   belongs_to :folder
   belongs_to :user
 
+  scope :recent, lambda { where("attachment_updated_at > ?", 1.week.ago) }
+
   validates_attachment_presence :attachment
   validates_attachment_size :attachment,
     :less_than => 100.megabytes
