@@ -7,7 +7,7 @@
   <div id="space-subjects" class="body clearfix">
     <div class="header clearfix">
       <h4 class="title">Conteúdo</h4>
-      <span class="detail">(<%= pluralize @space.subjects.visible.count, "módulo" %> , <%= pluralize @space.lectures_count, "aula" %>)</span>
+      <span class="detail">(<%= pluralize @space.subjects.visible.count, "módulo" %> , <%= pluralize @space.lectures.count, "aula" %>)</span>
     </div>
     <% if can? :manage, @space %>
       <div class="admin-actions">

@@ -58,8 +58,7 @@ class Space < ActiveRecord::Base
     where("user_space_associations.role = ?", :teacher)
 
   # ACCESSORS
-  attr_protected :owner, :removed, :lectures_count, :members_count,
-                 :course_id, :published
+  attr_protected :owner, :removed, :members_count, :course_id, :published
 
   # PLUGINS
   acts_as_taggable
@@ -123,10 +122,8 @@ class Space < ActiveRecord::Base
     Delayed::Job.enqueue(job, queue: 'email')
   end
 
-  def lectures_count
-    unless self.subjects.empty?
-      Lecture.by_subjects(self.subjects).count
-    end
+  def lectures
+    Lecture.by_subjects(self.subjects.visible)
   end
 
   def member_count

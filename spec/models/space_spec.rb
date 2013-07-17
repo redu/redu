@@ -223,21 +223,28 @@ describe Space do
 
   end
 
-  context "when counting lectures" do
-    before do
-      @lectures = 3.times.inject([]) do |acc,i|
-        subj = FactoryGirl.create(:subject, owner: subject.owner,
-                       space: subject,
-                       visible: true, finalized: true)
-        lectures = 3.times.inject([]) do |mem, i|
-          mem << FactoryGirl.create(:lecture, subject: subj)
-        end
-        acc << lectures
-      end.flatten!
+  describe "#lectures" do
+    it "should return an Arel" do
+      subject.lectures.is_a? ActiveRecord::Relation
     end
 
-    it "should count correctly" do
-      subject.lectures_count.should == @lectures.size
+    context "when there are invisible subjects" do
+      let!(:invisible_subjects) do
+        2.times.map do
+          FactoryGirl.create(:complete_subject, space: subject, visible: false)
+        end
+      end
+
+      let!(:visible_subjects) do
+        2.times.map do
+          FactoryGirl.create(:complete_subject, space: subject, visible: true)
+        end
+      end
+
+      it "should return only lectures from visible subjects" do
+        visible_lectures = visible_subjects.collect(&:lectures).flatten
+        subject.lectures.should =~ visible_lectures
+      end
     end
   end
 

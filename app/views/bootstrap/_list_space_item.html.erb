@@ -33,9 +33,9 @@
     <div class="list-space-stats-row">
       <div class="list-space-stat">
         <span class="list-space-stat">
-          <%= link_to "#{ t("hierarchy.lecture", count: list_space_item.lectures_count.to_i) }:",
+          <%= link_to "#{ t("hierarchy.lecture", count: list_space_item.lectures.count) }:",
             list_space_item, class: "icon-subject-lightblue_16_18-before" %>
-          <%= list_space_item.lectures_count.to_i %>
+          <%= list_space_item.lectures.count %>
 
           <%# TODO: Novas aulas. %>
           <% new_lectures = 0 %>
