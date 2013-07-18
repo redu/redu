@@ -98,8 +98,7 @@ class SubjectsController < BaseController
     end
 
     respond_to do |format|
-      format.html
-      format.js { render_endless 'subjects/item', @subjects, '#subjects_list' }
+      format.html { render layout: 'new_application' }
     end
   end
 
