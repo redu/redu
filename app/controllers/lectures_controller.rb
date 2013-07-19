@@ -73,7 +73,7 @@ class LecturesController < BaseController
                       :redu_user_id => current_user.id }
           @canvas_url = @lecture.lectureable.current_url(options)
 
-          render :show_canvas
+          render :show_canvas, layout: 'new_application'
         end
       elsif @lecture.lectureable_type == 'Exercise'
         format.html do
