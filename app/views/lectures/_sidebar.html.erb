@@ -1,0 +1,22 @@
+<%#
+  Barra lateral da aula.
+
+  Variáveis:
+    lecture: a aula.
+    user: o usuário.
+    done: se a aula foi finalizada.
+%>
+
+<div class="entity-sidebar">
+  <%= render "environments/sidebar_thumbnail",
+    environment: lecture.subject.space.course.environment %>
+
+  <%# TODO: Adicionar icon-lecture-lightblue_32_34-before. %>
+  <%= render "bootstrap/breadcrumb_icons", current_entity: lecture,
+    extra_classes: "lights-fade" %>
+
+  <%= new_local_nav :lectures %>
+
+  <%= render "lectures/student_actions", lecture: lecture, user: user,
+    done: done %>
+</div>

@@ -1,0 +1,54 @@
+// ==========================================================================
+// Aula.
+// ==========================================================================
+
+
+.lecture-iframe {
+  min-height: 500px;
+  width: 100%;
+  border: 0;
+}
+
+.lights-on { background-color: $gray6; }
+
+.lecture-sidebar-actions {
+  &.affix {
+    position: fixed;
+    width: grid-width(3);
+    top: $nav-global-height;
+  }
+}
+
+.lecture-wall-wrapper {
+  .create-status {
+    display: none;
+    margin-top: 10px;
+
+    &.tab-left:before { left: 300px; }
+
+    &.tab-right:before { right: 295px; }
+  }
+}
+
+.lecture-wall-actions {
+  margin: 0;
+  list-style: none;
+}
+
+.lecture-wall-action { float: left; }
+
+.lecture-wall-button {
+  margin: 0;
+
+  &[class*="icon-"][class*="-before"]:before { vertical-align: middle; }
+
+  .lecture-wall-action:first-child & {
+    @include border-top-right-radius(0);
+    @include border-bottom-right-radius(0);
+  }
+
+  .lecture-wall-action:last-child & {
+    @include border-top-left-radius(0);
+    @include border-bottom-left-radius(0);
+  }
+}

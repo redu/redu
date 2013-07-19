@@ -35,23 +35,17 @@ module LecturesHelper
     result.html_safe
   end
 
+  # Adiciona o ícone para aula finalizada.
   def mark_lecture_icon(done)
-    if done
-      "icon-class-green_16_18-before"
-    else
-      "icon-class-gray_16_18-before"
-    end
+    "icon-correct-green_16_18-after" if done
   end
 
-  def disable_label_if(disable)
-    "disabled" if disable
-  end
-
-  def add_tiptip_if_disabled(disable, &block)
+  # Adiciona tooltip caso o finalizar aula esteja desativado.
+  def add_tooltip_if_disabled(disable, &block)
     body = capture(&block)
 
     if disable
-      content_tag(:span, body, :class => "tiptip", :title => "Estamos" \
+      content_tag(:div, body, rel: "tooltip", title: "Estamos" \
                   " processando esta aula, por favor, aguarde. Em instantes" \
                   " você poderá finalizá-la.")
     else
@@ -68,5 +62,10 @@ module LecturesHelper
     when "api::canvas" then "app"
     else lecture.lectureable_type.to_s.downcase
     end
+  end
+
+  # Retorna valor numérico (em string) correspondente a se a aula foi finalizada.
+  def lecture_done_value(done)
+    done ? '0' : '1'
   end
 end

@@ -1,0 +1,19 @@
+<%#
+  Cabeçalho.
+
+  Variáveis:
+    lecture: a aula.
+    question: se for uma página de questão.
+    results: se for uma página de resultados.
+%>
+
+<div class="content-body-fix-top">
+  <%= render "bootstrap/header", current_entity: lecture.subject %>
+</div>
+
+<%= render "lectures/info", lecture: lecture %>
+
+<hr class="list-separator">
+
+<%= render "lectures/details", lecture: lecture, question: question,
+  results: results %>

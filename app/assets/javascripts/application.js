@@ -3,7 +3,6 @@
 //= require modernizr
 //= require jquery.tipTip.minified
 //= require exercises
-//= require lectures
 //= require lazy-load
 //= require jquery.fcbkcomplete.min
 //= require jquery.tokeninput-instant-search

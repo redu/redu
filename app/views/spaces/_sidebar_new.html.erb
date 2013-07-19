@@ -16,20 +16,7 @@
   <div class="nav-local-balloon">
     <span class="nav-local-balloon-arrow icon-arrow-up-balloon-gray_20_8"></span>
     <span class="nav-local-balloon-title">Você na disciplina:</span>
-    <%# TODO: Calcular todas as aulas finalizadas na disciplina. %>
-    <% done_lectures = 0 %>
-    <% percentage = 0 %>
-    <% total_lectures = space.lectures.count %>
-    <% if total_lectures > 0 %>
-      <% percentage = (done_lectures * 100 / total_lectures) %>
-    <% end %>
-    <%= content_tag :span,
-      "#{ t("hierarchy.lecture", count: total_lectures) }: #{ done_lectures } / #{ total_lectures }",
-      class: "nav-local-balloon-item icon-subject-gray_16_18-before" %>
-    <span class="nav-local-balloon-item">
-      <%= render "bootstrap/progress_bar", percentage: percentage, size: "medium",
-        thickness: "thick", show_percentage: true %>
-    </span>
+    <%= render "spaces/lectures_progress", space: space %>
     <div class="nav-local-separator"></div>
     <% user_comments = Activity.from_hierarchy(space).where(user_id: user.id).count %>
     <%= content_tag :span, "Comentários: #{ user_comments }",

@@ -50,14 +50,13 @@ class LecturesController < BaseController
 
     if enrollment = current_user.get_association_with(@lecture.subject)
       asset_report = @lecture.asset_reports.of_user(current_user).first
-      @student_grade = enrollment.grade.to_i
       @done = asset_report.try(:done)
     end
 
     respond_to do |format|
       if @lecture.lectureable_type == 'Page'
         format.html do
-          render :show_page
+          render :show_page, layout: 'new_application'
         end
       elsif @lecture.lectureable_type == 'Seminar'
         format.html do

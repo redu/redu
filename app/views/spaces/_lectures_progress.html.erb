@@ -1,0 +1,23 @@
+<%#
+  Progresso do usuário nas aulas da disciplina.
+
+  Variáveis:
+    space: a disciplina.
+%>
+
+<div class="lectures-progress">
+  <%# TODO: Calcular todas as aulas finalizadas na disciplina. %>
+  <% done_lectures = 0 %>
+  <% percentage = 0 %>
+  <% total_lectures = space.lectures.count %>
+  <% if total_lectures > 0 %>
+    <% percentage = (done_lectures * 100 / total_lectures) %>
+  <% end %>
+  <%= content_tag :span,
+    "#{ t("hierarchy.lecture", count: total_lectures) }: #{ done_lectures } / #{ total_lectures }",
+    class: "nav-local-balloon-item icon-subject-gray_16_18-before" %>
+  <span class="nav-local-balloon-item">
+    <%= render "bootstrap/progress_bar", percentage: percentage, size: "medium",
+      thickness: "thick", show_percentage: true %>
+  </span>
+</div>
