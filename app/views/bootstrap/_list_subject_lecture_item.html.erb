@@ -7,11 +7,11 @@
 %>
 
 <%= cache ["space_lecture_item", list_subject_lecture_item.id, user.id] do %>
-  <li class="list-button-item">
+  <li class="list-button-item link-container">
     <%# Nome. %>
     <%= link_to list_subject_lecture_item.name,
       space_subject_lecture_path(list_subject_lecture_item.subject.space, list_subject_lecture_item.subject, list_subject_lecture_item),
-      class: "list-button-link icon-#{ lecture_type_class(list_subject_lecture_item) }-lightblue_16_18-before",
+      class: "list-button-link icon-#{ lecture_type_class(list_subject_lecture_item) }-lightblue_16_18-before link-target",
       rel: "tooltip", title: t(list_subject_lecture_item.lectureable_type) %>
 
     <div class="list-lecture-info">
