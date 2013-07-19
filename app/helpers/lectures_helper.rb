@@ -15,10 +15,10 @@ module LecturesHelper
   # Mostra o player.
   def render_player(options = {})
     options = {
-      :height => '360',
-      :skin => '/flash/modieus.swf',
-      :flashplayer => '/flash/player.swf',
-      :id => 'player',
+      height: '360',
+      skin: '/flash/modieus.swf',
+      flashplayer: '/flash/player.swf',
+      id: 'player',
     }.merge(options)
 
     result = <<-END

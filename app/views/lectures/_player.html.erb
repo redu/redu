@@ -6,9 +6,9 @@
 %>
 
 <% if seminar.external_resource_type.eql?('upload') %>
-  <%= render 'lectures/video', :resource => seminar %>
+  <%= render 'lectures/video', resource: seminar %>
 <% elsif seminar.external_resource_type.eql?('youtube') %>
-  <%= render "lectures/youtube", :resource => seminar %>
+  <%= render "lectures/youtube", resource: seminar %>
 <% else %>
   <div class="centralize">
     <%= link_to "Download o vídeo", seminar.media.url, class: "button-primary" %>

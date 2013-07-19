@@ -6,7 +6,7 @@
 %>
 
 <%= lazy_load(javascript_path('jwplayer.js')) do %>
-  <%= render_player(:youtube_url => resource.external_resource_url) %>
+  <%= render_player(youtube_url: resource.external_resource_url) %>
 <% end %>
 
 <%= render "lectures/player_placeholder" %>
