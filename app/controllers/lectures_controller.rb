@@ -64,7 +64,7 @@ class LecturesController < BaseController
         end
       elsif @lecture.lectureable_type == 'Document'
         format.html do
-          render :show_document
+          render :show_document, layout: 'new_application'
         end
       elsif @lecture.lectureable_type == 'Api::Canvas'
         format.html do

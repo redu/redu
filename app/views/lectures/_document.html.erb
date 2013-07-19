@@ -1,18 +1,27 @@
-<div id="view_video" class="stage" align="center" >
-  <% if lecture.lectureable.ipaper_document %>
-    <% if lecture.lectureable.conversion_processing? %>
-      <div class="box_notice">
-        O documento está sendo processado, em breve estrará disponível
-      </div>
-    <% else %>
-      <%= raw(lecture.lectureable.display_ipaper(:disable_related_docs => true,
-                                                 :mode => :slide,
-                                                 :hide_disabled_buttons => true )) %>
-      <div id="document_stage"></div>
-    <% end %>
+<%#
+  O documento em si.
 
-  <%# Document com arquivo de imagem %>
+  Variáveis:
+    lecture: a aula.
+%>
+
+<% if lecture.lectureable.ipaper_document %>
+  <% if lecture.lectureable.conversion_processing? %>
+    <%= render "shared/message_block", type: "info", close: false,
+      message: "O documento está sendo processado, em breve estrará disponível",
+      button: false %>
   <% else %>
-    <%= image_tag lecture.lectureable.attachment.url, :alt => lecture.name %>
+    <%= raw(lecture.lectureable.display_ipaper(:disable_related_docs => true,
+                                               :mode => :slide,
+                                               :hide_disabled_buttons => true)) %>
   <% end %>
-</div>
+
+<%# Documento com arquivo de imagem. %>
+<% else %>
+  <div class="centralize">
+    <%= link_to lecture.lectureable.attachment.url, target: "_blank" do %>
+      <%= image_tag lecture.lectureable.attachment.url, :alt => lecture.name,
+        title: lecture.name %>
+    <% end %>
+  </div>
+<% end %>
