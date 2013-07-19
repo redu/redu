@@ -56,15 +56,15 @@ class LecturesController < BaseController
     respond_to do |format|
       if @lecture.lectureable_type == 'Page'
         format.html do
-          render :show_page, layout: 'new_application'
+          render :show_page, layout: 'lectures/show'
         end
       elsif @lecture.lectureable_type == 'Seminar'
         format.html do
-          render :show_seminar, layout: 'new_application'
+          render :show_seminar, layout: 'lectures/show'
         end
       elsif @lecture.lectureable_type == 'Document'
         format.html do
-          render :show_document, layout: 'new_application'
+          render :show_document, layout: 'lectures/show'
         end
       elsif @lecture.lectureable_type == 'Api::Canvas'
         format.html do
@@ -73,7 +73,7 @@ class LecturesController < BaseController
                       :redu_user_id => current_user.id }
           @canvas_url = @lecture.lectureable.current_url(options)
 
-          render :show_canvas, layout: 'new_application'
+          render :show_canvas, layout: 'lectures/show'
         end
       elsif @lecture.lectureable_type == 'Exercise'
         format.html do

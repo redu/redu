@@ -1,23 +1,4 @@
-<% content_for :container_class do "entity-wrapper" end %>
-
-<%= render "lectures/javascripts" %>
-
-<div class="span3">
-  <%= render "lectures/sidebar", lecture: @lecture, user: current_user, done: @done %>
-</div>
-<div class="span13">
-  <%= breadcrumb = capture { render "lectures/breadcrumb", lecture: @lecture } %>
-  <div class="content-body">
-    <%= render "lectures/header", lecture: @lecture, question: @question,
-      results: @results %>
-
-    <div class="content-section">
-      <%= content_tag :iframe, nil, id: "page-iframe", class: "lecture-iframe",
-        src: page_content_space_subject_lecture_path(@space, @subject, @lecture) %>
-    </div>
-
-    <%= render "statuses/wall", status: @status, statusable: @lecture,
-      statuses: @statuses, placeholder: "Comente nesta aula." %>
-  </div>
-  <%= breadcrumb %>
+<div class="content-section">
+  <%= content_tag :iframe, nil, id: "page-iframe", class: "lecture-iframe",
+    src: page_content_space_subject_lecture_path(@space, @subject, @lecture) %>
 </div>

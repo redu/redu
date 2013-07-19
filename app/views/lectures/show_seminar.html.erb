@@ -1,22 +1,3 @@
-<% content_for :container_class do "entity-wrapper" end %>
-
-<%= render "lectures/javascripts" %>
-
-<div class="span3">
-  <%= render "lectures/sidebar", lecture: @lecture, user: current_user, done: @done %>
-</div>
-<div class="span13">
-  <%= breadcrumb = capture { render "lectures/breadcrumb", lecture: @lecture } %>
-  <div class="content-body">
-    <%= render "lectures/header", lecture: @lecture, question: @question,
-      results: @results %>
-
-    <div class="lecture-video">
-      <%= render "lectures/player", seminar: @lecture.lectureable %>
-    </div>
-
-    <%= render "statuses/wall", status: @status, statusable: @lecture,
-      statuses: @statuses, placeholder: "Comente nesta aula." %>
-  </div>
-  <%= breadcrumb %>
+<div class="lecture-video">
+  <%= render "lectures/player", seminar: @lecture.lectureable %>
 </div>
