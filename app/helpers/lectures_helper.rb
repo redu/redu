@@ -12,9 +12,9 @@ module LecturesHelper
     existent_lectures
   end
 
+  # Mostra o player.
   def render_player(options = {})
     options = {
-      :width => '608',
       :height => '360',
       :skin => '/flash/modieus.swf',
       :flashplayer => '/flash/player.swf',

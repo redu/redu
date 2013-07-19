@@ -60,7 +60,7 @@ class LecturesController < BaseController
         end
       elsif @lecture.lectureable_type == 'Seminar'
         format.html do
-          render :show_seminar
+          render :show_seminar, layout: 'new_application'
         end
       elsif @lecture.lectureable_type == 'Document'
         format.html do

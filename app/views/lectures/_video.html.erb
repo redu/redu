@@ -1,3 +1,10 @@
+<%#
+  Player para vídeos de upload.
+
+  Variáveis:
+    resource: o vídeo.
+%>
+
 <% if resource.state.eql?("converted") %>
   <script type="text/javascript">
     <% media_url = resource.media.url %>
@@ -20,16 +27,15 @@
       'name':               'player'
     };
 
-    swfobject.embedSWF('/flash/player.swf', 'player', '608', '360', '9',
+    swfobject.embedSWF('/flash/player.swf', 'player', '100%', '360', '9',
       'false', flashvars, params, attributes);
   </script>
 
-  <div id="player" class="stage" >
-    Você precisa instalar o <%= link_to 'Flash Player',
-      'http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash' %>
-    para ver este vídeo.
-  </div>
+  <%= render "lectures/player_placeholder" %>
 <% else %>
-  <%= (resource.state.eql?("converting")) ? 'O video esta sendo processado' :
-    'O video nao pode ser processado' %>
+  <div id="player" class="centralize">
+    <%= render "shared/message_block", type: "info", close: false,
+      message: (resource.state.eql?("converting") ? 'O vídeo está sendo processado.' : 'O vídeo não pode ser processado.'),
+      button: false %>
+  </div>
 <% end %>
