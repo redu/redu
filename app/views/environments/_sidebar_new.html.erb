@@ -6,12 +6,7 @@
 %>
 
 <div class="entity-sidebar">
-  <%= link_to environment, class: "environment-thumbnail" do %>
-    <%# TODO: Usar 160x160 quando estiver gerado. %>
-    <%= image_tag environment.avatar.url(:thumb_140), size: "160x160",
-      alt: environment.name, title: environment.name,
-      class: "environment-thumbnail" %>
-  <% end %>
+  <%= render "sidebar_thumbnail", environment: environment, clickable: false %>
 
   <%= render "bootstrap/breadcrumb_icons", current_entity: environment %>
 

@@ -19,33 +19,6 @@
   color: $gray5;
 }
 
-// Quadro com ambiente e sub-entidade.
-.entity-frame {
-  @include square(160px);
-  @include box-shadow(0 1px 0 $white);
-  @include border-radius;
-  background-color: $gray2;
-  position: relative;
-
-  .environment-thumbnail {
-    @include border-radius;
-    @include box-shadow(0 0 5px $black);
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    z-index: 1;
-  }
-}
-
-.entity-frame-mask {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-}
-
-.entity-frame +
-.breadcrumb-icons { margin-top: 20px; }
-
 .breadcrumb-icons +
 .nav-local { margin-top: 20px; }
 

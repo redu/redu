@@ -7,15 +7,7 @@
 %>
 
 <div class="entity-sidebar">
-  <div class="entity-frame">
-    <%= link_to space.course.environment do %>
-      <%= image_tag space.course.environment.avatar.url(:thumb_90), size: "90x90",
-        alt: space.course.environment.name, title: space.course.environment.name,
-        class: "environment-thumbnail" %>
-    <% end %>
-    <%= content_tag :span, space.name, title: space.name,
-      class: "entity-frame-mask icon-space-white_64 text-replacement show" %>
-  </div>
+  <%= render "environments/sidebar_thumbnail", environment: space.course.environment %>
 
   <%= render "bootstrap/breadcrumb_icons", current_entity: space %>
 
