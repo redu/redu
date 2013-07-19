@@ -3,6 +3,7 @@
 //= require modernizr
 //= require jquery.tipTip.minified
 //= require exercises
+//= require jquery.remotipart
 //= require lazy-load
 //= require jquery.fcbkcomplete.min
 //= require jquery.tokeninput-instant-search
