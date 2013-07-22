@@ -1,0 +1,30 @@
+<%#
+  Item da lista de usuários que finalizaram um exercício.
+
+  Variáveis:
+    users_list_item: o resultado de um usuário.
+    show_grade: se é para mostrar a nota do usuário (default false).
+                Se omitido, mostra quando o usuário finalizou o exercício.
+%>
+
+<% show_grade = false unless local_assigns.has_key? :show_grade %>
+
+<li class="exercise-users-list-item two-columns-wrapper">
+  <%= link_to users_list_item.user, class: "two-columns-column",
+    title: users_list_item.user.display_name do %>
+    <%= image_tag users_list_item.user.avatar.url(:thumb_32), size: "32x32",
+      alt: users_list_item.user.display_name %>
+  <% end %>
+  <div class="two-columns-column">
+    <%= link_to users_list_item.user.display_name,
+      users_list_item.user,
+      title: users_list_item.user.display_name,
+      class: "text-truncate" %>
+
+    <% if show_grade %>
+      <%= content_tag :strong, users_list_item.grade.round(2).to_s, class: "legend show" %>
+    <% else %>
+      <%= content_tag :span, time_ago_in_words(users_list_item.finalized_at), class: "legend show" %>
+    <% end %>
+  </div>
+</li>

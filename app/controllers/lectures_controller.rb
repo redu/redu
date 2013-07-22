@@ -80,7 +80,7 @@ class LecturesController < BaseController
           @result = @lecture.lectureable.result_for(current_user)
           @first_question = @lecture.lectureable.questions.
             first(:conditions => { :position => 1 })
-          render :show_exercise
+          render :show_exercise, layout: 'lectures/show'
         end
       end
       format.js do

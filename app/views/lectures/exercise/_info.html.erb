@@ -1,61 +1,78 @@
-<%# Resultados para o exercício. Locals: exercise, can_manage_lecture
-    (booleano), result (nil se não houver)  %>
-<% dom_class_for_result = result ? "done" : "undone" %>
-<div class="exercise-overview <%= dom_class_for_result %>">
-  <span class="exercise-call exercise-name <%= dom_class_for_result %>"><%= exercise.lecture.name %>:</span>
-  <span class="qty-questions <%= dom_class_for_result %>"><%= exercise.info[:questions_count] %></span>
-  <span class="qty-questions-tip">questões (múltipla ecolha)</span>
-  <span class="qty-questions <%= dom_class_for_result %>"><%= exercise.info[:explained_count] %></span>
-  <span class="qty-questions-tip <%= dom_class_for_result %>">questões explicadas</span>
-  <% if result %>
-    <span class="qty-questions right"><%= result.to_report[:hits] %></span>
-    <span class="qty-questions-tip">questões acertadas</span>
+<%#
+  Resultados para o exercício.
+
+  Variáveis:
+    can_manage_lecture: se é possível gerenciar a aula (booleano).
+    exercise: o exercício.
+    result: o resultado do exercício (nil se não houver).
+%>
+
+<% exercise_status = result ? "exercise-done" : "exercise-undone" %>
+
+<div class="exercise-summaries">
+  <%= content_tag :div, class: "exercise-box exercise-summary exercise-column-left #{ exercise_status }" do %>
+    <%= content_tag :h5, "#{ exercise.lecture.name }:",
+      class: "exercise-summary-title" %>
+
+    <%= content_tag :span, exercise.info[:questions_count],
+      class: "exercise-summary-value" %>
+    <span class="exercise-summary-legend legend">questões (múltipla ecolha)</span>
+
+    <%= content_tag :span, exercise.info[:explained_count],
+      class: "exercise-summary-value" %>
+    <span class="exercise-summary-legend legend">questões explicadas</span>
+
+    <% if result %>
+      <%= content_tag :h5, result.to_report[:hits],
+      class: "exercise-summary-value exercise-summary-value-right" %>
+      <span class="exercise-summary-legend legend">questões acertadas</span>
+    <% end %>
+  <% end %>
+
+  <% if exercise.results.finalized.count > 0 %>
+    <div class="exercise-summary exercise-column-middle exercise-box exercise-box-gray">
+      <h5 class="exercise-summary-title">Quantos já fizeram</h5>
+
+      <%= content_tag :span, exercise.info[:results_count],
+        class: "exercise-summary-value exercise-summary-value-finalized" %>
+      <%= content_tag :span, "pessoa".pluralize(exercise.info[:results_count]),
+        class: "exercise-summary-legend legend" %>
+
+      <h5 class="exercise-summary-title">Média geral</h5>
+      <%= content_tag :span, exercise.info[:average_grade].round(2).to_s,
+        class: "exercise-summary-value exercise-summary-value-average" %>
+
+      <h5 class="exercise-summary-title">Tempo médio</h5>
+      <%= content_tag :span,
+        period_of_time(exercise.info[:average_duration])[:value],
+        class: "exercise-summary-value exercise-summary-value-average" %>
+      <%= content_tag :span,
+        period_of_time(exercise.info[:average_duration])[:unit],
+        class: "exercise-summary-legend legend" %>
+    </div>
+
+    <div class="exercise-summary exercise-column-right exercise-box exercise-box-gray">
+      <h5 class="exercise-summary-title">Recentemente</h5>
+
+      <ul class="exercise-users-list">
+        <%= render partial: "lectures/exercise/users_list_item",
+          collection: exercise.results.finalized.n_recents(3).includes(:user) %>
+      </ul>
+
+      <% if can_manage_lecture %>
+        <h5 class="exercise-summary-title">Melhores notas</h5>
+      <% else %>
+        <h5 class="exercise-summary-title">Compartilhe dúvidas com</h5>
+      <% end %>
+      <ol class="exercise-users-list">
+        <%= render partial: "lectures/exercise/users_list_item",
+          collection: exercise.results.finalized.n_best_grades(3).includes(:user),
+          locals: { show_grade: true } %>
+      </ol>
+    </div>
+  <% else %>
+    <div class="exercise-summary exercise-clean">
+      <h5 class="exercise-note">Este exercício ainda não foi resolvido</h5>
+    </div>
   <% end %>
 </div>
-
-<% if exercise.results.finalized.count > 0 %>
-  <div class="exercise-result">
-    <span class="exercise-call">Quantos já fizeram</span>
-    <span class="qty-users-exercise"><%= exercise.info[:results_count] %></span>
-    <span class="qty-users-tip">pessoas</span>
-    <span class="exercise-call over">Média geral</span>
-    <span class="average"><%= exercise.info[:average_grade].round(2).to_s %></span>
-    <span class="exercise-call over">Tempo médio</span>
-    <span class="average"><%= period_of_time(exercise.info[:average_duration])[:value] %></span>
-    <span class="qty-users-tip"><%= period_of_time(exercise.info[:average_duration])[:unit] %></span>
-  </div>
-
-  <div class="users-exercise">
-    <span class="exercise-call">Recentemente</span>
-    <ul class="list-users-exercise">
-      <% exercise.results.finalized.n_recents(3).includes(:user).each do |result| %>
-        <li>
-          <%= image_tag result.user.avatar(:thumb_32), :size => "32x32", :class => "avatar" %>
-          <%= link_to result.user.display_name, user_path(result.user) %>
-          <span class="qty-list-users-tip"><%= time_ago_in_words(result.finalized_at) %></span>
-        </li>
-      <% end %>
-    </ul>
-
-    <% if can_manage_lecture %>
-      <span class="exercise-call">Melhores notas</span>
-    <% else %>
-      <span class="exercise-call">Compartilhe dúvidas com</span>
-    <% end %>
-    <ol class="list-users-exercise over">
-      <% exercise.results.finalized.n_best_grades(3).includes(:user).each do |result| %>
-        <li>
-          <%= image_tag result.user.avatar(:thumb_32), :size => "32x32", :class => "avatar" %>
-          <%= link_to result.user.display_name, user_path(result.user) %>
-          <% if can_manage_lecture %>
-            <span class="user-grade"><%= result.grade.round(2).to_s %></span>
-          <% end %>
-        </li>
-      <% end %>
-    </ol>
-  </div>
-<% else %>
-  <div class="exercise-clean">
-    <span class="exercise-note">Este exercício ainda não foi resolvido</span>
-  </div>
-<% end %>

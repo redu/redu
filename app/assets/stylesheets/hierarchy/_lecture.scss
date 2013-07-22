@@ -54,3 +54,149 @@
     @include border-bottom-left-radius(0);
   }
 }
+
+
+// Exercício.
+// ==========================================================================
+
+.exercise-box {
+  @include border-radius;
+  border-width: 1px;
+  border-style: solid;
+  padding: 20px 10px;
+}
+
+.exercise-box-gray {
+  border-color: $gray4;
+  background-color: $gray1;
+}
+
+.start-exercise {
+  padding: 30px 0;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.exercise-button {
+  & +
+  & { margin-left: 10px; }
+}
+
+.exercise-summary-title +
+.exercise-summary-legend,
+.exercise-summary-title +
+.exercise-summary-value,
+.exercise-summary-legend +
+.exercise-summary-value,
+.exercise-summary-title +
+.exercise-users-list { margin-top: 10px; }
+
+.exercise-summary-legend +
+.exercise-summary-title,
+.exercise-summary-value +
+.exercise-summary-title,
+.exercise-users-list +
+.exercise-summary-title,
+.exercise-box +
+.exercise-summaries { margin-top: 20px; }
+
+.exercise-summary-value {
+  font: 100 58px/57px $museo-sans;
+  display: block;
+}
+
+.exercise-summary-value-finalized { color: $blue2; }
+
+.exercise-summary-value-average { color: $gray6; }
+
+.exercise-summary-value-right { color: $green2; }
+
+.exercise-summary-legend { font-size: 13px; }
+
+.exercise-done {
+  background-image: linear-gradient(45deg, $green1 0%, $white 50%, $green1 100%);
+  border-color: $green2;
+  color: $green4;
+}
+
+.exercise-undone {
+  background-image: linear-gradient(45deg, $orange1 0%, $white 50%, $orange1 100%);
+  border-color: $orange3;
+  color: $orange4;
+}
+
+$exercise-summary-height: 375px;
+$exercise-summary-spacing: 20px;
+$exercise-summary-quantity: 3;
+
+.exercise-summaries {
+  overflow: hidden;
+
+  .exercise-summary { min-height: $exercise-summary-height; }
+}
+
+.exercise-summary {
+  @include box-sizing;
+  float: left;
+  text-align: center;
+
+  & +
+  & { margin-left: $exercise-summary-spacing; }
+}
+
+.exercise-column-left {
+  @include calc("width", "(100% - #{$exercise-summary-spacing} * (#{$exercise-summary-quantity} - 1)) * 0.27", 183px);
+}
+
+.exercise-column-middle {
+  @include calc("width", "(100% - #{$exercise-summary-spacing} * (#{$exercise-summary-quantity} - 1)) * 0.35", 237px);
+}
+
+.exercise-column-right {
+  @include calc("width", "(100% - #{$exercise-summary-spacing} * (#{$exercise-summary-quantity} - 1)) * 0.38", 258px);
+}
+
+.exercise-clean {
+  @include calc("width", "(100% - #{$exercise-summary-spacing}) * 0.73", 510px);
+}
+
+.exercise-note {
+  line-height: $exercise-summary-height;
+  color: $gray6;
+}
+
+$exercise-users-list-item-spacing: 10px;
+$exercise-users-list-item-height: 32px;
+$exercise-users-list-item-quantity: 3;
+
+.exercise-users-list {
+  margin: 0;
+  list-style: none;
+  text-align: left;
+  height: $exercise-users-list-item-height * $exercise-users-list-item-quantity + $exercise-users-list-item-spacing * ($exercise-users-list-item-quantity - 1);
+}
+
+.exercise-users-list-item {
+  & +
+  & { margin-top: $exercise-users-list-item-spacing; }
+}
+
+.exercise-summary-title +
+.exercise-review-scores { margin-top: 15px; }
+
+.exercise-review-scores {
+  margin: 0;
+  list-style: none;
+  color: $gray5;
+}
+
+.exercise-review-score {
+  float: right;
+  text-align: center;
+  width: 75px;
+}
+
+.exercise-summary-user {
+  text-align: left;
+  margin-bottom: 40px;
+}

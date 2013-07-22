@@ -1,26 +1,47 @@
-<div class="review-score">
-  <span class="exercise-call">Sua pontuação:</span>
-  <ul>
-    <li>
-      <span class="score-type">Acertos</span>
-      <span class="score-value"><%= result.to_report[:hits] %></span>
+<%#
+  Pontuação do aluno no exercício.
+
+  Variáveis:
+    result: o resultado do exercício.
+%>
+
+<div class="exercise-summary exercise-column-middle">
+  <h5 class="exercise-summary-title">Sua pontuação:</h5>
+  <ul class="exercise-review-scores text-left">
+    <li class="clearfix">
+      <h5>
+        Acertos
+        <%= content_tag :span, result.to_report[:hits],
+          class: "exercise-review-score" %>
+      </h5>
     </li>
-    <li>
-      <span class="score-type">Erros</span>
-      <span class="score-value"><%= result.to_report[:misses] %></span>
+    <li class="clearfix">
+      <h5>
+        Erros
+        <%= content_tag :span, result.to_report[:misses],
+          class: "exercise-review-score" %>
+      </h5>
     </li>
-    <li>
-      <span class="score-type">Não marcadas</span>
-      <span class="score-value"><%= result.to_report[:blanks] %></span>
+    <li class="clearfix">
+      <h5>
+        Não marcadas
+        <%= content_tag :span, result.to_report[:blanks],
+          class: "exercise-review-score" %>
+      </h5>
     </li>
-    <li>
-      <span class="score-type">Tempo</span>
-      <span class="score-value"><%= detailed_period_of_time(result.to_report[:duration]) %></span>
+    <li class="clearfix">
+      <h5>
+        Tempo
+        <%= content_tag :span,
+          detailed_period_of_time(result.to_report[:duration]),
+          class: "exercise-review-score" %>
+      </h5>
     </li>
   </ul>
 </div>
 
-<div class="review-grade">
-  <span class="exercise-call">Sua nota:</span>
-  <span class="exercise-grade"><%= result.to_report[:grade].round(2) %></span>
+<div class="exercise-summary exercise-column-right">
+  <h5 class="exercise-summary-title">Sua nota:</h5>
+  <%= content_tag :span, result.to_report[:grade].round(2),
+    class: "exercise-summary-value exercise-summary-value-right" %>
 </div>
