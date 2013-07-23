@@ -7,7 +7,7 @@
     result: o resultado do exercício (nil se não houver).
 %>
 
-<%= questions_review = capture do %>
+<% questions_review = capture do %>
   <%= link_to "Rever questões",
     exercise_question_path(exercise, first_question),
     class: "exercise-button button-primary icon-exercise-white_blue_16_18-before" %>
