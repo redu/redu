@@ -16,7 +16,7 @@
   <div class="nav-local-balloon">
     <span class="nav-local-balloon-arrow icon-arrow-up-balloon-gray_20_8"></span>
     <span class="nav-local-balloon-title">Você na disciplina:</span>
-    <%= render "spaces/lectures_progress", space: space %>
+    <%= render "spaces/lectures_progress", space: space, user: user %>
     <div class="nav-local-separator"></div>
     <% user_comments = Activity.from_hierarchy(space).where(user_id: user.id).count %>
     <%= content_tag :span, "Comentários: #{ user_comments }",

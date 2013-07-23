@@ -626,6 +626,10 @@ class User < ActiveRecord::Base
     self.birth_localization.blank? && self.localization.blank?
   end
 
+  def done_asset_reports
+    self.asset_reports.done
+  end
+
   protected
 
   # Retorna true ou false baseado se o humanizer está ou não habilitado.

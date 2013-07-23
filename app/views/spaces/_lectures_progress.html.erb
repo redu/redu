@@ -3,11 +3,11 @@
 
   Variáveis:
     space: a disciplina.
+    user: o usuário.
 %>
 
 <div class="lectures-progress">
-  <%# TODO: Calcular todas as aulas finalizadas na disciplina. %>
-  <% done_lectures = 0 %>
+  <% done_lectures = space.lectures.finalized_by(user).count %>
   <% percentage = 0 %>
   <% total_lectures = space.lectures.count %>
   <% if total_lectures > 0 %>
