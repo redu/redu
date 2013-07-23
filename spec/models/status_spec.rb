@@ -69,6 +69,24 @@ describe Status do
         Status.from_hierarchy(@lectures.first).to_set.should \
           be_subset(@lecture_statuses.to_set)
       end
+
+      context "when there are invisible subjects" do
+        let(:lecture) { @lectures.first }
+        let!(:invisible_subject) do
+          lecture.subject.update_attributes(visible: false)
+          lecture.subject
+        end
+        let(:invisible_statuses) do
+          @lecture_statuses.select do |s|
+            invisible_subject.lectures.include? s.statusable
+          end
+        end
+
+        it "should retrieve only visible statuses (from visible subjects)" do
+          expect(Status.from_hierarchy(@spaces.first).to_set).to_not \
+            be_superset(invisible_statuses.to_set)
+        end
+      end
     end
 
     context "from lecture" do
