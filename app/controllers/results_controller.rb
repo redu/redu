@@ -48,7 +48,7 @@ class ResultsController < BaseController
       includes(:user, :choices, exercise: :questions)
 
     respond_to do |format|
-      format.html { render 'results/admin/index' }
+      format.html { render 'results/admin/index', layout: 'lectures/show' }
     end
   end
 

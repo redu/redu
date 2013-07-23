@@ -200,3 +200,21 @@ $exercise-users-list-item-quantity: 3;
   text-align: left;
   margin-bottom: 40px;
 }
+
+.exercise-report-table {
+  th,
+  td { text-align: center; }
+}
+.exercise-report-column-large { width: 40%; }
+
+.exercise-report-column-medium { width: 20%; }
+
+.exercise-report-column-small { width: 10%; }
+
+.exercise-report-neutral { color: $gray5; }
+
+.exercise-report-grade { color: $gray6; }
+
+.exercise-report-hits { color: $green4; }
+
+.exercise-report-misses { color: $red4; }

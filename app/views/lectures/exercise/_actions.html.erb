@@ -24,21 +24,9 @@
 
   <% elsif result %>
     <div class="exercise-summary exercise-column-left">
-      <div class="exercise-summary-user two-columns-wrapper">
-        <%= link_to result.user, class: "two-columns-column",
-          title: result.user.display_name do %>
-          <%= image_tag result.user.avatar.url(:thumb_32), size: "32x32",
-            alt: result.user.display_name %>
-        <% end %>
-        <div class="two-columns-column">
-          <%= link_to result.user.display_name,
-            result.user,
-            title: result.user.display_name,
-            class: "text-truncate" %>
-          <%= content_tag :span, time_ago_in_words(result.finalized_at),
-            class: "legend show" %>
-        </div>
-      </div>
+      <%= render "users/thumb_legend", user: result.user,
+        legend: time_ago_in_words(result.finalized_at),
+        wrapper_class: "exercise-summary-user" %>
 
       <%= questions_review %>
     </div>
