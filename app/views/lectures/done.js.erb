@@ -6,5 +6,5 @@
 
 $(".nav-local-balloon-is-lecture-completed").toggleClass("icon-correct-green_16_18-after");
 
-$(".lectures-progress").replaceWith($('<%= escape_javascript render "spaces/lectures_progress", space: @space %>'));
+$(".lectures-progress").replaceWith($('<%= escape_javascript render "spaces/lectures_progress", space: @space, user: current_user %>'));
 $(".subjects-progress").replaceWith($('<%= escape_javascript render "spaces/subjects_progress", space: @space %>'));
