@@ -2,3 +2,6 @@
   <%= content_tag :iframe, nil, id: "page-iframe", class: "lecture-iframe",
     src: page_content_space_subject_lecture_path(@space, @subject, @lecture) %>
 </div>
+
+<%= render "statuses/wall", status: @status, statusable: @lecture,
+  statuses: @statuses, placeholder: "Comente nesta aula." %>

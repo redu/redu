@@ -1,3 +1,6 @@
 <div class="lecture-video">
   <%= render "lectures/player", seminar: @lecture.lectureable %>
 </div>
+
+<%= render "statuses/wall", status: @status, statusable: @lecture,
+  statuses: @statuses, placeholder: "Comente nesta aula." %>

@@ -8,3 +8,6 @@
     });
   <% end %>
 </div>
+
+<%= render "statuses/wall", status: @status, statusable: @lecture,
+  statuses: @statuses, placeholder: "Comente nesta aula." %>
