@@ -45,11 +45,11 @@
   <div class="clearfix">
     <% if current != first %>
       <%= link_to "< primeira", exercise_question_path(exercise, first),
-        :class => "pull-left link-secondary" %>
+        class: "pull-left link-secondary" %>
     <% end %>
     <% if current != last %>
       <%= link_to "> última", exercise_question_path(exercise, last),
-        :class => "pull-right link-secondary" %>
+        class: "pull-right link-secondary" %>
     <% end %>
   </div>
 </div>

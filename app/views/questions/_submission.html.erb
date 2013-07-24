@@ -14,14 +14,14 @@
     <li class="exercise-question-button-item">
       <%= link_to "Anterior",
         exercise_question_path(exercise, question.previous_item),
-        :class => "exercise-question-button button-default" %>
+        class: "exercise-question-button button-default" %>
     </li>
   <% end %>
   <% if question != last %>
     <li class="exercise-question-button-item">
       <%= link_to "Próxima",
         exercise_question_path(exercise, question.next_item),
-        :class => "exercise-question-button button-default" %>
+        class: "exercise-question-button button-default" %>
     </li>
   <% end %>
   <% unless review %>
