@@ -20,7 +20,7 @@ class QuestionsController < BaseController
     end
 
     respond_to do |format|
-      format.html
+      format.html { render layout: 'lectures/show' }
     end
   end
 

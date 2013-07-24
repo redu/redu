@@ -218,3 +218,81 @@ $exercise-users-list-item-quantity: 3;
 .exercise-report-hits { color: $green4; }
 
 .exercise-report-misses { color: $red4; }
+
+.exercise-statement +
+.exercise-choices,
+.exercise-choices +
+.exercise-question-button-list { margin-top: 10px; }
+
+.exercise-choices {
+  margin: 0;
+  list-style: none;
+}
+
+.exercise-choice {
+  padding: 8px 10px;
+  color: $gray6;
+
+  &:nth-child(odd) {
+    @include border-radius(3px);
+    background-color: $gray1;
+  }
+}
+
+.exercise-choice-order {
+  color: $gray4;
+  text-transform: uppercase;
+  margin-right: 5px;
+}
+
+.exercise-question-button-list {
+  margin: 0;
+  list-style: none;
+  text-align: right;
+}
+
+.exercise-question-button-item {
+  display: inline-block;
+
+  & +
+  & { margin-left: 5px; }
+}
+
+.exercise-question-navigation +
+.exercise-statement { margin-top: 35px; }
+
+.exercise-question-navigation { padding: 10px; }
+
+.exercise-question-navigation-list {
+  margin: 0;
+  list-style: none;
+  text-align: center;
+}
+
+.exercise-question-navigation-item {
+  display: inline-block;
+  @include heading;
+  width: 50px;
+  padding: 5px 0;
+
+  a {
+    &,
+    &:hover { color: $gray5; }
+  }
+}
+
+.exercise-question-navigation-item-current {
+  $color: $blue2;
+  $box-shadow: 0 0 2px 1px $color,
+               0 0 0 1px $white inset,
+               0 0 2px 1px $color inset;
+  @include box-shadow($box-shadow);
+  @include border-radius;
+}
+
+.exercise-question-navigation-item-answered {
+  a {
+    &,
+    &:hover { color: $blue3; }
+  }
+}
