@@ -135,7 +135,6 @@ class User < ActiveRecord::Base
 
   acts_as_authentic do |c|
     c.crypto_provider = CommunityEngineSha1CryptoMethod
-
     c.validate_login_field = false
     c.validate_password_field = false
     c.validate_email_field = false
@@ -371,8 +370,6 @@ class User < ActiveRecord::Base
     # (authlogic)
     return false unless created_at
     ( activated_at.nil? and (created_at < (Time.now - 30.days))) ? false : true
-    # activation_code.nil? && !activated_at.nil?
-    # self.activated_at
   end
 
   def encrypt(password)
