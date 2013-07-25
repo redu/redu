@@ -1,25 +1,23 @@
-<div class="breadcrumbless-wrapper clearfix">
-  <div class="span3">
-    <%= render "users/profile_sidebar", user: @user %>
-  </div>
-  <div class="span10">
-    <div class="content-area">
-      <div class="content-body">
-        <% if (can? :manage, @user) or (can? :view_mural, @user) %>
-          <%= render "statuses/wall", status: @status, statusable: @user,
-            placeholder: "Compartilhe algo com seus Amigos através de seu mural",
-            statuses: @statuses %>
-        <% else %>
-          <%= render "shared/empty_message",
-            icon_message: "Mural disponível apenas para Amigos",
-            icon_class: "icon-private-gray_128_130",
-            message: "Este mural está disponível apenas para Amigos." %>
-        <% end %>
-      </div>
+<div class="span3">
+  <%= render "users/profile_sidebar", user: @user %>
+</div>
+<div class="span10">
+  <div class="content-area">
+    <div class="content-body">
+      <% if (can? :manage, @user) or (can? :view_mural, @user) %>
+        <%= render "statuses/wall", status: @status, statusable: @user,
+          placeholder: "Compartilhe algo com seus Amigos através de seu mural",
+          statuses: @statuses %>
+      <% else %>
+        <%= render "shared/empty_message",
+          icon_message: "Mural disponível apenas para Amigos",
+          icon_class: "icon-private-gray_128_130",
+          message: "Este mural está disponível apenas para Amigos." %>
+      <% end %>
     </div>
   </div>
-  <div class="span3">
-    <%= render "users/secondary_sidebar", user: @user,
-      subscribed_courses_count: @subscribed_courses_count %>
-  </div>
+</div>
+<div class="span3">
+  <%= render "users/secondary_sidebar", user: @user,
+    subscribed_courses_count: @subscribed_courses_count %>
 </div>

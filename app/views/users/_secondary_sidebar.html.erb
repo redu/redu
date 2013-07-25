@@ -51,7 +51,7 @@
       <%# Se os usuário forem amigos, opção para escrever mensagem. %>
       <% if is_friend %>
         <li class="profile-action profile-action-remove-contact">
-          <%= link_to "Escrever Mensagem", new_user_message_path(current_user),
+          <%= link_to "Enviar mensagem", new_user_message_path(current_user),
             remote: true,
             class: 'button-primary icon-message-new-white_blue_16_18-before' %>
         </li>
