@@ -20,13 +20,5 @@ body { height: 100%; }
 
 .footer-pusher { height: $footer-height; }
 
-// Encapsulador das colunas quando não há breadcrumb mini superior.
-.breadcrumbless-wrapper {
-  padding-top: 20px;
-
-  .home-left-sidebar,
-  .content-area,
-  .home-right-sidebar { padding-top: 0; }
-}
 
 .content-body .content-section:last-child { padding-bottom: 20px; }

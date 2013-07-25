@@ -1,29 +1,23 @@
   <div class="span3">
-    <%= render :partial => "users/left_sidebar",
-      :locals => { :user => @user } %>
+    <%= render "users/left_sidebar", user: @user %>
   </div>
   <div class="span10">
     <div class="content-area">
-      <%= render :partial => "users/breadcrumb_configurations",
-        :locals => { :user => @user } %>
       <div class="content-body">
         <div class="content-section">
           <%# Cabeçalho %>
-          <%= render "bootstrap/header_breadcrumb", :header_breadcrumb_items => [
-            { :name => "Configurações", :link => edit_user_path(@user), :classes => "icon-manage-gray_32_34-before" },
-            { :name => "Conta", :link => account_user_path(@user) } ] %>
+          <%= render "bootstrap/header_breadcrumb", header_breadcrumb_items: [
+            { name: "Configurações", link: edit_user_path(@user), classes: "icon-manage-gray_32_34-before" },
+            { name: "Conta", link: account_user_path(@user) } ] %>
         </div>
         <%# Abas e sub-abas %>
         <%= new_tabs(:new_users) %>
-        <%= render :partial => "users/form_account",
-          :locals => { :user => @user } %>
+        <%= render "users/form_account", user: @user %>
 
       </div>
-      <%= render :partial => "users/breadcrumb_configurations",
-        :locals => { :user => @user } %>
+      <%= render "users/breadcrumb_configurations", user: @user %>
     </div>
   </div>
   <div class="span3">
-    <%= render :partial => "users/sidebar_account",
-      :locals => { :user => @user } %>
+    <%= render "users/sidebar_account", user: @user %>
   </div>
