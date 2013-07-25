@@ -236,13 +236,11 @@ $exercise-users-list-item-quantity: 3;
 }
 
 .exercise-choice {
+  @include border-radius(3px);
   padding: 8px 10px;
   color: $gray6;
 
-  &:nth-child(odd) {
-    @include border-radius(3px);
-    background-color: $gray1;
-  }
+  &:nth-child(odd) { background-color: $gray1; }
 }
 
 .exercise-choice-order {
@@ -303,8 +301,49 @@ $exercise-users-list-item-quantity: 3;
   }
 }
 
+.exercise-question-navigation-item-right {
+  a {
+    &,
+    &:hover { color: $green3; }
+  }
+}
+
+.exercise-question-navigation-item-wrong {
+  a {
+    &,
+    &:hover { color: $red3; }
+  }
+}
+
 .exercise-question-navigation +
 .exercise-form-submission { margin-top: 80px; }
 
 .exercise-note +
 .exercise-form-submission-submit { margin-top: 40px; }
+
+.exercise-statement +
+.exercise-justification,
+.exercise-justification +
+.exercise-choices { margin-top: 40px; }
+
+.exercise-justification { padding-left: 55px; }
+
+.exercise-choice-right {
+  // !important para sobrescrever o nth-child(odd).
+  background-color: $green1 !important;
+
+  .exercise-choice-order { color: $green3; }
+}
+
+.exercise-choice-selected {
+  color: $black;
+
+  .exercise-choice-order {
+    font-weight: bold;
+    color: $black;
+  }
+}
+
+.exercise-choice-wrong {
+  .exercise-choice-order { margin-right: 23px; }
+}

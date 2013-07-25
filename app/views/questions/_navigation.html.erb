@@ -25,9 +25,8 @@
       <% end %>
       <% current_class = (question == current) ? "exercise-question-navigation-item-current" : "" %>
       <% if review %>
-        <li class="exercise-question-navigation-item <%= current_class %> <%= right_or_wrong(choice) %>">
-          <%= question_link %>
-        </li>
+        <%= content_tag :li, question_link,
+          class: "exercise-question-navigation-item #{ current_class } #{ right_or_wrong_class(choice) }" %>
       <% else %>
         <% question_answered_class = choice ? "exercise-question-navigation-item-answered" : "" %>
         <%= content_tag :li, question_link,
@@ -36,7 +35,7 @@
     <% end %>
     <% if current != last %>
       <li class="exercise-question-navigation-item">
-        <% if  next_range = current.item_at_offset(4) %>
+        <% if next_range = current.item_at_offset(4) %>
           <%= link_to "...", exercise_question_path(exercise, next_range) %>
         <% end %>
       </li>
