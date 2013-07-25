@@ -6,7 +6,7 @@
     currentQuestionClass: ".exercise-question-navigation-item-current",
     answeredQuestionClass: "exercise-question-navigation-item-answered"
   };
-  config.disableOnSaveClasses = ".exercise-question-button, .exercise-question-navigation a, " + config.radioClass;
+  config.disableOnSaveClasses = ".exercise-question-button, .exercise-question-navigation a, :not(:checked(" + config.radioClass + "))";
 
   // Evita que links funcionem enquanto desabilitados.
   $(document).on("click", config.formClass + ' [disabled="disabled"]', function(e) {

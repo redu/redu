@@ -161,8 +161,14 @@ $exercise-summary-quantity: 3;
 }
 
 .exercise-note {
-  line-height: $exercise-summary-height;
+  @include heading(5);
   color: $gray6;
+  display: block;
+
+  & +
+  & { margin-top: 5px; }
+
+  .exercise-summaries & { line-height: $exercise-summary-height; }
 }
 
 $exercise-users-list-item-spacing: 10px;
@@ -296,3 +302,9 @@ $exercise-users-list-item-quantity: 3;
     &:hover { color: $blue3; }
   }
 }
+
+.exercise-question-navigation +
+.exercise-form-submission { margin-top: 80px; }
+
+.exercise-note +
+.exercise-form-submission-submit { margin-top: 40px; }
