@@ -6,7 +6,8 @@
 %>
 
 <div class="entity-sidebar">
-  <%= render "sidebar_thumbnail", environment: environment, clickable: false %>
+  <%= render "environments/sidebar_thumbnail", environment: environment,
+    clickable: false %>
 
   <%= render "bootstrap/breadcrumb_icons", current_entity: environment %>
 

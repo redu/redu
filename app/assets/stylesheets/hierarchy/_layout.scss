@@ -4,20 +4,14 @@
 
 
 // Encapsulador.
-.entity-wrapper { padding: 14px 0 20px; }
+.entity-wrapper { padding: 20px 0; }
 
 
 // Barra lateral.
 // ==========================================================================
 
 // Encapsulador.
-.entity-sidebar {
-  $breadcrumb-mini-height: 18px;
-  $breadcrumb-mini-n-content-body-margin: 10px;
-  $padding-top: $breadcrumb-mini-height + $breadcrumb-mini-n-content-body-margin;
-  padding: $padding-top 0 20px;
-  color: $gray5;
-}
+.entity-sidebar { color: $gray5; }
 
 .breadcrumb-icons +
 .nav-local { margin-top: 20px; }

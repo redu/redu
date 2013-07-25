@@ -5,12 +5,11 @@
 <% end %>
 
 <div class="span3">
-  <%= render "sidebar_new", course: @course %>
+  <%= render "courses/sidebar_new", course: @course %>
 </div>
 <div class="span13">
-  <%= render "breadcrumbs_new", course: @course %>
   <div class="content-body">
-    <%= render "header_new", course: @course,
+    <%= render "courses/header_new", course: @course,
       responsibles_associations: @responsibles_associations %>
 
     <% if can? :entity, @course %>
@@ -72,5 +71,5 @@
       </div>
     </div>
   </div>
-  <%= render "breadcrumbs_new", course: @course %>
+  <%= render "courses/breadcrumbs_new", course: @course %>
 </div>

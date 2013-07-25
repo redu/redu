@@ -34,7 +34,7 @@
   <%= render "lectures/player_placeholder" %>
 <% else %>
   <div id="player" class="centralize">
-    <%= render "shared/message_block", type: "info", close: false,
+    <%= render "bootstrap/message_block", type: "info", close: false,
       message: (resource.state.eql?("converting") ? 'O vídeo está sendo processado.' : 'O vídeo não pode ser processado.'),
       button: false %>
   </div>

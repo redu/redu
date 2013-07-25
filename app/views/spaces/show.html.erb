@@ -1,12 +1,11 @@
 <% content_for :container_class do "entity-wrapper" end %>
 
 <div class="span3">
-  <%= render "sidebar_new", space: @space, user: current_user %>
+  <%= render "spaces/sidebar_new", space: @space, user: current_user %>
 </div>
 <div class="span13">
-  <%= render "breadcrumbs_new", space: @space %>
   <div class="content-body">
-    <%= render "header", space: @space %>
+    <%= render "spaces/header", space: @space %>
 
     <div class="content-section">
       <h3 class="header-breadcrumb-big icon-subject-gray_32_34-before">Aulas</h3>
@@ -27,5 +26,5 @@
       <%= paginate @subjects, theme: "new_endless" %>
     <% end %>
   </div>
-  <%= render "breadcrumbs_new", space: @space %>
+  <%= render "spaces/breadcrumbs_new", space: @space %>
 </div>
