@@ -2,8 +2,8 @@
 require 'spec_helper'
 
 module StatusService
-  describe FromHierarchyStatusQuery do
-    subject { FromHierarchyStatusQuery.new(space) }
+  describe AggregatedQuery do
+    subject { described_class.new(space) }
     let(:space) { FactoryGirl.create(:space) }
 
     describe "#count" do
@@ -20,7 +20,7 @@ module StatusService
 
       context "when a specific relation is passed" do
         subject do
-          FromHierarchyStatusQuery.new(space, Status.where(text: "Cool"))
+          described_class.new(space, Status.where(text: "Cool"))
         end
 
         let!(:status) do
@@ -47,7 +47,7 @@ module StatusService
 
       context "when a specific relation is passed" do
         subject do
-          FromHierarchyStatusQuery.new(space, Status.where(text: "Cool"))
+          described_class.new(space, Status.where(text: "Cool"))
         end
 
         let!(:status) do

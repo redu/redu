@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 module StatusService
-  class FromHierarchyStatusQuery
+  class AggregatedQuery
     attr_reader :relation
 
     def initialize(entity, relation=Status)
