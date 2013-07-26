@@ -3,6 +3,13 @@
 // ==========================================================================
 
 
+.lecture-header-title-neutral { color: $gray5; }
+
+.lecture-header-title {
+  float: left;
+  max-width: 91%;
+}
+
 .lecture-video { padding: 10px 0; }
 
 .lecture-iframe {

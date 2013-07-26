@@ -19,8 +19,18 @@
       title: "Remover esta aula" %>
   <% end %>
 
-  <%# TODO: Cor diferente para numeração de aula e ícone. %>
-  <%= content_tag :h2, "#{ lecture.position }. #{ lecture.name }" %>
+  <%= content_tag :h6, lecture.subject.name, class: "lecture-header-title-neutral" %>
+
+  <div class="clearfix">
+    <% lecture_position = content_tag :span, "#{ lecture.position }.",
+      class: "lecture-header-title-neutral" %>
+    <%= content_tag :h2, lecture_position + " " + lecture.name,
+      class: "lecture-header-title" %>
+
+    <% lecture_type_name = t lecture.lectureable_type %>
+    <%= content_tag :span, lecture_type_name, title: lecture_type_name,
+      class: "pull-right text-replacement icon-#{ lecture_type_class(lecture) }-gray_32_34" %>
+  </div>
 
   <%= content_tag :time, time_ago_in_words(lecture.created_at),
     class: "legend", title: l(lecture.created_at, format: :time_ago) %>
