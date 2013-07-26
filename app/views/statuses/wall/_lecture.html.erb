@@ -13,7 +13,7 @@
     <div class="context">
       <%= link_to item.statusable.name,
         space_subject_lecture_path(item.statusable.subject.space, item.statusable.subject, item.statusable),
-        class: "text-replacement context-icon icon-subject-gray_32_34-before" %>
+        class: "text-replacement context-icon icon-lecture-gray_32_34-before" %>
       <%= content_tag :span,
         entity_hierarchy_breacrumb_links(item.statusable.subject),
         class: "legend" %>
@@ -30,7 +30,7 @@
             confirm: "Ao remover o comentário, todas as respostas serão apagadas. Deseja removê-lo?" %>
         <% end %>
         <%= render "statuses/user_name", user: item.user, entity: item.statusable %>
-        <span class="action">comentou na Aula <%= link_to item.statusable.name, space_subject_lecture_path(item.statusable.subject.space, item.statusable.subject, item.statusable), class: "icon-subject-gray_16_18-before" %></span>
+        <span class="action">comentou na Aula <%= link_to item.statusable.name, space_subject_lecture_path(item.statusable.subject.space, item.statusable.subject, item.statusable), class: "icon-lecture-gray_16_18-before" %></span>
         <%= render "statuses/timeago", status: item, timestamp: item.created_at %>
       </div>
     </div>
