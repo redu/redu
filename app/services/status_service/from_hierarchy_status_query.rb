@@ -1,6 +1,8 @@
 # -*- encoding : utf-8 -*-
 module StatusService
   class FromHierarchyStatusQuery
+    attr_reader :relation
+
     def initialize(entity, relation=Status)
       @entity = entity
       @relation = relation.where(build_conditions)
@@ -14,26 +16,22 @@ module StatusService
       relation.find_each(&block)
     end
 
-    # Constrói as condições de busca de status dentro da hierarquia. Aceita
-    # Course, Space e Lecture como raiz
+    protected
+
+    attr_reader :entity
+
     def build_conditions
       statusables = statuables_on_hierarchy(entity)
-      conditions = []
+      statusables.reject! { |_, instances| instances.empty? }
 
-      statusables.each do |key, val|
-        next if val.empty?
-
-        ids = val.collect { |s| s.id }.join(',')
-        conditions << "(statusable_type LIKE '#{key.to_s.classify}' AND " + \
+      conditions = statusables.map do |klass_key, instances|
+        ids = instances.map(&:id).join(',')
+        "(statusable_type LIKE '#{klass_key.to_s.classify}' AND " \
           "statusable_id IN (#{ids}))"
       end
 
-      return conditions.join(" OR ")
+      conditions.join(" OR ")
     end
-
-    protected
-
-    attr_reader :entity, :relation
 
     def statuables_on_hierarchy(root)
       groups = { :courses => [], :spaces => [], :lectures => [] }

@@ -26,15 +26,15 @@ class Status < ActiveRecord::Base
   scope :not_compound_log, where("statuses.type NOT LIKE ?", "CompoundLog")
 
   scope :from_hierarchy, lambda { |c|
-    where(StatusService::FromHierarchyStatusQuery.build_conditions(c))
-    .includes(:user).order("updated_at DESC")
+    StatusService::FromHierarchyStatusQuery.
+      new(c, includes(:user).order("updated_at DESC")).relation
   }
 
   # Não utilizar o recent em consultas sem include e posteriormente,
   # na view, fazer as consultas
   scope :recent_from_hierarchy, lambda { |c|
-    where(StatusService::FromHierarchyStatusQuery.build_conditions(c)).
-      where('created_at > ?', 1.week.ago)
+    StatusService::FromHierarchyStatusQuery.
+      new(c, where('created_at > ?', 1.week.ago)).relation
   }
 
   # Retorna apenas status visíveis
