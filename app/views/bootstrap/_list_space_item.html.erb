@@ -34,7 +34,7 @@
       <div class="list-space-stat">
         <span class="list-space-stat">
           <%= link_to "#{ t("hierarchy.lecture", count: list_space_item.lectures.count) }:",
-            list_space_item, class: "icon-subject-lightblue_16_18-before" %>
+            list_space_item, class: "icon-lecture-lightblue_16_18-before" %>
           <%= list_space_item.lectures.count %>
 
           <% new_lectures = list_space_item.lectures.recent.count %>

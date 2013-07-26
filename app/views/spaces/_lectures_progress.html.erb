@@ -15,7 +15,7 @@
   <% end %>
   <%= content_tag :span,
     "#{ t("hierarchy.lecture", count: total_lectures) }: #{ done_lectures } / #{ total_lectures }",
-    class: "nav-local-balloon-item icon-subject-gray_16_18-before" %>
+    class: "nav-local-balloon-item icon-lecture-gray_16_18-before" %>
   <span class="nav-local-balloon-item">
     <%= render "bootstrap/progress_bar", percentage: percentage, size: "medium",
       thickness: "thick", show_percentage: true %>

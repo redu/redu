@@ -10,7 +10,7 @@ module LecturesNavigation
 
     sidebar.item :content, 'Aulas', @lecture.subject.space,
       highlights_on: action_matcher({ 'lectures' => 'show' }),
-      class: "#{ item_class } icon-subject_16_18-before",
+      class: "#{ item_class } icon-lecture_16_18-before",
       link: { class: link_class }
     sidebar.item :lecture, "#{ @lecture.position }. #{ @lecture.name }",
       class: "#{ item_class } icon-arrow-right-squared-gray_16_18-before",

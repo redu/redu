@@ -55,13 +55,8 @@ module LecturesHelper
 
   # Retorna a classe de ícone dependendo do tipo da aula.
   def lecture_type_class(lecture)
-    case lecture.lectureable_type.to_s.downcase
-    when "document" then "presentation"
-    when "page" then "text-page"
-    when "seminar" then "video"
-    when "api::canvas" then "app"
-    else lecture.lectureable_type.to_s.downcase
-    end
+    type = lecture.lectureable_type.to_s.downcase
+    (type == "api::canvas") ? "app" : type
   end
 
   # Retorna valor numérico (em string) correspondente a se a aula foi finalizada.

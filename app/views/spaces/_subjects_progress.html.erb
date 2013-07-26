@@ -15,7 +15,7 @@
   <% end %>
   <%= content_tag :span,
     "#{ t("hierarchy.subject", count: total_subjects) }: #{ done_subjects } / #{ total_subjects }",
-    class: "nav-local-balloon-item icon-content-gray_16_18-before" %>
+    class: "nav-local-balloon-item icon-subject-gray_16_18-before" %>
   <span class="nav-local-balloon-item">
     <%= render "bootstrap/progress_bar", percentage: percentage, size: "medium",
       thickness: "thick", show_percentage: true %>

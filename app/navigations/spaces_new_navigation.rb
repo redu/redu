@@ -8,7 +8,7 @@ module SpacesNewNavigation
       highlights_on: action_matcher({ 'spaces' => 'show',
                                       'subjects' => 'show',
                                       'lectures' => 'show'}),
-      class: 'icon-subject_16_18-before nav-local-item',
+      class: 'icon-lecture_16_18-before nav-local-item',
       link: { class: 'nav-local-link' }
     sidebar.item :wall, 'Mural', mural_space_path(@space),
       class: 'icon-wall_16_18-before nav-local-item',
