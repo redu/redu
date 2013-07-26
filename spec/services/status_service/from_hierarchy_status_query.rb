@@ -3,9 +3,9 @@ require 'spec_helper'
 
 module StatusService
   describe FromHierarchyStatusQuery do
-    subject { FromHierarchyStatusQuery }
+    subject { FromHierarchyStatusQuery.new }
 
-    describe ".build_conditions" do
+    describe "#build_conditions" do
       let(:users) { FactoryGirl.build_stubbed_list(:user, 2)}
       let(:courses) { FactoryGirl.build_stubbed_list(:course, 2)}
       let(:space) { FactoryGirl.build_stubbed(:space)}
