@@ -3,8 +3,9 @@ require 'spec_helper'
 
 module StatusService
   describe AggregatedQuery do
-    subject { described_class.new(space) }
+    subject { described_class.new(aggregator) }
     let(:space) { FactoryGirl.create(:space) }
+    let(:aggregator) { mock("Aggregator", perform: { spaces: [space] }) }
 
     describe "#count" do
       let!(:statuses) do
@@ -20,7 +21,7 @@ module StatusService
 
       context "when a specific relation is passed" do
         subject do
-          described_class.new(space, Status.where(text: "Cool"))
+          described_class.new(aggregator, Status.where(text: "Cool"))
         end
 
         let!(:status) do
@@ -47,7 +48,7 @@ module StatusService
 
       context "when a specific relation is passed" do
         subject do
-          described_class.new(space, Status.where(text: "Cool"))
+          described_class.new(aggregator, Status.where(text: "Cool"))
         end
 
         let!(:status) do
@@ -58,6 +59,10 @@ module StatusService
           expect { |b| subject.find_each(&b) }.to yield_successive_args(status)
         end
       end
+    end
+
+    it "should be possible to change the aggregator" do
+      expect(subject).to respond_to(:aggregator=)
     end
 
     def status_with_cool_text(statuses)
