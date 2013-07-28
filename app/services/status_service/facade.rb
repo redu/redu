@@ -20,6 +20,10 @@ module StatusService
       answer
     end
 
+    def activities(aggregator)
+      AggregatedQuery.new(aggregator).relation
+    end
+
     private
 
     def answer_service

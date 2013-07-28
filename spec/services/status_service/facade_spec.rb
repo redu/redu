@@ -108,5 +108,26 @@ module StatusService
         end
       end
     end
+
+    describe "#activites" do
+      let(:aggregator) { mock("Aggregator") }
+      let(:aggregated_query) { mock("AggregatedQuery") }
+
+      it "should invoke initialize an AggregatedQuery with aggregator" do
+        aggregated_query.stub(:relation)
+
+        AggregatedQuery.should_receive(:new).with(aggregator).
+          and_return(aggregated_query)
+
+        subject.activities(aggregator)
+      end
+
+      it "should invoke AggregatedQuery#relation" do
+        AggregatedQuery.stub(:new).and_return(aggregated_query)
+
+        aggregated_query.should_receive(:relation).with(no_args())
+        subject.activities(aggregator)
+      end
+    end
   end
 end
