@@ -55,7 +55,7 @@ module Api
       authorize! :read, statusable
 
       statuses = if statusable.is_a?(Space)
-        Status.from_hierarchy(statusable)
+        statusable.activities
       else
         statusable.overview
       end

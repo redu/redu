@@ -55,7 +55,7 @@ class TeacherParticipation
   # Todos os posts do professor naquelas disciplinas + aulas
   def posts_by_space
     # Statuses do curso
-    @statuses = Status.from_hierarchy(@uca.course)
+    @statuses = @uca.course.activities
     posts = @statuses.activity_by_user(@user_id)
 
     # Aulas do curso
