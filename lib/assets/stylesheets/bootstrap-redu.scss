@@ -5804,7 +5804,11 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
 
 .nav-local-balloon-is-lecture-completed {
   font-size: 13px;
-  margin-left: 10px;
+  margin-left: 5px;
+}
+.nav-local-balloon-is-lecture-completed.control-checked {
+  font-weight: bold;
+  color: #5fc080;
 }
 
 .tabs {
@@ -6184,9 +6188,6 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
   margin: 0;
 }
 
-.header-link {
-  font-weight: bold;
-}
 .header-link:hover {
   text-decoration: none;
 }
@@ -6316,8 +6317,8 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
 
 .lecture-data {
   overflow: hidden;
-  margin: 0 20px;
-  padding-bottom: 10px;
+  margin: 0;
+  padding: 20px 20px 10px;
 }
 
 .lecture-authoring {
