@@ -1,22 +1,33 @@
-<tr class="row">
-  <td class="cell cell-400">
-    <div class="course-info icon-course-gray_16_18-before">
-      <%= link_to item_admin.name,
-        environment_course_path(@environment, item_admin),
-        :class => "course-info" %>
-      <span class="course-detail members"><%= item_admin.users.count %> membros</span>
-      <span class="course-detail subject-count"><%= item_admin.spaces.count %> disciplinas</span>
-      <span class="course-detail created-at">criado em <%= l(item_admin.created_at, :format => :admin) %></span>
-    </div>
-  </td>
-  <td class="cell centered-cell">
-    <%= link_to "Editar", edit_environment_course_path(@environment, item_admin),
-      :class => "option icon-manage-gray_8_10-before edit" %>
-  </td>
-  <td class="cell centered-cell">
-    <%= link_to 'Remover', environment_course_path(@environment, item_admin),
-      :confirm => 'Todas as informações dos usuários, disciplinas e dados referente ao curso serão perdidas. Você tem certeza disso?',
+<%#
+  Item da lista de gerenciamento de cursos de um ambiente.
+
+  Variáveis:
+    item_admin: o curso.
+%>
+
+<% environment = item_admin.environment %>
+
+<li class="entity-management-list-item">
+  <div class="entity-management-list-item-cell entity-management-list-item-icon">
+    <span class="icon-course-gray_16_18 show text-replacement">Curso</span>
+  </div>
+  <div class="entity-management-list-item-cell">
+    <%= link_to item_admin.name, environment_course_path(environment, item_admin) %>
+    <%= content_tag :span, pluralize(item_admin.users.count, "membro"),
+      class: "legend show" %>
+    <%= content_tag :span, pluralize(item_admin.spaces.count, "disciplina"),
+      class: "legend show" %>
+    <%= content_tag :span, "criado em #{ l(item_admin.created_at, :format => :admin) }",
+      class: "legend show" %>
+  </div>
+  <div class="entity-management-list-item-cell entity-management-list-item-action">
+    <%= link_to "Editar", edit_environment_course_path(environment, item_admin),
+      :class => "icon-manage-lightblue_8_10-before link-secondary" %>
+  </div>
+  <div class="entity-management-list-item-cell entity-management-list-item-action">
+    <%= link_to "Remover",  environment_course_path(environment, item_admin),
+      :confirm => "Todas as informações dos usuários, disciplinas e dados referente ao curso serão perdidas. Você tem certeza disso?",
       :method => :delete,
-      :class => "option icon-delete-gray_8_10-before delete" %>
-  </td>
-</tr>
+      :class => "icon-close-gray_8_10-before link-secondary" %>
+  </div>
+</li>

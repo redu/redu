@@ -29,3 +29,50 @@
   float: left;
   margin-right: 5px;
 }
+
+
+// Lista de gerenciamento de entidades.
+// ==========================================================================
+
+.entity-management-count {
+  color: $gray5;
+  float: left;
+}
+
+.entity-mangement-list {
+  margin: 0;
+  list-style: none;
+}
+
+.entity-management-list-item {
+  @include box-sizing;
+  @include border-radius;
+  display: table;
+  width: 100%;
+  padding: 20px 10px 20px 20px;
+  border: 1px solid $gray4;
+  $color: $gray2;
+  background-color: $color;
+
+  .cssgradients & { @include background-image(linear-gradient($color 0%, $white 50%, $color 100%)); }
+
+  &:hover {
+    border-color: $blue3;
+    $color: $blue1;
+    background-color: $color;
+
+    .cssgradients & { @include background-image(linear-gradient($color 0%, $white 50%, $color 100%)); }
+  }
+
+  & +
+  & { margin-top: 10px; }
+}
+
+.entity-management-list-item-cell {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.entity-management-list-item-icon { width: 16px + 5px; }
+
+.entity-management-list-item-action { width: 10%; }

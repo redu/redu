@@ -56,7 +56,7 @@ class EnvironmentsController < BaseController
   # GET /environments/1/edit
   def edit
     respond_to do |format|
-      format.html { render 'environments/admin/edit', layout: 'new_application' }
+      format.html { render 'environments/admin/edit', layout: 'environments/admin' }
     end
   end
 
@@ -184,14 +184,13 @@ class EnvironmentsController < BaseController
   end
 
   def admin_courses
+    @total_courses = @environment.courses.count
     @courses = @environment.courses.page(params[:page]).
       per(Redu::Application.config.items_per_page)
 
     respond_to do |format|
-      format.html { render "environments/admin/admin_courses" }
-      format.js do
-        render_endless 'courses/admin/item_admin', @courses, '#course_list'
-      end
+      format.html { render 'environments/admin/admin_courses',
+                           layout: 'environments/admin' }
     end
   end
 
