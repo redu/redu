@@ -9,14 +9,6 @@ module StatusService
       @relation = relation.where(build_conditions)
     end
 
-    def count
-      relation.count
-    end
-
-    def find_each(&block)
-      relation.find_each(&block)
-    end
-
     protected
 
     def build_conditions
