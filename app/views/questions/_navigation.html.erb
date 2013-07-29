@@ -1,7 +1,18 @@
-<div class="exercise-nav">
-  <ol>
+<%#
+  Navegação entre questões.
+
+  Variáveis:
+    exercise: o exercício.
+    current: a questão atual.
+    first: a primeira questão.
+    last: a última questão.
+    review: se é revisão.
+%>
+
+<div class="exercise-box exercise-box-gray exercise-question-navigation">
+  <ol class="exercise-question-navigation-list">
     <% if prev_range = current.item_at_offset(-4) %>
-      <li class="endless-lecture">
+      <li class="exercise-question-navigation-item">
         <%= link_to "...", exercise_question_path(exercise, prev_range) %>
       </li>
     <% end %>
@@ -9,28 +20,35 @@
     <% questions_navigation = exercise.questions.limit(limit).offset(offset).order('position ASC') %>
     <% questions_navigation.each do |question| %>
       <% choice = question.choice_for(current_user) if question %>
+      <% question_link = capture do %>
+        <%= link_to question.position, exercise_question_path(exercise, question) if question %>
+      <% end %>
+      <% current_class = (question == current) ? "exercise-question-navigation-item-current" : "" %>
       <% if review %>
-        <li class="<%= question == current ? "actual" : "" %> <%= right_or_wrong(choice) %>">
-          <%= link_to question.position, exercise_question_path(exercise, question) if question %>
-        </li>
+        <%= content_tag :li, question_link,
+          class: "exercise-question-navigation-item #{ current_class } #{ right_or_wrong_class(choice) }" %>
       <% else %>
-        <li class="<%= question == current ? "actual" : "" %> <%= choice ? "question-answered" : "" %>">
-          <%= link_to question.position, exercise_question_path(exercise, question) if question %>
-        </li>
+        <% question_answered_class = choice ? "exercise-question-navigation-item-answered" : "" %>
+        <%= content_tag :li, question_link,
+          class: "exercise-question-navigation-item #{ current_class } #{ question_answered_class }" %>
       <% end %>
     <% end %>
     <% if current != last %>
-      <li class="endless-lecture">
-        <% if  next_range = current.item_at_offset(4) %>
+      <li class="exercise-question-navigation-item">
+        <% if next_range = current.item_at_offset(4) %>
           <%= link_to "...", exercise_question_path(exercise, next_range) %>
         <% end %>
       </li>
     <% end %>
   </ol>
-  <% if current != first %>
-    <%= link_to "< primeira", exercise_question_path(exercise, first), :class => "first-question" %>
-  <% end %>
-  <% if current != last %>
-    <%= link_to "> última", exercise_question_path(exercise, last), :class => "last-question" %>
-  <% end %>
+  <div class="clearfix">
+    <% if current != first %>
+      <%= link_to "< primeira", exercise_question_path(exercise, first),
+        class: "pull-left link-secondary" %>
+    <% end %>
+    <% if current != last %>
+      <%= link_to "> última", exercise_question_path(exercise, last),
+        class: "pull-right link-secondary" %>
+    <% end %>
+  </div>
 </div>

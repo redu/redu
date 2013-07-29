@@ -1,35 +1,40 @@
-<%# Acoes que podem ser realizadas num exercicio (rever, realizar, etc).
-    Locals: can_manage_lecture (booleano), exercise, result (pode ser nil) %>
-<% if can_manage_lecture %>
-  <div class="start-exercise">
-    <%= link_to exercise_question_path(exercise, first_question), :class => "concave-button question-button" do %>
-      <span class="icon-exercise-white_16_18-before">Rever questões</span>
-    <% end %>
-    <%= link_to exercise_results_path(exercise), :class => "concave-button report-button" do %>
-      <span class="icon-exercise-white_16_18-before">Relatório</span>
-    <% end %>
-  </div>
-<% elsif result %>
-  <div class="review-exercise">
-    <div class="review-info">
-      <div class="review-user">
-        <%= image_tag result.user.avatar(:thumb_32), :size => "32x32", :class => "avatar" %>
-        <%= link_to result.user.display_name, user_path(result.user) %>
-        <span class="user-tip"><%= time_ago_in_words(result.finalized_at) %></span>
-      </div>
-      <%= link_to exercise_question_path(exercise, first_question), :class => "concave-button question-button" do %>
-        <span class="icon-exercise-white_16_18-before">Rever questões</span>
-      <% end %>
+<%#
+  Ações que podem ser realizadas num exercicio (rever, realizar, etc).
 
-    </div>
-    <%= render 'lectures/exercise/grade', :result => result %>
-  </div>
-<% else %>
-  <div class="start-exercise">
-    <%= form_tag exercise_results_path(exercise), :method => :post do %>
-      <button type="submit" class="concave-button">
-        <span class="do-exercise icon-exercise-white_16_18-before">Fazer exercício</span>
-      </button>
-    <% end %>
-  </div>
+  Variáveis:
+    can_manage_lecture: se é possível gerenciar a aula (booleano).
+    exercise: o exercício.
+    result: o resultado do exercício (nil se não houver).
+%>
+
+<% questions_review = capture do %>
+  <%= link_to "Rever questões",
+    exercise_question_path(exercise, first_question),
+    class: "exercise-button button-primary icon-exercise-white_blue_16_18-before" %>
 <% end %>
+
+<div class="exercise-box exercise-box-gray clearfix">
+  <% if can_manage_lecture %>
+    <div class="text-center">
+      <%= questions_review %>
+      <%= link_to "Relatório", exercise_results_path(exercise),
+        class: "exercise-button button-primary icon-exercise-white_blue_16_18-before" %>
+    </div>
+
+  <% elsif result %>
+    <div class="exercise-summary exercise-column-left">
+      <%= render "users/thumb_legend", user: result.user,
+        legend: time_ago_in_words(result.finalized_at),
+        wrapper_class: "exercise-summary-user" %>
+
+      <%= questions_review %>
+    </div>
+    <%= render "lectures/exercise/grade", result: result %>
+
+  <% else %>
+    <%= form_tag exercise_results_path(exercise), method: :post,
+      class: "text-center" do %>
+      <button type="submit" class="button-big button-primary icon-exercise-white_blue_16_18-before">Fazer exercício</button>
+    <% end %>
+  <% end %>
+</div>

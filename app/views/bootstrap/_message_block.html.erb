@@ -8,16 +8,13 @@
     button: algum botão, se necessário.
 %>
 
-<div class='<%= "message-block message-#{type} fade in" %>'>
-  <% if close %>
-    <span data-dismiss="alert" class="message-close">×</span>
-  <% end %>
-  <div class="message-block-content">
-    <%= message %>
-  </div>
+<%= content_tag :div, class: "message-block message-#{ type } fade in" do %>
+  <%= content_tag(:span, "×", class: "message-close",
+    data: { dismiss: "alert"}) if close %>
+  <%= content_tag :div, raw(message), class: "message-block-content" %>
   <% if button %>
     <div class="message-block-actions">
       <%= button %>
     </div>
   <% end %>
-</div>
+<% end %>

@@ -9,13 +9,8 @@
 <% management = false unless local_assigns.has_key? :management %>
 
 <div class="entity-sidebar">
-  <%# Thumbnail. %>
-  <%= link_to environment, class: "environment-thumbnail" do %>
-    <%# TODO: Usar 160x160 quando estiver gerado. %>
-    <%= image_tag environment.avatar.url(:thumb_140), size: "160x160",
-      alt: environment.name, title: environment.name,
-      class: "environment-thumbnail" %>
-  <% end %>
+  <%= render "environments/sidebar_thumbnail", environment: environment,
+    clickable: false %>
 
   <%# Gerenciamento. %>
   <% if management %>

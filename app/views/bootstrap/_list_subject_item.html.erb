@@ -6,7 +6,8 @@
     user: o usuário.
 %>
 
-<li class="list-subject-item">
+<%= content_tag :li, id: "subject-#{ list_subject_item.id }",
+  class: "list-subject-item" do %>
   <div class="list-subject-header clearfix">
     <%# Nome. %>
     <%= content_tag :h4, list_subject_item.name, class: "list-subject-name" %>
@@ -54,4 +55,4 @@
       </ol>
     <% end %>
   </div>
-</li>
+<% end %>

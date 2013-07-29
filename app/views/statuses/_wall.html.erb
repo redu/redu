@@ -13,10 +13,30 @@
 <%# Preview de links externos. %>
 <%= render "statuses/template_preview" %>
 
-<div class="content-section">
+<% create_status = capture do %>
   <%= render "statuses/create_status", status: status,
     statusable: statusable,
     placeholder: placeholder %>
+<% end %>
+
+<div class="content-section">
+  <% if statusable.is_a?(Lecture) %>
+    <div class="lecture-wall-wrapper">
+      <div class="centralize">
+        <ul class="lecture-wall-actions clearfix">
+          <li class="lecture-wall-action">
+            <button class="button-primary button-big lecture-wall-button button-comment icon-comment-white_blue_32_34-before">Comentar</button>
+          </li>
+          <li class="lecture-wall-action">
+            <button class="button-primary button-big lecture-wall-button button-help icon-request-help-white_blue_32_34-before">Pedir ajuda</button>
+          </li>
+        </ul>
+      </div>
+      <%= create_status %>
+    </div>
+  <% else %>
+    <%= create_status %>
+  <% end %>
 </div>
 <ol id="statuses" class="status-list">
   <%= render partial: "statuses/item", collection: statuses %>

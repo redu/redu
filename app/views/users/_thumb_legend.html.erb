@@ -1,0 +1,23 @@
+<%#
+  Bloco com thumbnail a esquerda, nome/link do usuário a direita e em baixo
+  uma legenda.
+
+  Variáveis:
+    user: o usuário.
+    legend: texto da legenda (opcional).
+    wrapper_class: classe extra para o encapsulador (opcional).
+%>
+
+<% legend = nil unless local_assigns.has_key? :legend %>
+<% wrapper_class = nil unless local_assigns.has_key? :wrapper_class %>
+
+<%= content_tag :div, class: "#{ wrapper_class } two-columns-wrapper" do %>
+  <%= link_to user, class: "two-columns-column" do %>
+    <%= image_tag user.avatar.url(:thumb_32), size: "32x32",
+      alt: user.display_name, title: user.display_name %>
+  <% end %>
+  <div class="two-columns-column">
+    <%= link_to user.display_name, user, class: "text-truncate" %>
+    <%= content_tag :span, legend, class: "legend show" %>
+  </div>
+<% end %>

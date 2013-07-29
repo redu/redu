@@ -1,17 +1,14 @@
 <div class="span3">
-  <%= render :partial => "users/left_sidebar",
-    :locals => { :user => @user } %>
+  <%= render "users/left_sidebar", user: @user %>
 </div>
 <div class="span10">
   <div class="content-area">
-    <%= render :partial => "users/breadcrumb_configurations",
-      :locals => { :user => @user } %>
     <div class="content-body">
       <div class="content-section">
         <%# Cabeçalho %>
-        <%= render "bootstrap/header_breadcrumb", :header_breadcrumb_items => [
-          { :name => "Configurações", :link => edit_user_path(@user), :classes => "icon-manage-gray_32_34-before" },
-          { :name => "Perfil", :link => edit_user_path(@user) } ] %>
+        <%= render "bootstrap/header_breadcrumb", header_breadcrumb_items: [
+          { name: "Configurações", link: edit_user_path(@user), classes: "icon-manage-gray_32_34-before" },
+          { name: "Perfil", link: edit_user_path(@user) } ] %>
       </div>
       <%# Abas e sub-abas %>
       <%= new_tabs(:new_users) %>
@@ -24,12 +21,10 @@
         <fieldset class="form-config-fieldset curriculum-container experience">
           <legend class="form-config-legend icon-curriculum-professional-lightblue_32_34-before">Experiência profissional</legend>
           <ul class="experiences">
-            <%= render :partial => 'experiences/item',
-              :collection => @experiences %>
+            <%= render partial: "experiences/item", collection: @experiences %>
           </ul>
-          <%= render :partial => 'experiences/form', :locals => {
-            :user => @user, :experience => @experience,
-            :experiences_count => @experiences.length } %>
+          <%= render "experiences/form", user: @user, experience: @experience,
+            experiences_count: @experiences.length %>
           <div class="config-new-item">
             <button class="button-default new-experience-button icon-curriculum-lightblue_16_18-before">Adicionar novo item</button>
           </div>
@@ -40,14 +35,12 @@
         <fieldset class="form-config-fieldset curriculum-container education">
           <legend class="form-config-legend icon-curriculum-academic-lightblue_32_34-before">Experiência acadêmica</legend>
           <ul class="educations">
-            <%= render :partial => "educations/item",
-              :collection => @educations %>
+            <%= render partial: "educations/item", collection: @educations %>
           </ul>
-          <%= render :partial => 'educations/form', :locals => {
-            :high_school => @high_school,
-            :higher_education => @higher_education,
-            :complementary_course => @complementary_course,
-            :event_education => @event_education, :user => @user } %>
+          <%= render "educations/form", high_school: @high_school,
+            higher_education: @higher_education,
+            complementary_course: @complementary_course,
+            event_education: @event_education, user: @user %>
           <div class="config-new-item">
             <buttton class="button-default new-education-button icon-curriculum-lightblue_16_18-before">Adicionar novo item</buttton>
           </div>
@@ -55,11 +48,9 @@
 
       </div>
     </div>
-    <%= render :partial => "users/breadcrumb_configurations",
-      :locals => { :user => @user } %>
+    <%= render "users/breadcrumb_configurations", user: @user %>
   </div>
 </div>
 <div class="span3">
-  <%= render :partial => "users/sidebar_curriculum",
-    :locals => { :user => @user } %>
+  <%= render "users/sidebar_curriculum", user: @user %>
 </div>

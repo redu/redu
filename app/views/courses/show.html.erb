@@ -1,20 +1,19 @@
 <% content_for :container_class do "entity-wrapper" end %>
 
 <div class="span3">
-  <%= render "sidebar_new", course: @course %>
+  <%= render "courses/sidebar_new", course: @course %>
 </div>
 <div class="span13">
-  <%= render "breadcrumbs_new", course: @course %>
   <div class="content-body">
-    <%= render "header_new", course: @course,
+    <%= render "courses/header_new", course: @course,
       responsibles_associations: @responsibles_associations %>
 
-    <%= render "actions", course: @course, user: current_user %>
+    <%= render "courses/actions", course: @course, user: current_user %>
 
     <%= new_tabs :courses %>
 
     <% if @preview %>
-      <%= render "preview_messages", course: @course,
+      <%= render "courses/preview_messages", course: @course,
         user: current_user %>
 
     <% else %>
@@ -33,5 +32,5 @@
       <% end %>
     <% end %>
   </div>
-  <%= render "breadcrumbs_new", course: @course %>
+  <%= render "courses/breadcrumbs_new", course: @course %>
 </div>

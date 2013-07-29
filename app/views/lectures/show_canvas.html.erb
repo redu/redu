@@ -1,36 +1,13 @@
-<%= render "shared/new_wall_assets" %>
+<div class="content-section">
+  <div class="iframe-canvas"></div>
+  <%= lazy_load(:canvas, clear: false) do %>
+    $(document).ready(function(){
+      var canvas = new Canvas({
+        remote : "<%= @canvas_url.html_safe %>"
+      });
+    });
+  <% end %>
+</div>
 
-<%= render partial: 'lectures/javascripts' %>
-<%= render partial: 'subjects/sidebar' %>
-<div class="main space grid_12 omega big-col">
-  <%= render partial: "subjects/breadcrumbs", locals: { subject: @subject } %>
-  <%= render partial: 'subjects/header',
-    locals: { subject: @subject, space: @space } %>
-
-  <div id="resource" class="hierarchy-listing-wrapper">
-    <div class="resource-head">
-      <%= render partial: 'lectures/info',
-        locals: { lecture: @lecture } %>
-      <%= render partial: 'lectures/context',
-        locals: { student_grade: @student_grade, done: @done } %>
-    </div>
-
-    <div class="resource-content clearfix">
-      <%= render partial: 'lectures/details',
-        locals: { lecture: @lecture} %>
-      <div class="stage page-content content iframe-canvas">
-      </div>
-      <%= lazy_load(:canvas, clear: false) do %>
-        $(document).ready(function(){
-          var canvas = new Canvas({
-            remote : "<%= @canvas_url.html_safe %>"
-          });
-        });
-      <% end %>
-    </div>
-
-    <%= render "lectures/wall", statusable: @lecture,
-      statuses: @statuses, status: @status %>
-  </div><!-- end #resource -->
-
-</div><!-- end .main -->
+<%= render "statuses/wall", status: @status, statusable: @lecture,
+  statuses: @statuses, placeholder: "Comente nesta aula." %>

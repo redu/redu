@@ -1,12 +1,11 @@
 <% content_for :container_class do "entity-wrapper" end %>
 
 <div class="span3">
-  <%= render "sidebar", environment: @environment %>
+  <%= render "environments/sidebar", environment: @environment %>
 </div>
 <div class="span13">
-  <%= render "breadcrumb", environment: @environment %>
   <div class="content-body">
-    <%= render "header", environment: @environment %>
+    <%= render "environments/header", environment: @environment %>
 
     <% if @courses.empty? %>
       <%= render "shared/empty_message",
@@ -22,5 +21,5 @@
       <%= paginate @courses, theme: "new_endless" %>
     <% end %>
   </div>
-  <%= render "breadcrumb", environment: @environment %>
+  <%= render "environments/breadcrumb", environment: @environment %>
 </div>

@@ -1,30 +1,23 @@
 <div class="span3">
-  <%= render :partial => "users/left_sidebar",
-    :locals => { :user => @user } %>
+  <%= render "users/left_sidebar", user: @user %>
 </div>
 <div class="span10">
   <div class="content-area">
-    <%= render :partial => "messages/breadcrumb",
-      :locals => { :user => @user } %>
     <div class="content-body">
       <div class="content-section">
-        <%= render "bootstrap/header_breadcrumb", :header_breadcrumb_items => [
-          { :name => "Mensagens", :link => user_messages_path(@user), :classes => "icon-sent-message-gray_32_34-before" },
-          { :name => "Enviadas", :link => index_sent_user_messages_path(@user), :counter => @total_messages } ] %>
-        <%= link_to "Nova Mensagem", new_user_message_path(@user),
-          :remote => true,
-          :class => "button-primary icon-message-new-white_blue_16_18-before pull-right" %>
+        <%= render "bootstrap/header_breadcrumb", header_breadcrumb_items: [
+          { name: "Mensagens", link: user_messages_path(@user), classes: "icon-sent-message-gray_32_34-before" },
+          { name: "Enviadas", link: index_sent_user_messages_path(@user), counter: @total_messages } ] %>
+        <%= link_to "Nova Mensagem", new_user_message_path(@user), remote: true,
+          class: "button-primary icon-message-new-white_blue_16_18-before pull-right" %>
       </div>
       <%= new_tabs(:new_users) %>
-      <%= render :partial => 'messages/index',
-        :locals => { :mailbox => :outbox, :messages => @messages,
-        :user => @user } %>
+      <%= render "messages/index", mailbox: :outbox, messages: @messages,
+        user: @user %>
     </div>
-    <%= render :partial => "messages/breadcrumb",
-      :locals => { :user => @user } %>
+    <%= render "messages/breadcrumb", user: @user %>
   </div>
 </div>
 <div class="span3">
-  <%= render :partial => "users/right_sidebar",
-    :locals => { :user => @user } %>
+  <%= render "users/right_sidebar", user: @user %>
 </div>

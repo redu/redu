@@ -1,0 +1,19 @@
+<%#
+  Item da lista de usuários que finalizaram um exercício.
+
+  Variáveis:
+    users_list_item: o resultado de um usuário.
+    show_grade: se é para mostrar a nota do usuário (default false).
+                Se omitido, mostra quando o usuário finalizou o exercício.
+%>
+
+<% show_grade = false unless local_assigns.has_key? :show_grade %>
+
+<li class="exercise-users-list-item">
+  <% if show_grade %>
+    <% legend = content_tag :strong, users_list_item.grade.round(2).to_s %>
+  <% else %>
+    <% legend = time_ago_in_words(users_list_item.finalized_at) %>
+  <% end %>
+  <%= render "users/thumb_legend", user: users_list_item.user, legend: legend %>
+</li>

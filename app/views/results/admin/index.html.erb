@@ -1,31 +1,22 @@
-<%= render :partial => 'lectures/javascripts' %>
-<%= render :partial => 'subjects/sidebar' %>
-<div class="main space grid_12 omega big-col">
-  <%= render :partial => "subjects/breadcrumbs", :locals => { :subject => @subject } %>
-  <%= render :partial => 'subjects/header',
-    :locals => { :subject => @subject, :space => @space } %>
-
-  <div id="resource" class="hierarchy-listing-wrapper">
-    <div class="resource-head">
-      <%= render :partial => 'lectures/info',
-        :locals => { :lecture => @lecture } %>
-      <%= render :partial => 'lectures/context',
-        :locals => { :student_grade => @student_grade, :done => @done } %>
-    </div>
-
-    <div class="resource-content exercise-report clearfix">
-      <%= render :partial => 'lectures/details',
-        :locals => { :lecture => @lecture} %>
-      <div class="stage">
-        <% if @results.empty? %>
-          <em>Nenhum aluno respondeu o exercício ainda. Tente enviar um comentário estimulando a participação!</em>
-        <% else %>
-          <%= render "results/admin/user_list_admin", :results => @results %>
-        <% end %>
-      </div>
-    </div>
-
-  </div><!-- end #resource -->
-
-</div><!-- end .main -->
-
+<div class="content-section">
+  <% if @results.empty? %>
+    <em>Nenhum aluno respondeu o exercício ainda. Tente enviar um comentário estimulando a participação!</em>
+  <% else %>
+    <table class="exercise-report-table table-without-borderradius">
+      <thead>
+        <tr>
+          <th class="exercise-report-column-large">Nome</th>
+          <th class="exercise-report-column-medium">Tempo</th>
+          <th class="exercise-report-column-small">Nota</th>
+          <th class="exercise-report-column-small">Acertos</th>
+          <th class="exercise-report-column-small">Erros</th>
+          <th class="exercise-report-column-small">Nulas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render partial: "results/admin/user_item_admin",
+          collection: @results %>
+      </tbody>
+    </table>
+  <% end %>
+</div>

@@ -6,7 +6,7 @@
   <% [:info, :notice, :error].each do |type| %>
     <% if flash[type] %>
       <% klass, greeting = flash_message(type) %>
-      <%= render "shared/message_block", :type => klass, :close => true, :message => raw(content_tag(:p, (content_tag(:strong, greeting)) + " " + flash[type])), :button => false %>
+      <%= render "bootstrap/message_block", type: klass, close: true, message: (content_tag(:p, (content_tag(:strong, greeting)) + " " + flash[type])), button: false %>
     <% end %>
   <% end %>
 </div>

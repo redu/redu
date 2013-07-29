@@ -14,9 +14,12 @@
         link: link.
         classes: classes adicionais, tais como o ícone e
                  se o texto deve ser escondido (.text-replacement).
+    extra_classes: classes extras (default nil).
 %>
 
-<ul class="breadcrumb-mini">
+<% extra_classes = nil unless local_assigns.has_key? :extra_classes %>
+
+<%= content_tag :ul, class: "breadcrumb-mini #{ extra_classes }" do %>
   <% last = breadcrumb_mini_items.length - 1 %>
   <% breadcrumb_mini_items.each_with_index do |breadcrumb_mini_item, i| %>
     <li class="breadcrumb-mini-item icon-arrow-right-separator-gray_16_18-after">
@@ -32,4 +35,4 @@
       <% end %>
     </li>
   <% end %>
-</ul>
+<% end %>

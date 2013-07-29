@@ -1,37 +1,16 @@
-<%= render partial: 'lectures/javascripts' %>
-<%= render partial: 'subjects/sidebar' %>
-<div class="main space grid_12 omega big-col">
-  <%= render partial: "subjects/breadcrumbs", locals: { subject: @subject } %>
-  <%= render partial: 'subjects/header',
-    locals: { subject: @subject, space: @space } %>
+<div class="content-section">
+  <%# Depois de clicar em "finalizar". %>
+  <%= render "questions/navigation", exercise: @exercise,
+    current: @last_question, first: @first_question, last: @last_question,
+    review: @review %>
 
-  <div id="resource" class="hierarchy-listing-wrapper">
-    <div class="resource-head">
-      <%= render partial: 'lectures/info',
-        :locals => { :lecture => @lecture } %>
-      <%= render partial: 'lectures/context',
-        locals: { student_grade: @student_grade, done: @done } %>
-    </div>
-
-    <div class="resource-content clearfix">
-      <%= render partial: 'lectures/details',
-        locals: { lecture: @lecture} %>
-      <div class="stage exercise">
-        <% # Depois de clicar em "finalizar" %>
-        <%= render "questions/navigation", exercise: @exercise,
-        current: @last_question, first: @first_question,
-        last: @last_question, review: @review %>
-
-        <% # Form para submissão do exercício %>
-        <%= form_tag exercise_result_path(@exercise, @result),
-        method: :put, class: "exercise-finalize-form" do %>
-          <span class="exercise-call">Exercício finalizado.</span>
-          <%= completude_message(@choices_count, @questions_count) %>
-          <span class="exercise-call">Você pode revisar as questões ou submeter a aula. </span>
-          <%= exercise_submit_button(@choices_count, @questions_count) %>
-        <% end %>
-      </div>
-    </div>
-
-  </div><!-- end #resource -->
-</div><!-- end .main -->
+  <%# Form para submissão do exercício. %>
+  <%= form_tag exercise_result_path(@exercise, @result), method: :put,
+    class: "exercise-form-submission text-center" do %>
+    <span class="exercise-note">Exercício finalizado.</span>
+    <%= content_tag :span, completeness_message(@choices_count, @questions_count),
+      class: "exercise-note" %>
+    <span class="exercise-note">Você pode revisar as questões ou submeter a aula.</span>
+    <%= exercise_submit_button(@choices_count, @questions_count) %>
+  <% end %>
+</div>

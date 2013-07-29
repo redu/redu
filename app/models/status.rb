@@ -109,9 +109,7 @@ class Status < ActiveRecord::Base
 
   def self.lectures_or_nothing(spaces)
     spaces.collect do |space|
-      space.subjects.select("subjects.id").collect do |subject|
-        subject.lectures.select("lectures.id")
-      end
+      space.lectures.select("lectures.id")
     end.flatten
   end
 end

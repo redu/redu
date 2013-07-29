@@ -1,23 +1,36 @@
-<%= render :partial => 'spaces/sidebar', :locals => { :space => @space } %>
-<div class="main space grid_12 omega big-col">
-  <%= render :partial => 'spaces/breadcrumbs', :locals => { :space => @space } %>
-  <%= render :partial => 'spaces/header',
-    :locals => { :space => @space }%>
+<%#
+  Quase cópia de Spaces#show, sem paginação, lista vazia e
+  com JS de scroll para o módulo.
+%>
 
-  <div id="space-subjects" class="body clearfix">
-    <div class="header clearfix">
-      <h4 class="title">Conteúdo</h4>
-      <span class="detail">(<%= pluralize @space.subjects.visible.count, "módulo" %> , <%= pluralize @space.lectures_count, "aula" %>)</span>
+<% content_for :container_class do "entity-wrapper" end %>
+
+<script>
+  $(function() {
+    $("body").animate({
+      scrollTop: $("#subject-<%= @subject.id %>").offset().top - 75
+    }, "slow");
+  });
+</script>
+
+<div class="span3">
+  <%= render "spaces/sidebar_new", space: @space, user: current_user %>
+</div>
+<div class="span13">
+  <%= render "spaces/breadcrumbs_new", space: @space %>
+  <div class="content-body">
+    <%= render "spaces/header", space: @space %>
+
+    <div class="content-section">
+      <h3 class="header-breadcrumb-big icon-subject-gray_32_34-before">Aulas</h3>
     </div>
-    <% if can? :manage, @space %>
-      <div class="admin-actions">
-        <%= link_to "Criar novo módulo", new_space_subject_path(@space),
-          :id => 'link-new-subject', :class => 'concave-button' %>
-      </div>
-    <% end %>
 
-    <ul id="subjects_list" class="hierarchy-listing subjects main-content">
-      <%= render :partial => 'subjects/item_show', :collection => @subjects, :as => :item, :locals => { :subject => @subject } %>
-    </ul>
-  </div><!-- end #environment-courses -->
-</div><!-- end .main -->
+    <div class="content-section">
+      <ul class="list-subject" style="clear: both;">
+        <%= render partial: "bootstrap/list_subject_item",
+          collection: @subjects, locals: { user: current_user } %>
+      </ul>
+    </div>
+  </div>
+  <%= render "spaces/breadcrumbs_new", space: @space %>
+</div>

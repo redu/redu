@@ -33,12 +33,11 @@
     <div class="list-space-stats-row">
       <div class="list-space-stat">
         <span class="list-space-stat">
-          <%= link_to "#{ t("hierarchy.lecture", count: list_space_item.lectures_count.to_i) }:",
-            list_space_item, class: "icon-subject-lightblue_16_18-before" %>
-          <%= list_space_item.lectures_count.to_i %>
+          <%= link_to "#{ t("hierarchy.lecture", count: list_space_item.lectures.count) }:",
+            list_space_item, class: "icon-lecture-lightblue_16_18-before" %>
+          <%= list_space_item.lectures.count %>
 
-          <%# TODO: Novas aulas. %>
-          <% new_lectures = 0 %>
+          <% new_lectures = list_space_item.lectures.recent.count %>
           <% if new_lectures > 0 %>
             <%= content_tag :span,
               "(+#{ new_lectures })",
@@ -48,9 +47,9 @@
         </span>
 
         <span class="list-space-stat icon-request-help-lightorange_16_18-before">
-          <%= "#{ pluralize(Status.from_hierarchy(list_space_item).where(type: "Help").count, "pedido")} de ajuda" %>
+          <%= "#{ pluralize(Help.from_hierarchy(list_space_item).count, "pedido")} de ajuda" %>
 
-          <% new_help_requests = Status.recent_from_hierarchy(list_space_item).where(type: "Help").count %>
+          <% new_help_requests = Help.recent_from_hierarchy(list_space_item).count %>
           <% if new_help_requests > 0 %>
             <%= content_tag :span,
               "(+#{ new_help_requests })",
@@ -66,10 +65,10 @@
       <span class="list-space-stat">
         <%= link_to "Mural da disciplina:", mural_space_path(list_space_item),
           class: "icon-wall-lightblue_16_18-before" %>
-        <%= pluralize Status.from_hierarchy(list_space_item).where(type: "Activity").count, "comentário" %>
+        <%= pluralize Activity.from_hierarchy(list_space_item).count, "comentário" %>
 
         <%# Novos comentários. %>
-        <% new_comments = Status.recent_from_hierarchy(list_space_item).count %>
+        <% new_comments = Activity.recent_from_hierarchy(list_space_item).count %>
         <% if new_comments > 0 %>
           <%= content_tag :span, "(+#{ new_comments })", rel: "tooltip",
             title: "#{ new_comments } #{ "novo".pluralize(new_comments) } #{ "comentário".pluralize(new_comments) }",
@@ -79,7 +78,7 @@
 
       <%# TODO: Total e novas respostas, os métodos tentados
           abaixo estão sempre retornando 0. %>
-      <% answers = Status.from_hierarchy(list_space_item).where(type: "Answer").count %>
+      <% answers = Answer.from_hierarchy(list_space_item).count %>
       <% if answers > 0 %>
         <span class="list-space-stat icon-reply-lightblue_16_18-before">
           <%# Não está adicionando o "s" no final no plural como costume, tive que explicitá-lo. %>
@@ -87,7 +86,7 @@
         </span>
 
         <%# Novas respostas. %>
-        <% new_answers = Status.recent_from_hierarchy(list_space_item).where(type: "Answer").count %>
+        <% new_answers = Answer.recent_from_hierarchy(list_space_item).count %>
         <% if new_answers > 0 %>
           <%= content_tag :span, "(+#{ new_answers })", rel: "tooltip",
             title: "#{ new_answers } #{ "nova".pluralize(new_answers) } #{ "resposta".pluralize(new_answers) }",
@@ -103,8 +102,7 @@
           class: "icon-file-lightblue_16_18-before" %>
         <%= pluralize list_space_item.myfiles.count, "arquivo" %>
 
-        <%# TODO: Novos arquivos. %>
-        <% new_files = 0 # Não funfa: list_space_item.myfiles.recent.count %>
+        <% new_files = list_space_item.myfiles.recent.count %>
         <% if new_files > 0 %>
           <%= content_tag :span, "(+#{ new_files })", rel: "tooltip",
             title: "#{ new_files } #{ "novo".pluralize(new_files) } #{ "arquivo".pluralize(new_files) }",

@@ -52,4 +52,28 @@ describe Myfile do
       end
     end
   end
+
+  describe ".recent" do
+    it "should return an Arel" do
+      expect(Myfile.recent).to be_a ActiveRecord::Relation
+    end
+
+    context "when there are old myfiles" do
+      let!(:old_myfiles) do
+        (2..3).collect do |i|
+          FactoryGirl.create(:myfile, attachment_updated_at: i.week.ago)
+        end
+      end
+
+      let!(:recent_myfiles) do
+        (1..2).collect do |i|
+          FactoryGirl.create(:myfile, attachment_updated_at: i.day.ago)
+        end
+      end
+
+      it "should return myfiles that where updated until 1 week ago" do
+        expect(Myfile.recent).to match_array(recent_myfiles)
+      end
+    end
+  end
 end

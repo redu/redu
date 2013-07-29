@@ -1,50 +1,47 @@
 <div class="span3">
-  <%= render :partial => "users/left_sidebar",
-    :locals => { :user => @user } %>
+  <%= render "users/left_sidebar", user: @user %>
 </div>
 <div class="span10">
   <div class="content-area">
-    <%= render :partial => "users/breadcrumb_configurations",
-      :locals => { :user => @user } %>
     <div class="content-body">
       <div class="content-section">
         <%# Cabeçalho %>
-        <%= render "bootstrap/header_breadcrumb", :header_breadcrumb_items => [
-          { :name => "Configurações", :link => edit_user_path(@user), :classes => "icon-manage-gray_32_34-before" },
-          { :name => "Planos", :link => user_plans_path(@user) },
-          { :name => "Detalhes", :link => plan_invoices_path(@plan) } ] %>
+        <%= render "bootstrap/header_breadcrumb", header_breadcrumb_items: [
+          { name: "Configurações", link: edit_user_path(@user), classes: "icon-manage-gray_32_34-before" },
+          { name: "Planos", link: user_plans_path(@user) },
+          { name: "Detalhes", link: plan_invoices_path(@plan) } ] %>
       </div>
       <%# Abas e sub-abas %>
       <%= new_tabs(:new_users) %>
       <div class="content-section">
-        <%= render "plans/plans_title", :plan => @plan %>
+        <%= render "plans/plans_title", plan: @plan %>
 
         <ul class="list-mix plan-details">
           <li>
             <div class="list-mix-item">
               <div class="list-mix-inner">
                 <div class="list-mix-header">
-                  <%= content_tag :span, @plan.name, :class => "plan-name #{plan_payment_status_class(@plan)}" %>
+                  <%= content_tag :span, @plan.name, class: "plan-name #{plan_payment_status_class(@plan)}" %>
                   <% if can? :migrate, @plan %>
-                    <%= link_to "Upgrade", options_plan_path(@plan), :class => "button-success pull-right" %>
+                    <%= link_to "Upgrade", options_plan_path(@plan), class: "button-success pull-right" %>
                   <% end %>
                   <% if @plan.pending_payment? %>
                     <% if @plan.invoice.overdue? %>
                       <span class="plan-status legend">Fatura em aberto, plano bloqueado</span>
                     <% else %>
-                      <%= content_tag(:span, "Fatura em aberto. #{(@plan.invoice.threshold_date - Date.today).to_i} dias restantes.", :class => "plan-status legend") %>
+                      <%= content_tag(:span, "Fatura em aberto. #{(@plan.invoice.threshold_date - Date.today).to_i} dias restantes.", class: "plan-status legend") %>
                     <% end %>
                   <% else %>
                     <span class="plan-status legend">Sem pendências</span>
                   <% end %>
                 </div>
                 <% if @quota %>
-                  <%= render :partial => "invoices/quotas",
-                    :locals => { :quota_file => @plan.billable.percentage_quota_file,
-                                 :plan => @plan,
-                                 :quota_multimedia => @plan.billable.percentage_quota_multimedia,
-                                 :quota_members => @plan.billable.percentage_quota_members,
-                                 :quota => @quota } %>
+                  <%= render "invoices/quotas",
+                    quota_file: @plan.billable.percentage_quota_file,
+                    plan: @plan,
+                    quota_multimedia: @plan.billable.percentage_quota_multimedia,
+                    quota_members: @plan.billable.percentage_quota_members,
+                    quota: @quota %>
                 <% end %>
               </div>
             </div>
@@ -77,7 +74,7 @@
                   </td>
                   <td>
                     <% if can? :pay_with_pagseguro, invoice %>
-                      <%= pagseguro_form invoice.plan.create_order, :submit => "Pagar" %>
+                      <%= pagseguro_form invoice.plan.create_order, submit: "Pagar" %>
                     <% elsif invoice.paid? %>
                       <span class="no-pending legend">Pago</span>
                     <% end %>
@@ -89,16 +86,16 @@
         <% end %>
       </div>
       <div class="content-section clearfix">
-        <%= link_to "< voltar para a lista de cursos e planos", user_plans_path(@user), :class => "legend pull-right" %>
+        <%= link_to "< voltar para a lista de cursos e planos", user_plans_path(@user), class: "legend pull-right" %>
       </div>
     </div>
-    <%= render :partial => "users/breadcrumb_configurations",
-      :locals => { :user => @user } %>
+    <%= render "users/breadcrumb_configurations", user: @user %>
   </div>
 </div>
 <div class="span3">
-  <%= render :partial => 'plans/explanation_sidebar' %>
+  <%= render "plans/explanation_sidebar" %>
 </div>
+
 <script type="text/javascript">
   $(document).ready(function() {
     $("form.pagseguro input[type=submit]").addClass('button-primary');

@@ -4,20 +4,16 @@
 # Via groups it is determined which actions the logged-in User can perform.
 class Folder < ActiveRecord::Base
 
-  # Associations
   belongs_to :user
   alias :owner :user
   has_many :myfiles, :dependent => :destroy
   has_many :folders, :foreign_key => "parent_id", :dependent => :destroy
   belongs_to :space
 
-  # Accessors
   attr_accessible :name, :space_id, :parent_id
 
-  # Plugins
   acts_as_tree :order => 'name'
 
-  # Validations
   validates_uniqueness_of :name, :scope => 'parent_id', :if => Proc.new { |folder| folder.parent_id }
   validates_presence_of :name
 

@@ -7,11 +7,6 @@
     management: true %>
 </div>
 <div class="span13">
-  <% breadcrumb = capture do %>
-    <%= render "environments/breadcrumb",
-      environment: @environment %>
-  <% end %>
-  <%= breadcrumb %>
   <div class="content-body">
     <%= render "environments/admin/header", environment: @environment %>
 
@@ -119,5 +114,5 @@
         class: "link-secondary" %>
     </div>
   </div>
-  <%= breadcrumb %>
+  <%= render "environments/breadcrumb", environment: @environment %>
 </div>

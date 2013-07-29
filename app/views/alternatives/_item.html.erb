@@ -1,6 +1,20 @@
-<li class="<%= (index % 2 == 0) ? "" : "odd" %>">
-  <span class="choice"><%= (index + 97).chr %>:</span>
-  <%= f.radio_button :alternative_id, alternative.id %>
-  <p><%= alternative.text %></p>
-</li>
+<%#
+  Uma alternativa da questão.
 
+  Variáveis:
+    f: o formulário.
+%>
+
+<% alternative_id = "alternative-#{ item.id }" %>
+
+<li class="exercise-choice two-columns-wrapper">
+  <div class="two-columns-column">
+    <%= content_tag :span, "#{ (item_counter + 97).chr }:",
+      class: "exercise-choice-order" %>
+    <%= f.radio_button :alternative_id, item.id, id: alternative_id,
+      class: "exercise-choice-radio" %>
+  </div>
+  <div class="two-columns-column">
+    <%= content_tag :label, item.text, for: alternative_id %>
+  </div>
+</li>

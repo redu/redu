@@ -14,8 +14,7 @@
         <button class="toggle-dropdown button-create-folder button-default">Criar nova pasta</button>
         <div class="new-folder-inner dropdown-menu">
           <span class="dropdown-arrow icon-arrow-up-dropdown-lightblue_20_8 text-replacement">Seta</span>
-          <% @new_folder = Folder.new %>
-          <%= form_for [space, @new_folder], remote: true,
+          <%= form_for [space, Folder.new], remote: true,
             method: :post do |f| %>
             <%= f.text_field :name, placeholder: "Nome da nova pasta",
               class: "new-folder-input" %>

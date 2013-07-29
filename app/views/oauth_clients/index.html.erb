@@ -1,12 +1,10 @@
 <div class="span3">
-  <%= render :partial => "users/left_sidebar",
-    :locals => { :user => @user } %>
+  <%= render "users/left_sidebar", user: @user %>
 </div>
 <div class="span10">
   <div class="content-area">
-    <%= render :partial => "oauth_clients/breadcrumb", :locals => { :user => @user } %>
     <div class="content-body">
-      <%= render :partial => 'oauth_clients/header_breadcrumb_index', :locals => { :user => @user } %>
+      <%= render 'oauth_clients/header_breadcrumb_index', user: @user %>
 
       <div class="my-app-tabs">
         <%= new_tabs(:new_users) %>
@@ -26,10 +24,10 @@
               <% @client_applications.each do |client|%>
                 <tr class="link-container">
                   <td>
-                    <%= link_to truncate(client.name, :length => 27), user_oauth_client_path(@user, client), :class => "link-target" %>
+                    <%= link_to truncate(client.name, length: 27), user_oauth_client_path(@user, client), class: "link-target" %>
                   </td>
-                  <td><%= truncate client.url, :length => 37 %></td>
-                  <td><span><%= link_to 'Editar', edit_user_oauth_client_path(@user, client) %></span> <span><%= link_to 'Excluir', user_oauth_client_path(@user, client), :confirm => "Você tem certeza?", :method => :delete, :class => "icon-close-gray_8_10 replacement close" %></span></td>
+                  <td><%= truncate client.url, length: 37 %></td>
+                  <td><span><%= link_to 'Editar', edit_user_oauth_client_path(@user, client) %></span> <span><%= link_to 'Excluir', user_oauth_client_path(@user, client), confirm: "Você tem certeza?", method: :delete, class: "icon-close-gray_8_10 replacement close" %></span></td>
                 </tr>
               <% end %>
             </tbody>
@@ -37,10 +35,9 @@
         <% end %>
       </div>
     </div>
-    <%= render :partial => "oauth_clients/breadcrumb", :locals => { :user => @user } %>
+    <%= render "oauth_clients/breadcrumb", user: @user %>
   </div>
 </div>
 <div class="span3">
-  <%= render :partial => "users/right_sidebar",
-    :locals => { :user => @user } %>
+  <%= render "users/right_sidebar", user: @user %>
 </div>

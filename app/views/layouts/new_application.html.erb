@@ -25,7 +25,7 @@
       <% end %>
       <%= content_tag :div, class: "container #{ content_for(:container_class) }" do %>
         <div class="row">
-          <%= yield %>
+          <%= content_for?(:content) ? yield(:content) : yield %>
         </div>
       <% end %>
       <% unless content_for? :footer %>
