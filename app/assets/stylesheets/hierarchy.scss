@@ -25,20 +25,3 @@
 
 // Aulas.
 @import "hierarchy/lecture";
-
-// BS fixes.
-.lecture-data {
-  margin: 0;
-  padding: 20px 20px 10px;
-}
-
-.header-link { font-weight: normal; }
-
-.nav-local-balloon-is-lecture-completed {
-  margin-left: 5px;
-
-  &.control-checked {
-    font-weight: bold;
-    color: $green3;
-  }
-}
