@@ -111,15 +111,16 @@ module StatusService
 
     describe "#activites" do
       let(:aggregator) { mock("Aggregator") }
+      let(:relation) { mock("Status") }
       let(:aggregated_query) { mock("AggregatedQuery") }
 
-      it "should invoke initialize an AggregatedQuery with aggregator" do
+      it "should invoke AggregatedQuery.new with aggregator and relation" do
         aggregated_query.stub(:relation)
 
-        AggregatedQuery.should_receive(:new).with(aggregator).
+        AggregatedQuery.should_receive(:new).with(aggregator, relation).
           and_return(aggregated_query)
 
-        subject.activities(aggregator)
+        subject.activities(aggregator, relation)
       end
 
       it "should invoke AggregatedQuery#relation" do

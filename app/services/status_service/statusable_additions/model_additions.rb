@@ -6,7 +6,9 @@ module StatusService
 
       def activities
         aggregator = "StatusService::#{self.class}Aggregator".constantize
-        status_service.activities(aggregator.new(self))
+        optimized_relation = Status.includes(:user).order("updated_at DESC")
+
+        status_service.activities(aggregator.new(self), optimized_relation)
       end
     end
   end

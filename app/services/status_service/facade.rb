@@ -20,8 +20,8 @@ module StatusService
       answer
     end
 
-    def activities(aggregator)
-      AggregatedQuery.new(aggregator).relation
+    def activities(aggregator, relation=nil)
+      AggregatedQuery.new(aggregator, relation).relation
     end
 
     private

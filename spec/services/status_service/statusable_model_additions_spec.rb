@@ -14,9 +14,11 @@ module StatusService
       let(:facade) { mock("Facade") }
 
       describe "#activities" do
-        it "should invoke Facade#activities" do
+        it "should invoke Facade#activities with aggregator and relation" do
           mock_facade(facade)
-          facade.should_receive(:activities).with(DummyAggregator.new(subject))
+          facade.should_receive(:activities).
+            with(DummyAggregator.new(subject),
+                 an_instance_of(ActiveRecord::Relation))
 
           subject.activities
         end
