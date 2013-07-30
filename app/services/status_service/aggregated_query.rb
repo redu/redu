@@ -1,12 +1,15 @@
 # -*- encoding : utf-8 -*-
 module StatusService
   class AggregatedQuery
-    attr_reader :relation
     attr_accessor :aggregator
 
     def initialize(aggregator, relation=Status)
       @aggregator = aggregator
-      @relation = relation.where(build_conditions)
+      @relation = relation
+    end
+
+    def relation
+      @relation.where(build_conditions)
     end
 
     protected

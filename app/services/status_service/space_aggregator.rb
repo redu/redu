@@ -2,7 +2,7 @@
 module StatusService
   class SpaceAggregator < Struct.new(:space)
     def perform
-      { Space: [space.id], Lecture: lectures_ids }
+      @values ||= { Space: [space.id], Lecture: lectures_ids }
     end
 
     private

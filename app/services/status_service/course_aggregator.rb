@@ -1,7 +1,8 @@
 module StatusService
   class CourseAggregator < Struct.new(:course)
     def perform
-      { Course: [course.id], Space: spaces_ids, Lecture: lectures_ids }
+      @values ||= { Course: [course.id], Space: spaces_ids,
+                    Lecture: lectures_ids }
     end
 
     private
