@@ -4,11 +4,11 @@ require 'spec_helper'
 module StatusService
   describe Lecture do
     it "should include BaseModelAdditions" do
-      described_class.should include(BaseModelAdditions)
+      expect(described_class).to include(BaseModelAdditions)
     end
 
     it "should include StatusableAdditions::ModelAdditions" do
-      described_class.should include(StatusableAdditions::ModelAdditions)
+      expect(described_class).to include(StatusableAdditions::ModelAdditions)
     end
   end
 end
