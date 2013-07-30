@@ -8,7 +8,7 @@ module StatusService
 
     describe "#perform" do
       it "should include the lecture" do
-        expect(subject.perform).to include(lectures: [lecture])
+        expect(subject.perform).to include(Lecture: [lecture.id])
       end
     end
   end

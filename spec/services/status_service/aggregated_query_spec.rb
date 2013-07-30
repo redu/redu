@@ -5,7 +5,7 @@ module StatusService
   describe AggregatedQuery do
     subject { described_class.new(aggregator) }
     let(:space) { FactoryGirl.create(:space) }
-    let(:aggregator) { mock("Aggregator", perform: { spaces: [space] }) }
+    let(:aggregator) { mock("Aggregator", perform: { Space: [space.id] }) }
 
     describe ".new" do
       let!(:statuses) do

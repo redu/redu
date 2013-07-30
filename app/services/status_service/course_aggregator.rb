@@ -1,21 +1,18 @@
 module StatusService
   class CourseAggregator < Struct.new(:course)
     def perform
-      { courses: [course], spaces: spaces, lectures: lectures }
+      { Course: [course.id], Space: spaces_ids, Lecture: lectures_ids }
     end
 
     private
 
-    def spaces
-      course.spaces.select("spaces.id")
+    def spaces_ids
+      course.spaces.values_of(:id)
     end
 
-    def lectures
-      course.spaces.map do |space|
-        space.subjects.select("subjects.id").collect do |subject|
-          subject.lectures.select("lectures.id")
-        end
-      end.flatten
+    def lectures_ids
+      subjects_ids = Subject.where(space_id: spaces_ids).values_of(:id)
+      Lecture.by_subjects(subjects_ids).values_of(:id)
     end
   end
 end

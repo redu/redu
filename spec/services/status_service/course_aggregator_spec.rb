@@ -8,7 +8,7 @@ module StatusService
 
     describe "#perform" do
       it "should include the course" do
-        expect(subject.perform).to include(courses: [course])
+        expect(subject.perform).to include(Course: [course.id])
       end
 
       context "when there are other spaces from other courses" do
@@ -20,7 +20,7 @@ module StatusService
         end
 
         it "should include all spaces from this course" do
-          expect(subject.perform).to include(spaces: spaces)
+          expect(subject.perform).to include(Space: spaces.map(&:id))
         end
       end
 
@@ -39,7 +39,7 @@ module StatusService
         end
 
         it "should include all spaces from this course" do
-          expect(subject.perform).to include(lectures: lectures)
+          expect(subject.perform).to include(Lecture: lectures.map(&:id))
         end
       end
     end

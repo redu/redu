@@ -13,12 +13,11 @@ module StatusService
 
     def build_conditions
       statusables = aggregator.perform
-      statusables.reject! { |_, instances| instances.empty? }
+      statusables.reject! { |_, ids| ids.empty? }
 
-      conditions = statusables.map do |klass_key, instances|
-        ids = instances.map(&:id).join(',')
-        "(statusable_type LIKE '#{klass_key.to_s.classify}' AND " \
-          "statusable_id IN (#{ids}))"
+      conditions = statusables.map do |klass, ids|
+        "(statusable_type LIKE '#{klass}' AND " \
+          "statusable_id IN (#{ids.join(",")}))"
       end
 
       conditions.join(" OR ")

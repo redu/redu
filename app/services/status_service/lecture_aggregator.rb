@@ -2,7 +2,7 @@
 module StatusService
   class LectureAggregator < Struct.new(:lecture)
     def perform
-      { lectures: [lecture] }
+      { Lecture: [lecture.id] }
     end
   end
 end

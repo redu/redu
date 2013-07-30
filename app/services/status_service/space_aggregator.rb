@@ -2,15 +2,14 @@
 module StatusService
   class SpaceAggregator < Struct.new(:space)
     def perform
-      { spaces: [space], lectures: lectures }
+      { Space: [space.id], Lecture: lectures_ids }
     end
 
     private
 
-    def lectures
-      space.subjects.select("subjects.id").map do |subject|
-        subject.lectures.select("lectures.id")
-      end.flatten
+    def lectures_ids
+      subjects_ids = space.subjects.values_of(:id)
+      Lecture.by_subjects(subjects_ids).values_of(:id)
     end
   end
 end
