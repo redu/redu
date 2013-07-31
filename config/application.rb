@@ -297,6 +297,7 @@ module Redu
     # Layout com bootstrap
     config.assets.precompile += %w(new_application.js friend-invitation.js basic.js landing.js mobile.js status_show.js)
     config.assets.precompile += %w(bootstrap-redu.min.css new_application.css basic.css mobile.css authoring-page.css)
+    config.assets.precompile += %w(maintenance.css)
 
     # Layout sem bootstrap
     config.assets.precompile += %w(ie.js chat.js outdated_browser.js ckeditor.js olark.js jquery.maskedinput.js canvas.js chart.js jwplayer.js webview.js clean.js new_wall.js new_wall/lecture-toggle-comment-or-help.js)
