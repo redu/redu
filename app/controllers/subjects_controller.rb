@@ -98,7 +98,7 @@ class SubjectsController < BaseController
     end
 
     respond_to do |format|
-      format.html { render layout: 'new_application' }
+      format.html { render layout: 'spaces/show' }
     end
   end
 

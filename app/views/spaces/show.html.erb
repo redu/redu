@@ -1,34 +1,22 @@
-<% content_for :container_class do "entity-wrapper" end %>
-
-<div class="span3">
-  <%= render "spaces/sidebar_new", space: @space, user: current_user %>
+<div class="content-section">
+  <h3 class="header-breadcrumb-big icon-subject-gray_32_34-before">Aulas</h3>
 </div>
-<div class="span13">
-  <div class="content-body">
-    <%= render "spaces/header", space: @space %>
 
-    <div class="content-section">
-      <h3 class="header-breadcrumb-big icon-subject-gray_32_34-before">Aulas</h3>
-    </div>
-
-    <% if @subjects.empty? %>
-      <%= render "shared/empty_message",
-        icon_message: "Nenhum módulo.",
-        icon_class: "icon-subject-empty_128_130",
-        message: "Ainda não há Módulos criados para esta Disciplina." %>
-    <% else %>
-      <div class="content-section">
-        <ul class="list-subject" style="clear: both;">
-          <%= render partial: "bootstrap/list_subject_item",
-            collection: @subjects, locals: { user: current_user } %>
-        </ul>
-      </div>
-      <% if @subjects.total_pages > 1 %>
-        <hr class="list-separator">
-      <% end %>
-      <%= paginate @subjects, theme: "numbers", outer_window: 1,
-        inner_window: 4 %>
-    <% end %>
+<% if @subjects.empty? %>
+  <%= render "shared/empty_message",
+    icon_message: "Nenhum módulo.",
+    icon_class: "icon-subject-empty_128_130",
+    message: "Ainda não há Módulos criados para esta Disciplina." %>
+<% else %>
+  <div class="content-section">
+    <ul class="list-subject" style="clear: both;">
+      <%= render partial: "bootstrap/list_subject_item",
+        collection: @subjects, locals: { user: current_user } %>
+    </ul>
   </div>
-  <%= render "spaces/breadcrumbs_new", space: @space %>
-</div>
+  <% if @subjects.total_pages > 1 %>
+    <hr class="list-separator">
+  <% end %>
+  <%= paginate @subjects, theme: "numbers", outer_window: 1,
+    inner_window: 4 %>
+<% end %>

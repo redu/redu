@@ -400,7 +400,7 @@ class UsersController < BaseController
     respond_to do |format|
       format.html do
         render "#{entity.class.to_s.downcase.pluralize}/users/index",
-          layout: "new_application"
+          layout: "#{entity.class.to_s.downcase.pluralize}/show"
       end
     end
   end

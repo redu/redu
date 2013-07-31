@@ -1,18 +1,6 @@
-<% content_for :container_class do "entity-wrapper" end %>
-
-<div class="span3">
-  <%= render "environments/sidebar_new", environment: @environment %>
+<div class="content-section centralize">
+  <%= new_subtabs :environments %>
 </div>
-<div class="span13">
-  <div class="content-body">
-    <%= render "environments/header", environment: @environment %>
 
-    <div class="content-section centralize">
-      <%= new_subtabs :environments %>
-    </div>
-
-    <%= render "shared/entity_members_list", role: @role, users: @users,
-      entity: @environment %>
-  </div>
-  <%= render "environments/breadcrumbs_new", environment: @environment %>
-</div>
+<%= render "shared/entity_members_list", role: @role, users: @users,
+  entity: @environment %>

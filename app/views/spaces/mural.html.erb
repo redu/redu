@@ -1,18 +1,6 @@
-<% content_for :container_class do "entity-wrapper" end %>
-
-<div class="span3">
-  <%= render "spaces/sidebar_new", space: @space, user: current_user %>
+<div class="content-section">
+  <h3 class="header-breadcrumb-big icon-wall-gray_32_34-before">Mural</h3>
 </div>
-<div class="span13">
-  <div class="content-body">
-    <%= render "spaces/header", space: @space %>
 
-    <div class="content-section">
-      <h3 class="header-breadcrumb-big icon-wall-gray_32_34-before">Mural</h3>
-    </div>
-
-    <%= render "statuses/wall", status: @status, statusable: @space,
-      statuses: @statuses, placeholder: "Comente nesta disciplina." %>
-  </div>
-  <%= render "spaces/breadcrumbs_new", space: @space %>
-</div>
+<%= render "statuses/wall", status: @status, statusable: @space,
+  statuses: @statuses, placeholder: "Comente nesta disciplina." %>

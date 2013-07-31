@@ -1,34 +1,21 @@
-<% content_for :container_class do "entity-wrapper" end %>
-
-<div class="span3">
-  <%= render "courses/sidebar_new", course: @course %>
-</div>
-<div class="span13">
-  <div class="content-body">
-    <%= render "courses/header_new", course: @course,
-      responsibles_associations: @responsibles_associations %>
-
-    <% if can? :invite_members, @course %>
-      <div class="entity-actions clearfix">
-        <%= link_to "Convidar membros",
-          admin_invitations_environment_course_path(@course.environment, @course),
-          class: "entity-action button-primary icon-invite-white_blue_16_18-before" %>
-        <% if can?(:manage, @course) %>
-          <%= link_to "Gerenciar curso",
-            edit_environment_course_path(@course.environment, @course),
-            class: "entity-action button-default icon-manage-lightblue_16_18-before" %>
-        <% end %>
-      </div>
+<% if can? :invite_members, @course %>
+  <div class="entity-actions clearfix">
+    <%= link_to "Convidar membros",
+      admin_invitations_environment_course_path(@course.environment, @course),
+      class: "entity-action button-primary icon-invite-white_blue_16_18-before" %>
+    <% if can?(:manage, @course) %>
+      <%= link_to "Gerenciar curso",
+        edit_environment_course_path(@course.environment, @course),
+        class: "entity-action button-default icon-manage-lightblue_16_18-before" %>
     <% end %>
-
-    <%= new_tabs :courses %>
-
-    <div class="content-section centralize">
-      <%= new_subtabs :courses %>
-    </div>
-
-    <%= render "shared/entity_members_list", role: @role, users: @users,
-      entity: @course %>
   </div>
-  <%= render "courses/breadcrumbs_new", course: @course %>
+<% end %>
+
+<%= new_tabs :courses %>
+
+<div class="content-section centralize">
+  <%= new_subtabs :courses %>
 </div>
+
+<%= render "shared/entity_members_list", role: @role, users: @users,
+  entity: @course %>

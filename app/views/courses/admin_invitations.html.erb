@@ -1,75 +1,62 @@
-<% content_for :container_class do "entity-wrapper" end %>
-
 <% content_for :header_scripts_and_styles do %>
   <%= javascript_include_tag "friend-invitation" %>
 <% end %>
 
-<div class="span3">
-  <%= render "courses/sidebar_new", course: @course %>
+<% if can? :entity, @course %>
+  <div class="entity-actions clearfix">
+    <%= link_to "Gerenciar curso",
+      edit_environment_course_path(@course.environment, @course),
+      class: "entity-action button-default icon-manage-lightblue_16_18-before" %>
+  </div>
+<% end %>
+
+<%= new_tabs :courses %>
+
+<div class="content-section">
+  <div class="course-invite">
+    <h3 class="course-invite-title">Convide membros para seu <span class="course-invite-title-highlight">curso</span></h3>
+    <p class="course-invite-description">Amplie sua base de membros. Procure pelo nome ou endereço de email; caso a pessoa não seja cadastrada no Redu, enviaremos um convite - que terá validade apenas para este curso. </p>
+  </div>
 </div>
-<div class="span13">
-  <div class="content-body">
-    <%= render "courses/header_new", course: @course,
-      responsibles_associations: @responsibles_associations %>
 
-    <% if can? :entity, @course %>
-      <div class="entity-actions clearfix">
-        <%= link_to "Gerenciar curso",
-          edit_environment_course_path(@course.environment, @course),
-          class: "entity-action button-default icon-manage-lightblue_16_18-before" %>
-      </div>
-    <% end %>
+<% unless can? :add_entry, @course %>
+  <div class="content-section">
+    <p class="message-block message-busy">
+      O limite de vagas foi atingido, seus convites não poderão ser aceitos. Faça o upgrade do seu curso, e aumente a capacidade de usuários.
+    </p>
+  </div>
+<% end %>
 
-    <%= new_tabs :courses %>
-
-    <div class="content-section">
-      <div class="course-invite">
-        <h3 class="course-invite-title">Convide membros para seu <span class="course-invite-title-highlight">curso</span></h3>
-        <p class="course-invite-description">Amplie sua base de membros. Procure pelo nome ou endereço de email; caso a pessoa não seja cadastrada no Redu, enviaremos um convite - que terá validade apenas para este curso. </p>
-      </div>
+<div class="content-section">
+  <div class="row">
+    <div class="span9">
+      <%= form_tag invite_members_environment_course_path(@environment, @course),
+        class: "invite-friend-form friend-invitation clearfix" do %>
+        <div class="control-group">
+          <div class="control-label">
+            <label for="token-input-user-invitation">Digite um nome e/ou endereço de e-mail para convidar</label>
+          </div>
+          <div class="controls">
+            <input type="text" name="users" id="user-invitation" class="user-invitation" placeholder="Convide Amigos pelo nome ou e-mail">
+          </div>
+        </div>
+        <%= hidden_field_tag "emails", "" %>
+        <%= submit_tag "Convidar", class: "button-success pull-right",
+          disabled: true, title: "Adicione pelo menos uma pessoa para ativá-lo" %>
+      <% end %>
     </div>
-
-    <% unless can? :add_entry, @course %>
-      <div class="content-section">
-        <p class="message-block message-busy">
-          O limite de vagas foi atingido, seus convites não poderão ser aceitos. Faça o upgrade do seu curso, e aumente a capacidade de usuários.
-        </p>
+    <div class="span3">
+      <strong class="course-invite-counter-title icon-members-gray_16_18-before">Membro(s):</strong>
+      <div class="course-invite-counter">
+        <%= content_tag :span, @course.users.count,
+          class: "course-invite-title-highlight" %> / <%= @course.plan.try(:members_limit) || @course.environment.plan.try(:members_limit) %> (<%= number_to_percentage(@course.plan ? @course.percentage_quota_members : @course.environment.percentage_quota_members, precision: 0) %>)
       </div>
-    <% end %>
 
-    <div class="content-section">
-      <div class="row">
-        <div class="span9">
-          <%= form_tag invite_members_environment_course_path(@environment, @course),
-            class: "invite-friend-form friend-invitation clearfix" do %>
-            <div class="control-group">
-              <div class="control-label">
-                <label for="token-input-user-invitation">Digite um nome e/ou endereço de e-mail para convidar</label>
-              </div>
-              <div class="controls">
-                <input type="text" name="users" id="user-invitation" class="user-invitation" placeholder="Convide Amigos pelo nome ou e-mail">
-              </div>
-            </div>
-            <%= hidden_field_tag "emails", "" %>
-            <%= submit_tag "Convidar", class: "button-success pull-right",
-              disabled: true, title: "Adicione pelo menos uma pessoa para ativá-lo" %>
-          <% end %>
-        </div>
-        <div class="span3">
-          <strong class="course-invite-counter-title icon-members-gray_16_18-before">Membro(s):</strong>
-          <div class="course-invite-counter">
-            <%= content_tag :span, @course.users.count,
-              class: "course-invite-title-highlight" %> / <%= @course.plan.try(:members_limit) || @course.environment.plan.try(:members_limit) %> (<%= number_to_percentage(@course.plan ? @course.percentage_quota_members : @course.environment.percentage_quota_members, precision: 0) %>)
-          </div>
-
-          <strong class="course-invite-counter-title icon-invite-gray_16_18-before">Convite(s):</strong>
-          <div class="course-invite-counter">
-            <%= content_tag :span, @course.user_course_invitations.count + @course.user_course_associations.invited.count,
-              class: "course-invite-title-highlight" %>
-          </div>
-        </div>
+      <strong class="course-invite-counter-title icon-invite-gray_16_18-before">Convite(s):</strong>
+      <div class="course-invite-counter">
+        <%= content_tag :span, @course.user_course_invitations.count + @course.user_course_associations.invited.count,
+          class: "course-invite-title-highlight" %>
       </div>
     </div>
   </div>
-  <%= render "courses/breadcrumbs_new", course: @course %>
 </div>
