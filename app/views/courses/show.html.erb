@@ -28,7 +28,8 @@
           <%= render partial: "bootstrap/list_space_item",
             collection: @spaces %>
         </ul>
-        <%= paginate @spaces, theme: "new_endless" %>
+        <%= paginate @spaces, theme: "numbers", outer_window: 1,
+          inner_window: 4 %>
       <% end %>
     <% end %>
   </div>

@@ -19,5 +19,9 @@
         collection: users, locals: { entity: entity } %>
     </ul>
   </div>
-  <%= paginate users, theme: "new_endless" %>
+  <% if users.total_pages > 1 %>
+    <hr class="list-separator">
+  <% end %>
+  <%= paginate users, theme: "numbers",
+    outer_window: 1, inner_window: 4 %>
 <% end %>

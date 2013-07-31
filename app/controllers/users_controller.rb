@@ -402,11 +402,6 @@ class UsersController < BaseController
         render "#{entity.class.to_s.downcase.pluralize}/users/index",
           layout: "new_application"
       end
-      format.js do
-        render_endless 'bootstrap/member_list_item', @users, '.entity-member-list',
-          template: 'shared/new_endless_kaminari',
-          partial_locals: { entity: entity }
-      end
     end
   end
 

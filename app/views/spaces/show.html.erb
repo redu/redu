@@ -23,7 +23,11 @@
             collection: @subjects, locals: { user: current_user } %>
         </ul>
       </div>
-      <%= paginate @subjects, theme: "new_endless" %>
+      <% if @subjects.total_pages > 1 %>
+        <hr class="list-separator">
+      <% end %>
+      <%= paginate @subjects, theme: "numbers", outer_window: 1,
+        inner_window: 4 %>
     <% end %>
   </div>
   <%= render "spaces/breadcrumbs_new", space: @space %>

@@ -18,7 +18,8 @@
         <%= render partial: "bootstrap/list_course_item",
           collection: @courses %>
       </ul>
-      <%= paginate @courses, theme: "new_endless" %>
+      <%= paginate @courses, theme: "numbers", outer_window: 1,
+        inner_window: 4 %>
     <% end %>
   </div>
   <%= render "environments/breadcrumbs_new", environment: @environment %>
