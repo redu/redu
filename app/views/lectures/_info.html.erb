@@ -47,12 +47,6 @@
     </div>
 
     <%# Avaliação. %>
-    <%= content_tag :div, class: "lecture-stars", rel: "tooltip",
-      title: "Avaliação média: #{ pluralize(lecture.rating_average, "estrela") }" do %>
-      <%= ratings_for lecture, remote_options: {
-        url: rate_space_subject_lecture_path(lecture.subject.space,
-                                             lecture.subject,
-                                             lecture) } %>
-    <% end %>
+    <%= render "lectures/rating", lecture: lecture %>
   </div>
 </div>

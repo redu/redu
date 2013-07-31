@@ -1,7 +1,1 @@
-var $link = "<%= escape_javascript ratings_for(@lecture,
-                                               params.merge(:wrap => false), :static,
-                                               :remote_options => {
-                                                 :url => rate_space_subject_lecture_path(@lecture.subject.space,
-                                                                         @lecture.subject,
-                                                                         @lecture)}) %>";
-$('#<%= @lecture.wrapper_dom_id(params) %>').html($link);
+$(".lecture-stars").replaceWith("<%= escape_javascript(render 'lectures/rating', lecture: @lecture) %>");
