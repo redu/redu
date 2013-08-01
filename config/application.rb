@@ -296,7 +296,7 @@ module Redu
     config.assets.ckeditor_path = "#{config.assets.prefix}/ckeditor"
 
     # Layout com bootstrap
-    config.assets.precompile += %w(new_application.js friend-invitation.js basic.js landing.js mobile.js status_show.js bootstrap-affix.js lectures.js exercise-questions.js)
+    config.assets.precompile += %w(new_application.js friend-invitation.js basic.js landing.js mobile.js status_show.js bootstrap-affix.js lectures.js exercise-questions.js folders.js)
     config.assets.precompile += %w(bootstrap-redu.min.css new_application.css basic.css mobile.css authoring-page.css)
 
     # Layout sem bootstrap
