@@ -20,7 +20,7 @@ $(function() {
 
 // Redireciona para aula escolhida.
 $(document).on("change", ".lectures-select", function() {
-  window.location = $(this).val();
+  window.location = $(this).children("option:selected").data("path");
 });
 
 // Acende/apaga as luzes.
