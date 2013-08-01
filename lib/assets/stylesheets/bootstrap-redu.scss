@@ -5803,7 +5803,7 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
 }
 
 .nav-local-balloon-is-lecture-completed {
-  font-size: 13px;
+  font-size: 12px;
   margin-left: 5px;
 }
 .nav-local-balloon-is-lecture-completed.control-checked {
@@ -7044,8 +7044,8 @@ hr {
   float: left;
 }
 .list-1-columns > li:nth-child(1n+1) {
-  margin-left: 0;
   clear: left;
+  margin-left: -1px;
 }
 
 .list-1-columns.list-columns-separator > li {
@@ -7096,8 +7096,8 @@ hr {
   float: left;
 }
 .list-2-columns > li:nth-child(2n+1) {
-  margin-left: 0;
   clear: left;
+  margin-left: -1px;
 }
 
 .list-2-columns.list-columns-separator > li {
@@ -7151,8 +7151,8 @@ hr {
   float: left;
 }
 .list-3-columns > li:nth-child(3n+1) {
-  margin-left: 0;
   clear: left;
+  margin-left: -1px;
 }
 
 .list-3-columns.list-columns-separator > li {
