@@ -24,7 +24,7 @@
   <% elsif result %>
     <div class="exercise-summary exercise-column-left">
       <%= render "users/thumb_legend", user: result.user,
-        legend: time_ago_in_words(result.finalized_at),
+        legend: content_tag(:span, time_ago_in_words(result.finalized_at), class: "legend show"),
         wrapper_class: "exercise-summary-user" %>
 
       <%= questions_review %>

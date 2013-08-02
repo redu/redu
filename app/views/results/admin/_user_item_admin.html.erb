@@ -10,7 +10,7 @@
 <tr>
   <td>
     <%= render "users/thumb_legend", user: user_item_admin.user,
-      legend: time_ago_in_words(user_item_admin.finalized_at),
+      legend: content_tag(:span, time_ago_in_words(user_item_admin.finalized_at), class: "legend show"),
       wrapper_class: "text-left" %>
   </td>
   <%= content_tag :td, detailed_period_of_time(report[:duration]),
