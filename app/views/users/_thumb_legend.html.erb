@@ -17,7 +17,8 @@
       alt: user.display_name, title: user.display_name %>
   <% end %>
   <div class="two-columns-column">
-    <%= link_to user.display_name, user, class: "text-truncate" %>
-    <%= content_tag :span, legend, class: "legend show" %>
+    <%= link_to user.display_name, user, class: "text-truncate",
+      title: user.display_name %>
+    <%= legend %>
   </div>
 <% end %>

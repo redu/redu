@@ -15,5 +15,6 @@
   <% else %>
     <% legend = time_ago_in_words(users_list_item.finalized_at) %>
   <% end %>
-  <%= render "users/thumb_legend", user: users_list_item.user, legend: legend %>
+  <%= render "users/thumb_legend", user: users_list_item.user,
+    legend: content_tag(:span, legend, class: "legend show") %>
 </li>
