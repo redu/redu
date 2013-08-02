@@ -35,12 +35,7 @@ class CoursesController < BaseController
       page(params[:page]).per(Redu::Application.config.items_per_page)
 
     respond_with(@environment, @course) do |format|
-      format.html { render layout: 'new_application' }
-      format.js do
-        render_endless('bootstrap/list_space_item', @spaces,
-                       '.list-space',
-                       template: 'shared/new_endless_kaminari')
-      end
+      format.html { render layout: 'courses/show' }
     end
   end
 
@@ -402,7 +397,7 @@ class CoursesController < BaseController
     @responsibles_associations = responsibles_associations_of(@course)
 
     respond_to do |format|
-      format.html { render layout: 'new_application' }
+      format.html { render layout: 'courses/show' }
     end
   end
 

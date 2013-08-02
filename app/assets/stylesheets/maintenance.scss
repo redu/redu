@@ -1,0 +1,27 @@
+body { background-image: image-url("landing/background.png"); }
+
+.content-body {
+  min-height: inherit;
+  margin: 0 auto;
+  width: 600px;
+  padding: 20px 0 30px 0;
+  margin-top: 250px;
+
+  .call {
+    text-align: center;
+    margin-left: 50px;
+  }
+
+  .logo {
+    height: 200px;
+    width: 200px;
+    margin: 20px auto 0 auto;
+    background: url("simbolo-redu-512px.png");
+    background-size: 200px;
+
+    position: absolute;
+    bottom: -33px;
+    left: -100px;
+    z-index: 1;
+  }
+}

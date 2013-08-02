@@ -1,25 +1,14 @@
-<% content_for :container_class do "entity-wrapper" end %>
-
-<div class="span3">
-  <%= render "environments/sidebar", environment: @environment %>
-</div>
-<div class="span13">
-  <div class="content-body">
-    <%= render "environments/header", environment: @environment %>
-
-    <% if @courses.empty? %>
-      <%= render "shared/empty_message",
-        icon_message: "Nenhum curso.",
-        icon_class: "icon-course-empty_128_130",
-        message: "Este Ambiente não possui nenhum Curso." %>
-    <% else %>
-      <% content_for :container_class do " entity-list-intergation" end %>
-      <ul class="list-course">
-        <%= render partial: "bootstrap/list_course_item",
-          collection: @courses %>
-      </ul>
-      <%= paginate @courses, theme: "new_endless" %>
-    <% end %>
-  </div>
-  <%= render "environments/breadcrumb", environment: @environment %>
-</div>
+<% if @courses.empty? %>
+  <%= render "shared/empty_message",
+    icon_message: "Nenhum curso.",
+    icon_class: "icon-course-gray_128_130",
+    message: "Este Ambiente não possui nenhum Curso." %>
+<% else %>
+  <% content_for :container_class do "entity-list-intergation " end %>
+  <ul class="list-course">
+    <%= render partial: "bootstrap/list_course_item",
+      collection: @courses %>
+  </ul>
+  <%= paginate @courses, theme: "numbers", outer_window: 1,
+    inner_window: 4 %>
+<% end %>

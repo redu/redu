@@ -14,10 +14,14 @@
     message: "Ainda não há #{ t "classy_enum.role.#{ role.singularize }.other" }." %>
 <% else %>
   <div class="content-section">
-    <ul class="entity-member-list list-3-columns clearfix">
+    <ul class="list-3-columns clearfix">
       <%= render partial: 'bootstrap/member_list_item',
         collection: users, locals: { entity: entity } %>
     </ul>
   </div>
-  <%= paginate users, theme: "new_endless" %>
+  <% if users.total_pages > 1 %>
+    <hr class="list-separator">
+  <% end %>
+  <%= paginate users, theme: "numbers",
+    outer_window: 1, inner_window: 4 %>
 <% end %>

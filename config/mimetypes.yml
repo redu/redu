@@ -69,5 +69,18 @@ video:
     'video/parityfec',
     'video/pointer',
     'video/raw',
-    'video/rtx' ]
-audio: ['audio/mpeg', 'audio/mp3', 'audio/amr']
+    'video/rtx',
+    'application/x-mpegURL',
+    'video/x-ms-wmv']
+audio:
+  [ 'audio/mpeg',
+    'audio/mp3',
+    'audio/amr',
+    'audio/basic',
+    'audio/L24',
+    'audio/mp4',
+    'audio/ogg',
+    'audio/vorbis',
+    'audio/vnd.rn-realaudio',
+    'audio/vnd.wave',
+    'audio/webm']

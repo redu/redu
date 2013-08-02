@@ -67,7 +67,7 @@ class SpacesController < BaseController
       if @space
         @status = Status.new
 
-        format.html { render layout: 'new_application' }
+        format.html { render layout: 'spaces/show' }
         format.js do
           render_endless 'statuses/item', @statuses, '#statuses',
             template: 'shared/new_endless_kaminari'
@@ -96,13 +96,7 @@ class SpacesController < BaseController
       per(Redu::Application.config.items_per_page)
 
     respond_to do |format|
-      format.html { render layout: 'new_application' }
-      format.js do
-        render_endless('bootstrap/list_subject_item', @subjects,
-                       '.list-subject',
-                       template: 'shared/new_endless_kaminari',
-                       partial_locals: { user: current_user } )
-      end
+      format.html { render layout: 'spaces/show' }
     end
   end
 

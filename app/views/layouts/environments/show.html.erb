@@ -1,0 +1,17 @@
+<% content_for :content do %>
+  <% content_for :container_class do "entity-wrapper" end %>
+
+  <div class="span3">
+    <%= render "environments/sidebar", environment: @environment %>
+  </div>
+  <div class="span13">
+    <div class="content-body">
+      <%= render "environments/header", environment: @environment %>
+
+      <%= yield %>
+    </div>
+    <%= render "environments/breadcrumb", environment: @environment %>
+  </div>
+<% end %>
+
+<%= render template: "layouts/new_application" %>

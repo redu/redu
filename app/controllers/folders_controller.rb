@@ -77,7 +77,7 @@ class FoldersController < BaseController
     list(params[:id])
 
     respond_to do |format|
-      format.html { render layout: 'new_application' }
+      format.html { render layout: 'spaces/show' }
       format.js { render partial: 'index', locals: { space: @space, folder: @folder,
         folders: @folders, can_update: @can_update, can_delete: @can_delete,
         myfiles: @myfiles, myfile: @myfile } }

@@ -1,23 +1,15 @@
-<% content_for :container_class do "entity-wrapper" end %>
+<% content_for :header_scripts_and_styles do %>
+  <%= javascript_include_tag "folders" %>
+<% end %>
 
-<div class="span3">
-  <%= render "spaces/sidebar_new", space: @space, user: current_user %>
+<div class="content-section">
+  <h3 class="header-breadcrumb-big icon-file-gray_32_34-before">Arquivos de Apoio</h3>
 </div>
-<div class="span13">
-  <div class="content-body">
-    <%= render "spaces/header", space: @space %>
 
-    <div class="content-section">
-      <h3 class="header-breadcrumb-big icon-file-gray_32_34-before">Arquivos de Apoio</h3>
-    </div>
+<%= render "admin", space: @space, folder: @folder, myfile: @myfile %>
 
-    <%= render "admin", space: @space, folder: @folder, myfile: @myfile %>
-
-    <div class="content-section">
-      <%= render "list", space: @space, folder: @folder,
-        folders: @folders, can_update: @can_update, can_delete: @can_delete,
-        myfiles: @myfiles %>
-    </div>
-  </div>
-  <%= render "spaces/breadcrumbs_new", space: @space %>
+<div class="content-section">
+  <%= render "list", space: @space, folder: @folder,
+    folders: @folders, can_update: @can_update, can_delete: @can_delete,
+    myfiles: @myfiles %>
 </div>

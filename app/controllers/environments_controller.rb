@@ -34,12 +34,7 @@ class EnvironmentsController < BaseController
       per(Redu::Application.config.items_per_page)
 
     respond_to do |format|
-      format.html { render layout: 'new_application' }
-      format.js do
-        render_endless('bootstrap/list_course_item', @courses,
-                       '.list-course',
-                       template: 'shared/new_endless_kaminari')
-      end
+      format.html { render layout: 'environments/show' }
       format.xml  { render :xml => @environment }
     end
   end
@@ -173,12 +168,7 @@ class EnvironmentsController < BaseController
       per(Redu::Application.config.items_per_page)
 
     respond_to do |format|
-      format.html { render 'show', layout: 'new_application' }
-      format.js do
-        render_endless('bootstrap/list_course_space_item', @courses,
-                       '.list-course',
-                       template: 'shared/new_endless_kaminari')
-      end
+      format.html { render 'show', layout: 'environments/show' }
       format.xml  { render :xml => @environment }
     end
   end
