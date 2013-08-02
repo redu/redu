@@ -190,11 +190,8 @@ class EnvironmentsController < BaseController
       per(Redu::Application.config.items_per_page)
 
     respond_to do |format|
-      format.html { render "environments/admin/admin_members" }
-      format.js do
-        render_endless 'environments/admin/user_item_admin', @memberships,
-          '#user_list_table'
-      end
+      format.html { render 'environments/admin/admin_members',
+                           layout: 'environments/admin' }
     end
   end
 

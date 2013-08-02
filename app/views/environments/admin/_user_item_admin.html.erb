@@ -1,24 +1,31 @@
-<tr id="user-<%= user_item_admin.user_id %>" class="row">
-  <td class="cell checkbox-cell centered-cell"><%= check_box_tag 'users[]', user_item_admin.user.id, false,
-    {:class => "autoCheck", :id => "remove-#{user_item_admin.user.id}"}  %></td>
-  <td class="cell member-cell centered-cell">
-    <%= image_tag user_item_admin.user.avatar(:thumb_32), :class => "avatar", :size => "32x32" %>
-    <div class="member-info">
-      <%= link_to user_item_admin.user.display_name, user_item_admin.user,
-        :rarget => "_blank", :class => "member-name" %>
-      <span class="member-detail">Último login em <%= user_item_admin.user.last_login_at && l(user_item_admin.user.last_login_at, :format => :admin) %></span>
-      <span class="member-detail">Inscrito em <%= user_item_admin.created_at && l(user_item_admin.created_at, :format => :admin) %></span>
-    </div>
+<%#
+  Membro da lista de gerenciamento de papéis de ambiente.
+
+  Variável:
+    user_item_admin: um membro.
+    environment: o ambiente.
+%>
+
+<tr>
+  <td class="entity-management-members-column-user">
+    <% legend = content_tag :span,
+      "Último login em #{ user_item_admin.user.last_login_at && l(user_item_admin.user.last_login_at, format: :admin) }", class: "legend show" %>
+    <% legend << content_tag(:span,
+      "Inscrito em #{ user_item_admin.created_at && l(user_item_admin.created_at, format: :admin) }",
+      class: "legend show") %>
+    <%= render "users/thumb_legend", user: user_item_admin.user, legend: legend %>
   </td>
-  <td class="cell centered-cell">
-    <span class="member-detail">
-      <span class="icon-course-gray_16_18-before">
-        Matriculado em <%= user_item_admin.user.courses.of_environment(@environment).count %> curso(s)
-      </span>
-    </span>
+  <td>
+    <%= content_tag :span,
+      "Matriculado em #{ pluralize(user_item_admin.user.courses.of_environment(environment).count, "curso") }",
+      class: "icon-course-gray_16_18-before legend" %>
   </td>
-  <td class="cell centered-cell">
-    <%= link_to "Papéis", environment_user_roles_path(@environment, user_item_admin.user),
-      :class => "option icon-manage-gray_8_10-before"%>
+  <td>
+    <%= link_to "Papéis",
+      environment_user_roles_path(environment, user_item_admin.user),
+      class: "icon-manage-lightblue_8_10-before link-secondary" %>
+  </td>
+  <td>
+    <%= check_box_tag "users[]", user_item_admin.user.id, false %>
   </td>
 </tr>

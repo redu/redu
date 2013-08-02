@@ -1,0 +1,40 @@
+<%#
+  Filtro de papéis de membros.
+%>
+
+<div class="entity-management-members-input form-search area-fix">
+  <%= text_field_tag :search_user, nil, class: "control-area area-infix",
+    placeholder: "Nome do membro" %>
+  <button class="button-default area-suffix" type="submit">
+    <span class="control-search-icon icon-magnifier-gray_16_18 text-replacement">Buscar</span>
+  </button>
+</div>
+
+<%= field_set_tag "Filtrar por papel:", class: "entity-management-members-filters" do %>
+  <ul class="entity-management-members-filters-list">
+    <li class="entity-management-members-filters-list-item">
+      <%= check_box_tag "role_filter[]", Role[:member], false,
+        id: "role_filter_#{ Role[:member] }" %>
+      <%= label_tag "role_filter_#{ Role[:member] }",
+        t("classy_enum.role.member") %>
+    </li>
+    <li class="entity-management-members-filters-list-item">
+      <%= check_box_tag  "role_filter[]", Role[:tutor], false,
+        id: "role_filter_#{ Role[:tutor] }" %>
+      <%= label_tag "role_filter_#{ Role[:tutor] }",
+        t("classy_enum.role.tutor.one") %>
+    </li>
+    <li class="entity-management-members-filters-list-item">
+      <%= check_box_tag "role_filter[]", Role[:teacher], false,
+        id: "role_filter_#{ Role[:teacher] }" %>
+      <%= label_tag "role_filter_#{ Role[:teacher] }",
+        t("classy_enum.role.teacher.one") %>
+    </li>
+    <li class="entity-management-members-filters-list-item">
+      <%= check_box_tag "role_filter[]", Role[:environment_admin], false,
+        id: "role_filter_#{ Role[:environment_admin] }" %>
+      <%= label_tag "role_filter_#{ Role[:environment_admin] }",
+        t("classy_enum.role.admin") %>
+    </li>
+  </ul>
+<% end %>

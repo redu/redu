@@ -1,37 +1,24 @@
-<%= render :partial => 'shared/management_background' %>
-<div class="management-sidebar">
-  <%= render :partial => 'environments/sidebar', :locals => { :environment => @environment } %>
+<% content_for :header_scripts_and_styles do %>
+  <%= javascript_include_tag "entity-management-members-filter" %>
+<% end %>
+
+<div class="content-section clearfix">
+  <%= content_tag(:h3,
+    "#{ pluralize(@environment.users.count, "membro") } e #{ @environment.courses.count } #{ t("hierarchy.course", count: @environment.courses.count).downcase }",
+    class: "entity-management-count") %>
 </div>
-<div class="main grid_12 omega big-col management-wrapper">
-  <%= render :partial => 'environments/breadcrumbs',
-    :locals => { :environment => @environment } %>
 
-  <%= render :partial => 'environments/admin/header',
-    :locals => { :environment => @environment } %>
-
-  <div id="environment-manage" class="body management">
-    <%= render :partial => 'environments/admin/clean_header' %>
-
-    <%= tabs :environments_admin do %>
-      <h3 class="form-header-closer">
-        <%= @environment.users.count %> membro(s) e <%= @environment.courses.count %> curso(s)
-      </h3>
-
-    <% if @memberships && @memberships.size > 0 %>
-      <%= form_tag search_users_admin_environment_path(@environment), :remote => true, :class => "admin-filter-form" do %>
-        <%= render :partial => "shared/admin/filter_members_form" %>
-      <% end %>
-
-      <div id="user_list">
-        <%= render :partial => 'environments/admin/user_list_admin',
-          :locals => {:memberships => @memberships}%>
-      </div>
-    <% else %>
-      <div class="box_notice">Não há usuários no ambiente.</div>
-    <% end %>
-
-    <%= paginate @memberships, :theme => 'endless' %>
-    <%= link_to "Sair", environment_path(@environment), :class => "manage exit icon-manage-gray_8_10-before" %>
+<%= form_tag search_users_admin_environment_path(@environment), remote: true,
+  class: "entity-mangement-members-filter-form clearfix" do %>
+  <%= render "shared/admin/filter_members_form_new" %>
+<% end %>
+<div class="environment-management-member-search-result">
+  <% if @memberships.blank? %>
+    <%= render "shared/empty_message", icon_message: "Nenhum membro.",
+      icon_class: "icon-member-empty_128_130",
+      message: "Este Ambiente não possui membros." %>
+  <% else %>
+    <%= render "environments/admin/user_list_admin", memberships: @memberships,
+      environment: @environment %>
   <% end %>
 </div>
-</div><!-- end #environment-edit -->

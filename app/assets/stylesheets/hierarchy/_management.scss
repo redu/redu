@@ -76,3 +76,57 @@
 .entity-management-list-item-icon { width: 16px + 5px; }
 
 .entity-management-list-item-action { width: 10%; }
+
+
+// Lista de gerenciamento de membros.
+// ==========================================================================
+
+.entity-mangement-members-filter-form {
+  background-color: $gray1;
+  padding: 10px 20px;
+}
+
+.entity-management-members-input { float: left; }
+
+.entity-management-members-input +
+.entity-management-members-filters { margin-left: 20px; }
+
+.entity-management-members-filters {
+  float: right;
+  overflow: hidden;
+  color: $gray5;
+
+  legend {
+    font-weight: bold;
+    float: left;
+
+    & +
+    .entity-management-members-filters-list { margin-left: 5px; }
+  }
+}
+
+$entity-management-members-filters-list-item-width: 100px;
+
+.entity-management-members-filters-list {
+  margin: 0;
+  list-style: none;
+  float: left;
+  width: 5px + $entity-management-members-filters-list-item-width * 2;
+}
+
+.entity-management-members-filters-list-item {
+  display: inline-block;
+  width: $entity-management-members-filters-list-item-width;
+}
+
+.entity-mangement-members-filter-form +
+.environment-management-member-search-result { margin-top: 10px; }
+
+.environment-management-member-search-result {
+  .form-checklist tr:hover a { color: $link-color-hover; }
+}
+
+.entity-management-members-column-user { width: 50%; }
+.entity-management-members-column-course { width: 25%}
+.entity-management-members-column-permissions { width: 14%; }
+.entity-management-members-column-checkbox { width: 3%; }
