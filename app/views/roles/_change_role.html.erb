@@ -1,17 +1,30 @@
-<% is_admin = membership.role.environment_admin? %>
-<div class="make-admin icon-environment_admin-<%= is_admin ? "lightblue" : "gray" %>_16_18-after">
-  <% if is_admin %>
-  <span class="current-role strong">Administrador</span>
-    <%= link_to "Remover papel de administrador",
-      environment_user_roles_path(@environment, membership.user,
-                             :role => Role[:member]),
-      :remote => true, :method => :post, :class => "option" %>
-  <% else %>
-   <%= link_to "< voltar para a lista de membros", admin_members_environment_path(@environment), :class => "member-list link-secondary" %>
-  <span class="current-role">O membro não possui nível de administrador</span>
-    <%= link_to "Tornar administrador",
-      environment_user_roles_path(@environment, membership.user,
-                             :role => Role[:environment_admin]),
-      :remote => true, :method => :post, :class => "option" %>
-  <% end %>
+<%#
+  Links de voltar e remover/tornar membro administrador.
+
+  Variáveis:
+    environment: o ambiente.
+    membership: a associação do usuário ao ambiente.
+%>
+
+<div class="entity-management-role-header pull-right">
+  <%= link_to "< voltar para a lista de membros",
+    admin_members_environment_path(environment),
+    class: "pull-right link-secondary" %>
+
+  <div class="entity-management-role-header-admin text-right">
+    <% if membership.role.environment_admin? %>
+      <p>Administrador</p>
+      <%= link_to "Remover papel de administrador",
+        environment_user_roles_path(environment, membership.user,
+                                    role: Role[:member]),
+        remote: true, method: :post,
+        class: "icon-manager-lightblue_16_18-before" %>
+    <% else %>
+      <p>O membro não possui nível de administrador</p>
+      <%= link_to "Tornar administrador",
+        environment_user_roles_path(environment, membership.user,
+                                    role: Role[:environment_admin]),
+        remote: true, method: :post, class: "icon-manager-gray_16_18-before" %>
+    <% end %>
+  </div>
 </div>

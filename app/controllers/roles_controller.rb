@@ -13,7 +13,7 @@ class RolesController < BaseController
 
     respond_to do |format|
       format.html do
-        render template: "roles/show"
+        render 'roles/show', layout: 'environments/admin'
       end
     end
   end

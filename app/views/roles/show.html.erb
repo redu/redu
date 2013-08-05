@@ -1,74 +1,22 @@
-<%= render :partial => 'shared/management_background' %>
-<div class="management-sidebar">
-  <%= render :partial => 'environments/sidebar', :locals => { :environment => @environment } %>
+<div class="content-section">
+  <div class="clearfix">
+    <%= content_tag(:h3,
+      raw("Papéis e permissões de #{ link_to @user.display_name, @user, class: "link-name" }"),
+      class: "entity-management-role-header entity-management-count") %>
+
+    <%= render "roles/change_role", environment: @environment,
+      membership: @environment_membership %>
+  </div>
+
+  <%= render "users/thumb_legend", user: @user,
+    wrapper_class: "entity-management-role-member",
+    legend: content_tag(:span,
+                        "Inscreveu-se há #{ time_ago_in_words(@environment_membership.created_at) }",
+                        class: "legend show") %>
+
+  <div class="entity-management-role-table">
+    <%= render partial: "roles/change_role_form", collection: @courses_memberships,
+      locals: { environment: @environment, user: @user,
+                is_admin: @environment_membership.role.environment_admin? } %>
+  </div>
 </div>
-<div class="main grid_12 omega big-col management-wrapper">
-  <%= render :partial => 'environments/breadcrumbs',
-    :locals => { :environment => @environment } %>
-
-  <%= render :partial => 'environments/admin/header',
-    :locals => { :environment => @environment } %>
-
-  <div id="environment-manage" class="body management">
-    <%= render :partial => "environments/admin/clean_header" %>
-
-    <%= tabs :environments_admin do %>
-      <h3 class="form-header">
-        Papéis e permissões de <%= link_to @user.display_name, user_path(@user), :class => "strong" %>
-      </h3>
-      <%= render :partial => 'roles/change_role', :locals => { :membership => @environment_membership } %>
-    <div class="role-user-info">
-      <%= image_tag @user.avatar(:thumb_32), :class => "avatar", :size => "32x32" %>
-      <%= link_to @user.email, @user, :class => "call" %>
-      <span class="info">Inscreveu-se há <%= time_ago_in_words(@environment_membership.created_at) %></span>
-    </div>
-    <% is_admin = @environment_membership.role.environment_admin? %>
-    <% @courses_memberships.each do |membership| %>
-      <%= form_tag environment_course_user_roles_path(@environment, membership.course, @user), :method => :post do %>
-        <table class="admin-role-table">
-          <thead style="display: none;">
-            <tr>
-              <th>Curso</th>
-              <th>Papel</th>
-              <th>Editar</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <% if is_admin %>
-                <td class="edit-roles">
-                  <div class="box_notice">Este usuário é administrador do ambiente. Seu papel não pode ser mudado.</div>
-                </td>
-                <td class="course-cell">
-                  <%= link_to membership.course.name,
-                    environment_course_path(@environment, membership.course), :class => "course-name" %>
-                </td>
-                <td class="edit-cell">
-                </td>
-              <% else %>
-                <td class="edit-roles">
-                  <%= label_tag "role_#{Role[:teacher]}", "Professor", :class => "label " %>
-                  <%= radio_button_tag :role, Role[:teacher], membership.role.teacher? ? true : false, :class => "input-checkbox"  %>
-                  <%= label_tag "role_#{Role[:member]}", "Membro", :class => "label" %>
-                  <%= radio_button_tag :role, Role[:member], membership.role.member? ? true : false , :class => "input-checkbox" %>
-                  <%= label_tag "role_#{Role[:tutor]}", "Tutor", :class => "label" %>
-                  <%= radio_button_tag :role, Role[:tutor], membership.role.tutor? ? true : false, :class => "input-checkbox"  %>
-                </td>
-                <td class="course-cell">
-                  <%= link_to membership.course.name,
-                    environment_course_path(@environment, membership.course), :class => "course-name" %>
-                </td>
-                <td class="edit-cell">
-                  <%= submit_tag "Alterar", :class => "concave-button" %>
-                </td>
-              <% end %>
-            </tr>
-          </tbody>
-        </table>
-      <% end %>
-    <% end %>
-  <% end %>
-  <%= link_to "Sair", environment_path(@environment), :class => "manage exit icon-manage-gray_8_10-before" %>
-</div>
-</div>
-

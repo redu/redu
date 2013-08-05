@@ -130,3 +130,24 @@ $entity-management-members-filters-list-item-width: 100px;
 .entity-management-members-column-course { width: 25%}
 .entity-management-members-column-permissions { width: 14%; }
 .entity-management-members-column-checkbox { width: 3%; }
+
+.entity-management-role-header { width: 50%; }
+
+.entity-management-role-header-admin {
+  clear: both;
+  padding-top: 20px;
+  color: $gray5;
+}
+
+.entity-management-role-member +
+.entity-management-role-table { margin-top: 20px; }
+
+.entity-management-role-table {
+  form:first-of-type tbody tr:first-child td {
+    border-top: 1px solid $gray3;
+  }
+}
+
+.entity-management-role-column-role { width: 23%; }
+
+.entity-management-role-column-button { width: 12%; }

@@ -21,9 +21,7 @@ module EnvironmentsAdminNavigation
         :highlights_on => action_matcher({'environments' => ['admin_members'],
                                           'roles' => ['index']}),
         :class => 'tab',
-        :link => { :class => "tab-title icon-members-lightblue_16_18-before" },
-        :details => { :text => 'papéis', :class => 'details',
-                      :if => action_matcher({'roles' => ['index']})}
+        :link => { :class => "tab-title icon-members-lightblue_16_18-before" }
       # TODO: Link para nova aba de licenças e planos.
       tabs.item :plans, 'Licenças / Faturas', "#",
         class: 'tab',
