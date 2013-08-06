@@ -209,6 +209,7 @@ Redu::Application.routes.draw do
         get :preview
         get :admin_courses
         get :admin_members
+        get :admin_plans
         post :destroy_members
         post :search_users_admin
       end

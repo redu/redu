@@ -1,0 +1,43 @@
+<div class="content-section">
+  <h4 class="environment-licenses-title">Licenças em uso:
+    <%= content_tag :span, licenses_in_use(@licences_in_use), class: "environment-licenses-title-value" %>
+    <% tooltip_text = "As licenças são apenas contabilizadas quando você convida alguém para participar de um Curso Privado" %>
+    <%= content_tag :span, tooltip_text, rel: "tooltip", title: tooltip_text,
+      class: "environment-licenses-title-tooltip icon-info-tooltip-lightblue_16_18 text-replacement" %>
+  </h4>
+  <p class="legend">Total de licenças em uso nos Cursos deste Ambiente.</p>
+
+  <table class="table-without-borderradius">
+    <thead>
+      <tr>
+        <th>Nome do Curso</th>
+        <th class="text-center">Tipo</th>
+        <th class="text-center">Armazenamento</th>
+        <th class="text-center">Licenças</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render partial: "environments/admin/license", collection: @licenses %>
+    </tbody>
+  </table>
+</div>
+
+<hr class="list-separator">
+
+<div class="content-section">
+  <h4 class="environment-licenses-title">Faturas</h4>
+
+  <div class="environment-invoices-box">
+    <div class="environment-invoices-box-row">
+      <div class="environment-invoices-box-row-cell environment-invoices-box-title">
+        Próxima fatura
+      </div>
+    </div>
+    <div class="environment-invoices-box-row">
+      <div class="environment-invoices-box-row-cell">
+        <p>Não há fatura para este Ambiente.</p>
+        <%= link_to "Crie um Curso Privado", "#" %>
+      </div>
+    </div>
+  </div>
+</div>

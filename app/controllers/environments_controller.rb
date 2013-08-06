@@ -258,4 +258,27 @@ class EnvironmentsController < BaseController
       end
     end
   end
+
+  def admin_plans
+    # TODO: Back-end.
+    # Exemplo de faturas vazia.
+    @licences_in_use = 0
+    @licenses = [
+      { course: { name: "Curso Lorem Ipsum Sit Dolor",
+                  link: "http://www.google.com",
+                  type: :public,
+                  storage: 0,
+                  quota: {
+                    space: "0 MB",
+                    documents: "0 MB",
+                    videos: "0 MB"
+                  },
+                  licenses: 0, }
+      }]
+
+    respond_to do |format|
+      format.html { render 'environments/admin/admin_plans',
+                           layout: 'environments/admin' }
+    end
+  end
 end

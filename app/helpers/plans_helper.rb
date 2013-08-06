@@ -22,4 +22,13 @@ module PlansHelper
   def bytes_to_mb(bytes)
     number_with_precision((bytes / 1.megabyte.to_f), :precision => 2)
   end
+
+  # Formata a quantidade de licensas em uso. Em caso de 0, "–" é usado.
+  def licenses_in_use(licenses)
+    if licenses == 0
+      "–"
+    else
+      licenses
+    end
+  end
 end

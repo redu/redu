@@ -151,3 +151,72 @@ $entity-management-members-filters-list-item-width: 100px;
 .entity-management-role-column-role { width: 23%; }
 
 .entity-management-role-column-button { width: 12%; }
+
+
+// Licenças / Faturas.
+// ==========================================================================
+
+.environment-licenses-title,
+.environment-licenses-table-in-use { color: $gray6; }
+
+.environment-licenses-title-value { color: $black; }
+
+.environment-licenses-title-value +
+.environment-licenses-title-tooltip { margin-left: 15px; }
+
+.environment-licenses-title-tooltip {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.environment-licenses-title +
+.environment-invoices-box { margin-top: 20px; }
+
+.environment-invoices-box {
+  @include box-shadow(0 1px 0 $gray3);
+  @include border-radius(10px);
+
+  .cssgradients & { @include redu-gradient($gray2, $gray1, 0.3); }
+
+  .no-cssgradients & {
+    // http://www.colorzilla.com/gradient-editor/#f7f7f7+0,f0f0f0+100;Custom
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2Y3ZjdmNyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmMGYwZjAiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+  }
+}
+
+$environment-invoices-box-border: $gray3;
+$environment-invoices-box-shadow-inset: $white;
+
+.environment-invoices-box-row-cell {
+  @include box-sizing;
+  padding: 10px;
+  width: 50%;
+  color: $gray5;
+  text-align: center;
+  float: left;
+
+  &:only-child { width: 100%; }
+
+  & +
+  & {
+    border-left: 1px solid $environment-invoices-box-border;
+    @include box-shadow(-1px 0 0 $environment-invoices-box-shadow-inset);
+  }
+}
+
+.environment-invoices-box-row {
+  @include box-sizing;
+  overflow: hidden;
+
+  & +
+  & {
+    border-top: 1px solid $environment-invoices-box-border;
+    @include box-shadow(0 1px 0 $environment-invoices-box-shadow-inset inset);
+  }
+}
+
+.environment-invoices-box-title {
+  font: 100 18px/21px $museo-sans;
+  letter-spacing: -1px;
+  color: $gray6;
+}
