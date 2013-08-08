@@ -40,7 +40,7 @@
 
     <%# Licenças e faturas. %>
     <%# TODO: Back-end. %>
-    <% if environment.plan %>
+    <% if @screen == :to_pay %>
       <div class="entity-sidebar-widget content-body">
         <div class="entity-sidebar-widget-section">
           <span class="entity-sidebar-widget-title icon-plan-lightblue_16_18-before" rel="tooltip" title="As licenças são apenas contabilizadas quando você convida alguém para participar de um um Curso Privado.">Licenças</span>
@@ -48,12 +48,12 @@
         <hr class="entity-sidebar-widget-separator">
         <div class="entity-sidebar-widget-section">
           <span class="entity-sidebar-widget-legend">Licenças em uso:</span>
-          20
+          <%= licenses_in_use(@licences_in_use) %>
         </div>
         <hr class="entity-sidebar-widget-separator">
         <div class="entity-sidebar-widget-section">
           <span class="entity-sidebar-widget-legend show">Valor previsto:</span>
-          R$12,00
+          <%= number_to_currency(@invoices[1][:total]) %>
         </div>
         <hr class="list-separator">
         <div class="entity-sidebar-widget-section">
@@ -62,12 +62,13 @@
         <hr class="entity-sidebar-widget-separator">
         <div class="entity-sidebar-widget-section">
           <span class="entity-sidebar-widget-legend">Valor:</span>
-          <%= content_tag :span, "R$11,00", class: plan_payment_status_class(environment.plan) %>
+          <%= content_tag :span, number_to_currency(@invoices[1][:total]),
+            class: "plan-status-pending" %>
         </div>
         <hr class="entity-sidebar-widget-separator">
         <div class="entity-sidebar-widget-section">
           <span class="entity-sidebar-widget-legend show">Vencimento:</span>
-          01/04/2013
+          <%= @invoices[1][:end] %>
         </div>
         <hr class="entity-sidebar-widget-separator">
         <div class="entity-sidebar-widget-section entity-sidebar-widget-section-button centralize">
@@ -84,7 +85,7 @@
         <hr class="entity-sidebar-widget-separator">
         <div class="entity-sidebar-widget-section">
           <span class="entity-sidebar-widget-legend">Licenças em uso:</span>
-          -
+          <%= licenses_in_use(@licences_in_use) %>
         </div>
         <hr class="list-separator">
         <div class="entity-sidebar-widget-section">
@@ -103,7 +104,7 @@
         <hr class="entity-sidebar-widget-separator">
         <div class="entity-sidebar-widget-section">
           <span class="entity-sidebar-widget-legend">Licenças em uso:</span>
-          20
+          <%= licenses_in_use(@licences_in_use) %>
         </div>
         <hr class="list-separator">
         <div class="entity-sidebar-widget-section">

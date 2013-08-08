@@ -14,14 +14,16 @@
     <%= invoice[:end] %>
   </td>
   <td>
-    <%= invoice[:state] %>
+    <%= content_tag :span, invoice[:state],
+      class: "#{ "plan-status-pending" if invoice[:state] == "A pagar" }" %>
   </td>
   <td>
-    <%= licenses_in_use(invoice[:total]) %>
+    <%= licenses_in_use(number_to_currency(invoice[:total])) %>
   </td>
   <td>
     <% if invoice[:total] > 0 %>
-
+      <%= link_to "Ver detalhes", "#" %> •
+      <%= link_to "Pagar", "#" %>
     <% else %>
       <%= licenses_in_use(0) %>
     <% end %>

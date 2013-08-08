@@ -261,7 +261,7 @@ class EnvironmentsController < BaseController
 
   def admin_plans
     # TODO: Back-end.
-    @screen = :first
+    @screen = :to_pay
     case @screen
     when :empty
       # Exemplo de faturas vazia.
@@ -300,6 +300,36 @@ class EnvironmentsController < BaseController
           end: "01/05/2013",
           state: "Em uso",
           total: 0
+        }
+      ]
+    when :to_pay
+      # Exemplo de fatura a pagar.
+      @licenses = [
+        { course: {
+            name: "Curso Lorem Ipsum Sit Dolor 2",
+            link: "http://www.google.com.br",
+            type: :private,
+            storage: 80,
+            quota: {
+              space: "800 MB",
+              documents: "400 MB",
+              videos: "400 MB"
+            },
+            licenses: 4 }
+        }]
+      @licences_in_use = 4
+      @invoices = [
+        {
+          begin: "02/04/2013",
+          end: "01/05/2013",
+          state: "Em uso",
+          total: 0
+        },
+        {
+          begin: "02/03/2013",
+          end: "01/04/2013",
+          state: "A pagar",
+          total: 12
         }
       ]
     end

@@ -25,7 +25,7 @@ module PlansHelper
 
   # Formata a quantidade de licensas em uso. Em caso de 0, "–" é usado.
   def licenses_in_use(licenses)
-    if licenses == 0
+    if licenses == 0 || licenses == "R$ 0,00"
       "–"
     else
       licenses
