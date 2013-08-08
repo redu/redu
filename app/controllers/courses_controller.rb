@@ -41,7 +41,7 @@ class CoursesController < BaseController
 
   def edit
     respond_to do |format|
-      format.html { render 'courses/admin/edit' }
+      format.html { render 'courses/admin/edit', layout: 'courses/admin' }
     end
   end
 
