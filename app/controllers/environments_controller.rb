@@ -261,20 +261,48 @@ class EnvironmentsController < BaseController
 
   def admin_plans
     # TODO: Back-end.
-    # Exemplo de faturas vazia.
-    @licences_in_use = 0
-    @licenses = [
-      { course: { name: "Curso Lorem Ipsum Sit Dolor",
-                  link: "http://www.google.com",
-                  type: :public,
-                  storage: 0,
-                  quota: {
-                    space: "0 MB",
-                    documents: "0 MB",
-                    videos: "0 MB"
-                  },
-                  licenses: 0, }
-      }]
+    @screen = :first
+    case @screen
+    when :empty
+      # Exemplo de faturas vazia.
+      @licenses = [
+        { course: { name: "Curso Lorem Ipsum Sit Dolor",
+                    link: "http://www.google.com",
+                    type: :public,
+                    storage: 0,
+                    quota: {
+                      space: "0 MB",
+                      documents: "0 MB",
+                      videos: "0 MB"
+                    },
+                    licenses: 0 }
+        }]
+      @licences_in_use = 0
+    when :first
+      # Exemplo de primeira fatura.
+      @licenses = [
+        { course: {
+            name: "Curso Lorem Ipsum Sit Dolor 2",
+            link: "http://www.google.com.br",
+            type: :private,
+            storage: 80,
+            quota: {
+              space: "800 MB",
+              documents: "400 MB",
+              videos: "400 MB"
+            },
+            licenses: 20 }
+        }]
+      @licences_in_use = 20
+      @invoices = [
+        {
+          begin: "02/04/2013",
+          end: "01/05/2013",
+          state: "Em uso",
+          total: 0
+        }
+      ]
+    end
 
     respond_to do |format|
       format.html { render 'environments/admin/admin_plans',

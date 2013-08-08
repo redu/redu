@@ -220,3 +220,17 @@ $environment-invoices-box-shadow-inset: $white;
   letter-spacing: -1px;
   color: $gray6;
 }
+
+.environment-invoices-box +
+.environment-invoices-table { margin-top: 20px; }
+
+.environment-invoices-table {
+  color: $gray6;
+
+  th,
+  td { text-align: center; }
+}
+
+tr.environment-invoices-in-use {
+  td { background-color: $green1; }
+}

@@ -75,7 +75,8 @@
             title: "O Redu utiliza a solução mais completa para pagamento online, o PagSeguro, com total sigilo dos seus dados financeiros." %>
         </div>
       </div>
-    <% else %>
+
+    <% elsif @screen == :empty %>
       <div class="entity-sidebar-widget content-body">
         <div class="entity-sidebar-widget-section">
           <span class="entity-sidebar-widget-title icon-plan-lightblue_16_18-before" rel="tooltip" title="As licenças são apenas contabilizadas quando você convida alguém para participar de um um Curso Privado.">Licenças</span>
@@ -94,6 +95,23 @@
           <span class="entity-sidebar-widget-legend">Não há fatura para este Ambiente.</span>
         </div>
       </div>
+    <% elsif @screen == :first %>
+      <div class="entity-sidebar-widget content-body">
+        <div class="entity-sidebar-widget-section">
+          <span class="entity-sidebar-widget-title icon-plan-lightblue_16_18-before" rel="tooltip" title="As licenças são apenas contabilizadas quando você convida alguém para participar de um um Curso Privado.">Licenças</span>
+        </div>
+        <hr class="entity-sidebar-widget-separator">
+        <div class="entity-sidebar-widget-section">
+          <span class="entity-sidebar-widget-legend">Licenças em uso:</span>
+          20
+        </div>
+        <hr class="list-separator">
+        <div class="entity-sidebar-widget-section">
+          <span class="entity-sidebar-widget-legend">Valor previsto:</span>
+          R$12,00
+        </div>
+      </div>
+
     <% end %>
 
   <%# Normal. %>

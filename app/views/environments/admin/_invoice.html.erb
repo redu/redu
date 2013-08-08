@@ -1,0 +1,29 @@
+<%#
+  Item da coleção de faturas.
+
+  Variáveis:
+    invoice: as informações da fatura.
+%>
+
+<%= content_tag :tr,
+  class: "#{ "environment-invoices-in-use" if invoice[:state] == "Em uso" }" do %>
+  <td>
+    <%= invoice[:begin] %>
+  </td>
+  <td>
+    <%= invoice[:end] %>
+  </td>
+  <td>
+    <%= invoice[:state] %>
+  </td>
+  <td>
+    <%= licenses_in_use(invoice[:total]) %>
+  </td>
+  <td>
+    <% if invoice[:total] > 0 %>
+
+    <% else %>
+      <%= licenses_in_use(0) %>
+    <% end %>
+  </td>
+<% end %>

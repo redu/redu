@@ -27,17 +27,49 @@
 <div class="content-section">
   <h4 class="environment-licenses-title">Faturas</h4>
 
-  <div class="environment-invoices-box">
-    <div class="environment-invoices-box-row">
-      <div class="environment-invoices-box-row-cell environment-invoices-box-title">
-        Próxima fatura
+  <% if @screen == :empty %>
+    <div class="environment-invoices-box">
+      <div class="environment-invoices-box-row">
+        <div class="environment-invoices-box-row-cell environment-invoices-box-title">
+          Próxima fatura
+        </div>
+      </div>
+      <div class="environment-invoices-box-row">
+        <div class="environment-invoices-box-row-cell">
+          <p>Não há fatura para este Ambiente.</p>
+          <%= link_to "Crie um Curso Privado", "#" %>
+        </div>
       </div>
     </div>
-    <div class="environment-invoices-box-row">
-      <div class="environment-invoices-box-row-cell">
-        <p>Não há fatura para este Ambiente.</p>
-        <%= link_to "Crie um Curso Privado", "#" %>
+
+  <% elsif @screen == :first %>
+    <div class="environment-invoices-box">
+      <div class="environment-invoices-box-row">
+        <div class="environment-invoices-box-row-cell environment-invoices-box-title">
+          Próxima fatura
+        </div>
+      </div>
+      <div class="environment-invoices-box-row">
+        <div class="environment-invoices-box-row-cell">
+          <p>R$12,00</p>
+          <p class="legend"><strong>Vencimento: 01 de maio, 2013.</strong> Este é um valor previsto e pode ser alterado caso você convide mais membros.</p>
+        </div>
       </div>
     </div>
-  </div>
+  <% end %>
+
+  <table class="environment-invoices-table table-without-borderradius">
+    <thead>
+      <tr>
+        <th>Inicio</th>
+        <th>Término</th>
+        <th>Estado</th>
+        <th>Valor total</th>
+        <th>Detalhes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render partial: "environments/admin/invoice", collection:@invoices %>
+    </tbody>
+  </table>
 </div>

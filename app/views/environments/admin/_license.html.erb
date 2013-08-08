@@ -13,7 +13,7 @@
     <%= course_privacy_type(license[:course]) %>
   </td>
   <td class="centralize">
-    <% tooltip = content_tag(:p, "Espaço utilizado: #{ license[:course][:quota][:space] }") %>
+    <% tooltip = content_tag(:p, content_tag(:strong, "Espaço utilizado: #{ license[:course][:quota][:space] }")) %>
     <% tooltip << content_tag(:p, "Documentos: #{ license[:course][:quota][:documents] }") %>
     <% tooltip << content_tag(:p, "Vídeos: #{ license[:course][:quota][:videos] }") %>
     <%= render "bootstrap/progress_bar", size: "medium",
