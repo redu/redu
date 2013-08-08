@@ -80,6 +80,34 @@
         </div>
       </div>
     </div>
+
+  <% elsif @screen == :lots %>
+    <div class="environment-invoices-box">
+      <div class="environment-invoices-box-row">
+        <div class="environment-invoices-box-row-cell environment-invoices-box-title">
+          Valor da última fatura
+        </div>
+        <div class="environment-invoices-box-row-cell environment-invoices-box-title">
+          Próxima fatura
+        </div>
+      </div>
+      <div class="environment-invoices-box-row">
+        <div class="environment-invoices-box-row-cell">
+          <%= content_tag :span, number_to_currency(@invoices[1][:total]),
+            class: "environment-invoices-box-title environment-invoices-box-invoice-total icon-correct-green_16_18-after" %>
+          <%= content_tag :span, "Início: #{ "02 de março, 2013" }", class: "environment-invoices-box-legend legend" %>
+          <%= content_tag :span, "Término: #{ "01 de abril, 2013" }", class: "environment-invoices-box-legend legend" %>
+        </div>
+        <div class="environment-invoices-box-row-cell">
+          <%= content_tag :span, number_to_currency(@invoices[1][:total]),
+            class: "environment-invoices-box-button" %>
+          <%= content_tag :strong, "Vencimento: #{ "01 de maio, 2013" }", class: "environment-invoices-box-details environment-invoices-box-legend legend" %>
+          <span class="environment-invoices-box-legend legend">
+            Este é um valor previsto e pode ser alterado caso você convide mais membros.
+          </span>
+        </div>
+      </div>
+    </div>
   <% end %>
 
   <table class="environment-invoices-table table-without-borderradius">

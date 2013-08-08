@@ -261,7 +261,7 @@ class EnvironmentsController < BaseController
 
   def admin_plans
     # TODO: Back-end.
-    @screen = :to_pay
+    @screen = :lots
     case @screen
     when :empty
       # Exemplo de faturas vazia.
@@ -329,6 +329,72 @@ class EnvironmentsController < BaseController
           begin: "02/03/2013",
           end: "01/04/2013",
           state: "A pagar",
+          total: 12
+        }
+      ]
+    when :lots
+      # Exemplo de várias faturas.
+      @licenses = [
+        { course: {
+            name: "Curso Lorem Ipsum Sit Dolor 3",
+            link: "http://www.google.com.br",
+            type: :private,
+            storage: 100,
+            quota: {
+              space: "1000 MB",
+              documents: "500 MB",
+              videos: "500 MB"
+            },
+            licenses: 15 }
+        },
+        { course: {
+            name: "Curso Lorem Ipsum Sit Dolor 4",
+            link: "http://www.google.com.br",
+            type: :private,
+            storage: 50,
+            quota: {
+              space: "400 MB",
+              documents: "200 MB",
+              videos: "200 MB"
+            },
+            licenses: 10 }
+        },
+        { course: {
+            name: "Curso Lorem Ipsum Sit Dolor 5",
+            link: "http://www.google.com.br",
+            type: :public,
+            storage: 80,
+            quota: {
+              space: "800 MB",
+              documents: "400 MB",
+              videos: "400 MB"
+            },
+            licenses: 0 }
+        }]
+      @licences_in_use = 15 + 10
+      @invoices = [
+        {
+          begin: "02/04/2013",
+          end: "01/05/2013",
+          state: "Em uso",
+          total: 0
+        },
+        {
+          begin: "02/03/2013",
+          end: "01/04/2013",
+          state: "Pago",
+          total: 12
+        },
+        {
+          begin: "02/02/2013",
+          end: "01/03/2013",
+          state: "Pago",
+          total: 12
+        },
+        {
+          begin: "02/01/2013",
+          end: "01/02/2013",
+          state: "Pago",
           total: 12
         }
       ]
