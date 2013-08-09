@@ -5,7 +5,8 @@ module StatusService
       extend ActiveSupport::Concern
 
       def activities
-        aggregator_class = "StatusService::#{self.class}Aggregator".constantize
+        aggregator_class = "StatusService::#{self.class}HierarchyAggregator".
+          constantize
         @status_aggregator ||= aggregator_class.new(self)
         optimized_relation = Status.includes(:user).order("updated_at DESC")
 

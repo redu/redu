@@ -8,7 +8,7 @@ module StatusService
         include BaseModelAdditions
         include ModelAdditions
       end
-      class StatusService::DummyAggregator < Struct.new(:dummy) ; end
+      class StatusService::DummyHierarchyAggregator < Struct.new(:dummy) ; end
 
       subject { ::Dummy.new }
       let(:facade) { mock("Facade") }
@@ -17,7 +17,7 @@ module StatusService
         it "should invoke Facade#activities with aggregator and relation" do
           mock_facade(facade)
           facade.should_receive(:activities).
-            with(DummyAggregator.new(subject),
+            with(DummyHierarchyAggregator.new(subject),
                  an_instance_of(ActiveRecord::Relation))
 
           subject.activities

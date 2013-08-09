@@ -15,7 +15,7 @@ module StatusService
     protected
 
     def build_conditions
-      statusables = aggregator.perform
+      statusables = aggregator.build
       statusables.reject! { |_, ids| ids.empty? }
 
       conditions = statusables.map do |klass, ids|

@@ -1,11 +1,11 @@
 # -*- encoding : utf-8 -*-
 module StatusService
-  class LectureAggregator
+  class LectureHierarchyAggregator
     def initialize(lecture)
       @lecture = lecture
     end
 
-    def perform
+    def build
       { Lecture: [lecture.id] }
     end
 

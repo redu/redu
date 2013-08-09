@@ -2,13 +2,13 @@
 require 'spec_helper'
 
 module StatusService
-  describe SpaceAggregator do
+  describe SpaceHierarchyAggregator do
     subject { described_class.new(space) }
     let(:space) { FactoryGirl.build_stubbed(:space) }
 
-    describe "#perform" do
+    describe "#build" do
       it "should include the space" do
-        expect(subject.perform).to include(Space: [space.id])
+        expect(subject.build).to include(Space: [space.id])
       end
 
       context "when there are other spaces lectures" do
@@ -22,7 +22,7 @@ module StatusService
         end
 
         it "should include all lectures from this space" do
-          expect(subject.perform).to include(Lecture: lectures.map(&:id))
+          expect(subject.build).to include(Lecture: lectures.map(&:id))
         end
       end
     end

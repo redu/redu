@@ -1,10 +1,10 @@
 module StatusService
-  class CourseAggregator
+  class CourseHierarchyAggregator
     def initialize(course)
       @course = course
     end
 
-    def perform
+    def build
       @values ||= { Course: [course.id], Space: spaces_ids,
                     Lecture: lectures_ids }
     end

@@ -2,13 +2,13 @@
 require 'spec_helper'
 
 module StatusService
-  describe LectureAggregator do
+  describe LectureHierarchyAggregator do
     subject { described_class.new(lecture) }
     let(:lecture) { FactoryGirl.build_stubbed(:lecture) }
 
-    describe "#perform" do
+    describe "#build" do
       it "should include the lecture" do
-        expect(subject.perform).to include(Lecture: [lecture.id])
+        expect(subject.build).to include(Lecture: [lecture.id])
       end
     end
   end

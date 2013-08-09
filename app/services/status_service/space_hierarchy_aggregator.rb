@@ -1,11 +1,11 @@
 # -*- encoding : utf-8 -*-
 module StatusService
-  class SpaceAggregator
+  class SpaceHierarchyAggregator
     def initialize(space)
       @space = space
     end
 
-    def perform
+    def build
       @values ||= { Space: [space.id], Lecture: lectures_ids }
     end
 
