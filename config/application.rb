@@ -152,7 +152,7 @@ module Redu
 
     # No ambiente de desenvolvimento :test => 1 (definido em development.rb)
     config.zencoder = {
-      :api_key => 'cf950c35c3943ff7c25a84c874ddcca3',
+      :api_key => '69c8730bf5c0134af339a97b6a2d53e0',
       :input => '',
       :output => {
         :url => '',

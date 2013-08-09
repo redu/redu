@@ -58,7 +58,7 @@ class SpacesController < BaseController
     end
 
     if @space
-      @statuses = Status.from_hierarchy(@space).page(params[:page]).
+      @statuses = @space.activities.page(params[:page]).
         per(Redu::Application.config.items_per_page)
       @statusable = @space
     end

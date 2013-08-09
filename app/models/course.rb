@@ -3,6 +3,8 @@ class Course < ActiveRecord::Base
   include ActsAsBillable
   include DestroySoon::ModelAdditions
   include CourseSearchable
+  include StatusService::BaseModelAdditions
+  include StatusService::StatusableAdditions::ModelAdditions
 
   # Apenas deve ser chamado na criação do segundo curso em diante
   after_create :create_user_course_association, :unless => "self.environment.nil?"

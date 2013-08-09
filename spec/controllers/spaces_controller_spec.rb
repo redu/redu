@@ -97,5 +97,15 @@ describe SpacesController do
         token.should eq(Oauth2Token.first.token)
       end
     end
+
+    describe "GET mural" do
+      before do
+        get :mural, id: @space.id, locale: "pt-BR"
+      end
+
+      it "assigns statuses" do
+        expect(assigns[:statuses]).to be
+      end
+    end
   end
 end

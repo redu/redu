@@ -4,6 +4,8 @@ class Lecture < ActiveRecord::Base
   # três especializações: Seminar, InteractiveClass e Page.
   include SimpleActsAsList::ModelAdditions
   include EnrollmentService::LectureAdditions::ModelAdditions
+  include StatusService::BaseModelAdditions
+  include StatusService::StatusableAdditions::ModelAdditions
 
   # ASSOCIATIONS
   has_many :statuses, :as => :statusable, :order => "updated_at DESC",

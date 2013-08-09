@@ -29,95 +29,29 @@ describe Status do
 
         acc << lect
       end
-
-      @space_statuses = @spaces.collect do |e|
-        3.times.inject([]) do |acc,i|
-          acc << FactoryGirl.create(:activity, :statusable => e, :user => @course.owner)
-        end
-      end.flatten
-
-      @course_statuses = 3.times.inject([]) do |acc,i|
-        acc << FactoryGirl.create(:activity, :statusable => @course, :user => @course.owner)
-      end
-
-       @lecture_statuses = @lectures.collect do |l|
-         3.times.inject([]) do |acc,i|
-           acc << FactoryGirl.create(:activity, :statusable => l, :user => @course.owner)
-         end + \
-         3.times.inject([]) do |acc,i|
-           acc << FactoryGirl.create(:help, :statusable => l, :user => @course.owner)
-         end
-       end.flatten
-    end
-
-    context "from course" do
-      it "retrieves course statuses" do
-        Status.from_hierarchy(@course).to_set.should \
-          be_superset(@space_statuses.to_set)
-        Status.from_hierarchy(@course).to_set.should \
-          be_superset(@course_statuses.to_set)
-        Status.from_hierarchy(@course).to_set.should \
-          be_superset(@lecture_statuses.to_set)
-      end
-    end
-
-    context "from space" do
-      it "retrieves space statuses" do
-        statuses = @space_statuses.select { |s| s.statusable == @spaces.first }
-        Status.from_hierarchy(@spaces.first).to_set.should \
-          be_superset(statuses.to_set)
-        Status.from_hierarchy(@lectures.first).to_set.should \
-          be_subset(@lecture_statuses.to_set)
-      end
-
-      context "when there are invisible subjects" do
-        let(:lecture) { @lectures.first }
-        let!(:invisible_subject) do
-          lecture.subject.update_attributes(visible: false)
-          lecture.subject
-        end
-        let(:invisible_statuses) do
-          @lecture_statuses.select do |s|
-            invisible_subject.lectures.include? s.statusable
-          end
-        end
-
-        it "should retrieve only visible statuses (from visible subjects)" do
-          expect(Status.from_hierarchy(@spaces.first).to_set).to_not \
-            be_superset(invisible_statuses.to_set)
-        end
-      end
-    end
-
-    context "from lecture" do
-      it "retrieves lecture statuses" do
-        Status.from_hierarchy(@lectures.first).to_set.should \
-          be_subset(@lecture_statuses.to_set)
-      end
-    end
-
-    context "recent" do
-      before do
-        @old_space_statuses = (1..3).collect do
-          FactoryGirl.create(:activity, :statusable => @spaces.first, :user => @course.owner,
-                  :created_at => 3.weeks.ago)
-        end
-
-        @recent_space_statuses = (1..3).collect do
-          FactoryGirl.create(:activity, :statusable => @spaces.first, :user => @course.owner,
-                  :created_at => 5.days.ago)
-        end
-      end
-
-      it "retrieves recent space statuses" do
-        statuses = @space_statuses.select { |s| s.statusable == @spaces.first }
-        Status.recent_from_hierarchy(@spaces.first).to_set.should \
-          be_superset((statuses | @recent_space_statuses).to_set)
-      end
     end
 
     context "filtering" do
       before do
+        @space_statuses = @spaces.collect do |e|
+          3.times.inject([]) do |acc,i|
+            acc << FactoryGirl.create(:activity, :statusable => e, :user => @course.owner)
+          end
+        end.flatten
+
+        @course_statuses = 3.times.inject([]) do |acc,i|
+          acc << FactoryGirl.create(:activity, :statusable => @course, :user => @course.owner)
+        end
+
+        @lecture_statuses = @lectures.collect do |l|
+          3.times.inject([]) do |acc,i|
+            acc << FactoryGirl.create(:activity, :statusable => l, :user => @course.owner)
+          end + \
+          3.times.inject([]) do |acc,i|
+            acc << FactoryGirl.create(:help, :statusable => l, :user => @course.owner)
+          end
+        end.flatten
+
         @user = FactoryGirl.create(:user)
         @activity_statuses = (1..2).collect {
           FactoryGirl.create(:activity, :user => @user,
@@ -139,7 +73,7 @@ describe Status do
       end
 
       it "by statusable" do
-        Status.from_hierarchy(@course).by_statusable("Space", [@spaces[0], @spaces[1]]).count.should eq(10)
+        Status.by_statusable("Space", [@spaces[0], @spaces[1]]).count.should eq(10)
       end
 
       it "by id" do
@@ -175,6 +109,18 @@ describe Status do
     describe :visible do
       it "should return visible statuses" do
         Status.visible.where_values_hash.should == { "compound" => false }
+      end
+    end
+
+    describe "#recent" do
+      let!(:statuses) do
+        (1..3).map do |i|
+          FactoryGirl.create(:activity,:created_at => (i*3).day.ago)
+        end
+      end
+
+      it "retrieves recent statuses (created until 1 week ago)" do
+        expect(Status.recent).to match_array(statuses[0..1])
       end
     end
   end # context scope

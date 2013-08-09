@@ -2,6 +2,8 @@
 class Space < ActiveRecord::Base
   include DestroySoon::ModelAdditions
   include SpaceSearchable
+  include StatusService::BaseModelAdditions
+  include StatusService::StatusableAdditions::ModelAdditions
   attr_writer :member_count
 
   # Representa uma disciplina de ensino. O objetivo principal do Space é agrupar
