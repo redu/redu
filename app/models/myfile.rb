@@ -7,7 +7,8 @@ require 'zip/zipfilesystem'
 class Myfile < ActiveRecord::Base
   CONTENT_TYPES =  Redu::Application.config.mimetypes['image'] + \
     Redu::Application.config.mimetypes['documents'] + \
-    Redu::Application.config.mimetypes['audio']
+    Redu::Application.config.mimetypes['audio'] + \
+    Redu::Application.config.mimetypes['video']
 
   has_attached_file :attachment, Redu::Application.config.paperclip_myfiles
 
