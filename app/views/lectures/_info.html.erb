@@ -34,8 +34,8 @@
 
       <%# Finalizações. %>
       <%# TODO: Quantidade de vezes finalizada. %>
-      <% done_count = 10 %>
-      <%= content_tag :span, done_count,
+      <%# done_count = 10 %>
+      <%# content_tag :span, done_count,
         class: "lecture-stat icon-correct-gray_16_18-before", rel: "tooltip",
         title: "Finalizada #{ pluralize(done_count, "vez", "vezes") }" %>
     </div>

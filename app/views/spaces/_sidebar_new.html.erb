@@ -21,8 +21,5 @@
     <% user_comments = space.activities.where(user_id: user.id).count %>
     <%= content_tag :span, "Comentários: #{ user_comments }",
       class: "nav-local-balloon-item icon-comment-gray_16_18-before" %>
-    <% user_help_requests = 10 %>
-    <%= content_tag :span, "Dúvidas: #{ user_help_requests }",
-      class: "nav-local-balloon-item icon-request-help-gray_16_18-before" %>
   </div>
 </div>
