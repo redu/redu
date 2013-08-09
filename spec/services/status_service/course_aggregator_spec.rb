@@ -12,11 +12,12 @@ module StatusService
       end
 
       context "when there are other spaces from other courses" do
+        before do
+          FactoryGirl.create_list(:space, 2)
+        end
+
         let!(:spaces) do
           FactoryGirl.create_list(:space, 2, course: course)
-        end
-        let!(:other_spaces) do
-          FactoryGirl.create_list(:space, 2)
         end
 
         it "should include all spaces from this course" do
@@ -25,17 +26,14 @@ module StatusService
       end
 
       context "when there are many lectures" do
-        let(:space) do
-          FactoryGirl.create(:space, course: course)
-        end
-        let(:subj) do
-          FactoryGirl.create(:subject, space: space, finalized: true)
-        end
-        let!(:lectures) do
-          FactoryGirl.create_list(:lecture, 2, subject: subj)
-        end
-        let!(:other_lectures) do
+        before do
           FactoryGirl.create_list(:lecture, 2)
+        end
+
+        let!(:lectures) do
+          space = FactoryGirl.create(:space, course: course)
+          subj = FactoryGirl.create(:subject, space: space, finalized: true)
+          FactoryGirl.create_list(:lecture, 2, subject: subj)
         end
 
         it "should include all spaces from this course" do
