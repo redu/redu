@@ -1,11 +1,17 @@
 module StatusService
-  class CourseAggregator < Struct.new(:course)
+  class CourseAggregator
+    def initialize(course)
+      @course = course
+    end
+
     def perform
       @values ||= { Course: [course.id], Space: spaces_ids,
                     Lecture: lectures_ids }
     end
 
     private
+
+    attr_accessor :course
 
     def spaces_ids
       course.spaces.values_of(:id)

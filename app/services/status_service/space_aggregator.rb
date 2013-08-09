@@ -1,11 +1,17 @@
 # -*- encoding : utf-8 -*-
 module StatusService
-  class SpaceAggregator < Struct.new(:space)
+  class SpaceAggregator
+    def initialize(space)
+      @space = space
+    end
+
     def perform
       @values ||= { Space: [space.id], Lecture: lectures_ids }
     end
 
     private
+
+    attr_accessor :space
 
     def lectures_ids
       subjects_ids = space.subjects.values_of(:id)
