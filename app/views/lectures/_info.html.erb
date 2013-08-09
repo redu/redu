@@ -23,15 +23,9 @@
   <div class="lecture-stats">
     <div class="lecture-stats-group">
       <%# Comentários. %>
-      <%= content_tag :span, Activity.from_hierarchy(lecture).count,
+      <%= content_tag :span, lecture.activities.count,
         class: "lecture-stat icon-wall-gray_16_18-before", rel: "tooltip",
-        title: pluralize(Activity.from_hierarchy(lecture).count, "comentário") %>
-
-      <%# Pedidos de ajuda. %>
-      <%= content_tag :span, Help.from_hierarchy(lecture).count,
-        class: "lecture-stat icon-request-help-gray_16_18-before",
-        rel: "tooltip",
-        title: "#{ pluralize(Help.from_hierarchy(lecture).count, "pedido")} de ajuda" %>
+        title: pluralize(lecture.activities.count, "comentário") %>
 
       <%# Visualizações. %>
       <%= content_tag :span, lecture.view_count,

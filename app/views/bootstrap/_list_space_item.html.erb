@@ -45,18 +45,6 @@
               title: "#{ pluralize(new_lectures, "nova") } #{ t("hierarchy.lecture", count: new_lectures).downcase }" %>
           <% end %>
         </span>
-
-        <span class="list-space-stat icon-request-help-lightorange_16_18-before">
-          <%= "#{ pluralize(Help.from_hierarchy(list_space_item).count, "pedido")} de ajuda" %>
-
-          <% new_help_requests = Help.recent_from_hierarchy(list_space_item).count %>
-          <% if new_help_requests > 0 %>
-            <%= content_tag :span,
-              "(+#{ new_help_requests })",
-              class: "list-space-stats-orange", rel: "tooltip",
-              title: "#{ pluralize(new_help_requests, "novo") } #{ "pedido".pluralize(new_help_requests) } de ajuda" %>
-          <% end %>
-        </span>
       </div>
     </div>
 
@@ -65,34 +53,16 @@
       <span class="list-space-stat">
         <%= link_to "Mural da disciplina:", mural_space_path(list_space_item),
           class: "icon-wall-lightblue_16_18-before" %>
-        <%= pluralize Activity.from_hierarchy(list_space_item).count, "comentário" %>
+        <%= pluralize list_space_item.activities.count, "comentário" %>
 
         <%# Novos comentários. %>
-        <% new_comments = Activity.recent_from_hierarchy(list_space_item).count %>
+        <% new_comments = list_space_item.activities.recent.count %>
         <% if new_comments > 0 %>
           <%= content_tag :span, "(+#{ new_comments })", rel: "tooltip",
             title: "#{ new_comments } #{ "novo".pluralize(new_comments) } #{ "comentário".pluralize(new_comments) }",
             class: "list-space-stats-blue" %>
         <% end %>
       </span>
-
-      <%# TODO: Total e novas respostas, os métodos tentados
-          abaixo estão sempre retornando 0. %>
-      <% answers = Answer.from_hierarchy(list_space_item).count %>
-      <% if answers > 0 %>
-        <span class="list-space-stat icon-reply-lightblue_16_18-before">
-          <%# Não está adicionando o "s" no final no plural como costume, tive que explicitá-lo. %>
-          <%= pluralize(answers, "resposta", "respostas") %>
-        </span>
-
-        <%# Novas respostas. %>
-        <% new_answers = Answer.recent_from_hierarchy(list_space_item).count %>
-        <% if new_answers > 0 %>
-          <%= content_tag :span, "(+#{ new_answers })", rel: "tooltip",
-            title: "#{ new_answers } #{ "nova".pluralize(new_answers) } #{ "resposta".pluralize(new_answers) }",
-            class: "list-space-stats-blue" %>
-        <% end %>
-      <% end %>
     </div>
 
     <%# Arquivos de apoio. %>

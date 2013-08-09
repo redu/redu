@@ -26,7 +26,7 @@
       <% end %>
 
       <%# Comentários. %>
-      <% comments_count = Status.from_hierarchy(list_subject_lecture_item).where(type: "Activity").count %>
+      <% comments_count = list_subject_lecture_item.activities.count %>
       <% comments_legend = "#{ pluralize comments_count, "comentário" }" %>
       <%# TODO: Novos comentários. %>
       <% new_comments = 0 %>
@@ -38,21 +38,6 @@
         <%= content_tag :span, comments_count,
           class: "wall-stats icon-wall-gray_16_18-before", rel: "tooltip",
           title: comments_legend %>
-      <% end %>
-
-      <%# Pedidos de ajuda. %>
-      <% help_requests_count = Status.from_hierarchy(list_subject_lecture_item).where(type: "Help").count %>
-      <% help_requests_legend = "#{ pluralize help_requests_count, "pedido" } de ajuda" %>
-      <%# TODO: Novos pedidos de ajuda. %>
-      <% new_help_requests = 0 %>
-      <% if new_help_requests > 0 %>
-        <%= content_tag :span, "+#{ new_help_requests }", rel: "tooltip",
-          class: "request-help-stats-new icon-request-help-lightorange_16_18-before",
-          title: "#{ help_requests_legend }<br>#{ new_help_requests } #{ "novo".pluralize(new_help_requests) } #{ "pedido".pluralize(new_help_requests) }" %>
-      <% else %>
-        <%= content_tag :span, help_requests_count,
-          class: "request-help-stats icon-request-help-gray_16_18-before", rel: "tooltip",
-          title: help_requests_legend %>
       <% end %>
 
       <%# Avaliação. %>
