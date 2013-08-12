@@ -14,13 +14,6 @@
     $(this).find("input[type=submit]").loadingComplete();
   });
 
-  // Atualiza path do curso (slug)
-  $("#course_name, #course_path").live('keyup blur', function(e){
-    var slugedPath = $(this).slug();
-    $("#course_path").val(slugedPath);
-    $("#environment-manage .course-path .course-name, #course-manage .course-path .course-name").html(slugedPath);
-  });
-
   // Colorindo tabela de roles
   $.fn.refreshRoleTable = function(){
     return $("#environment-manage .admin-role-table tr:even").addClass("even");

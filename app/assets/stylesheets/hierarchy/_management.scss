@@ -7,22 +7,32 @@
 
 .form-fieldset-section { padding: 10px 0; }
 
-// Prefixo a um campo de texto com o endereço do Redu.
-.input-prefix-redu {
-  $form-control-horizontal-padding: 10px;
-  @include area-prefix($form-control-horizontal-padding, 132px);
-
-  .area-prefix {
-    @include border-top-right-radius(0);
-    @include border-bottom-right-radius(0);
-
-    &,
-    &:hover {
-      $form-control-border-width: 1px;
-      border: $form-control-border-width solid $gray4;
-    }
-  }
+// Prefixo/sufixo de campos.
+.control-fix {
+  padding: 7px 10px;
+  color: $gray5;
+  border: 1px solid $gray4;
+  background-color: $gray2;
 }
+
+$bootstrap-control-border-radius: 4px;
+$bootstrap-control-horizontal-padding: 10px;
+
+.control-prefix {
+  @include border-top-left-radius($bootstrap-control-border-radius);
+  @include border-bottom-left-radius($bootstrap-control-border-radius);
+}
+
+.control-suffix {
+  @include border-top-right-radius($bootstrap-control-border-radius);
+  @include border-bottom-right-radius($bootstrap-control-border-radius);
+}
+
+.control-prefix-redu-path { @include area-prefix($bootstrap-control-horizontal-padding, 132px); }
+
+.control-prefix-course-path { @include area-prefix($bootstrap-control-horizontal-padding, 225px); }
+
+.control-suffix-course-workload { @include area-suffix($bootstrap-control-horizontal-padding, 54px); }
 
 // Ícone de informação com tooltip para labels.
 .label-tooltip-icon {
@@ -153,7 +163,7 @@ $entity-management-members-filters-list-item-width: 100px;
 .entity-management-role-column-button { width: 12%; }
 
 
-// Licenças / Faturas.
+// Ambiente: Licenças / Faturas.
 // ==========================================================================
 
 .environment-licenses-title,
@@ -251,3 +261,9 @@ tr.environment-invoices-in-use {
 .environment-invoices-box-details { margin-top: 10px; }
 
 .environment-invoices-box-details { display: block; }
+
+
+// Curso.
+// ==========================================================================
+
+.form-course-submit { margin-left: 10px; }

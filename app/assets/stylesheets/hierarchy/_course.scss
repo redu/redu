@@ -76,9 +76,26 @@
 .course-invite-counter-title { margin-top: 20px; }
 
 // Privacidade.
-.course-privacy-open { color: $green3; }
 
-.course-privacy-closed { color: $red2; }
+.control-radio {
+  .course-privacy-open,
+  .course-privacy-closed { color: $gray6; }
+}
+
+.course-privacy-open {
+  &,
+  .control-checked & { color: $green3; }
+}
+
+.course-privacy-closed {
+  &,
+  .control-checked & { color: $red2; }
+}
+
+.course-privacy-icon-tooltip {
+  display: inline-block;
+  vertical-align: middle;
+}
 
 // Armazenamento.
 

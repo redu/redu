@@ -10,3 +10,4 @@
 //= require embedly
 //= require search
 //= require jquery.remotipart
+//= require slugify

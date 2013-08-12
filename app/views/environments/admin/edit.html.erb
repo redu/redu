@@ -17,7 +17,7 @@
         <%= f.label :name, "Nome" %>
       </div>
       <div class="controls span7">
-        <%= f.text_field :name,
+        <%= f.text_field :name, class: "control-to-slug",
           placeholder: "Nome do ambiente virtual de aprendizagem" %>
         <%= concave_errors_for(f.object, :name) %>
       </div>
@@ -41,9 +41,9 @@
         <% end %>
       </div>
       <div class="controls span7">
-        <div class="input-prefix-redu area-fix">
-          <button class="button-default area-prefix" disabled>http://redu.com.br/</button>
-          <%= f.text_field :path, class: "area-infix" %>
+        <div class="control-prefix-redu-path area-fix">
+          <span class="control-fix control-prefix area-prefix">http://redu.com.br/</span>
+          <%= f.text_field :path, class: "area-infix control-to-show-slug" %>
         </div>
         <%= concave_errors_for(f.object, :path) %>
       </div>

@@ -1,0 +1,53 @@
+<%#
+  Caixa com as informações de armazenamento do curso.
+
+  Variáveis:
+    course: o curso.
+%>
+
+<div class="course-storage-box list-mix-inner">
+  <%# Detalhes. %>
+  <div class="course-storage-details">
+    <%# Documentos. %>
+    <div class="course-storage-detail">
+      <div class="course-storage-details-icons">
+        <% content_document = "Documentos e apresentações" %>
+        <%= content_tag :span, content_document, title: content_document,
+          class: "course-storage-details-icon icon-document-gray_16_18 text-replacement" %>
+        <% content_page = "Páginas simples" %>
+        <%= content_tag :span, content_page, title: content_page,
+          class: "course-storage-details-icon icon-page-gray_16_18 text-replacement" %>
+        <% content_file = "Arquivos de apoio" %>
+        <%= content_tag :span, content_file, title: content_file,
+          class: "course-storage-details-icon icon-file-gray_16_18 text-replacement" %>
+      </div>
+      <div class="course-storage-details-legend">
+        Documentos: <%= content_tag :strong, "400 MB" %>
+      </div>
+    </div>
+
+    <%# Vídeo. %>
+    <div class="course-storage-detail">
+      <div class="course-storage-details-icons">
+        <% content_seminar = "Vídeos" %>
+        <%= content_tag :span, content_seminar, title: content_seminar,
+          class: "course-storage-details-icon icon-seminar-gray_16_18 text-replacement" %>
+      </div>
+      <div class="course-storage-details-legend">
+        Vídeos: <%= content_tag :strong, "400 MB" %>
+      </div>
+    </div>
+  </div>
+
+  <%# Barra de progresso. %>
+  <div class="course-storage-total">
+    <span class="course-storage-total-legend">
+      Espaço: <%= content_tag :strong, "4.000 MB" %>
+    </span>
+    <% tooltip = content_tag(:p, content_tag(:strong, "Espaço utilizado: #{ "800 MB" }")) %>
+    <% tooltip << content_tag(:p, "Documentos: #{ "400 MB" }") %>
+    <% tooltip << content_tag(:p, "Videos: #{ "400 MB" }") %>
+    <%= render "bootstrap/progress_bar", percentage: 20,
+      tooltip_text: tooltip, size: "long", show_percentage: true %>
+  </div>
+</div>
