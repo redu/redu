@@ -44,7 +44,7 @@ module CoursesAdminNavigation
         :highlights_on => action_matcher({
           'courses' => ['teacher_participation_report']}),
           :class => 'tab',
-          :link => { :class => "tab-title icon-report-lightblue_16_18-before" }
+          :link => { :class => "tab-title icon-reports-lightblue_16_18-before" }
     end
   end
 end
