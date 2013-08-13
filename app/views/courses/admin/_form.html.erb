@@ -3,151 +3,124 @@
 
   Variáveis:
     course: o curso.
+    f: o formulário.
 %>
 
 <%# TODO: Quais campos originais realmente serão removidos? %>
+<%= new_concave_error_messages_for course %>
 
-<%= form_for course, url: environment_course_path(course.environment, course),
-  html: { class: "form-horizontal" } do |f| %>
-
-  <%= new_concave_error_messages_for course %>
-
-  <div class="form-fieldset-section">
-    <%# Categoria do Curso. %>
-    <div class="control-group row">
-      <div class="control-label span3">
-        <%= label_tag :course_category, "Categoria do Curso" %>
-      </div>
-      <div class="controls span9">
-        <label class="control-radio">
-          <input type="radio" name="course_privacy">
-          <div class="icon-privacy-open-gray_16_18-before">
-            <span class="course-privacy-open">Aberto</span> (todos podem entrar e ver seus materiais)
-            <% tooltip = "São gratuitos para quem cria e quem participa. Não há limite de usuários que podem ser inscritos." %>
-            <%= content_tag :span, tooltip, rel: "tooltip", title: tooltip,
-              class: "course-privacy-icon-tooltip icon-info-tooltip-lightblue_16_18 text-replacement" %>
-          </div>
-        </label>
-        <label class="control-radio">
-          <input type="radio" name="course_privacy">
-          <div class="icon-privacy-closed-gray_16_18-before">
-            <span class="course-privacy-closed">Privado</span> (apenas quem você permitir pode entrar e ver seus materiais)
-            <% tooltip = "São moderados e de conteúdo totalmente privado e seguro — só quem você permitir terá acesso aos materiais e discussões" %>
-            <%= content_tag :span, tooltip, rel: "tooltip", title: tooltip,
-              class: "course-privacy-icon-tooltip icon-info-tooltip-lightblue_16_18 text-replacement" %>
-          </div>
-        </label>
-      </div>
+<div class="form-fieldset-section">
+  <%# Categoria do Curso. %>
+  <div class="control-group row">
+    <div class="control-label span3">
+      <%= label_tag :course_category, "Categoria do Curso" %>
     </div>
-  </div>
-
-  <hr class="list-separator">
-
-  <div class="form-fieldset-section">
-    <%# Nome do Curso. %>
-    <div class="control-group row">
-      <div class="control-label span3">
-        <%= f.label :name, "Nome do Curso" %>
-      </div>
-      <div class="controls span8">
-        <%= f.text_field :name, placeholder: "Nome do Curso", class: "control-to-slug" %>
-        <%= concave_errors_for(f.object, :name) %>
-      </div>
-    </div>
-
-    <%# Endereço. %>
-    <div class="control-group row">
-      <div class="control-label span3">
-        <%= f.label :path, class: "pull-right" do %>
-          <span class="label-tooltip-icon icon-info-tooltip-lightblue_16_18 text-replacement" rel="tooltip" title="Esse será o endereço que as pessoas usarão para acessar o seu Curso.">Informação</span>
-          <%= t(:path) %>
-        <% end %>
-      </div>
-      <div class="controls span8">
-        <div class="control-prefix-course-path area-fix">
-          <%= content_tag :span,
-            "http://redu.com.br#{ truncate(environment_path(course.environment), length: 10) }/cursos/",
-            class: "control-fix control-prefix area-prefix", rel: "tooltip",
-            title: "http://redu.com.br#{ environment_path(course.environment) }/cursos/" %>
-          <%= f.text_field :path, class: "area-infix control-to-show-slug" %>
+    <div class="controls span9">
+      <label class="control-radio">
+        <input type="radio" name="course_privacy">
+        <div class="icon-privacy-open-gray_16_18-before">
+          <span class="course-privacy-open">Aberto</span> (todos podem entrar e ver seus materiais)
+          <% tooltip = "São gratuitos para quem cria e quem participa. Não há limite de usuários que podem ser inscritos." %>
+          <%= content_tag :span, tooltip, rel: "tooltip", title: tooltip,
+            class: "course-privacy-icon-tooltip icon-info-tooltip-lightblue_16_18 text-replacement" %>
         </div>
-        <%= concave_errors_for(f.object, :path) %>
-      </div>
-    </div>
-
-    <%# Descrição. %>
-    <div class="control-group row">
-      <div class="control-label span3">
-        <%= f.label :description, "Descrição" %>
-      </div>
-      <div class="controls span8">
-        <%= f.text_area :description,
-          placeholder: "Digite informações resumidas acerca do Curso",
-          rows: 6 %>
-        <%= concave_errors_for(f.object, :description) %>
-      </div>
-    </div>
-
-    <%# Palavras-chave. %>
-    <div class="control-group row">
-      <div class="control-label span3">
-        <%= f.label :tag_list, "Palavras-chave" %>
-      </div>
-      <div class="controls span8">
-        <%= f.text_field :tag_list,
-          placeholder: "Áreas de estudo e interesses relacionados ao tema em palavras-chave" %>
-        <span class="legend">(separadas por vírgula)</span>
-        <%= concave_errors_for(f.object, :tag_list) %>
-      </div>
-    </div>
-
-    <%# Imagem. %>
-    <div class="control-group row">
-      <div class="control-label span3">
-        <%= f.label :avatar, "Imagem (miniatura)" %>
-      </div>
-      <div class="controls span8">
-        <%= f.file_field :avatar %>
-        <span class="legend">Adicione uma imagem de proporção igual ou similar a um quadrado</span>
-        <%= concave_errors_for(f.object, :avatar) %>
-      </div>
-    </div>
-
-    <%# Carga horária. %>
-    <div class="control-group row">
-      <div class="control-label span3">
-        <%= f.label :workload, "Carga horária" %>
-      </div>
-      <div class="controls span3">
-        <div class="control-suffix-course-workload area-fix">
-          <%= f.text_field :workload, placeholder: "Ex: 60", class: "area-infix" %>
-          <span class="control-fix control-suffix area-suffix">horas</span>
+      </label>
+      <label class="control-radio">
+        <input type="radio" name="course_privacy">
+        <div class="icon-privacy-closed-gray_16_18-before">
+          <span class="course-privacy-closed">Privado</span> (apenas quem você permitir pode entrar e ver seus materiais)
+          <% tooltip = "São moderados e de conteúdo totalmente privado e seguro — só quem você permitir terá acesso aos materiais e discussões" %>
+          <%= content_tag :span, tooltip, rel: "tooltip", title: tooltip,
+            class: "course-privacy-icon-tooltip icon-info-tooltip-lightblue_16_18 text-replacement" %>
         </div>
-        <%= concave_errors_for(f.object, :workload) %>
-      </div>
+      </label>
+    </div>
+  </div>
+</div>
+
+<hr class="list-separator">
+
+<div class="form-fieldset-section">
+  <%# Nome do Curso. %>
+  <div class="control-group row">
+    <div class="control-label span3">
+      <%= f.label :name, "Nome do Curso" %>
+    </div>
+    <div class="controls span8">
+      <%= f.text_field :name, placeholder: "Nome do Curso", class: "control-to-slug" %>
+      <%= concave_errors_for(f.object, :name) %>
     </div>
   </div>
 
-  <hr class="list-separator">
-
-  <%# Botões. %>
-  <div class="content-section clearfix">
-    <%= link_to "Remover curso", environment_course_path(course.environment, course),
-      confirm: "Você tem certeza que deseja remover este curso?", method: :delete,
-      class: "button-danger pull-left" %>
-
-    <%= f.submit t(:save_changes),
-      class: "form-course-submit button-primary pull-right" %>
-
-    <% course_publishing_button_classes = "button-default pull-right" %>
-    <% if course.published? %>
-      <%= link_to "Despublicar curso", unpublish_environment_course_path(course.environment, course),
-        confirm: "Você tem certeza que deseja deixar este curso invisível?",
-        class: course_publishing_button_classes %>
-    <% else %>
-      <%= link_to "Publicar", publish_environment_course_path(course.environment, course),
-        confirm: "Você tem certeza que deseja deixar este curso visível?",
-        class: course_publishing_button_classes %>
-    <% end %>
+  <%# Endereço. %>
+  <div class="control-group row">
+    <div class="control-label span3">
+      <%= f.label :path, class: "pull-right" do %>
+        <span class="label-tooltip-icon icon-info-tooltip-lightblue_16_18 text-replacement" rel="tooltip" title="Esse será o endereço que as pessoas usarão para acessar o seu Curso.">Informação</span>
+        <%= t(:path) %>
+      <% end %>
+    </div>
+    <div class="controls span8">
+      <div class="control-prefix-course-path area-fix">
+        <%= content_tag :span,
+          "http://redu.com.br#{ truncate(environment_path(course.environment), length: 10) }/cursos/",
+          class: "control-fix control-prefix area-prefix", rel: "tooltip",
+          title: "http://redu.com.br#{ environment_path(course.environment) }/cursos/" %>
+        <%= f.text_field :path, class: "area-infix control-to-show-slug" %>
+      </div>
+      <%= concave_errors_for(f.object, :path) %>
+    </div>
   </div>
-<% end %>
+
+  <%# Descrição. %>
+  <div class="control-group row">
+    <div class="control-label span3">
+      <%= f.label :description, "Descrição" %>
+    </div>
+    <div class="controls span8">
+      <%= f.text_area :description,
+        placeholder: "Digite informações resumidas acerca do Curso",
+        rows: 6 %>
+      <%= concave_errors_for(f.object, :description) %>
+    </div>
+  </div>
+
+  <%# Palavras-chave. %>
+  <div class="control-group row">
+    <div class="control-label span3">
+      <%= f.label :tag_list, "Palavras-chave" %>
+    </div>
+    <div class="controls span8">
+      <%= f.text_field :tag_list,
+        placeholder: "Áreas de estudo e interesses relacionados ao tema em palavras-chave" %>
+      <span class="legend">(separadas por vírgula)</span>
+      <%= concave_errors_for(f.object, :tag_list) %>
+    </div>
+  </div>
+
+  <%# Imagem. %>
+  <div class="control-group row">
+    <div class="control-label span3">
+      <%= f.label :avatar, "Imagem (miniatura)" %>
+    </div>
+    <div class="controls span8">
+      <%= f.file_field :avatar %>
+      <span class="legend">Adicione uma imagem de proporção igual ou similar a um quadrado</span>
+      <%= concave_errors_for(f.object, :avatar) %>
+    </div>
+  </div>
+
+  <%# Carga horária. %>
+  <div class="control-group row">
+    <div class="control-label span3">
+      <%= f.label :workload, "Carga horária" %>
+    </div>
+    <div class="controls span3">
+      <div class="control-suffix-course-workload area-fix">
+        <%= f.text_field :workload, placeholder: "Ex: 60", class: "area-infix" %>
+        <span class="control-fix control-suffix area-suffix">horas</span>
+      </div>
+      <%= concave_errors_for(f.object, :workload) %>
+    </div>
+  </div>
+</div>

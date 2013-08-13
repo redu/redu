@@ -80,7 +80,7 @@ class CoursesController < BaseController
 
   def new
     respond_to do |format|
-      format.html { render 'courses/admin/new' }
+      format.html { render 'courses/admin/new', layout: 'environments/admin' }
     end
   end
 

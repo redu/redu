@@ -16,7 +16,7 @@ module EnvironmentsAdminNavigation
                                           'courses' => ['new', 'create']}),
         :class => 'tab',
         :link => { :class => "tab-title icon-course-lightblue_16_18-before" },
-        :details => { :text => 'novo', :class => 'details',
+        :details => { :text => 'Novo', :class => 'tab-sub-title legend',
                       :if => action_matcher({'courses' => ['new', 'create']})}
       tabs.item :members, 'Papéis', admin_members_environment_path(@environment),
         :highlights_on => action_matcher({'environments' => ['admin_members'],

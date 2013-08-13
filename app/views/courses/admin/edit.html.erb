@@ -4,4 +4,30 @@
 
 <hr class="list-separator">
 
-<%= render "courses/admin/form", course: @course %>
+<%= form_for @course, url: environment_course_path(@environment, @course),
+  html: { class: "form-horizontal" } do |f| %>
+  <%= render "courses/admin/form", f: f, course: @course %>
+
+  <hr class="list-separator">
+
+  <%# Botões. %>
+  <div class="content-section clearfix">
+    <%= link_to "Remover curso", environment_course_path(@environment, @course),
+      confirm: "Você tem certeza que deseja remover este curso?", method: :delete,
+      class: "button-danger pull-left" %>
+
+    <%= f.submit t(:save_changes),
+      class: "form-course-submit button-primary pull-right" %>
+
+    <% course_publishing_button_classes = "button-default pull-right" %>
+    <% if @course.published? %>
+      <%= link_to "Despublicar curso", unpublish_environment_course_path(@environment, @course),
+        confirm: "Você tem certeza que deseja deixar este curso invisível?",
+        class: course_publishing_button_classes %>
+    <% else %>
+      <%= link_to "Publicar", publish_environment_course_path(@environment, @course),
+        confirm: "Você tem certeza que deseja deixar este curso visível?",
+        class: course_publishing_button_classes %>
+    <% end %>
+  </div>
+<% end %>
