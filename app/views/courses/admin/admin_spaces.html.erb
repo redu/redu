@@ -1,21 +1,27 @@
-<%= render :partial => 'shared/management_background' %>
-<div class="management-sidebar">
-  <%= render :partial => 'courses/sidebar',
-    :locals => { :course => @course }  %>
+<div class="content-section clearfix">
+  <%= content_tag(:h3,
+    "#{ @total_spaces } #{ t("hierarchy.space", count: @total_spaces) }",
+    class: "entity-management-count") unless @spaces.empty? %>
+
+  <%= link_to "Criar nova disciplina",
+    new_space_path(course_id: @course.id),
+    class: "button-primary pull-right" %>
 </div>
-<div class="main grid_12 omega big-col management-wrapper">
-  <%= render :partial => 'courses/breadcrumbs',
-    :locals => { :course => @course } %>
-  <%= render :partial => 'courses/admin/header',
-    :locals => { :course => @course } %>
-  <div id="course-manage" class="body management">
-    <%= render :partial => 'courses/admin/clean_header' %>
-    <%= tabs :courses_admin do %>
-      <h3 class="form-header">
-        <%= @course.spaces.count %> disciplina(s)
-      </h3>
-      <%= render 'spaces/admin/index_admin' %>
-      <%= link_to "Sair", environment_course_path(@environment, @course), :class => "manage exit icon-manage-gray_8_10-before" %>
-    <% end %>
+
+<% if @spaces.empty? %>
+  <%= render "shared/empty_message",
+    icon_message: "Nenhuma Disciplina.",
+    icon_class: "icon-space-empty_128_130",
+    message: "Este Ambiente não possui nenhuma Disciplina." %>
+<% else %>
+  <div class="content-section">
+    <ul class="entity-mangement-list">
+      <%= render partial: 'spaces/admin/item_admin', collection: @spaces %>
+    </ul>
   </div>
-</div>
+  <% if @spaces.total_pages > 1 %>
+    <hr class="list-separator">
+    <%= paginate @spaces, theme: "numbers", outer_window: 1, inner_window: 4 %>
+    <hr class="list-separator">
+  <% end %>
+<% end %>
