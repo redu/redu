@@ -6,7 +6,7 @@
     currentQuestionClass: ".exercise-question-navigation-item-current",
     answeredQuestionClass: "exercise-question-navigation-item-answered"
   };
-  config.disableOnSaveClasses = ".exercise-question-button, .exercise-question-navigation a, :not(:checked(" + config.radioClass + "))";
+  config.disableOnSaveClasses = ".exercise-question-button, .exercise-question-navigation a";
 
   // Evita que links funcionem enquanto desabilitados.
   $(document).on("click", config.formClass + ' [disabled="disabled"]', function(e) {
@@ -16,11 +16,11 @@
   // Mostra/esconde mensagem de carregado e habilita/desabilita os links.
   $(document)
     .on("ajax:before", config.formClass, function() {
-      $(this).find(config.disableOnSaveClasses).attr("disabled", "disabled");
+      $(this).find(config.disableOnSaveClasses + ", input:not(input:checked(" + config.radioClass + "))").attr("disabled", "disabled");
       $(config.loadingMessageId).fadeIn(150, "swing");
     })
     .on("ajax:complete", config.formClass, function() {
-      $(this).find(config.disableOnSaveClasses).removeAttr("disabled", "disabled");
+      $(this).find(config.disableOnSaveClasses + ", " + config.radioClass + ":disabled").removeAttr("disabled", "disabled");
       $(config.loadingMessageId).fadeOut(150, "swing");
     })
     .on("ajax:success", config.formClass, function() {
