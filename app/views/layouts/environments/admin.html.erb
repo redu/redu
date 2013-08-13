@@ -1,0 +1,25 @@
+<% content_for :content do %>
+  <% content_for :container_class do "entity-wrapper" end %>
+
+  <% @environment = @header_environment || @environment %>
+
+  <div class="span3">
+    <%= render "environments/sidebar", environment: @environment,
+      management: true %>
+  </div>
+  <div class="span13">
+    <div class="content-body">
+      <%= render "environments/admin/header", environment: @environment %>
+
+      <%= yield %>
+
+      <div class="centralize">
+        <%= link_to "Sair do Gerenciamento", @environment,
+          class: "link-secondary" %>
+      </div>
+    </div>
+    <%= render "environments/breadcrumb", environment: @environment %>
+  </div>
+<% end %>
+
+<%= render template: "layouts/new_application" %>

@@ -1,27 +1,27 @@
-<%= render :partial => 'shared/management_background' %>
-<div class="management-sidebar">
-  <%= render :partial => 'environments/sidebar', :locals => { :environment => @environment } %>
+<div class="content-section clearfix">
+  <%= content_tag(:h3,
+    "#{ @total_courses } #{ t("hierarchy.course", count: @total_courses) }",
+    class: "entity-management-count") unless @courses.empty? %>
+
+  <%= link_to "Criar novo curso",
+    new_environment_course_path(@environment),
+    class: "button-primary pull-right" %>
 </div>
-<div class="main grid_12 omega big-col management-wrapper">
-  <%= render :partial => 'environments/breadcrumbs',
-    :locals => { :environment => @environment } %>
 
-  <%= render :partial => 'environments/admin/header',
-    :locals => { :environment => @environment } %>
-
-  <div id="environment-manage" class="body management">
-    <%= render :partial => 'environments/admin/clean_header' %>
-
-    <%= tabs :environments_admin do %>
-      <h3 class="form-header">
-        <%= @environment.courses.count %> curso(s)
-      </h3>
-      <div class="management-actions">
-        <%= link_to "Criar novo curso", new_environment_course_path(@environment),
-          :class => "concave-button" %>
-      </div>
-      <%= render :partial => 'courses/admin/index_admin' %>
-      <%= link_to "Sair", environment_path(@environment), :class => "manage exit icon-manage-gray_8_10-before" %>
-    <% end %>
-  </div><!-- end #environment-manage -->
-</div>
+<% if @courses.empty? %>
+  <%= render "shared/empty_message",
+    icon_message: "Nenhum curso.",
+    icon_class: "icon-course-empty_128_130",
+    message: "Este Ambiente não possui nenhum Curso." %>
+<% else %>
+  <div class="content-section">
+    <ul class="entity-mangement-list">
+      <%= render :partial => 'courses/admin/item_admin', :collection => @courses %>
+    </ul>
+  </div>
+  <% if @courses.total_pages > 1 %>
+    <hr class="list-separator">
+    <%= paginate @courses, theme: "numbers", outer_window: 1, inner_window: 4 %>
+    <hr class="list-separator">
+  <% end %>
+<% end %>

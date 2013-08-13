@@ -1,0 +1,127 @@
+<div class="content-section">
+  <h4 class="environment-licenses-title">Licenças em uso:
+    <%= content_tag :span, licenses_in_use(@licences_in_use), class: "environment-licenses-title-value" %>
+    <% tooltip_text = "As licenças são apenas contabilizadas quando você convida alguém para participar de um Curso Privado" %>
+    <%= content_tag :span, tooltip_text, rel: "tooltip", title: tooltip_text,
+      class: "environment-licenses-title-tooltip icon-info-tooltip-lightblue_16_18 text-replacement" %>
+  </h4>
+  <p class="legend">Total de licenças em uso nos Cursos deste Ambiente.</p>
+
+  <table class="table-without-borderradius">
+    <thead>
+      <tr>
+        <th>Nome do Curso</th>
+        <th class="text-center">Tipo</th>
+        <th class="text-center">Armazenamento</th>
+        <th class="text-center">Licenças</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render partial: "environments/admin/license", collection: @licenses %>
+    </tbody>
+  </table>
+</div>
+
+<hr class="list-separator">
+
+<div class="content-section">
+  <h4 class="environment-licenses-title">Faturas</h4>
+
+  <% if @screen == :empty %>
+    <div class="environment-invoices-box">
+      <div class="environment-invoices-box-row">
+        <div class="environment-invoices-box-row-cell environment-invoices-box-title">
+          Próxima fatura
+        </div>
+      </div>
+      <div class="environment-invoices-box-row">
+        <div class="environment-invoices-box-row-cell">
+          <p>Não há fatura para este Ambiente.</p>
+          <%= link_to "Crie um Curso Privado", "#" %>
+        </div>
+      </div>
+    </div>
+
+  <% elsif @screen == :first %>
+    <div class="environment-invoices-box">
+      <div class="environment-invoices-box-row">
+        <div class="environment-invoices-box-row-cell environment-invoices-box-title">
+          Próxima fatura
+        </div>
+      </div>
+      <div class="environment-invoices-box-row">
+        <div class="environment-invoices-box-row-cell">
+          <p>R$12,00</p>
+          <p class="legend"><strong>Vencimento: 01 de maio, 2013.</strong> Este é um valor previsto e pode ser alterado caso você convide mais membros.</p>
+        </div>
+      </div>
+    </div>
+
+  <% elsif @screen == :to_pay %>
+    <div class="environment-invoices-box">
+      <div class="environment-invoices-box-row">
+        <div class="environment-invoices-box-row-cell environment-invoices-box-title">
+          Valor da última fatura
+        </div>
+      </div>
+      <div class="environment-invoices-box-row">
+        <div class="environment-invoices-box-row-cell">
+          <%= content_tag :span, number_to_currency(@invoices[1][:total]),
+            class: "environment-invoices-box-title environment-invoices-box-invoice-total plan-status-pending" %>
+          <%= content_tag :span, "Início: #{ "02 de março, 2013" }", class: "environment-invoices-box-legend legend" %>
+          <%= content_tag :span, "Término: #{ "01 de abril, 2013" }", class: "environment-invoices-box-legend legend" %>
+        </div>
+        <div class="environment-invoices-box-row-cell">
+          <%= link_to "Pagar com o PagSeguro", "#", rel: "tooltip",
+            title: "O Redu utiliza a solução mais completa para pagamento online, o PagSeguro, com total sigilo dos seus dados financeiros.",
+            class: "environment-invoices-box-button button-success" %>
+          <%= link_to "Ver detalhes da fatura", "#",
+            class: "environment-invoices-box-details link-secondary" %>
+        </div>
+      </div>
+    </div>
+
+  <% elsif @screen == :lots %>
+    <div class="environment-invoices-box">
+      <div class="environment-invoices-box-row">
+        <div class="environment-invoices-box-row-cell environment-invoices-box-title">
+          Valor da última fatura
+        </div>
+        <div class="environment-invoices-box-row-cell environment-invoices-box-title">
+          Próxima fatura
+        </div>
+      </div>
+      <div class="environment-invoices-box-row">
+        <div class="environment-invoices-box-row-cell">
+          <%= content_tag :span, number_to_currency(@invoices[1][:total]),
+            class: "environment-invoices-box-title environment-invoices-box-invoice-total icon-correct-green_16_18-after" %>
+          <%= content_tag :span, "Início: #{ "02 de março, 2013" }", class: "environment-invoices-box-legend legend" %>
+          <%= content_tag :span, "Término: #{ "01 de abril, 2013" }", class: "environment-invoices-box-legend legend" %>
+        </div>
+        <div class="environment-invoices-box-row-cell">
+          <%= content_tag :span, number_to_currency(@invoices[1][:total]),
+            class: "environment-invoices-box-button" %>
+          <%= content_tag :strong, "Vencimento: #{ "01 de maio, 2013" }", class: "environment-invoices-box-details environment-invoices-box-legend legend" %>
+          <span class="environment-invoices-box-legend legend">
+            Este é um valor previsto e pode ser alterado caso você convide mais membros.
+          </span>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <table class="environment-invoices-table table-without-borderradius">
+    <thead>
+      <tr>
+        <th>Inicio</th>
+        <th>Término</th>
+        <th>Estado</th>
+        <th>Valor total</th>
+        <th>Detalhes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render partial: "environments/admin/invoice", collection:@invoices %>
+    </tbody>
+  </table>
+</div>

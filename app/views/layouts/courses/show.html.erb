@@ -2,7 +2,7 @@
   <% content_for :container_class do "entity-wrapper" end %>
 
   <div class="span3">
-    <%= render "courses/sidebar_new", course: @course %>
+    <%= render "courses/sidebar", course: @course %>
   </div>
   <div class="span13">
     <div class="content-body">
@@ -11,7 +11,7 @@
 
       <%= yield %>
     </div>
-    <%= render "courses/breadcrumbs_new", course: @course %>
+    <%= render "courses/breadcrumb", course: @course %>
   </div>
 <% end %>
 

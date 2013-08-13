@@ -9,7 +9,7 @@
     show_percentage: se deve mostrar a porcentagem (opcional).
 %>
 
-<% tooltip_text = "cursado" unless local_assigns.has_key? :tooltip_text %>
+<% tooltip_text = "#{ percentage }% cursado" unless local_assigns.has_key? :tooltip_text %>
 <% size = "short" unless local_assigns.has_key? :size %>
 <% thickness = "thin" unless local_assigns.has_key? :thickness %>
 <% show_percentage = false unless local_assigns.has_key? :show_percentage %>
@@ -21,7 +21,7 @@
 <% end %>
 
 <% if show_percentage %>
-  <%= content_tag :div, rel: "tooltip", title: "#{ percentage }% #{ tooltip_text }",
+  <%= content_tag :div, rel: "tooltip", title: tooltip_text,
     class: "progress-bar-legend progress-bar-#{ size }" do %>
     <%= content_tag :span, "#{ percentage }%", class: "legend" %>
     <%= content_tag :span,
@@ -30,7 +30,7 @@
     <% end %>
   <% end %>
 <% else %>
-  <%= content_tag :div, rel: "tooltip", title: "#{ percentage }% #{ tooltip_text }",
+  <%= content_tag :div, rel: "tooltip", title: tooltip_text,
     class: "progress-bar-total progress-bar-#{ size } progress-bar-#{ thickness }" do %>
     <%= progress_bar_completed %>
   <% end %>

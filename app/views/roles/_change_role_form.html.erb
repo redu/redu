@@ -1,0 +1,57 @@
+<%#
+  Formulário de alterar papel de um membro nos cursos de um ambiente.
+
+  Variáveis:
+    change_role_form: uma associação do usuário com o curso.
+    environment: o ambiente.
+    user: o usuário:
+    is_admin: se o usuário é administrador do ambiente.
+%>
+
+<%= form_tag environment_course_user_roles_path(environment, change_role_form.course, user),
+  method: :post do %>
+  <table>
+    <thead class="hide">
+      <tr>
+        <th>Papel</th>
+        <th>Curso</th>
+        <th>Editar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <% if is_admin %>
+          <td class="entity-management-role-column-role">
+            <p class="legend">Este usuário é administrador do ambiente. Seu papel não pode ser mudado.</p>
+          </td>
+          <td>
+            <%= link_to change_role_form.course.name,
+              environment_course_path(environment, change_role_form.course) %>
+          </td>
+          <td></td>
+        <% else %>
+          <td class="entity-management-role-column-role text-right">
+            <label class="control-label show">
+              Professor <%= radio_button_tag :role, Role[:teacher], change_role_form.role.teacher? ? true : false %>
+            </label>
+            <label class="control-label show">
+              Aluno
+              <%= radio_button_tag :role, Role[:member], change_role_form.role.member? ? true : false %>
+            </label>
+            <label class="control-label show">
+              Tutor
+              <%= radio_button_tag :role, Role[:tutor], change_role_form.role.tutor? ? true : false %>
+            </label>
+          </td>
+          <td>
+            <%= link_to change_role_form.course.name,
+              environment_course_path(environment, change_role_form.course) %>
+          </td>
+          <td class="entity-management-role-column-button">
+            <%= submit_tag "Alterar", class: "button-primary" %>
+          </td>
+        <% end %>
+      </tr>
+    </tbody>
+  </table>
+<% end %>

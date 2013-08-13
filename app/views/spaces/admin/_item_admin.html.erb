@@ -1,16 +1,31 @@
-<tr class="row">
-  <td class="cell cell-400">
-    <div class="space-info icon-space-gray_16_18-before">
-      <%= link_to item_admin.name, space_path(item_admin), :class => "space-name" %>
-      <span class="space-detail members"><%= pluralize item_admin.member_count, 'membro' %> </span>
-      <span class="space-detail subject-count"><%= item_admin.subjects.length %> módulos</span>
-      <span class="space-detail created-at">criado em <%= l(item_admin.created_at, :format => :admin) %></span>
-    </div>
-  </td>
-  <td class="cell centered-cell"><%= link_to 'Gerenciar disciplina', edit_space_path(item_admin),
-        :class => "option icon-manage-gray_8_10-before" %> </td>
-      <td class="cell centered-cell"><%= link_to 'Remover', space_path(item_admin),
-        :confirm => 'Você tem certeza que deseja remover este curso?',
-        :method => :delete,
-        :class => "option icon-delete-gray_8_10-before" %> </td>
-</tr>
+<%#
+  Item da lista de gerenciamento de disciplinas de um curso.
+
+  Variáveis:
+    item_admin: a disciplina.
+%>
+
+<li class="entity-management-list-item">
+  <div class="entity-management-list-item-cell entity-management-list-item-icon">
+    <span class="icon-space-gray_16_18 show text-replacement">Discipina</span>
+  </div>
+  <div class="entity-management-list-item-cell">
+    <%= link_to item_admin.name, item_admin %>
+    <%= content_tag :span, pluralize(item_admin.member_count, "membro"),
+      class: "legend show" %>
+    <%= content_tag :span, pluralize(item_admin.subjects.count, "módulo"),
+      class: "legend show" %>
+    <%= content_tag :span, "criado em #{ l(item_admin.created_at, format: :admin) }",
+      class: "legend show" %>
+  </div>
+  <div class="entity-management-list-item-cell entity-management-list-item-action">
+    <%= link_to "Editar", edit_space_path(item_admin),
+      class: "icon-manage-lightblue_8_10-before link-secondary" %>
+  </div>
+  <div class="entity-management-list-item-cell entity-management-list-item-action">
+    <%= link_to "Remover",  space_path(item_admin),
+      confirm: "Todas as informações dos módulos, aulas e dados referente ao curso serão perdidas. Você tem certeza disso?",
+      method: :delete,
+      class: "icon-close-gray_8_10-before link-secondary" %>
+  </div>
+</li>

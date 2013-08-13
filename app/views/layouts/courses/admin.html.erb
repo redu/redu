@@ -1,0 +1,26 @@
+<% content_for :content do %>
+  <% content_for :container_class do "entity-wrapper" end %>
+
+  <% @course = @header_course || @course %>
+
+  <div class="span3">
+    <%= render "courses/sidebar", course: @course,
+      management: true %>
+  </div>
+  <div class="span13">
+    <div class="content-body">
+      <%= render "courses/admin/header", course: @course %>
+
+      <%= yield %>
+
+      <div class="centralize">
+        <%= link_to "Sair do Gerenciamento",
+          environment_course_path(@course.environment, @course),
+          class: "link-secondary" %>
+      </div>
+    </div>
+    <%= render "courses/breadcrumb", course: @course %>
+  </div>
+<% end %>
+
+<%= render template: "layouts/new_application" %>

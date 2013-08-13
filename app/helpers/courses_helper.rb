@@ -37,4 +37,15 @@ module CoursesHelper
       end
     end
   end
+
+  # Retorna a privacidade de um curso com suas devidas classes.
+  def course_privacy_type(course)
+    if course[:type] == :public
+      content_tag(:span, "Aberto",
+                  class: "course-privacy-open icon-privacy-open-green_16_18-before")
+    else
+      content_tag(:span, "Privado",
+                  class: "course-privacy-closed icon-privacy-closed-red_16_18-before")
+    end
+  end
 end

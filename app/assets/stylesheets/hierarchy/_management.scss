@@ -1,0 +1,269 @@
+// ==========================================================================
+// Gerenciamento.
+// ==========================================================================
+
+
+.entity-management-header { padding: 10px 20px 20px; }
+
+.form-fieldset-section { padding: 10px 0; }
+
+// Prefixo/sufixo de campos.
+.control-fix {
+  padding: 7px 10px;
+  color: $gray5;
+  border: 1px solid $gray4;
+  background-color: $gray2;
+}
+
+$bootstrap-control-border-radius: 4px;
+$bootstrap-control-horizontal-padding: 10px;
+
+.control-prefix {
+  @include border-top-left-radius($bootstrap-control-border-radius);
+  @include border-bottom-left-radius($bootstrap-control-border-radius);
+}
+
+.control-suffix {
+  @include border-top-right-radius($bootstrap-control-border-radius);
+  @include border-bottom-right-radius($bootstrap-control-border-radius);
+}
+
+.control-prefix-redu-path { @include area-prefix($bootstrap-control-horizontal-padding, 132px); }
+
+.control-prefix-course-path { @include area-prefix($bootstrap-control-horizontal-padding, 225px); }
+
+.control-suffix-course-workload { @include area-suffix($bootstrap-control-horizontal-padding, 54px); }
+
+// Ícone de informação com tooltip para labels.
+.label-tooltip-icon {
+  float: left;
+  margin-right: 5px;
+}
+
+
+// Lista de gerenciamento de entidades.
+// ==========================================================================
+
+.entity-management-count {
+  color: $gray5;
+  float: left;
+}
+
+.entity-mangement-list {
+  margin: 0;
+  list-style: none;
+}
+
+.entity-management-list-item {
+  @include box-sizing;
+  @include border-radius;
+  display: table;
+  width: 100%;
+  padding: 20px 10px 20px 20px;
+  border: 1px solid $gray4;
+  $color: $gray2;
+  background-color: $color;
+
+  .cssgradients & { @include background-image(linear-gradient($color 0%, $white 50%, $color 100%)); }
+
+  &:hover {
+    border-color: $blue3;
+    $color: $blue1;
+    background-color: $color;
+
+    .cssgradients & { @include background-image(linear-gradient($color 0%, $white 50%, $color 100%)); }
+  }
+
+  & +
+  & { margin-top: 10px; }
+}
+
+.entity-management-list-item-cell {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.entity-management-list-item-icon { width: 16px + 5px; }
+
+.entity-management-list-item-action { width: 10%; }
+
+
+// Lista de gerenciamento de membros.
+// ==========================================================================
+
+.entity-mangement-members-filter-form {
+  background-color: $gray1;
+  padding: 10px 20px;
+}
+
+.entity-management-members-input { float: left; }
+
+.entity-management-members-input +
+.entity-management-members-filters { margin-left: 20px; }
+
+.entity-management-members-filters {
+  float: right;
+  overflow: hidden;
+  color: $gray5;
+
+  legend {
+    font-weight: bold;
+    float: left;
+
+    & +
+    .entity-management-members-filters-list { margin-left: 5px; }
+  }
+}
+
+$entity-management-members-filters-list-item-width: 100px;
+
+.entity-management-members-filters-list {
+  margin: 0;
+  list-style: none;
+  float: left;
+  width: 5px + $entity-management-members-filters-list-item-width * 2;
+}
+
+.entity-management-members-filters-list-item {
+  display: inline-block;
+  width: $entity-management-members-filters-list-item-width;
+}
+
+.entity-mangement-members-filter-form +
+.environment-management-member-search-result { margin-top: 10px; }
+
+.environment-management-member-search-result {
+  .form-checklist tr:hover a { color: $link-color-hover; }
+}
+
+.entity-management-members-column-user { width: 50%; }
+.entity-management-members-column-course { width: 25%}
+.entity-management-members-column-permissions { width: 14%; }
+.entity-management-members-column-checkbox { width: 3%; }
+
+.entity-management-role-header { width: 50%; }
+
+.entity-management-role-header-admin {
+  clear: both;
+  padding-top: 20px;
+  color: $gray5;
+}
+
+.entity-management-role-member +
+.entity-management-role-table { margin-top: 20px; }
+
+.entity-management-role-table {
+  form:first-of-type tbody tr:first-child td {
+    border-top: 1px solid $gray3;
+  }
+}
+
+.entity-management-role-column-role { width: 23%; }
+
+.entity-management-role-column-button { width: 12%; }
+
+
+// Ambiente: Licenças / Faturas.
+// ==========================================================================
+
+.environment-licenses-title,
+.environment-licenses-table-in-use { color: $gray6; }
+
+.environment-licenses-title-value { color: $black; }
+
+.environment-licenses-title-value +
+.environment-licenses-title-tooltip { margin-left: 15px; }
+
+.environment-licenses-title-tooltip {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.environment-licenses-title +
+.environment-invoices-box { margin-top: 20px; }
+
+.environment-invoices-box {
+  @include box-shadow(0 1px 0 $gray3);
+  @include border-radius(10px);
+
+  .cssgradients & { @include redu-gradient($gray2, $gray1, 0.3); }
+
+  .no-cssgradients & {
+    // http://www.colorzilla.com/gradient-editor/#f7f7f7+0,f0f0f0+100;Custom
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2Y3ZjdmNyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmMGYwZjAiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+  }
+}
+
+$environment-invoices-box-border: $gray3;
+$environment-invoices-box-shadow-inset: $white;
+
+.environment-invoices-box-row-cell {
+  @include box-sizing;
+  padding: 10px;
+  width: 50%;
+  color: $gray5;
+  text-align: center;
+  float: left;
+
+  &:only-child { width: 100%; }
+
+  & +
+  & {
+    border-left: 1px solid $environment-invoices-box-border;
+    @include box-shadow(-1px 0 0 $environment-invoices-box-shadow-inset);
+  }
+}
+
+.environment-invoices-box-row {
+  @include box-sizing;
+  overflow: hidden;
+
+  & +
+  & {
+    border-top: 1px solid $environment-invoices-box-border;
+    @include box-shadow(0 1px 0 $environment-invoices-box-shadow-inset inset);
+  }
+}
+
+.environment-invoices-box-title {
+  line-height: 21px;
+  font-size: 18px;
+  font-family: $museo-sans;
+  font-weight: 100;
+  letter-spacing: -1px;
+  color: $gray6;
+}
+
+.environment-invoices-box-invoice-total { font-weight: 500; }
+
+.environment-invoices-box-legend {
+  display: block;
+
+  .environment-invoices-box-title +
+  & { margin-top: 5px; }
+}
+
+.environment-invoices-box +
+.environment-invoices-table { margin-top: 20px; }
+
+.environment-invoices-table {
+  color: $gray6;
+
+  th,
+  td { text-align: center; }
+}
+
+tr.environment-invoices-in-use {
+  td { background-color: $green1; }
+}
+
+.environment-invoices-box-button +
+.environment-invoices-box-details { margin-top: 10px; }
+
+.environment-invoices-box-details { display: block; }
+
+
+// Curso.
+// ==========================================================================
+
+.form-course-submit { margin-left: 10px; }

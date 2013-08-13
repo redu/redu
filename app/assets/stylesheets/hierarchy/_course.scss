@@ -74,3 +74,78 @@
 
 .course-invite-counter +
 .course-invite-counter-title { margin-top: 20px; }
+
+// Privacidade.
+
+.control-radio {
+  .course-privacy-open,
+  .course-privacy-closed { color: $gray6; }
+}
+
+.course-privacy-open {
+  &,
+  .control-checked & { color: $green3; }
+}
+
+.course-privacy-closed {
+  &,
+  .control-checked & { color: $red2; }
+}
+
+.course-privacy-icon-tooltip {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+// Armazenamento.
+
+.course-storage-box {
+  overflow: hidden;
+  color: $gray5;
+  padding-right: 10px;
+
+  .progress-bar-legend { width: auto; }
+}
+
+.course-storage-details {
+  float: left;
+  width: 40%;
+}
+
+.course-storage-total {
+  float: right;
+  width: 60%;
+  padding-top: 5px;
+  text-align: center;
+}
+
+.course-storage-total-legend {
+  display: block;
+}
+
+.course-storage-detail {
+  overflow: hidden;
+
+  & +
+  & { margin-top: 5px; }
+}
+
+.course-storage-details-icons {
+  float: left;
+  $icon-width: 16px;
+  $icon-spacing: 5px;
+  $icon-amount: 3;
+  width: ($icon-amount * $icon-width) + ($icon-spacing * ($icon-amount - 1));
+}
+
+.course-storage-details-icon {
+  float: right;
+
+  & +
+  & { margin-right: 5px;}
+}
+
+.course-storage-details-icons +
+.course-storage-details-legend { margin-left: 5px; }
+
+.course-storage-details-legend { float: left; }

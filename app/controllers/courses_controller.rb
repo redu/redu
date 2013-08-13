@@ -41,7 +41,7 @@ class CoursesController < BaseController
 
   def edit
     respond_to do |format|
-      format.html { render 'courses/admin/edit' }
+      format.html { render 'courses/admin/edit', layout: 'courses/admin' }
     end
   end
 
@@ -80,7 +80,7 @@ class CoursesController < BaseController
 
   def new
     respond_to do |format|
-      format.html { render 'courses/admin/new' }
+      format.html { render 'courses/admin/new', layout: 'environments/admin' }
     end
   end
 
@@ -134,6 +134,7 @@ class CoursesController < BaseController
 
   # Aba Disciplinas.
   def admin_spaces
+    @total_spaces = @course.spaces.count
     @spaces = @course.spaces.includes(:subjects).order('updated_at DESC').
       page(params[:page]).per(Redu::Application.config.items_per_page)
 
@@ -144,10 +145,7 @@ class CoursesController < BaseController
     end
 
     respond_to do |format|
-      format.html { render "courses/admin/admin_spaces" }
-      format.js do
-        render_endless 'spaces/admin/item_admin', @spaces, '#spaces_list'
-      end
+      format.html { render 'courses/admin/admin_spaces', layout: 'courses/admin' }
     end
   end
 

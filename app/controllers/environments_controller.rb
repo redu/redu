@@ -51,7 +51,7 @@ class EnvironmentsController < BaseController
   # GET /environments/1/edit
   def edit
     respond_to do |format|
-      format.html { render 'environments/admin/edit' }
+      format.html { render 'environments/admin/edit', layout: 'environments/admin' }
     end
   end
 
@@ -174,14 +174,13 @@ class EnvironmentsController < BaseController
   end
 
   def admin_courses
+    @total_courses = @environment.courses.count
     @courses = @environment.courses.page(params[:page]).
       per(Redu::Application.config.items_per_page)
 
     respond_to do |format|
-      format.html { render "environments/admin/admin_courses" }
-      format.js do
-        render_endless 'courses/admin/item_admin', @courses, '#course_list'
-      end
+      format.html { render 'environments/admin/admin_courses',
+                           layout: 'environments/admin' }
     end
   end
 
@@ -191,11 +190,8 @@ class EnvironmentsController < BaseController
       per(Redu::Application.config.items_per_page)
 
     respond_to do |format|
-      format.html { render "environments/admin/admin_members" }
-      format.js do
-        render_endless 'environments/admin/user_item_admin', @memberships,
-          '#user_list_table'
-      end
+      format.html { render 'environments/admin/admin_members',
+                           layout: 'environments/admin' }
     end
   end
 
@@ -260,6 +256,153 @@ class EnvironmentsController < BaseController
                        { :template => 'shared/new_endless_kaminari',
                          :partial_locals => { :user => @user } })
       end
+    end
+  end
+
+  def admin_plans
+    # TODO: Back-end.
+    @screen = :lots
+    case @screen
+    when :empty
+      # Exemplo de faturas vazia.
+      @licenses = [
+        { course: { name: "Curso Lorem Ipsum Sit Dolor",
+                    link: "http://www.google.com",
+                    type: :public,
+                    storage: 0,
+                    quota: {
+                      space: "0 MB",
+                      documents: "0 MB",
+                      videos: "0 MB"
+                    },
+                    licenses: 0 }
+        }]
+      @licences_in_use = 0
+    when :first
+      # Exemplo de primeira fatura.
+      @licenses = [
+        { course: {
+            name: "Curso Lorem Ipsum Sit Dolor 2",
+            link: "http://www.google.com.br",
+            type: :private,
+            storage: 80,
+            quota: {
+              space: "800 MB",
+              documents: "400 MB",
+              videos: "400 MB"
+            },
+            licenses: 20 }
+        }]
+      @licences_in_use = 20
+      @invoices = [
+        {
+          begin: "02/04/2013",
+          end: "01/05/2013",
+          state: "Em uso",
+          total: 0
+        }
+      ]
+    when :to_pay
+      # Exemplo de fatura a pagar.
+      @licenses = [
+        { course: {
+            name: "Curso Lorem Ipsum Sit Dolor 2",
+            link: "http://www.google.com.br",
+            type: :private,
+            storage: 80,
+            quota: {
+              space: "800 MB",
+              documents: "400 MB",
+              videos: "400 MB"
+            },
+            licenses: 4 }
+        }]
+      @licences_in_use = 4
+      @invoices = [
+        {
+          begin: "02/04/2013",
+          end: "01/05/2013",
+          state: "Em uso",
+          total: 0
+        },
+        {
+          begin: "02/03/2013",
+          end: "01/04/2013",
+          state: "A pagar",
+          total: 12
+        }
+      ]
+    when :lots
+      # Exemplo de várias faturas.
+      @licenses = [
+        { course: {
+            name: "Curso Lorem Ipsum Sit Dolor 3",
+            link: "http://www.google.com.br",
+            type: :private,
+            storage: 100,
+            quota: {
+              space: "1000 MB",
+              documents: "500 MB",
+              videos: "500 MB"
+            },
+            licenses: 15 }
+        },
+        { course: {
+            name: "Curso Lorem Ipsum Sit Dolor 4",
+            link: "http://www.google.com.br",
+            type: :private,
+            storage: 50,
+            quota: {
+              space: "400 MB",
+              documents: "200 MB",
+              videos: "200 MB"
+            },
+            licenses: 10 }
+        },
+        { course: {
+            name: "Curso Lorem Ipsum Sit Dolor 5",
+            link: "http://www.google.com.br",
+            type: :public,
+            storage: 80,
+            quota: {
+              space: "800 MB",
+              documents: "400 MB",
+              videos: "400 MB"
+            },
+            licenses: 0 }
+        }]
+      @licences_in_use = 15 + 10
+      @invoices = [
+        {
+          begin: "02/04/2013",
+          end: "01/05/2013",
+          state: "Em uso",
+          total: 0
+        },
+        {
+          begin: "02/03/2013",
+          end: "01/04/2013",
+          state: "Pago",
+          total: 12
+        },
+        {
+          begin: "02/02/2013",
+          end: "01/03/2013",
+          state: "Pago",
+          total: 12
+        },
+        {
+          begin: "02/01/2013",
+          end: "01/02/2013",
+          state: "Pago",
+          total: 12
+        }
+      ]
+    end
+
+    respond_to do |format|
+      format.html { render 'environments/admin/admin_plans',
+                           layout: 'environments/admin' }
     end
   end
 end

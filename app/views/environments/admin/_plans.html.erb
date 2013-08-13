@@ -1,0 +1,115 @@
+<%#
+  Informações sobre planos e faturas.
+  Usado na barra lateral.
+  TODO: sem integração com back-end.
+
+  Variáveis:
+
+%>
+
+<% if @screen == :lots %>
+  <div class="entity-sidebar-widget content-body">
+    <div class="entity-sidebar-widget-section">
+      <span class="entity-sidebar-widget-title icon-plan-lightblue_16_18-before" rel="tooltip" title="As licenças são apenas contabilizadas quando você convida alguém para participar de um um Curso Privado.">Licenças</span>
+    </div>
+    <hr class="entity-sidebar-widget-separator">
+    <div class="entity-sidebar-widget-section">
+      <span class="entity-sidebar-widget-legend">Licenças em uso:</span>
+      <%= licenses_in_use(@licences_in_use) %>
+    </div>
+    <hr class="entity-sidebar-widget-separator">
+    <div class="entity-sidebar-widget-section">
+      <span class="entity-sidebar-widget-legend show">Valor previsto:</span>
+      <%= number_to_currency(@invoices[1][:total]) %>
+    </div>
+    <hr class="list-separator">
+    <div class="entity-sidebar-widget-section">
+      <span class="entity-sidebar-widget-title icon-plan-lightblue_16_18-before" rel="tooltip" title="A fatura estará sempre associada ao seu Ambiente de Aprendizagem, independente da quantidade de Cursos e Disciplinas.">Faturas</span>
+    </div>
+    <hr class="entity-sidebar-widget-separator">
+    <div class="entity-sidebar-widget-section">
+      <span class="entity-sidebar-widget-legend">Valor:</span>
+      <%= content_tag :span, number_to_currency(@invoices[1][:total]),
+        class: "icon-correct-green_16_18-after" %>
+    </div>
+    <hr class="entity-sidebar-widget-separator">
+    <div class="entity-sidebar-widget-section">
+      <span class="entity-sidebar-widget-legend show">Vencimento:</span>
+      <%= @invoices[1][:end] %>
+    </div>
+  </div>
+
+<% elsif @screen == :to_pay %>
+  <div class="entity-sidebar-widget content-body">
+    <div class="entity-sidebar-widget-section">
+      <span class="entity-sidebar-widget-title icon-plan-lightblue_16_18-before" rel="tooltip" title="As licenças são apenas contabilizadas quando você convida alguém para participar de um um Curso Privado.">Licenças</span>
+    </div>
+    <hr class="entity-sidebar-widget-separator">
+    <div class="entity-sidebar-widget-section">
+      <span class="entity-sidebar-widget-legend">Licenças em uso:</span>
+      <%= licenses_in_use(@licences_in_use) %>
+    </div>
+    <hr class="entity-sidebar-widget-separator">
+    <div class="entity-sidebar-widget-section">
+      <span class="entity-sidebar-widget-legend show">Valor previsto:</span>
+      <%= number_to_currency(@invoices[1][:total]) %>
+    </div>
+    <hr class="list-separator">
+    <div class="entity-sidebar-widget-section">
+      <span class="entity-sidebar-widget-title icon-plan-lightblue_16_18-before" rel="tooltip" title="A fatura estará sempre associada ao seu Ambiente de Aprendizagem, independente da quantidade de Cursos e Disciplinas.">Faturas</span>
+    </div>
+    <hr class="entity-sidebar-widget-separator">
+    <div class="entity-sidebar-widget-section">
+      <span class="entity-sidebar-widget-legend">Valor:</span>
+      <%= content_tag :span, number_to_currency(@invoices[1][:total]),
+        class: "plan-status-pending" %>
+    </div>
+    <hr class="entity-sidebar-widget-separator">
+    <div class="entity-sidebar-widget-section">
+      <span class="entity-sidebar-widget-legend show">Vencimento:</span>
+      <%= @invoices[1][:end] %>
+    </div>
+    <hr class="entity-sidebar-widget-separator">
+    <div class="entity-sidebar-widget-section entity-sidebar-widget-section-button centralize">
+      <%= link_to "Pagar", "#", class: "button-success", rel: "tooltip",
+        title: "O Redu utiliza a solução mais completa para pagamento online, o PagSeguro, com total sigilo dos seus dados financeiros." %>
+    </div>
+  </div>
+
+<% elsif @screen == :empty %>
+  <% @licences_in_use = 0 %>
+  <div class="entity-sidebar-widget content-body">
+    <div class="entity-sidebar-widget-section">
+      <span class="entity-sidebar-widget-title icon-plan-lightblue_16_18-before" rel="tooltip" title="As licenças são apenas contabilizadas quando você convida alguém para participar de um um Curso Privado.">Licenças</span>
+    </div>
+    <hr class="entity-sidebar-widget-separator">
+    <div class="entity-sidebar-widget-section">
+      <span class="entity-sidebar-widget-legend">Licenças em uso:</span>
+      <%= licenses_in_use(@licences_in_use) %>
+    </div>
+    <hr class="list-separator">
+    <div class="entity-sidebar-widget-section">
+      <span class="entity-sidebar-widget-title icon-plan-lightblue_16_18-before" rel="tooltip" title="A fatura estará sempre associada ao seu Ambiente de Aprendizagem, independente da quantidade de Cursos e Disciplinas.">Faturas</span>
+    </div>
+    <hr class="entity-sidebar-widget-separator">
+    <div class="entity-sidebar-widget-section text-center">
+      <span class="entity-sidebar-widget-legend">Não há fatura para este Ambiente.</span>
+    </div>
+  </div>
+<% elsif @screen == :first %>
+  <div class="entity-sidebar-widget content-body">
+    <div class="entity-sidebar-widget-section">
+      <span class="entity-sidebar-widget-title icon-plan-lightblue_16_18-before" rel="tooltip" title="As licenças são apenas contabilizadas quando você convida alguém para participar de um um Curso Privado.">Licenças</span>
+    </div>
+    <hr class="entity-sidebar-widget-separator">
+    <div class="entity-sidebar-widget-section">
+      <span class="entity-sidebar-widget-legend">Licenças em uso:</span>
+      <%= licenses_in_use(@licences_in_use) %>
+    </div>
+    <hr class="list-separator">
+    <div class="entity-sidebar-widget-section">
+      <span class="entity-sidebar-widget-legend">Valor previsto:</span>
+      R$12,00
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,25 @@
+<%#
+  Item da coleção de licensas em uso.
+
+  Variáveis:
+    license: as informações da licença.
+%>
+
+<tr>
+  <td>
+    <%= link_to license[:course][:name], license[:course][:link] %>
+  </td>
+  <td class="text-center">
+    <%= course_privacy_type(license[:course]) %>
+  </td>
+  <td class="centralize">
+    <% tooltip = content_tag(:p, content_tag(:strong, "Espaço utilizado: #{ license[:course][:quota][:space] }")) %>
+    <% tooltip << content_tag(:p, "Documentos: #{ license[:course][:quota][:documents] }") %>
+    <% tooltip << content_tag(:p, "Vídeos: #{ license[:course][:quota][:videos] }") %>
+    <%= render "bootstrap/progress_bar", size: "medium",
+      percentage: license[:course][:storage], tooltip_text: tooltip %>
+  </td>
+  <td class="environment-licenses-table-in-use text-center">
+    <%= licenses_in_use(license[:course][:licenses]) %>
+  </td>
+</tr>

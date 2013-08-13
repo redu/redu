@@ -1,22 +1,40 @@
-<%= form_tag destroy_members_environment_path,
-    :method => :post, :id => "remove" do %>
-<table id="user_list_table" class="concave-admin-table">
-  <thead style="display: none;">
-    <tr>
-      <th width="30px">
-        <input type="checkbox" id="select_all"  >
-      </th>
-      <th >Usuário</th>
-      <th >Curso(s)</th>
-      <th >Permissões</th>
-      <th >Administrador?</th>
-    </tr>
-  </thead>
-  <tbody>
-    <%= render :partial => 'environments/admin/user_item_admin', :collection => memberships %>
-  </tbody>
-</table>
-<div class="remove-actions">
-  <%= submit_tag "Remover selecionados", :class => "concave-remove" %>
+<%#
+  Filtro de papéis de membros.
+
+  Variáveis:
+    memberships: os membros.
+    environment: o ambiente.
+%>
+
+<div class="entity-mangement-members-list content-section">
+  <%= form_tag destroy_members_environment_path,
+      :method => :post, :id => "remove", class: "form-checklist" do %>
+    <table id="user_list_table" class="table-with-borderradius table-with-link">
+      <thead>
+        <tr>
+          <th class="entity-management-members-column-user">Usuário</th>
+          <th class="entity-management-members-column-course">Curso(s)</th>
+          <th class="entity-management-members-column-permissions">Permissões</th>
+          <th class="entity-management-members-column-checkbox">
+            <input type="checkbox" class="form-checklist-all" rel="tooltip" title="Selecionar todos abaixo">
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render partial: "environments/admin/user_item_admin",
+          collection: memberships, locals: { environment: environment } %>
+      </tbody>
+    </table>
+    <div class="button-toolbar">
+      <%= submit_tag t(:delete_selected), class: "button-danger",
+        confirm: "Você tem certeza que deseja remover este(s) membro(s)?" %>
+    </div>
+  <% end %>
 </div>
+
+<% if memberships.total_pages > 1 %>
+  <hr class="list-separator">
+  <%= paginate memberships, theme: "numbers", outer_window: 1,
+    inner_window: 4 %>
+  <hr class="list-separator">
 <% end %>

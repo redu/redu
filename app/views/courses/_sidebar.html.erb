@@ -1,42 +1,92 @@
-<div class="concave-sidebar alpha grid_3">
-  <div class="image-frame course-frame">
-    <%= link_to(course.environment) do %>
-      <%= image_tag course.environment.avatar.url(:thumb_90),
-        :size => "90x90", :alt => 'profile', :class => "environment" %>
-    <% end %>
-    <span class="course icons-big icon-environment-white_64_64 replacement"><%= course.name %></span>
-  </div>
+<%#
+  Barra lateral de cursos.
 
-  <div class="total-count">
-    <span class="count"><%= course.approved_users.count %></span>
-    <span class="members">membros</span>
-  </div>
+  Variáveis:
+    course: o curso.
+    management: se está sendo mostrada nas telas de gerenciamento (default false).
+%>
 
-  <ul class="roles clearfix">
-    <li>
-      <span class="role icon-teacher-gray_16_18-before">Professores:</span>
+<% management = false unless local_assigns.has_key? :management %>
+
+<div class="entity-sidebar">
+  <%= render "environments/sidebar_thumbnail", environment: course.environment %>
+
+  <%# Gerenciamento. %>
+  <% if management %>
+    <%# Quantidade de membros e convidar. %>
+    <div class="entity-sidebar-widget content-body">
+      <div class="entity-sidebar-widget-section text-center">
+        <%= link_to "← Gerenciar Ambiente",
+          edit_environment_path(course.environment), class: "link-secondary" %>
+      </div>
+      <hr class="entity-sidebar-widget-separator">
+      <div class="entity-sidebar-widget-section">
+        <span class="entity-sidebar-widget-icon icon-course-gray_16_18 show text-replacement">Curso</span>
+        <%= content_tag :span, course.name, class: "entity-sidebar-widget-name" %>
+      </div>
+      <hr class="entity-sidebar-widget-separator">
+      <div class="entity-sidebar-widget-section">
+        <span class="entity-sidebar-widget-legend icon-teacher-gray_16_18-before">Prof.:</span>
+        <%= course.teachers.count %>
+      </div>
+      <hr class="entity-sidebar-widget-separator">
+      <div class="entity-sidebar-widget-section">
+        <span class="entity-sidebar-widget-legend icon-tutor-gray_16_18-before">Tutores.:</span>
+        <%= course.tutors.count %>
+      </div>
+      <hr class="entity-sidebar-widget-separator">
+      <div class="entity-sidebar-widget-section">
+        <span class="entity-sidebar-widget-legend icon-member-gray_16_18-before">Alunos:</span>
+        <%= course.students.count %>
+      </div>
+      <hr class="entity-sidebar-widget-separator">
+      <div class="entity-sidebar-widget-section centralize">
+        <%# TODO: Modal de convidar membros. %>
+        <%= link_to "Convidar Membros", "#", class: "link-secondary" %>
+      </div>
+    </div>
+
+    <%# Licenças e faturas. %>
+    <% @screen = :empty %>
+    <%= render "environments/admin/plans" %>
+
+  <% else %>
+    <%= render "bootstrap/breadcrumb_icons", current_entity: course %>
+
+    <div class="entity-members-counter-wrapper">
+      <%= content_tag :span, course.approved_users.count,
+        class: "entity-members-counter" %>
+      <%= "membro".pluralize(course.approved_users.count) %>
+    </div>
+
+    <span class="nav-local-general-stat icon-teacher-gray_16_18-before">
+      <%= t("classy_enum.role.teacher", count: course.teachers.count) %>:
       <%= link_to course.teachers.count,
         environment_course_users_path(course.environment, course,
-                                      :role => "teachers"),
-        :class => "count" %>
-    </li>
-    <li>
-      <span class="role icon-tutor-gray_16_18-before">Tutores:</span>
+        role: "teachers"),
+        class: "nav-local-general-stat-link" %>
+    </span>
+    <span class="nav-local-general-stat icon-tutor-gray_16_18-before">
+      <%= t("classy_enum.role.tutor", count: course.tutors.count) %>:
       <%= link_to course.tutors.count,
         environment_course_users_path(course.environment, course,
-                                      :role => "tutors"),
-        :class => "count" %>
-    </li>
-    <li>
-      <span class="role icon-member-gray_16_18-before">Alunos:</span>
+        role: "tutors"),
+        class: "nav-local-general-stat-link" %>
+    </span>
+    <span class="nav-local-general-stat icon-member-gray_16_18-before">
+      <%= t("classy_enum.role.student", count: course.students.count) %>:
       <%= link_to course.students.count,
         environment_course_users_path(course.environment, course,
-                                      :role => "students"),
-        :class => "count" %>
-    </li>
-  </ul><!-- end .roles -->
-  <ul class="connections clearfix">
-    <%= render :partial => 'users/item_short',
-      :collection => course.approved_users.limit(16) %>
-  </ul><!-- end .connections -->
+        role: "students"),
+        class: "nav-local-general-stat-link" %>
+    </span>
+
+    <span class="entity-sidebar-separator icon-arrow-up-curly-gray show text-replacement">-</span>
+
+    <ul class="entity-members-list clearfix">
+      <%= render partial: "shared/item_linkable",
+        collection: course.users.limit(16),
+        locals: { classes: "entity-member", size: 32, name: "display_name" } %>
+    </ul>
+  <% end %>
 </div>

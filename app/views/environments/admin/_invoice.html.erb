@@ -1,0 +1,33 @@
+<%#
+  Item da coleção de faturas.
+
+  Variáveis:
+    invoice: as informações da fatura.
+%>
+
+<%= content_tag :tr,
+  class: "#{ "environment-invoices-in-use" if invoice[:state] == "Em uso" }" do %>
+  <td>
+    <%= invoice[:begin] %>
+  </td>
+  <td>
+    <%= invoice[:end] %>
+  </td>
+  <td>
+    <%= content_tag :span, invoice[:state],
+      class: "#{ "plan-status-pending" if invoice[:state] == "A pagar" }" %>
+  </td>
+  <td>
+    <%= licenses_in_use(number_to_currency(invoice[:total])) %>
+  </td>
+  <td>
+    <% if invoice[:total] > 0 %>
+      <%= link_to "Ver detalhes", "#" %>
+      <% if invoice[:state] == "A pagar" %>
+        • <%= link_to "Pagar", "#" %>
+      <% end %>
+    <% else %>
+      <%= licenses_in_use(0) %>
+    <% end %>
+  </td>
+<% end %>

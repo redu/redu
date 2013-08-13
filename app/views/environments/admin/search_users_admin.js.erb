@@ -1,7 +1,6 @@
 <% if @memberships.empty? %>
-  $message = $("<div/>", { "class" : "box_notice" }).text("Nenhum usuário encontrado.");
-  $("#user_list").html($message);
+  $content = $('<%= escape_javascript(render "shared/empty_message", icon_message: "Nenhum usuário encontrado.", icon_class: "icon-search-empty_128_130", message: "Nenhum usuário encontrado.") %>');
 <% else %>
-  $users = $("<%= escape_javascript(render :partial => "environments/admin/user_list_admin", :locals => { :memberships => @memberships }) %>");
-  $("#user_list").html($users);
+  $content = $('<%= escape_javascript(render "environments/admin/user_list_admin", memberships: @memberships, environment: @environment) %>');
 <% end %>
+$(".environment-management-member-search-result").html($content);

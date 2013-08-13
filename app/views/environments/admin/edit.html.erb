@@ -1,81 +1,98 @@
-  <script type="text/javascript">
-    $(document).ready(function(){
-        $("#environment_name").bind('keyup blur', function(e){
-          $("#environment_path").val($(this).slug());
-          $(".form-common .path .environment").html($(this).slug());
-          })
+<%= form_for @environment, html: { multipart: true, class: "form-horizontal" },
+  url: @environment do |f| %>
+  <div class="form-fieldset-section">
+    <%= concave_error_messages_for(@environment) %>
 
-        $("#environment_path").bind('keyup blur', function(e){
-          $("#environment_path").val($(this).slug());
-          $(".form-common .path .environment").html($(this).slug());
-          })
+    <div class="control-group row">
+      <div class="control-label span3">
+        <label for="cpf">CPF</label>
+      </div>
+      <div class="controls span4">
+        <input type="text" id="cpf" placeholder="000.000.000-00">
+      </div>
+    </div>
 
-        })
-</script>
-<%= render :partial => 'shared/management_background' %>
-<div class="management-sidebar">
-  <%= render :partial => 'environments/sidebar',
-    :locals => { :environment => @environment } %>
- </div>
-<div class="main grid_12 omega big-col management-wrapper">
-  <%= render :partial => 'environments/breadcrumbs',
-    :locals => { :environment => @header_environment || @environment } %>
-
-  <%= render :partial => 'environments/admin/header',
-    :locals => { :environment => @header_environment || @environment } %>
-
-  <div id="environment-manage" class="body management">
-    <%= render :partial => 'environments/admin/clean_header' %>
-
-    <%= tabs :environments_admin do %>
-      <% if @environment.plan %>
-        <div class="plan-panel">
-          <div class="plan-use">
-            <span class="plan-type"><%= @environment.plan.name %></span>
-            <%= render :partial => "invoices/quotas_old",
-              :locals => { :quota_file => @environment.percentage_quota_file,
-                           :plan => @environment.plan,
-                           :quota_multimedia => @environment.percentage_quota_multimedia,
-                           :quota_members => @environment.percentage_quota_members,
-                           :quota => @environment.quota } %>
-          </div>
-        </div>
-      <% end %>
-
-      <%= form_for @environment, :html => { :class => 'concave-form',
-        :multipart => true }, :url => environment_path(@header_environment || @environment) do |f| %>
-        <%= concave_error_messages_for(@environment) %>
+    <div class="control-group row">
+      <div class="control-label span3">
         <%= f.label :name, "Nome" %>
-        <%= f.text_field :name  %>
+      </div>
+      <div class="controls span7">
+        <%= f.text_field :name, class: "control-to-slug",
+          placeholder: "Nome do ambiente virtual de aprendizagem" %>
         <%= concave_errors_for(f.object, :name) %>
-        <span class="tip">Nome do ambiente virtual de aprendizagem</span>
-        <%= f.label :initials, "Abreviação" %>
-        <%= f.text_field :initials  %>
-        <%= concave_errors_for(f.object, :initials) %>
-        <span class="tip">Abreviação ou sigla</span>
-        <%= f.label :path, t(:path) %>
-        <%= f.text_field :path %>
-        <%= concave_errors_for(f.object, :path) %>
-        <%= f.label :description, "Descrição", :class => "concave-label-high" %>
-        <%= f.text_area :description, :size=>'102x4' %>
-        <%= concave_errors_for(f.object, :description) %>
-        <%= f.label :tag_list,
-          raw("Palavras-chave <span class='snippet'>(separadas por vírgula)</span>") %>
-        <%= f.text_field :tag_list %>
-        <span class="tip">O ambiente resumido em palavras elementares</span>
-        <%= f.label :avatar, "Imagem" %>
-        <%= f.file_field :avatar %>
-        <span class="tip">Adicione uma imagem de proporção igual ou similar a um quadrado</span>
-        <hr/>
+      </div>
+    </div>
 
-        <%= f.submit "Salvar alterações" %>
-        <%= link_to "Remover ambiente", environment_path(@header_environment || @environment),
-          :confirm => "Você tem certeza que deseja remover este ambiente?",
-          :method => :delete,
-          :class => "concave-remove" %>
-      <% end %>
-      <%= link_to "Sair", environment_path(@header_environment || @environment),
-        :class => "manage exit icon-manage-gray_8_10-before" %>
-    <% end %>
+    <div class="control-group row">
+      <div class="control-label span3">
+        <%= f.label :initials, "Abreviação" %>
+      </div>
+      <div class="controls span7">
+        <%= f.text_field :initials, placeholder: "Abreviação ou sigla" %>
+        <%= concave_errors_for(f.object, :initials) %>
+      </div>
+    </div>
+
+    <div class="control-group row">
+      <div class="control-label span3">
+        <%= f.label :path, class: "pull-right" do %>
+          <span class="label-tooltip-icon icon-info-tooltip-lightblue_16_18 text-replacement" rel="tooltip" title="Esse será o endereço que as pessoas usarão para acessar o seu Ambiente.">Informação</span>
+          <%= t(:path) %>
+        <% end %>
+      </div>
+      <div class="controls span7">
+        <div class="control-prefix-redu-path area-fix">
+          <span class="control-fix control-prefix area-prefix">http://redu.com.br/</span>
+          <%= f.text_field :path, class: "area-infix control-to-show-slug" %>
+        </div>
+        <%= concave_errors_for(f.object, :path) %>
+      </div>
+    </div>
+
+    <div class="control-group row">
+      <div class="control-label span3">
+        <%= f.label :description, "Descrição" %>
+      </div>
+      <div class="controls span7">
+        <%= f.text_area :description,
+          placeholder: "Informações acerca do Ambiente de Aprendizagem (200 caracteres)",
+          rows: 6, maxlength: 200 %>
+        <%= concave_errors_for(f.object, :description) %>
+      </div>
+    </div>
+
+    <div class="control-group row">
+      <div class="control-label span3">
+        <%= f.label :tag_list, "Palavras-chave" %>
+      </div>
+      <div class="controls span7">
+        <%= f.text_field :tag_list,
+          placeholder: "O ambiente resumido em palavras elementares" %>
+        <span class="legend">(separadas por vírgula)</span>
+        <%= concave_errors_for(f.object, :tag_list) %>
+      </div>
+    </div>
+
+    <div class="control-group row">
+      <div class="control-label span3">
+        <%= f.label :avatar, "Imagem" %>
+      </div>
+      <div class="controls span7">
+        <%= f.file_field :avatar %>
+        <span class="legend">Adicione uma imagem de proporção igual ou similar a um quadrado</span>
+        <%= concave_errors_for(f.object, :avatar) %>
+      </div>
+    </div>
   </div>
-</div><!-- end #environment-edit -->
+
+  <hr class="list-separator">
+
+  <div class="content-section clearfix">
+    <%= link_to "Remover ambiente", @environment,
+      confirm: "Você tem certeza que deseja remover este ambiente?",
+      method: :delete,
+      class: "button-danger pull-left" %>
+
+    <%= f.submit t(:save_changes), class: "button-primary pull-right" %>
+  </div>
+<% end %>
