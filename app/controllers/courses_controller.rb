@@ -128,10 +128,7 @@ class CoursesController < BaseController
     @preview = true
 
     respond_to do |format|
-      format.html { render 'show', layout: 'new_application' }
-      format.js do
-        render_endless 'spaces/item_short', @spaces, '#course-preview > ul'
-      end
+      format.html { render 'show', layout: 'courses/show' }
     end
   end
 
