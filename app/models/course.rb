@@ -184,8 +184,8 @@ class Course < ActiveRecord::Base
   # Desassocia o usuário do curso
 
   # - Remove a associação do usuário com o Course
-  # - Remove a associação do usuário com o Environment, caso ele passe
-  #   a não fazer parte de nenhum Course
+  # - Remove a associação do usuário com o Environment, caso ele passe a não
+  #   fazer parte de nenhum Course
   # - Remove as associações com os Spaces
   # - Remove as associações com os Subjects
   # - Notifica Vis em relação a remoção dos enrollments
