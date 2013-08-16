@@ -30,20 +30,6 @@ class SpacesController < BaseController
     redirect_to preview_environment_course_path(@environment, @course)
   end
 
-  def admin_members
-    @memberships = @space.user_space_associations.includes(:user).
-      order('updated_at DESC').page(params[:page]).
-      per(Redu::Application.config.items_per_page)
-
-    respond_to do |format|
-      format.html { render 'spaces/admin/admin_members' }
-      format.js do
-        render_endless 'spaces/admin/user_item_admin', @memberships,
-          '#user_list_table'
-      end
-    end
-  end
-
   def admin_subjects
     @subjects = @space.subjects
 
@@ -118,7 +104,7 @@ class SpacesController < BaseController
     @billable = @plan.billable
 
     respond_to do |format|
-      format.html { render "spaces/admin/edit" }
+      format.html { render "spaces/admin/edit", layout: "spaces/admin" }
     end
   end
 

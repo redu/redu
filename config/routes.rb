@@ -62,7 +62,6 @@ Redu::Application.routes.draw do
     # Space
     resources :spaces, :except => [:index] do
       member do
-        get :admin_members
         get :mural
         get :students_endless
         get :admin_subjects

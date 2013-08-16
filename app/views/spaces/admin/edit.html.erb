@@ -1,61 +1,20 @@
-<%= render :partial => 'shared/management_background' %>
-<%= render :partial => 'spaces/admin/management_sidebar',
-  :locals => { :space => @space } %>
+<div class="content-section">
+  <%= render "courses/admin/storage_box", course: @space.course %>
+</div>
 
-<div class="main space grid_12 omega big-col">
-  <%= render :partial => 'spaces/breadcrumbs',
-    :locals => { :space => @header_space || @space } %>
+<hr class="list-separator">
 
-  <div id="space-manage" class="body management">
-    <%= render :partial => 'spaces/admin/header',
-      :locals => { :space => @header_space || @space }%>
-    <%= render :partial => 'spaces/admin/clean_header' %>
+<%= form_for @space, html: { class: "form-horizontal", multipart: true } do |f| %>
+  <%= render "spaces/form", space: @space, f: f, edit: true %>
 
-    <%= tabs :spaces_admin do %>
-      <div class="plan-info">
-        <span class="call">Plano</span>
-        <span>
-          <% if @space.course.plan %>
-          <%= link_to @space.course.name,
-            environment_course_path(@space.course.environment, @space.course),
-            :class => "course-name" %> /
-          <% elsif @space.course.environment.plan %>
-            <%= link_to @space.course.environment.name,
-              environment_path(@space.course.environment),
-              :class => "course-name" %> /
-          <% end %>
-          <%= link_to @plan.name, plan_invoices_path(@plan),
-            :class => "plan-name" %>
-          </span>
-        <ul class="plan-data">
-          <li>membros:
-            <strong class="featured"><%= @billable.users.count %></strong> /
-            <%= @plan.members_limit %>
-            <span class="featured">(<%= @billable.percentage_quota_members.round %>%)</span>
-          </li>
-          <li>documentos:
-            <strong class="featured"><%= number_to_human_size(@billable.quota.files) %></strong> /
-            <%= number_to_human_size(@plan.file_storage_limit, :precision => 0) %>
-            <span class="featured">(<%= @billable.percentage_quota_file.round %>%)</span>
-          </li>
-          <li>vídeos:
-            <strong class="featured"><%= number_to_human_size(@billable.quota.multimedia) %></strong> /
-            <%= number_to_human_size(@plan.video_storage_limit, :precision => 0) %>
-            <span class="featured">(<%= @billable.percentage_quota_multimedia.round %>%)</span>
-          </li>
-        </ul>
-      </div>
-      <%= form_for(@space, :html => { :class => "concave-form", :multipart => true }) do |f| %>
-        <%= render :partial => "spaces/form",
-          :locals => { :f => f, :edit => true} %>
+  <hr class="list-separator">
 
-        <%= f.submit 'Salvar alterações' %>
-        <%= link_to 'Remover disciplina', @space,
-          :confirm => 'Você tem certeza que deseja remover esta disciplina?', :method => :delete,
-          :class => "concave-remove" %>
-      <% end %>
+  <%# Botões. %>
+  <div class="content-section clearfix">
+    <%= link_to "Remover Disciplina", @space, method: :delete,
+      confirm: "Você tem certeza que deseja remover esta Disciplina?",
+      class: "button-danger pull-left" %>
 
-    <% end %>
-  </div><!-- end #space-manage -->
-
-</div><!-- end .main -->
+    <%= f.submit t(:save_changes), class: "button-primary pull-right" %>
+  </div>
+<% end %>

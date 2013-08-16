@@ -1,14 +1,21 @@
 <% content_for :content do %>
   <% content_for :container_class do "entity-wrapper" end %>
 
+  <% @space = @header_space || @space %>
+
   <div class="span3">
-    <%= render "spaces/sidebar", space: @space, user: current_user %>
+    <%= render "spaces/sidebar", space: @space,
+      user: current_user, management: true %>
   </div>
   <div class="span13">
     <div class="content-body">
-      <%= render "spaces/header", space: @space %>
+      <%= render "spaces/admin/header", space: @space %>
 
       <%= yield %>
+
+      <div class="text-center">
+        <%= link_to "Sair do Gerenciamento", @space, class: "link-secondary" %>
+      </div>
     </div>
     <%= render "spaces/breadcrumb", space: @space %>
   </div>

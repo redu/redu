@@ -1,42 +1,60 @@
-<div class="sidebar space alpha grid_3">
-  <div class="image-frame space-frame">
-    <%= link_to(space.course.environment) do %>
-      <%= image_tag space.course.environment.avatar.url(:thumb_90),
-        :size => "90x90", :alt => 'profile', :class => "environment" %>
-    <% end %>
-    <span class="space icons-big icon-space-white_64_64 replacement"><%=  space.name %></span>
-  </div>
-  <%# Contexto do sidebar %>
-  <% if content_for?(:space_sidebar_navigation) %>
-    <%= content_for(:space_sidebar_navigation) %>
+<%#
+  Barra lateral da disciplina.
+
+  Variáveis:
+    space: a disciplina.
+    user: o usuário.
+    management: se está sendo mostrada nas telas de gerenciamento (default false).
+%>
+
+<% management = false unless local_assigns.has_key? :management %>
+
+<div class="entity-sidebar">
+  <%= render "environments/sidebar_thumbnail", environment: space.course.environment %>
+
+  <%# Gerenciamento. %>
+  <% if management %>
+    <div class="entity-sidebar-widget content-body">
+      <div class="entity-sidebar-widget-section text-center">
+        <%= link_to "← Gerenciar Curso",
+          edit_environment_course_path(space.course.environment, space.course), class: "link-secondary" %>
+      </div>
+      <hr class="entity-sidebar-widget-separator">
+      <div class="entity-sidebar-widget-section">
+        <span class="entity-sidebar-widget-icon icon-space-gray_16_18 show text-replacement">Disciplina</span>
+        <%= content_tag :span, space.name, class: "entity-sidebar-widget-name" %>
+      </div>
+      <hr class="entity-sidebar-widget-separator">
+      <div class="entity-sidebar-widget-section text-center">
+        <%= link_to "Adicionar Conteúdo", "#", class: "link-secondary" %>
+      </div>
+      <hr class="entity-sidebar-widget-separator">
+      <div class="entity-sidebar-widget-section text-center">
+        <%# TODO: Modal de convidar membros. %>
+        <%= link_to "Convidar Membros", "#", class: "link-secondary" %>
+      </div>
+    </div>
+
+    <%# Licenças e faturas. %>
+    <% @screen = :empty %>
+    <%= render "environments/admin/plans" %>
+
   <% else %>
-    <%= local_nav :spaces %>
+    <%= render "bootstrap/breadcrumb_icons", current_entity: space %>
+
+    <%= new_local_nav :spaces_new %>
+
+    <div class="nav-local-balloon">
+      <span class="nav-local-balloon-arrow icon-arrow-up-balloon-gray_20_8"></span>
+      <span class="nav-local-balloon-title">Você na disciplina:</span>
+      <%= render "spaces/lectures_progress", space: space, user: user %>
+      <div class="nav-local-separator"></div>
+      <% user_comments = Activity.from_hierarchy(space).where(user_id: user.id).count %>
+      <%= content_tag :span, "Comentários: #{ user_comments }",
+        class: "nav-local-balloon-item icon-comment-gray_16_18-before" %>
+      <% user_help_requests = Help.from_hierarchy(space).where(user_id: user.id).count %>
+      <%= content_tag :span, "Dúvidas: #{ user_help_requests }",
+        class: "nav-local-balloon-item icon-request-help-gray_16_18-before" %>
+    </div>
   <% end %>
-  <% teachers_count = space.teachers.count %>
-  <% unless teachers_count == 0 %>
-    <span class="call icon-teacher-gray_16_18-before">Professores: <%= link_to teachers_count, space_users_path(space, :role => :teachers), :class => "count" %></span>
-    <ul class="connections clearfix">
-      <%= render :partial => 'users/item_medium_24',
-        :collection => space.teachers.limit(2) %>
-    </ul><!-- end .connections -->
-  <% end %>
-  <% tutors_count = space.tutors.count %>
-  <% unless tutors_count == 0 %>
-    <span class="call icon-tutor-gray_16_18-before">Tutores: <%= link_to tutors_count, space_users_path(space, :role => :tutors), :class => "count" %></span>
-    <ul class="connections clearfix">
-      <%= render :partial => 'users/item_medium_24',
-        :collection => space.tutors.limit(2) %>
-    </ul><!-- end .connections -->
-  <% end %>
-  <span class="call icon-member-gray_16_18-before">Alunos: <%= link_to space.students.count, space_users_path(space, :role => :students), :class => "count" %></span>
-  <ul class="connections students clearfix">
-    <% @sidebar_students = space.students.page(params[:page]).per(4) %>
-    <%= render :partial => 'users/item_medium_24',
-      :collection => @sidebar_students %>
-  </ul><!-- end .connections -->
-  <%= paginate @sidebar_students, :theme => 'sidebar_endless',
-    :params => { :controller => 'spaces', :action => 'students_endless',
-      :id => space.id },
-      :text => "Mostrando os <X> últimos alunos da disciplina" %>
-  </li>
 </div>

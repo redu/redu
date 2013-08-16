@@ -1,29 +1,62 @@
-<%= concave_error_messages_for(@space) %>
+<%#
+  Formulário de criação/edição de disciplina.
 
-<%= field_set_tag nil do %>
-  <%= hidden_field_tag "course_id", @course.id %>
+  Variáveis:
+    space: a disciplina.
+    f: o formulário.
+    edit: se o formulário está sendo usado para edição.
+%>
 
-  <%= f.label :name, "Nome" %>
-  <%= f.text_field :name %>
-  <span class="tip">Nome da disciplina</span>
-  <%= concave_errors_for(f.object, :name) %>
+<%= new_concave_error_messages_for space %>
 
-  <% random_number = get_random_number%>
-  <%= f.label :description, "Descrição" %>
-  <%= f.text_area :description, :size => "50x7", :class => "desc-#{random_number}" %>
-  <span class="tip">Informações da disciplina</span>
-  <%= concave_errors_for(f.object, :description) %>
-  <%= render :partial => 'shared/limit_char_field', :locals => { :class_textarea => "desc-#{random_number}" }%>
+<div class="form-fieldset-section">
+  <%= hidden_field_tag "course_id", space.course.id %>
 
-  <%= f.label :tag_list, raw("Palavras-chaves <span class='snippet'>(separadas por vírgula)</span> ") %>
-  <%= f.text_field :tag_list %>
-  <span class="tip">Áreas de estudo e interesses relacionados ao curso</span>
-<% end %>
-<hr />
-<% unless edit %>
-    <strong class="concave-label">Termos e condições do Redu</strong>
-
-    <div class="tos">
-      Por favor não publique conteúdo que esteja protegido por direitos autorais, conteúdo obsceno ou que viole os termos e condições do Redu. Ao clicar no botão abaixo, você estará concordando com esses termos.
+  <%# Nome. %>
+  <div class="control-group row">
+    <div class="control-label span3">
+      <%= f.label :name, "Nome da Disciplina" %>
     </div>
-<% end %>
+    <div class="controls span8">
+      <%= f.text_field :name, placeholder: "Nome da Disciplina" %>
+      <%= concave_errors_for(f.object, :name) %>
+    </div>
+  </div>
+
+  <%# Descrição. %>
+  <div class="control-group row">
+    <div class="control-label span3">
+      <%= f.label :description, "Descrição" %>
+    </div>
+    <div class="controls span8">
+      <%= f.text_area :description,
+        placeholder: "Digite informações resumidas acerca da Disciplina",
+        rows: 6 %>
+      <%= concave_errors_for(f.object, :description) %>
+    </div>
+  </div>
+
+  <%# Palavras-chave. %>
+  <div class="control-group row">
+    <div class="control-label span3">
+      <%= f.label :tag_list, "Palavras-chave" %>
+    </div>
+    <div class="controls span8">
+      <%= f.text_field :tag_list,
+        placeholder: "Áreas de estudo e interesses relacionados ao tema em palavras-chave" %>
+      <span class="legend">(separadas por vírgula)</span>
+      <%= concave_errors_for(f.object, :tag_list) %>
+    </div>
+  </div>
+
+  <% unless edit %>
+    <div class="control-group row">
+      <div class="control-label span3">
+        <label>Termos e condições do Redu</label>
+      </div>
+      <div class="controls span8">
+        <p class="legend">Por favor não publique conteúdo que esteja protegido por direitos autorais, conteúdo obsceno ou que viole os termos e condições do Redu. Ao clicar no botão abaixo, você estará concordando com esses termos.</p>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -30,7 +30,7 @@ $bootstrap-control-horizontal-padding: 10px;
 
 .control-prefix-redu-path { @include area-prefix($bootstrap-control-horizontal-padding, 132px); }
 
-.control-prefix-course-path { @include area-prefix($bootstrap-control-horizontal-padding, 225px); }
+.control-prefix-course-path { @include area-prefix($bootstrap-control-horizontal-padding, 230px); }
 
 .control-suffix-course-workload { @include area-suffix($bootstrap-control-horizontal-padding, 54px); }
 
