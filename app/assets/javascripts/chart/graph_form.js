@@ -1,5 +1,5 @@
 // Função que trata dos elementos do form relacionado aos gráficos HighCharts,
-// Manipulação dos selects das datas, checkboxs e função de submit do form
+// Manipulação dos selects das datas e função de submit do form
 // Além de tratar eventos de erro com mensagens
 
 $.fn.plotGraphForm = function (divRender) {
@@ -26,56 +26,21 @@ $.fn.plotGraphForm = function (divRender) {
     return st < en;
   }
 
-  // Tratamento dos checkboxes
-  $this.find(".item-chart-check").click(function () {
-    var all = $this.find("#all-check")[0];
-    if (!this.checked){
-      all.checked = false;
-    }
-    else{
-      var ipts = $this.find(".item-chart-check");
-      var all_checked = true;
-      $.each(ipts, function () {
-        if(!this.checked){
-          all_checked = false
-        }
-      })
-
-      if (all_checked) {
-        all.checked = true;
-      }
-    }
-  });
-
-  $this.find("#all-check").click(function () {
-    var ipts = $this.find(".item-chart-check");
-    if (this.checked) {
-      $.each(ipts, function () {
-        this.checked = true;
-      })
-    }
-    else{
-      $.each(ipts, function () {
-        this.checked = false;
-      })
-    }
-  });
-
   // Função checa se mensagem de erro está ativa
   var errorExist = function (){
-    return ($this.find(".error_explanation")).length
+    return $this.find(".report-form-errors").length;
   };
 
   // Submissão do gráfico por AJAX
   $this.submit(function(e) {
-    $this.find("#date_start").val(timeSelected("start"));
-    $this.find("#date_end").val(timeSelected("end"));
+    $this.find(".reports-form-date-start").val(timeSelected("start"));
+    $this.find(".reports-form-date-end").val(timeSelected("end"));
 
     // Só submita se a data for válida
     if(!validateDate()){
       if(!errorExist()){
-        $this.find('#form-problem').before('<div class="error_explanation" id="error_explanation"><h2>Ops!</h2><p>Há problemas para os seguinte(s) campo(s):</p><p class="invalid_fields">Data inicial, Data final</p></div>');
-        $this.find("#date-validate").append('<ul class="errors_on_date"><li>'+"Intervalo de tempo inválido"+'</li></ul>');
+        $this.prepend('<div class="content-section report-form-errors"><div class="message-block message-warning fade in"><div class="message-block-content"><span class="show"><strong>Ops!</strong> Há problemas para os seguinte(s) campo(s):</span>Data inicial, Data final</div></div></div>');
+        $this.find(".report-form-error-date").append('<p class="control-errors">Intervalo de tempo inválido</p>');
       }
 
       // Não submita e também não chama o método live
@@ -87,8 +52,8 @@ $.fn.plotGraphForm = function (divRender) {
   $this.live("ajax:complete", function(e, xhr){
     var json = $.parseJSON(xhr.responseText);
       if(errorExist){
-        $this.find(".error_explanation").remove();
-        $this.find(".errors_on_date").remove();
+        $this.find(".report-form-errors").remove();
+        $this.find(".report-form-error-date .control-errors").remove();
       }
 
       // As requisições cross-domain não devolvem este callback,

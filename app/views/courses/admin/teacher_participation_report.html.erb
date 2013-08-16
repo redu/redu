@@ -1,76 +1,99 @@
-<%= render :partial => 'shared/management_background' %>
-<div class="management-sidebar">
-  <%= render :partial => 'courses/sidebar',
-    :locals => { :course => @course }%>
-</div>
-
-<div class="main grid_12 omega big-col management-wrapper">
-  <%= render :partial => 'courses/breadcrumbs',
-    :locals => { :course => @course } %>
-  <%= render :partial => 'courses/admin/header',
-    :locals => { :course => @course } %>
-  <div id="course-manage" class="body management">
-    <%= render :partial => 'courses/admin/clean_header' %>
-    <%= tabs :courses_admin do %>
-      <% if @course.teachers.empty? %>
-        <div class="body preview">
-          <div class="flash-message notice">
-            <ul class="message icons-big-before icon-privacy-lightred_64_66-before">
-              <li>O conteúdo desta página não está disponível para o curso que não possui professores.</li>
-              <li>Você pode modificar os pápeis dos usuários <%= link_to "configurando o ambiente", admin_members_environment_path(@course.environment)%>.</li>
-            <ul>
-          </div>
-        </div>
-      <% elsif @course.spaces.empty? %>
-        <div class="body">
-          <div class="flash-message notice">
-            <ul class="message icons-big-before icon-privacy-lightred_64_66-before">
-              <li>O conteúdo desta página só está disponível para cursos que possuem Disciplinas.</li>
-              <li>Você pode <%= link_to "adicionar Disciplinas", new_space_path(:course_id => @course.id)%> nas configurações do Curso.</li>
-            <ul>
-          </div>
-        </div>
-      <% else %>
-        <h3 class="form-header graph-header">Qual a participação do professor nas disciplinas?</h3>
-          <%= lazy_load(:chart) do %>
-              var graph = new TeacherParticipationGraph();
-              graph.load({ chart: { renderTo: "teacher-participation-chart" }  ,
-                           form: $("#graph-form") });
-          <% end %>
-          <%= form_tag vis_dashboard_teacher_participation_interaction_path, :method => :get, :remote => true, :class => "concave-form", :id => "graph-form" do %>
-          <%= label_tag "", "Professor", :id => "form-problem"%>
-          <%= select_tag(:teacher_id, options_from_collection_for_select(@course.teachers, :id, :first_name), {:class =>"concave-select"})%>
-
-          <%= label_tag "Disciplinas" %>
-          <ul class="single-column">
-            <%= render :partial => 'courses/admin/space_item_admin',
-              :collection => @course.spaces, :as => :space  %>
-            <li>
-              <%= check_box_tag "all-check", "0", true %>
-              <%= label_tag "all-check", "Todos" %>
-            </li>
-          </ul>
-
-          <%= label_tag "date_start_fake", "Data inicial" %>
-          <%= field_set_tag nil, :class => "inline" do %>
-            <%= date_select "date_start_fake", nil,
-                :default => Date.today - 9 %>
-            <%= text_field_tag :date_start, nil,
-                :style => "display: none;" %>
-          <% end %>
-
-          <%= label_tag "date_end", "Data final" %>
-          <%= field_set_tag nil, :id => "date-validate",
-            :class => "inline" do %>
-            <%= date_select "date_end_fake", nil, :end_year => Date.today.year %>
-            <%= text_field_tag :date_end, nil, :style => "display: none;" %>
-          <% end %>
-
-          <%= hidden_field_tag :course_id, @course.id %>
-
-          <%= submit_tag "Atualizar", :class=>"concave-submit" %>
-        <% end %>
-      <% end %>
+<% if @course.teachers.empty? %>
+  <div class="content-section">
+    <% message = capture do %>
+      <div class="two-columns-wrapper">
+        <span class="two-columns-column icon-private-red2_64_66 text-replacement">
+          Aviso
+        </span>
+        <ul class="two-columns-column">
+          <li>O conteúdo desta página não está disponível para o curso que não possui professores.</li>
+          <li>Você pode modificar os pápeis dos usuários <%= link_to "configurando o ambiente", admin_members_environment_path(@course.environment)%>.</li>
+        </ul>
+      </div>
     <% end %>
+    <%= render "bootstrap/message_block", type: "info", close: false,
+      button: nil, message: message %>
   </div>
-</div>
+
+<% elsif @course.spaces.empty? %>
+  <div class="content-section">
+    <% message = capture do %>
+      <div class="two-columns-wrapper">
+        <span class="two-columns-column icon-private-red2_64_66 text-replacement">
+          Aviso
+        </span>
+        <ul class="two-columns-column">
+          <li>O conteúdo desta página só está disponível para cursos que possuem Disciplinas.</li>
+          <li>Você pode <%= link_to "adicionar Disciplinas", new_space_path(course_id: @course.id)%> nas configurações do Curso.</li>
+        </ul>
+      </div>
+    <% end %>
+    <%= render "bootstrap/message_block", type: "info", close: false,
+      button: nil, message: message %>
+  </div>
+
+<% else %>
+  <div class="content-section clearfix">
+    <h3 class="entity-management-count">Qual a participação do professor nas disciplinas?</h3>
+  </div>
+
+  <%= lazy_load(:chart) do %>
+      var graph = new TeacherParticipationGraph();
+      graph.load({ chart: { renderTo: "teacher-participation-chart" },
+                   form: $("#graph-form") });
+  <% end %>
+  <%= form_tag vis_dashboard_teacher_participation_interaction_path,
+    method: :get, remote: true, class: "form-horizontal", id: "graph-form" do %>
+    <div class="control-group row">
+      <div class="control-label span3">
+        <%= label_tag "Professor" %>
+      </div>
+      <div class="controls span6">
+        <%= select_tag(:teacher_id, options_from_collection_for_select(@course.teachers, :id, :first_name)) %>
+      </div>
+    </div>
+
+    <div class="control-group row">
+      <div class="control-label span3">
+        <%= label_tag "Disciplinas" %>
+      </div>
+      <div class="controls controls-check-all span6">
+        <%= render partial: "courses/admin/space_item_admin",
+          collection: @course.spaces  %>
+        <label class="control-checkbox">
+          <input type="checkbox" class="control-checkbox-all" checked="checked">
+          Todos
+        </label>
+      </div>
+    </div>
+
+    <div class="control-group control-select-date row">
+      <div class="control-label span3">
+        <label>Data inicial</label>
+      </div>
+      <div class="controls span6">
+        <%= date_select "date_start_fake", nil, default: Date.today - 9 %>
+        <%= text_field_tag :date_start, nil, style: "display: none;",
+          class: "reports-form-date-start" %>
+      </div>
+    </div>
+
+    <div class="control-group control-select-date row">
+      <div class="control-label span3">
+        <label>Data final</label>
+      </div>
+      <div class="controls span6 report-form-error-date">
+        <%= date_select "date_end_fake", nil, end_year: Date.today.year %>
+        <%= text_field_tag :date_end, nil, style: "display: none;",
+          class: "reports-form-date-end" %>
+      </div>
+    </div>
+
+    <%= hidden_field_tag :course_id, @course.id %>
+
+    <div class="content-section clearfix">
+      <%= image_tag "spinner-grey.gif", class: "hide" %>
+      <%= submit_tag "Atualizar", class: "button-primary pull-right" %>
+    </div>
+  <% end %>
+<% end %>

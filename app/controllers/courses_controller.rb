@@ -439,7 +439,8 @@ class CoursesController < BaseController
 
   def teacher_participation_report
     respond_to do |format|
-      format.html { render 'courses/admin/teacher_participation_report'}
+      format.html { render 'courses/admin/teacher_participation_report',
+                            layout: 'courses/admin'}
     end
   end
 

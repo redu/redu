@@ -1,5 +1,11 @@
-<li>
-  <%= check_box_tag "spaces[]", space.id, true,
-    { :class => "item-chart-check", :id => "spaces-#{space.id}" } %>
-  <%= label_tag "spaces-#{space.id}", space.name %>
-</li>
+<%#
+  Item da coleção de disciplinas em formato de checkbox.
+
+  Variáveis:
+    space_item_admin: uma disciplina.
+%>
+
+<label class="control-checkbox">
+  <%= check_box_tag "spaces[]", space_item_admin.id, true %>
+  <%= space_item_admin.name %>
+</label>
