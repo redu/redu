@@ -1,63 +1,63 @@
-<%= render :partial => 'shared/management_background' %>
-<%= render :partial => 'spaces/admin/management_sidebar',
-  :locals => { :space => @space } %>
+<% if @browser_not_supported %>
+   <%= render "spaces/admin/disclaimer_chart" %>
 
-<div class="main space grid_12 omega big-col">
-  <%= render :partial => 'spaces/breadcrumbs',
-    :locals => { :space => @space, :header_space => @header_space } %>
+<% else %>
+  <div class="content-section">
+    <h3 class="entity-management-count">Qual a participação dos alunos nas aulas?</h3>
+  </div>
 
-  <div id="space-manage" class="body management">
-    <%= render :partial => 'spaces/admin/header',
-      :locals => { :space => @space }%>
-    <%= render :partial => 'spaces/admin/clean_header' %>
+  <div class="content-section">
+    <%= lazy_load(:chart) do %>
+      var graph = new LectureParticipationGraph();
+      graph.load({ chart:{ renderTo: "lecture-participation-chart" } ,
+                           form: $("#graph-form") });
+    <% end %>
 
-    <%= tabs :spaces_admin do %>
-      <%= subtabs :spaces_admin do %>
-        <% if @browser_not_supported %>
-           <%= render :partial => 'spaces/admin/disclaimer_chart' %>
-        <% else %>
-          <h3 class="form-header graph-header">Qual a participação dos alunos nas aulas?</h3>
+    <%= form_tag api_vis_lecture_participation_path(@space.id), method: :get,
+      remote: true, class: "form-horizontal", id: "graph-form" do %>
 
-          <%= lazy_load(:chart) do %>
-            var graph = new LectureParticipationGraph();
-            graph.load({ chart:{ renderTo: "lecture-participation-chart" } ,
-            form: $("#graph-form") });
-          <% end %>
+      <div class="control-group row">
+        <div class="control-label span3">
+          <%= label_tag "Aulas" %>
+        </div>
+        <div class="controls controls-check-all span9">
+          <%= render partial: "spaces/admin/lecture_item_admin",
+            collection: @space.subjects %>
+          <label class="control-checkbox">
+            <input type="checkbox" class="control-checkbox-all" checked="checked">
+            Todos
+          </label>
+        </div>
+      </div>
 
-          <%= form_tag api_vis_lecture_participation_path(@space.id), :method => :get,
-            :remote => true, :class => "concave-form", :id => "graph-form" do %>
-            <%= label_tag "", "Aulas", :id => "form-problem" %>
-            <ul class="columns">
-              <li>
-                <%= check_box_tag "all-check", "0", true %>
-                <%= label_tag "all-check", "Todos" %>
-              </li>
-              <% @space.subjects.each do |subject| %>
-                <%= render :partial => 'spaces/admin/lecture_item_admin',
-                  :collection => subject.lectures, :as => :lecture %>
-              <% end %>
-            </ul>
+      <div class="control-group control-select-date row">
+        <div class="control-label span3">
+          <label>Data inicial</label>
+        </div>
+        <div class="controls span6">
+          <%= date_select "date_start_fake", nil, default: Date.today - 9 %>
+          <%= text_field_tag :date_start, nil, style: "display: none;",
+            class: "reports-form-date-start" %>
+        </div>
+      </div>
 
-            <%= label_tag "date_start_fake", "Data inicial" %>
-            <%= field_set_tag nil, :class => "inline" do %>
-              <%= date_select "date_start_fake", nil,
-                :default => Date.today - 9 %>
-              <%= text_field_tag :date_start, nil,
-                :style => "display: none;" %>
-            <% end %>
+      <div class="control-group control-select-date row">
+        <div class="control-label span3">
+          <label>Data final</label>
+        </div>
+        <div class="controls span6 report-form-error-date">
+          <%= date_select "date_end_fake", nil, end_year: Date.today.year %>
+          <%= text_field_tag :date_end, nil, style: "display: none;",
+            class: "reports-form-date-end" %>
+        </div>
+      </div>
 
-            <%= label_tag "date_end_fake", "Data final" %>
-            <%= field_set_tag nil, :id => "date-validate",
-              :class => "inline" do %>
-              <%= date_select "date_end_fake", nil, :end_year => Date.today.year %>
-              <%= text_field_tag :date_end, nil, :style => "display: none;" %>
-            <% end %>
+      <%= hidden_field_tag :oauth_token, @token %>
 
-            <%= hidden_field_tag :oauth_token, @token %>
-            <%= submit_tag "Atualizar", :class=>"concave-submit" %>
-          <% end %>
-        <% end %>
-      <% end %>
+      <div class="content-section clearfix">
+        <%= image_tag "spinner-grey.gif", class: "hide" %>
+        <%= submit_tag "Atualizar", class: "button-primary pull-right" %>
+      </div>
     <% end %>
   </div>
-</div>
+<% end %>

@@ -1,5 +1,11 @@
-<li>
-  <%= check_box_tag "lectures[]", lecture.id, true,
-    { :class => "item-chart-check", :id => "lecture-#{lecture.id}" } %>
-  <%= label_tag "lecture-#{lecture.id}", lecture.name %>
-</li>
+<%#
+  Item da coleção de aulas em formato de checkbox.
+
+  Variáveis:
+    lecture_item_admin: uma disciplina.
+%>
+
+<label class="control-checkbox">
+  <%= check_box_tag "lectures[]", lecture_item_admin.id, true %>
+  <%= lecture_item_admin.name %>
+</label>
