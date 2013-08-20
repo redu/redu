@@ -15,7 +15,7 @@ var SubjectPie = function () {
         },
         tooltip: {
             formatter: function() {
-                return '<b>' + this.point.name + '</b>: ' + Highcharts.numberFormat( this.percentage, 1 )+ ' %';
+                return '<strong>' + this.point.name + '</strong>: ' + Highcharts.numberFormat( this.percentage, 1 )+ ' %';
             },
             valueDecimals: 1
         },
@@ -67,24 +67,19 @@ var SubjectPie = function () {
 // Objeto para carregamento do Bullet Charts
 var SubjectBullet = function () {
     // Parametros de tamanho do bullet
-    var w = 390,
-        h = 107.5,
-        m = [52.5, 30, 40, 20]; // top right bottom left
+    var h = 65;
 
     var d3chart = d3.chart.bullet()
-        .width(w - m[1] -m[3])
-        .height(h -m[0] -m[2]);
+        .height(15);
 
     // Carregamento do bullet
     var loadBullet = function(data, div) {
       var vis = d3.select(div).selectAll("svg")
         .data(data)
         .enter().append("svg")
-        .attr("class", "bullet")
-        .attr("width", w)
         .attr("height", h)
         .append("g")
-        .attr("transform", "translate(" + m[3] + "," + m[0] + ")")
+        .attr("transform", "translate(5, 0)")
         .call(d3chart);
 
       var title = vis.append("g")
@@ -92,20 +87,15 @@ var SubjectBullet = function () {
 
       // Subtítulo do bullet charts
       title.append("text")
-        .attr("class", "subtitle-chart")
+        .attr("class", "legend")
         .attr("dy", "4.5em")
         .text("Total de alunos X Total de alunos que finalizaram o módulo");
 
       // Atributo title para o tooltip
       d3.selectAll("rect")
-        .attr("alt", "Total de alunos: " + data[0].ranges[0] +
+        .attr("rel", "tooltip")
+        .attr("title", "Total de alunos: " + data[0].ranges[0] +
             "<br/>Total de alunos que finalizaram o módulo: " + data[0].measures[0]);
-
-      // Configuração default do tooltip
-      $(div).find('> svg > g > rect.range').tipTip(
-          { defaultPosition: "top", attribute: "alt" });
-      $(div).find('> svg > g > rect.measure').tipTip(
-          { defaultPosition: "top", attribute: "alt" });
     };
 
   // Retorno do objeto

@@ -28,3 +28,11 @@
 
 // Gerenciamento.
 @import "hierarchy/management";
+
+
+// Correções temporárias do bootstrap.
+
+.list-unstyled {
+  margin: 0;
+  list-style: none;
+}

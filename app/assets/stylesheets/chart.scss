@@ -1,0 +1,25 @@
+// ==========================================================================
+// Estilos para os gráficos dos relatórios.
+// ==========================================================================
+
+
+// Bootstrap.
+@import "bootstrap/variables";
+
+
+// Quantos alunos finalizaram o módulo?
+
+.subject-participation-bullet {
+  .range.s0 { fill: $gray3; }
+
+  .measure.s0 { fill: $blue2; }
+
+  .marker {
+    stroke: black;
+    stroke-width: 2px;
+  }
+
+  .tick text { font-size: 12px; }
+
+  .legend { fill: $gray5; }
+}

@@ -170,7 +170,8 @@ class SpacesController < BaseController
     @token = current_vis_token # lib/vis_application_additions...
 
     respond_to do |format|
-      format.html { render "spaces/admin/subject_participation_report" }
+      format.html { render "spaces/admin/subject_participation_report",
+                           layout: "spaces/admin" }
     end
   end
 

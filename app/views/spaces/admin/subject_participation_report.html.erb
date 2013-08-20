@@ -1,40 +1,27 @@
-<%= render :partial => 'shared/management_background' %>
-<%= render :partial => 'spaces/admin/management_sidebar',
-  :locals => { :space => @space } %>
+<% if @browser_not_supported %>
+  <%= render "spaces/admin/disclaimer_chart" %>
 
-<div class="main space grid_12 omega big-col">
-  <%= render :partial => 'spaces/breadcrumbs',
-    :locals => { :space => @header_space || @space } %>
+<% else %>
+  <% content_for :header_scripts_and_styles do %>
+    <%= stylesheet_link_tag "chart" %>
+  <% end %>
 
-  <div id="space-manage" class="body management">
-    <%= render :partial => 'spaces/admin/header',
-      :locals => { :space => @header_space || @space }%>
-    <%= render :partial => 'spaces/admin/clean_header' %>
-
-    <%= tabs :spaces_admin do %>
-      <%= subtabs :spaces_admin do %>
-        <div id="subject-chart-admin">
-          <% if @browser_not_supported %>
-            <%= render :partial =>'spaces/admin/disclaimer_chart' %>
-          <% else %>
-            <h3 class="form-header graph-header">Quantos alunos finalizaram o módulo?</h3>
-            <h3 class="form-header form-header-complement graph-header">Quantos pedidos de ajuda foram respondidos?</h3>
-            <%= render :partial => 'spaces/admin/subject_chart_admin',
-              :collection => @space.subjects, :as => :subject %>
-
-            <%= lazy_load(:chart) do %>
-              try{
-              var par = new SubjectParticipation();
-              par.load("<%= api_vis_subject_activities_path(@space.id) %>",
-              "<%= @token %>",
-              "<%= @space.subjects.map { |subj| "&subjects[]=#{subj.id}" }.join %>"
-              );
-              }catch(e){}
-            <% end %>
-
-          <% end %>
-        </div>
-      <% end %>
-    <% end %>
+  <div class="report-subject-participation-header content-section">
+    <h3 class="entity-management-count pull-left">Quantos alunos finalizaram o módulo?</h3>
+    <h3 class="entity-management-count pull-right">Quantos pedidos de ajuda foram respondidos?</h3>
   </div>
-</div>
+  <div class="content-section">
+    <ul class="list-unstyled">
+      <%= render partial: "spaces/admin/subject_chart_admin",
+        collection: @space.subjects %>
+    </ul>
+  </div>
+  <%= lazy_load(:chart) do %>
+    try {
+      var par = new SubjectParticipation();
+      par.load("<%= api_vis_subject_activities_path(@space.id) %>",
+               "<%= @token %>",
+               "<%= @space.subjects.map { |subj| "&subjects[]=#{subj.id}" }.join %>");
+    } catch(e) {}
+  <% end %>
+<% end %>

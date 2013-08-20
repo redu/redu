@@ -299,3 +299,30 @@ tr.environment-invoices-in-use {
 
   p { margin-bottom: 10px; }
 }
+
+.report-subject-participation-header {
+  overflow: hidden;
+
+  .entity-management-count {
+    @include box-sizing;
+    width: 45%;
+  }
+
+  .entity-management-count +
+  .entity-management-count { margin-left: 10%; }
+}
+
+.subject-participation-bullet {
+  @include box-sizing;
+  width: 53%;
+  float: left;
+  padding-top: 20px;
+}
+
+.subject-participation-pie {
+  float: right;
+  width: 47%;
+}
+
+.subject-participation-bullet,
+.subject-participation-pie { height: 140px; }
