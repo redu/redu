@@ -4,7 +4,11 @@
 
 
 // Encapsulador.
-.entity-wrapper { padding: 20px 0; }
+.entity-wrapper {
+  padding: 20px 0;
+
+  .content-body { color: $gray6; }
+}
 
 
 // Barra lateral.

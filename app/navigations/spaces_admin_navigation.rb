@@ -21,21 +21,18 @@ module SpacesAdminNavigation
         students_participation_report_space_path(@space),
         :class => 'tab',
         :link => { :class => "tab-title icon-reports-lightblue_16_18-before" } do |subtabs|
-        # Sub abas
-        subtabs.dom_class = 'tab-buttons'
-        subtabs.selected_class = 'tab-button-active'
-        subtabs.item :students_report, "Alunos",
-          students_participation_report_space_path(@space),
-          :class => 'tab',
-          :link => { :class => 'tab-button icon-list_16_18-before' }
-        subtabs.item :lecture_report, "Aulas",
-          lecture_participation_report_space_path(@space),
-          :class => 'tab',
-          :link => { :class => 'tab-button icon-list_16_18-before' }
-        subtabs.item :subject_report, "Módulos",
-          subject_participation_report_space_path(@space),
-          :class => 'tab',
-          :link => { :class => 'tab-button icon-list_16_18-before' }
+          # Sub abas
+          subtabs.dom_class = 'tab-buttons'
+          subtabs.selected_class = 'tab-button-active'
+          subtabs.item :students_report, "Alunos",
+            students_participation_report_space_path(@space),
+            :class => 'tab-button icon-list_16_18-before'
+          subtabs.item :lecture_report, "Aulas",
+            lecture_participation_report_space_path(@space),
+            :class => 'tab-button icon-list_16_18-before'
+          subtabs.item :subject_report, "Módulos",
+            subject_participation_report_space_path(@space),
+            :class => 'tab-button icon-list_16_18-before'
       end
     end
   end

@@ -1,34 +1,53 @@
-<%= stylesheet_link_tag :print, :media => 'print' %>
+<% content_for :container_class do "entity-wrapper" end %>
+
+<%= stylesheet_link_tag :print, media: "print" %>
 
 <%= lazy_load(:chart) do %>
   var treemap = new StudentsTreemap();
   treemap.print({ form: $("#graph-form"),
-  renderTo: "treemap-chart",
-  url: "<%= api_space_users_path(@space.id, :oauth_token => @token, :role=>'member', :partial => true) %>" })
+                  renderTo: "treemap-chart",
+                  url: "<%= api_space_users_path(@space.id, oauth_token: @token, role: 'member', partial: true) %>" })
 <% end %>
 
-<div id="space-manage" class="body management">
-    <h3 class="form-header graph-header">Qual o desempenho dos alunos?</h3>
+<div class="span16">
+  <div class="content-body">
+    <div class="content-section clearfix">
+      <h3 class="entity-management-count">Qual o desempenho dos alunos?</h3>
+    </div>
+    <div class="content-section">
+      <%= form_tag api_vis_students_participation_path(@space.id), method: :get,
+        remote: true, class: "form-horizontal", id: "graph-form" do %>
 
-    <%= form_tag api_vis_students_participation_path(@space.id), :method => :get,
-      :remote => true, :class => "concave-form", :id => "graph-form" do %>
+        <%# Data inicial. %>
+        <div class="control-group control-select-date row">
+          <div class="control-label span3">
+            <label>Data inicial</label>
+          </div>
+          <div class="controls span6">
+            <%= date_select "date_start_fake", nil, default: Date.today - 9 %>
+            <%= text_field_tag :date_start, nil, style: "display: none;",
+              class: "reports-form-date-start" %>
+          </div>
+        </div>
 
-      <%= label_tag "date_start_fake", "Data inicial", :id => "form-problem" %>
-      <%= field_set_tag nil, :class => "inline" do %>
-        <%= date_select "date_start_fake", nil,
-          :default => @start.to_date %>
-        <%= text_field_tag :date_start, nil,
-          :style => "display: none;" %>
+        <%# Data final. %>
+        <div class="control-group control-select-date row">
+          <div class="control-label span3">
+            <label>Data final</label>
+          </div>
+          <div class="controls span6 report-form-error-date">
+            <%= date_select "date_end_fake", nil, end_year: Date.today.year %>
+            <%= text_field_tag :date_end, nil, style: "display: none;",
+              class: "reports-form-date-end" %>
+          </div>
+        </div>
+
+        <%= hidden_field_tag :oauth_token, @token %>
+        <div class="clearfix">
+          <%= image_tag "spinner-grey.gif", class: "hide" %>
+          <%= submit_tag "Atualizar", class: "button-primary pull-right" %>
+        </div>
       <% end %>
-
-      <%= label_tag "date_end_fake", "Data final" %>
-      <%= field_set_tag nil, :id => "date-validate",
-        :class => "inline" do %>
-        <%= date_select "date_end_fake", nil, :default => @end.to_date %>
-        <%= text_field_tag :date_end, nil, :style => "display: none;" %>
-      <% end %>
-
-      <%= hidden_field_tag :oauth_token, @token %>
-      <%= submit_tag "Atualizar", :class=>"concave-submit" %>
-    <% end %>
+    </div>
+  </div>
 </div>

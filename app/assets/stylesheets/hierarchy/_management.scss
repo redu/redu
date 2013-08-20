@@ -267,3 +267,35 @@ tr.environment-invoices-in-use {
 // ==========================================================================
 
 .form-course-submit { margin-left: 10px; }
+
+
+// Disciplina - Relatórios.
+// ==========================================================================
+
+.report-legend-wrapper {
+  @include size(20px, 10px);
+
+  & +
+  .legend { margin-right: 10px; }
+}
+
+.report-show-details +
+.report-table,
+.report-table +
+.report-print { margin-top: 10px; }
+
+.report-table { display: none; }
+
+.report-print {
+  float: right;
+  display: none;
+}
+
+.report-form {
+  clear: right;
+
+  .report-print +
+  & { padding-top: 20px; }
+
+  p { margin-bottom: 10px; }
+}

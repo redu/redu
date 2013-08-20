@@ -1,6 +1,6 @@
 var StudentsTreemap = function() {
   // Configurações do layout do treemap
-  var w = 748,
+  var w = 718,
       h = 400,
       x = d3.scale.linear().range([0, w]),
       y = d3.scale.linear().range([0, h]),
@@ -111,70 +111,46 @@ var StudentsTreemap = function() {
 
   // Função usada para remover o relatório descritivo antigo, caso houver
   var removeReportDescription = function() {
-    $("#report-description").remove();
-    $("#report").remove();
+    $(".report-show-details, .report-table, .report-print").remove();
   }
 
   var fillLegend = function() {
-    $("svg > #gray").css("fill", color.gray);
-    $("svg > #red").css("fill", color.red);
-    $("svg > #orange").css("fill", color.orange);
-    $("svg > #yellow").css("fill", color.yellow);
-    $("svg > #green").css("fill", color.green);
-    $("svg > #blue").css("fill", color.blue);
+    $(".report-legend-gray").css("fill", color.gray);
+    $(".report-legend-red").css("fill", color.red);
+    $(".report-legend-orange").css("fill", color.orange);
+    $(".report-legend-yellow").css("fill", color.yellow);
+    $(".report-legend-green").css("fill", color.green);
+    $(".report-legend-blue").css("fill", color.blue);
   }
 
   var reportDescription = function(form, data, print, url) {
-      form.before($("<span/>", { 'id': "report-description", 'class': "concave-button", 'text': "Mostrar informações detalhadas" }));
-      $("#report-description").click(function(){
-          $("#report").slideToggle('fast');
-      });
+      $("<button/>", { "class": "report-show-details button-primary", "text": "Mostrar informações detalhadas" })
+        .click(function() {
+          $(".report-table, .report-print").slideToggle(150, "swing");
+        })
+        .insertBefore(form);
 
-      form.before($("<table/>", { 'id': "report", 'class': "table-report-students" }));
+      var report = $("<div class='report-table'><table class='table-with-borderradius'><thead><tr><th>Nome</th><th>Comentários</th><th>Resposta a comentários</th><th>Pedidos de ajuda</th><th>Resposta a pedidos de ajuda</th><th>Média dos exercícios</th></thead><tbody></tbody></table></div>")
+        .insertBefore(form);
 
-      var report = $("#report");
-      report.hide();
-      report.append($("<tbody/>", { 'id': "table-report" }));
-
-      report.find("tbody").append($("<tr/>", { 'class': "row-head" }));
-      report.find(".row-head").append($("<th/>", { 'class': "head", 'text': "Nome" }));
-      report.find(".row-head").append($("<th/>", { 'class': "head", 'text': "Comentários" }));
-      report.find(".row-head").append($("<th/>", { 'class': "head", 'text': "Resposta a comentários" }));
-      report.find(".row-head").append($("<th/>", { 'class': "head", 'text': "Pedidos de ajuda" }));
-      report.find(".row-head").append($("<th/>", { 'class': "head", 'text': "Resposta a pedidos de ajuda" }));
-      report.find(".row-head").append($("<th/>", { 'class': "head", 'text': "Média dos exercícios" }));
       if (!print){
-          report.find(".row-head").append($("<th/>", { 'class': "head", 'text': "Link" }));
-          report.find("tbody").css('max-height', '500px').css('overflow', 'auto');
+        report.find("thead tr").append($("<th/>", { "text": "Link" }));
+        report.css('max-height', '500px').css('overflow', 'auto');
       }
 
       data.children.sort(compare);
 
       // Template
       var table = "<% _.each(_.extend(children, print), function(object){ %>" +
-            "<tr class='row' id='row-<%=object.id%>'>" +
-                "<td class='cell'>" +
-                    "<div class='student-info'>" +
-                        "<span><%=object.name + ' ' + object.last_name%></span>" +
-                    "</div>" +
-                "</td>" +
-                "<td class='cell'>" +
-                    "<span class='participation'><%=object.activities%></span>" +
-                "</td>" +
-                "<td class='cell'>" +
-                    "<span class='participation'><%=object.answered_activities%></span>" +
-                "</td>" +
-                "<td class='cell'>" +
-                    "<span class='participation'><%=object.helps%></span>" +
-                "</td>" +
-                "<td class='cell'>" +
-                    "<span class='participation'><%=object.answered_activities%></span>" +
-                "</td>" +
-                "<td class='cell'>" +
-                    "<span class='participation'><%=object.grade === -1 ? 'Não realizou' : object.grade%></span>" +
-                "</td>" +
+            "<tr>" +
+                "<td><%= object.name + ' ' + object.last_name %></td>" +
+                "<td class='text-center'><%= object.activities %></td>" +
+                "<td class='text-center'><%= object.answered_activities %></td>" +
+                "<td class='text-center'><%= object.helps %></td>" +
+                "<td class='text-center'><%= object.answered_activities %></td>" +
+                "<td class='text-center'><%= object.grade === -1 ? 'Não realizou' : object.grade %></td>" +
                 "<% if (!print) { %>" +
-                    "<td class='cell treemap-link'>" +
+                    "<td class='text-center treemap-link'>" +
                         "<a href=#<%=object.id%>>no mapa</a>" +
                     "</td>" +
                 "<% };%>" +
@@ -189,13 +165,14 @@ var StudentsTreemap = function() {
           css("stroke", "black");
       });
 
-      report.append($("<a/>", { 'class': "concave-button", 'text': "Imprimir", href: url }));
-      report.find(".concave-button").click(function(){
+      $("<a/>", { "class": "report-print button-primary", "text": "Imprimir", href: url })
+        .insertAfter(report)
+        .click(function() {
           var start = timeSelected("start");
           var end = timeSelected("end");
 
           $(this).attr("href", url + "?date_start=" + start + "&date_end=" + end);
-      });
+        });
   }
 
   function compare(a,b) {
@@ -264,9 +241,10 @@ var StudentsTreemap = function() {
             var cell = svg.selectAll("g")
               .data(nodes)
               .enter().append("svg:g")
-              .attr("class", "cell")
               .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
-              .attr("alt", function(d) {
+              .attr("rel", "tooltip")
+              .attr("data-placement", "left")
+              .attr("title", function(d) {
                 var nota = d.grade !== -1 ? d.grade : "nenhum exercício realizado"
                 return "Nome: " + d.name + " " + d.last_name
                         + "</br>Comentários: " + d.activities
@@ -296,10 +274,6 @@ var StudentsTreemap = function() {
               .text(function(d) { return d.name; })
               .style("opacity", function(d) { d.w = this.getComputedTextLength(); return d.dx > d.w ? 1 : 0; });
 
-            // Tooltip da célula
-            $(".cell").tipTip({ defaultPosition: "left",
-                                attribute: "alt" });
-
             // Relatório descritivo
             removeReportDescription();
             reportDescription(graphView.form, root, false, graphView.print);
@@ -325,10 +299,10 @@ var StudentsTreemap = function() {
             removeReportDescription();
             reportDescription(graphView.form, root, true);
 
-            $("#report").show();
+            $(".report-table").show();
             $("#treemap-chart").hide();
-            $("#report-description").hide();
-            $("#report").find(".concave-button").hide();
+            $(".report-show-details").hide();
+            $(".report-print").hide();
             }
         })
       })

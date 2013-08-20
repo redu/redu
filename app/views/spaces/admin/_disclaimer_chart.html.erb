@@ -1,9 +1,18 @@
-<div class="body">
-  <div class="flash-message notice">
-    <p class="message icons-big-before icon-privacy-lightred_64_66-before">O Redu foi construído sobre tecnologias modernas e acessíveis. Para visualizar este relatório é necessário que você utilize um navegador mais moderno. Algumas sugestões:
-      <%= link_to "Google Chrome", "http://www.google.com/chrome" %> ou
-      <%= link_to "Mozilla Firefox", "http://br.mozdev.org/" %>
-    </p>
-  </div>
-</div>
+<%#
+  Mensagem de aviso sobre navegador desatualizado.
+%>
 
+<div class="content-section">
+  <% message = capture do %>
+    <div class="two-columns-wrapper">
+      <span class="two-columns-column icon-private-red2_64_66 text-replacement">
+        Aviso
+      </span>
+      <p class="two-columns-column">
+        O Redu foi construído sobre tecnologias modernas e acessíveis. Para visualizar este relatório é necessário que você utilize um navegador mais moderno. Algumas sugestões: <%= link_to "Google Chrome", "http://www.google.com/chrome" %> ou <%= link_to "Mozilla Firefox", "http://br.mozdev.org/" %>
+      </p>
+    </div>
+  <% end %>
+  <%= render "bootstrap/message_block", type: "info", close: false,
+    button: nil, message: message %>
+</div>
