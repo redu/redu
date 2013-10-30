@@ -27,4 +27,4 @@ staging:
 
 production:
   <<: *defaults
-  fog_directory: "redu-assets"
+  fog_directory: "redu-assets2"

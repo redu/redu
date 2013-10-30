@@ -11,10 +11,10 @@ staging: &staging
 
 production:
   <<: *defaults
-  bucket: redu_uploads
-  videos_bucket: redu-videos
-  files_bucket: redu_files
-  assets_bucket: redu-assets
+  bucket: redu_uploads2
+  videos_bucket: redu-videos2
+  files_bucket: redu_files2
+  assets_bucket: redu-assets2
 
 development:
   <<: *defaults
