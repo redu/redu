@@ -1,6 +1,6 @@
 defaults: &defaults
-  access_key_id: 1PA6KRGRS1JAYMRN8D02
-  secret_access_key: 6XQILMvuzBoYKp8YkzoFjafNxG0AvhjdmyLZIQGW
+  access_key_id: AKIAIRKVQDTWT2NN4J4Q
+  secret_access_key: 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
 
 staging: &staging
   <<: *defaults
