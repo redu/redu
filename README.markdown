@@ -222,3 +222,8 @@ $ > /etc/init.d/niginx restart
 #### Cache
 
 Utilizamos o [Memcached](http://memcached.org/) como sistema de *caching*, o [setup](https://support.cloud.engineyard.com/entries/22375358-Using-Memcached-on-Engine-Yard-Cloud) é feito por default pelo Engine Yard (ambiente em *cluster*). Nós apenas configuramos para usar o cliente [Dalli](https://github.com/mperham/dalli) em produção.
+
+# Espaço utilizado
+
+Para ver todo o espaço utilizado nas intâncias use o seguinte comando:
+`sudo du -H --max-depth=1 .`
