@@ -1,0 +1,24 @@
+1- Na etapa "criar arquivo database.yml" o tutorial não descreve o que fazer exatamente mas deve-se:
+
+preencha um redu/config/database.yml com esse conteúdo:
+
+development:
+  adapter: mysql2
+  encoding: utf8
+  database: rails_myapp_dev
+  username: root
+  password: 
+  host: localhost
+  port: 3306
+
+depois instale o ligador do mysql adicionando
+gem install 'activerecord-mysql-adapter'  
+ao arquivo de gemas
+
+Em seguida execute novamente bundle install. Isso vai instalar o adaptador mysql.
+
+Após isso é só seguir com o tutorial de instalação. Ao final dele vai ser possível executar o redu, mas o acesso aos usuários padrão previamente criados só é possível quando executamos esses comandos
+
+no arquivo redu\lib\tasks\bootstrap.rake tem os dados dos usuários.
+
+Em seguida rodar o servidor de busca solr (rake sunspot:solr:run) em um terminal separado
