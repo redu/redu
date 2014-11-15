@@ -1,3 +1,6 @@
+O tutorial inicial com instruções de como instalar o ambiente de desenvolviemnto está em
+https://github.com/redu/redu/wiki/Redu-Setup
+
 1- Na etapa "criar arquivo database.yml" o tutorial não descreve o que fazer exatamente mas deve-se:
 
 preencha um redu/config/database.yml com esse conteúdo:
