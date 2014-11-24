@@ -1,6 +1,8 @@
 O tutorial inicial com instruções de como instalar o ambiente de desenvolviemnto está em
 https://github.com/redu/redu/wiki/Redu-Setup
 
+A instalação do ruby tem que ser a 1.9.3
+
 1- Na etapa "criar arquivo database.yml" o tutorial não descreve o que fazer exatamente mas deve-se:
 
 preencha um redu/config/database.yml com esse conteúdo:
@@ -20,7 +22,13 @@ ao arquivo de gemas
 
 Em seguida execute novamente bundle install. Isso vai instalar o adaptador mysql.
 
-Após isso é só seguir com o tutorial de instalação. Ao final dele vai ser possível executar o redu, mas o acesso aos usuários padrão previamente criados só é possível quando executamos esses comandos
+Após isso é só seguir com o tutorial de instalação. Ao final dele vai ser possível executar o redu.
+Lembrando que toda vez que você executar um terminal e for na pasta do redu pra poder instalar devemos fazer os comandos:
+
+bash --login
+rvm use 1.9.3
+
+O acesso aos usuários padrão previamente criados só é possível quando executamos esses comandos
 
 no arquivo redu\lib\tasks\bootstrap.rake tem os dados dos usuários.
 
