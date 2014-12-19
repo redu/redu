@@ -1,23 +1,27 @@
 <%=  form_for [space, subject],
-  :html => { :class => 'concave-form new-subject' } do |f| %>
-  <%= render 'subjects/admin/form_infos', :f => f, :space => space, :quota => quota, :plan => plan%>
+              :html => { :class => 'concave-form new-subject' } do |f| %>
+    <%= render 'subjects/admin/form_infos', :f => f, :space => space, :quota => quota, :plan => plan%>
 <% end %>
 <div id="resources-edition">
   <%= render :partial => 'lectures/admin/edit', :collection => @editable_lectures, :as => :lecture, :locals => {:subject => subject, :space => space } %>
 </div>
 
 <%= render :partial => 'lectures/admin/choose_type',
-  :locals => { :subject => subject, :space => space } %>
+           :locals => { :subject => subject, :space => space } %>
 
-<div class="concave-form">
-  <hr />
-  <%= link_to  'Finalizar módulo', '#', :class => 'add concave-button', :id => 'subject_submit'%>
-  <%= link_to "< voltar para a listagem de modulos",
-    admin_subjects_space_path(space), :class => "back-down" %>
+<div>
   <% if action_name == 'edit' or action_name == 'update' %>
-    <%= link_to "Remover módulo",
-      space_subject_path(space, subject),
-      :method => :delete, :class => "concave-remove",
-      :confirm => "Você tem certeza que deseja remover este módulo? Todas as informações serão perdidas."  %>
+      <%= link_to "Remover módulo",
+                  space_subject_path(space, subject),
+                  :method => :delete, :class => "concave-remove",
+                  :confirm => "Você tem certeza que deseja remover este módulo? Todas as informações serão perdidas."  %>
   <% end %>
+
+  <%= link_to "< voltar para a listagem de modulos", admin_subjects_space_path(space), :class => "back-down" %>
+
+  <%= link_to  'Finalizar módulo', '#', :class => 'add concave-button', :id => 'subject_submit'%>
+
+  <%= check_box_tag "notify-students", "0", false %>
+  <%= label_tag "notify-students", "Notificar alunos" %>
+
 </div>
