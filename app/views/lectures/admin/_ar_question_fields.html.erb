@@ -1,0 +1,27 @@
+<li class="ar-question-item visible">
+  <span class="position">1</span>
+  <div class="summary clearfix">
+    <span class="statement">(Enunciado não informado)</span>
+    <span class="expand icon-small icon-expand_down-gray_16_18 replacement">Mais detalhes</span>
+  </div>
+  <div class="fields">
+    
+    <%= f.label :statement %>
+    <%= f.text_area :statement, :class => "ar-question-statement" %>
+    <div class="tip">Descrição da questão e sua problemática</div>
+    <%= f.label :explanation %>
+    <%= f.text_area :explanation %>
+    <div class="tip">Explicação da questão. Será exibida após a realização do exame</div>
+
+    <%= f.hidden_field :id %>
+    <%= f.hidden_field :_destroy %>
+
+    <div class="nested-fields-level-2 clearfix">
+      <div class="simple-actions">
+        <a href="#" class="question-remove">excluir questão</a>
+        <a href="#" class="finalize-edition">finalizar edição da questão</a>
+      </div>
+    </div>
+
+  </div>
+</li>
