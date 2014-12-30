@@ -103,6 +103,7 @@ class LecturesController < BaseController
 
     if @lecture.lectureable.is_a? Exercise
       @lecture.lectureable.build_question_and_alternative
+      @lecture.lectureable.build_ar_question
     end
 
     respond_with(@space, @subject, @lecture) do |format|

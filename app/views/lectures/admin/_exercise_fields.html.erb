@@ -4,6 +4,10 @@
     <%= label_tag "Questões" %>
     <a href="#" class="question-add question-add-top">+ adicionar</a>
   </div>
+
+  <input type="radio" name="tipo" id = "fechada" value="multipla-escolha">Múltipla-Escolha
+  <input type="radio" name="tipo" id = "aberta" value="dissertativa">Dissertativa
+  
   <ol class="question-container clearfix">
     <%= f.nested_fields_for :questions, { :new_item_index => 'new_question_item', :render_template => false } do |builder| %>
       <%= render 'lectures/admin/question_fields', :f => builder %>
