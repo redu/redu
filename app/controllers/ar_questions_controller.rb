@@ -4,8 +4,13 @@ class ArQuestionsController < ApplicationController
   authorize_resource :ar_question
 
   def show
-  @first_question = @ar_question.first_item
-  @last_question = @ar_question.last_item
+    @first_ar_question = @ar_question.first_item
+    @last_ar_question = @ar_question.last_item
+
+    respond_to do |format|
+      format.html
+    end
+
   end
 
 

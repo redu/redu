@@ -28,28 +28,79 @@ $(function(){
       }
     };
 
-    $(this).find(".nested-fields-level-1").nestedFields({
-      containerSelector: ".question-container",
-      itemSelector: ".question-item",
-      addSelector: ".question-add",
-      removeSelector: ".question-remove",
-      itemTemplateSelector: ".question.template",
-      newItemIndex: "new_question_item",
-      afterInsert: function(item) {
-        // Aplica nestedFields às alternativas da nova questão
-        item.find(".nested-fields-level-2").nestedFields(alternativeOptions);
+    $("#fechada").click(function(){
+      $(this).find(".nested-fields-level-1").nestedFields({
 
-        // Insere um campo de alternativa para a nova questão
-        item.find(".nested-fields-level-2").nestedFields("insert");
-        item.refreshForms();
-        item.refreshQuestionsNumbering();
-        item.find(".alternative-item").refreshAlternativesNumbering();
-      },
-      afterRemove: function(item) {
-        item.removeClass("visible");
-        item.refreshQuestionsNumbering();
-      }
+      //if(document.getElementById("fechada").checked){
+      
+        containerSelector: ".question-container",
+        itemSelector: ".question-item",
+        addSelector: ".question-add",
+        removeSelector: ".question-remove",
+        itemTemplateSelector: ".question.template",
+        newItemIndex: "new_question_item",
+        afterInsert: function(item) {
+          // Aplica nestedFields às alternativas da nova questão
+          item.find(".nested-fields-level-2").nestedFields(alternativeOptions);
+
+          // Insere um campo de alternativa para a nova questão
+          item.find(".nested-fields-level-2").nestedFields("insert");
+          item.refreshForms();
+          item.refreshQuestionsNumbering();
+          item.find(".alternative-item").refreshAlternativesNumbering();
+        },
+        afterRemove: function(item) {
+          item.removeClass("visible");
+          item.refreshQuestionsNumbering();
+        }
+      //}
+      });
     });
+  $("#aberta").click(function(){
+    $(this).find(".nested-fields-level-1").nestedFields({
+
+      //if(document.getElementById("fechada").checked){
+      // $("#fechada").click(function(){
+      //   containerSelector: ".question-container",
+      //   itemSelector: ".question-item",
+      //   addSelector: ".question-add",
+      //   removeSelector: ".question-remove",
+      //   itemTemplateSelector: ".question.template",
+      //   newItemIndex: "new_question_item",
+      //   afterInsert: function(item) {
+      //     // Aplica nestedFields às alternativas da nova questão
+      //     item.find(".nested-fields-level-2").nestedFields(alternativeOptions);
+
+      //     // Insere um campo de alternativa para a nova questão
+      //     item.find(".nested-fields-level-2").nestedFields("insert");
+      //     item.refreshForms();
+      //     item.refreshQuestionsNumbering();
+      //     item.find(".alternative-item").refreshAlternativesNumbering();
+      //   },
+      //   afterRemove: function(item) {
+      //     item.removeClass("visible");
+      //     item.refreshQuestionsNumbering();
+      //   }
+      // //}
+      // });
+
+      // //if(document.getElementById("aberta").checked){
+      // $("#aberta").click(function(){
+        containerSelector: ".ar-question-container",
+        itemSelector: ".ar-question-item",
+        addSelector: ".ar-question-add",
+        removeSelector: ".ar-question-remove",
+        itemTemplateSelector: ".ar-question.template",
+        newItemIndex: "new_ar_question_item",
+
+        afterRemove: function(item) {
+          item.removeClass("visible");
+          item.refreshArQuestionsNumbering();
+        }
+      //}
+    });
+
+  });
 
     // Aplica nestedFields às alternativas da primeira questão
     $(this).find('.nested-fields-level-2').nestedFields(alternativeOptions);
@@ -127,6 +178,15 @@ $(function(){
     return this.each(function(){
       var $questions = $(this).parent().find(".question-item.visible");
       $questions.each(function(index){
+        $(this).find(".position").text(index + 1);
+      });
+    });
+  };
+
+  $.fn.refreshArQuestionsNumbering = function(){
+    return this.each(function(){
+      var $ar_questions = $(this).parent().find(".ar-question-item.visible");
+      $ar_questions.each(function(index){
         $(this).find(".position").text(index + 1);
       });
     });
@@ -222,9 +282,21 @@ $(function(){
     });
   };
 
+  $.fn.refreshFormQuestions = function(){
+    $("#aberta").click(function(){
+      $("#dissertative").style.display = "block";
+      $("#multiple_choice").style.display = "none";
+    });
+    $("#fechada").click(function(){
+      $("#dissertative").style.display = "none";
+      $("#multiple_choice").style.display = "block";
+    });
+  };
+
   $(document).ready(function(){
     $(document).refreshNestedFieldsEdition();
     $("#resources-edition .exercise").refreshQuestionsAppearance();
+    $(document).refreshFormQuestions();
 
     $(document).ajaxComplete(function(){
       $(document).refreshNestedFieldsEdition();
@@ -232,6 +304,7 @@ $(function(){
       $(".exercise-nav .actual").addClass("question-answered");
       showLoadingMessage(false);
       disableQuestionNavButtons(false);
+      $(document).refreshFormQuestions();
     });
   });
 

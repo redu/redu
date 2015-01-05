@@ -93,6 +93,7 @@
     var $editionItem = $("#" + $item.attr("id") + "-edition");
     $editionItem.slideToggle();
     $editionItem.find(".question-item:first-child").refreshQuestionsNumbering();
+    $editionItem.find(".ar-question-item:first-child").refreshArQuestionsNumbering();
     e.preventDefault();
   });
 

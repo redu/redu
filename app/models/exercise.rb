@@ -133,7 +133,7 @@ class Exercise < ActiveRecord::Base
   # e alternativa para questões sem alternativas
   
   def build_ar_question
-    self.questions.build
+    self.ar_questions.build
   end
 
   def build_question_and_alternative

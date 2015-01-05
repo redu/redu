@@ -132,6 +132,23 @@
 
 }
 
+#resource .exercise .first-ar_question,
+#resource .exercise .last-ar_question {
+  font-size: .87em;
+}
+
+#resource .exercise .first-ar_question {
+  float: left;
+  margin-left: 10px;
+}
+
+#resource .exercise .last-ar_question {
+  float: right;
+  margin-right: 10px;
+
+}
+
+
 #resource .exercise-finalize-form {
   margin-top: 80px;
   text-align: center;
@@ -154,6 +171,10 @@
 }
 
 #resource .exercise .question {
+  margin: 35px 0px 12px 0px;
+}
+
+#resource .exercise .ar_question {
   margin: 35px 0px 12px 0px;
 }
 
@@ -280,7 +301,20 @@
   margin-top: 33px;
 }
 
+#resource .start-exercise .concave-button.ar_question-button,
+#resource .start-exercise .concave-button.report-button {
+  padding: 5px;
+  float: left;
+  width: auto;
+  margin-top: 33px;
+}
+
 #resource .concave-button.question-button {
+  margin-left: 180px;
+  margin-right: 10px;
+}
+
+#resource .concave-button.ar_question-button {
   margin-left: 180px;
   margin-right: 10px;
 }
@@ -290,6 +324,13 @@
 }
 
 #resource .concave-button.question-button span:before,
+#resource .concave-button.report-button span:before,
+#resource .concave-button .do-exercise:before {
+  float: left;
+  margin-right: 5px;
+}
+
+#resource .concave-button.ar_question-button span:before,
 #resource .concave-button.report-button span:before,
 #resource .concave-button .do-exercise:before {
   float: left;
@@ -486,6 +527,41 @@
 }
 
 #resource .exercise-overview .qty-questions-tip {
+  display: block;
+  text-align: center;
+  color: rgb(179, 179, 179);
+  font-size: .9em;
+  margin-top: -5px;
+}
+
+#resource .exercise-overview .qty-ar-questions {
+  font-family: museo-slab, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 100;
+  font-size: 4.5em;
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+}
+
+#resource .exercise-overview .qty-ar-questions.undone {
+  color: rgb(255, 124, 53);
+}
+
+#resource .exercise-overview .qty-ar-questions.done {
+  color: rgb(97, 160, 128);
+}
+
+
+#resource .exercise-overview .qty-ar-questions.right {
+  color: rgb(171, 227, 133);
+}
+
+.textshadow .exercise-overview .exercise-name,
+.textshadow .exercise-overview .qty-ar-questions {
+  text-shadow: 0px 1px 0px white;
+}
+
+#resource .exercise-overview .qty-ar-questions-tip {
   display: block;
   text-align: center;
   color: rgb(179, 179, 179);
@@ -955,6 +1031,319 @@
   text-align: right;
   margin: 0 10px 0 0;
 }
+
+#space-manage .new-resource .ar-question-container,
+
+#space-manage .edit-resource .ar-question-container {
+
+  float: left;
+
+  margin-top: 10px;
+
+}
+
+#space-manage .new-resource .ar-question-item,
+
+#space-manage .edit-resource .ar-question-item {
+
+  background-color: rgb(230, 230, 230);
+
+  border: solid 1px rgb(204, 204, 204);
+
+  margin-top: 10px;
+
+  padding: 0 18px 18px 0;
+
+  width: 524px;
+
+}
+
+.borderradius #space-manage .new-resource .ar-question-item,
+
+.borderradius #space-manage .edit-resource .ar-question-item {
+
+  -webkit-border-radius: 5px;
+
+  -moz-border-radius: 5px;
+
+  border-radius: 5px;
+
+}
+
+
+
+#space-manage .new-resource .ar-question-item:hover,
+
+#space-manage .edit-resource .ar-question-item:hover {
+
+  background-color: rgb(219, 239, 247);
+
+}
+
+
+
+#space-manage .new-resource .ar-question-item .position,
+
+#space-manage .edit-resource .ar-question-item .position {
+
+  display: block;
+
+  width: 25px;
+
+  text-align: left;
+
+  float: left;
+
+  margin: 5px;
+
+
+
+  font-family: museo-slab, "Helvetica Neue", Arial, sans-serif;
+
+  font-weight: 900;
+
+  font-size: 1.3em;
+
+  color: white;
+
+}
+
+
+
+.textshadow #space-manage .new-resource .ar-question-item .position,
+
+.textshadow #space-manage .edit-resource .ar-question-item .position {
+
+  text-shadow: 0px -1px 0px rgb(179, 179, 179);
+
+}
+
+
+
+#space-manage .new-resource .ar-question-item:hover .position,
+
+#space-manage .edit-resource .ar-question-item:hover .position {
+
+  color: rgb(115, 195, 230);
+
+}
+
+
+
+.textshadow #space-manage .new-resource .ar-question-item:hover .position,
+
+.textshadow #space-manage .edit-resource .ar-question-item:hover .position {
+
+  text-shadow: 0px 1px 0px #ffffff;
+
+}
+
+
+
+#space-manage .new-resource .ar-question-item.closed .position,
+
+#space-manage .edit-resource .ar-question-item.closed .position {
+
+  color: rgb(179, 179, 179);
+
+}
+
+
+
+.textshadow #space-manage .new-resource .ar-question-item.closed .position,
+
+.textshadow #space-manage .edit-resource .ar-question-item.closed .position {
+
+  text-shadow: 0px 1px 0px white;
+
+}
+
+
+
+#space-manage .new-resource .ar-question-item.closed,
+
+#space-manage .edit-resource .ar-question-item.closed {
+
+  background: rgb(240,240,240); /* Old browsers */
+
+}
+
+
+
+.cssgradients #space-manage .new-resource .ar-question-item.closed,
+
+.cssgradients #space-manage .edit-resource .ar-question-item.closed {
+
+  background: -moz-linear-gradient(top, rgb(240,240,240) 0%, rgb(255,255,255) 50%, rgb(240,240,240) 100%); /* FF3.6+ */
+
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(240,240,240)), color-stop(50%,rgb(255,255,255)), color-stop(100%,rgb(240,240,240))); /* Chrome,Safari4+ */
+
+  background: -webkit-linear-gradient(top, rgb(240,240,240) 0%,rgb(255,255,255) 50%,rgb(240,240,240) 100%); /* Chrome10+,Safari5.1+ */
+
+  background: -o-linear-gradient(top, rgb(240,240,240) 0%,rgb(255,255,255) 50%,rgb(240,240,240) 100%); /* Opera 11.10+ */
+
+  background: -ms-linear-gradient(top, rgb(240,240,240) 0%,rgb(255,255,255) 50%,rgb(240,240,240) 100%); /* IE10+ */
+
+  background: linear-gradient(top, rgb(240,240,240) 0%,rgb(255,255,255) 50%,rgb(240,240,240) 100%); /* W3C */
+
+}
+
+
+
+#space-manage .new-resource .ar-question-item .summary,
+
+#space-manage .edit-resource .ar-question-item .summary {
+
+  margin-left: 40px;
+
+  display: none;
+
+}
+
+
+
+#space-manage .new-resource .ar-question-item .summary .statement,
+
+#space-manage .edit-resource .ar-question-item .summary .statement {
+
+  display: block;
+
+  margin-top: 15px;
+
+  color: rgb(109, 110, 111);
+
+}
+
+#space-manage .new-resource .ar-question-item .summary .expand,
+
+#space-manage .edit-resource .ar-question-item .summary .expand {
+
+  display: block;
+
+  width: 16px;
+
+  height: 18px;
+
+  float: right;
+
+}
+
+
+
+#space-manage .new-resource .ar-question-item .fields,
+
+#space-manage .edit-resource .ar-question-item .fields {
+
+  clear: left;
+
+}
+
+
+
+#space-manage .new-resource .ar-question-item .concave-input,
+
+#space-manage .edit-resource .ar-question-item .concave-input {
+
+  width: 402px;
+
+  height: 44px;
+
+}
+
+
+
+#space-manage .new-resource .ar-question-item .concave-label:first,
+
+#space-manage .new-resource .ar-question-item .ar-question-statement,
+
+#space-manage .edit-resource .ar-question-item .concave-label:first,
+
+#space-manage .edit-resource .ar-question-item .ar-question-statement {
+
+  margin-top: 0;
+
+}
+
+#space-manage .new-resource .ar-question-item .simple-actions,
+
+#space-manage .new-resource .ar-question-add,
+
+#space-manage .edit-resource .ar-question-item .simple-actions,
+
+#space-manage .edit-resource .ar-question-add {
+
+  margin-top: 25px;
+
+  font-size: .87em;
+
+}
+
+
+
+#space-manage .new-resource .ar-question-item .simple-actions,
+
+#space-manage .edit-resource .ar-question-item .simple-actions {
+
+  float: left;
+
+  margin-left: 100px;
+
+  width: 420px;
+
+}
+
+
+
+#space-manage .new-resource .ar-question-item .ar-question-remove,
+
+#space-manage .edit-resource .ar-question-item .ar-question-remove {
+
+  color: rgb(232, 59, 59);
+
+  margin-right: 50px;
+
+}
+
+
+
+#space-manage .new-resource .ar-question-item .finalize-edition,
+
+#space-manage .edit-resource .ar-question-item .finalize-edition {
+
+  float: right;
+
+}
+
+
+
+#space-manage .new-resource .ar-question-add,
+
+#space-manage .edit-resource .ar-question-add {
+
+  float: right;
+
+}
+
+
+
+#space-manage .new-resource .ar-question-add-top,
+
+#space-manage .edit-resource .ar-question-add-top {
+
+  clear: left;
+
+  float: left;
+
+  display: block;
+
+  width: 90px;
+
+  text-align: right;
+
+  margin: 0 10px 0 0;
+
+}
+
 
 #space-manage .new-resource .label-wrapper,
 #space-manage .edit-resource .label-wrapper {
