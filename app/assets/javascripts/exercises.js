@@ -29,10 +29,9 @@ $(function(){
     };
 
     $("#fechada").click(function(){
+      console.log(999);
       $(this).find(".nested-fields-level-1").nestedFields({
-
       //if(document.getElementById("fechada").checked){
-      
         containerSelector: ".question-container",
         itemSelector: ".question-item",
         addSelector: ".question-add",
@@ -56,8 +55,9 @@ $(function(){
       //}
       });
     });
-  $("#aberta").click(function(){
-    $(this).find(".nested-fields-level-1").nestedFields({
+     $("#aberta").click(function(){
+      console.log(991);
+      $(this).find(".nested-fields-level-1").nestedFields({
 
       //if(document.getElementById("fechada").checked){
       // $("#fechada").click(function(){
@@ -98,9 +98,9 @@ $(function(){
           item.refreshArQuestionsNumbering();
         }
       //}
-    });
+      });
 
-  });
+    });
 
     // Aplica nestedFields às alternativas da primeira questão
     $(this).find('.nested-fields-level-2').nestedFields(alternativeOptions);
@@ -282,22 +282,18 @@ $(function(){
     });
   };
 
-  $.fn.refreshFormQuestions = function(){
-    $("#aberta").click(function(){
-      $("#dissertative").style.display = "block";
-      $("#multiple_choice").style.display = "none";
-    });
-    $("#fechada").click(function(){
-      $("#dissertative").style.display = "none";
-      $("#multiple_choice").style.display = "block";
+ $.fn.refreshFormQuestions = function(){
+    $("#lecture_lectureable_attributes, #lecture_lectureable_attributes").change(function(){
+      $('#dissertative, #multiple_choice').toggle();
     });
   };
 
   $(document).ready(function(){
+    
     $(document).refreshNestedFieldsEdition();
     $("#resources-edition .exercise").refreshQuestionsAppearance();
     $(document).refreshFormQuestions();
-
+    
     $(document).ajaxComplete(function(){
       $(document).refreshNestedFieldsEdition();
       $("#resources-edition .exercise").refreshQuestionsAppearance();
@@ -305,6 +301,18 @@ $(function(){
       showLoadingMessage(false);
       disableQuestionNavButtons(false);
       $(document).refreshFormQuestions();
+      $("#aberta").click(function(){
+        //console.log("aberta");
+        $("#dissertative").css("display","block");
+        $("#multiple_choice").css("display","none");
+      });
+      $("#fechada").click(function(){
+        //console.log("fechada");
+        $("#dissertative").css("display","none");
+        $("#multiple_choice").css("display","block");
+        
+      });
+
     });
   });
 
