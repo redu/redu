@@ -30,6 +30,8 @@ class Exercise < ActiveRecord::Base
 
   accepts_nested_attributes_for :questions, :allow_destroy => true,
     :reject_if => :question_and_alternatives_blank
+  accepts_nested_attributes_for :ar_questions, :allow_destroy => true, 
+    :reject_if => :ar_questions_blank
 
 
   # Utiliza o maximum_grade para calcular o peso por questão

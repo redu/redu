@@ -26,9 +26,14 @@
     $('.new-resource .resource-form').replaceWith($newForm);
     $('.new-resource .resource-form').show();
     <% if @lecture.lectureable.is_a? Exercise %>
-      $newForm.refreshNestedFields();
+      if($form.find("#aberta").is(":checked")){
+        $form.refreshNestedFields2();
+      }if($form.find("#fechada").is(":checked")){
+        $form.refreshNestedFields();
+        $form.find(".alternative-item").refreshAlternativesNumbering();
+      }
       $newForm.find(".question-item:first-child").refreshQuestionsNumbering();
-      $newForm.find(".alternative-item:first-child").refreshAlternativesNumbering();
+      $newForm.find(".ar-question-item:first-child").refreshArQuestionsNumbering();
       $newForm.refreshQuestionsAppearance();
     <% end %>
   <% end %>

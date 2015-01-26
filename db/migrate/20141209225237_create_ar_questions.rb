@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateArQuestions < ActiveRecord::Migration
   def self.up
     create_table :ar_questions do |t|

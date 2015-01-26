@@ -7,6 +7,14 @@ var $form;
 <% end %>
 
 $form.appendTo($('#lectures_types')).slideDown();
-$form.refreshNestedFields();
-$form.find(".alternative-item").refreshAlternativesNumbering();
+
+	$form.find("#new").click(function(){  
+      if($form.find("#aberta").is(":checked")){
+        $form.refreshNestedFields2();
+      }if($form.find("#fechada").is(":checked")){
+        $form.refreshNestedFields();
+        $form.find(".alternative-item").refreshAlternativesNumbering();
+      }
+    });
+// $form.refreshNestedFields();
 $("#space-manage #resources_list").refreshResourcesNumbering();

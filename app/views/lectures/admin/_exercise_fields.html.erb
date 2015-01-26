@@ -1,41 +1,37 @@
-<%= hidden_field_tag "lecture[lectureable_attributes][_type]", "Exercise" %>
-<%= label_tag "Questões" %>
-
-<ol class= "teste">
-  <input type="radio" name="tipo" id = "fechada" value="multipla-escolha">Múltipla-Escolha
-  <input type="radio" name="tipo" id = "aberta" value="dissertativa">Dissertativa
-</ol>
-
-<div id ="dissertative" class="nested-fields-level-1 clearfix" style= "display: none">
-  <div class="label-wrapper">  
-    <a href="#" class="ar-question-add ar-question-add-top">+ adicionar</a>
-  </div>
-
-  <ol class="ar-question-container clearfix">
-    <%= f.nested_fields_for :ar_questions, { :new_item_index => 'new_ar_question_item', :render_template => false } do |builder| %>
-      <%= render 'lectures/admin/ar_question_fields', :f => builder %>
-    <% end %>
-  </ol>
-
-  <%= nested_fields_templates %>
-  <a href="#" class="ar-question-add">+ adicionar questão</a>
-</div>
-
-<div id="multiple_choice" class="nested-fields-level-1 clearfix" style= "display: none">
+<div class="nested-fields-level-1 clearfix">
+  <%= hidden_field_tag "lecture[lectureable_attributes][_type]", "Exercise" %>
   <div class="label-wrapper">
-    <a href="#" class="question-add question-add-top">+ adicionar</a>
+    <%= label_tag "Questões" %>
+    <!--<a href="#" class="question-add question-add-top">+ adicionar</a>-->
   </div>
 
-  <!--<input type="radio" name="tipo" id = "fechada" value="multipla-escolha">Múltipla-Escolha
-  <input type="radio" name="tipo" id = "aberta" value="dissertativa">Dissertativa-->
-  
-  <ol class="question-container clearfix">
-    <%= f.nested_fields_for :questions, { :new_item_index => 'new_question_item', :render_template => false } do |builder| %>
-      <%= render 'lectures/admin/question_fields', :f => builder %>
-    <% end %>
+  <ol class= "teste">
+    <input type="radio" class="tipo" name="tipo" id = "fechada" value="multipla-escolha">Múltipla-Escolha
+    <input type="radio" class="tipo" name ="tipo" id = "aberta" value="dissertativa">Dissertativa    
+    <button type="button" id="new">adicionar questão</button>
+
+    <ol id ="dissertative" class="ar-question-container clearfix" style= "display: none">
+      <a href="#" class="ar-question-add ar-question-add-top">+ adicionar</a>
+      <%= f.nested_fields_for :ar_questions, { :new_item_index => 'new_ar_question_item', :render_template => false } do |builder| %>
+        <%= render 'lectures/admin/ar_question_fields', :f => builder %>
+      <% end %>
+      <%= nested_fields_templates %>
+      <a href="#" class="ar-question-add">+ adicionar questão</a>
+    </ol>
+    
+    <ol id="multiple_choice" class="question-container clearfix" style= "display: none">
+      <a href="#" class="question-add question-add-top">+ adicionar</a>
+      <%= f.nested_fields_for :questions, { :new_item_index => 'new_question_item', :render_template => false } do |builder| %>
+        <%= render 'lectures/admin/question_fields', :f => builder %>
+      <% end %>
+      <%= nested_fields_templates %>
+      <a href="#" class="question-add">+ adicionar questão</a>
+      
+    </ol>
+
   </ol>
 
   
-  <%= nested_fields_templates %>
-  <a href="#" class="question-add">+ adicionar questão</a>
+ <!-- <%= nested_fields_templates %>
+  <a href="#" class="question-add">+ adicionar questão</a>-->
 </div>

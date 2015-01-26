@@ -1,10 +1,17 @@
-<li class="ar-question-item invisible">
+<li class="ar-question-item visible">
   <span class="position">1</span>
+  <div class="summary clearfix">
+    <span class="statement">(Enunciado não informado)</span>
+    <span class="alternatives">
+      Questão aberta. Clique para expandir
+    </span>
+    <span class="expand icon-small icon-expand_down-gray_16_18 replacement">Mais detalhes</span>
+  </div>
 
   <div class="fields">
     
     <%= f.label :statement %>
-    <%= f.text_area :statement, :class => "ar-question-statement" %>
+    <%= f.text_area :statement, :class => "question-statement" %>
     <div class="tip">Descrição da questão e sua problemática</div>
     <%= f.label :explanation %>
     <%= f.text_area :explanation %>

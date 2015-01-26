@@ -2,13 +2,15 @@ $(function(){
 
   // Aplica nestedFields às questões e alternativas de Exercício
   $.fn.refreshNestedFields = function(){
+    
     var alternativeOptions = {
-      containerSelector: ".alternative-container",
-      itemSelector: ".alternative-item",
-      addSelector: ".alternative-add",
-      removeSelector: ".alternative-remove",
-      itemTemplateSelector: ".alternative.template",
-      newItemIndex: "new_alternative_item",
+          containerSelector: ".alternative-container",
+          itemSelector: ".alternative-item",
+          addSelector: ".alternative-add",
+          removeSelector: ".alternative-remove",
+          itemTemplateSelector: ".alternative.template",
+          newItemIndex: "new_alternative_item",
+          
       afterInsert: function(item) {
         item.refreshForms();
         item.refreshAlternativesNumbering();
@@ -28,82 +30,91 @@ $(function(){
       }
     };
 
-    $("#fechada").click(function(){
-      console.log(999);
       $(this).find(".nested-fields-level-1").nestedFields({
-      //if(document.getElementById("fechada").checked){
-        containerSelector: ".question-container",
-        itemSelector: ".question-item",
-        addSelector: ".question-add",
-        removeSelector: ".question-remove",
-        itemTemplateSelector: ".question.template",
-        newItemIndex: "new_question_item",
-        afterInsert: function(item) {
-          // Aplica nestedFields às alternativas da nova questão
-          item.find(".nested-fields-level-2").nestedFields(alternativeOptions);
-
+        
+          containerSelector: ".question-container",
+          itemSelector: ".question-item",
+          addSelector: ".question-add",
+          removeSelector: ".question-remove",
+          itemTemplateSelector: ".question.template",
+          newItemIndex: "new_question_item",
+        
+          afterInsert: function(item) {
+            console.log("dalee2");
+        
+            item.find(".nested-fields-level-2").nestedFields(alternativeOptions);
+          
           // Insere um campo de alternativa para a nova questão
-          item.find(".nested-fields-level-2").nestedFields("insert");
-          item.refreshForms();
-          item.refreshQuestionsNumbering();
-          item.find(".alternative-item").refreshAlternativesNumbering();
-        },
-        afterRemove: function(item) {
-          item.removeClass("visible");
-          item.refreshQuestionsNumbering();
-        }
-      //}
+            item.find(".nested-fields-level-2").nestedFields("insert");
+            item.refreshForms();
+            item.refreshQuestionsNumbering();
+            item.find(".alternative-item").refreshAlternativesNumbering();
+            // }
+          },
+          afterRemove: function(item) {
+            item.removeClass("visible");
+            item.refreshQuestionsNumbering();
+          }
       });
+      $(this).find(".nested-fields-level-2").nestedFields(alternativeOptions);    
+//    }
+
+  //   if($("#aberta").is(":checked")){
+  //     console.log("entrou nested aberta");
+  //     $(this).find(".nested-fields-level-1").nestedFields({
+             
+  //         containerSelector: ".ar-question-container",
+  //         itemSelector: ".ar-question-item",
+  //         addSelector: ".ar-question-add",
+  //         removeSelector: ".ar-question-remove",
+  //         itemTemplateSelector: ".ar-question.template",
+  //         newItemIndex: "new_ar_question_item",
+
+  //         afterInsert: function(item) {
+  //           console.log("dalee2");
+  //           item.find(".nested-fields-level-2").nestedFields();
+  //         // Insere um campo de alternativa para a nova questão
+  //           item.find(".nested-fields-level-2").nestedFields("insert");
+  //           item.refreshForms();
+  //           item.refreshQuestionsNumbering();
+  //           // item.find(".alternative-item").refreshAlternativesNumbering();
+  //         },
+  //         afterRemove: function(item) {
+  //           item.removeClass("visible");
+  //           item.refreshQuestionsNumbering();
+  //         }
+  //     });
+  //     $(this).find(".nested-fields-level-2").nestedFields();    
+  //   }      
+  };
+
+  $.fn.refreshNestedFields2 = function(){
+
+    $(this).find(".nested-fields-level-1").nestedFields({
+      containerSelector: ".ar-question-container",
+      itemSelector: ".ar-question-item",
+      addSelector: ".ar-question-add",
+      removeSelector: ".ar-question-remove",
+      itemTemplateSelector: ".question.template",
+      newItemIndex: "new_ar_question_item",
+
+      afterInsert: function(item) {
+        console.log("dalee3");
+        // Aplica nestedFields às alternativas da nova questão
+        item.find(".nested-fields-level-2").nestedFields();
+        // console.log("dalee");
+        // Insere um campo de alternativa para a nova questão
+        item.find(".nested-fields-level-2").nestedFields("insert");
+        item.refreshForms();
+        item.refreshArQuestionsNumbering();
+      },
+      afterRemove: function(item) {
+        item.removeClass("visible");
+        item.refreshArQuestionsNumbering();
+      }
     });
-     $("#aberta").click(function(){
-      console.log(991);
-      $(this).find(".nested-fields-level-1").nestedFields({
+  $(this).find(".nested-fields-level-2").nestedFields();
 
-      //if(document.getElementById("fechada").checked){
-      // $("#fechada").click(function(){
-      //   containerSelector: ".question-container",
-      //   itemSelector: ".question-item",
-      //   addSelector: ".question-add",
-      //   removeSelector: ".question-remove",
-      //   itemTemplateSelector: ".question.template",
-      //   newItemIndex: "new_question_item",
-      //   afterInsert: function(item) {
-      //     // Aplica nestedFields às alternativas da nova questão
-      //     item.find(".nested-fields-level-2").nestedFields(alternativeOptions);
-
-      //     // Insere um campo de alternativa para a nova questão
-      //     item.find(".nested-fields-level-2").nestedFields("insert");
-      //     item.refreshForms();
-      //     item.refreshQuestionsNumbering();
-      //     item.find(".alternative-item").refreshAlternativesNumbering();
-      //   },
-      //   afterRemove: function(item) {
-      //     item.removeClass("visible");
-      //     item.refreshQuestionsNumbering();
-      //   }
-      // //}
-      // });
-
-      // //if(document.getElementById("aberta").checked){
-      // $("#aberta").click(function(){
-        containerSelector: ".ar-question-container",
-        itemSelector: ".ar-question-item",
-        addSelector: ".ar-question-add",
-        removeSelector: ".ar-question-remove",
-        itemTemplateSelector: ".ar-question.template",
-        newItemIndex: "new_ar_question_item",
-
-        afterRemove: function(item) {
-          item.removeClass("visible");
-          item.refreshArQuestionsNumbering();
-        }
-      //}
-      });
-
-    });
-
-    // Aplica nestedFields às alternativas da primeira questão
-    $(this).find('.nested-fields-level-2').nestedFields(alternativeOptions);
   };
 
   // Expande a questão
@@ -111,9 +122,20 @@ $(function(){
     $(this).parents(".question-item").expandQuestion();
   });
 
+  $("#space-manage .concave-form .ar-question-item .summary .expand").live("click", function(){
+    $(this).parents(".ar-question-item").expandQuestion();
+  });
+
   // Click do botão finalizar
   $("#space-manage .concave-form .question-item .finalize-edition").live("click", function(e){
-    $(this).parents(".question-item").retractQuestion();
+      console.log("retrai fechada");
+      $(this).parents(".question-item").retractQuestion();
+      e.preventDefault();    
+  });
+
+  $("#space-manage .concave-form .ar-question-item .ar-finalize-edition").live("click", function(e){
+    console.log("retrai aberta");
+    $(this).parents(".ar-question-item").retractQuestion();
     e.preventDefault();
   });
 
@@ -157,6 +179,7 @@ $(function(){
       var qttAlternatives = $fields.find(".alternative-container .alternative-item.visible:not(.disabled) textarea.alternative-text[value!=\"\"]").length;
     $summary.find(".alternatives .qtt").text(qttAlternatives);
     var statement = $fields.find(".question-statement").val();
+
     if (statement != ""){
       $summary.find(".statement").text(statement);
     }else{
@@ -176,6 +199,7 @@ $(function(){
   // Atualiza numeração das questões
   $.fn.refreshQuestionsNumbering = function(){
     return this.each(function(){
+      console.log("teseee22");
       var $questions = $(this).parent().find(".question-item.visible");
       $questions.each(function(index){
         $(this).find(".position").text(index + 1);
@@ -185,8 +209,10 @@ $(function(){
 
   $.fn.refreshArQuestionsNumbering = function(){
     return this.each(function(){
+      console.log("teseee");
       var $ar_questions = $(this).parent().find(".ar-question-item.visible");
       $ar_questions.each(function(index){
+        console.log(index);
         $(this).find(".position").text(index + 1);
       });
     });
@@ -210,6 +236,30 @@ $(function(){
       $(this).refreshNestedFields();
     });
   };
+     // if($("#dissertative").css("display")=="block"){
+      
+       // console.log("aberta");
+        //$("#resources-edition .edit-resource.exercise").each(function(){
+      // if(tipo = "aberta"){
+        // $(this).refreshNestedFields2();
+        // console.log("abertaa");
+      // }else{$(this).refreshNestedFields(tipo);    }
+      
+      
+      
+        //});
+      //};
+      //if($("#multiple_choice").css("display")=="block"){
+      
+        //console.log("fechada");
+      
+      //};
+   
+
+      // $(this).refreshNestedFields2();
+        // $(this).refreshNestedFields2();
+  
+ 
 
   // Habilita alternativas já existentes
   $.fn.refreshAlternativesAppearance = function(){
@@ -279,6 +329,7 @@ $(function(){
     return this.each(function(){
       $(this).refreshAlternativesAppearance();
       $(this).find(".question-item").closeQuestionsWithoutErrors();
+      $(this).find(".ar-question-item").closeQuestionsWithoutErrors();
     });
   };
 
@@ -288,28 +339,72 @@ $(function(){
     });
   };
 
+  $.fn.pegaTipo = function(){
+    var tipo = "seila";
+    $("#new").click(function(){
+  
+      if($("#aberta").is(":checked")){
+        tipo = "aberta";
+        //console.log("abertonafun");
+        $(".exercise-nav .actual").addClass("ar-question-answered");
+        $("#dissertative").css("display","block");
+        $("#multiple_choice").css("display","none");
+        // $(document).refreshNestedFields2();
+      }if($("#fechada").is(":checked")){
+        tipo = "fechada";
+        //console.log("fechadonafun");
+        $(".exercise-nav .actual").addClass("question-answered");
+        $("#dissertative").css("display","none");
+        $("#multiple_choice").css("display","block");
+        // $(document).refreshNestedFields();
+      }
+      //console.log(tipo);
+      // $(document).refreshNestedFieldsEdition(tipo);
+      // $(document).refreshFormQuestions();
+      // // $(this).refreshNestedFields(tipo);
+      // $("#resources-edition .exercise").refreshQuestionsAppearance();
+      // showLoadingMessage(false);
+      // disableQuestionNavButtons(false);
+    });
+    return tipo;
+  };
+
   $(document).ready(function(){
     
-    $(document).refreshNestedFieldsEdition();
+    // $(document).refreshNestedFieldsEdition();
+    // var tipo = pegaTipo();
+     // console.log($(document).pegaTipo());
+    // var tipo = $(document).pegaTipo();
+    // console.log(tipo);
+
     $("#resources-edition .exercise").refreshQuestionsAppearance();
-    $(document).refreshFormQuestions();
-    
+    // $(document).refreshNestedFieldsEdition();
     $(document).ajaxComplete(function(){
-      $(document).refreshNestedFieldsEdition();
+      
+      // console.log(tipo+" noajax");
+      // $(document).refreshNestedFieldsEdition();
       $("#resources-edition .exercise").refreshQuestionsAppearance();
       $(".exercise-nav .actual").addClass("question-answered");
       showLoadingMessage(false);
       disableQuestionNavButtons(false);
-      $(document).refreshFormQuestions();
+      // $(document).refreshFormQuestions();
+      $(document).pegaTipo();
       $("#aberta").click(function(){
-        //console.log("aberta");
-        $("#dissertative").css("display","block");
-        $("#multiple_choice").css("display","none");
+  //       //console.log("aberta");
+
+  //       $("#dissertative").css("display","block");
+  //       $("#multiple_choice").css("display","none");
+        //$(document).refreshNestedFieldsEdition();
+        // $("#new").addClass("ar-question-add");
+        // $(document).refreshNestedFields2();
       });
       $("#fechada").click(function(){
-        //console.log("fechada");
-        $("#dissertative").css("display","none");
-        $("#multiple_choice").css("display","block");
+        // $(document).refreshNestedFieldsEdition();
+        // $("#new").addClass("question-add");
+//         //console.log("fechada");
+//         $("#dissertative").css("display","none");
+//         $("#multiple_choice").css("display","block");
+        // $(document).refreshNestedFields();
         
       });
 
