@@ -39,7 +39,7 @@ class Exercise < ActiveRecord::Base
     if questions.count == 0 && ar_questions.count == 0
       BigDecimal.new("0")
     else
-      maximum_grade / BigDecimal.new((questions.count+ar_questions.count).to_s)
+      maximum_grade / BigDecimal.new((questions.count + ar_questions.count).to_s)
     end
   end
 
@@ -130,6 +130,11 @@ class Exercise < ActiveRecord::Base
     question_blank && alternatives_blank.reduce(:&)
   end
 
+  def ar_questions_blank(attrs)
+    ar_question_blank = attrs['statement'].blank? && attrs['explanation'].blank?
+
+    ar_question_blank
+  end
 
   # Instancia questão para exercício sem questão
   # e alternativa para questões sem alternativas

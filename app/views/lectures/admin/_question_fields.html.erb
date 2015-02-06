@@ -9,7 +9,7 @@
   </div>
   <div class="fields">
     <%= f.label :statement %>
-    <%= f.text_area :statement, :class => "question-statement" %>
+    <%= f.cktext_area :statement, :class => "question-statement" %>
     <div class="tip">Descrição da questão e sua problemática</div>
     <%= concave_errors_for(f.object, :base) %>
     <%= concave_errors_for(f.object, :statement) %>

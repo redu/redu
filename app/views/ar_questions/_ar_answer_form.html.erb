@@ -1,0 +1,11 @@
+<%= form_for :ar_answer, :url => exercise_question_choices_path(exercise, ar_question),
+  :method => :post, :remote => true, :html => { :id => "form-ar_answer" } do |f| %>
+  <%= render "ar_questions/navigation",
+    :exercise => exercise, :current => ar_question,
+    :first => first, :last => last, :review => review %>
+  <%= render "ar_questions/form", :f => f, :exercise => exercise,
+    :question => question, :result => result, :review => review,
+    :ar_answer => ar_answer %>
+  <%= render "ar_questions/submission", :exercise => exercise, :ar_question => ar_question,
+    :first => first, :last => last, :review => review %>
+<% end %>

@@ -81,6 +81,7 @@ class LecturesController < BaseController
           @result = @lecture.lectureable.result_for(current_user)
           @first_question = @lecture.lectureable.questions.
             first(:conditions => { :position => 1 })
+          @first_ar_question = @lecture.lectureable.ar_questions.first
           render :show_exercise
         end
       end
@@ -146,6 +147,7 @@ class LecturesController < BaseController
       else
         if @lecture.lectureable.is_a? Exercise
           @lecture.lectureable.build_question_and_alternative
+          @lecture.lectureable.build_ar_question
         end
       end
     end
@@ -174,6 +176,7 @@ class LecturesController < BaseController
       @lecture.save && @lecture.reload if @lecture.lectureable.make_sense?
       if @lecture.lectureable.is_a? Exercise
         @lecture.lectureable.build_question_and_alternative
+        @lecture.lectureable.build_ar_question
       end
     else
       @lecture.save

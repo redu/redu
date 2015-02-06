@@ -56,36 +56,7 @@ $(function(){
             item.refreshQuestionsNumbering();
           }
       });
-      $(this).find(".nested-fields-level-2").nestedFields(alternativeOptions);    
-//    }
-
-  //   if($("#aberta").is(":checked")){
-  //     console.log("entrou nested aberta");
-  //     $(this).find(".nested-fields-level-1").nestedFields({
-             
-  //         containerSelector: ".ar-question-container",
-  //         itemSelector: ".ar-question-item",
-  //         addSelector: ".ar-question-add",
-  //         removeSelector: ".ar-question-remove",
-  //         itemTemplateSelector: ".ar-question.template",
-  //         newItemIndex: "new_ar_question_item",
-
-  //         afterInsert: function(item) {
-  //           console.log("dalee2");
-  //           item.find(".nested-fields-level-2").nestedFields();
-  //         // Insere um campo de alternativa para a nova questão
-  //           item.find(".nested-fields-level-2").nestedFields("insert");
-  //           item.refreshForms();
-  //           item.refreshQuestionsNumbering();
-  //           // item.find(".alternative-item").refreshAlternativesNumbering();
-  //         },
-  //         afterRemove: function(item) {
-  //           item.removeClass("visible");
-  //           item.refreshQuestionsNumbering();
-  //         }
-  //     });
-  //     $(this).find(".nested-fields-level-2").nestedFields();    
-  //   }      
+      $(this).find(".nested-fields-level-2").nestedFields(alternativeOptions);         
   };
 
   $.fn.refreshNestedFields2 = function(){
@@ -95,20 +66,19 @@ $(function(){
       itemSelector: ".ar-question-item",
       addSelector: ".ar-question-add",
       removeSelector: ".ar-question-remove",
-      itemTemplateSelector: ".question.template",
-      newItemIndex: "new_ar_question_item",
+      //itemTemplateSelector: ".ar-question.template",
+      newItemIndex: "new_question_item",
 
       afterInsert: function(item) {
         console.log("dalee3");
         // Aplica nestedFields às alternativas da nova questão
         item.find(".nested-fields-level-2").nestedFields();
-        // console.log("dalee");
         // Insere um campo de alternativa para a nova questão
         item.find(".nested-fields-level-2").nestedFields("insert");
         item.refreshForms();
         item.refreshArQuestionsNumbering();
       },
-      afterRemove: function(item) {
+      beforeRemove: function(item) {
         item.removeClass("visible");
         item.refreshArQuestionsNumbering();
       }
@@ -212,8 +182,8 @@ $(function(){
       console.log("teseee");
       var $ar_questions = $(this).parent().find(".ar-question-item.visible");
       $ar_questions.each(function(index){
-        console.log(index);
         $(this).find(".position").text(index + 1);
+        console.log(index);
       });
     });
   };
@@ -236,30 +206,6 @@ $(function(){
       $(this).refreshNestedFields();
     });
   };
-     // if($("#dissertative").css("display")=="block"){
-      
-       // console.log("aberta");
-        //$("#resources-edition .edit-resource.exercise").each(function(){
-      // if(tipo = "aberta"){
-        // $(this).refreshNestedFields2();
-        // console.log("abertaa");
-      // }else{$(this).refreshNestedFields(tipo);    }
-      
-      
-      
-        //});
-      //};
-      //if($("#multiple_choice").css("display")=="block"){
-      
-        //console.log("fechada");
-      
-      //};
-   
-
-      // $(this).refreshNestedFields2();
-        // $(this).refreshNestedFields2();
-  
- 
 
   // Habilita alternativas já existentes
   $.fn.refreshAlternativesAppearance = function(){
@@ -315,6 +261,7 @@ $(function(){
       $(this).on("click", function(e){
         showLoadingMessage(true);
         disableQuestionNavButtons(true);
+        console.log("entrou aqui");
         $("#form-choice").submit();
       });
     });
@@ -345,69 +292,33 @@ $(function(){
   
       if($("#aberta").is(":checked")){
         tipo = "aberta";
-        //console.log("abertonafun");
         $(".exercise-nav .actual").addClass("ar-question-answered");
         $("#dissertative").css("display","block");
         $("#multiple_choice").css("display","none");
-        // $(document).refreshNestedFields2();
+        //$("#multiple_choice").remove();
       }if($("#fechada").is(":checked")){
         tipo = "fechada";
-        //console.log("fechadonafun");
         $(".exercise-nav .actual").addClass("question-answered");
         $("#dissertative").css("display","none");
         $("#multiple_choice").css("display","block");
-        // $(document).refreshNestedFields();
+        //$("#dissertative").remove();
       }
-      //console.log(tipo);
-      // $(document).refreshNestedFieldsEdition(tipo);
-      // $(document).refreshFormQuestions();
-      // // $(this).refreshNestedFields(tipo);
-      // $("#resources-edition .exercise").refreshQuestionsAppearance();
-      // showLoadingMessage(false);
-      // disableQuestionNavButtons(false);
     });
     return tipo;
   };
 
   $(document).ready(function(){
     
-    // $(document).refreshNestedFieldsEdition();
-    // var tipo = pegaTipo();
-     // console.log($(document).pegaTipo());
-    // var tipo = $(document).pegaTipo();
-    // console.log(tipo);
-
     $("#resources-edition .exercise").refreshQuestionsAppearance();
-    // $(document).refreshNestedFieldsEdition();
+
     $(document).ajaxComplete(function(){
       
-      // console.log(tipo+" noajax");
-      // $(document).refreshNestedFieldsEdition();
       $("#resources-edition .exercise").refreshQuestionsAppearance();
       $(".exercise-nav .actual").addClass("question-answered");
       showLoadingMessage(false);
       disableQuestionNavButtons(false);
-      // $(document).refreshFormQuestions();
       $(document).pegaTipo();
-      $("#aberta").click(function(){
-  //       //console.log("aberta");
-
-  //       $("#dissertative").css("display","block");
-  //       $("#multiple_choice").css("display","none");
-        //$(document).refreshNestedFieldsEdition();
-        // $("#new").addClass("ar-question-add");
-        // $(document).refreshNestedFields2();
-      });
-      $("#fechada").click(function(){
-        // $(document).refreshNestedFieldsEdition();
-        // $("#new").addClass("question-add");
-//         //console.log("fechada");
-//         $("#dissertative").css("display","none");
-//         $("#multiple_choice").css("display","block");
-        // $(document).refreshNestedFields();
-        
-      });
-
+    
     });
   });
 

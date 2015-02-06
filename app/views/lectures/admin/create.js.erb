@@ -10,7 +10,13 @@
     <% if @lecture.lectureable.is_a?(Page) or @lecture.lectureable.is_a?(Exercise) %>
       var $editPageForm = $("<%= escape_javascript render 'lectures/admin/edit', :lecture => @lecture, :subject => @subject, :space => @space %>");
       $('#resources-edition').append($editPageForm);
-      $editPageForm.refreshNestedFields();
+      if($form.find("#fechada").is(":checked")){
+        $editPageForm.refreshNestedFields();
+        console.log("entroufechada");
+      }if($form.find("#aberta").is(":checked")){
+        $editPageForm.refreshNestedFields2();
+        console.log("entrouaberta");
+      }
     <% end %>
 
     <%= render 'lectures/admin/update_lecture_order' %>
@@ -27,11 +33,15 @@
     $('.new-resource .resource-form').show();
     <% if @lecture.lectureable.is_a? Exercise %>
       if($form.find("#aberta").is(":checked")){
+
         $form.refreshNestedFields2();
       }if($form.find("#fechada").is(":checked")){
+
         $form.refreshNestedFields();
-        $form.find(".alternative-item").refreshAlternativesNumbering();
+        console.log("create");
+        $form.find(".alternative-item").refreshAlternativesNumbering();  
       }
+
       $newForm.find(".question-item:first-child").refreshQuestionsNumbering();
       $newForm.find(".ar-question-item:first-child").refreshArQuestionsNumbering();
       $newForm.refreshQuestionsAppearance();

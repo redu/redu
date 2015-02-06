@@ -11,10 +11,10 @@
   <div class="fields">
     
     <%= f.label :statement %>
-    <%= f.text_area :statement, :class => "question-statement" %>
+    <%= f.cktext_area :statement, :class => "question-statement" %>
     <div class="tip">Descrição da questão e sua problemática</div>
     <%= f.label :explanation %>
-    <%= f.text_area :explanation %>
+    <%= f.text_area :explanation%>
     <div class="tip">Explicação da questão. Será exibida após a realização do exame</div>
 
     <%= f.hidden_field :id %>
@@ -26,6 +26,8 @@
         <a href="#" class="ar-finalize-edition">finalizar edição da questão</a>
       </div>
     </div>
-
   </div>
+
+  
+
 </li>
