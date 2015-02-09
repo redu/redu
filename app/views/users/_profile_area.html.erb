@@ -18,5 +18,26 @@
       :alt => user.display_name, :title => user.display_name,
       :size => "90x90",
       :class => "home-profile-area-photo" %>
+    <% end %>
+    <% if Status.where(user_id:@user.id).count > 5 %>
+      <div class="home-profile-area-badge">
+        <%= link_to user_path(user), :class => "pull-right" do %>
+        <%= image_tag "busy-user-badge.png",
+          :alt => user.display_name, :title => "Busy User",
+          :size => "16x16",
+          :class => "home-profile-badge" %>
+      </div>
+    <% end %>
+    <% if UserEnvironmentAssociation.where(user_id:@user.id)
+            .where(role:"environment_admin") != [] %>
+      <div class="home-profile-area-badge">
+      <%= link_to user_path(user), :class => "pull-right" do %>
+      <%= image_tag "env-admin-badge.png",
+          :alt => user.display_name, :title => "Environment Admin",
+          :size => "16x16",
+          :class => "home-profile-badge" %>
+        <% end %>
+      </div>
+    <% end %>
   <% end %>
 </div>

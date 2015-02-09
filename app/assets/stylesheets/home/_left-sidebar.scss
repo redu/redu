@@ -11,7 +11,10 @@
 }
 
 .home-hello-user +
-.home-profile-area { margin-top: 10px; }
+.home-profile-area {
+  margin-top: 10px; 
+  padding-right: 10px;
+}
 
 // Área do perfil
 .home-profile-area { overflow: hidden; }
@@ -23,12 +26,26 @@
   .link-secondary { display: block; }
 
   .link-secondary +
-  .link-secondary { margin-top: 5px; }
+  .link-secondary {
+    margin-top: 5px;
+    margin-right: 5px;
+  }
 }
 
 // Foto do perfil
 .home-profile-area-photo {
   .borderradius & { @include border-radius(3px); }
+}
+
+.home-profile-area-badge {
+  position: relative;
+  padding-left: 60px;
+  margin:2px;
+
+  .home-profile-badge {
+    position: relative;
+    padding-left: 3px;
+  }
 }
 
 .home-profile-area +
