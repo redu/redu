@@ -83,7 +83,7 @@ def insert_statuses_on_vis(date)
         
         params_status = fill_status(status)
       when "Space"
-	      fill_params_status(nil, nil, status.statusable.id, status.statusable.course.id)
+        fill_params_status(nil, nil, status.statusable.id, status.statusable.course.id)
         
         params_status = fill_status(status)
       when "Activity", "Help"
