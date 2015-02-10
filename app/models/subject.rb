@@ -78,7 +78,6 @@ class Subject < ActiveRecord::Base
     end
   end
 
-
   def self.destroy_subjects_unfinalized
     Subject.where(['created_at < ? AND finalized = 0', 1.day.ago]).each do |s|
       s.destroy

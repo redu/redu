@@ -30,7 +30,7 @@
             <ul class="columns">
               <li>
                 <%= check_box_tag "all-check", "0", true %>
-                <%= label_tag "all-check", "Ueba" %>
+                <%= label_tag "all-check", "Todos" %>
               </li>
               <% @space.subjects.each do |subject| %>
                 <%= render :partial => 'spaces/admin/lecture_item_admin',
