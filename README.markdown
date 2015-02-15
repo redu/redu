@@ -15,6 +15,8 @@ Este repositório contem o core do Redu. O redu-core é a parte central da plata
 - [Permit](http://github.com/redu/permit): Autorização e gerênciamento de políticas de acesso entre serviços.
 - [ReduPy](http://github.com/redu/redupy): Encapsulador Python para a API REST do Redu.
 - [JRedu](http://github.com/redu/jredu): Encapsulador Java para a API REST do Redu
+- [ReduJS](http://github.com/godely/redujs): Encapsulador JavaScript para a API REST do Redu
+- [ReduPHP](http://github.com/godely/reduphp): Encapsulador PHP para a API Rest do Redu
 
 ### Setup
 
