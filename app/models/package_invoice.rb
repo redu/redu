@@ -6,7 +6,7 @@ class PackageInvoice < Invoice
 
   validates_presence_of :amount
 
-  scope :current, where(:current => true)
+  scope :current, -> { where(current: true) }
 
   aasm_column :state
   aasm_initial_state :waiting
