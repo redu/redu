@@ -1,0 +1,28 @@
+<%#
+  Mensagens da prévia do curso.
+
+  Variáveis:
+    course: o curso.
+    user: o usuário.
+%>
+
+<div class="course-preview-wrapper">
+  <% if course.users.include?(user) %>
+    <% if course.waiting_user_approval?(user) %>
+      <span class="course-preview-icon icon-invite-green3_64_66 text-replacement" title="Aceitar convite">Aceitar convite</span>
+      <p class="course-preview-message">Você foi convidado para participar deste Curso.</p>
+    <% elsif course.waiting_approval?(user) %>
+      <span class="course-preview-icon icon-moderated-green3_64_66 text-replacement" title="Aguarde a confirmação do responsável.">Aguarde a confirmação do responsável.</span>
+      <p class="course-preview-message course-waiting-approval-message">Você já requisitou sua matrícula neste curso. Aguarde a confirmação do responsável.</p>
+    <% end %>
+  <% else %>
+    <% if course.subscription_type.eql? 1 %>
+      <span class="course-preview-icon icon-open-green3_64_66 text-replacement" title="Curso aberto">Curso aberto</span>
+      <p class="course-preview-message">Este Curso requer o seu pedido de participação, ou seja, apenas quem faz parte dele consegue visualizar seu conteúdo.</p>
+    <% else %>
+      <span class="course-preview-icon icon-private-red2_64_66 text-replacement" title="Curso privado">Curso privado</span>
+      <p class="course-preview-message">Este Curso requer o seu pedido de participação, ou seja, apenas quem faz parte dele consegue visualizar seu conteúdo. Você pode pedir acesso clicando no botão abaixo e <strong>esperar a aprovação do responsável</strong>.</p>
+    <% end %>
+  <% end %>
+  <%= render "enroll_button", course: course, user: user %>
+</div>

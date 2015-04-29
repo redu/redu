@@ -1,11 +1,22 @@
-<%= form_for :choice, :url => exercise_question_choices_path(exercise, question),
-  :method => :post, :remote => true, :html => { :id => "form-choice" } do |f| %>
-  <%= render "questions/navigation",
-    :exercise => exercise, :current => question,
-    :first => first, :last => last, :review => review %>
-  <%= render "questions/form", :f => f, :exercise => exercise,
-    :question => question, :result => result, :review => review,
-    :choice => choice %>
-  <%= render "questions/submission", :exercise => exercise, :question => question,
-    :first => first, :last => last, :review => review %>
+<%#
+  Formulário do questionário.
+
+  Variáveis:
+    exercise: o exercício.
+    question: a questão atual.
+    first: a primeira questão.
+    last: a última questão.
+    review: se é revisão.
+    choice: a resposta.
+    result: o resultado.
+%>
+
+<%= form_for :choice, url: exercise_question_choices_path(exercise, question),
+  method: :post, remote: true, html: { class: "exercise-form" } do |f| %>
+  <%= render "questions/navigation", exercise: exercise, current: question,
+    first: first, last: last, review: review %>
+  <%= render "questions/form", f: f, exercise: exercise, question: question,
+    result: result, review: review, choice: choice %>
+  <%= render "questions/submission", exercise: exercise, question: question,
+    first: first, last: last, review: review %>
 <% end %>

@@ -1,24 +1,22 @@
-<%= render :partial => 'spaces/sidebar', :locals => { :space => @space } %>
-<div class="main space grid_12 omega big-col">
-  <%= render :partial => 'spaces/breadcrumbs', :locals => { :space => @space } %>
-  <%= render :partial => 'spaces/header',
-    :locals => { :space => @space }%>
+<div class="content-section">
+  <h3 class="header-breadcrumb-big icon-lecture-gray_32_34-before">Aulas</h3>
+</div>
 
-  <div id="space-subjects" class="body clearfix">
-    <div class="header clearfix">
-      <h4 class="title">Conteúdo</h4>
-      <span class="detail">(<%= pluralize @space.subjects.visible.count, "módulo" %> , <%= pluralize @space.lectures_count, "aula" %>)</span>
-    </div>
-    <% if can? :manage, @space %>
-      <div class="admin-actions">
-        <%= link_to "Criar novo módulo", new_space_subject_path(@space),
-           :id => 'link-new-subject', :class => 'concave-button' %>
-      </div>
-    <% end %>
-
-    <ul id="subjects_list" class="hierarchy-listing subjects main-content">
-      <%= render :partial => 'subjects/item', :collection => @subjects %>
+<% if @subjects.empty? %>
+  <%= render "shared/empty_message",
+    icon_message: "Nenhum módulo.",
+    icon_class: "icon-subject-empty_128_130",
+    message: "Ainda não há Módulos criados para esta Disciplina." %>
+<% else %>
+  <div class="content-section">
+    <ul class="list-subject" style="clear: both;">
+      <%= render partial: "bootstrap/list_subject_item",
+        collection: @subjects, locals: { user: current_user } %>
     </ul>
-    <%= paginate @subjects, :theme => 'endless' %>
-  </div><!-- end #environment-courses -->
-</div><!-- end .main -->
+  </div>
+  <% if @subjects.total_pages > 1 %>
+    <hr class="list-separator">
+  <% end %>
+  <%= paginate @subjects, theme: "numbers", outer_window: 1,
+    inner_window: 4 %>
+<% end %>

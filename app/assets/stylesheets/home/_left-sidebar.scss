@@ -69,3 +69,10 @@
     width: 120px;
   }
 }
+
+
+// Navegação local.
+// ==========================================================================
+
+// Evita que o .text-truncate quebre-linha.
+.nav-local-link.text-truncate { max-width: 87%; }

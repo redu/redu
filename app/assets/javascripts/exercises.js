@@ -172,47 +172,6 @@ $(function(){
     });
   };
 
-  // Mostra mensagem de carregando enquanto a questão está sendo salva
-  var showLoadingMessage = function (show) {
-    var loading = $("#loading-message");
-    if (show) {
-      loading.show();
-    }else{
-      loading.hide();
-    };
-  };
-
-  var disableQuestionNavButtons = function (disable) {
-    var lectureButtons = $(".actions-buttons .lecture-buttons a, actions-buttons button");
-    var $links = $(".exercise-nav a");
-
-    if (disable) {
-      lectureButtons.attr("disabled", "disabled");
-      $links.addClass("link-disabled");
-    } else {
-      lectureButtons.removeAttr("disabled");
-      $links.removeClass("link-disabled");
-    }
-  }
-
-  $(document).on("click", "a.link-disabled", function(e) {
-    e.preventDefault();
-  });
-
-  // Ao clicar no radio button, submete o form de choice
-  $.fn.saveQuestion = function(){
-    return this.each(function(){
-      $(this).on("click", function(e){
-        showLoadingMessage(true);
-        disableQuestionNavButtons(true);
-        $("#form-choice").submit();
-      });
-    });
-  };
-
-  // Radio buttons salvam automaticamente as questões, via AJAX
-  $(".exercise input:radio").saveQuestion();
-
   // Atualiza para apenas a última alternativa ter aparência disabled
   // e deixa apenas as questões com erro abertas
   $.fn.refreshQuestionsAppearance = function(){
@@ -229,13 +188,6 @@ $(function(){
     $(document).ajaxComplete(function(){
       $(document).refreshNestedFieldsEdition();
       $("#resources-edition .exercise").refreshQuestionsAppearance();
-      $(".exercise-nav .actual").addClass("question-answered");
-      showLoadingMessage(false);
-      disableQuestionNavButtons(false);
     });
-  });
-
-  $(document).on("click", ".concave-clean[disabled]", function(e) {
-    e.preventDefault();
   });
 });

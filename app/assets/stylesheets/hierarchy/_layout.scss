@@ -1,0 +1,115 @@
+// ==========================================================================
+// Layout.
+// ==========================================================================
+
+
+// Encapsulador.
+.entity-wrapper { padding: 20px 0; }
+
+
+// Barra lateral.
+// ==========================================================================
+
+// Encapsulador.
+.entity-sidebar { color: $gray5; }
+
+.breadcrumb-icons +
+.nav-local { margin-top: 20px; }
+
+.breadcrumb-icons +
+.entity-members-counter-wrapper { margin-top: 20px; }
+
+// Contador de membros.
+.entity-members-counter-wrapper { text-align: center; }
+
+.entity-members-counter {
+  @include heading(3);
+  display: block;
+}
+
+.entity-members-counter-wrapper +
+.entity-sidebar-separator,
+.nav-local-general-stat +
+.entity-sidebar-separator { margin-top: 10px; }
+
+.entity-sidebar-separator +
+.entity-members-list { margin-top: 10px; }
+
+// Lista de membros.
+.entity-members-list {
+  list-style-type: none;
+  margin: 0;
+}
+
+.entity-member {
+  // Número de items por linha.
+  $n: 4;
+  float: left;
+
+  & +
+  & { margin-left: 10px; }
+
+  &:nth-child(#{$n}n+1) { margin-left: 0; }
+
+  &:nth-child(n+#{$n + 1}) { margin-top: 10px; }
+}
+
+
+// Cabeçalho.
+// ==========================================================================
+
+.content-body-fix-top +
+.entity-header { padding-top: 20px; }
+
+.entity-header { color: $gray5; }
+
+// Nome.
+.entity-header-title {
+  @include heading(1);
+  color: $black;
+}
+
+.entity-header-title +
+.entity-header-info { margin-top: 20px; }
+
+// Descrição e tags.
+.entity-header-info {
+  & +
+  & { margin-top: 5px; }
+}
+
+// Ações.
+.entity-actions {
+  overflow: hidden;
+  padding-right: 20px;
+  margin-bottom: -12px;
+}
+
+.entity-action {
+  float: right;
+
+  & +
+  & { margin-right: 5px; }
+}
+
+.entity-action-link { margin-top: 8px; }
+
+.entity-list-intergation {
+  // Integra a aba, lista de curso/disciplina e paginação.
+  .list-course,
+  .list-space { margin-top: -11px; }
+
+  .list-course-space-item:first-child { border-top: 1px solid $gray4; }
+
+  .tab-active .tab-title { height: 20px; }
+
+  .content-body { padding-bottom: 20px; }
+}
+
+// Lista vazia.
+.empty-message {
+  .entity-wrapper & {
+    margin: 0;
+    padding: 20px 0;
+  }
+}

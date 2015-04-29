@@ -471,6 +471,24 @@ describe Lecture do
     end
   end
 
+  describe ".finalized_by" do
+    let(:done_asset_reports_relation) { double(values_of: []) }
+
+    before do
+      @user.stub(:done_asset_reports).and_return(done_asset_reports_relation)
+    end
+
+    it "should invoke user#done_asset_reports" do
+      @user.should_receive(:done_asset_reports)
+      @sub.lectures.finalized_by(@user)
+    end
+
+    it "should invoke values_of(:lecture_id) on relation" do
+      done_asset_reports_relation.should_receive(:values_of).with(:lecture_id)
+      @sub.lectures.finalized_by(@user)
+    end
+  end
+
   protected
   def attrs_except(entities, attrs_to_remove)
     entities.collect do |entity|

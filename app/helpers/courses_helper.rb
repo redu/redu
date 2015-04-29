@@ -5,19 +5,36 @@ module CoursesHelper
     # Todos.
     if course.subscription_type == 1
       if can?(:read, course)
-        legend = "Entrada livre — Você já faz parte deste Curso"
+        "Entrada livre — Você já faz parte deste Curso"
       else
-        legend = "Entrada livre"
+        "Entrada livre"
       end
     # Entrada moderada.
     else
       if can?(:show, course)
-        legend = "Entrada moderada — Você já faz parte deste Curso."
+        "Entrada moderada — Você já faz parte deste Curso."
       else
-        legend = "Entrada moderada — Este Curso requer aprovação de matrícula."
+        "Entrada moderada — Este Curso requer aprovação de matrícula."
       end
     end
+  end
 
-    content_tag :strong, legend, :class => "privacy-legend"
+  # Dado um curso privado, retorna um hash com a cor do ícone e seu texto.
+  def private_course_info(course)
+    unless course.subscription_type == 1
+      if can?(:manage, course)
+        if course.user_course_associations.waiting.exists?
+          { color: "green",
+            text: "Curso fechado, existem alunos na fila de moderação."}
+        else
+          { color: "gray",
+            text: "Curso fechado, não existem alunos na fila de moderação."}
+        end
+      elsif can?(:show, course)
+        { color: "gray", text: "Curso fechado e você tem acesso."}
+      else
+        { color: "red2", text: "Curso fechado"}
+      end
+    end
   end
 end

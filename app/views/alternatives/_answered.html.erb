@@ -1,13 +1,22 @@
-<% dom_classes = "#{(index % 2 == 0) ? "" : "odd"} #{alternative.correct? ? "right-answer" : ""} #{alternative == choosed ? "selected" : ""}"  %>
-<% if alternative.correct? %>
-  <li class="<%= dom_classes %>">
-    <span class="choice icon-confirm-green_16_18-after"><%= (index + 97).chr %>:</span>
-    <p><%= alternative.text %></p>
-  </li>
-<% else %>
-  <li class="<%= dom_classes %>">
-    <span class="choice"><%= (index + 97).chr %>:</span>
-    <p><%= alternative.text %></p>
-  </li>
-<% end %>
+<%#
+  Uma alternativa da questão na revisão.
 
+  Variáveis:
+    chosen: a alternativa respondida.
+%>
+
+<% correctness = answered.correct? ? "exercise-choice-right" : "exercise-choice-wrong" %>
+<% selected = (answered == chosen) ? "exercise-choice-selected" : "" %>
+
+<%= content_tag :li,
+  class: "exercise-choice two-columns-wrapper #{ correctness } #{ selected }" do %>
+  <div class="two-columns-column">
+    <%= content_tag :span, "#{ (answered_counter + 97).chr }:",
+      class: "exercise-choice-order pull-left" %>
+    <%= content_tag(:span, "Alternativa correta",
+      class: "icon-correct-green_16_18 pull-right text-replacement") if answered.correct %>
+  </div>
+  <div class="two-columns-column">
+    <%= content_tag :p, answered.text %>
+  </div>
+<% end %>

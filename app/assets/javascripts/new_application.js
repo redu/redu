@@ -9,3 +9,4 @@
 //= require underscore
 //= require embedly
 //= require search
+//= require jquery.remotipart

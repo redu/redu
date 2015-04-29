@@ -1,0 +1,97 @@
+<%#
+  Item da lista de disciplinas.
+
+  Variáveis:
+    list_space_item: a disciplina.
+%>
+
+<li class="list-course-space-item">
+  <div class="list-course-space-gradient-top"></div>
+  <div class="list-course-space-header icon-course-lightgray_32_34-before clearfix">
+    <%# Ações de gerenciamento. %>
+    <% if can?(:manage, list_space_item) %>
+      <%= link_to "Editar",
+        edit_space_path(list_space_item),
+        class: "link-secondary icon-manage-lightblue_8_10-before pull-right" %>
+    <% end %>
+
+    <div class="list-course-space-authoring">
+      <%# Nome. %>
+      <h3>
+        <%= link_to list_space_item.name, list_space_item,
+          class: "list-course-space-link icon-space-lightblue_32_34-before" %>
+      </h3>
+
+      <%# Criador. %>
+      <span class="legend">autor:</span>
+      <%= link_to list_space_item.owner.display_name, list_space_item.owner,
+        class: "link-name icon-teacher-gray_16_18-before" %>
+    </div>
+  </div>
+  <div class="list-course-space-stats">
+    <%# Aulas e pedidos de ajuda. %>
+    <div class="list-space-stats-row">
+      <div class="list-space-stat">
+        <span class="list-space-stat">
+          <%= link_to "#{ t("hierarchy.lecture", count: list_space_item.lectures.count) }:",
+            list_space_item, class: "icon-lecture-lightblue_16_18-before" %>
+          <%= list_space_item.lectures.count %>
+
+          <% new_lectures = list_space_item.lectures.recent.count %>
+          <% if new_lectures > 0 %>
+            <%= content_tag :span,
+              "(+#{ new_lectures })",
+              class: "list-space-stats-blue", rel: "tooltip",
+              title: "#{ pluralize(new_lectures, "nova") } #{ t("hierarchy.lecture", count: new_lectures).downcase }" %>
+          <% end %>
+        </span>
+      </div>
+    </div>
+
+    <%# Comentários e respostas. %>
+    <div class="list-space-stats-row">
+      <span class="list-space-stat">
+        <%= link_to "Mural da disciplina:", mural_space_path(list_space_item),
+          class: "icon-wall-lightblue_16_18-before" %>
+        <%= pluralize list_space_item.activities.count, "comentário" %>
+
+        <%# Novos comentários. %>
+        <% new_comments = list_space_item.activities.recent.count %>
+        <% if new_comments > 0 %>
+          <%= content_tag :span, "(+#{ new_comments })", rel: "tooltip",
+            title: "#{ new_comments } #{ "novo".pluralize(new_comments) } #{ "comentário".pluralize(new_comments) }",
+            class: "list-space-stats-blue" %>
+        <% end %>
+      </span>
+    </div>
+
+    <%# Arquivos de apoio. %>
+    <div class="list-space-stats-row">
+      <div class="list-space-stat">
+        <%= link_to "Arquivos de apoio:", space_folders_path(list_space_item),
+          class: "icon-file-lightblue_16_18-before" %>
+        <%= pluralize list_space_item.myfiles.count, "arquivo" %>
+
+        <% new_files = list_space_item.myfiles.recent.count %>
+        <% if new_files > 0 %>
+          <%= content_tag :span, "(+#{ new_files })", rel: "tooltip",
+            title: "#{ new_files } #{ "novo".pluralize(new_files) } #{ "arquivo".pluralize(new_files) }",
+            class: "list-space-stats-blue" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <%# Descrição. %>
+  <% unless list_space_item.description.blank? %>
+    <%= content_tag :p, list_space_item.description,
+      class: "list-course-space-description icon-description-gray_16_18-before" %>
+  <% end %>
+
+  <%# Tags. %>
+  <% unless list_space_item.tags.empty? %>
+    <%= content_tag :p, list_space_item.tags.join(", "),
+      class: "list-course-space-tags icon-tag-gray_16_18-before" %>
+  <% end %>
+  <div class="list-course-space-gradient-bottom"></div>
+</li>

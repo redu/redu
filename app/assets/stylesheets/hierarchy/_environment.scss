@@ -1,0 +1,9 @@
+// ==========================================================================
+// Estilos para Ambientes de Aprendizagem.
+// ==========================================================================
+
+
+.environment-thumbnail { @include border-radius; }
+
+.environment-thumbnail +
+.breadcrumb-icons { margin-top: 20px; }

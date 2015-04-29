@@ -1,4 +1,20 @@
 pt-BR:
+  hierarchy:
+    environment:
+      one: "Ambiente de aprendizagem"
+      other: "Ambientes de aprendizagem"
+    course:
+      one: "Curso"
+      other: "Cursos"
+    space:
+      one: "Disciplina"
+      other: "Disciplinas"
+    subject:
+      one: "Módulo"
+      other: "Módulos"
+    lecture:
+      one: "Aula"
+      other: "Aulas"
   classy_enum:
     role:
       admin: "Administrador"
@@ -9,8 +25,12 @@ pt-BR:
       teacher:
         one: "Professor"
         other: "Professores"
-      tutor: "Tutor"
-      student: "Aluno"
+      tutor:
+        one: "Tutor"
+        other: "Tutores"
+      student:
+        one: "Aluno"
+        other: "Alunos"
   date:
     formats:
       published_date: "%d/%m/%Y"

@@ -1,0 +1,27 @@
+// ==========================================================================
+// Estilos para Ambientes.
+// ==========================================================================
+
+
+// Bootstrap.
+@import "bootstrap/variables";
+@import "bootstrap/mixins";
+
+
+// Layout.
+@import "hierarchy/layout";
+
+// Sprites.
+@import "hierarchy/sprites";
+
+// Ambientes de Aprendizagem.
+@import "hierarchy/environment";
+
+// Cursos.
+@import "hierarchy/course";
+
+// Disciplinas.
+@import "hierarchy/space";
+
+// Aulas.
+@import "hierarchy/lecture";

@@ -1,21 +1,34 @@
-<ol class="actions-buttons">
+<%#
+  Botões de navegação e submissão.
+
+  Variáveis:
+    exercise: o exercício.
+    question: a questão atual.
+    first: a primeira questão.
+    last: a última questão.
+    review: se é revisão.
+%>
+
+<ul class="exercise-question-button-list">
   <% if question != first %>
-    <li class="lecture-buttons">
-      <%= link_to "Anterior", exercise_question_path(exercise, question.previous_item), :class => "concave-clean" %>
+    <li class="exercise-question-button-item">
+      <%= link_to "Anterior",
+        exercise_question_path(exercise, question.previous_item),
+        class: "exercise-question-button button-default" %>
     </li>
   <% end %>
   <% if question != last %>
-    <li class="lecture-buttons">
-      <%= link_to "Próxima", exercise_question_path(exercise, question.next_item), :class => "concave-clean" %>
+    <li class="exercise-question-button-item">
+      <%= link_to "Próxima",
+        exercise_question_path(exercise, question.next_item),
+        class: "exercise-question-button button-default" %>
     </li>
   <% end %>
   <% unless review %>
     <% if question == last %>
-      <li class="lecture-button-finalize">
-        <button type="submit" class="concave-button" name="commit">
-          <span class="end-exercise icon-exercise-white_16_18-before">Finalizar</span>
-        </button>
+      <li class="exercise-question-button-item">
+        <button type="submit" name="commit" class="exercise-question-button button-primary icon-exercise-white_blue_16_18-before">Finalizar</button>
       </li>
     <% end %>
   <% end %>
-</ol>
+</ul>

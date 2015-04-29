@@ -1,29 +1,22 @@
-<% report = item.to_report %>
-<tr class="row">
-  <td class="cell">
-    <div class="member-info">
-      <%= image_tag item.user.avatar(:thumb_32), :size => "32x32", :class => 'avatar' %>
-      <span class="member-name"><%= item.user.display_name %></span>
-      <span class="member-detail"><%= l(item.finalized_at, :format => :time_ago) %></span>
-    </div>
-  </td>
-  <td class="cell">
-    <span class="student-time"><%= detailed_period_of_time(report[:duration]) %></span>
-  </td>
-  <td class="cell">
-    <span class="student-score"><%= report[:grade].round(2) %></span>
-  </td>
-  <td class="cell">
-    <span class="student-correct"><%= report[:hits] %></span>
-  </td>
-  </td>
-  <td class="cell">
-    <span class="student-wrong"><%= report[:misses] %></span>
-  </td>
-  </td>
-  <td class="cell">
-    <span class="student-null"><%= report[:blanks] %></span>
-  </td>
-  </td>
-</tr>
+<%#
+  Item do resultado de um aluno na tabela de relatório.
 
+  Variáveis:
+    user_item_admin: um resultado.
+%>
+
+<% report = user_item_admin.to_report %>
+
+<tr>
+  <td>
+    <%= render "users/thumb_legend", user: user_item_admin.user,
+      legend: content_tag(:span, time_ago_in_words(user_item_admin.finalized_at), class: "legend show"),
+      wrapper_class: "text-left" %>
+  </td>
+  <%= content_tag :td, detailed_period_of_time(report[:duration]),
+    class: "exercise-report-neutral" %>
+  <%= content_tag :td, report[:grade].round(2), class: "exercise-report-grade" %>
+  <%= content_tag :td, report[:hits], class: "exercise-report-hits" %>
+  <%= content_tag :td, report[:misses], class: "exercise-report-misses" %>
+  <%= content_tag :td, report[:blanks], class: "exercise-report-neutral" %>
+</tr>

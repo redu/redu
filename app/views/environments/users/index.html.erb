@@ -1,24 +1,6 @@
-<%= render :partial => 'environments/sidebar',
-  :locals => { :environment => @environment } %>
+<div class="content-section centralize">
+  <%= new_subtabs :environments %>
+</div>
 
-<div class="main grid_12 omega big-col">
-  <%= render :partial => "environments/breadcrumbs",
-      :locals => { :environment => @environment } %>
-
-  <%= render :partial => 'environments/header',
-    :locals => { :environment => @environment } %>
-
-  <div id="environment-users" class="body">
-    <%= big_tabs :environments do %>
-      <%= subtabs :environments do %>
-        <ul id="users-list" class="members clearfix">
-          <%= render :partial => 'users/item',
-            :collection => @users, :locals => { :entity => @environment } %>
-          <% reset_cycle "users_cycle" %>
-        </ul>
-        <%= paginate @users, :theme => 'endless' %>
-      <% end %>
-    <% end %>
-  </div><!-- end #environment-courses -->
-
-</div><!-- end .main -->
+<%= render "shared/entity_members_list", role: @role, users: @users,
+  entity: @environment %>

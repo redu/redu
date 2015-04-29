@@ -1,8 +1,16 @@
-<% if seminar.external_resource_type.eql?('upload')%>
-  <%= render :partial => 'lectures/video', :locals => { :resource => seminar } %>
-<% elsif seminar.external_resource_type.eql?('youtube')%>
-  <%= render :partial => "lectures/youtube", :locals => { :resource => seminar } %>
-<% else %>
-  <%= link_to "Download", lecture.media.url %>
-<% end %>
+<%#
+  O player do vídeo.
 
+  Variáveis:
+    seminar: o vídeo.
+%>
+
+<% if seminar.external_resource_type.eql?('upload') %>
+  <%= render 'lectures/video', resource: seminar %>
+<% elsif seminar.external_resource_type.eql?('youtube') %>
+  <%= render "lectures/youtube", resource: seminar %>
+<% else %>
+  <div class="centralize">
+    <%= link_to "Download o vídeo", seminar.media.url, class: "button-primary" %>
+  </div>
+<% end %>

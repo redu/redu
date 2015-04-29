@@ -1,26 +1,21 @@
-<%= render :partial => 'courses/sidebar',
-  :locals => { :course => @course }  %>
+<% if can? :invite_members, @course %>
+  <div class="entity-actions clearfix">
+    <%= link_to "Convidar membros",
+      admin_invitations_environment_course_path(@course.environment, @course),
+      class: "entity-action button-primary icon-invite-white_blue_16_18-before" %>
+    <% if can?(:manage, @course) %>
+      <%= link_to "Gerenciar curso",
+        edit_environment_course_path(@course.environment, @course),
+        class: "entity-action button-default icon-manage-lightblue_16_18-before" %>
+    <% end %>
+  </div>
+<% end %>
 
-<div class="main grid_12 omega big-col">
-  <%= render :partial => 'courses/breadcrumbs',
-    :locals => { :course => @course }%>
-  <%= render :partial => 'courses/header',
-    :locals => { :course => @course, responsibles_associations: @responsibles_associations }%>
-  <div id="course-users" class="body">
-    <div class="actions clearfix">
-    <% if can? :invite_members, @course %>
-      <%= link_to "Convidar membros", admin_invitations_environment_course_path(@environment, @course), :class => "concave-button" %>
-    <% end %>
-    </div>
-    <%= big_tabs :courses do %>
-      <%= subtabs :courses do %>
-        <ul id="users-list" class="members clearfix">
-          <%= render :partial => 'users/item',
-            :collection => @users, :locals => { :entity => @course } %>
-          <% reset_cycle "users_cycle" %>
-        </ul>
-        <%= paginate @users, :theme => 'endless' %>
-      <% end %>
-    <% end %>
-  </div><!-- end #environment-courses -->
-</div><!-- end .main -->
+<%= new_tabs :courses %>
+
+<div class="content-section centralize">
+  <%= new_subtabs :courses %>
+</div>
+
+<%= render "shared/entity_members_list", role: @role, users: @users,
+  entity: @course %>

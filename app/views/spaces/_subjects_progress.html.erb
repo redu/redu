@@ -1,0 +1,23 @@
+<%#
+  Progresso do usuário nos módulos da disciplina.
+
+  Variáveis:
+    space: a disciplina.
+%>
+
+<div class="subjects-progress">
+  <%# TODO: Calcular todas os módulos finalizados na disciplina. %>
+  <% done_subjects = 0 %>
+  <% percentage = 0 %>
+  <% total_subjects = space.subjects.where(visible: true).count %>
+  <% if total_subjects > 0 %>
+    <% percentage = (done_subjects * 100 / total_subjects) %>
+  <% end %>
+  <%= content_tag :span,
+    "#{ t("hierarchy.subject", count: total_subjects) }: #{ done_subjects } / #{ total_subjects }",
+    class: "nav-local-balloon-item icon-subject-gray_16_18-before" %>
+  <span class="nav-local-balloon-item">
+    <%= render "bootstrap/progress_bar", percentage: percentage, size: "medium",
+      thickness: "thick", show_percentage: true %>
+  </span>
+</div>

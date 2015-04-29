@@ -35,7 +35,7 @@ class CoursesController < BaseController
       page(params[:page]).per(Redu::Application.config.items_per_page)
 
     respond_with(@environment, @course) do |format|
-      format.js { render_endless 'spaces/item', @spaces, '#spaces_list' }
+      format.html { render layout: 'courses/show' }
     end
   end
 
@@ -125,11 +125,10 @@ class CoursesController < BaseController
     @responsibles_associations = responsibles_associations_of(@course)
     @spaces = @course.spaces.order('name ASC').page(params[:page]).
       per(Redu::Application.config.items_per_page)
+    @preview = true
+
     respond_to do |format|
-      format.html { render layout: 'new_application' }
-      format.js do
-        render_endless 'spaces/item_short', @spaces, '#course-preview > ul'
-      end
+      format.html { render 'show', layout: 'courses/show' }
     end
   end
 
@@ -395,7 +394,7 @@ class CoursesController < BaseController
     @responsibles_associations = responsibles_associations_of(@course)
 
     respond_to do |format|
-      format.html
+      format.html { render layout: 'courses/show' }
     end
   end
 

@@ -1,0 +1,19 @@
+<%#
+  Estrelas.
+
+  Variáveis:
+    active: quantidade de estrelas ativas.
+    max: quantidade máxima de estrelas (default 5).
+%>
+
+<% max = 5 unless local_assigns.has_key? :max %>
+
+<%= content_tag :span, class: "stars", rel: "tooltip",
+  title: pluralize(active, "estrela") do %>
+  <% active.times do %>
+    <span class="star icon-star-full-gray_8_10"></span>
+  <% end %>
+  <% (max - active).times do %>
+    <span class="star icon-star-empty-gray_8_10"></span>
+  <% end %>
+<% end %>

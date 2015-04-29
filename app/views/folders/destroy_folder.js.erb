@@ -1,3 +1,4 @@
-$('#folder-index').html("<%= escape_javascript (
-    render :partial => "folders/list") %>")
-
+$("#folder-index").html('<%= escape_javascript(
+  render "list", space: @space, folder: @folder,
+         folders: @folders, can_update: @can_update, can_delete: @can_delete,
+         myfiles: @myfiles) %>');

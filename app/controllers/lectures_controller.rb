@@ -50,22 +50,21 @@ class LecturesController < BaseController
 
     if enrollment = current_user.get_association_with(@lecture.subject)
       asset_report = @lecture.asset_reports.of_user(current_user).first
-      @student_grade = enrollment.grade.to_i
       @done = asset_report.try(:done)
     end
 
     respond_to do |format|
       if @lecture.lectureable_type == 'Page'
         format.html do
-          render :show_page
+          render :show_page, layout: 'lectures/show'
         end
       elsif @lecture.lectureable_type == 'Seminar'
         format.html do
-          render :show_seminar
+          render :show_seminar, layout: 'lectures/show'
         end
       elsif @lecture.lectureable_type == 'Document'
         format.html do
-          render :show_document
+          render :show_document, layout: 'lectures/show'
         end
       elsif @lecture.lectureable_type == 'Api::Canvas'
         format.html do
@@ -74,14 +73,14 @@ class LecturesController < BaseController
                       :redu_user_id => current_user.id }
           @canvas_url = @lecture.lectureable.current_url(options)
 
-          render :show_canvas
+          render :show_canvas, layout: 'lectures/show'
         end
       elsif @lecture.lectureable_type == 'Exercise'
         format.html do
           @result = @lecture.lectureable.result_for(current_user)
           @first_question = @lecture.lectureable.questions.
             first(:conditions => { :position => 1 })
-          render :show_exercise
+          render :show_exercise, layout: 'lectures/show'
         end
       end
       format.js do

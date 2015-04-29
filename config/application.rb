@@ -100,7 +100,8 @@ module Redu
     config.paperclip_environment = config.paperclip.merge({
       :styles => { :thumb_32 => "32x32#",
                    :thumb_90 => "90x90#",
-                   :thumb_140 => "140x140#" }
+                   :thumb_140 => "140x140#",
+                   :thumb_160 => "160x160#" }
     })
 
     config.paperclip_user = config.paperclip.merge({
@@ -295,13 +296,13 @@ module Redu
     config.assets.ckeditor_path = "#{config.assets.prefix}/ckeditor"
 
     # Layout com bootstrap
-    config.assets.precompile += %w(new_application.js friend-invitation.js basic.js landing.js mobile.js status_show.js)
+    config.assets.precompile += %w(new_application.js friend-invitation.js basic.js landing.js mobile.js status_show.js bootstrap-affix.js lectures.js exercise-questions.js folders.js)
     config.assets.precompile += %w(bootstrap-redu.min.css new_application.css basic.css mobile.css authoring-page.css)
     config.assets.precompile += %w(maintenance.css)
 
     # Layout sem bootstrap
-    config.assets.precompile += %w(ie.js chat.js outdated_browser.js ckeditor.js olark.js jquery.maskedinput.js canvas.js chart.js jwplayer.js webview.js clean.js new_wall.js new_wall/lecture-toggle-comment-or-help.js)
-    config.assets.precompile += %w(ie.css icons.redu.css chat.css outdated_browser.css preview-course-old.css page.css cold.css clean.css print.css email.css new_wall.css)
+    config.assets.precompile += %w(ie.js chat.js outdated_browser.js ckeditor.js olark.js jquery.maskedinput.js canvas.js chart.js jwplayer.js webview.js clean.js)
+    config.assets.precompile += %w(ie.css icons.redu.css chat.css outdated_browser.css preview-course-old.css page.css cold.css clean.css print.css email.css)
 
     # CKEditor
     config.assets.precompile += %w(ckeditor/*)

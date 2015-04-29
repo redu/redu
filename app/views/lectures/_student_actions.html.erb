@@ -1,24 +1,94 @@
-<div class="student-actions">
-  <ul>
-    <li>
-      <a href="#" title="" class="action-comment concave-clean" >
-        <span class="comment icon-small icon-comment-lightblue_32_34"></span>
-        Comentar
-      </a>
-    </li>
-    <li>
-      <a href="#" title="" id="lights" class="lights_link concave-clean">
-        <span class="lights icon-small icon-light-off-lightblue_32_34"></span>
-        Apagar luzes
-      </a>
-    </li>
-    <li>
-      <a class="addthis_button share_link concave-clean" href="http://addthis.com/bookmark.php?v=250&amp;username=redu" title="">
-        <span class="share icon-small icon-share-lightblue_32_34"></span>
-        Compartilhar
-      </a>
-    </li>
-  </ul>
+<%#
+  Ações para uma aula na barra lateral.
+
+  Variáveis:
+    lecture: a aula.
+    user: o usuário.
+    done: se a aula foi finalizada.
+%>
+
+<% subject = lecture.subject %>
+<% space = subject.space %>
+
+<div class="lecture-sidebar-actions nav-local-balloon" data-spy="affix" data-offset-top="520">
+  <span class="nav-local-balloon-arrow icon-arrow-up-balloon-gray_20_8"></span>
+  <%# Finalizar aula. %>
+  <span class="nav-local-balloon-item">
+    <% if user.get_association_with(subject) %>
+      <% form_id = "do_lecture" %>
+      <%= form_tag done_space_subject_lecture_path(space, subject, lecture),
+        remote: true, method: :post, id: form_id do %>
+          <%= hidden_field_tag "lecture_id", lecture.id %>
+          <%= hidden_field_tag "done", lecture_done_value(done) %>
+          <% disabled = done.nil? %>
+          <%= add_tooltip_if_disabled(disabled) do %>
+            <% checkbox_id = "mark-as-done" %>
+            <%= check_box_tag "", nil, done, id: checkbox_id,
+              onclick: "$('##{ form_id }').submit()", disabled: disabled %>
+            <%= label_tag "Aula finalizada?", nil, for: checkbox_id,
+              class: "nav-local-balloon-is-lecture-completed #{ mark_lecture_icon(done) }" %>
+          <% end %>
+        <% end %>
+    <% end %>
+  </span>
+
+  <%# Comentar, pedir ajudar e apagar as luzes. %>
+  <div class="nav-local-separator"></div>
+  <div class="button-toolbar">
+    <button class="button-default lecture-sidebar-comment" rel="tooltip" title="Comentar">
+      <span class="icon-comment-lightblue_16_18 show text-replacement">Comentar</span>
+    </button>
+    <button class="button-default lecture-sidebar-help" rel="tooltip" title="Pedir ajuda">
+      <span class="icon-request-help-lightblue_16_18 show text-replacement">Pedir ajuda</span>
+    </button>
+    <button class="button-default lights" rel="tooltip" title="Apagar as luzes">
+      <span class="icon-lights-lightblue_16_18 show text-replacement">Apagar as luzes</span>
+    </button>
+  </div>
+
+  <%# Navegação entre aulas. %>
+  <div class="nav-local-separator"></div>
+  <span class="nav-local-balloon-item">
+    <select class="lectures-select">
+      <%= options_for_select(subject.lectures.collect { | l | ["#{ l.position }. #{ l.name }", l.id, { "data-path" => space_subject_lecture_path(l.subject.space, l.subject, l) }] }, selected: lecture.id) %>
+    </select>
+  </span>
+  <span class="nav-local-balloon-item">
+    <div class="button-toolbar">
+      <% previous_text = "Aula anterior" %>
+      <% next_text = "Próxima aula" %>
+
+      <% if lecture.first_item? %>
+        <%= content_tag :button, class: "button-default", disabled: true do %>
+          <%= content_tag :span, previous_text,
+            class: "icon-arrow-left-gray_16_18 show text-replacement" %>
+        <% end %>
+      <% else %>
+        <%= link_to space_subject_lecture_path(space, subject, lecture.previous_item),
+          class: "button-default", rel: "tooltip", title: previous_text do %>
+          <%= content_tag :span, previous_text,
+            class: "icon-arrow-left-lightblue_16_18 show text-replacement" %>
+        <% end %>
+      <% end %>
+
+      <% if lecture.last_item? %>
+        <%= content_tag :button, class: "button-default", disabled: true do %>
+          <%= content_tag :span, next_text,
+            class: "icon-arrow-right-gray_16_18 show text-replacement" %>
+        <% end %>
+      <% else %>
+        <%= link_to space_subject_lecture_path(space, subject, lecture.next_item),
+          class: "button-default", rel: "tooltip", title: next_text do %>
+          <%= content_tag :span, next_text,
+            class: "icon-arrow-right-lightblue_16_18 show text-replacement" %>
+        <% end %>
+      <% end %>
+    </div>
+  </span>
+
+  <%# Progresso geral de aulas e módulos na disciplina. %>
+  <div class="nav-local-separator"></div>
+  <%= render "spaces/lectures_progress", space: space, user: user %>
+  <!-- <div class="nav-local-separator"></div> -->
+  <%# render "spaces/subjects_progress", space: space %>
 </div>
-
-

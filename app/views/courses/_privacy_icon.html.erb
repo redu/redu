@@ -1,0 +1,16 @@
+<%#
+  Ícone de privacidade do curso.
+
+  Variáveis:
+    course: o curso.
+    extra_classes: classes extras (opcional).
+%>
+
+<% extra_classes = nil unless local_assigns.has_key? :extra_classes %>
+
+<% private_course_info = private_course_info(course) %>
+<% unless private_course_info.nil? %>
+  <%= content_tag :span, private_course_info[:text], rel: "tooltip",
+    title: private_course_info[:text],
+    class: "#{ extra_classes } text-replacement icon-private-#{ private_course_info[:color] }_16_18" %>
+<% end %>

@@ -18,6 +18,8 @@ module NavigationHelper
   include PartnersNavigation
   include NewUsersNavigation
   include SearchNavigation
+  include SpacesNewNavigation
+  include LecturesNavigation
 
   # Renderiza navegação global
   def render_dynamic_navigation(opts = { :level => 1, :renderer => :list })
@@ -72,15 +74,5 @@ module NavigationHelper
     else
       :environments
     end
-  end
-
-  # Renderiza um item do tipo canvas na navegação local.
-  def render_local_nav_canvas(canvas)
-    content = content_tag(:span, canvas.current_name,
-                          :title => canvas.current_name,
-                          :class => "local-nav-item-canvas text-truncate")
-    content << content_tag(:span, "por: #{canvas.user.display_name}",
-                           :title => canvas.user.display_name,
-                           :class => "local-nav-item-canvas-author text-truncate")
   end
 end

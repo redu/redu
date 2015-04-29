@@ -90,15 +90,18 @@ module BaseHelper
     content_tag(:ul, errors, :class => 'errors_on_field control-errors') unless object.errors.empty?
   end
 
-  def type_class(resource)
-    icons = ['3gp', 'bat', 'bmp', 'doc', 'css', 'exe', 'gif', 'jpg', 'jpeg', 'jar','zip',
-             'mp3', 'mp4', 'avi', 'mpeg', 'mov', 'm4p', 'ogg', 'pdf', 'png', 'psd', 'ppt', 'txt', 'swf', 'wmv', 'xls', 'xml', 'zip']
+  # Retorna a extensão do arquivo que será usado para determinar a classe do ícone.
+  def file_type_class(resource)
+    icons = ['3gp', 'bat', 'bmp', 'doc', 'css', 'exe', 'gif', 'jpg', 'jpeg',
+             'jar','zip', 'mp3', 'mp4', 'avi', 'mpeg', 'mov', 'm4p', 'ogg',
+             'pdf', 'png', 'psd', 'ppt', 'txt', 'swf', 'wmv', 'xls', 'xml',
+             'zip']
 
     file_ext = resource.attachment_file_name.split('.').last if resource.attachment_file_name.split('.').length > 0
     if file_ext and icons.include? file_ext
-      'ext_'+ file_ext
+      file_ext
     else
-      'ext_blank'
+      'blank'
     end
   end
 
@@ -414,6 +417,48 @@ module AsyncJSHelper
     when Role[:teacher] then "teacher"
     when Role[:tutor] then "tutor"
     when Role[:member] then "member"
+    end
+  end
+
+  # Dada uma entidade, retorna um hash com toda sua hiearquia.
+  def entity_hierachy(entity)
+    hierarchy = { environment: nil, course: nil, space: nil, subject: nil, lecture: nil }
+
+    case entity.class.to_s
+    when "Lecture"
+      hierarchy[:lecture] = entity
+      hierarchy[:subject] = entity.subject
+      hierarchy[:space] = hierarchy[:subject].space
+      hierarchy[:course] = hierarchy[:space].course
+      hierarchy[:environment] = hierarchy[:course].environment
+    when "Subject"
+      hierarchy[:subject] = entity
+      hierarchy[:space] = entity.space
+      hierarchy[:course] = hierarchy[:space].course
+      hierarchy[:environment] = hierarchy[:course].environment
+    when "Space"
+      hierarchy[:space] = entity
+      hierarchy[:course] = entity.course
+      hierarchy[:environment] = hierarchy[:course].environment
+    when "Course"
+      hierarchy[:course] = entity
+      hierarchy[:environment] = hierarchy[:course].environment
+    when "Environment"
+      hierarchy[:environment] = entity
+    end
+
+    hierarchy
+  end
+
+  # Dada uma entidade, retorna seu path.
+  def entity_hierachy_link(entity)
+    case entity.class.to_s
+    when "Lecture"
+      space_subject_lecture_path(entity.subject.space, entity.subject, entity)
+    when "Subject" then space_subject_path(entity.space, entity)
+    when "Space" then space_path(entity)
+    when "Course" then environment_course_path(entity.environment, entity)
+    when "Environment" then environment_path(entity)
     end
   end
 end

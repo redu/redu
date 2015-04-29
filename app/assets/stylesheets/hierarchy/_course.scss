@@ -1,0 +1,76 @@
+// ==========================================================================
+// Estilos para Cursos.
+// ==========================================================================
+
+
+// Responsáveis.
+.entity-header-title +
+.course-owners { margin-top: 20px; }
+
+.course-responsibles {
+  display: inline-block;
+  list-style: disc;
+  margin: 0;
+}
+
+.course-responsible {
+  float: left;
+
+  & +
+  & { margin-left: 25px; }
+
+  &:first-child { list-style: none; }
+}
+
+.course-owners +
+.entity-header-info { margin-top: 5px; }
+
+// Prévia.
+.course-preview-wrapper { text-align: center; }
+
+.course-preview-message {
+  width: 435px;
+  margin-left: auto;
+  margin-right: auto;
+  color: $gray5;
+}
+
+.course-preview-icon { display: inline-block; }
+
+.course-preview-icon +
+.course-preview-message,
+.course-preview-message +
+.course-preview-button { margin-top: 10px; }
+
+.course-waiting-approval-message { width: 310px; }
+
+
+// Convidar membros.
+
+.course-invite {
+  color: $gray5;
+  background-image: image-url("invite-members-to-course.png");
+  background-repeat: no-repeat;
+  background-position: 0 4px;
+  // Largura da imagem + espaçamento.
+  padding-left: 100px + 20px;
+}
+
+.course-invite-title +
+.course-invite-description { margin-top: 10px; }
+
+.course-invite-title-highlight { color: $green4; }
+
+.course-invite-counter-title,
+.course-invite-counter {
+  color: $gray5;
+  display: block;
+}
+
+.course-invite-counter {
+  // Largura do ícone + espaçamento.
+  padding-left: 16px + 5px;
+}
+
+.course-invite-counter +
+.course-invite-counter-title { margin-top: 20px; }

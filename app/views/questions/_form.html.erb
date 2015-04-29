@@ -1,25 +1,29 @@
-<div class="question">
-  <p><%= question.statement %></p>
-</div>
+<%#
+  Formulário das questões.
+
+  Variáveis:
+    f: o formulário.
+    exercise: o exercício.
+    question: a questão atual.
+    review: se é revisão.
+    choice: a resposta.
+    result: o resultado.
+%>
+
+<%= content_tag :p, question.statement, class: "exercise-statement" %>
 
 <% if review %>
-  <div class="justification">
-    <span class="call">Justificativa:</span>
-    <p><%= question.explanation || "Não há" %></p>
+  <div class="exercise-justification">
+    <span class="exercise-note exercise-report-hits">Justificativa:</span>
+    <%= content_tag :em, question.explanation || "Não há" %>
   </div>
-  <div class="alternatives review">
-    <ol>
-      <% question.alternatives.each_with_index do |alternative, index| %>
-        <%= render 'alternatives/answered', :index => index, :alternative => alternative, :choosed => choice.alternative %>
-      <% end %>
-    </ol>
-  </div>
+  <ol class="exercise-choices">
+    <%= render partial: "alternatives/answered",
+      collection: question.alternatives, locals: { chosen: choice.alternative } %>
+  </ol>
 <% else %>
-  <div class="alternatives">
-    <ol>
-      <% question.alternatives.each_with_index do |alternative, index| %>
-        <%= render 'alternatives/item', :f => f, :index => index, :alternative => alternative %>
-      <% end %>
-    </ol>
-  </div>
+  <ol class="exercise-choices">
+    <%= render partial: "alternatives/item", collection: question.alternatives,
+      locals: { f: f } %>
+  </ol>
 <% end %>

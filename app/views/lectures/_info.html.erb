@@ -1,7 +1,46 @@
-<div class="info">
-  <%= image_tag lecture.owner.avatar(:thumb_32), :class => "avatar" %>
-  <div class="info-icon icon-teacher-gray_16_18-before">
-    <span class="label">Autor:</span>
-    <%= link_to lecture.owner.display_name, user_path(lecture.owner) %>
+<%#
+  Informações sobre a aula.
+
+  Variáveis:
+    lecture: a aula.
+%>
+
+<div class="lecture-data">
+  <%# Autor. %>
+  <div class="lecture-authoring">
+    <%= link_to lecture.owner, title: lecture.owner.display_name,
+      class: "lecture-author-thumbnail" do %>
+      <%= image_tag lecture.owner.avatar(:thumb_32),
+        alt: lecture.owner.display_name, title: lecture.owner.display_name %>
+    <% end %>
+    <div class="lecture-authoring-info">
+      <span class="lecture-authoring-written-by legend">por</span>
+      <%= link_to lecture.owner.display_name, lecture.owner,
+        class: "link-name icon-teacher-gray_16_18-before" %>
+    </div>
+  </div>
+
+  <div class="lecture-stats">
+    <div class="lecture-stats-group">
+      <%# Comentários. %>
+      <%= content_tag :span, lecture.activities.count,
+        class: "lecture-stat icon-wall-gray_16_18-before", rel: "tooltip",
+        title: pluralize(lecture.activities.count, "comentário") %>
+
+      <%# Visualizações. %>
+      <%= content_tag :span, lecture.view_count,
+        class: "lecture-stat icon-seen-gray_16_18-before", rel: "tooltip",
+        title: pluralize(lecture.view_count, "visualização", "visualizações") %>
+
+      <%# Finalizações. %>
+      <%# TODO: Quantidade de vezes finalizada. %>
+      <%# done_count = 10 %>
+      <%# content_tag :span, done_count,
+        class: "lecture-stat icon-correct-gray_16_18-before", rel: "tooltip",
+        title: "Finalizada #{ pluralize(done_count, "vez", "vezes") }" %>
+    </div>
+
+    <%# Avaliação. %>
+    <%= render "lectures/rating", lecture: lecture %>
   </div>
 </div>

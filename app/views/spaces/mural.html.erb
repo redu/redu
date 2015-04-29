@@ -1,21 +1,6 @@
-<%= render "shared/new_wall_assets" %>
+<div class="content-section">
+  <h3 class="header-breadcrumb-big icon-wall-gray_32_34-before">Mural</h3>
+</div>
 
-<%= render partial: 'spaces/sidebar', locals: { space: @space } %>
-<div class="main space grid_12 omega big-col">
-  <%= render partial: 'spaces/breadcrumbs', locals: { space: @space } %>
-  <%= render partial: 'spaces/header',
-    locals: { space: @space }%>
-
-  <div id="space-statuses" class="body clearfix">
-    <div class="header clearfix">
-      <h4 class="title">Mural</h4>
-    </div>
-
-    <div class="status-large" style="clear: both;">
-      <%# Status. %>
-      <%= render "statuses/wall", status: @status, statusable: @space,
-        statuses: @statuses, placeholder: "Comente nesta disciplina." %>
-    </div><!-- end .statuses -->
-  </div><!-- end #environment-courses -->
-
-</div><!-- end .main -->
+<%= render "statuses/wall", status: @status, statusable: @space,
+  statuses: @statuses, placeholder: "Comente nesta disciplina." %>

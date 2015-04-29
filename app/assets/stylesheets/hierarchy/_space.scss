@@ -1,0 +1,155 @@
+// ==========================================================================
+// Estilos para Disciplinas.
+// ==========================================================================
+
+
+// Cabeçalho.
+// ==========================================================================
+
+.space-header-separator { margin-top: 20px; }
+
+
+// Arquivos de Apoio.
+// ==========================================================================
+
+.folder-admin {
+  position: relative;
+  float: right;
+
+  .new-folder,
+  .new-file { float: left; }
+
+  .dropdown-menu {
+    top: 30px;
+    padding: 10px;
+  }
+
+  .dropdown-arrow {
+    display: block;
+    top: -8px;
+  }
+
+  .new-folder {
+    margin-right: 5px;
+
+    .new-folder-input {
+      float: left;
+      margin-right: 10px;
+      width: 171px;
+    }
+
+    .dropdown-arrow { left: 55px; }
+  }
+
+  .new-folder-inner { left: 0; }
+
+  .new-file .dropdown-arrow { left: 308px; }
+
+  .new-file-inner {
+    right: 0;
+    width: 350px;
+  }
+
+  .file-wrapper {
+    position: relative;
+    width: 300px;
+    float: left;
+  }
+
+  .control-file-text {
+    position: absolute;
+    top: 8px;
+    max-width: 180px;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .errorMessageField {
+    margin-bottom: 10px;
+    color: $red2;
+  }
+}
+
+.folder {
+  @include border-radius(7px);
+  @include box-shadow(0 -1px 0 0 $gray4);
+  background-color: $gray2;
+  padding: 10px 0;
+
+  .cssgradients & { @include redu-gradient($white, $gray2, 0.3); }
+
+  .no-cssgradients.gt-ie8 & {
+    // http://www.colorzilla.com/gradient-editor/#ffffff+0,f0f0f0+97;Custom
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9Ijk3JSIgc3RvcC1jb2xvcj0iI2YwZjBmMCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
+  }
+
+  .folder-title {
+    display: block;
+    text-align: center;
+    color: $gray6;
+  }
+
+  .context {
+    color: $gray5;
+    padding: 10px;
+
+    .current { color: $blue2; }
+  }
+}
+
+.folder-list {
+  list-style-type: none;
+  margin: 0;
+}
+
+.folder-item {
+  padding: 3px 10px;
+
+  &:hover { background-color: $blue1; }
+
+  &:before { float: left; }
+}
+
+.rename-folder {
+  display: none;
+  float: left;
+
+  .folder-rename-field { width: auto; }
+}
+
+.folder-actions {
+  float: right;
+  margin-top: 3px;
+
+  & +
+  & { margin-right: 20px; }
+}
+
+.file-list-quota {
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.files-list-title {
+  display: block;
+  text-align: center;
+  color: $gray6;
+  margin: 20px 0 0;
+}
+
+.files-list-centralize {
+  vertical-align: middle;
+  display: block;
+  margin: 0 auto;
+}
+
+.files-list-ordering:after { margin-top: 5px; }
+
+.files-list-table-column-icon { width: 5%; }
+
+.files-list-table-column-size { width: 15%; }
+
+.files-list-table-column-updated-at { width: 20%; }

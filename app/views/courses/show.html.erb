@@ -1,29 +1,24 @@
-<%= render :partial => 'courses/sidebar',
-  :locals => { :course => @course }  %>
+<%= render "courses/actions", course: @course, user: current_user %>
 
-<div class="main grid_12 omega big-col">
-  <%= render :partial => 'courses/breadcrumbs',
-    :locals => { :course => @course } %>
-  <%= render :partial => 'courses/header',
-    :locals => { :course => @course, responsibles_associations: @responsibles_associations } %>
+<%= new_tabs :courses %>
 
-<div id="course-spaces" class="body clearfix">
-  <%= render :partial => 'courses/actions',
-    :locals => { :course => @course }%>
+<% if @preview %>
+  <%= render "courses/preview_messages", course: @course,
+    user: current_user %>
 
-  <%= big_tabs :courses do %>
-    <% if @spaces.empty? %>
-      <%= render "shared/empty_message",
-        :icon_message => "Nenhuma disciplina",
-        :icon_class => "icon-space-gray_128_130",
-        :message => "Ainda não há disciplinas criadas para este curso." %>
-    <% else %>
-      <ul id="spaces_list" class="hierarchy-listing spaces">
-        <%= render :partial => 'spaces/item', :collection => @spaces %>
-      </ul>
-      <%= paginate @spaces, :theme => 'endless' %>
-    <% end %>
+<% else %>
+  <% if @spaces.empty? %>
+    <%= render "shared/empty_message",
+      icon_message: "Nenhuma Disciplina.",
+      icon_class: "icon-space-empty_128_130",
+      message: "Ainda não há Disciplinas criadas para este Curso." %>
+  <% else %>
+    <% content_for :container_class do "entity-list-intergation " end %>
+    <ul class="list-space">
+      <%= render partial: "bootstrap/list_space_item",
+        collection: @spaces %>
+    </ul>
+    <%= paginate @spaces, theme: "numbers", outer_window: 1,
+      inner_window: 4 %>
   <% end %>
-</div>
-
-</div><!-- end .main -->
+<% end %>

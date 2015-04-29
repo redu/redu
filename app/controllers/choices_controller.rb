@@ -16,7 +16,7 @@ class ChoicesController < BaseController
     respond_to do |format|
       format.js do
         if params[:commit].nil?
-          render :partial => "questions/choice_form", :locals => locals_form
+          render nothing: true
         else
           render :js => "window.location = '#{ edit_exercise_result_path(@exercise, @result) }'"
         end

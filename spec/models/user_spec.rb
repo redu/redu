@@ -915,6 +915,19 @@ describe User do
     subject.should respond_to(:async_destroy)
   end
 
+  describe "#done_asset_reports" do
+    let(:asset_reports_relation) { double("asset_reports").stub(:done) }
+
+    before do
+      subject.stub(:asset_reports).and_return(asset_reports_relation)
+    end
+
+    it "should invoke .done on self asset_reports" do
+      asset_reports_relation.should_receive(:done).with(no_args)
+      subject.done_asset_reports
+    end
+  end
+
   private
   def create_friendship(user1, user2)
     user1.be_friends_with(user2)

@@ -1,29 +1,42 @@
-<div class="details <%= lecture.lectureable.class.to_s.downcase %>-details clearfix">
-  <h3 class="position"><%= lecture.position %></h3>
-  <div id="rating_lecture" class="rating">
-    <%= ratings_for lecture, :remote_options => {
-      :url => rate_space_subject_lecture_path(lecture.subject.space,
-                                              lecture.subject, lecture)} %>
-  </div>
-  <% if can? :manage, @lecture %>
-    <div class="admin-actions">
-      <%= link_to 'Remover',
-        space_subject_lecture_path(@lecture.subject.space,
-                                   @lecture.subject,
-                                   @lecture),
-        :method => :delete,
-        :confirm => "Você tem certeza que deseja remover esta aula? Não será possível recuperá-la.",
-        :class => "delete icon-delete-gray_8_10-before" %>
-    </div>
+<%#
+  Detalhes.
+
+  Variáveis:
+    lecture: a aula.
+    question: se for uma página de questão.
+    results: se for uma página de resultados.
+%>
+
+<% subject = lecture.subject %>
+<% space = subject.space %>
+
+<div class="content-section">
+  <% if can? :manage, lecture %>
+    <%= link_to "Remover", space_subject_lecture_path(space, subject, lecture),
+      method: :delete,
+      confirm: "Você tem certeza que deseja remover esta aula? Não será possível recuperá-la.",
+      class: "link-secondary pull-right icon-close-gray_8_10-before",
+      title: "Remover esta aula" %>
   <% end %>
-  <div class="resource-info">
-    <h3 class="name icon-<%= lecture.lectureable_type.downcase %>-gray_32_34-before"><%= lecture.name %></h3>
-    <ul class="statistics">
-      <li><%= time_ago_in_words lecture.created_at %></li>
-      <li>Visualizado <%= lecture.view_count %> <%= lecture.view_count > 1 ? "vezes" : "vez" %></li>
-      <% if @question || @results %>
-        <li><%= link_to "Voltar", space_subject_lecture_path(@space, @subject, @lecture) %></li>
-      <% end %>
-    </ul>
+
+  <%= content_tag :h6, lecture.subject.name, class: "lecture-header-title-neutral" %>
+
+  <div class="clearfix">
+    <% lecture_position = content_tag :span, "#{ lecture.position }.",
+      class: "lecture-header-title-neutral" %>
+    <%= content_tag :h2, lecture_position + " " + lecture.name,
+      class: "lecture-header-title" %>
+
+    <% lecture_type_name = t lecture.lectureable_type %>
+    <%= content_tag :span, lecture_type_name, title: lecture_type_name,
+      class: "pull-right text-replacement icon-#{ lecture_type_class(lecture) }-gray_32_34" %>
   </div>
+
+  <%= content_tag :time, time_ago_in_words(lecture.created_at),
+    class: "legend", title: l(lecture.created_at, format: :time_ago) %>
+  <% if question || results %>
+    <span class="legend">|</span>
+    <%= link_to "Voltar", space_subject_lecture_path(space, subject, lecture),
+      class: "link-secondary" %>
+  <% end %>
 </div>

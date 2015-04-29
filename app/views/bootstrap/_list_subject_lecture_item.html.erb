@@ -1,0 +1,48 @@
+<%#
+  Item da lista de aulas da lista de módulos.
+
+  Variáveis:
+    list_subject_lecture_item: a aula.
+    user: o usuário.
+%>
+
+<%= cache ["space_lecture_item", list_subject_lecture_item.id, user.id] do %>
+  <li class="list-button-item link-container">
+    <%# Nome. %>
+    <%= link_to list_subject_lecture_item.name,
+      space_subject_lecture_path(list_subject_lecture_item.subject.space, list_subject_lecture_item.subject, list_subject_lecture_item),
+      class: "list-button-link icon-#{ lecture_type_class(list_subject_lecture_item) }-lightblue_16_18-before link-target",
+      rel: "tooltip", title: t(list_subject_lecture_item.lectureable_type) %>
+
+    <div class="list-lecture-info">
+      <%# Nova. %>
+      <% if list_subject_lecture_item.recent? %>
+        <span class="label-news" rel="tooltip" title="Nova aula">Novo</span>
+      <% end %>
+
+      <%# Aula finalizada. %>
+      <% if list_subject_lecture_item.done? user %>
+        <span class="icon-correct-green_8_10 text-replacement" rel="tooltip" title="Aula finalizada">Aula finalizada</span>
+      <% end %>
+
+      <%# Comentários. %>
+      <% comments_count = list_subject_lecture_item.activities.count %>
+      <% comments_legend = "#{ pluralize comments_count, "comentário" }" %>
+      <%# TODO: Novos comentários. %>
+      <% new_comments = 0 %>
+      <% if new_comments > 0 %>
+        <%= content_tag :span, "+#{ new_comments }", rel: "tooltip",
+          class: "wall-stats-new icon-wall-lightblue_16_18-before",
+          title: "#{ comments_legend }<br>#{ new_comments } #{ "novo".pluralize(new_comments) } #{ "comentário".pluralize(new_comments) }" %>
+      <% else %>
+        <%= content_tag :span, comments_count,
+          class: "wall-stats icon-wall-gray_16_18-before", rel: "tooltip",
+          title: comments_legend %>
+      <% end %>
+
+      <%# Avaliação. %>
+      <%= render "bootstrap/stars",
+        active: list_subject_lecture_item.rating_average %>
+    </div>
+  </li>
+<% end %>

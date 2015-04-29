@@ -1,0 +1,53 @@
+<%#
+  Cabeçalhos.
+
+  Variáveis:
+    current_entity: a entidade da hierarquia.
+%>
+
+<% hierarchy = entity_hierachy(current_entity) %>
+
+<ul class="header">
+  <% hierarchy.except(:subject).each do |type, entity| %>
+    <% unless entity.nil? %>
+      <li class="header-item link-container">
+        <%= link_to entity.name, entity_hierachy_link(entity),
+          class: "header-link icon-#{ type.to_s }-lightblue_16_18-before link-target" %>
+        <div class="pull-right">
+          <%# Descrição. %>
+          <% unless entity.description.blank? %>
+            <%= content_tag :span, entity.description, rel: "popover",
+              data: { content: entity.description },
+              class: "header-info text-replacement icon-description-gray_16_18" %>
+          <% end %>
+
+          <%# Tags. %>
+          <% unless entity.tags.empty? %>
+            <% tags = entity.tags.join(", ") %>
+            <%= content_tag :span, tags, rel: "popover", data: { content: tags },
+              class: "header-info text-replacement icon-tag-gray_16_18" %>
+          <% end %>
+
+          <%# Privacidade do curso. %>
+          <% if type == :course %>
+            <% course = entity %>
+            <% course_pending_users = course.pending_users.count %>
+
+            <%# Ícones. %>
+            <%= render "courses/privacy_icon", course: course,
+              extra_classes: "header-info" %>
+
+            <%# Convites pendentes. %>
+            <% if can?(:manage, course) && course.subscription_type.eql?(2) &&
+              course_pending_users > 0 %>
+              <%= link_to course_pending_users,
+                admin_members_requests_environment_course_path(hierarchy[:environment], course),
+                class: "header-info label-online", rel: "tooltip",
+                title: "#{ pluralize(course_pending_users, "convite") } #{ "pendente".pluralize(course_pending_users) }" %>
+            <% end %>
+          <% end %>
+        </div>
+      </li>
+    <% end %>
+  <% end %>
+</ul>

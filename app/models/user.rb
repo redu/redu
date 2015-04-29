@@ -16,13 +16,11 @@ class User < ActiveRecord::Base
   require 'community_engine_sha1_crypto_method'
   require 'paperclip'
 
-  # Constants
   MALE    = 'M'
   FEMALE  = 'F'
   MIN_LOGIN_LENGTH = 5
   MAX_LOGIN_LENGTH = 20
 
-  # CALLBACKS
   before_create :make_activation_code
   after_create  :update_last_login
   before_validation :strip_whitespace
@@ -32,31 +30,30 @@ class User < ActiveRecord::Base
     UserNotifier.delay(queue: 'email', priority: 1).user_signedup(self.id)
   end
 
-  # ASSOCIATIONS
   has_many :chat_messages
   has_many :chats, dependent: :destroy
-  # Space
+
   has_many :spaces, through: :user_space_associations,
     conditions: ["spaces.destroy_soon = ?", false]
   has_many :user_space_associations, dependent: :destroy
   has_many :spaces_owned, class_name: "Space" , foreign_key: "user_id"
-  # Environment
+
   has_many :user_environment_associations, dependent: :destroy
   has_many :environments, through: :user_environment_associations,
     conditions: ["environments.destroy_soon = ?", false]
+
   has_many :user_course_associations, dependent: :destroy
   has_many :course_enrollments, dependent: :destroy
+
   has_many :environments_owned, class_name: "Environment",
     foreign_key: "user_id"
   # Course
   has_many :courses, through: :user_course_associations,
     conditions: ["courses.destroy_soon = ? AND
                     course_enrollments.state = ?", false, 'approved']
-  # Authentication
-  has_many :authentications, dependent: :destroy
-  has_many :chats, dependent: :destroy
 
-  #COURSES
+  has_many :authentications, dependent: :destroy
+
   has_many :lectures, foreign_key: "user_id",
     conditions: {is_clone: false}
   has_many :courses_owned, class_name: "Course",
@@ -65,7 +62,6 @@ class User < ActiveRecord::Base
   has_many :enrollments
   has_many :asset_reports, through: :enrollments
 
-  #subject
   has_many :subjects, order: 'name ASC',
     conditions: { finalized: true }
 
@@ -92,7 +88,6 @@ class User < ActiveRecord::Base
   has_many :results, dependent: :destroy
   has_many :choices, dependent: :delete_all
 
-  # Named scopes
   scope :recent, order('users.created_at DESC')
   scope :active, where("users.activated_at IS NOT NULL")
   scope :with_ids, lambda { |ids| where(id: ids) }
@@ -129,7 +124,6 @@ class User < ActiveRecord::Base
 
   attr_accessor :email_confirmation
 
-  # Accessors
   attr_protected :admin, :role, :activation_code, :friends_count, :score,
     :removed
 
@@ -139,7 +133,6 @@ class User < ActiveRecord::Base
       attributes['name'].blank? },
     allow_destroy: true
 
-  # PLUGINS
   acts_as_authentic do |c|
     c.crypto_provider = CommunityEngineSha1CryptoMethod
     c.validate_login_field = false
@@ -154,7 +147,6 @@ class User < ActiveRecord::Base
   acts_as_taggable
   has_private_messages
 
-  # VALIDATIONS
   validates_presence_of :first_name, :last_name
   validates :birthday, allow_nil: true,
             date: { before: Proc.new { 13.years.ago } }
@@ -629,6 +621,10 @@ class User < ActiveRecord::Base
     self.experiences.actual_jobs.empty? && self.educations.empty? &&
     self.birthday.nil? && self.languages.blank? &&
     self.birth_localization.blank? && self.localization.blank?
+  end
+
+  def done_asset_reports
+    self.asset_reports.done
   end
 
   protected

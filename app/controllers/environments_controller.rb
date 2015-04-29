@@ -34,9 +34,7 @@ class EnvironmentsController < BaseController
       per(Redu::Application.config.items_per_page)
 
     respond_to do |format|
-      format.html
-      format.js { render_endless 'courses/item', @courses,
-                  '#courses_list' }
+      format.html { render layout: 'environments/show' }
       format.xml  { render :xml => @environment }
     end
   end
@@ -170,8 +168,7 @@ class EnvironmentsController < BaseController
       per(Redu::Application.config.items_per_page)
 
     respond_to do |format|
-      format.html
-      format.js { render_endless 'courses/item', @courses, '#courses_list' }
+      format.html { render 'show', layout: 'environments/show' }
       format.xml  { render :xml => @environment }
     end
   end

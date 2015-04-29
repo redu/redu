@@ -3,25 +3,38 @@
 
   Variáveis:
     course: o curso.
-    extra_classes: classes extras para ser adicionada ao botão.
+    user: o usuário.
+    extra_classes: classes extras para os botões.
 %>
 
-<% if course.users.include?(current_user) %>
-  <% if course.waiting_user_approval?(current_user) %>
+<% extra_classes = nil unless local_assigns.has_key? :extra_classes %>
+
+<% if course.users.include?(user) %>
+  <% if course.waiting_user_approval?(user) %>
     <%= link_to "Aceitar convite",
       join_environment_course_path(course.environment, course),
-      :method => :post, :class => "button-success course-preview-button #{extra_classes}" %>
+      method: :post,
+      class: "button-success course-preview-button #{ extra_classes }" %>
   <% end %>
 <% else %>
-  <% if current_user %>
+  <% if user %>
     <% if can? :add_entry, course %>
       <%= link_to 'Matricular-se',
         join_environment_course_path(course.environment, course),
-        :method => :post, :class => "button-success course-preview-button #{extra_classes}" %>
+        method: :post,
+        class: "button-success course-preview-button #{ extra_classes }" %>
     <% else %>
-      <button class="button-success button-disabled course-preview-button <%= "#{extra_classes}" %>" rel="popover" data-original-title="Limite de vagas atingido." data-content="O limite de vagas foi atingido, portanto, você não poderá se matricular agora. Fale com o administrador ou professor do curso para que ele libere mais vagas.">Matricular-se</button>
+      <%= content_tag :button, "Matricular-se", rel: "popover",
+        class: "button-success button-disabled course-preview-button #{ extra_classes }",
+        data: { original_title: "Limite de vagas atingido.",
+                content: "O limite de vagas foi atingido, portanto, você não poderá se matricular agora. Fale com o administrador ou professor do curso para que ele libere mais vagas.",
+                placement: "left" } %>
     <% end %>
   <% else %>
-    <button class="button-success button-disabled course-preview-button <%= "#{extra_classes}" %>" rel="popover" data-original-title="Deseja participar deste curso?" data-content="Para se matricular neste curso, você precisa se cadastrar no Redu. Caso já tenha cadastro, basta acessar sua conta e este botão ficará disponível para a solicitação da matrícula. </br> </br> Cadastre-se ou acesse a sua conta através do menu superior &#8593;.">Matricular-se</button>
+    <%= content_tag :button, "Matricular-se", rel: "popover",
+      class: "button-success button-disabled course-preview-button #{ extra_classes }",
+      data: { original_title: "Deseja participar deste curso?",
+              content: "Para se matricular neste curso, você precisa se cadastrar no Redu. Caso já tenha cadastro, basta acessar sua conta e este botão ficará disponível para a solicitação da matrícula. </br> </br> Cadastre-se ou acesse a sua conta através do menu superior &#8593;.",
+              placement: "left" } %>
   <% end %>
 <% end %>

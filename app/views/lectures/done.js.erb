@@ -1,16 +1,10 @@
 <% if @done == 0 %>
   $('#done').val('1');
-  $('#do_lecture').removeClass("done");
-  $('#do_lecture').addClass("undone");
-  $('#do_lecture > fieldset > label').removeClass("icon-class-green_16_18-before");
-  $('#do_lecture > fieldset > label').addClass("icon-class-gray_16_18-before");
 <% else %>
   $('#done').val('0');
-  $('#do_lecture').removeClass("undone");
-  $('#do_lecture').addClass("done");
-  $('#do_lecture > fieldset > label').removeClass("icon-class-gray_16_18-before");
-  $('#do_lecture > fieldset > label').addClass("icon-class-green_16_18-before");
 <% end %>
 
-$('#progress_bar > div > .completed').attr('style', "width: <%= @student_grade %>%");
-$('#progress_bar > .progress-value').html("<%= @student_grade  %>%");
+$(".nav-local-balloon-is-lecture-completed").toggleClass("icon-correct-green_16_18-after");
+
+$(".lectures-progress").replaceWith($('<%= escape_javascript render "spaces/lectures_progress", space: @space, user: current_user %>'));
+$(".subjects-progress").replaceWith($('<%= escape_javascript render "spaces/subjects_progress", space: @space %>'));

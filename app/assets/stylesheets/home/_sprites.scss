@@ -20,11 +20,3 @@ $sprites: sprite-map("sprites/social-networks/*.png", $layout: smart);
     width: image-width(sprite-file($sprites, $sprite));
   }
 }
-
-/* Mensagem de mural privado. */
-
-.icon-private-gray_128_130 {
-  background-image: image-url("private-gray_128_130.png");
-  width: 128px;
-  height: 130px;
-}

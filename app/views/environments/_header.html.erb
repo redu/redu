@@ -1,27 +1,31 @@
-<%# Cabeçalho do environment (contém título, descrição e tags)  %>
+<%#
+  Renderiza o cabeçalho da página de Ambiente de Aprendizagem.
 
-<div id="hierarchy-header" class="clearfix">
-  <h3 class="call name"><%= link_to h(environment.name), environment_path(environment) %></h3>
-  <% if can?(:manage, environment) %>
+  Variáveis:
+    environment: o ambiente.
+%>
+
+<div class="entity-header content-section">
+  <%= content_tag :h2, environment.name, class: "entity-header-title" %>
+
+  <% unless environment.description.blank? %>
+    <%= content_tag :p, environment.description,
+      class: "entity-header-info icon-description-gray_16_18-before" %>
+  <% end %>
+
+  <% unless environment.tags.empty? %>
+    <%= content_tag :p, environment.tags.join(", "),
+      class: "entity-header-info icon-tag-gray_16_18-before" %>
+  <% end %>
+</div>
+
+<% if can?(:manage, environment) %>
+  <div class="entity-actions">
+    <%= link_to "Criar novo curso", new_environment_course_path(environment),
+      class: "entity-action button-primary" %>
     <%= link_to "Gerenciar ambiente", edit_environment_path(environment),
-      :class => "manage icon-manage-gray_8_10-before" %>
-  <% end %>
-  <% unless environment.description.blank? && environment.tags.empty? %>
-    <div class="details">
-      <% unless environment.description.blank? %>
-        <span class="description icon-bio-gray_16_18-before">
-          <%= environment.description %>
-        </span>
-      <% end %>
-      <% unless environment.tags.empty? %>
-        <ul class="tags icon-tag-gray_16_18-before clearfix <%= environment.description.empty? ? "" : "separator" %>">
-          <% environment.tags.each do |tag| %>
-            <li>
-              <%= link_to tag, environment_path(environment) %>
-            </li>
-          <% end %>
-        </ul>
-      <% end %>
-    </div>
-  <% end %>
-</div><!-- end #hierarchy-header -->
+      class: "entity-action button-default icon-manage-lightblue_16_18-before" %>
+  </div>
+<% end %>
+
+<%= new_tabs :environments %>

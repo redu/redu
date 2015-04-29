@@ -1,8 +1,9 @@
 $('.errorMessageField').remove();
-$('.spinner').hide();
 
 <% if @folder.valid? %>
-  <%= render :partial => "folders/index" %>
+  <%= render partial: "index", locals: { space: @space, folder: @folder,
+      folders: @folders, can_update: @can_update, can_delete: @can_delete,
+      myfiles: @myfiles, myfile: @myfile } %>
 <% else %>
   var error = $("<div class='errorMessageField'>").html(" <%= escape_javascript @folder.errors.full_messages.join(",") %>");
   $('.new-folder-inner form').prepend(error);

@@ -1,0 +1,12 @@
+<%#
+  Renderiza o breadcrumb da página de Disciplina.
+
+  Variáveis:
+    space: a disciplina.
+%>
+
+<%= render "bootstrap/breadcrumb_mini", breadcrumb_mini_items: [
+  { name: "Início", link: home_path, classes: "icon-home-lightblue_16_18-before text-replacement" },
+  { name: space.course.environment.name, link: space.course.environment, classes: "icon-environment-lightblue_16_18-before text-replacement" },
+  { name: space.course.name, link: environment_course_path(space.course.environment, space.course), classes: "icon-course-lightblue_16_18-before text-replacement" },
+  { name: space.name, classes: "icon-space-gray_16_18-before" } ] %>

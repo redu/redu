@@ -110,4 +110,12 @@ module UsersHelper
 
     contacts
   end
+
+  # Retorna a classe do ícone que deve ser usada (papel) na lista vazia de membros.
+  def icon_role_to_name_class(role)
+    case role
+    when "students" then "member"
+    else role.singularize
+    end
+  end
 end

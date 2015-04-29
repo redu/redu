@@ -31,6 +31,10 @@ class Lecture < ActiveRecord::Base
   scope :by_subjects, lambda { |subjects_id| where(:subject_id =>subjects_id) }
   scope :by_day, lambda { |day| where(:created_at =>(day..(day+1))) }
 
+  scope :finalized_by, (lambda do |user|
+    where(:id => user.done_asset_reports.values_of(:lecture_id))
+  end)
+
   attr_protected :owner, :view_count, :is_clone
 
   # PLUGINS

@@ -1,0 +1,58 @@
+<%#
+  Item da lista de módulos e aulas.
+
+  Variáveis:
+    list_subject_item: o módulo.
+    user: o usuário.
+%>
+
+<%= content_tag :li, id: "subject-#{ list_subject_item.id }",
+  class: "list-subject-item" do %>
+  <div class="list-subject-header clearfix">
+    <%# Nome. %>
+    <%= content_tag :h4, list_subject_item.name, class: "list-subject-name" %>
+
+    <div class="list-subject-header-info">
+      <%# Novo. %>
+      <% if list_subject_item.recent? %>
+        <span class="label-news" rel="tooltip" title="Novo Módulo">Novo</span>
+      <% end %>
+
+      <%# Barra de progresso. %>
+      <%= render "bootstrap/progress_bar", size: "medium",
+        percentage: subject_completeness(list_subject_item, user) %>
+    </div>
+  </div>
+  <div class="list-subject-body">
+    <div class="list-subject-info clearfix">
+      <%# Gerenciamento. %>
+      <% if (can? :manage, list_subject_item) %>
+        <%= link_to "Editar",
+          edit_space_subject_path(list_subject_item.space, list_subject_item),
+          class: "list-subject-edit link-secondary icon-manage-lightblue_8_10-before" %>
+
+        <%# Visibilidade. %>
+        <% visbility_text = icon_visibility_text(list_subject_item) %>
+        <%= content_tag :span, visbility_text,
+          class: "list-subject-visibility icon-#{ icon_visiblity_class(list_subject_item) }-lightgray_16_18 text-replacement",
+          rel: "tooltip", title: visbility_text %>
+      <% end %>
+
+
+      <%# Descrição. %>
+      <% unless list_subject_item.description.blank? %>
+        <%= content_tag :p, list_subject_item.description,
+          class: "list-subject-description icon-description-gray_16_18-before" %>
+      <% end %>
+    </div>
+
+    <% if list_subject_item.lectures.empty? %>
+      <%# TODO: Aviso. %>
+    <% else %>
+      <ol class="list-button">
+        <%= render partial: "bootstrap/list_subject_lecture_item",
+          collection: list_subject_item.lectures, locals: { user: user } %>
+      </ol>
+    <% end %>
+  </div>
+<% end %>

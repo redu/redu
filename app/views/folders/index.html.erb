@@ -1,19 +1,15 @@
-<%= render :partial => 'spaces/sidebar', :locals => { :space => @space } %>
-<div class="main space grid_12 omega big-col">
-  <%= render :partial => 'spaces/breadcrumbs', :locals => { :space => @space } %>
-  <%= render :partial => 'spaces/header',
-    :locals => { :space => @space }%>
+<% content_for :header_scripts_and_styles do %>
+  <%= javascript_include_tag "folders" %>
+<% end %>
 
-  <div id="space-subjects" class="body clearfix">
-    <div class="header clearfix">
-      <h4 class="title">Arquivos de Apoio</h4>
-      <span class="detail">(<%= pluralize @files_count, "arquivo" %>)</span>
-    </div>
-    <%= render :partial => 'folders/admin',
-      :locals => { :space => @space, :folder => @folder, :myfile => @myfile } %>
-    <div id="materials" class="main-content">
-      <%= render :partial => 'folders/list' %>
-    </div>
-  </div><!-- end #environment-courses -->
+<div class="content-section">
+  <h3 class="header-breadcrumb-big icon-file-gray_32_34-before">Arquivos de Apoio</h3>
+</div>
 
-</div><!-- end main -->
+<%= render "admin", space: @space, folder: @folder, myfile: @myfile %>
+
+<div class="content-section">
+  <%= render "list", space: @space, folder: @folder,
+    folders: @folders, can_update: @can_update, can_delete: @can_delete,
+    myfiles: @myfiles %>
+</div>

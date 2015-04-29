@@ -380,11 +380,12 @@ class UsersController < BaseController
       with_roles([Role[:teacher], Role[:environment_admin]]).includes(:user)
     end
 
-    @users = if params[:role].eql? "teachers"
+    @role = params[:role]
+    @users = if @role.eql? "teachers"
       entity.teachers
-    elsif params[:role].eql? "tutors"
+    elsif @role.eql? "tutors"
       entity.tutors
-    elsif params[:role].eql? "students"
+    elsif @role.eql? "students"
       entity.students
     else
       if @course
@@ -398,11 +399,8 @@ class UsersController < BaseController
 
     respond_to do |format|
       format.html do
-        render "#{entity.class.to_s.downcase.pluralize}/users/index"
-      end
-      format.js do
-          render_endless 'users/item', @users, '#users-list',
-            :partial_locals => { :entity => entity }
+        render "#{entity.class.to_s.downcase.pluralize}/users/index",
+          layout: "#{entity.class.to_s.downcase.pluralize}/show"
       end
     end
   end

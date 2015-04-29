@@ -1,24 +1,14 @@
-<%= render :partial => 'environments/sidebar', :locals => { :environment => @environment } %>
-<div class="main grid_12 omega big-col">
-  <%= render :partial => 'environments/breadcrumbs',
-    :locals => { :environment => @environment } %>
-  <%= render :partial => 'environments/header',
-        :locals => { :environment => @environment } %>
-
-  <div id="environment-courses" class="body">
-    <% if can?(:manage, @environment) %>
-      <div class="admin-actions">
-        <%= link_to 'Criar novo curso', new_environment_course_path(@environment), :class => "concave-button" %>
-      </div>
-    <% end %>
-
-    <%= big_tabs :environments do %>
-      <ul id="courses_list" class="hierarchy-listing">
-        <%= render :partial => 'courses/item',
-          :collection => @courses %>
-      </ul>
-      <%= paginate @courses, :theme => 'endless' %>
-    <% end %>
-  </div><!-- end #environment-courses -->
-
-</div><!-- end .main -->
+<% if @courses.empty? %>
+  <%= render "shared/empty_message",
+    icon_message: "Nenhum curso.",
+    icon_class: "icon-course-gray_128_130",
+    message: "Este Ambiente não possui nenhum Curso." %>
+<% else %>
+  <% content_for :container_class do "entity-list-intergation " end %>
+  <ul class="list-course">
+    <%= render partial: "bootstrap/list_course_item",
+      collection: @courses %>
+  </ul>
+  <%= paginate @courses, theme: "numbers", outer_window: 1,
+    inner_window: 4 %>
+<% end %>

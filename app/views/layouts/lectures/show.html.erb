@@ -1,0 +1,31 @@
+<% content_for :content do %>
+  <% content_for :container_class do "entity-wrapper" end %>
+
+  <%= render "lectures/javascripts" %>
+
+  <div class="span3">
+    <%= render "lectures/sidebar", lecture: @lecture, user: current_user, done: @done %>
+  </div>
+  <div class="span13">
+    <div class="content-body">
+      <%= render "lectures/header", lecture: @lecture, question: @question,
+        results: @results %>
+
+      <%= yield %>
+    </div>
+    <% subject = @lecture.subject %>
+    <% space = subject.space %>
+    <% course = space.course %>
+    <% environment = course.environment %>
+    <%= render "bootstrap/breadcrumb_mini", breadcrumb_mini_items: [
+      { name: "Início", link: home_path, classes: "icon-home-lightblue_16_18-before text-replacement" },
+      { name: environment.name, link: environment, classes: "icon-environment-lightblue_16_18-before text-replacement" },
+      { name: course.name, link: environment_course_path(environment, course), classes: "icon-course-lightblue_16_18-before text-replacement" },
+      { name: space.name, link: space, classes: "icon-space-lightblue_16_18-before" },
+      { name: subject.name, link: space_subject_path(space, subject), classes: "icon-subject-lightblue_16_18-before" },
+      { name: @lecture.name, classes: "icon-lecture-gray_16_18-before" } ],
+      extra_classes: "lights-fade" %>
+  </div>
+<% end %>
+
+<%= render template: "layouts/new_application" %>

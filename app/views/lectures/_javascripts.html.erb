@@ -1,7 +1,8 @@
-<%= lazy_load("http://s7.addthis.com/js/250/addthis_widget.js#username=redu") do %>
-    var addthis_config = {
-      "data_track_clickback": true,
-      ui_click: true,
-      ui_cobrand: "Redu"
-    };
+<%#
+  JavaScripts específicos das páginas de aula.
+%>
+
+<% content_for :header_scripts_and_styles do %>
+  <%= javascript_include_tag "bootstrap-affix" %>
+  <%= javascript_include_tag "lectures" %>
 <% end %>

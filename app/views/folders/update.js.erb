@@ -1,3 +1,10 @@
-$('#folder-index').html("<%= escape_javascript (
-    render :partial => "folders/list") %>")
-
+<% if @folder.valid? %>
+  $("#folder-index").html('<%= escape_javascript(
+    render "list", space: @space, folder: @folder,
+           folders: @folders, can_update: @can_update, can_delete: @can_delete,
+           myfiles: @myfiles) %>');
+<% else %>
+  $message = $('<%= escape_javascript render "bootstrap/system_message",
+                type: "warning", message: @folder.errors.full_messages.join(",") %>');
+  $message.prependTo("body");
+<% end %>

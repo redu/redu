@@ -1,31 +1,10 @@
-<%= render partial: 'lectures/javascripts' %>
-<%= render partial: 'subjects/sidebar' %>
-<div class="main space grid_12 omega big-col">
-  <%= render partial: "subjects/breadcrumbs", locals: { subject: @subject } %>
-  <%= render partial: 'subjects/header',
-    locals: { subject: @subject, space: @space } %>
+<% content_for :header_scripts_and_styles do %>
+  <%= javascript_include_tag "exercise-questions" %>
+<% end %>
 
-  <div id="resource" class="hierarchy-listing-wrapper">
-    <div class="resource-head">
-      <%= render partial: 'lectures/info',
-        locals: { lecture: @lecture } %>
-      <%= render partial: 'lectures/context',
-        locals: { student_grade: @student_grade, done: @done } %>
-    </div>
-
-    <div class="resource-content clearfix">
-      <%= render partial: 'lectures/details',
-        locals: { lecture: @lecture} %>
-
-      <div class="stage exercise">
-          <% # Forms para submissão do choice da questão %>
-          <%= render partial: "questions/choice_form",
-              locals: { exercise: @exercise, question: @question,
-                        first: @first_question, last: @last_question,
-                        review: @review, choice: @choice, result: @result } %>
-      </div>
-
-    </div>
-
-  </div><!-- end #resource -->
-</div><!-- end .main -->
+<div class="content-section">
+  <%# Form para submissão do choice da questão. %>
+  <%= render "questions/choice_form", exercise: @exercise, question: @question,
+    first: @first_question, last: @last_question, review: @review,
+    choice: @choice, result: @result %>
+</div>

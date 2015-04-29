@@ -19,3 +19,7 @@
   <%= render "bootstrap/system_message", type: "warning",
     message: "<p><strong>Opa!</strong> #{ raw(flash[:error]) }</p>" %>
 <% end %>
+
+<div id="loading-message" class="system-message message-busy hide">
+  Carrengando...
+</div>

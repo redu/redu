@@ -1,0 +1,36 @@
+<%#
+  Item de um membro de uma entidade.
+
+  Variáveis:
+    member_list_item: o usuário.
+    entity: a entidade.
+%>
+
+<li class="general-list-item member-list-item">
+  <div class="general-list-item-body">
+    <%= link_to member_list_item, class: "general-list-item-column" do %>
+      <%= image_tag member_list_item.avatar.url(:thumb_64),
+        size: "64x64", alt: member_list_item.display_name %>
+    <% end %>
+    <div class="general-list-item-column">
+      <%# Nome. %>
+      <%= link_to member_list_item.display_name, member_list_item,
+        class: "link-name text-truncate", title: member_list_item.display_name %>
+
+      <%# Papel. %>
+      <% role = member_list_item.get_association_with(entity).role %>
+      <%= content_tag :span, t("classy_enum.role.#{role}", count: 1),
+        class: "legend icon-#{role_icon(role)}-gray_16_18-before" %>
+
+      <%# Amigos em comum. %>
+      <% if current_user and
+        member_list_item.get_association_with(entity).role.member? %>
+        <% unless member_list_item.friends_in_common_with(current_user).count == 0 %>
+          <%= content_tag :span,
+            "#{ pluralize member_list_item.friends_in_common_with(current_user).count, "contato"} em comum",
+            class: "legend" %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</li>

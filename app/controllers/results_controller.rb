@@ -38,7 +38,7 @@ class ResultsController < BaseController
     @questions_count = @exercise.questions.count
 
     respond_to do |format|
-      format.html { render 'results/admin/edit' }
+      format.html { render 'results/admin/edit', layout: 'lectures/show' }
     end
   end
 
@@ -48,7 +48,7 @@ class ResultsController < BaseController
       includes(:user, :choices, exercise: :questions)
 
     respond_to do |format|
-      format.html { render 'results/admin/index' }
+      format.html { render 'results/admin/index', layout: 'lectures/show' }
     end
   end
 

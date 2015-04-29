@@ -1,0 +1,37 @@
+<%#
+  Barra de progresso.
+
+  Variáveis:
+    percentage: a porcentagem completada.
+    tooltip_text: o texto do tooltip (default 'cursado').
+    size: pequeno (short [default]), médio (medium) ou longo (long).
+    thickness: fina (thin [default]) ou grossa (thick).
+    show_percentage: se deve mostrar a porcentagem (opcional).
+%>
+
+<% tooltip_text = "cursado" unless local_assigns.has_key? :tooltip_text %>
+<% size = "short" unless local_assigns.has_key? :size %>
+<% thickness = "thin" unless local_assigns.has_key? :thickness %>
+<% show_percentage = false unless local_assigns.has_key? :show_percentage %>
+
+<%# Barra de progresso completada. %>
+<% progress_bar_completed = capture do %>
+  <%= content_tag :span, "#{ percentage }%", style: "width: #{ percentage }%;",
+    class: "progress-bar-completed text-replacement" %>
+<% end %>
+
+<% if show_percentage %>
+  <%= content_tag :div, rel: "tooltip", title: "#{ percentage }% #{ tooltip_text }",
+    class: "progress-bar-legend progress-bar-#{ size }" do %>
+    <%= content_tag :span, "#{ percentage }%", class: "legend" %>
+    <%= content_tag :span,
+      class: "progress-bar-total progress-bar-#{ thickness }" do %>
+      <%= progress_bar_completed %>
+    <% end %>
+  <% end %>
+<% else %>
+  <%= content_tag :div, rel: "tooltip", title: "#{ percentage }% #{ tooltip_text }",
+    class: "progress-bar-total progress-bar-#{ size } progress-bar-#{ thickness }" do %>
+    <%= progress_bar_completed %>
+  <% end %>
+<% end %>
