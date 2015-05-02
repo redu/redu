@@ -14,6 +14,7 @@
   $form.replaceWith($editForm);
   $editForm.show();
   <% if @lecture.lectureable.is_a? Exercise %>
+    $editForm.find(".question-item:first-child").refreshArQuestionsNumbering();
     $editForm.find(".question-item:first-child").refreshQuestionsNumbering();
     $editForm.find(".alternative-item:first-child").refreshAlternativesNumbering();
     $editForm.refreshQuestionsAppearance();

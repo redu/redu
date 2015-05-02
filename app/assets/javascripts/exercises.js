@@ -2,13 +2,15 @@ $(function(){
 
   // Aplica nestedFields às questões e alternativas de Exercício
   $.fn.refreshNestedFields = function(){
+    
     var alternativeOptions = {
-      containerSelector: ".alternative-container",
-      itemSelector: ".alternative-item",
-      addSelector: ".alternative-add",
-      removeSelector: ".alternative-remove",
-      itemTemplateSelector: ".alternative.template",
-      newItemIndex: "new_alternative_item",
+          containerSelector: ".alternative-container",
+          itemSelector: ".alternative-item",
+          addSelector: ".alternative-add",
+          removeSelector: ".alternative-remove",
+          itemTemplateSelector: ".alternative.template",
+          newItemIndex: "new_alternative_item",
+          
       afterInsert: function(item) {
         item.refreshForms();
         item.refreshAlternativesNumbering();
@@ -28,31 +30,61 @@ $(function(){
       }
     };
 
-    $(this).find(".nested-fields-level-1").nestedFields({
-      containerSelector: ".question-container",
-      itemSelector: ".question-item",
-      addSelector: ".question-add",
-      removeSelector: ".question-remove",
-      itemTemplateSelector: ".question.template",
-      newItemIndex: "new_question_item",
-      afterInsert: function(item) {
-        // Aplica nestedFields às alternativas da nova questão
-        item.find(".nested-fields-level-2").nestedFields(alternativeOptions);
+      $(this).find(".nested-fields-level-1").nestedFields({
+        
+          containerSelector: ".question-container",
+          itemSelector: ".question-item",
+          addSelector: ".question-add",
+          removeSelector: ".question-remove",
+          itemTemplateSelector: ".question.template",
+          newItemIndex: "new_question_item",
+        
+          afterInsert: function(item) {
+            console.log("dalee2");
+        
+            item.find(".nested-fields-level-2").nestedFields(alternativeOptions);
+          
+          // Insere um campo de alternativa para a nova questão
+            item.find(".nested-fields-level-2").nestedFields("insert");
+            item.refreshForms();
+            item.refreshQuestionsNumbering();
+            item.find(".alternative-item").refreshAlternativesNumbering();
+            // }
+          },
+          afterRemove: function(item) {
+            item.removeClass("visible");
+            item.refreshQuestionsNumbering();
+          }
+      });
+      $(this).find(".nested-fields-level-2").nestedFields(alternativeOptions);         
+  };
 
+  $.fn.refreshNestedFields2 = function(){
+
+    $(this).find(".nested-fields-level-1").nestedFields({
+      containerSelector: ".ar-question-container",
+      itemSelector: ".ar-question-item",
+      addSelector: ".ar-question-add",
+      removeSelector: ".ar-question-remove",
+      //itemTemplateSelector: ".ar-question.template",
+      newItemIndex: "new_question_item",
+
+      afterInsert: function(item) {
+        console.log("dalee3");
+        // Aplica nestedFields às alternativas da nova questão
+        item.find(".nested-fields-level-2").nestedFields();
         // Insere um campo de alternativa para a nova questão
         item.find(".nested-fields-level-2").nestedFields("insert");
         item.refreshForms();
-        item.refreshQuestionsNumbering();
-        item.find(".alternative-item").refreshAlternativesNumbering();
+        item.refreshArQuestionsNumbering();
       },
-      afterRemove: function(item) {
+      beforeRemove: function(item) {
         item.removeClass("visible");
-        item.refreshQuestionsNumbering();
+        item.refreshArQuestionsNumbering();
       }
     });
+  $(this).find(".nested-fields-level-2").nestedFields();
 
-    // Aplica nestedFields às alternativas da primeira questão
-    $(this).find('.nested-fields-level-2').nestedFields(alternativeOptions);
   };
 
   // Expande a questão
@@ -60,9 +92,20 @@ $(function(){
     $(this).parents(".question-item").expandQuestion();
   });
 
+  $("#space-manage .concave-form .ar-question-item .summary .expand").live("click", function(){
+    $(this).parents(".ar-question-item").expandQuestion();
+  });
+
   // Click do botão finalizar
   $("#space-manage .concave-form .question-item .finalize-edition").live("click", function(e){
-    $(this).parents(".question-item").retractQuestion();
+      console.log("retrai fechada");
+      $(this).parents(".question-item").retractQuestion();
+      e.preventDefault();    
+  });
+
+  $("#space-manage .concave-form .ar-question-item .ar-finalize-edition").live("click", function(e){
+    console.log("retrai aberta");
+    $(this).parents(".ar-question-item").retractQuestion();
     e.preventDefault();
   });
 
@@ -106,6 +149,7 @@ $(function(){
       var qttAlternatives = $fields.find(".alternative-container .alternative-item.visible:not(.disabled) textarea.alternative-text[value!=\"\"]").length;
     $summary.find(".alternatives .qtt").text(qttAlternatives);
     var statement = $fields.find(".question-statement").val();
+
     if (statement != ""){
       $summary.find(".statement").text(statement);
     }else{
@@ -125,9 +169,21 @@ $(function(){
   // Atualiza numeração das questões
   $.fn.refreshQuestionsNumbering = function(){
     return this.each(function(){
+      console.log("teseee22");
       var $questions = $(this).parent().find(".question-item.visible");
       $questions.each(function(index){
         $(this).find(".position").text(index + 1);
+      });
+    });
+  };
+
+  $.fn.refreshArQuestionsNumbering = function(){
+    return this.each(function(){
+      console.log("teseee");
+      var $ar_questions = $(this).parent().find(".ar-question-item.visible");
+      $ar_questions.each(function(index){
+        $(this).find(".position").text(index + 1);
+        console.log(index);
       });
     });
   };
@@ -205,6 +261,7 @@ $(function(){
       $(this).on("click", function(e){
         showLoadingMessage(true);
         disableQuestionNavButtons(true);
+        console.log("entrou aqui");
         $("#form-choice").submit();
       });
     });
@@ -219,19 +276,49 @@ $(function(){
     return this.each(function(){
       $(this).refreshAlternativesAppearance();
       $(this).find(".question-item").closeQuestionsWithoutErrors();
+      $(this).find(".ar-question-item").closeQuestionsWithoutErrors();
     });
   };
 
+ $.fn.refreshFormQuestions = function(){
+    $("#lecture_lectureable_attributes, #lecture_lectureable_attributes").change(function(){
+      $('#dissertative, #multiple_choice').toggle();
+    });
+  };
+
+  $.fn.pegaTipo = function(){
+    var tipo = "seila";
+    $("#new").click(function(){
+  
+      if($("#aberta").is(":checked")){
+        tipo = "aberta";
+        $(".exercise-nav .actual").addClass("ar-question-answered");
+        $("#dissertative").css("display","block");
+        $("#multiple_choice").css("display","none");
+        //$("#multiple_choice").remove();
+      }if($("#fechada").is(":checked")){
+        tipo = "fechada";
+        $(".exercise-nav .actual").addClass("question-answered");
+        $("#dissertative").css("display","none");
+        $("#multiple_choice").css("display","block");
+        //$("#dissertative").remove();
+      }
+    });
+    return tipo;
+  };
+
   $(document).ready(function(){
-    $(document).refreshNestedFieldsEdition();
+    
     $("#resources-edition .exercise").refreshQuestionsAppearance();
 
     $(document).ajaxComplete(function(){
-      $(document).refreshNestedFieldsEdition();
+      
       $("#resources-edition .exercise").refreshQuestionsAppearance();
       $(".exercise-nav .actual").addClass("question-answered");
       showLoadingMessage(false);
       disableQuestionNavButtons(false);
+      $(document).pegaTipo();
+    
     });
   });
 

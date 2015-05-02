@@ -185,6 +185,9 @@ pt-BR:
       question:
         statement: "Enunciado"
         explanation: "Justificativa"
+      ar_question:
+        statement: "Enunciado"
+        explanation: "Justificativa"
       invoice:
         open: "A calcular"
         pending: "A vencer"

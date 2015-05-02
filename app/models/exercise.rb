@@ -19,7 +19,8 @@ class Exercise < ActiveRecord::Base
   # result.to_report
   # => {:misses=>1, :blanks=>1, :duration=>0.691735982894897,
   #     :hits=>1, :grade=>#<BigDecimal:10d7cbfb0,'0.33...E1',45(72)>}
-
+  
+  has_many :ar_questions, :dependent => :destroy
   has_many :questions, :dependent => :destroy
   has_many :results, :dependent => :destroy
   has_many :explained_questions,
@@ -29,14 +30,16 @@ class Exercise < ActiveRecord::Base
 
   accepts_nested_attributes_for :questions, :allow_destroy => true,
     :reject_if => :question_and_alternatives_blank
+  accepts_nested_attributes_for :ar_questions, :allow_destroy => true, 
+    :reject_if => :ar_questions_blank
 
 
   # Utiliza o maximum_grade para calcular o peso por questão
   def question_weight
-    if questions.count == 0
+    if questions.count == 0 && ar_questions.count == 0
       BigDecimal.new("0")
     else
-      maximum_grade / BigDecimal.new(questions.count.to_s)
+      maximum_grade / BigDecimal.new((questions.count + ar_questions.count).to_s)
     end
   end
 
@@ -127,13 +130,24 @@ class Exercise < ActiveRecord::Base
     question_blank && alternatives_blank.reduce(:&)
   end
 
+  def ar_questions_blank(attrs)
+    ar_question_blank = attrs['statement'].blank? && attrs['explanation'].blank?
+
+    ar_question_blank
+  end
 
   # Instancia questão para exercício sem questão
   # e alternativa para questões sem alternativas
+  
+  def build_ar_question
+    self.ar_questions.build
+  end
+
   def build_question_and_alternative
     self.questions.build if self.questions.empty?
     self.questions.each do |q|
       q.alternatives.build if q.alternatives.empty?
     end
   end
+
 end

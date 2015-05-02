@@ -97,6 +97,9 @@ Redu::Application.routes.draw do
 
     resources :exercises, :only => :show do
       resources :results, :only => [:index, :create, :update, :edit]
+      resources :ar_questions, :only => :show do
+        resources :ar_answers, only: :create
+      end
       resources :questions, :only => :show do
         resources :choices, :only => [:create, :update]
       end

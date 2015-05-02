@@ -81,6 +81,7 @@ class LecturesController < BaseController
           @result = @lecture.lectureable.result_for(current_user)
           @first_question = @lecture.lectureable.questions.
             first(:conditions => { :position => 1 })
+          @first_ar_question = @lecture.lectureable.ar_questions.first
           render :show_exercise
         end
       end
@@ -101,9 +102,10 @@ class LecturesController < BaseController
     lectureable_params = { :_type => params.fetch(:type, 'Page') }
     @lecture.build_lectureable(lectureable_params)
 
-    if @lecture.lectureable.is_a? Exercise
-      @lecture.lectureable.build_question_and_alternative
-    end
+     if @lecture.lectureable.is_a? Exercise
+       @lecture.lectureable.build_question_and_alternative
+       @lecture.lectureable.build_ar_question
+     end
 
     respond_with(@space, @subject, @lecture) do |format|
       format.js { render "lectures/admin/new" }
@@ -145,6 +147,7 @@ class LecturesController < BaseController
       else
         if @lecture.lectureable.is_a? Exercise
           @lecture.lectureable.build_question_and_alternative
+          @lecture.lectureable.build_ar_question
         end
       end
     end
@@ -173,6 +176,7 @@ class LecturesController < BaseController
       @lecture.save && @lecture.reload if @lecture.lectureable.make_sense?
       if @lecture.lectureable.is_a? Exercise
         @lecture.lectureable.build_question_and_alternative
+        @lecture.lectureable.build_ar_question
       end
     else
       @lecture.save
