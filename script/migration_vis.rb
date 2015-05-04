@@ -43,41 +43,37 @@ def insert_exercise_finalized(date)
   end
 end
 
+def fill_params_status(lecture, subject, space, course)
+{
+  @lecture_id = lecture
+  @subject_id = subject
+  @space_id   = space
+  @course_id  = course
+}
+
 def insert_statuses(date)
   Status.where("type IN ('Activity', 'Help', 'Answer') AND created_at >= '#{date}'").find_each do |status|
 
     # Filling params according type of the Status
     case status.statusable.class.to_s
     when "Lecture"
-      @lecture_id = status.statusable_id
-      @subject_id = status.statusable.subject.id
-      @space_id = status.statusable.subject.space.id
-      @course_id = status.statusable.subject.space.course.id
-
+      fill_params_status(status.statusable_id, status.statusable.subject.id, status.statusable.subject.space.id, status.statusable.subject.space.course.id)
+      
       send_statuses(status)
     when "Space"
-      @lecture_id = nil
-      @subject_id = nil
-      @space_id = status.statusable.id
-      @course_id = status.statusable.course.id
-
+      fill_params_status(nil, nil, status.statusable.id, status.statusable.course.id)
+      
       send_statuses(status)
     when "Activity", "Help"
       statusable = status.statusable
       case statusable.statusable.class.to_s
       when "Lecture"
-        @lecture_id = statusable.statusable_id
-        @subject_id = statusable.statusable.subject.id
-        @space_id = statusable.statusable.subject.space.id
-        @course_id = statusable.statusable.subject.space.course.id
-
+        fill_params_status(statusable.statusable_id, statusable.statusable.subject.id, statusable.statusable.subject.space.id, statusable.statusable.subject.space.course.id)
+        
         send_statuses(status)
       when "Space"
-        @lecture_id = nil
-        @subject_id = nil
-        @space_id = statusable.statusable.id
-        @course_id = statusable.statusable.course.id
-
+        fill_params_status(nil, nil, statusable.statusable.id, statusable.statusable.course.id)
+        
         send_statuses(status)
       end
     end
