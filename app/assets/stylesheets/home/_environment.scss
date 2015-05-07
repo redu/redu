@@ -9,3 +9,25 @@
 .list-environment-course-space { padding: 0; }
 
 .list-environment-course-space-item { padding: 20px; }
+
+
+// Diagrama com a explicação do que são Ambientes de Aprendizagem.
+// ==========================================================================
+
+.my-environments-explaination-wrapper { display: none; }
+
+.my-environments-explaination {
+  background-color: $gray1;
+  padding-top: 20px;
+  margin-top: -10px;
+  margin-bottom: -10px;
+
+  .learning-environments { margin: 0 auto; }
+
+  .learning-environments-course { width: 404px; }
+
+  .learning-environments-space {
+    width: 404px;
+    left: -34px;
+  }
+}

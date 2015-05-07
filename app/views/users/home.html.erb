@@ -46,6 +46,7 @@
       <%= content_tag :div, id: "learn-environments-box",
         style: "display: #{learn_environments_display(@user)}" do %>
         <div class="content-section">
+          <span data-tour="learn-environments" data-dismiss="alert" data-target="#learn-environments-box" class="learning-environments-close message-close">×</span>
           <%= render "users/learn_environments" %>
         </div>
         <hr class="list-separator">
