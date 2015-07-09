@@ -23,9 +23,9 @@ class UserCourseAssociation < CourseEnrollment
   }
 
   scope :recent, lambda { where("created_at >= ?", 1.week.ago) }
-  scope :approved, where(:state => 'approved')
-  scope :invited, where(:state => 'invited')
-  scope :waiting, where(:state => 'waiting')
+  scope :approved, -> { where(state: 'approved') }
+  scope :invited, -> { where(state: 'invited') }
+  scope :waiting, -> { where(state: 'waiting') }
 
   scope :last_accessed, lambda { |limit|
     where("last_accessed_at IS NOT NULL"). order("last_accessed_at DESC").
