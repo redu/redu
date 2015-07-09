@@ -9,7 +9,7 @@ class LicensedInvoice < Invoice
     where("period_start between ? and ?",
           Date.civil(year, month, 1),
           Date.civil(year, month, 1).end_of_month) }
-  scope :actual,  order("period_start DESC").limit(1)
+  scope :actual, -> { order("period_start DESC").limit(1)}
 
   validates_presence_of :period_start
 

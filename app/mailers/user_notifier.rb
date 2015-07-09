@@ -190,6 +190,18 @@ class UserNotifier < BaseMailer
     end
   end
 
+  # Enviado quando novo conteúdo é adicionado a um módulo
+  def subject_update(user, subject)
+    @user = user
+    @subj = subject
+    @environment = subject.space.course.environment
+    @course = @subj.space.course
+
+    mail(:subject => "Novo conteúdo adicionado a #{@subj.name}", :to => @user.email) do |format|
+      format.html
+    end
+  end
+
   def space_added(user, space)
     @user, @space, @course = user, space, space.course
     @environment = space.course.environment
@@ -269,4 +281,5 @@ class UserNotifier < BaseMailer
     end
 
   end
+
 end

@@ -69,6 +69,15 @@ class Subject < ActiveRecord::Base
     end
   end
 
+  # Notifica todos alunos matriculados sobre a adição de conteudo ao Subject
+  def notify_subject_update
+    if notificable?
+      self.space.users.all.each do|u|
+        UserNotifier.delay(:queue => 'email').subject_update(u, self)
+      end
+    end
+  end
+
   def self.destroy_subjects_unfinalized
     Subject.where(['created_at < ? AND finalized = 0', 1.day.ago]).each do |s|
       s.destroy

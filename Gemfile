@@ -35,7 +35,7 @@ gem 'invitable', git: 'git@github.com:redu/invitable.git'
 gem 'jquery-rails', '>= 1.0.12'
 gem 'kaminari', git: 'git://github.com/amatsuda/kaminari.git'
 gem 'mime-types'
-gem "mysql2"
+gem 'mysql2'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'pusher'
@@ -74,6 +74,9 @@ gem 'truncate_html'
 gem 'oauth-plugin', '~> 0.4.0'
 gem 'rack-cors', require: 'rack/cors'
 gem 'roar-rails'
+
+#Gem para mysql
+gem 'activerecord-mysql-adapter'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2'

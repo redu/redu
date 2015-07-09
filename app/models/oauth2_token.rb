@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 class Oauth2Token < AccessToken
-  scope :valid, where("invalidated_at IS NULL AND authorized_at IS NOT NULL")
+  scope :valid, -> { where("invalidated_at IS NULL AND authorized_at IS NOT NULL")}
 
   attr_accessor :state
   def as_json(options={})
