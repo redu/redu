@@ -22,8 +22,10 @@
 @import "landing/navigation";
 // Estilos da área dos filtros.
 @import "landing/filters";
-// Estilos da área de segmentos.
-@import "landing/segments";
+// Estilos da área de "Como Funciona?".
+@import "landing/how";
+// Estilos da área de "Quanto Custa?".
+@import "landing/cost";
 // Estilos da área de vantagens.
 @import "landing/advantages";
 // Estilos da área de funcionalidades.
@@ -44,8 +46,8 @@
 @import "landing/api";
 // Estilos da área de mensagens particulares, currículo e mobilidade.
 @import "landing/others";
-// Estilos da área de planos.
-@import "landing/plans";
+// Estilos da área de "Mais Serviços".
+@import "landing/services";
 // Estilos da área de parceiros.
 @import "landing/partners";
 // Estilos da área de Visual Class.
