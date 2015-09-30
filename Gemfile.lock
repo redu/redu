@@ -50,18 +50,18 @@ GIT
       activesupport (>= 3.0.0)
 
 GIT
+  remote: git@github.com:OpenRedu/invitable.git
+  revision: 8f56a767909ab59220964304fb78364f49a42315
+  specs:
+    invitable (0.0.7)
+      rails (>= 3.0.10)
+
+GIT
   remote: git@github.com:redu/analytics.git
   revision: 81559623dfcc9d9ddf90b4bc03ab31cc2216fd58
   specs:
     redu_analytics (0.0.3)
       lazy_high_charts
-
-GIT
-  remote: git@github.com:redu/invitable.git
-  revision: 8f56a767909ab59220964304fb78364f49a42315
-  specs:
-    invitable (0.0.7)
-      rails (>= 3.0.10)
 
 GIT
   remote: git@github.com:redu/vis_client.git
