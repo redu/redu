@@ -17,7 +17,7 @@
     this.$body          = $(document.body)
     this.$scrollElement = $(element).is(document.body) ? $(window) : $(element)
     this.options        = $.extend({}, ScrollSpy.DEFAULTS, options)
-    this.selector       = (this.options.target || '') + ' .nav li > a'
+    this.selector       = (this.options.target || '') + ' ' + this.options.selector
     this.offsets        = []
     this.targets        = []
     this.activeTarget   = null
@@ -31,7 +31,13 @@
   ScrollSpy.VERSION  = '3.3.6'
 
   ScrollSpy.DEFAULTS = {
-    offset: 10
+    offset: 10,
+    // Classe que indica estado ativado.
+    activeClass: 'active',
+    // Seletor dos alvos.
+    selector: '.nav li > a',
+    // Indica se a classe de estado ativado deve ser aplicada ao pai do seletor (true) ou no próprio seletor (false).
+    applyActiveToParent: true
   }
 
   ScrollSpy.prototype.getScrollHeight = function () {
@@ -110,23 +116,35 @@
       '[data-target="' + target + '"],' +
       this.selector + '[href="' + target + '"]'
 
-    var active = $(selector)
-      .parents('li')
-      .addClass('active')
 
-    if (active.parent('.dropdown-menu').length) {
-      active = active
-        .closest('li.dropdown')
-        .addClass('active')
+    var $active = $(selector)
+
+    if (this.options.applyActiveToParent) {
+      $active
+        .parents('li')
+        .addClass(this.options.activeClass)
+
+      if ($active.parent('.dropdown-menu').length) {
+        $active = $active
+          .closest('li.dropdown')
+          .addClass(this.options.activeClass)
+      }
+    } else {
+      $active = $active.addClass(this.options.activeClass)
     }
 
-    active.trigger('activate.bs.scrollspy')
+    $active.trigger('activate.bs.scrollspy')
   }
 
   ScrollSpy.prototype.clear = function () {
-    $(this.selector)
-      .parentsUntil(this.options.target, '.active')
-      .removeClass('active')
+    var $selector = $(this.selector);
+
+    if (this.options.applyActiveToParent) {
+      $selector = $selector
+        .parentsUntil(this.options.target, '.' + this.options.activeClass)
+    }
+
+    $selector.removeClass(this.options.activeClass)
   }
 
 
