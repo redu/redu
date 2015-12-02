@@ -1,12 +1,11 @@
-## Redu Core
+## OpenRedu Core
 
-Este repositório contem o core do Redu. O redu-core é a parte central da plataforma social educacional Redu. Também existem alguns subsistemas/serviços que estão em servidores/projetos/repositórios diferentes. A saber:
+Este repositório contem o core do OpenRedu. O openredu-core é a parte central da plataforma social educacional OpenRedu. Também existem alguns subsistemas/serviços que estão em servidores/projetos/repositórios diferentes. A saber:
 
 - [Portal de aplicativos](http://github.com/redu/apps): Marketplace de aplicativos educacionais.
 - [Visualizações semânticas](http://github.com/redu/vis): Armazenamento e construção de visualizações semânticas do Redu.
-- [Central de Ajuda](http://github.com/redu/help-center): [Tutoriais](http://ajuda.redu.com.br) de suporte no uso da plataforma.
+- [Central de Ajuda](http://github.com/OpenRedu/help-center): [Tutoriais](http://ajuda.openredu.com) de suporte no uso da plataforma.
 - [Página de desenvolvedores](http://github.com/redu/redu.github.com): Documentação da API REST do Redu
-- [Página da empresa](http://github.com/redu/tech.redu.com.br): Página do [Redu Educational Technologies](http://tech.redu.com.br)
 - [Página do livro](http://github.com/redu/livro): Pagina do livro [Educar com o Redu](http://educarcom.redu.com.br)
 - [Redu Mobile](http://github.com/redu/mobile): Aplicativo Android oficial.
 - [Wally Server](http://github.com/redu/wally): Mural do Redu (server-side)
