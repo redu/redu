@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/OpenRedu/invitable.git
+  revision: 8f56a767909ab59220964304fb78364f49a42315
+  specs:
+    invitable (0.0.7)
+      rails (>= 3.0.10)
+
+GIT
   remote: git://github.com/amatsuda/kaminari.git
   revision: 7d209354119a8d5d273def3a7f5c6d011c4baa0a
   specs:
@@ -50,21 +57,14 @@ GIT
       activesupport (>= 3.0.0)
 
 GIT
-  remote: git@github.com:OpenRedu/invitable.git
-  revision: 8f56a767909ab59220964304fb78364f49a42315
-  specs:
-    invitable (0.0.7)
-      rails (>= 3.0.10)
-
-GIT
-  remote: git@github.com:redu/analytics.git
-  revision: 81559623dfcc9d9ddf90b4bc03ab31cc2216fd58
+  remote: git://github.com/redu/analytics.git
+  revision: a777409d456f6e14894eac8e011f7046a14a1ae1
   specs:
     redu_analytics (0.0.3)
       lazy_high_charts
 
 GIT
-  remote: git@github.com:redu/vis_client.git
+  remote: git://github.com/redu/vis_client.git
   revision: 4e73d1de4004d60f63d891c8232e799664b2d5a4
   branch: ruby-1-9-3
   specs:
@@ -107,7 +107,6 @@ GEM
       arel (~> 3.0.2)
       tzinfo (~> 0.3.29)
     activerecord-import (0.3.1)
-      activerecord (~> 3.0)
       activerecord (~> 3.0)
     activeresource (3.2.13)
       activemodel (= 3.2.13)
@@ -257,7 +256,7 @@ GEM
     json (1.8.0)
     jwt (0.1.6)
       multi_json (>= 1.0)
-    lazy_high_charts (1.4.2)
+    lazy_high_charts (1.5.4)
       bundler (>= 1.0)
       hash-deep-merge
     lazydoc (1.0)
@@ -539,3 +538,6 @@ DEPENDENCIES
   whenever
   yajl-ruby
   zencoder
+
+BUNDLED WITH
+   1.10.6

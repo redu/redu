@@ -31,7 +31,7 @@ gem 'eventmachine'
 gem 'exceptional'
 gem 'factory_girl_rails'
 gem "redu-has_friends", "~> 1.0", require: "has_friends"
-gem 'invitable', git: 'git@github.com:OpenRedu/invitable.git'
+gem 'invitable', git: 'git://github.com/OpenRedu/invitable.git'
 gem 'jquery-rails', '>= 1.0.12'
 gem 'kaminari', git: 'git://github.com/amatsuda/kaminari.git'
 gem 'mime-types'
@@ -50,7 +50,7 @@ gem 'simple-navigation', git: 'git://github.com/andi/simple-navigation.git'
 gem 'sunspot_rails'
 gem 'route_translator'
 gem 'useragent'
-gem 'vis_client', git: 'git@github.com:redu/vis_client.git',
+gem 'vis_client', git: 'git://github.com/redu/vis_client.git',
   branch: 'ruby-1-9-3'
 gem 'chronic' # Necessário ao whenever
 gem 'whenever', require: false
@@ -60,7 +60,7 @@ gem 'yajl-ruby'
 gem 'simple_acts_as_list'
 gem 'ey_config'
 gem 'destroy_soon'
-gem 'redu_analytics', git: 'git@github.com:redu/analytics.git'
+gem 'redu_analytics', git: 'git://github.com/redu/analytics.git'
 gem 'humanizer'
 gem 'valium'
 gem 'dalli'
@@ -90,7 +90,6 @@ group :development, :test do
   gem 'no_peeping_toms', git: 'git://github.com/patmaddox/no-peeping-toms.git'
   gem 'rails3-generators'
   gem "rspec-rails", "~> 2.13"
-  gem 'debugger'
   gem 'sunspot_solr'
 end
 
@@ -111,4 +110,8 @@ end
 
 group :production do
   gem 'newrelic_rpm'
+end
+
+group :debug do
+  gem 'debugger'
 end
