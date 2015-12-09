@@ -6,7 +6,6 @@ tmp/
 *.swp
 mongrel/
 bin/
-db/schema.rb
 log/**/*
 *.tmproj
 config/database.yml
