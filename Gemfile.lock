@@ -80,9 +80,7 @@ GIT
       valium
 
 GEM
-  remote: http://rubygems.org/
-  remote: http://gems.github.com/
-  remote: http://reduadmin:pomp64bozos@the-shire.herokuapp.com/
+  remote: https://rubygems.org/
   specs:
     aasm (3.0.16)
     actionmailer (3.2.13)
