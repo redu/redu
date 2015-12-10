@@ -1,6 +1,4 @@
-source 'http://rubygems.org'
-source 'http://gems.github.com'
-source 'http://reduadmin:pomp64bozos@the-shire.herokuapp.com/'
+source 'https://rubygems.org'
 
 ruby "1.9.3"
 
