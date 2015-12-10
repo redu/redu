@@ -1,0 +1,10 @@
+language: ruby
+rvm:
+  - "1.9.3-p551"
+services:
+  - mongodb
+bundler_args: --without development debug
+before_script:
+  - cp config/database.travis.yml config/database.yml
+  - mysql -e 'create database redu_test;'
+  - bundle exec rake db:schema:load RAILS_ENV=test
