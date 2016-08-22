@@ -14,7 +14,7 @@ class UsersController < BaseController
     redirect_to signup_path and return if params[:id].blank?
     @user = User.find_by_activation_code(params[:id])
     if @user and @user.activated_at
-      flash[:notice] = "Sua conta já foi ativada. Utilize seu login e senha para entrar no Redu."
+      flash[:notice] = "Sua conta já foi ativada. Utilize seu login e senha para entrar no Openredu."
       redirect_to application_path
       return
     elsif @user and @user.activate
@@ -417,7 +417,7 @@ class UsersController < BaseController
     session[:return_to] = request.fullpath
     if exception.action == :preview && exception.subject.class == Space
       if current_user.nil?
-        flash[:info] = "Essa área só pode ser vista após você acessar o Redu com seu nome e senha."
+        flash[:info] = "Essa área só pode ser vista após você acessar o Openredu com seu nome e senha."
       else
         flash[:info] = "Você não tem acesso a essa página"
       end
