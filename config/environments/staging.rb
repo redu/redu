@@ -53,13 +53,6 @@ Redu::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  # Configurações do Pusher (redu-development app)
-  config.pusher = {
-    :app_id => '6407',
-    :key => '3de110621e98059023ca',
-    :secret => 'ae4d3ee4e10e13cfe325'
-  }
-
   # Configuração da aplicação em omniauth providers
   config.omniauth = {
     :facebook => {

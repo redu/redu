@@ -33,8 +33,6 @@ class User < ActiveRecord::Base
   end
 
   # ASSOCIATIONS
-  has_many :chat_messages
-  has_many :chats, dependent: :destroy
   # Space
   has_many :spaces, through: :user_space_associations,
     conditions: ["spaces.destroy_soon = ?", false]
@@ -54,7 +52,6 @@ class User < ActiveRecord::Base
                     course_enrollments.state = ?", false, 'approved']
   # Authentication
   has_many :authentications, dependent: :destroy
-  has_many :chats, dependent: :destroy
 
   #COURSES
   has_many :lectures, foreign_key: "user_id",
@@ -522,18 +519,6 @@ class User < ActiveRecord::Base
 
   def create_settings!
     self.settings = TourSetting.create(view_mural: Privacy[:friends])
-  end
-
-  def presence_channel
-    "presence-user-#{self.id}"
-  end
-
-  def private_channel_with(user)
-    if self.id < user.id
-      "private-#{self.id}-#{user.id}"
-    else
-      "private-#{user.id}-#{self.id}"
-    end
   end
 
   #FIXME falta testar alguns casos

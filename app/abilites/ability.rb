@@ -51,10 +51,6 @@ class Ability
     # Message
     alias_action :delete_selected, :to => :manage
 
-    # Presence
-    alias_action :auth, :to => :manage
-    alias_action :send_chat_message, :last_messages_with, :to => :subscribe_channel
-
     # Plan
     alias_action :confirm, :address, :pay, :to => :manage
 
@@ -130,9 +126,6 @@ class Ability
         document.can_upload_document?(document.lecture)
       end
 
-      can :subscribe_channel, User do |contact|
-        Presence.new(user).contacts.include?(contact)
-      end
 
       can :multiauth, User
 

@@ -207,13 +207,6 @@ module Redu
     # Adapters
     config.autoload_paths << "#{config.root}/app/adapters"
 
-    # Configurações do Pusher (redu app)
-    config.pusher = {
-      :app_id => '4577',
-      :key => 'f786a58d885e7397ecaa',
-      :secret => '1de7afbc11094fcfa16b'
-    }
-
     # Observers
     unless File.basename($0) == 'rake'
       config.active_record.observers = [:course_observer,
@@ -238,7 +231,6 @@ module Redu
                                         :message_cache_observer,
                                         :lecture_cache_observer,
                                         :asset_report_cache_observer,
-                                        :chat_message_observer,
                                         :solr_profile_indexer_observer,
                                         :solr_education_indexer_observer,
                                         :solr_hierarchy_indexer_observer,
@@ -300,8 +292,8 @@ module Redu
     config.assets.precompile += %w(maintenance.css)
 
     # Layout sem bootstrap
-    config.assets.precompile += %w(ie.js chat.js outdated_browser.js ckeditor.js jquery.maskedinput.js canvas.js chart.js jwplayer.js webview.js clean.js new_wall.js new_wall/lecture-toggle-comment-or-help.js)
-    config.assets.precompile += %w(ie.css icons.redu.css chat.css outdated_browser.css preview-course-old.css page.css cold.css clean.css print.css email.css new_wall.css)
+    config.assets.precompile += %w(ie.js outdated_browser.js ckeditor.js jquery.maskedinput.js canvas.js chart.js jwplayer.js webview.js clean.js new_wall.js new_wall/lecture-toggle-comment-or-help.js)
+    config.assets.precompile += %w(ie.css icons.redu.css outdated_browser.css preview-course-old.css page.css cold.css clean.css print.css email.css new_wall.css)
 
     # CKEditor
     config.assets.precompile += %w(ckeditor/*)

@@ -55,9 +55,6 @@ Redu::Application.configure do
   # Só converte os 5 primeiros segundos (grátis)
   config.zencoder[:test] = 1
 
- # Configurações do Pusher (redu-development app)
-  config.pusher = {
-  }
 
   # Configuração da aplicação em omniauth providers
   config.omniauth = {
@@ -98,5 +95,3 @@ Redu::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 end
-
-
