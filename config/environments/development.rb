@@ -52,10 +52,6 @@ Redu::Application.configure do
   config.video_original = config.paperclip.merge({:styles => {}})
   config.video_transcoded = config.paperclip.merge({:styles => {}})
 
-  # Só converte os 5 primeiros segundos (grátis)
-  config.zencoder[:test] = 1
-
-
   # Configuração da aplicação em omniauth providers
   config.omniauth = {
     :facebook => {

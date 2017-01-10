@@ -143,33 +143,6 @@ module Redu
       :default_url => "http://#{config.s3_credentials['assets_bucket']}.s3.amazonaws.com/images/new/missing_:class_:style.png",
     }
 
-    # Usado em :controller => jobs, :action => notify
-    config.zencoder_credentials = {
-      :username => 'zencoder',
-      :password => 'MCZC2pDQyt5bzko1'
-    }
-
-    # No ambiente de desenvolvimento :test => 1 (definido em development.rb)
-    config.zencoder = {
-      :api_key => '69c8730bf5c0134af339a97b6a2d53e0',
-      :input => '',
-      :output => {
-        :url => '',
-        :video_codec => "vp6",
-        :public => 1,
-        :thumbnails => {
-          :number => 6,
-          :size => "160x120",
-          :base_url => '',
-          :prefix => "thumb"
-        },
-        :notifications => {
-          :format => 'json',
-          :url => ''
-        }
-     }
-    }
-
     # Usado pelo WYSIWYG CKEditor
     config.autoload_paths << "#{config.root}/app/models/ckeditor"
 
