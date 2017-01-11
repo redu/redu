@@ -124,18 +124,4 @@ class PackagePlan < Plan
       :amount => self.price + (self.membership_fee || 0),
       :description => "Fatura refrente aos primeiros 30 dias#{self.membership_fee ? ' e a taxa de adesão': ''} no plano #{self.name}"})
   end
-
-  # Cria ordem do gateway padrão (i.e PagSeguro) com as informações dos invoices
-  # cujo estado é pending. É possível passar informações adicionais para a ordem.
-  def create_order(options={})
-    order_options = {
-      :order_id => self.id,
-      :items => self.invoices.pending_payment.collect { |i| i.to_order_item }
-    }.merge(options)
-
-    order = PagSeguro::Order.new(order_options[:order_id])
-    order_options[:items].each { |item| order.add(item) }
-
-    return order
-  end
 end

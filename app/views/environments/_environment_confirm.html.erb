@@ -60,7 +60,6 @@
         <%= render :partial => 'environments/form', :locals => { :f => f } %>
       </div>
       <%= hidden_field_tag :plan, @plan %>
-      <div id="pagseguro-button"></div>
       <%= f.submit "Finalizar", :id => "final-button"%>
 
       <%= image_tag 'spinner.gif', :id => 'spinner-form',

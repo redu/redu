@@ -300,7 +300,6 @@ GEM
     omniauth-oauth2 (1.1.1)
       oauth2 (~> 0.8.0)
       omniauth (~> 1.0)
-    pagseguro (0.1.13)
     paperclip (2.7.5)
       activerecord (>= 2.3.0)
       activesupport (>= 2.3.2)
@@ -493,7 +492,6 @@ DEPENDENCIES
   oauth-plugin (~> 0.4.0)
   omniauth
   omniauth-facebook
-  pagseguro (~> 0.1.10)
   paperclip (~> 2.7.5)
   premailer-rails
   rack-cors

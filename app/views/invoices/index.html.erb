@@ -73,9 +73,7 @@
                     <span><%= number_to_currency(invoice.total) %></span>
                   </td>
                   <td>
-                    <% if can? :pay_with_pagseguro, invoice %>
-                      <%= pagseguro_form invoice.plan.create_order, submit: "Pagar" %>
-                    <% elsif invoice.paid? %>
+                    <% if invoice.paid? %>
                       <span class="no-pending legend">Pago</span>
                     <% end %>
                   </td>
@@ -95,9 +93,3 @@
 <div class="span3">
   <%= render "plans/explanation_sidebar" %>
 </div>
-
-<script type="text/javascript">
-  $(document).ready(function() {
-    $("form.pagseguro input[type=submit]").addClass('button-primary');
-  });
-</script>

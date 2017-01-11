@@ -36,7 +36,6 @@ gem 'mime-types'
 gem "mysql2"
 gem 'omniauth'
 gem 'omniauth-facebook'
-gem 'pagseguro', '~> 0.1.10'
 gem 'paperclip', '~> 2.7.5'
 gem 'rails', '~> 3.2.13'
 gem "rake", "~> 10.0.4"

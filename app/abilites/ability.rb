@@ -165,10 +165,6 @@ class Ability
         !(is_admin && (invoice.pending? || invoice.overdue?))
       end
 
-      cannot :pay_with_pagseguro, Invoice do |invoice|
-        invoice.paid?
-      end
-
       # Plan
       cannot :migrate, Plan do |plan|
         (plan.blocked? || plan.migrated?) && !is_admin
