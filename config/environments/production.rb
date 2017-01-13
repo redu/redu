@@ -63,14 +63,6 @@ Redu::Application.configure do
   # Remove cores do log
   config.colorize_logging = false
 
-  # Configuração da aplicação em omniauth providers
-  config.omniauth = {
-    :facebook => {
-      :app_id => '191555477625856',
-      :app_secret => '27e285f90a3ee1db7a3b61641ae14694'
-    }
-  }
-
   # Configurações de VisClient
   config.vis_client = {
     :url => "http://vis.redu.com.br/hierarchy_notifications.json"

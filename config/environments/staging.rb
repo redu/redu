@@ -60,14 +60,6 @@ Redu::Application.configure do
     :secret => 'ae4d3ee4e10e13cfe325'
   }
 
-  # Configuração da aplicação em omniauth providers
-  config.omniauth = {
-    :facebook => {
-      :app_id => '142857189169463',
-      :app_secret => 'ea0f249a4df83b250c3364ccf097f35c'
-    }
-  }
-
   # Configurações de VisClient
   config.vis_client = {
     :url => "http://visstaging.redu.com.br/hierarchy_notifications.json"

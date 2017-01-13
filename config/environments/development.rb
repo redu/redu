@@ -59,14 +59,6 @@ Redu::Application.configure do
   config.pusher = {
   }
 
-  # Configuração da aplicação em omniauth providers
-  config.omniauth = {
-    :facebook => {
-      :app_id => '142857189169463',
-      :app_secret => 'ea0f249a4df83b250c3364ccf097f35c'
-    }
-  }
-
   # Configurações de VisClient
   config.vis_client = {
     :url => "http://localhost:4000/hierarchy_notifications.json",
@@ -98,5 +90,3 @@ Redu::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 end
-
-
