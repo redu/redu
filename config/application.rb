@@ -53,12 +53,6 @@ module Redu
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password, :password_confirmation]
 
-    # S3 credentials
-    if File.exists?("#{Rails.root}/config/s3.yml")
-      config.s3_config = YAML.load_file("#{Rails.root}/config/s3.yml")
-      config.s3_credentials = config.s3_config[Rails.env]
-    end
-
     if File.exists?( File.join(Rails.root, 'config', 'application.yml') )
       file = File.join(Rails.root, 'config', 'application.yml')
       config.extras = YAML.load_file file
@@ -90,11 +84,10 @@ module Redu
     config.action_mailer.delivery_method = :test
 
     config.paperclip = {
-      :storage => :s3,
-      :s3_credentials => config.s3_credentials,
-      :bucket => config.s3_credentials['bucket'], # redu-uploads
-      :path => ":class/:attachment/:id/:style/:basename.:extension",
-      :default_url => "http://#{config.s3_credentials['assets_bucket']}.s3.amazonaws.com/images/new/missing_:class_:style.png",
+      :storage => :filesystem,
+      :path => File.join(Rails.root.to_s, "public/images/:class/:attachment/:id/:style/:basename.:extension"),
+      :url => "/images/:class/:attachment/:id/:style/:filename",
+      :default_url => "/assets/missing_:class_:style.png"
     }
 
     config.paperclip_environment = config.paperclip.merge({
@@ -119,28 +112,25 @@ module Redu
     })
 
     config.paperclip_myfiles = config.paperclip.merge({
-      :bucket => config.s3_credentials['files_bucket'], # redu-files
-      :path => ":class/:attachment/:id/:style/:basename.:extension",
+      :storage => :filesystem,
+      :path => File.join(Rails.root.to_s, "public/files/:class/:attachment/:id/:style/:basename.:extension"),
       :default_url => ":class/:attachment/:style/missing.png",
       :styles => {}
     })
 
     # Configurações de conversão e storage de videos (Seminar)
     config.video_original = { # Arquivo original do video (uploaded)
-      :storage => :s3,
-      :s3_credentials => config.s3_credentials,
-      :bucket => config.s3_credentials['bucket'],
-      :path => ":class/:attachment/:id/:style/:basename.:extension",
-      :default_url => "http://#{config.s3_credentials['assets_bucket']}.s3.amazonaws.com/images/new/missing_:class_:style.png",
+      :storage => :filesystem,
+      :path => File.join(Rails.root.to_s, "public/video_original/:class/:attachment/:id/:style/:basename.:extension"),
+      :url => "/images/:class/:attachment/:id/:style/:filename",
+      :default_url => ":class/:attachment/:style/missing.png",
       :styles => {}
     }
 
     config.video_transcoded = { # Arquivo convertido
-      :storage => :s3,
-      :s3_credentials => config.s3_credentials,
-      :bucket => config.s3_credentials['videos_bucket'],
-      :path => ":class/:attachment/:id/:style/:basename.:extension",
-      :default_url => "http://#{config.s3_credentials['assets_bucket']}.s3.amazonaws.com/images/new/missing_:class_:style.png",
+      :storage => :filesystem,
+      :path => File.join(Rails.root.to_s, "public/video_transcoded/:class/:attachment/:id/:style/:basename.:extension"),
+      :default_url => ":class/:attachment/:style/missing.png"
     }
 
     # Usado pelo WYSIWYG CKEditor
