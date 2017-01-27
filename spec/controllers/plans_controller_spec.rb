@@ -54,31 +54,6 @@ describe PlansController do
         response.should render_template('plans/options')
       end
     end
-
-    context "as a partner" do
-      before do
-        @admin = FactoryGirl.create(:user)
-        @partner_assoc = FactoryGirl.create(:partner_environment_association)
-        @partner_assoc.partner.add_collaborator @admin
-        @plan = FactoryGirl.create(:plan, :billable => @partner_assoc.environment)
-
-        login_as @admin
-        get :options, :locale => "pt-BR", :partner_id => @partner_assoc.partner.id,
-          :client_id => @partner_assoc.id, :id => @plan.id
-      end
-
-      it "assigns partner" do
-        assigns[:partner].should == @partner_assoc.partner
-      end
-
-      it "assigns client" do
-        assigns[:client].should == @partner_assoc
-      end
-
-      it "renders partner_environment_associations plans options" do
-        response.should render_template("partner_environment_associations/plans/options")
-      end
-    end
   end
 
   context "when requesting an upgrade" do
@@ -176,46 +151,6 @@ describe PlansController do
 
       it "should redirect to new plan invoices index" do
         response.should redirect_to(controller.plan_invoices_path(assigns[:new_plan]))
-      end
-    end
-
-    context "as a partner" do
-      before do
-        @admin = FactoryGirl.create(:user)
-        @partner_assoc = FactoryGirl.create(:partner_environment_association,
-                                 :environment => @environment)
-        @partner_assoc.partner.add_collaborator @admin
-        @plan = FactoryGirl.create(:plan, :billable => @partner_assoc.environment)
-
-        login_as @admin
-
-        @params = {
-          :partner_id => @partner_assoc.partner.id,
-          :client_id => @partner_assoc.id,
-          :environment_id => @environment.path,
-          :new_plan => "instituicao_medio",
-          :type => "LicensedPlan",
-          :locale => "pt-BR"
-        }
-        post :create, @params
-      end
-
-      it "assigns partner" do
-        assigns[:partner].should == @partner_assoc.partner
-      end
-
-      it "assigns client" do
-        assigns[:client].should == @partner_assoc
-      end
-
-      it "renders partner_environment_associations plans options" do
-        response.should redirect_to controller.partner_client_plan_invoices_path(
-          @partner_assoc.partner, @partner_assoc, assigns[:new_plan])
-      end
-
-      it "creates the correct plan" do
-        assigns[:new_plan].name.should ==
-          LicensedPlan::PLANS[@params[:new_plan].to_sym][:name]
       end
     end
   end

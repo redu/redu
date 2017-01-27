@@ -28,7 +28,7 @@
         :url => environment_course_path(@environment, @header_course || @course),
         :html => { :class => "concave-form" } do |f| %>
         <%= concave_error_messages_for @course %>
-        <%= render :partial => 'courses/admin/form', :locals => { :f => f, :edit => true, :partner => @environment.partner } %>
+        <%= render :partial => 'courses/admin/form', :locals => { :f => f, :edit => true } %>
         <%= f.submit "Salvar alterações" %>
         <% if @course.published? %>
           <%= link_to 'Despublicar curso', unpublish_environment_course_path(@environment, @course),

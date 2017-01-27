@@ -156,29 +156,6 @@ class UserNotifier < BaseMailer
 
   end
 
-  # Enviado quando se tenta criar um Curso através dos parceiros
-  def partner_environment_notice(partner_contact)
-    @contact = partner_contact
-
-    mail(:to => [Redu::Application.config.email, "cns@redu.com.br"],
-         :subject => "[Redu] Criação de ambiente",
-         :date => Time.zone.now) do |format|
-      format.text
-    end
-  end
-
-  # Enviado quando se demonstra interesse em migrar para plano de
-  # empresa/instituição.
-  def partner_environment_migration_notice(partner_contact)
-    @contact = partner_contact
-
-    mail(:to => [Redu::Application.config.email, "cns@redu.com.br"],
-         :subject => "[Redu] Migração para plano empresa/instituição",
-         :date => Time.zone.now) do |format|
-      format.text
-    end
-  end
-
   def subject_added(user, subject)
     @user = user
     @subj = subject

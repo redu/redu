@@ -14,16 +14,6 @@
     <li class="vanila-plan">
       <a href="#teacher-plan" class="teacher icons-big icon-checkout-teacher-lightblue_100_100">Professor</a>
     </li>
-    <li class="partner">
-      <a href="#partner-plan">
-        <span class="partner-plan instituition icons-big icon-checkout-institution-lightblue_100_100">
-          Instituição de ensino
-        </span>
-        <span class="partner-plan company icons-big icon-checkout-company-lightblue_100_100">
-          Empresa
-        </span>
-      </a>
-    </li>
   </ul>
   <div id="teacher-plan" class="plan-container clearfix wide">
     <ul class="plans clearfix">
@@ -208,14 +198,4 @@
       </li>
     </ul>
   </div><!-- end #teacher -->
-  <div id="partner-plan" class="plan-container">
-    <%= image_tag "thumbnail-cns.png", :size => "130x130", :class => "partner-avatar" %>
-    <h3 class="partner-call">
-      A parceria certa para a sua empresa
-    </h3>
-    <p class="partner-details">
-      A CNS Consultores Associados, em parceria com o Redu,  traz uma nova concepção de educação a distância, oferecendo soluções pedagógicas adequadas, por meio de um ambiente virtual de aprendizagem (A.v.A.) inovador, com conteúdos personalizados e metodologias motivadoras.
-    </p>
-    <%= render :partial => 'partners/partner_contacts/new_old', :locals => { :environment => @environment } %>
-  </div><!-- end #partner -->
 </div>

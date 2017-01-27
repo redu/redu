@@ -31,12 +31,6 @@
         </ul>
       </div>
       <hr class="list-separator">
-      <div class="content-section">
-        <h5 class="plans-title">Planos para Instituição de Ensino ou Empresa</h5>
-        <span class="legend">Você é uma Instituição de Ensino ou Empresa? Entre em contato com a nossa parceira CNS e explique as suas necessidades.</span>
-        <%= render "partners/partner_contacts/new", environment: nil,
-          migration: true, billable_url: @billable_url %>
-      </div>
       <div class="content-section clearfix">
         <%= link_to "< voltar para detalhes do plano atual", plan_invoices_path(@plan), class: "legend pull-right" %>
       </div>

@@ -34,8 +34,6 @@ class Environment < ActiveRecord::Base
     :source => :user,
     :conditions => [ "user_environment_associations.role = ?", :member ]
 
-  has_one :partner, :through => :partner_environment_association
-  has_one :partner_environment_association
   has_one :quota, :dependent => :destroy, :as => :billable
 
   attr_protected :owner, :published

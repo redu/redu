@@ -12,8 +12,6 @@ describe Environment do
   it { should have_many(:users).through(:user_environment_associations)}
   it { should have_many(:plans) }
   it { should belong_to(:owner)}
-  it { should have_one(:partner).through(:partner_environment_association) }
-  it { should have_one(:partner_environment_association) }
   it { should accept_nested_attributes_for :courses }
 
   it { should validate_presence_of(:name) }

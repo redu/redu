@@ -70,7 +70,7 @@ module NewUsersNavigation
         :link => { :class => 'tab-title icon-account_16_18-before',
                    :title => 'Conta' }
       settings_tab.item :plans, 'Planos', user_plans_path(@user),
-        :highlights_on => Proc.new { action_matcher({'plans' => ['index', 'options'], 'invoices' => ['index']}).call && @partner.nil? },
+        :highlights_on => Proc.new { action_matcher({'plans' => ['index', 'options'], 'invoices' => ['index']}).call },
         :class => 'tab',
         :link => { :class => 'tab-title icon-plan_16_18-before',
                    :title => 'Planos' },

@@ -51,14 +51,6 @@ namespace :bootstrap do
     Audience.create(:name => "Diversos")
   end
 
-  desc "Inser standard partner"
-  task :partner => :environment do
-    Partner.create(:name => "CNS",
-                   :email => "cns@redu.com.br",
-                   :cnpj => "12.123.123/1234-12",
-                   :address => "Beaker street")
-  end
-
   desc "Create OAuth Client Application for ReduVis"
   task :reduvis_app => :environment do
     user_admin = User.find_by_id(2)
@@ -86,6 +78,5 @@ namespace :bootstrap do
   end
 
   desc "Run all bootstrapping tasks"
-  task :all => [:audiences, :default_user, :default_admin,
-                :partner, :reduvis_app, :reduapps_app]
+  task :all => [:audiences, :default_user, :default_admin, :reduvis_app, :reduapps_app]
 end

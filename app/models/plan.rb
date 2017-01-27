@@ -55,7 +55,7 @@ class Plan < ActiveRecord::Base
   # Serializa billable associado e salva com propósito de auditoria
   def audit_billable!
     options = Hash.new
-    options[:include] = [:courses, :partner_environment_association] if self.billable.is_a? Environment
+    options[:include] = [:courses] if self.billable.is_a? Environment
     self.billable_audit = self.billable.serializable_hash(options)
     self.save!
   end

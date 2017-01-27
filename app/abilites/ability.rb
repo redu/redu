@@ -160,10 +160,6 @@ class Ability
           (user.has_access_to? status.statusable)
       end
 
-      # Parceiros
-      can :contact, Partner
-      cannot :index, Partner unless is_admin
-
       # Result
       can :update, Result, :state => 'started', :user_id => user.id
 

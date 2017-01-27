@@ -7,11 +7,6 @@ class PlansController < BaseController
 
   def create
     @user = load_and_authorize_if_param(User, params[:user_id])
-    @partner = load_and_authorize_if_param(Partner, params[:partner_id])
-
-    if client_id = params[:client_id]
-      @client = @partner.partner_environment_associations.find(client_id)
-    end
 
     @environment = Environment.find(params[:environment_id])
     if params[:course_id]
@@ -26,15 +21,8 @@ class PlansController < BaseController
 
     flash[:notice] = "O novo plano foi assinado, você pode ver a fatura abaixo."
     respond_to do |format|
-      if @client
-        format.html do
-          redirect_to partner_client_plan_invoices_path(@partner, @client,
-                                                        @new_plan)
-        end
-      else
-        format.html do
-          redirect_to plan_invoices_path(@new_plan)
-        end
+      format.html do
+        redirect_to plan_invoices_path(@new_plan)
       end
     end
   end
@@ -49,14 +37,9 @@ class PlansController < BaseController
   end
 
   def options
-    @partner = load_and_authorize_if_param(Partner, params[:partner_id])
 
     authorize! :migrate, @plan
     @user = @plan.user
-
-    if params[:client_id]
-      @client = @partner.partner_environment_associations.find(params[:client_id])
-    end
 
     @billable_url = if @plan.billable.is_a? Environment
                       environment_url(@plan.billable)
@@ -66,11 +49,7 @@ class PlansController < BaseController
                     end
 
     respond_to do |format|
-      if @client
-        format.html { render "partner_environment_associations/plans/options" }
-      else
-        format.html { render :layout => 'new_application' }
-      end
+      format.html { render :layout => 'new_application' }
     end
   end
 
