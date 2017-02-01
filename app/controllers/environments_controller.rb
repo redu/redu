@@ -107,18 +107,12 @@ class EnvironmentsController < BaseController
           @environment.courses.first.plan = @plan
 
           @environment.courses.first.create_quota
-          if @plan.create_invoice_and_setup
-            format.js { render :pay }
-            format.html do
-              redirect_to confirm_plan_path(@plan)
-            end
-          else
-            format.html do
-              flash[:notice] = "Parabens, o seu ambiente de ensino foi criado"
-            end
-            format.js do
-              render :redirect
-            end
+
+          format.html do
+            flash[:notice] = "Parabens, o seu ambiente de ensino foi criado"
+          end
+          format.js do
+            render :redirect
           end
         else
           format.js { render :new }

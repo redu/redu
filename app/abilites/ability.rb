@@ -163,15 +163,6 @@ class Ability
       # Result
       can :update, Result, :state => 'started', :user_id => user.id
 
-      # Invoice
-      cannot :pay, Invoice do |invoice|
-        !(is_admin && (invoice.pending? || invoice.overdue?))
-      end
-
-      cannot :pay_with_pagseguro, Invoice do |invoice|
-        invoice.paid?
-      end
-
       # Plan
       cannot :migrate, Plan do |plan|
         (plan.blocked? || plan.migrated?) && !is_admin

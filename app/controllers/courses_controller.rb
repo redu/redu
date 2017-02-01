@@ -95,7 +95,6 @@ class CoursesController < BaseController
           @plan.user = current_user
           @course.create_quota
           @course.plan = @plan
-          @plan.create_invoice_and_setup
         end
         @environment.courses << @course
         format.html { redirect_to environment_course_path(@environment, @course) }
