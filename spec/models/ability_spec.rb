@@ -1101,7 +1101,6 @@ describe Ability do
       context "on package_plan" do
         before do
           @package_plan = FactoryGirl.create(:active_package_plan)
-          @invoice = FactoryGirl.create(:package_invoice, :plan => @package_plan)
         end
 
         context "the owner" do
@@ -1119,23 +1118,6 @@ describe Ability do
 
           it "migrates its own package_plan" do
             @ability.should be_able_to(:migrate, @package_plan)
-          end
-
-          it "reads package_plan's invoice" do
-            @ability.should be_able_to(:read, @invoice)
-          end
-
-          it "manages package_plan's invoice" do
-            @ability.should be_able_to(:manage, @invoice)
-          end
-
-          it "can pay package_plan's invoice with pagseguro" do
-            @ability.should be_able_to(:pay_with_pagseguro, @invoice)
-          end
-
-          it "can NOT pay paid package_plan's invoice with pagseguro" do
-            @invoice.update_attribute(:state, "paid")
-            @ability.should_not be_able_to(:pay_with_pagseguro, @invoice)
           end
         end
 
@@ -1155,114 +1137,6 @@ describe Ability do
 
           it "can NOT migrate others package_plans" do
             @ability.should_not be_able_to(:migrate, @package_plan)
-          end
-
-          it "can NOT read others package_plan's invoice" do
-            @ability.should_not be_able_to(:read, @invoice)
-          end
-
-          it "can NOT manage others package_plan's invoice" do
-            @ability.should_not be_able_to(:manage, @invoice)
-          end
-        end
-      end
-
-      context "on licensed_plan" do
-        before do
-          @licensed_plan = FactoryGirl.create(:active_licensed_plan)
-          @invoice = FactoryGirl.create(:licensed_invoice, :plan => @licensed_plan)
-          @invoice.update_attribute(:state, "pending")
-        end
-
-        context "the owner" do
-          before do
-            @ability = Ability.new(@licensed_plan.user)
-          end
-
-          it "read its own licensed_plan" do
-            @ability.should be_able_to(:read, @licensed_plan)
-          end
-
-          it "manages its own licensed_plan" do
-            @ability.should be_able_to(:manage, @licensed_plan)
-          end
-
-          it "migrates its own licensed_plan" do
-            @ability.should be_able_to(:migrate, @licensed_plan)
-          end
-
-          it "reads licensed_plan's invoice" do
-            @ability.should be_able_to(:read, @invoice)
-          end
-
-          it "manages licensed_plan's invoice" do
-            @ability.should be_able_to(:manage, @invoice)
-          end
-
-          it "can NOT pay licensed_plan's invoice" do
-            @ability.should_not be_able_to(:pay, @invoice)
-          end
-        end
-
-        context "the strange" do
-          before do
-            strange = FactoryGirl.create(:user)
-            @ability = Ability.new(strange)
-          end
-
-          it "can NOT read others licensed_plans" do
-            @ability.should_not be_able_to(:read, @licensed_plan)
-          end
-
-          it "can NOT manage others licensed_plans" do
-            @ability.should_not be_able_to(:manage, @licensed_plan)
-          end
-
-          it "can NOT migrate others licensed_plans" do
-            @ability.should_not be_able_to(:migrate, @licensed_plan)
-          end
-
-          it "can NOT read others licensed_plan's invoice" do
-            @ability.should_not be_able_to(:read, @invoice)
-          end
-
-          it "can NOT manage others licensed_plan's invoice" do
-            @ability.should_not be_able_to(:manage, @invoice)
-          end
-        end
-
-        context "the redu admin" do
-          before do
-            redu_admin = FactoryGirl.create(:user, :role => Role[:admin])
-            @ability = Ability.new(redu_admin)
-          end
-
-          it "can pay licensed_plan's invoice" do
-            @ability.should be_able_to(:pay, @invoice)
-          end
-
-          it "can NOT pay a non pending invoice" do
-            @invoice.pay!
-            @ability.should_not be_able_to(:pay, @invoice.reload)
-          end
-
-          it "can pay a overdue invoice" do
-            @invoice.overdue!
-            @ability.should be_able_to(:pay, @invoice.reload)
-          end
-
-          it "can manage partner licensed_plans of dead billable" do
-            @licensed_plan.billable.audit_billable_and_destroy
-            @ability.should be_able_to(:manage, @licensed_plan)
-          end
-
-          it "can migrate a blocked or migrated plan" do
-            @plan = FactoryGirl.create(:plan)
-            @plan.update_attribute(:state, "blocked")
-            @ability.should be_able_to(:migrate, @plan)
-
-            @plan.update_attribute(:state, "blocked")
-            @ability.should be_able_to(:migrate, @plan)
           end
         end
       end

@@ -3,7 +3,7 @@ require 'spec_helper'
 require 'authlogic/test_case'
 
 describe EnvironmentsController do
-  context "when creating a paid Environment" do
+  context "when creating a Environment" do
     before do
       User.maintain_sessions = false
       @user = FactoryGirl.create(:user)
@@ -88,107 +88,6 @@ describe EnvironmentsController do
       end
     end
     context "at step 4" do
-      context "when plain request" do
-        before do
-          @params[:step] = "4"
-          @params[:plan] = "professor_standard"
-          @params[:color] = "f56b00"
-
-          post :create, @params
-        end
-
-        it "assigns and creates the environment" do
-          assigns[:environment].should_not be_nil
-          assigns[:environment].should_not be_new_record
-        end
-
-        it "assigns and creates the plan" do
-          assigns[:plan].should_not be_nil
-          assigns[:plan].should be_valid
-          assigns[:plan].should_not be_new_record
-        end
-
-        it "associates the plan to the course" do
-          assigns[:environment].courses.first.plan.should == assigns[:plan]
-        end
-
-        it "associates the quota to the course" do
-          course = assigns[:environment].courses.first
-          course.quota.should_not be_nil
-        end
-
-        it "associates the plan with the user" do
-          assigns[:plan].user.should == @user
-        end
-
-        it "creates the first order" do
-          assigns[:plan].invoices.size.should == 1
-        end
-
-        it "redirects to confirmation page" do
-          should redirect_to(controller.confirm_plan_path(assigns[:plan]))
-        end
-      end
-
-      context "when observers are enabled" do
-        before do
-          @params[:step] = "4"
-          @params[:plan] = "professor_standard"
-          @params[:color] = "f56b00"
-
-        end
-
-        it "associates the plan to the course" do
-          ActiveRecord::Observer.with_observers :course_observer do
-            expect {
-              post :create, @params
-            }.to_not raise_error
-          end
-        end
-      end
-
-      context "when AJAX request" do
-        before do
-          @params[:step] = "4"
-          @params[:plan] = "professor_standard"
-          @params[:color] = "f56b00"
-          @params[:body] = "js"
-
-          post :create, @params
-        end
-
-        it "assigns and creates the environment" do
-          assigns[:environment].should_not be_nil
-          assigns[:environment].should_not be_new_record
-        end
-
-        it "assigns and creates the plan" do
-          assigns[:plan].should_not be_nil
-          assigns[:plan].should be_valid
-          assigns[:plan].should_not be_new_record
-        end
-
-        it "associates the plan to the course" do
-          assigns[:environment].courses.first.plan.should == assigns[:plan]
-        end
-
-        it "associates the quota to the course" do
-          course = assigns[:environment].courses.first
-          course.quota.should_not be_nil
-        end
-
-        it "associates the plan with the user" do
-          assigns[:plan].user.should == @user
-        end
-
-        it "creates the first order" do
-          assigns[:plan].invoices.size.should == 1
-        end
-
-      end
-    end
-
-    context "at step 4 for free" do
       before do
         @params[:step] = "4"
         @params[:plan] = "free"
@@ -197,6 +96,30 @@ describe EnvironmentsController do
         @params[:format] = "js"
 
         post :create, @params
+      end
+
+      it "assigns and creates the environment" do
+        assigns[:environment].should_not be_nil
+        assigns[:environment].should_not be_new_record
+      end
+
+      it "assigns and creates the plan" do
+        assigns[:plan].should_not be_nil
+        assigns[:plan].should be_valid
+        assigns[:plan].should_not be_new_record
+      end
+
+      it "associates the plan to the course" do
+        assigns[:environment].courses.first.plan.should == assigns[:plan]
+      end
+
+      it "associates the quota to the course" do
+        course = assigns[:environment].courses.first
+        course.quota.should_not be_nil
+      end
+
+      it "associates the plan with the user" do
+        assigns[:plan].user.should == @user
       end
 
       it "redirects to course page" do

@@ -225,22 +225,6 @@ describe Environment do
         end
       end
 
-      context "and plan dones NOT have members limit" do
-        before do
-          plan = Plan.from_preset(:free, "LicensedPlan")
-          plan.user = subject.owner
-          subject.plan = plan
-        end
-
-        it "should permit entry" do
-          subject.can_add_entry?.should be_true
-        end
-
-        it "should permit entry" do
-          (1..15).each { subject.courses.first.join(FactoryGirl.create(:user)) }
-          subject.can_add_entry?.should be_true
-        end
-      end
     end
 
     context "when destroying" do
