@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130601184428) do
+ActiveRecord::Schema.define(:version => 20170202184330) do
 
   create_table "alternatives", :force => true do |t|
     t.text     "text"
@@ -342,26 +342,6 @@ ActiveRecord::Schema.define(:version => 20130601184428) do
     t.datetime "updated_at",    :null => false
   end
 
-  create_table "invoices", :force => true do |t|
-    t.date     "period_start"
-    t.date     "period_end"
-    t.datetime "due_at"
-    t.string   "currency",                                       :default => "BRL"
-    t.string   "state"
-    t.decimal  "amount",           :precision => 8, :scale => 2
-    t.text     "description"
-    t.integer  "plan_id"
-    t.datetime "created_at",                                                        :null => false
-    t.datetime "updated_at",                                                        :null => false
-    t.decimal  "previous_balance", :precision => 8, :scale => 2, :default => 0.0
-    t.text     "audit"
-    t.string   "type"
-    t.boolean  "current",                                        :default => false
-  end
-
-  add_index "invoices", ["current"], :name => "index_invoices_on_current"
-  add_index "invoices", ["plan_id"], :name => "index_invoices_on_plan_id"
-
   create_table "lectures", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -381,19 +361,6 @@ ActiveRecord::Schema.define(:version => 20130601184428) do
   add_index "lectures", ["lectureable_id", "lectureable_type"], :name => "lectures_lectureable_id_and_type"
   add_index "lectures", ["subject_id"], :name => "index_lectures_on_subject_id"
   add_index "lectures", ["user_id"], :name => "index_lectures_on_user_id"
-
-  create_table "licenses", :force => true do |t|
-    t.string   "name"
-    t.string   "login"
-    t.string   "email"
-    t.date     "period_start"
-    t.date     "period_end"
-    t.string   "role"
-    t.integer  "invoice_id"
-    t.integer  "course_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-  end
 
   create_table "messages", :force => true do |t|
     t.integer  "sender_id"
@@ -449,50 +416,20 @@ ActiveRecord::Schema.define(:version => 20130601184428) do
     t.datetime "updated_at"
   end
 
-  create_table "partner_environment_associations", :force => true do |t|
-    t.integer  "environment_id"
-    t.integer  "partner_id"
-    t.string   "cnpj"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-    t.string   "address"
-    t.string   "company_name"
-  end
-
-  create_table "partner_user_associations", :force => true do |t|
-    t.integer  "partner_id"
-    t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "partners", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.string   "email"
-    t.string   "cnpj"
-    t.string   "address"
-  end
-
   create_table "plans", :force => true do |t|
     t.string   "state"
     t.string   "name"
     t.integer  "video_storage_limit"
     t.integer  "members_limit"
     t.integer  "file_storage_limit"
-    t.decimal  "price",               :precision => 8, :scale => 2
     t.integer  "user_id"
     t.integer  "billable_id"
     t.string   "billable_type"
-    t.datetime "created_at",                                                           :null => false
-    t.datetime "updated_at",                                                           :null => false
-    t.date     "billing_date"
-    t.decimal  "yearly_price",        :precision => 8, :scale => 2
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
     t.text     "billable_audit"
     t.string   "type"
-    t.decimal  "membership_fee",      :precision => 8, :scale => 2
-    t.boolean  "current",                                           :default => false
+    t.boolean  "current",             :default => false
   end
 
   add_index "plans", ["current"], :name => "index_plans_on_current"
