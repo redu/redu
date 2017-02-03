@@ -1,7 +1,0 @@
-
-<div class="client-infos">
-  <span class="emission info"><strong>Emissão:</strong> <%= l Date.today %></span>
-  <% unless period.nil? %>
-    <span class="period"><strong>Competência:</strong> <%= l period.end, :format => :month_year %> </span>
-  <% end %>
-</div>

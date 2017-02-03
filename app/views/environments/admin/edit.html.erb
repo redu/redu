@@ -32,7 +32,7 @@
         <div class="plan-panel">
           <div class="plan-use">
             <span class="plan-type"><%= @environment.plan.name %></span>
-            <%= render :partial => "invoices/quotas_old",
+            <%= render :partial => "quotas/quotas_old",
               :locals => { :quota_file => @environment.percentage_quota_file,
                            :plan => @environment.plan,
                            :quota_multimedia => @environment.percentage_quota_multimedia,
