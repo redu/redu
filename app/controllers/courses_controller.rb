@@ -91,7 +91,7 @@ class CoursesController < BaseController
     respond_to do |format|
       if @course.save
         if @environment.plan.nil?
-          @plan = Plan.from_preset(params[:plan].to_sym)
+          @plan = Plan.from_preset(:professor_plus)
           @plan.user = current_user
           @course.create_quota
           @course.plan = @plan
