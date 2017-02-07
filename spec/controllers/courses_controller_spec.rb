@@ -58,16 +58,9 @@ describe CoursesController do
     end
 
     context "POST create" do
-      it "should be a professor_lite plan" do
-        params[:plan] = "professor_lite"
+      it "should be a professor_plus plan" do
         post :create, params
-        assigns[:plan].name.should == "Professor Lite"
-      end
-
-      it "should be a free plan" do
-        params[:plan] = "free"
-        post :create, params
-        assigns[:plan].name.should == "Professor Grátis"
+        assigns[:plan].name.should == "Professor Plus"
       end
     end
   end

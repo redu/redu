@@ -116,13 +116,13 @@ describe Plan do
   end
 
   context "when migrating to another plan" do
-    let(:subject) { FactoryGirl.create(:plan, :price => 15.90) }
+    let(:subject) { FactoryGirl.create(:plan) }
 
     context "when upgrading" do
       before do
         @billable = subject.billable
 
-        @new_plan = FactoryGirl.build(:active_package_plan, :price => 25.40)
+        @new_plan = FactoryGirl.build(:active_package_plan)
       end
 
       it "should change to migrated" do
@@ -153,7 +153,7 @@ describe Plan do
       before do
         @billable = subject.billable
 
-        @new_plan = FactoryGirl.build(:active_package_plan, :price => 10.70)
+        @new_plan = FactoryGirl.build(:active_package_plan)
       end
     end
   end

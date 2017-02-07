@@ -28,31 +28,17 @@ describe EnvironmentsController do
         assigns[:environment].should be_valid
         assigns[:step].should == 2
       end
+
+      it "assigns the plan should be professor_plus" do
+        assigns[:plan].name.should == "Professor Plus"
+      end
     end
 
     context "at step 2" do
-      before do
-        @params[:step] = "2"
-        @params[:plan] = "professor_standard"
-        post :create, @params
-      end
-
-      it "assigns the environment" do
-        assigns[:environment].should_not be_nil
-        assigns[:environment].should be_valid
-        assigns[:step].should == 3
-      end
-
-      it "assigns the plan" do
-        assigns[:plan].should == @params[:plan]
-      end
-    end
-
-    context "at step 3" do
 
       context "when is valid" do
         before do
-          @params[:step] = "3"
+          @params[:step] = "2"
           @params[:plan] = "professor_standard"
           post :create, @params
         end
@@ -60,17 +46,17 @@ describe EnvironmentsController do
         it "assigns the environment" do
           assigns[:environment].should_not be_nil
           assigns[:environment].should be_valid
-          assigns[:step].should == 4
+          assigns[:step].should == 3
         end
 
         it "assigns the plan" do
-          assigns[:plan].should == @params[:plan]
+          assigns[:plan].name.should == "Professor Plus"
         end
       end
 
       context "when isn't valid" do
         before do
-          @params[:step] = "3"
+          @params[:step] = "2"
           @params[:plan] = "professor_standard"
           @params[:environment][:name] = ""
           post :create, @params
@@ -79,7 +65,7 @@ describe EnvironmentsController do
         it "assigns the environment" do
          assigns[:environment].should_not be_nil
          assigns[:environment].should_not be_valid
-         assigns[:step].should == 3
+         assigns[:step].should == 2
         end
 
         it "assigns the plan" do
@@ -87,9 +73,9 @@ describe EnvironmentsController do
         end
       end
     end
-    context "at step 4" do
+    context "at step 3" do
       before do
-        @params[:step] = "4"
+        @params[:step] = "3"
         @params[:plan] = "free"
         @params[:color] = "f56b00"
         @params[:locale] = "pt-BR"
