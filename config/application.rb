@@ -53,12 +53,6 @@ module Redu
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password, :password_confirmation]
 
-    # S3 credentials
-    if File.exists?("#{Rails.root}/config/s3.yml")
-      config.s3_config = YAML.load_file("#{Rails.root}/config/s3.yml")
-      config.s3_credentials = config.s3_config[Rails.env]
-    end
-
     if File.exists?( File.join(Rails.root, 'config', 'application.yml') )
       file = File.join(Rails.root, 'config', 'application.yml')
       config.extras = YAML.load_file file
@@ -90,11 +84,10 @@ module Redu
     config.action_mailer.delivery_method = :test
 
     config.paperclip = {
-      :storage => :s3,
-      :s3_credentials => config.s3_credentials,
-      :bucket => config.s3_credentials['bucket'], # redu-uploads
-      :path => ":class/:attachment/:id/:style/:basename.:extension",
-      :default_url => "http://#{config.s3_credentials['assets_bucket']}.s3.amazonaws.com/images/new/missing_:class_:style.png",
+      :storage => :filesystem,
+      :path => File.join(Rails.root.to_s, "public/images/:class/:attachment/:id/:style/:basename.:extension"),
+      :url => "/images/:class/:attachment/:id/:style/:filename",
+      :default_url => "/assets/missing_:class_:style.png"
     }
 
     config.paperclip_environment = config.paperclip.merge({
@@ -119,55 +112,25 @@ module Redu
     })
 
     config.paperclip_myfiles = config.paperclip.merge({
-      :bucket => config.s3_credentials['files_bucket'], # redu-files
-      :path => ":class/:attachment/:id/:style/:basename.:extension",
+      :storage => :filesystem,
+      :path => File.join(Rails.root.to_s, "public/files/:class/:attachment/:id/:style/:basename.:extension"),
       :default_url => ":class/:attachment/:style/missing.png",
       :styles => {}
     })
 
     # Configurações de conversão e storage de videos (Seminar)
     config.video_original = { # Arquivo original do video (uploaded)
-      :storage => :s3,
-      :s3_credentials => config.s3_credentials,
-      :bucket => config.s3_credentials['bucket'],
-      :path => ":class/:attachment/:id/:style/:basename.:extension",
-      :default_url => "http://#{config.s3_credentials['assets_bucket']}.s3.amazonaws.com/images/new/missing_:class_:style.png",
+      :storage => :filesystem,
+      :path => File.join(Rails.root.to_s, "public/video_original/:class/:attachment/:id/:style/:basename.:extension"),
+      :url => "/images/:class/:attachment/:id/:style/:filename",
+      :default_url => ":class/:attachment/:style/missing.png",
       :styles => {}
     }
 
     config.video_transcoded = { # Arquivo convertido
-      :storage => :s3,
-      :s3_credentials => config.s3_credentials,
-      :bucket => config.s3_credentials['videos_bucket'],
-      :path => ":class/:attachment/:id/:style/:basename.:extension",
-      :default_url => "http://#{config.s3_credentials['assets_bucket']}.s3.amazonaws.com/images/new/missing_:class_:style.png",
-    }
-
-    # Usado em :controller => jobs, :action => notify
-    config.zencoder_credentials = {
-      :username => 'zencoder',
-      :password => 'MCZC2pDQyt5bzko1'
-    }
-
-    # No ambiente de desenvolvimento :test => 1 (definido em development.rb)
-    config.zencoder = {
-      :api_key => '69c8730bf5c0134af339a97b6a2d53e0',
-      :input => '',
-      :output => {
-        :url => '',
-        :video_codec => "vp6",
-        :public => 1,
-        :thumbnails => {
-          :number => 6,
-          :size => "160x120",
-          :base_url => '',
-          :prefix => "thumb"
-        },
-        :notifications => {
-          :format => 'json',
-          :url => ''
-        }
-     }
+      :storage => :filesystem,
+      :path => File.join(Rails.root.to_s, "public/video_transcoded/:class/:attachment/:id/:style/:basename.:extension"),
+      :default_url => ":class/:attachment/:style/missing.png"
     }
 
     # Usado pelo WYSIWYG CKEditor
@@ -207,13 +170,6 @@ module Redu
     # Adapters
     config.autoload_paths << "#{config.root}/app/adapters"
 
-    # Configurações do Pusher (redu app)
-    config.pusher = {
-      :app_id => '4577',
-      :key => 'f786a58d885e7397ecaa',
-      :secret => '1de7afbc11094fcfa16b'
-    }
-
     # Observers
     unless File.basename($0) == 'rake'
       config.active_record.observers = [:course_observer,
@@ -238,7 +194,6 @@ module Redu
                                         :message_cache_observer,
                                         :lecture_cache_observer,
                                         :asset_report_cache_observer,
-                                        :chat_message_observer,
                                         :solr_profile_indexer_observer,
                                         :solr_education_indexer_observer,
                                         :solr_hierarchy_indexer_observer,
@@ -310,8 +265,8 @@ module Redu
     config.assets.precompile += %w(maintenance.css)
 
     # Layout sem bootstrap
-    config.assets.precompile += %w(ie.js chat.js outdated_browser.js ckeditor.js olark.js jquery.maskedinput.js canvas.js chart.js jwplayer.js webview.js clean.js new_wall.js new_wall/lecture-toggle-comment-or-help.js)
-    config.assets.precompile += %w(ie.css icons.redu.css chat.css outdated_browser.css preview-course-old.css page.css cold.css clean.css print.css email.css new_wall.css)
+    config.assets.precompile += %w(ie.js outdated_browser.js ckeditor.js jquery.maskedinput.js canvas.js chart.js jwplayer.js webview.js clean.js new_wall.js new_wall/lecture-toggle-comment-or-help.js)
+    config.assets.precompile += %w(ie.css icons.redu.css outdated_browser.css preview-course-old.css page.css cold.css clean.css print.css email.css new_wall.css)
 
     # CKEditor
     config.assets.precompile += %w(ckeditor/*)

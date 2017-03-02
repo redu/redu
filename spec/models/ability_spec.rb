@@ -1128,15 +1128,6 @@ describe Ability do
           it "manages package_plan's invoice" do
             @ability.should be_able_to(:manage, @invoice)
           end
-
-          it "can pay package_plan's invoice with pagseguro" do
-            @ability.should be_able_to(:pay_with_pagseguro, @invoice)
-          end
-
-          it "can NOT pay paid package_plan's invoice with pagseguro" do
-            @invoice.update_attribute(:state, "paid")
-            @ability.should_not be_able_to(:pay_with_pagseguro, @invoice)
-          end
         end
 
         context "the strange" do
@@ -1320,82 +1311,6 @@ describe Ability do
     before do
       @user = FactoryGirl.create(:user)
       @user_ability = Ability.new(@user)
-    end
-
-    context "pusher channels" do
-      before do
-        @stranger = FactoryGirl.create(:user)
-        @friend = FactoryGirl.create(:user)
-
-        friendship, status = @user.be_friends_with(@friend)
-        friendship.accept!
-      end
-
-      it "can auth a channel" do
-        @user_ability.should be_able_to(:auth, @user)
-      end
-
-      it "can NOT auth a contact channel" do
-        @user_ability.should_not be_able_to(:auth, @friend)
-      end
-
-      it "can subscribe a contact channel" do
-        @user_ability.should be_able_to(:subscribe_channel, @friend)
-      end
-
-      it "can NOT subscribe a stranger channel" do
-        @user_ability.should_not be_able_to(:subscribe_channel, @stranger)
-      end
-
-      context "when chatting" do
-        before do
-          course = FactoryGirl.create(:course)
-          @colleague = FactoryGirl.create(:user)
-          @teacher = FactoryGirl.create(:user)
-          course.join(@user)
-          course.join(@colleague)
-          course.join(@teacher, Role[:teacher])
-        end
-
-        it "can send a message to a friend" do
-          @user_ability.should be_able_to(:send_chat_message, @friend)
-        end
-
-        it "can send a message to a teacher" do
-          @user_ability.should be_able_to(:send_chat_message, @teacher)
-        end
-
-        it "can NOT send a message to a colleague" do
-          @user_ability.should_not be_able_to(:send_chat_message, @colleague)
-        end
-
-        it "can NOT send a message to a stranger" do
-          @user_ability.should_not be_able_to(:send_chat_message, @stranger)
-        end
-      end
-
-      context "when requesting last chat messages" do
-        before do
-          course = FactoryGirl.create(:course)
-          @colleague = FactoryGirl.create(:user)
-          @teacher = FactoryGirl.create(:user)
-          course.join(@user)
-          course.join(@colleague)
-          course.join(@teacher, Role[:teacher])
-        end
-
-        it "can request his messages with a teacher" do
-          @user_ability.should be_able_to(:last_messages_with, @teacher)
-        end
-
-        it "can NOT request his messages with a colleague" do
-          @user_ability.should_not be_able_to(:last_messages_with, @colleague)
-        end
-
-        it "can NOT request his messages with a stranger" do
-          @user_ability.should_not be_able_to(:last_messages_with, @stranger)
-        end
-      end
     end
 
     context "when friends" do

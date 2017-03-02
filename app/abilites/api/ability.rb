@@ -9,8 +9,6 @@ module Api
     include Api::UserAbility
     include Api::LectureAbility
     include Api::SubjectAbility
-    include Api::ChatAbility
-    include Api::ChatMessageAbility
     include Api::FolderAbility
     include Api::MyfileAbility
     include Api::AssetReportAbility

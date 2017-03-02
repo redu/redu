@@ -33,11 +33,9 @@ gem 'invitable', git: 'git://github.com/OpenRedu/invitable.git'
 gem 'jquery-rails', '>= 1.0.12'
 gem 'kaminari', git: 'git://github.com/amatsuda/kaminari.git'
 gem 'mime-types'
-gem "mysql2"
+gem "mysql2", '0.3.17'
 gem 'omniauth'
-gem 'omniauth-facebook', '~> 4.0.0'
-gem 'pusher'
-gem 'pagseguro', '~> 0.1.10'
+gem 'omniauth-facebook'
 gem 'paperclip', '~> 2.7.5'
 gem 'rails', '~> 3.2.13'
 gem "rake", "~> 10.0.4"
@@ -52,7 +50,6 @@ gem 'vis_client', git: 'git://github.com/redu/vis_client.git',
   branch: 'ruby-1-9-3'
 gem 'chronic' # Necessário ao whenever
 gem 'whenever', require: false
-gem 'zencoder'
 gem 'untied-publisher', '~> 0.0.7.pre3'
 gem 'yajl-ruby'
 gem 'simple_acts_as_list'

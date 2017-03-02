@@ -44,10 +44,6 @@ module Api
       api_user_contacts_url(self)
     end
 
-    link :chats do
-      api_user_chats_url(self)
-    end
-
     link :connections do
       api_user_connections_url(self)
     end

@@ -285,21 +285,20 @@ GEM
       oauth (~> 0.4.4)
       oauth2 (>= 0.5.0)
       rack
-    oauth2 (1.3.0)
-      faraday (>= 0.8, < 0.11)
-      jwt (~> 1.0)
-      multi_json (~> 1.3)
-      multi_xml (~> 0.5)
-      rack (>= 1.2, < 3)
-    omniauth (1.3.1)
-      hashie (>= 1.2, < 4)
-      rack (>= 1.0, < 3)
-    omniauth-facebook (4.0.0)
-      omniauth-oauth2 (~> 1.2)
-    omniauth-oauth2 (1.4.0)
-      oauth2 (~> 1.0)
-      omniauth (~> 1.2)
-    pagseguro (0.1.13)
+    oauth2 (0.8.1)
+      faraday (~> 0.8)
+      httpauth (~> 0.1)
+      jwt (~> 0.1.4)
+      multi_json (~> 1.0)
+      rack (~> 1.2)
+    omniauth (1.1.4)
+      hashie (>= 1.2, < 3)
+      rack
+    omniauth-facebook (1.4.1)
+      omniauth-oauth2 (~> 1.1.0)
+    omniauth-oauth2 (1.1.1)
+      oauth2 (~> 0.8.0)
+      omniauth (~> 1.0)
     paperclip (2.7.5)
       activerecord (>= 2.3.0)
       activesupport (>= 2.3.2)
@@ -313,10 +312,7 @@ GEM
     premailer-rails (1.4.0)
       premailer (~> 1.7)
       rails (>= 3)
-    pusher (0.11.3)
-      multi_json (~> 1.0)
-      signature (~> 0.1.6)
-    rack (1.4.7)
+    rack (1.4.5)
     rack-cache (1.2)
       rack (>= 0.4)
     rack-cors (0.2.7)
@@ -398,7 +394,6 @@ GEM
     shoulda-matchers (1.5.6)
       activesupport (>= 3.0.0)
       bourne (~> 1.3)
-    signature (0.1.7)
     simple_acts_as_list (0.0.1)
       activesupport
     sprockets (2.2.2)
@@ -449,8 +444,6 @@ GEM
     whenever (0.8.2)
     xml-simple (1.1.2)
     yajl-ruby (1.1.0)
-    zencoder (2.4.4)
-      multi_json
 
 PLATFORMS
   ruby
@@ -497,11 +490,9 @@ DEPENDENCIES
   no_peeping_toms!
   oauth-plugin (~> 0.4.0)
   omniauth
-  omniauth-facebook (~> 4.0.0)
-  pagseguro (~> 0.1.10)
+  omniauth-facebook
   paperclip (~> 2.7.5)
   premailer-rails
-  pusher
   rack-cors
   rails (~> 3.2.13)
   rails3-generators
@@ -534,7 +525,9 @@ DEPENDENCIES
   webmock
   whenever
   yajl-ruby
-  zencoder
+
+RUBY VERSION
+   ruby 1.9.3p551
 
 RUBY VERSION
    ruby 1.9.3p551

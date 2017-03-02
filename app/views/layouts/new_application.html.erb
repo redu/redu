@@ -9,7 +9,6 @@
     <%= stylesheet_link_tag "new_application" %>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <%= javascript_include_tag "new_application" %>
-    <%= content_for?(:chat_script) ? content_for(:chat_script) : render("shared/chat") %>
     <%= render "shared/typekit" %>
     <%= render "shared/analytics" %>
     <%= yield :header_scripts_and_styles %>
@@ -25,10 +24,9 @@
         </div>
       <% end %>
       <% unless content_for? :footer %>
-        <div class="footer-pusher"></div>
+        <div class="footer-sticky"></div>
       <% end %>
     </div>
     <%= content_for?(:footer) ? content_for(:footer) : render("shared/footer") %>
-    <%= content_for?(:olark_script) ? content_for(:olark_script) : render("shared/olark") %>
   </body>
 </html>

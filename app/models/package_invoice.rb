@@ -36,16 +36,6 @@ class PackageInvoice < Invoice
     transitions :to => :overdue, :from => [:pending, :overdue, :waiting]
   end
 
-  # Converte o invoice para um hash que pode ser utilizado para adicionar produtos
-  # a ordem do gateway de pagamento (e.g PagSeguro)
-  def to_order_item(item_options = {})
-    args = {
-      :id => self.id,
-      :price => self.total,
-      :description => self.description || self.generate_description
-    }.merge(item_options)
-  end
-
   # Data limite para o pagamento
   def threshold_date
     self.period_start + Invoice::OVERDUE_DAYS

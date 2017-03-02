@@ -29,9 +29,6 @@ describe User do
   it { should have_many(:user_environment_associations).dependent(:destroy) }
   it { should have_many(:environments_owned) }
 
-  # Chat
-  it { should have_many(:chat_messages) }
-  it { should have_many(:chats).dependent(:destroy) }
 
   # Plan
   it { should have_many(:plans) }
@@ -437,16 +434,6 @@ describe User do
       it 'retrieves a user by name' do
         User.with_keyword("tarcisio coutinho").to_set.should == [@tarci].to_set
       end
-    end
-
-    it "should retrieve a presence channel name" do
-      subject.presence_channel.should == "presence-user-#{subject.id}"
-    end
-
-    it "should retrive a private channel name with a contact" do
-      @contact = FactoryGirl.create(:user)
-      subject.private_channel_with(@contact).should ==
-        "private-#{@contact.id}-#{subject.id}"
     end
 
     it "retrieves the 5 most popular users (more friends)" do
