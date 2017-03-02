@@ -59,15 +59,7 @@ Redu::Application.configure do
 
   # Só converte os 5 primeiros segundos (grátis)
   config.zencoder[:test] = 1
-
-  # Configuração da aplicação em omniauth providers
-  config.omniauth = {
-    :facebook => {
-      :app_id => '142857189169463',
-      :app_secret => 'ea0f249a4df83b250c3364ccf097f35c'
-    }
-  }
-
+  
   # Ativa o modo de testes do OmniAuth
   OmniAuth.config.test_mode = true
 

@@ -35,7 +35,7 @@ gem 'kaminari', git: 'git://github.com/amatsuda/kaminari.git'
 gem 'mime-types'
 gem "mysql2"
 gem 'omniauth'
-gem 'omniauth-facebook'
+gem 'omniauth-facebook', '~> 4.0.0'
 gem 'pusher'
 gem 'pagseguro', '~> 0.1.10'
 gem 'paperclip', '~> 2.7.5'
