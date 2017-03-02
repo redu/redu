@@ -24,7 +24,7 @@
         </div>
       <% end %>
       <% unless content_for? :footer %>
-        <div class="footer-pusher"></div>
+        <div class="footer-sticky"></div>
       <% end %>
     </div>
     <%= content_for?(:footer) ? content_for(:footer) : render("shared/footer") %>
