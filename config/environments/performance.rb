@@ -55,15 +55,6 @@ Redu::Application.configure do
   #config.action_controller.asset_host = "http://192.168.1.19:3000"
 
   config.action_mailer.default_url_options = { :host => config.url }
-  #config.action_mailer.asset_host =  config.action_controller.asset_host
-
-  # Configuração da aplicação em omniauth providers
-  config.omniauth = {
-    :facebook => {
-      :app_id => '142857189169463',
-      :app_secret => 'ea0f249a4df83b250c3364ccf097f35c'
-    }
-  }
 
   # Configurações de VisClient
   config.vis_client = {

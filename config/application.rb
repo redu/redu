@@ -233,6 +233,16 @@ module Redu
       :url => "http://blog.redu.com.br/"
     }
 
+    # Configuração da aplicação em omniauth providers
+    config.omniauth = {
+      :facebook => {
+        :app_id => ENV['FACEBOOK_APP_ID'],
+        :app_secret => ENV['FACEBOOK_APP_SECRET'],
+        :scope => 'public_profile, email',
+        :info_fields => 'email,first_name,last_name'
+      }
+    }
+
     # Seta locale defaul para pt-br
     config.i18n.default_locale = :"pt-BR"
     I18n.locale = config.i18n.default_locale
