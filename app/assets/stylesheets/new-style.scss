@@ -7433,10 +7433,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 /* Fim estilo página invoice.html */
 
 /* Início página plans.html */
-.explanation-sidebar .explanation .pag-seguro {
-  text-indent: -9999px;
-}
-
 .tabs > ul li .upgrade-plan {
     color: rgb(204, 204, 204);
     display: block;
@@ -7444,16 +7440,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
     font-style: italic;
     margin-left: 30px;
     margin-top: -10px;
-}
-
-#content .explanation-sidebar .explanation .pag-seguro a {
-  background-image: image-url("pagseguro-p.png");
-  text-indent: -9999px;
-  display: block;
-  overflow: hidden;
-  background-repeat: no-repeat;
-  width: 150px;
-  height: 30px;
 }
 
 .plan-panel .options-plan .plans-list .plans .plan {
