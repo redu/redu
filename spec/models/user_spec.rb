@@ -32,8 +32,7 @@ describe User do
 
   # Plan
   it { should have_many(:plans) }
-
-  it { should have_many(:partners).through(:partner_user_associations) }
+  
   # Curriculum
   it { should have_many(:experiences).dependent(:destroy) }
   it { should have_many(:educations).dependent(:destroy) }

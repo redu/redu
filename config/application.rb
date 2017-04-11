@@ -189,8 +189,6 @@ module Redu
                                         :user_cache_observer,
                                         :user_course_association_cache_observer,
                                         :course_cache_observer,
-                                        :partner_user_association_cache_observer,
-                                        :partner_cache_observer,
                                         :message_cache_observer,
                                         :lecture_cache_observer,
                                         :asset_report_cache_observer,

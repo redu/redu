@@ -12,8 +12,6 @@ describe Environment do
   it { should have_many(:users).through(:user_environment_associations)}
   it { should have_many(:plans) }
   it { should belong_to(:owner)}
-  it { should have_one(:partner).through(:partner_environment_association) }
-  it { should have_one(:partner_environment_association) }
   it { should accept_nested_attributes_for :courses }
 
   it { should validate_presence_of(:name) }
@@ -227,22 +225,6 @@ describe Environment do
         end
       end
 
-      context "and plan dones NOT have members limit" do
-        before do
-          plan = Plan.from_preset(:free, "LicensedPlan")
-          plan.user = subject.owner
-          subject.plan = plan
-        end
-
-        it "should permit entry" do
-          subject.can_add_entry?.should be_true
-        end
-
-        it "should permit entry" do
-          (1..15).each { subject.courses.first.join(FactoryGirl.create(:user)) }
-          subject.can_add_entry?.should be_true
-        end
-      end
     end
 
     context "when destroying" do

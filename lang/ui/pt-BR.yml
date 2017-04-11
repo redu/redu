@@ -206,12 +206,6 @@ pt-BR:
         password_confirmation: "Confirmação da senha"
         email_confirmation: "Confirmação de E-mail"
         current_password: "Senha atual"
-      partner:
-        name: "Nome"
-      partner_environment_association:
-        cnpj: "CNPJ"
-        company_name: "Razão social"
-        address: "Endereço"
     errors:
       template:
         header:
@@ -287,10 +281,6 @@ pt-BR:
           attributes:
            name:
             blank: ":Escolha um nome para o recurso."
-        partner_environment_association:
-          attributes:
-            cnpj:
-              invalid: "formato inválido"
         seminar:
           attributes:
             original:
