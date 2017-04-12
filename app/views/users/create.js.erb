@@ -13,7 +13,7 @@ var $modal = $("#modal-sign-up");
                    :user => @user %>");
 
   <% unless @user.errors[:tos].empty? %>
-    $newForm.append("<%= escape_javascript render 'bootstrap/system_message', message: 'Você não pode se cadastrar se não aceitar os Termos de Uso do Redu.', type: 'warning' %>");
+    $newForm.append("<%= escape_javascript render 'bootstrap/system_message', message: 'Você não pode se cadastrar se não aceitar os Termos de Uso do Openredu.', type: 'warning' %>");
   <% end %>
 
   $form.replaceWith($newForm);
