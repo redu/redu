@@ -195,6 +195,8 @@ GEM
       activesupport (>= 3.0.20)
       rake
     diff-lcs (1.2.4)
+    domain_name (0.5.20170404)
+      unf (>= 0.0.5, < 1.0.0)
     dynamic_form (1.1.4)
     em-http-request (1.0.3)
       addressable (>= 2.2.3)
@@ -237,6 +239,8 @@ GEM
     hike (1.2.2)
     hooks (0.3.1)
     htmlentities (4.3.1)
+    http-cookie (1.0.3)
+      domain_name (~> 0.5)
     http_parser.rb (0.5.3)
     humanizer (2.4.4)
     i18n (0.6.1)
@@ -277,6 +281,7 @@ GEM
     net-scp (1.1.1)
       net-ssh (>= 2.6.5)
     net-ssh (2.6.7)
+    netrc (0.11.0)
     newrelic_rpm (3.6.2.96)
     nokogiri (1.5.9)
     oauth (0.4.7)
@@ -349,6 +354,10 @@ GEM
     representable (1.5.3)
       multi_json
       nokogiri
+    rest-client (1.8.0)
+      http-cookie (>= 1.0.2, < 2.0)
+      mime-types (>= 1.16, < 3.0)
+      netrc (~> 0.7)
     roar (0.11.18)
       representable (>= 1.5.2)
     roar-rails (0.1.0)
@@ -426,6 +435,9 @@ GEM
     uglifier (2.1.0)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.7.2)
     untied-publisher (0.0.7.pre3)
       activerecord
       amqp
@@ -501,6 +513,7 @@ DEPENDENCIES
   redu-has_friends (~> 1.0)
   redu_analytics!
   remotipart (~> 1.0)
+  rest-client
   roar-rails
   route_translator
   rspec-rails (~> 2.13)
@@ -530,4 +543,4 @@ RUBY VERSION
    ruby 1.9.3p551
 
 BUNDLED WITH
-   1.13.5
+   1.14.6

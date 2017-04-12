@@ -31,6 +31,7 @@
 // Somente para a nav global: fim
 //= require search
 //= require ckeditor/ckeditor
+//= require pdf
 
 
 jQuery(function(){

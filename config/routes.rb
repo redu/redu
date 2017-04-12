@@ -1,6 +1,7 @@
 # -*- encoding : utf-8 -*-
 Redu::Application.routes.draw do
   localized do
+    get 'getpdf', to: 'lectures#getpdf'
     match '/oauth/token',         :to => 'oauth#token',         :as => :token
     match '/oauth/access_token',  :to => 'oauth#access_token',  :as => :access_token
     match '/oauth/request_token', :to => 'oauth#request_token', :as => :request_token
