@@ -158,16 +158,21 @@ class LecturesController < BaseController
           authorize! :upload_document, @lecture
           @lecture.save
           if @lecture.lectureable.attachment_content_type != 'application/pdf'
-            response = RestClient.post(
-              "#{LIVREDOC_URL}/api/v1/documents",
-              {
-                :document_id => @lecture.lectureable.id,
-                :file => File.new(@lecture.lectureable.attachment.path)
-              },
-              livredoc_header
-            )
-            response = JSON.parse(response)
-            @lecture.lectureable.livredoc_id = response['id']
+            response = nil
+            begin
+              response = RestClient.post(
+                "#{LIVREDOC_URL}/api/v1/documents",
+                {
+                  :document_id => @lecture.lectureable.id,
+                  :file => File.new(@lecture.lectureable.attachment.path)
+                },
+                livredoc_header
+              )
+              response = JSON.parse(response)
+              @lecture.lectureable.livredoc_id = response['id']
+            rescue RestClient::RequestFailed
+              @lecture.lectureable.livredoc_id = nil
+            end
             @lecture.save
           end
         else
