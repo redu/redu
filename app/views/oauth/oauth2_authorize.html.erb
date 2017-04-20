@@ -12,7 +12,7 @@
     </div>
     <div class="content-section">
       <h3>Autorizar acesso à sua conta</h3>
-      <p class="authorization-disclaimer">O aplicativo <%= link_to @client_application.name,@client_application.url, target: "_BLANK", class: "app-name" %> deseja acessar seus dados no Redu. Entretanto, sua senha nunca poderá ser consultada por este serviço.
+      <p class="authorization-disclaimer">O aplicativo <%= link_to @client_application.name,@client_application.url, target: "_BLANK", class: "app-name" %> deseja acessar seus dados no Openredu. Entretanto, sua senha nunca poderá ser consultada por este serviço.
       </p>
       <p class="authorization-question"> Você autoriza o acesso aos seus dados?  </p>
       <%= form_tag authorize_url, class: "positive-authorization-form" do %>
