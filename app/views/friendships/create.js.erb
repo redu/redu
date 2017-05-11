@@ -37,9 +37,7 @@
 <%# Se o convite de amizade foi feito na página de perfil. %>
 var $buttonAddContact = $('.profile-action-new-friendship');
 
-<% if current_user.friends? @friend %>
-  
-<% else %>
+<% unless current_user.friends? @friend %>
   var $buttonWaiting = $('<%= escape_javascript render "friendships/button_waiting" %>');
   $buttonWaiting.hide();
   $buttonAddContact.after($buttonWaiting);
