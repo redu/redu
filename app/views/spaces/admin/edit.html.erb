@@ -13,20 +13,7 @@
 
     <%= tabs :spaces_admin do %>
       <div class="plan-info">
-        <span class="call">Plano</span>
-        <span>
-          <% if @space.course.plan %>
-          <%= link_to @space.course.name,
-            environment_course_path(@space.course.environment, @space.course),
-            :class => "course-name" %> /
-          <% elsif @space.course.environment.plan %>
-            <%= link_to @space.course.environment.name,
-              environment_path(@space.course.environment),
-              :class => "course-name" %> /
-          <% end %>
-          <%= link_to @plan.name, plan_invoices_path(@plan),
-            :class => "plan-name" %>
-          </span>
+        <span class="call">Limites</span>
         <ul class="plan-data">
           <li>membros:
             <strong class="featured"><%= @billable.users.count %></strong> /

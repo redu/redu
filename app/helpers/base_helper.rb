@@ -325,13 +325,6 @@ module BaseHelper
     SecureRandom.hex(4)
   end
 
-  # Mostra tabela de preço de planos
-  def pricing_table(plans=nil)
-    plans ||= PackagePlan::PLANS
-
-    render :partial => "plans/plans", :locals => { :plans => plans }
-  end
-
   # Sidebar esquerdo de user
   def last_accessed_courses(user)
     user.user_course_associations.includes(:course => :environment).

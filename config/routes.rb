@@ -22,10 +22,6 @@ Redu::Application.routes.draw do
     match '/search/environments' => 'search#environments', :as => :search_environments
     match '/search/profiles' => 'search#profiles', :as => :search_profiles
 
-    post "presence/auth"
-    post "presence/multiauth"
-    post "presence/send_chat_message"
-    get "presence/last_messages_with"
     get "vis/dashboard/teacher_participation_interaction"
 
     match '/jobs/notify' => 'jobs#notify', :as => :notify
@@ -185,25 +181,6 @@ Redu::Application.routes.draw do
       :as => :payment_callback
     match '/payment/success' => 'payment_gateway#success', :as => :payment_success
 
-    resources :partners, :only => [:show, :index] do
-      member do
-        post :contact
-        get :success
-      end
-
-      resources :partner_environment_associations, :as => :clients,
-        :only => [:create, :index, :new] do
-          resources :plans, :only => [:show] do
-            member do
-              get :options
-            end
-            resources :invoices, :only => [:index]
-          end
-      end
-      resources :partner_user_associations, :as => :collaborators, :only => :index
-      resources :invoices, :only => [:index]
-    end
-
     resources :environments, :path => '', :except => [:index] do
       member do
         get :preview
@@ -303,7 +280,6 @@ Redu::Application.routes.draw do
       end
       resources :users, :only => :index, :path => :contacts,
         :as => :contacts
-      resources :chats, :only => :index
       resources :friendships, :path => :connections,
         :as => 'connections', :only => [:index, :create]
       resources :asset_reports, :path => "progress", :only => [:index]
@@ -315,11 +291,6 @@ Redu::Application.routes.draw do
       resources :answers, :only => [:index, :create]
     end
 
-    resources :chats, :only => :show do
-      resources :chat_messages, :only => :index, :as => :messages
-    end
-
-    resources :chat_messages, :only => :show
 
     resources :folders, :only => [:show, :index] do
       resources :myfiles, :path => "files", :only => [:index, :create]

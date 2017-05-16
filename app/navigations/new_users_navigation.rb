@@ -69,13 +69,6 @@ module NewUsersNavigation
         :class => 'tab',
         :link => { :class => 'tab-title icon-account_16_18-before',
                    :title => 'Conta' }
-      settings_tab.item :plans, 'Planos', user_plans_path(@user),
-        :highlights_on => Proc.new { action_matcher({'plans' => ['index', 'options'], 'invoices' => ['index']}).call && @partner.nil? },
-        :class => 'tab',
-        :link => { :class => 'tab-title icon-plan_16_18-before',
-                   :title => 'Planos' },
-        :details => { :text => 'Detalhes', :class => 'tab-sub-title legend',
-                      :if => action_matcher({'invoices' => ['index']}) }
     end
     sidebar.item :oauth_clients, 'Aplicativos', new_user_oauth_client_path(@user),
       :class => 'nav-local-item icon-app-lightblue_16_18-before ',

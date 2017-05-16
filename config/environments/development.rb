@@ -33,40 +33,6 @@ Redu::Application.configure do
   config.action_mailer.default_url_options = { :host => config.url }
   config.action_mailer.asset_host = "http://#{config.url}"
 
-  # Armazena no sist. de arquivos
-  config.paperclip = {
-    :storage => :filesystem,
-    :path => File.join(Rails.root.to_s, "public/images/:class/:attachment/:id/:style/:basename.:extension"),
-    :url => "/images/:class/:attachment/:id/:style/:filename",
-    :default_url => "/assets/missing_:class_:style.png"
-  }
-
-  config.paperclip_environment.merge!(config.paperclip)
-  config.paperclip_user.merge!(config.paperclip)
-
-  config.paperclip_documents = config.paperclip.merge({
-    :styles => {},
-    :default_url => ''
-  })
-  config.paperclip_myfiles = config.paperclip.merge({:styles => {}})
-  config.video_original = config.paperclip.merge({:styles => {}})
-  config.video_transcoded = config.paperclip.merge({:styles => {}})
-
-  # Só converte os 5 primeiros segundos (grátis)
-  config.zencoder[:test] = 1
-
- # Configurações do Pusher (redu-development app)
-  config.pusher = {
-  }
-
-  # Configuração da aplicação em omniauth providers
-  config.omniauth = {
-    :facebook => {
-      :app_id => '142857189169463',
-      :app_secret => 'ea0f249a4df83b250c3364ccf097f35c'
-    }
-  }
-
   # Configurações de VisClient
   config.vis_client = {
     :url => "http://localhost:4000/hierarchy_notifications.json",
@@ -98,5 +64,3 @@ Redu::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 end
-
-

@@ -74,7 +74,7 @@ class ApplicationController < ActionController::Base
   def deny_access(exception, &block)
     session[:return_to] ||= request.fullpath
 
-    flash[:error] = "Essa área só pode ser vista após você acessar o Redu com seu nome e senha."
+    flash[:error] = "Essa área só pode ser vista após você acessar o Openredu com seu nome e senha."
 
     yield if block_given?
 

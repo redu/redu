@@ -51,10 +51,6 @@ class Ability
     # Message
     alias_action :delete_selected, :to => :manage
 
-    # Presence
-    alias_action :auth, :to => :manage
-    alias_action :send_chat_message, :last_messages_with, :to => :subscribe_channel
-
     # Plan
     alias_action :confirm, :address, :pay, :to => :manage
 
@@ -130,9 +126,6 @@ class Ability
         document.can_upload_document?(document.lecture)
       end
 
-      can :subscribe_channel, User do |contact|
-        Presence.new(user).contacts.include?(contact)
-      end
 
       can :multiauth, User
 
@@ -160,21 +153,8 @@ class Ability
           (user.has_access_to? status.statusable)
       end
 
-      # Parceiros
-      can :contact, Partner
-      cannot :index, Partner unless is_admin
-
       # Result
       can :update, Result, :state => 'started', :user_id => user.id
-
-      # Invoice
-      cannot :pay, Invoice do |invoice|
-        !(is_admin && (invoice.pending? || invoice.overdue?))
-      end
-
-      cannot :pay_with_pagseguro, Invoice do |invoice|
-        invoice.paid?
-      end
 
       # Plan
       cannot :migrate, Plan do |plan|

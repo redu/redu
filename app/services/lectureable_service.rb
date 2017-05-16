@@ -3,7 +3,7 @@ class LectureableService
   # Implementa o padrão Template Method para a criação de lectureables. Filhos
   # de lectureable service precisam implementar o método #build. Caso a criação
   # do lectureable necessite de autorização ou pós-processamento é facultativa
-  # a implementação dos métodos #authorize! e #process!
+  # a implementação dos métodos #authorize!
   def initialize(ability, lectureable_attrs={})
     @ability = ability
     @attrs = lectureable_attrs.with_indifferent_access
@@ -26,11 +26,6 @@ class LectureableService
   #
   def authorize!(lecture); end
 
-  # Template method responsável por realizar pós-processamento no lectureable,
-  # por exemplo, conversões de arquivos. É chamado depois que o lectureable é
-  # salvo.
-  def process!; end
-
   def create(lecture, &block)
     @lectureable = build(lecture, &block)
     lecture.lectureable = @lectureable
@@ -38,7 +33,6 @@ class LectureableService
     if @lectureable.valid?
       authorize!(lecture)
       @lectureable.save
-      process!
     end
 
     @lectureable

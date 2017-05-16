@@ -233,12 +233,6 @@ class LecturesController < BaseController
 
   protected
 
-  def authenticate
-    authenticate_or_request_with_http_basic do |id, password|
-      id == 'zencoder' && password == 'sociallearning'
-    end
-  end
-
   def find_subject_space_course_environment
     if @lecture
       @subject = @lecture.subject

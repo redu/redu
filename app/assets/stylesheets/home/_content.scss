@@ -134,10 +134,6 @@
   z-index: auto !important;
 }
 
-#chat {
-  z-index: 900;
-}
-
 .footer-logo-img {
   z-index: 800;
 }
@@ -276,38 +272,6 @@
       left: 100%;
       top: 50%;
       margin-top: -9px;
-    }
-  }
-
-  #tour-13 {
-    left: auto;
-    top: auto;
-    right: 20px;
-    bottom: 50px;
-    position: fixed;
-
-    &:after {
-      border: 9px solid transparent;
-      border-top-color: $gray1;
-
-      top: 100%;
-      right: 20px;
-    }
-  }
-
-  #tour-14 {
-    bottom: 60px;
-    left: 50%;
-    top: auto;
-    margin-left: -465px;
-    position: fixed;
-
-    &:after {
-      border: 9px solid transparent;
-      border-top-color: $gray1;
-
-      top: 100%;
-      left: 20px;
     }
   }
 

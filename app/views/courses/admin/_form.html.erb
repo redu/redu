@@ -2,7 +2,7 @@
     estiver sendo utilizado para editar uma entrada já existente %>
 
 <span class="course-path">
-  redu.com.br<%= environment_path(@environment) %>/cursos/<span class="course-name strong"><%= @course.path %></span>
+  openredu.ufpe.br<%= environment_path(@environment) %>/cursos/<span class="course-name strong"><%= @course.path %></span>
 </span>
 
 <%= f.label :name, "Nome" %>
@@ -47,35 +47,3 @@
     </li>
   </ul>
 </div>
-
-<% unless edit || @environment.plan %>
-  <hr />
-  <div class="clearfix">
-    <%= label :plan, "Plano" %>
-    <ul class="single-column course-plan">
-      <li>
-        <span class="plan-type">Professor</span>
-      </li>
-      <li>
-        <%= radio_button_tag :plan, 'free', :checked => true %>
-        <%= label_tag :plan_free, "Grátis" %>
-        <span class="tiptip-right icon-small icon-question-blue_12_12" title="<%= "#{render 'plans/admin/details', :name => 'Professor', :type => 'Grátis', :plan => Plan.from_preset(:free)}" %>"></span>
-      </li>
-      <li>
-        <%= radio_button_tag :plan, 'professor_lite' %>
-        <%= label_tag :plan_professor_lite, "Lite" %>
-        <span class="tiptip-right icon-small icon-question-blue_12_12" title="<%= "#{render 'plans/admin/details', :name => 'Professor', :type => 'Lite', :plan => Plan.from_preset(:professor_lite)}" %>"></span>
-      </li>
-      <li>
-        <%= radio_button_tag :plan, 'professor_standard' %>
-        <%= label_tag :plan_professor_standard, "Standard" %>
-        <span class="tiptip-right icon-small icon-question-blue_12_12" title="<%= "#{render 'plans/admin/details', :name => 'Professor', :type => 'Standard', :plan => Plan.from_preset(:professor_standard)}" %>"></span>
-      </li>
-      <li>
-        <%= radio_button_tag :plan, 'professor_plus' %>
-        <%= label_tag :plan_professor_plus, "Plus" %>
-        <span class="tiptip-right icon-small icon-question-blue_12_12" title="<%= "#{render 'plans/admin/details', :name => 'Professor', :type => 'Plus', :plan => Plan.from_preset(:professor_plus)}" %>"></span>
-      </li>
-    </ul>
-  </div>
-<% end %>

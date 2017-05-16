@@ -36,10 +36,6 @@ Redu::Application.configure do
   # In production, Apache or nginx will already do this
   config.serve_static_assets = false
 
-  # Enable serving of images, stylesheets, and javascripts from an asset server
-  config.action_controller.asset_host = "http://#{config.s3_credentials['assets_bucket']}.s3.amazonaws.com"
-  config.action_mailer.asset_host = config.action_controller.asset_host
-
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
 
@@ -62,14 +58,6 @@ Redu::Application.configure do
 
   # Remove cores do log
   config.colorize_logging = false
-
-  # Configuração da aplicação em omniauth providers
-  config.omniauth = {
-    :facebook => {
-      :app_id => '191555477625856',
-      :app_secret => '27e285f90a3ee1db7a3b61641ae14694'
-    }
-  }
 
   # Configurações de VisClient
   config.vis_client = {

@@ -206,12 +206,6 @@ pt-BR:
         password_confirmation: "Confirmação da senha"
         email_confirmation: "Confirmação de E-mail"
         current_password: "Senha atual"
-      partner:
-        name: "Nome"
-      partner_environment_association:
-        cnpj: "CNPJ"
-        company_name: "Razão social"
-        address: "Endereço"
     errors:
       template:
         header:
@@ -237,9 +231,9 @@ pt-BR:
               blank: "Por favor, digite um login."
               too_short: "Login muito curto (mínimo de 5 caracteres)."
               invalid:  "Utilize apenas letras (a-z), números (0-9), traço (-) e sublinhado (_). Não deixe espaços no início ou final."
-              taken: "Por favor, escolha outro login. Este já existe no Redu."
+              taken: "Por favor, escolha outro login. Este já existe no Openredu."
             login_slug:
-              taken: "Por favor, escolha outro login. Este já existe no Redu."
+              taken: "Por favor, escolha outro login. Este já existe no Openredu."
             email:
               blank: "Por favor, digite um e-mail."
               too_short: "E-mail muito curto (mínimo de 3 caracteres)."
@@ -287,10 +281,6 @@ pt-BR:
           attributes:
            name:
             blank: ":Escolha um nome para o recurso."
-        partner_environment_association:
-          attributes:
-            cnpj:
-              invalid: "formato inválido"
         seminar:
           attributes:
             original:
@@ -502,7 +492,7 @@ pt-BR:
   #en: add_comment: Add Comment
   add_comment: Adicionar Comentário
   #en: add_lecture: Add Lecture
-  add_lecture: Adicionada no Redu por
+  add_lecture: Adicionada no Openredu por
   #en: add_from_my_address_book: "Add from my address book"
   add_from_my_address_book: "Add from my address book"
   #en: add_some_friends_to_get_started: Add some friends to get started!
@@ -901,7 +891,7 @@ pt-BR:
   #en: explore_site: Explore {{site}}
   explore_site: "Explore {{site}}"
   facebook_connect_error: Não foi possível logar com sua conta do Facebook
-  facebook_connect_account_association: Sua conta do Facebook foi associada ao Redu.
+  facebook_connect_account_association: Sua conta do Facebook foi associada ao Openredu.
   facebook_connect_new_user: Sua conta foi criada com seu e-mail do Facebook.
   #en: failed: failed
   failed: failed
@@ -1926,7 +1916,7 @@ pt-BR:
   you_may_want_to_use_your_company_logo_or_a_photo_of_one_of_your_products_: "You may want to use your company logo, or a photo of one of your products. "
   #en: you_must_vote_to_see_the_results: You must vote to see the resuts.
   you_must_vote_to_see_the_results: You must vote to see the resuts.
-  you_need_give_us_access_to_your_facebook_data: "Para logar com sua conta do Facebook, é necessário adicionar o Redu aos seus aplicativos."
+  you_need_give_us_access_to_your_facebook_data: "Para logar com sua conta do Facebook, é necessário adicionar o Openredu aos seus aplicativos."
   #en: your_about_text_goes_here: Your About text goes here.
   your_about_text_goes_here: Your About text goes here.
   #en: your_faq_text_goes_here: Your FAQ text goes here.

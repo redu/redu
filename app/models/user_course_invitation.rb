@@ -7,9 +7,9 @@ class UserCourseInvitation < CourseEnrollment
 
   before_validation :generate_token, :on => :create
 
-  scope :invited, where(:state => 'invited')
+  scope :invited, -> { where(state: 'invited')}
   scope :with_email, lambda { |email| where( :email => email.to_s) }
-  scope :invitations_approved, where(:state => 'approved')
+  scope :invitations_approved, -> { where(state: 'approved') } 
 
   aasm_column :state
 

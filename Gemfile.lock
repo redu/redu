@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/OpenRedu/invitable.git
+  revision: 8f56a767909ab59220964304fb78364f49a42315
+  specs:
+    invitable (0.0.7)
+      rails (>= 3.0.10)
+
+GIT
   remote: git://github.com/amatsuda/kaminari.git
   revision: 7d209354119a8d5d273def3a7f5c6d011c4baa0a
   specs:
@@ -50,21 +57,14 @@ GIT
       activesupport (>= 3.0.0)
 
 GIT
-  remote: git@github.com:redu/analytics.git
-  revision: 81559623dfcc9d9ddf90b4bc03ab31cc2216fd58
+  remote: git://github.com/redu/analytics.git
+  revision: a777409d456f6e14894eac8e011f7046a14a1ae1
   specs:
     redu_analytics (0.0.3)
       lazy_high_charts
 
 GIT
-  remote: git@github.com:redu/invitable.git
-  revision: 8f56a767909ab59220964304fb78364f49a42315
-  specs:
-    invitable (0.0.7)
-      rails (>= 3.0.10)
-
-GIT
-  remote: git@github.com:redu/vis_client.git
+  remote: git://github.com/redu/vis_client.git
   revision: 4e73d1de4004d60f63d891c8232e799664b2d5a4
   branch: ruby-1-9-3
   specs:
@@ -80,9 +80,7 @@ GIT
       valium
 
 GEM
-  remote: http://rubygems.org/
-  remote: http://gems.github.com/
-  remote: http://reduadmin:pomp64bozos@the-shire.herokuapp.com/
+  remote: https://rubygems.org/
   specs:
     aasm (3.0.16)
     actionmailer (3.2.13)
@@ -107,7 +105,6 @@ GEM
       arel (~> 3.0.2)
       tzinfo (~> 0.3.29)
     activerecord-import (0.3.1)
-      activerecord (~> 3.0)
       activerecord (~> 3.0)
     activeresource (3.2.13)
       activemodel (= 3.2.13)
@@ -220,8 +217,8 @@ GEM
     factory_girl_rails (4.2.1)
       factory_girl (~> 4.2.0)
       railties (>= 3.0.0)
-    faraday (0.8.7)
-      multipart-post (~> 1.1)
+    faraday (0.10.1)
+      multipart-post (>= 1.2, < 3)
     ffi (1.8.1)
     fog (1.11.1)
       builder
@@ -236,12 +233,11 @@ GEM
     formatador (0.2.4)
     fssm (0.2.10)
     hash-deep-merge (0.1.1)
-    hashie (2.0.4)
+    hashie (3.4.6)
     hike (1.2.2)
     hooks (0.3.1)
     htmlentities (4.3.1)
     http_parser.rb (0.5.3)
-    httpauth (0.2.0)
     humanizer (2.4.4)
     i18n (0.6.1)
     jasmine (1.3.2)
@@ -255,13 +251,12 @@ GEM
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     json (1.8.0)
-    jwt (0.1.6)
-      multi_json (>= 1.0)
-    lazy_high_charts (1.4.2)
+    jwt (1.5.6)
+    lazy_high_charts (1.5.4)
       bundler (>= 1.0)
       hash-deep-merge
     lazydoc (1.0)
-    libv8 (3.11.8.17)
+    libv8 (3.16.14.15)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -275,8 +270,9 @@ GEM
       activemodel (~> 3.1)
       mongo (~> 1.8)
       tzinfo (~> 0.3.22)
-    multi_json (1.7.4)
-    multipart-post (1.2.0)
+    multi_json (1.12.1)
+    multi_xml (0.6.0)
+    multipart-post (2.0.0)
     mysql2 (0.3.11)
     net-scp (1.1.1)
       net-ssh (>= 2.6.5)
@@ -289,21 +285,20 @@ GEM
       oauth (~> 0.4.4)
       oauth2 (>= 0.5.0)
       rack
-    oauth2 (0.8.1)
-      faraday (~> 0.8)
-      httpauth (~> 0.1)
-      jwt (~> 0.1.4)
-      multi_json (~> 1.0)
-      rack (~> 1.2)
-    omniauth (1.1.4)
-      hashie (>= 1.2, < 3)
-      rack
-    omniauth-facebook (1.4.1)
-      omniauth-oauth2 (~> 1.1.0)
-    omniauth-oauth2 (1.1.1)
-      oauth2 (~> 0.8.0)
-      omniauth (~> 1.0)
-    pagseguro (0.1.13)
+    oauth2 (1.3.0)
+      faraday (>= 0.8, < 0.11)
+      jwt (~> 1.0)
+      multi_json (~> 1.3)
+      multi_xml (~> 0.5)
+      rack (>= 1.2, < 3)
+    omniauth (1.3.1)
+      hashie (>= 1.2, < 4)
+      rack (>= 1.0, < 3)
+    omniauth-facebook (4.0.0)
+      omniauth-oauth2 (~> 1.2)
+    omniauth-oauth2 (1.4.0)
+      oauth2 (~> 1.0)
+      omniauth (~> 1.2)
     paperclip (2.7.5)
       activerecord (>= 2.3.0)
       activesupport (>= 2.3.2)
@@ -317,9 +312,6 @@ GEM
     premailer-rails (1.4.0)
       premailer (~> 1.7)
       rails (>= 3)
-    pusher (0.11.3)
-      multi_json (~> 1.0)
-      signature (~> 0.1.6)
     rack (1.4.5)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -352,7 +344,7 @@ GEM
     rdoc (3.12.2)
       json (~> 1.4)
     redu-has_friends (1.0.0)
-    ref (1.0.4)
+    ref (2.0.0)
     remotipart (1.0.5)
     representable (1.5.3)
       multi_json
@@ -402,7 +394,6 @@ GEM
     shoulda-matchers (1.5.6)
       activesupport (>= 3.0.0)
       bourne (~> 1.3)
-    signature (0.1.7)
     simple_acts_as_list (0.0.1)
       activesupport
     sprockets (2.2.2)
@@ -419,8 +410,8 @@ GEM
     sunspot_solr (2.0.0)
     test_xml (0.1.6)
       nokogiri (>= 1.3.2)
-    therubyracer (0.11.4)
-      libv8 (~> 3.11.8.12)
+    therubyracer (0.12.2)
+      libv8 (~> 3.16.14.0)
       ref
     thor (0.18.1)
     tilt (1.4.1)
@@ -453,8 +444,6 @@ GEM
     whenever (0.8.2)
     xml-simple (1.1.2)
     yajl-ruby (1.1.0)
-    zencoder (2.4.4)
-      multi_json
 
 PLATFORMS
   ruby
@@ -501,11 +490,9 @@ DEPENDENCIES
   no_peeping_toms!
   oauth-plugin (~> 0.4.0)
   omniauth
-  omniauth-facebook
-  pagseguro (~> 0.1.10)
+  omniauth-facebook (~> 4.0.0)
   paperclip (~> 2.7.5)
   premailer-rails
-  pusher
   rack-cors
   rails (~> 3.2.13)
   rails3-generators
@@ -538,4 +525,9 @@ DEPENDENCIES
   webmock
   whenever
   yajl-ruby
-  zencoder
+
+RUBY VERSION
+   ruby 1.9.3p551
+
+BUNDLED WITH
+   1.13.5
