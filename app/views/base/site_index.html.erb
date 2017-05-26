@@ -1,18 +1,91 @@
-<% content_for :header_scripts_and_styles do %>
-  <%= javascript_include_tag "landing" %>
-<% end %>
-
-<%= render "landing/welcome" %>
-<div class="container">
-  <div class="landing-navigation content-body">
-    <%= render "landing/filters" %>
-    <hr id="segmentos" class="list-separator"/>
-    <%= render "landing/segments" %>
-    <hr id="vantagens" class="list-separator"/>
-    <%= render "landing/advantages" %>
-    <hr id="funcionalidades" class="list-separator"/>
-    <%= render "landing/functionalities" %>
-    <hr id="parceiros" class="list-separator"/>
-    <%= render "landing/partners" %>
+<section id="content" class="principal">
+  <div class="left">
+    <figure class="logo">
+      <%= image_tag('logo-openredu.svg', class: 'logo')%>
+    </figure>
+    <h1 class="title">Aprender nunca foi tão fácil</h1>
+    <p class="intro">
+      O Openredu é uma plataforma para ensino com tecnologia, que permite criar, compartilhar e discutir conteúdos das mais diversas formas, estimulando a aprendizagem, colaboração e diversão.
+    </p>
   </div>
-</div>
+  <div class="right">
+    <section class="form-container">
+      <%= form_for @user_session || UserSession.new, :remote => true, :url => sessions_path, :html => { :class => "user-dates header-sign-in-form", :id => "form-sign-in" } do |f| %>
+        <h2 class="sub-title">acesse aqui sua conta</h2>
+        <%= f.text_field :login, class: 'input', placeholder: 'login' %>
+        <%= concave_errors_for f.object, :login %>
+        <%= f.password_field :password, class: 'input', placeholder: 'senha' %>
+        <%= concave_errors_for f.object, :password %>
+        <%= f.check_box :remember_me %>
+        <%= f.label :remember_me, 'lembrar', :class => 'legend' %>
+        <%= f.submit 'entrar', id: 'landing-button', class: 'bt active' %>
+      <% end %>
+      <%= link_to 'esqueci a senha', recover_username_password_path, class: 'bt in' %>
+    </section>
+    <section class="out-form">
+      <a href="#" class="bt out">criar uma conta</a>
+    </section>
+  </div>
+</section>
+<footer id="foot-page">
+  <section class="footer main">
+    <div class="about">
+      <figure>
+        <%= image_tag('logo-openredu-pb50.svg', class: 'logo')%>
+      </figure>
+      <p>
+      Openredu é uma rede social educacional desenvolvida por pesquisadores da UFPE e mantida por dezenas de colaboradores no Brasil e em em diversos países.
+      </p>
+    </div>
+    <div class="area-menu">
+      <nav class="menu">
+        <ul>
+          <li class="item"><a href="#" >Sobre o Openredu</a></li>
+          <li class="item"><a href="#" >Colabore com o projeto</a></li>
+          <li class="item"><a href="#" >Conheça a comunidade</a></li>
+          <li class="item"><a href="#" >Fórum</a></li>
+          <li class="item"><a href="#" >Política de privacidade</a></li>
+          <li class="item"><a href="#" >Termos de uso</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="more-contact">
+      <p class="copyleft">Orgulhosamente desenvolvido pela comunidade</p>
+      <figure>
+        <%= image_tag('openredu-org-white.svg', class: 'logo')%>
+      </figure>
+      <div class="icones-social">
+        <ul>
+          <li class="item-social">
+            <a href="#">
+              <figure class="icon-social">
+                <%= image_tag('facebook.svg')%>
+              </figure>
+            </a>
+          </li>
+          <li class="item-social">
+            <a href="#">
+              <figure class="icon-social">
+                <%= image_tag('twitter.svg')%>
+              </figure>
+            </a>
+          </li>
+          <li class="item-social">
+            <a href="#">
+              <figure class="icon-social">
+                <%= image_tag('youtube.svg')%>
+              </figure>
+            </a>
+          </li>
+          <li class="item-social">
+            <a href="#">
+              <figure class="icon-social">
+                <%= image_tag('github.svg')%>
+              </figure>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</footer>

@@ -1,53 +1,37 @@
-// ==========================================================================
-// Estilos para a landing.
-// ==========================================================================
-
-// Mixins de imagens do Compass.
-@import "compass/css3/images";
-// UI-components.
-@import "bootstrap/variables";
-@import "bootstrap/mixins";
-
-// Variáveis.
-@import "landing/variables";
-// Estilos compartilhados.
-@import "landing/shared";
-// Estilos do layout.
-@import "landing/layout";
-// Sprites.
-@import "landing/sprites";
-// Estilos da mensagem de bem vindo.
-@import "landing/welcome";
-// Estilos da área de navegação.
-@import "landing/navigation";
-// Estilos da área dos filtros.
-@import "landing/filters";
-// Estilos da área de segmentos.
-@import "landing/segments";
-// Estilos da área de vantagens.
-@import "landing/advantages";
-// Estilos da área de funcionalidades.
-@import "landing/functionalities";
-// Estilos da área de rede social & chat.
-@import "landing/social-network-n-chat";
-// Estilos da área de mural de discussão.
-@import "landing/discussion-wall";
-// Estilos da área de aulas multimídia.
-@import "landing/multimedia-classes";
-// Estilos da área de Relatórios Básicos.
-@import "landing/basic-reports";
-// Estilos da área de gerenciamento e suporte.
-@import "landing/management-support";
-// Estilos da área de Recursos Educacionais Abertos.
-@import "landing/oer";
-// Estilos da área de serviços e aplicações integradas.
-@import "landing/api";
-// Estilos da área de mensagens particulares, currículo e mobilidade.
-@import "landing/others";
-// Estilos da área de planos.
-@import "landing/plans";
-// Estilos da área de Visual Class.
-@import "landing/visual-class";
-
-// TODO: Remover depois de resolver a issue ui-compnents#15.
-.textshadow .olrk-noquirks { text-shadow: none; }
+html{height: 100%}
+body{padding:0;margin:0;font-family:"Open Sans", sans-serif;font-size: 1em;color: #6d6e6f;height: 100%}
+input:not([type='checkbox']){font-size: 0.9em;padding: 10px;border:1px solid #f7f7f7;background-color: #fff;width: 90%;margin: 5px 0;border-radius: 2px;-o-border-radius: 2px;-webkit-border-radius: 2px;moz-border-radius: 2px}
+button{font-size: 0.9em;padding: 15px 0;width: 95%;color: #fff;border:0;outline:0;text-align:center;display:block;margin: 5px auto;background-color: #4cadd7;border-radius: 2px;-o-border-radius: 2px;-webkit-border-radius: 2px;moz-border-radius: 2px}
+figure{padding: 0;margin: 0}
+a.bt{display:block;padding: 20px;text-align:center;font-weight: 100;font-size: 0.8em;text-decoration: none}
+a.bt.in{color: #6d6e6f}
+a.bt.out{color: #4cadd7}
+section{}
+section#content:after, footer#foot-page:after{display:block;clear:both;content:""}
+section#content{height: 100%;background-color:#eee;background-image:image-url("nuvens.svg");background-repeat: no-repeat;background-position: 50% 140%}
+section#content .left, section#content .right{width:50%;padding: 10% 0}
+section#content .left{float:left}
+section#content .right{float:right}
+section#content .left figure.logo{display:block;width: 225px;margin-left:40px;padding: 0 20px}
+section#content .left figure.logo img{width: 100%; height: auto}
+section#content .left h1.title{padding: 20px;color: #63bf82;margin-left:40px}
+section#content .left p.intro{padding: 20px;line-height: 1.5em;;margin-left:40px;font-weight: 100}
+section#content .right section.form-container{max-width: 60%;margin: 15px auto;background-color: #fff;padding: 20px 0;box-shadow: 0 0 10px -1px #6e6d6f;-webkit-box-shadow: 0 0 10px -1px #6e6d6f;-o-box-shadow: 0 0 10px -1px #6e6d6f;-moz-box-shadow: 0 0 10px -1px #6e6d6f;border-radius: 2px;-o-border-radius: 2px;-webkit-border-radius: 2px;moz-border-radius: 2px}
+section#content .right section.form-container form{padding: 0 40px}
+section#content .right section.form-container h2.sub-title{padding: 20px;text-align: center;font-size: 1.3em}
+footer#foot-page{color: #fff;background-color: #158ac4}
+footer#foot-page .about, footer#foot-page .area-menu,footer#foot-page .more-contact{float: left;width: 33.3%;padding: 20px 0}
+footer#foot-page .about figure{padding:0 20px 0;max-width: 150px}
+footer#foot-page .about p{padding: 0 20px;font-size: 0.8em;max-width: 80%}
+footer#foot-page .area-menu nav ul{padding: 0 20px}
+footer#foot-page .area-menu nav ul li{display: block}
+footer#foot-page .area-menu nav ul li a{display: block;color:#fff;padding: 5px;text-decoration: none}
+footer#foot-page .more-contact{}
+footer#foot-page .more-contact p{padding: 10px 20px;font-size: 0.9em}
+footer#foot-page .more-contact figure{max-width: 120px;padding: 0 20px}
+footer#foot-page .more-contact figure img{width: 100%; height: auto}
+footer#foot-page .more-contact .icones-social{padding: 10px 20px}
+footer#foot-page .more-contact .icones-social ul{padding: 0;margin: 5px 0}
+footer#foot-page .more-contact .icones-social ul li{display: inline-block;}
+footer#foot-page .more-contact .icones-social ul li a{display: block;padding: 5px;color: #fff}
+footer#foot-page .more-contact .icones-social ul li a figure.icon-social{width: auto;display: block;padding: 0}
