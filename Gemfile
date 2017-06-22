@@ -64,6 +64,7 @@ gem 'simple-private-messages', '0.0.0', # A gem não possui .gemspec
 gem 'rails_autolink'
 gem 'rubyzip', require: 'zip/zip'
 gem 'truncate_html'
+gem 'rest-client'
 
 # Gems específicos para a API
 gem 'oauth-plugin', '~> 0.4.0'
