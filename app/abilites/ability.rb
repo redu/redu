@@ -153,17 +153,8 @@ class Ability
           (user.has_access_to? status.statusable)
       end
 
-      # Parceiros
-      can :contact, Partner
-      cannot :index, Partner unless is_admin
-
       # Result
       can :update, Result, :state => 'started', :user_id => user.id
-
-      # Invoice
-      cannot :pay, Invoice do |invoice|
-        !(is_admin && (invoice.pending? || invoice.overdue?))
-      end
 
       # Plan
       cannot :migrate, Plan do |plan|

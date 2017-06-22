@@ -15,7 +15,7 @@
         :url => environment_courses_path(@environment),
         :html => { :class => 'concave-form clearfix' } do |f| %>
         <%= concave_error_messages_for @course %>
-        <%= render :partial => 'courses/admin/form', :locals => { :f => f, :edit => false, :partner => @environment.partner } %>
+        <%= render :partial => 'courses/admin/form', :locals => { :f => f, :edit => false } %>
         <hr />
         <%= f.submit "Salvar alterações" %>
       <% end %>

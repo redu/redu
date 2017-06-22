@@ -17,7 +17,6 @@
 //= require ytpreview.jquery
 //= require subjects
 //= require admin
-//= require partner
 //= require jquery.nested-fields
 //= require boring-browser
 //= require jquery.noisy

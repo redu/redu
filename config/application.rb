@@ -65,10 +65,10 @@ module Redu
     end
 
     # Meta dados da aplicação
-    config.name = "Redu"
+    config.name = "Openredu"
     config.tagline = "Rede Social Educacional"
     config.description = "Rede Social Educacional"
-    config.email = "contato@redu.com.br"
+    config.email = "contato@openredu.com"
 
     # Paginação
     config.items_per_page = 10
@@ -189,8 +189,6 @@ module Redu
                                         :user_cache_observer,
                                         :user_course_association_cache_observer,
                                         :course_cache_observer,
-                                        :partner_user_association_cache_observer,
-                                        :partner_cache_observer,
                                         :message_cache_observer,
                                         :lecture_cache_observer,
                                         :asset_report_cache_observer,
@@ -221,16 +219,16 @@ module Redu
 
     config.redu_services = {}
     config.redu_services[:apps] = {
-      :url => "http://aplicativos.redu.com.br"
+      :url => "http://aplicativos.openredu.com"
     }
     config.redu_services[:help_center] = {
-      :url => "http://ajuda.redu.com.br/"
+      :url => "http://ajuda.openredu.com/"
     }
     config.redu_services[:dev] = {
-      :url => "http://developers.redu.com.br/"
+      :url => "http://developers.openredu.com/"
     }
     config.redu_services[:blog] = {
-      :url => "http://blog.redu.com.br/"
+      :url => "http://openredu.org/"
     }
 
     # Configuração da aplicação em omniauth providers

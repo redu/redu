@@ -72,8 +72,6 @@ class User < ActiveRecord::Base
   has_many :experiences, dependent: :destroy
   has_many :educations, dependent: :destroy
   has_one :settings, class_name: "TourSetting", dependent: :destroy
-  has_many :partners, through: :partner_user_associations
-  has_many :partner_user_associations, dependent: :destroy
 
   has_many :social_networks, dependent: :destroy
 
@@ -251,25 +249,12 @@ class User < ActiveRecord::Base
     when 'User'
       entity == self
     when 'Plan', 'PackagePlan', 'LicensedPlan'
-      entity.user == self || self.can_manage?(entity.billable) ||
-        # Caso em que billable foi destruído
-        self.can_manage?(
-          # Não levanta RecordNotFound
-          Partner.where( id: entity.billable_audit.
-                        try(:[], :partner_environment_association).
-                        try(:[],"partner_id")).first
-      )
-    when 'Invoice', 'LicensedInvoice', 'PackageInvoice'
-      self.can_manage?(entity.plan)
+      entity.user == self || self.can_manage?(entity.billable)
     when 'Myfile'
       self.can_manage?(entity.folder)
     when 'Friendship'
       # user_id necessário devido ao bug do create_time_zone
       self.id == entity.user_id
-    when 'PartnerEnvironmentAssociation'
-      entity.partner.users.exists?(self.id)
-    when 'Partner'
-      entity.users.exists?(self.id)
     when 'Experience'
       self.can_manage?(entity.user)
     when 'SocialNetwork'
@@ -310,10 +295,6 @@ class User < ActiveRecord::Base
         has_access_to?(entity.statusable)
       when Lecture
         self.has_access_to? entity.subject
-      when PartnerEnvironmentAssociation
-        self.has_access_to? entity.partner
-      when Partner
-        entity.users.exists?(self)
       when Result
         entity.user == self
       when Question
@@ -335,10 +316,8 @@ class User < ActiveRecord::Base
        (object.is_a? Status) || (object.is_a? Help) ||
        (object.is_a? User) || (object.is_a? Friendship) ||
        (object.is_a? Plan) || (object.is_a? PackagePlan) ||
-       (object.is_a? Invoice) ||
-       (object.is_a? PartnerEnvironmentAssociation) ||
-       (object.is_a? Partner) || (object.is_a? Result) ||
-       (object.is_a? Question) || (object.is_a? Lecture)
+        (object.is_a? Result) || (object.is_a? Question) ||
+        (object.is_a? Lecture)
 
       self.has_access_to?(object)
     else
