@@ -33,7 +33,7 @@ gem 'invitable', git: 'git://github.com/OpenRedu/invitable.git'
 gem 'jquery-rails', '>= 1.0.12'
 gem 'kaminari', git: 'git://github.com/amatsuda/kaminari.git'
 gem 'mime-types'
-gem "mysql2"
+gem "mysql2", '~> 0.3.21'
 gem 'omniauth'
 gem 'omniauth-facebook', '~> 4.0.0'
 gem 'paperclip', '~> 2.7.5'

@@ -497,7 +497,7 @@ DEPENDENCIES
   jquery-rails (>= 1.0.12)
   kaminari!
   mime-types
-  mysql2
+  mysql2 (~> 0.3.21)
   newrelic_rpm
   no_peeping_toms!
   oauth-plugin (~> 0.4.0)
