@@ -28,12 +28,6 @@ module Redu
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     config.time_zone = 'Brasilia'
 
-    # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
-    # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
-    # config.i18n.default_locale = :de
-    config.i18n.load_path += Dir[ Rails.root.join("lang", "ui", '*.{rb,yml}').to_s ]
-    config.i18n.default_locale = "pt-BR"
-
     # JavaScript files you want as :defaults (application.js is always included).
     # config.action_view.javascript_expansions[:defaults] = %w(jquery rails)
 
@@ -241,10 +235,16 @@ module Redu
       }
     }
 
+    # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
+    # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
+    # config.i18n.default_locale = :de
+    config.i18n.load_path += Dir[ Rails.root.join("lang", "ui", '*.{rb,yml}').to_s ]
+
     # Seta locale defaul para pt-br
     config.i18n.default_locale = :"pt-BR"
-    I18n.locale = config.i18n.default_locale
     I18n.available_locales = [config.i18n.default_locale]
+    I18n.locale = config.i18n.default_locale
+
 
     # Quantidade de resultados da busca exibidos por páginas
     config.search_results_per_page = 10
