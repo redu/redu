@@ -279,6 +279,8 @@ class UsersController < BaseController
 
       UserNotifier.delay(:queue => 'email', :priority => 1).
           confirm_user_reseted_password(@user, @user.password)
+
+      @user.recovery_token = nil
       @user.save
 
       if UserSession.find
