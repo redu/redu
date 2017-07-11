@@ -33,7 +33,7 @@ gem 'invitable', git: 'git://github.com/OpenRedu/invitable.git'
 gem 'jquery-rails', '>= 1.0.12'
 gem 'kaminari', git: 'git://github.com/amatsuda/kaminari.git'
 gem 'mime-types'
-gem "mysql2"
+gem "mysql2", '~> 0.3.21'
 gem 'omniauth'
 gem 'omniauth-facebook', '~> 4.0.0'
 gem 'paperclip', '~> 2.7.5'
@@ -64,6 +64,7 @@ gem 'simple-private-messages', '0.0.0', # A gem não possui .gemspec
 gem 'rails_autolink'
 gem 'rubyzip', require: 'zip/zip'
 gem 'truncate_html'
+gem 'rest-client'
 
 # Gems específicos para a API
 gem 'oauth-plugin', '~> 0.4.0'

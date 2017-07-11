@@ -53,12 +53,10 @@ CKEDITOR.editorConfig = function( config )
     ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
     ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
     ['Link','Unlink','Anchor'],
-    ['Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'],
+    ['Image','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'],
     '/',
     ['Styles','Format','Font','FontSize'],
     ['TextColor','BGColor'],
     ['Maximize','-','About']
       ];
 };
-
-
