@@ -275,17 +275,6 @@ describe Ability do
             @sub = FactoryGirl.create(:subject, :owner => @env_admin, :space => @space)
           end
 
-          # Sorry, but Document #1 could not be uploaded to Scribd
-          pending do
-            it "can NOT upload document" do
-              document = FactoryGirl.create(:document)
-              lecture = FactoryGirl.create(:lecture, :owner => @env_admin,
-                                :subject => @sub,
-                                :lectureable => document)
-              @ability.should_not be_able_to(:upload_document, document)
-            end
-          end
-
           # Need Seminar factory
           it "can NOT upload multimedia"
 
@@ -796,7 +785,6 @@ describe Ability do
                                     :lectureable => FactoryGirl.create(:complete_exercise))
         @lecture_seminar = FactoryGirl.create(:lecture, :subject => @subject,
                                    :lectureable => FactoryGirl.create(:seminar_youtube))
-        mock_scribd_api
         @lecture_document = FactoryGirl.create(:lecture, :subject => @subject,
                                     :lectureable => FactoryGirl.create(:document))
 
