@@ -256,8 +256,7 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.8.6)
     jwt (1.5.6)
-    lazy_high_charts (1.5.4)
-      bundler (>= 1.0)
+    lazy_high_charts (1.5.8)
       hash-deep-merge
     lazydoc (1.0)
     libv8 (3.16.14.15)
