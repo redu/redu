@@ -197,6 +197,10 @@ GEM
     diff-lcs (1.2.4)
     domain_name (0.5.20170404)
       unf (>= 0.0.5, < 1.0.0)
+    dotenv (2.2.1)
+    dotenv-rails (2.2.1)
+      dotenv (= 2.2.1)
+      railties (>= 3.2, < 5.2)
     dynamic_form (1.1.4)
     em-http-request (1.0.3)
       addressable (>= 2.2.3)
@@ -485,6 +489,7 @@ DEPENDENCIES
   deep_cloneable
   delayed_job_mongoid
   destroy_soon
+  dotenv-rails
   dynamic_form
   em-http-request
   eventmachine

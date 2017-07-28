@@ -65,6 +65,7 @@ gem 'rails_autolink'
 gem 'rubyzip', require: 'zip/zip'
 gem 'truncate_html'
 gem 'rest-client'
+gem 'dotenv-rails'
 
 # Gems específicos para a API
 gem 'oauth-plugin', '~> 0.4.0'
