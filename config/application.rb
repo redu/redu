@@ -161,6 +161,9 @@ module Redu
     # Adapters
     config.autoload_paths << "#{config.root}/app/adapters"
 
+    #ckeditor
+    config.autoload_paths += %w(#{config.root}/app/models/ckeditor)
+
     # Observers
     unless File.basename($0) == 'rake'
       config.active_record.observers = [:course_observer,
