@@ -4,6 +4,7 @@ ruby "1.9.3"
 
 gem 'aasm'
 gem 'premailer-rails'
+gem 'activemodel', '~>3.2'
 gem 'classy_enum'
 gem 'activerecord-import'
 gem 'acts_as_tree', '~> 0.1.1'
@@ -35,7 +36,7 @@ gem 'mime-types'
 gem "mysql2", '~> 0.3.21'
 gem 'omniauth'
 gem 'omniauth-facebook', '~> 4.0.0'
-gem 'paperclip', '~> 2.7.5'
+gem 'paperclip', '~> 4.3'
 gem 'rails', '~> 3.2.13'
 gem "rake", "~> 10.0.4"
 gem 'remotipart', '~> 1.0'
