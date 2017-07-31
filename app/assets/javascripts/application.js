@@ -29,7 +29,6 @@
 //= require bootstrap-redu-search-form
 // Somente para a nav global: fim
 //= require search
-//= require ckeditor/ckeditor
 //= require pdf
 //= require pdf_worker
 
