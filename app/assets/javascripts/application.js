@@ -31,6 +31,7 @@
 //= require search
 //= require pdf
 //= require pdf_worker
+//= require ckeditor/init
 
 jQuery(function(){
 

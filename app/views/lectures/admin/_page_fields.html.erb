@@ -1,6 +1,8 @@
 <%= hidden_field_tag "lecture[lectureable_attributes][_type]", "Page" %>
-<%= f.label :body, "Texto" %>
-<%= f.text_area :body,
-  :width => '525px', :height => '495px' %>
+<br/>
+<br/>
+<br/>
+<br/>
+<%= f.cktext_area :body %>
 <span class="tip">Conteúdo da aula</span>
 <%= concave_errors_for(f.object, :body) %>
