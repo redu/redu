@@ -700,6 +700,7 @@ ActiveRecord::Schema.define(:version => 20170713201420) do
     t.string   "languages"
     t.text     "favorite_quotation"
     t.boolean  "destroy_soon"
+    t.string   "recovery_token"
   end
 
   add_index "users", ["activated_at"], :name => "index_users_on_activated_at"

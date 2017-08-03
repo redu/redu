@@ -595,6 +595,14 @@ class User < ActiveRecord::Base
     self.birth_localization.blank? && self.localization.blank?
   end
 
+  def generate_recovery_token
+    self.recovery_token = SecureRandom.urlsafe_base64(nil,false)
+    if self.save
+      UserNotifier.delay(:queue => 'email', :priority => 1).
+        user_reseted_password(self)
+    end
+  end
+
   protected
 
   # Retorna true ou false baseado se o humanizer está ou não habilitado.
