@@ -9,14 +9,13 @@ bin/
 log/**/*
 *.tmproj
 config/database.yml
-public/system/*/*
 *~
 *.swo
 .DS_Store
 Gemfile.local.rb
+public/system/*/*
 public/assets/*
-public/images/users/*
-public/images/myfiles/*
+public/images/*
 config/initializers/rails_footnotes.rb
 .rails_footnotes
 .vagrant
