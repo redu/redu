@@ -13,7 +13,9 @@ config/database.yml
 *.swo
 .DS_Store
 Gemfile.local.rb
-public/*
+public/system/*/*
+public/assets/*
+public/images/*
 config/initializers/rails_footnotes.rb
 .rails_footnotes
 .vagrant
