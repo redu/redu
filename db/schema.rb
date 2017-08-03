@@ -207,8 +207,6 @@ ActiveRecord::Schema.define(:version => 20170713201420) do
     t.string   "attachment_content_type"
     t.integer  "attachment_file_size"
     t.datetime "attachment_updated_at"
-    t.integer  "ipaper_id"
-    t.string   "ipaper_access_key"
     t.string   "state"
     t.boolean  "published",               :default => false
     t.datetime "created_at",                                 :null => false
