@@ -268,8 +268,5 @@ module Redu
 
     # CKEditor
     config.assets.precompile += %w(ckeditor/*)
-
-    #PDFJS
-    config.assets.precompile += %w(pdf.js)
   end
 end
