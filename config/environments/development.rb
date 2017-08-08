@@ -63,4 +63,7 @@ Redu::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  #enable captcha
+  config.enable_humanizer = false
 end
