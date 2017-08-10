@@ -73,6 +73,12 @@
 .badge-messages {
    position:relative;
 }
+
+.nav-local-item-active .badge-messages[data-badge]:after {
+   content:attr("");
+   display: none;
+}
+
 .badge-messages[data-badge]:after {
    content:attr(data-badge);
    position:absolute;
