@@ -442,7 +442,8 @@ GEM
       addressable (>= 2.2.7)
       crack (>= 0.3.2)
     websocket (1.0.7)
-    whenever (0.8.2)
+    whenever (0.9.7)
+      chronic (>= 0.6.3)
     xml-simple (1.1.2)
     yajl-ruby (1.1.0)
 
@@ -531,4 +532,4 @@ RUBY VERSION
    ruby 1.9.3p551
 
 BUNDLED WITH
-   1.14.6
+   1.15.3

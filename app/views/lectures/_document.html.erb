@@ -1,23 +1,5 @@
 <div id="view_video" class="stage" align="center" >
-  <% if @lecture.lectureable.livredoc_id.blank? %>
-    <% if @lecture.lectureable.attachment_content_type == 'application/pdf' %>
-        <canvas id="canvas"></canvas>
-        <div id="spinner-pdf" class="row" align="center">
-          <%= image_tag('spinner-blue-horiz.gif') %>
-        </div>
-        <div class="row">
-          <div class="span3">
-              <div id="pdf-control" style="display:none">
-                <button id="prev" class="button-default">Anterior</button>
-                <span id="pages" class="legend"><span id="page_num"></span> / <span id="page_count"></span></span>
-                <button id="next" class="button-default">Próximo</button>
-              </div>
-          </div>
-        </div>
-    <% else %>
-      <%= image_tag @lecture.lectureable.attachment.url, :alt => @lecture.name %>
-    <% end %>
-  <% else %>
+  <% if @lecture.lectureable.attachment_content_type == 'application/pdf' || !@lecture.lectureable.livredoc_id.blank?%>
       <canvas id="canvas"></canvas>
       <div id="spinner-pdf" class="row" align="center">
         <%= image_tag('spinner-blue-horiz.gif') %>
@@ -31,8 +13,10 @@
             </div>
         </div>
       </div>
-    </div>
+  <% else %>
+    <%= image_tag @lecture.lectureable.attachment.url, :alt => @lecture.name %>
   <% end %>
+</div>
 
 <script>
   <%= render partial: "lectures/document.js", locals: { lecture: @lecture } %>
