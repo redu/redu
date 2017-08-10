@@ -181,7 +181,17 @@ class UserNotifier < BaseMailer
   end
 
   # Redefinição de senha
-  def user_reseted_password(user, new_password)
+  def user_reseted_password(user)
+    @user = user
+
+    mail(:to => user.email,
+         :subject => "Redefinição de senha") do |format|
+      format.html
+    end
+  end
+
+  # Confirmação de Redefinição de senha
+  def confirm_user_reseted_password(user, new_password)
     @user = user
     @new_password = new_password
 

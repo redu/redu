@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170731161636) do
+ActiveRecord::Schema.define(:version => 20170731131913) do
 
   create_table "alternatives", :force => true do |t|
     t.text     "text"
@@ -105,22 +105,20 @@ ActiveRecord::Schema.define(:version => 20170731161636) do
   add_index "choices", ["user_id", "question_id"], :name => "index_choices_on_user_id_and_question_id", :unique => true
 
   create_table "ckeditor_assets", :force => true do |t|
-    t.string   "data_file_name",                                 :null => false
+    t.string   "data_file_name",                  :null => false
     t.string   "data_content_type"
     t.integer  "data_file_size"
     t.integer  "assetable_id"
     t.string   "assetable_type",    :limit => 30
-    t.string   "type",              :limit => 25
-    t.string   "guid",              :limit => 10
-    t.integer  "locale",            :limit => 1,  :default => 0
-    t.integer  "user_id"
-    t.datetime "created_at",                                     :null => false
-    t.datetime "updated_at",                                     :null => false
+    t.string   "type",              :limit => 30
+    t.integer  "width"
+    t.integer  "height"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
   end
 
-  add_index "ckeditor_assets", ["assetable_type", "assetable_id"], :name => "fk_assetable"
-  add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], :name => "idx_assetable_type"
-  add_index "ckeditor_assets", ["user_id"], :name => "fk_user"
+  add_index "ckeditor_assets", ["assetable_type", "assetable_id"], :name => "idx_ckeditor_assetable"
+  add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], :name => "idx_ckeditor_assetable_type"
 
   create_table "client_applications", :force => true do |t|
     t.string   "name"
@@ -202,28 +200,11 @@ ActiveRecord::Schema.define(:version => 20170731161636) do
   add_index "courses", ["environment_id"], :name => "index_courses_on_environment_id"
   add_index "courses", ["user_id"], :name => "index_courses_on_user_id"
 
-  create_table "delayed_jobs", :force => true do |t|
-    t.integer  "priority",   :default => 0
-    t.integer  "attempts",   :default => 0
-    t.text     "handler"
-    t.text     "last_error"
-    t.datetime "run_at"
-    t.datetime "locked_at"
-    t.datetime "failed_at"
-    t.string   "locked_by"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
-
   create_table "documents", :force => true do |t|
     t.string   "attachment_file_name"
     t.string   "attachment_content_type"
     t.integer  "attachment_file_size"
     t.datetime "attachment_updated_at"
-    t.integer  "ipaper_id"
-    t.string   "ipaper_access_key"
     t.string   "state"
     t.boolean  "published",               :default => false
     t.datetime "created_at",                                 :null => false
@@ -237,14 +218,6 @@ ActiveRecord::Schema.define(:version => 20170731161636) do
     t.integer  "user_id"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
-  end
-
-  create_table "emails", :force => true do |t|
-    t.string   "from"
-    t.string   "to"
-    t.integer  "last_send_attempt", :default => 0
-    t.text     "mail"
-    t.datetime "created_on"
   end
 
   create_table "enrollments", :force => true do |t|
@@ -310,14 +283,6 @@ ActiveRecord::Schema.define(:version => 20170731161636) do
     t.datetime "updated_at",                     :null => false
   end
 
-  create_table "favorites", :force => true do |t|
-    t.integer  "favoritable_id"
-    t.string   "favoritable_type"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "folders", :force => true do |t|
     t.string   "name"
     t.datetime "date_modified"
@@ -374,25 +339,6 @@ ActiveRecord::Schema.define(:version => 20170731161636) do
     t.datetime "updated_at",    :null => false
   end
 
-  create_table "invoices", :force => true do |t|
-    t.date     "period_start"
-    t.date     "period_end"
-    t.datetime "due_at"
-    t.string   "currency",                                   :default => "BRL"
-    t.string   "state"
-    t.decimal  "amount",       :precision => 8, :scale => 2
-    t.text     "description"
-    t.integer  "plan_id"
-    t.datetime "created_at",                                                    :null => false
-    t.datetime "updated_at",                                                    :null => false
-    t.decimal  "discount",     :precision => 8, :scale => 2, :default => 0.0
-    t.text     "audit"
-    t.string   "type"
-    t.boolean  "current",                                    :default => false
-  end
-
-  add_index "invoices", ["current"], :name => "index_invoices_on_current"
-
   create_table "lectures", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -412,19 +358,6 @@ ActiveRecord::Schema.define(:version => 20170731161636) do
   add_index "lectures", ["lectureable_id", "lectureable_type"], :name => "lectures_lectureable_id_and_type"
   add_index "lectures", ["subject_id"], :name => "index_lectures_on_subject_id"
   add_index "lectures", ["user_id"], :name => "index_lectures_on_user_id"
-
-  create_table "licenses", :force => true do |t|
-    t.string   "name"
-    t.string   "login"
-    t.string   "email"
-    t.date     "period_start"
-    t.date     "period_end"
-    t.integer  "role"
-    t.integer  "invoice_id"
-    t.integer  "course_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-  end
 
   create_table "messages", :force => true do |t|
     t.integer  "sender_id"
@@ -480,32 +413,6 @@ ActiveRecord::Schema.define(:version => 20170731161636) do
     t.datetime "updated_at"
   end
 
-  create_table "partner_environment_associations", :force => true do |t|
-    t.integer  "environment_id"
-    t.integer  "partner_id"
-    t.string   "cnpj"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-    t.string   "address"
-    t.string   "company_name"
-  end
-
-  create_table "partner_user_associations", :force => true do |t|
-    t.integer  "partner_id"
-    t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "partners", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.string   "email"
-    t.string   "cnpj"
-    t.string   "address"
-  end
-
   create_table "plans", :force => true do |t|
     t.string   "state"
     t.string   "name"
@@ -523,10 +430,6 @@ ActiveRecord::Schema.define(:version => 20170731161636) do
   end
 
   add_index "plans", ["current"], :name => "index_plans_on_current"
-
-  create_table "privacies", :force => true do |t|
-    t.string "name"
-  end
 
   create_table "questions", :force => true do |t|
     t.integer  "exercise_id"
@@ -569,11 +472,6 @@ ActiveRecord::Schema.define(:version => 20170731161636) do
     t.integer  "duration",                                   :default => 0
     t.datetime "created_at",                                                  :null => false
     t.datetime "updated_at",                                                  :null => false
-  end
-
-  create_table "roles", :force => true do |t|
-    t.string  "name"
-    t.boolean "space_role", :null => false
   end
 
   create_table "seminars", :force => true do |t|
@@ -683,16 +581,6 @@ ActiveRecord::Schema.define(:version => 20170731161636) do
   add_index "statuses", ["in_response_to_id", "in_response_to_type"], :name => "statuses_on_response_to_id_and_response_to_type_ix"
   add_index "statuses", ["logeable_id", "logeable_type"], :name => "index_statuses_on_logeable_id_and_logeable_type"
   add_index "statuses", ["statusable_type", "statusable_id"], :name => "index_statuses_on_statusable_type_and_statusable_id"
-
-  create_table "student_profiles", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "subject_id"
-    t.boolean  "graduaded",     :default => false
-    t.float    "grade",         :default => 0.0
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
-    t.integer  "enrollment_id"
-  end
 
   create_table "subjects", :force => true do |t|
     t.string   "name"
@@ -810,6 +698,7 @@ ActiveRecord::Schema.define(:version => 20170731161636) do
     t.string   "languages"
     t.text     "favorite_quotation"
     t.boolean  "destroy_soon"
+    t.string   "recovery_token"
   end
 
   add_index "users", ["activated_at"], :name => "index_users_on_activated_at"

@@ -40,8 +40,6 @@ gem 'paperclip', '~> 4.3'
 gem 'rails', '~> 3.2.13'
 gem "rake", "~> 10.0.4"
 gem 'remotipart', '~> 1.0'
-gem 'scribd_fu', git: 'git://github.com/guiocavalcanti/scribd_fu.git',
-  branch: 'without-scape'
 gem 'simple-navigation', git: 'git://github.com/andi/simple-navigation.git'
 gem 'sunspot_rails'
 gem 'route_translator'

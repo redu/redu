@@ -39,11 +39,6 @@ describe LecturesController do
         post :show, :locale => "pt-BR", :id => @lectures[0].id,
           :subject_id => @subject.id, :space_id => @space.id
       end
-      it "renders show_page" do
-        pending do
-          response.should render_template('lectures/show_seminar')
-        end
-      end
     end
 
     context "when Document" do
@@ -52,12 +47,6 @@ describe LecturesController do
         @lectures[0].save
         post :show, :locale => "pt-BR", :id => @lectures[0].id,
           :subject_id => @subject.id, :space_id => @space.id
-      end
-      # Sorry, but Document #1 could not be uploaded to Scribd
-      pending do
-        it "renders show_page" do
-          response.should render_template('lectures/show_document')
-        end
       end
     end
 
