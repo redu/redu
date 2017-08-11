@@ -16,6 +16,7 @@ Gemfile.local.rb
 public/system/*/*
 public/assets/*
 public/images/*
+public/ckeditor_assets/*
 config/initializers/rails_footnotes.rb
 .rails_footnotes
 .vagrant

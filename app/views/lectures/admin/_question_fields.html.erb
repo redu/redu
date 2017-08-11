@@ -9,13 +9,13 @@
   </div>
   <div class="fields">
     <%= f.label :statement %>
-    <%= f.text_area :statement, :class => "question-statement" %>
+    <%= f.cktext_area :statement, :class => "question-statement", ckeditor: {width: '400'} %>
     <div class="tip">Descrição da questão e sua problemática</div>
     <%= concave_errors_for(f.object, :base) %>
     <%= concave_errors_for(f.object, :statement) %>
     <%= concave_errors_for(f.object, :alternatives) %>
     <%= f.label :explanation %>
-    <%= f.text_area :explanation %>
+    <%= f.cktext_area :explanation, ckeditor: {width: '400'} %>
     <div class="tip">Explicação da questão. Será exibida após a realização do exame</div>
 
     <%= f.hidden_field :id %>
