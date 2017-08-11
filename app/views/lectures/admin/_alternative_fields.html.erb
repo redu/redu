@@ -7,7 +7,7 @@
     :id => "correct-#{random_number}-alternative-new_alternative_item" %>
   <%= f.label :correct, raw("<span class='confirm icon-small icon-confirm-gray_16_18'></span>"),
     :class => "is-correct-label", :for => "correct-#{random_number}-alternative-new_alternative_item" %>
-  <%= f.cktext_area :text, :class => "alternative-text", ckeditor: {width: '400', height: '200'} %>
+  <%= f.cktext_area :text, :class => "alternative-text", ckeditor: {width: '350', height: '200'} %>
   <a href="#" class="alternative-remove icon-small icon-delete-gray_8_10 replacement">excluir alternativa</a>
   <div class="tip">Clique para adicionar mais uma alternativa</div>
   <%= concave_errors_for(f.object, :text) %>
