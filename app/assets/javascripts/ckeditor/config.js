@@ -5,9 +5,19 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 CKEDITOR.editorConfig = function( config )
 {
-  // Define changes to default configuration here. For example:
-  // config.language = 'fr';
-  // config.uiColor = '#AADC6E';
+  config.PreserveSessionOnFileBrowser = true;
+
+  config.language = 'en';
+
+  config.extraPlugins = 'autogrow';
+
+  config.autoGrow_minHeight = 200;
+
+  config.autoGrow_maxHeight = 600;
+
+  config.autoGrow_bottomSpace = 50;
+
+  config.width = '530px';
 
   /* Filebrowser routes */
   // The location of an external file browser, that should be launched when "Browse Server" button is pressed.
@@ -34,19 +44,7 @@ CKEDITOR.editorConfig = function( config )
   config.allowedContent = true;
 
   // Toolbar groups configuration.
-  config.toolbar = [
-    { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source'] },
-    { name: 'clipboard', groups: [ 'clipboard', 'undo' ], items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },
-    // { name: 'editing', groups: [ 'find', 'selection', 'spellchecker' ], items: [ 'Find', 'Replace', '-', 'SelectAll', '-', 'Scayt' ] },
-    // { name: 'forms', items: [ 'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField' ] },
-    { name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] },
-    { name: 'insert', items: [ 'Image', 'Flash', 'Table', 'HorizontalRule', 'SpecialChar' ] },
-    { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
-    '/',
-    { name: 'styles', items: [ 'Styles', 'Format', 'Font', 'FontSize' ] },
-    { name: 'colors', items: [ 'TextColor', 'BGColor' ] },
-    { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ] }
-  ];
+  config.toolbar = 'mini'
 
   config.toolbar_mini = [
     { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
@@ -54,5 +52,20 @@ CKEDITOR.editorConfig = function( config )
     { name: 'colors', items: [ 'TextColor', 'BGColor' ] },
     { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ] },
     { name: 'insert', items: [ 'Image', 'Table', 'HorizontalRule', 'SpecialChar' ] }
+  ];
+
+  config.toolbar_Easy = [
+    ['Preview','-','Templates'],
+    ['Cut','Copy','Paste','PasteText','PasteFromWord'],
+    ['Undo','Redo','-','Find','-','SelectAll','RemoveFormat'],
+    ['Bold','Italic','Underline','Strike','-','Subscript','Superscript'],
+    ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
+    ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
+    ['Link','Unlink','Anchor'],
+    ['Image','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'],
+    '/',
+    ['Styles','Format','Font','FontSize'],
+    ['TextColor','BGColor'],
+    ['Maximize','-','About']
   ];
 };
