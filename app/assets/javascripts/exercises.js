@@ -23,6 +23,11 @@ $(function(){
         lastAlternatives.find(".tip").text("Digite uma alternativa para a questão");
       },
       beforeRemove: function(item) {
+          var lastAlternatives = item.prevAll(".alternative-item.visible")
+          if(lastAlternatives.length === 0){
+            var nestedFields = item.parents(".nested-fields-level-2")
+            nestedFields.nestedFields("insert");
+          }
           item.removeClass("visible");
           item.refreshAlternativesNumbering();
       }
