@@ -24,9 +24,15 @@ $(function(){
       },
       beforeRemove: function(item) {
           var lastAlternatives = item.prevAll(".alternative-item.visible")
+          var nestedFields = item.parents(".nested-fields-level-2")
           if(lastAlternatives.length === 0){
-            var nestedFields = item.parents(".nested-fields-level-2")
             nestedFields.nestedFields("insert");
+          }else if (item.is('.alternative-item.visible:last-child')){
+            var lastAlternative = item.prev(".alternative-item.visible")
+            lastAlternative.bind("click", function(){
+              lastAlternative.parents(".nested-fields-level-2").nestedFields("insert");
+            });
+            lastAlternative.find(".tip").text("Clique aqui para adicionar mais uma alternativa");
           }
           item.removeClass("visible");
           item.refreshAlternativesNumbering();
