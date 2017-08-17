@@ -123,14 +123,6 @@ GEM
       activesupport (>= 3.2)
     awesome_nested_fields (0.6.4)
       rails (>= 3.0.0)
-    aws-s3 (0.6.3)
-      builder
-      mime-types
-      xml-simple
-    aws-sdk (1.9.2)
-      json (~> 1.4)
-      nokogiri (>= 1.4.4)
-      uuidtools (~> 2.1)
     bourne (1.4.0)
       mocha (~> 0.13.2)
     bson (1.8.6)
@@ -260,7 +252,6 @@ GEM
       treetop (~> 1.4.8)
     metaclass (0.0.1)
     mime-types (1.25.1)
-    mimemagic (0.3.0)
     mocha (0.13.3)
       metaclass (~> 0.0.1)
     mongo (1.8.6)
@@ -300,12 +291,11 @@ GEM
       oauth2 (~> 1.0)
       omniauth (~> 1.2)
     orm_adapter (0.5.0)
-    paperclip (4.3.7)
-      activemodel (>= 3.2.0)
-      activesupport (>= 3.2.0)
-      cocaine (~> 0.5.5)
+    paperclip (3.5.4)
+      activemodel (>= 3.0.0)
+      activesupport (>= 3.0.0)
+      cocaine (~> 0.5.3)
       mime-types
-      mimemagic (= 0.3.0)
     polyglot (0.3.5)
     pr_geohash (1.0.0)
     premailer (1.7.3)
@@ -441,7 +431,6 @@ GEM
       json
       representable
     useragent (0.6.0)
-    uuidtools (2.1.3)
     valium (0.5.0)
       activerecord (>= 3.0.2)
     webmock (1.11.0)
@@ -450,7 +439,6 @@ GEM
     websocket (1.0.7)
     whenever (0.9.7)
       chronic (>= 0.6.3)
-    xml-simple (1.1.2)
     yajl-ruby (1.1.0)
 
 PLATFORMS
@@ -466,8 +454,6 @@ DEPENDENCIES
   asset_sync
   authlogic
   awesome_nested_fields
-  aws-s3
-  aws-sdk
   bson_ext
   bundler (~> 1.2)
   cancan (~> 1.6.7)
@@ -500,7 +486,7 @@ DEPENDENCIES
   oauth-plugin (~> 0.4.0)
   omniauth
   omniauth-facebook (~> 4.0.0)
-  paperclip (~> 4.3)
+  paperclip (~> 3.5)
   premailer-rails
   rack-cors
   rails (~> 3.2.13)
