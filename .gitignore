@@ -18,6 +18,7 @@ public/assets/*
 public/images/*
 public/myfiles/*
 public/ckeditor_assets/*
+public/documents/*
 config/initializers/rails_footnotes.rb
 .rails_footnotes
 .vagrant
