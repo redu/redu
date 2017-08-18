@@ -369,7 +369,7 @@ pt-BR:
       not_active: Your account is not active
       not_confirmed: Your account is not confirmed
       not_approved: Your account is not approved
-      no_authentication_details: You did not provide any details for authentication.
+      no_authentication_details: Informe seu login e senha
     models:
       user: login
     attributes:

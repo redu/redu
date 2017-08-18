@@ -362,13 +362,15 @@ section#content {
   }
 }
 
-#painel-cadastro span.error-message {
+section#content .right section.form-container ul.messages-errors li {
+  display: block;
   font-size: 0.9em;
   color: #e83b3b;
   text-align: center;
 }
 
-section#content .right section.form-container span.error-message:not(:empty), #painel-cadastro span.error-message:not(:empty) {
+
+section#content .right section.form-container ul.messages-errors, #painel-cadastro span.error-message:not(:empty) {
   display: block;
   padding: 10px 5px;
   border-top: 2px solid #e83b3b;
