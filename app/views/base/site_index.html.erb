@@ -53,15 +53,14 @@
   </div>
   <div class="right">
     <section class="form-container">
-      <form class="form-login">
-        <h2 class="sub-title">ACESSE SUA CONTA AQUI</h2>
-        <span class="error-message">Um texto de exemplo de erro</span>
-        <input type="text" name="login" class="input" placeholder="login" /><br />
-        <input type="password" name="senha" class="input" placeholder="senha" /><br />
-        <input type="checkbox" class="check" id="lembrar-me" />
+      <%= form_for @user_session || UserSession.new, :remote => true, url: sessions_path, html: { class: 'form-login' } do |f| %>
+        <h2 class="sub-title">acesse aqui sua conta</h2>
+        <%= f.text_field :login, class: 'input', placeholder: 'login' %>
+        <%= f.password_field :password, class: 'input', placeholder: 'senha' %><br />
+        <%= f.check_box :remember_me, class: 'check', id: 'lembrar-me' %>
         <label class="lb-check-lembrar" for="lembrar-me">lembrar</label><br />
         <button class="bt active">entrar</button>
-      </form>
+      <% end %>
       <a href="#" class="bt in">esqueci a senha</a>
       <div class="loginface">
         <a href="#">
