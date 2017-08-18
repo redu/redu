@@ -106,7 +106,7 @@ div.bg-modal {
     h4.title-modal {
       display: block;
       padding: 20px 40px;
-      margin: 0 0 20px 0;
+      margin: 0;
       font-size: 1.8em;
       color: #fff;
       position: relative;
@@ -193,8 +193,6 @@ div.bg-modal {
           font-weight: 300;
         }
         div.mail {
-          background-color: #f0f0f0;
-          padding: 10px;
           margin: 20px 0;
           input {
             width: 47%;
@@ -290,7 +288,7 @@ input#ck-modal {
 
 /* Content */
 
-section#content:after, footer#foot-page:after, form.form-cadastra:after {
+section#content:after, footer#foot-page:after, form.form-cadastra:after, div.loginface:after {
   display: block;
   clear: both;
   content: "";
@@ -304,7 +302,7 @@ section#content {
   background-position: 50% 140%;
   .left, .right {
     width: 50%;
-    padding: 10% 0;
+    padding: 5% 0;
   }
   .left {
     float: left;
@@ -352,9 +350,45 @@ section#content {
       padding: 0 40px;
     }
     h2.sub-title {
-      padding: 20px;
+      padding: 5px 10px;
       text-align: center;
       font-size: 1.3em;
+    }
+    span.error-message {
+      font-size: 0.9em;
+      color: #e83b3b;
+      text-align: center;
+    }
+  }
+}
+
+#painel-cadastro span.error-message {
+  font-size: 0.9em;
+  color: #e83b3b;
+  text-align: center;
+}
+
+section#content .right section.form-container span.error-message:not(:empty), #painel-cadastro span.error-message:not(:empty) {
+  display: block;
+  padding: 10px 5px;
+  border-top: 2px solid #e83b3b;
+}
+
+section#content .right section.form-container div.loginface {
+  max-width: 50%;
+  min-width: 200px;
+  margin: 0 auto;
+  background-color: #158ac4;
+  color: #fff;
+  a {
+    display: block;
+    padding: 10px;
+    font-size: 0.8em;
+    color: #fff;
+    text-decoration: none;
+    img, p {
+      display: inline-block;
+      margin: 0 5px;
     }
   }
 }

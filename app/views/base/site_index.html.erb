@@ -3,6 +3,7 @@
   <label for="ck-modal" class="label-bg"></label>
   <section id="painel-cadastro">
     <h4 class="title-modal">Criar uma conta <label for="ck-modal"><span class="icv"></span><span class="ich"></span></label></h4>
+    <span class="error-message">Um texto de erro aqui também</span>
     <p class="info-face">Caso tenha uma conta no Facebook, você pode evitar o trabalho de preencher formulários ao associar sua conta ao Openredu. Desta forma, o cadastro é feito de forma automática.</p>
     <div class="cad-facebook">
       <figure class="icon-social">
@@ -19,7 +20,7 @@
         <input type="email" name="email" placeholder="Seu e-mail de contato" class="email">
         <input type="email" name="email-confirm" placeholder="Repita seu e-mail aqui" class="email">
         <input type="text" name="login" placeholder="Digite um nome de usuário/login" class="clr">
-        <label class="info">O Login define como será o endereço de sua página no Openredu. Ex.: openredu.ufpe.br/pessoas/seulogin</label>
+        <label class="info">O Login define como será o endereço de sua página no Openredu.<label>
         <div class="mail">
           <input type="password" name="senha" placeholder="Crie uma senha">
           <input type="password" name="senha-confirm" placeholder="Repita a senha aqui">
@@ -52,15 +53,22 @@
   </div>
   <div class="right">
     <section class="form-container">
-      <%= form_for @user_session || UserSession.new, :remote => true, url: sessions_path, html: { class: 'form-login' } do |f| %>
-        <h2 class="sub-title">acesse aqui sua conta</h2>
-        <%= f.text_field :login, class: 'input', placeholder: 'login' %>
-        <%= f.password_field :password, class: 'input', placeholder: 'senha' %><br />
-        <%= f.check_box :remember_me, class: 'check', id: 'lembrar-me' %>
+      <form class="form-login">
+        <h2 class="sub-title">ACESSE SUA CONTA AQUI</h2>
+        <span class="error-message">Um texto de exemplo de erro</span>
+        <input type="text" name="login" class="input" placeholder="login" /><br />
+        <input type="password" name="senha" class="input" placeholder="senha" /><br />
+        <input type="checkbox" class="check" id="lembrar-me" />
         <label class="lb-check-lembrar" for="lembrar-me">lembrar</label><br />
         <button class="bt active">entrar</button>
-      <% end %>
+      </form>
       <a href="#" class="bt in">esqueci a senha</a>
+      <div class="loginface">
+        <a href="#">
+          <%= image_tag('facebook.svg')%>
+          <p>Login com Facebook</p>
+        </a>
+      </div>
     </section>
     <section class="out-form">
       <label class="bt out" for="ck-modal">criar uma conta</label>
