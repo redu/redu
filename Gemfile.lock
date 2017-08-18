@@ -28,14 +28,6 @@ GIT
     ajaxful_rating (3.0.0.beta8)
 
 GIT
-  remote: git://github.com/guiocavalcanti/scribd_fu.git
-  revision: 422926986f993bf4d72fcaa981dea221ecc86641
-  branch: without-scape
-  specs:
-    scribd_fu (2.0.11)
-      rscribd
-
-GIT
   remote: git://github.com/jongilbraith/simple-private-messages.git
   revision: 7ba7d3c9f7670ef3bddfc90390a49556a94f7013
   specs:
@@ -256,8 +248,7 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.8.6)
     jwt (1.5.6)
-    lazy_high_charts (1.5.4)
-      bundler (>= 1.0)
+    lazy_high_charts (1.5.8)
       hash-deep-merge
     lazydoc (1.0)
     libv8 (3.16.14.15)
@@ -368,8 +359,6 @@ GEM
       roar (~> 0.11.13)
       test_xml (>= 0.1.6)
     route_translator (3.1.0)
-    rscribd (1.3.0)
-      mime-types
     rsolr (1.0.9)
       builder (>= 2.1.2)
     rspec (2.13.0)
@@ -453,7 +442,8 @@ GEM
       addressable (>= 2.2.7)
       crack (>= 0.3.2)
     websocket (1.0.7)
-    whenever (0.8.2)
+    whenever (0.9.7)
+      chronic (>= 0.6.3)
     xml-simple (1.1.2)
     yajl-ruby (1.1.0)
 
@@ -520,7 +510,6 @@ DEPENDENCIES
   ruby-prof
   rubyzip
   sass-rails (~> 3.2)
-  scribd_fu!
   shoulda-matchers (~> 1)
   simple-navigation!
   simple-private-messages (= 0.0.0)!
@@ -543,4 +532,4 @@ RUBY VERSION
    ruby 1.9.3p551
 
 BUNDLED WITH
-   1.14.6
+   1.15.3
