@@ -13,32 +13,60 @@
         </a>
       </figure>
     </div>
-    <form class="form-cadastra">
+    <%= form_for @user || User.new , :remote => true,
+      :html => { :class => "form-cadastra", :id => "form-sign-up" } do |f| %>
+
+      <% if params[:invitation_token] %>
+        <%= hidden_field_tag :invitation_token, params[:invitation_token] %>
+        <% fb_connect_invitation = {
+          :invitation_token => params[:invitation_token] } %>
+      <% end %>
+
+      <% if params[:friendship_invitation_token] %>
+        <%= hidden_field_tag :friendship_invitation_token,
+          params[:friendship_invitation_token] %>
+        <% fb_connect_invitation = {
+          :friendship_invitation_token => params[:friendship_invitation_token] } %>
+      <% end %>
       <div class="field-group">
-        <input type="text" name="fname" placeholder="Seu primeiro nome">
-        <input type="text" name="fname" placeholder="Seu sobrenome">
-        <input type="email" name="email" placeholder="Seu e-mail de contato" class="email">
-        <input type="email" name="email-confirm" placeholder="Repita seu e-mail aqui" class="email">
-        <input type="text" name="login" placeholder="Digite um nome de usuário/login" class="clr">
-        <label class="info">O Login define como será o endereço de sua página no Openredu.<label>
+        <%= f.text_field :first_name, :placeholder => "Seu primeiro nome",
+          :maxlength => 25 %>
+        <%= f.text_field :last_name, :placeholder => "Seu sobrenome",
+          :maxlength => 25 %>
+        <%= f.text_field :email, :placeholder =>"Seu e-mail de contato",
+          :maxlength => 100 %>
+        <%= f.text_field :email_confirmation, :placeholder =>
+          "Repita seu email de contato", :maxlength => 100 %>
+        <%= f.text_field :login, :placeholder =>
+              "Digite seu nome de usuário/login", :maxlength => 20 %>
         <div class="mail">
-          <input type="password" name="senha" placeholder="Crie uma senha">
-          <input type="password" name="senha-confirm" placeholder="Repita a senha aqui">
+          <%= f.password_field :password, :placeholder => "Digite sua senha",
+            :maxlength => 20 %>
+          <%= f.password_field :password_confirmation,
+            :placeholder => "Repita sua senha", :maxlength => 20 %>
         </div>
         <label class="captcha">
-          <span class="title">Pergunta aleatória</span>
+          <%= f.label :humanizer_answer, f.object.humanizer_question, class: 'title' %>
           <em>?</em>
-          <span class="tooltip">Lore ipsum dolor...Lore ipsum dolorLore ipsum dolorLore ipsum dolor</span>
+          <span class="tooltip">Na Internet, é comum que certos computadores façam cadastros automáticos para espalhar propagandas indesejadas conhecidas como 'spam'. Essa pergunta serve para diferenciar as pessoas reais desses robôs e garantir uma boa e segura experiência de uso para você." data-placement="right">Por que esta pergunta?</span>
         </label>
-          <input type="text" class="captcha" name="captcha" placeholder="Digite a resposta aqui" >
+        <%= f.text_field :humanizer_answer, :class => "control-input",
+          :placeholder => "Responda a pergunta acima" %>
+        <%= f.hidden_field :humanizer_question_id %>
       </div>
       <div class="confirm-terms">
-        <input type="checkbox" class="input-check" id="ck-confirm-terms"/><label for="ck-confirm-terms">Aceito os <a href="#">Termos de Uso</a> da plataforma Openredu</label>
+        <%= check_box "user", "tos" %>
+        <%= f.label "tos", raw("Aceito os #{link_to "Termos de Uso",
+            home_path(:anchor => "modal-tos"), "data-toggle" => "modal"}
+            da plataforma Openredu.") %>
       </div>
       <div class="bt-groups">
-        <button id="bt_cancelar" class="bt inativo">cancelar</button><button id="bt_enviar" class="bt ativo">cadastrar</button>
+        <%= hidden_field_tag :inviter_id, params[:inviter_id] %>
+        <%= hidden_field_tag :inviter_code, params[:inviter_code] %>
+        <button id="bt_enviar" class="bt ativo">cadastrar</button>
+        <%= submit_tag "cadastrar", :class => "bt ativo" %>
       </div>
-    </form>
+    <% end %>
   </section>
 </div>
 <section id="content" class="principal">
