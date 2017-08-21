@@ -45,6 +45,23 @@ button {
   moz-border-radius: 2px;
 }
 
+.button-success-modal {
+  font-size: 0.9em;
+  padding: 15px 0;
+  width: 40%;
+  color: #fff;
+  border: 0;
+  outline: 0;
+  text-align: center;
+  display: block;
+  margin: 5px auto;
+  background-color: #4cadd7;
+  border-radius: 2px;
+  -o-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  moz-border-radius: 2px;
+}
+
 figure {
   padding: 0;
   margin: 0;
@@ -354,15 +371,17 @@ section#content {
       text-align: center;
       font-size: 1.3em;
     }
-    span.error-message {
-      font-size: 0.9em;
-      color: #e83b3b;
-      text-align: center;
-    }
+
   }
 }
 
-section#content .right section.form-container ul.messages-errors li {
+.error-message {
+  font-size: 0.9em;
+  color: #e83b3b;
+  text-align: center;
+}
+
+.messages-errors li {
   display: block;
   font-size: 0.9em;
   color: #e83b3b;
@@ -370,10 +389,11 @@ section#content .right section.form-container ul.messages-errors li {
 }
 
 
-section#content .right section.form-container ul.messages-errors, #painel-cadastro span.error-message:not(:empty) {
+ul.messages-errors {
   display: block;
   padding: 10px 5px;
   border-top: 2px solid #e83b3b;
+  margin-top: 0px;
 }
 
 section#content .right section.form-container div.loginface {
