@@ -21,7 +21,7 @@ class CoursesController < BaseController
     if @course.blocked?
       flash[:info] = "Entre em contato com o administrador deste curso."
     elsif current_user.nil?
-      flash[:info] = "Essa área só pode ser vista após você acessar o Openredu com seu nome e senha."
+      flash[:info] = "Essa área só pode ser vista após você acessar o #{Redu::Application.config.name} com seu nome e senha."
     else
       flash[:info] = "Você não tem acesso a essa página"
     end

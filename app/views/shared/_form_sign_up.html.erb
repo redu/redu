@@ -31,7 +31,7 @@
         preencher formulários ao associar sua conta ao Openredu. Desta forma, o
         cadastro é feito de forma automática.</p>
       <div class="facebook-sign-up">
-        <%= link_to "Cadastre-se no Openredu usando sua conta do Facebook",
+        <%= link_to "Cadastre-se no #{Redu::Application.config.name} usando sua conta do Facebook",
           facebook_authentication_path(:state => fb_connect_invitation.to_json),
           :class => "facebook-sign-up-button" %>
         <span class="legend"><em>Opcional</em></span>
@@ -39,7 +39,7 @@
     </div>
     <hr class="list-separator">
     <div class="modal-sign-up-section">
-      <p>Passo 1 de 2 — Preencha os campos abaixo e crie seu perfil no Openredu.</p>
+      <p>Passo 1 de 2 — Preencha os campos abaixo e crie seu perfil no <%= Redu::Application.config.name %>.</p>
     </div>
     <div class="row">
       <div class="span6">

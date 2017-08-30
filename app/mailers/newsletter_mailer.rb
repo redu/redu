@@ -20,7 +20,7 @@ class NewsletterMailer < BaseMailer
   #     end
   #   end
   def newsletter(email, opts={})
-    subject = opts.delete(:subject) || "Novidades do Openredu"
+    subject = opts.delete(:subject) || "Novidades do #{Redu::Application.config.name}"
     template = opts.delete(:template) || "newsletter/newsletter"
     @vars = { :email => email }.merge(opts)
 

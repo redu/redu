@@ -5,7 +5,7 @@
         <div class="footer-logo-wrapper">
           <%= link_to "http://openredu.org/",
             :class => "footer-logo-link" do %>
-              <h1 class="footer-logo-img sprite-logo-redu-tech-footer text-replacement">Feito com ♥ pela comunidade Openredu</h1>
+              <h1 class="footer-logo-img sprite-logo-redu-tech-footer text-replacement">Feito com ♥ pela comunidade <%= Redu::Application.config.name %></h1>
           <% end %>
           <span class="footer-cnpj">contato@openredu.com</span>
         </div>
@@ -16,7 +16,7 @@
         <% unless current_user %>
           <ul class="footer-navigation">
             <li>
-              <%= link_to "Sobre o Openredu", home_path(anchor: "") %>
+              <%= link_to "Sobre o #{Redu::Application.config.name}", home_path(anchor: "") %>
             </li>
             <li>
               <%= link_to "Segmentos", home_path(anchor: "segmentos"),
