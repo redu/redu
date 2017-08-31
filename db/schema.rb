@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170410204242) do
+ActiveRecord::Schema.define(:version => 20170713201420) do
 
   create_table "alternatives", :force => true do |t|
     t.text     "text"
@@ -207,8 +207,6 @@ ActiveRecord::Schema.define(:version => 20170410204242) do
     t.string   "attachment_content_type"
     t.integer  "attachment_file_size"
     t.datetime "attachment_updated_at"
-    t.integer  "ipaper_id"
-    t.string   "ipaper_access_key"
     t.string   "state"
     t.boolean  "published",               :default => false
     t.datetime "created_at",                                 :null => false
@@ -702,6 +700,7 @@ ActiveRecord::Schema.define(:version => 20170410204242) do
     t.string   "languages"
     t.text     "favorite_quotation"
     t.boolean  "destroy_soon"
+    t.string   "recovery_token"
   end
 
   add_index "users", ["activated_at"], :name => "index_users_on_activated_at"
