@@ -18,7 +18,7 @@ describe Seminar do
 
     it "should return fully fladged URL" do
       subject.external_resource_url.should == \
-        "https://www.youtube.com/watch?v=#{subject.external_resource}"
+        "https://www.youtube.com/embed/#{subject.external_resource}"
     end
 
     it "should accept Youtube URL in any order" do
