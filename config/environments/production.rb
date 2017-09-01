@@ -88,4 +88,7 @@ Redu::Application.configure do
 
   # Generate digests for assets URLs
   config.assets.digest = true
+
+  #enable captcha
+  config.enable_humanizer = true
 end
