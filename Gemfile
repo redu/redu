@@ -8,7 +8,7 @@ gem 'activemodel', '~>3.2'
 gem 'classy_enum'
 gem 'activerecord-import'
 gem 'acts_as_tree', '~> 0.1.1'
-gem 'acts-as-taggable-on', git: 'git://github.com/mbleigh/acts-as-taggable-on.git'
+gem 'acts-as-taggable-on','~> 2.4'
 gem 'ajaxful_rating',
   git: 'git://github.com/edgarjs/ajaxful-rating.git',
   branch: 'rails3'
