@@ -21,13 +21,6 @@ GIT
       activesupport (>= 2.3.2)
 
 GIT
-  remote: git://github.com/edgarjs/ajaxful-rating.git
-  revision: f22e2c38d601f8279e959fbe9a578b2314235505
-  branch: rails3
-  specs:
-    ajaxful_rating (3.0.0.beta8)
-
-GIT
   remote: git://github.com/jongilbraith/simple-private-messages.git
   revision: 7ba7d3c9f7670ef3bddfc90390a49556a94f7013
   specs:
@@ -101,6 +94,7 @@ GEM
       rails (>= 3, < 5)
     acts_as_tree (0.1.1)
     addressable (2.3.4)
+    ajaxful_rating (2.2.9.1)
     amq-client (1.0.2)
       amq-protocol (>= 1.2.0)
       eventmachine
@@ -445,7 +439,7 @@ DEPENDENCIES
   activerecord-import
   acts-as-taggable-on (~> 2.4)
   acts_as_tree (~> 0.1.1)
-  ajaxful_rating!
+  ajaxful_rating
   asset_sync
   authlogic
   awesome_nested_fields

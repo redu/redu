@@ -8,10 +8,8 @@ gem 'activemodel', '~>3.2'
 gem 'classy_enum'
 gem 'activerecord-import'
 gem 'acts_as_tree', '~> 0.1.1'
-gem 'acts-as-taggable-on','~> 2.4'
-gem 'ajaxful_rating',
-  git: 'git://github.com/edgarjs/ajaxful-rating.git',
-  branch: 'rails3'
+gem 'acts-as-taggable-on','~> 2.4 '
+gem 'ajaxful_rating'
 gem 'authlogic'
 gem 'awesome_nested_fields'
 gem 'bundler', '~> 1.2'
