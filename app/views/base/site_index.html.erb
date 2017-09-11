@@ -56,34 +56,37 @@
       <div class="icones-social">
         <ul>
           <li class="item-social">
-            <a href="#">
+            <a href="https://www.facebook.com/openredu">
               <figure class="icon-social">
                 <%= image_tag('facebook.svg')%>
               </figure>
             </a>
           </li>
           <li class="item-social">
-            <a href="#">
+            <a href="https://twitter.com/openredu">
               <figure class="icon-social">
                 <%= image_tag('twitter.svg')%>
               </figure>
             </a>
           </li>
           <li class="item-social">
-            <a href="#">
+            <a href="https://www.youtube.com/user/openredu">
               <figure class="icon-social">
                 <%= image_tag('youtube.svg')%>
               </figure>
             </a>
           </li>
           <li class="item-social">
-            <a href="#">
+            <a href="https://github.com/Openredu/Openredu">
               <figure class="icon-social">
                 <%= image_tag('github.svg')%>
               </figure>
             </a>
           </li>
         </ul>
+      </div>
+      <div>
+        <span title="<%= ENV['RELEASE'] %>" class= 'label-release'><%= ENV['TAG'] %></span>
       </div>
     </div>
   </section>

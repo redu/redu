@@ -434,6 +434,17 @@ footer#foot-page {
       max-width: 80%;
     }
   }
+  .label-release{
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
+    border-radius:3px;
+    font-size:11px;
+    line-height:11px;
+    padding:3px 5px 2px 5px;
+    background: #ffa935;
+    color: white;
+    margin-left: 20px;
+    }
   .area-menu nav ul {
     padding: 0 20px;
     li {
