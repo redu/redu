@@ -176,6 +176,17 @@ var buildChat = function(opts){
           value : "online" });
       that.uiUpdateCounter();
     },
+    uiAddWindow : function(member){
+      $layout.addWindow({
+          windowPartial : $window.clone(),
+          messagePartial : $message.clone(),
+          id : message.user_id,
+          owner_id : config.owner_id,
+          name : message.name,
+          "status" : "online",
+          state : "closed"
+      });
+    },
     // Remove da lista de contatos
     uiRemoveContact : function(userId){
       $layout.removeContact({ id : userId });

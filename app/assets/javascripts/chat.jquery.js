@@ -205,11 +205,12 @@
           $presence.find(".name").text(opts.member.info.name);
 
           // Adicionando papel do usuário (o mais relevante será mostrado)
-          if(opts.member.info.roles["member"]){ $role.text("Aluno"); }
-          if(opts.member.info.roles["tutor"]){ $role.text("Tutor"); }
-          if(opts.member.info.roles["teacher"]){ $role.text("Professor"); }
-          if(opts.member.info.roles["environment_admin"]){ $role.text("Administrador"); }
-          if(opts.member.info.roles["admin"]){ $role.text("Staff"); }
+          $role.text("Amigo");
+          // if(opts.member.info.roles["member"]){  }
+          // if(opts.member.info.roles["tutor"]){ $role.text("Tutor"); }
+          // if(opts.member.info.roles["teacher"]){ $role.text("Professor"); }
+          // if(opts.member.info.roles["environment_admin"]){ $role.text("Administrador"); }
+          // if(opts.member.info.roles["admin"]){ $role.text("Staff"); }
 
           $contacts.find("ul").append($presence);
 
