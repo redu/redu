@@ -200,9 +200,9 @@
           var $presence = $(opts.presencePartial);
           var $role = $presence.find(".role");
 
-          $presence.attr("id", getCSSUserId(opts.member.id));
-          $presence.find("img").attr("src", opts.member.info.thumbnail);
-          $presence.find(".name").text(opts.member.info.name);
+          $presence.attr("id", getCSSUserId(opts.member.user_id));
+          $presence.find("img").attr("src", opts.member.avatar);
+          $presence.find(".name").text(opts.member.name);
 
           // Adicionando papel do usuário (o mais relevante será mostrado)
           $role.text("Amigo");
@@ -214,16 +214,16 @@
 
           $contacts.find("ul").append($presence);
 
-          var $statusDiv = $("#" + getCSSWindowId(opts.member.id) + " .chat-window-bar .offline");
+          var $statusDiv = $("#" + getCSSWindowId(opts.member.user_id) + " .chat-window-bar .offline");
           $statusDiv.removeClass("offline").addClass("online");
           $statusDiv.text("online");
 
           $presence.bind("click", function(){
               $this.addWindow({ windowPartial : opts.windowPartial.clone()
                   , messagePartial : opts.messagePartial.clone()
-                  , id : opts.member.id
+                  , id : opts.member.user_id
                   , owner_id : opts.owner_id
-                  , name : opts.member.info.name
+                  , name : opts.member.name
                   , "status" : "online"
                   , state : "opened" });
           });

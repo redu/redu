@@ -15,9 +15,11 @@ var buildChat = (function(){
 // Constrói um novo objeto Chat
 var buildChat = function(opts){
   var config = opts;
-
+  var client = new Faye.Client('http://localhost:9292/faye');
+  var currentUser = config.currentUser;
   // Inicializando variaveis de template
-  var $layout, $window, $presence;
+  var $layout, $window, $presence, $friends;
+
   if(config.layout instanceof jQuery)
     $layout = config.layout;
   else
@@ -37,6 +39,8 @@ var buildChat = function(opts){
     $message = config.messagePartial;
   else
     $message = $(config.messagePartial);
+
+  $friends = config.friends;
 
   var getCSSUserId = function(userId) {
     return "chat-user-" + userId;
@@ -75,9 +79,31 @@ var buildChat = function(opts){
           messagePartial : $message.clone(),
           owner_id : config.owner_id,
       });
+
+      client.subscribe('/online/server', function(data){
+        var usersOnline = data.users
+        console.log(data);
+        for(var i = 0; i < $friends.length; i++){
+          that.uiRemoveContact($friends[i]);
+          console.log('removeu '+$friends[i]);
+          for(var j = 0; j < usersOnline.length; j++){
+            if($friends[i] === usersOnline[j].user_id){
+              var member = usersOnline[j];
+              member['owner_id'] = currentUser.user_id
+              console.log('add');
+              console.log(member);
+              that.uiAddContact(member);
+            }
+          }
+        }
+      });
+
+      //Encapsular em um chamada do servidor
+      client.publish('/online/client', currentUser);
     },
     // Inscreve no canal do usuário logado
     subscribeMyChannel : function(){
+
       // myPresenceCh = pusher.subscribe(config.channel);
 
       // // Escuta evento de confirmação de inscrição no canal
@@ -180,9 +206,9 @@ var buildChat = function(opts){
       $layout.addWindow({
           windowPartial : $window.clone(),
           messagePartial : $message.clone(),
-          id : message.user_id,
+          id : member.user_id,
           owner_id : config.owner_id,
-          name : message.name,
+          name : member.name,
           "status" : "online",
           state : "closed"
       });
