@@ -85,13 +85,10 @@ var buildChat = function(opts){
         console.log(data);
         for(var i = 0; i < $friends.length; i++){
           that.uiRemoveContact($friends[i]);
-          console.log('removeu '+$friends[i]);
           for(var j = 0; j < usersOnline.length; j++){
             if($friends[i] === usersOnline[j].user_id){
               var member = usersOnline[j];
               member['owner_id'] = currentUser.user_id
-              console.log('add');
-              console.log(member);
               that.uiAddContact(member);
             }
           }
