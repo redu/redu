@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170713201420) do
+ActiveRecord::Schema.define(:version => 20170925172433) do
 
   create_table "alternatives", :force => true do |t|
     t.text     "text"
@@ -701,6 +701,7 @@ ActiveRecord::Schema.define(:version => 20170713201420) do
     t.text     "favorite_quotation"
     t.boolean  "destroy_soon"
     t.string   "recovery_token"
+    t.string   "channel"
   end
 
   add_index "users", ["activated_at"], :name => "index_users_on_activated_at"
