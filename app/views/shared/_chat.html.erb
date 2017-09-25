@@ -10,7 +10,7 @@
     chat = buildChat({ key : "key"
     , friends : <%= @user.friends.order('first_name ASC').map { |u| u.id }%>
     , currentUser: <%= raw({'user_id' => current_user.id, 'avatar' => current_user.avatar.url(:thumb_24), 'name' => current_user.first_name }.to_json) %>
-    , channel : "presence_channel"
+    , channel : <%= current_user.user_channel %>
     , endPoint : "presence_auth_path"
     , owner_id : "<%= current_user.id %>"
     , layout : "<%= escape_javascript(render :partial => "presence/chat_list") %>"
