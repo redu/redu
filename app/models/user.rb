@@ -604,7 +604,7 @@ class User < ActiveRecord::Base
   end
 
   def user_channel
-    self.channel || update_attribute(:channel, SecureRandom.urlsafe_base64 ? self.channel : nil
+    self.channel || update_attribute(:channel, SecureRandom.urlsafe_base64) ? self.channel : nil
   end
 
   protected
