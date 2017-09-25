@@ -603,6 +603,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def user_channel
+    self.channel || update_attribute(:channel, SecureRandom.urlsafe_base64 ? self.channel : nil
+  end
+
   protected
 
   def enable_humanizer
