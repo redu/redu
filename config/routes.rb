@@ -32,6 +32,9 @@ Redu::Application.routes.draw do
       end
     end
 
+    #chat routes
+    post '/send_message', to: 'chats#send_message'
+    
     # sessions routes
     match '/signup' => 'users#new', :as => :signup
     get '/login' => 'sessions#new', :as => :login

@@ -18,7 +18,7 @@ var buildChat = function(opts){
   var client = new Faye.Client('http://localhost:9292/faye');
   var currentUser = config.currentUser;
   // Inicializando variaveis de template
-  var $layout, $window, $presence, $friends;
+  var $layout, $window, $presence, $channel, $friends;
 
   if(config.layout instanceof jQuery)
     $layout = config.layout;
@@ -41,6 +41,7 @@ var buildChat = function(opts){
     $message = $(config.messagePartial);
 
   $friends = config.friends;
+  $channel = config.channel;
 
   var getCSSUserId = function(userId) {
     return "chat-user-" + userId;
@@ -93,6 +94,29 @@ var buildChat = function(opts){
             }
           }
         }
+      });
+
+      client.subscribe($channel, function(message){
+        console.log(message);
+        $layout.addWindow({
+            windowPartial : $window.clone(),
+            messagePartial : $message.clone(),
+            id : message.user_id,
+            owner_id : config.owner_id,
+            name : message.name,
+            "status" : "online",
+            state : "closed"
+        });
+
+        $layout.find("#" + getCSSWindowId(message.user_id)).addMessage({
+            messagePartial : $message.clone(),
+            thumbnail : message.thumbnail,
+            text : message.text,
+            time : message.time,
+            name : message.name,
+            id : message.user_id,
+            owner_id : config.owner_id
+        }).nodge();
       });
 
       //Encapsular em um chamada do servidor

@@ -604,11 +604,24 @@ class User < ActiveRecord::Base
   end
 
   def user_channel
-    self.channel || update_attribute(:channel, SecureRandom.urlsafe_base64) ? self.channel : nil
+    self.channel || generate_channel
   end
+
+
 
   protected
 
+  def generate_channel
+    channel =  SecureRandom.hex(20)
+    users = User.where(channel: channel)
+    while !users.empty?
+      channel =  SecureRandom.hex(20)
+      users = User.where(channel: channel)
+    end
+    update_attribute(:channel, channel)
+    channel
+  end
+   
   def enable_humanizer
     Rails.application.config.enable_humanizer
   end

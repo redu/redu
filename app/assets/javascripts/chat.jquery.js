@@ -405,22 +405,22 @@
     $.fn.restoreConversation = function(opts){
       return this.each(function(){
         var $this = $(this);
-        $.getJSON('/presence/last_messages_with', { contact_id : opts.id },
-          function(logs){
-            for (i in logs) {
-              var msg = logs[i];
-              $this.addMessage({
-                  messagePartial : opts.messagePartial.clone(),
-                  text : msg.text,
-                  id : msg.user_id,
-                  owner_id : opts.owner_id,
-                  name : msg.name,
-                  thumbnail : msg.thumbnail,
-                  time : msg.time
-              });
-            }
+        // $.getJSON('/presence/last_messages_with', { contact_id : opts.id },
+        //   function(logs){
+        //     for (i in logs) {
+        //       var msg = logs[i];
+        //       $this.addMessage({
+        //           messagePartial : opts.messagePartial.clone(),
+        //           text : msg.text,
+        //           id : msg.user_id,
+        //           owner_id : opts.owner_id,
+        //           name : msg.name,
+        //           thumbnail : msg.thumbnail,
+        //           time : msg.time
+        //       });
+        //     }
 
-        });
+        // });
       });
     };
 
