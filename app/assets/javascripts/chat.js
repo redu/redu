@@ -83,7 +83,6 @@ var buildChat = function(opts){
 
       client.subscribe('/online/server', function(data){
         var usersOnline = data.users
-        console.log(data);
         for(var i = 0; i < $friends.length; i++){
           that.uiRemoveContact($friends[i]);
           for(var j = 0; j < usersOnline.length; j++){
@@ -97,7 +96,6 @@ var buildChat = function(opts){
       });
 
       client.subscribe($channel, function(message){
-        console.log(message);
         $layout.addWindow({
             windowPartial : $window.clone(),
             messagePartial : $message.clone(),
@@ -120,97 +118,9 @@ var buildChat = function(opts){
       });
 
       //Encapsular em um chamada do servidor
-      client.publish('/online/client', currentUser);
+      $.get('/online');
     },
-    // Inscreve no canal do usuário logado
-    subscribeMyChannel : function(){
 
-      // myPresenceCh = pusher.subscribe(config.channel);
-
-      // // Escuta evento de confirmação de inscrição no canal
-      // myPresenceCh.bind("pusher:subscription_succeeded", function(members){
-      //     members.each(function(member) {
-      //         // var channels = member.info.contacts;
-      //         var channels = member.info.contacts;
-      //         // Somente o user atual tem info.contacts
-      //         if(channels){
-      //           that.multiSubscribe(channels);
-      //         } else {
-      //           // Para o restante dos membros do canal
-      //           // (caso em que os contatos entram antes do dono, logo eles
-      //           // devem ser adicionados a interface).
-      //           that.uiAddContact(member);
-      //         }
-      //     });
-      // });
-
-      // // Escuta evento de adição de membro no canal
-      // myPresenceCh.bind("pusher:member_added", function(member){
-      //     that.uiAddContact(member);
-      //     pusher.subscribe(member.info.pre_channel);
-
-      //     if (!pusher.channels.find(member.info.pri_channel)) {
-      //       that.subscribePrivate(member.info.pri_channel);
-      //     }
-      // });
-
-      // // Escuta evento de remoção de membro no canal
-      // myPresenceCh.bind("pusher:member_removed", function(member){
-      //     that.uiRemoveContact(member.id);
-      //     pusher.unsubscribe(member.info.pre_channel);
-      // });
-    },
-    // Increve no canal dado (Caso de já estar no chat e aceitar convite de contato)
-    subscribePresence : function(channel){
-      // pusher.subscribe(channel);
-    },
-    // Desinscreve do canal dado
-    unsubscribePresence : function(channel){
-      // pusher.unsubscribe(channel);
-    },
-    // Se inscreve no canal privado de um usuário
-    subscribePrivate: function(channel){
-      // var channel = pusher.subscribe(channel);
-      // that.bindMessage(channel);
-    },
-    // // Escuta evento de mensagem enviada no canal privado
-    // bindMessage : function(channel) {
-    //   channel.bind("message_sent", function(message){
-    //       if (message.user_id != config.owner_id ){
-    //         $layout.addWindow({
-    //             windowPartial : $window.clone(),
-    //             messagePartial : $message.clone(),
-    //             id : message.user_id,
-    //             owner_id : config.owner_id,
-    //             name : message.name,
-    //             "status" : "online",
-    //             state : "closed"
-    //         });
-
-    //         $layout.find("#" + getCSSWindowId(message.user_id)).addMessage({
-    //             messagePartial : $message.clone(),
-    //             thumbnail : message.thumbnail,
-    //             text : message.text,
-    //             time : message.time,
-    //             name : message.name,
-    //             id : message.user_id,
-    //             owner_id : config.owner_id
-    //         }).nodge();
-    //     }
-    //   });
-    // },
-    // Desinscreve no canal privado
-    unsubscribePrivate : function(channel){
-      // pusher.unsubscribe(channel);
-    },
-    multiSubscribe : function(channels){
-      // var channels = pusher.multiSubscribe(channels);
-      // for(var prop in channels) {
-      //   if(channels.hasOwnProperty(prop)) {
-      //     that.bindMessage(channels[prop]);
-      //   }
-      // }
-    },
     // Adiciona a lista de contatos
     uiAddContact : function(member){
       $layout.addContact({member : member
