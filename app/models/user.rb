@@ -87,6 +87,9 @@ class User < ActiveRecord::Base
   has_many :results, dependent: :destroy
   has_many :choices, dependent: :delete_all
 
+  #Chat
+  has_many :conversations, foreign_key: :sender_id
+
   # Named scopes
   scope :recent, order('users.created_at DESC')
   scope :active, where("users.activated_at IS NOT NULL")
@@ -621,7 +624,7 @@ class User < ActiveRecord::Base
     update_attribute(:channel, channel)
     channel
   end
-   
+
   def enable_humanizer
     Rails.application.config.enable_humanizer
   end
