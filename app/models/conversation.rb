@@ -6,11 +6,11 @@ class Conversation < ActiveRecord::Base
 
   validates_uniqueness_of :sender_id, :scope => :recipient_id
 
-  def involving(user)
+  def self.involving(user)
     where("conversations.sender_id =? OR conversations.recipient_id =?",user.id,user.id)
   end
 
-  def between(sender_id,recipient_id)
+  def self.between(sender_id,recipient_id)
     where("(conversations.sender_id = ? AND conversations.recipient_id =?) OR (conversations.sender_id = ? AND conversations.recipient_id =?)", sender_id,recipient_id, recipient_id, sender_id)
   end
 end

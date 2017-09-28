@@ -5,16 +5,44 @@ class ChatsController < ApplicationController
     authorize! :send_message, recipient
 
     text = params['text']
-    conversation = Conversation.first_or_create(sender: current_user, recipient: recipient)
-    p conversation
+
+    conversation = Conversation.between(
+      current_user.id,
+      recipient.id
+    ).first
+
+    if conversation.blank?
+      conversation = Conversation.create(
+        sender: current_user,
+        recipient: recipient
+      )
+    end
+
     message = conversation.chat_messages.build(user: current_user, body: text)
 
     if message.valid?
+      message.save
       sender("/#{recipient.user_channel}", message.format_message)
     end
 
 		head :ok, content_type: "text/html"
 	end
+
+  def last_messages_with
+    recipient = User.find(params['contact_id'])
+
+    conversation = Conversation.between(
+      current_user.id,
+      recipient.id
+    ).first
+    p conversation
+    p conversation.chat_messages
+    if conversation.blank?
+      render json: []
+    else
+      render json: conversation.chat_messages.map {|x| x.format_message }
+    end
+  end
 
   def online
     authorize! :online, :chats

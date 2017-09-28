@@ -117,8 +117,7 @@ var buildChat = function(opts){
         }).nodge();
       });
 
-      //Encapsular em um chamada do servidor
-      $.get('/online');
+      $.get('/chat/online');
     },
 
     // Adiciona a lista de contatos

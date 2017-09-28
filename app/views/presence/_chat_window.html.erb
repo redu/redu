@@ -2,7 +2,7 @@
   <div class="chat-window">
     <span class="name"></span>
     <ul class="conversation"></ul>
-    <%= form_tag "/send_message", :remote => true,
+    <%= form_tag "/chat/send_message", :remote => true,
       :class => "user-input" do %>
       <%= hidden_field_tag :owner_socket_id, nil,
         { :id => "", :class => "owner-socket-id" } %>

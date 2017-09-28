@@ -9,7 +9,7 @@ class ChatMessage < ActiveRecord::Base
       user_id: user.id,
       name: user.display_name,
       thumbnail: user.avatar.url(:thumb_24),
-      text: text
+      text: body
     }
   end
 end
