@@ -1,18 +1,18 @@
 class ChatsController < ApplicationController
 	def send_message
-		receiver = User.find(params['contact_id'])
-    authorize! :send_message, receiver
-		text = params['text']
+		recipient = User.find(params['contact_id'])
 
-		sender(
-			"/#{receiver.user_channel}",
-			{
-				user_id: current_user.id,
-				name: "#{current_user.first_name} #{current_user.last_name}",
-				thumbnail: current_user.avatar.url(:thumb_24),
-				text: text
-			}
-		)
+    authorize! :send_message, recipient
+
+    text = params['text']
+    conversation = Conversation.first_or_create(sender: current_user, recipient: recipient)
+    p conversation
+    message = conversation.chat_messages.build(user: current_user, body: text)
+
+    if message.valid?
+      sender("/#{recipient.user_channel}", message.format_message)
+    end
+
 		head :ok, content_type: "text/html"
 	end
 
