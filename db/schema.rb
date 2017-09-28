@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170925172433) do
+ActiveRecord::Schema.define(:version => 20170928122335) do
 
   create_table "alternatives", :force => true do |t|
     t.text     "text"
@@ -147,6 +147,16 @@ ActiveRecord::Schema.define(:version => 20170925172433) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
+
+  create_table "conversations", :force => true do |t|
+    t.integer  "sender_id"
+    t.integer  "recipient_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "conversations", ["recipient_id"], :name => "index_conversations_on_recipient_id"
+  add_index "conversations", ["sender_id"], :name => "index_conversations_on_sender_id"
 
   create_table "course_enrollments", :force => true do |t|
     t.integer  "user_id"
