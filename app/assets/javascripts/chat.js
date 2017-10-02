@@ -6,10 +6,7 @@
 //= require chat
 //= require loading
 
-// Utilizando pjax
 var $pjaxLinks = $("a:not([data-remote]):not([href^='#']):not([rel='nofollow']):not([href^='javascript\:']):not([onClick])");;
-// Desabilitado enquanto existem dois layouts
-//$pjaxLinks.pjax("#pjax-container", { timeout: null });
 
 var buildChat = (function(){
 // Constrói um novo objeto Chat
@@ -117,7 +114,9 @@ var buildChat = function(opts){
         }).nodge();
       });
 
-      $.get('/chat/online');
+      $.get('/chat/online', function(success){
+        client.publish('/online/client', currentUser);
+      });
     },
 
     // Adiciona a lista de contatos

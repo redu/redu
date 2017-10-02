@@ -48,11 +48,9 @@ class ChatsController < ApplicationController
   def online
     authorize! :online, :chats
     sender(
-      "/online/client",
+      "/online/confirm",
       {
-        'user_id' => current_user.id,
-        'avatar' => current_user.avatar.url(:thumb_24),
-        'name' => "#{current_user.first_name} #{current_user.last_name}"
+        current_user.user_channel => current_user.id
       }
     )
     head :ok, content_type: "text/html"
