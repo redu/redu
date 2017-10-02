@@ -31,12 +31,13 @@ class ChatsController < ApplicationController
   def last_messages_with
     recipient = User.find(params['contact_id'])
 
+    authorize! :send_message, recipient
+
     conversation = Conversation.between(
       current_user.id,
       recipient.id
     ).first
-    p conversation
-    p conversation.chat_messages
+
     if conversation.blank?
       render json: []
     else
