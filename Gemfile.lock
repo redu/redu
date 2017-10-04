@@ -1,47 +1,25 @@
 GIT
-  remote: git://github.com/OpenRedu/invitable.git
+  remote: https://github.com/OpenRedu/invitable.git
   revision: 8f56a767909ab59220964304fb78364f49a42315
   specs:
     invitable (0.0.7)
       rails (>= 3.0.10)
 
 GIT
-  remote: git://github.com/amatsuda/kaminari.git
-  revision: 7d209354119a8d5d273def3a7f5c6d011c4baa0a
+  remote: https://github.com/andi/simple-navigation.git
+  revision: 3df3a88fd65645eba1d9fd8dcfd59804e9f6232c
   specs:
-    kaminari (0.14.1)
-      actionpack (>= 3.0.0)
-      activesupport (>= 3.0.0)
-
-GIT
-  remote: git://github.com/andi/simple-navigation.git
-  revision: 04315d6dd5a1bde7d02e4c49d89a90a283c67a31
-  specs:
-    simple-navigation (3.10.1)
+    simple-navigation (4.0.5)
       activesupport (>= 2.3.2)
 
 GIT
-  remote: git://github.com/edgarjs/ajaxful-rating.git
-  revision: f22e2c38d601f8279e959fbe9a578b2314235505
-  branch: rails3
-  specs:
-    ajaxful_rating (3.0.0.beta8)
-
-GIT
-  remote: git://github.com/jongilbraith/simple-private-messages.git
+  remote: https://github.com/jongilbraith/simple-private-messages.git
   revision: 7ba7d3c9f7670ef3bddfc90390a49556a94f7013
   specs:
     simple-private-messages (0.0.0)
 
 GIT
-  remote: git://github.com/mbleigh/acts-as-taggable-on.git
-  revision: 18d95ef13700a90d9cf1eb40e24ceb0d3bfe90e7
-  specs:
-    acts-as-taggable-on (2.4.1.pre)
-      rails (>= 3, < 5)
-
-GIT
-  remote: git://github.com/patmaddox/no-peeping-toms.git
+  remote: https://github.com/patmaddox/no-peeping-toms.git
   revision: 7e4148731caf9a09d8f3c91a8e5303d369753643
   specs:
     no_peeping_toms (2.1.3)
@@ -49,14 +27,14 @@ GIT
       activesupport (>= 3.0.0)
 
 GIT
-  remote: git://github.com/redu/analytics.git
+  remote: https://github.com/redu/analytics.git
   revision: a777409d456f6e14894eac8e011f7046a14a1ae1
   specs:
     redu_analytics (0.0.3)
       lazy_high_charts
 
 GIT
-  remote: git://github.com/redu/vis_client.git
+  remote: https://github.com/redu/vis_client.git
   revision: 4e73d1de4004d60f63d891c8232e799664b2d5a4
   branch: ruby-1-9-3
   specs:
@@ -104,8 +82,11 @@ GEM
     activesupport (3.2.22.5)
       i18n (~> 0.6, >= 0.6.4)
       multi_json (~> 1.0)
+    acts-as-taggable-on (2.4.1)
+      rails (>= 3, < 5)
     acts_as_tree (0.1.1)
     addressable (2.3.4)
+    ajaxful_rating (3.0.0.beta8)
     amq-client (1.0.2)
       amq-protocol (>= 1.2.0)
       eventmachine
@@ -123,14 +104,6 @@ GEM
       activesupport (>= 3.2)
     awesome_nested_fields (0.6.4)
       rails (>= 3.0.0)
-    aws-s3 (0.6.3)
-      builder
-      mime-types
-      xml-simple
-    aws-sdk (1.9.2)
-      json (~> 1.4)
-      nokogiri (>= 1.4.4)
-      uuidtools (~> 2.1)
     bourne (1.4.0)
       mocha (~> 0.13.2)
     bson (1.8.6)
@@ -144,8 +117,9 @@ GEM
       ffi (~> 1.0, >= 1.0.11)
     chronic (0.9.1)
     chunky_png (1.2.8)
-    ckeditor (3.4.2.pre)
-      mime-types (>= 1.16)
+    ckeditor (4.1.3)
+      cocaine
+      orm_adapter (~> 0.5.0)
     classy_enum (3.2.1)
       rails (>= 3.0)
     cocaine (0.3.2)
@@ -189,6 +163,10 @@ GEM
     diff-lcs (1.2.4)
     domain_name (0.5.20170404)
       unf (>= 0.0.5, < 1.0.0)
+    dotenv (2.2.1)
+    dotenv-rails (2.2.1)
+      dotenv (= 2.2.1)
+      railties (>= 3.2, < 5.2)
     dynamic_form (1.1.4)
     em-http-request (1.0.3)
       addressable (>= 2.2.3)
@@ -248,6 +226,9 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.8.6)
     jwt (1.5.6)
+    kaminari (0.17.0)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     lazy_high_charts (1.5.8)
       hash-deep-merge
     lazydoc (1.0)
@@ -295,6 +276,7 @@ GEM
     omniauth-oauth2 (1.4.0)
       oauth2 (~> 1.0)
       omniauth (~> 1.2)
+    orm_adapter (0.5.0)
     paperclip (2.7.5)
       activerecord (>= 2.3.0)
       activesupport (>= 2.3.2)
@@ -435,7 +417,6 @@ GEM
       json
       representable
     useragent (0.6.0)
-    uuidtools (2.1.3)
     valium (0.5.0)
       activerecord (>= 3.0.2)
     webmock (1.11.0)
@@ -444,7 +425,6 @@ GEM
     websocket (1.0.7)
     whenever (0.9.7)
       chronic (>= 0.6.3)
-    xml-simple (1.1.2)
     yajl-ruby (1.1.0)
 
 PLATFORMS
@@ -453,19 +433,17 @@ PLATFORMS
 DEPENDENCIES
   aasm
   activerecord-import
-  acts-as-taggable-on!
+  acts-as-taggable-on (~> 2.4)
   acts_as_tree (~> 0.1.1)
-  ajaxful_rating!
+  ajaxful_rating (= 3.0.0.beta8)
   asset_sync
   authlogic
   awesome_nested_fields
-  aws-s3
-  aws-sdk
   bson_ext
   bundler (~> 1.2)
   cancan (~> 1.6.7)
   chronic
-  ckeditor (= 3.4.2.pre)
+  ckeditor (= 4.1.3)
   classy_enum
   compass-rails
   daemons (= 1.0.10)
@@ -475,6 +453,7 @@ DEPENDENCIES
   deep_cloneable
   delayed_job_mongoid
   destroy_soon
+  dotenv-rails
   dynamic_form
   em-http-request
   eventmachine
@@ -485,7 +464,7 @@ DEPENDENCIES
   invitable!
   jasmine
   jquery-rails (>= 1.0.12)
-  kaminari!
+  kaminari
   mime-types
   mysql2 (~> 0.3.21)
   newrelic_rpm
@@ -532,4 +511,4 @@ RUBY VERSION
    ruby 1.9.3p551
 
 BUNDLED WITH
-   1.15.3
+   1.15.4

@@ -10,6 +10,8 @@ class UsersController < BaseController
 
   rescue_from CanCan::AccessDenied, :with => :deny_access
 
+  before_filter :remove_errors_field, only: :create
+
   ## User
   def activate
     redirect_to signup_path and return if params[:id].blank?
@@ -461,6 +463,12 @@ class UsersController < BaseController
 
     if space_id = params[:space_id]
       @space = Space.find(space_id)
+    end
+  end
+
+  def remove_errors_field
+    ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
+      html_tag
     end
   end
 end

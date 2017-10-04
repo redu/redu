@@ -17,11 +17,11 @@ module LecturesHelper
       :width => '608',
       :height => '360',
     }.merge(options)
-    youtube_id = options[:youtube_url].partition('=').last
+
     result = <<-END
         <iframe width="#{options[:width]}"
           height="#{options[:height]}"
-          src="http://www.youtube.com/embed/#{youtube_id}"
+          src="#{options[:youtube_url]}"
           frameborder="0"
           allowfullscreen="allowfullscreen"
           mozallowfullscreen="mozallowfullscreen"

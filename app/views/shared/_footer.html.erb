@@ -36,7 +36,9 @@
             </li>
           </ul>
         <% else %>
-          &nbsp;
+          <div style="text-align:center;line-height:125px"">
+            <span title="<%= ENV['RELEASE'] %>" class= 'label-doubts'><%= ENV['TAG'] %></span>
+          </div>
         <% end %>
       </div>
       <div class="span3">
