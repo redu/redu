@@ -595,20 +595,18 @@ class User < ActiveRecord::Base
     self.birth_localization.blank? && self.localization.blank?
   end
 
+  def generate_recovery_token
+    self.recovery_token = SecureRandom.urlsafe_base64(nil,false)
+    if self.save
+      UserNotifier.delay(:queue => 'email', :priority => 1).
+        user_reseted_password(self)
+    end
+  end
+
   protected
 
-  # Retorna true ou false baseado se o humanizer está ou não habilitado.
-  # Por padrão do ambiente de desenvolvimento, ele é desabilitado. E em produção
-  # habilitado.
-  #
-  # É possível desabilitar para uma determinada instância da seguinte forma:
-  #   user = User.new
-  #   user.enable_humanizer = false
-  #
-  # Esta configuração é restrita a uma única instância e independente de ambiente.
   def enable_humanizer
-    return @enable_humanizer if defined? @enable_humanizer
-    Rails.env.production?
+    Rails.application.config.enable_humanizer
   end
 
   def activate_before_save

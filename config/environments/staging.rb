@@ -63,4 +63,9 @@ Redu::Application.configure do
     :students_participation => "http://visstaging.redu.com.br/user_spaces/participation.json"
   }
 
+  #enable captcha
+  config.enable_humanizer = true
+
+  #enable digest
+  config.assets.digest = true
 end

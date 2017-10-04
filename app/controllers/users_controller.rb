@@ -4,10 +4,13 @@ class UsersController < BaseController
 
   load_and_authorize_resource :except => [:recover_username_password,
     :recover_password, :resend_activation, :activate,
+    :confirm_recover_password,
     :index],
     :find_by => :login
 
   rescue_from CanCan::AccessDenied, :with => :deny_access
+
+  before_filter :remove_errors_field, only: :create
 
   ## User
   def activate
@@ -255,19 +258,38 @@ class UsersController < BaseController
     if @recover_password.valid?
       @user = User.find_by_email(@recover_password.email)
 
-      if @user.try(:reset_password)
-        UserNotifier.delay(:queue => 'email', :priority => 1).
-          user_reseted_password(@user, @user.password)
-        @user.save
-
-        # O usuario estava ficando logado, apos o comando @user.save.
+      if @user.nil?
+        @recover_password.mark_email_as_invalid!
+      else
+        @user.generate_recovery_token
+        #O usuario estava ficando logado, apos o comando @user.save.
         # Destruindo sessao caso ela exista.
         if UserSession.find
           UserSession.find.destroy
         end
-      else # Email não cadastrado no Redu
-        @recover_password.mark_email_as_invalid!
       end
+    end
+  end
+
+  def confirm_recover_password
+    token = params[:token]
+    @user = User.find_by_recovery_token(token)
+    if @user.nil?
+      redirect_to home_path
+    else
+      @user.reset_password
+
+      UserNotifier.delay(:queue => 'email', :priority => 1).
+          confirm_user_reseted_password(@user, @user.password)
+
+      @user.recovery_token = nil
+      @user.save
+
+      if UserSession.find
+        UserSession.find.destroy
+      end
+
+      render layout: 'cold'
     end
   end
 
@@ -441,6 +463,12 @@ class UsersController < BaseController
 
     if space_id = params[:space_id]
       @space = Space.find(space_id)
+    end
+  end
+
+  def remove_errors_field
+    ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
+      html_tag
     end
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170410204242) do
+ActiveRecord::Schema.define(:version => 20170731131913) do
 
   create_table "alternatives", :force => true do |t|
     t.text     "text"
@@ -105,22 +105,20 @@ ActiveRecord::Schema.define(:version => 20170410204242) do
   add_index "choices", ["user_id", "question_id"], :name => "index_choices_on_user_id_and_question_id", :unique => true
 
   create_table "ckeditor_assets", :force => true do |t|
-    t.string   "data_file_name",                                 :null => false
+    t.string   "data_file_name",                  :null => false
     t.string   "data_content_type"
     t.integer  "data_file_size"
     t.integer  "assetable_id"
     t.string   "assetable_type",    :limit => 30
-    t.string   "type",              :limit => 25
-    t.string   "guid",              :limit => 10
-    t.integer  "locale",            :limit => 1,  :default => 0
-    t.integer  "user_id"
-    t.datetime "created_at",                                     :null => false
-    t.datetime "updated_at",                                     :null => false
+    t.string   "type",              :limit => 30
+    t.integer  "width"
+    t.integer  "height"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
   end
 
-  add_index "ckeditor_assets", ["assetable_type", "assetable_id"], :name => "fk_assetable"
-  add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], :name => "idx_assetable_type"
-  add_index "ckeditor_assets", ["user_id"], :name => "fk_user"
+  add_index "ckeditor_assets", ["assetable_type", "assetable_id"], :name => "idx_ckeditor_assetable"
+  add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], :name => "idx_ckeditor_assetable_type"
 
   create_table "client_applications", :force => true do |t|
     t.string   "name"
@@ -207,8 +205,6 @@ ActiveRecord::Schema.define(:version => 20170410204242) do
     t.string   "attachment_content_type"
     t.integer  "attachment_file_size"
     t.datetime "attachment_updated_at"
-    t.integer  "ipaper_id"
-    t.string   "ipaper_access_key"
     t.string   "state"
     t.boolean  "published",               :default => false
     t.datetime "created_at",                                 :null => false
@@ -702,6 +698,7 @@ ActiveRecord::Schema.define(:version => 20170410204242) do
     t.string   "languages"
     t.text     "favorite_quotation"
     t.boolean  "destroy_soon"
+    t.string   "recovery_token"
   end
 
   add_index "users", ["activated_at"], :name => "index_users_on_activated_at"
