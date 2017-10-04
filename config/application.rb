@@ -262,5 +262,8 @@ module Redu
     # Layout sem bootstrap
     config.assets.precompile += %w(ie.js outdated_browser.js jquery.maskedinput.js canvas.js chart.js webview.js clean.js new_wall.js new_wall/lecture-toggle-comment-or-help.js)
     config.assets.precompile += %w(ie.css icons.redu.css outdated_browser.css preview-course-old.css page.css cold.css clean.css print.css email.css new_wall.css)
+
+    # Assets da nova landing page
+    config.assets.precompile += %w(landing.css jquery.js rails.js)
   end
 end

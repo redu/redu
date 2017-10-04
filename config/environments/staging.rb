@@ -65,4 +65,7 @@ Redu::Application.configure do
 
   #enable captcha
   config.enable_humanizer = true
+
+  #enable digest
+  config.assets.digest = true
 end
