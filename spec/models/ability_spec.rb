@@ -1143,8 +1143,10 @@ describe Ability do
         @my_friend = FactoryGirl.create(:user)
         @my_friend_ability = Ability.new(@my_friend)
 
-        friendship, status = @user.be_friends_with(@my_friend)
-        friendship.accept!
+        friendship1, status = @user.be_friends_with(@my_friend)
+        friendship2, status = @my_friend.be_friends_with(@user)
+        friendship1.accept!
+        friendship2.accept!
       end
 
       it "should read each other" do
@@ -1155,6 +1157,24 @@ describe Ability do
       it "should not manage each other" do
         @user_ability.should_not be_able_to(:manage, @my_friend)
         @my_friend_ability.should_not be_able_to(:manage, @user)
+      end
+
+      it "should send message to other" do
+        @user_ability.should be_able_to(:send_message, @my_friend)
+        @my_friend_ability.should be_able_to(:send_message, @user)
+      end
+    end
+
+    context "when they are not friends" do
+      before do
+        @not_my_friend = FactoryGirl.create(:user)
+        @not_my_friend_ability = Ability.new(@not_my_friend)
+      end
+
+
+      it "should not send message each other" do
+        @user_ability.should_not be_able_to(:send_message, @not_my_friend)
+        @not_my_friend_ability.should_not be_able_to(:send_message, @user)
       end
     end
 
@@ -1252,6 +1272,10 @@ describe Ability do
 
     it "manages itself" do
       @user_ability.should be_able_to(:manage, @user)
+    end
+
+    it "inform that itself is online" do
+      @user_ability.should be_able_to(:online, @user)
     end
 
     context "manages its own statuses" do

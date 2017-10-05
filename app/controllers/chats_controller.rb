@@ -60,7 +60,10 @@ class ChatsController < ApplicationController
 
   	def sender(channel, msg)
       message = {:channel => channel, :data => msg.merge(:authToken => 'openredu')}
-      uri = URI.parse("http://localhost:9292/faye")
-      Net::HTTP.post_form(uri, :message => message.to_json)
+      begin
+        uri = URI.parse("http://localhost:9292/faye")
+        Net::HTTP.post_form(uri, :message => message.to_json)
+      rescue Exception => e
+      end
     end
 end
