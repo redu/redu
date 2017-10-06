@@ -1,8 +1,20 @@
 development:
+  host: mongo
   database: redu_development
 
 test:
+  host: mongo
   database: redu_test
-  
+
+# set these environment variables on your prod server
 production:
-  database: redu_production
+  host: <%= ENV['MONGOID_HOST'] %>
+  port: <%= ENV['MONGOID_PORT'] %>
+  username: <%= ENV['MONGOID_USERNAME'] %>
+  password: <%= ENV['MONGOID_PASSWORD'] %>
+  database: <%= ENV['MONGOID_DATABASE'] %>
+  # slaves:
+  #   - host: slave1.local
+  #     port: 27018
+  #   - host: slave2.local
+  #     port: 27019

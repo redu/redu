@@ -38,6 +38,7 @@ gem "rake", "~> 10.0.4"
 gem 'remotipart', '~> 1.0'
 gem 'simple-navigation', git: 'https://github.com/andi/simple-navigation.git'
 gem 'sunspot_rails'
+gem 'sunspot_solr'
 gem 'route_translator'
 gem 'useragent'
 gem 'vis_client', git: 'https://github.com/redu/vis_client.git',
@@ -81,7 +82,6 @@ group :development, :test do
   gem 'no_peeping_toms', git: 'https://github.com/patmaddox/no-peeping-toms.git'
   gem 'rails3-generators'
   gem "rspec-rails", "~> 2.13"
-  gem 'sunspot_solr'
 end
 
 group :test do
@@ -104,5 +104,5 @@ group :production do
 end
 
 group :debug do
-  gem 'debugger'
+  #gem 'debugger'
 end
