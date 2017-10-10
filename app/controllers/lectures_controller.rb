@@ -279,9 +279,6 @@ class LecturesController < BaseController
     end
   end
 
-    
-  end
-
   def find_subject_space_course_environment
     if @lecture
       @subject = @lecture.subject
