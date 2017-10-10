@@ -47,7 +47,7 @@ describe Conversation do
     end
 
     it 'should return just a conversation' do
-      conversartion1 = Conversation.create(sender: @user, recipient: @contact)
+      conversartion1 = Conversation.create(sender: @user, recipient: @contact1)
       conversartion2 = Conversation.create(sender: @user, recipient: @contact2)
       Conversation.between(@user, @contact1).first.should == conversartion1
     end
