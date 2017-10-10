@@ -1,3 +1,5 @@
+<%= javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/1.9.638/pdf.min.js' %>
+<%= javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/1.9.638/pdf.worker.min.js' %>
 <div id="view_video" class="stage" align="center" >
   <% if @lecture.lectureable.attachment_content_type == 'application/pdf' || !@lecture.lectureable.livredoc_id.blank?%>
       <canvas id="canvas"></canvas>
