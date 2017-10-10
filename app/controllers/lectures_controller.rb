@@ -47,10 +47,10 @@ class LecturesController < BaseController
         )
       rescue RestClient::RequestFailed
         pdf_path = File.join(Rails.root, "public")
-        send_file File.new(pdf_path+'/error_pdf.pdf')
+        send_pdf(pdf_path+'/error_pdf.pdf')
       end
     else
-      send_file document.attachment.path
+      send_pdf(document.attachment.path)
     end
   end
 
@@ -271,6 +271,13 @@ class LecturesController < BaseController
   end
 
   protected
+
+  def send_pdf(path)
+    file = path
+    File.open(file, 'r') do |f|
+      send_data f.read.force_encoding('BINARY')
+    end
+  end
 
   def find_subject_space_course_environment
     if @lecture
