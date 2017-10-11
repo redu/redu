@@ -36,7 +36,7 @@ gem 'paperclip', '~> 2.7.5'
 gem 'rails', '~> 3.2.13'
 gem "rake", "~> 10.0.4"
 gem 'remotipart', '~> 1.0'
-gem 'simple-navigation', git: 'https://github.com/andi/simple-navigation.git'
+gem 'simple-navigation', '~> 3'
 gem 'sunspot_rails'
 gem 'route_translator'
 gem 'useragent'
