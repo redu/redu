@@ -8,7 +8,6 @@ mongrel/
 bin/
 log/**/*
 *.tmproj
-config/database.yml
 *~
 *.swo
 .DS_Store
@@ -29,5 +28,4 @@ config/initializers/rails_footnotes.rb
 chromedriver.log
 solr/data/*
 solr/pids/*
-config/sunspot.yml
 .sass-cache/

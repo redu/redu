@@ -2,6 +2,10 @@ development:
   host: mongo
   database: redu_development
 
+staging:
+  host: mongo
+  database: redu_staging
+
 test:
   host: mongo
   database: redu_test
@@ -13,8 +17,3 @@ production:
   username: <%= ENV['MONGOID_USERNAME'] %>
   password: <%= ENV['MONGOID_PASSWORD'] %>
   database: <%= ENV['MONGOID_DATABASE'] %>
-  # slaves:
-  #   - host: slave1.local
-  #     port: 27018
-  #   - host: slave2.local
-  #     port: 27019
