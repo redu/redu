@@ -70,6 +70,9 @@ module Redu
     # Máximo de caracteres p/ descrição
     config.desc_char_limit = 200
 
+    config.faye_url = ENV['FAYE_URL']
+    config.faye_js_url = "#{config.faye_url}/client.js"
+
     config.session_store = :active_record_store
     config.representer.default_url_options = {:host => "127.0.0.1:3000"}
 

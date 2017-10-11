@@ -61,7 +61,7 @@ class ChatsController < ApplicationController
   	def sender(channel, msg)
       message = {:channel => channel, :data => msg.merge(:authToken => 'openredu')}
       begin
-        uri = URI.parse("http://localhost:9292/faye")
+        uri = URI.parse(Redu::Application.config.faye_url)
         Net::HTTP.post_form(uri, :message => message.to_json)
       rescue Exception => e
       end

@@ -12,7 +12,7 @@ var buildChat = (function(){
 // Constrói um novo objeto Chat
 var buildChat = function(opts){
   var config = opts;
-  var client = new Faye.Client('http://localhost:9292/faye');
+  var client = new Faye.Client(config.url);
   var currentUser = config.currentUser;
   // Inicializando variaveis de template
   var $layout, $window, $presence, $channel, $friends;
