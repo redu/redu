@@ -6,19 +6,8 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
   mongo:
     image: mongo
-  solr:
-    build: .
-    command: bundle exec rake sunspot:solr:run
-    volumes:
-      - .:/app
-    depends_on:
-      - mongo
-      - db
-    ports:
-      - '8983:8983'
   web:
     build: .
-    command: bundle exec rails s -p 3000 -b '0.0.0.0'
     volumes:
       - .:/app
     ports:
@@ -26,6 +15,3 @@ services:
     depends_on:
       - mongo
       - db
-      - solr
-    environment:
-      MONGO_HOST: mongo:27017
