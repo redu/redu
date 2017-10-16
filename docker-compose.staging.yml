@@ -17,8 +17,6 @@ services:
     volumes:
       - .:/app
       - assets:/app/public/assets
-    ports:
-      - "3000:3000"
     depends_on:
       - mongo
       - db
