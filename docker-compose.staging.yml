@@ -11,7 +11,9 @@ services:
     volumes:
          - mongodb-datavolume:/data/db
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile-staging
     volumes:
       - .:/app
     ports:
@@ -19,6 +21,8 @@ services:
     depends_on:
       - mongo
       - db
+    environment:
+      - RACK_ENV=staging
 volumes:
   mysql-datavolume:
   mongodb-datavolume:

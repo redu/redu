@@ -6,13 +6,6 @@ GIT
       rails (>= 3.0.10)
 
 GIT
-  remote: https://github.com/andi/simple-navigation.git
-  revision: 3df3a88fd65645eba1d9fd8dcfd59804e9f6232c
-  specs:
-    simple-navigation (4.0.5)
-      activesupport (>= 2.3.2)
-
-GIT
   remote: https://github.com/jongilbraith/simple-private-messages.git
   revision: 7ba7d3c9f7670ef3bddfc90390a49556a94f7013
   specs:
@@ -283,6 +276,7 @@ GEM
     premailer-rails (1.4.0)
       premailer (~> 1.7)
       rails (>= 3)
+    puma (3.10.0)
     rack (1.4.7)
     rack-cache (1.7.0)
       rack (>= 0.4)
@@ -367,6 +361,8 @@ GEM
     shoulda-matchers (1.5.6)
       activesupport (>= 3.0.0)
       bourne (~> 1.3)
+    simple-navigation (3.10.1)
+      activesupport (>= 2.3.2)
     simple_acts_as_list (0.0.1)
       activesupport
     sprockets (2.2.3)
@@ -466,6 +462,7 @@ DEPENDENCIES
   omniauth-facebook (~> 4.0.0)
   paperclip (~> 2.7.5)
   premailer-rails
+  puma
   rack-cors
   rails (~> 3.2.13)
   rails3-generators
@@ -482,7 +479,7 @@ DEPENDENCIES
   rubyzip
   sass-rails (~> 3.2)
   shoulda-matchers (~> 1)
-  simple-navigation!
+  simple-navigation (= 3.10.1)
   simple-private-messages (= 0.0.0)!
   simple_acts_as_list
   sunspot_rails

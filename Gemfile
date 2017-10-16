@@ -36,7 +36,7 @@ gem 'paperclip', '~> 2.7.5'
 gem 'rails', '~> 3.2.13'
 gem "rake", "~> 10.0.4"
 gem 'remotipart', '~> 1.0'
-gem 'simple-navigation', git: 'https://github.com/andi/simple-navigation.git'
+gem 'simple-navigation','3.10.1'
 gem 'sunspot_rails'
 gem 'sunspot_solr'
 gem 'route_translator'
@@ -61,6 +61,7 @@ gem 'rubyzip', require: 'zip/zip'
 gem 'truncate_html'
 gem 'rest-client'
 gem 'dotenv-rails'
+gem 'puma'
 
 # Gems específicos para a API
 gem 'oauth-plugin', '~> 0.4.0'
