@@ -26,7 +26,7 @@ gem 'exceptional'
 gem 'factory_girl_rails'
 gem "redu-has_friends", "~> 1.0", require: "has_friends"
 gem 'invitable', git: 'https://github.com/OpenRedu/invitable.git'
-gem 'jquery-rails', '>= 1.0.12'
+gem 'jquery-rails', '2.1.3'
 gem 'kaminari'
 gem 'mime-types'
 gem "mysql2", '~> 0.3.21'
