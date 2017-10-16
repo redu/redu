@@ -13,7 +13,6 @@ log/**/*
 .DS_Store
 Gemfile.local.rb
 public/system/*/*
-public/assets/*
 public/images/*
 public/myfiles/*
 public/ckeditor_assets/*

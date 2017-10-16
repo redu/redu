@@ -16,6 +16,7 @@ services:
       dockerfile: Dockerfile-staging
     volumes:
       - .:/app
+      - assets:/app/public/assets
     ports:
       - "3000:3000"
     depends_on:
@@ -23,6 +24,15 @@ services:
       - db
     environment:
       - RACK_ENV=staging
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile-nginx
+    links:
+      - web
+    ports:
+      - "80:80"
 volumes:
   mysql-datavolume:
   mongodb-datavolume:
+  assets:

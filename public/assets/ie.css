@@ -1,0 +1,27 @@
+/* Estilos necessários ao IE8 e IE9 */
+
+
+.replacement,
+.replacement a,
+.replacement span,
+.replacement:hover,
+.replacement a:hover,
+.replacement span:hover,
+.big-tabs > ul li.ui-state-default a {
+  text-indent: 0 !important;
+  color: transparent !important;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.big-tabs > ul li.ui-state-active a {
+  color: rgb(21, 138, 196) !important;
+}
+
+.create-status .post-resource .thumbnail .arrow {
+  margin: -10px 10px 5px 10px;
+}
+
+.inform-my-status .post-resource .thumbnail .arrow {
+  margin-top: -8px;
+}
