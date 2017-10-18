@@ -265,5 +265,8 @@ module Redu
 
     # Assets da nova landing page
     config.assets.precompile += %w(landing.css jquery.js rails.js)
+
+    # Assets do ckeditor
+    config.assets.precompile += %w(ckeditor/*)
   end
 end

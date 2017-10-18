@@ -10,27 +10,39 @@ services:
     image: mongo
     volumes:
          - mongodb-datavolume:/data/db
-  web:
+  delayedjob:
     build:
       context: .
       dockerfile: Dockerfile-staging
+    command: rake RAILS_ENV=staging jobs:work
     volumes:
       - .:/app
-      - assets:/app/public/assets
     depends_on:
       - mongo
       - db
     environment:
       - RACK_ENV=staging
+      - RAILS_ENV=staging
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile-staging
+    volumes:
+      - .:/app
+    depends_on:
+      - mongo
+      - db
+    environment:
+      - RACK_ENV=staging
+      - RAILS_ENV=staging
   nginx:
     build:
       context: .
       dockerfile: Dockerfile-nginx
     links:
-      - web
+      - app
     ports:
       - "80:80"
 volumes:
   mysql-datavolume:
   mongodb-datavolume:
-  assets:

@@ -10,7 +10,7 @@ services:
     image: mongo
     volumes:
          - mongodb-datavolume:/data/db
-  web:
+  app:
     build: .
     volumes:
       - .:/app
