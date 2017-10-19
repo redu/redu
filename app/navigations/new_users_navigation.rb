@@ -12,7 +12,7 @@ module NewUsersNavigation
       :link => { :class => 'nav-local-link link-target', :title => 'Meu Mural' }
     sidebar.item :messages, 'Mensagens', user_messages_path(@user),
       :class => 'icon-message_16_18-before nav-local-item',
-      :link => { :class => 'nav-local-link link-target', :title => 'Mensagens' } do |messages_tab|
+      :link => { :class => 'nav-local-link link-target badge-messages', :title => 'Mensagens', :'data-badge' => @user.unread_message_count} do |messages_tab|
       # Abas
       messages_tab.dom_class = 'tabs'
       messages_tab.selected_class = 'tab-active'

@@ -93,7 +93,7 @@ class Seminar < ActiveRecord::Base
   # Virtual attribute para url do vídeo
   def external_resource_url
     unless external_resource.nil?
-      "http://www.#{ self.external_resource_type }.com/watch?v=#{ self.external_resource }"
+      "https://www.#{ self.external_resource_type }.com/embed/#{ self.external_resource }"
     end
   end
 

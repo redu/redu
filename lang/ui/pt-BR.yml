@@ -222,30 +222,30 @@ pt-BR:
         user:
           attributes:
             first_name:
-              blank: "Por favor, informe seu nome."
-              invalid:  "Utilize apenas letras (a-z), números (0-9), traço (-) e sublinhado (_). Não deixe espaços no início ou final."
+              blank: "Informe seu nome"
+              invalid:  "O nome pode ser formado apenas por letras, números, traço e sublinhado. Não deixe espaços no início ou final."
             last_name:
-              blank: "Por favor, informe seu sobrenome."
-              invalid:  "Utilize apenas letras (a-z), números (0-9), traço (-) e sublinhado (_). Não deixe espaços no início ou final."
+              blank: "Informe seu sobrenome."
+              invalid:  "O sobrenome pode ser formado apenas por letras, números, traço e sublinhado. Não deixe espaços no início ou final."
             login:
-              blank: "Por favor, digite um login."
+              blank: "Digite um login."
               too_short: "Login muito curto (mínimo de 5 caracteres)."
-              invalid:  "Utilize apenas letras (a-z), números (0-9), traço (-) e sublinhado (_). Não deixe espaços no início ou final."
+              invalid:  "O login pode ser formado apenas por letras, números, traço e sublinhado. Não deixe espaços no início ou final."
               taken: "Por favor, escolha outro login. Este já existe no Openredu."
             login_slug:
               taken: "Por favor, escolha outro login. Este já existe no Openredu."
             email:
-              blank: "Por favor, digite um e-mail."
+              blank: "Digite um e-mail."
               too_short: "E-mail muito curto (mínimo de 3 caracteres)."
               invalid: "E-mail inválido."
               taken: "Este e-mail já está cadastrado."
-              confirmation: "É diferente da confirmação."
+              confirmation: "A confirmação de email não confere"
             email_confirmation:
-              blank: "Por favor, confirme seu e-mail."
+              blank: "Confirme seu e-mail."
             password:
-              blank: "Por favor, digite a senha."
+              blank: "Digite a senha."
               too_short: "Senha muito curta (mínimo de 6 caracteres)."
-              confirmation: "A confirmação não confere."
+              confirmation: "A confirmação de senha não confere."
             password_confirmation:
               blank: "Por favor, digite a senha de confirmação."
               too_short: "Senha muito curta (mínimo de 6 caracteres)."
@@ -369,7 +369,7 @@ pt-BR:
       not_active: Your account is not active
       not_confirmed: Your account is not confirmed
       not_approved: Your account is not approved
-      no_authentication_details: You did not provide any details for authentication.
+      no_authentication_details: Informe seu login e senha
     models:
       user: login
     attributes:
