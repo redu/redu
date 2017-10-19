@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170731131913) do
+ActiveRecord::Schema.define(:version => 20170928125123) do
 
   create_table "alternatives", :force => true do |t|
     t.text     "text"
@@ -74,12 +74,14 @@ ActiveRecord::Schema.define(:version => 20170731131913) do
   create_table "chat_messages", :force => true do |t|
     t.integer  "user_id"
     t.integer  "contact_id"
-    t.text     "message"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.text     "body"
+    t.integer  "conversation_id"
   end
 
   add_index "chat_messages", ["contact_id"], :name => "index_chat_messages_on_contact_id"
+  add_index "chat_messages", ["conversation_id"], :name => "index_chat_messages_on_conversation_id"
   add_index "chat_messages", ["user_id"], :name => "index_chat_messages_on_user_id"
 
   create_table "chats", :force => true do |t|
@@ -145,6 +147,16 @@ ActiveRecord::Schema.define(:version => 20170731131913) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
+
+  create_table "conversations", :force => true do |t|
+    t.integer  "sender_id"
+    t.integer  "recipient_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "conversations", ["recipient_id"], :name => "index_conversations_on_recipient_id"
+  add_index "conversations", ["sender_id"], :name => "index_conversations_on_sender_id"
 
   create_table "course_enrollments", :force => true do |t|
     t.integer  "user_id"
@@ -699,6 +711,7 @@ ActiveRecord::Schema.define(:version => 20170731131913) do
     t.text     "favorite_quotation"
     t.boolean  "destroy_soon"
     t.string   "recovery_token"
+    t.string   "channel"
   end
 
   add_index "users", ["activated_at"], :name => "index_users_on_activated_at"

@@ -10,6 +10,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <%= javascript_include_tag "new_application" %>
     <%= render "shared/analytics" %>
+    <%= content_for?(:chat_script) ? content_for(:chat_script) : render("shared/chat") %>
     <%= yield :header_scripts_and_styles %>
   </head>
   <body>

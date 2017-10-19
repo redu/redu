@@ -1,0 +1,20 @@
+<li>
+  <div class="chat-window">
+    <span class="name"></span>
+    <ul class="conversation"></ul>
+    <%= form_tag "/chat/send_message", :remote => true,
+      :class => "user-input" do %>
+      <%= hidden_field_tag :owner_socket_id, nil,
+        { :id => "", :class => "owner-socket-id" } %>
+      <%= hidden_field_tag :contact_id, nil,
+        { :id => "", :class => "contact-id" } %>
+      <%= text_field_tag :text, nil,
+        { :id => "", :class => "text", :autocomplete => "off" } %>
+    <% end %>
+  </div>
+  <div class="chat-window-bar">
+    <div class="online">on-line</div>
+    <span class="name"></span>
+    <div class="close">Fechar</div>
+  </div>
+</li>

@@ -70,6 +70,12 @@ class Ability
       # Autorizar apps OAuth
       can :authorize_oauth, :base
 
+      #Autorizar mandar mensage que está online
+      can :online, :chats
+      can :send_message, User do |friend|
+        user.friends? friend
+      end
+
       # Somente donos do aplicativo podem gerencia-lo
       can :manage, ClientApplication, :user_id => user.id
 
