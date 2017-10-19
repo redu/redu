@@ -1,6 +1,6 @@
 class ChatsController < ApplicationController
-	def send_message
-		recipient = User.find(params['contact_id'])
+  def send_message
+    recipient = User.find(params['contact_id'])
 
     authorize! :send_message, recipient
 
@@ -25,8 +25,8 @@ class ChatsController < ApplicationController
       sender("/#{recipient.user_channel}", message.format_message)
     end
 
-		head :ok, content_type: "text/html"
-	end
+    head :ok, content_type: "text/html"
+  end
 
   def last_messages_with
     recipient = User.find(params['contact_id'])
@@ -58,7 +58,7 @@ class ChatsController < ApplicationController
 
   protected
 
-  	def sender(channel, msg)
+    def sender(channel, msg)
       message = {:channel => channel, :data => msg.merge(:authToken => 'openredu')}
       begin
         uri = URI.parse(Redu::Application.config.faye_url)
