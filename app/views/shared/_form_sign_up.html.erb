@@ -1,52 +1,51 @@
 <%= form_for user || User.new , :remote => true,
       :html => { :class => "form-cadastra", :id => "form-sign-up" } do |f| %>
-      <% if params[:invitation_token] %>
-        <%= hidden_field_tag :invitation_token, params[:invitation_token] %>
-        <% fb_connect_invitation = {
-          :invitation_token => params[:invitation_token] } %>
-      <% end %>
-
-      <% if params[:friendship_invitation_token] %>
-        <%= hidden_field_tag :friendship_invitation_token,
-          params[:friendship_invitation_token] %>
-        <% fb_connect_invitation = {
-          :friendship_invitation_token => params[:friendship_invitation_token] } %>
-      <% end %>
-      <div class="field-group">
-        <%= f.text_field :first_name, :placeholder => "Seu primeiro nome",
-          :maxlength => 25 %>
-        <%= f.text_field :last_name, :placeholder => "Seu sobrenome",
-          :maxlength => 25 %>
-        <%= f.text_field :email, :placeholder =>"Seu e-mail de contato",
-          :maxlength => 100 %>
-        <%= f.text_field :email_confirmation, :placeholder =>
-          "Repita seu email de contato", :maxlength => 100 %>
-        <%= f.text_field :login, :placeholder =>
-              "Digite seu nome de usuário/login", :maxlength => 20 %>
-        <div class="mail">
-          <%= f.password_field :password, :placeholder => "Digite sua senha",
-            :maxlength => 20 %>
-          <%= f.password_field :password_confirmation,
-            :placeholder => "Repita sua senha", :maxlength => 20 %>
-        </div>
-        <label class="captcha">
-          <%= f.label :humanizer_answer, f.object.humanizer_question, class: 'title' %>
-          <em>?</em>
-          <span class="tooltip">Na Internet, é comum que certos computadores façam cadastros automáticos para espalhar propagandas indesejadas conhecidas como 'spam'. Essa pergunta serve para diferenciar as pessoas reais desses robôs e garantir uma boa e segura experiência de uso para você." data-placement="right">Por que esta pergunta?</span>
-        </label>
-        <%= f.text_field :humanizer_answer, :class => "control-input",
-          :placeholder => "Responda a pergunta acima" %>
-        <%= f.hidden_field :humanizer_question_id %>
-      </div>
-      <div class="confirm-terms">
-        <%= check_box "user", "tos" %>
-        <%= f.label "tos", raw("Aceito os #{link_to "Termos de Uso",
-            home_path(:anchor => "modal-tos"), "data-toggle" => "modal"}
-            da plataforma Openredu.") %>
-      </div>
-      <div class="bt-groups">
-        <%= hidden_field_tag :inviter_id, params[:inviter_id] %>
-        <%= hidden_field_tag :inviter_code, params[:inviter_code] %>
-        <button id="bt_enviar" class="bt ativo">cadastrar</button>
-      </div>
-    <% end %>
+  <% if params[:invitation_token] %>
+    <%= hidden_field_tag :invitation_token, params[:invitation_token] %>
+    <% fb_connect_invitation = {
+      :invitation_token => params[:invitation_token] } %>
+  <% end %>
+  <% if params[:friendship_invitation_token] %>
+    <%= hidden_field_tag :friendship_invitation_token,
+      params[:friendship_invitation_token] %>
+    <% fb_connect_invitation = {
+      :friendship_invitation_token => params[:friendship_invitation_token] } %>
+  <% end %>
+  <div class="field-group">
+    <%= f.text_field :first_name, :placeholder => "Seu primeiro nome",
+      :maxlength => 25 %>
+    <%= f.text_field :last_name, :placeholder => "Seu sobrenome",
+      :maxlength => 25 %>
+    <%= f.text_field :email, :placeholder =>"Seu e-mail de contato",
+      :maxlength => 100 %>
+    <%= f.text_field :email_confirmation, :placeholder =>
+      "Repita seu email de contato", :maxlength => 100 %>
+    <%= f.text_field :login, :placeholder =>
+          "Digite seu nome de usuário/login", :maxlength => 20 %>
+    <div class="mail">
+      <%= f.password_field :password, :placeholder => "Digite sua senha",
+        :maxlength => 20 %>
+      <%= f.password_field :password_confirmation,
+        :placeholder => "Repita sua senha", :maxlength => 20 %>
+    </div>
+    <label class="captcha">
+      <%= f.label :humanizer_answer, f.object.humanizer_question, class: 'title' %>
+      <em>?</em>
+      <span class="tooltip">Na Internet, é comum que certos computadores façam cadastros automáticos para espalhar propagandas indesejadas conhecidas como 'spam'. Essa pergunta serve para diferenciar as pessoas reais desses robôs e garantir uma boa e segura experiência de uso para você." data-placement="right">Por que esta pergunta?</span>
+    </label>
+    <%= f.text_field :humanizer_answer, :class => "control-input",
+      :placeholder => "Responda a pergunta acima" %>
+    <%= f.hidden_field :humanizer_question_id %>
+  </div>
+  <div class="confirm-terms">
+    <%= check_box "user", "tos" %>
+    <%= f.label "tos", raw("Aceito os #{link_to "Termos de Uso",
+        home_path(:anchor => "modal-tos"), "data-toggle" => "modal"}
+        da plataforma Openredu.") %>
+  </div>
+  <div class="bt-groups">
+    <%= hidden_field_tag :inviter_id, params[:inviter_id] %>
+    <%= hidden_field_tag :inviter_code, params[:inviter_code] %>
+    <button id="bt_enviar" class="bt ativo">cadastrar</button>
+  </div>
+<% end %>

@@ -6,7 +6,7 @@
   <div class="nav-global-inner">
     <div class="nav-global-container">
       <h1>
-        <%= link_to "Openredu", application_path, :class => "nav-global-brand logo-redu-gray_140_40 text-replacement", :title => "Openredu" %>
+        <%= link_to Redu::Application.config.name, application_path, :class => "nav-global-brand logo-redu-gray_140_40 text-replacement", :title => Redu::Application.config.name %>
       </h1>
 
       <%= global_nav %>

@@ -144,7 +144,7 @@ class UserNotifier < BaseMailer
                  :tutor => uca.with_roles([:tutor]).count,
                  :teacher => uca.with_roles([:teacher]).count }
 
-    mail(:subject => 'Você foi convidado para o Openredu', :to => @email) do |format|
+    mail(:subject => "Você foi convidado para o #{Redu::Application.config.name}", :to => @email) do |format|
       format.html
     end
   end

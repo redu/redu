@@ -11,7 +11,5 @@ var $modal = $("#modal-sign-up");
 <% else %>
   var $newModal = $("<%= escape_javascript render 'shared/modal_sign_up',
                    user: @user %>");
-
-
   $modal.replaceWith($newModal);
 <% end %>
