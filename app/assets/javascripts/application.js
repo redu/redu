@@ -18,7 +18,6 @@
 //= require subjects
 //= require admin
 //= require jquery.nested-fields
-//= require boring-browser
 //= require jquery.noisy
 //= require underscore
 //= require embedly
