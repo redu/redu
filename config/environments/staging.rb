@@ -42,26 +42,8 @@ Redu::Application.configure do
   # the I18n.default_locale when a translation can not be found)
   config.i18n.fallbacks = true
 
-  # Nome e URL do app
-  config.url = "www.redu.com.br"
-
-  config.action_mailer.default_url_options = { :host => config.url }
-
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
-
-  }
-
-  # Configurações de VisClient
-  config.vis_client = {
-    :url => "http://visstaging.redu.com.br/hierarchy_notifications.json"
-  }
-
-  config.vis = {
-    :subject_activities => "http://visstaging.redu.com.br/subjects/activities.json",
-    :lecture_participation => "http://visstaging.redu.com.br/lectures/participation.json",
-    :students_participation => "http://visstaging.redu.com.br/user_spaces/participation.json"
-  }
 
   #enable captcha
   config.enable_humanizer = true
