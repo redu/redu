@@ -45,11 +45,12 @@ describe ChatsController do
         text: 'message'
       }
       @get_params = { :locale => "pt-BR",
-        contact_id: @friend1.id
+        contact_id: @friend1.id,
+        messages_per_chat: 2
       }
       post 'send_message', @post_params
       post 'send_message', @post_params
-      get 'last_messages_with', locale: "pt-BR", contact_id: @friend1.id
+      get 'last_messages_with', @get_params
     end
 
     it "should be successful" do
