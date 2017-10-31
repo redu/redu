@@ -16,7 +16,6 @@
   <body>
     <%= content_for?(:nav_global) ? content_for(:nav_global) : render("shared/nav_global") %>
     <div class="main-wrapper">
-      <%= content_for?(:outdated_browser) ? content_for(:outdated_browser) : render("shared/outdated_browser_new") %>
       <%= render "shared/system_flash_message" %>
       <%= content_tag :div, class: "container #{ content_for(:container_class) }" do %>
         <div class="row">
