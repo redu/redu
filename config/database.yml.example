@@ -6,9 +6,9 @@ development:
   host: localhost
 production:
   adapter: mysql2
-  username: root
-  password: admin
-  database: redu_production
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWD'] %>
+  database: <%= ENV['DATABASE'] %>
   host: localhost
 performance:
   adapter: mysql2
@@ -18,9 +18,9 @@ performance:
   host: localhost
 staging:
   adapter: mysql2
-  username: root
-  password: admin
-  database: redu_staging
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWD'] %>
+  database: <%= ENV['DATABASE'] %>
   host: localhost
 test:
   adapter: mysql2

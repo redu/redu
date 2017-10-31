@@ -31,3 +31,5 @@ solr/data/*
 solr/pids/*
 config/sunspot.yml
 .sass-cache/
+.env.staging
+.env.production
