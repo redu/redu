@@ -41,7 +41,11 @@ class ChatsController < ApplicationController
     if conversation.blank?
       render json: []
     else
-      render json: conversation.chat_messages.map {|x| x.format_message }
+      messages = conversation.chat_messages.order('created_at')
+      length = messages.count
+      messages_per_chat = params['messages_per_chat'].to_i || length
+      offset = [(length-messages_per_chat),0].max
+      render json: messages[offset..(length-1)].map {|x| x.format_message }
     end
   end
 
