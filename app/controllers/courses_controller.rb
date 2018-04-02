@@ -26,7 +26,11 @@ class CoursesController < BaseController
       flash[:info] = "Você não tem acesso a essa página"
     end
 
-    redirect_to preview_environment_course_path(@environment, @course)
+    if current_user
+      redirect_to preview_environment_course_path(@environment, @course)
+    else
+      redirect_to home_path
+    end
   end
 
   def show
