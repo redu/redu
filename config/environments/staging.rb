@@ -45,6 +45,17 @@ Redu::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
+  # Configurações de VisClient
+  config.vis_client = {
+    :url => "http://visstaging.redu.com.br/hierarchy_notifications.json"
+  }
+
+  config.vis = {
+    :subject_activities => "http://visstaging.redu.com.br/subjects/activities.json",
+    :lecture_participation => "http://visstaging.redu.com.br/lectures/participation.json",
+    :students_participation => "http://visstaging.redu.com.br/user_spaces/participation.json"
+  }
+
   #enable captcha
   config.enable_humanizer = true
 

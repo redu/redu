@@ -1,13 +1,13 @@
 development:
-  host: mongo
+  host: localhost
   database: redu_development
 
 staging:
-  host: mongo
+  host: localhost
   database: redu_staging
 
 test:
-  host: mongo
+  host: localhost
   database: redu_test
 
 # set these environment variables on your prod server
