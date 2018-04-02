@@ -21,18 +21,11 @@ performance:
 
 staging:
   adapter: mysql2
-<<<<<<< HEAD:config/database.yml.example
-  username: <%= ENV['DB_USERNAME'] %>
-  password: <%= ENV['DB_PASSWD'] %>
-  database: <%= ENV['DATABASE'] %>
-  host: localhost
-=======
   username: root
   password:
   database: redu_staging
   host: db
 
->>>>>>> origin/docker-openredu:config/database.yml
 test:
   adapter: mysql2
   username: root
