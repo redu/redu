@@ -1,0 +1,24 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.5
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+    volumes:
+      - mysql-datavolume:/var/lib/mysql
+  mongo:
+    image: mongo
+    volumes:
+         - mongodb-datavolume:/data/db
+  app:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+      - db
+volumes:
+  mysql-datavolume:
+  mongodb-datavolume:

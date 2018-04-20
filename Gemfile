@@ -36,8 +36,9 @@ gem 'paperclip', '~> 2.7.5'
 gem 'rails', '~> 3.2.13'
 gem "rake", "~> 10.0.4"
 gem 'remotipart', '~> 1.0'
-gem 'simple-navigation', '~> 3'
+gem 'simple-navigation','3.10.1'
 gem 'sunspot_rails'
+gem 'sunspot_solr'
 gem 'route_translator'
 gem 'useragent'
 gem 'vis_client', git: 'https://github.com/redu/vis_client.git',
@@ -60,6 +61,7 @@ gem 'rubyzip', require: 'zip/zip'
 gem 'truncate_html'
 gem 'rest-client'
 gem 'dotenv-rails'
+gem 'puma'
 
 # Gems específicos para a API
 gem 'oauth-plugin', '~> 0.4.0'
@@ -71,7 +73,6 @@ group :assets do
   gem 'compass-rails'
   gem 'therubyracer', platforms: :ruby
   gem 'uglifier', '~> 2'
-  gem 'asset_sync'
   gem 'turbo-sprockets-rails3'
 end
 
@@ -81,7 +82,6 @@ group :development, :test do
   gem 'no_peeping_toms', git: 'https://github.com/patmaddox/no-peeping-toms.git'
   gem 'rails3-generators'
   gem "rspec-rails", "~> 2.13"
-  gem 'sunspot_solr'
 end
 
 group :test do
@@ -104,5 +104,5 @@ group :production do
 end
 
 group :debug do
-  gem 'debugger'
+  #gem 'debugger'
 end

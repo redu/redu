@@ -89,9 +89,6 @@ GEM
       amq-protocol (>= 1.3.0)
       eventmachine
     arel (3.0.3)
-    asset_sync (0.5.4)
-      activemodel
-      fog
     authlogic (3.3.0)
       activerecord (>= 3.2)
       activesupport (>= 3.2)
@@ -116,7 +113,6 @@ GEM
     classy_enum (3.2.1)
       rails (>= 3.0)
     cocaine (0.3.2)
-    columnize (0.3.6)
     compass (0.12.2)
       chunky_png (~> 1.2)
       fssm (>= 0.2.7)
@@ -135,12 +131,6 @@ GEM
     dalli (2.6.3)
     date_validator (0.6.4)
       activemodel (>= 3)
-    debugger (1.6.0)
-      columnize (>= 0.3.1)
-      debugger-linecache (~> 1.2.0)
-      debugger-ruby_core_source (~> 1.2.1)
-    debugger-linecache (1.2.0)
-    debugger-ruby_core_source (1.2.2)
     deep_cloneable (1.5.1)
       activerecord (>= 3.1)
     delayed_job (3.0.5)
@@ -173,7 +163,6 @@ GEM
     eventmachine (1.0.3)
     exceptional (2.0.33)
       rack
-    excon (0.21.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
     ey_config (0.0.6)
@@ -185,20 +174,9 @@ GEM
     faraday (0.10.1)
       multipart-post (>= 1.2, < 3)
     ffi (1.8.1)
-    fog (1.11.1)
-      builder
-      excon (~> 0.20)
-      formatador (~> 0.2.0)
-      json (~> 1.7)
-      mime-types
-      net-scp (~> 1.1)
-      net-ssh (>= 2.1.3)
-      nokogiri (~> 1.5.0)
-      ruby-hmac
-    formatador (0.2.4)
     fssm (0.2.10)
     hash-deep-merge (0.1.1)
-    hashie (3.4.6)
+    hashie (3.4.4)
     hike (1.2.3)
     hooks (0.3.1)
     htmlentities (4.3.1)
@@ -243,9 +221,6 @@ GEM
     multi_xml (0.6.0)
     multipart-post (2.0.0)
     mysql2 (0.3.21)
-    net-scp (1.1.1)
-      net-ssh (>= 2.6.5)
-    net-ssh (2.6.7)
     netrc (0.11.0)
     newrelic_rpm (3.6.2.96)
     nokogiri (1.5.9)
@@ -283,6 +258,7 @@ GEM
     premailer-rails (1.4.0)
       premailer (~> 1.7)
       rails (>= 3)
+    puma (3.10.0)
     rack (1.4.7)
     rack-cache (1.7.0)
       rack (>= 0.4)
@@ -351,7 +327,6 @@ GEM
       rspec-core (~> 2.13.0)
       rspec-expectations (~> 2.13.0)
       rspec-mocks (~> 2.13.0)
-    ruby-hmac (0.4.0)
     ruby-prof (0.13.0)
     rubyzip (0.9.9)
     sass (3.2.8)
@@ -431,7 +406,6 @@ DEPENDENCIES
   acts-as-taggable-on (~> 2.4)
   acts_as_tree (~> 0.1.1)
   ajaxful_rating (= 3.0.0.beta8)
-  asset_sync
   authlogic
   awesome_nested_fields
   bson_ext
@@ -444,7 +418,6 @@ DEPENDENCIES
   daemons (= 1.0.10)
   dalli
   date_validator
-  debugger
   deep_cloneable
   delayed_job_mongoid
   destroy_soon
@@ -469,6 +442,7 @@ DEPENDENCIES
   omniauth-facebook (~> 4.0.0)
   paperclip (~> 2.7.5)
   premailer-rails
+  puma
   rack-cors
   rails (~> 3.2.13)
   rails3-generators
@@ -485,7 +459,7 @@ DEPENDENCIES
   rubyzip
   sass-rails (~> 3.2)
   shoulda-matchers (~> 1)
-  simple-navigation (~> 3)
+  simple-navigation (= 3.10.1)
   simple-private-messages (= 0.0.0)!
   simple_acts_as_list
   sunspot_rails
@@ -501,9 +475,3 @@ DEPENDENCIES
   webmock
   whenever
   yajl-ruby
-
-RUBY VERSION
-   ruby 1.9.3p551
-
-BUNDLED WITH
-   1.15.4

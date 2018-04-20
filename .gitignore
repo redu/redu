@@ -8,13 +8,12 @@ mongrel/
 bin/
 log/**/*
 *.tmproj
-config/database.yml
 *~
 *.swo
 .DS_Store
 Gemfile.local.rb
-public/system/*/*
 public/assets/*
+public/system/*/*
 public/images/*
 public/myfiles/*
 public/ckeditor_assets/*
@@ -29,7 +28,8 @@ config/initializers/rails_footnotes.rb
 chromedriver.log
 solr/data/*
 solr/pids/*
-config/sunspot.yml
 .sass-cache/
 .env.staging
 .env.production
+*.pptx
+*.sh

@@ -7,8 +7,6 @@ CKEDITOR.editorConfig = function( config )
 {
   config.PreserveSessionOnFileBrowser = true;
 
-  config.language = 'pt-BR';
-
   config.removePlugins = 'elementspath';
 
   config.extraPlugins = 'autogrow';
