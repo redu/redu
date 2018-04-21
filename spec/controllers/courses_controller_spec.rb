@@ -610,9 +610,9 @@ describe CoursesController do
         get :show, nested_course_params
       end
 
-      it "should show the preview page" do
+      it "should show the login/home page" do
         path = controller.preview_environment_course_path(course.environment, course)
-        response.should redirect_to(path)
+        response.should redirect_to(home_path)
       end
     end
   end
