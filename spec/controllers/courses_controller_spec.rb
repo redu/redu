@@ -611,8 +611,8 @@ describe CoursesController do
       end
 
       it "should show the login/home page" do
-        path = controller.preview_environment_course_path(course.environment, course)
-        response.should redirect_to(home_path)
+        #path = controller.preview_environment_course_path(course.environment, course)
+        response.should redirect_to(controller.home_path)
       end
     end
   end
