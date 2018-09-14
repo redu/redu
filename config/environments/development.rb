@@ -28,6 +28,8 @@ Redu::Application.configure do
 
   config.action_mailer.asset_host = "http://#{config.url}"
 
+  # Merge development logs with puma logs
+  config.logger = Logger.new(STDOUT)
 
   Footnotes.run! if defined?(Footnotes)
 
