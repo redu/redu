@@ -12,10 +12,10 @@ Redu::Application.configure do
 
   # Use Memcached as cache store (default config from ey)
   ## parse the memcached.yml
-  memcached_config = YAML.load_file(Rails.root.join('config/memcached.yml'))
-  memcached_hosts = memcached_config['defaults']['servers']
+  #memcached_config = YAML.load_file(Rails.root.join('config/memcached.yml'))
+  #memcached_hosts = memcached_config['defaults']['servers']
   ## pass the servers to dalli setup
-  config.cache_store = :dalli_store, *memcached_hosts
+  #config.cache_store = :dalli_store, *memcached_hosts
 
   # Specifies the header that your server uses for sending files
   config.action_dispatch.x_sendfile_header = "X-Sendfile"
@@ -47,7 +47,7 @@ Redu::Application.configure do
   config.i18n.fallbacks = true
 
   # Nome e URL do app
-  config.url = "www.redu.com.br"
+  config.url = ENV['APP_URL']
 
   config.action_mailer.default_url_options = \
     { :host => config.url }
