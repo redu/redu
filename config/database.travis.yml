@@ -1,5 +1,5 @@
 test:
   adapter: mysql2
-  database: redu_test
+  database: openredu_test
   username: travis
   encoding: utf8

@@ -1,14 +1,14 @@
 development:
   host: mongo
-  database: redu_development
+  database: openredu_development
 
 staging:
   host: mongo
-  database: redu_staging
+  database: openredu_staging
 
 test:
   host: mongo
-  database: redu_test
+  database: openredu_test
 
 # set these environment variables on your prod server
 production:
