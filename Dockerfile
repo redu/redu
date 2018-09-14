@@ -5,6 +5,9 @@ RUN mkdir /app
 WORKDIR /app
 ADD Gemfile /app/Gemfile
 ADD Gemfile.lock /app/Gemfile.lock
-RUN bundle install
-ADD . /app
-CMD rm -f /app/tmp/pids/server.pid && bundle exec rake sunspot:solr:start && bundle exec rails s -p 3000 -b '0.0.0.0'
+RUN bundle install --full-index
+COPY . /rails_app
+RUN rm -rf /rails_app/_nginx
+EXPOSE 3000
+EXPOSE 8982
+CMD rm -f /app/tmp/pids/server.pid && bundle exec rake sunspot:solr:start && bundle exec puma -C config/puma.rb
