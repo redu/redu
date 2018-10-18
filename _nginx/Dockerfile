@@ -5,7 +5,6 @@ WORKDIR $RAILS_ROOT
 RUN rm -Rf ./*
 RUN mkdir -p log
 RUN mkdir -p public
-COPY public $RAILS_ROOT/public
 COPY _nginx/app.conf /tmp/docker_example.nginx
 RUN envsubst '$RAILS_ROOT' < /tmp/docker_example.nginx > /etc/nginx/conf.d/default.conf
 EXPOSE 80
