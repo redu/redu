@@ -3,7 +3,7 @@
     <div class="row">
       <div class="span4">
         <div class="footer-logo-wrapper">
-          <%= link_to "http://openredu.org/",
+          <%= link_to "#{ENV['PROM_PAGE']}",
             :class => "footer-logo-link" do %>
               <h1 class="footer-logo-img sprite-logo-redu-tech-footer text-replacement">Feito com ♥ pela comunidade <%= Redu::Application.config.name %></h1>
           <% end %>
@@ -84,10 +84,10 @@
         </div>
         <div class="footer-social-networks">
           <%= link_to "Facebook",
-            "https://www.facebook.com/openredu",
+            "#{ENV['FACEBOOK_PAGE']}",
             :class => "footer-social-network sprite-social-facebook text-replacement",
             :title => "Facebook" %>
-          <%= link_to "Twitter", "https://twitter.com/openredu",
+          <%= link_to "Twitter", "#{ENV['TWITTER_PAGE']}",
             :class => "footer-social-network sprite-social-twitter text-replacement",
             :title => "Twitter" %>
         </div>

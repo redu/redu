@@ -220,16 +220,16 @@ module Redu
 
     config.redu_services = {}
     config.redu_services[:apps] = {
-      :url => "http://aplicativos.openredu.com"
+      :url => "#{ENV['APPS_PAGE']}"
     }
     config.redu_services[:help_center] = {
-      :url => "http://ajuda.openredu.com/"
+      :url => "#{ENV['HELP_PAGE']}"
     }
     config.redu_services[:dev] = {
-      :url => "http://developers.openredu.com/"
+      :url => "#{ENV['DEVS_PAGE']}"
     }
     config.redu_services[:blog] = {
-      :url => "http://openredu.org/"
+      :url => "#{ENV['PROM_PAGE']}"
     }
 
     # Configurações de VisClient
@@ -256,9 +256,9 @@ module Redu
 
     # SMTP settings
     config.action_mailer.smtp_settings = {
-      address: "smtp.gmail.com",
+      address: ENV['SMTP_ADDR'],
       port: 465,
-      domain: "cin.ufpe.br",
+      domain: ENV['SMTP_DOMAIN'],
       authentication: "plain",
       enable_starttls_auto: true,
       user_name: ENV['SMTP_USER'],

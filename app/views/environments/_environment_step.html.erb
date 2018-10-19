@@ -53,7 +53,9 @@ $(document).ready(function(){
         <%= concave_error_messages_for(@environment) %>
         <%= field_set_tag nil, :class => "inline" do %>
           <div id="url_preview">
-            <span class="base">redu.com.br</span>
+            <span class="base">
+              <%= ENV['COURSE_PATH'] %>
+            </span>
             <span class="customizable">
               <span class="environment"><%= @environment.path %></span>
               <span class="course-base">cursos</span>

@@ -56,28 +56,28 @@
       <div class="icones-social">
         <ul>
           <li class="item-social">
-            <a href="https://www.facebook.com/openredu">
+            <a href= <%= "#{ENV['FACEBOOK_PAGE']}" %> >
               <figure class="icon-social">
                 <%= image_tag('facebook.svg')%>
               </figure>
             </a>
           </li>
           <li class="item-social">
-            <a href="https://twitter.com/openredu">
+            <a href= <%= "#{ENV['TWITTER_PAGE']}" %> >
               <figure class="icon-social">
                 <%= image_tag('twitter.svg')%>
               </figure>
             </a>
           </li>
           <li class="item-social">
-            <a href="https://www.youtube.com/user/openredu">
+            <a href= <%= "#{ENV['YOUTUBE_CHANNEL']}" %> >
               <figure class="icon-social">
                 <%= image_tag('youtube.svg')%>
               </figure>
             </a>
           </li>
           <li class="item-social">
-            <a href="https://github.com/Openredu/Openredu">
+            <a href= <%= "#{ENV['GITHUB_PAGE']}" %> >
               <figure class="icon-social">
                 <%= image_tag('github.svg')%>
               </figure>
