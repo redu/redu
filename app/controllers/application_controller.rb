@@ -24,6 +24,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def redirect_to(options = {}, response_status = {})
+    ::Rails.logger.error("Redirected by #{caller(1).first rescue "unknown"}")
+    super(options, response_status)
+  end
+
   private
 
   # Handlers para exceções (paginas de error customizadas)
@@ -75,6 +80,9 @@ class ApplicationController < ActionController::Base
     session[:return_to] ||= request.fullpath
 
     flash[:error] = "Essa área só pode ser vista após você acessar o #{Redu::Application.config.name} com seu nome e senha."
+
+    puts exception.action
+    puts exception.subject
 
     yield if block_given?
 

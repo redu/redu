@@ -12,10 +12,10 @@ Redu::Application.configure do
 
   # Use Memcached as cache store (default config from ey)
   ## parse the memcached.yml
-  memcached_config = YAML.load_file(Rails.root.join('config/memcached.yml'))
-  memcached_hosts = memcached_config['defaults']['servers']
+  #memcached_config = YAML.load_file(Rails.root.join('config/memcached.yml'))
+  #memcached_hosts = memcached_config['defaults']['servers']
   ## pass the servers to dalli setup
-  config.cache_store = :dalli_store, *memcached_hosts
+  #config.cache_store = :dalli_store, *memcached_hosts
 
   # Specifies the header that your server uses for sending files
   config.action_dispatch.x_sendfile_header = "X-Sendfile"
@@ -47,7 +47,7 @@ Redu::Application.configure do
   config.i18n.fallbacks = true
 
   # Nome e URL do app
-  config.url = "www.redu.com.br"
+  config.url = ENV['APP_URL']
 
   config.action_mailer.default_url_options = \
     { :host => config.url }
@@ -60,21 +60,22 @@ Redu::Application.configure do
   config.colorize_logging = false
 
   # Configurações de VisClient
-  config.vis_client = {
-    :url => "http://vis.redu.com.br/hierarchy_notifications.json"
-  }
+  # Podem ser usadas as mesmas configs da vis em application.rb, apenas alterando em .env
+  # config.vis_client = {
+  #   :url => "http://vis.redu.com.br/hierarchy_notifications.json"
+  # }
 
-  config.vis = {
-    :subject_activities => "http://vis.redu.com.br/subjects/activities.json",
-    :lecture_participation => "http://vis.redu.com.br/lectures/participation.json",
-    :students_participation => "http://vis.redu.com.br/user_spaces/participation.json"
-  }
+  # config.vis = {
+  #   :subject_activities => "http://vis.redu.com.br/subjects/activities.json",
+  #   :lecture_participation => "http://vis.redu.com.br/lectures/participation.json",
+  #   :students_participation => "http://vis.redu.com.br/user_spaces/participation.json"
+  # }
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     :address => "email-smtp.us-east-1.amazonaws.com",
     :port => 465,
-    :domain => 'redu.com.br',
+    :domain => ENV['SMTP_DOMAIN'],
     :authentication => :login,
     :user_name => 'AKIAINQ5Y2UPLZJQM3EA',
     :password => 'AqEmj6PTCT8HJCpUB9qmIXQb+G2SaKEFjKcWrR9MLUaF'

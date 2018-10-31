@@ -63,7 +63,7 @@ class ChatsController < ApplicationController
   protected
 
     def sender(channel, msg)
-      message = {:channel => channel, :data => msg.merge(:authToken => 'openredu')}
+      message = {:channel => channel, :data => msg.merge(:authToken => ENV['FAYE_TOKEN'])}
       begin
         uri = URI.parse(Redu::Application.config.faye_url)
         Net::HTTP.post_form(uri, :message => message.to_json)

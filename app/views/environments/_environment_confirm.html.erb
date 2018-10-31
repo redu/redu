@@ -8,7 +8,9 @@
 
   <div class="confirmation">
     <div id="url_preview">
-      <span class="base">openredu.ufpe.br</span>
+      <span class="base">
+        <%= ENV['COURSE_PATH'] %>
+      </span>
       <span class="customizable">
         <span class="environment"><%= @environment.path %></span>
         <span class="course-base">cursos</span>
