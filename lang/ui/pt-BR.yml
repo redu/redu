@@ -153,9 +153,9 @@ pt-BR:
         path: "Endereço"
         name: "Nome"
         initials: "Abreviação"
-        courses:
-          name: "Nome do Curso"
-          path: "Endereço do Curso"
+      environment/courses:
+        name: "Nome do Curso"
+        path: "Endereço do Curso"
       event_education:
         name: "Nome do evento"
         role: "Seu papel"
