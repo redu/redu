@@ -28,6 +28,6 @@ env:
   - TEST_SUITE=visualizations
 script: "bundle exec rspec spec/$TEST_SUITE"
 before_install:
-  - gem install bundler
+  - gem install bundler -v 1.17.3
   - chmod +x ./script/grant_travis_privileges_on_mysql.sh
   - ./script/grant_travis_privileges_on_mysql.sh
