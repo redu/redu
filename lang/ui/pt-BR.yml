@@ -150,8 +150,8 @@ pt-BR:
         path: "Endereço"
         name: "Nome"
       environment:
-        path: "Endereço"
-        name: "Nome"
+        path: "Endereço eletrônico do Ambiente"
+        name: "Nome do Ambiente"
         initials: "Abreviação"
       environment/courses:
         name: "Nome do Curso"
@@ -211,7 +211,9 @@ pt-BR:
         header:
           one: "Ops!" #"Um erro ocorreu, verifique abaixo como proceder."
           other: "Ops!" #"{{count}} erros ocorreram, veja como proceder abaixo."
-        body: "Há problemas para o(s) seguinte(s) campo(s):"
+        body: 
+          one: "Há um problema no seguinte campo:"
+          other: "Há problemas para os seguintes campos:"
       messages:
         blank: "Não pode ser deixado em branco."
         too_long: "Texto muito longo"
