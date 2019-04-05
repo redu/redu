@@ -155,7 +155,7 @@ pt-BR:
         initials: "Abreviação"
       environment/courses:
         name: "Nome do Curso"
-        path: "Endereço do Curso"
+        path: "Endereço eletrônico do Curso"
       event_education:
         name: "Nome do evento"
         role: "Seu papel"
@@ -215,11 +215,11 @@ pt-BR:
           one: "Há um problema no seguinte campo:"
           other: "Há problemas para os seguintes campos:"
       messages:
-        blank: "Não pode ser deixado em branco."
-        too_long: "Texto muito longo"
-        accepted: "Você precisa aceitar os Termos de Uso"
-        taken: "já existente."
-        invalid: "inválido."
+        blank: "Este campo não pode ser deixado em branco."
+        too_long: "Texto muito longo."
+        accepted: "Você precisa aceitar os Termos de Uso."
+        taken: "Já existente."
+        invalid: "Inválido."
       models:
         user:
           attributes:
