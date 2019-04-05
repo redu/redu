@@ -45,7 +45,7 @@ $(document).ready(function(){
 
   <div class="step-info">
     <h3>1 <span>Informações</span></h3>
-    <em class="description">Descreva as informações básicas do ambiente e curso</em>
+    <em class="description">Descreva as informações básicas do ambiente e curso.</em>
   </div>
   <div class="customizing">
     <%= form_for @environment, :url => environments_path(:step => 2),
@@ -65,7 +65,7 @@ $(document).ready(function(){
         <% end %>
         <hr/>
         <%= render :partial => 'environments/form', :locals => { :f => f } %>
-        <%= f.submit "Assinar", :class => "concave-important next"%>
+        <%= f.submit "Enviar", :class => "concave-important next"%>
       <% end %>
   </div>
 </div>
