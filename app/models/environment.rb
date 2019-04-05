@@ -9,7 +9,7 @@ class Environment < ActiveRecord::Base
 
   after_create :create_environment_association
   after_create :create_course_association, :unless => "self.courses.empty?"
-
+  
   has_many :courses, :dependent => :destroy,
     :conditions => ["courses.destroy_soon = ?", false]
   has_many :all_courses, :dependent => :destroy, :class_name => "Course"
@@ -42,9 +42,9 @@ class Environment < ActiveRecord::Base
   has_attached_file :avatar, Redu::Application.config.paperclip_environment
 
   validates_presence_of :name, :path, :initials
-  validates_uniqueness_of :name, :path,
-    :message => "Precisa ser único"
+  validates_uniqueness_of :name, :path
   validates_length_of :name, :maximum => 40
+  validates_length_of :path, :maximum => 100
   validates_length_of :description, :maximum => 400, :allow_blank => true
   validates_length_of :initials, :maximum => 10
   validates_format_of :path, :with => /^[-_A-Za-z0-9]*$/
