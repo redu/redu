@@ -711,6 +711,12 @@ pt-BR:
   contest_entries: Contest Entries
   #en: country: Country
   country: País
+  course:
+    one: curso
+    other: cursos
+  course_caps:
+    one: Curso
+    other: Cursos
   #en: lecture: Lecture
   lecture: Aula
   #en: create: Create
@@ -782,6 +788,12 @@ pt-BR:
   description: Descrição
   #en: destroy: Destroy
   destroy: Destroy
+  discipline:
+    one: Disciplina
+    other: Disciplinas
+  disciplinas_matriculadas:
+    one: disciplina matriculada
+    other: disciplinas matriculadas
   doctorate: Doutorado
   #en: dont_have_an_account: Don't have an account?
   dont_have_an_account: Não possui uma conta?
@@ -1129,9 +1141,13 @@ pt-BR:
   #en: megabyte_upload_limit_per_file: megabyte upload limit per file.
   megabyte_upload_limit_per_file: megabyte upload limit per file.
   #en: member: Member
-  member: Member
-  #en: members: Members
-  members: Members
+  member:
+    one: membro
+    other: membros
+  member_caps:
+    one: Membro
+    other: Membros
+    
   #en: member_since: Member since
   member_since: Member since
   #en: message: Message
@@ -1618,6 +1634,9 @@ pt-BR:
   status: Status
   #en: sticky: Sticky
   sticky: Aberto
+  studant:
+    one: Aluno
+    other: Alunos
   #en: subject: Subject
   subject: Módulo
   #en: suject_of_message: Subject of Message
@@ -1653,6 +1672,9 @@ pt-BR:
   tagged: tagged
   #en: tags_page: tags page
   tags_page: página de tags
+  teacher:
+    one: Professor
+    other: Professores
   technical: Técnico
   #en: thanks_for_activating_your_account: Thanks for activating your account!
   thanks_for_activating_your_account: Obrigado por ativar a sua conta!
@@ -1732,6 +1754,9 @@ pt-BR:
   total_users: Total users
   #en: total_votes: Total votes
   total_votes: Total votes
+  tutor:
+    one: Tutor
+    other: Tutores
   #en: type_a_username: Type usernames separated by commas
   type_a_username: Digite logins separados por vírgula
   #en: type_your_password: "Type your password:"
