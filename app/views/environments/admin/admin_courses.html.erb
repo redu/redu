@@ -14,7 +14,8 @@
 
     <%= tabs :environments_admin do %>
       <h3 class="form-header">
-        <%= @environment.courses.count %> curso(s)
+        <%= courses_count = @environment.courses.count %>
+        <%= t :course_, :count => courses_count%> 
       </h3>
       <div class="management-actions">
         <%= link_to "Criar novo curso", new_environment_course_path(@environment),

@@ -711,7 +711,7 @@ pt-BR:
   contest_entries: Contest Entries
   #en: country: Country
   country: País
-  course:
+  course_:
     one: curso
     other: cursos
   course_caps:
@@ -1141,7 +1141,7 @@ pt-BR:
   #en: megabyte_upload_limit_per_file: megabyte upload limit per file.
   megabyte_upload_limit_per_file: megabyte upload limit per file.
   #en: member: Member
-  member:
+  member_:
     one: membro
     other: membros
   member_caps:
