@@ -14,7 +14,7 @@
 
     <%= tabs :environments_admin do %>
       <h3 class="form-header-closer">
-        <%= @environment.users.count %> membro(s) e <%= @environment.courses.count %> curso(s)
+        <%= members_count = @environment.users.count %> <%=t :member, :count => members_count %> e <%= courses_count = @environment.courses.count %> <%=t :course, :count => courses_count%>
       </h3>
 
     <% if @memberships && @memberships.size > 0 %>
