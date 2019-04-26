@@ -18,7 +18,6 @@
 //= require subjects
 //= require admin
 //= require jquery.nested-fields
-//= require cocoon
 //= require jquery.noisy
 //= require underscore
 //= require embedly

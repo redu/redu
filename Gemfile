@@ -62,7 +62,6 @@ gem 'truncate_html'
 gem 'rest-client'
 gem 'dotenv-rails'
 gem 'puma'
-gem 'cocoon'          # Gerencia nested attributes para global_exercises
 # Gems específicos para a API
 gem 'oauth-plugin', '~> 0.4.0'
 gem 'rack-cors', require: 'rack/cors'
@@ -82,7 +81,6 @@ group :development, :test do
   gem 'no_peeping_toms', git: 'https://github.com/patmaddox/no-peeping-toms.git'
   gem 'rails3-generators'
   gem "rspec-rails", "~> 2.13"
-  gem 'pry-rails'
 end
 
 group :test do
