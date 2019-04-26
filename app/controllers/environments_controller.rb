@@ -60,6 +60,15 @@ class EnvironmentsController < BaseController
   # POST /environments
   # POST /environments.xml
   def create
+    @environment.name ||= params[:env_name]
+    @environment.path ||= params[:env_path]
+    @environment.initials ||= params[:env_init]
+    if @environment.courses.first.nil? then @environment.courses.build end
+    @environment.courses.first.name ||= params[:courses_name]
+    @environment.courses.first.path ||= params[:courses_path]
+
+
+
     @plan = Plan.from_preset(:professor_plus)
     @plan.user = current_user
     case params[:step]
@@ -201,7 +210,6 @@ class EnvironmentsController < BaseController
     roles = params[:role_filter].collect {|r| r.to_s} if params[:role_filter]
     keyword = []
     keyword = params[:search_user] || nil
-
     @memberships = UserEnvironmentAssociation.with_roles(roles).
                    of_environment(@environment).with_keyword(keyword).
                    includes(:user => [{ :user_course_associations => :course }]).

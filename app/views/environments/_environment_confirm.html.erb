@@ -57,7 +57,8 @@
       <div style='display: none;'>
         <%= render :partial => 'environments/form', :locals => { :f => f } %>
       </div>
-      <%= f.submit "Finalizar", :id => "final-button"%>
+      <%= f.submit "Finalizar", :class => "concave-button"%>
+      <%= link_to "Voltar", {:controller => 'environments', :action => 'create', :step => 1, :env_name => @environment.name, :env_path => @environment.path, :env_init => @environment.initials, :courses_name => @environment.courses.first.name, :courses_path => @environment.courses.first.path}, {:method => :post, :title => "Voltar", :class => "concave-button"} %>
       <%= image_tag 'spinner.gif', :id => 'spinner-form',
         :style => 'display: none; float: right;'  %>
     <% end %>
