@@ -9,8 +9,8 @@
   <div id="environment-manage" class="body management">
     <%= render 'environments/admin/clean_header' %>
     <%= tabs :environments_admin do %>
-      <h3 class="form-header">Criação de um <strong class="strong">novo curso</strong></h3>
-      <%= link_to "< voltar para a listagem de cursos", admin_courses_environment_path(@environment), :class => "back" %>
+      <h3 class="form-header"> <strong class="strong">Criação de um novo curso</strong></h3>
+      <%= link_to "Listagem de cursos", admin_courses_environment_path(@environment), :class => "back" %>
       <%= form_for @course,
         :url => environment_courses_path(@environment),
         :html => { :class => 'concave-form clearfix' } do |f| %>
