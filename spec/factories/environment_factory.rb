@@ -4,6 +4,8 @@ FactoryGirl.define do
     sequence(:name) { |n| "Ambiente #{n}" }
     sequence(:path) { |n| "ambiente-#{n}" }
     sequence(:initials) { |n| "amb-#{n}" }
+    sequence (:workload) { |n| "ambi-#{n}"}
+    sequence (:tag_list) { |n| "ambie-#{n}"}
     association :owner, :factory => :user
   end
 

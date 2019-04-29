@@ -17,12 +17,18 @@ describe Environment do
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:path) }
   it { should validate_presence_of(:initials) }
+  it { should validate_presence_of(:workload) }
+  it { should validate_presence_of(:tag_list) }
+
   xit { should validate_uniqueness_of(:name) }
   xit { should validate_uniqueness_of(:path) }
   it { should allow_value("teste-medio1").for(:path)}
   it { should ensure_length_of(:name).is_at_most 40 }
   it { should ensure_length_of(:initials).is_at_most(10)}
   it { should ensure_length_of(:description).is_at_most(400)}
+  it { should ensure_length_of(:workload).is_at_most(10)}
+  it { should ensure_length_of(:tag_list).is_at_most(200)}
+
 
   it { should_not allow_mass_assignment_of(:owner)}
   it { should_not allow_mass_assignment_of(:published)}
