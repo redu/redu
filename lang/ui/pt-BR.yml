@@ -506,7 +506,12 @@ pt-BR:
   #en: added_to_a_forum_topic: "added to a forum topic:"
   added_to_a_forum_topic: "added to a forum topic:"
   #en: admin: Admin
-  admin: Administrador
+  admin_:
+    one: administrador
+    other: administradores
+  admin_caps:
+    one: Administrador
+    other: Administradores
   #en: admin_controls: Admin Controls
   admin_controls: Admin Controls
   #en: admin_dashboard: Admin dashboard # AQUI
@@ -1634,6 +1639,7 @@ pt-BR:
   status: Status
   #en: sticky: Sticky
   sticky: Aberto
+  strong_tags: "tags"
   studant:
     one: Aluno
     other: Alunos

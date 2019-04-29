@@ -301,6 +301,16 @@ module BaseHelper
         end
       when 'sessions'
         title = t(:login) + ' - ' + app_base + tagline
+      when 'environments'
+        title = 'Ambientes' + ' - ' + app_base + tagline
+      when 'courses'
+        title = 'Disciplinas' + ' - ' + app_base + tagline
+      when 'leaderboards'
+        title = 'Leaderboard do Curso' + ' - ' + app_base + tagline
+      when 'global_questions'
+        title = 'Banco de Questões' + ' - ' + app_base + tagline
+      when 'strong_tags'
+        title = 'Lista de Tags' + ' - ' + app_base + tagline
     end
 
     if @page_title
