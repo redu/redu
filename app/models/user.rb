@@ -445,6 +445,17 @@ class User < ActiveRecord::Base
     association && association.role && association.role.teacher?
   end
 
+  def teacher_in_this_environment?(environment)
+    is_teacher = false;
+
+    environment.course_ids.each do |course_id|
+      is_teacher = self.teacher?(Course.find(course_id))
+      break if is_teacher == true;
+    end
+
+    is_teacher
+  end
+
   def tutor?(entity)
     association = get_association_with entity
     return false if association.nil?
