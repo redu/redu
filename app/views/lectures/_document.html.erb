@@ -1,5 +1,8 @@
 <%= javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/1.9.638/pdf.min.js' %>
 <%= javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/1.9.638/pdf.worker.min.js' %>
+<%= javascript_include_tag 'document' %>
+
+<%= content_tag :span, '', id: 'lecture-data', :'data-lecture-id' => @lecture.id %> 
 <div id="view_video" class="stage" align="center" >
   <% if @lecture.lectureable.attachment_content_type == 'application/pdf' || !@lecture.lectureable.livredoc_id.blank?%>
       <canvas id="canvas"></canvas>
@@ -19,7 +22,3 @@
     <%= image_tag @lecture.lectureable.attachment.url, :alt => @lecture.name %>
   <% end %>
 </div>
-
-<script>
-  <%= render partial: "lectures/document.js", locals: { lecture: @lecture } %>
-</script>
