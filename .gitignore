@@ -30,6 +30,8 @@ solr/data/*
 solr/pids/*
 .sass-cache/
 .env
+.env.test
+.env.development
 .env.staging
 .env.production
 *.pptx
