@@ -23,7 +23,8 @@ module Api
     collection :tags, :from => :interested_areas, :extend => TagRepresenter
     collection :social_networks, :extend => SocialNetworkRepresenter,
       :class => SocialNetwork
-
+    property :languages
+    
     link :self do
       api_user_url(self)
     end
