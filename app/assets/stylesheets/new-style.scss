@@ -7435,6 +7435,8 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 /*-- #graph-form é o .concave-form do gráfico --*/
 #graph-form .inline {
   float: left;
+  display: flex;
+  width: 40%;
 }
 
 #graph-form .errors_on_date{
