@@ -399,7 +399,10 @@ ul.messages-errors {
 section#content .right section.form-container div.loginface {
   max-width: 50%;
   min-width: 200px;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5px;
+  margin-bottom: 25px;
   background-color: #158ac4;
   color: #fff;
   a {
@@ -414,7 +417,21 @@ section#content .right section.form-container div.loginface {
     }
   }
 }
-
+section#content .right section.form-container div.criarconta {
+  max-width: 40%;
+  min-width: 100px;
+  max-height: 50%;
+  min-height: 30px;
+  margin: 0 auto;
+  display: block;
+  padding-top: 10px;
+  font-size: 0.8em;
+  background-color: #4cadd7;
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+  font-weight: 600;
+}
 footer#foot-page {
   color: #fff;
   background-color: #158ac4;
