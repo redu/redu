@@ -11,7 +11,7 @@
       <h3 class="form-header">Edição de <strong class="strong">módulo</strong></h3>
       <%= link_to "< voltar para a listagem de modulos",
         admin_subjects_space_path(@space), :class => "back" %>
-      <%= render 'subjects/admin/edit', :space => @space, :subject => @subject %>
+      <%= render 'subjects/admin/edit', :space => @space, :subject => @subject, :quota => @quota, :plan => @plan %>
 
     <%= link_to "Sair", environment_course_path(@environment, @course), :class => "manage exit icon-manage-gray_8_10-before" %>
     <% end %>
