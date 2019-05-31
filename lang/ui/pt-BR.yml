@@ -743,6 +743,9 @@ pt-BR:
   #en: created_at: Created at
   created_at: Created at
   #en: custom_friendly_local: custom, friendly, local
+  cursar:
+    one: cursa
+    other: cursam
   custom_friendly_local: "custom, friendly, local"
   #en: dashboard: Dashboard
   dashboard: Dashboard

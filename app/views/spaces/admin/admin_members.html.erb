@@ -11,7 +11,7 @@
     <%= tabs :spaces_admin do %>
       <div id="user_list">
         <h3 class="form-header-closer">
-          <%= @space.users.count %> membro(s) cursam a disciplina
+          <%= t = @space.users.count %> <%=t (:member_, :count => t)%> <%= t(:cursar, :count => t)%> a disciplina
         </h3>
         <%= render :partial => 'spaces/admin/user_list_admin',
           :locals => {:memberships => @memberships}%>
