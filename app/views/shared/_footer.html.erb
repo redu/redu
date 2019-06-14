@@ -13,7 +13,7 @@
       <div class="span3">
         <%# Esconde os links para a landing quando o usuário está logado,
           pois o mesmo não consegue ir para lá. Remover quando for possível. %>
-       <% unless current_user %>
+        <% unless current_user %>
           <ul class="footer-navigation">
             <li>
               <%= link_to "Sobre o #{Redu::Application.config.name}", home_path(anchor: "") %>
@@ -49,11 +49,6 @@
               :title => "Central de Ajuda", :target => "_blank" %>
           </li>
           <li>
-            <%= link_to "Fórum da Comunidade",
-              Redu::Application.config.redu_services[:forum][:url],
-              :title => "Fórum da Comunidade"%>
-          </li>
-          <li>
             <%= link_to "Blog",
               Redu::Application.config.redu_services[:blog][:url],
               :title => "Blog"
@@ -78,6 +73,11 @@
               :title => "Termos de Uso",
               "data-toggle" => "modal"
             %>
+          </li>
+          <li>
+            <%= link_to "Fórum da Comunidade",
+              Redu::Application.config.redu_services[:forum][:url],
+              :title => "Fórum da Comunidade"%>
           </li>
         </ul>
         <%= render :partial => "shared/modal_tos" %>
