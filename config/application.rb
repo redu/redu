@@ -63,6 +63,7 @@ module Redu
     config.tagline = "Rede Social Educacional"
     config.description = "Rede Social Educacional"
     config.email = "contato@openredu.com"
+    config.path = "openredu.ufpe.br"
 
     # Nome e URL do app
     config.url = ENV['APP_URL']
