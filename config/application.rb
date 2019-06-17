@@ -232,9 +232,6 @@ module Redu
     config.redu_services[:blog] = {
       :url => "#{ENV['PROM_PAGE']}"
     }
-    config.redu_services[:forum] = {
-      :url => "#{ENV['FORUM_PAGE']}"
-    }
 
     # Configurações de VisClient
     config.vis_client = {
