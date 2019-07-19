@@ -41,7 +41,7 @@
     <%= check_box "user", "tos" %>
     <%= f.label "tos", raw("Aceito os #{link_to "Termos de Uso",
         home_path(:anchor => "modal-tos"), "data-toggle" => "modal"}
-        da plataforma #{Redu::Application.config.name}.") %>
+        da plataforma Openredu.") %>
   </div>
   <div class="bt-groups">
     <%= hidden_field_tag :inviter_id, params[:inviter_id] %>
