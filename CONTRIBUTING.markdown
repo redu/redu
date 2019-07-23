@@ -9,13 +9,21 @@
 * Se possível, use o template abaixo para criar a isse. Simplesmente copie e preencha os dados no **campo de descrição da issue**:
 
 > **Título**:
+
 	**Descrição**: 
+
 	**Etapas**:
+
 	**Resultado**:
+
 	**Resultado esperado**:
+
 	**Versão**: 
+
 	**Navegador**:
+
 	**Sistema Operacional**:
+
 	**Anexos**:
 
 * Para informações mais detalhadas e boas práticas ao submeter uma issue, uma leitura recomendada é o [guia de open source](https://opensource.guide/how-to-contribute/).
