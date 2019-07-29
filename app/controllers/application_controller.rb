@@ -31,6 +31,10 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def single_access_allowed?
+    controller_path.split("/").first == 'api'
+  end
+
   # Handlers para exceções (paginas de error customizadas)
   def render_not_found(exception)
     logger.error exception
