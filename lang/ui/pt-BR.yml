@@ -743,6 +743,9 @@ pt-BR:
   #en: created_at: Created at
   created_at: Created at
   #en: custom_friendly_local: custom, friendly, local
+  cursar:
+    one: cursa
+    other: cursam
   custom_friendly_local: "custom, friendly, local"
   #en: dashboard: Dashboard
   dashboard: Dashboard
@@ -1175,6 +1178,9 @@ pt-BR:
   moderator: Moderator
   #en: moderators: Moderators
   moderators: Moderadores
+  module:
+    one: módulo
+    other: módulos
   #en: monitored_topics: Monitored Topics
   monitored_topics: Monitored Topics
   #en: month: Month
