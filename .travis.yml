@@ -2,7 +2,7 @@ sudo: required
 language: ruby
 cache: bundler
 rvm:
-  - "1.9.3-p551"
+  - "1.9.3"
 services:
   - mongodb
 bundler_args: --without development debug
