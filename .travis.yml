@@ -7,10 +7,11 @@ services:
   - mongodb
 bundler_args: --without development debug
 before_script:
+  - sudo apt-get install mysql-server
   - export TZ=America/Sao_Paulo
   - cp config/database.travis.yml config/database.yml
   - cp config/mongoid.travis.yml config/mongoid.yml
-  - mysql -e 'create database openredu_test;'
+  - sudo mysql -e 'create database openredu_test;'
   - bundle exec rake db:schema:load RAILS_ENV=test
 env:
   - TEST_SUITE=abilities
