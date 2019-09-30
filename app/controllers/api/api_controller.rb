@@ -58,9 +58,13 @@ module Api
     end
 
     def extract_single_access_token
-      if(request.headers['Authorization'].present?)
-        params[:user_credentials] = request.headers['Authorization']
+      if(request.headers['Authorization'].present? && request.headers['AppKey'].present?)
+        params[:user_credentials] = appkey_is_valid? ? request.headers['Authorization'] : nil
       end
+    end
+
+    def appkey_is_valid?
+      request.headers['AppKey'] == ENV['MOBILE_API_TOKEN']
     end
   end
 end
