@@ -8,8 +8,8 @@ end
 class SocialNetworkSite::Twitter < SocialNetworkSite
 end
 
-class SocialNetworkSite::Orkut < SocialNetworkSite
+class SocialNetworkSite::Linkedin < SocialNetworkSite
 end
 
-class SocialNetworkSite::Linkedin < SocialNetworkSite
+class SocialNetworkSite::Instagram < SocialNetworkSite
 end
