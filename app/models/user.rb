@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
 
   # CALLBACKS
   before_create :make_activation_code
-  after_create  :update_last_login
+  after_create  :update_last_login, :activate
   before_validation :strip_whitespace
   after_commit on: :create do
     environment = Environment.find_by_path('ava-redu')

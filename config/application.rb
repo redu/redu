@@ -256,16 +256,19 @@ module Redu
     }
 
     # SMTP settings
-    config.action_mailer.smtp_settings = {
-      address: ENV['SMTP_ADDR'],
-      port: 465,
-      domain: ENV['SMTP_DOMAIN'],
-      authentication: "plain",
-      enable_starttls_auto: true,
-      user_name: ENV['SMTP_USER'],
-      password: ENV['SMTP_PASSWD'],
-      openssl_verify_mode: "none"
-    }
+    # config.action_mailer.smtp_settings = {
+    #   address: ENV['SMTP_ADDR'],
+    #   port: 465,
+    #   domain: ENV['SMTP_DOMAIN'],
+    #   authentication: "plain",
+    #   enable_starttls_auto: true,
+    #   user_name: ENV['SMTP_USER'],
+    #   password: ENV['SMTP_PASSWD'],
+    #   openssl_verify_mode: "none"
+    # }
+    config.action_mailer.delivery_method = :test
+    config.action_mailer.perform_deliveries = false
+    config.action_mailer.raise_delivery_errors = false
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
