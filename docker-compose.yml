@@ -24,6 +24,7 @@ services:
       - app
     ports:
       - 80:80
+      - 443:443
     networks: 
       - vis_default
       - livredoc_default
