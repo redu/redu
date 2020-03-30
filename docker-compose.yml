@@ -71,6 +71,7 @@ services:
     
   delayedjob:
     build: .
+    restart: always
     command: rake jobs:work
     volumes:
       - .:/rails_app
