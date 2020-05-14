@@ -86,7 +86,7 @@ class SpacesController < BaseController
   # GET /spaces/1.xml
   def show
     @subjects = @space.subjects.includes([:lectures, :space]).
-      order('updated_at ASC')
+      order('updated_at DESC')
 
     unless can? :manage, @space
       @subjects = @subjects.visible
