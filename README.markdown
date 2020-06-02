@@ -34,28 +34,32 @@ O estilo e padrões de código utilizados estão disponíveis [neste](https://gi
 
 ### Contribuições
 
+Todas as contribuições serão analisadas pelos integrantes da comunidade OpenRedu, o código do OpenRedu não está ligado a nenhuma instituição. É um código de software livre.
+
+Um guia muito bom é o do [GitHub](https://guides.github.com/activities/contributing-to-open-source/), ele explica detalhadamente as práticas e como contribuir como projetos de Open Source.
+
+As informações abaixo são só reforços do guia do GitHub.
+
 #### Pull requests
 
 Os passos para contribuir com a evolução do código, seja para resolução de issue ou criação de features são os seguintes:
 
-1. Criar um branch novo
+1. Fork do projeto no GitHub
+2. Criar um branch próprio para o problema
 2. Realizar mudanças ou adicionar a feature
-3. Commitar mudanças e enviá-las para o remoto
-4. Realizar pull request e atribuir a um revisor
+3. Commitar mudanças e enviá-las para o remoto do seu repositório
+4. Realizar pull request
 5. Caso existam revisões: realizar novos commits no mesmo branch criado e enviar para o remoto
 
-Um exemplo de resolução de issue seguiria o seguinte fluxo:
+#### Reportando issues
 
-Assumindo que o issue tenha o ID 1300.
+Descreva o issue de forma mais clara possível, sempre usando usando algum casa de uso. Casa haja alguma melhoria de código ou de funcionalidade, tente justificar o motivo.
 
-```sh
-$ redu (master) > git pull origin master
-$ redu (master) > git checkout -b issue-1300
-$ redu (issue-1300) > git commit -a -m "Minhas modificações"
-$ redu (issue-1300) > git push origin issue-1300
-```
+Sempre tente seguir esse checklist para reportar um issue:
 
-Para mais informações sobre como fazer o pull request, consulte [este](https://help.github.com/articles/using-pull-requests) post.
+- Adicione um título claro do que se trata o issue
+- Se for um bug, escreva uma descrição mostrando em que ambiente e como aconteceu o erro. Um vídeo ou uma imagem pode ajudar na reprodução do erro.
+- Se for uma melhoria, descreva detalhamente o motivo da melhoria que você pretende adicionar.
 
 #### Reportando issues da API
 
