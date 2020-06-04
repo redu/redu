@@ -1,18 +1,18 @@
-sudo: required
+os: linux
+dist: xenial
 language: ruby
 cache: bundler
 rvm:
   - "1.9.3"
 services:
   - mongodb
+  - mysql
 bundler_args: --without development debug
 before_script:
-  - sudo apt-get install mysql-server
   - export TZ=America/Sao_Paulo
   - cp config/database.travis.yml config/database.yml
   - cp config/mongoid.travis.yml config/mongoid.yml
-  - sudo mysql -e 'create database openredu_test;'
-  - bundle exec rake db:schema:load RAILS_ENV=test
+  - bundle exec rake db:create db:schema:load RAILS_ENV=test
 env:
   - TEST_SUITE=abilities
   - TEST_SUITE=adapters
