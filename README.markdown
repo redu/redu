@@ -26,6 +26,13 @@ Em caso de desejar fazer contato direto com a comunidade, existe um [fórum](htt
 [Setup Ubuntu](https://github.com/OpenRedu/OpenRedu/wiki/OpenRedu-Setup-%28Ubuntu%29)
 [Setup Windows/Mac OS/Ubuntu (Deprecated)](https://github.com/OpenRedu/OpenRedu/wiki/Redu-Setup----Deprecated)
 
+#### Scripts pra setup no Mac:
+
+    $ ./script/setup/init
+    $ ./script/setup/run
+
+Nota: boa parte do que está nesses scripts pode ser reutilizado para outras
+plataformas (não só Mac).
 
 #### Dependências
 
