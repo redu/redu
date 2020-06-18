@@ -1,21 +1,26 @@
 [![Build Status](https://travis-ci.org/Openredu/Openredu.svg?branch=master)](https://travis-ci.org/Openredu/Openredu)
 
-## OpenRedu Core
+## Openredu Core
 
-Este repositório contem o core do OpenRedu. O openredu-core é a parte central da plataforma social educacional OpenRedu. Também existem alguns subsistemas/serviços que estão em servidores/projetos/repositórios diferentes. A saber:
+Este repositório contem o core do Openredu. O openredu-core é a parte central da plataforma social educacional Openredu. Também existem alguns subsistemas/serviços que estão em servidores/projetos/repositórios diferentes. A saber:
 
 - [Portal de aplicativos](http://github.com/redu/apps): Marketplace de aplicativos educacionais.
 - [Visualizações semânticas](http://github.com/redu/vis): Armazenamento e construção de visualizações semânticas do Redu.
 - [Central de Ajuda](http://github.com/OpenRedu/help-center): [Tutoriais](http://ajuda.openredu.com) de suporte no uso da plataforma.
-- [Página de desenvolvedores](http://github.com/redu/redu.github.com): Documentação da API REST do Redu
-- [Página do livro](http://github.com/redu/livro): Pagina do livro [Educar com o Redu](http://educarcom.redu.com.br)
+- [Página de desenvolvedores](http://github.com/redu/redu.github.com): Documentação da API REST do Redu.
+- [Página do livro](http://github.com/redu/livro): Pagina do livro [Educar com o Redu](http://educarcom.redu.com.br).
 - [Redu Mobile](http://github.com/redu/mobile): Aplicativo Android oficial.
-- [Wally Server](http://github.com/redu/wally): Mural do Redu (server-side)
-- [Wally.js](http://github.com/redu/wally.js): Mural do Redu (client-side)
+- [Wally Server](http://github.com/redu/wally): Mural do Redu (server-side).
+- [Wally.js](http://github.com/redu/wally.js): Mural do Redu (client-side).
 - [Untied](http://github.com/redu/untied): Message Bus utilizado na comunicação entre serviços.
 - [Permit](http://github.com/redu/permit): Autorização e gerênciamento de políticas de acesso entre serviços.
 - [ReduPy](http://github.com/redu/redupy): Encapsulador Python para a API REST do Redu.
-- [JRedu](http://github.com/redu/jredu): Encapsulador Java para a API REST do Redu
+- [JRedu](http://github.com/redu/jredu): Encapsulador Java para a API REST do Redu.
+
+### Comunidade de Software Livre Openredu
+
+Em caso de desejar fazer contato direto com a comunidade, existe um [fórum](http://forum.openredu.com) ([http://forum.openredu.com](http://forum.openredu.com)) o qual você pode tirar suas dúvidas, fazer postagens com sugestões, comentários e elogios. Sinta-se a vontade para contribuir e fazer a comunidade crescer!
+
 
 ### Setup
 [Setup Ubuntu](https://github.com/OpenRedu/OpenRedu/wiki/OpenRedu-Setup-%28Ubuntu%29)
@@ -97,6 +102,8 @@ UserNotifier.delay(:queue => 'email').external_user_course_invitation(user_cours
 
 
 Para mais informações de uso: ``bundle exec ar_sendmail_rails3 -h``
+
+
 
 # Licença Utilizada
 
