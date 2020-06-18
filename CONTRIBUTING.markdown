@@ -1,3 +1,7 @@
+### Comunidade de Software Livre Openredu
+
+Em caso de desejar fazer contato direto com a comunidade, existe um fórum [http://forum.openredu.com] o qual você pode tirar suas dúvidas, fazer postagens com sugestões, comentários e elogios. Sinta-se a vontade para contribuir e fazer a comunidade crescer!
+
 ## Como contribuir para o Openredu
 
 #### **Você encontrou um bug?**
