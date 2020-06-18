@@ -1,19 +1,26 @@
-## OpenRedu Core
+[![Build Status](https://travis-ci.org/Openredu/Openredu.svg?branch=master)](https://travis-ci.org/Openredu/Openredu)
 
-Este repositório contem o core do OpenRedu. O openredu-core é a parte central da plataforma social educacional OpenRedu. Também existem alguns subsistemas/serviços que estão em servidores/projetos/repositórios diferentes. A saber:
+## Openredu Core
+
+Este repositório contem o core do Openredu. O openredu-core é a parte central da plataforma social educacional Openredu. Também existem alguns subsistemas/serviços que estão em servidores/projetos/repositórios diferentes. A saber:
 
 - [Portal de aplicativos](http://github.com/redu/apps): Marketplace de aplicativos educacionais.
 - [Visualizações semânticas](http://github.com/redu/vis): Armazenamento e construção de visualizações semânticas do Redu.
 - [Central de Ajuda](http://github.com/OpenRedu/help-center): [Tutoriais](http://ajuda.openredu.com) de suporte no uso da plataforma.
-- [Página de desenvolvedores](http://github.com/redu/redu.github.com): Documentação da API REST do Redu
-- [Página do livro](http://github.com/redu/livro): Pagina do livro [Educar com o Redu](http://educarcom.redu.com.br)
+- [Página de desenvolvedores](http://github.com/redu/redu.github.com): Documentação da API REST do Redu.
+- [Página do livro](http://github.com/redu/livro): Pagina do livro [Educar com o Redu](http://educarcom.redu.com.br).
 - [Redu Mobile](http://github.com/redu/mobile): Aplicativo Android oficial.
-- [Wally Server](http://github.com/redu/wally): Mural do Redu (server-side)
-- [Wally.js](http://github.com/redu/wally.js): Mural do Redu (client-side)
+- [Wally Server](http://github.com/redu/wally): Mural do Redu (server-side).
+- [Wally.js](http://github.com/redu/wally.js): Mural do Redu (client-side).
 - [Untied](http://github.com/redu/untied): Message Bus utilizado na comunicação entre serviços.
 - [Permit](http://github.com/redu/permit): Autorização e gerênciamento de políticas de acesso entre serviços.
 - [ReduPy](http://github.com/redu/redupy): Encapsulador Python para a API REST do Redu.
-- [JRedu](http://github.com/redu/jredu): Encapsulador Java para a API REST do Redu
+- [JRedu](http://github.com/redu/jredu): Encapsulador Java para a API REST do Redu.
+
+### Comunidade de Software Livre Openredu
+
+Em caso de desejar fazer contato direto com a comunidade, existe um [fórum](http://forum.openredu.com) ([http://forum.openredu.com](http://forum.openredu.com)) o qual você pode tirar suas dúvidas, fazer postagens com sugestões, comentários e elogios. Sinta-se a vontade para contribuir e fazer a comunidade crescer!
+
 
 ### Setup
 [Setup Ubuntu](https://github.com/OpenRedu/OpenRedu/wiki/OpenRedu-Setup-%28Ubuntu%29)
@@ -34,28 +41,32 @@ O estilo e padrões de código utilizados estão disponíveis [neste](https://gi
 
 ### Contribuições
 
+Todas as contribuições serão analisadas pelos integrantes da comunidade OpenRedu, o código do OpenRedu não está ligado a nenhuma instituição. É um código de software livre.
+
+Um guia muito bom é o do [GitHub](https://guides.github.com/activities/contributing-to-open-source/), ele explica detalhadamente as práticas e como contribuir como projetos de Open Source.
+
+As informações abaixo são só reforços do guia do GitHub.
+
 #### Pull requests
 
 Os passos para contribuir com a evolução do código, seja para resolução de issue ou criação de features são os seguintes:
 
-1. Criar um branch novo
+1. Fork do projeto no GitHub
+2. Criar um branch próprio para o problema
 2. Realizar mudanças ou adicionar a feature
-3. Commitar mudanças e enviá-las para o remoto
-4. Realizar pull request e atribuir a um revisor
+3. Commitar mudanças e enviá-las para o remoto do seu repositório
+4. Realizar pull request
 5. Caso existam revisões: realizar novos commits no mesmo branch criado e enviar para o remoto
 
-Um exemplo de resolução de issue seguiria o seguinte fluxo:
+#### Reportando issues
 
-Assumindo que o issue tenha o ID 1300.
+Descreva o issue de forma mais clara possível, sempre usando usando algum casa de uso. Casa haja alguma melhoria de código ou de funcionalidade, tente justificar o motivo.
 
-```sh
-$ redu (master) > git pull origin master
-$ redu (master) > git checkout -b issue-1300
-$ redu (issue-1300) > git commit -a -m "Minhas modificações"
-$ redu (issue-1300) > git push origin issue-1300
-```
+Sempre tente seguir esse checklist para reportar um issue:
 
-Para mais informações sobre como fazer o pull request, consulte [este](https://help.github.com/articles/using-pull-requests) post.
+- Adicione um título claro do que se trata o issue
+- Se for um bug, escreva uma descrição mostrando em que ambiente e como aconteceu o erro. Um vídeo ou uma imagem pode ajudar na reprodução do erro.
+- Se for uma melhoria, descreva detalhamente o motivo da melhoria que você pretende adicionar.
 
 #### Reportando issues da API
 
@@ -91,6 +102,8 @@ UserNotifier.delay(:queue => 'email').external_user_course_invitation(user_cours
 
 
 Para mais informações de uso: ``bundle exec ar_sendmail_rails3 -h``
+
+
 
 # Licença Utilizada
 
