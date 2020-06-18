@@ -4,12 +4,12 @@ module StatusService
   module AnswerService
     describe AnswerEntityService do
       subject { AnswerEntityService.new }
-      let(:activity) { FactoryGirl.build_stubbed(:activity) }
+      let(:activity) { FactoryBot.build_stubbed(:activity) }
 
       context "#create" do
         let(:fake_answer) { mock_model('Answer') }
         let(:answer_params) do
-          FactoryGirl.attributes_for(:answer)
+          FactoryBot.attributes_for(:answer)
         end
 
         it "should delegate to #status.answers.build" do
@@ -37,7 +37,7 @@ module StatusService
         end
 
         it "should create the answer" do
-          activity = FactoryGirl.create(:activity)
+          activity = FactoryBot.create(:activity)
           expect {
             subject.create(activity, answer_params) do |a|
               a.user = activity.user

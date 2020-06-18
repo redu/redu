@@ -4,7 +4,7 @@ require 'spec_helper'
 module EnrollmentService
   describe UntiedAdapter do
     subject { UntiedAdapter.new }
-    let(:enrollment) { FactoryGirl.build(:enrollment) }
+    let(:enrollment) { FactoryBot.build(:enrollment) }
 
     context "#produce_event" do
       it "should enqueue the event" do
@@ -15,7 +15,7 @@ module EnrollmentService
       it "should enqueue multiple events" do
         subject.queue.should_receive(:enqueue).
           with(:after_create, an_instance_of(Enrollment)).twice
-        subject.produce_event(:after_create, FactoryGirl.build_list(:enrollment, 2))
+        subject.produce_event(:after_create, FactoryBot.build_list(:enrollment, 2))
       end
     end
 

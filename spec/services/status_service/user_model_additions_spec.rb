@@ -3,7 +3,7 @@ require 'spec_helper'
 
 module StatusService
   describe User do
-    subject { FactoryGirl.create(:user) }
+    subject { FactoryBot.create(:user) }
     let(:facade) { mock("Facade") }
 
     describe "before_destroy" do

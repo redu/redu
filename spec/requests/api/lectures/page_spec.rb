@@ -2,10 +2,10 @@
 require 'api_spec_helper'
 
 describe "Page API" do
-  let(:environment) { FactoryGirl.create(:complete_environment) }
+  let(:environment) { FactoryBot.create(:complete_environment) }
   let(:course) { environment.courses.first }
   let(:space) { course.spaces.first }
-  let(:subj) { FactoryGirl.create(:subject, :owner => course.owner,
+  let(:subj) { FactoryBot.create(:subject, :owner => course.owner,
                        :space => space, :finalized => true) }
   let(:token) { _, _, token = generate_token(course.owner); token}
   let(:base_params) do
@@ -14,7 +14,7 @@ describe "Page API" do
 
   context "when GET /lectures/:id" do
     subject do
-      FactoryGirl.create(:lecture, :lectureable => FactoryGirl.create(:page),
+      FactoryBot.create(:lecture, :lectureable => FactoryBot.create(:page),
               :subject => subj, :owner => subj.owner)
     end
 

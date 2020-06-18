@@ -4,9 +4,9 @@ require 'spec_helper'
 module StatusService
   describe StatusEntityService do
     subject { StatusEntityService.new(statusable: statusable) }
-    let(:statusable) { FactoryGirl.build_stubbed(:user) }
+    let(:statusable) { FactoryBot.build_stubbed(:user) }
     let!(:statuses) do
-      FactoryGirl.create_list(:activity, 2, statusable: statusable)
+      FactoryBot.create_list(:activity, 2, statusable: statusable)
     end
 
     describe "#destroy" do

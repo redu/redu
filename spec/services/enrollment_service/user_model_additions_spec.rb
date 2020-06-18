@@ -3,7 +3,7 @@ require 'spec_helper'
 
 module EnrollmentService
   describe User do
-    subject { FactoryGirl.create(:user) }
+    subject { FactoryBot.create(:user) }
     let(:facade) { mock(Facade) }
 
     describe "before_destroy" do
@@ -20,7 +20,7 @@ module EnrollmentService
 
     describe "private destroy methods" do
       let!(:enrollments) do
-        FactoryGirl.create_list(:enrollment, 2, user: subject)
+        FactoryBot.create_list(:enrollment, 2, user: subject)
       end
 
       before do
@@ -30,7 +30,7 @@ module EnrollmentService
       describe "#destroy_asset_reports" do
         let(:lectures) do
           enrollments.map do |e|
-            FactoryGirl.create(:lecture, subject: e.subject)
+            FactoryBot.create(:lecture, subject: e.subject)
           end
         end
 

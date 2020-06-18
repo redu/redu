@@ -6,12 +6,12 @@ module StatusService
     describe AnswerPresenter do
       include ActionView::TestCase::Behavior
 
-      let(:author) { FactoryGirl.build_stubbed(:user) }
-      let(:user) { FactoryGirl.build_stubbed(:user) }
+      let(:author) { FactoryBot.build_stubbed(:user) }
+      let(:user) { FactoryBot.build_stubbed(:user) }
       let(:answer) do
-        FactoryGirl.build_stubbed(:answer, user: author, in_response_to: status)
+        FactoryBot.build_stubbed(:answer, user: author, in_response_to: status)
       end
-      let(:status) { FactoryGirl.build_stubbed(:activity) }
+      let(:status) { FactoryBot.build_stubbed(:activity) }
       let(:notification) { AnswerNotification.new }
       subject { AnswerPresenter.new(notification: notification, template: view) }
 
@@ -41,7 +41,7 @@ module StatusService
 
       context "when status#statusable is User" do
         it_should_behave_like "email notification" do
-          let(:status) { FactoryGirl.build_stubbed(:activity, user: user) }
+          let(:status) { FactoryBot.build_stubbed(:activity, user: user) }
           let(:message) do
             /participou da discussão no Mural de #{status.statusable.first_name}/
           end
@@ -50,9 +50,9 @@ module StatusService
 
       context "when status#statusable is Lecture" do
         it_should_behave_like "email notification" do
-          let(:lecture) { FactoryGirl.build_stubbed(:lecture) }
+          let(:lecture) { FactoryBot.build_stubbed(:lecture) }
           let(:status) do
-            FactoryGirl.build_stubbed(:activity, user: user, statusable: lecture)
+            FactoryBot.build_stubbed(:activity, user: user, statusable: lecture)
           end
           let(:message) do
             /participou da discussão em: #{lecture.name}/
@@ -62,9 +62,9 @@ module StatusService
 
       context "when status#statusable is Space" do
         it_should_behave_like "email notification" do
-          let(:space) { FactoryGirl.build_stubbed(:space) }
+          let(:space) { FactoryBot.build_stubbed(:space) }
           let(:status) do
-            FactoryGirl.build_stubbed(:activity, user: user, statusable: space)
+            FactoryBot.build_stubbed(:activity, user: user, statusable: space)
           end
           let(:message) do
             /participou da discussão em: #{space.name}/

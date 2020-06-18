@@ -7,7 +7,7 @@ describe Untied::EnvironmentRepresenter do
   include Api::Helpers
 
   let(:environment) do
-    FactoryGirl.create(:environment).extend(Untied::EnvironmentRepresenter)
+    FactoryBot.create(:environment).extend(Untied::EnvironmentRepresenter)
   end
   let(:subject) do
     parse(environment.to_json).fetch('environment', {})

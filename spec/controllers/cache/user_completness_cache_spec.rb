@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe 'UserCompletnessCache' do
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { FactoryBot.create(:user) }
 
   context "user_completness_bar" do
     let(:cache_identifier) { "views/user_completness_bar/#{user.id}" }

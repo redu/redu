@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-FactoryGirl.define do
+FactoryBot.define do
   factory :invoice do
     period_start Date.today
     period_end(Date.today + 15)

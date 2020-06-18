@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe Page do
-  subject { FactoryGirl.create(:page) }
+  subject { FactoryBot.create(:page) }
 
   it { should have_one :lecture }
   it { should validate_presence_of :body }

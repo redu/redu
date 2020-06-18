@@ -10,7 +10,7 @@ module StatusService
     end
 
     describe "#destroy_status" do
-      let(:statusable) { FactoryGirl.build_stubbed(:user) }
+      let(:statusable) { FactoryBot.build_stubbed(:user) }
 
       before do
         mock_status_entity_service(status_entity_service)
@@ -38,7 +38,7 @@ module StatusService
 
         it "should invoke StatusDependenciesEntityService.new with" \
           " StatusEntityService#statuses return" do
-          statuses = FactoryGirl.build_stubbed_list(:activity, 2)
+          statuses = FactoryBot.build_stubbed_list(:activity, 2)
           status_entity_service.stub(:statuses).and_return(statuses)
 
           StatusDependenciesEntityService.should_receive(:new).
@@ -77,8 +77,8 @@ module StatusService
     context "#answer_status" do
       let(:notification_service) { AnswerService::AnswerNotificationService }
       let(:entity_service) { mock('AnswerEntityService') }
-      let(:activity) { FactoryGirl.build_stubbed(:activity) }
-      let(:attributes) { FactoryGirl.attributes_for(:answer) }
+      let(:activity) { FactoryBot.build_stubbed(:activity) }
+      let(:attributes) { FactoryBot.attributes_for(:answer) }
       before { subject.stub(:answer_service).and_return entity_service }
 
       it "should invoke AnswerEntityService with correct arguments" do
@@ -104,7 +104,7 @@ module StatusService
         notification_service.any_instance.should_receive(:deliver)
 
         subject.answer_status(activity, attributes) do |a|
-          a.user = FactoryGirl.build_stubbed(:user)
+          a.user = FactoryBot.build_stubbed(:user)
         end
       end
     end

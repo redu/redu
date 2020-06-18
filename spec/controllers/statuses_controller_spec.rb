@@ -3,10 +3,10 @@ require 'spec_helper'
 require 'authlogic/test_case'
 
 describe StatusesController do
-  subject { FactoryGirl.create(:activity) }
+  subject { FactoryBot.create(:activity) }
   let(:base_params) { { locale: "pt-BR" } }
-  let(:author) { FactoryGirl.create(:user) }
-  let(:statusable) { FactoryGirl.create(:user) }
+  let(:author) { FactoryBot.create(:user) }
+  let(:statusable) { FactoryBot.create(:user) }
 
   describe "POST create" do
     let(:params) do
@@ -44,7 +44,7 @@ describe StatusesController do
       end
 
       context "with an associated resource" do
-        let(:resource) { FactoryGirl.build(:status_resource) }
+        let(:resource) { FactoryBot.build(:status_resource) }
         let(:params_with_resource) do
           params[:status][:status_resources_attributes] = [{
             provider: resource.provider,
@@ -74,14 +74,14 @@ describe StatusesController do
 
     context "when creating new help request" do
       let(:statusable) do
-        FactoryGirl.create(:lecture, owner: author, subject: subj)
+        FactoryBot.create(:lecture, owner: author, subject: subj)
       end
       let(:subj) do
-        FactoryGirl.create(:subject, owner: author, space: space,
+        FactoryBot.create(:subject, owner: author, space: space,
                            finalized: true, visible: true)
       end
-      let(:author) { FactoryGirl.create(:user) }
-      let(:space) { FactoryGirl.create(:space) }
+      let(:author) { FactoryBot.create(:user) }
+      let(:space) { FactoryBot.create(:space) }
       let(:status_attrs) do
         {statusable_type: "Lecture", text: "Lorem ipsum dolor sit amet,",
          statusable_id: statusable.id, type: "Help" }
@@ -126,11 +126,11 @@ describe StatusesController do
     end
 
     context "when responding a help request" do
-      let(:help) { FactoryGirl.create(:help, statusable: lecture) }
-      let(:lecture) { FactoryGirl.create(:lecture, owner: author, subject: subj) }
-      let(:subj) { FactoryGirl.create(:subject, owner: author, space: space, finalized: true, visible: true) }
-      let(:author) { FactoryGirl.create(:user) }
-      let(:space) { FactoryGirl.create(:space) }
+      let(:help) { FactoryBot.create(:help, statusable: lecture) }
+      let(:lecture) { FactoryBot.create(:lecture, owner: author, subject: subj) }
+      let(:subj) { FactoryBot.create(:subject, owner: author, space: space, finalized: true, visible: true) }
+      let(:author) { FactoryBot.create(:user) }
+      let(:space) { FactoryBot.create(:space) }
       let(:response_params) do
         params.merge(id: help.id, "in_response_to_type"=>"Status" ,"in_response_to_id"=> help.id)
       end
@@ -164,7 +164,7 @@ describe StatusesController do
       context "that has an associated resource" do
         before do
           subject.type = "Activity"
-          subject.status_resources << FactoryGirl.create(:status_resource, status: subject)
+          subject.status_resources << FactoryBot.create(:status_resource, status: subject)
         end
 
         it "should destroys the status successfully" do
@@ -199,7 +199,7 @@ describe StatusesController do
       end
 
       context "when status is a Answer" do
-        subject { FactoryGirl.create(:answer) }
+        subject { FactoryBot.create(:answer) }
 
         it "should redirect to status page with an anchor" do
           path = controller.
@@ -210,7 +210,7 @@ describe StatusesController do
     end
 
     context "when the status is not accessible" do
-      let(:strange) { FactoryGirl.create(:user) }
+      let(:strange) { FactoryBot.create(:user) }
 
       it "should redirect to home_path when not logged in" do
         get :show, params

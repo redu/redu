@@ -8,25 +8,25 @@ describe "Statuses" do
 
   context "when listing User statuses" do
     let(:space) do
-      environment = FactoryGirl.create(:complete_environment, owner: @current_user)
+      environment = FactoryBot.create(:complete_environment, owner: @current_user)
       environment.courses.first.spaces.first
     end
     let(:lecture) do
-      s = FactoryGirl.create(:subject, owner: space.owner, space: space)
-      FactoryGirl.create(:lecture, owner: s.owner, subject: s)
+      s = FactoryBot.create(:subject, owner: space.owner, space: space)
+      FactoryBot.create(:lecture, owner: s.owner, subject: s)
     end
     before do
       @user_statuses = [
-        FactoryGirl.create(:help, user: @current_user, statusable: lecture),
-        FactoryGirl.create(:activity, user: @current_user, statusable: lecture),
-        FactoryGirl.create(:log, user: @current_user, statusable: space,
+        FactoryBot.create(:help, user: @current_user, statusable: lecture),
+        FactoryBot.create(:activity, user: @current_user, statusable: lecture),
+        FactoryBot.create(:log, user: @current_user, statusable: space,
                 logeable: lecture)
       ]
 
       # Um pouco de ruído
-      FactoryGirl.create(:help, statusable: lecture)
-      FactoryGirl.create(:log, statusable: space, logeable: lecture)
-      FactoryGirl.create(:activity, statusable: lecture)
+      FactoryBot.create(:help, statusable: lecture)
+      FactoryBot.create(:log, statusable: space, logeable: lecture)
+      FactoryBot.create(:activity, statusable: lecture)
     end
 
     it "should return code 200" do
@@ -56,7 +56,7 @@ describe "Statuses" do
     it_should_behave_like "pagination" do
       let(:entities) do
         4.times.collect do
-          FactoryGirl.create(:activity, user: @current_user, statusable: @current_user)
+          FactoryBot.create(:activity, user: @current_user, statusable: @current_user)
         end
       end
       let(:params) do
@@ -68,23 +68,23 @@ describe "Statuses" do
 
   context "when listing on Space" do
     let(:space) do
-      environment = FactoryGirl.create(:complete_environment, owner: @current_user)
+      environment = FactoryBot.create(:complete_environment, owner: @current_user)
       environment.courses.first.spaces.first
     end
     let(:lecture) do
-      s = FactoryGirl.create(:subject, owner: space.owner, space: space)
-      FactoryGirl.create(:lecture, owner: s.owner, subject: s)
+      s = FactoryBot.create(:subject, owner: space.owner, space: space)
+      FactoryBot.create(:lecture, owner: s.owner, subject: s)
     end
     before do
       @space_statuses = [
-        FactoryGirl.create(:activity, statusable: space, user: @current_user),
-        FactoryGirl.create(:log, statusable: space, logeable: space,
+        FactoryBot.create(:activity, statusable: space, user: @current_user),
+        FactoryBot.create(:log, statusable: space, logeable: space,
                 user: @current_user)
       ]
 
       # Um pouco de ruído
-      FactoryGirl.create(:help, statusable: lecture, user: @current_user)
-      FactoryGirl.create(:activity, statusable: lecture, user: @current_user)
+      FactoryBot.create(:help, statusable: lecture, user: @current_user)
+      FactoryBot.create(:activity, statusable: lecture, user: @current_user)
     end
 
     it "should return code 200" do
@@ -108,25 +108,25 @@ describe "Statuses" do
 
   context "when listing on Lecture" do
     let(:space) do
-      environment = FactoryGirl.create(:complete_environment, owner: @current_user)
+      environment = FactoryBot.create(:complete_environment, owner: @current_user)
       environment.courses.first.spaces.first
     end
     let(:lecture) do
-      s = FactoryGirl.create(:subject, owner: space.owner, space: space)
-      FactoryGirl.create(:lecture, owner: s.owner, subject: s)
+      s = FactoryBot.create(:subject, owner: space.owner, space: space)
+      FactoryBot.create(:lecture, owner: s.owner, subject: s)
     end
 
     before do
       @lecture_statuses = [
-        FactoryGirl.create(:help, statusable: lecture, user: @current_user),
-        FactoryGirl.create(:activity, statusable: lecture, user: @current_user),
+        FactoryBot.create(:help, statusable: lecture, user: @current_user),
+        FactoryBot.create(:activity, statusable: lecture, user: @current_user),
       ]
 
       # Um pouco de ruído
-      FactoryGirl.create(:help, statusable: FactoryGirl.create(:lecture), user: @current_user)
-      FactoryGirl.create(:log, statusable: FactoryGirl.create(:lecture), logeable: lecture,
+      FactoryBot.create(:help, statusable: FactoryBot.create(:lecture), user: @current_user)
+      FactoryBot.create(:log, statusable: FactoryBot.create(:lecture), logeable: lecture,
               user: @current_user)
-      FactoryGirl.create(:activity, statusable: FactoryGirl.create(:lecture), user: @current_user)
+      FactoryBot.create(:activity, statusable: FactoryBot.create(:lecture), user: @current_user)
     end
 
     it "should return code 200" do
@@ -201,25 +201,25 @@ describe "Statuses" do
 
   context "when deleting status" do
     let(:space) do
-      environment = FactoryGirl.create(:complete_environment, owner: @current_user)
+      environment = FactoryBot.create(:complete_environment, owner: @current_user)
       environment.courses.first.spaces.first
     end
     let(:lecture) do
-      s = FactoryGirl.create(:subject, owner: space.owner, space: space)
-      FactoryGirl.create(:lecture, owner: s.owner, subject: s)
+      s = FactoryBot.create(:subject, owner: space.owner, space: space)
+      FactoryBot.create(:lecture, owner: s.owner, subject: s)
     end
     let(:activity) do
-      FactoryGirl.create(:activity, statusable: @current_user, user: @current_user)
+      FactoryBot.create(:activity, statusable: @current_user, user: @current_user)
     end
     let(:help) do
-      FactoryGirl.create(:help, statusable: lecture, user: @current_user)
+      FactoryBot.create(:help, statusable: lecture, user: @current_user)
     end
     let(:log) do
-      FactoryGirl.create(:log, statusable: space, user: @current_user,
+      FactoryBot.create(:log, statusable: space, user: @current_user,
               logeable: space)
     end
     let(:answer) do
-      FactoryGirl.create(:answer, statusable: activity, in_response_to: activity,
+      FactoryBot.create(:answer, statusable: activity, in_response_to: activity,
               user: @current_user)
     end
 
@@ -262,7 +262,7 @@ describe "Statuses" do
 
   context "when creating status on space" do
     let(:space) do
-      environment = FactoryGirl.create(:complete_environment, owner: @current_user)
+      environment = FactoryBot.create(:complete_environment, owner: @current_user)
       environment.courses.first.spaces.first
     end
     let(:params) do
@@ -314,13 +314,13 @@ describe "Statuses" do
 
   context "when creating status (type Activity) on Lecture" do
     let(:space) do
-      environment = FactoryGirl.create(:complete_environment, owner: @current_user)
+      environment = FactoryBot.create(:complete_environment, owner: @current_user)
       environment.courses.first.spaces.first
     end
     let(:lecture) do
-      s = FactoryGirl.create(:subject, owner: space.owner, space: space)
-      c = FactoryGirl.create(:canvas, user: s.owner)
-      FactoryGirl.create(:lecture, owner: s.owner, subject: s,
+      s = FactoryBot.create(:subject, owner: space.owner, space: space)
+      c = FactoryBot.create(:canvas, user: s.owner)
+      FactoryBot.create(:lecture, owner: s.owner, subject: s,
               lectureable: c)
     end
     let(:params) do
@@ -369,13 +369,13 @@ describe "Statuses" do
 
   context "when creating status (type Help) on Lecture" do
     let(:space) do
-      environment = FactoryGirl.create(:complete_environment, owner: @current_user)
+      environment = FactoryBot.create(:complete_environment, owner: @current_user)
       environment.courses.first.spaces.first
     end
     let(:lecture) do
-      s = FactoryGirl.create(:subject, owner: space.owner, space: space)
-      c = FactoryGirl.create(:canvas, user: s.owner)
-      FactoryGirl.create(:lecture, owner: s.owner, subject: s,
+      s = FactoryBot.create(:subject, owner: space.owner, space: space)
+      c = FactoryBot.create(:canvas, user: s.owner)
+      FactoryBot.create(:lecture, owner: s.owner, subject: s,
               lectureable: c)
     end
     let(:params) do
@@ -418,7 +418,7 @@ describe "Statuses" do
        oauth_token: @token, format: 'json' }
     end
     let(:space) do
-      environment = FactoryGirl.create(:complete_environment, owner: @current_user)
+      environment = FactoryBot.create(:complete_environment, owner: @current_user)
       environment.courses.first.spaces.first
     end
 
@@ -430,7 +430,7 @@ describe "Statuses" do
 
   context "when listing overview on Space" do
     let(:space) do
-      environment = FactoryGirl.create(:complete_environment, owner: @current_user)
+      environment = FactoryBot.create(:complete_environment, owner: @current_user)
       environment.courses.first.spaces.first
     end
 
@@ -464,13 +464,13 @@ describe "Statuses" do
 
   context "when listing overview on Space" do
     let(:environment) do
-      FactoryGirl.create(:complete_environment, owner: @current_user)
+      FactoryBot.create(:complete_environment, owner: @current_user)
     end
     let(:space) { environment.courses.first.spaces.first }
 
     before do
       4.times do
-        FactoryGirl.create(:activity, statusable: space, user: @current_user)
+        FactoryBot.create(:activity, statusable: space, user: @current_user)
       end
     end
 
@@ -486,7 +486,7 @@ describe "Statuses" do
 
   context "when listing User overview" do
     let(:environment) do
-      FactoryGirl.create(:complete_environment, owner: @current_user)
+      FactoryBot.create(:complete_environment, owner: @current_user)
     end
     let(:space) { environment.courses.first.spaces.first }
     before do
@@ -520,12 +520,12 @@ describe "Statuses" do
       { oauth_token: @token, format: 'json' }
     end
     let(:space) do
-      environment = FactoryGirl.create(:complete_environment, owner: @current_user)
+      environment = FactoryBot.create(:complete_environment, owner: @current_user)
       environment.courses.first.spaces.first
     end
     let(:lecture) do
-      s = FactoryGirl.create(:subject, owner: space.owner, space: space)
-      FactoryGirl.create(:lecture, owner: s.owner, subject: s)
+      s = FactoryBot.create(:subject, owner: space.owner, space: space)
+      FactoryBot.create(:lecture, owner: s.owner, subject: s)
     end
 
     before do
@@ -537,9 +537,9 @@ describe "Statuses" do
         @activity = parse(response.body)
 
         @user_statuses = [
-        FactoryGirl.create(:help, user: @current_user, statusable: lecture),
-        FactoryGirl.create(:activity, user: @current_user, statusable: lecture),
-        FactoryGirl.create(:log, user: @current_user, statusable: space,
+        FactoryBot.create(:help, user: @current_user, statusable: lecture),
+        FactoryBot.create(:activity, user: @current_user, statusable: lecture),
+        FactoryBot.create(:log, user: @current_user, statusable: space,
                 logeable: lecture)
       ]
       end
@@ -571,7 +571,7 @@ describe "Statuses" do
     end
 
     it "should return code 404 when not found" do
-      @lecture = FactoryGirl.create(:lecture)
+      @lecture = FactoryBot.create(:lecture)
       get "/api/users/212/statuses/timeline", params
       response.code.should == "404"
     end
@@ -631,7 +631,7 @@ describe "Statuses" do
   end
 
   context "when there are Compound Logs" do
-    let(:compound) { FactoryGirl.create(:compound_log, user: @current_user) }
+    let(:compound) { FactoryBot.create(:compound_log, user: @current_user) }
     let(:params) { { oauth_token: @token, format: 'json' } }
     before do
       compound.statusable = @current_user

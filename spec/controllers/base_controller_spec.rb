@@ -21,7 +21,7 @@ describe BaseController do
     end
 
     context 'when there is a signed in user' do
-      let(:user) { FactoryGirl.create(:user) }
+      let(:user) { FactoryBot.create(:user) }
 
       before do
         login_as user

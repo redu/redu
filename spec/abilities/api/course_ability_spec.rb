@@ -5,9 +5,9 @@ require 'cancan/matchers'
 describe "Course abilities" do
   subject { Api::Ability.new(@user) }
   before do
-    @environment = FactoryGirl.create(:complete_environment)
+    @environment = FactoryBot.create(:complete_environment)
     @course = @environment.courses.first
-    @user = FactoryGirl.create(:user)
+    @user = FactoryBot.create(:user)
   end
 
   context "when not a member" do

@@ -13,8 +13,8 @@ require 'spec_helper'
 # end
 describe QuestionsHelper do
   context "navigation" do
-    let(:exercise) { FactoryGirl.create(:exercise) }
-    let(:questions) { 10.times.collect { FactoryGirl.create(:question, :exercise => exercise )} }
+    let(:exercise) { FactoryBot.create(:exercise) }
+    let(:questions) { 10.times.collect { FactoryBot.create(:question, :exercise => exercise )} }
 
     context "when first question" do
       it "should have a limit of 4" do
@@ -65,8 +65,8 @@ describe QuestionsHelper do
     end
 
     context "when there are only one question" do
-      let(:exercise) { FactoryGirl.create(:exercise) }
-      let(:question) { FactoryGirl.create(:question, :exercise => exercise) }
+      let(:exercise) { FactoryBot.create(:exercise) }
+      let(:question) { FactoryBot.create(:question, :exercise => exercise) }
 
       it "should have limit of 7" do
         limit, offset = helper.pagination(question)

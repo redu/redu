@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-FactoryGirl.define do
+FactoryBot.define do
   factory :experience do |e|
     e.sequence(:title) { |n| "Developer #{n}"}
     e.company "Company"

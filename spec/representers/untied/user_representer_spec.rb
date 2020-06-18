@@ -6,7 +6,7 @@ require "support/api/base"
 describe Untied::UserRepresenter do
   include Api::Helpers
   let(:user) do
-    FactoryGirl.create(:user).extend(Untied::UserRepresenter)
+    FactoryBot.create(:user).extend(Untied::UserRepresenter)
   end
   let(:user_repr) { parse(user.to_json).fetch('user', {}) }
 

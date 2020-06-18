@@ -2,11 +2,11 @@
 require 'api_spec_helper'
 
 describe "Media API" do
-  let(:current_user) { FactoryGirl.create(:user) }
-  let(:environment) { FactoryGirl.create(:complete_environment, :owner => current_user) }
+  let(:current_user) { FactoryBot.create(:user) }
+  let(:environment) { FactoryBot.create(:complete_environment, :owner => current_user) }
   let(:course) { environment.courses.first }
   let(:space) { course.spaces.first }
-  let(:sub) { FactoryGirl.create(:subject, :owner => current_user, :space => space) }
+  let(:sub) { FactoryBot.create(:subject, :owner => current_user, :space => space) }
   let(:token) { _, _, token = generate_token(current_user); token }
   let(:base_params) do
     { :oauth_token => token, :format => :json }
@@ -15,7 +15,7 @@ describe "Media API" do
   context "GET /api/lectures/:id" do
     context "when external media (ie. Youtube)" do
       subject do
-        FactoryGirl.create(:lecture, :lectureable => FactoryGirl.create(:seminar_youtube), :subject => sub)
+        FactoryBot.create(:lecture, :lectureable => FactoryBot.create(:seminar_youtube), :subject => sub)
       end
       before do
         get "/api/lectures/#{subject.id}", base_params
@@ -39,7 +39,7 @@ describe "Media API" do
 
     context "when uploaded media" do
       subject do
-        FactoryGirl.create(:lecture, :lectureable => FactoryGirl.create(:seminar_upload), :subject => sub)
+        FactoryBot.create(:lecture, :lectureable => FactoryBot.create(:seminar_upload), :subject => sub)
       end
       before do
         get "/api/lectures/#{subject.id}", base_params

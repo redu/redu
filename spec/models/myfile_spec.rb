@@ -2,16 +2,16 @@
 require "spec_helper"
 
 describe Myfile do
-  subject { FactoryGirl.create(:myfile, :folder => @folder) }
+  subject { FactoryBot.create(:myfile, :folder => @folder) }
   before do
-    @space = FactoryGirl.create(:space)
+    @space = FactoryBot.create(:space)
     @folder = @space.folders.find_by_name("root")
     @another_folder = @space.folders.create(:name => "another")
   end
 
   context "when creating a file with existing title in different folders" do
     it "should reemove the current one" do
-      FactoryGirl.create(:myfile, :folder => @another_folder,
+      FactoryBot.create(:myfile, :folder => @another_folder,
               :attachment_file_name => subject.attachment_file_name)
       expect { subject.reload }.to_not raise_error(ActiveRecord::RecordNotFound)
     end
@@ -19,7 +19,7 @@ describe Myfile do
 
   context "when creating a file with existing title in same folder" do
     it "should not be valid" do
-      f = FactoryGirl.build(:myfile, :folder => @folder,
+      f = FactoryBot.build(:myfile, :folder => @folder,
               :attachment_file_name => subject.attachment_file_name)
 
       f.valid?

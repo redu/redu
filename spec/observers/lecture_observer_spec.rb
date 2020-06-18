@@ -6,10 +6,10 @@ describe LectureObserver do
     it "logs update" do
       ActiveRecord::Observer.with_observers(:lecture_observer) do
         expect {
-          sub = FactoryGirl.create(:subject, :visible => true)
+          sub = FactoryBot.create(:subject, :visible => true)
           sub.finalized = true
           sub.save
-          lecture = FactoryGirl.create(:lecture, :subject => sub,
+          lecture = FactoryBot.create(:lecture, :subject => sub,
                              :owner => sub.owner)
         }.to change(Log, :count).by(1)
       end

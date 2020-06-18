@@ -5,9 +5,9 @@ require 'authlogic/test_case'
 describe SocialNetworksController do
   context "POST destroy" do
     before do
-      @user = FactoryGirl.create(:user)
+      @user = FactoryBot.create(:user)
       login_as @user
-      @social_network = FactoryGirl.create(:social_network, :user => @user)
+      @social_network = FactoryBot.create(:social_network, :user => @user)
     end
 
     it "should load social network" do

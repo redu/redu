@@ -4,7 +4,7 @@ require 'spec_helper'
 module StatusService
   describe SpaceHierarchyAggregator do
     subject { described_class.new(space) }
-    let(:space) { FactoryGirl.build_stubbed(:space) }
+    let(:space) { FactoryBot.build_stubbed(:space) }
 
     describe "#build" do
       it "should include the space" do
@@ -13,12 +13,12 @@ module StatusService
 
       context "when there are other spaces lectures" do
         before do
-          FactoryGirl.create_list(:lecture, 2)
+          FactoryBot.create_list(:lecture, 2)
         end
 
         let!(:lectures) do
-          subj = FactoryGirl.create(:subject, space: space, finalized: true)
-          FactoryGirl.create_list(:lecture, 2, subject: subj)
+          subj = FactoryBot.create(:subject, space: space, finalized: true)
+          FactoryBot.create_list(:lecture, 2, subject: subj)
         end
 
         it "should include all lectures from this space" do

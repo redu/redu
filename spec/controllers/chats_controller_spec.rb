@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe ChatsController do
   before do
-    @current_user = FactoryGirl.create(:user)
-    @friend1 = FactoryGirl.create(:user)
+    @current_user = FactoryBot.create(:user)
+    @friend1 = FactoryBot.create(:user)
     @current_user.be_friends_with(@friend1)
     @friend1.be_friends_with(@current_user)
 

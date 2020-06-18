@@ -1,10 +1,10 @@
 # -*- encoding : utf-8 -*-
-FactoryGirl.define do
+FactoryBot.define do
   factory :course do
     sequence(:name){ |n| "Curso #{n}" }
     sequence(:path){ |n| "curso-#{n}" }
     association :owner, :factory => :user
-    environment { |course| FactoryGirl.create(:environment, :owner => course.owner) }
+    environment { |course| FactoryBot.create(:environment, :owner => course.owner) }
     association :quota, :factory => :quota
   end
 
@@ -13,7 +13,7 @@ FactoryGirl.define do
     workload 40
 
     after(:create) do |c, _|
-      c.spaces << FactoryGirl.create(:complete_space, :owner => c.owner, :course => c)
+      c.spaces << FactoryBot.create(:complete_space, :owner => c.owner, :course => c)
     end
   end
 

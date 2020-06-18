@@ -4,7 +4,7 @@ require 'authlogic/test_case'
 
 describe UsersController do
   before do
-    users = (1..4).collect { FactoryGirl.create(:user) }
+    users = (1..4).collect { FactoryBot.create(:user) }
     users[0].be_friends_with(users[1])
     users[0].be_friends_with(users[2])
     users[0].be_friends_with(users[3])
@@ -46,8 +46,8 @@ describe UsersController do
       context "with an invitation token" do
         context "and failing the validation" do
           before do
-            course = FactoryGirl.create(:course)
-            @invite = FactoryGirl.create(:user_course_invitation,
+            course = FactoryBot.create(:course)
+            @invite = FactoryBot.create(:user_course_invitation,
                               :email => "email@example.com", :course => course)
             @invite.invite!
             @post_params.store(:invitation_token, @invite.token)
@@ -71,8 +71,8 @@ describe UsersController do
 
         context "and the same email that was invited" do
           before do
-            course = FactoryGirl.create(:course)
-            @invite = FactoryGirl.create(:user_course_invitation,
+            course = FactoryBot.create(:course)
+            @invite = FactoryBot.create(:user_course_invitation,
                               :email => @post_params[:user][:email],
                               :course => course)
             @invite.invite!
@@ -92,8 +92,8 @@ describe UsersController do
 
           before do
             @another_email = "newemail@example.com"
-            course = FactoryGirl.create(:course)
-            @invite = FactoryGirl.create(:user_course_invitation,
+            course = FactoryBot.create(:course)
+            @invite = FactoryBot.create(:user_course_invitation,
                               :email => @another_email,
                               :course => course)
             @invite.invite!
@@ -174,7 +174,7 @@ describe UsersController do
 
   context "POST update" do
     before do
-      @user = FactoryGirl.create(:user)
+      @user = FactoryBot.create(:user)
       login_as @user
 
       @post_params = { :locale => "pt-BR", :id => @user.login, :user => {
@@ -241,7 +241,7 @@ describe UsersController do
 
   context "POST update_account" do
     before do
-      @user = FactoryGirl.create(:user)
+      @user = FactoryBot.create(:user)
       login_as @user
 
       @post_params =
@@ -309,7 +309,7 @@ describe UsersController do
 
   context "POST destroy" do
     before do
-      @user = FactoryGirl.create(:user)
+      @user = FactoryBot.create(:user)
       login_as @user
 
       @post_params = { :locale => "pt-BR", :id => @user.login }
@@ -329,7 +329,7 @@ describe UsersController do
 
   context "GET home" do
     before do
-      @user = FactoryGirl.create(:user)
+      @user = FactoryBot.create(:user)
       login_as @user
 
       @params = { :locale => "pt-BR", :id => @user.login }
@@ -346,7 +346,7 @@ describe UsersController do
 
   context "GET curriculum" do
     before do
-      @user = FactoryGirl.create(:user)
+      @user = FactoryBot.create(:user)
       login_as @user
       get :curriculum, { :locale => "pt-BR", :id => @user.login }
     end
@@ -363,7 +363,7 @@ describe UsersController do
     context "an strange" do
       context "when viewing Environment users" do
         before do
-          environment = FactoryGirl.create(:environment)
+          environment = FactoryBot.create(:environment)
           get :index, { :locale => "pt-BR", :environment_id => environment.path }
         end
 
@@ -378,8 +378,8 @@ describe UsersController do
 
       context "when viewing Course users" do
         before do
-          environment = FactoryGirl.create(:environment)
-          course = FactoryGirl.create(:course, :environment => environment)
+          environment = FactoryBot.create(:environment)
+          course = FactoryBot.create(:course, :environment => environment)
           get :index, { :locale => "pt-BR", :environment_id => environment.path,
             :course_id => course.path }
         end
@@ -395,9 +395,9 @@ describe UsersController do
 
       context "when viewing Space users" do
         before do
-          @environment = FactoryGirl.create(:environment)
-          @course = FactoryGirl.create(:course, :environment => @environment)
-          space = FactoryGirl.create(:space, :course => @course)
+          @environment = FactoryBot.create(:environment)
+          @course = FactoryBot.create(:course, :environment => @environment)
+          space = FactoryBot.create(:space, :course => @course)
           get :index, { :locale => "pt-BR", :space_id => space.id }
         end
 
@@ -415,10 +415,10 @@ describe UsersController do
     context "a member" do
       context "when viewing Space users" do
         before do
-          @environment = FactoryGirl.create(:environment)
-          @course = FactoryGirl.create(:course, :environment => @environment)
-          space = FactoryGirl.create(:space, :course => @course)
-          user = FactoryGirl.create(:user)
+          @environment = FactoryBot.create(:environment)
+          @course = FactoryBot.create(:course, :environment => @environment)
+          space = FactoryBot.create(:space, :course => @course)
+          user = FactoryBot.create(:user)
           @course.join user
           login_as user
           get :index, { :locale => "pt-BR", :space_id => space.id }
@@ -437,8 +437,8 @@ describe UsersController do
 
   context "GET my_wall" do
     before do
-      @contact = FactoryGirl.create(:user)
-      @user = FactoryGirl.create(:user)
+      @contact = FactoryBot.create(:user)
+      @user = FactoryBot.create(:user)
       login_as @user
     end
 
@@ -464,7 +464,7 @@ describe UsersController do
         # Criando friendship (para gerar um status compondable)
         ActiveRecord::Observer.with_observers(:log_observer,
                                               :friendship_observer) do
-                                                friend = FactoryGirl.create(:user)
+                                                friend = FactoryBot.create(:user)
                                                 friend.be_friends_with(@user)
                                                 @user.be_friends_with(friend)
                                               end
@@ -480,9 +480,9 @@ describe UsersController do
 
   context "GET show" do
     before do
-      @user = FactoryGirl.create(:user)
-      @courses = 4.times.collect { FactoryGirl.create(:course) }
-      @moderated_courses = 4.times.collect { FactoryGirl.create(:course,
+      @user = FactoryBot.create(:user)
+      @courses = 4.times.collect { FactoryBot.create(:course) }
+      @moderated_courses = 4.times.collect { FactoryBot.create(:course,
                                                      :subscription_type => 2) }
       @approved_courses = @courses[0..2].each { |c| c.join(@user) }
       @moderated_courses[0..2].each { |c| c.join(@user) }
@@ -500,9 +500,9 @@ describe UsersController do
 
   context "GET show_mural" do
     before do
-      @user = FactoryGirl.create(:user)
-      @courses = 4.times.collect { FactoryGirl.create(:course) }
-      @moderated_courses = 4.times.collect { FactoryGirl.create(:course,
+      @user = FactoryBot.create(:user)
+      @courses = 4.times.collect { FactoryBot.create(:course) }
+      @moderated_courses = 4.times.collect { FactoryBot.create(:course,
                                                      :subscription_type => 2) }
 
       @approved_courses = @courses[0..2].each { |c| c.join(@user) }
@@ -526,7 +526,7 @@ describe UsersController do
         # Criando friendship (para gerar um status compondable)
         ActiveRecord::Observer.with_observers(:log_observer,
                                               :friendship_observer) do
-                                                friend = FactoryGirl.create(:user)
+                                                friend = FactoryBot.create(:user)
                                                 friend.be_friends_with(@user)
                                                 @user.be_friends_with(friend)
                                               end
@@ -559,7 +559,7 @@ describe UsersController do
           UserNotifier.perform_deliveries = true
           UserNotifier.deliveries = []
 
-          @user = FactoryGirl.create(:user)
+          @user = FactoryBot.create(:user)
           post :recover_password, :locale => "pt-BR", :format => "js", :recovery_email => { :email => @user.email }
 
         end
@@ -581,7 +581,7 @@ describe UsersController do
 
       context "when submitting an UNregistered email" do
         before do
-          @user = FactoryGirl.create(:user)
+          @user = FactoryBot.create(:user)
           post :recover_password, :locale => "pt-BR", :format => "js", :recovery_email => { :email => "iamnot@redu.com.br" }
         end
 
@@ -609,7 +609,7 @@ describe UsersController do
   end
 
   describe "GET resend_activation" do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryBot.create(:user) }
 
     context "with email" do
       it "assigns @user" do

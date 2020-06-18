@@ -6,7 +6,7 @@ describe EducationObserver do
     it "logs creation" do
       ActiveRecord::Observer.with_observers(:education_observer) do
         expect {
-          FactoryGirl.create(:education)
+          FactoryBot.create(:education)
         }.to change(Log, :count).by(1)
       end
     end

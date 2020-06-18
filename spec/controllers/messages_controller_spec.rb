@@ -5,8 +5,8 @@ require 'authlogic/test_case'
 describe MessagesController do
   context "POST delete_selected" do
     before do
-      @user = FactoryGirl.create(:user)
-      @messages = 5.times.collect { FactoryGirl.create(:message, :recipient => @user) }
+      @user = FactoryBot.create(:user)
+      @messages = 5.times.collect { FactoryBot.create(:message, :recipient => @user) }
       login_as @user
 
       @messages_to_delete = @messages[0..2]
@@ -24,7 +24,7 @@ describe MessagesController do
 
     context "when trying to mark others messages as deleted" do
       before do
-        @others_messages = 3.times.collect { FactoryGirl.create(:message) }
+        @others_messages = 3.times.collect { FactoryBot.create(:message) }
         @params = {:mailbox => "inbox",
                    :delete => @others_messages.collect(&:id) }
 

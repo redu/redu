@@ -7,10 +7,10 @@ module EnrollmentService
     let(:vis_adapter) { mock("VisAdapter") }
     let(:enrollment_service) { mock('EnrollmentEntityService') }
     let(:asset_report_service) { mock('AssetReportEntityService') }
-    let(:subj) { FactoryGirl.create(:subject, space: nil) }
-    let(:users) { FactoryGirl.create_list(:user, 3) }
-    let(:user) { FactoryGirl.create(:user) }
-    let(:subjects) { FactoryGirl.create_list(:subject, 3, space: nil) }
+    let(:subj) { FactoryBot.create(:subject, space: nil) }
+    let(:users) { FactoryBot.create_list(:user, 3) }
+    let(:user) { FactoryBot.create(:user) }
+    let(:subjects) { FactoryBot.create_list(:subject, 3, space: nil) }
 
     before do
       mock_vis_adapter(vis_adapter)
@@ -66,7 +66,7 @@ module EnrollmentService
 
       context "VisAdapter" do
         let(:enrollments) do
-          FactoryGirl.create_list(:enrollment, 2, subject: nil)
+          FactoryBot.create_list(:enrollment, 2, subject: nil)
         end
 
         it "should invoke VisAdapter#notify_enrollment_creation with created" \
@@ -82,7 +82,7 @@ module EnrollmentService
 
       context "UntiedAdapter" do
         let(:enrollments) do
-          FactoryGirl.create_list(:enrollment, 2, subject: nil)
+          FactoryBot.create_list(:enrollment, 2, subject: nil)
         end
         let(:untied_adapter) { mock('UntiedAdapter') }
 
@@ -143,7 +143,7 @@ module EnrollmentService
 
     context "#destroy_enrollment" do
       let!(:enrollments) do
-        FactoryGirl.create_list(:enrollment, 2, subject: nil)
+        FactoryBot.create_list(:enrollment, 2, subject: nil)
       end
       let(:enrollments_arel) do
         Enrollment.limit(2)
@@ -301,7 +301,7 @@ module EnrollmentService
       subjects = subj.respond_to?(:map) ? subj : [subj]
 
       subjects.each do |s|
-        FactoryGirl.create(:lecture, owner: s.owner, subject: s)
+        FactoryBot.create(:lecture, owner: s.owner, subject: s)
       end
     end
 
@@ -309,7 +309,7 @@ module EnrollmentService
       subjects = subj.respond_to?(:map) ? subj : [subj]
 
       subjects.each do |s|
-        s.space = FactoryGirl.create(:space, owner: s.owner)
+        s.space = FactoryBot.create(:space, owner: s.owner)
         s.save
       end
     end

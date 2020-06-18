@@ -4,17 +4,17 @@ require 'authlogic/test_case'
 
 describe QuestionsController do
   before do
-    @space = FactoryGirl.create(:space)
+    @space = FactoryBot.create(:space)
 
-    @subject = FactoryGirl.create(:subject, :owner => @space.owner,
+    @subject = FactoryBot.create(:subject, :owner => @space.owner,
                        :space => @space, :finalized => true,
                        :visible => true)
-    @exercise = FactoryGirl.create(:complete_exercise)
+    @exercise = FactoryBot.create(:complete_exercise)
     @questions = @exercise.questions
-    @lecture = FactoryGirl.create(:lecture,:subject => @subject, :lectureable => @exercise,
+    @lecture = FactoryBot.create(:lecture,:subject => @subject, :lectureable => @exercise,
                        :owner => @space.owner)
 
-    @user = FactoryGirl.create(:user)
+    @user = FactoryBot.create(:user)
     @space.course.join(@user)
     login_as @user
   end

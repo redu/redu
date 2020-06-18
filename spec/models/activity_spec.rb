@@ -2,13 +2,13 @@
 require 'spec_helper'
 
 describe Activity do
-  subject { FactoryGirl.create(:activity) }
+  subject { FactoryBot.create(:activity) }
 
   it { should validate_presence_of :text }
   it { should have_many(:answers) }
 
   context "when responding the activity" do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryBot.create(:user) }
     it "should respond to respont" do
       subject.should respond_to(:respond)
     end

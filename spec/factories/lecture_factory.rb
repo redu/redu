@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-FactoryGirl.define do
+FactoryBot.define do
   factory :lecture do
     sequence(:name) { |n| "Item #{n}" }
     association :lectureable, :factory => :page

@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-FactoryGirl.define do
+FactoryBot.define do
   factory :quota do
     multimedia 5.megabytes
     files 10.megabytes

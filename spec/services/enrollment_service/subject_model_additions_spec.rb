@@ -3,18 +3,18 @@ require 'spec_helper'
 
 module EnrollmentService
   describe Subject do
-    subject { FactoryGirl.create(:subject, space: nil) }
-    let(:user) { FactoryGirl.create(:user) }
+    subject { FactoryBot.create(:subject, space: nil) }
+    let(:user) { FactoryBot.create(:user) }
     let(:facade) { mock("Facade") }
     let(:lectures) do
-      subjects.each { |s| FactoryGirl.create(:lecture, subject: s) }
+      subjects.each { |s| FactoryBot.create(:lecture, subject: s) }
       Lecture.where(subject_id: subjects)
     end
 
     context ".enroll" do
-      let!(:subjects) { FactoryGirl.create_list(:subject, 3) }
-      let(:users) { FactoryGirl.create_list(:user, 3) }
-      let!(:enrollments) { FactoryGirl.create_list(:enrollment, 2) }
+      let!(:subjects) { FactoryBot.create_list(:subject, 3) }
+      let(:users) { FactoryBot.create_list(:user, 3) }
+      let!(:enrollments) { FactoryBot.create_list(:enrollment, 2) }
 
       before { mock_facade(facade) }
 
@@ -82,7 +82,7 @@ module EnrollmentService
       end
 
       context "with multiple users" do
-        let(:users) { FactoryGirl.build_list(:user, 3) }
+        let(:users) { FactoryBot.build_list(:user, 3) }
 
         it "should delegate to .enroll with self and :users" do
           Subject.should_receive(:enroll).
@@ -101,7 +101,7 @@ module EnrollmentService
     end
 
     context "#unenroll" do
-      let(:users) { FactoryGirl.create_list(:user, 3) }
+      let(:users) { FactoryBot.create_list(:user, 3) }
 
       it "should invoke .unenroll with [self] and users" do
         Subject.should_receive(:unenroll).with([subject], users)
@@ -115,14 +115,14 @@ module EnrollmentService
       end
 
       context do
-        let(:users) { FactoryGirl.create_list(:user, 3) }
+        let(:users) { FactoryBot.create_list(:user, 3) }
         let(:subjects) do
-          FactoryGirl.create_list(:subject, 3, space: nil)
+          FactoryBot.create_list(:subject, 3, space: nil)
         end
         let(:enrollments) do
           subjects.map do |s|
             users.map do |user|
-              FactoryGirl.create(:enrollment, user: user, subject: s)
+              FactoryBot.create(:enrollment, user: user, subject: s)
             end.flatten
           end.flatten
         end

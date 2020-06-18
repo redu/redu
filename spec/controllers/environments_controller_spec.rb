@@ -6,7 +6,7 @@ describe EnvironmentsController do
   context "when creating a Environment" do
     before do
       User.maintain_sessions = false
-      @user = FactoryGirl.create(:user)
+      @user = FactoryBot.create(:user)
       login_as @user
 
       @params = {:step => "1",
@@ -116,8 +116,8 @@ describe EnvironmentsController do
 
   context "GET preview" do
     before do
-      environment = FactoryGirl.create(:environment)
-      courses = (1..5).collect { FactoryGirl.create(:course, :environment => environment) }
+      environment = FactoryBot.create(:environment)
+      courses = (1..5).collect { FactoryBot.create(:course, :environment => environment) }
 
       get :preview, :id => environment.path, :locale => "pt-BR"
     end
@@ -130,9 +130,9 @@ describe EnvironmentsController do
   # admin actions (management panel)
   context "on management panel" do
     before  do
-      @environment = FactoryGirl.create(:environment)
-      @courses = (1..3).collect { FactoryGirl.create(:course, :environment => @environment) }
-      @user = FactoryGirl.create(:user)
+      @environment = FactoryBot.create(:environment)
+      @courses = (1..3).collect { FactoryBot.create(:course, :environment => @environment) }
+      @user = FactoryBot.create(:user)
       @courses.each {|c| c.join @user, :environment_admin }
       login_as @user
     end
@@ -183,7 +183,7 @@ describe EnvironmentsController do
 
     context "POST destroy" do
       before do
-        @plan = FactoryGirl.create(:active_package_plan, :billable => @environment)
+        @plan = FactoryBot.create(:active_package_plan, :billable => @environment)
         @post_params = { :locale => "pt-BR" }
         @post_params[:id] = @environment.path
         post :destroy, @post_params
@@ -197,11 +197,11 @@ describe EnvironmentsController do
     context "POST destroy_members" do
       before do
         @courses.each do |c|
-          (1..2).each { FactoryGirl.create(:space, :course => c) }
+          (1..2).each { FactoryBot.create(:space, :course => c) }
           c.spaces.reload
         end
 
-        @users = (1..3).collect { FactoryGirl.create(:user) }
+        @users = (1..3).collect { FactoryBot.create(:user) }
         @courses[0].join @users[0]
         @courses[0].join @users[1]
         @courses[0].join @users[2]
@@ -225,11 +225,11 @@ describe EnvironmentsController do
   end
 
   context 'GET index' do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryBot.create(:user) }
 
     before do
-      (1..3).collect { FactoryGirl.create(:environment) }
-      @user_environments = (1..3).collect { FactoryGirl.create(:environment) }
+      (1..3).collect { FactoryBot.create(:environment) }
+      @user_environments = (1..3).collect { FactoryBot.create(:environment) }
       @user_environments.each { |e| user.environments << e }
 
       login_as user
@@ -261,7 +261,7 @@ describe EnvironmentsController do
   end
 
   context "GET search_users_admin" do
-    let(:environment) { FactoryGirl.create(:complete_environment) }
+    let(:environment) { FactoryBot.create(:complete_environment) }
     let(:course) {  environment.courses.first }
     let(:role) { ['teacher'] }
     let(:params) do
@@ -271,7 +271,7 @@ describe EnvironmentsController do
 
     before do
       login_as environment.owner
-      course.join(FactoryGirl.create(:user), Role[:teacher])
+      course.join(FactoryBot.create(:user), Role[:teacher])
       xhr :get, :search_users_admin, params
     end
 

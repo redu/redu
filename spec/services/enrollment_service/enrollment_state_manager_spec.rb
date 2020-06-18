@@ -6,7 +6,7 @@ module EnrollmentService
     subject { EnrollmentStateManager.new(enrollments) }
     let(:facade) { mock('Facade') }
     let(:enrollments) do
-      FactoryGirl.
+      FactoryBot.
         create_list(:enrollment, 3, graduated: false, subject: nil)
     end
 

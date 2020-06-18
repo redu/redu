@@ -4,7 +4,7 @@ require 'authlogic/test_case'
 
 describe ExperiencesController do
   before do
-    @user = FactoryGirl.create(:user)
+    @user = FactoryBot.create(:user)
     login_as @user
   end
 
@@ -63,7 +63,7 @@ describe ExperiencesController do
 
   describe "GET 'edit'" do
     before do
-      @experience = FactoryGirl.create(:experience, :user => @user)
+      @experience = FactoryBot.create(:experience, :user => @user)
       @params = { :locale => "pt-BR", :format => "js", :user_id => @user.id,
                   :id => @experience.id }
       get :edit, @params
@@ -80,7 +80,7 @@ describe ExperiencesController do
 
   describe "POST 'update'" do
     before do
-      @experience = FactoryGirl.create(:experience, :user => @user)
+      @experience = FactoryBot.create(:experience, :user => @user)
       @post_params = { :locale => "pt-BR", :format => "js",
                        :user_id => @user.id, :id => @experience.id,
                        :experience => { :title => "Writer" }}
@@ -141,7 +141,7 @@ describe ExperiencesController do
 
   describe "POST 'destroy'" do
     before do
-      @experience = FactoryGirl.create(:experience, :user => @user)
+      @experience = FactoryBot.create(:experience, :user => @user)
       @post_params = { :locale => "pt-BR", :format => "js",
                        :user_id => @user.id, :id => @experience.id }
     end

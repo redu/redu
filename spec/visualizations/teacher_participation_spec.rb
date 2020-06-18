@@ -3,10 +3,10 @@ require 'spec_helper'
 
 describe TeacherParticipation do
   before(:each) do
-    @owner = FactoryGirl.create(:user)
-    @teacher = FactoryGirl.create(:user)
-    @environment = FactoryGirl.create(:environment, :owner => @owner)
-    @course = FactoryGirl.create(:course, :owner => @owner,
+    @owner = FactoryBot.create(:user)
+    @teacher = FactoryBot.create(:user)
+    @environment = FactoryBot.create(:environment, :owner => @owner)
+    @course = FactoryBot.create(:course, :owner => @owner,
                       :environment => @environment)
     @space_statuses = []
     @lecture_statuses = []
@@ -16,28 +16,28 @@ describe TeacherParticipation do
     @end = "2012-02-16".to_date
 
     2.times.collect  do
-      s = FactoryGirl.create(:space, :course => @course)
-      su = FactoryGirl.create(:subject, :space => s,
+      s = FactoryBot.create(:space, :course => @course)
+      su = FactoryBot.create(:subject, :space => s,
                    :owner => @owner, :finalized => true)
-      l = FactoryGirl.create(:lecture, :subject => su, :owner => @teacher,
+      l = FactoryBot.create(:lecture, :subject => su, :owner => @teacher,
                   :created_at => @end)
 
       @space_statuses += 3.times.collect do
-        FactoryGirl.create(:activity,
+        FactoryBot.create(:activity,
                 :statusable => s, :user => @teacher,
                 :created_at => @end)
       end
 
       @lecture_statuses += 3.times.collect do
-        FactoryGirl.create(:activity,
+        FactoryBot.create(:activity,
                 :statusable => l, :user => @teacher,
                 :created_at => @end)
       end
 
       @ans += 2.times.collect do
-        acti = FactoryGirl.create(:activity, :statusable => l, :user => FactoryGirl.create(:user),
+        acti = FactoryBot.create(:activity, :statusable => l, :user => FactoryBot.create(:user),
                :created_at => @end)
-        FactoryGirl.create(:answer, :statusable => l,
+        FactoryBot.create(:answer, :statusable => l,
                 :in_response_to => acti, :user => @teacher,
                 :created_at => @end)
       end
@@ -48,26 +48,26 @@ describe TeacherParticipation do
     end
 
 
-    s = FactoryGirl.create(:space, :course => @course)
-    su = FactoryGirl.create(:subject, :space => s,
+    s = FactoryBot.create(:space, :course => @course)
+    su = FactoryBot.create(:subject, :space => s,
                  :owner => @owner, :finalized => true)
-    l = FactoryGirl.create(:lecture, :subject => su,
+    l = FactoryBot.create(:lecture, :subject => su,
                 :owner => @teacher, :created_at => @ini)
 
     3.times.collect do
-      FactoryGirl.create(:activity,
+      FactoryBot.create(:activity,
               :statusable => s, :user => @teacher,
               :created_at => @ini)
     end
 
     3.times.collect do
-      FactoryGirl.create(:activity,
+      FactoryBot.create(:activity,
               :statusable => l, :user => @teacher,
               :created_at => @ini)
     end
 
     2.times.collect do
-      FactoryGirl.create(:answer, :statusable => l,
+      FactoryBot.create(:answer, :statusable => l,
               :in_response_to => l.statuses.first, :user => @teacher,
               :created_at => @ini)
     end
@@ -112,7 +112,7 @@ describe TeacherParticipation do
     it "retrieves the lectures ids that belongs the User from the
     especified spaces" do
       subject.spaces = [@course.spaces.first]
-      @lecture = FactoryGirl.create(:lecture,
+      @lecture = FactoryBot.create(:lecture,
                          :subject => subject.spaces.first.subjects.first,
                          :owner => @owner)
       subject.spaces.first.subjects.first.lectures << @lecture
@@ -122,9 +122,9 @@ describe TeacherParticipation do
 
     it "retrieves all posts that belongs the User from especified spaces" do
       2.times do
-        FactoryGirl.create(:activity,
+        FactoryBot.create(:activity,
                 :statusable => subject.spaces.first, :user => @owner)
-        FactoryGirl.create(:activity,
+        FactoryBot.create(:activity,
                 :statusable => subject.spaces.first.subjects.first.
                                lectures.first,
                 :user => @owner)
@@ -138,9 +138,9 @@ describe TeacherParticipation do
 
     it "retrieves all answers made by User from specified spaces" do
       2.times do
-        FactoryGirl.create(:activity,
+        FactoryBot.create(:activity,
                 :statusable => subject.spaces.first, :user => @owner)
-        FactoryGirl.create(:activity,
+        FactoryBot.create(:activity,
                 :statusable => subject.spaces.first.subjects.first.
                                lectures.first,
                 :user => @owner)

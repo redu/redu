@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-FactoryGirl.define do
+FactoryBot.define do
   factory :document do
     attachment_file_name 'Document'
     attachment_content_type 'application/pdf'

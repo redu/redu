@@ -3,7 +3,7 @@ require 'api_spec_helper'
 
 describe "ThumbnailCollection" do
   let(:representer) { Api::UserRepresenter }
-  let(:model) { FactoryGirl.build(:user) }
+  let(:model) { FactoryBot.build(:user) }
   let(:representation) do
     model.extend(representer)
     model.to_hash

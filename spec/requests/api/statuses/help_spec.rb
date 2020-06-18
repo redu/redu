@@ -2,20 +2,20 @@
 require "api_spec_helper"
 
 describe "Help" do
-  let(:current_user) { FactoryGirl.create(:user) }
+  let(:current_user) { FactoryBot.create(:user) }
   let(:token) { _, _, token = generate_token(current_user); token }
   let(:space) do
-    environment = FactoryGirl.create(:complete_environment, owner: current_user)
+    environment = FactoryBot.create(:complete_environment, owner: current_user)
     environment.courses.first.spaces.first
   end
   let(:lecture) do
-    s = FactoryGirl.create(:subject, owner: space.owner, space: space)
-    c = FactoryGirl.create(:canvas, user: s.owner)
-    FactoryGirl.create(:lecture, owner: s.owner, subject: s,
+    s = FactoryBot.create(:subject, owner: space.owner, space: space)
+    c = FactoryBot.create(:canvas, user: s.owner)
+    FactoryBot.create(:lecture, owner: s.owner, subject: s,
             lectureable: c)
   end
   let(:help) do
-    FactoryGirl.create(:help, user: lecture.owner, statusable: lecture)
+    FactoryBot.create(:help, user: lecture.owner, statusable: lecture)
   end
   let(:params) { { oauth_token: token, format: 'json'} }
 

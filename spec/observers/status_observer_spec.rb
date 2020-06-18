@@ -12,9 +12,9 @@ describe StatusObserver do
     end
 
     context "when statusable is user" do
-      let(:activity) { FactoryGirl.create(:activity, :user => owner, :statusable => statusable) }
-      let(:statusable) { FactoryGirl.create(:user) }
-      let(:owner) { FactoryGirl.create(:user) }
+      let(:activity) { FactoryBot.create(:activity, :user => owner, :statusable => statusable) }
+      let(:statusable) { FactoryBot.create(:user) }
+      let(:owner) { FactoryBot.create(:user) }
 
 
       def create_friendship(user1, user2)
@@ -33,7 +33,7 @@ describe StatusObserver do
       context "owner with contacts" do
         before do
           create_activity_after do
-            create_friendships(owner, *FactoryGirl.create_list(:user, 5))
+            create_friendships(owner, *FactoryBot.create_list(:user, 5))
           end
         end
 
@@ -54,7 +54,7 @@ describe StatusObserver do
       context "with statusable contacts" do
         before do
           create_activity_after do
-            create_friendships(statusable, *FactoryGirl.create_list(:user, 3))
+            create_friendships(statusable, *FactoryBot.create_list(:user, 3))
           end
         end
 
@@ -67,26 +67,26 @@ describe StatusObserver do
 
     context "when statusable is Lecture" do
       before do
-        @environment = FactoryGirl.create(:environment)
-        @course = FactoryGirl.create(:course, :owner => @environment.owner,
+        @environment = FactoryBot.create(:environment)
+        @course = FactoryBot.create(:course, :owner => @environment.owner,
                           :environment => @environment)
-        @poster = FactoryGirl.create(:user)
+        @poster = FactoryBot.create(:user)
         @course.join(@poster)
-        @space = FactoryGirl.create(:space, :owner => @environment.owner,
+        @space = FactoryBot.create(:space, :owner => @environment.owner,
                          :course => @course)
-        @subject = FactoryGirl.create(:subject, :owner => @poster, :space => @space)
-        @lecture = FactoryGirl.create(:lecture, :subject => @subject,
+        @subject = FactoryBot.create(:subject, :owner => @poster, :space => @space)
+        @lecture = FactoryBot.create(:lecture, :subject => @subject,
                            :owner => @environment.owner)
 
         @poster_contacts = 5.times.inject([]) do |acc, i|
-          u = FactoryGirl.create(:user)
+          u = FactoryBot.create(:user)
           u.be_friends_with(@poster)
           @poster.be_friends_with(u)
           acc << u
         end
 
         @students = 3.times.inject([]) do |acc, u|
-          user = FactoryGirl.create(:user)
+          user = FactoryBot.create(:user)
           @course.join(user)
           acc << user
         end
@@ -97,7 +97,7 @@ describe StatusObserver do
 
         before do
           ActiveRecord::Observer.with_observers(:status_observer) do
-            @activity = FactoryGirl.create(:activity, :statusable => @lecture,
+            @activity = FactoryBot.create(:activity, :statusable => @lecture,
                                 :user => @poster)
           end
         end
@@ -114,29 +114,29 @@ describe StatusObserver do
 
     context "when statusable is Space" do
       before do
-        @environment = FactoryGirl.create(:environment)
-        @course = FactoryGirl.create(:course, :owner => @environment.owner,
+        @environment = FactoryBot.create(:environment)
+        @course = FactoryBot.create(:course, :owner => @environment.owner,
                           :environment => @environment)
-        @poster = FactoryGirl.create(:user)
+        @poster = FactoryBot.create(:user)
         @course.join(@poster)
-        @space = FactoryGirl.create(:space, :owner => @environment.owner,
+        @space = FactoryBot.create(:space, :owner => @environment.owner,
                          :course => @course)
 
         @poster_contacts = 5.times.inject([]) do |acc, i|
-          u = FactoryGirl.create(:user)
+          u = FactoryBot.create(:user)
           u.be_friends_with(@poster)
           @poster.be_friends_with(u)
           acc << u
         end
 
         @students = 3.times.inject([]) do |acc, u|
-          user = FactoryGirl.create(:user)
+          user = FactoryBot.create(:user)
           @course.join(user)
           acc << user
         end
 
         ActiveRecord::Observer.with_observers(:status_observer) do
-          @activity = FactoryGirl.create(:activity, :statusable => @space,
+          @activity = FactoryBot.create(:activity, :statusable => @space,
                               :user => @poster)
         end
       end
@@ -154,9 +154,9 @@ describe StatusObserver do
     context "when statusable is UserCourseAssociation" do
       before do
         ActiveRecord::Observer.with_observers(:status_observer) do
-          @uca = FactoryGirl.create(:user_course_association)
+          @uca = FactoryBot.create(:user_course_association)
           @uca.approve!
-          3.times { @uca.course.join(FactoryGirl.create(:user)) }
+          3.times { @uca.course.join(FactoryBot.create(:user)) }
           @log = Log.setup(@uca)
         end
       end

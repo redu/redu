@@ -4,7 +4,7 @@ require 'authlogic/test_case'
 
 describe EducationsController do
   before do
-    @user = FactoryGirl.create(:user)
+    @user = FactoryBot.create(:user)
     login_as @user
   end
 
@@ -139,7 +139,7 @@ describe EducationsController do
 
   describe "POST 'update'" do
     before do
-      @education = FactoryGirl.create(:education, :user => @user)
+      @education = FactoryBot.create(:education, :user => @user)
       @post_params = { :locale => "pt-BR", :format => "js",
         :user_id => @user.id, :id => @education.id,
         :high_school => { :institution => "New Inst." }}
@@ -180,8 +180,8 @@ describe EducationsController do
 
     context "with education of kind higher_education" do
       before do
-        higher_education = FactoryGirl.create(:higher_education)
-        @education = FactoryGirl.create(:education, :educationable => higher_education,
+        higher_education = FactoryBot.create(:higher_education)
+        @education = FactoryBot.create(:education, :educationable => higher_education,
                              :user => @user)
         @post_params = { :locale => "pt-BR", :format => "js",
           :user_id => @user.id, :id => @education.id,
@@ -201,8 +201,8 @@ describe EducationsController do
 
     context "with education of kind complementary_course" do
       before do
-        complementary_course = FactoryGirl.create(:complementary_course)
-        @education = FactoryGirl.create(:education, :educationable => complementary_course,
+        complementary_course = FactoryBot.create(:complementary_course)
+        @education = FactoryBot.create(:education, :educationable => complementary_course,
                              :user => @user)
         @post_params = { :locale => "pt-BR", :format => "js",
           :user_id => @user.id, :id => @education.id,
@@ -222,8 +222,8 @@ describe EducationsController do
 
     context "with education of kind event_education" do
       before do
-        event_education = FactoryGirl.create(:event_education)
-        @education = FactoryGirl.create(:education, :educationable => event_education,
+        event_education = FactoryBot.create(:event_education)
+        @education = FactoryBot.create(:education, :educationable => event_education,
                              :user => @user)
         @post_params = { :locale => "pt-BR", :format => "js",
           :user_id => @user.id, :id => @education.id,
@@ -244,7 +244,7 @@ describe EducationsController do
 
   describe "POST 'destroy'" do
     before do
-      @education = FactoryGirl.create(:education, :user => @user)
+      @education = FactoryBot.create(:education, :user => @user)
       @params = {:locale => "pt-BR", :format => "js", :user_id => @user.id,
         :id => @education.id }
     end
@@ -268,8 +268,8 @@ describe EducationsController do
 
     context "with education of kind higher_education" do
       before do
-        higher_education = FactoryGirl.create(:higher_education)
-        @education = FactoryGirl.create(:education, :educationable => higher_education,
+        higher_education = FactoryBot.create(:higher_education)
+        @education = FactoryBot.create(:education, :educationable => higher_education,
                              :user => @user)
         @params = {:locale => "pt-BR", :format => "js", :user_id => @user.id,
           :id => @education.id }
@@ -284,8 +284,8 @@ describe EducationsController do
 
     context "with education of kind complementary_course" do
       before do
-        complementary_course = FactoryGirl.create(:complementary_course)
-        @education = FactoryGirl.create(:education, :educationable => complementary_course,
+        complementary_course = FactoryBot.create(:complementary_course)
+        @education = FactoryBot.create(:education, :educationable => complementary_course,
                              :user => @user)
         @params = {:locale => "pt-BR", :format => "js", :user_id => @user.id,
           :id => @education.id }
@@ -300,8 +300,8 @@ describe EducationsController do
 
     context "with education of kind event_education" do
       before do
-        event_education = FactoryGirl.create(:event_education)
-        @education = FactoryGirl.create(:education, :educationable => event_education,
+        event_education = FactoryBot.create(:event_education)
+        @education = FactoryBot.create(:education, :educationable => event_education,
                              :user => @user)
         @params = {:locale => "pt-BR", :format => "js", :user_id => @user.id,
           :id => @education.id }

@@ -21,7 +21,7 @@ describe FolderService do
 
       it "should accept a block" do
         folder = subject.create do |folder|
-          folder.user = FactoryGirl.create(:user)
+          folder.user = FactoryBot.create(:user)
         end
 
         folder.user.should_not be_nil
@@ -46,7 +46,7 @@ describe FolderService do
     end
 
     describe "#destroy" do
-      let!(:folder) { FactoryGirl.create(:folder) }
+      let!(:folder) { FactoryBot.create(:folder) }
       subject { FolderService.new(params.merge(:model => folder)) }
 
       before do
@@ -70,8 +70,8 @@ describe FolderService do
     end
 
     describe "#update" do
-      let(:folder) { FactoryGirl.create(:folder) }
-      let(:user) { FactoryGirl.create(:user) }
+      let(:folder) { FactoryBot.create(:folder) }
+      let(:user) { FactoryBot.create(:user) }
       subject { FolderService.new(params.merge(:model => folder)) }
       let(:folder_params) { { :name => "Old" } }
 

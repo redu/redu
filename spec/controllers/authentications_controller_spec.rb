@@ -5,7 +5,7 @@ describe AuthenticationsController do
   describe "GET create" do
     context 'when successfully authenticates' do
       context 'and connects with existent user' do
-        let(:user) { FactoryGirl.create(:user) }
+        let(:user) { FactoryBot.create(:user) }
         let(:omniauth) do
           OmniAuth.config.mock_auth[:some_provider].merge({
             :info => {
@@ -130,9 +130,9 @@ describe AuthenticationsController do
       end
 
       context "when user has an invitation to course" do
-        let(:course) { FactoryGirl.create(:course) }
+        let(:course) { FactoryBot.create(:course) }
         let(:invite) do
-          FactoryGirl.create(:user_course_invitation, :course => course,
+          FactoryBot.create(:user_course_invitation, :course => course,
                   :email => request.env['omniauth.auth'][:info][:email])
         end
 
@@ -155,7 +155,7 @@ describe AuthenticationsController do
         end
 
         before do
-          @host = FactoryGirl.create(:user)
+          @host = FactoryBot.create(:user)
           state = { :friendship_invitation_token => invitation.token }.to_json
           get :create, :locale => 'pt-BR', :state => state
           @user = User.find_by_email(request.env['omniauth.auth'][:info][:email])

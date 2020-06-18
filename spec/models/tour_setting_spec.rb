@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe TourSetting do
-  subject { FactoryGirl.create(:tour_setting) }
+  subject { FactoryBot.create(:tour_setting) }
   it { should_not allow_mass_assignment_of :explored }
 
   describe 'keep explored tour parts' do

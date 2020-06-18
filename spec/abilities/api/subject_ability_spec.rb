@@ -5,10 +5,10 @@ require 'cancan/matchers'
 describe "Subject(the subject of a space) abilities" do
   subject { Api::Ability.new(@user) }
   before do
-    @environment = FactoryGirl.create(:complete_environment)
+    @environment = FactoryBot.create(:complete_environment)
     @course = @environment.courses.first
     @space = @course.spaces.first
-    @user = FactoryGirl.create(:user)
+    @user = FactoryBot.create(:user)
     @subject = Subject.create(:name => "Test Subject 1",
                               :description => "Test Subject Description",
                               :space => @space)

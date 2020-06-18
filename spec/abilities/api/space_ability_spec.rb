@@ -5,10 +5,10 @@ require 'cancan/matchers'
 describe "Space abilities" do
   subject { Api::Ability.new(@user) }
   before do
-    @environment = FactoryGirl.create(:complete_environment)
+    @environment = FactoryBot.create(:complete_environment)
     @course = @environment.courses.first
     @space = @course.spaces.first
-    @user = FactoryGirl.create(:user)
+    @user = FactoryBot.create(:user)
     @application, @current_user, @token = generate_token(@user)
   end
 

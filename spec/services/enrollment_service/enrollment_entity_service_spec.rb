@@ -3,10 +3,10 @@ require 'spec_helper'
 
 module EnrollmentService
   describe EnrollmentEntityService do
-    let(:spaces) { 2.times.map { FactoryGirl.create(:space) } }
+    let(:spaces) { 2.times.map { FactoryBot.create(:space) } }
     let(:subjects) do
       spaces.map do |space|
-        2.times.map { FactoryGirl.create(:subject, space: space) }
+        2.times.map { FactoryBot.create(:subject, space: space) }
       end.flatten
     end
 
@@ -28,7 +28,7 @@ module EnrollmentService
       end
 
       it "should accept an optional list of [[user, role]]" do
-        users = 2.times.collect { FactoryGirl.create(:user) }
+        users = 2.times.collect { FactoryBot.create(:user) }
         user_role_pairs = users.collect { |u| [u, Role[:member]] }
 
         records = []
@@ -44,7 +44,7 @@ module EnrollmentService
       end
 
       it "should accept optional users and role" do
-        users = FactoryGirl.create_list(:user, 2)
+        users = FactoryBot.create_list(:user, 2)
         role = Role[:member]
 
         records = []
@@ -58,7 +58,7 @@ module EnrollmentService
       end
 
       it "should return created enrollments" do
-        users = FactoryGirl.create_list(:user, 2)
+        users = FactoryBot.create_list(:user, 2)
 
         enrollments = subject.create(users: users)
 
@@ -71,7 +71,7 @@ module EnrollmentService
     context "#destroy" do
       let!(:enrollments) do
         subjects.map do |sub|
-          3.times.map { FactoryGirl.create(:enrollment, subject: sub) }
+          3.times.map { FactoryBot.create(:enrollment, subject: sub) }
         end.flatten
       end
       let(:users) { enrollments.map(&:user) }
@@ -98,10 +98,10 @@ module EnrollmentService
 
     context "#update_grade" do
       let(:enrollment) do
-        FactoryGirl.create(:enrollment, subject: nil)
+        FactoryBot.create(:enrollment, subject: nil)
       end
       let!(:asset_reports) do
-        FactoryGirl.create_list(:asset_report, 3, enrollment: enrollment)
+        FactoryBot.create_list(:asset_report, 3, enrollment: enrollment)
       end
       subject { EnrollmentEntityService.new(enrollment: enrollment) }
 
@@ -121,10 +121,10 @@ module EnrollmentService
 
     describe "#get_enrollments_for" do
       let(:enrollments) do
-        subjects.map { |s| FactoryGirl.create(:enrollment, subject: s) }
+        subjects.map { |s| FactoryBot.create(:enrollment, subject: s) }
       end
       let!(:extra_enrollments) do
-        subjects.map { |s| FactoryGirl.create(:enrollment, subject: s) }
+        subjects.map { |s| FactoryBot.create(:enrollment, subject: s) }
       end
       let(:users) { enrollments.map(&:user).flatten }
 

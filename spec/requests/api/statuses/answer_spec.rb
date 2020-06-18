@@ -2,13 +2,13 @@
 require "api_spec_helper"
 
 describe "Answer" do
-  let(:current_user) { FactoryGirl.create(:user) }
+  let(:current_user) { FactoryBot.create(:user) }
   let(:token) { _, _, token = generate_token(current_user); token }
   let(:activity) do
-    FactoryGirl.create(:activity, user: current_user, statusable: current_user)
+    FactoryBot.create(:activity, user: current_user, statusable: current_user)
   end
   let(:answer) do
-    FactoryGirl.create(:answer, statusable: current_user,
+    FactoryBot.create(:answer, statusable: current_user,
             user: current_user, in_response_to: activity)
   end
   let(:params) { { oauth_token: token, format: 'json'} }
@@ -43,19 +43,19 @@ describe "Answer" do
 
   context "when creating an Answer" do
     let(:space) do
-      environment = FactoryGirl.create(:complete_environment, owner: current_user)
+      environment = FactoryBot.create(:complete_environment, owner: current_user)
       environment.courses.first.spaces.first
     end
     let(:lecture) do
-      s = FactoryGirl.create(:subject, owner: space.owner, space: space)
-      FactoryGirl.create(:lecture, owner: s.owner, subject: s)
+      s = FactoryBot.create(:subject, owner: space.owner, space: space)
+      FactoryBot.create(:lecture, owner: s.owner, subject: s)
     end
     let(:activity) do
-      FactoryGirl.
+      FactoryBot.
         create(:activity, user: current_user, statusable: current_user)
     end
     let(:help) do
-      FactoryGirl.create(:help, user: current_user, statusable: lecture)
+      FactoryBot.create(:help, user: current_user, statusable: lecture)
     end
     let(:params) do
       { status: {text: "Ximbica Answer Test" },
@@ -94,7 +94,7 @@ describe "Answer" do
     end
 
     xit "should return 422 when invalid type" do
-      @log = FactoryGirl.create(:log) # tipo inválido
+      @log = FactoryBot.create(:log) # tipo inválido
       post "/api/statuses/#{@log.id}/answers", @params
       # Deve ser atualizado com authorize
       response.code.should == "422"
@@ -127,7 +127,7 @@ describe "Answer" do
 
   context "when listing Answers" do
     let(:activity) do
-      FactoryGirl.
+      FactoryBot.
         create(:activity, statusable: current_user, user: current_user)
     end
     let(:params) do

@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-FactoryGirl.define do
+FactoryBot.define do
   factory :status_resource do |s|
     s.provider "http://www.youtube.com/"
     s.thumb_url "http://www.youtube.com/watch?v=mUceNnaCfFo"

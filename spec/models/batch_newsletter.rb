@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe BatchNewsletter do
-  let!(:users) { 2.times { FactoryGirl.create(:user) } }
+  let!(:users) { 2.times { FactoryBot.create(:user) } }
   let(:arel) { User.limit(2) }
   subject do
     BatchNewsletter.

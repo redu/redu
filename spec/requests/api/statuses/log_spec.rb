@@ -2,14 +2,14 @@
 require "api_spec_helper"
 
 describe "Log" do
-  let(:current_user) { FactoryGirl.create(:user) }
+  let(:current_user) { FactoryBot.create(:user) }
   let(:token) { _, _, token = generate_token(current_user); token }
   let(:space) do
-    environment = FactoryGirl.create(:complete_environment, owner: current_user)
+    environment = FactoryBot.create(:complete_environment, owner: current_user)
     environment.courses.first.spaces.first
   end
   let(:log) do
-    FactoryGirl.create(:log, statusable: space, user: current_user,
+    FactoryBot.create(:log, statusable: space, user: current_user,
             logeable: space)
   end
   let(:params) { { oauth_token: token, format: 'json'} }
@@ -48,43 +48,43 @@ describe "Log" do
       let(:get_params) { params }
       let(:logeable) { current_user }
       let(:status) do
-        FactoryGirl.create(:log, user: current_user,
+        FactoryBot.create(:log, user: current_user,
                            statusable: current_user, logeable: logeable)
       end
     end
 
     it_should_behave_like 'having breadcrumbs', "Course" do
       let(:get_params) { params }
-      let(:logeable) { FactoryGirl.create(:course) }
+      let(:logeable) { FactoryBot.create(:course) }
       let(:status) do
-        FactoryGirl.create(:log, user: current_user,
+        FactoryBot.create(:log, user: current_user,
                            statusable: current_user, logeable: logeable)
       end
     end
 
     it_should_behave_like 'having breadcrumbs', "Lecture" do
       let(:get_params) { params }
-      let(:logeable) { FactoryGirl.create(:lecture, owner: current_user) }
+      let(:logeable) { FactoryBot.create(:lecture, owner: current_user) }
       let(:status) do
-        FactoryGirl.create(:log, user: current_user, statusable: space,
+        FactoryBot.create(:log, user: current_user, statusable: space,
                            logeable: logeable)
       end
     end
 
     it_should_behave_like 'having breadcrumbs', "Subject" do
       let(:get_params) { params }
-      let(:logeable) { FactoryGirl.create(:subject, owner: current_user) }
+      let(:logeable) { FactoryBot.create(:subject, owner: current_user) }
       let(:status) do
-        FactoryGirl.create(:log, user: current_user, statusable: space,
+        FactoryBot.create(:log, user: current_user, statusable: space,
                            logeable: logeable)
       end
     end
 
     it_should_behave_like 'having breadcrumbs', "CourseEnrollment" do
       let(:get_params) { params }
-      let(:logeable) { FactoryGirl.create(:user_course_association) }
+      let(:logeable) { FactoryBot.create(:user_course_association) }
       let(:status) do
-        FactoryGirl.create(:log, user: current_user,
+        FactoryBot.create(:log, user: current_user,
                            statusable: space.course, logeable: logeable)
       end
     end
@@ -93,11 +93,11 @@ describe "Log" do
   context "when GET /api/users/:id/statuses" do
     let!(:user_logs) do
       2.times.collect do
-        FactoryGirl.create(:log, statusable: current_user, logeable: current_user, user: current_user)
+        FactoryBot.create(:log, statusable: current_user, logeable: current_user, user: current_user)
       end
     end
     let!(:space_logs) do
-      1.times.collect { FactoryGirl.create(:log, statusable: current_user, logeable: space, user: current_user) }
+      1.times.collect { FactoryBot.create(:log, statusable: current_user, logeable: space, user: current_user) }
     end
 
     it "should filter Logs by logeable_type" do

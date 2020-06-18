@@ -7,7 +7,7 @@ describe Plan do
     UserNotifier.perform_deliveries = true
   end
 
-  subject { FactoryGirl.create(:plan) }
+  subject { FactoryBot.create(:plan) }
 
   it { should belong_to :billable }
   it { should belong_to :user }
@@ -67,7 +67,7 @@ describe Plan do
 
     it "creates a plan from preset" do
       plan = Plan.from_preset(:professor_standard)
-      plan.user = FactoryGirl.create(:user)
+      plan.user = FactoryBot.create(:user)
       plan.should be_valid
     end
   end
@@ -78,7 +78,7 @@ describe Plan do
     end
 
     it "should initialize a valid plan" do
-      @plan.user = FactoryGirl.create(:user)
+      @plan.user = FactoryBot.create(:user)
       @plan.should be_valid
     end
 
@@ -116,13 +116,13 @@ describe Plan do
   end
 
   context "when migrating to another plan" do
-    let(:subject) { FactoryGirl.create(:plan) }
+    let(:subject) { FactoryBot.create(:plan) }
 
     context "when upgrading" do
       before do
         @billable = subject.billable
 
-        @new_plan = FactoryGirl.build(:active_package_plan)
+        @new_plan = FactoryBot.build(:active_package_plan)
       end
 
       it "should change to migrated" do
@@ -153,7 +153,7 @@ describe Plan do
       before do
         @billable = subject.billable
 
-        @new_plan = FactoryGirl.build(:active_package_plan)
+        @new_plan = FactoryBot.build(:active_package_plan)
       end
     end
   end
@@ -174,11 +174,11 @@ describe Plan do
 
   context "when a plan blocks all billable access" do
     context "when billable is a course" do
-      subject { FactoryGirl.create(:plan, :billable => FactoryGirl.create(:complete_course)) }
+      subject { FactoryBot.create(:plan, :billable => FactoryBot.create(:complete_course)) }
 
       before do
         @course = subject.billable
-        (1..3).each { @course.join! FactoryGirl.create(:user) }
+        (1..3).each { @course.join! FactoryBot.create(:user) }
 
         subject.block_all_access!
       end
@@ -208,15 +208,15 @@ describe Plan do
     end
 
     context "when billable is a environment" do
-      subject { FactoryGirl.create(:plan, :billable => FactoryGirl.create(:complete_environment)) }
+      subject { FactoryBot.create(:plan, :billable => FactoryBot.create(:complete_environment)) }
 
       before do
         @environment = subject.billable
-        @environment.courses << FactoryGirl.create(:complete_course,
+        @environment.courses << FactoryBot.create(:complete_course,
                                         :environment => @environment)
         @course1, @course2 = @environment.courses
-        (1..3).each { @course1.join! FactoryGirl.create(:user) }
-        (1..2).each { @course2.join! FactoryGirl.create(:user) }
+        (1..3).each { @course1.join! FactoryBot.create(:user) }
+        (1..2).each { @course2.join! FactoryBot.create(:user) }
 
         subject.block_all_access!
       end

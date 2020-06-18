@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-FactoryGirl.define do
+FactoryBot.define do
   factory :user do |u|
     u.sequence(:login) {|n| "usuario#{n}"}
     u.password "password"
@@ -15,7 +15,7 @@ FactoryGirl.define do
 
   factory :partner_user, :parent => :user do
     after(:create) do |u,_|
-      u.partners << FactoryGirl.create(:partner)
+      u.partners << FactoryBot.create(:partner)
     end
   end
 end

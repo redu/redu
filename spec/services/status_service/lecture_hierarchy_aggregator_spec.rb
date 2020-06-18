@@ -4,7 +4,7 @@ require 'spec_helper'
 module StatusService
   describe LectureHierarchyAggregator do
     subject { described_class.new(lecture) }
-    let(:lecture) { FactoryGirl.build_stubbed(:lecture) }
+    let(:lecture) { FactoryBot.build_stubbed(:lecture) }
 
     describe "#build" do
       it "should include the lecture" do

@@ -5,7 +5,7 @@ require 'cancan/matchers'
 describe Api::Ability do
   context "when user" do
     subject { Api::Ability.new(user) }
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryBot.create(:user) }
 
     it "should be able to manage itself" do
       subject.should be_able_to :manage, user
@@ -14,7 +14,7 @@ describe Api::Ability do
 
   context "when redu_admin" do
     subject { Api::Ability.new(user) }
-    let(:user) { FactoryGirl.create(:user, :role => Role[:admin]) }
+    let(:user) { FactoryBot.create(:user, :role => Role[:admin]) }
     it "should be able to manage all" do
       subject.should be_able_to :manage, :all
     end

@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe Answer do
-  subject { FactoryGirl.create(:answer) }
+  subject { FactoryBot.create(:answer) }
 
   it { should belong_to :in_response_to }
   it { should validate_presence_of :text }

@@ -4,8 +4,8 @@ require 'spec_helper'
 describe VisStatusObserver do
   context "after create" do
     context "an activity or help in a lecture wall (statusable Lecture)" do
-      let!(:lecture) { FactoryGirl.create(:lecture) }
-      let(:help) { FactoryGirl.build(:help, :statusable => lecture) }
+      let!(:lecture) { FactoryBot.create(:lecture) }
+      let(:help) { FactoryBot.build(:help, :statusable => lecture) }
       it "should call VisClient.notify_delayed" do
         VisClient.should_receive(:notify_delayed).
           with("/hierarchy_notifications.json", help.type.downcase,
@@ -18,8 +18,8 @@ describe VisStatusObserver do
     end
 
     context "an activity or help in a space wall (statusable Space)" do
-      let!(:space) { FactoryGirl.create(:space) }
-      let(:activity) { FactoryGirl.build(:activity, :statusable => space) }
+      let!(:space) { FactoryBot.create(:space) }
+      let(:activity) { FactoryBot.build(:activity, :statusable => space) }
       it "should call VisClient.notify_delayed" do
         VisClient.should_receive(:notify_delayed).
           with("/hierarchy_notifications.json", activity.type.downcase,
@@ -32,9 +32,9 @@ describe VisStatusObserver do
     end
 
     context "an answer in a lecture wall" do
-      let!(:lecture) { FactoryGirl.create(:lecture) }
-      let!(:help) { FactoryGirl.create(:help, :statusable => lecture) }
-      let(:answer) { FactoryGirl.build(:answer, :statusable => help,
+      let!(:lecture) { FactoryBot.create(:lecture) }
+      let!(:help) { FactoryBot.create(:help, :statusable => lecture) }
+      let(:answer) { FactoryBot.build(:answer, :statusable => help,
                                   :in_response_to => help) }
       it "should call VisClient.notify_delayed" do
         VisClient.should_receive(:notify_delayed).
@@ -48,9 +48,9 @@ describe VisStatusObserver do
     end
 
     context "an aswer in a space wall" do
-      let!(:space) { FactoryGirl.create(:space) }
-      let!(:activity) { FactoryGirl.create(:activity, :statusable => space) }
-      let(:answer) { FactoryGirl.build(:answer, :statusable => activity,
+      let!(:space) { FactoryBot.create(:space) }
+      let!(:activity) { FactoryBot.create(:activity, :statusable => space) }
+      let(:answer) { FactoryBot.build(:answer, :statusable => activity,
                                    :in_response_to => activity) }
       it "should call VisClient.notify_delayed" do
         VisClient.should_receive(:notify_delayed).
@@ -66,8 +66,8 @@ describe VisStatusObserver do
 
   context "after destroy" do
     context "an activity or help in a lecture wall (statusable Lecture)" do
-      let!(:lecture) { FactoryGirl.create(:lecture) }
-      let(:help) { FactoryGirl.create(:help, :statusable => lecture) }
+      let!(:lecture) { FactoryBot.create(:lecture) }
+      let(:help) { FactoryBot.create(:help, :statusable => lecture) }
       it "should call VisClient.notify_delayed" do
         VisClient.should_receive(:notify_delayed).
           with("/hierarchy_notifications.json",
@@ -81,8 +81,8 @@ describe VisStatusObserver do
     end
 
     context "an activity or help in a space wall (statusable Space)" do
-      let!(:space) { FactoryGirl.create(:space) }
-      let(:activity) { FactoryGirl.create(:activity, :statusable => space) }
+      let!(:space) { FactoryBot.create(:space) }
+      let(:activity) { FactoryBot.create(:activity, :statusable => space) }
       it "should call VisClient.notify_delayed" do
         VisClient.should_receive(:notify_delayed).
           with("/hierarchy_notifications.json",
@@ -96,9 +96,9 @@ describe VisStatusObserver do
     end
 
     context "an answer in a lecture wall" do
-      let!(:lecture) { FactoryGirl.create(:lecture) }
-      let!(:activity) { FactoryGirl.create(:activity, :statusable => lecture) }
-      let(:answer) { FactoryGirl.create(:answer, :statusable => activity,
+      let!(:lecture) { FactoryBot.create(:lecture) }
+      let!(:activity) { FactoryBot.create(:activity, :statusable => lecture) }
+      let(:answer) { FactoryBot.create(:answer, :statusable => activity,
                                   :in_response_to => activity) }
       it "should call VisClient.notify_delayed" do
         VisClient.should_receive(:notify_delayed).
@@ -112,9 +112,9 @@ describe VisStatusObserver do
     end
 
     context "an aswer in a space wall" do
-      let!(:space) { FactoryGirl.create(:space) }
-      let!(:activity) { FactoryGirl.create(:activity, :statusable => space) }
-      let(:answer) { FactoryGirl.create(:answer, :statusable => activity,
+      let!(:space) { FactoryBot.create(:space) }
+      let!(:activity) { FactoryBot.create(:activity, :statusable => space) }
+      let(:answer) { FactoryBot.create(:answer, :statusable => activity,
                                    :in_response_to => activity) }
       it "should call VisClient.notify_delayed" do
         VisClient.should_receive(:notify_delayed).
