@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe Environment do
-  subject { FactoryGirl.create(:environment) }
+  subject { FactoryBot.create(:environment) }
 
   it { should have_many(:courses).dependent(:destroy) }
   it { should have_many(:user_environment_associations).dependent(:destroy) }
@@ -54,80 +54,80 @@ describe Environment do
     end
 
     it "retrieves all members" do
-      users = 5.times.inject([]) { |res, i| res << FactoryGirl.create(:user) }
-      FactoryGirl.create(:user_environment_association, :user => users[0],
+      users = 5.times.inject([]) { |res, i| res << FactoryBot.create(:user) }
+      FactoryBot.create(:user_environment_association, :user => users[0],
               :environment => subject, :role => :environment_admin)
-      FactoryGirl.create(:user_environment_association, :user => users[1],
+      FactoryBot.create(:user_environment_association, :user => users[1],
               :environment => subject, :role => :environment_admin)
-      FactoryGirl.create(:user_environment_association, :user => users[2],
+      FactoryBot.create(:user_environment_association, :user => users[2],
               :environment => subject, :role => :teacher)
-      FactoryGirl.create(:user_environment_association, :user => users[3],
+      FactoryBot.create(:user_environment_association, :user => users[3],
               :environment => subject, :role => :tutor)
-      FactoryGirl.create(:user_environment_association, :user => users[4],
+      FactoryBot.create(:user_environment_association, :user => users[4],
               :environment => subject, :role => :member)
       subject.users.to_set.
         should == (users << subject.owner).to_set
     end
 
     it "retrieves all administrators" do
-      users = 5.times.inject([]) { |res, i| res << FactoryGirl.create(:user) }
-      FactoryGirl.create(:user_environment_association, :user => users[0],
+      users = 5.times.inject([]) { |res, i| res << FactoryBot.create(:user) }
+      FactoryBot.create(:user_environment_association, :user => users[0],
               :environment => subject, :role => :environment_admin)
-      FactoryGirl.create(:user_environment_association, :user => users[1],
+      FactoryBot.create(:user_environment_association, :user => users[1],
               :environment => subject, :role => :environment_admin)
-      FactoryGirl.create(:user_environment_association, :user => users[2],
+      FactoryBot.create(:user_environment_association, :user => users[2],
               :environment => subject, :role => :teacher)
-      FactoryGirl.create(:user_environment_association, :user => users[3],
+      FactoryBot.create(:user_environment_association, :user => users[3],
               :environment => subject, :role => :tutor)
-      FactoryGirl.create(:user_environment_association, :user => users[4],
+      FactoryBot.create(:user_environment_association, :user => users[4],
               :environment => subject, :role => :member)
       subject.administrators.to_set.
         should == [users[0], users[1], subject.owner].to_set
     end
 
     it "retrieves all teachers" do
-      users = 5.times.inject([]) { |res, i| res << FactoryGirl.create(:user) }
-      FactoryGirl.create(:user_environment_association, :user => users[0],
+      users = 5.times.inject([]) { |res, i| res << FactoryBot.create(:user) }
+      FactoryBot.create(:user_environment_association, :user => users[0],
               :environment => subject, :role => :teacher)
-      FactoryGirl.create(:user_environment_association, :user => users[1],
+      FactoryBot.create(:user_environment_association, :user => users[1],
               :environment => subject, :role => :teacher)
-      FactoryGirl.create(:user_environment_association, :user => users[2],
+      FactoryBot.create(:user_environment_association, :user => users[2],
               :environment => subject, :role => :teacher)
-      FactoryGirl.create(:user_environment_association, :user => users[3],
+      FactoryBot.create(:user_environment_association, :user => users[3],
               :environment => subject, :role => :tutor)
-      FactoryGirl.create(:user_environment_association, :user => users[4],
+      FactoryBot.create(:user_environment_association, :user => users[4],
               :environment => subject, :role => :member)
       subject.teachers.to_set.
         should == [users[0], users[1], users[2]].to_set
     end
 
     it "retrieves all tutors" do
-      users = 5.times.inject([]) { |res, i| res << FactoryGirl.create(:user) }
-      FactoryGirl.create(:user_environment_association, :user => users[0],
+      users = 5.times.inject([]) { |res, i| res << FactoryBot.create(:user) }
+      FactoryBot.create(:user_environment_association, :user => users[0],
               :environment => subject, :role => :tutor)
-      FactoryGirl.create(:user_environment_association, :user => users[1],
+      FactoryBot.create(:user_environment_association, :user => users[1],
               :environment => subject, :role => :tutor)
-      FactoryGirl.create(:user_environment_association, :user => users[2],
+      FactoryBot.create(:user_environment_association, :user => users[2],
               :environment => subject, :role => :teacher)
-      FactoryGirl.create(:user_environment_association, :user => users[3],
+      FactoryBot.create(:user_environment_association, :user => users[3],
               :environment => subject, :role => :member)
-      FactoryGirl.create(:user_environment_association, :user => users[4],
+      FactoryBot.create(:user_environment_association, :user => users[4],
               :environment => subject, :role => :member)
       subject.tutors.to_set.
         should == [users[0], users[1]].to_set
     end
 
     it "retrieves all students (role member)" do
-      users = 5.times.inject([]) { |res, i| res << FactoryGirl.create(:user) }
-      FactoryGirl.create(:user_environment_association, :user => users[0],
+      users = 5.times.inject([]) { |res, i| res << FactoryBot.create(:user) }
+      FactoryBot.create(:user_environment_association, :user => users[0],
               :environment => subject, :role => :tutor)
-      FactoryGirl.create(:user_environment_association, :user => users[1],
+      FactoryBot.create(:user_environment_association, :user => users[1],
               :environment => subject, :role => :tutor)
-      FactoryGirl.create(:user_environment_association, :user => users[2],
+      FactoryBot.create(:user_environment_association, :user => users[2],
               :environment => subject, :role => :teacher)
-      FactoryGirl.create(:user_environment_association, :user => users[3],
+      FactoryBot.create(:user_environment_association, :user => users[3],
               :environment => subject, :role => :member)
-      FactoryGirl.create(:user_environment_association, :user => users[4],
+      FactoryBot.create(:user_environment_association, :user => users[4],
               :environment => subject, :role => :member)
       subject.students.to_set.
         should == [users[3], users[4]].to_set
@@ -135,7 +135,7 @@ describe Environment do
   end
 
   it "changes a user role" do
-    user = FactoryGirl.create(:user)
+    user = FactoryBot.create(:user)
     subject.users << user
     subject.save
 
@@ -148,8 +148,8 @@ describe Environment do
   it { should respond_to :plan }
 
   it "should return actual plan" do
-    plan = FactoryGirl.create(:active_package_plan, :billable => subject, :current => false)
-    plan2 = FactoryGirl.create(:active_package_plan, :billable => subject)
+    plan = FactoryBot.create(:active_package_plan, :billable => subject, :current => false)
+    plan2 = FactoryBot.create(:active_package_plan, :billable => subject)
 
     subject.plan.should == plan2
   end
@@ -160,9 +160,9 @@ describe Environment do
     end
 
     it "creates an approved course association with the first course" do
-      user = FactoryGirl.create(:user)
-      subject = FactoryGirl.create(:environment, :owner => user,
-                        :courses => [FactoryGirl.create(:course, :owner => user)])
+      user = FactoryBot.create(:user)
+      subject = FactoryBot.create(:environment, :owner => user,
+                        :courses => [FactoryBot.create(:course, :owner => user)])
       subject.courses.first.owner.should == subject.owner
       subject.courses.first.users.should include(subject.owner)
       user.user_course_associations.last.state.should == 'approved'
@@ -181,13 +181,13 @@ describe Environment do
 
   context "behaves like a billable" do
     before do
-      users = 4.times.collect { FactoryGirl.create(:user) }
+      users = 4.times.collect { FactoryBot.create(:user) }
 
-      FactoryGirl.create(:active_package_plan, :billable => subject, :user => subject.owner,
+      FactoryBot.create(:active_package_plan, :billable => subject, :user => subject.owner,
               :members_limit => 10)
 
-      FactoryGirl.create(:quota, :billable => subject)
-      course = FactoryGirl.create(:course, :environment => subject, :quota => nil)
+      FactoryBot.create(:quota, :billable => subject)
+      course = FactoryBot.create(:course, :environment => subject, :quota => nil)
       course.join(users[0], Role[:environment_admin])
       course.join(users[1], Role[:environment_admin])
       course.join(users[2], Role[:teacher])
@@ -200,11 +200,11 @@ describe Environment do
 
     context "when verifying members limit and plan is on environment" do
       before do
-        subject.courses = (1..2).collect { FactoryGirl.create(:course, :environment => nil) }
+        subject.courses = (1..2).collect { FactoryBot.create(:course, :environment => nil) }
         # Sem moderação
         subject.courses.each do |c|
           c.subscription_type = 1
-          (1..5).each { c.join(FactoryGirl.create(:user)) }
+          (1..5).each { c.join(FactoryBot.create(:user)) }
         end
       end
 
@@ -221,7 +221,7 @@ describe Environment do
         end
 
         it "should NOT permit entry" do
-          (1..15).each { subject.courses.first.join(FactoryGirl.create(:user)) }
+          (1..15).each { subject.courses.first.join(FactoryBot.create(:user)) }
           subject.can_add_entry?.should be_false
         end
       end
@@ -229,13 +229,13 @@ describe Environment do
     end
 
     context "when destroying" do
-      let(:subject) { FactoryGirl.create(:environment) }
+      let(:subject) { FactoryBot.create(:environment) }
       context "with an associated plan" do
         before do
           subject.reload
           subject.plans = []
           subject.courses = []
-          @plan = FactoryGirl.create(:active_package_plan, :billable => subject)
+          @plan = FactoryBot.create(:active_package_plan, :billable => subject)
         end
 
         it "should persist environment attributes" do
@@ -245,7 +245,7 @@ describe Environment do
         end
 
         it "should persist courses" do
-          courses = (1..3).collect { FactoryGirl.create(:course, :environment => subject) }
+          courses = (1..3).collect { FactoryBot.create(:course, :environment => subject) }
 
           subject.audit_billable_and_destroy
 
@@ -267,13 +267,13 @@ describe Environment do
 
   context "when removes users" do
     let(:courses) do
-      (1..3).collect { FactoryGirl.create(:course, :environment => subject) }
+      (1..3).collect { FactoryBot.create(:course, :environment => subject) }
     end
-    let(:users) { (1..3).collect { FactoryGirl.create(:user) } }
+    let(:users) { (1..3).collect { FactoryBot.create(:user) } }
 
     before do
       courses.each do |c|
-        (1..2).each { FactoryGirl.create(:space, :course => c) }
+        (1..2).each { FactoryBot.create(:space, :course => c) }
         c.spaces.reload
       end
       subject.courses.reload
@@ -305,7 +305,7 @@ describe Environment do
   context "with a course marked for destruction" do
     it "should destroy associated course" do
       subject.courses << \
-        FactoryGirl.create(:course, :owner => subject.owner, :environment => subject,
+        FactoryBot.create(:course, :owner => subject.owner, :environment => subject,
                 :destroy_soon => true)
       subject.courses.reload
       expect {

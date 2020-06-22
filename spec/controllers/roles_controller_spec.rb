@@ -4,18 +4,18 @@ require 'authlogic/test_case'
 
 describe RolesController do
   before do
-    @environment = FactoryGirl.create(:environment)
+    @environment = FactoryBot.create(:environment)
     @owner = @environment.owner
-    FactoryGirl.create(:course, path: "path")
+    FactoryBot.create(:course, path: "path")
     @courses = []
-    @courses << FactoryGirl.create(:course, environment: @environment,
+    @courses << FactoryBot.create(:course, environment: @environment,
                              owner: @owner, path: "path")
-    @courses << FactoryGirl.create(:course, environment: @environment,
+    @courses << FactoryBot.create(:course, environment: @environment,
                              owner: @owner)
     @spaces = 2.times.collect do
-      FactoryGirl.create(:space, course: @course, owner: @owner )
+      FactoryBot.create(:space, course: @course, owner: @owner )
     end
-    @member = FactoryGirl.create(:user)
+    @member = FactoryBot.create(:user)
     @courses.each { |c| c.join(@member) }
 
     login_as @owner
@@ -24,7 +24,7 @@ describe RolesController do
   context "on Environment" do
     context "with a moderated course" do
       it "should aprove user into every course if he is admin" do
-        moderated_course = FactoryGirl.create(:course, environment: @environment,
+        moderated_course = FactoryBot.create(:course, environment: @environment,
           owner: @owner)
         moderated_course.subscription_type = 0
         moderated_course.save

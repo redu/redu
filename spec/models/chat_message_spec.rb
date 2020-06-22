@@ -10,8 +10,8 @@ describe ChatMessage do
 
   describe '.format_message' do
     it 'should a formated message' do
-      @user = FactoryGirl.create(:user)
-      @contact1 = FactoryGirl.create(:user)
+      @user = FactoryBot.create(:user)
+      @contact1 = FactoryBot.create(:user)
       conversation = Conversation.create(sender: @user, recipient: @contact1)
       msg = 'Tudo bem?'
       message = conversation.chat_messages.create(user: @user, body: msg)

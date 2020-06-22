@@ -5,8 +5,8 @@ describe FriendshipObserver do
   context "logger" do
     it "logs firendship" do
       ActiveRecord::Observer.with_observers(:friendship_observer) do
-        @user1 = FactoryGirl.create(:user)
-        @user2 = FactoryGirl.create(:user)
+        @user1 = FactoryBot.create(:user)
+        @user2 = FactoryBot.create(:user)
 
         expect {
           @user1.be_friends_with(@user2)
@@ -24,12 +24,12 @@ describe FriendshipObserver do
     end
 
     it "notifies the request" do
-      neo = FactoryGirl.create(:user)
+      neo = FactoryBot.create(:user)
       2.times do
-        e = FactoryGirl.create(:environment, :owner => neo)
-        FactoryGirl.create(:course, :environment => e, :owner => neo)
+        e = FactoryBot.create(:environment, :owner => neo)
+        FactoryBot.create(:course, :environment => e, :owner => neo)
       end
-      smith = FactoryGirl.create(:user)
+      smith = FactoryBot.create(:user)
 
       ActionMailer::Base.register_observer(UserNotifierObserver)
       ActiveRecord::Observer.with_observers(:friendship_observer) do

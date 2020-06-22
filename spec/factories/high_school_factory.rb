@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-FactoryGirl.define do
+FactoryBot.define do
   factory :high_school do |h|
     h.sequence(:institution) { |n| "Institution #{n}" }
     h.end_year Date.today - 2.years

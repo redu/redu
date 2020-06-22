@@ -3,9 +3,9 @@ require 'spec_helper'
 module StatusService
   module AnswerService
     describe AnswerNotificationService do
-      let(:status) { FactoryGirl.create(:activity) }
+      let(:status) { FactoryBot.create(:activity) }
       let(:answer) do
-        FactoryGirl.create(:answer, in_response_to: status, statusable: status)
+        FactoryBot.create(:answer, in_response_to: status, statusable: status)
       end
 
       subject { AnswerNotificationService.new(answer) }
@@ -19,8 +19,8 @@ module StatusService
         end
 
         it "should not send duplicated notification" do
-          user = FactoryGirl.create(:user)
-          FactoryGirl.create_list(:answer, 2, in_response_to: status,
+          user = FactoryBot.create(:user)
+          FactoryBot.create_list(:answer, 2, in_response_to: status,
                                   statusable: status, user: user)
 
           StatusMailer.should_receive(:new_answer).

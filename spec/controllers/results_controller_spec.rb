@@ -4,18 +4,18 @@ require 'authlogic/test_case'
 
 describe ResultsController do
   before do
-    @space = FactoryGirl.create(:space)
+    @space = FactoryBot.create(:space)
     @course = @space.course
     @owner = @space.owner
 
-    @subject = FactoryGirl.create(:subject, owner: @space.owner,
+    @subject = FactoryBot.create(:subject, owner: @space.owner,
                        space: @space, finalized: true,
                        visible: true)
-    @exercise = FactoryGirl.create(:complete_exercise)
-    @lecture = FactoryGirl.create(:lecture,subject: @subject, lectureable: @exercise,
+    @exercise = FactoryBot.create(:complete_exercise)
+    @lecture = FactoryBot.create(:lecture,subject: @subject, lectureable: @exercise,
                        owner: @space.owner)
 
-    @user = FactoryGirl.create(:user)
+    @user = FactoryBot.create(:user)
     @space.course.join(@user)
     login_as @user
   end
@@ -73,7 +73,7 @@ describe ResultsController do
     before do
       @course.change_role(@user, Role[:teacher])
       @results = 5.times.collect {
-        FactoryGirl.create(:result, exercise: @exercise, state: 'finalized',
+        FactoryBot.create(:result, exercise: @exercise, state: 'finalized',
                 grade: 10, started_at: Time.zone.now,
                 finalized_at: Time.zone.now.advance(minutes: 30),
                 duration: 30 * 60 * 60)

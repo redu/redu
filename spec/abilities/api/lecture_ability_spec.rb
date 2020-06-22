@@ -5,16 +5,16 @@ require 'cancan/matchers'
 describe "Lecture abilities" do
   subject { Api::Ability.new(user) }
   before do
-    environment = FactoryGirl.create(:complete_environment)
+    environment = FactoryBot.create(:complete_environment)
     @course = environment.courses.first
     space = @course.spaces.first
-    @sub = FactoryGirl.create(:subject, :owner => @course.owner,
+    @sub = FactoryBot.create(:subject, :owner => @course.owner,
                        :space => space, :finalized => true)
     @application, @current_user, @token = generate_token(user)
   end
 
-  let(:lecture) { FactoryGirl.create(:lecture, :subject => @sub, :owner => @course.owner) }
-  let(:user) { FactoryGirl.create(:user) }
+  let(:lecture) { FactoryBot.create(:lecture, :subject => @sub, :owner => @course.owner) }
+  let(:user) { FactoryBot.create(:user) }
 
   context "when not a member" do
     it "should not be able to manage" do

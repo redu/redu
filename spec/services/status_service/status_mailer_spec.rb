@@ -4,8 +4,8 @@ module StatusService
   module Mailers
     describe StatusMailer do
       subject { StatusMailer }
-      let(:user) { FactoryGirl.build_stubbed(:user) }
-      let(:answer) { FactoryGirl.build_stubbed(:answer) }
+      let(:user) { FactoryBot.build_stubbed(:user) }
+      let(:answer) { FactoryBot.build_stubbed(:answer) }
       let(:notification) do
         AnswerService::AnswerNotification.new(user: user, answer: answer)
       end

@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe Result do
-  subject { FactoryGirl.create(:result) }
+  subject { FactoryBot.create(:result) }
 
   # Rel
   it { should belong_to :exercise }
@@ -44,7 +44,7 @@ describe Result do
       end
 
       it "should calculate the grade" do
-        subject.choices << 3.times.collect { FactoryGirl.create(:choice, correct: true )}
+        subject.choices << 3.times.collect { FactoryBot.create(:choice, correct: true )}
         subject.exercise.stub(:question_weight) { BigDecimal.new("1.0") }
         subject.start!
 
@@ -65,19 +65,19 @@ describe Result do
 
   context "calculations" do
     it "should have a grade even when is not finalized" do
-      subject.choices << 3.times.collect { FactoryGirl.create(:choice, correct: true )}
+      subject.choices << 3.times.collect { FactoryBot.create(:choice, correct: true )}
       subject.exercise.stub(:question_weight) { BigDecimal.new("1.0") }
       subject.calculate_grade.should == BigDecimal.new("3.0")
     end
 
     context "when finalized" do
       before do
-        subject.exercise = FactoryGirl.create(:exercise, maximum_grade: 10)
-        subject.user = FactoryGirl.create(:user)
+        subject.exercise = FactoryBot.create(:exercise, maximum_grade: 10)
+        subject.user = FactoryBot.create(:user)
 
         subject.start!
 
-        subject.choices << 3.times.collect { FactoryGirl.create(:choice, correct: true )}
+        subject.choices << 3.times.collect { FactoryBot.create(:choice, correct: true )}
         subject.exercise.stub(:question_weight) { BigDecimal.new("1.0") }
       end
 
@@ -90,7 +90,7 @@ describe Result do
       it "should calculate correct choices number" do
         subject.finalize!
         # Um pouco de ruído
-        subject.choices << 3.times.collect { FactoryGirl.create(:choice, correct: false )}
+        subject.choices << 3.times.collect { FactoryBot.create(:choice, correct: false )}
         subject.choices.correct.count.should == 3
       end
 
@@ -104,8 +104,8 @@ describe Result do
 
   context "duration" do
     before do
-      subject.exercise = FactoryGirl.create(:exercise, maximum_grade: 10)
-      subject.user = FactoryGirl.create(:user)
+      subject.exercise = FactoryBot.create(:exercise, maximum_grade: 10)
+      subject.user = FactoryBot.create(:user)
     end
 
     it "should calculate the duartion" do
@@ -130,7 +130,7 @@ describe Result do
       subject.update_attribute(:finalized_at, (Time.zone.now - 3.days))
 
       results = 3.times.collect do |i|
-        result = FactoryGirl.create(:result)
+        result = FactoryBot.create(:result)
         result.start! && result.finalize!
       end
 
@@ -142,7 +142,7 @@ describe Result do
       subject.update_attribute(:grade, 5)
 
       results = 3.times.collect do |i|
-        result = FactoryGirl.create(:result, grade: 10)
+        result = FactoryBot.create(:result, grade: 10)
         result.start! && result.finalize!
       end
 
@@ -153,11 +153,11 @@ describe Result do
   context "when generating report" do
     before do
       subject.start!
-      subject.exercise = FactoryGirl.create(:exercise, maximum_grade: 10)
-      20.times { subject.exercise.questions << FactoryGirl.create(:question) }
+      subject.exercise = FactoryBot.create(:exercise, maximum_grade: 10)
+      20.times { subject.exercise.questions << FactoryBot.create(:question) }
       10.times.collect do  |i|
         response = (i % 2 == 0) ? true : false
-        subject.choices << FactoryGirl.create(:choice, correct: response)
+        subject.choices << FactoryBot.create(:choice, correct: response)
       end
       subject.finalize!
     end

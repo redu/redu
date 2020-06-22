@@ -48,7 +48,7 @@ shared_examples_for "created lecture" do
   end
 
   def mock_lecture_initialize
-    lecture = FactoryGirl.create(:lecture)
+    lecture = FactoryBot.create(:lecture)
     Lecture.stub(:new).and_return(lecture)
     lecture
   end

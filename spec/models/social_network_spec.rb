@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe SocialNetwork do
-  subject { FactoryGirl.create(:social_network) }
+  subject { FactoryBot.create(:social_network) }
 
   it { should belong_to :user }
 

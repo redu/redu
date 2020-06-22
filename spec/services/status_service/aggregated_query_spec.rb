@@ -4,15 +4,15 @@ require 'spec_helper'
 module StatusService
   describe AggregatedQuery do
     subject { described_class.new(aggregator) }
-    let(:space) { FactoryGirl.create(:space) }
+    let(:space) { FactoryBot.create(:space) }
     let(:aggregator) { mock("Aggregator", build: { Space: [space.id] }) }
 
     describe ".new" do
       let!(:statuses) do
-        FactoryGirl.create_list(:activity, 2, statusable: space)
+        FactoryBot.create_list(:activity, 2, statusable: space)
       end
       let!(:other_status) do
-        FactoryGirl.create(:activity)
+        FactoryBot.create(:activity)
       end
 
       it "should contruct the query" do

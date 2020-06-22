@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe LectureableCanvasService do
-  let(:client) { FactoryGirl.create(:client_application) }
-  let(:lecture) { FactoryGirl.build_stubbed(:lecture) }
+  let(:client) { FactoryBot.create(:client_application) }
+  let(:lecture) { FactoryBot.build_stubbed(:lecture) }
   let(:ability) { mock('Ability') }
   let(:access_token) do
     t = mock('AccessToken')
@@ -10,7 +10,7 @@ describe LectureableCanvasService do
     t.stub(:client_application_id).and_return(client.id)
     t
   end
-  let(:canvas_attrs) { FactoryGirl.attributes_for(:canvas) }
+  let(:canvas_attrs) { FactoryBot.attributes_for(:canvas) }
 
   subject do
     LectureableCanvasService.

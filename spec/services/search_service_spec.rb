@@ -5,7 +5,7 @@ describe SearchService do
   let(:params) {{ :q => 'Alex', :f => ["disciplinas"],
                   :action => "environments", :locale => 'pt-BR' }}
   let(:per_page) { 10 }
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { FactoryBot.create(:user) }
 
   subject { SearchService.new(:params => params,
                               :ability => Ability.new(user),
@@ -32,13 +32,13 @@ describe SearchService do
 
   context "filters" do
     before do
-      my_course = FactoryGirl.create(:course)
-      course = FactoryGirl.create(:course)
+      my_course = FactoryBot.create(:course)
+      course = FactoryBot.create(:course)
       my_course.join(user)
 
       @spaces = []
-      space = FactoryGirl.create(:space, :course => course)
-      @my_space = FactoryGirl.create(:space, :course => my_course)
+      space = FactoryBot.create(:space, :course => course)
+      @my_space = FactoryBot.create(:space, :course => my_course)
 
       @spaces << space
       @spaces << @my_space

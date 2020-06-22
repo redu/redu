@@ -3,21 +3,21 @@ require 'spec_helper'
 require 'authlogic/test_case'
 
 describe CoursesController do
-  let(:user) { FactoryGirl.create(:user) }
-  let(:environment) { FactoryGirl.create(:environment, owner: user) }
+  let(:user) { FactoryBot.create(:user) }
+  let(:environment) { FactoryBot.create(:environment, owner: user) }
   let(:course) do
-    FactoryGirl.create(:course, environment: environment, owner: user)
+    FactoryBot.create(:course, environment: environment, owner: user)
   end
-  let(:space) { FactoryGirl.create(:space, course: course, owner: user) }
+  let(:space) { FactoryBot.create(:space, course: course, owner: user) }
   let(:spaces) do
-    FactoryGirl.create_list(:space, 2, course: course, owner: user)
+    FactoryBot.create_list(:space, 2, course: course, owner: user)
   end
   let(:subjects) do
     spaces.map do |s|
-      FactoryGirl.create_list(:subject, 2, space: s, owner: user, finalized: true)
+      FactoryBot.create_list(:subject, 2, space: s, owner: user, finalized: true)
     end.flatten
   end
-  let(:users) { FactoryGirl.create_list(:user, 5).map { |u| course.join(u); u } }
+  let(:users) { FactoryBot.create_list(:user, 5).map { |u| course.join(u); u } }
   let(:locale_params) { { locale: "pt-BR" } }
   let(:course_params) { locale_params.merge(id: course.path) }
   let(:nested_course_params) do
@@ -83,7 +83,7 @@ describe CoursesController do
 
     context "POST update - updating a subscription_type to 1" do
       let!(:users) do
-        FactoryGirl.create_list(:user, 5).map { |u| course.join(u); u }
+        FactoryBot.create_list(:user, 5).map { |u| course.join(u); u }
       end
 
       it "should create associations with all members that are waiting" do
@@ -95,7 +95,7 @@ describe CoursesController do
   end
 
   context "when moderating a course" do
-    let!(:plan) { FactoryGirl.create(:plan, billable: course, user: course.owner) }
+    let!(:plan) { FactoryBot.create(:plan, billable: course, user: course.owner) }
 
     before do
       course.update_attribute(:subscription_type, 2)
@@ -170,7 +170,7 @@ describe CoursesController do
   end
 
   context "when unjoin from a course (POST unjoin)" do
-    let!(:plan) { FactoryGirl.create(:plan, billable: course, user: course.owner) }
+    let!(:plan) { FactoryBot.create(:plan, billable: course, user: course.owner) }
 
     before do
       course.join(user)
@@ -201,7 +201,7 @@ describe CoursesController do
     end # context "and it's the unique course which user has joined"
 
     context "and it's not the unique course which user has joined" do
-      let(:other_course) { FactoryGirl.create(:course, environment: environment) }
+      let(:other_course) { FactoryBot.create(:course, environment: environment) }
       before do
         other_course.join(user)
         post :unjoin, nested_course_params
@@ -231,10 +231,10 @@ describe CoursesController do
 
   context "when responding a course invitation" do
     let!(:plan) do
-      FactoryGirl.
+      FactoryBot.
         create(:plan, billable: course, user: course.owner, members_limit: 5)
     end
-    let(:visitor) { FactoryGirl.create(:user) }
+    let(:visitor) { FactoryBot.create(:user) }
 
     before do
       course.create_quota
@@ -317,7 +317,7 @@ describe CoursesController do
         merge(users: users.map(&:id).join(","), emails: emails.join(','))
     end
     let(:emails) { ["email@example.com", "email2@example.com", "email3@example.com"] }
-    let(:users) { FactoryGirl.create_list(:user, 3) }
+    let(:users) { FactoryBot.create_list(:user, 3) }
     before do
       login_as user
     end
@@ -342,13 +342,13 @@ describe CoursesController do
   context "POST join" do
     context "when course is open" do
       let!(:subj) do
-        FactoryGirl.
+        FactoryBot.
           create(:subject, space: space, owner: course.owner, finalized: true)
       end
-      let(:visitor) { FactoryGirl.create(:user) }
+      let(:visitor) { FactoryBot.create(:user) }
 
       before do
-        @plan = FactoryGirl.
+        @plan = FactoryBot.
           create(:active_package_plan, billable: course, user: course.owner)
 
         environment.create_quota
@@ -370,9 +370,9 @@ describe CoursesController do
   end
 
   context "when the limit of members is full" do
-    let(:visitor) { FactoryGirl.create(:user) }
+    let(:visitor) { FactoryBot.create(:user) }
     before do
-      plan = FactoryGirl.
+      plan = FactoryBot.
         create( :plan, billable: course, user: course.owner, members_limit: 5)
       course.create_quota
       users
@@ -422,7 +422,7 @@ describe CoursesController do
   context "when viewing sent invitations (GET admin_manage_invitations)" do
     before do
       login_as user
-      course.invite FactoryGirl.create(:user)
+      course.invite FactoryBot.create(:user)
       course.invite_by_email "email2121@example.com"
 
       get :admin_manage_invitations, nested_course_params
@@ -442,7 +442,7 @@ describe CoursesController do
       4.times.map { |i| course.invite_by_email "email#{i}@example.com" }
     end
     let(:user_invitations) do
-      4.times.map { course.invite FactoryGirl.create(:user) }
+      4.times.map { course.invite FactoryBot.create(:user) }
     end
 
     before do
@@ -658,7 +658,7 @@ describe CoursesController do
   end
 
   context "when visiting a course" do
-    let(:visitor) { FactoryGirl.create(:user) }
+    let(:visitor) { FactoryBot.create(:user) }
 
     context "as a course's member" do
       before do
@@ -705,7 +705,7 @@ describe CoursesController do
       let(:role) { ['tutor'] }
       before do
         login_as user
-        course.join(FactoryGirl.create(:user), Role[:tutor])
+        course.join(FactoryBot.create(:user), Role[:tutor])
 
         search_memberships(role_filter: role)
       end

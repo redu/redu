@@ -3,12 +3,12 @@ require 'spec_helper'
 module StatusService
   module AnswerService
     describe AnswerNotification do
-      let(:author) { FactoryGirl.build_stubbed(:user) }
-      let(:user) { FactoryGirl.build_stubbed(:user) }
+      let(:author) { FactoryBot.build_stubbed(:user) }
+      let(:user) { FactoryBot.build_stubbed(:user) }
       let(:answer) do
-        FactoryGirl.build_stubbed(:answer, user: author, in_response_to: status)
+        FactoryBot.build_stubbed(:answer, user: author, in_response_to: status)
       end
-      let(:status) { FactoryGirl.build_stubbed(:activity) }
+      let(:status) { FactoryBot.build_stubbed(:activity) }
       subject { AnswerNotification.new(answer: answer, user: user) }
 
       it "should define author_name" do
@@ -28,23 +28,23 @@ module StatusService
       end
 
       context "#hierarchy_breadcrumb" do
-        let(:user) { FactoryGirl.build_stubbed(:user) }
-        let(:course) { FactoryGirl.build_stubbed(:course, owner: user) }
-        let(:space) { FactoryGirl.build_stubbed(:space, course: course, owner: user) }
+        let(:user) { FactoryBot.build_stubbed(:user) }
+        let(:course) { FactoryBot.build_stubbed(:course, owner: user) }
+        let(:space) { FactoryBot.build_stubbed(:space, course: course, owner: user) }
         let(:answer) do
           opts = { user: author, in_response_to: status, statusable: status }
-          FactoryGirl.build_stubbed(:answer, opts)
+          FactoryBot.build_stubbed(:answer, opts)
         end
 
         context "when statusable is Lecture" do
           let(:subj) do
-            FactoryGirl.build_stubbed(:subject, owner: user, space: space)
+            FactoryBot.build_stubbed(:subject, owner: user, space: space)
           end
           let(:lecture) do
             opts = { subject: subj, owner: user, lectureable: nil }
-            FactoryGirl.build_stubbed(:lecture, opts)
+            FactoryBot.build_stubbed(:lecture, opts)
           end
-          let(:status) { FactoryGirl.build_stubbed(:activity, statusable: lecture) }
+          let(:status) { FactoryBot.build_stubbed(:activity, statusable: lecture) }
 
           it "should return the breadcrumb as Subject#name > Lecture#name" do
             subject.hierarchy_breadcrumbs.should == "#{subj.name} > #{lecture.name}"
@@ -52,7 +52,7 @@ module StatusService
         end
 
         context "when statusable is Space" do
-          let(:status) { FactoryGirl.build_stubbed(:activity, statusable: space) }
+          let(:status) { FactoryBot.build_stubbed(:activity, statusable: space) }
 
           it "should return the breadcrumb as Course#name > Space#name" do
             subject.hierarchy_breadcrumbs.should == "#{course.name} > #{space.name}"
@@ -67,7 +67,7 @@ module StatusService
 
         context "when statusable is something else" do
           it "should return empty string" do
-            status.stub(:statusable).and_return(FactoryGirl.build_stubbed(:course))
+            status.stub(:statusable).and_return(FactoryBot.build_stubbed(:course))
             subject.hierarchy_breadcrumbs.should == ""
           end
         end

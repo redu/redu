@@ -9,13 +9,13 @@ describe StatusUserAssociation do
 
   context "when multiple SUA with the same observer" do
     before do
-      @user1 = FactoryGirl.create(:user)
-      @user2 = FactoryGirl.create(:user)
+      @user1 = FactoryBot.create(:user)
+      @user2 = FactoryBot.create(:user)
       @user1.be_friends_with(@user2)
       @user2.be_friends_with(@user1)
 
       @contacts = 2.times.inject([]) do |acc,u|
-        user = FactoryGirl.create(:user)
+        user = FactoryBot.create(:user)
         user.be_friends_with(@user1)
         @user1.be_friends_with(user)
         @user2.be_friends_with(user)
@@ -23,12 +23,12 @@ describe StatusUserAssociation do
         acc << user
       end
 
-      @user3 = FactoryGirl.create(:user)
+      @user3 = FactoryBot.create(:user)
       @user3.be_friends_with(@user2)
       @user2.be_friends_with(@user3)
 
       ActiveRecord::Observer.with_observers(:status_observer) do
-        @activity = FactoryGirl.create(:activity, :user => @user1, :statusable => @user2)
+        @activity = FactoryBot.create(:activity, :user => @user1, :statusable => @user2)
       end
     end
 

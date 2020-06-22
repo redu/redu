@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe RecoveryEmail do
-  subject { FactoryGirl.build(:recovery_email) }
+  subject { FactoryBot.build(:recovery_email) }
 
   it { should allow_value("person@email.com").for(:email) }
   it { should allow_value("person@email.com.br").for(:email) }

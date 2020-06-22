@@ -9,7 +9,7 @@ describe "Vis Api" do
   # intercepta ele assim.
 
   before do
-    environment = FactoryGirl.create(:complete_environment)
+    environment = FactoryBot.create(:complete_environment)
     course = environment.courses.first
     @space = course.spaces.first
 

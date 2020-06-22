@@ -5,7 +5,7 @@ require 'authlogic/test_case'
 describe UserCourseInvitationsController do
   context "GET show" do
     before do
-      @course = FactoryGirl.create(:course)
+      @course = FactoryBot.create(:course)
       @invite = @course.invite_by_email("email@example.com")
       @params = {:locale => 'pt-BR', :environment_id => @course.environment.path,
         :course_id => @course.path, :id => @invite.id }
@@ -13,7 +13,7 @@ describe UserCourseInvitationsController do
 
     context "when the user is logged in" do
       before do
-        @logged_user = FactoryGirl.create(:user)
+        @logged_user = FactoryBot.create(:user)
         login_as @logged_user
         get :show, @params
       end

@@ -4,7 +4,7 @@ require 'spec_helper'
 module StatusService
   describe StatusDependenciesEntityService do
     subject { StatusDependenciesEntityService.new(statuses: statuses) }
-    let(:statuses) { FactoryGirl.build_stubbed_list(:activity, 2) }
+    let(:statuses) { FactoryBot.build_stubbed_list(:activity, 2) }
 
     describe "#destroy" do
       it 'should invoke self#destroy_dependency with Answer' do
@@ -39,7 +39,7 @@ module StatusService
       describe "#destroy_dependency(Answer)" do
         let(:items) do
           statuses.map do |status|
-            FactoryGirl.create_list(:answer, 2, in_response_to: status)
+            FactoryBot.create_list(:answer, 2, in_response_to: status)
           end.flatten
         end
         let(:klass) { Answer }
@@ -50,7 +50,7 @@ module StatusService
       describe "#destroy_dependency(StatusUserAssociation)" do
         let(:items) do
           statuses.map do |status|
-            FactoryGirl.create_list(:status_user_association, 2, status: status)
+            FactoryBot.create_list(:status_user_association, 2, status: status)
           end.flatten
         end
         let(:klass) { StatusUserAssociation }
@@ -61,7 +61,7 @@ module StatusService
       describe "#destroy_dependency(StatusResource)" do
         let(:items) do
           statuses.map do |status|
-            FactoryGirl.create_list(:status_resource, 2, status: status)
+            FactoryBot.create_list(:status_resource, 2, status: status)
           end.flatten
         end
         let(:klass) { StatusResource }

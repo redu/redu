@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe Document do
-  subject { FactoryGirl.build(:document) }
+  subject { FactoryBot.build(:document) }
 
   it { should have_attached_file(:attachment) }
 

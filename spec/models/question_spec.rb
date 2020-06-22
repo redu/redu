@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe Question do
-  subject { FactoryGirl.create(:question) }
+  subject { FactoryBot.create(:question) }
 
   it { should have_many(:alternatives).dependent(:destroy) }
   it { should belong_to(:exercise) }
@@ -13,7 +13,7 @@ describe Question do
 
   context "when validating alternatives count" do
     it "should add error when the question has just one alternative" do
-      subject = FactoryGirl.create(:complete_question)
+      subject = FactoryBot.create(:complete_question)
       subject.alternatives[0].destroy
       subject.alternatives[1].destroy
 
@@ -22,7 +22,7 @@ describe Question do
     end
 
     it "should add error when there are alternatives makerd for destruction" do
-      subject = FactoryGirl.create(:complete_question)
+      subject = FactoryBot.create(:complete_question)
       alt1, alt2 = subject.alternatives[0], subject.alternatives[1]
       mass = { :alternatives_attributes => {
         "1" => { :id => alt1.id, :_destroy => true, :text => "my def text" },
@@ -34,7 +34,7 @@ describe Question do
   end
 
   context "when validating uniqueness of correct alternative" do
-    subject { FactoryGirl.create(:complete_question) }
+    subject { FactoryBot.create(:complete_question) }
     let(:alternatives) { subject.alternatives }
 
     it "should validate when more than 2 correct" do
@@ -50,7 +50,7 @@ describe Question do
 
   context "sortable" do
     before do
-      subject.exercise = FactoryGirl.create(:exercise)
+      subject.exercise = FactoryBot.create(:exercise)
     end
 
     it "should respond to next_item" do
@@ -63,10 +63,10 @@ describe Question do
   context "when responding" do
     before do
       @alternatives = 3.times.collect {
-        FactoryGirl.create(:alternative, :question => subject, :correct => false)
+        FactoryBot.create(:alternative, :question => subject, :correct => false)
       }
       @alternatives.first.update_attribute(:correct, true)
-      @user = FactoryGirl.create(:user)
+      @user = FactoryBot.create(:user)
     end
 
     it "should respond to choose_alternative" do
@@ -106,10 +106,10 @@ describe Question do
   context "when responding again" do
     before do
       @alternatives = 3.times.collect {
-        FactoryGirl.create(:alternative, :question => subject, :correct => false)
+        FactoryBot.create(:alternative, :question => subject, :correct => false)
       }
       @alternatives.first.update_attribute(:correct, true)
-      @user = FactoryGirl.create(:user)
+      @user = FactoryBot.create(:user)
     end
 
     it "should not create another choice" do
@@ -131,10 +131,10 @@ describe Question do
   context "when trying to get the choice" do
     before do
       @alternatives = 3.times.collect {
-        FactoryGirl.create(:alternative, :question => subject, :correct => false)
+        FactoryBot.create(:alternative, :question => subject, :correct => false)
       }
       @alternatives.first.update_attribute(:correct, true)
-      @user = FactoryGirl.create(:user)
+      @user = FactoryBot.create(:user)
     end
 
     it "returns nil if there is no choice" do
@@ -149,7 +149,7 @@ describe Question do
 
   context "when accepting nested attributes" do
     before do
-      @question = FactoryGirl.build(:question)
+      @question = FactoryBot.build(:question)
     end
     context "when creating a question with blank alternatives" do
       before do

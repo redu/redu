@@ -4,7 +4,7 @@ require 'spec_helper'
 module Untied
   module Publisher
     describe PublishEventJob do
-      let(:model) { FactoryGirl.create(:social_network) }
+      let(:model) { FactoryBot.create(:social_network) }
       subject do
         PublishEventJob.new(:after_create, model.class.to_s, model)
       end

@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-FactoryGirl.define do
+FactoryBot.define do
   factory :plan do
     state "active"
     sequence(:name){ |n| "Plano #{n}"}

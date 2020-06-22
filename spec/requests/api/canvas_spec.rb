@@ -2,14 +2,14 @@
 require  'api_spec_helper'
 
 describe 'Canvas API' do
-  let(:environment) { FactoryGirl.create(:complete_environment) }
+  let(:environment) { FactoryBot.create(:complete_environment) }
   let(:course) { environment.courses.first }
   let(:space) { course.spaces.first }
   let(:token) { _, _, token = generate_token(space.owner); token }
   let(:params) { { oauth_token: token, format: 'json' } }
 
   subject do
-    FactoryGirl.create(:canvas, container: space, user: space.owner)
+    FactoryBot.create(:canvas, container: space, user: space.owner)
   end
 
   context "GET /api/canvas/:id" do
@@ -57,7 +57,7 @@ describe 'Canvas API' do
   context "GET /api/spaces/:space_id/canvas" do
     it "should return the correct canvas representations" do
       canvas = 3.times.collect do
-        FactoryGirl.create(:canvas, container: space, user: space.owner)
+        FactoryBot.create(:canvas, container: space, user: space.owner)
       end
 
       get "api/spaces/#{space.id}/canvas", params

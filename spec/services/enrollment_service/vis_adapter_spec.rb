@@ -8,7 +8,7 @@ module EnrollmentService
     end
 
     describe "adapter methods" do
-      let(:items) { FactoryGirl.create_list(:enrollment, 2, subject: nil) }
+      let(:items) { FactoryBot.create_list(:enrollment, 2, subject: nil) }
       let(:items_arel) { Enrollment.limit(2) }
       include_examples "vis adapter method", :notify_enrollment_creation,
         "enrollment"

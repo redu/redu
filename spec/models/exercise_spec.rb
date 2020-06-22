@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe Exercise do
-  subject { FactoryGirl.create(:exercise) }
+  subject { FactoryBot.create(:exercise) }
 
   it { should have_many(:questions).dependent(:destroy) }
   it { should have_many(:results).dependent(:destroy) }
@@ -17,12 +17,12 @@ describe Exercise do
     end
 
     it "should not add errors when there are questions" do
-      exercise = FactoryGirl.create(:complete_exercise)
+      exercise = FactoryBot.create(:complete_exercise)
       exercise.make_sense?.should be_true
     end
 
     it "should add error when there are questions marked for destruction" do
-      subject = FactoryGirl.create(:complete_exercise)
+      subject = FactoryBot.create(:complete_exercise)
       questions = subject.questions
       mass = { :questions_attributes =>
                [{:id => questions[0].id, :_destroy => true},
@@ -51,7 +51,7 @@ describe Exercise do
   context "when there are questions" do
     before do
       @questions = 3.times.inject([]) { |acc, i|
-        acc << FactoryGirl.create(:question, :exercise => subject)
+        acc << FactoryBot.create(:question, :exercise => subject)
       }
     end
 
@@ -69,7 +69,7 @@ describe Exercise do
   context "finalized by" do
     context "when the user finalized" do
       before do
-        @user = FactoryGirl.create(:user)
+        @user = FactoryBot.create(:user)
         subject.start_for(@user)
         subject.finalize_for(@user)
       end
@@ -81,7 +81,7 @@ describe Exercise do
 
     context "when the user started but havent finalized" do
       before do
-        @user = FactoryGirl.create(:user)
+        @user = FactoryBot.create(:user)
         subject.start_for(@user)
       end
 
@@ -92,7 +92,7 @@ describe Exercise do
 
     context "when there arent results at all" do
       it "should return false" do
-        subject.finalized_by?(FactoryGirl.create(:user)).should be_false
+        subject.finalized_by?(FactoryBot.create(:user)).should be_false
       end
     end
   end
@@ -100,7 +100,7 @@ describe Exercise do
   context "when there are results" do
     before do
       3.times do
-        result = FactoryGirl.create(:result,
+        result = FactoryBot.create(:result,
                          :grade => BigDecimal.new("3.5"),
                          :state => 'finalized',
                          :exercise => subject)
@@ -108,7 +108,7 @@ describe Exercise do
       end
 
       3.times do
-        result = FactoryGirl.create(:result,
+        result = FactoryBot.create(:result,
                          :grade => BigDecimal.new("9.0"),
                          :exercise => subject,
                          :state => 'finalized')
@@ -123,14 +123,14 @@ describe Exercise do
 
   context "when there aren't finalized results" do
     it "should not compute" do
-      subject.results << FactoryGirl.create(:result)
+      subject.results << FactoryBot.create(:result)
       subject.average_grade.should == BigDecimal.new('0')
     end
   end
 
   context "when starting an exercise" do
     before do
-      @user = FactoryGirl.create(:user)
+      @user = FactoryBot.create(:user)
     end
 
     it "responds to start_for" do
@@ -211,7 +211,7 @@ describe Exercise do
 
     context "when the result is already finalized" do
       before do
-        @user = FactoryGirl.create(:user)
+        @user = FactoryBot.create(:user)
         @result = subject.start_for(@user)
         @result.finalize!
       end
@@ -224,7 +224,7 @@ describe Exercise do
 
     context "when the result was started" do
       before do
-        @user = FactoryGirl.create(:user)
+        @user = FactoryBot.create(:user)
         @result = subject.start_for(@user)
       end
 
@@ -236,14 +236,14 @@ describe Exercise do
   end
 
   context "when getting choices from user" do
-    subject { FactoryGirl.create(:complete_exercise) }
+    subject { FactoryBot.create(:complete_exercise) }
 
     before do
-      @user = FactoryGirl.create(:user)
+      @user = FactoryBot.create(:user)
       @choices = subject.questions.collect do |q|
         q.choose_alternative(q.correct_alternative, @user)
       end
-      FactoryGirl.create(:choice, :user => @user) # ruído
+      FactoryBot.create(:choice, :user => @user) # ruído
     end
 
     it "should get the correct choices" do
@@ -252,7 +252,7 @@ describe Exercise do
   end
 
   context "when getting info" do
-    subject { FactoryGirl.create(:complete_exercise) }
+    subject { FactoryBot.create(:complete_exercise) }
 
     it "should return the correct number of questions" do
       subject.info[:questions_count].should == 3
@@ -272,9 +272,9 @@ describe Exercise do
   end
 
   context "when getting results" do
-    subject { FactoryGirl.create(:complete_exercise) }
+    subject { FactoryBot.create(:complete_exercise) }
     before do
-      @user = FactoryGirl.create(:user)
+      @user = FactoryBot.create(:user)
       subject.start_for(@user)
     end
 
@@ -285,14 +285,14 @@ describe Exercise do
   end
 
   context "when verifying if anyone have finalized" do
-    subject { FactoryGirl.create(:complete_exercise) }
+    subject { FactoryBot.create(:complete_exercise) }
 
     it "should return false when there arent any results" do
       subject.has_results?.should be_false
     end
 
     it "should return true when there are finalized results" do
-      user = FactoryGirl.create(:user)
+      user = FactoryBot.create(:user)
       subject.start_for(user)
       subject.finalize_for(user)
 
@@ -302,7 +302,7 @@ describe Exercise do
 
   context "when accepting nested attributes" do
     before do
-      @exercise = FactoryGirl.build(:exercise)
+      @exercise = FactoryBot.build(:exercise)
     end
 
     context "when creating an exercise with blank question" do
@@ -403,7 +403,7 @@ describe Exercise do
 
       context "when the exercise has one question without alternatives" do
         before do
-          @lecture.lectureable.questions << FactoryGirl.create(:question)
+          @lecture.lectureable.questions << FactoryBot.create(:question)
           @lecture.lectureable.build_question_and_alternative
         end
 
@@ -422,8 +422,8 @@ describe Exercise do
 
       context "when the exercise has one question with alternatives" do
         before do
-          @alternatives = (1..3).collect { FactoryGirl.build(:alternative) }
-          @question = FactoryGirl.build(:question, :alternatives => @alternatives)
+          @alternatives = (1..3).collect { FactoryBot.build(:alternative) }
+          @question = FactoryBot.build(:question, :alternatives => @alternatives)
           @lecture.lectureable.questions << @question
           @lecture.lectureable.build_question_and_alternative
         end

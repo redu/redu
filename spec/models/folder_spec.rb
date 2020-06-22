@@ -2,7 +2,7 @@
 require "spec_helper"
 
 describe Folder do
-  subject { FactoryGirl.create(:folder) }
+  subject { FactoryBot.create(:folder) }
 
   it { should belong_to(:user) }
   it { should belong_to(:space) }

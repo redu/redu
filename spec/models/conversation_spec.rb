@@ -8,9 +8,9 @@ describe Conversation do
   it { should validate_uniqueness_of(:sender_id).scoped_to(:recipient_id)}
 
   before do
-    @user = FactoryGirl.create(:user)
-    @contact1 = FactoryGirl.create(:user)
-    @contact2 = FactoryGirl.create(:user)
+    @user = FactoryBot.create(:user)
+    @contact1 = FactoryBot.create(:user)
+    @contact2 = FactoryBot.create(:user)
   end
 
   describe '.involving' do

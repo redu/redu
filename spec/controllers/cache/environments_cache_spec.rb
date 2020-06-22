@@ -3,8 +3,8 @@ require 'spec_helper'
 
 describe "EnvironmentsController" do
   render_views
-  let(:user) { FactoryGirl.create(:user) }
-  let(:environment) { FactoryGirl.create(:environment, :owner => user) }
+  let(:user) { FactoryBot.create(:user) }
+  let(:environment) { FactoryBot.create(:environment, :owner => user) }
 
   before do
     @controller = EnvironmentsController.new
@@ -15,10 +15,10 @@ describe "EnvironmentsController" do
     before do
       @courses = []
       3.times do
-        @courses << FactoryGirl.create(:course, :environment => environment,
+        @courses << FactoryBot.create(:course, :environment => environment,
                            :owner => environment.owner)
       end
-      @user2 = FactoryGirl.create(:user)
+      @user2 = FactoryBot.create(:user)
       @course = @courses.first
     end
 
@@ -85,13 +85,13 @@ describe "EnvironmentsController" do
     end
 
     context 'expiration' do
-      let(:course) { FactoryGirl.create(:course, :environment => environment) }
+      let(:course) { FactoryBot.create(:course, :environment => environment) }
 
       it 'when a user starts to be a part of an environment' do
         ActiveRecord::Observer.with_observers(
           :user_environment_association_cache_observer) do
             performing_cache(cache_identifier) do |cache|
-              course.join FactoryGirl.create(:user)
+              course.join FactoryBot.create(:user)
 
               cache.should_not exist(cache_identifier)
             end

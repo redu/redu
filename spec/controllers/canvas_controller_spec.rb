@@ -6,13 +6,13 @@ describe CanvasController do
   include Authlogic::TestCase
 
   describe "GET 'show'" do
-    let(:current_user) { FactoryGirl.create(:user) }
+    let(:current_user) { FactoryBot.create(:user) }
     let(:space) do
-      environment = FactoryGirl.create(:complete_environment, :owner => current_user)
+      environment = FactoryBot.create(:complete_environment, :owner => current_user)
       environment.courses.first.spaces.first
     end
     let(:canvas) do
-      FactoryGirl.create(:canvas, :user => current_user, :container => space)
+      FactoryBot.create(:canvas, :user => current_user, :container => space)
     end
 
     before do

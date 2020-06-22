@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-FactoryGirl.define do
+FactoryBot.define do
   factory :folder do |f|
     f.sequence(:name) {|n| "Folder #{n}" }
     f.association :user
@@ -16,7 +16,7 @@ FactoryGirl.define do
 
   factory :complete_folder, :parent => :folder do
     after(:create) do |f,_|
-      f.myfiles << FactoryGirl.create(:myfile, :folder => f)
+      f.myfiles << FactoryBot.create(:myfile, :folder => f)
     end
   end
 end

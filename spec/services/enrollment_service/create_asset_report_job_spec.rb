@@ -5,10 +5,10 @@ module EnrollmentService
   module Jobs
     describe CreateAssetReportJob do
       let(:enrollments) do
-        FactoryGirl.create_list(:enrollment, 2, subject: nil)
+        FactoryBot.create_list(:enrollment, 2, subject: nil)
       end
       let(:lectures) do
-        FactoryGirl.create_list(:lecture, 2, subject: nil)
+        FactoryBot.create_list(:lecture, 2, subject: nil)
       end
       subject do
         CreateAssetReportJob.new(enrollment: enrollments, lecture: lectures)

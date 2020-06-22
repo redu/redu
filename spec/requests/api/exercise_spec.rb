@@ -2,19 +2,19 @@
 require 'api_spec_helper'
 
 describe "Media API" do
-  let(:current_user) { FactoryGirl.create(:user) }
-  let(:environment) { FactoryGirl.create(:complete_environment, owner: current_user) }
+  let(:current_user) { FactoryBot.create(:user) }
+  let(:environment) { FactoryBot.create(:complete_environment, owner: current_user) }
   let(:course) { environment.courses.first }
   let(:space) { course.spaces.first }
-  let(:sub) { FactoryGirl.create(:subject, owner: current_user, space: space) }
+  let(:sub) { FactoryBot.create(:subject, owner: current_user, space: space) }
   let(:token) { _, _, token = generate_token(current_user); token }
   let(:params) do
     { oauth_token: token, format: :json }
   end
-  let(:exercise) { FactoryGirl.create(:complete_exercise) }
+  let(:exercise) { FactoryBot.create(:complete_exercise) }
 
   subject do
-    FactoryGirl.create(:lecture, lectureable: exercise, subject: sub)
+    FactoryBot.create(:lecture, lectureable: exercise, subject: sub)
   end
 
   before do

@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-FactoryGirl.define do
+FactoryBot.define do
   factory :myfile do |m|
     m.sequence(:attachment_file_name) { |n| "File #{n}" }
     m.attachment_content_type "image/jpeg"

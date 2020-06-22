@@ -10,22 +10,22 @@ describe Status do
 
   context "scopes" do
     before do
-      @environment = FactoryGirl.create(:environment)
-      @course = FactoryGirl.create(:course, :environment => @environment,
+      @environment = FactoryBot.create(:environment)
+      @course = FactoryBot.create(:course, :environment => @environment,
                         :owner => @environment.owner)
 
       @course.join(@environment.owner)
 
       @spaces = 3.times.inject([]) do |acc,i|
-        acc << FactoryGirl.create(:space, :owner => @course.owner, :course => @course)
+        acc << FactoryBot.create(:space, :owner => @course.owner, :course => @course)
       end
 
       @lectures = 3.times.inject([]) do |acc,i|
-        sub = FactoryGirl.create(:subject, :owner => @spaces.first.owner,
+        sub = FactoryBot.create(:subject, :owner => @spaces.first.owner,
                       :space => @spaces.first,
                       :finalized => true)
-        lect = FactoryGirl.create(:lecture, :owner => @spaces.first.owner,
-                       :lectureable => FactoryGirl.create(:page), :subject => sub)
+        lect = FactoryBot.create(:lecture, :owner => @spaces.first.owner,
+                       :lectureable => FactoryBot.create(:page), :subject => sub)
 
         acc << lect
       end
@@ -35,29 +35,29 @@ describe Status do
       before do
         @space_statuses = @spaces.collect do |e|
           3.times.inject([]) do |acc,i|
-            acc << FactoryGirl.create(:activity, :statusable => e, :user => @course.owner)
+            acc << FactoryBot.create(:activity, :statusable => e, :user => @course.owner)
           end
         end.flatten
 
         @course_statuses = 3.times.inject([]) do |acc,i|
-          acc << FactoryGirl.create(:activity, :statusable => @course, :user => @course.owner)
+          acc << FactoryBot.create(:activity, :statusable => @course, :user => @course.owner)
         end
 
         @lecture_statuses = @lectures.collect do |l|
           3.times.inject([]) do |acc,i|
-            acc << FactoryGirl.create(:activity, :statusable => l, :user => @course.owner)
+            acc << FactoryBot.create(:activity, :statusable => l, :user => @course.owner)
           end + \
           3.times.inject([]) do |acc,i|
-            acc << FactoryGirl.create(:help, :statusable => l, :user => @course.owner)
+            acc << FactoryBot.create(:help, :statusable => l, :user => @course.owner)
           end
         end.flatten
 
-        @user = FactoryGirl.create(:user)
+        @user = FactoryBot.create(:user)
         @activity_statuses = (1..2).collect {
-          FactoryGirl.create(:activity, :user => @user,
+          FactoryBot.create(:activity, :user => @user,
                   :statusable => @spaces.first) }
-        @activity_statuses << FactoryGirl.create(:activity, :statusable => @spaces.first)
-        @activity_statuses << FactoryGirl.create(:activity, :statusable => @spaces.first)
+        @activity_statuses << FactoryBot.create(:activity, :statusable => @spaces.first)
+        @activity_statuses << FactoryBot.create(:activity, :statusable => @spaces.first)
       end
 
       it "Activities by a specified user" do
@@ -66,8 +66,8 @@ describe Status do
       end
 
       it "Helps and Activities" do
-        @activity_statuses << FactoryGirl.create(:help, :statusable => @lectures.first, :user => @user)
-        @activity_statuses << FactoryGirl.create(:help, :statusable => @lectures.first, :user => @user)
+        @activity_statuses << FactoryBot.create(:help, :statusable => @lectures.first, :user => @user)
+        @activity_statuses << FactoryBot.create(:help, :statusable => @lectures.first, :user => @user)
 
         @lectures.first.statuses.helps_and_activities.count.should eq(8)
       end
@@ -87,8 +87,8 @@ describe Status do
       end
 
       it "by day" do
-        id = [FactoryGirl.create(:activity, :created_at => "2012-02-14".to_date).id]
-        id << FactoryGirl.create(:activity, :created_at => "2012-02-16".to_date).id
+        id = [FactoryBot.create(:activity, :created_at => "2012-02-14".to_date).id]
+        id << FactoryBot.create(:activity, :created_at => "2012-02-16".to_date).id
         activity = Status.by_id(id)
         activity.by_day("2012-02-14".to_date).should eq([activity.first])
       end
@@ -96,7 +96,7 @@ describe Status do
       it "answers id" do
         id = []
         3.times.collect do
-          a = FactoryGirl.create(:answer, :user => @user,
+          a = FactoryBot.create(:answer, :user => @user,
                       :in_response_to => @activity_statuses.first)
           id << a.id
           @activity_statuses.first.answers << a
@@ -115,7 +115,7 @@ describe Status do
     describe "#recent" do
       let!(:statuses) do
         (1..3).map do |i|
-          FactoryGirl.create(:activity,:created_at => (i*3).day.ago)
+          FactoryBot.create(:activity,:created_at => (i*3).day.ago)
         end
       end
 

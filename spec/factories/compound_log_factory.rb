@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-FactoryGirl.define do
+FactoryBot.define do
   factory :compound_log do |e|
     e.association :statusable, :factory => :user
     e.association :user, :factory => :user

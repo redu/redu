@@ -5,7 +5,7 @@ module EnrollmentService
   module Jobs
     describe UpdateGradeJob do
       let(:enrollments) do
-        FactoryGirl.create_list(:enrollment, 2, subject: nil)
+        FactoryBot.create_list(:enrollment, 2, subject: nil)
       end
       subject { UpdateGradeJob.new(enrollment: enrollments) }
 

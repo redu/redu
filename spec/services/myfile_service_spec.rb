@@ -28,7 +28,7 @@ describe MyfileService do
 
       it "should accept a block" do
         myfile = subject.create do |myfile|
-          myfile.user = FactoryGirl.create(:user)
+          myfile.user = FactoryBot.create(:user)
         end
 
         myfile.user.should_not be_nil
@@ -92,7 +92,7 @@ describe MyfileService do
     end
 
     describe "#destroy" do
-      let!(:myfile) { FactoryGirl.create(:myfile) }
+      let!(:myfile) { FactoryBot.create(:myfile) }
       subject { MyfileService.new(params.merge(:model => myfile)) }
 
       it "should destroy Myfile" do

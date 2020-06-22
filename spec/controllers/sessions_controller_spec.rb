@@ -4,14 +4,14 @@ require 'authlogic/test_case'
 
 describe SessionsController do
   before do
-    @user = FactoryGirl.create(:user)
+    @user = FactoryBot.create(:user)
   end
 
   context "POST create" do
     context "with a token (:invitation)" do
       before do
-        course = FactoryGirl.create(:course)
-        @invite = FactoryGirl.create(:user_course_invitation, :email => @user.email,
+        course = FactoryBot.create(:course)
+        @invite = FactoryBot.create(:user_course_invitation, :email => @user.email,
                           :course => course)
         @invite.invite!
       end
@@ -91,7 +91,7 @@ describe SessionsController do
     context "request with friendship_invitation_token" do
       before do
         @email = 'mail@example.com'
-        @host = FactoryGirl.create(:user)
+        @host = FactoryBot.create(:user)
         @invitation = Invitation.invite(:user => @host,
                                         :hostable => @host,
                                         :email => 'email@example.com')
@@ -228,7 +228,7 @@ describe SessionsController do
   context "GET destroy(logout)" do
     context "when current_user is NOT nil" do
       before do
-        @user = FactoryGirl.create(:user)
+        @user = FactoryBot.create(:user)
         login_as @user
         get :destroy, { :locale => "pt-BR" }
       end
@@ -251,7 +251,7 @@ describe SessionsController do
   end
 
   context "GET new" do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryBot.create(:user) }
 
     context "when there is not a current user" do
       context "with a mobile user agent" do

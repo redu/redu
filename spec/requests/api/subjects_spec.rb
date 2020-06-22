@@ -4,12 +4,12 @@ require "api_spec_helper"
 describe "Subjects API" do
   before do
     @application, @current_user, @token = generate_token
-    @environment = FactoryGirl.create(:complete_environment,
+    @environment = FactoryBot.create(:complete_environment,
                            owner: @current_user)
     @space = @environment.courses.first.spaces.first
     @subject = @space.subjects.first
 
-    other_user = FactoryGirl.create(:user)
+    other_user = FactoryBot.create(:user)
     @environment.courses.first.join(other_user, :member)
     @params = {oauth_token: @token, format: "json"}
   end

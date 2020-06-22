@@ -5,8 +5,8 @@ describe SubjectObserver do
   describe :after_update do
     context "Logger" do
       it "logs the creation" do
-        sub = FactoryGirl.create(:subject, :visible => true)
-        FactoryGirl.create(:lecture, :subject => sub)
+        sub = FactoryBot.create(:subject, :visible => true)
+        FactoryBot.create(:lecture, :subject => sub)
 
         ActiveRecord::Observer.with_observers(:subject_observer) do
           expect {
@@ -23,9 +23,9 @@ describe SubjectObserver do
         UserNotifier.perform_deliveries = true
         UserNotifier.deliveries = []
 
-        @sub = FactoryGirl.create(:subject, :visible => true)
-        space = FactoryGirl.create(:space, :owner => @sub.owner)
-        FactoryGirl.create(:lecture, :subject => @sub, :owner => @sub.owner)
+        @sub = FactoryBot.create(:subject, :visible => true)
+        space = FactoryBot.create(:space, :owner => @sub.owner)
+        FactoryBot.create(:lecture, :subject => @sub, :owner => @sub.owner)
         @sub.enroll(@sub.owner)
       end
 
@@ -50,8 +50,8 @@ describe SubjectObserver do
 
     context "when subject is not yet finalized" do
       before do
-        @subject = FactoryGirl.create(:subject, :visible => true)
-        FactoryGirl.create(:lecture, :subject => @subject)
+        @subject = FactoryBot.create(:subject, :visible => true)
+        FactoryBot.create(:lecture, :subject => @subject)
       end
 
       it "should create enrollment associations when subject is finalized" do

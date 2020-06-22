@@ -2,8 +2,8 @@
 require 'spec_helper'
 
 describe 'SearchAdministratorsCache' do
-  let(:user) { FactoryGirl.create(:user) }
-  let(:environment) { FactoryGirl.create(:environment) }
+  let(:user) { FactoryBot.create(:user) }
+  let(:environment) { FactoryBot.create(:environment) }
 
   context "search_environment_administrators" do
     let(:cache_identifier) { "views/search_environment_administrators/#{environment.id}" }
@@ -26,7 +26,7 @@ describe 'SearchAdministratorsCache' do
       it "expires when admin user_environment_association is created" do
         ActiveRecord::Observer.with_observers(:user_environment_association_cache_observer) do
           performing_cache(cache_identifier) do |cache|
-            FactoryGirl.create(:user_environment_association, :user => user,
+            FactoryBot.create(:user_environment_association, :user => user,
                     :environment => environment, :role => :environment_admin)
 
             cache.should_not exist(cache_identifier)
@@ -35,7 +35,7 @@ describe 'SearchAdministratorsCache' do
       end
 
       it "expires when user_environment_association is updated" do
-        FactoryGirl.create(:user_environment_association, :user => user,
+        FactoryBot.create(:user_environment_association, :user => user,
                 :environment => environment)
 
         ActiveRecord::Observer.with_observers(:user_environment_association_cache_observer) do
@@ -48,7 +48,7 @@ describe 'SearchAdministratorsCache' do
       end
 
       it "expires when admin user_environment_association is destroyed" do
-        FactoryGirl.create(:user_environment_association, :user => user,
+        FactoryBot.create(:user_environment_association, :user => user,
                 :environment => environment, :role => :environment_admin)
 
         ActiveRecord::Observer.with_observers(:user_environment_association_cache_observer) do
