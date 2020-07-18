@@ -115,13 +115,13 @@
           $.fn.refreshMobileMask = function() {
             return this.each(function() {
                 var $this = $(this);
-                $this.mask("+99 (99) 9999-9999", { placeholder: "" });
+                $this.mask("+99 (99) 99999-9999", { placeholder: "" });
             });
           };
 
           $(".form-config-mobile").refreshMobileMask();
       <% end %>
-      <%= f.text_field :mobile, :placeholder => "Exemplo: +55 (81) 4444-4444",
+      <%= f.text_field :mobile, :placeholder => "Exemplo: +55 (81) 94444-4444",
         :class => "form-config-mobile" %>
       <%= concave_errors_for(f.object, :mobile) %>
     </div>
