@@ -7,6 +7,7 @@ module Api
     property :id
     property :name
     property :description
+    property :user_grades, getter: lambda { |args| if enrollment = args[:user].get_association_with(self) then enrollment.grade.to_i else nil end }
     property :created_at
     property :updated_at
 

@@ -7,13 +7,13 @@ module Api
       space = Space.find(params[:space_id])
       authorize! :read, space
       subjects = space.try(:subjects) || []
-      respond_with(:api, subjects)
+      respond_with(:api, subjects, :user => current_user)
     end
 
     def show
       subject = Subject.find(params[:id])
       authorize! :read, subject
-      respond_with(subject)
+      respond_with(subject, :user => current_user)
     end
 
     def destroy
