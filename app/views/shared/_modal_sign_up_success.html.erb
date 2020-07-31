@@ -5,10 +5,12 @@
     <h4 class="title-modal">Conta criada com sucesso <label for="ck-modal"><span class="icv"></span><span class="ich"></span></label></h4>
     <div class="modal-body" style="margin:10px;">
       <h3>Olá, Seu cadastro foi efetuado com sucesso.</h3>
-      <h4>No entanto, é necessário que você o confirme. Enviamos um e-mail para sua caixa de entrada contendo um link – basta clicá-lo. Mas não se preocupe: você tem até 30 dias para realizar esta etapa.</h4>
-      <h4>Até lá, experimente o Openredu e não hesite em entrar em contato conosco caso surjam dúvidas, reclamações ou sugestões.</h4>
+      <% if REQUIRE_ACCOUNT_ACTIVATION %>
+        <h4>No entanto, é necessário que você o confirme. Enviamos um e-mail para sua caixa de entrada contendo um link – basta clicá-lo. Mas não se preocupe: você tem até 30 dias para realizar esta etapa.</h4>
+        <h4>Até lá, experimente o Openredu e não hesite em entrar em contato conosco caso surjam dúvidas, reclamações ou sugestões.</h4>
+      <% end %>
       <div style="padding-bottom: 10px;">
-        <%= link_to "Experimentar o Openredu", home_user_path(@user, :exploring_tour => true), :class => "button-success-modal" %>
+        <%= link_to try_openredu_text, home_user_path(@user, :exploring_tour => true), :class => "button-success-modal" %>
       </div>
     </div>
 
