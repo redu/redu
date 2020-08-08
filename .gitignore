@@ -36,4 +36,4 @@ solr/pids/*
 .env.production
 *.pptx
 *.sh
-
+docker-compose.override.yml
