@@ -13,9 +13,17 @@ e a nomenclatura dos nossos releases adere ao padrão [Semantic Versioning](http
 - Download de apresentações [#286]
 - Questão com imagem [#60]
 
+## [1.2.0] - 2020-08-08
+
 ### Correções
 
 - Texto de boas vindas quando conta já está ativa [#294]
+
+### Contribuições :heart:
+
+|-|Commits|Arquivos modificados|Linhas adicionadas|Linhas removidas|
+|-|-|-|-|-|
+|Matheus Santana|7|8 | 231 | 4 |
 
 ## [1.1.0] - 2020-07-18
 
@@ -116,7 +124,8 @@ N/A
 TODO para a versão 1.0.0
 - Problemas relativos a upload (fron-end e back-end)
 
-[Unreleased]: https://github.com/Openredu/Openredu/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/Openredu/Openredu/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/Openredu/Openredu/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/Openredu/Openredu/compare/v1.0.2...v1.1.0
 [1.0.2]: https://github.com/Openredu/Openredu/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/Openredu/Openredu/compare/v1.0.0...v1.0.1
@@ -127,4 +136,5 @@ TODO para a versão 1.0.0
 [#294]: https://github.com/Openredu/Openredu/pull/294
 [#287]: https://github.com/Openredu/Openredu/pull/287
 [#286]: https://github.com/Openredu/Openredu/pull/286
+[#294]: https://github.com/Openredu/Openredu/pull/294
 [#60]: https://github.com/Openredu/Openredu/pull/60
