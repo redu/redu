@@ -256,8 +256,7 @@ class UsersController < BaseController
       @user = User.find_by_email(@recover_password.email)
 
       if @user.try(:reset_password)
-        UserNotifier.delay(:queue => 'email', :priority => 1).
-          user_reseted_password(@user, @user.password)
+        UserNotifier.delay(:queue => 'email', :priority => 1).user_reseted_password(@user, @user.password)
         @user.save
 
         # O usuario estava ficando logado, apos o comando @user.save.
@@ -273,17 +272,20 @@ class UsersController < BaseController
 
   def resend_activation
     if params[:email]
-      @under_recover = RecoveryEmail.new(params[:email])
-      @user = User.find_by_email(@under_recover.email)
-    
-      if @user
-        flash[:notice] = t :activation_email_resent_message
-        UserNotifier.delay(:queue => 'email', :priority => 1).user_signedup(@user)
+      @resend_activation = RecoveryEmail.new(params[:email])
 
-        redirect_to login_path and return
-      else
-        flash[:error] = t :activation_email_not_sent_message
-      end
+      if @resend_activation.valid?
+        @user = User.find_by_email(@resend_activation.email)
+        
+        if @user
+          flash[:notice] = t :activation_email_resent_message
+          UserNotifier.delay(:queue => 'email', :priority => 1).user_signedup(@user)
+  
+          redirect_to login_path and return
+        else
+          flash[:error] = t :activation_email_not_sent_message
+        end
+      end     
     end
   end
 
