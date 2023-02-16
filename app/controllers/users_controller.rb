@@ -273,21 +273,17 @@ class UsersController < BaseController
 
   def resend_activation
     if params[:email]
-      @user = User.find_by_email(params[:email])
-    else
-      @user = User.find(params[:id])
-    end
-    if @user
-      flash[:notice] = t :activation_email_resent_message
-      UserNotifier.delay(:queue => 'email').user_signedup(@user.id)
+      @under_recover = RecoveryEmail.new(params[:email])
+      @user = User.find_by_email(@under_recover.email)
+    
+      if @user
+        flash[:notice] = t :activation_email_resent_message
+        UserNotifier.delay(:queue => 'email', :priority => 1).user_signedup(@user)
 
-      if current_user_agent.mobile?
         redirect_to login_path and return
       else
-        redirect_to application_path and return
+        flash[:error] = t :activation_email_not_sent_message
       end
-    else
-      flash[:error] = t :activation_email_not_sent_message
     end
   end
 
